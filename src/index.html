@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+
+<!--
+    ===========
+    GLOBAL META
+    ===========
+-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+    ==================
+    PAGE-SPECIFIC META
+    ==================
+-->
+
+<title>Capital Framework demo page</title>
+<meta name="description" content="A test page for Capital Framework components.">
+
+<!-- Explicit favicon link needed for testing. Remove for production. -->
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+<!--
+    ======
+    STYLES
+    ======
+    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
+    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
+-->
+
+<!--[if lt IE 9]>      <link rel="stylesheet" href="static/css/ie8.min.css"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="static/css/main.min.css"> <!--<![endif]-->
+
+<!--
+    ============
+    HEAD SCRIPTS
+    ============
+    The following scripts must be included in the head. DO NOT ADD ANY MORE.
+    All other scripts should go before the closing body tag.
+    If you come across a script that makes a convincing case to be included in
+    the head, then file an issue or PR to discuss including it.
+-->
+
+<!--[if lt IE 9]>
+    <script src="vendor/html5shiv/html5shiv-printshiv.js"></script>
+<![endif]-->
+
+    <script>
+        // Confirm availability of JS and remove no-js class from html
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <h1>Capital Framework demo page</h1>
+
+    <ul class="feature-list">
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">CF-Buttons</em></h3>
+            <p><a href="#" class="btn">Link Button</a> <button class="btn">Form Button</button></p>
+        </li>
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">CF-Colors</em></h3>
+            <p>
+                <span class="color-demo color-demo__green"></span>
+                <span class="color-demo color-demo__green-midtone"></span>
+                <span class="color-demo color-demo__green-tint"></span>
+            </p>
+        </li>
+
+        <li class="feature-list_item">
+            <h3>CF-Expandables</h3>
+            <div class="expandable">
+                <header class="expandable-header">
+                    Expandable Header
+                    <a href="" class="btn btn-link expandable-button">
+                        <span class="expandable-text">Show</span> <i class="icon-plus-sign"></i>
+                    </a>
+                </header>
+                <div class="expandable-content expandable-hidden">
+                    <p>Climb leg chase mice so missing until dinner time and hate dog stand in front of the computer screen mark territory intently stare at the same spot. Why must they do that find something else more interesting or behind the couch. Destroy couch burrow under covers and run in circles for leave dead animals as gifts. Under the bed climb leg so attack feet yet burrow under covers chew foot. Under the bed hunt anything that moves so play time rub face on everything for claw drapes yet hide when guests come over. Behind the couch under the bed. Chase imaginary bugs play time hide when guests come over all of a sudden go crazy or make muffins, for stretch. Leave hair everywhere cat snacks behind the couch so rub face on everything for hopped up on goofballs. Stare at ceiling inspect anything brought into the house and nap all day so under the bed yet why must they do that swat at dog. Claw drapes throwup on your pillow play time.</p>
+                </div>
+            </div>
+        </li>
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">CF-Forms</em></h3>
+            <form action="#">
+                <p><input placeholder="placeholder text" type="text"></p>
+                <p><textarea>Example entry</textarea></p>
+            </form>
+        </li>
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">CF-Grid</em></h3>
+            <div class="wrapper">
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-1 feature-list_show-col"></div>
+                <div class="col-6 feature-list_show-col"></div>
+                <div class="col-6 feature-list_show-col"></div>
+                <div class="col-4 feature-list_show-col"></div>
+                <div class="col-4 feature-list_show-col"></div>
+                <div class="col-4 feature-list_show-col"></div>
+                <div class="col-3 feature-list_show-col"></div>
+                <div class="col-3 feature-list_show-col"></div>
+                <div class="col-3 feature-list_show-col"></div>
+                <div class="col-3 feature-list_show-col"></div>
+            </div>
+            <br>
+        </li>
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">CF-Pagination</em></h3>
+            <nav class="pagination">
+                <a class="btn pagination_prev" href="#"><i class="btn-icon-left icon-chevron-left"></i> Previous</a>
+                <form class="pagination_form">
+                    <label class="pagination_label" for="pagination_current-page">Page</label>
+                    <input class="pagination_current-page" id="pagination_current-page" name="pagination_current-page" type="number" min="1" max="149" value="149" />
+                    <label class="pagination_label" for="pagination_current-page">of 149</label>
+                    <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">Go</button>
+                </form>
+                <a class="btn pagination_next" href="#">Next <i class="btn-icon-right icon-chevron-right"></i></a>
+            </nav>
+            <br>
+        </li>
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">CF-Typography</em></h3>
+
+            <table class="typography-demo">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Sample</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="display">
+                        <th rowspan="2">Superheader</th>
+                        <td class="sample"><h1 class="superheader">Getting out of debt</h1></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Demi<br>
+                            48px / 66px
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2">H1</th>
+                        <td class="sample"><h1>Getting out of debt</h1></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Regular<br>
+                            34px / 44px
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2">H2</th>
+                        <td class="sample"><h2>Getting out of debt</h2></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Regular<br>
+                            26px / 33px
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2">H3</th>
+                        <td class="sample"><h3>Getting out of debt</h3></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Regular<br>
+                            22px / 28px
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2">H4</th>
+                        <td class="sample"><h4>Getting out of debt</h4></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Medium<br>
+                            18px / 22px
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2">H5</th>
+                        <td class="sample"><h5>Getting out of debt</h5></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Demi<br>
+                            14px / 22px<br>
+                            uppercase<br>
+                            letter-spacing: 1px
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2">H6</th>
+                        <td class="sample"><h6>Getting out of debt</h6></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Demi<br>
+                            12px / 22px<br>
+                            uppercase<br>
+                            letter-spacing: 1px
+                        </td>
+                    </tr>
+
+                    <tr class="p-sans">
+                        <th rowspan="2">Body (sans-serif)</th>
+                        <td class="sample"><p>Use this tool to compare school data and relevant financial factors to make a more informed decision for your future.</p></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Avenir Next Regular<br>
+                            16px / 22px<br>
+                        </td>
+                    </tr>
+
+                    <tr class="p-serif">
+                        <th rowspan="2">Body (serif)</th>
+                        <td class="sample"><p>Use this tool to compare school data and relevant financial factors to make a more informed decision for your future.</p></td>
+                    </tr>
+                    <tr>
+                        <td class="spec">
+                            Georgia<br>
+                            16px / 22px<br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+
+        <li class="feature-list_item">
+            <h3 class="feature-list_header">Font Awesome</em></h3>
+            <p><i class="icon-coffee"></i> <i class="icon-beer"></i> <i class="icon-fighter-jet"></i></p>
+        </li>
+
+    </ul><!-- END .feature-list -->
+
+</div><!-- END .wrapper -->
+
+<!--
+    ============
+    BODY SCRIPTS
+    ============
+    The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
+    specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
+-->
+
+<script src="static/js/main.min.js"></script>
+
+</body>
+
+</html>

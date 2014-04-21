@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Capital Framework
+   Master LESS File
+   ========================================================================== */
+
+// @import Normalize before all other LESS/CSS
+@import (less) "../../vendor/normalize-css/normalize.css";
+@import (less) "../../vendor/normalize-legacy-addon/normalize-legacy-addon.css";
+
+// @import combined CF component LESS
+@import (less) "../../vendor/cf-concat/cf.less";
+
+//* @import other components' LESS below
+@import (less) "../../vendor/font-awesome/font-awesome.css";
+
+
+/* Project-specific LESS goes below
+   ========================================================================== */
+
+// The following example styles are use on the framework test page (index.html)
+
+body {
+    padding: 2em 1em 3em;
+}
+
+.feature-list,
+.feature-list_item {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.feature-list_item {
+    padding-top: 1em;
+    border-bottom: 1px solid black;
+}
+
+.feature-list_item:first-child {
+    border-top: 1px solid black;
+}
+
+.color-demo {
+    .column( 4 );
+    height: 30px;
+}
+
+.color-demo__green {
+    background-color: @green;
+}
+
+.color-demo__green-midtone {
+    background-color: @green-midtone;
+}
+
+.color-demo__green-tint {
+    background-color: @green-tint;
+}
+
+.col-1 {
+    .column( 1 );
+}
+
+.col-3 {
+    .column( 3 );
+}
+
+.col-4 {
+    .column( 4 );
+}
+
+.col-6 {
+    .column( 6 );
+}
+
+.feature-list_show-col:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1em;
+    background: #FF9E1B;
+}
+
+.typography-demo {
+    width: 60%;
+    border-collapse: collapse;
+
+    th, td {
+        padding: 0.75em;
+        vertical-align: top;
+    }
+    tbody th,
+    tbody td {
+        border-top: 1px solid #BABBBD;
+    }
+    th {
+        color: #75787B;
+        font-family: "Avenir Next Medium", Arial, sans-serif;
+        font-weight: 500;
+        text-align: left;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0;
+    }
+    .spec {
+        color: #75787B;
+        font-size: 0.875em;
+    }
+    .p-sans p {
+        font-family: "Avenir Next", Arial, sans-serif;
+    }
+}
+

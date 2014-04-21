@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-autoprefixer": "~0.6.5",
+    "grunt-banner": "latest",
+    "grunt-bower-task": "~0.3.2",
+    "grunt-cfpb-internal": "git://github.com/cfpb/grunt-cfpb-internal.git",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-compress": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-cssmin": "~0.6.2",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-less": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-gh-pages": "~0.9.1",
+    "grunt-release": "latest",
+    "grunt-string-replace": "latest"
+  }
+}
