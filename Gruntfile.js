@@ -285,22 +285,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Compress: https://github.com/gruntjs/grunt-contrib-compress
-     * 
-     * Creates a ZIP file with the contents of the dist folder.
-     */
-    compress: {
-      dist: {
-        options: {
-          archive: 'capital-framework-dist.zip'
-        },
-        files: [
-          {src: ['dist/**'], dest: '/'}
-        ]
-      }
-    },
-
-    /**
      * grunt-gh-pages: https://github.com/tschaub/grunt-gh-pages
      * 
      * Use Grunt to push to your gh-pages branch hosted on GitHub or any other branch anywhere else
@@ -386,7 +370,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-cfpb-internal');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -404,7 +387,7 @@ module.exports = function(grunt) {
   grunt.registerTask('vendor', ['clean:bowerDir', 'bower:install', 'concat:cf-less']);
   grunt.registerTask('compile', ['less', 'string-replace:vendor', 'autoprefixer', 'concat:bodyScripts']);
   grunt.registerTask('default', ['compile']);
-  grunt.registerTask('dist', ['cssmin', 'uglify', 'usebanner', 'clean:dist', 'copy:dist', 'compress:dist']);
+  grunt.registerTask('dist', ['cssmin', 'uglify', 'usebanner', 'clean:dist', 'copy:dist']);
   grunt.registerTask('test', ['jshint']);
 
 };

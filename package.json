@@ -6,7 +6,6 @@
     "grunt-bower-task": "~0.3.2",
     "grunt-cfpb-internal": "git://github.com/cfpb/grunt-cfpb-internal.git",
     "grunt-contrib-clean": "latest",
-    "grunt-contrib-compress": "latest",
     "grunt-contrib-concat": "latest",
     "grunt-contrib-copy": "latest",
     "grunt-contrib-cssmin": "~0.6.2",
