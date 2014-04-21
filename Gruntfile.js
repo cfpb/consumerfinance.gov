@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     /**
      * Concat: https://github.com/gruntjs/grunt-contrib-concat
      * 
-     * Concatenate cf-* LESS files prior to compiling them.
+     * Concatenate cf-* Less files prior to compiling them.
      */
     concat: {
       'cf-less': {
@@ -58,9 +58,9 @@ module.exports = function(grunt) {
     },
 
     /**
-     * LESS: https://github.com/gruntjs/grunt-contrib-less
+     * Less: https://github.com/gruntjs/grunt-contrib-less
      * 
-     * Compile LESS files to CSS.
+     * Compile Less files to CSS.
      */
     less: {
       main: {
