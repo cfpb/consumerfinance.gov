@@ -358,6 +358,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: ['Gruntfile.js', 'src/static/css/*.less', '<%= uglify.bodyScripts.src %>'],
         tasks: ['default']
+      },
+      css: {
+        files: ['src/*.html', 'src/static/css/*.less'],
+        tasks: ['cssdev']
       }
     }
   });
@@ -389,5 +393,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('dist', ['cssmin', 'uglify', 'usebanner', 'clean:dist', 'copy:dist']);
   grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'cssmin']);
 
 };
