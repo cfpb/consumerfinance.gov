@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     bower: {
       install: {
         options: {
-          targetDir: './src/vendor/',
+          targetDir: './vendor/',
           install: true,
           verbose: true,
           cleanBowerDir: true,
@@ -44,16 +44,16 @@ module.exports = function(grunt) {
      */
     concat: {
       'cf-less': {
-        src: ['src/vendor/cf-*/*.less'],
-        dest: 'src/vendor/cf-concat/cf.less',
+        src: ['vendor/cf-*/*.less'],
+        dest: 'vendor/cf-concat/cf.less',
       },
       bodyScripts: {
         src: [
-          'src/vendor/jquery/jquery.js',
-          'src/vendor/cf-*/*.js',
-          'src/static/js/app.js'
+          'vendor/jquery/jquery.js',
+          'vendor/cf-*/*.js',
+          'static/js/app.js'
         ],
-        dest: 'src/static/js/main.js'
+        dest: 'static/js/main.js'
       }
     },
 
@@ -65,19 +65,19 @@ module.exports = function(grunt) {
     less: {
       main: {
         options: {
-          paths: grunt.file.expand('src/vendor/**/'),
+          paths: grunt.file.expand('vendor/**/'),
         },
         files: {
-          'src/static/css/main.css': ['src/static/css/main.less']
+          'static/css/main.css': ['static/css/main.less']
         }
       },
       ie8: {
         options: {
           banner: '<%= banner.cfpb %>',
-          paths: ['src/static'],
+          paths: ['static'],
         },
         files: {
-          'dist/static/css/ie8.css': ['src/static/css/ie/ie8.less']
+          'static/css/ie8.css': ['static/css/ie/ie8.less']
         }
       }
     },
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
     'string-replace': {
       vendor: {
         files: {
-          'src/static/css/': ['src/static/css/main.css']
+          'static/css/': ['static/css/main.css']
         },
         options: {
           replacements: [{
@@ -155,9 +155,9 @@ module.exports = function(grunt) {
         map: false
       },
       multiple_files: {
-        // Prefix all CSS files found in `src/static/css` and overwrite.
+        // Prefix all CSS files found in `static/css` and overwrite.
         expand: true,
-        src: 'src/static/css/*.css'
+        src: 'static/css/*.css'
       },
     },
 
@@ -173,12 +173,12 @@ module.exports = function(grunt) {
         preserveComments: 'some'
       },
       // headScripts: {
-      //   src: 'src/vendor/html5shiv/html5shiv-printshiv.js',
-      //   dest: 'src/static/js/html5shiv-printshiv.js'
+      //   src: 'vendor/html5shiv/html5shiv-printshiv.js',
+      //   dest: 'static/js/html5shiv-printshiv.js'
       // },
       bodyScripts: {
-        src: ['src/static/js/main.js'],
-        dest: 'src/static/js/main.min.js'
+        src: ['static/js/main.js'],
+        dest: 'static/js/main.min.js'
       }
     },
 
@@ -215,7 +215,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: [ 'src/static/css/*.min.css', 'src/static/js/*.min.js' ]
+          src: [ 'static/css/*.min.css', 'static/js/*.min.js' ]
         }
       }
     },
@@ -228,22 +228,12 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         options: {
-          //root: '/src/'
+          //root: '/'
         },
         files: {
-          'src/static/css/main.min.css': ['src/static/css/main.css'],
+          'static/css/main.min.css': ['static/css/main.css'],
         }
       }
-    },
-
-    /**
-     * Clean: https://github.com/gruntjs/grunt-contrib-clean
-     *
-     * Clear files and folders.
-     */
-    clean: {
-      bowerDir: ['bower_components'],
-      dist: ['dist/**/*', '!dist/.git/']
     },
 
     /**
@@ -252,48 +242,20 @@ module.exports = function(grunt) {
      * Copy files and folders.
      */
     copy: {
-      dist: {
+      vendor: {
         files:
         [
           {
             expand: true,
-            cwd: 'src/',
+            cwd: '',
             src: [
-
-              // Bring over everything in src/
-              '**',
-
-              // Except...
-
-              // Don't bring over everything in static/
-              '!static/**',
-              // Only include minified assets in css/ and js/
-              'static/css/*.min.css',
-              'static/js/*.min.js',
-              'static/fonts/**',
-
-              // Exclude all vendor files because a lot will get concatenated
-              '!vendor/**',
               // Only include vendor files that we use independently
-              'vendor/html5shiv/html5shiv-printshiv.js'
-
+              'vendor/html5shiv/html5shiv-printshiv.min.js'
             ],
-            dest: 'dist/'
+            dest: 'static'
           }
         ]
       }
-    },
-
-    /**
-     * grunt-gh-pages: https://github.com/tschaub/grunt-gh-pages
-     * 
-     * Use Grunt to push to your gh-pages branch hosted on GitHub or any other branch anywhere else
-     */
-    'gh-pages': {
-      options: {
-        base: 'dist'
-      },
-      src: ['**']
     },
 
     /**
@@ -330,7 +292,7 @@ module.exports = function(grunt) {
           EventEmitter: true
         }
       },
-      all: ['src/static/js/main.js']
+      all: ['static/js/main.js']
     },
 
     /**
@@ -356,11 +318,11 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', 'src/static/css/*.less', '<%= uglify.bodyScripts.src %>'],
+        files: ['Gruntfile.js', 'static/css/*.less', '<%= uglify.bodyScripts.src %>'],
         tasks: ['default']
       },
       css: {
-        files: ['src/*.html', 'src/static/css/*.less'],
+        files: ['static/css/*.less'],
         tasks: ['cssdev']
       }
     }
@@ -373,7 +335,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-banner');
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-cfpb-internal');
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -383,16 +344,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-release');
   grunt.loadNpmTasks('grunt-string-replace');
-  grunt.loadNpmTasks('grunt-gh-pages');
 
   /**
    * Create custom task aliases and combinations
    */
-  grunt.registerTask('vendor', ['clean:bowerDir', 'bower:install', 'concat:cf-less']);
-  grunt.registerTask('compile', ['less', 'string-replace:vendor', 'autoprefixer', 'concat:bodyScripts']);
-  grunt.registerTask('default', ['compile']);
-  grunt.registerTask('dist', ['cssmin', 'uglify', 'usebanner', 'clean:dist', 'copy:dist']);
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('vendor', ['bower:install', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'cssmin']);
+  grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner']);
+  grunt.registerTask('default', ['cssdev', 'string-replace:vendor', 'jsdev', 'copy:vendor']);
+  grunt.registerTask('test', ['jshint']);
 
 };
