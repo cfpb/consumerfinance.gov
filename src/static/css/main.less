@@ -1,112 +1,64 @@
 /* ==========================================================================
-   Capital Framework
-   Master LESS File
+   cfgov-refresh
+   Master Less File
    ========================================================================== */
 
-// @import Normalize before all other LESS/CSS
+// @import Normalize before all other Less/CSS
 @import (less) "../../vendor/normalize-css/normalize.css";
 @import (less) "../../vendor/normalize-legacy-addon/normalize-legacy-addon.css";
 
-// @import combined CF component LESS
+// @import combined CF component Less
 @import (less) "../../vendor/cf-concat/cf.less";
 
-//* @import other components' LESS below
+//* @import other components' Less below
 @import (less) "../../vendor/font-awesome/font-awesome.css";
 
 
-/* Project-specific LESS goes below
+/* Project-specific Less goes below
    ========================================================================== */
 
-// The following example styles are use on the framework test page (index.html)
+.demo-banner {
+    padding: 0.5em 1em;
+    margin-bottom: 1em;
+    background: @gray-20;
+    .webfont-regular;
 
-body {
-    padding: 2em 1em 3em;
-}
-
-.feature-list,
-.feature-list_item {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-.feature-list_item {
-    padding-top: 1em;
-    border-bottom: 1px solid black;
-}
-
-.feature-list_item:first-child {
-    border-top: 1px solid black;
-}
-
-.color-demo {
-    .column( 4 );
-    height: 30px;
-}
-
-.color-demo__green {
-    background-color: @green;
-}
-
-.color-demo__green-midtone {
-    background-color: @green-midtone;
-}
-
-.color-demo__green-tint {
-    background-color: @green-tint;
-}
-
-.col-1 {
-    .column( 1 );
-}
-
-.col-3 {
-    .column( 3 );
-}
-
-.col-4 {
-    .column( 4 );
-}
-
-.col-6 {
-    .column( 6 );
-}
-
-.feature-list_show-col:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 1em;
-    background: #FF9E1B;
-}
-
-.typography-demo {
-    width: 60%;
-    border-collapse: collapse;
-
-    th, td {
-        padding: 0.75em;
-        vertical-align: top;
-    }
-    tbody th,
-    tbody td {
-        border-top: 1px solid #BABBBD;
-    }
-    th {
-        color: #75787B;
-        font-family: "Avenir Next Medium", Arial, sans-serif;
-        font-weight: 500;
-        text-align: left;
-    }
-    h1, h2, h3, h4, h5, h6 {
-        margin-bottom: 0;
-    }
-    .spec {
-        color: #75787B;
-        font-size: 0.875em;
-    }
-    .p-sans p {
-        font-family: "Avenir Next", Arial, sans-serif;
+    &_back-link {
+        margin-right: 1em;
     }
 }
 
+
+.content {
+    .column(8);
+    padding: 2em 0;
+    margin-left: -(@gutter-width / 2);
+}
+.sidebar {
+    .column(4);
+    margin-right: -(@gutter-width / 2);
+    background: @gray-20;
+    // Need to bring in bleeding sidebar treatment from CFPB Open Tech
+}
+
+
+// STUFF THAT SHOULD PROBABLY MOVE TO CF-LAYOUT
+
+.wrapper {
+    .wrapper();
+}
+.header {
+    border-bottom: 10px solid @green;
+}
+.hero {
+    padding: 1em 2em;
+    background: @gray-10;
+
+    > h1 {
+        margin: 0;
+    }
+}
+.footer {
+    padding: 1.5em 0;
+    background: @gray-10;
+}
