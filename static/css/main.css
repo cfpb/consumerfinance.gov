@@ -1,0 +1,3723 @@
+/* ==========================================================================
+   cfgov-refresh
+   Master Less File
+   ========================================================================== */
+/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+  font-family: sans-serif;
+  /* 1 */
+
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+
+}
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0;
+}
+/* HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  /* 1 */
+
+  vertical-align: baseline;
+  /* 2 */
+
+}
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none;
+}
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background: transparent;
+}
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active,
+a:hover {
+  outline: 0;
+}
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold;
+}
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+dfn {
+  font-style: italic;
+}
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000;
+}
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+img {
+  border: 0;
+}
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+svg:not(:root) {
+  overflow: hidden;
+}
+/* Grouping content
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+figure {
+  margin: 1em 40px;
+}
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+/**
+ * Contain overflow in all browsers.
+ */
+pre {
+  overflow: auto;
+}
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+/* Forms
+   ========================================================================== */
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  /* 1 */
+
+  font: inherit;
+  /* 2 */
+
+  margin: 0;
+  /* 3 */
+
+}
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+button {
+  overflow: visible;
+}
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+button,
+select {
+  text-transform: none;
+}
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+
+  cursor: pointer;
+  /* 3 */
+
+}
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+input {
+  line-height: normal;
+}
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* 1 */
+
+  padding: 0;
+  /* 2 */
+
+}
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+
+  box-sizing: content-box;
+}
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0;
+  /* 1 */
+
+  padding: 0;
+  /* 2 */
+
+}
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+textarea {
+  overflow: auto;
+}
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+optgroup {
+  font-weight: bold;
+}
+/* Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+/*! normalize-legacy-addon | MIT License | https://github.com/cfpb/normalize-legacy-addon */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/*
+ * Corrects `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+audio,
+canvas,
+video {
+  *display: inline;
+  *zoom: 1;
+}
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/* 
+ * Corrects text resizing oddly in IE 6/7 when body `font-size` is set using
+ * `em` units.
+*/
+html {
+  font-size: 100%;
+}
+/*
+ * Addresses `font-family` inconsistency between `textarea` and other form
+ * elements.
+ */
+html,
+button,
+input,
+select,
+textarea {
+  font-family: sans-serif;
+}
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/*
+ * Addresses font sizes and margins set differently in IE 6/7.
+ * Addresses font sizes within `section` and `article` in Firefox 4+, Safari 5,
+ * and Chrome.
+ */
+h1 {
+  margin: 0.67em 0;
+}
+h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+h3 {
+  font-size: 1.17em;
+  margin: 1em 0;
+}
+h4 {
+  font-size: 1em;
+  margin: 1.33em 0;
+}
+h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0;
+}
+h6 {
+  font-size: 0.75em;
+  margin: 2.33em 0;
+}
+blockquote {
+  margin: 1em 40px;
+}
+/*
+ * Addresses margins set differently in IE 6/7.
+ */
+p,
+pre {
+  margin: 1em 0;
+}
+/*
+ * Corrects font family set oddly in IE 6, Safari 4/5, and Chrome.
+ */
+code,
+kbd,
+pre,
+samp {
+  _font-family: 'courier new', monospace;
+}
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+pre {
+  white-space: pre;
+  word-wrap: break-word;
+}
+/*
+ * Addresses CSS quotes not supported in IE 6/7.
+ */
+q {
+  quotes: none;
+}
+/*
+ * Addresses `quotes` property not supported in Safari 4.
+ */
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+/*
+ * Addresses margins set differently in IE 6/7.
+ */
+dl,
+menu,
+ol,
+ul {
+  margin: 1em 0;
+}
+dd {
+  margin: 0 0 0 40px;
+}
+/*
+ * Addresses paddings set differently in IE 6/7.
+ */
+menu,
+ol,
+ul {
+  padding: 0 0 0 40px;
+}
+/*
+ * Corrects list images handled incorrectly in IE 7.
+ */
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none;
+}
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/*
+ * Improves image quality when scaled in IE 7.
+ */
+img {
+  -ms-interpolation-mode: bicubic;
+}
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/*
+ * Corrects margin displayed oddly in IE 6/7.
+ */
+form {
+  margin: 0;
+}
+/*
+ * 1. Corrects color not being inherited in IE 6/7/8/9.
+ * 2. Corrects text not wrapping in Firefox 3.
+ * 3. Corrects alignment displayed oddly in IE 6/7.
+ */
+legend {
+  border: 0;
+  /* 1 */
+
+  white-space: normal;
+  /* 2 */
+
+  *margin-left: -7px;
+  /* 3 */
+
+}
+/*
+ * Improves appearance and consistency in all browsers.
+ */
+button,
+input,
+select,
+textarea {
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+/*
+ * Removes inner spacing in IE 7 without affecting normal text inputs.
+ * Known issue: inner spacing remains in IE 6.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  *overflow: visible;
+}
+/*
+ * Removes excess padding in IE 7.
+ * Known issue: excess padding remains in IE 6.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  *height: 13px;
+  *width: 13px;
+}
+/* ==========================================================================
+   Capital Framework
+   Button Styling
+   ========================================================================== */
+/* topdoc
+    name: LESS notes
+    family: cf-buttons
+    patterns:
+    - name: Variables
+      codenotes:
+        - "@btn-font-size: 14px;"
+        - "@btn-v-padding: 9px;"
+        - "@btn-v-padding-modifier-ie: .8;"
+      notes:
+        - "@btn-v-padding-modifier-ie is used to fix the vertical padding bug in IE for <button>'s and <inputs>'s
+          across various .btn styles. We should revisit this after adding normalize.css to see if this is still needed."
+    tags:
+    - cf-buttons
+    - less
+*/
+/* topdoc
+    name: Default button
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn">Anchor Tag</a>
+        <button class="btn">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn">
+    - name: Hovered/focused state
+      markup: |
+        <a href="#" class="btn hover">Anchor Tag</a>
+        <button class="btn hover">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn hover">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn active">Anchor Tag</a>
+        <button class="btn active">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn active">
+    tags:
+    - cf-buttons
+*/
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0.6428571428571429em 1em;
+  border: 0;
+  border-radius: 0.2857142857142857em;
+  margin: 0;
+  vertical-align: middle;
+  background-color: #0072ce;
+  color: #ffffff;
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.875em;
+  line-height: normal;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-transition: .1s;
+  transition: .1s;
+  -webkit-appearance: none;
+}
+.btn:hover,
+.btn:focus,
+.btn.hover {
+  background-color: #328ed8;
+}
+.btn:active,
+.btn.active {
+  background-color: #33578e;
+}
+.btn + .btn {
+  margin-left: 0.42857142857142855em;
+}
+button.btn::-moz-focus-inner,
+input.btn::-moz-focus-inner {
+  border: 0;
+}
+.lt-ie8 {
+  background: url(null) fixed no-repeat;
+}
+.lt-ie8 button.btn,
+.lt-ie8 input.btn {
+  overflow: visible;
+  padding-top: 0.5142857142857143em;
+  padding-bottom: 0.5142857142857143em;
+}
+/* topdoc
+    name: Secondary button
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn btn-secondary">Anchor Tag</a>
+        <button class="btn btn-secondary">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-secondary">
+    - name: Hovered/focused state
+      markup: |
+        <a href="#" class="btn btn-secondary hover">Anchor Tag</a>
+        <button class="btn btn-secondary hover">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-secondary hover">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn btn-secondary active">Anchor Tag</a>
+        <button class="btn btn-secondary active">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-secondary active">
+    tags:
+    - cf-buttons
+*/
+.btn-secondary,
+.btn-secondary:link,
+.btn-secondary:visited {
+  background-color: #75787b;
+  color: #ffffff;
+}
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary.hover {
+  background-color: #919395;
+}
+.btn-secondary:active,
+.btn-secondary.active {
+  background-color: #43484e;
+}
+/* topdoc
+    name: Destructive action button
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn btn-warning">Anchor Tag</a>
+        <button class="btn btn-warning">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-warning">
+    - name: Hovered/focused state
+      markup: |
+        <a href="#" class="btn btn-warning hover">Anchor Tag</a>
+        <button class="btn btn-warning hover">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-warning hover">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn btn-warning active">Anchor Tag</a>
+        <button class="btn btn-warning active">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-warning active">
+    tags:
+    - cf-buttons
+*/
+.btn-warning,
+.btn-warning:link,
+.btn-warning:visited {
+  background-color: #d12124;
+  color: #ffffff;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning.hover {
+  background-color: #da6750;
+}
+.btn-warning:active,
+.btn-warning.active {
+  background-color: #9c301b;
+}
+/* topdoc
+    name: Disabled button
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default/hovered/focused/active state
+      markup: |
+        <a href="#" class="btn btn-disabled">Anchor Tag</a>
+        <button class="btn btn-disabled">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-disabled">
+    tags:
+    - cf-buttons
+*/
+.btn-disabled,
+.btn-disabled:link,
+.btn-disabled:visited,
+.btn-disabled:hover,
+.btn-disabled.hover,
+.btn-disabled:focus,
+.btn-disabled:active,
+.btn-disabled.active {
+  background-color: #e3e4e5;
+  color: #75787b;
+  cursor: default;
+  cursor: not-allowed;
+}
+/* topdoc
+    name: Super button
+    family: cf-buttons
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn btn-super">Anchor Tag</a>
+        <button class="btn btn-super">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-super">
+    - name: Hovered/focused state
+      markup: |
+        <a href="#" class="btn btn-super hover">Anchor Tag</a>
+        <button class="btn btn-super hover">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-super hover">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn btn-super active">Anchor Tag</a>
+        <button class="btn btn-super active">Button Tag</button>
+        <input type="submit" value="Input Tag" class="btn btn-super active">
+    tags:
+    - cf-buttons
+*/
+.btn-super,
+.btn-super:link,
+.btn-super:visited {
+  padding: 0.8333333333333334em 1.6666666666666667em;
+  font-size: 1.125em;
+}
+.btn-super + .btn-super {
+  margin-left: 0.3333333333333333em;
+}
+.lt-ie8 button.btn-super,
+.lt-ie8 input.btn-super {
+  padding-top: 0.6666666666666666em;
+  padding-bottom: 0.6666666666666666em;
+}
+/* topdoc
+    name: Button with icons
+    family: cf-buttons
+    patterns:
+    - name: Button icon left
+      markup: |
+        <a href="#" class="btn">
+            <i class="btn-icon-left icon-chevron-left"><span class="jekyll-bug"></span></i>
+            Anchor Tag
+        </a>
+        <button class="btn">
+            <i class="btn-icon-left icon-chevron-left"><span class="jekyll-bug"></span></i>
+            Button Tag
+        </button>
+    - name: Button icon right
+      markup: |
+        <a href="#" class="btn">
+            Anchor Tag
+            <i class="btn-icon-right icon-chevron-right"><span class="jekyll-bug"></span></i>
+        </a>
+        <button class="btn">
+            Button Tag
+            <i class="btn-icon-right icon-chevron-right"><span class="jekyll-bug"></span></i>
+        </button>
+    - name: Just an icon
+      markup: |
+        <a href="#" class="btn">
+            <i class="icon-search"><span class="jekyll-bug"></span></i>
+        </a>
+        <button class="btn">
+            <i class="icon-search"><span class="jekyll-bug"></span></i>
+        </button>
+    tags:
+    - cf-buttons
+    - fj-icons
+*/
+.btn [class^="icon-"],
+.btn [class*="icon-"] {
+  line-height: 1;
+}
+.btn-icon-left {
+  padding: 0 0.75em 0 0;
+  border-right: 1px solid #ffffff;
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+  margin: 0 0.5em 0 0;
+}
+.btn-disabled .btn-icon-left {
+  border-right-color: #babbbd;
+}
+.btn-icon-right {
+  padding: 0 0 0 0.75em;
+  border-right: 0;
+  border-left: 1px solid #ffffff;
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  margin: 0 0 0 0.5em;
+}
+.btn-disabled .btn-icon-right {
+  border-left-color: #babbbd;
+}
+/* topdoc
+    name: Button group
+    family: cf-buttons
+    patterns:
+    - name: Default buttons in a button group
+      markup: |
+        <div class="btn-group">
+            <a href="#" class="btn">Anchor 1</a>
+            <a href="#" class="btn">Anchor 2</a>
+            <a href="#" class="btn">Anchor 3</a>
+        </div><br>
+        <div class="btn-group">
+            <button class="btn">Button 1</button>
+            <button class="btn">Button 2</button>
+            <button class="btn">Button 3</button>
+        </div><br>
+        <div class="btn-group">
+            <input type="button" value="Input 1" class="btn">
+            <input type="button" value="Input 2" class="btn">
+            <input type="button" value="Input 3" class="btn">
+        </div>
+    - name: Super buttons in a button group
+      markup: |
+        <div class="btn-group">
+            <a href="#" class="btn btn-super">Anchor 1</a>
+            <a href="#" class="btn btn-super">Anchor 2</a>
+            <a href="#" class="btn btn-super">Anchor 3</a>
+        </div><br>
+        <div class="btn-group">
+            <button class="btn btn-super">Button 1</button>
+            <button class="btn btn-super">Button 2</button>
+            <button class="btn btn-super">Button 3</button>
+        </div><br>
+        <div class="btn-group">
+            <input type="button" value="Input 1" class="btn btn-super">
+            <input type="button" value="Input 2" class="btn btn-super">
+            <input type="button" value="Input 3" class="btn btn-super">
+        </div>
+    tags:
+    - cf-buttons
+*/
+.btn-group .btn:first-child:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.btn-group .btn + .btn {
+  margin-left: -0.21428571428571427em;
+}
+.btn-group .btn + .btn:not(:last-child) {
+  border-radius: 0;
+}
+.btn-group .btn:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.btn-group .btn-super + .btn-super {
+  margin-left: -0.16666666666666666em;
+}
+/* topdoc
+    name: Compound button
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default button style
+      markup: |
+        <div class="btn-group">
+            <a href="#" class="btn">Anchor</a>
+            <a href="#" class="btn btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
+        </div><br>
+        <div class="btn-group">
+            <button class="btn">Button</button>
+            <button class="btn btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
+        </div><br>
+    - name: Secondary button style
+      markup: |
+        <div class="btn-group">
+            <a href="#" class="btn btn-secondary">Anchor</a>
+            <a href="#" class="btn btn-secondary btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
+        </div><br>
+        <div class="btn-group">
+            <button class="btn btn-secondary">Button</button>
+            <button class="btn btn-secondary btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
+        </div>
+    - name: Super button style
+      markup: |
+        <div class="btn-group">
+            <a href="#" class="btn btn-super">Anchor</a>
+            <a href="#" class="btn btn-super btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
+        </div><br>
+        <div class="btn-group">
+            <button class="btn btn-super">Button</button>
+            <button class="btn btn-super btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
+        </div>
+    tags:
+    - cf-buttons
+    - fj-icons
+*/
+.btn-compound-action,
+.btn-compound-action:link,
+.btn-compound-action:visited {
+  background-color: #328ed8;
+}
+.btn-compound-action:hover,
+.btn-compound-action:focus,
+.btn-compound-action.hover {
+  background-color: #0072ce;
+}
+.btn-compound-action.btn-secondary {
+  background-color: #919395;
+}
+.btn-compound-action.btn-secondary:hover,
+.btn-compound-action.btn-secondary:focus,
+.btn-compound-action.btn-secondary.hover {
+  background-color: #75787b;
+}
+.btn-compound-action.btn-super {
+  padding-left: 1.2222222222222223em;
+  padding-right: 1.2222222222222223em;
+}
+/* topdoc
+    name: Button link
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn btn-link">Anchor Tag</a>
+        <button class="btn btn-link">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link">
+    - name: Hovered state
+      markup: |
+        <a href="#" class="btn btn-link hover">Anchor Tag</a>
+        <button class="btn btn-link hover">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link hover">
+    - name: Focused state
+      markup: |
+        <a href="#" class="btn btn-link focus">Anchor Tag</a>
+        <button class="btn btn-link focus">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link focus">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn btn-link active">Anchor Tag</a>
+        <button class="btn btn-link active">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link active">
+    tags:
+    - cf-buttons
+*/
+.btn-link,
+.btn-link:link,
+.btn-link:visited {
+  padding: 0;
+  border-bottom: 1px dotted #0072ce;
+  border-radius: 0;
+  margin: 0.6428571428571429em 0;
+  background-color: transparent;
+  color: #0072ce;
+}
+.btn-link:hover,
+.btn-link.hover {
+  border-bottom: 1px solid #7fb8e6;
+  background-color: transparent;
+  color: #7fb8e6;
+}
+.btn-link:focus,
+.btn-link.focus {
+  border-bottom-style: solid;
+  background-color: transparent;
+  outline: thin dotted;
+}
+.btn-link:active,
+.btn-link.active {
+  border-bottom: 1px solid #002d72;
+  background-color: transparent;
+  color: #002d72;
+}
+.lt-ie8 button.btn-link,
+.lt-ie8 input.btn-link {
+  padding: 0;
+}
+/* topdoc
+    name: Destructive action button link
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn btn-link btn-warning">Anchor Tag</a>
+        <button class="btn btn-link btn-warning">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link btn-warning">
+    - name: Hovered state
+      markup: |
+        <a href="#" class="btn btn-link btn-warning hover">Anchor Tag</a>
+        <button class="btn btn-link btn-warning hover">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link btn-warning hover">
+    - name: Focused state
+      markup: |
+        <a href="#" class="btn btn-link btn-warning focus">Anchor Tag</a>
+        <button class="btn btn-link btn-warning focus">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link btn-warning focus">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn btn-link btn-warning active">Anchor Tag</a>
+        <button class="btn btn-link btn-warning active">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn-link btn-warning active">
+    tags:
+    - cf-buttons
+*/
+.btn-link.btn-warning,
+.btn-link.btn-warning:link,
+.btn-link.btn-warning:visited {
+  border-bottom-color: #d12124;
+  background-color: transparent;
+  color: #d12124;
+}
+.btn-link.btn-warning:hover,
+.btn-link.btn-warning.hover {
+  border-bottom-color: #da6750;
+  color: #da6750;
+}
+.btn-link.btn-warning:focus,
+.btn-link.btn-warning.focus {
+  border-bottom-color: #da6750;
+  outline: thin dotted;
+}
+.btn-link.btn-warning:active,
+.btn-link.btn-warning.active {
+  border-bottom-color: #9c301b;
+  color: #9c301b;
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   Capital Framework
+   Expandable Styling
+   ========================================================================== */
+/* topdoc
+    name: Default expandable
+    family: cf-expandables
+    patterns:
+    - name: Default state
+      markup: |
+        <div class="expandable">
+            <header class="expandable-header">
+                Expandable Header
+                <a href="" class="expandable-button">
+                    <span class="expandable-text">Show</span> <i class="icon-plus-sign"></i>
+                </a>
+            </header>
+            <div class="expandable-content expandable-hidden" style="display: none;">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+    tags:
+    - cf-expandables
+*/
+.expandable {
+  margin-bottom: 1.375em;
+  background: #f1f2f2;
+}
+.expandable:hover,
+.expandable .open {
+  background: #e3e4e5;
+}
+.expandable-hidden {
+  display: none;
+}
+.expandable-header {
+  padding: 0.625em 0.75em;
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  cursor: pointer;
+}
+.expandable-button,
+.expandable-button:link,
+.expandable-button:visited {
+  margin: 0;
+  border-width: 0;
+  float: right;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.875em;
+  line-height: 1.5714285714285714;
+}
+.expandable-content {
+  padding: 0 0.75em 0.25em;
+}
+.open .icon-plus-sign:before {
+  content: "\f056";
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   Capital Framework
+   Form Element Styling
+   ========================================================================== */
+/* topdoc
+    name: Form labels
+    family: cf-forms
+    patterns:
+    - name: Default label
+      notes:
+        - "Warning, this pattern is still under development."
+      markup: |
+        <label>I am a form label</label>
+    tags:
+    - cf-forms
+*/
+label {
+  display: block;
+}
+/* topdoc
+    name: Single-line text input
+    notes:
+      - Most other text-based inputs extend styles from here as seen in the CSS to the right.
+    family: cf-forms
+    patterns:
+    - name: Default single-line text input
+      markup: |
+        <input placeholder="placeholder text" type="text" value="">
+    - name: Focused state
+      markup: |
+        <input class="focus" placeholder="placeholder text" type="text" value="">
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <input class="error" placeholder="placeholder text" type="text" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <input class="success" placeholder="placeholder text" type="text" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea {
+  display: inline-block;
+  width: 85%;
+  margin: 0;
+  padding: 0.25em;
+  font-family: Arial, sans-serif;
+  font-size: 1em;
+  background: #ffffff;
+  border: 1px solid #75787b;
+  border-radius: 0;
+  vertical-align: top;
+  -webkit-appearance: none;
+  -webkit-user-modify: read-write-plaintext-only;
+}
+input[type="text"]:focus,
+input[type="text"].focus,
+input[type="search"]:focus,
+input[type="search"].focus,
+input[type="email"]:focus,
+input[type="email"].focus,
+input[type="url"]:focus,
+input[type="url"].focus,
+input[type="tel"]:focus,
+input[type="tel"].focus,
+input[type="number"]:focus,
+input[type="number"].focus,
+textarea:focus,
+textarea.focus {
+  border: 1px solid #0072ce;
+  border-color: #0072ce;
+  outline: 1px solid #0072ce;
+  outline-offset: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+input[type="text"].error,
+input[type="search"].error,
+input[type="email"].error,
+input[type="url"].error,
+input[type="tel"].error,
+input[type="number"].error,
+textarea.error {
+  border: 1px solid #d12124;
+  outline: 1px solid #d12124;
+}
+input[type="text"].success,
+input[type="search"].success,
+input[type="email"].success,
+input[type="url"].success,
+input[type="tel"].success,
+input[type="number"].success,
+textarea.success {
+  border: 1px solid #2cb34a;
+  outline: 1px solid #2cb34a;
+}
+/* topdoc
+    name: Single-line search input
+    family: cf-forms
+    patterns:
+    - name: Default single-line search input
+      markup: |
+        <input placeholder="placeholder search text" type="search" value="">
+    - name: Focused state
+      markup: |
+        <input class="focus" placeholder="placeholder search text" type="search" value="">
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <input class="error" placeholder="placeholder search text" type="search" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <input class="success" placeholder="placeholder search text" type="search" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+/* NOTE: all input[type="search"] styles extend input[type="text"]. */
+/* topdoc
+    name: Single-line email input
+    family: cf-forms
+    patterns:
+    - name: Default single-line email input
+      markup: |
+        <input placeholder="placeholder email text" type="email" value="">
+    - name: Focused state
+      markup: |
+        <input class="focus" placeholder="placeholder email text" type="email" value="">
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <input class="error" placeholder="placeholder email text" type="email" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <input class="success" placeholder="placeholder email text" type="email" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+/* NOTE: all input[type="email"] styles extend input[type="text"]. */
+/* topdoc
+    name: Single-line url input
+    family: cf-forms
+    patterns:
+    - name: Default single-line url input
+      markup: |
+        <input placeholder="placeholder url text" type="url" value="">
+    - name: Focused state
+      markup: |
+        <input class="focus" placeholder="placeholder url text" type="url" value="">
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <input class="error" placeholder="placeholder url text" type="url" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <input class="success" placeholder="placeholder url text" type="url" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+/* NOTE: all input[type="url"] styles extend input[type="text"]. */
+/* topdoc
+    name: Single-line tel input
+    family: cf-forms
+    patterns:
+    - name: Default single-line tel input
+      markup: |
+        <input placeholder="placeholder tel text" type="tel" value="">
+    - name: Focused state
+      markup: |
+        <input class="focus" placeholder="placeholder tel text" type="tel" value="">
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <input class="error" placeholder="placeholder tel text" type="tel" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <input class="success" placeholder="placeholder tel text" type="tel" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+/* NOTE: all input[type="tel"] styles extend input[type="text"]. */
+/* topdoc
+    name: Single-line number input
+    family: cf-forms
+    patterns:
+    - name: Default single-line number input
+      markup: |
+        <input placeholder="placeholder number text" type="number" value="">
+    - name: Focused state
+      markup: |
+        <input class="focus" placeholder="placeholder number text" type="number" value="">
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <input class="error" placeholder="placeholder number text" type="number" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <input class="success" placeholder="placeholder number text" type="number" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+/* NOTE: all input[type="number"] styles extend input[type="text"]. */
+/* topdoc
+    name: Multiline textarea
+    family: cf-forms
+    patterns:
+    - name: Default multi-line text box
+      markup: |
+        <textarea>Example entry</textarea>
+    - name: Focused multi-line text box
+      markup: |
+        <textarea class="focus">Example entry</textarea>
+    - name: Multi-line text box in error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <textarea class="error">Invalid input</textarea>
+        <i class="cf-form_input-icon icon-remove-sign" role="alert"><span class="jekyll-bug"></span></i>
+    - name: Multi-line text box in success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <textarea class="success">Validated input</textarea>
+        <i class="cf-form_input-icon icon-ok-sign"><span class="jekyll-bug"></span></i>
+    tags:
+    - cf-forms
+*/
+/* NOTE: all textarea styles extend input[type="text"]. */
+textarea {
+  overflow: auto;
+}
+/* topdoc
+    name: Form icons
+    family: cf-forms
+    patterns:
+    - name: The .jekyll-bug element
+      codenotes:
+        - |
+          <i class="cf-form_input-icon icon-credit-card">
+            <span class="jekyll-bug"></span>
+          </i>
+      notes:
+        - |
+          Adding the .jekyll-bug element inside of an icon is only necessary
+          when using Jekyll as it tends to ignore empty <i> elements.
+    - name: Form input icons
+      notes:
+        - "Form input icons add small positioning tweaks to Font Awesome icons."
+        - "They are meant to be positioned after a form input."
+      markup: |
+        <input type="text" value="">
+        <i class="cf-form_input-icon icon-credit-card">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Form input error icon
+      notes:
+        - |
+          The icon must be placed directly after the form input in the markup
+          and the input must have the class of "error".
+        - 'Use the alert role to mark invalid fields: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role'
+      markup: |
+        <input class="error" placeholder="placeholder search text" type="search" value="Invalid input">
+        <i class="cf-form_input-icon icon-remove-sign" role="alert">
+          <span class="jekyll-bug"></span>
+        </i>
+    - name: Form input success icon
+      notes:
+        - |
+          The icon must be placed directly after the form input in the markup
+          and the input must have the class of "success".
+      markup: |
+        <input class="success" placeholder="placeholder search text" type="search" value="Validated input">
+        <i class="cf-form_input-icon icon-ok-sign">
+          <span class="jekyll-bug"></span>
+        </i>
+    tags:
+    - cf-forms
+*/
+.cf-form_input-icon {
+  position: relative;
+  top: 0.15em;
+  margin-left: 0.2em;
+  font-size: 1.25em;
+}
+.error + .cf-form_input-icon {
+  color: #d12124;
+}
+.success + .cf-form_input-icon {
+  color: #2cb34a;
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   Capital Framework
+   Grid mixins
+   ========================================================================== */
+/* topdoc
+    name: "Global Less variables"
+    notes:
+      - "The following variables are default values used in creating grids.
+        They can be overridden in your application's stylesheet.
+        Most mixins allows you to override these values by passing them arguments."
+    family: "cf-grid"
+    patterns:
+    - codenotes:
+        - "@wrapper-width: 1200px;"
+      notes:
+        - "The grid's maximum width in px."
+    - codenotes:
+      - "@gutter-width: 30px;"
+      notes:
+        - "The fixed width between columns."
+    - codenotes:
+      - "@total-columns: 12;"
+      notes:
+        - "The total number of columns used in calculating column widths."
+    - codenotes:
+      - "@debug"
+      notes:
+        - "Gives column blocks a background color if set to true."
+    tags:
+    - "cf-grid"
+*/
+/* topdoc
+    name: "Wrapper"
+    notes:
+      - "Wrappers are centered containers with a max-width and fixed gutters
+        that match the gutter widths of columns."
+      - "If you want IE 6/7 support, ensure boxsizing.htc is in the same dir as your stylesheet.
+        Read more: https://github.com/Schepp/box-sizing-polyfill."
+    family: "cf-grid"
+    patterns:
+    - name: "Less mixin"
+      codenotes:
+        - ".wrapper( @wrapper-width: @wrapper-width )"
+      notes:
+        - "You can create wrappers with different max-widths by passing a pixel
+          value into the mixin."
+    - name: "Usage"
+      codenotes:
+      - |
+        .main-wrapper {
+          .wrapper();
+        }
+        .wide-wrapper {
+          .wrapper( 1900px );
+        }
+      - |
+        <div class="main-wrapper">
+          This container now has left and right padding and a centered max width.
+        </div>
+        <div class="wide-wrapper">
+          This container is the same except it has a wider max-width.
+        </div>
+    tags:
+    - "cf-grid"
+*/
+/* topdoc
+    name: "Columns"
+    family: "cf-grid"
+    patterns:
+    - name: "Less mixin"
+      codenotes:
+      - ".column( @columns: 1; @total: @total-columns; @prefix: 0; @suffix: 0 )"
+      notes:
+      - "Computes column widths and prefix/suffix padding."
+      - "CSS borders are used for fixed gutters."
+    - name: "Usage"
+      codenotes:
+      - |
+        .main-wrapper {
+          .wrapper();
+        }
+        .half {
+          .column(1, 2);
+        }
+      - |
+        <div class="main-wrapper">
+          <div class="half">I am half of my parent.</div>
+          <div class="half">I am half of my parent.</div>
+        </div>
+    - name: "This is a placeholder for documenting prefix and suffix"
+      codenotes:
+      - ...
+    tags:
+    - "cf-grid"
+*/
+/* topdoc
+    name: "Push and Pull mixins for source ordering"
+    family: "cf-grid"
+    patterns:
+    - codenotes:
+        - ".push( @offset: 1, @total-columns: @total-columns )"
+        - ".pull( @offset: 1, @total-columns: @total-columns )"
+    - name: "Usage"
+      codenotes:
+      - |
+        .first {
+          .column(1, 2);
+          .pull(1)l
+        }
+        .second {
+          .column(1, 2);
+          .push(1)l
+        }
+      - |
+        <div>
+          <div class="second">I am first in the markup but appear after .first.</div>
+          <div class="first">I am second in the markup but appear before .second.</div>
+        </div>
+    tags:
+    - "cf-grid"
+*/
+/* topdoc
+    name: "Nested columns"
+    notes:
+      - "Since all cf-grid columns have left and right gutters you will notice
+        undesireable offsetting when nesting columns.
+        Normally this is removed with complex selectors or by adding classes
+        to the first and last column per 'row'.
+        In cf-grid the way to get around this is by wrapping your columns in a
+        container that utilizes the .nested-col-group() mixin.
+        This mixin uses negative left and right margins to pull the columns back
+        into alignment with parent columns."
+      - "NOTE: Working this way allows you to easily create responsive grids.
+        You are free to control the number of columns per 'row' without having
+        to deal with the first and last columns of each row."
+      - "NOTE: cf-grids does not use 'rows' and there is no row container.
+        To clarify, if you have a 12 column grid and place 24 columns inside
+        of a wrapper cf-grid columns will automaitcally stack into 2 'rows'
+        of 12."
+    family: "cf-grid"
+    patterns:
+    - name: "Less mixin"
+      codenotes:
+      - ".nested-col-group()"
+    - name: "Usage"
+      codenotes:
+      - |
+        .main-wrapper {
+          .wrapper();
+        }
+        .cols {
+          .nested-col-group();
+        }
+        .half {
+          .column(1, 2);
+        }
+      - |
+        <div class="main-wrapper">
+          <div class="half">
+            <div class="cols">
+              <div class="half"></div>
+              <div class="half"></div>
+            </div>
+          </div>
+          <div class="half">
+            <div class="cols">
+              <div class="half"></div>
+              <div class="half"></div>
+            </div>
+          </div>
+        </div>
+    tags:
+    - "cf-grid"
+*/
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   Capital Framework
+   Pagination Styling
+   ========================================================================== */
+/* topdoc
+    name: Pagination
+    family: cf-pagination
+    patterns:
+    - name: Default pagination
+      markup: |
+        <nav class="pagination">
+            <a class="btn pagination_prev" href="#"><i class="btn-icon-left icon-chevron-left"></i> Previous</a>
+            <form class="pagination_form">
+                <label class="pagination_label" for="pagination_current-page">Page</label>
+                <input class="pagination_current-page" id="pagination_current-page" name="pagination_current-page" type="number" min="1" max="149" value="149" />
+                <label class="pagination_label" for="pagination_current-page">of 149</label>
+                <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">Go</button>
+            </form>
+            <a class="btn pagination_next" href="#">Next <i class="btn-icon-right icon-chevron-right"></i></a>
+        </nav>
+    tags:
+    - fj-buttons
+    - fj-forms
+*/
+.pagination {
+  display: block;
+  margin: 0;
+  padding: 0;
+  /* Positions .pagination_next relative to this container */
+
+  position: relative;
+}
+/* On small screens position .pagination_next to the right edge of .pagination */
+.pagination_next {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.pagination_label {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.875em;
+}
+.pagination_form {
+  display: block;
+  padding: 0.25em 1.875em;
+  margin: 1em 0 0 0;
+  background: #E3E4E5;
+  color: #75787B;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+}
+.pagination_current-page {
+  display: inline-block;
+  vertical-align: middle;
+  /* We need enough room for three digits and the number spinners for type="number" inputs */
+
+  width: 3em;
+  /* Resets the padding back to 4px now that the font-size is 14px */
+
+  padding: 0.2857142857142857em;
+  margin: 0 0.2857142857142857em;
+  /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
+
+  font-size: 0.875em;
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  text-align: right;
+}
+.pagination_submit.btn {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 0 1em;
+}
+@media only screen and (min-width: 480px) {
+  .pagination_form {
+    border-radius: 0.2857142857142857em;
+  }
+  .pagination_prev {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .pagination_prev.btn,
+  .pagination_prev.btn:link,
+  .pagination_prev.btn:visited {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .pagination_next.btn,
+  .pagination_next.btn:link,
+  .pagination_next.btn:visited {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   Capital Framework
+   Basic Typography
+   ========================================================================== */
+/* topdoc
+    name: LESS notes
+    family: cf-typography
+    patterns:
+    - name: Size variables
+      codenotes:
+        - "@base-font-size-px: 16px;"
+        - "@base-line-height-px: 22px;"
+        - "@base-line-height: unit(@base-line-height-px / @base-font-size-px);"
+    - name: Webfont mixins
+      codenotes:
+        - ".webfont-regular()"
+        - ".webfont-italic()"
+        - ".webfont-medium()"
+        - ".webfont-demi()"
+    - name: Explicitly set font styles
+      notes:
+        - "Any instances of Avenir Next getting italicized or bolded must be declared explicitly
+          so that it uses the correct webfont and does not fake the style on normal Avenir Next."
+        - "Use the webfont mixins above to make this easy. See the #blockquote styles as an example."
+      markup: |
+       <blockquote cite="http://cfpb.github.io/cf-typography/docs/index.html#webfont-notes">
+         Any instances of Avenir Next getting <em>italic</em><i>ized</i> or <strong>bold</strong><b>ed</b> must be declared explicitly ...
+       </blockquote> 
+    tags:
+    - cf-typography
+*/
+/* topdoc
+    name: Type hierarchy
+    family: cf-typography
+    patterns:
+    - name: Default body type
+      markup: |
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    - name: Heading level 1
+      markup: |
+        <h1>Example heading element</h1>
+        <p class="h1">A non-heading element</p>
+    - name: Heading level 2
+      markup: |
+        <h2>Example heading element</h2>
+        <p class="h2">A non-heading element</p>
+    - name: Heading level 3
+      markup: |
+        <h3>Example heading element</h3>
+        <p class="h3">A non-heading element</p>
+    - name: Heading level 4
+      markup: |
+        <h4>Example heading element</h4>
+        <p class="h4">A non-heading element</p>
+    - name: Heading level 5
+      markup: |
+        <h5>Example heading element</h5>
+        <p class="h5">A non-heading element</p>
+    - name: Heading level 6
+      markup: |
+        <h6>Example heading element</h6>
+        <p class="h6">A non-heading element</p>
+    - name: Super header
+      markup: |
+        <h1 class="superheader">Example super heading</h1>
+        <p class="superheader">Example super heading</p>
+    tags:
+    - cf-typography
+*/
+body {
+  color: #101820;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 100%;
+  line-height: 1.375;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-top: 0;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+h1,
+.h1 {
+  margin-bottom: 0.6470588235294118em;
+  font-size: 2.125em;
+  line-height: 1.2941176470588236;
+}
+h2,
+.h2 {
+  margin-bottom: 0.8461538461538461em;
+  font-size: 1.625em;
+  line-height: 1.2692307692307692;
+}
+h3,
+.h3 {
+  margin-bottom: 1em;
+  font-size: 1.375em;
+  line-height: 1.2727272727272727;
+}
+h4,
+.h4 {
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 1.2222222222222223em;
+  font-size: 1.125em;
+  line-height: 1.2222222222222223;
+}
+h5,
+h6,
+.h5,
+.h6 {
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+h5,
+.h5 {
+  margin-bottom: 1.5714285714285714em;
+  font-size: 0.875em;
+  line-height: 1.5714285714285714;
+}
+h6,
+.h6 {
+  margin-bottom: 1.8333333333333333em;
+  font-size: 0.75em;
+  line-height: 1.8333333333333333;
+}
+.superheader {
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  margin-bottom: 0.4583333333333333em;
+  font-size: 3em;
+  line-height: 1.375;
+}
+/* topdoc
+    name: Margins
+    family: cf-typography
+    patterns:
+    - name: Consistent vertical margins
+      notes:
+        - "Assumes that the font size of each of these items remains the default."
+      markup: |
+        <p>Paragraph margin example</p>
+        <p>Paragraph margin example</p>
+    tags:
+    - cf-typography
+*/
+p,
+ul,
+ol,
+dl,
+table,
+blockquote,
+figure {
+  margin-top: 0;
+  margin-bottom: 1.375em;
+}
+/* topdoc
+    name: Default link
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+        be used in production."
+    family: cf-typography
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#">Default link style</a>
+    - name: Visited state
+      markup: |
+        <a href="#" class="visited">Visited link style</a>
+    - name: Hovered state
+      markup: |
+        <a href="#" class="hover">Hovered link style</a>
+    - name: Focused state
+      markup: |
+        <a href="#" class="focus">Focused link style</a>
+    - name: Active state
+      markup: |
+        <a href="#" class="active">Active link style</a>
+    tags:
+    - cf-typography
+*/
+a {
+  border-bottom-width: 0;
+  border-bottom-style: dotted;
+  border-bottom-color: #0072ce;
+  color: #0072ce;
+  text-decoration: none;
+}
+a:visited,
+a.visited {
+  border-bottom-color: #005e5d;
+  color: #005e5d;
+}
+a:hover,
+a.hover {
+  border-bottom-style: solid;
+  border-bottom-color: #7fb8e6;
+  color: #7fb8e6;
+}
+a:focus,
+a.focus {
+  border-bottom-style: solid;
+}
+a:active,
+a.active {
+  border-bottom-style: solid;
+  border-bottom-color: #002d72;
+  color: #002d72;
+}
+/* topdoc
+    name: Underlined links
+    family: cf-typography
+    patterns:
+    - name: States
+      notes:
+        - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
+          be used in production."
+        - "The underline style properties are mostly set above in the a tag.
+          To enable the underline simply set a bottom-border-width as done here."
+      markup: |
+        <p>
+            <a href="#">Default</a>,
+            <a href="#" class="visited">Visited</a>,
+            <a href="#" class="hover">Hovered</a>,
+            <a href="#" class="focus">Focused</a>,
+            <a href="#" class="active">Active</a>
+        </p>
+    - name: Underline conditions
+      notes:
+       - "We're restricting link borders to links within p, li, and dd so that
+         we don't have to override them every time we want a plain link."
+      markup: |
+        <p>
+            <a href="#">A child of a paragraph</a>
+        </p>
+        <ul>
+            <li>
+                <a href="#">A child of a list item</a>
+            </li>
+        </ul>
+        <dl>
+            <dt>
+                Definition list term
+            </dt>
+            <dd>
+                <a href="#">A child of a definition list description</a>
+            </dd>
+        </dl>
+    - name: Exceptions for underlined links
+      notes:
+        - "Inline text links inside of a nav element are not underlined."
+      markup: |
+        <nav>
+            <p>
+                <a href="#">A child of a paragraph</a>
+            </p>
+            <ul>
+                <li>
+                    <a href="#">A child of a list item</a>
+                </li>
+            </ul>
+            <dl>
+                <dt>
+                    Definition list term
+                </dt>
+                <dd>
+                    <a href="#">A child of a definition list description</a>
+                </dd>
+            </dl>
+        </nav>
+    tags:
+    - cf-typography
+*/
+p a,
+li a,
+dd a {
+  border-bottom-width: 1px;
+}
+nav a {
+  border-bottom-width: 0;
+}
+/* topdoc
+    name: Blockquote
+    family: cf-typography
+    patterns:
+    - name: Default blockquote
+      markup: |
+       <blockquote>
+         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi animi facere modi eaque amet odio!
+       </blockquote> 
+    tags:
+    - cf-typography
+*/
+blockquote {
+  padding: 0.5em 0.75em;
+  border-left: 4px solid #2cb34a;
+  background: #addc91;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+blockquote em,
+blockquote i {
+  font-family: "Avenir Next Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+blockquote strong,
+blockquote b {
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+/* topdoc
+    name: Lists
+    family: cf-typography
+    patterns:
+    - name: Unordered list
+      markup: |
+       <ul>
+         <li>List item</li>
+         <li>List item</li>
+         <li>List item</li>
+       </ul>
+    tags:
+    - cf-typography
+*/
+ul {
+  list-style: square;
+}
+/* topdoc
+    name: IE overrides
+    family: cf-typography
+    patterns:
+    - name: Prevent faux/double bold and italics in IE 6-8
+      notes:
+        - "Any bold or italic Avenir elements added to the base styles MUST BE added to this section, as well."
+        - "Dependent on using H5BP's conditional classes on the <html> element:
+          https://github.com/h5bp/html5-boilerplate/blob/v4.3.0/doc/html.md"
+      markup: |
+        <h5>I might appear as faux/double bold in older IE without this fix.</h5>
+    tags:
+    - cf-typography
+    - ltie9
+*/
+.lt-ie9 h1,
+.lt-ie9 h2,
+.lt-ie9 h3,
+.lt-ie9 h4,
+.lt-ie9 h5,
+.lt-ie9 h6,
+.lt-ie9 blockquote strong {
+  font-weight: normal !important;
+}
+.lt-ie9 blockquote em {
+  font-style: normal !important;
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/*!
+ *  Font Awesome 3.2.1
+ *  the iconic font designed for Bootstrap
+ *  ------------------------------------------------------------------------------
+ *  The full suite of pictographic icons, examples, and documentation can be
+ *  found at http://fontawesome.io.  Stay up to date on Twitter at
+ *  http://twitter.com/fontawesome.
+ *
+ *  License
+ *  ------------------------------------------------------------------------------
+ *  - The Font Awesome font is licensed under SIL OFL 1.1 -
+ *    http://scripts.sil.org/OFL
+ *  - Font Awesome CSS, LESS, and SASS files are licensed under MIT License -
+ *    http://opensource.org/licenses/mit-license.html
+ *  - Font Awesome documentation licensed under CC BY 3.0 -
+ *    http://creativecommons.org/licenses/by/3.0/
+ *  - Attribution is no longer required in Font Awesome 3.0, but much appreciated:
+ *    "Font Awesome by Dave Gandy - http://fontawesome.io"
+ *
+ *  Author - Dave Gandy
+ *  ------------------------------------------------------------------------------
+ *  Email: dave@fontawesome.io
+ *  Twitter: http://twitter.com/byscuits
+ *  Work: Lead Product Designer @ Kyruus - http://kyruus.com
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url("../fonts/fontawesome-webfont.eot?v=3.2.1");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1") format('embedded-opentype'), url("../fonts/fontawesome-webfont.woff?v=3.2.1") format('woff'), url("../fonts/fontawesome-webfont.ttf?v=3.2.1") format('truetype'), url("../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* FONT AWESOME CORE
+ * -------------------------- */
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+}
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  text-decoration: inherit;
+  display: inline-block;
+  speak: none;
+}
+/* makes the font 33% larger relative to the icon container */
+.icon-large:before {
+  vertical-align: -10%;
+  font-size: 1.3333333333333333em;
+}
+/* makes sure icons active on rollover in links */
+a [class^="icon-"],
+a [class*=" icon-"] {
+  display: inline;
+}
+/* increased font size for icon-large */
+[class^="icon-"].icon-fixed-width,
+[class*=" icon-"].icon-fixed-width {
+  display: inline-block;
+  width: 1.1428571428571428em;
+  text-align: right;
+  padding-right: 0.2857142857142857em;
+}
+[class^="icon-"].icon-fixed-width.icon-large,
+[class*=" icon-"].icon-fixed-width.icon-large {
+  width: 1.4285714285714286em;
+}
+.icons-ul {
+  margin-left: 2.142857142857143em;
+  list-style-type: none;
+}
+.icons-ul > li {
+  position: relative;
+}
+.icons-ul .icon-li {
+  position: absolute;
+  left: -2.142857142857143em;
+  width: 2.142857142857143em;
+  text-align: center;
+  line-height: inherit;
+}
+[class^="icon-"].hide,
+[class*=" icon-"].hide {
+  display: none;
+}
+.icon-muted {
+  color: #eeeeee;
+}
+.icon-light {
+  color: #ffffff;
+}
+.icon-dark {
+  color: #333333;
+}
+.icon-border {
+  border: solid 1px #eeeeee;
+  padding: .2em .25em .15em;
+  border-radius: 3px;
+}
+.icon-2x {
+  font-size: 2em;
+}
+.icon-2x.icon-border {
+  border-width: 2px;
+  border-radius: 4px;
+}
+.icon-3x {
+  font-size: 3em;
+}
+.icon-3x.icon-border {
+  border-width: 3px;
+  border-radius: 5px;
+}
+.icon-4x {
+  font-size: 4em;
+}
+.icon-4x.icon-border {
+  border-width: 4px;
+  border-radius: 6px;
+}
+.icon-5x {
+  font-size: 5em;
+}
+.icon-5x.icon-border {
+  border-width: 5px;
+  border-radius: 7px;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+[class^="icon-"].pull-left,
+[class*=" icon-"].pull-left {
+  margin-right: .3em;
+}
+[class^="icon-"].pull-right,
+[class*=" icon-"].pull-right {
+  margin-left: .3em;
+}
+/* BOOTSTRAP SPECIFIC CLASSES
+ * -------------------------- */
+/* Bootstrap 2.0 sprites.less reset */
+[class^="icon-"],
+[class*=" icon-"] {
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  margin-top: 0;
+}
+/* more sprites.less reset */
+.icon-white,
+.nav-pills > .active > a > [class^="icon-"],
+.nav-pills > .active > a > [class*=" icon-"],
+.nav-list > .active > a > [class^="icon-"],
+.nav-list > .active > a > [class*=" icon-"],
+.navbar-inverse .nav > .active > a > [class^="icon-"],
+.navbar-inverse .nav > .active > a > [class*=" icon-"],
+.dropdown-menu > li > a:hover > [class^="icon-"],
+.dropdown-menu > li > a:hover > [class*=" icon-"],
+.dropdown-menu > .active > a > [class^="icon-"],
+.dropdown-menu > .active > a > [class*=" icon-"],
+.dropdown-submenu:hover > a > [class^="icon-"],
+.dropdown-submenu:hover > a > [class*=" icon-"] {
+  background-image: none;
+}
+/* keeps Bootstrap styles with and without icons the same */
+.btn [class^="icon-"].icon-large,
+.nav [class^="icon-"].icon-large,
+.btn [class*=" icon-"].icon-large,
+.nav [class*=" icon-"].icon-large {
+  line-height: .9em;
+}
+.btn [class^="icon-"].icon-spin,
+.nav [class^="icon-"].icon-spin,
+.btn [class*=" icon-"].icon-spin,
+.nav [class*=" icon-"].icon-spin {
+  display: inline-block;
+}
+.nav-tabs [class^="icon-"],
+.nav-pills [class^="icon-"],
+.nav-tabs [class*=" icon-"],
+.nav-pills [class*=" icon-"],
+.nav-tabs [class^="icon-"].icon-large,
+.nav-pills [class^="icon-"].icon-large,
+.nav-tabs [class*=" icon-"].icon-large,
+.nav-pills [class*=" icon-"].icon-large {
+  line-height: .9em;
+}
+.btn [class^="icon-"].pull-left.icon-2x,
+.btn [class*=" icon-"].pull-left.icon-2x,
+.btn [class^="icon-"].pull-right.icon-2x,
+.btn [class*=" icon-"].pull-right.icon-2x {
+  margin-top: .18em;
+}
+.btn [class^="icon-"].icon-spin.icon-large,
+.btn [class*=" icon-"].icon-spin.icon-large {
+  line-height: .8em;
+}
+.btn.btn-small [class^="icon-"].pull-left.icon-2x,
+.btn.btn-small [class*=" icon-"].pull-left.icon-2x,
+.btn.btn-small [class^="icon-"].pull-right.icon-2x,
+.btn.btn-small [class*=" icon-"].pull-right.icon-2x {
+  margin-top: .25em;
+}
+.btn.btn-large [class^="icon-"],
+.btn.btn-large [class*=" icon-"] {
+  margin-top: 0;
+}
+.btn.btn-large [class^="icon-"].pull-left.icon-2x,
+.btn.btn-large [class*=" icon-"].pull-left.icon-2x,
+.btn.btn-large [class^="icon-"].pull-right.icon-2x,
+.btn.btn-large [class*=" icon-"].pull-right.icon-2x {
+  margin-top: .05em;
+}
+.btn.btn-large [class^="icon-"].pull-left.icon-2x,
+.btn.btn-large [class*=" icon-"].pull-left.icon-2x {
+  margin-right: .2em;
+}
+.btn.btn-large [class^="icon-"].pull-right.icon-2x,
+.btn.btn-large [class*=" icon-"].pull-right.icon-2x {
+  margin-left: .2em;
+}
+/* Fixes alignment in nav lists */
+.nav-list [class^="icon-"],
+.nav-list [class*=" icon-"] {
+  line-height: inherit;
+}
+/* EXTRAS
+ * -------------------------- */
+/* Stacked and layered icon */
+.icon-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: -35%;
+}
+.icon-stack [class^="icon-"],
+.icon-stack [class*=" icon-"] {
+  display: block;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+  line-height: inherit;
+  *line-height: 2em;
+}
+.icon-stack .icon-stack-base {
+  font-size: 2em;
+  *line-height: 1em;
+}
+/* Animated rotating icon */
+.icon-spin {
+  display: inline-block;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+/* Prevent stack and spinners from being taken inline when inside a link */
+a .icon-stack,
+a .icon-spin {
+  display: inline-block;
+  text-decoration: none;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+/* Icon rotations and mirroring */
+.icon-rotate-90:before {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+.icon-rotate-180:before {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+.icon-rotate-270:before {
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.icon-flip-horizontal:before {
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.icon-flip-vertical:before {
+  -webkit-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+/* ensure rotation occurs inside anchor tags */
+a .icon-rotate-90:before,
+a .icon-rotate-180:before,
+a .icon-rotate-270:before,
+a .icon-flip-horizontal:before,
+a .icon-flip-vertical:before {
+  display: inline-block;
+}
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+.icon-glass:before {
+  content: "\f000";
+}
+.icon-music:before {
+  content: "\f001";
+}
+.icon-search:before {
+  content: "\f002";
+}
+.icon-envelope-alt:before {
+  content: "\f003";
+}
+.icon-heart:before {
+  content: "\f004";
+}
+.icon-star:before {
+  content: "\f005";
+}
+.icon-star-empty:before {
+  content: "\f006";
+}
+.icon-user:before {
+  content: "\f007";
+}
+.icon-film:before {
+  content: "\f008";
+}
+.icon-th-large:before {
+  content: "\f009";
+}
+.icon-th:before {
+  content: "\f00a";
+}
+.icon-th-list:before {
+  content: "\f00b";
+}
+.icon-ok:before {
+  content: "\f00c";
+}
+.icon-remove:before {
+  content: "\f00d";
+}
+.icon-zoom-in:before {
+  content: "\f00e";
+}
+.icon-zoom-out:before {
+  content: "\f010";
+}
+.icon-power-off:before,
+.icon-off:before {
+  content: "\f011";
+}
+.icon-signal:before {
+  content: "\f012";
+}
+.icon-gear:before,
+.icon-cog:before {
+  content: "\f013";
+}
+.icon-trash:before {
+  content: "\f014";
+}
+.icon-home:before {
+  content: "\f015";
+}
+.icon-file-alt:before {
+  content: "\f016";
+}
+.icon-time:before {
+  content: "\f017";
+}
+.icon-road:before {
+  content: "\f018";
+}
+.icon-download-alt:before {
+  content: "\f019";
+}
+.icon-download:before {
+  content: "\f01a";
+}
+.icon-upload:before {
+  content: "\f01b";
+}
+.icon-inbox:before {
+  content: "\f01c";
+}
+.icon-play-circle:before {
+  content: "\f01d";
+}
+.icon-rotate-right:before,
+.icon-repeat:before {
+  content: "\f01e";
+}
+.icon-refresh:before {
+  content: "\f021";
+}
+.icon-list-alt:before {
+  content: "\f022";
+}
+.icon-lock:before {
+  content: "\f023";
+}
+.icon-flag:before {
+  content: "\f024";
+}
+.icon-headphones:before {
+  content: "\f025";
+}
+.icon-volume-off:before {
+  content: "\f026";
+}
+.icon-volume-down:before {
+  content: "\f027";
+}
+.icon-volume-up:before {
+  content: "\f028";
+}
+.icon-qrcode:before {
+  content: "\f029";
+}
+.icon-barcode:before {
+  content: "\f02a";
+}
+.icon-tag:before {
+  content: "\f02b";
+}
+.icon-tags:before {
+  content: "\f02c";
+}
+.icon-book:before {
+  content: "\f02d";
+}
+.icon-bookmark:before {
+  content: "\f02e";
+}
+.icon-print:before {
+  content: "\f02f";
+}
+.icon-camera:before {
+  content: "\f030";
+}
+.icon-font:before {
+  content: "\f031";
+}
+.icon-bold:before {
+  content: "\f032";
+}
+.icon-italic:before {
+  content: "\f033";
+}
+.icon-text-height:before {
+  content: "\f034";
+}
+.icon-text-width:before {
+  content: "\f035";
+}
+.icon-align-left:before {
+  content: "\f036";
+}
+.icon-align-center:before {
+  content: "\f037";
+}
+.icon-align-right:before {
+  content: "\f038";
+}
+.icon-align-justify:before {
+  content: "\f039";
+}
+.icon-list:before {
+  content: "\f03a";
+}
+.icon-indent-left:before {
+  content: "\f03b";
+}
+.icon-indent-right:before {
+  content: "\f03c";
+}
+.icon-facetime-video:before {
+  content: "\f03d";
+}
+.icon-picture:before {
+  content: "\f03e";
+}
+.icon-pencil:before {
+  content: "\f040";
+}
+.icon-map-marker:before {
+  content: "\f041";
+}
+.icon-adjust:before {
+  content: "\f042";
+}
+.icon-tint:before {
+  content: "\f043";
+}
+.icon-edit:before {
+  content: "\f044";
+}
+.icon-share:before {
+  content: "\f045";
+}
+.icon-check:before {
+  content: "\f046";
+}
+.icon-move:before {
+  content: "\f047";
+}
+.icon-step-backward:before {
+  content: "\f048";
+}
+.icon-fast-backward:before {
+  content: "\f049";
+}
+.icon-backward:before {
+  content: "\f04a";
+}
+.icon-play:before {
+  content: "\f04b";
+}
+.icon-pause:before {
+  content: "\f04c";
+}
+.icon-stop:before {
+  content: "\f04d";
+}
+.icon-forward:before {
+  content: "\f04e";
+}
+.icon-fast-forward:before {
+  content: "\f050";
+}
+.icon-step-forward:before {
+  content: "\f051";
+}
+.icon-eject:before {
+  content: "\f052";
+}
+.icon-chevron-left:before {
+  content: "\f053";
+}
+.icon-chevron-right:before {
+  content: "\f054";
+}
+.icon-plus-sign:before {
+  content: "\f055";
+}
+.icon-minus-sign:before {
+  content: "\f056";
+}
+.icon-remove-sign:before {
+  content: "\f057";
+}
+.icon-ok-sign:before {
+  content: "\f058";
+}
+.icon-question-sign:before {
+  content: "\f059";
+}
+.icon-info-sign:before {
+  content: "\f05a";
+}
+.icon-screenshot:before {
+  content: "\f05b";
+}
+.icon-remove-circle:before {
+  content: "\f05c";
+}
+.icon-ok-circle:before {
+  content: "\f05d";
+}
+.icon-ban-circle:before {
+  content: "\f05e";
+}
+.icon-arrow-left:before {
+  content: "\f060";
+}
+.icon-arrow-right:before {
+  content: "\f061";
+}
+.icon-arrow-up:before {
+  content: "\f062";
+}
+.icon-arrow-down:before {
+  content: "\f063";
+}
+.icon-mail-forward:before,
+.icon-share-alt:before {
+  content: "\f064";
+}
+.icon-resize-full:before {
+  content: "\f065";
+}
+.icon-resize-small:before {
+  content: "\f066";
+}
+.icon-plus:before {
+  content: "\f067";
+}
+.icon-minus:before {
+  content: "\f068";
+}
+.icon-asterisk:before {
+  content: "\f069";
+}
+.icon-exclamation-sign:before {
+  content: "\f06a";
+}
+.icon-gift:before {
+  content: "\f06b";
+}
+.icon-leaf:before {
+  content: "\f06c";
+}
+.icon-fire:before {
+  content: "\f06d";
+}
+.icon-eye-open:before {
+  content: "\f06e";
+}
+.icon-eye-close:before {
+  content: "\f070";
+}
+.icon-warning-sign:before {
+  content: "\f071";
+}
+.icon-plane:before {
+  content: "\f072";
+}
+.icon-calendar:before {
+  content: "\f073";
+}
+.icon-random:before {
+  content: "\f074";
+}
+.icon-comment:before {
+  content: "\f075";
+}
+.icon-magnet:before {
+  content: "\f076";
+}
+.icon-chevron-up:before {
+  content: "\f077";
+}
+.icon-chevron-down:before {
+  content: "\f078";
+}
+.icon-retweet:before {
+  content: "\f079";
+}
+.icon-shopping-cart:before {
+  content: "\f07a";
+}
+.icon-folder-close:before {
+  content: "\f07b";
+}
+.icon-folder-open:before {
+  content: "\f07c";
+}
+.icon-resize-vertical:before {
+  content: "\f07d";
+}
+.icon-resize-horizontal:before {
+  content: "\f07e";
+}
+.icon-bar-chart:before {
+  content: "\f080";
+}
+.icon-twitter-sign:before {
+  content: "\f081";
+}
+.icon-facebook-sign:before {
+  content: "\f082";
+}
+.icon-camera-retro:before {
+  content: "\f083";
+}
+.icon-key:before {
+  content: "\f084";
+}
+.icon-gears:before,
+.icon-cogs:before {
+  content: "\f085";
+}
+.icon-comments:before {
+  content: "\f086";
+}
+.icon-thumbs-up-alt:before {
+  content: "\f087";
+}
+.icon-thumbs-down-alt:before {
+  content: "\f088";
+}
+.icon-star-half:before {
+  content: "\f089";
+}
+.icon-heart-empty:before {
+  content: "\f08a";
+}
+.icon-signout:before {
+  content: "\f08b";
+}
+.icon-linkedin-sign:before {
+  content: "\f08c";
+}
+.icon-pushpin:before {
+  content: "\f08d";
+}
+.icon-external-link:before {
+  content: "\f08e";
+}
+.icon-signin:before {
+  content: "\f090";
+}
+.icon-trophy:before {
+  content: "\f091";
+}
+.icon-github-sign:before {
+  content: "\f092";
+}
+.icon-upload-alt:before {
+  content: "\f093";
+}
+.icon-lemon:before {
+  content: "\f094";
+}
+.icon-phone:before {
+  content: "\f095";
+}
+.icon-unchecked:before,
+.icon-check-empty:before {
+  content: "\f096";
+}
+.icon-bookmark-empty:before {
+  content: "\f097";
+}
+.icon-phone-sign:before {
+  content: "\f098";
+}
+.icon-twitter:before {
+  content: "\f099";
+}
+.icon-facebook:before {
+  content: "\f09a";
+}
+.icon-github:before {
+  content: "\f09b";
+}
+.icon-unlock:before {
+  content: "\f09c";
+}
+.icon-credit-card:before {
+  content: "\f09d";
+}
+.icon-rss:before {
+  content: "\f09e";
+}
+.icon-hdd:before {
+  content: "\f0a0";
+}
+.icon-bullhorn:before {
+  content: "\f0a1";
+}
+.icon-bell:before {
+  content: "\f0a2";
+}
+.icon-certificate:before {
+  content: "\f0a3";
+}
+.icon-hand-right:before {
+  content: "\f0a4";
+}
+.icon-hand-left:before {
+  content: "\f0a5";
+}
+.icon-hand-up:before {
+  content: "\f0a6";
+}
+.icon-hand-down:before {
+  content: "\f0a7";
+}
+.icon-circle-arrow-left:before {
+  content: "\f0a8";
+}
+.icon-circle-arrow-right:before {
+  content: "\f0a9";
+}
+.icon-circle-arrow-up:before {
+  content: "\f0aa";
+}
+.icon-circle-arrow-down:before {
+  content: "\f0ab";
+}
+.icon-globe:before {
+  content: "\f0ac";
+}
+.icon-wrench:before {
+  content: "\f0ad";
+}
+.icon-tasks:before {
+  content: "\f0ae";
+}
+.icon-filter:before {
+  content: "\f0b0";
+}
+.icon-briefcase:before {
+  content: "\f0b1";
+}
+.icon-fullscreen:before {
+  content: "\f0b2";
+}
+.icon-group:before {
+  content: "\f0c0";
+}
+.icon-link:before {
+  content: "\f0c1";
+}
+.icon-cloud:before {
+  content: "\f0c2";
+}
+.icon-beaker:before {
+  content: "\f0c3";
+}
+.icon-cut:before {
+  content: "\f0c4";
+}
+.icon-copy:before {
+  content: "\f0c5";
+}
+.icon-paperclip:before,
+.icon-paper-clip:before {
+  content: "\f0c6";
+}
+.icon-save:before {
+  content: "\f0c7";
+}
+.icon-sign-blank:before {
+  content: "\f0c8";
+}
+.icon-reorder:before {
+  content: "\f0c9";
+}
+.icon-list-ul:before {
+  content: "\f0ca";
+}
+.icon-list-ol:before {
+  content: "\f0cb";
+}
+.icon-strikethrough:before {
+  content: "\f0cc";
+}
+.icon-underline:before {
+  content: "\f0cd";
+}
+.icon-table:before {
+  content: "\f0ce";
+}
+.icon-magic:before {
+  content: "\f0d0";
+}
+.icon-truck:before {
+  content: "\f0d1";
+}
+.icon-pinterest:before {
+  content: "\f0d2";
+}
+.icon-pinterest-sign:before {
+  content: "\f0d3";
+}
+.icon-google-plus-sign:before {
+  content: "\f0d4";
+}
+.icon-google-plus:before {
+  content: "\f0d5";
+}
+.icon-money:before {
+  content: "\f0d6";
+}
+.icon-caret-down:before {
+  content: "\f0d7";
+}
+.icon-caret-up:before {
+  content: "\f0d8";
+}
+.icon-caret-left:before {
+  content: "\f0d9";
+}
+.icon-caret-right:before {
+  content: "\f0da";
+}
+.icon-columns:before {
+  content: "\f0db";
+}
+.icon-sort:before {
+  content: "\f0dc";
+}
+.icon-sort-down:before {
+  content: "\f0dd";
+}
+.icon-sort-up:before {
+  content: "\f0de";
+}
+.icon-envelope:before {
+  content: "\f0e0";
+}
+.icon-linkedin:before {
+  content: "\f0e1";
+}
+.icon-rotate-left:before,
+.icon-undo:before {
+  content: "\f0e2";
+}
+.icon-legal:before {
+  content: "\f0e3";
+}
+.icon-dashboard:before {
+  content: "\f0e4";
+}
+.icon-comment-alt:before {
+  content: "\f0e5";
+}
+.icon-comments-alt:before {
+  content: "\f0e6";
+}
+.icon-bolt:before {
+  content: "\f0e7";
+}
+.icon-sitemap:before {
+  content: "\f0e8";
+}
+.icon-umbrella:before {
+  content: "\f0e9";
+}
+.icon-paste:before {
+  content: "\f0ea";
+}
+.icon-lightbulb:before {
+  content: "\f0eb";
+}
+.icon-exchange:before {
+  content: "\f0ec";
+}
+.icon-cloud-download:before {
+  content: "\f0ed";
+}
+.icon-cloud-upload:before {
+  content: "\f0ee";
+}
+.icon-user-md:before {
+  content: "\f0f0";
+}
+.icon-stethoscope:before {
+  content: "\f0f1";
+}
+.icon-suitcase:before {
+  content: "\f0f2";
+}
+.icon-bell-alt:before {
+  content: "\f0f3";
+}
+.icon-coffee:before {
+  content: "\f0f4";
+}
+.icon-food:before {
+  content: "\f0f5";
+}
+.icon-file-text-alt:before {
+  content: "\f0f6";
+}
+.icon-building:before {
+  content: "\f0f7";
+}
+.icon-hospital:before {
+  content: "\f0f8";
+}
+.icon-ambulance:before {
+  content: "\f0f9";
+}
+.icon-medkit:before {
+  content: "\f0fa";
+}
+.icon-fighter-jet:before {
+  content: "\f0fb";
+}
+.icon-beer:before {
+  content: "\f0fc";
+}
+.icon-h-sign:before {
+  content: "\f0fd";
+}
+.icon-plus-sign-alt:before {
+  content: "\f0fe";
+}
+.icon-double-angle-left:before {
+  content: "\f100";
+}
+.icon-double-angle-right:before {
+  content: "\f101";
+}
+.icon-double-angle-up:before {
+  content: "\f102";
+}
+.icon-double-angle-down:before {
+  content: "\f103";
+}
+.icon-angle-left:before {
+  content: "\f104";
+}
+.icon-angle-right:before {
+  content: "\f105";
+}
+.icon-angle-up:before {
+  content: "\f106";
+}
+.icon-angle-down:before {
+  content: "\f107";
+}
+.icon-desktop:before {
+  content: "\f108";
+}
+.icon-laptop:before {
+  content: "\f109";
+}
+.icon-tablet:before {
+  content: "\f10a";
+}
+.icon-mobile-phone:before {
+  content: "\f10b";
+}
+.icon-circle-blank:before {
+  content: "\f10c";
+}
+.icon-quote-left:before {
+  content: "\f10d";
+}
+.icon-quote-right:before {
+  content: "\f10e";
+}
+.icon-spinner:before {
+  content: "\f110";
+}
+.icon-circle:before {
+  content: "\f111";
+}
+.icon-mail-reply:before,
+.icon-reply:before {
+  content: "\f112";
+}
+.icon-github-alt:before {
+  content: "\f113";
+}
+.icon-folder-close-alt:before {
+  content: "\f114";
+}
+.icon-folder-open-alt:before {
+  content: "\f115";
+}
+.icon-expand-alt:before {
+  content: "\f116";
+}
+.icon-collapse-alt:before {
+  content: "\f117";
+}
+.icon-smile:before {
+  content: "\f118";
+}
+.icon-frown:before {
+  content: "\f119";
+}
+.icon-meh:before {
+  content: "\f11a";
+}
+.icon-gamepad:before {
+  content: "\f11b";
+}
+.icon-keyboard:before {
+  content: "\f11c";
+}
+.icon-flag-alt:before {
+  content: "\f11d";
+}
+.icon-flag-checkered:before {
+  content: "\f11e";
+}
+.icon-terminal:before {
+  content: "\f120";
+}
+.icon-code:before {
+  content: "\f121";
+}
+.icon-reply-all:before {
+  content: "\f122";
+}
+.icon-mail-reply-all:before {
+  content: "\f122";
+}
+.icon-star-half-full:before,
+.icon-star-half-empty:before {
+  content: "\f123";
+}
+.icon-location-arrow:before {
+  content: "\f124";
+}
+.icon-crop:before {
+  content: "\f125";
+}
+.icon-code-fork:before {
+  content: "\f126";
+}
+.icon-unlink:before {
+  content: "\f127";
+}
+.icon-question:before {
+  content: "\f128";
+}
+.icon-info:before {
+  content: "\f129";
+}
+.icon-exclamation:before {
+  content: "\f12a";
+}
+.icon-superscript:before {
+  content: "\f12b";
+}
+.icon-subscript:before {
+  content: "\f12c";
+}
+.icon-eraser:before {
+  content: "\f12d";
+}
+.icon-puzzle-piece:before {
+  content: "\f12e";
+}
+.icon-microphone:before {
+  content: "\f130";
+}
+.icon-microphone-off:before {
+  content: "\f131";
+}
+.icon-shield:before {
+  content: "\f132";
+}
+.icon-calendar-empty:before {
+  content: "\f133";
+}
+.icon-fire-extinguisher:before {
+  content: "\f134";
+}
+.icon-rocket:before {
+  content: "\f135";
+}
+.icon-maxcdn:before {
+  content: "\f136";
+}
+.icon-chevron-sign-left:before {
+  content: "\f137";
+}
+.icon-chevron-sign-right:before {
+  content: "\f138";
+}
+.icon-chevron-sign-up:before {
+  content: "\f139";
+}
+.icon-chevron-sign-down:before {
+  content: "\f13a";
+}
+.icon-html5:before {
+  content: "\f13b";
+}
+.icon-css3:before {
+  content: "\f13c";
+}
+.icon-anchor:before {
+  content: "\f13d";
+}
+.icon-unlock-alt:before {
+  content: "\f13e";
+}
+.icon-bullseye:before {
+  content: "\f140";
+}
+.icon-ellipsis-horizontal:before {
+  content: "\f141";
+}
+.icon-ellipsis-vertical:before {
+  content: "\f142";
+}
+.icon-rss-sign:before {
+  content: "\f143";
+}
+.icon-play-sign:before {
+  content: "\f144";
+}
+.icon-ticket:before {
+  content: "\f145";
+}
+.icon-minus-sign-alt:before {
+  content: "\f146";
+}
+.icon-check-minus:before {
+  content: "\f147";
+}
+.icon-level-up:before {
+  content: "\f148";
+}
+.icon-level-down:before {
+  content: "\f149";
+}
+.icon-check-sign:before {
+  content: "\f14a";
+}
+.icon-edit-sign:before {
+  content: "\f14b";
+}
+.icon-external-link-sign:before {
+  content: "\f14c";
+}
+.icon-share-sign:before {
+  content: "\f14d";
+}
+.icon-compass:before {
+  content: "\f14e";
+}
+.icon-collapse:before {
+  content: "\f150";
+}
+.icon-collapse-top:before {
+  content: "\f151";
+}
+.icon-expand:before {
+  content: "\f152";
+}
+.icon-euro:before,
+.icon-eur:before {
+  content: "\f153";
+}
+.icon-gbp:before {
+  content: "\f154";
+}
+.icon-dollar:before,
+.icon-usd:before {
+  content: "\f155";
+}
+.icon-rupee:before,
+.icon-inr:before {
+  content: "\f156";
+}
+.icon-yen:before,
+.icon-jpy:before {
+  content: "\f157";
+}
+.icon-renminbi:before,
+.icon-cny:before {
+  content: "\f158";
+}
+.icon-won:before,
+.icon-krw:before {
+  content: "\f159";
+}
+.icon-bitcoin:before,
+.icon-btc:before {
+  content: "\f15a";
+}
+.icon-file:before {
+  content: "\f15b";
+}
+.icon-file-text:before {
+  content: "\f15c";
+}
+.icon-sort-by-alphabet:before {
+  content: "\f15d";
+}
+.icon-sort-by-alphabet-alt:before {
+  content: "\f15e";
+}
+.icon-sort-by-attributes:before {
+  content: "\f160";
+}
+.icon-sort-by-attributes-alt:before {
+  content: "\f161";
+}
+.icon-sort-by-order:before {
+  content: "\f162";
+}
+.icon-sort-by-order-alt:before {
+  content: "\f163";
+}
+.icon-thumbs-up:before {
+  content: "\f164";
+}
+.icon-thumbs-down:before {
+  content: "\f165";
+}
+.icon-youtube-sign:before {
+  content: "\f166";
+}
+.icon-youtube:before {
+  content: "\f167";
+}
+.icon-xing:before {
+  content: "\f168";
+}
+.icon-xing-sign:before {
+  content: "\f169";
+}
+.icon-youtube-play:before {
+  content: "\f16a";
+}
+.icon-dropbox:before {
+  content: "\f16b";
+}
+.icon-stackexchange:before {
+  content: "\f16c";
+}
+.icon-instagram:before {
+  content: "\f16d";
+}
+.icon-flickr:before {
+  content: "\f16e";
+}
+.icon-adn:before {
+  content: "\f170";
+}
+.icon-bitbucket:before {
+  content: "\f171";
+}
+.icon-bitbucket-sign:before {
+  content: "\f172";
+}
+.icon-tumblr:before {
+  content: "\f173";
+}
+.icon-tumblr-sign:before {
+  content: "\f174";
+}
+.icon-long-arrow-down:before {
+  content: "\f175";
+}
+.icon-long-arrow-up:before {
+  content: "\f176";
+}
+.icon-long-arrow-left:before {
+  content: "\f177";
+}
+.icon-long-arrow-right:before {
+  content: "\f178";
+}
+.icon-apple:before {
+  content: "\f179";
+}
+.icon-windows:before {
+  content: "\f17a";
+}
+.icon-android:before {
+  content: "\f17b";
+}
+.icon-linux:before {
+  content: "\f17c";
+}
+.icon-dribbble:before {
+  content: "\f17d";
+}
+.icon-skype:before {
+  content: "\f17e";
+}
+.icon-foursquare:before {
+  content: "\f180";
+}
+.icon-trello:before {
+  content: "\f181";
+}
+.icon-female:before {
+  content: "\f182";
+}
+.icon-male:before {
+  content: "\f183";
+}
+.icon-gittip:before {
+  content: "\f184";
+}
+.icon-sun:before {
+  content: "\f185";
+}
+.icon-moon:before {
+  content: "\f186";
+}
+.icon-archive:before {
+  content: "\f187";
+}
+.icon-bug:before {
+  content: "\f188";
+}
+.icon-vk:before {
+  content: "\f189";
+}
+.icon-weibo:before {
+  content: "\f18a";
+}
+.icon-renren:before {
+  content: "\f18b";
+}
+/* Project-specific Less goes below
+   ========================================================================== */
+.demo-banner {
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+  background: #e3e4e5;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.demo-banner_back-link {
+  margin-right: 1em;
+}
+.content {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 66.66666666666666%;
+  padding: 2em 0;
+  margin-left: -15px;
+}
+.ie .content {
+  margin-right: -0.26em;
+}
+.lt-ie8 .content {
+  display: inline;
+  *zoom: 1;
+  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+}
+.sidebar {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 33.33333333333333%;
+  margin-right: -15px;
+  background: #e3e4e5;
+}
+.ie .sidebar {
+  margin-right: -0.26em;
+}
+.lt-ie8 .sidebar {
+  display: inline;
+  *zoom: 1;
+  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+}
+.wrapper {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+  position: relative;
+  clear: both;
+}
+.lt-ie8 .wrapper {
+  *zoom: 1;
+  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+}
+.header {
+  border-bottom: 10px solid #2cb34a;
+}
+.hero {
+  padding: 1em 2em;
+  background: #f1f2f2;
+}
+.hero > h1 {
+  margin: 0;
+}
+.footer {
+  padding: 1.5em 0;
+  background: #f1f2f2;
+}
