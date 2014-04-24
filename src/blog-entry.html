@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+
+<!--
+    ===========
+    GLOBAL META
+    ===========
+-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+    ==================
+    PAGE-SPECIFIC META
+    ==================
+-->
+
+    <title>Blog entry page - cfgov-refresh demo</title>
+    <meta name="description" content="Blog entry prototyping for the consumerfinance.gov refresh">
+
+    <!-- Explicit favicon link needed for testing. Remove for production. -->
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+<!--
+    ======
+    STYLES
+    ======
+    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
+    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
+-->
+
+<!--[if lt IE 9]>      <link rel="stylesheet" href="static/css/ie8.min.css"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="static/css/main.min.css"> <!--<![endif]-->
+
+<!--
+    ============
+    HEAD SCRIPTS
+    ============
+    The following scripts must be included in the head. DO NOT ADD ANY MORE.
+    All other scripts should go before the closing body tag.
+    If you come across a script that makes a convincing case to be included in
+    the head, then file an issue or PR to discuss including it.
+-->
+
+<!--[if lt IE 9]>
+    <script src="vendor/html5shiv/html5shiv-printshiv.js"></script>
+<![endif]-->
+
+    <script>
+        // Confirm availability of JS and remove no-js class from html
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+
+</head>
+
+<body>
+
+    <div class="demo-banner">
+        <a class="demo-banner_back-link" href="index.html"><i class="cf-icon cf-icon-left"></i> Back to demo home</a>
+        cfgov-refresh demo: <b>Blog entry page</b>
+    </div>
+
+
+    <header class="header" role="banner">
+        <div class="wrapper">
+            <h1>header placeholder</h1>
+        </div>
+    </header><!-- END header.wrapper -->
+
+    <main class="main" role="main">
+        <div class="wrapper">
+            <section class="content">
+                <article class="entry">
+                    <header>
+                        <img class="entry_featured-img" src="image.jpg" alt="alt text" width="100%" height="200">
+                        <a class="entry_category"><i class="cf-icon cf-icon-student-loans"></i> Student loans</a>
+                        <h1>Article title</h1>
+                        <div class="entry_meta">
+                            <span class="byline">By <a class="byline_link" href="#">Firstname Lastname</a></span> &ndash;
+                            <span class="short-date">Mon 32, 3001</span>
+                            <ul class="share-links">
+                                <li><a href="#"><i class="cf-icon cf-icon-email-square"></i> Email</a></li>
+                                <li><a href="#"><i class="cf-icon cf-icon-facebook-square"></i> Facebook</a></li>
+                                <li><a href="#"><i class="cf-icon cf-icon-twitter-square"></i> Twitter</a></li>
+                                <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
+                            </ul>
+                        </div>
+                        <h2>Post summary</h2>
+                        <p class="summary">
+                            Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                            id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                            Labitur liberavisse quo ei, utamur impetus eu nam.
+                        </p>
+                    </header>
+                    <p>
+                        Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                        id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                        Labitur liberavisse quo ei, utamur impetus eu nam.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                        id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                        Labitur liberavisse quo ei, utamur impetus eu nam.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                        id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                        Labitur liberavisse quo ei, utamur impetus eu nam.
+                    </p>
+                    <section class="callout">
+                        <h1>More information placeholder</h1>
+                    </section>
+                    <p>
+                        Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                        id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                        Labitur liberavisse quo ei, utamur impetus eu nam.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                        id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                        Labitur liberavisse quo ei, utamur impetus eu nam.
+                    </p>
+                    <footer>
+                        <p>tags placeholder</p> <!-- see commented implementation on CFPB Open Tech-->
+                    </footer>
+                </article>
+                <section class="comments">
+                    <p>comments placeholder</p>
+                </section>
+            </section><!-- END .content -->
+            <aside class="sidebar">
+                <section class="popular-stories">
+                    <h1>Related news placeholder</h1>
+                </section>
+                <section class="related-links">
+                    <h1>Related stories placeholder</h1>
+                </section>
+                <section class="stay-informed">
+                    <h1>Stay informed placeholder</h1>
+                </section>
+            </aside><!-- END .sidebar -->
+        </div><!-- END .wrapper -->
+    </main><!-- END main -->
+
+    <footer class="footer" role="contentinfo">
+        <div class="wrapper">
+            <p>footer placeholder</p>
+        </div>
+    </footer><!-- END footer.wrapper -->
+
+<!--
+    ============
+    BODY SCRIPTS
+    ============
+    The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
+    specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
+-->
+
+<script src="static/js/main.min.js"></script>
+
+</body>
+
+</html>
