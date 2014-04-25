@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
-  grunt.initConfig({
+  var config = {
 
     /**
      * Pull in the package.json file so we can read its metadata.
@@ -310,51 +310,6 @@ module.exports = function(grunt) {
       }
     },
 
-    topdoc: {
-      utilities: {
-        options: {
-          source: 'static/css/',
-          destination: 'docs/utilities/',
-          template: 'node_modules/cf-component-demo/code_examples/',
-          templateData: {
-            jsBody: '',
-            family: 'cfgov-utilities',
-            description: 'Utilities for cfgov-refresh.',
-            title: 'cfgov-refresh utilities docs',
-            repo: '<%= pkg.homepage %>'
-          }
-        }
-      },
-      meta: {
-        options: {
-          source: 'static/css/',
-          destination: 'docs/meta/',
-          template: 'node_modules/cf-component-demo/code_examples/',
-          templateData: {
-            jsBody: '',
-            family: 'cfgov-meta',
-            description: 'Meta for cfgov-refresh.',
-            title: 'cfgov-refresh meta docs',
-            repo: '<%= pkg.homepage %>'
-          }
-        }
-      },
-      'media-object': {
-        options: {
-          source: 'static/css/',
-          destination: 'docs/media-object/',
-          template: 'node_modules/cf-component-demo/code_examples/',
-          templateData: {
-            jsBody: '',
-            family: 'cfgov-media-object',
-            description: 'Media objects for cfgov-refresh.',
-            title: 'cfgov-refresh media-object docs',
-            repo: '<%= pkg.homepage %>'
-          }
-        }
-      }
-    },
-
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
@@ -371,7 +326,46 @@ module.exports = function(grunt) {
         tasks: ['cssdev', 'topdoc']
       }
     }
-  });
+  };
+
+  /*
+   * Creates a dynamic topdoc options object.
+   * To add more subtasks add an item to the subtasks array.
+   * For example if you created a new component with the family name of
+   * "my-component" then you could add a new item to the subtasks array called
+   * "my-component" and this function would automatically add a new topdoc
+   * subtask to the topdoc task. You could then run `grunt topdoc:my-component`
+   * to build it out separately or just `grunt topdoc` to run all topdoc tasks.
+   */
+  function dynamicTopdocTasks() {
+    var topdoc = {};
+    var subtasks = [
+      'utilities',
+      'meta',
+      'media-object'
+    ];
+    for (var i = 0; i < subtasks.length; i++) {
+      var key = subtasks[i];
+      topdoc[key] = {
+        options: {
+          source: 'static/css/',
+          destination: 'docs/' + key + '/',
+          template: 'node_modules/cf-component-demo/code_examples/',
+          templateData: {
+            family: 'cfgov-' + key,
+            description: key + ' for cfgov-refresh.',
+            title: 'cfgov-refresh ' + key + ' docs',
+            repo: '<%= pkg.homepage %>'
+          }
+        }
+      };
+    }
+    return topdoc;
+  };
+
+  config.topdoc = dynamicTopdocTasks();
+
+  grunt.initConfig(config);
 
   /**
    * The above tasks are loaded here.
