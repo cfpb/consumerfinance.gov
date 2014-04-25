@@ -1,0 +1,51 @@
+/* ==========================================================================
+   cfgov-refresh
+   media-object
+   ========================================================================== */
+
+/* topdoc
+    name: Media object
+    family: cfgov-media-object
+    patterns:
+    - notes:
+        - Move category to its own pattern like category slug?
+        - Make unstyled link mixin?
+        - .post-preview is main class
+        - Use .meta-header
+      markup: |
+        <article class="media-object">
+            <h1 class="media-object_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="media-object_text">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="media-object_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+    tags:
+    - cfgov-media-object
+*/
+
+.media-object_header {
+    // Use &:extend(h2);? Can't if we want to use @font-size
+    .h2();
+}
+
+.media-object_text {
+    .webfont-regular();
+    color: @darkgray;
+}
+
+.media-object_byline {
+    .webfont-regular();
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

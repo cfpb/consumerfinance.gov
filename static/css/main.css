@@ -3642,58 +3642,56 @@ a .icon-flip-vertical:before {
    ========================================================================== */
 /* ==========================================================================
    cfgov-refresh
-   media-block
+   meta
    ========================================================================== */
 /* topdoc
-    name: Media block
-    family: cfgov-media-block
+    name: Date
+    family: cfgov-meta
     patterns:
     - markup: |
-        <article class="media-block">
-            <div class="media-block_meta">
-                <span class="media-block_category">
-                    <i class="cf-icon"></i>
-                    <a href="#" class="media-block_category_link">Consumer finance</a>
-                </span>
-                <span class="date media-block_date">
-                    Nov 4, 2013
-                </span>
-            </div>
-            <h1 class="h2 media-block_header">Preventing illegal discrimination in auto lending</h1>
-            <p class="media-block_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
-            <p class="media-block_author">By Patrice Ficklin</p>
-        </article>
-    tags:
-    - cfgov-media-block
-*/
-/* topdoc
-    name: Media block meta
-    family: cfgov-media-block
-    patterns:
-    - name: Meta
-      notes:
-        - "Just a simple bottom border."
-      markup: |
-        <div class="media-block_meta"></div>
-    tags:
-    - cfgov-media-block
-*/
-.media-block_meta {
-  border-bottom: 1px solid #CFCFCD;
-}
-/* topdoc
-    name: Media block category
-    family: cfgov-media-block
-    patterns:
-    - markup: |
-        <span class="media-block_category">
-            <i class="cf-icon"></i>
-            <a href="#" class="media-block_category_link">Consumer finance</a>
+        <span class="date">
+            Nov 4, 2013
         </span>
     tags:
-    - cfgov-media-block
+    - cfgov-meta
 */
-.media-block_category_link {
+.date {
+  margin-top: 0;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-weight: normal;
+  font-family: "Avenir Next Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.5714285714285714em;
+  font-size: 0.875em;
+  line-height: 1.5714285714285714;
+  color: #75787b;
+}
+/* topdoc
+    name: Meta header
+    family: cfgov-meta
+    patterns:
+    - markup: |
+        <div class="meta-header">
+            <a href="#" class="meta-header_category">
+                <i class="cf-icon"></i>
+                Consumer finance
+            </a>
+            <span class="date meta-header_date">
+                Nov 4, 2013
+            </span>
+        </div>
+    tags:
+    - cfgov-meta
+*/
+.meta-header {
+  padding-bottom: 0.5em;
+  margin-bottom: 0.625em;
+  border-bottom: 1px solid #babbbd;
+}
+.meta-header_category {
   margin-top: 0;
   font-family: "Avenir Next", Arial, sans-serif;
   font-weight: normal;
@@ -3703,17 +3701,81 @@ a .icon-flip-vertical:before {
   margin-bottom: 1.2222222222222223em;
   font-size: 1.125em;
   line-height: 1.2222222222222223;
+  margin-bottom: 0;
+}
+.meta-header_date {
+  float: right;
+  margin-bottom: 0;
 }
 /* topdoc
-    name: Media block text
-    family: cfgov-media-block
-    patterns:
-    - markup: |
-        <p class="media-block_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
-    tags:
-    - cfgov-media-block
+  name: EOF
+  eof: true
 */
-.media-block_text {
+/* ==========================================================================
+   cfgov-refresh
+   utilities
+   ========================================================================== */
+/* topdoc
+    name: Less mixins
+    family: cfgov-utilities
+    patterns:
+    - codenotes:
+        - |
+          .u-right();
+    tags:
+    - cfgov-utilities
+*/
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   cfgov-refresh
+   media-object
+   ========================================================================== */
+/* topdoc
+    name: Media object
+    family: cfgov-media-object
+    patterns:
+    - notes:
+        - Move category to its own pattern like category slug?
+        - Make unstyled link mixin?
+        - .post-preview is main class
+        - Use .meta-header
+      markup: |
+        <article class="media-object">
+            <h1 class="media-object_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="media-object_text">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="media-object_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+    tags:
+    - cfgov-media-object
+*/
+.media-object_header {
+  margin-top: 0;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 0.8461538461538461em;
+  font-size: 1.625em;
+  line-height: 1.2692307692307692;
+}
+.media-object_text {
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #43484e;
+}
+.media-object_byline {
   font-family: "Avenir Next", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -3802,4 +3864,10 @@ a .icon-flip-vertical:before {
 .footer {
   padding: 1.5em 0;
   background: #f1f2f2;
+}
+/* ==========================================================================
+   .post-preview
+   ========================================================================== */
+.post-preview + .post-preview {
+  margin-top: 50px;
 }
