@@ -1,92 +1,38 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-
-<head>
-
-<!--
-    ===========
-    GLOBAL META
-    ===========
--->
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!--
-    ==================
-    PAGE-SPECIFIC META
-    ==================
--->
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>cfgov-refresh docs</title>
-    <meta name="description" content="Styleguide docs for the consumerfinance.gov refresh">
-
-    <!-- Explicit favicon link needed for testing. Remove for production. -->
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-
-<!--
-    ======
-    STYLES
-    ======
-    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
-    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
--->
-
-<!--[if lt IE 9]>      <link rel="stylesheet" href="../static/css/ie8.min.css"> <![endif]-->
-<!--[if gt IE 8]><!--> <link rel="stylesheet" href="../static/css/main.min.css"> <!--<![endif]-->
-
-<!--
-    ============
-    HEAD SCRIPTS
-    ============
-    The following scripts must be included in the head. DO NOT ADD ANY MORE.
-    All other scripts should go before the closing body tag.
-    If you come across a script that makes a convincing case to be included in
-    the head, then file an issue or PR to discuss including it.
--->
-
-<!--[if lt IE 9]>
-    <script src="../static/vendor/html5shiv/html5shiv-printshiv.min.js"></script>
-<![endif]-->
-
-    <script>
-        // Confirm availability of JS and remove no-js class from html
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
-    </script>
-
-</head>
-
-<body>
-
-    <div class="wrapper">
-
-        <h1>cfgov-refresh demo</h1>
-
-        <h2>Table of Contents</h2>
-
-        <ul>
-            <li><a href="utilities/">Utilities</a></li>
-            <li><a href="meta/">Meta</a></li>
-            <li><a href="media-object/">Media object</a></li>
-        </ul>
-
-    </div><!-- END .wrapper -->
-
-    <!--
-        ============
-        BODY SCRIPTS
-        ============
-        The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
-        specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
-    -->
-
-    <script src="../static/js/main.min.js"></script>
-
-</body>
-
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  </head>
+  <body>
+    <div class="demo-wrapper">
+      <header class="demo_header">
+        <h1 class="h5">cfgov-refresh docs</h1>
+      </header>
+      <ul class="demo-component-list">
+        <li id="media-object" class="demo-component-list_item demo-wrapper">
+          <h1 class="demo-component-list_header">Table of contents</h1>
+          <ul class="demo-pattern-list">
+            <li class="demo-pattern-list_item">
+                <a href="utilities/">Utilities</a>
+            </li>
+            <li class="demo-pattern-list_item">
+                <a href="meta/">Meta</a>
+            </li>
+            <li class="demo-pattern-list_item">
+                <a href="media-object/">Media object</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <footer class="wrapper-footer">
+        <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
+      </footer>
+    </div>
+    <script src="static/demo/main.min.js"></script>
+  </body>
 </html>
