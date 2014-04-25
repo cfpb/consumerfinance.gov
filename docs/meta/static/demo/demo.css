@@ -8,7 +8,7 @@ body {
   padding: 1.375em;
 }
 
-.wrapper:after {
+.demo-wrapper:after {
   content: "";
   display: table;
   clear: both;
