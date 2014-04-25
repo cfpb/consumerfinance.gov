@@ -2222,8 +2222,8 @@ ul {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=3.2.1");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1") format('embedded-opentype'), url("../fonts/fontawesome-webfont.woff?v=3.2.1") format('woff'), url("../fonts/fontawesome-webfont.ttf?v=3.2.1") format('truetype'), url("../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format('svg');
+  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -3640,6 +3640,88 @@ a .icon-flip-vertical:before {
 }
 /* Project-specific Less goes below
    ========================================================================== */
+/* ==========================================================================
+   cfgov-refresh
+   media-block
+   ========================================================================== */
+/* topdoc
+    name: Media block
+    family: cfgov-media-block
+    patterns:
+    - markup: |
+        <article class="media-block">
+            <div class="media-block_meta">
+                <span class="media-block_category">
+                    <i class="cf-icon"></i>
+                    <a href="#" class="media-block_category_link">Consumer finance</a>
+                </span>
+                <span class="date media-block_date">
+                    Nov 4, 2013
+                </span>
+            </div>
+            <h1 class="h2 media-block_header">Preventing illegal discrimination in auto lending</h1>
+            <p class="media-block_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+            <p class="media-block_author">By Patrice Ficklin</p>
+        </article>
+    tags:
+    - cfgov-media-block
+*/
+/* topdoc
+    name: Media block meta
+    family: cfgov-media-block
+    patterns:
+    - name: Meta
+      notes:
+        - "Just a simple bottom border."
+      markup: |
+        <div class="media-block_meta"></div>
+    tags:
+    - cfgov-media-block
+*/
+.media-block_meta {
+  border-bottom: 1px solid #CFCFCD;
+}
+/* topdoc
+    name: Media block category
+    family: cfgov-media-block
+    patterns:
+    - markup: |
+        <span class="media-block_category">
+            <i class="cf-icon"></i>
+            <a href="#" class="media-block_category_link">Consumer finance</a>
+        </span>
+    tags:
+    - cfgov-media-block
+*/
+.media-block_category_link {
+  margin-top: 0;
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-weight: normal;
+  font-family: "Avenir Next Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 1.2222222222222223em;
+  font-size: 1.125em;
+  line-height: 1.2222222222222223;
+}
+/* topdoc
+    name: Media block text
+    family: cfgov-media-block
+    patterns:
+    - markup: |
+        <p class="media-block_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+    tags:
+    - cfgov-media-block
+*/
+.media-block_text {
+  font-family: "Avenir Next", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
 .demo-banner {
   padding: 0.5em 1em;
   margin-bottom: 1em;
