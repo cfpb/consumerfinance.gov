@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git",
     "grunt": "~0.4.4",
     "grunt-autoprefixer": "~0.6.5",
     "grunt-banner": "latest",
@@ -13,6 +14,7 @@
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "~0.4.4",
     "grunt-release": "latest",
-    "grunt-string-replace": "latest"
+    "grunt-string-replace": "latest",
+    "grunt-topdoc": "~0.2.0"
   }
 }

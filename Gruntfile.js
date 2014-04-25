@@ -310,6 +310,23 @@ module.exports = function(grunt) {
       }
     },
 
+    topdoc: {
+      'media-block': {
+        options: {
+          source: 'static/css/',
+          destination: 'docs/media-block/',
+          template: 'node_modules/cf-component-demo/code_examples/',
+          templateData: {
+            jsBody: '',
+            family: 'cfgov-media-block',
+            description: 'Media blocks for cfgov-refresh.',
+            title: 'cfgov-refresh media-block docs',
+            repo: '<%= pkg.homepage %>'
+          }
+        }
+      }
+    },
+
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
@@ -323,7 +340,7 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['static/css/*.less'],
-        tasks: ['cssdev']
+        tasks: ['cssdev', 'topdoc']
       }
     }
   });
@@ -344,6 +361,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-release');
   grunt.loadNpmTasks('grunt-string-replace');
+  grunt.loadNpmTasks('grunt-topdoc');
 
   /**
    * Create custom task aliases and combinations
