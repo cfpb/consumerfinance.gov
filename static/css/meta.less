@@ -24,12 +24,32 @@
 
 
 /* topdoc
+    name: Category slug
+    family: cfgov-meta
+    patterns:
+    - markup: |
+        <a href="#" class="category-slug">
+            <i class="cf-icon"></i>
+            Consumer finance
+        </a>
+    tags:
+    - cfgov-meta
+*/
+
+.category-slug {
+    /* &:extend(h4); */
+    &:extend(h4);
+    .u-unstyled-link();
+}
+
+
+/* topdoc
     name: Meta header
     family: cfgov-meta
     patterns:
     - markup: |
         <div class="meta-header">
-            <a href="#" class="meta-header_category">
+            <a href="#" class="category-slug meta-header_heading">
                 <i class="cf-icon"></i>
                 Consumer finance
             </a>
@@ -47,8 +67,7 @@
     border-bottom: 1px solid @gray-50;
 }
 
-.meta-header_category {
-    .h4();
+.meta-header_heading {
     margin-bottom: 0;
 }
 

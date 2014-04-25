@@ -50,6 +50,35 @@
 }</code></pre>
           </div>
         </li>
+        <li id="category-slug" class="demo-component-list_item wrapper">
+          <h1 class="demo-component-list_header">Category slug</h1>
+          <ul class="demo-pattern-list">
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+              </header>
+              <section>
+<a href="#" class="category-slug">
+    <i class="cf-icon"></i>
+    Consumer finance
+</a>
+</section>
+              <footer class="demo-pattern-list_footer">
+                <pre class="html"><code data-language="html">&lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
+    &lt;i class=&quot;cf-icon&quot;&gt;&lt;/i&gt;
+    Consumer finance
+&lt;/a&gt;</code></pre>
+              </footer>
+            </li>
+          </ul>
+          <div class="demo-pattern-css">
+            <pre class="css"><code data-language="css">.category-slug {
+  /* &amp;:extend(h4); */
+
+  color: #101820;
+  border-bottom-width: 0;
+}</code></pre>
+          </div>
+        </li>
         <li id="meta-header" class="demo-component-list_item wrapper">
           <h1 class="demo-component-list_header">Meta header</h1>
           <ul class="demo-pattern-list">
@@ -58,7 +87,7 @@
               </header>
               <section>
 <div class="meta-header">
-    <a href="#" class="meta-header_category">
+    <a href="#" class="category-slug meta-header_heading">
         <i class="cf-icon"></i>
         Consumer finance
     </a>
@@ -69,7 +98,7 @@
 </section>
               <footer class="demo-pattern-list_footer">
                 <pre class="html"><code data-language="html">&lt;div class=&quot;meta-header&quot;&gt;
-    &lt;a href=&quot;#&quot; class=&quot;meta-header_category&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;category-slug meta-header_heading&quot;&gt;
         &lt;i class=&quot;cf-icon&quot;&gt;&lt;/i&gt;
         Consumer finance
     &lt;/a&gt;
@@ -86,16 +115,7 @@
   margin-bottom: 0.625em;
   border-bottom: 1px solid #babbbd;
 }
-.meta-header_category {
-  margin-top: 0;
-  font-family: &quot;Avenir Next&quot;, Arial, sans-serif;
-  font-weight: normal;
-  font-family: &quot;Avenir Next Medium&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  margin-bottom: 1.2222222222222223em;
-  font-size: 1.125em;
-  line-height: 1.2222222222222223;
+.meta-header_heading {
   margin-bottom: 0;
 }
 .meta-header_date {

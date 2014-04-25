@@ -430,7 +430,8 @@ h3 {
   font-size: 1.17em;
   margin: 1em 0;
 }
-h4 {
+h4,
+.category-slug {
   font-size: 1em;
   margin: 1.33em 0;
 }
@@ -1902,7 +1903,8 @@ h6,
 .h3,
 .h4,
 .h5,
-.h6 {
+.h6,
+.category-slug {
   margin-top: 0;
   font-family: "Avenir Next", Arial, sans-serif;
   font-style: normal;
@@ -1927,7 +1929,8 @@ h3,
   line-height: 1.2727272727272727;
 }
 h4,
-.h4 {
+.h4,
+.category-slug {
   font-family: "Avenir Next Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -3670,12 +3673,30 @@ a .icon-flip-vertical:before {
   color: #75787b;
 }
 /* topdoc
+    name: Category slug
+    family: cfgov-meta
+    patterns:
+    - markup: |
+        <a href="#" class="category-slug">
+            <i class="cf-icon"></i>
+            Consumer finance
+        </a>
+    tags:
+    - cfgov-meta
+*/
+.category-slug {
+  /* &:extend(h4); */
+
+  color: #101820;
+  border-bottom-width: 0;
+}
+/* topdoc
     name: Meta header
     family: cfgov-meta
     patterns:
     - markup: |
         <div class="meta-header">
-            <a href="#" class="meta-header_category">
+            <a href="#" class="category-slug meta-header_heading">
                 <i class="cf-icon"></i>
                 Consumer finance
             </a>
@@ -3691,16 +3712,7 @@ a .icon-flip-vertical:before {
   margin-bottom: 0.625em;
   border-bottom: 1px solid #babbbd;
 }
-.meta-header_category {
-  margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-weight: normal;
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  margin-bottom: 1.2222222222222223em;
-  font-size: 1.125em;
-  line-height: 1.2222222222222223;
+.meta-header_heading {
   margin-bottom: 0;
 }
 .meta-header_date {
@@ -3720,8 +3732,8 @@ a .icon-flip-vertical:before {
     family: cfgov-utilities
     patterns:
     - codenotes:
-        - |
-          .u-right();
+        - .u-right();
+        - .u-unstyled-link();
     tags:
     - cfgov-utilities
 */
@@ -3737,10 +3749,7 @@ a .icon-flip-vertical:before {
     name: Media object
     family: cfgov-media-object
     patterns:
-    - notes:
-        - Move category to its own pattern like category slug?
-        - Make unstyled link mixin?
-      markup: |
+    - markup: |
         <article class="media-object">
             <h1 class="media-object_header">
                 Preventing illegal discrimination in auto lending
