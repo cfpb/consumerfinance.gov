@@ -1717,6 +1717,894 @@ textarea {
 */
 /* ==========================================================================
    Capital Framework
+   Icons
+   ========================================================================== */
+/* topdoc
+    name: LESS Variables
+    family: cf-icons
+    patterns:
+    - name: CSS Prefix
+      codenotes:
+        - "@cf-css-prefix: cf-icon;"
+    tags:
+    - cf-icons
+*/
+@font-face {
+  font-family: 'CFPB Minicons';
+  src: url('../fonts/cf-icons.eot');
+  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* topdoc
+    name: Icon Class
+    family: cf-icons
+    patterns:
+    - name: Use of Icon Class
+      notes:
+        - "The cf-css-prefix class applies the font family to an element."
+    tags:
+    - cf-icons
+*/
+.cf-icon {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+/* topdoc
+    name: Navigation Icons
+    family: cf-icons
+    patterns:
+    - name: left
+      markup: |
+        <i class="cf-icon cf-icon-left"></i>
+        <i class="cf-icon cf-icon-left-round"></i>
+    - name: right
+      markup: |
+        <i class="cf-icon cf-icon-right"></i>
+        <i class="cf-icon cf-icon-right-round"></i>
+    - name: up
+      markup: |
+        <i class="cf-icon cf-icon-up"></i>
+        <i class="cf-icon cf-icon-up-round"></i>
+    - name: down
+      markup: |
+        <i class="cf-icon cf-icon-down"></i>
+        <i class="cf-icon cf-icon-down-round"></i>
+    - name: arrow-left
+      markup: |
+        <i class="cf-icon cf-icon-arrow-left"></i>
+        <i class="cf-icon cf-icon-arrow-left-round"></i>
+    - name: arrow-right
+      markup: |
+        <i class="cf-icon cf-icon-arrow-right"></i>
+        <i class="cf-icon cf-icon-arrow-right-round"></i>
+    - name: arrow-up
+      markup: |
+        <i class="cf-icon cf-icon-arrow-up"></i>
+        <i class="cf-icon cf-icon-arrow-up-round"></i>
+    - name: arrow-down
+      markup: |
+        <i class="cf-icon cf-icon-arrow-down"></i>
+        <i class="cf-icon cf-icon-arrow-down-round"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-left:before {
+  content: "\e000";
+}
+.cf-icon-left-round:before {
+  content: "\e001";
+}
+.cf-icon-right:before {
+  content: "\e002";
+}
+.cf-icon-right-round:before {
+  content: "\e003";
+}
+.cf-icon-up:before {
+  content: "\e004";
+}
+.cf-icon-up-round:before {
+  content: "\e005";
+}
+.cf-icon-down:before {
+  content: "\e006";
+}
+.cf-icon-down-round:before {
+  content: "\e007";
+}
+.cf-icon-arrow-left:before {
+  content: "\e008";
+}
+.cf-icon-arrow-left-round:before {
+  content: "\e009";
+}
+.cf-icon-arrow-right:before {
+  content: "\e010";
+}
+.cf-icon-arrow-right-round:before {
+  content: "\e011";
+}
+.cf-icon-arrow-up:before {
+  content: "\e012";
+}
+.cf-icon-arrow-up-round:before {
+  content: "\e013";
+}
+.cf-icon-arrow-down:before {
+  content: "\e014";
+}
+.cf-icon-arrow-down-round:before {
+  content: "\e015";
+}
+/* topdoc
+    name: Status Icons
+    family: cf-icons
+    patterns:
+    - name: approved
+      markup: |
+        <i class="cf-icon cf-icon-approved"></i>
+        <i class="cf-icon cf-icon-approved-round"></i>
+    - name: error
+      markup: |
+        <i class="cf-icon cf-icon-error"></i>
+        <i class="cf-icon cf-icon-error-round"></i>
+    - name: help
+      markup: |
+        <i class="cf-icon cf-icon-help"></i>
+        <i class="cf-icon cf-icon-help-round"></i>
+    - name: delete
+      markup: |
+        <i class="cf-icon cf-icon-delete"></i>
+        <i class="cf-icon cf-icon-delete-round"></i>
+    - name: plus
+      markup: |
+        <i class="cf-icon cf-icon-plus"></i>
+        <i class="cf-icon cf-icon-plus-round"></i>
+    - name: minus
+      markup: |
+        <i class="cf-icon cf-icon-minus"></i>
+        <i class="cf-icon cf-icon-minus-round"></i>
+    - name: update
+      markup: |
+        <i class="cf-icon cf-icon-update"></i>
+        <i class="cf-icon cf-icon-update-round"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-approved:before {
+  content: "\e100";
+}
+.cf-icon-approved-round:before {
+  content: "\e101";
+}
+.cf-icon-error:before {
+  content: "\e102";
+}
+.cf-icon-error-round:before {
+  content: "\e103";
+}
+.cf-icon-help:before {
+  content: "\e104";
+}
+.cf-icon-help-round:before {
+  content: "\e105";
+}
+.cf-icon-delete:before {
+  content: "\e106";
+}
+.cf-icon-delete-round:before {
+  content: "\e107";
+}
+.cf-icon-plus:before {
+  content: "\e108";
+}
+.cf-icon-plus-round:before {
+  content: "\e109";
+}
+.cf-icon-minus:before {
+  content: "\e110";
+}
+.cf-icon-minus-round:before {
+  content: "\e111";
+}
+.cf-icon-update:before {
+  content: "\e112";
+}
+.cf-icon-update-round:before {
+  content: "\e113";
+}
+/* topdoc
+    name: Social Icons
+    family: cf-icons
+    patterns:
+    - name: youtube
+      markup: |
+        <i class="cf-icon cf-icon-youtube"></i>
+        <i class="cf-icon cf-icon-youtube-square"></i>
+    - name: linkedin
+      markup: |
+        <i class="cf-icon cf-icon-linkedin"></i>
+        <i class="cf-icon cf-icon-linkedin-square"></i>
+    - name: facebook
+      markup: |
+        <i class="cf-icon cf-icon-facebook"></i>
+        <i class="cf-icon cf-icon-facebook-square"></i>
+    - name: flickr
+      markup: |
+        <i class="cf-icon cf-icon-flickr"></i>
+        <i class="cf-icon cf-icon-flickr-square"></i>
+    - name: plus
+      markup: |
+        <i class="cf-icon cf-icon-twitter"></i>
+        <i class="cf-icon cf-icon-twitter-square"></i>
+    - name: github
+      markup: |
+        <i class="cf-icon cf-icon-github"></i>
+        <i class="cf-icon cf-icon-github-square"></i>
+    - name: email-social
+      markup: |
+        <i class="cf-icon cf-icon-email-social"></i>
+        <i class="cf-icon cf-icon-email-social-square"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-youtube:before {
+  content: "\e200";
+}
+.cf-icon-youtube-square:before {
+  content: "\e201";
+}
+.cf-icon-linkedin:before {
+  content: "\e202";
+}
+.cf-icon-linkedin-square:before {
+  content: "\e203";
+}
+.cf-icon-facebook:before {
+  content: "\e204";
+}
+.cf-icon-facebook-square:before {
+  content: "\e205";
+}
+.cf-icon-flickr:before {
+  content: "\e206";
+}
+.cf-icon-flickr-square:before {
+  content: "\e207";
+}
+.cf-icon-twitter:before {
+  content: "\e208";
+}
+.cf-icon-twitter-square:before {
+  content: "\e209";
+}
+.cf-icon-github:before {
+  content: "\e210";
+}
+.cf-icon-github-square:before {
+  content: "\e211";
+}
+.cf-icon-email-social:before {
+  content: "\e212";
+}
+.cf-icon-email-social-square:before {
+  content: "\e213";
+}
+/* topdoc
+    name: Communication Icons
+    family: cf-icons
+    patterns:
+    - name: web
+      markup: |
+        <i class="cf-icon cf-icon-web"></i>
+        <i class="cf-icon cf-icon-web-round"></i>
+    - name: email
+      markup: |
+        <i class="cf-icon cf-icon-email"></i>
+        <i class="cf-icon cf-icon-email-round"></i>
+    - name: mail
+      markup: |
+        <i class="cf-icon cf-icon-mail"></i>
+        <i class="cf-icon cf-icon-mail-round"></i>
+    - name: phone
+      markup: |
+        <i class="cf-icon cf-icon-phone"></i>
+        <i class="cf-icon cf-icon-phone-round"></i>
+    - name: technology
+      markup: |
+        <i class="cf-icon cf-icon-technology"></i>
+        <i class="cf-icon cf-icon-technology-round"></i>
+    - name: fax
+      markup: |
+        <i class="cf-icon cf-icon-fax"></i>
+        <i class="cf-icon cf-icon-fax-round"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-web:before {
+  content: "\e300";
+}
+.cf-icon-web-round:before {
+  content: "\e301";
+}
+.cf-icon-email:before {
+  content: "\e302";
+}
+.cf-icon-email-round:before {
+  content: "\e303";
+}
+.cf-icon-mail:before {
+  content: "\e304";
+}
+.cf-icon-mail-round:before {
+  content: "\e305";
+}
+.cf-icon-phone:before {
+  content: "\e306";
+}
+.cf-icon-phone-round:before {
+  content: "\e307";
+}
+.cf-icon-technology:before {
+  content: "\e308";
+}
+.cf-icon-technology-round:before {
+  content: "\e309";
+}
+.cf-icon-fax:before {
+  content: "\e310";
+}
+.cf-icon-fax-round:before {
+  content: "\e311";
+}
+/* topdoc
+    name: Document Icons
+    family: cf-icons
+    patterns:
+    - name: document
+      markup: |
+        <i class="cf-icon cf-icon-document"></i>
+        <i class="cf-icon cf-icon-document-round"></i>
+    - name: pdf
+      markup: |
+        <i class="cf-icon cf-icon-pdf"></i>
+        <i class="cf-icon cf-icon-pdf-round"></i>
+    - name: upload
+      markup: |
+        <i class="cf-icon cf-icon-upload"></i>
+        <i class="cf-icon cf-icon-upload-round"></i>
+    - name: copy
+      markup: |
+        <i class="cf-icon cf-icon-copy"></i>
+        <i class="cf-icon cf-icon-copy-round"></i>
+    - name: edit
+      markup: |
+        <i class="cf-icon cf-icon-edit"></i>
+        <i class="cf-icon cf-icon-edit-round"></i>
+    - name: attach
+      markup: |
+        <i class="cf-icon cf-icon-attach"></i>
+        <i class="cf-icon cf-icon-attach-round"></i>
+    - name: print
+      markup: |
+        <i class="cf-icon cf-icon-print"></i>
+        <i class="cf-icon cf-icon-print-round"></i>
+    - name: save
+      markup: |
+        <i class="cf-icon cf-icon-save"></i>
+        <i class="cf-icon cf-icon-save-round"></i>
+    - name: appendix
+      markup: |
+        <i class="cf-icon cf-icon-appendix"></i>
+        <i class="cf-icon cf-icon-appendix-round"></i>
+    - name: supplement
+      markup: |
+        <i class="cf-icon cf-icon-supplement"></i>
+        <i class="cf-icon cf-icon-supplement-round"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-document:before {
+  content: "\e400";
+}
+.cf-icon-document-round:before {
+  content: "\e401";
+}
+.cf-icon-pdf:before {
+  content: "\e402";
+}
+.cf-icon-pdf-round:before {
+  content: "\e403";
+}
+.cf-icon-upload:before {
+  content: "\e404";
+}
+.cf-icon-upload-round:before {
+  content: "\e405";
+}
+.cf-icon-download:before {
+  content: "\e406";
+}
+.cf-icon-download-round:before {
+  content: "\e407";
+}
+.cf-icon-copy:before {
+  content: "\e408";
+}
+.cf-icon-copy-round:before {
+  content: "\e409";
+}
+.cf-icon-edit:before {
+  content: "\e410";
+}
+.cf-icon-edit-round:before {
+  content: "\e411";
+}
+.cf-icon-attach:before {
+  content: "\e412";
+}
+.cf-icon-attach-round:before {
+  content: "\e413";
+}
+.cf-icon-print:before {
+  content: "\e414";
+}
+.cf-icon-print-round:before {
+  content: "\e415";
+}
+.cf-icon-save:before {
+  content: "\e416";
+}
+.cf-icon-save-round:before {
+  content: "\e417";
+}
+.cf-icon-appendix:before {
+  content: "\e418";
+}
+.cf-icon-appendix-round:before {
+  content: "\e419";
+}
+.cf-icon-supplement:before {
+  content: "\e420";
+}
+.cf-icon-supplement-round:before {
+  content: "\e421";
+}
+/* topdoc
+    name: Financial Product Icons
+    family: cf-icons
+    patterns:
+    - name: bank-account
+      markup: |
+        <i class="cf-icon cf-icon-bank-account"></i>
+        <i class="cf-icon cf-icon-bank-account-round"></i>
+    - name: credit-card
+      markup: |
+        <i class="cf-icon cf-icon-credit-card"></i>
+        <i class="cf-icon cf-icon-credit-card-round"></i>
+    - name: loan
+      markup: |
+        <i class="cf-icon cf-icon-loan"></i>
+        <i class="cf-icon cf-icon-loan-round"></i>
+    - name: money-transfer
+      markup: |
+        <i class="cf-icon cf-icon-money-transfer"></i>
+        <i class="cf-icon cf-icon-money-transfer-round"></i>
+    - name: mortgage
+      markup: |
+        <i class="cf-icon cf-icon-mortgage"></i>
+        <i class="cf-icon cf-icon-mortgage-round"></i>
+    - name: debt-collection
+      markup: |
+        <i class="cf-icon cf-icon-debt-collection"></i>
+        <i class="cf-icon cf-icon-debt-collection-round"></i>
+    - name: credit-report
+      markup: |
+        <i class="cf-icon cf-icon-credit-report"></i>
+        <i class="cf-icon cf-icon-credit-report-round"></i>
+    - name: money
+      markup: |
+        <i class="cf-icon cf-icon-money"></i>
+        <i class="cf-icon cf-icon-money-round"></i>
+    - name: quick-cash
+      markup: |
+        <i class="cf-icon cf-icon-quick-cash"></i>
+        <i class="cf-icon cf-icon-quick-cash-round"></i>
+    - name: contract
+      markup: |
+        <i class="cf-icon cf-icon-contract"></i>
+        <i class="cf-icon cf-icon-contract-round"></i>
+    - name: comlaint
+      markup: |
+        <i class="cf-icon cf-icon-complaint"></i>
+        <i class="cf-icon cf-icon-complaint-round"></i>
+    - name: getting-credit-card
+      markup: |
+        <i class="cf-icon cf-icon-getting-credit-card"></i>
+        <i class="cf-icon cf-icon-getting-credit-card-round"></i>
+    - name: buying-car
+      markup: |
+        <i class="cf-icon cf-icon-buying-car"></i>
+        <i class="cf-icon cf-icon-buying-car-round"></i>
+    - name: mortgage
+      markup: |
+        <i class="cf-icon cf-icon-paying-college"></i>
+        <i class="cf-icon cf-icon-paying-college-round"></i>
+    - name: owning-home
+      markup: |
+        <i class="cf-icon cf-icon-owning-home"></i>
+        <i class="cf-icon cf-icon-owning-home-round"></i>
+    - name: debt
+      markup: |
+        <i class="cf-icon cf-icon-debt"></i>
+        <i class="cf-icon cf-icon-debt-round"></i>
+    - name: building-credit
+      markup: |
+        <i class="cf-icon cf-icon-building-credit"></i>
+        <i class="cf-icon cf-icon-building-credit-round"></i>
+    - name: prepaid-cards
+      markup: |
+        <i class="cf-icon cf-icon-prepaid-cards"></i>
+        <i class="cf-icon cf-icon-prepaid-cards-round"></i>
+    - name: payday-loan
+      markup: |
+        <i class="cf-icon cf-icon-payday-loan"></i>
+        <i class="cf-icon cf-icon-payday-loan-round"></i>
+    - name: retirement
+      markup: |
+        <i class="cf-icon cf-icon-retirement"></i>
+        <i class="cf-icon cf-icon-retirement-round"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-bank-account:before {
+  content: "\e500";
+}
+.cf-icon-bank-account-round:before {
+  content: "\e501";
+}
+.cf-icon-credit-card:before {
+  content: "\e502";
+}
+.cf-icon-credit-card-round:before {
+  content: "\e503";
+}
+.cf-icon-loan:before {
+  content: "\e504";
+}
+.cf-icon-loan-round:before {
+  content: "\e505";
+}
+.cf-icon-money-transfer:before {
+  content: "\e506";
+}
+.cf-icon-money-transfer-round:before {
+  content: "\e507";
+}
+.cf-icon-mortgage:before {
+  content: "\e508";
+}
+.cf-icon-mortgage-round:before {
+  content: "\e509";
+}
+.cf-icon-debt-collection:before {
+  content: "\e510";
+}
+.cf-icon-debt-collection-round:before {
+  content: "\e511";
+}
+.cf-icon-credit-report:before {
+  content: "\e512";
+}
+.cf-icon-credit-report-round:before {
+  content: "\e513";
+}
+.cf-icon-money:before {
+  content: "\e514";
+}
+.cf-icon-money-round:before {
+  content: "\e515";
+}
+.cf-icon-quick-cash:before {
+  content: "\e516";
+}
+.cf-icon-quick-cash-round:before {
+  content: "\e517";
+}
+.cf-icon-contract:before {
+  content: "\e518";
+}
+.cf-icon-contract-round:before {
+  content: "\e519";
+}
+.cf-icon-complaint:before {
+  content: "\e520";
+}
+.cf-icon-complaint-round:before {
+  content: "\e521";
+}
+.cf-icon-getting-credit-card:before {
+  content: "\e522";
+}
+.cf-icon-getting-credit-card-round:before {
+  content: "\e523";
+}
+.cf-icon-buying-car:before {
+  content: "\e524";
+}
+.cf-icon-buying-car-round:before {
+  content: "\e525";
+}
+.cf-icon-paying-college:before {
+  content: "\e526";
+}
+.cf-icon-paying-college-round:before {
+  content: "\e527";
+}
+.cf-icon-owning-home:before {
+  content: "\e528";
+}
+.cf-icon-owning-home-round:before {
+  content: "\e529";
+}
+.cf-icon-debt:before {
+  content: "\e530";
+}
+.cf-icon-debt-round:before {
+  content: "\e531";
+}
+.cf-icon-building-credit:before {
+  content: "\e532";
+}
+.cf-icon-building-credit-round:before {
+  content: "\e533";
+}
+.cf-icon-prepaid-cards:before {
+  content: "\e534";
+}
+.cf-icon-prepaid-cards-round:before {
+  content: "\e535";
+}
+.cf-icon-payday-loan:before {
+  content: "\e536";
+}
+.cf-icon-payday-loan-round:before {
+  content: "\e537";
+}
+.cf-icon-retirement:before {
+  content: "\e538";
+}
+.cf-icon-retirement-round:before {
+  content: "\e539";
+}
+/* topdoc
+    name: Web Icons
+    family: cf-icons
+    patterns:
+    - name: user
+      markup: |
+        <i class="cf-icon cf-icon-user"></i>
+        <i class="cf-icon cf-icon-user-round"></i>
+    - name: wifi
+      markup: |
+        <i class="cf-icon cf-icon-wifi"></i>
+        <i class="cf-icon cf-icon-wifi-round"></i>
+    - name: search
+      markup: |
+        <i class="cf-icon cf-icon-search"></i>
+        <i class="cf-icon cf-icon-search-round"></i>
+    - name: share
+      markup: |
+        <i class="cf-icon cf-icon-share"></i>
+        <i class="cf-icon cf-icon-share-round"></i>
+    - name: link
+      markup: |
+        <i class="cf-icon cf-icon-link"></i>
+        <i class="cf-icon cf-icon-link-round"></i>
+    - name: external-link
+      markup: |
+        <i class="cf-icon cf-icon-external-link"></i>
+        <i class="cf-icon cf-icon-external-link-round"></i>
+    - name: audio-mute
+      markup: |
+        <i class="cf-icon cf-icon-audio-mute"></i>
+        <i class="cf-icon cf-icon-audio-mute-round"></i>
+    - name: audio-low
+      markup: |
+        <i class="cf-icon cf-icon-audio-low"></i>
+        <i class="cf-icon cf-icon-audio-low-round"></i>
+    - name: audio-medium
+      markup: |
+        <i class="cf-icon cf-icon-audio-medium"></i>
+        <i class="cf-icon cf-icon-audio-medium-round"></i>
+    - name: audio-max
+      markup: |
+        <i class="cf-icon cf-icon-audio-max"></i>
+        <i class="cf-icon cf-icon-audio-max-round"></i>
+    - name: favorite
+      markup: |
+        <i class="cf-icon cf-icon-favorite"></i>
+        <i class="cf-icon cf-icon-favorite-round"></i>
+    - name: unfavorite
+      markup: |
+        <i class="cf-icon cf-icon-unfavorite"></i>
+        <i class="cf-icon cf-icon-unfavorite-round"></i>
+    - name: bookmark
+      markup: |
+        <i class="cf-icon cf-icon-bookmark"></i>
+        <i class="cf-icon cf-icon-bookmark-round"></i>
+    - name: unbookmark
+      markup: |
+        <i class="cf-icon cf-icon-unbookmark"></i>
+        <i class="cf-icon cf-icon-unbookmark-round"></i>
+    - name: settings
+      markup: |
+        <i class="cf-icon cf-icon-settings"></i>
+        <i class="cf-icon cf-icon-settings-round"></i>
+    - name: menu
+      markup: |
+        <i class="cf-icon cf-icon-menu"></i>
+        <i class="cf-icon cf-icon-menu-round"></i>
+    - name: lock
+      markup: |
+        <i class="cf-icon cf-icon-lock"></i>
+        <i class="cf-icon cf-icon-lock-round"></i>
+    - name: unlock
+      markup: |
+        <i class="cf-icon cf-icon-unlock"></i>
+        <i class="cf-icon cf-icon-unlock-round"></i>
+    - name: clock
+      markup: |
+        <i class="cf-icon cf-icon-clock"></i>
+        <i class="cf-icon cf-icon-clock-round"></i>
+    - name: chart
+      markup: |
+        <i class="cf-icon cf-icon-chart"></i>
+        <i class="cf-icon cf-icon-chart-round"></i>
+    - name: play
+      markup: |
+        <i class="cf-icon cf-icon-play"></i>
+        <i class="cf-icon cf-icon-play-round"></i>
+    tags:
+    - cf-icons
+*/
+.cf-icon-user:before {
+  content: "\e600";
+}
+.cf-icon-user-round:before {
+  content: "\e601";
+}
+.cf-icon-wifi:before {
+  content: "\e602";
+}
+.cf-icon-wifi-round:before {
+  content: "\e603";
+}
+.cf-icon-search:before {
+  content: "\e604";
+}
+.cf-icon-search-round:before {
+  content: "\e605";
+}
+.cf-icon-share:before {
+  content: "\e606";
+}
+.cf-icon-share-round:before {
+  content: "\e607";
+}
+.cf-icon-link:before {
+  content: "\e608";
+}
+.cf-icon-link-round:before {
+  content: "\e609";
+}
+.cf-icon-external-link:before {
+  content: "\e610";
+}
+.cf-icon-external-link-round:before {
+  content: "\e611";
+}
+.cf-icon-audio-mute:before {
+  content: "\e612";
+}
+.cf-icon-audio-mute-round:before {
+  content: "\e616";
+}
+.cf-icon-audio-low:before {
+  content: "\e613";
+}
+.cf-icon-audio-low-round:before {
+  content: "\e617";
+}
+.cf-icon-audio-medium:before {
+  content: "\e614";
+}
+.cf-icon-audio-medium-round:before {
+  content: "\e618";
+}
+.cf-icon-audio-max:before {
+  content: "\e615";
+}
+.cf-icon-audio-max-round:before {
+  content: "\e619";
+}
+.cf-icon-favorite:before {
+  content: "\e620";
+}
+.cf-icon-favorite-round:before {
+  content: "\e621";
+}
+.cf-icon-unfavorite:before {
+  content: "\e622";
+}
+.cf-icon-unfavorite-round:before {
+  content: "\e623";
+}
+.cf-icon-bookmark:before {
+  content: "\e624";
+}
+.cf-icon-bookmark-round:before {
+  content: "\e625";
+}
+.cf-icon-unbookmark:before {
+  content: "\e626";
+}
+.cf-icon-unbookmark-round:before {
+  content: "\e627";
+}
+.cf-icon-settings:before {
+  content: "\e628";
+}
+.cf-icon-settings-round:before {
+  content: "\e629";
+}
+.cf-icon-menu:before {
+  content: "\e630";
+}
+.cf-icon-menu-round:before {
+  content: "\e631";
+}
+.cf-icon-lock:before {
+  content: "\e632";
+}
+.cf-icon-lock-round:before {
+  content: "\e633";
+}
+.cf-icon-unlock:before {
+  content: "\e634";
+}
+.cf-icon-unlock-round:before {
+  content: "\e635";
+}
+.cf-icon-clock:before {
+  content: "\e636";
+}
+.cf-icon-clock-round:before {
+  content: "\e637";
+}
+.cf-icon-chart:before {
+  content: "\e638";
+}
+.cf-icon-chart-round:before {
+  content: "\e639";
+}
+.cf-icon-play:before {
+  content: "\e640";
+}
+.cf-icon-play-round:before {
+  content: "\e641";
+}
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   Capital Framework
    Pagination Styling
    ========================================================================== */
 /* topdoc
@@ -3700,7 +4588,7 @@ a .icon-flip-vertical:before {
     patterns:
     - markup: |
         <a href="#" class="category-slug">
-            <i class="cf-icon"></i>
+            <i class="cf-icon cf-icon-credit-card"></i>
             Consumer finance
         </a>
     tags:
@@ -3881,9 +4769,6 @@ a .icon-flip-vertical:before {
   padding: 1.5em 0;
   background: #f1f2f2;
 }
-/* ==========================================================================
-   .post-preview
-   ========================================================================== */
 .post-preview + .post-preview {
   margin-top: 50px;
 }
