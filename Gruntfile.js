@@ -311,16 +311,44 @@ module.exports = function(grunt) {
     },
 
     topdoc: {
-      'media-block': {
+      utilities: {
         options: {
           source: 'static/css/',
-          destination: 'docs/media-block/',
+          destination: 'docs/utilities/',
           template: 'node_modules/cf-component-demo/code_examples/',
           templateData: {
             jsBody: '',
-            family: 'cfgov-media-block',
-            description: 'Media blocks for cfgov-refresh.',
-            title: 'cfgov-refresh media-block docs',
+            family: 'cfgov-utilities',
+            description: 'Utilities for cfgov-refresh.',
+            title: 'cfgov-refresh utilities docs',
+            repo: '<%= pkg.homepage %>'
+          }
+        }
+      },
+      meta: {
+        options: {
+          source: 'static/css/',
+          destination: 'docs/meta/',
+          template: 'node_modules/cf-component-demo/code_examples/',
+          templateData: {
+            jsBody: '',
+            family: 'cfgov-meta',
+            description: 'Meta for cfgov-refresh.',
+            title: 'cfgov-refresh meta docs',
+            repo: '<%= pkg.homepage %>'
+          }
+        }
+      },
+      'media-object': {
+        options: {
+          source: 'static/css/',
+          destination: 'docs/media-object/',
+          template: 'node_modules/cf-component-demo/code_examples/',
+          templateData: {
+            jsBody: '',
+            family: 'cfgov-media-object',
+            description: 'Media objects for cfgov-refresh.',
+            title: 'cfgov-refresh media-object docs',
             repo: '<%= pkg.homepage %>'
           }
         }

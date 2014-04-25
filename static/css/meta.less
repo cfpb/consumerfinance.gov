@@ -1,0 +1,64 @@
+/* ==========================================================================
+   cfgov-refresh
+   meta
+   ========================================================================== */
+
+
+/* topdoc
+    name: Date
+    family: cfgov-meta
+    patterns:
+    - markup: |
+        <span class="date">
+            Nov 4, 2013
+        </span>
+    tags:
+    - cfgov-meta
+*/
+
+.date {
+    // Use &:extend(h5);?
+    .h5();
+    color: @gray;
+}
+
+
+/* topdoc
+    name: Meta header
+    family: cfgov-meta
+    patterns:
+    - markup: |
+        <div class="meta-header">
+            <a href="#" class="meta-header_category">
+                <i class="cf-icon"></i>
+                Consumer finance
+            </a>
+            <span class="date meta-header_date">
+                Nov 4, 2013
+            </span>
+        </div>
+    tags:
+    - cfgov-meta
+*/
+
+.meta-header {
+    padding-bottom: unit(8px / @base-font-size-px, em);
+    margin-bottom: unit(10px / @base-font-size-px, em);
+    border-bottom: 1px solid @gray-50;
+}
+
+.meta-header_category {
+    .h4();
+    margin-bottom: 0;
+}
+
+.meta-header_date {
+    .u-right();
+    margin-bottom: 0;
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

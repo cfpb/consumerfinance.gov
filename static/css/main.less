@@ -17,7 +17,9 @@
 /* Project-specific Less goes below
    ========================================================================== */
 
-@import (less) "media-block.less";
+@import (less) "meta.less";
+@import (less) "utilities.less";
+@import (less) "media-object.less";
 
 
 .demo-banner {
@@ -64,4 +66,12 @@
 .footer {
     padding: 1.5em 0;
     background: @gray-10;
+}
+
+/* ==========================================================================
+   .post-preview
+   ========================================================================== */
+
+.post-preview + .post-preview {
+    margin-top: 50px;
 }
