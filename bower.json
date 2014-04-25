@@ -30,6 +30,7 @@
     "cf-expandables": "git://github.com/cfpb/cf-expandables.git",
     "cf-forms": "git://github.com/cfpb/cf-forms.git",
     "cf-grid": "git://github.com/cfpb/cf-grid.git",
+    "cf-icons": "git://github.com/cfpb/cf-icons.git",
     "cf-pagination": "git://github.com/cfpb/cf-pagination.git",
     "cf-typography": "git://github.com/cfpb/cf-typography.git"
   },
