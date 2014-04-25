@@ -435,7 +435,8 @@ h4,
   font-size: 1em;
   margin: 1.33em 0;
 }
-h5 {
+h5,
+.date {
   font-size: 0.83em;
   margin: 1.67em 0;
 }
@@ -1904,6 +1905,7 @@ h6,
 .h4,
 .h5,
 .h6,
+.date,
 .category-slug {
   margin-top: 0;
   font-family: "Avenir Next", Arial, sans-serif;
@@ -1941,7 +1943,8 @@ h4,
 h5,
 h6,
 .h5,
-.h6 {
+.h6,
+.date {
   font-family: "Avenir Next Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -1949,7 +1952,8 @@ h6,
   text-transform: uppercase;
 }
 h5,
-.h5 {
+.h5,
+.date {
   margin-bottom: 1.5714285714285714em;
   font-size: 0.875em;
   line-height: 1.5714285714285714;
@@ -3659,17 +3663,6 @@ a .icon-flip-vertical:before {
     - cfgov-meta
 */
 .date {
-  margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-weight: normal;
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 1.5714285714285714em;
-  font-size: 0.875em;
-  line-height: 1.5714285714285714;
   color: #75787b;
 }
 /* topdoc
@@ -3685,8 +3678,6 @@ a .icon-flip-vertical:before {
     - cfgov-meta
 */
 .category-slug {
-  /* &:extend(h4); */
-
   color: #101820;
   border-bottom-width: 0;
 }
