@@ -20,7 +20,6 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "font-awesome": "~3.2.1",
     "html5shiv": "latest",
     "jquery": "~1.11.0",
     "normalize-css": "~3.0.0",
