@@ -57,13 +57,19 @@
           </ul>
           <div class="demo-pattern-css">
             <pre class="css"><code data-language="css">.media-object_header {
-  margin-top: 0;
-  font-family: &quot;Avenir Next&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-bottom: 0.8461538461538461em;
-  font-size: 1.625em;
-  line-height: 1.2692307692307692;
+  /* &amp;:extend(h3); */
+
+}
+@media only all and (min-width: 48em) {
+  .media-object_header {
+    margin-top: 0;
+    font-family: &quot;Avenir Next&quot;, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0.8461538461538461em;
+    font-size: 1.625em;
+    line-height: 1.2692307692307692;
+  }
 }
 .media-object_text {
   font-family: &quot;Avenir Next&quot;, Arial, sans-serif;

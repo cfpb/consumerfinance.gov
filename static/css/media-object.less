@@ -27,8 +27,11 @@
 */
 
 .media-object_header {
-    // Use &:extend(h2);? Can't if we want to use @font-size
-    .h2();
+    /* &:extend(h3); */
+    &:extend(h3);
+    @media @respond-to-medium-screens-min {
+        .h2();
+    }
 }
 
 .media-object_text {

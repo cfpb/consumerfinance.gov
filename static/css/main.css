@@ -426,7 +426,8 @@ h2 {
   font-size: 1.5em;
   margin: 0.83em 0;
 }
-h3 {
+h3,
+.media-object_header {
   font-size: 1.17em;
   margin: 1em 0;
 }
@@ -1731,8 +1732,8 @@ textarea {
 */
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url("../fonts/cf-icons.eot");
-  src: url("../fonts/cf-icons.eot?#iefix") format('embedded-opentype'), url("../fonts/cf-icons.woff") format('woff'), url("../fonts/cf-icons.ttf") format('truetype'), url("../fonts/cf-icons.svg") format('svg');
+  src: url('../fonts/cf-icons.eot');
+  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -2794,7 +2795,8 @@ h6,
 .h5,
 .h6,
 .date,
-.category-slug {
+.category-slug,
+.media-object_header {
   margin-top: 0;
   font-family: "Avenir Next", Arial, sans-serif;
   font-style: normal;
@@ -2813,7 +2815,8 @@ h2,
   line-height: 1.2692307692307692;
 }
 h3,
-.h3 {
+.h3,
+.media-object_header {
   margin-bottom: 1em;
   font-size: 1.375em;
   line-height: 1.2727272727272727;
@@ -3117,8 +3120,8 @@ ul {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=3.2.1");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1") format('embedded-opentype'), url("../fonts/fontawesome-webfont.woff?v=3.2.1") format('woff'), url("../fonts/fontawesome-webfont.ttf?v=3.2.1") format('truetype'), url("../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format('svg');
+  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -4566,6 +4569,45 @@ a .icon-flip-vertical:before {
    ========================================================================== */
 /* ==========================================================================
    cfgov-refresh
+   vars
+   ========================================================================== */
+/* topdoc
+    name: Less vars
+    family: cfgov-vars
+    patterns:
+    - codenotes:
+        - "@medium-screens-min"
+        - "@medium-screens-max"
+    - codenotes:
+        - "@respond-to-medium-screens-min"
+        - "@respond-to-medium-screens-max"
+    tags:
+    - cfgov-vars
+*/
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   cfgov-refresh
+   utilities
+   ========================================================================== */
+/* topdoc
+    name: Less mixins
+    family: cfgov-utilities
+    patterns:
+    - codenotes:
+        - .u-right();
+        - .u-unstyled-link();
+    tags:
+    - cfgov-utilities
+*/
+/* topdoc
+  name: EOF
+  eof: true
+*/
+/* ==========================================================================
+   cfgov-refresh
    meta
    ========================================================================== */
 /* topdoc
@@ -4633,24 +4675,6 @@ a .icon-flip-vertical:before {
 */
 /* ==========================================================================
    cfgov-refresh
-   utilities
-   ========================================================================== */
-/* topdoc
-    name: Less mixins
-    family: cfgov-utilities
-    patterns:
-    - codenotes:
-        - .u-right();
-        - .u-unstyled-link();
-    tags:
-    - cfgov-utilities
-*/
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   cfgov-refresh
    media-object
    ========================================================================== */
 /* topdoc
@@ -4676,13 +4700,19 @@ a .icon-flip-vertical:before {
     - cfgov-media-object
 */
 .media-object_header {
-  margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-bottom: 0.8461538461538461em;
-  font-size: 1.625em;
-  line-height: 1.2692307692307692;
+  /* &:extend(h3); */
+
+}
+@media only all and (min-width: 48em) {
+  .media-object_header {
+    margin-top: 0;
+    font-family: "Avenir Next", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0.8461538461538461em;
+    font-size: 1.625em;
+    line-height: 1.2692307692307692;
+  }
 }
 .media-object_text {
   font-family: "Avenir Next", Arial, sans-serif;
@@ -4718,7 +4748,7 @@ a .icon-flip-vertical:before {
 .lt-ie8 .content {
   display: inline;
   *zoom: 1;
-  *behavior: url(/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc);
+  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
 }
 .sidebar {
   display: inline-block;
