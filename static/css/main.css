@@ -1731,8 +1731,8 @@ textarea {
 */
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url('../fonts/cf-icons.eot');
-  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
+  src: url("../fonts/cf-icons.eot");
+  src: url("../fonts/cf-icons.eot?#iefix") format('embedded-opentype'), url("../fonts/cf-icons.woff") format('woff'), url("../fonts/cf-icons.ttf") format('truetype'), url("../fonts/cf-icons.svg") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -3117,8 +3117,8 @@ ul {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
-  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
+  src: url("../fonts/fontawesome-webfont.eot?v=3.2.1");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1") format('embedded-opentype'), url("../fonts/fontawesome-webfont.woff?v=3.2.1") format('woff'), url("../fonts/fontawesome-webfont.ttf?v=3.2.1") format('truetype'), url("../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -4718,7 +4718,7 @@ a .icon-flip-vertical:before {
 .lt-ie8 .content {
   display: inline;
   *zoom: 1;
-  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+  *behavior: url(/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc);
 }
 .sidebar {
   display: inline-block;
