@@ -4,24 +4,62 @@
    ========================================================================== */
 
 /* topdoc
-    name: Less vars
+    name: Media query vars
     family: cfgov-vars
     patterns:
-    - codenotes:
+    - name: Size calculations
+      notes:
+        - "You shouldn't need to use these vars directly,
+          they're used to create the @respond-to vars which you should use instead."
+      codenotes:
+        - "@small-screens-min"
+        - "@small-screens-max"
         - "@medium-screens-min"
         - "@medium-screens-max"
-    - codenotes:
+        - "@large-screens-min"
+        - "@large-screens-max"
+        - "@extralarge-screens-min"
+    - name: Interpolated media type and expressions
+      codenotes:
+        - "@respond-to-small-screens-min"
+        - "@respond-to-small-screens-max"
         - "@respond-to-medium-screens-min"
         - "@respond-to-medium-screens-max"
+        - "@respond-to-large-screens-min"
+        - "@respond-to-large-screens-max"
+        - "@respond-to-extralarge-screens-min"
+    - name: "Usage"
+      codenotes:
+        - |
+            @media @respond-to-medium-screens-min {
+                ...
+            }
+
+            Compiles to:
+
+            @media only all and (min-width: 48em) {
+                ...
+            }
     tags:
     - cfgov-vars
 */
 
-@medium-screens-min:    unit((768px / @base-font-size-px), em);
-@medium-screens-max:    unit((767px / @base-font-size-px), em);
+@small-screens-min:                  unit((320px / @base-font-size-px), em);
+@small-screens-max:                  unit((767px / @base-font-size-px), em);
+@medium-screens-min:                 unit((768px / @base-font-size-px), em);
+@medium-screens-max:                 unit((959px / @base-font-size-px), em);
+@large-screens-min:                  unit((960px / @base-font-size-px), em);
+@large-screens-max:                  unit((1199px / @base-font-size-px), em);
+@extralarge-screens-min:             unit((1200px / @base-font-size-px), em);
 
-@respond-to-medium-screens-min:    ~"only all and (min-width: @{medium-screens-min})";
-@respond-to-medium-screens-max:    ~"only all and (max-width: @{medium-screens-max})";
+@respond-to-small-screens-min:       ~"only all and (min-width: @{small-screens-min})";
+@respond-to-small-screens-max:       ~"only all and (max-width: @{small-screens-max})";
+@respond-to-medium-screens-min:      ~"only all and (min-width: @{medium-screens-min})";
+@respond-to-medium-screens-max:      ~"only all and (max-width: @{medium-screens-max})";
+@respond-to-large-screens-min:       ~"only all and (min-width: @{large-screens-min})";
+@respond-to-large-screens-max:       ~"only all and (max-width: @{large-screens-max})";
+@respond-to-extralarge-screens-min:  ~"only all and (max-width: @{extralarge-screens-min})";
+
 
 /* topdoc
   name: EOF
