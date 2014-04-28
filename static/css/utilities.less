@@ -8,8 +8,9 @@
     family: cfgov-utilities
     patterns:
     - codenotes:
-        - .u-right();
-        - .u-unstyled-link();
+          - .u-right();
+    - codenotes:
+          - .u-unstyled-link();
     tags:
     - cfgov-utilities
 */
@@ -21,9 +22,37 @@
 .u-unstyled-link() {
     color: @black;
     border-bottom-width: 0;
+
+    &:visited,
+    &.visited {
+        border-bottom-color: @black;
+        color: @black;
+    }
+
+    &:hover,
+    &.hover {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: @black;
+        color: @black;
+    }
+
+    &:focus,
+    &.focus {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+
+    &:active,
+    &.active {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: @black;
+        color: @black;
+    }
 }
 
 /* topdoc
-  name: EOF
-  eof: true
+    name: EOF
+    eof: true
 */
