@@ -15,29 +15,82 @@
         <h1 class="h5">cfgov-refresh vars docs</h1>
       </header>
       <ul class="demo-component-list">
-        <li id="less-vars" class="demo-component-list_item demo-wrapper">
-          <h1 class="demo-component-list_header">Less vars</h1>
+        <li id="media-query-vars" class="demo-component-list_item demo-wrapper">
+          <h1 class="demo-component-list_header">Media query vars</h1>
           <ul class="demo-pattern-list">
             <li class="demo-pattern-list_item">
               <header class="demo-pattern-list_header">
+                <h3>Size calculations</h3>
                 <ul class="demo_codenotes">
+                  <li>
+                    <pre class="code"><code>@small-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@small-screens-max</code></pre>
+                  </li>
                   <li>
                     <pre class="code"><code>@medium-screens-min</code></pre>
                   </li>
                   <li>
                     <pre class="code"><code>@medium-screens-max</code></pre>
                   </li>
+                  <li>
+                    <pre class="code"><code>@large-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@large-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@extralarge-screens-min</code></pre>
+                  </li>
+                </ul>
+                <ul class="demo_notes">
+                  <li>You shouldn't need to use these vars directly, they're used to create the @respond-to vars which you should use instead.</li>
                 </ul>
               </header>
             </li>
             <li class="demo-pattern-list_item">
               <header class="demo-pattern-list_header">
+                <h3>Interpolated media type and expressions</h3>
                 <ul class="demo_codenotes">
+                  <li>
+                    <pre class="code"><code>@respond-to-small-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-small-screens-max</code></pre>
+                  </li>
                   <li>
                     <pre class="code"><code>@respond-to-medium-screens-min</code></pre>
                   </li>
                   <li>
                     <pre class="code"><code>@respond-to-medium-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-large-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-large-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-extralarge-screens-min</code></pre>
+                  </li>
+                </ul>
+              </header>
+            </li>
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+                <h3>Usage</h3>
+                <ul class="demo_codenotes">
+                  <li>
+                    <pre class="code"><code>@media @respond-to-medium-screens-min {
+    ...
+}
+
+Compiles to:
+
+@media only all and (min-width: 48em) {
+    ...
+}</code></pre>
                   </li>
                 </ul>
               </header>
