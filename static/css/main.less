@@ -14,19 +14,19 @@
 @import (less) "../../vendor/font-awesome/font-awesome.css";
 
 
-/* Project-specific Less goes below
+/* Demo-specific styles
    ========================================================================== */
 
-.demo-banner {
-    padding: 0.5em 1em;
-    margin-bottom: 1em;
-    background: @gray-20;
-    .webfont-regular;
+@import (less) "demo.less";
 
-    &_back-link {
-        margin-right: 1em;
-    }
-}
+
+/* Project-specific styles
+   ========================================================================== */
+
+@import (less) "vars.less";
+@import (less) "utilities.less";
+@import (less) "meta.less";
+@import (less) "media-object.less";
 
 
 .content {
@@ -61,4 +61,11 @@
 .footer {
     padding: 1.5em 0;
     background: @gray-10;
+}
+
+
+// Post styles
+
+.post-preview + .post-preview {
+    margin-top: 50px;
 }
