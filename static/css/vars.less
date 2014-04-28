@@ -1,0 +1,29 @@
+/* ==========================================================================
+   cfgov-refresh
+   vars
+   ========================================================================== */
+
+/* topdoc
+    name: Less vars
+    family: cfgov-vars
+    patterns:
+    - codenotes:
+        - "@medium-screens-min"
+        - "@medium-screens-max"
+    - codenotes:
+        - "@respond-to-medium-screens-min"
+        - "@respond-to-medium-screens-max"
+    tags:
+    - cfgov-vars
+*/
+
+@medium-screens-min:    unit((768px / @base-font-size-px), em);
+@medium-screens-max:    unit((767px / @base-font-size-px), em);
+
+@respond-to-medium-screens-min:    ~"only all and (min-width: @{medium-screens-min})";
+@respond-to-medium-screens-max:    ~"only all and (max-width: @{medium-screens-max})";
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

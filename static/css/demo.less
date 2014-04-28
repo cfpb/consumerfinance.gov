@@ -1,0 +1,29 @@
+/* ==========================================================================
+   cfgov-refresh
+   demo
+   ========================================================================== */
+
+.demo-banner {
+    padding: 0.5em 1em;
+    background: @gray-20;
+    .webfont-regular;
+}
+
+.demo-banner_back-link {
+    margin-right: 1em;
+}
+
+.demo-placeholder {
+    @font-size: 14px;
+    display: inline-block;
+    padding:
+        unit(8px / @font-size, em)
+        unit(12px / @font-size, em);
+    margin: 1.5em 0;
+    color: @gray;
+    .webfont-regular();
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1;
+    border: 2px dashed @gray-50;
+    background: @gray-5;
+}
