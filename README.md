@@ -6,6 +6,9 @@ a the recommended workflow for using Capital Framework components.
 If you're new to Capital Framework, we encourage you to
 [start here](http://cfpb.github.io/capital-framework/).
 
+- [View the docs](http://cfpb.github.io/cfgov-refresh/docs/)
+- [See the demos](http://cfpb.github.io/cfgov-refresh/)
+
 
 ## Contributing
 
