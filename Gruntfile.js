@@ -44,7 +44,9 @@ module.exports = function(grunt) {
      */
     concat: {
       'cf-less': {
-        src: ['vendor/cf-*/*.less'],
+        src: [
+          'vendor/cf-*/*.less'
+        ],
         dest: 'vendor/cf-concat/cf.less',
       },
       bodyScripts: {
@@ -107,12 +109,6 @@ module.exports = function(grunt) {
                 pathLength = pathParts.length;
                 filename = pathParts[pathLength-1]; // The filename is the last item in pathParts
 
-                grunt.verbose.writeln('');
-                grunt.verbose.writeln('--------------');
-                grunt.verbose.writeln('Original path:');
-                grunt.verbose.writeln(match);
-                grunt.verbose.writeln('--------------');
-
                 // Rewrite the path based on the file type
                 // Note that .svg can be a font or a graphic, not sure what to do about this.
                 if (filename.indexOf('.eot') !== -1 ||
@@ -121,27 +117,22 @@ module.exports = function(grunt) {
                     filename.indexOf('.svg') !== -1)
                 {
                   newPath = 'url("../fonts/'+filename+'")';
-                  grunt.verbose.writeln('New path:');
-                  grunt.verbose.writeln(newPath);
-                  grunt.verbose.writeln('--------------');
+                  grunt.verbose.ok('Replaced:',match,'\n    with:',newPath);
+                  grunt.verbose.writeln('');
                   return newPath;
                 } else if (filename.indexOf('.png') !== -1 ||
                     filename.indexOf('.gif') !== -1 ||
                     filename.indexOf('.jpg') !== -1)
                 {
                   newPath = 'url("../img/'+filename+'")';
-                  grunt.verbose.writeln('New path:');
-                  grunt.verbose.writeln(newPath);
-                  grunt.verbose.writeln('--------------');
+                  grunt.verbose.ok('Replaced:',match,'\n    with:',newPath);
+                  grunt.verbose.writeln('');
                   return newPath;
                 } else {
-                  grunt.verbose.writeln('No new path.');
-                  grunt.verbose.writeln('--------------');
+                  grunt.verbose.warn('No filetype matches for:',match,'\n');
+                  grunt.verbose.writeln('');
                   return match;
                 }
-
-                grunt.verbose.writeln('--------------');
-                return match;
               }
             }
           ]
@@ -234,7 +225,7 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         options: {
-          //root: '/'
+          processImport: false
         },
         files: {
           'static/css/main.min.css': ['static/css/main.css'],
