@@ -1,4 +1,4 @@
-@import url(http://fast.fonts.net/t/1.css?apiType=css&projectid=0a274127-32a9-474a-bbdb-f23f410e88c5);
+@import url(//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50);
 /* ==========================================================================
    cfgov-refresh
    Master Less File
@@ -636,8 +636,7 @@ input[type="radio"] {
   vertical-align: middle;
   background-color: #0072ce;
   color: #ffffff;
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 0.875em;
@@ -648,543 +647,10 @@ input[type="radio"] {
   transition: .1s;
   -webkit-appearance: none;
 }
-.btn:hover,
-.btn:focus,
-.btn.hover {
-  background-color: #328ed8;
-}
-.btn:active,
-.btn.active {
-  background-color: #33578e;
-}
-.btn + .btn {
-  margin-left: 0.42857142857142855em;
-}
-button.btn::-moz-focus-inner,
-input.btn::-moz-focus-inner {
-  border: 0;
-}
-.lt-ie8 {
-  background: url(null) fixed no-repeat;
-}
-.lt-ie8 button.btn,
-.lt-ie8 input.btn {
-  overflow: visible;
-  padding-top: 0.5142857142857143em;
-  padding-bottom: 0.5142857142857143em;
-}
-/* topdoc
-    name: Secondary button
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#" class="btn btn-secondary">Anchor Tag</a>
-        <button class="btn btn-secondary">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-secondary">
-    - name: Hovered/focused state
-      markup: |
-        <a href="#" class="btn btn-secondary hover">Anchor Tag</a>
-        <button class="btn btn-secondary hover">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-secondary hover">
-    - name: Active state
-      markup: |
-        <a href="#" class="btn btn-secondary active">Anchor Tag</a>
-        <button class="btn btn-secondary active">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-secondary active">
-    tags:
-    - cf-buttons
-*/
-.btn-secondary,
-.btn-secondary:link,
-.btn-secondary:visited {
-  background-color: #75787b;
-  color: #ffffff;
-}
-.btn-secondary:hover,
-.btn-secondary:focus,
-.btn-secondary.hover {
-  background-color: #919395;
-}
-.btn-secondary:active,
-.btn-secondary.active {
-  background-color: #43484e;
-}
-/* topdoc
-    name: Destructive action button
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#" class="btn btn-warning">Anchor Tag</a>
-        <button class="btn btn-warning">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-warning">
-    - name: Hovered/focused state
-      markup: |
-        <a href="#" class="btn btn-warning hover">Anchor Tag</a>
-        <button class="btn btn-warning hover">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-warning hover">
-    - name: Active state
-      markup: |
-        <a href="#" class="btn btn-warning active">Anchor Tag</a>
-        <button class="btn btn-warning active">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-warning active">
-    tags:
-    - cf-buttons
-*/
-.btn-warning,
-.btn-warning:link,
-.btn-warning:visited {
-  background-color: #d12124;
-  color: #ffffff;
-}
-.btn-warning:hover,
-.btn-warning:focus,
-.btn-warning.hover {
-  background-color: #da6750;
-}
-.btn-warning:active,
-.btn-warning.active {
-  background-color: #9c301b;
-}
-/* topdoc
-    name: Disabled button
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default/hovered/focused/active state
-      markup: |
-        <a href="#" class="btn btn-disabled">Anchor Tag</a>
-        <button class="btn btn-disabled">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-disabled">
-    tags:
-    - cf-buttons
-*/
-.btn-disabled,
-.btn-disabled:link,
-.btn-disabled:visited,
-.btn-disabled:hover,
-.btn-disabled.hover,
-.btn-disabled:focus,
-.btn-disabled:active,
-.btn-disabled.active {
-  background-color: #e3e4e5;
-  color: #75787b;
-  cursor: default;
-  cursor: not-allowed;
-}
-/* topdoc
-    name: Super button
-    family: cf-buttons
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#" class="btn btn-super">Anchor Tag</a>
-        <button class="btn btn-super">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-super">
-    - name: Hovered/focused state
-      markup: |
-        <a href="#" class="btn btn-super hover">Anchor Tag</a>
-        <button class="btn btn-super hover">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-super hover">
-    - name: Active state
-      markup: |
-        <a href="#" class="btn btn-super active">Anchor Tag</a>
-        <button class="btn btn-super active">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn btn-super active">
-    tags:
-    - cf-buttons
-*/
-.btn-super,
-.btn-super:link,
-.btn-super:visited {
-  padding: 0.8333333333333334em 1.6666666666666667em;
-  font-size: 1.125em;
-}
-.btn-super + .btn-super {
-  margin-left: 0.3333333333333333em;
-}
-.lt-ie8 button.btn-super,
-.lt-ie8 input.btn-super {
-  padding-top: 0.6666666666666666em;
-  padding-bottom: 0.6666666666666666em;
-}
-/* topdoc
-    name: Button with icons
-    family: cf-buttons
-    patterns:
-    - name: Button icon left
-      markup: |
-        <a href="#" class="btn">
-            <i class="btn-icon-left icon-chevron-left"><span class="jekyll-bug"></span></i>
-            Anchor Tag
-        </a>
-        <button class="btn">
-            <i class="btn-icon-left icon-chevron-left"><span class="jekyll-bug"></span></i>
-            Button Tag
-        </button>
-    - name: Button icon right
-      markup: |
-        <a href="#" class="btn">
-            Anchor Tag
-            <i class="btn-icon-right icon-chevron-right"><span class="jekyll-bug"></span></i>
-        </a>
-        <button class="btn">
-            Button Tag
-            <i class="btn-icon-right icon-chevron-right"><span class="jekyll-bug"></span></i>
-        </button>
-    - name: Just an icon
-      markup: |
-        <a href="#" class="btn">
-            <i class="icon-search"><span class="jekyll-bug"></span></i>
-        </a>
-        <button class="btn">
-            <i class="icon-search"><span class="jekyll-bug"></span></i>
-        </button>
-    tags:
-    - cf-buttons
-    - fj-icons
-*/
-.btn [class^="icon-"],
-.btn [class*="icon-"] {
-  line-height: 1;
-}
-.btn-icon-left {
-  padding: 0 0.75em 0 0;
-  border-right: 1px solid #ffffff;
-  border-right: 1px solid rgba(255, 255, 255, 0.4);
-  margin: 0 0.5em 0 0;
-}
-.btn-disabled .btn-icon-left {
-  border-right-color: #babbbd;
-}
-.btn-icon-right {
-  padding: 0 0 0 0.75em;
-  border-right: 0;
-  border-left: 1px solid #ffffff;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  margin: 0 0 0 0.5em;
-}
-.btn-disabled .btn-icon-right {
-  border-left-color: #babbbd;
-}
-/* topdoc
-    name: Button group
-    family: cf-buttons
-    patterns:
-    - name: Default buttons in a button group
-      markup: |
-        <div class="btn-group">
-            <a href="#" class="btn">Anchor 1</a>
-            <a href="#" class="btn">Anchor 2</a>
-            <a href="#" class="btn">Anchor 3</a>
-        </div><br>
-        <div class="btn-group">
-            <button class="btn">Button 1</button>
-            <button class="btn">Button 2</button>
-            <button class="btn">Button 3</button>
-        </div><br>
-        <div class="btn-group">
-            <input type="button" value="Input 1" class="btn">
-            <input type="button" value="Input 2" class="btn">
-            <input type="button" value="Input 3" class="btn">
-        </div>
-    - name: Super buttons in a button group
-      markup: |
-        <div class="btn-group">
-            <a href="#" class="btn btn-super">Anchor 1</a>
-            <a href="#" class="btn btn-super">Anchor 2</a>
-            <a href="#" class="btn btn-super">Anchor 3</a>
-        </div><br>
-        <div class="btn-group">
-            <button class="btn btn-super">Button 1</button>
-            <button class="btn btn-super">Button 2</button>
-            <button class="btn btn-super">Button 3</button>
-        </div><br>
-        <div class="btn-group">
-            <input type="button" value="Input 1" class="btn btn-super">
-            <input type="button" value="Input 2" class="btn btn-super">
-            <input type="button" value="Input 3" class="btn btn-super">
-        </div>
-    tags:
-    - cf-buttons
-*/
-.btn-group .btn:first-child:not(:last-child) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.btn-group .btn + .btn {
-  margin-left: -0.21428571428571427em;
-}
-.btn-group .btn + .btn:not(:last-child) {
-  border-radius: 0;
-}
-.btn-group .btn:last-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.btn-group .btn-super + .btn-super {
-  margin-left: -0.16666666666666666em;
-}
-/* topdoc
-    name: Compound button
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default button style
-      markup: |
-        <div class="btn-group">
-            <a href="#" class="btn">Anchor</a>
-            <a href="#" class="btn btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
-        </div><br>
-        <div class="btn-group">
-            <button class="btn">Button</button>
-            <button class="btn btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
-        </div><br>
-    - name: Secondary button style
-      markup: |
-        <div class="btn-group">
-            <a href="#" class="btn btn-secondary">Anchor</a>
-            <a href="#" class="btn btn-secondary btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
-        </div><br>
-        <div class="btn-group">
-            <button class="btn btn-secondary">Button</button>
-            <button class="btn btn-secondary btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
-        </div>
-    - name: Super button style
-      markup: |
-        <div class="btn-group">
-            <a href="#" class="btn btn-super">Anchor</a>
-            <a href="#" class="btn btn-super btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
-        </div><br>
-        <div class="btn-group">
-            <button class="btn btn-super">Button</button>
-            <button class="btn btn-super btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
-        </div>
-    tags:
-    - cf-buttons
-    - fj-icons
-*/
-.btn-compound-action,
-.btn-compound-action:link,
-.btn-compound-action:visited {
-  background-color: #328ed8;
-}
-.btn-compound-action:hover,
-.btn-compound-action:focus,
-.btn-compound-action.hover {
-  background-color: #0072ce;
-}
-.btn-compound-action.btn-secondary {
-  background-color: #919395;
-}
-.btn-compound-action.btn-secondary:hover,
-.btn-compound-action.btn-secondary:focus,
-.btn-compound-action.btn-secondary.hover {
-  background-color: #75787b;
-}
-.btn-compound-action.btn-super {
-  padding-left: 1.2222222222222223em;
-  padding-right: 1.2222222222222223em;
-}
-/* topdoc
-    name: Button link
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#" class="btn btn-link">Anchor Tag</a>
-        <button class="btn btn-link">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link">
-    - name: Hovered state
-      markup: |
-        <a href="#" class="btn btn-link hover">Anchor Tag</a>
-        <button class="btn btn-link hover">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link hover">
-    - name: Focused state
-      markup: |
-        <a href="#" class="btn btn-link focus">Anchor Tag</a>
-        <button class="btn btn-link focus">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link focus">
-    - name: Active state
-      markup: |
-        <a href="#" class="btn btn-link active">Anchor Tag</a>
-        <button class="btn btn-link active">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link active">
-    tags:
-    - cf-buttons
-*/
-.btn-link,
-.btn-link:link,
-.btn-link:visited {
-  padding: 0;
-  border-bottom: 1px dotted #0072ce;
-  border-radius: 0;
-  margin: 0.6428571428571429em 0;
-  background-color: transparent;
-  color: #0072ce;
-}
-.btn-link:hover,
-.btn-link.hover {
-  border-bottom: 1px solid #7fb8e6;
-  background-color: transparent;
-  color: #7fb8e6;
-}
-.btn-link:focus,
-.btn-link.focus {
-  border-bottom-style: solid;
-  background-color: transparent;
-  outline: thin dotted;
-}
-.btn-link:active,
-.btn-link.active {
-  border-bottom: 1px solid #002d72;
-  background-color: transparent;
-  color: #002d72;
-}
-.lt-ie8 button.btn-link,
-.lt-ie8 input.btn-link {
-  padding: 0;
-}
-/* topdoc
-    name: Destructive action button link
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#" class="btn btn-link btn-warning">Anchor Tag</a>
-        <button class="btn btn-link btn-warning">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link btn-warning">
-    - name: Hovered state
-      markup: |
-        <a href="#" class="btn btn-link btn-warning hover">Anchor Tag</a>
-        <button class="btn btn-link btn-warning hover">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link btn-warning hover">
-    - name: Focused state
-      markup: |
-        <a href="#" class="btn btn-link btn-warning focus">Anchor Tag</a>
-        <button class="btn btn-link btn-warning focus">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link btn-warning focus">
-    - name: Active state
-      markup: |
-        <a href="#" class="btn btn-link btn-warning active">Anchor Tag</a>
-        <button class="btn btn-link btn-warning active">Button Tag</button>
-        <input type="button" value="Input Tag" class="btn btn-link btn-warning active">
-    tags:
-    - cf-buttons
-*/
-.btn-link.btn-warning,
-.btn-link.btn-warning:link,
-.btn-link.btn-warning:visited {
-  border-bottom-color: #d12124;
-  background-color: transparent;
-  color: #d12124;
-}
-.btn-link.btn-warning:hover,
-.btn-link.btn-warning.hover {
-  border-bottom-color: #da6750;
-  color: #da6750;
-}
-.btn-link.btn-warning:focus,
-.btn-link.btn-warning.focus {
-  border-bottom-color: #da6750;
-  outline: thin dotted;
-}
-.btn-link.btn-warning:active,
-.btn-link.btn-warning.active {
-  border-bottom-color: #9c301b;
-  color: #9c301b;
-}
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Button Styling
-   ========================================================================== */
-/* topdoc
-    name: LESS notes
-    family: cf-buttons
-    patterns:
-    - name: Variables
-      codenotes:
-        - "@btn-font-size: 14px;"
-        - "@btn-v-padding: 9px;"
-        - "@btn-v-padding-modifier-ie: .8;"
-      notes:
-        - "@btn-v-padding-modifier-ie is used to fix the vertical padding bug in IE for <button>'s and <inputs>'s
-          across various .btn styles. We should revisit this after adding normalize.css to see if this is still needed."
-    tags:
-    - cf-buttons
-    - less
-*/
-/* topdoc
-    name: Default button
-    family: cf-buttons
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#" class="btn">Anchor Tag</a>
-        <button class="btn">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn">
-    - name: Hovered/focused state
-      markup: |
-        <a href="#" class="btn hover">Anchor Tag</a>
-        <button class="btn hover">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn hover">
-    - name: Active state
-      markup: |
-        <a href="#" class="btn active">Anchor Tag</a>
-        <button class="btn active">Button Tag</button>
-        <input type="submit" value="Input Tag" class="btn active">
-    tags:
-    - cf-buttons
-*/
-.btn,
-.btn:link,
-.btn:visited {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0.6428571428571429em 1em;
-  border: 0;
-  border-radius: 0.2857142857142857em;
-  margin: 0;
-  vertical-align: middle;
-  background-color: #0072ce;
-  color: #ffffff;
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.875em;
-  line-height: normal;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-transition: .1s;
-  transition: .1s;
-  -webkit-appearance: none;
+.lt-ie9 .btn,
+.lt-ie9 .btn:link,
+.lt-ie9 .btn:visited {
+  font-weight: normal !important;
 }
 .btn:hover,
 .btn:focus,
@@ -1695,11 +1161,13 @@ input.btn::-moz-focus-inner {
 }
 .expandable-header {
   padding: 0.625em 0.75em;
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   cursor: pointer;
+}
+.lt-ie9 .expandable-header {
+  font-weight: normal !important;
 }
 .expandable-button,
 .expandable-button:link,
@@ -1707,8 +1175,7 @@ input.btn::-moz-focus-inner {
   margin: 0;
   border-width: 0;
   float: right;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 0.875em;
@@ -1780,12 +1247,6 @@ input[type="email"],
 input[type="url"],
 input[type="tel"],
 input[type="number"],
-textarea,
-input[type="search"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
 textarea {
   display: inline-block;
   width: 85%;
@@ -1813,18 +1274,6 @@ input[type="tel"].focus,
 input[type="number"]:focus,
 input[type="number"].focus,
 textarea:focus,
-textarea.focus,
-input[type="search"]:focus,
-input[type="search"].focus,
-input[type="email"]:focus,
-input[type="email"].focus,
-input[type="url"]:focus,
-input[type="url"].focus,
-input[type="tel"]:focus,
-input[type="tel"].focus,
-input[type="number"]:focus,
-input[type="number"].focus,
-textarea:focus,
 textarea.focus {
   border: 1px solid #0072ce;
   border-color: #0072ce;
@@ -1839,23 +1288,11 @@ input[type="email"].error,
 input[type="url"].error,
 input[type="tel"].error,
 input[type="number"].error,
-textarea.error,
-input[type="search"].error,
-input[type="email"].error,
-input[type="url"].error,
-input[type="tel"].error,
-input[type="number"].error,
 textarea.error {
   border: 1px solid #d12124;
   outline: 1px solid #d12124;
 }
 input[type="text"].success,
-input[type="search"].success,
-input[type="email"].success,
-input[type="url"].success,
-input[type="tel"].success,
-input[type="number"].success,
-textarea.success,
 input[type="search"].success,
 input[type="email"].success,
 input[type="url"].success,
@@ -2290,30 +1727,35 @@ textarea {
    Icons
    ========================================================================== */
 /* topdoc
-    name: LESS Variables
-    family: cf-icons
-    patterns:
-    - name: CSS Prefix
+  name: Less variables
+  family: cf-icons
+  notes:
+    - "These variables can be overriden in your project's Less file."
+  patterns:
+    - name: CSS prefix
       codenotes:
         - "@cf-css-prefix: cf-icon;"
-    tags:
+    - name: Path to icon font files
+      codenotes:
+        - "@cf-icon-path: '../fonts';"
+  tags:
     - cf-icons
 */
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url("../fonts/cf-icons.eot");
-  src: url("../fonts/cf-icons.eot?#iefix") format('embedded-opentype'), url("../fonts/cf-icons.woff") format('woff'), url("../fonts/cf-icons.ttf") format('truetype'), url("../fonts/cf-icons.svg") format('svg');
+  src: url('../fonts/cf-icons.eot');
+  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 /* topdoc
-    name: Icon Class
-    family: cf-icons
-    patterns:
-    - name: Use of Icon Class
+  name: Icon class
+  family: cf-icons
+  patterns:
+    - name: Use of icon class
       notes:
         - "The cf-css-prefix class applies the font family to an element."
-    tags:
+  tags:
     - cf-icons
 */
 .cf-icon {
@@ -2325,43 +1767,43 @@ textarea {
   -webkit-font-smoothing: antialiased;
 }
 /* topdoc
-    name: Navigation Icons
+    name: Navigation icons
     family: cf-icons
     patterns:
-    - name: left
-      markup: |
-        <i class="cf-icon cf-icon-left"></i>
-        <i class="cf-icon cf-icon-left-round"></i>
-    - name: right
-      markup: |
-        <i class="cf-icon cf-icon-right"></i>
-        <i class="cf-icon cf-icon-right-round"></i>
-    - name: up
-      markup: |
-        <i class="cf-icon cf-icon-up"></i>
-        <i class="cf-icon cf-icon-up-round"></i>
-    - name: down
-      markup: |
-        <i class="cf-icon cf-icon-down"></i>
-        <i class="cf-icon cf-icon-down-round"></i>
-    - name: arrow-left
-      markup: |
-        <i class="cf-icon cf-icon-arrow-left"></i>
-        <i class="cf-icon cf-icon-arrow-left-round"></i>
-    - name: arrow-right
-      markup: |
-        <i class="cf-icon cf-icon-arrow-right"></i>
-        <i class="cf-icon cf-icon-arrow-right-round"></i>
-    - name: arrow-up
-      markup: |
-        <i class="cf-icon cf-icon-arrow-up"></i>
-        <i class="cf-icon cf-icon-arrow-up-round"></i>
-    - name: arrow-down
-      markup: |
-        <i class="cf-icon cf-icon-arrow-down"></i>
-        <i class="cf-icon cf-icon-arrow-down-round"></i>
+      - name: left
+        markup: |
+          <i class="cf-icon cf-icon-left"></i>
+          <i class="cf-icon cf-icon-left-round"></i>
+      - name: right
+        markup: |
+          <i class="cf-icon cf-icon-right"></i>
+          <i class="cf-icon cf-icon-right-round"></i>
+      - name: up
+        markup: |
+          <i class="cf-icon cf-icon-up"></i>
+          <i class="cf-icon cf-icon-up-round"></i>
+      - name: down
+        markup: |
+          <i class="cf-icon cf-icon-down"></i>
+          <i class="cf-icon cf-icon-down-round"></i>
+      - name: arrow-left
+        markup: |
+          <i class="cf-icon cf-icon-arrow-left"></i>
+          <i class="cf-icon cf-icon-arrow-left-round"></i>
+      - name: arrow-right
+        markup: |
+          <i class="cf-icon cf-icon-arrow-right"></i>
+          <i class="cf-icon cf-icon-arrow-right-round"></i>
+      - name: arrow-up
+        markup: |
+          <i class="cf-icon cf-icon-arrow-up"></i>
+          <i class="cf-icon cf-icon-arrow-up-round"></i>
+      - name: arrow-down
+        markup: |
+          <i class="cf-icon cf-icon-arrow-down"></i>
+          <i class="cf-icon cf-icon-arrow-down-round"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-left:before {
   content: "\e000";
@@ -2412,39 +1854,39 @@ textarea {
   content: "\e015";
 }
 /* topdoc
-    name: Status Icons
+    name: Status icons
     family: cf-icons
     patterns:
-    - name: approved
-      markup: |
-        <i class="cf-icon cf-icon-approved"></i>
-        <i class="cf-icon cf-icon-approved-round"></i>
-    - name: error
-      markup: |
-        <i class="cf-icon cf-icon-error"></i>
-        <i class="cf-icon cf-icon-error-round"></i>
-    - name: help
-      markup: |
-        <i class="cf-icon cf-icon-help"></i>
-        <i class="cf-icon cf-icon-help-round"></i>
-    - name: delete
-      markup: |
-        <i class="cf-icon cf-icon-delete"></i>
-        <i class="cf-icon cf-icon-delete-round"></i>
-    - name: plus
-      markup: |
-        <i class="cf-icon cf-icon-plus"></i>
-        <i class="cf-icon cf-icon-plus-round"></i>
-    - name: minus
-      markup: |
-        <i class="cf-icon cf-icon-minus"></i>
-        <i class="cf-icon cf-icon-minus-round"></i>
-    - name: update
-      markup: |
-        <i class="cf-icon cf-icon-update"></i>
-        <i class="cf-icon cf-icon-update-round"></i>
+      - name: approved
+        markup: |
+          <i class="cf-icon cf-icon-approved"></i>
+          <i class="cf-icon cf-icon-approved-round"></i>
+      - name: error
+        markup: |
+          <i class="cf-icon cf-icon-error"></i>
+          <i class="cf-icon cf-icon-error-round"></i>
+      - name: help
+        markup: |
+          <i class="cf-icon cf-icon-help"></i>
+          <i class="cf-icon cf-icon-help-round"></i>
+      - name: delete
+        markup: |
+          <i class="cf-icon cf-icon-delete"></i>
+          <i class="cf-icon cf-icon-delete-round"></i>
+      - name: plus
+        markup: |
+          <i class="cf-icon cf-icon-plus"></i>
+          <i class="cf-icon cf-icon-plus-round"></i>
+      - name: minus
+        markup: |
+          <i class="cf-icon cf-icon-minus"></i>
+          <i class="cf-icon cf-icon-minus-round"></i>
+      - name: update
+        markup: |
+          <i class="cf-icon cf-icon-update"></i>
+          <i class="cf-icon cf-icon-update-round"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-approved:before {
   content: "\e100";
@@ -2489,39 +1931,39 @@ textarea {
   content: "\e113";
 }
 /* topdoc
-    name: Social Icons
+    name: Social icons
     family: cf-icons
     patterns:
-    - name: youtube
-      markup: |
-        <i class="cf-icon cf-icon-youtube"></i>
-        <i class="cf-icon cf-icon-youtube-square"></i>
-    - name: linkedin
-      markup: |
-        <i class="cf-icon cf-icon-linkedin"></i>
-        <i class="cf-icon cf-icon-linkedin-square"></i>
-    - name: facebook
-      markup: |
-        <i class="cf-icon cf-icon-facebook"></i>
-        <i class="cf-icon cf-icon-facebook-square"></i>
-    - name: flickr
-      markup: |
-        <i class="cf-icon cf-icon-flickr"></i>
-        <i class="cf-icon cf-icon-flickr-square"></i>
-    - name: plus
-      markup: |
-        <i class="cf-icon cf-icon-twitter"></i>
-        <i class="cf-icon cf-icon-twitter-square"></i>
-    - name: github
-      markup: |
-        <i class="cf-icon cf-icon-github"></i>
-        <i class="cf-icon cf-icon-github-square"></i>
-    - name: email-social
-      markup: |
-        <i class="cf-icon cf-icon-email-social"></i>
-        <i class="cf-icon cf-icon-email-social-square"></i>
+      - name: youtube
+        markup: |
+          <i class="cf-icon cf-icon-youtube"></i>
+          <i class="cf-icon cf-icon-youtube-square"></i>
+      - name: linkedin
+        markup: |
+          <i class="cf-icon cf-icon-linkedin"></i>
+          <i class="cf-icon cf-icon-linkedin-square"></i>
+      - name: facebook
+        markup: |
+          <i class="cf-icon cf-icon-facebook"></i>
+          <i class="cf-icon cf-icon-facebook-square"></i>
+      - name: flickr
+        markup: |
+          <i class="cf-icon cf-icon-flickr"></i>
+          <i class="cf-icon cf-icon-flickr-square"></i>
+      - name: plus
+        markup: |
+          <i class="cf-icon cf-icon-twitter"></i>
+          <i class="cf-icon cf-icon-twitter-square"></i>
+      - name: github
+        markup: |
+          <i class="cf-icon cf-icon-github"></i>
+          <i class="cf-icon cf-icon-github-square"></i>
+      - name: email-social
+        markup: |
+          <i class="cf-icon cf-icon-email-social"></i>
+          <i class="cf-icon cf-icon-email-social-square"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-youtube:before {
   content: "\e200";
@@ -2566,35 +2008,35 @@ textarea {
   content: "\e213";
 }
 /* topdoc
-    name: Communication Icons
+    name: Communication icons
     family: cf-icons
     patterns:
-    - name: web
-      markup: |
-        <i class="cf-icon cf-icon-web"></i>
-        <i class="cf-icon cf-icon-web-round"></i>
-    - name: email
-      markup: |
-        <i class="cf-icon cf-icon-email"></i>
-        <i class="cf-icon cf-icon-email-round"></i>
-    - name: mail
-      markup: |
-        <i class="cf-icon cf-icon-mail"></i>
-        <i class="cf-icon cf-icon-mail-round"></i>
-    - name: phone
-      markup: |
-        <i class="cf-icon cf-icon-phone"></i>
-        <i class="cf-icon cf-icon-phone-round"></i>
-    - name: technology
-      markup: |
-        <i class="cf-icon cf-icon-technology"></i>
-        <i class="cf-icon cf-icon-technology-round"></i>
-    - name: fax
-      markup: |
-        <i class="cf-icon cf-icon-fax"></i>
-        <i class="cf-icon cf-icon-fax-round"></i>
+      - name: web
+        markup: |
+          <i class="cf-icon cf-icon-web"></i>
+          <i class="cf-icon cf-icon-web-round"></i>
+      - name: email
+        markup: |
+          <i class="cf-icon cf-icon-email"></i>
+          <i class="cf-icon cf-icon-email-round"></i>
+      - name: mail
+        markup: |
+          <i class="cf-icon cf-icon-mail"></i>
+          <i class="cf-icon cf-icon-mail-round"></i>
+      - name: phone
+        markup: |
+          <i class="cf-icon cf-icon-phone"></i>
+          <i class="cf-icon cf-icon-phone-round"></i>
+      - name: technology
+        markup: |
+          <i class="cf-icon cf-icon-technology"></i>
+          <i class="cf-icon cf-icon-technology-round"></i>
+      - name: fax
+        markup: |
+          <i class="cf-icon cf-icon-fax"></i>
+          <i class="cf-icon cf-icon-fax-round"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-web:before {
   content: "\e300";
@@ -2633,51 +2075,51 @@ textarea {
   content: "\e311";
 }
 /* topdoc
-    name: Document Icons
+    name: Document icons
     family: cf-icons
     patterns:
-    - name: document
-      markup: |
-        <i class="cf-icon cf-icon-document"></i>
-        <i class="cf-icon cf-icon-document-round"></i>
-    - name: pdf
-      markup: |
-        <i class="cf-icon cf-icon-pdf"></i>
-        <i class="cf-icon cf-icon-pdf-round"></i>
-    - name: upload
-      markup: |
-        <i class="cf-icon cf-icon-upload"></i>
-        <i class="cf-icon cf-icon-upload-round"></i>
-    - name: copy
-      markup: |
-        <i class="cf-icon cf-icon-copy"></i>
-        <i class="cf-icon cf-icon-copy-round"></i>
-    - name: edit
-      markup: |
-        <i class="cf-icon cf-icon-edit"></i>
-        <i class="cf-icon cf-icon-edit-round"></i>
-    - name: attach
-      markup: |
-        <i class="cf-icon cf-icon-attach"></i>
-        <i class="cf-icon cf-icon-attach-round"></i>
-    - name: print
-      markup: |
-        <i class="cf-icon cf-icon-print"></i>
-        <i class="cf-icon cf-icon-print-round"></i>
-    - name: save
-      markup: |
-        <i class="cf-icon cf-icon-save"></i>
-        <i class="cf-icon cf-icon-save-round"></i>
-    - name: appendix
-      markup: |
-        <i class="cf-icon cf-icon-appendix"></i>
-        <i class="cf-icon cf-icon-appendix-round"></i>
-    - name: supplement
-      markup: |
-        <i class="cf-icon cf-icon-supplement"></i>
-        <i class="cf-icon cf-icon-supplement-round"></i>
+      - name: document
+        markup: |
+          <i class="cf-icon cf-icon-document"></i>
+          <i class="cf-icon cf-icon-document-round"></i>
+      - name: pdf
+        markup: |
+          <i class="cf-icon cf-icon-pdf"></i>
+          <i class="cf-icon cf-icon-pdf-round"></i>
+      - name: upload
+        markup: |
+          <i class="cf-icon cf-icon-upload"></i>
+          <i class="cf-icon cf-icon-upload-round"></i>
+      - name: copy
+        markup: |
+          <i class="cf-icon cf-icon-copy"></i>
+          <i class="cf-icon cf-icon-copy-round"></i>
+      - name: edit
+        markup: |
+          <i class="cf-icon cf-icon-edit"></i>
+          <i class="cf-icon cf-icon-edit-round"></i>
+      - name: attach
+        markup: |
+          <i class="cf-icon cf-icon-attach"></i>
+          <i class="cf-icon cf-icon-attach-round"></i>
+      - name: print
+        markup: |
+          <i class="cf-icon cf-icon-print"></i>
+          <i class="cf-icon cf-icon-print-round"></i>
+      - name: save
+        markup: |
+          <i class="cf-icon cf-icon-save"></i>
+          <i class="cf-icon cf-icon-save-round"></i>
+      - name: appendix
+        markup: |
+          <i class="cf-icon cf-icon-appendix"></i>
+          <i class="cf-icon cf-icon-appendix-round"></i>
+      - name: supplement
+        markup: |
+          <i class="cf-icon cf-icon-supplement"></i>
+          <i class="cf-icon cf-icon-supplement-round"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-document:before {
   content: "\e400";
@@ -2746,91 +2188,91 @@ textarea {
   content: "\e421";
 }
 /* topdoc
-    name: Financial Product Icons
+    name: Financial product icons
     family: cf-icons
     patterns:
-    - name: bank-account
-      markup: |
-        <i class="cf-icon cf-icon-bank-account"></i>
-        <i class="cf-icon cf-icon-bank-account-round"></i>
-    - name: credit-card
-      markup: |
-        <i class="cf-icon cf-icon-credit-card"></i>
-        <i class="cf-icon cf-icon-credit-card-round"></i>
-    - name: loan
-      markup: |
-        <i class="cf-icon cf-icon-loan"></i>
-        <i class="cf-icon cf-icon-loan-round"></i>
-    - name: money-transfer
-      markup: |
-        <i class="cf-icon cf-icon-money-transfer"></i>
-        <i class="cf-icon cf-icon-money-transfer-round"></i>
-    - name: mortgage
-      markup: |
-        <i class="cf-icon cf-icon-mortgage"></i>
-        <i class="cf-icon cf-icon-mortgage-round"></i>
-    - name: debt-collection
-      markup: |
-        <i class="cf-icon cf-icon-debt-collection"></i>
-        <i class="cf-icon cf-icon-debt-collection-round"></i>
-    - name: credit-report
-      markup: |
-        <i class="cf-icon cf-icon-credit-report"></i>
-        <i class="cf-icon cf-icon-credit-report-round"></i>
-    - name: money
-      markup: |
-        <i class="cf-icon cf-icon-money"></i>
-        <i class="cf-icon cf-icon-money-round"></i>
-    - name: quick-cash
-      markup: |
-        <i class="cf-icon cf-icon-quick-cash"></i>
-        <i class="cf-icon cf-icon-quick-cash-round"></i>
-    - name: contract
-      markup: |
-        <i class="cf-icon cf-icon-contract"></i>
-        <i class="cf-icon cf-icon-contract-round"></i>
-    - name: comlaint
-      markup: |
-        <i class="cf-icon cf-icon-complaint"></i>
-        <i class="cf-icon cf-icon-complaint-round"></i>
-    - name: getting-credit-card
-      markup: |
-        <i class="cf-icon cf-icon-getting-credit-card"></i>
-        <i class="cf-icon cf-icon-getting-credit-card-round"></i>
-    - name: buying-car
-      markup: |
-        <i class="cf-icon cf-icon-buying-car"></i>
-        <i class="cf-icon cf-icon-buying-car-round"></i>
-    - name: mortgage
-      markup: |
-        <i class="cf-icon cf-icon-paying-college"></i>
-        <i class="cf-icon cf-icon-paying-college-round"></i>
-    - name: owning-home
-      markup: |
-        <i class="cf-icon cf-icon-owning-home"></i>
-        <i class="cf-icon cf-icon-owning-home-round"></i>
-    - name: debt
-      markup: |
-        <i class="cf-icon cf-icon-debt"></i>
-        <i class="cf-icon cf-icon-debt-round"></i>
-    - name: building-credit
-      markup: |
-        <i class="cf-icon cf-icon-building-credit"></i>
-        <i class="cf-icon cf-icon-building-credit-round"></i>
-    - name: prepaid-cards
-      markup: |
-        <i class="cf-icon cf-icon-prepaid-cards"></i>
-        <i class="cf-icon cf-icon-prepaid-cards-round"></i>
-    - name: payday-loan
-      markup: |
-        <i class="cf-icon cf-icon-payday-loan"></i>
-        <i class="cf-icon cf-icon-payday-loan-round"></i>
-    - name: retirement
-      markup: |
-        <i class="cf-icon cf-icon-retirement"></i>
-        <i class="cf-icon cf-icon-retirement-round"></i>
+      - name: bank-account
+        markup: |
+          <i class="cf-icon cf-icon-bank-account"></i>
+          <i class="cf-icon cf-icon-bank-account-round"></i>
+      - name: credit-card
+        markup: |
+          <i class="cf-icon cf-icon-credit-card"></i>
+          <i class="cf-icon cf-icon-credit-card-round"></i>
+      - name: loan
+        markup: |
+          <i class="cf-icon cf-icon-loan"></i>
+          <i class="cf-icon cf-icon-loan-round"></i>
+      - name: money-transfer
+        markup: |
+          <i class="cf-icon cf-icon-money-transfer"></i>
+          <i class="cf-icon cf-icon-money-transfer-round"></i>
+      - name: mortgage
+        markup: |
+          <i class="cf-icon cf-icon-mortgage"></i>
+          <i class="cf-icon cf-icon-mortgage-round"></i>
+      - name: debt-collection
+        markup: |
+          <i class="cf-icon cf-icon-debt-collection"></i>
+          <i class="cf-icon cf-icon-debt-collection-round"></i>
+      - name: credit-report
+        markup: |
+          <i class="cf-icon cf-icon-credit-report"></i>
+          <i class="cf-icon cf-icon-credit-report-round"></i>
+      - name: money
+        markup: |
+          <i class="cf-icon cf-icon-money"></i>
+          <i class="cf-icon cf-icon-money-round"></i>
+      - name: quick-cash
+        markup: |
+          <i class="cf-icon cf-icon-quick-cash"></i>
+          <i class="cf-icon cf-icon-quick-cash-round"></i>
+      - name: contract
+        markup: |
+          <i class="cf-icon cf-icon-contract"></i>
+          <i class="cf-icon cf-icon-contract-round"></i>
+      - name: comlaint
+        markup: |
+          <i class="cf-icon cf-icon-complaint"></i>
+          <i class="cf-icon cf-icon-complaint-round"></i>
+      - name: getting-credit-card
+        markup: |
+          <i class="cf-icon cf-icon-getting-credit-card"></i>
+          <i class="cf-icon cf-icon-getting-credit-card-round"></i>
+      - name: buying-car
+        markup: |
+          <i class="cf-icon cf-icon-buying-car"></i>
+          <i class="cf-icon cf-icon-buying-car-round"></i>
+      - name: mortgage
+        markup: |
+          <i class="cf-icon cf-icon-paying-college"></i>
+          <i class="cf-icon cf-icon-paying-college-round"></i>
+      - name: owning-home
+        markup: |
+          <i class="cf-icon cf-icon-owning-home"></i>
+          <i class="cf-icon cf-icon-owning-home-round"></i>
+      - name: debt
+        markup: |
+          <i class="cf-icon cf-icon-debt"></i>
+          <i class="cf-icon cf-icon-debt-round"></i>
+      - name: building-credit
+        markup: |
+          <i class="cf-icon cf-icon-building-credit"></i>
+          <i class="cf-icon cf-icon-building-credit-round"></i>
+      - name: prepaid-cards
+        markup: |
+          <i class="cf-icon cf-icon-prepaid-cards"></i>
+          <i class="cf-icon cf-icon-prepaid-cards-round"></i>
+      - name: payday-loan
+        markup: |
+          <i class="cf-icon cf-icon-payday-loan"></i>
+          <i class="cf-icon cf-icon-payday-loan-round"></i>
+      - name: retirement
+        markup: |
+          <i class="cf-icon cf-icon-retirement"></i>
+          <i class="cf-icon cf-icon-retirement-round"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-bank-account:before {
   content: "\e500";
@@ -2953,95 +2395,95 @@ textarea {
   content: "\e539";
 }
 /* topdoc
-    name: Web Icons
+    name: Web icons
     family: cf-icons
     patterns:
-    - name: user
-      markup: |
-        <i class="cf-icon cf-icon-user"></i>
-        <i class="cf-icon cf-icon-user-round"></i>
-    - name: wifi
-      markup: |
-        <i class="cf-icon cf-icon-wifi"></i>
-        <i class="cf-icon cf-icon-wifi-round"></i>
-    - name: search
-      markup: |
-        <i class="cf-icon cf-icon-search"></i>
-        <i class="cf-icon cf-icon-search-round"></i>
-    - name: share
-      markup: |
-        <i class="cf-icon cf-icon-share"></i>
-        <i class="cf-icon cf-icon-share-round"></i>
-    - name: link
-      markup: |
-        <i class="cf-icon cf-icon-link"></i>
-        <i class="cf-icon cf-icon-link-round"></i>
-    - name: external-link
-      markup: |
-        <i class="cf-icon cf-icon-external-link"></i>
-        <i class="cf-icon cf-icon-external-link-round"></i>
-    - name: audio-mute
-      markup: |
-        <i class="cf-icon cf-icon-audio-mute"></i>
-        <i class="cf-icon cf-icon-audio-mute-round"></i>
-    - name: audio-low
-      markup: |
-        <i class="cf-icon cf-icon-audio-low"></i>
-        <i class="cf-icon cf-icon-audio-low-round"></i>
-    - name: audio-medium
-      markup: |
-        <i class="cf-icon cf-icon-audio-medium"></i>
-        <i class="cf-icon cf-icon-audio-medium-round"></i>
-    - name: audio-max
-      markup: |
-        <i class="cf-icon cf-icon-audio-max"></i>
-        <i class="cf-icon cf-icon-audio-max-round"></i>
-    - name: favorite
-      markup: |
-        <i class="cf-icon cf-icon-favorite"></i>
-        <i class="cf-icon cf-icon-favorite-round"></i>
-    - name: unfavorite
-      markup: |
-        <i class="cf-icon cf-icon-unfavorite"></i>
-        <i class="cf-icon cf-icon-unfavorite-round"></i>
-    - name: bookmark
-      markup: |
-        <i class="cf-icon cf-icon-bookmark"></i>
-        <i class="cf-icon cf-icon-bookmark-round"></i>
-    - name: unbookmark
-      markup: |
-        <i class="cf-icon cf-icon-unbookmark"></i>
-        <i class="cf-icon cf-icon-unbookmark-round"></i>
-    - name: settings
-      markup: |
-        <i class="cf-icon cf-icon-settings"></i>
-        <i class="cf-icon cf-icon-settings-round"></i>
-    - name: menu
-      markup: |
-        <i class="cf-icon cf-icon-menu"></i>
-        <i class="cf-icon cf-icon-menu-round"></i>
-    - name: lock
-      markup: |
-        <i class="cf-icon cf-icon-lock"></i>
-        <i class="cf-icon cf-icon-lock-round"></i>
-    - name: unlock
-      markup: |
-        <i class="cf-icon cf-icon-unlock"></i>
-        <i class="cf-icon cf-icon-unlock-round"></i>
-    - name: clock
-      markup: |
-        <i class="cf-icon cf-icon-clock"></i>
-        <i class="cf-icon cf-icon-clock-round"></i>
-    - name: chart
-      markup: |
-        <i class="cf-icon cf-icon-chart"></i>
-        <i class="cf-icon cf-icon-chart-round"></i>
-    - name: play
-      markup: |
-        <i class="cf-icon cf-icon-play"></i>
-        <i class="cf-icon cf-icon-play-round"></i>
+      - name: user
+        markup: |
+          <i class="cf-icon cf-icon-user"></i>
+          <i class="cf-icon cf-icon-user-round"></i>
+      - name: wifi
+        markup: |
+          <i class="cf-icon cf-icon-wifi"></i>
+          <i class="cf-icon cf-icon-wifi-round"></i>
+      - name: search
+        markup: |
+          <i class="cf-icon cf-icon-search"></i>
+          <i class="cf-icon cf-icon-search-round"></i>
+      - name: share
+        markup: |
+          <i class="cf-icon cf-icon-share"></i>
+          <i class="cf-icon cf-icon-share-round"></i>
+      - name: link
+        markup: |
+          <i class="cf-icon cf-icon-link"></i>
+          <i class="cf-icon cf-icon-link-round"></i>
+      - name: external-link
+        markup: |
+          <i class="cf-icon cf-icon-external-link"></i>
+          <i class="cf-icon cf-icon-external-link-round"></i>
+      - name: audio-mute
+        markup: |
+          <i class="cf-icon cf-icon-audio-mute"></i>
+          <i class="cf-icon cf-icon-audio-mute-round"></i>
+      - name: audio-low
+        markup: |
+          <i class="cf-icon cf-icon-audio-low"></i>
+          <i class="cf-icon cf-icon-audio-low-round"></i>
+      - name: audio-medium
+        markup: |
+          <i class="cf-icon cf-icon-audio-medium"></i>
+          <i class="cf-icon cf-icon-audio-medium-round"></i>
+      - name: audio-max
+        markup: |
+          <i class="cf-icon cf-icon-audio-max"></i>
+          <i class="cf-icon cf-icon-audio-max-round"></i>
+      - name: favorite
+        markup: |
+          <i class="cf-icon cf-icon-favorite"></i>
+          <i class="cf-icon cf-icon-favorite-round"></i>
+      - name: unfavorite
+        markup: |
+          <i class="cf-icon cf-icon-unfavorite"></i>
+          <i class="cf-icon cf-icon-unfavorite-round"></i>
+      - name: bookmark
+        markup: |
+          <i class="cf-icon cf-icon-bookmark"></i>
+          <i class="cf-icon cf-icon-bookmark-round"></i>
+      - name: unbookmark
+        markup: |
+          <i class="cf-icon cf-icon-unbookmark"></i>
+          <i class="cf-icon cf-icon-unbookmark-round"></i>
+      - name: settings
+        markup: |
+          <i class="cf-icon cf-icon-settings"></i>
+          <i class="cf-icon cf-icon-settings-round"></i>
+      - name: menu
+        markup: |
+          <i class="cf-icon cf-icon-menu"></i>
+          <i class="cf-icon cf-icon-menu-round"></i>
+      - name: lock
+        markup: |
+          <i class="cf-icon cf-icon-lock"></i>
+          <i class="cf-icon cf-icon-lock-round"></i>
+      - name: unlock
+        markup: |
+          <i class="cf-icon cf-icon-unlock"></i>
+          <i class="cf-icon cf-icon-unlock-round"></i>
+      - name: clock
+        markup: |
+          <i class="cf-icon cf-icon-clock"></i>
+          <i class="cf-icon cf-icon-clock-round"></i>
+      - name: chart
+        markup: |
+          <i class="cf-icon cf-icon-chart"></i>
+          <i class="cf-icon cf-icon-chart-round"></i>
+      - name: play
+        markup: |
+          <i class="cf-icon cf-icon-play"></i>
+          <i class="cf-icon cf-icon-play-round"></i>
     tags:
-    - cf-icons
+      - cf-icons
 */
 .cf-icon-user:before {
   content: "\e600";
@@ -3222,8 +2664,7 @@ textarea {
   margin: 1em 0 0 0;
   background: #E3E4E5;
   color: #75787B;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   text-align: center;
@@ -3241,11 +2682,13 @@ textarea {
   /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
 
   font-size: 0.875em;
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   text-align: right;
+}
+.lt-ie9 .pagination_current-page {
+  font-weight: normal !important;
 }
 .pagination_submit.btn {
   display: inline-block;
@@ -3282,2039 +2725,108 @@ textarea {
    Capital Framework
    Basic Typography
    ========================================================================== */
-/* topdoc
-    name: LESS notes
-    family: cf-typography
-    patterns:
-    - name: Size variables
-      codenotes:
-        - "@base-font-size-px: 16px;"
-        - "@base-line-height-px: 22px;"
-        - "@base-line-height: unit(@base-line-height-px / @base-font-size-px);"
-    - name: Webfont mixins
-      codenotes:
-        - ".webfont-regular()"
-        - ".webfont-italic()"
-        - ".webfont-medium()"
-        - ".webfont-demi()"
-    - name: Explicitly set font styles
-      notes:
-        - "Any instances of Avenir Next getting italicized or bolded must be declared explicitly
-          so that it uses the correct webfont and does not fake the style on normal Avenir Next."
-        - "Use the webfont mixins above to make this easy. See the #blockquote styles as an example."
-      markup: |
-       <blockquote cite="http://cfpb.github.io/cf-typography/docs/index.html#webfont-notes">
-         Any instances of Avenir Next getting <em>italic</em><i>ized</i> or <strong>bold</strong><b>ed</b> must be declared explicitly ...
-       </blockquote> 
-    tags:
-    - cf-typography
-*/
-/* topdoc
-    name: Type hierarchy
-    family: cf-typography
-    patterns:
-    - name: Default body type
-      markup: |
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    - name: Heading level 1
-      markup: |
-        <h1>Example heading element</h1>
-        <p class="h1">A non-heading element</p>
-    - name: Heading level 2
-      markup: |
-        <h2>Example heading element</h2>
-        <p class="h2">A non-heading element</p>
-    - name: Heading level 3
-      markup: |
-        <h3>Example heading element</h3>
-        <p class="h3">A non-heading element</p>
-    - name: Heading level 4
-      markup: |
-        <h4>Example heading element</h4>
-        <p class="h4">A non-heading element</p>
-    - name: Heading level 5
-      markup: |
-        <h5>Example heading element</h5>
-        <p class="h5">A non-heading element</p>
-    - name: Heading level 6
-      markup: |
-        <h6>Example heading element</h6>
-        <p class="h6">A non-heading element</p>
-    - name: Super header
-      markup: |
-        <h1 class="superheader">Example super heading</h1>
-        <p class="superheader">Example super heading</p>
-    tags:
-    - cf-typography
-*/
-body {
-  color: #101820;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 100%;
-  line-height: 1.375;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+/*
+ * Source: http://fast.fonts.net/cssapi/44e8c964-4684-44c6-a6e3-3f3da8787b50.css
+ * This file has been edited to use absolute URLS so we can concatenate it with
+ * all of our other styles.
+ */
+@font-face {
+  font-family: "AvenirNextLTW01-Regular";
+  src: url("//fast.fonts.net/dv2/2/e9167238-3b3f-4813-a04a-a384394eed42.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("eot");
   font-style: normal;
   font-weight: normal;
 }
-h1,
-.h1 {
-  margin-bottom: 0.6470588235294118em;
-  font-size: 2.125em;
-  line-height: 1.2941176470588236;
-}
-h2,
-.h2 {
-  margin-bottom: 0.8461538461538461em;
-  font-size: 1.625em;
-  line-height: 1.2692307692307692;
-}
-h3,
-.h3 {
-  margin-bottom: 1em;
-  font-size: 1.375em;
-  line-height: 1.2727272727272727;
-}
-h4,
-.h4 {
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  margin-bottom: 1.2222222222222223em;
-  font-size: 1.125em;
-  line-height: 1.2222222222222223;
-}
-h5,
-h6,
-.h5,
-.h6 {
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-h5,
-.h5 {
-  margin-bottom: 1.5714285714285714em;
-  font-size: 0.875em;
-  line-height: 1.5714285714285714;
-}
-h6,
-.h6 {
-  margin-bottom: 1.8333333333333333em;
-  font-size: 0.75em;
-  line-height: 1.8333333333333333;
-}
-.superheader {
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  margin-bottom: 0.4583333333333333em;
-  font-size: 3em;
-  line-height: 1.375;
-}
-/* topdoc
-    name: Margins
-    family: cf-typography
-    patterns:
-    - name: Consistent vertical margins
-      notes:
-        - "Assumes that the font size of each of these items remains the default."
-      markup: |
-        <p>Paragraph margin example</p>
-        <p>Paragraph margin example</p>
-    tags:
-    - cf-typography
-*/
-p,
-ul,
-ol,
-dl,
-table,
-blockquote,
-figure {
-  margin-top: 0;
-  margin-bottom: 1.375em;
-}
-/* topdoc
-    name: Default link
-    notes:
-      - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-        be used in production."
-    family: cf-typography
-    patterns:
-    - name: Default state
-      markup: |
-        <a href="#">Default link style</a>
-    - name: Visited state
-      markup: |
-        <a href="#" class="visited">Visited link style</a>
-    - name: Hovered state
-      markup: |
-        <a href="#" class="hover">Hovered link style</a>
-    - name: Focused state
-      markup: |
-        <a href="#" class="focus">Focused link style</a>
-    - name: Active state
-      markup: |
-        <a href="#" class="active">Active link style</a>
-    tags:
-    - cf-typography
-*/
-a {
-  border-bottom-width: 0;
-  border-bottom-style: dotted;
-  border-bottom-color: #0072ce;
-  color: #0072ce;
-  text-decoration: none;
-}
-a:visited,
-a.visited {
-  border-bottom-color: #005e5d;
-  color: #005e5d;
-}
-a:hover,
-a.hover {
-  border-bottom-style: solid;
-  border-bottom-color: #7fb8e6;
-  color: #7fb8e6;
-}
-a:focus,
-a.focus {
-  border-bottom-style: solid;
-}
-a:active,
-a.active {
-  border-bottom-style: solid;
-  border-bottom-color: #002d72;
-  color: #002d72;
-}
-/* topdoc
-    name: Underlined links
-    family: cf-typography
-    patterns:
-    - name: States
-      notes:
-        - "Note that the .visited, .hover, .focus, .active classes are for demonstration purposes only and should not 
-          be used in production."
-        - "The underline style properties are mostly set above in the a tag.
-          To enable the underline simply set a bottom-border-width as done here."
-      markup: |
-        <p>
-            <a href="#">Default</a>,
-            <a href="#" class="visited">Visited</a>,
-            <a href="#" class="hover">Hovered</a>,
-            <a href="#" class="focus">Focused</a>,
-            <a href="#" class="active">Active</a>
-        </p>
-    - name: Underline conditions
-      notes:
-       - "We're restricting link borders to links within p, li, and dd so that
-         we don't have to override them every time we want a plain link."
-      markup: |
-        <p>
-            <a href="#">A child of a paragraph</a>
-        </p>
-        <ul>
-            <li>
-                <a href="#">A child of a list item</a>
-            </li>
-        </ul>
-        <dl>
-            <dt>
-                Definition list term
-            </dt>
-            <dd>
-                <a href="#">A child of a definition list description</a>
-            </dd>
-        </dl>
-    - name: Exceptions for underlined links
-      notes:
-        - "Inline text links inside of a nav element are not underlined."
-      markup: |
-        <nav>
-            <p>
-                <a href="#">A child of a paragraph</a>
-            </p>
-            <ul>
-                <li>
-                    <a href="#">A child of a list item</a>
-                </li>
-            </ul>
-            <dl>
-                <dt>
-                    Definition list term
-                </dt>
-                <dd>
-                    <a href="#">A child of a definition list description</a>
-                </dd>
-            </dl>
-        </nav>
-    tags:
-    - cf-typography
-*/
-p a,
-li a,
-dd a {
-  border-bottom-width: 1px;
-}
-nav a {
-  border-bottom-width: 0;
-}
-/* topdoc
-    name: Blockquote
-    family: cf-typography
-    patterns:
-    - name: Default blockquote
-      markup: |
-       <blockquote>
-         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi animi facere modi eaque amet odio!
-       </blockquote> 
-    tags:
-    - cf-typography
-*/
-blockquote {
-  padding: 0.5em 0.75em;
-  border-left: 4px solid #2cb34a;
-  background: #addc91;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+@font-face {
+  font-family: "AvenirNextLTW01-Regular";
+  src: url("//fast.fonts.net/dv2/2/e9167238-3b3f-4813-a04a-a384394eed42.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
+  src: url("//fast.fonts.net/dv2/3/1e9892c0-6927-4412-9874-1b82801ba47a.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/52a192b1-bea5-4b48-879f-107f009b666f.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
   font-style: normal;
   font-weight: normal;
 }
-blockquote em,
-blockquote i {
-  font-family: "Avenir Next Italic", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+@font-face {
+  font-family: "AvenirNextLTW01-Italic";
+  src: url("//fast.fonts.net/dv2/2/d1fddef1-d940-4904-8f6c-17e809462301.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("eot");
   font-style: italic;
   font-weight: normal;
 }
-blockquote strong,
-blockquote b {
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
+@font-face {
+  font-family: "AvenirNextLTW01-Italic";
+  src: url("//fast.fonts.net/dv2/2/d1fddef1-d940-4904-8f6c-17e809462301.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
+  src: url("//fast.fonts.net/dv2/3/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585") format("svg");
+  font-style: italic;
+  font-weight: normal;
 }
-/* topdoc
-    name: Lists
-    family: cf-typography
-    patterns:
-    - name: Unordered list
-      markup: |
-       <ul>
-         <li>List item</li>
-         <li>List item</li>
-         <li>List item</li>
-       </ul>
-    tags:
-    - cf-typography
-*/
-ul {
-  list-style: square;
-}
-/* topdoc
-    name: IE overrides
-    family: cf-typography
-    patterns:
-    - name: Prevent faux/double bold and italics in IE 6-8
-      notes:
-        - "Any bold or italic Avenir elements added to the base styles MUST BE added to this section, as well."
-        - "Dependent on using H5BP's conditional classes on the <html> element:
-          https://github.com/h5bp/html5-boilerplate/blob/v4.3.0/doc/html.md"
-      markup: |
-        <h5>I might appear as faux/double bold in older IE without this fix.</h5>
-    tags:
-    - cf-typography
-    - ltie9
-*/
-.lt-ie9 h1,
-.lt-ie9 h2,
-.lt-ie9 h3,
-.lt-ie9 h4,
-.lt-ie9 h5,
-.lt-ie9 h6,
-.lt-ie9 blockquote strong {
-  font-weight: normal !important;
-}
-.lt-ie9 blockquote em {
-  font-style: normal !important;
-}
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Expandable Styling
-   ========================================================================== */
-/* topdoc
-    name: Default expandable
-    family: cf-expandables
-    patterns:
-    - name: Default state
-      markup: |
-        <div class="expandable">
-            <header class="expandable-header">
-                Expandable Header
-                <a href="" class="expandable-button">
-                    <span class="expandable-text">Show</span> <i class="icon-plus-sign"></i>
-                </a>
-            </header>
-            <div class="expandable-content expandable-hidden" style="display: none;">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-        </div>
-    tags:
-    - cf-expandables
-*/
-.expandable {
-  margin-bottom: 1.375em;
-  background: #f1f2f2;
-}
-.expandable:hover,
-.expandable .open {
-  background: #e3e4e5;
-}
-.expandable-hidden {
-  display: none;
-}
-.expandable-header {
-  padding: 0.625em 0.75em;
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+@font-face {
+  font-family: "AvenirNextLTW01-Medium";
+  src: url("//fast.fonts.net/dv2/2/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("eot");
   font-style: normal;
   font-weight: 500;
-  cursor: pointer;
 }
-.expandable-button,
-.expandable-button:link,
-.expandable-button:visited {
-  margin: 0;
-  border-width: 0;
-  float: right;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 0.875em;
-  line-height: 1.5714285714285714;
-}
-.expandable-content {
-  padding: 0 0.75em 0.25em;
-}
-.open .icon-plus-sign:before {
-  content: "\f056";
-}
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Form Element Styling
-   ========================================================================== */
-/* topdoc
-    name: Form labels
-    family: cf-forms
-    patterns:
-    - name: Default label
-      notes:
-        - "Warning, this pattern is still under development."
-      markup: |
-        <label>I am a form label</label>
-    tags:
-    - cf-forms
-*/
-label {
-  display: block;
-}
-/* topdoc
-    name: Single-line text input
-    notes:
-      - Most other text-based inputs extend styles from here as seen in the CSS to the right.
-    family: cf-forms
-    patterns:
-    - name: Default single-line text input
-      markup: |
-        <input placeholder="placeholder text" type="text" value="">
-    - name: Focused state
-      markup: |
-        <input class="focus" placeholder="placeholder text" type="text" value="">
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <input class="error" placeholder="placeholder text" type="text" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <input class="success" placeholder="placeholder text" type="text" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-input[type="text"],
-input[type="search"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
-textarea,
-input[type="search"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
-textarea {
-  display: inline-block;
-  width: 85%;
-  margin: 0;
-  padding: 0.25em;
-  font-family: Arial, sans-serif;
-  font-size: 1em;
-  background: #ffffff;
-  border: 1px solid #75787b;
-  border-radius: 0;
-  vertical-align: top;
-  -webkit-appearance: none;
-  -webkit-user-modify: read-write-plaintext-only;
-}
-input[type="text"]:focus,
-input[type="text"].focus,
-input[type="search"]:focus,
-input[type="search"].focus,
-input[type="email"]:focus,
-input[type="email"].focus,
-input[type="url"]:focus,
-input[type="url"].focus,
-input[type="tel"]:focus,
-input[type="tel"].focus,
-input[type="number"]:focus,
-input[type="number"].focus,
-textarea:focus,
-textarea.focus,
-input[type="search"]:focus,
-input[type="search"].focus,
-input[type="email"]:focus,
-input[type="email"].focus,
-input[type="url"]:focus,
-input[type="url"].focus,
-input[type="tel"]:focus,
-input[type="tel"].focus,
-input[type="number"]:focus,
-input[type="number"].focus,
-textarea:focus,
-textarea.focus {
-  border: 1px solid #0072ce;
-  border-color: #0072ce;
-  outline: 1px solid #0072ce;
-  outline-offset: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-input[type="text"].error,
-input[type="search"].error,
-input[type="email"].error,
-input[type="url"].error,
-input[type="tel"].error,
-input[type="number"].error,
-textarea.error,
-input[type="search"].error,
-input[type="email"].error,
-input[type="url"].error,
-input[type="tel"].error,
-input[type="number"].error,
-textarea.error {
-  border: 1px solid #d12124;
-  outline: 1px solid #d12124;
-}
-input[type="text"].success,
-input[type="search"].success,
-input[type="email"].success,
-input[type="url"].success,
-input[type="tel"].success,
-input[type="number"].success,
-textarea.success,
-input[type="search"].success,
-input[type="email"].success,
-input[type="url"].success,
-input[type="tel"].success,
-input[type="number"].success,
-textarea.success {
-  border: 1px solid #2cb34a;
-  outline: 1px solid #2cb34a;
-}
-/* topdoc
-    name: Single-line search input
-    family: cf-forms
-    patterns:
-    - name: Default single-line search input
-      markup: |
-        <input placeholder="placeholder search text" type="search" value="">
-    - name: Focused state
-      markup: |
-        <input class="focus" placeholder="placeholder search text" type="search" value="">
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <input class="error" placeholder="placeholder search text" type="search" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <input class="success" placeholder="placeholder search text" type="search" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-/* NOTE: all input[type="search"] styles extend input[type="text"]. */
-/* topdoc
-    name: Single-line email input
-    family: cf-forms
-    patterns:
-    - name: Default single-line email input
-      markup: |
-        <input placeholder="placeholder email text" type="email" value="">
-    - name: Focused state
-      markup: |
-        <input class="focus" placeholder="placeholder email text" type="email" value="">
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <input class="error" placeholder="placeholder email text" type="email" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <input class="success" placeholder="placeholder email text" type="email" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-/* NOTE: all input[type="email"] styles extend input[type="text"]. */
-/* topdoc
-    name: Single-line url input
-    family: cf-forms
-    patterns:
-    - name: Default single-line url input
-      markup: |
-        <input placeholder="placeholder url text" type="url" value="">
-    - name: Focused state
-      markup: |
-        <input class="focus" placeholder="placeholder url text" type="url" value="">
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <input class="error" placeholder="placeholder url text" type="url" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <input class="success" placeholder="placeholder url text" type="url" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-/* NOTE: all input[type="url"] styles extend input[type="text"]. */
-/* topdoc
-    name: Single-line tel input
-    family: cf-forms
-    patterns:
-    - name: Default single-line tel input
-      markup: |
-        <input placeholder="placeholder tel text" type="tel" value="">
-    - name: Focused state
-      markup: |
-        <input class="focus" placeholder="placeholder tel text" type="tel" value="">
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <input class="error" placeholder="placeholder tel text" type="tel" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <input class="success" placeholder="placeholder tel text" type="tel" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-/* NOTE: all input[type="tel"] styles extend input[type="text"]. */
-/* topdoc
-    name: Single-line number input
-    family: cf-forms
-    patterns:
-    - name: Default single-line number input
-      markup: |
-        <input placeholder="placeholder number text" type="number" value="">
-    - name: Focused state
-      markup: |
-        <input class="focus" placeholder="placeholder number text" type="number" value="">
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <input class="error" placeholder="placeholder number text" type="number" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <input class="success" placeholder="placeholder number text" type="number" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-/* NOTE: all input[type="number"] styles extend input[type="text"]. */
-/* topdoc
-    name: Multiline textarea
-    family: cf-forms
-    patterns:
-    - name: Default multi-line text box
-      markup: |
-        <textarea>Example entry</textarea>
-    - name: Focused multi-line text box
-      markup: |
-        <textarea class="focus">Example entry</textarea>
-    - name: Multi-line text box in error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <textarea class="error">Invalid input</textarea>
-        <i class="cf-form_input-icon icon-remove-sign" role="alert"><span class="jekyll-bug"></span></i>
-    - name: Multi-line text box in success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <textarea class="success">Validated input</textarea>
-        <i class="cf-form_input-icon icon-ok-sign"><span class="jekyll-bug"></span></i>
-    tags:
-    - cf-forms
-*/
-/* NOTE: all textarea styles extend input[type="text"]. */
-textarea {
-  overflow: auto;
-}
-/* topdoc
-    name: Form icons
-    family: cf-forms
-    patterns:
-    - name: The .jekyll-bug element
-      codenotes:
-        - |
-          <i class="cf-form_input-icon icon-credit-card">
-            <span class="jekyll-bug"></span>
-          </i>
-      notes:
-        - |
-          Adding the .jekyll-bug element inside of an icon is only necessary
-          when using Jekyll as it tends to ignore empty <i> elements.
-    - name: Form input icons
-      notes:
-        - "Form input icons add small positioning tweaks to Font Awesome icons."
-        - "They are meant to be positioned after a form input."
-      markup: |
-        <input type="text" value="">
-        <i class="cf-form_input-icon icon-credit-card">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Form input error icon
-      notes:
-        - |
-          The icon must be placed directly after the form input in the markup
-          and the input must have the class of "error".
-        - 'Use the alert role to mark invalid fields: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role'
-      markup: |
-        <input class="error" placeholder="placeholder search text" type="search" value="Invalid input">
-        <i class="cf-form_input-icon icon-remove-sign" role="alert">
-          <span class="jekyll-bug"></span>
-        </i>
-    - name: Form input success icon
-      notes:
-        - |
-          The icon must be placed directly after the form input in the markup
-          and the input must have the class of "success".
-      markup: |
-        <input class="success" placeholder="placeholder search text" type="search" value="Validated input">
-        <i class="cf-form_input-icon icon-ok-sign">
-          <span class="jekyll-bug"></span>
-        </i>
-    tags:
-    - cf-forms
-*/
-.cf-form_input-icon {
-  position: relative;
-  top: 0.15em;
-  margin-left: 0.2em;
-  font-size: 1.25em;
-}
-.error + .cf-form_input-icon {
-  color: #d12124;
-}
-.success + .cf-form_input-icon {
-  color: #2cb34a;
-}
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Grid mixins
-   ========================================================================== */
-/* topdoc
-    name: "Global Less variables"
-    notes:
-      - "The following variables are default values used in creating grids.
-        They can be overridden in your application's stylesheet.
-        Most mixins allows you to override these values by passing them arguments."
-    family: "cf-grid"
-    patterns:
-    - codenotes:
-        - "@wrapper-width: 1200px;"
-      notes:
-        - "The grid's maximum width in px."
-    - codenotes:
-      - "@gutter-width: 30px;"
-      notes:
-        - "The fixed width between columns."
-    - codenotes:
-      - "@total-columns: 12;"
-      notes:
-        - "The total number of columns used in calculating column widths."
-    - codenotes:
-      - "@debug"
-      notes:
-        - "Gives column blocks a background color if set to true."
-    tags:
-    - "cf-grid"
-*/
-/* topdoc
-    name: "Wrapper"
-    notes:
-      - "Wrappers are centered containers with a max-width and fixed gutters
-        that match the gutter widths of columns."
-      - "If you want IE 6/7 support, ensure boxsizing.htc is in the same dir as your stylesheet.
-        Read more: https://github.com/Schepp/box-sizing-polyfill."
-    family: "cf-grid"
-    patterns:
-    - name: "Less mixin"
-      codenotes:
-        - ".wrapper( @wrapper-width: @wrapper-width )"
-      notes:
-        - "You can create wrappers with different max-widths by passing a pixel
-          value into the mixin."
-    - name: "Usage"
-      codenotes:
-      - |
-        .main-wrapper {
-          .wrapper();
-        }
-        .wide-wrapper {
-          .wrapper( 1900px );
-        }
-      - |
-        <div class="main-wrapper">
-          This container now has left and right padding and a centered max width.
-        </div>
-        <div class="wide-wrapper">
-          This container is the same except it has a wider max-width.
-        </div>
-    tags:
-    - "cf-grid"
-*/
-/* topdoc
-    name: "Columns"
-    family: "cf-grid"
-    patterns:
-    - name: "Less mixin"
-      codenotes:
-      - ".column( @columns: 1; @total: @total-columns; @prefix: 0; @suffix: 0 )"
-      notes:
-      - "Computes column widths and prefix/suffix padding."
-      - "CSS borders are used for fixed gutters."
-    - name: "Usage"
-      codenotes:
-      - |
-        .main-wrapper {
-          .wrapper();
-        }
-        .half {
-          .column(1, 2);
-        }
-      - |
-        <div class="main-wrapper">
-          <div class="half">I am half of my parent.</div>
-          <div class="half">I am half of my parent.</div>
-        </div>
-    - name: "This is a placeholder for documenting prefix and suffix"
-      codenotes:
-      - ...
-    tags:
-    - "cf-grid"
-*/
-/* topdoc
-    name: "Push and Pull mixins for source ordering"
-    family: "cf-grid"
-    patterns:
-    - codenotes:
-        - ".push( @offset: 1, @total-columns: @total-columns )"
-        - ".pull( @offset: 1, @total-columns: @total-columns )"
-    - name: "Usage"
-      codenotes:
-      - |
-        .first {
-          .column(1, 2);
-          .pull(1)l
-        }
-        .second {
-          .column(1, 2);
-          .push(1)l
-        }
-      - |
-        <div>
-          <div class="second">I am first in the markup but appear after .first.</div>
-          <div class="first">I am second in the markup but appear before .second.</div>
-        </div>
-    tags:
-    - "cf-grid"
-*/
-/* topdoc
-    name: "Nested columns"
-    notes:
-      - "Since all cf-grid columns have left and right gutters you will notice
-        undesireable offsetting when nesting columns.
-        Normally this is removed with complex selectors or by adding classes
-        to the first and last column per 'row'.
-        In cf-grid the way to get around this is by wrapping your columns in a
-        container that utilizes the .nested-col-group() mixin.
-        This mixin uses negative left and right margins to pull the columns back
-        into alignment with parent columns."
-      - "NOTE: Working this way allows you to easily create responsive grids.
-        You are free to control the number of columns per 'row' without having
-        to deal with the first and last columns of each row."
-      - "NOTE: cf-grids does not use 'rows' and there is no row container.
-        To clarify, if you have a 12 column grid and place 24 columns inside
-        of a wrapper cf-grid columns will automaitcally stack into 2 'rows'
-        of 12."
-    family: "cf-grid"
-    patterns:
-    - name: "Less mixin"
-      codenotes:
-      - ".nested-col-group()"
-    - name: "Usage"
-      codenotes:
-      - |
-        .main-wrapper {
-          .wrapper();
-        }
-        .cols {
-          .nested-col-group();
-        }
-        .half {
-          .column(1, 2);
-        }
-      - |
-        <div class="main-wrapper">
-          <div class="half">
-            <div class="cols">
-              <div class="half"></div>
-              <div class="half"></div>
-            </div>
-          </div>
-          <div class="half">
-            <div class="cols">
-              <div class="half"></div>
-              <div class="half"></div>
-            </div>
-          </div>
-        </div>
-    tags:
-    - "cf-grid"
-*/
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Icons
-   ========================================================================== */
-/* topdoc
-    name: LESS Variables
-    family: cf-icons
-    patterns:
-    - name: CSS Prefix
-      codenotes:
-        - "@cf-css-prefix: cf-icon;"
-    tags:
-    - cf-icons
-*/
 @font-face {
-  font-family: 'CFPB Minicons';
-  src: url("../fonts/cf-icons.eot");
-  src: url("../fonts/cf-icons.eot?#iefix") format('embedded-opentype'), url("../fonts/cf-icons.woff") format('woff'), url("../fonts/cf-icons.ttf") format('truetype'), url("../fonts/cf-icons.svg") format('svg');
-  font-weight: normal;
+  font-family: "AvenirNextLTW01-Medium";
+  src: url("//fast.fonts.net/dv2/2/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
+  src: url("//fast.fonts.net/dv2/3/f26faddb-86cc-4477-a253-1e1287684336.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
   font-style: normal;
+  font-weight: 500;
 }
-/* topdoc
-    name: Icon Class
-    family: cf-icons
-    patterns:
-    - name: Use of Icon Class
-      notes:
-        - "The cf-css-prefix class applies the font family to an element."
-    tags:
-    - cf-icons
-*/
-.cf-icon {
-  font-family: 'CFPB Minicons';
-  display: inline-block;
+@font-face {
+  font-family: "AvenirNextLTW01-Demi";
+  src: url("//fast.fonts.net/dv2/2/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("eot");
   font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-}
-/* topdoc
-    name: Navigation Icons
-    family: cf-icons
-    patterns:
-    - name: left
-      markup: |
-        <i class="cf-icon cf-icon-left"></i>
-        <i class="cf-icon cf-icon-left-round"></i>
-    - name: right
-      markup: |
-        <i class="cf-icon cf-icon-right"></i>
-        <i class="cf-icon cf-icon-right-round"></i>
-    - name: up
-      markup: |
-        <i class="cf-icon cf-icon-up"></i>
-        <i class="cf-icon cf-icon-up-round"></i>
-    - name: down
-      markup: |
-        <i class="cf-icon cf-icon-down"></i>
-        <i class="cf-icon cf-icon-down-round"></i>
-    - name: arrow-left
-      markup: |
-        <i class="cf-icon cf-icon-arrow-left"></i>
-        <i class="cf-icon cf-icon-arrow-left-round"></i>
-    - name: arrow-right
-      markup: |
-        <i class="cf-icon cf-icon-arrow-right"></i>
-        <i class="cf-icon cf-icon-arrow-right-round"></i>
-    - name: arrow-up
-      markup: |
-        <i class="cf-icon cf-icon-arrow-up"></i>
-        <i class="cf-icon cf-icon-arrow-up-round"></i>
-    - name: arrow-down
-      markup: |
-        <i class="cf-icon cf-icon-arrow-down"></i>
-        <i class="cf-icon cf-icon-arrow-down-round"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-left:before {
-  content: "\e000";
-}
-.cf-icon-left-round:before {
-  content: "\e001";
-}
-.cf-icon-right:before {
-  content: "\e002";
-}
-.cf-icon-right-round:before {
-  content: "\e003";
-}
-.cf-icon-up:before {
-  content: "\e004";
-}
-.cf-icon-up-round:before {
-  content: "\e005";
-}
-.cf-icon-down:before {
-  content: "\e006";
-}
-.cf-icon-down-round:before {
-  content: "\e007";
-}
-.cf-icon-arrow-left:before {
-  content: "\e008";
-}
-.cf-icon-arrow-left-round:before {
-  content: "\e009";
-}
-.cf-icon-arrow-right:before {
-  content: "\e010";
-}
-.cf-icon-arrow-right-round:before {
-  content: "\e011";
-}
-.cf-icon-arrow-up:before {
-  content: "\e012";
-}
-.cf-icon-arrow-up-round:before {
-  content: "\e013";
-}
-.cf-icon-arrow-down:before {
-  content: "\e014";
-}
-.cf-icon-arrow-down-round:before {
-  content: "\e015";
-}
-/* topdoc
-    name: Status Icons
-    family: cf-icons
-    patterns:
-    - name: approved
-      markup: |
-        <i class="cf-icon cf-icon-approved"></i>
-        <i class="cf-icon cf-icon-approved-round"></i>
-    - name: error
-      markup: |
-        <i class="cf-icon cf-icon-error"></i>
-        <i class="cf-icon cf-icon-error-round"></i>
-    - name: help
-      markup: |
-        <i class="cf-icon cf-icon-help"></i>
-        <i class="cf-icon cf-icon-help-round"></i>
-    - name: delete
-      markup: |
-        <i class="cf-icon cf-icon-delete"></i>
-        <i class="cf-icon cf-icon-delete-round"></i>
-    - name: plus
-      markup: |
-        <i class="cf-icon cf-icon-plus"></i>
-        <i class="cf-icon cf-icon-plus-round"></i>
-    - name: minus
-      markup: |
-        <i class="cf-icon cf-icon-minus"></i>
-        <i class="cf-icon cf-icon-minus-round"></i>
-    - name: update
-      markup: |
-        <i class="cf-icon cf-icon-update"></i>
-        <i class="cf-icon cf-icon-update-round"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-approved:before {
-  content: "\e100";
-}
-.cf-icon-approved-round:before {
-  content: "\e101";
-}
-.cf-icon-error:before {
-  content: "\e102";
-}
-.cf-icon-error-round:before {
-  content: "\e103";
-}
-.cf-icon-help:before {
-  content: "\e104";
-}
-.cf-icon-help-round:before {
-  content: "\e105";
-}
-.cf-icon-delete:before {
-  content: "\e106";
-}
-.cf-icon-delete-round:before {
-  content: "\e107";
-}
-.cf-icon-plus:before {
-  content: "\e108";
-}
-.cf-icon-plus-round:before {
-  content: "\e109";
-}
-.cf-icon-minus:before {
-  content: "\e110";
-}
-.cf-icon-minus-round:before {
-  content: "\e111";
-}
-.cf-icon-update:before {
-  content: "\e112";
-}
-.cf-icon-update-round:before {
-  content: "\e113";
-}
-/* topdoc
-    name: Social Icons
-    family: cf-icons
-    patterns:
-    - name: youtube
-      markup: |
-        <i class="cf-icon cf-icon-youtube"></i>
-        <i class="cf-icon cf-icon-youtube-square"></i>
-    - name: linkedin
-      markup: |
-        <i class="cf-icon cf-icon-linkedin"></i>
-        <i class="cf-icon cf-icon-linkedin-square"></i>
-    - name: facebook
-      markup: |
-        <i class="cf-icon cf-icon-facebook"></i>
-        <i class="cf-icon cf-icon-facebook-square"></i>
-    - name: flickr
-      markup: |
-        <i class="cf-icon cf-icon-flickr"></i>
-        <i class="cf-icon cf-icon-flickr-square"></i>
-    - name: plus
-      markup: |
-        <i class="cf-icon cf-icon-twitter"></i>
-        <i class="cf-icon cf-icon-twitter-square"></i>
-    - name: github
-      markup: |
-        <i class="cf-icon cf-icon-github"></i>
-        <i class="cf-icon cf-icon-github-square"></i>
-    - name: email-social
-      markup: |
-        <i class="cf-icon cf-icon-email-social"></i>
-        <i class="cf-icon cf-icon-email-social-square"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-youtube:before {
-  content: "\e200";
-}
-.cf-icon-youtube-square:before {
-  content: "\e201";
-}
-.cf-icon-linkedin:before {
-  content: "\e202";
-}
-.cf-icon-linkedin-square:before {
-  content: "\e203";
-}
-.cf-icon-facebook:before {
-  content: "\e204";
-}
-.cf-icon-facebook-square:before {
-  content: "\e205";
-}
-.cf-icon-flickr:before {
-  content: "\e206";
-}
-.cf-icon-flickr-square:before {
-  content: "\e207";
-}
-.cf-icon-twitter:before {
-  content: "\e208";
-}
-.cf-icon-twitter-square:before {
-  content: "\e209";
-}
-.cf-icon-github:before {
-  content: "\e210";
-}
-.cf-icon-github-square:before {
-  content: "\e211";
-}
-.cf-icon-email-social:before {
-  content: "\e212";
-}
-.cf-icon-email-social-square:before {
-  content: "\e213";
-}
-/* topdoc
-    name: Communication Icons
-    family: cf-icons
-    patterns:
-    - name: web
-      markup: |
-        <i class="cf-icon cf-icon-web"></i>
-        <i class="cf-icon cf-icon-web-round"></i>
-    - name: email
-      markup: |
-        <i class="cf-icon cf-icon-email"></i>
-        <i class="cf-icon cf-icon-email-round"></i>
-    - name: mail
-      markup: |
-        <i class="cf-icon cf-icon-mail"></i>
-        <i class="cf-icon cf-icon-mail-round"></i>
-    - name: phone
-      markup: |
-        <i class="cf-icon cf-icon-phone"></i>
-        <i class="cf-icon cf-icon-phone-round"></i>
-    - name: technology
-      markup: |
-        <i class="cf-icon cf-icon-technology"></i>
-        <i class="cf-icon cf-icon-technology-round"></i>
-    - name: fax
-      markup: |
-        <i class="cf-icon cf-icon-fax"></i>
-        <i class="cf-icon cf-icon-fax-round"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-web:before {
-  content: "\e300";
-}
-.cf-icon-web-round:before {
-  content: "\e301";
-}
-.cf-icon-email:before {
-  content: "\e302";
-}
-.cf-icon-email-round:before {
-  content: "\e303";
-}
-.cf-icon-mail:before {
-  content: "\e304";
-}
-.cf-icon-mail-round:before {
-  content: "\e305";
-}
-.cf-icon-phone:before {
-  content: "\e306";
-}
-.cf-icon-phone-round:before {
-  content: "\e307";
-}
-.cf-icon-technology:before {
-  content: "\e308";
-}
-.cf-icon-technology-round:before {
-  content: "\e309";
-}
-.cf-icon-fax:before {
-  content: "\e310";
-}
-.cf-icon-fax-round:before {
-  content: "\e311";
-}
-/* topdoc
-    name: Document Icons
-    family: cf-icons
-    patterns:
-    - name: document
-      markup: |
-        <i class="cf-icon cf-icon-document"></i>
-        <i class="cf-icon cf-icon-document-round"></i>
-    - name: pdf
-      markup: |
-        <i class="cf-icon cf-icon-pdf"></i>
-        <i class="cf-icon cf-icon-pdf-round"></i>
-    - name: upload
-      markup: |
-        <i class="cf-icon cf-icon-upload"></i>
-        <i class="cf-icon cf-icon-upload-round"></i>
-    - name: copy
-      markup: |
-        <i class="cf-icon cf-icon-copy"></i>
-        <i class="cf-icon cf-icon-copy-round"></i>
-    - name: edit
-      markup: |
-        <i class="cf-icon cf-icon-edit"></i>
-        <i class="cf-icon cf-icon-edit-round"></i>
-    - name: attach
-      markup: |
-        <i class="cf-icon cf-icon-attach"></i>
-        <i class="cf-icon cf-icon-attach-round"></i>
-    - name: print
-      markup: |
-        <i class="cf-icon cf-icon-print"></i>
-        <i class="cf-icon cf-icon-print-round"></i>
-    - name: save
-      markup: |
-        <i class="cf-icon cf-icon-save"></i>
-        <i class="cf-icon cf-icon-save-round"></i>
-    - name: appendix
-      markup: |
-        <i class="cf-icon cf-icon-appendix"></i>
-        <i class="cf-icon cf-icon-appendix-round"></i>
-    - name: supplement
-      markup: |
-        <i class="cf-icon cf-icon-supplement"></i>
-        <i class="cf-icon cf-icon-supplement-round"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-document:before {
-  content: "\e400";
-}
-.cf-icon-document-round:before {
-  content: "\e401";
-}
-.cf-icon-pdf:before {
-  content: "\e402";
-}
-.cf-icon-pdf-round:before {
-  content: "\e403";
-}
-.cf-icon-upload:before {
-  content: "\e404";
-}
-.cf-icon-upload-round:before {
-  content: "\e405";
-}
-.cf-icon-download:before {
-  content: "\e406";
-}
-.cf-icon-download-round:before {
-  content: "\e407";
-}
-.cf-icon-copy:before {
-  content: "\e408";
-}
-.cf-icon-copy-round:before {
-  content: "\e409";
-}
-.cf-icon-edit:before {
-  content: "\e410";
-}
-.cf-icon-edit-round:before {
-  content: "\e411";
-}
-.cf-icon-attach:before {
-  content: "\e412";
-}
-.cf-icon-attach-round:before {
-  content: "\e413";
-}
-.cf-icon-print:before {
-  content: "\e414";
-}
-.cf-icon-print-round:before {
-  content: "\e415";
-}
-.cf-icon-save:before {
-  content: "\e416";
-}
-.cf-icon-save-round:before {
-  content: "\e417";
-}
-.cf-icon-appendix:before {
-  content: "\e418";
-}
-.cf-icon-appendix-round:before {
-  content: "\e419";
-}
-.cf-icon-supplement:before {
-  content: "\e420";
-}
-.cf-icon-supplement-round:before {
-  content: "\e421";
-}
-/* topdoc
-    name: Financial Product Icons
-    family: cf-icons
-    patterns:
-    - name: bank-account
-      markup: |
-        <i class="cf-icon cf-icon-bank-account"></i>
-        <i class="cf-icon cf-icon-bank-account-round"></i>
-    - name: credit-card
-      markup: |
-        <i class="cf-icon cf-icon-credit-card"></i>
-        <i class="cf-icon cf-icon-credit-card-round"></i>
-    - name: loan
-      markup: |
-        <i class="cf-icon cf-icon-loan"></i>
-        <i class="cf-icon cf-icon-loan-round"></i>
-    - name: money-transfer
-      markup: |
-        <i class="cf-icon cf-icon-money-transfer"></i>
-        <i class="cf-icon cf-icon-money-transfer-round"></i>
-    - name: mortgage
-      markup: |
-        <i class="cf-icon cf-icon-mortgage"></i>
-        <i class="cf-icon cf-icon-mortgage-round"></i>
-    - name: debt-collection
-      markup: |
-        <i class="cf-icon cf-icon-debt-collection"></i>
-        <i class="cf-icon cf-icon-debt-collection-round"></i>
-    - name: credit-report
-      markup: |
-        <i class="cf-icon cf-icon-credit-report"></i>
-        <i class="cf-icon cf-icon-credit-report-round"></i>
-    - name: money
-      markup: |
-        <i class="cf-icon cf-icon-money"></i>
-        <i class="cf-icon cf-icon-money-round"></i>
-    - name: quick-cash
-      markup: |
-        <i class="cf-icon cf-icon-quick-cash"></i>
-        <i class="cf-icon cf-icon-quick-cash-round"></i>
-    - name: contract
-      markup: |
-        <i class="cf-icon cf-icon-contract"></i>
-        <i class="cf-icon cf-icon-contract-round"></i>
-    - name: comlaint
-      markup: |
-        <i class="cf-icon cf-icon-complaint"></i>
-        <i class="cf-icon cf-icon-complaint-round"></i>
-    - name: getting-credit-card
-      markup: |
-        <i class="cf-icon cf-icon-getting-credit-card"></i>
-        <i class="cf-icon cf-icon-getting-credit-card-round"></i>
-    - name: buying-car
-      markup: |
-        <i class="cf-icon cf-icon-buying-car"></i>
-        <i class="cf-icon cf-icon-buying-car-round"></i>
-    - name: mortgage
-      markup: |
-        <i class="cf-icon cf-icon-paying-college"></i>
-        <i class="cf-icon cf-icon-paying-college-round"></i>
-    - name: owning-home
-      markup: |
-        <i class="cf-icon cf-icon-owning-home"></i>
-        <i class="cf-icon cf-icon-owning-home-round"></i>
-    - name: debt
-      markup: |
-        <i class="cf-icon cf-icon-debt"></i>
-        <i class="cf-icon cf-icon-debt-round"></i>
-    - name: building-credit
-      markup: |
-        <i class="cf-icon cf-icon-building-credit"></i>
-        <i class="cf-icon cf-icon-building-credit-round"></i>
-    - name: prepaid-cards
-      markup: |
-        <i class="cf-icon cf-icon-prepaid-cards"></i>
-        <i class="cf-icon cf-icon-prepaid-cards-round"></i>
-    - name: payday-loan
-      markup: |
-        <i class="cf-icon cf-icon-payday-loan"></i>
-        <i class="cf-icon cf-icon-payday-loan-round"></i>
-    - name: retirement
-      markup: |
-        <i class="cf-icon cf-icon-retirement"></i>
-        <i class="cf-icon cf-icon-retirement-round"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-bank-account:before {
-  content: "\e500";
-}
-.cf-icon-bank-account-round:before {
-  content: "\e501";
-}
-.cf-icon-credit-card:before {
-  content: "\e502";
-}
-.cf-icon-credit-card-round:before {
-  content: "\e503";
-}
-.cf-icon-loan:before {
-  content: "\e504";
-}
-.cf-icon-loan-round:before {
-  content: "\e505";
-}
-.cf-icon-money-transfer:before {
-  content: "\e506";
-}
-.cf-icon-money-transfer-round:before {
-  content: "\e507";
-}
-.cf-icon-mortgage:before {
-  content: "\e508";
-}
-.cf-icon-mortgage-round:before {
-  content: "\e509";
-}
-.cf-icon-debt-collection:before {
-  content: "\e510";
-}
-.cf-icon-debt-collection-round:before {
-  content: "\e511";
-}
-.cf-icon-credit-report:before {
-  content: "\e512";
-}
-.cf-icon-credit-report-round:before {
-  content: "\e513";
-}
-.cf-icon-money:before {
-  content: "\e514";
-}
-.cf-icon-money-round:before {
-  content: "\e515";
-}
-.cf-icon-quick-cash:before {
-  content: "\e516";
-}
-.cf-icon-quick-cash-round:before {
-  content: "\e517";
-}
-.cf-icon-contract:before {
-  content: "\e518";
-}
-.cf-icon-contract-round:before {
-  content: "\e519";
-}
-.cf-icon-complaint:before {
-  content: "\e520";
-}
-.cf-icon-complaint-round:before {
-  content: "\e521";
-}
-.cf-icon-getting-credit-card:before {
-  content: "\e522";
-}
-.cf-icon-getting-credit-card-round:before {
-  content: "\e523";
-}
-.cf-icon-buying-car:before {
-  content: "\e524";
-}
-.cf-icon-buying-car-round:before {
-  content: "\e525";
-}
-.cf-icon-paying-college:before {
-  content: "\e526";
-}
-.cf-icon-paying-college-round:before {
-  content: "\e527";
-}
-.cf-icon-owning-home:before {
-  content: "\e528";
-}
-.cf-icon-owning-home-round:before {
-  content: "\e529";
-}
-.cf-icon-debt:before {
-  content: "\e530";
-}
-.cf-icon-debt-round:before {
-  content: "\e531";
-}
-.cf-icon-building-credit:before {
-  content: "\e532";
-}
-.cf-icon-building-credit-round:before {
-  content: "\e533";
-}
-.cf-icon-prepaid-cards:before {
-  content: "\e534";
-}
-.cf-icon-prepaid-cards-round:before {
-  content: "\e535";
-}
-.cf-icon-payday-loan:before {
-  content: "\e536";
-}
-.cf-icon-payday-loan-round:before {
-  content: "\e537";
-}
-.cf-icon-retirement:before {
-  content: "\e538";
-}
-.cf-icon-retirement-round:before {
-  content: "\e539";
-}
-/* topdoc
-    name: Web Icons
-    family: cf-icons
-    patterns:
-    - name: user
-      markup: |
-        <i class="cf-icon cf-icon-user"></i>
-        <i class="cf-icon cf-icon-user-round"></i>
-    - name: wifi
-      markup: |
-        <i class="cf-icon cf-icon-wifi"></i>
-        <i class="cf-icon cf-icon-wifi-round"></i>
-    - name: search
-      markup: |
-        <i class="cf-icon cf-icon-search"></i>
-        <i class="cf-icon cf-icon-search-round"></i>
-    - name: share
-      markup: |
-        <i class="cf-icon cf-icon-share"></i>
-        <i class="cf-icon cf-icon-share-round"></i>
-    - name: link
-      markup: |
-        <i class="cf-icon cf-icon-link"></i>
-        <i class="cf-icon cf-icon-link-round"></i>
-    - name: external-link
-      markup: |
-        <i class="cf-icon cf-icon-external-link"></i>
-        <i class="cf-icon cf-icon-external-link-round"></i>
-    - name: audio-mute
-      markup: |
-        <i class="cf-icon cf-icon-audio-mute"></i>
-        <i class="cf-icon cf-icon-audio-mute-round"></i>
-    - name: audio-low
-      markup: |
-        <i class="cf-icon cf-icon-audio-low"></i>
-        <i class="cf-icon cf-icon-audio-low-round"></i>
-    - name: audio-medium
-      markup: |
-        <i class="cf-icon cf-icon-audio-medium"></i>
-        <i class="cf-icon cf-icon-audio-medium-round"></i>
-    - name: audio-max
-      markup: |
-        <i class="cf-icon cf-icon-audio-max"></i>
-        <i class="cf-icon cf-icon-audio-max-round"></i>
-    - name: favorite
-      markup: |
-        <i class="cf-icon cf-icon-favorite"></i>
-        <i class="cf-icon cf-icon-favorite-round"></i>
-    - name: unfavorite
-      markup: |
-        <i class="cf-icon cf-icon-unfavorite"></i>
-        <i class="cf-icon cf-icon-unfavorite-round"></i>
-    - name: bookmark
-      markup: |
-        <i class="cf-icon cf-icon-bookmark"></i>
-        <i class="cf-icon cf-icon-bookmark-round"></i>
-    - name: unbookmark
-      markup: |
-        <i class="cf-icon cf-icon-unbookmark"></i>
-        <i class="cf-icon cf-icon-unbookmark-round"></i>
-    - name: settings
-      markup: |
-        <i class="cf-icon cf-icon-settings"></i>
-        <i class="cf-icon cf-icon-settings-round"></i>
-    - name: menu
-      markup: |
-        <i class="cf-icon cf-icon-menu"></i>
-        <i class="cf-icon cf-icon-menu-round"></i>
-    - name: lock
-      markup: |
-        <i class="cf-icon cf-icon-lock"></i>
-        <i class="cf-icon cf-icon-lock-round"></i>
-    - name: unlock
-      markup: |
-        <i class="cf-icon cf-icon-unlock"></i>
-        <i class="cf-icon cf-icon-unlock-round"></i>
-    - name: clock
-      markup: |
-        <i class="cf-icon cf-icon-clock"></i>
-        <i class="cf-icon cf-icon-clock-round"></i>
-    - name: chart
-      markup: |
-        <i class="cf-icon cf-icon-chart"></i>
-        <i class="cf-icon cf-icon-chart-round"></i>
-    - name: play
-      markup: |
-        <i class="cf-icon cf-icon-play"></i>
-        <i class="cf-icon cf-icon-play-round"></i>
-    tags:
-    - cf-icons
-*/
-.cf-icon-user:before {
-  content: "\e600";
-}
-.cf-icon-user-round:before {
-  content: "\e601";
-}
-.cf-icon-wifi:before {
-  content: "\e602";
-}
-.cf-icon-wifi-round:before {
-  content: "\e603";
-}
-.cf-icon-search:before {
-  content: "\e604";
-}
-.cf-icon-search-round:before {
-  content: "\e605";
-}
-.cf-icon-share:before {
-  content: "\e606";
-}
-.cf-icon-share-round:before {
-  content: "\e607";
-}
-.cf-icon-link:before {
-  content: "\e608";
-}
-.cf-icon-link-round:before {
-  content: "\e609";
-}
-.cf-icon-external-link:before {
-  content: "\e610";
-}
-.cf-icon-external-link-round:before {
-  content: "\e611";
-}
-.cf-icon-audio-mute:before {
-  content: "\e612";
-}
-.cf-icon-audio-mute-round:before {
-  content: "\e616";
-}
-.cf-icon-audio-low:before {
-  content: "\e613";
-}
-.cf-icon-audio-low-round:before {
-  content: "\e617";
-}
-.cf-icon-audio-medium:before {
-  content: "\e614";
-}
-.cf-icon-audio-medium-round:before {
-  content: "\e618";
-}
-.cf-icon-audio-max:before {
-  content: "\e615";
-}
-.cf-icon-audio-max-round:before {
-  content: "\e619";
-}
-.cf-icon-favorite:before {
-  content: "\e620";
-}
-.cf-icon-favorite-round:before {
-  content: "\e621";
-}
-.cf-icon-unfavorite:before {
-  content: "\e622";
-}
-.cf-icon-unfavorite-round:before {
-  content: "\e623";
-}
-.cf-icon-bookmark:before {
-  content: "\e624";
-}
-.cf-icon-bookmark-round:before {
-  content: "\e625";
-}
-.cf-icon-unbookmark:before {
-  content: "\e626";
-}
-.cf-icon-unbookmark-round:before {
-  content: "\e627";
-}
-.cf-icon-settings:before {
-  content: "\e628";
-}
-.cf-icon-settings-round:before {
-  content: "\e629";
-}
-.cf-icon-menu:before {
-  content: "\e630";
-}
-.cf-icon-menu-round:before {
-  content: "\e631";
-}
-.cf-icon-lock:before {
-  content: "\e632";
-}
-.cf-icon-lock-round:before {
-  content: "\e633";
-}
-.cf-icon-unlock:before {
-  content: "\e634";
-}
-.cf-icon-unlock-round:before {
-  content: "\e635";
-}
-.cf-icon-clock:before {
-  content: "\e636";
-}
-.cf-icon-clock-round:before {
-  content: "\e637";
-}
-.cf-icon-chart:before {
-  content: "\e638";
-}
-.cf-icon-chart-round:before {
-  content: "\e639";
-}
-.cf-icon-play:before {
-  content: "\e640";
-}
-.cf-icon-play-round:before {
-  content: "\e641";
-}
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Pagination Styling
-   ========================================================================== */
-/* topdoc
-    name: Pagination
-    family: cf-pagination
-    patterns:
-    - name: Default pagination
-      markup: |
-        <nav class="pagination">
-            <a class="btn pagination_prev" href="#"><i class="btn-icon-left icon-chevron-left"></i> Previous</a>
-            <form class="pagination_form">
-                <label class="pagination_label" for="pagination_current-page">Page</label>
-                <input class="pagination_current-page" id="pagination_current-page" name="pagination_current-page" type="number" min="1" max="149" value="149" />
-                <label class="pagination_label" for="pagination_current-page">of 149</label>
-                <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">Go</button>
-            </form>
-            <a class="btn pagination_next" href="#">Next <i class="btn-icon-right icon-chevron-right"></i></a>
-        </nav>
-    tags:
-    - fj-buttons
-    - fj-forms
-*/
-.pagination {
-  display: block;
-  margin: 0;
-  padding: 0;
-  /* Positions .pagination_next relative to this container */
-
-  position: relative;
-}
-/* On small screens position .pagination_next to the right edge of .pagination */
-.pagination_next {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.pagination_label {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.875em;
-}
-.pagination_form {
-  display: block;
-  padding: 0.25em 1.875em;
-  margin: 1em 0 0 0;
-  background: #E3E4E5;
-  color: #75787B;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "AvenirNextLTW01-Demi";
+  src: url("//fast.fonts.net/dv2/2/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
+  src: url("//fast.fonts.net/dv2/3/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/99affa9a-a5e9-4559-bd07-20cf0071852d.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#99affa9a-a5e9-4559-bd07-20cf0071852d") format("svg");
   font-style: normal;
-  font-weight: normal;
-  text-align: center;
-}
-.pagination_current-page {
-  display: inline-block;
-  vertical-align: middle;
-  /* We need enough room for three digits and the number spinners for type="number" inputs */
-
-  width: 3em;
-  /* Resets the padding back to 4px now that the font-size is 14px */
-
-  padding: 0.2857142857142857em;
-  margin: 0 0.2857142857142857em;
-  /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
-
-  font-size: 0.875em;
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  text-align: right;
-}
-.pagination_submit.btn {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 0 0 1em;
-}
-@media only screen and (min-width: 480px) {
-  .pagination_form {
-    border-radius: 0.2857142857142857em;
-  }
-  .pagination_prev {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .pagination_prev.btn,
-  .pagination_prev.btn:link,
-  .pagination_prev.btn:visited {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .pagination_next.btn,
-  .pagination_next.btn:link,
-  .pagination_next.btn:visited {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+  font-weight: 700;
 }
 /* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   Capital Framework
-   Basic Typography
-   ========================================================================== */
-/* topdoc
-  name: LESS notes
+  name: Less variables
   family: cf-typography
   patterns:
-    - name: Size variables
+    - name: Font sizes
       codenotes:
         - "@base-font-size-px: 16px;"
         - "@base-line-height-px: 22px;"
         - "@base-line-height: unit(@base-line-height-px / @base-font-size-px);"
+  tags:
+    - cf-typography
+*/
+/* topdoc
+  name: Webfonts
+  family: cf-typography
+  patterns:
+    - name: Licensed webfonts
+      notes:
+        - "Avenir Next is included via the licensed-fonts.css file.
+          This file contains absolute links to our paid font service.
+          Fonts included this way will only work on CFPB-registered domains."
     - name: Webfont mixins
       codenotes:
         - ".webfont-regular()"
         - ".webfont-italic()"
         - ".webfont-medium()"
         - ".webfont-demi()"
-    - name: Explicitly set font styles
       notes:
-        - "Any instances of Avenir Next getting italicized or bolded must be declared explicitly
-          so that it uses the correct webfont and does not fake the style on normal Avenir Next."
-        - "Use the webfont mixins above to make this easy. See the #blockquote styles as an example."
+        - "Use these mixins to easily add the Avenir Next font family to your
+          elements."
+        - "To avoid faux bold and italics in Avenir Next, you must use the font
+          family name for that particular style. So when defining an italic or
+          bold style in Avenir Next you need to use the Avenir Next Italic font
+          family. Use the mixins when setting bold or italic text as they also
+          set the appropriate font-weight and font-style."
+        - "These mixins also add the appropriate .lt-ie9 overrides.
+          .lt-ie9 overrides are necessary to override font-style and font-weight
+          each time the webfont is used. These overrides are built into the webfont
+          mixins so you get them automatically. Note that this requires you to
+          use conditional classes on the <html> element:
+          https://github.com/h5bp/html5-boilerplate/blob/v4.3.0/doc/html.md#conditional-html-classes."
       markup: |
         <blockquote cite="http://cfpb.github.io/cf-typography/docs/index.html#webfont-notes">
             Any instances of Avenir Next getting <em>italic</em><i>ized</i> or <strong>bold</strong><b>ed</b> must be declared explicitly ...
-        </blockquote> 
+        </blockquote>
   tags:
     - cf-typography
 */
@@ -5324,7 +2836,7 @@ textarea {
   patterns:
     - name: Default body type
       markup: |
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Lorem ipsum dolor sit amet, <em>consectetur adipisicing elit</em>, sed do eiusmod <strong>tempor incididunt</strong> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     - name: Heading level 1
       markup: |
         <h1>Example heading element</h1>
@@ -5375,8 +2887,7 @@ h6,
 .h5,
 .h6 {
   margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
@@ -5400,24 +2911,32 @@ h3,
 }
 h4,
 .h4 {
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   margin-bottom: 0.2777777777777778em;
   font-size: 1.125em;
   line-height: 1.2222222222222223;
 }
+.lt-ie9 h4,
+.lt-ie9 .h4 {
+  font-weight: normal !important;
+}
 h5,
 h6,
 .h5,
 .h6 {
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+.lt-ie9 h5,
+.lt-ie9 h6,
+.lt-ie9 .h5,
+.lt-ie9 .h6 {
+  font-weight: normal !important;
 }
 h5,
 .h5 {
@@ -5432,13 +2951,15 @@ h6,
   line-height: 1.8333333333333333;
 }
 .superheader {
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   margin-bottom: 0.1875em;
   font-size: 3em;
   line-height: 1.375;
+}
+.lt-ie9 .superheader {
+  font-weight: normal !important;
 }
 /* topdoc
   name: Margins
@@ -5604,24 +3125,29 @@ blockquote {
   padding: 0.5em 0.75em;
   border-left: 4px solid #2cb34a;
   background: #addc91;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
 blockquote em,
 blockquote i {
-  font-family: "Avenir Next Italic", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
+.lt-ie9 blockquote em,
+.lt-ie9 blockquote i {
+  font-style: normal !important;
+}
 blockquote strong,
 blockquote b {
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
+}
+.lt-ie9 blockquote strong,
+.lt-ie9 blockquote b {
+  font-weight: normal !important;
 }
 /* topdoc
   name: Lists
@@ -5639,33 +3165,6 @@ blockquote b {
 */
 ul {
   list-style: square;
-}
-/* topdoc
-  name: IE overrides
-  family: cf-typography
-  patterns:
-    - name: Prevent faux/double bold and italics in IE 6-8
-      notes:
-        - "Any bold or italic Avenir elements added to the base styles MUST BE added to this section, as well."
-        - "Dependent on using H5BP's conditional classes on the <html> element:
-          https://github.com/h5bp/html5-boilerplate/blob/v4.3.0/doc/html.md"
-      markup: |
-        <h5>I might appear as faux/double bold in older IE without this fix.</h5>
-  tags:
-    - cf-typography
-    - ltie9
-*/
-.lt-ie9 h1,
-.lt-ie9 h2,
-.lt-ie9 h3,
-.lt-ie9 h4,
-.lt-ie9 h5,
-.lt-ie9 h6,
-.lt-ie9 blockquote strong {
-  font-weight: normal !important;
-}
-.lt-ie9 blockquote em {
-  font-style: normal !important;
 }
 /* topdoc
   name: EOF
@@ -5700,8 +3199,8 @@ ul {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=3.2.1");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1") format('embedded-opentype'), url("../fonts/fontawesome-webfont.woff?v=3.2.1") format('woff'), url("../fonts/fontawesome-webfont.ttf?v=3.2.1") format('truetype'), url("../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format('svg');
+  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -7125,8 +4624,7 @@ a .icon-flip-vertical:before {
 .demo-banner {
   padding: 0.5em 1em;
   background: #e3e4e5;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
@@ -7138,8 +4636,7 @@ a .icon-flip-vertical:before {
   padding: 0.5714285714285714em 0.8571428571428571em;
   margin: 1.5em 0;
   color: #75787b;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 0.875em;
@@ -7154,9 +4651,9 @@ a .icon-flip-vertical:before {
    vars
    ========================================================================== */
 /* topdoc
-    name: Media query vars
-    family: cfgov-vars
-    patterns:
+  name: Media query vars
+  family: cfgov-vars
+  patterns:
     - name: Size calculations
       notes:
         - "You shouldn't need to use these vars directly,
@@ -7190,7 +4687,7 @@ a .icon-flip-vertical:before {
             @media only all and (min-width: 48em) {
                 ...
             }
-    tags:
+  tags:
     - cfgov-vars
 */
 /* topdoc
@@ -7202,14 +4699,14 @@ a .icon-flip-vertical:before {
    utilities
    ========================================================================== */
 /* topdoc
-    name: Less mixins
-    family: cfgov-utilities
-    patterns:
+  name: Less mixins
+  family: cfgov-utilities
+  patterns:
     - codenotes:
-          - .u-right();
+      - .u-right();
     - codenotes:
-          - .u-unstyled-link();
-    tags:
+      - .u-unstyled-link();
+  tags:
     - cfgov-utilities
 */
 /* topdoc
@@ -7221,23 +4718,21 @@ a .icon-flip-vertical:before {
    meta
    ========================================================================== */
 /* topdoc
-    name: Date
-    family: cfgov-meta
-    patterns:
+  name: Date
+  family: cfgov-meta
+  patterns:
     - markup: |
         <span class="date">
             Nov 4, 2013
         </span>
-    tags:
+  tags:
     - cfgov-meta
 */
 .date {
-  margin-bottom: 1.5714285714285714em;
   margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-weight: normal;
-  font-family: "Avenir Next Demi", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   letter-spacing: 1px;
@@ -7247,25 +4742,26 @@ a .icon-flip-vertical:before {
   line-height: 1.5714285714285714;
   color: #75787b;
 }
+.lt-ie9 .date {
+  font-weight: normal !important;
+}
 /* topdoc
-    name: Category slug
-    family: cfgov-meta
-    patterns:
+  name: Category slug
+  family: cfgov-meta
+  patterns:
     - markup: |
         <a href="#" class="category-slug">
             <i class="cf-icon cf-icon-credit-card"></i>
             Consumer finance
         </a>
-    tags:
+  tags:
     - cfgov-meta
 */
 .category-slug {
-  margin-bottom: 1.2222222222222223em;
   margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-weight: normal;
-  font-family: "Avenir Next Medium", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   margin-bottom: 0.2777777777777778em;
@@ -7273,6 +4769,9 @@ a .icon-flip-vertical:before {
   line-height: 1.2222222222222223;
   color: #101820;
   border-bottom-width: 0;
+}
+.lt-ie9 .category-slug {
+  font-weight: normal !important;
 }
 .category-slug:visited,
 .category-slug.visited {
@@ -7299,9 +4798,9 @@ a .icon-flip-vertical:before {
   color: #101820;
 }
 /* topdoc
-    name: Meta header
-    family: cfgov-meta
-    patterns:
+  name: Meta header
+  family: cfgov-meta
+  patterns:
     - markup: |
         <div class="meta-header">
             <a href="#" class="category-slug meta-header_heading">
@@ -7312,7 +4811,7 @@ a .icon-flip-vertical:before {
                 Nov 4, 2013
             </span>
         </div>
-    tags:
+  tags:
     - cfgov-meta
 */
 .meta-header {
@@ -7336,9 +4835,9 @@ a .icon-flip-vertical:before {
    media-object
    ========================================================================== */
 /* topdoc
-    name: Media object
-    family: cfgov-media-object
-    patterns:
+  name: Media object
+  family: cfgov-media-object
+  patterns:
     - markup: |
         <article class="media-object">
             <h1 class="media-object_header">
@@ -7354,14 +4853,12 @@ a .icon-flip-vertical:before {
                 By Patrice Ficklin
             </p>
         </article>
-    tags:
+  tags:
     - cfgov-media-object
 */
 .media-object_header {
-  margin-bottom: 1em;
   margin-top: 0;
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   margin-bottom: 0.22727272727272727em;
@@ -7370,10 +4867,8 @@ a .icon-flip-vertical:before {
 }
 @media only all and (min-width: 48em) {
   .media-object_header {
-    margin-bottom: 0.8461538461538461em;
     margin-top: 0;
-    font-family: "Avenir Next", Arial, sans-serif;
-    font-family: "Avenir Next W01", Arial, sans-serif;
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
     margin-bottom: 0.3076923076923077em;
@@ -7382,15 +4877,13 @@ a .icon-flip-vertical:before {
   }
 }
 .media-object_text {
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   color: #43484e;
 }
 .media-object_byline {
-  font-family: "Avenir Next", Arial, sans-serif;
-  font-family: "Avenir Next W01", Arial, sans-serif;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
@@ -7398,77 +4891,6 @@ a .icon-flip-vertical:before {
   name: EOF
   eof: true
 */
-@font-face {
-  font-family: "Avenir Next W01_n4";
-  src: url("../fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5");
-  src: url("../fonts/1e9892c0-6927-4412-9874-1b82801ba47a.woff?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("woff"), url("../fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("truetype"), url("../fonts/52a192b1-bea5-4b48-879f-107f009b666f.svg?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Avenir Next W01_i4";
-  src: url("../fonts/d1fddef1-d940-4904-8f6c-17e809462301.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/d1fddef1-d940-4904-8f6c-17e809462301.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/d1fddef1-d940-4904-8f6c-17e809462301.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5");
-  src: url("../fonts/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("woff"), url("../fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("truetype"), url("../fonts/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5#1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585") format("svg");
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: "Avenir Next W01_n5";
-  src: url("../fonts/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5");
-  src: url("../fonts/f26faddb-86cc-4477-a253-1e1287684336.woff?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("woff"), url("../fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("truetype"), url("../fonts/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Avenir Next W01_n7";
-  src: url("../fonts/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("eot");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Avenir Next W01";
-  src: url("../fonts/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5");
-  src: url("../fonts/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("woff"), url("../fonts/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5") format("truetype"), url("../fonts/99affa9a-a5e9-4559-bd07-20cf0071852d.svg?d44f19a684109620e4841679a390e818f15f4c3a416f72bce690397bb3766ef8eceac813423d2bb04b532149f84e22208d917f967083a8f4340c08349685825b1de474ee6af3335c1497db256ac1a3a1622ba20fce62851d84ead2074a0dabd04dd21f4092b08bd061a2d5e4da9e10f56e56d7af5d500aa46d0400d2fe752865e75abbaac52aec99c861c07e13d21d06dcf016cf156eec6b3f0a90f4f6a567e28f52be35452c2ec15bcb371d4d787a67f153f3e56406b310572fb7c49cab50790a9c1ced10e9c811dddf9ba3&projectId=0a274127-32a9-474a-bbdb-f23f410e88c5#99affa9a-a5e9-4559-bd07-20cf0071852d") format("svg");
-  font-weight: 700;
-  font-style: normal;
-}
-@media all and (min-width: 0px) {
-  
-}
 .content {
   display: inline-block;
   -webkit-box-sizing: border-box;
@@ -7481,14 +4903,6 @@ a .icon-flip-vertical:before {
   width: 66.66666666666666%;
   padding: 2em 0;
   margin-left: -15px;
-}
-.ie .content {
-  margin-right: -0.26em;
-}
-.lt-ie8 .content {
-  display: inline;
-  *zoom: 1;
-  *behavior: url(/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc);
 }
 .ie .content {
   margin-right: -0.26em;
@@ -7519,14 +4933,6 @@ a .icon-flip-vertical:before {
   *zoom: 1;
   *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
 }
-.ie .sidebar {
-  margin-right: -0.26em;
-}
-.lt-ie8 .sidebar {
-  display: inline;
-  *zoom: 1;
-  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
-}
 .wrapper {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -7536,10 +4942,6 @@ a .icon-flip-vertical:before {
   margin: 0 auto;
   position: relative;
   clear: both;
-}
-.lt-ie8 .wrapper {
-  *zoom: 1;
-  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
 }
 .lt-ie8 .wrapper {
   *zoom: 1;

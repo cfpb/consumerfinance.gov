@@ -22,7 +22,6 @@
   "dependencies": {
     "html5shiv": "latest",
     "jquery": "~1.11.0",
-    "licensed-font-service": "http://fast.fonts.net/cssapi/0a274127-32a9-474a-bbdb-f23f410e88c5.css",
     "normalize-css": "~3.0.0",
     "normalize-legacy-addon": "git://github.com/cfpb/normalize-legacy-addon.git#0.1.0",
     "cf-buttons": "git://github.com/cfpb/cf-buttons.git",
