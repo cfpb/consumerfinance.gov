@@ -89,6 +89,81 @@
 }</code></pre>
           </div>
         </li>
+        <li id="media-object-with-image" class="demo-component-list_item demo-wrapper">
+          <h1 class="demo-component-list_header">Media object with image</h1>
+          <ul class="demo-pattern-list">
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+              </header>
+              <section>
+<article class="media-object media-object__with-image">
+    <div class="media-object_img-container">
+        <img src="http://placekitten.com/290/155" class="media-object_img">
+    </div>
+    <h1 class="media-object_header">
+        Live from Phoenix!
+    </h1>
+    <p class="media-object_text">
+        This event was a training for housing counselors, legal aid
+        attorneys, and other advocates on the new mortgage servicing
+        rules that take effect today. 
+    </p>
+    <p class="media-object_byline">
+        By Patrice Ficklin
+    </p>
+</article>
+</section>
+              <footer class="demo-pattern-list_footer">
+                <pre class="html"><code data-language="html">&lt;article class=&quot;media-object media-object__with-image&quot;&gt;
+    &lt;div class=&quot;media-object_img-container&quot;&gt;
+        &lt;img src=&quot;http://placekitten.com/290/155&quot; class=&quot;media-object_img&quot;&gt;
+    &lt;/div&gt;
+    &lt;h1 class=&quot;media-object_header&quot;&gt;
+        Live from Phoenix!
+    &lt;/h1&gt;
+    &lt;p class=&quot;media-object_text&quot;&gt;
+        This event was a training for housing counselors, legal aid
+        attorneys, and other advocates on the new mortgage servicing
+        rules that take effect today. 
+    &lt;/p&gt;
+    &lt;p class=&quot;media-object_byline&quot;&gt;
+        By Patrice Ficklin
+    &lt;/p&gt;
+&lt;/article&gt;</code></pre>
+              </footer>
+            </li>
+          </ul>
+          <div class="demo-pattern-css">
+            <pre class="css"><code data-language="css">@media only all and (min-width: 48em) {
+  .media-object__with-image {
+    position: relative;
+    min-height: 9.6875em;
+    padding-left: 11.5625em;
+  }
+}
+@media only all and (min-width: 48em) {
+  .media-object_img-container {
+    position: absolute;
+    left: 0;
+    width: 9.6875em;
+    overflow: hidden;
+  }
+}
+.media-object_img {
+  max-width: 100%;
+  -ms-interpolation-mode: bicubic;
+  margin-bottom: 0.5em;
+}
+@media only all and (min-width: 48em) {
+  .media-object_img {
+    width: 290px;
+    max-width: 290px;
+    margin-bottom: 0;
+    margin-left: -50%;
+  }
+}</code></pre>
+          </div>
+        </li>
       </ul>
       <footer class="wrapper-footer">
         <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
