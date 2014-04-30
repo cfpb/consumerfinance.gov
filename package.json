@@ -14,7 +14,6 @@
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "~0.4.4",
     "grunt-release": "latest",
-    "grunt-string-replace": "latest",
     "grunt-topdoc": "~0.2.0"
   }
 }
