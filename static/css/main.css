@@ -1549,41 +1549,47 @@ textarea {
    Grid mixins
    ========================================================================== */
 /* topdoc
-    name: "Global Less variables"
-    notes:
-      - "The following variables are default values used in creating grids.
-        They can be overridden in your application's stylesheet.
-        Most mixins allows you to override these values by passing them arguments."
-    family: "cf-grid"
-    patterns:
+  name: "Global Less variables"
+  notes:
+    - "The following variables are default values used in creating grids.
+      They can be overridden in your application's stylesheet.
+      Most mixins allows you to override these values by passing them arguments."
+  family: "cf-grid"
+  patterns:
+    - codenotes:
+        - "@box-sizing-polyfill-path: '/cf-grid/custom-demo/static/css';"
+      notes:
+        - "The path where boxsizing.htc is located."
+        - "This path MUST be overridden in your project and set to a root relative url."
     - codenotes:
         - "@wrapper-width: 1200px;"
       notes:
         - "The grid's maximum width in px."
     - codenotes:
-      - "@gutter-width: 30px;"
+        - "@gutter-width: 30px;"
       notes:
         - "The fixed width between columns."
     - codenotes:
-      - "@total-columns: 12;"
+        - "@total-columns: 12;"
       notes:
         - "The total number of columns used in calculating column widths."
     - codenotes:
-      - "@debug"
+        - "@debug"
       notes:
         - "Gives column blocks a background color if set to true."
-    tags:
+  tags:
     - "cf-grid"
 */
 /* topdoc
-    name: "Wrapper"
-    notes:
-      - "Wrappers are centered containers with a max-width and fixed gutters
-        that match the gutter widths of columns."
-      - "If you want IE 6/7 support, ensure boxsizing.htc is in the same dir as your stylesheet.
-        Read more: https://github.com/Schepp/box-sizing-polyfill."
-    family: "cf-grid"
-    patterns:
+  name: "Wrapper"
+  notes:
+    - "Wrappers are centered containers with a max-width and fixed gutters
+      that match the gutter widths of columns."
+    - "To support IE 6/7, ensure that the path to boxsizing.htc is set using
+      the @box-sizing-polyfill-path Less variable.
+      Read more: https://github.com/Schepp/box-sizing-polyfill."
+  family: "cf-grid"
+  patterns:
     - name: "Less mixin"
       codenotes:
         - ".wrapper( @wrapper-width: @wrapper-width )"
@@ -1592,130 +1598,130 @@ textarea {
           value into the mixin."
     - name: "Usage"
       codenotes:
-      - |
-        .main-wrapper {
-          .wrapper();
-        }
-        .wide-wrapper {
-          .wrapper( 1900px );
-        }
-      - |
-        <div class="main-wrapper">
-          This container now has left and right padding and a centered max width.
-        </div>
-        <div class="wide-wrapper">
-          This container is the same except it has a wider max-width.
-        </div>
-    tags:
+        - |
+          .main-wrapper {
+            .wrapper();
+          }
+          .wide-wrapper {
+            .wrapper( 1900px );
+          }
+        - |
+          <div class="main-wrapper">
+              This container now has left and right padding and a centered max width.
+          </div>
+          <div class="wide-wrapper">
+              This container is the same except it has a wider max-width.
+          </div>
+  tags:
     - "cf-grid"
 */
 /* topdoc
-    name: "Columns"
-    family: "cf-grid"
-    patterns:
+  name: "Columns"
+  family: "cf-grid"
+  patterns:
     - name: "Less mixin"
       codenotes:
-      - ".column( @columns: 1; @total: @total-columns; @prefix: 0; @suffix: 0 )"
+        - ".column( @columns: 1; @total: @total-columns; @prefix: 0; @suffix: 0 )"
       notes:
-      - "Computes column widths and prefix/suffix padding."
-      - "CSS borders are used for fixed gutters."
+        - "Computes column widths and prefix/suffix padding."
+        - "CSS borders are used for fixed gutters."
     - name: "Usage"
       codenotes:
-      - |
-        .main-wrapper {
-          .wrapper();
-        }
-        .half {
-          .column(1, 2);
-        }
-      - |
-        <div class="main-wrapper">
-          <div class="half">I am half of my parent.</div>
-          <div class="half">I am half of my parent.</div>
-        </div>
+        - |
+          .main-wrapper {
+            .wrapper();
+          }
+          .half {
+            .column(1, 2);
+          }
+        - |
+          <div class="main-wrapper">
+              <div class="half">I am half of my parent.</div>
+              <div class="half">I am half of my parent.</div>
+          </div>
     - name: "This is a placeholder for documenting prefix and suffix"
       codenotes:
-      - ...
-    tags:
+        - "..."
+  tags:
     - "cf-grid"
 */
 /* topdoc
-    name: "Push and Pull mixins for source ordering"
-    family: "cf-grid"
-    patterns:
+  name: "Push and Pull mixins for source ordering"
+  family: "cf-grid"
+  patterns:
     - codenotes:
         - ".push( @offset: 1, @total-columns: @total-columns )"
         - ".pull( @offset: 1, @total-columns: @total-columns )"
     - name: "Usage"
       codenotes:
-      - |
-        .first {
-          .column(1, 2);
-          .pull(1)l
-        }
-        .second {
-          .column(1, 2);
-          .push(1)l
-        }
-      - |
-        <div>
-          <div class="second">I am first in the markup but appear after .first.</div>
-          <div class="first">I am second in the markup but appear before .second.</div>
-        </div>
-    tags:
+        - |
+          .first {
+            .column(1, 2);
+            .pull(1)l
+          }
+          .second {
+            .column(1, 2);
+            .push(1)l
+          }
+        - |
+          <div>
+              <div class="second">I am first in the markup but appear after .first.</div>
+              <div class="first">I am second in the markup but appear before .second.</div>
+          </div>
+  tags:
     - "cf-grid"
 */
 /* topdoc
-    name: "Nested columns"
-    notes:
-      - "Since all cf-grid columns have left and right gutters you will notice
-        undesireable offsetting when nesting columns.
-        Normally this is removed with complex selectors or by adding classes
-        to the first and last column per 'row'.
-        In cf-grid the way to get around this is by wrapping your columns in a
-        container that utilizes the .nested-col-group() mixin.
-        This mixin uses negative left and right margins to pull the columns back
-        into alignment with parent columns."
-      - "NOTE: Working this way allows you to easily create responsive grids.
-        You are free to control the number of columns per 'row' without having
-        to deal with the first and last columns of each row."
-      - "NOTE: cf-grids does not use 'rows' and there is no row container.
-        To clarify, if you have a 12 column grid and place 24 columns inside
-        of a wrapper cf-grid columns will automaitcally stack into 2 'rows'
-        of 12."
-    family: "cf-grid"
-    patterns:
+  name: "Nested columns"
+  notes:
+    - "Since all cf-grid columns have left and right gutters you will notice
+      undesireable offsetting when nesting columns.
+      Normally this is removed with complex selectors or by adding classes
+      to the first and last column per 'row'.
+      In cf-grid the way to get around this is by wrapping your columns in a
+      container that utilizes the .nested-col-group() mixin.
+      This mixin uses negative left and right margins to pull the columns back
+      into alignment with parent columns."
+    - "NOTE: Working this way allows you to easily create responsive grids.
+      You are free to control the number of columns per 'row' without having
+      to deal with the first and last columns of each row."
+    - "NOTE: cf-grids does not use 'rows' and there is no row container.
+      To clarify, if you have a 12 column grid and place 24 columns inside
+      of a wrapper cf-grid columns will automaitcally stack into 2 'rows'
+      of 12."
+  family: "cf-grid"
+  patterns:
     - name: "Less mixin"
       codenotes:
-      - ".nested-col-group()"
+        - ".nested-col-group()"
     - name: "Usage"
       codenotes:
-      - |
-        .main-wrapper {
-          .wrapper();
-        }
-        .cols {
-          .nested-col-group();
-        }
-        .half {
-          .column(1, 2);
-        }
-      - |
-        <div class="main-wrapper">
-          <div class="half">
-            <div class="cols">
-              <div class="half"></div>
-              <div class="half"></div>
-            </div>
+        - |
+          .main-wrapper {
+            .wrapper();
+          }
+          .cols {
+            .nested-col-group();
+          }
+          .half {
+            .column(1, 2);
+          }
+        - |
+          <div class="main-wrapper">
+              <div class="half">
+                  <div class="cols">
+                      <div class="half"></div>
+                      <div class="half"></div>
+                  </div>
+              </div>
+              <div class="half">
+                  <div class="cols">
+                      <div class="half"></div>
+                      <div class="half"></div>
+                  </div>
+              </div>
           </div>
-          <div class="half">
-            <div class="cols">
-              <div class="half"></div>
-              <div class="half"></div>
-            </div>
-          </div>
-        </div>
-    tags:
+  tags:
     - "cf-grid"
 */
 /* topdoc
@@ -4933,7 +4939,7 @@ a .icon-flip-vertical:before {
 .lt-ie8 .content {
   display: inline;
   *zoom: 1;
-  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 .sidebar {
   display: inline-block;
@@ -4954,7 +4960,7 @@ a .icon-flip-vertical:before {
 .lt-ie8 .sidebar {
   display: inline;
   *zoom: 1;
-  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 .wrapper {
   -webkit-box-sizing: border-box;
@@ -4968,7 +4974,7 @@ a .icon-flip-vertical:before {
 }
 .lt-ie8 .wrapper {
   *zoom: 1;
-  *behavior: url(/cf-grid/custom-demo/static/css/boxsizing.htc);
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 .header {
   border-bottom: 10px solid #2cb34a;
