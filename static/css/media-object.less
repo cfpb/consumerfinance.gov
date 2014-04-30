@@ -46,19 +46,20 @@
 
 /* topdoc
   name: Media object with image
-  family: cfgov-media-object-hide
+  family: cfgov-media-object
   patterns:
     - markup: |
         <article class="media-object media-object__with-image">
-            <img src="http://placekitten.com/290/150">
+            <div class="media-object_img-container">
+                <img src="http://placekitten.com/290/155" class="media-object_img">
+            </div>
             <h1 class="media-object_header">
-                Preventing illegal discrimination in auto lending
+                Live from Phoenix!
             </h1>
             <p class="media-object_text">
-                Every year, millions of American families buy a car –
-                and it will be one of the most significant purchases they make.
-                One key priority for us is protecting consumers from the silent
-                pickpocket of discrimination.
+                This event was a training for housing counselors, legal aid
+                attorneys, and other advocates on the new mortgage servicing
+                rules that take effect today. 
             </p>
             <p class="media-object_byline">
                 By Patrice Ficklin
@@ -67,6 +68,35 @@
   tags:
     - cfgov-media-object
 */
+
+.media-object__with-image {
+    @media @respond-to-medium-screens-min {
+        position: relative;
+        min-height: unit(155px / @base-font-size-px, em);
+        padding-left: unit(185px / @base-font-size-px, em);
+    }
+}
+
+.media-object_img-container {
+    @media @respond-to-medium-screens-min {
+        position: absolute;
+        left: 0;
+        width: unit(155px / @base-font-size-px, em);
+        overflow: hidden;
+    }
+}
+
+.media-object_img {
+    .u-flexible-image();
+    margin-bottom: unit(8px / @base-font-size-px, em);
+    @media @respond-to-medium-screens-min {
+        width: 290px;
+        max-width: 290px;
+        margin-bottom: 0;
+        margin-left: -50%;
+    }
+}
+
 
 /* topdoc
   name: EOF
