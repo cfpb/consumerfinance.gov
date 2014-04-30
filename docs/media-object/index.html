@@ -137,13 +137,14 @@
             <pre class="css"><code data-language="css">@media only all and (min-width: 48em) {
   .media-object__with-image {
     position: relative;
-    min-height: 9.6875em;
+    min-height: 9.9375em;
     padding-left: 11.5625em;
   }
 }
 @media only all and (min-width: 48em) {
   .media-object_img-container {
     position: absolute;
+    top: 0.25em;
     left: 0;
     width: 9.6875em;
     overflow: hidden;
@@ -156,6 +157,7 @@
 }
 @media only all and (min-width: 48em) {
   .media-object_img {
+    display: block;
     width: 290px;
     max-width: 290px;
     margin-bottom: 0;
