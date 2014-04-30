@@ -3,10 +3,11 @@
    media-object
    ========================================================================== */
 
+
 /* topdoc
-    name: Media object
-    family: cfgov-media-object
-    patterns:
+  name: Media object
+  family: cfgov-media-object
+  patterns:
     - markup: |
         <article class="media-object">
             <h1 class="media-object_header">
@@ -22,7 +23,7 @@
                 By Patrice Ficklin
             </p>
         </article>
-    tags:
+  tags:
     - cfgov-media-object
 */
 
@@ -41,6 +42,31 @@
 .media-object_byline {
     .webfont-regular();
 }
+
+
+/* topdoc
+  name: Media object with image
+  family: cfgov-media-object-hide
+  patterns:
+    - markup: |
+        <article class="media-object media-object__with-image">
+            <img src="http://placekitten.com/290/150">
+            <h1 class="media-object_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="media-object_text">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="media-object_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+  tags:
+    - cfgov-media-object
+*/
 
 /* topdoc
   name: EOF
