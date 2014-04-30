@@ -69,31 +69,39 @@
     - cfgov-media-object
 */
 
-.media-object__with-image {
-    @media @respond-to-medium-screens-min {
-        position: relative;
-        min-height: unit(155px / @base-font-size-px, em);
-        padding-left: unit(185px / @base-font-size-px, em);
-    }
-}
+.media-object {
 
-.media-object_img-container {
-    @media @respond-to-medium-screens-min {
-        position: absolute;
-        left: 0;
-        width: unit(155px / @base-font-size-px, em);
-        overflow: hidden;
-    }
-}
+    // The width and height of the image for medium screens and up.
+    @img-size: 155px;
 
-.media-object_img {
-    .u-flexible-image();
-    margin-bottom: unit(8px / @base-font-size-px, em);
-    @media @respond-to-medium-screens-min {
-        width: 290px;
-        max-width: 290px;
-        margin-bottom: 0;
-        margin-left: -50%;
+    &__with-image {
+        @media @respond-to-medium-screens-min {
+            position: relative;
+            min-height: unit((@img-size + 4px) / @base-font-size-px, em);
+            padding-left: unit((@img-size + @gutter-width) / @base-font-size-px, em);
+        }
+    }
+
+    &_img-container {
+        @media @respond-to-medium-screens-min {
+            position: absolute;
+            top: unit(4px / @base-font-size-px, em);
+            left: 0;
+            width: unit(@img-size / @base-font-size-px, em);
+            overflow: hidden;
+        }
+    }
+
+    &_img {
+        .u-flexible-image();
+        margin-bottom: unit(8px / @base-font-size-px, em);
+        @media @respond-to-medium-screens-min {
+            display: block;
+            width: 290px;
+            max-width: 290px;
+            margin-bottom: 0;
+            margin-left: -50%;
+        }
     }
 }
 
