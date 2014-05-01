@@ -9,11 +9,19 @@
   family: cfgov-utilities
   patterns:
     - codenotes:
-      - .u-right();
+        - .u-right();
+      notes:
+        - "IE7 float: right drop bug fixes:"
+        - "1. If the float: right follows an element in the html structure that
+          should be to its left (and not above it), then that preceding
+          element(s) must be float: left.
+          http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688"
+        - "2. Simply change the markup order so that the element floating right
+          comes before the element to its left."
     - codenotes:
-      - .u-unstyled-link();
+        - .u-unstyled-link();
     - codenotes:
-      - .u-flexible-image();
+        - .u-flexible-image();
   tags:
     - cfgov-utilities
 */

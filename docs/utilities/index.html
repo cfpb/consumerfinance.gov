@@ -25,6 +25,11 @@
                     <pre class="code"><code>.u-right();</code></pre>
                   </li>
                 </ul>
+                <ul class="demo_notes">
+                  <li>IE7 float: right drop bug fixes:</li>
+                  <li>1. If the float: right follows an element in the html structure that should be to its left (and not above it), then that preceding element(s) must be float: left. http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688</li>
+                  <li>2. Simply change the markup order so that the element floating right comes before the element to its left.</li>
+                </ul>
               </header>
             </li>
             <li class="demo-pattern-list_item">
