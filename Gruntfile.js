@@ -98,7 +98,7 @@ module.exports = function(grunt) {
       multiple_files: {
         // Prefix all CSS files found in `static/css` and overwrite.
         expand: true,
-        src: 'static/css/*.css'
+        src: ['static/css/*.css', '!static/css/*.min.css']
       },
     },
 

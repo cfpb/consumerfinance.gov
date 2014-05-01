@@ -42,15 +42,49 @@ img {
 
 
 .content {
-    .column(8);
     padding: 2em 0;
-    margin-left: -(@gutter-width / 2);
 }
 .sidebar {
-    .column(4);
-    margin-right: -(@gutter-width / 2);
-    background: @gray-20;
-    // Need to bring in bleeding sidebar treatment from CFPB Open Tech
+    padding: 2em (@gutter-width / 2);
+    margin: 0 -(@gutter-width / 2);
+    background: @gray-10;
+}
+@media @respond-to-medium-screens-min {
+
+    .content {
+        .column(8);
+        margin-left: -(@gutter-width / 2);
+    }
+    .sidebar {
+        .column(4);
+        padding: 2em @gutter-width;
+        margin-left: 0;
+    }
+
+    .bleeding-sidebar {
+        overflow: hidden;
+
+        &_fg {
+            // Remove background color from actual sidebar.
+            // It will now be provided by pseudoelement :after sidebar parent.
+            background: transparent;
+        }
+
+        &_bg:after {
+            // Create faux sidebar background.
+            content: '';
+            display: block;
+            width: 9999px;
+            border-left: 1px solid @gray-50;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 66.666666667%;
+            z-index: -1;
+            background: @gray-10;
+        }
+    }
+
 }
 
 
@@ -64,14 +98,16 @@ img {
 }
 .hero {
     padding: 1em 2em;
-    background: @gray-10;
+    background: @gray-20;
 
     > h1 {
         margin: 0;
     }
 }
+
 .footer {
     padding: 1.5em 0;
+    border-top: 3px solid @green;
     background: @gray-10;
 }
 
