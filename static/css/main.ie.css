@@ -5872,6 +5872,26 @@ img {
   name: Blog
   family: cfgov-content-blocks
   patterns:
+    - name: Category slugs
+      markup: |
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Announcements & updates
+        </a><br>
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Consumer information
+        </a><br>
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Engagement
+        </a><br>
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Innovation & data
+        </a>
+      notes:
+        - "Official icons are still being developed, hence the ?."
     - name: Post preview (no image)
       codenotes:
         - |
@@ -5890,8 +5910,8 @@ img {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="category-slug meta-header_heading">
-                    <i class="cf-icon cf-icon-credit-card"></i>
-                    Consumer finance
+                    <i class="cf-icon cf-icon-help"></i>
+                    Consumer information
                 </a>
             </div>
             <div class="summary">
@@ -5920,8 +5940,8 @@ img {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="category-slug meta-header_heading">
-                    <i class="cf-icon cf-icon-credit-card"></i>
-                    Consumer finance
+                    <i class="cf-icon cf-icon-help"></i>
+                    Consumer information
                 </a>
             </div>
             <div class="media-object">
