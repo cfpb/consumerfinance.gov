@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh vars docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <link rel="stylesheet" type="text/css" href="static/demo/brackets.css">
+  </head>
+  <body>
+    <div class="demo-wrapper">
+      <header class="demo_header">
+        <h1 class="h5">cfgov-refresh vars docs</h1>
+      </header>
+      <ul class="demo-component-list">
+        <li id="media-query-vars" class="demo-component-list_item demo-wrapper">
+          <h1 class="demo-component-list_header">Media query vars</h1>
+          <ul class="demo-pattern-list">
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+                <h3>Size calculations</h3>
+                <ul class="demo_codenotes">
+                  <li>
+                    <pre class="code"><code>@small-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@small-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@medium-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@medium-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@large-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@large-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@extralarge-screens-min</code></pre>
+                  </li>
+                </ul>
+                <ul class="demo_notes">
+                  <li>You shouldn't need to use these vars directly, they're used to create the @respond-to vars which you should use instead.</li>
+                </ul>
+              </header>
+            </li>
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+                <h3>Interpolated media type and expressions</h3>
+                <ul class="demo_codenotes">
+                  <li>
+                    <pre class="code"><code>@respond-to-small-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-small-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-medium-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-medium-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-large-screens-min</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-large-screens-max</code></pre>
+                  </li>
+                  <li>
+                    <pre class="code"><code>@respond-to-extralarge-screens-min</code></pre>
+                  </li>
+                </ul>
+              </header>
+            </li>
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+                <h3>Usage</h3>
+                <ul class="demo_codenotes">
+                  <li>
+                    <pre class="code"><code>@media @respond-to-medium-screens-min {
+    ...
+}
+
+Compiles to:
+
+@media only all and (min-width: 48em) {
+    ...
+}</code></pre>
+                  </li>
+                </ul>
+              </header>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <footer class="wrapper-footer">
+        <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
+      </footer>
+    </div>
+    <script src="static/demo/main.min.js"></script>
+  </body>
+</html>
