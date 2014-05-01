@@ -4640,7 +4640,7 @@ a .icon-flip-vertical:before {
 .demo-placeholder {
   display: inline-block;
   padding: 0.5714285714285714em 0.8571428571428571em;
-  margin: 1.5em 0;
+  margin: 3em 0;
   color: #75787b;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -4977,6 +4977,26 @@ img {
   name: Blog
   family: cfgov-content-blocks
   patterns:
+    - name: Category slugs
+      markup: |
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Announcements & updates
+        </a><br>
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Consumer information
+        </a><br>
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Engagement
+        </a><br>
+        <a href="#" class="category-slug">
+            <i class="cf-icon cf-icon-help"></i>
+            Innovation & data
+        </a>
+      notes:
+        - "Official icons are still being developed, hence the ?."
     - name: Post preview (no image)
       codenotes:
         - |
@@ -4995,8 +5015,8 @@ img {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="category-slug meta-header_heading">
-                    <i class="cf-icon cf-icon-credit-card"></i>
-                    Consumer finance
+                    <i class="cf-icon cf-icon-help"></i>
+                    Consumer information
                 </a>
             </div>
             <div class="summary">
@@ -5025,8 +5045,8 @@ img {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="category-slug meta-header_heading">
-                    <i class="cf-icon cf-icon-credit-card"></i>
-                    Consumer finance
+                    <i class="cf-icon cf-icon-help"></i>
+                    Consumer information
                 </a>
             </div>
             <div class="media-object">
