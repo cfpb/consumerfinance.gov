@@ -309,10 +309,12 @@ module.exports = function(grunt) {
   function dynamicTopdocTasks() {
     var topdoc = {};
     var subtasks = [
-      'vars',
-      'utilities',
+      'content-blocks',
       'meta',
-      'media-object'
+      'media-object',
+      'summary',
+      'utilities',
+      'vars'
     ];
     for (var i = 0; i < subtasks.length; i++) {
       var key = subtasks[i];
