@@ -10,63 +10,55 @@
   patterns:
     - markup: |
         <article class="media-object">
-            <h1 class="media-object_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
-            <p class="media-object_text">
-                Every year, millions of American families buy a car –
-                and it will be one of the most significant purchases they make.
-                One key priority for us is protecting consumers from the silent
-                pickpocket of discrimination.
-            </p>
-            <p class="media-object_byline">
-                By Patrice Ficklin
-            </p>
+            <div class="media-object_image-container">
+                <img src="http://placekitten.com/290/155" class="media-object_image">
+            </div>
+            <div class="media-object_text-container">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
         </article>
   tags:
     - cfgov-media-object
 */
 
-.media-object_header {
-    .h3();
+.media-object {
+
+    // The width and height of the image for medium screens and up.
+    @img-size: 155px;
+
     @media @respond-to-medium-screens-min {
-        .h2();
+        position: relative;
+        min-height: unit((@img-size + 4px) / @base-font-size-px, em);
+        padding-left: unit((@img-size + @gutter-width) / @base-font-size-px, em);
+    }
+
+    &_image-container {
+        @media @respond-to-medium-screens-min {
+            position: absolute;
+            top: unit(4px / @base-font-size-px, em);
+            left: 0;
+            width: unit(@img-size / @base-font-size-px, em);
+            overflow: hidden;
+        }
+    }
+
+    &_image {
+        margin-bottom: unit(8px / @base-font-size-px, em);
+        @media @respond-to-medium-screens-min {
+            display: block;
+            width: 290px;
+            max-width: 290px;
+            margin-bottom: 0;
+            margin-left: -50%;
+        }
     }
 }
 
-.media-object_text {
-    .webfont-regular();
-    color: @darkgray;
-}
-
-.media-object_byline {
-    .webfont-regular();
-}
-
-
-/* topdoc
-  name: Media object with image
-  family: cfgov-media-object-hide
-  patterns:
-    - markup: |
-        <article class="media-object media-object__with-image">
-            <img src="http://placekitten.com/290/150">
-            <h1 class="media-object_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
-            <p class="media-object_text">
-                Every year, millions of American families buy a car –
-                and it will be one of the most significant purchases they make.
-                One key priority for us is protecting consumers from the silent
-                pickpocket of discrimination.
-            </p>
-            <p class="media-object_byline">
-                By Patrice Ficklin
-            </p>
-        </article>
-  tags:
-    - cfgov-media-object
-*/
 
 /* topdoc
   name: EOF

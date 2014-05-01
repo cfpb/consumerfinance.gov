@@ -22,13 +22,23 @@
 @import (less) "demo.less";
 
 
+/* Base styles
+   ========================================================================== */
+
+img {
+    max-width: 100%;
+}
+
+
 /* Project-specific styles
    ========================================================================== */
 
-@import (less) "vars.less";
 @import (less) "utilities.less";
+@import (less) "vars.less";
 @import (less) "meta.less";
 @import (less) "media-object.less";
+@import (less) "summary.less";
+@import (less) "content-blocks.less";
 
 
 .content {
@@ -65,9 +75,3 @@
     background: @gray-10;
 }
 
-
-// Post styles
-
-.post-preview + .post-preview {
-    margin-top: 50px;
-}

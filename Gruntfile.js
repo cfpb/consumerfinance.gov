@@ -164,15 +164,42 @@ module.exports = function(grunt) {
     /**
      * CSS Min: https://github.com/gruntjs/grunt-contrib-cssmin
      *
-     * Minify CSS and optionally rewrite asset paths.
+     * Compress CSS files.
      */
     cssmin: {
-      combine: {
+      main: {
         options: {
           processImport: false
         },
         files: {
           'static/css/main.min.css': ['static/css/main.css'],
+        }
+      },
+      'ie-alternate': {
+        options: {
+          processImport: false
+        },
+        files: {
+          'static/css/main.ie.min.css': ['static/css/main.ie.css'],
+        }
+      }
+    },
+
+    /**
+     * Legacssy: https://github.com/robinpokorny/grunt-legacssy
+     *
+     * Fix your CSS for legacy browsers.
+     */
+    legacssy: {
+      'ie-alternate': {
+        options: {
+          // Flatten all media queries with a min-width over 960 or lower.
+          // All media queries over 960 will be excluded fromt he stylesheet.
+          // EM calculation: 960 / 16 = 60
+          legacyWidth: 60
+        },
+        files: {
+          'static/css/main.ie.css': 'static/css/main.css'
         }
       }
     },
@@ -282,10 +309,12 @@ module.exports = function(grunt) {
   function dynamicTopdocTasks() {
     var topdoc = {};
     var subtasks = [
-      'vars',
-      'utilities',
+      'content-blocks',
       'meta',
-      'media-object'
+      'media-object',
+      'summary',
+      'utilities',
+      'vars'
     ];
     for (var i = 0; i < subtasks.length; i++) {
       var key = subtasks[i];
@@ -324,6 +353,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-legacssy');
   grunt.loadNpmTasks('grunt-release');
   grunt.loadNpmTasks('grunt-topdoc');
 
@@ -331,7 +361,7 @@ module.exports = function(grunt) {
    * Create custom task aliases and combinations
    */
   grunt.registerTask('vendor', ['bower:install', 'concat:cf-less']);
-  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'cssmin']);
+  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'topdoc']);
   grunt.registerTask('test', ['jshint']);
