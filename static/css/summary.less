@@ -1,0 +1,53 @@
+/* ==========================================================================
+   cfgov-refresh
+   summary
+   ========================================================================== */
+
+
+/* topdoc
+  name: Summary
+  family: cfgov-summary
+  patterns:
+    - markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="summary_text">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="summary_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+  tags:
+    - cfgov-summary
+*/
+
+.summary {
+
+    &_header {
+        .h3();
+        @media @respond-to-medium-screens-min {
+            .h2();
+        }
+    }
+
+    &_text {
+        .webfont-regular();
+        color: @darkgray;
+    }
+
+    &_byline {
+        .webfont-regular();
+    }
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

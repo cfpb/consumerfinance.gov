@@ -10,60 +10,17 @@
   patterns:
     - markup: |
         <article class="media-object">
-            <h1 class="media-object_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
-            <p class="media-object_text">
-                Every year, millions of American families buy a car –
-                and it will be one of the most significant purchases they make.
-                One key priority for us is protecting consumers from the silent
-                pickpocket of discrimination.
-            </p>
-            <p class="media-object_byline">
-                By Patrice Ficklin
-            </p>
-        </article>
-  tags:
-    - cfgov-media-object
-*/
-
-.media-object_header {
-    .h3();
-    @media @respond-to-medium-screens-min {
-        .h2();
-    }
-}
-
-.media-object_text {
-    .webfont-regular();
-    color: @darkgray;
-}
-
-.media-object_byline {
-    .webfont-regular();
-}
-
-
-/* topdoc
-  name: Media object with image
-  family: cfgov-media-object
-  patterns:
-    - markup: |
-        <article class="media-object media-object__with-image">
-            <div class="media-object_img-container">
-                <img src="http://placekitten.com/290/155" class="media-object_img">
+            <div class="media-object_image-container">
+                <img src="http://placekitten.com/290/155" class="media-object_image">
             </div>
-            <h1 class="media-object_header">
-                Live from Phoenix!
-            </h1>
-            <p class="media-object_text">
-                This event was a training for housing counselors, legal aid
-                attorneys, and other advocates on the new mortgage servicing
-                rules that take effect today. 
-            </p>
-            <p class="media-object_byline">
-                By Patrice Ficklin
-            </p>
+            <div class="media-object_text-container">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
         </article>
   tags:
     - cfgov-media-object
@@ -74,15 +31,13 @@
     // The width and height of the image for medium screens and up.
     @img-size: 155px;
 
-    &__with-image {
-        @media @respond-to-medium-screens-min {
-            position: relative;
-            min-height: unit((@img-size + 4px) / @base-font-size-px, em);
-            padding-left: unit((@img-size + @gutter-width) / @base-font-size-px, em);
-        }
+    @media @respond-to-medium-screens-min {
+        position: relative;
+        min-height: unit((@img-size + 4px) / @base-font-size-px, em);
+        padding-left: unit((@img-size + @gutter-width) / @base-font-size-px, em);
     }
 
-    &_img-container {
+    &_image-container {
         @media @respond-to-medium-screens-min {
             position: absolute;
             top: unit(4px / @base-font-size-px, em);
@@ -92,8 +47,7 @@
         }
     }
 
-    &_img {
-        .u-flexible-image();
+    &_image {
         margin-bottom: unit(8px / @base-font-size-px, em);
         @media @respond-to-medium-screens-min {
             display: block;
