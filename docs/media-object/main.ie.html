@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh media-object docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <link rel="stylesheet" type="text/css" href="static/demo/brackets.css">
+  </head>
+  <body>
+    <div class="demo-wrapper">
+      <header class="demo_header">
+        <h1 class="h5">cfgov-refresh media-object docs</h1>
+      </header>
+      <ul class="demo-component-list">
+        <li id="media-object" class="demo-component-list_item demo-wrapper">
+          <h1 class="demo-component-list_header">Media object</h1>
+          <ul class="demo-pattern-list">
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+              </header>
+              <section>
+<article class="media-object">
+    <h1 class="media-object_header">
+        Preventing illegal discrimination in auto lending
+    </h1>
+    <p class="media-object_text">
+        Every year, millions of American families buy a car –
+        and it will be one of the most significant purchases they make.
+        One key priority for us is protecting consumers from the silent
+        pickpocket of discrimination.
+    </p>
+    <p class="media-object_byline">
+        By Patrice Ficklin
+    </p>
+</article>
+</section>
+              <footer class="demo-pattern-list_footer">
+                <pre class="html"><code data-language="html">&lt;article class=&quot;media-object&quot;&gt;
+    &lt;h1 class=&quot;media-object_header&quot;&gt;
+        Preventing illegal discrimination in auto lending
+    &lt;/h1&gt;
+    &lt;p class=&quot;media-object_text&quot;&gt;
+        Every year, millions of American families buy a car –
+        and it will be one of the most significant purchases they make.
+        One key priority for us is protecting consumers from the silent
+        pickpocket of discrimination.
+    &lt;/p&gt;
+    &lt;p class=&quot;media-object_byline&quot;&gt;
+        By Patrice Ficklin
+    &lt;/p&gt;
+&lt;/article&gt;</code></pre>
+              </footer>
+            </li>
+          </ul>
+          <div class="demo-pattern-css">
+            <pre class="css"><code data-language="css">
+.media-object_header {
+  margin-top: 0;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 0.22727272727272727em;
+  font-size: 1.375em;
+  line-height: 1.2727272727272727;
+}
+
+.media-object_header {
+  margin-top: 0;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 0.3076923076923077em;
+  font-size: 1.625em;
+  line-height: 1.2692307692307692;
+}
+
+.media-object_text {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #43484e;
+}
+
+.media-object_byline {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+</code></pre>
+          </div>
+        </li>
+        <li id="media-object-with-image" class="demo-component-list_item demo-wrapper">
+          <h1 class="demo-component-list_header">Media object with image</h1>
+          <ul class="demo-pattern-list">
+            <li class="demo-pattern-list_item">
+              <header class="demo-pattern-list_header">
+              </header>
+              <section>
+<article class="media-object media-object__with-image">
+    <div class="media-object_img-container">
+        <img src="http://placekitten.com/290/155" class="media-object_img">
+    </div>
+    <h1 class="media-object_header">
+        Live from Phoenix!
+    </h1>
+    <p class="media-object_text">
+        This event was a training for housing counselors, legal aid
+        attorneys, and other advocates on the new mortgage servicing
+        rules that take effect today. 
+    </p>
+    <p class="media-object_byline">
+        By Patrice Ficklin
+    </p>
+</article>
+</section>
+              <footer class="demo-pattern-list_footer">
+                <pre class="html"><code data-language="html">&lt;article class=&quot;media-object media-object__with-image&quot;&gt;
+    &lt;div class=&quot;media-object_img-container&quot;&gt;
+        &lt;img src=&quot;http://placekitten.com/290/155&quot; class=&quot;media-object_img&quot;&gt;
+    &lt;/div&gt;
+    &lt;h1 class=&quot;media-object_header&quot;&gt;
+        Live from Phoenix!
+    &lt;/h1&gt;
+    &lt;p class=&quot;media-object_text&quot;&gt;
+        This event was a training for housing counselors, legal aid
+        attorneys, and other advocates on the new mortgage servicing
+        rules that take effect today. 
+    &lt;/p&gt;
+    &lt;p class=&quot;media-object_byline&quot;&gt;
+        By Patrice Ficklin
+    &lt;/p&gt;
+&lt;/article&gt;</code></pre>
+              </footer>
+            </li>
+          </ul>
+          <div class="demo-pattern-css">
+            <pre class="css"><code data-language="css">
+.media-object__with-image {
+  position: relative;
+  min-height: 9.9375em;
+  padding-left: 11.5625em;
+}
+
+.media-object_img-container {
+  position: absolute;
+  top: 0.25em;
+  left: 0;
+  width: 9.6875em;
+  overflow: hidden;
+}
+
+.media-object_img {
+  max-width: 100%;
+  -ms-interpolation-mode: bicubic;
+  margin-bottom: 0.5em;
+}
+
+.media-object_img {
+  display: block;
+  width: 290px;
+  max-width: 290px;
+  margin-bottom: 0;
+  margin-left: -50%;
+}
+</code></pre>
+          </div>
+        </li>
+      </ul>
+      <footer class="wrapper-footer">
+        <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
+      </footer>
+    </div>
+    <script src="static/demo/main.min.js"></script>
+  </body>
+</html>
