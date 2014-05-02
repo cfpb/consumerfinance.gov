@@ -3,25 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>cfgov-refresh media-object docs</title>
+    <title>cfgov-refresh / media-object docs</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="static/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
-    <link rel="stylesheet" type="text/css" href="static/demo/brackets.css">
   </head>
   <body>
-    <div class="demo-wrapper">
-      <header class="demo_header">
-        <h1 class="h5">cfgov-refresh media-object docs</h1>
-      </header>
-      <ul class="demo-component-list">
-        <li id="media-object" class="demo-component-list_item demo-wrapper">
-          <h1 class="demo-component-list_header">Media object</h1>
-          <ul class="demo-pattern-list">
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-              </header>
-              <section>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / media-object docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="media-object" class="docs-component">
+      <h2 class="docs-component_header"><span>Media object</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default media object</h3>
+          <section class="docs-pattern_pattern">
 <article class="media-object">
     <div class="media-object_image-container">
         <img src="http://placekitten.com/290/155" class="media-object_image">
@@ -35,9 +34,10 @@
         </p>
     </div>
 </article>
-</section>
-              <footer class="demo-pattern-list_footer">
-                <pre class="html"><code data-language="html">&lt;article class=&quot;media-object&quot;&gt;
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;article class=&quot;media-object&quot;&gt;
     &lt;div class=&quot;media-object_image-container&quot;&gt;
         &lt;img src=&quot;http://placekitten.com/290/155&quot; class=&quot;media-object_image&quot;&gt;
     &lt;/div&gt;
@@ -50,11 +50,21 @@
         &lt;/p&gt;
     &lt;/div&gt;
 &lt;/article&gt;</code></pre>
-              </footer>
-            </li>
-          </ul>
-          <div class="demo-pattern-css">
-            <pre class="css"><code data-language="css">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>Structural sheat sheet:
+-----------------------
+.media-object
+  .media-object_image-container
+    .media-object_image
+  .media-object_text-container</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="css"><code data-language="css">
 .media-object {
   position: relative;
   min-height: 9.9375em;
@@ -81,13 +91,8 @@
   margin-left: -50%;
 }
 </code></pre>
-          </div>
-        </li>
-      </ul>
-      <footer class="wrapper-footer">
-        <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
-      </footer>
+      </div>
     </div>
-    <script src="static/demo/main.min.js"></script>
+    <script src="static/docs/main.min.js"></script>
   </body>
 </html>

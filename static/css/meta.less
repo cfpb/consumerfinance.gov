@@ -7,7 +7,8 @@
   name: Date
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default date
+      markup: |
         <span class="date">
             Nov 4, 2013
         </span>
@@ -25,7 +26,8 @@
   name: Category slug
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default category slug
+      markup: |
         <a href="#" class="category-slug">
             <i class="cf-icon cf-icon-credit-card"></i>
             Consumer finance
@@ -44,16 +46,24 @@
   name: Meta header
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default meta header
+      markup: |
         <div class="meta-header">
-            <a href="#" class="category-slug meta-header_heading">
+            <a href="#" class="meta-header_heading category-slug">
                 <i class="cf-icon cf-icon-credit-card"></i>
                 Consumer finance
             </a>
-            <span class="date meta-header_date">
+            <span class="meta-header_date date">
                 Nov 4, 2013
             </span>
         </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .meta-header
+            .meta-header_heading.category-slug
+            .meta-header_date.date
   tags:
     - cfgov-meta
 */
