@@ -5742,6 +5742,7 @@ img {
 }
 
 .meta-header_date {
+  display: inline-block;
   float: right;
   margin-bottom: 0;
 }
