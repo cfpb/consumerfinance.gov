@@ -5639,6 +5639,7 @@ img {
   font-size: 0.875em;
   line-height: 1.5714285714285714;
   color: #75787b;
+  white-space: nowrap;
 }
 
 .lt-ie9 .date {
@@ -5655,6 +5656,8 @@ img {
             <i class="cf-icon cf-icon-credit-card"></i>
             Consumer finance
         </a>
+      notes:
+        - "Always use a link element or else you will get unwanted hover styles."
   tags:
     - cfgov-meta
 */
@@ -5712,11 +5715,11 @@ img {
     - name: Default meta header
       markup: |
         <div class="meta-header">
-            <a href="#" class="meta-header_heading category-slug">
+            <a href="#" class="meta-header_left category-slug">
                 <i class="cf-icon cf-icon-credit-card"></i>
                 Consumer finance
             </a>
-            <span class="meta-header_date date">
+            <span class="meta-header_right date">
                 Nov 4, 2013
             </span>
         </div>
@@ -5725,8 +5728,33 @@ img {
           Structural cheat sheet:
           -----------------------
           .meta-header
-            .meta-header_heading.category-slug
-            .meta-header_date.date
+            .meta-header_left
+            .meta-header_right
+      notes:
+        - "Note that the example shows .meta-header_left using the
+          .category-slug pattern and .meta-header_right using the .date pattern
+          but you could use other patterns in place of them. Or you can even
+          swap them so that date is attached to .meta-header_left and
+          .category-slug is attacked to .meta-header_right."
+    - name: Alternate meta header arrangements
+      markup: |
+        <div class="meta-header">
+            <span class="meta-header_left date">
+                Nov 4, 2013
+            </span>
+            <a href="#" class="meta-header_right category-slug">
+                <i class="cf-icon cf-icon-credit-card"></i>
+            </a>
+        </div>
+        <br>
+        <div class="meta-header">
+            <a href="#" class="meta-header_left category-slug">
+                <i class="cf-icon cf-icon-credit-card"></i>
+                Consumer finance
+            </a>
+        </div>
+      notes:
+        - "Just some random variations to show off what you could do."
   tags:
     - cfgov-meta
 */
@@ -5737,14 +5765,13 @@ img {
   border-bottom: 1px solid #babbbd;
 }
 
-.meta-header_heading {
+.meta-header_left {
   margin-bottom: 0;
 }
 
-.meta-header_date {
+.meta-header_right {
   float: right;
   margin-bottom: 0;
-  white-space: nowrap;
 }
 
 /* topdoc
@@ -5920,8 +5947,8 @@ img {
         - |
           .post-preview
             .meta-header
-              .meta-header_date
-              .meta-header_heading
+              .meta-header_right
+              .meta-header_left
             .summary
               .sumary_header
               .sumary_text
@@ -5929,10 +5956,10 @@ img {
       markup: |
         <article class="post-preview">
             <div class="meta-header">
-                <span class="date meta-header_date">
+                <span class="date meta-header_right">
                     Nov 4, 2013
                 </span>
-                <a href="#" class="category-slug meta-header_heading">
+                <a href="#" class="category-slug meta-header_left">
                     <i class="cf-icon cf-icon-help"></i>
                     Consumer information
                 </a>
@@ -5948,8 +5975,8 @@ img {
         - |
           .post-preview
             .meta-header
-              .meta-header_date
-              .meta-header_heading
+              .meta-header_right
+              .meta-header_left
             .media-object
               .media-object_image-container
               .media-object_text-container.summary
@@ -5959,10 +5986,10 @@ img {
       markup: |
         <article class="post-preview">
             <div class="meta-header">
-                <span class="date meta-header_date">
+                <span class="date meta-header_right">
                     Nov 4, 2013
                 </span>
-                <a href="#" class="category-slug meta-header_heading">
+                <a href="#" class="category-slug meta-header_left">
                     <i class="cf-icon cf-icon-help"></i>
                     Consumer information
                 </a>
