@@ -47,6 +47,7 @@
   font-size: 0.875em;
   line-height: 1.5714285714285714;
   color: #75787b;
+  white-space: nowrap;
 }
 .lt-ie9 .date {
   font-weight: normal !important;
@@ -70,6 +71,9 @@
     &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
     Consumer finance
 &lt;/a&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Always use a link element or else you will get unwanted hover styles.</li>
+            </ul>
           </footer>
         </div>
       </div>
@@ -123,11 +127,11 @@
           <h3 class="docs-pattern_header">Default meta header</h3>
           <section class="docs-pattern_pattern">
 <div class="meta-header">
-    <a href="#" class="meta-header_heading category-slug">
+    <a href="#" class="meta-header_left category-slug">
         <i class="cf-icon cf-icon-credit-card"></i>
         Consumer finance
     </a>
-    <span class="meta-header_date date">
+    <span class="meta-header_right date">
         Nov 4, 2013
     </span>
 </div>
@@ -135,11 +139,11 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="html"><code data-language="html">&lt;div class=&quot;meta-header&quot;&gt;
-    &lt;a href=&quot;#&quot; class=&quot;meta-header_heading category-slug&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;meta-header_left category-slug&quot;&gt;
         &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
         Consumer finance
     &lt;/a&gt;
-    &lt;span class=&quot;meta-header_date date&quot;&gt;
+    &lt;span class=&quot;meta-header_right date&quot;&gt;
         Nov 4, 2013
     &lt;/span&gt;
 &lt;/div&gt;</code></pre>
@@ -148,9 +152,53 @@
                 <pre class="code"><code>Structural cheat sheet:
 -----------------------
 .meta-header
-  .meta-header_heading.category-slug
-  .meta-header_date.date</code></pre>
+  .meta-header_left
+  .meta-header_right</code></pre>
               </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Note that the example shows .meta-header_left using the .category-slug pattern and .meta-header_right using the .date pattern but you could use other patterns in place of them. Or you can even swap them so that date is attached to .meta-header_left and .category-slug is attacked to .meta-header_right.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Alternate meta header arrangements</h3>
+          <section class="docs-pattern_pattern">
+<div class="meta-header">
+    <span class="meta-header_left date">
+        Nov 4, 2013
+    </span>
+    <a href="#" class="meta-header_right category-slug">
+        <i class="cf-icon cf-icon-credit-card"></i>
+    </a>
+</div>
+<br>
+<div class="meta-header">
+    <a href="#" class="meta-header_left category-slug">
+        <i class="cf-icon cf-icon-credit-card"></i>
+        Consumer finance
+    </a>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;div class=&quot;meta-header&quot;&gt;
+    &lt;span class=&quot;meta-header_left date&quot;&gt;
+        Nov 4, 2013
+    &lt;/span&gt;
+    &lt;a href=&quot;#&quot; class=&quot;meta-header_right category-slug&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;div class=&quot;meta-header&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;meta-header_left category-slug&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
+        Consumer finance
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Just some random variations to show off what you could do.</li>
             </ul>
           </footer>
         </div>
@@ -161,13 +209,12 @@
   margin-bottom: 0.625em;
   border-bottom: 1px solid #babbbd;
 }
-.meta-header_heading {
+.meta-header_left {
   margin-bottom: 0;
 }
-.meta-header_date {
+.meta-header_right {
   float: right;
   margin-bottom: 0;
-  white-space: nowrap;
 }</code></pre>
       </div>
     </div>
