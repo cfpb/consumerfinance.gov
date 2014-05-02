@@ -5738,13 +5738,13 @@ img {
 }
 
 .meta-header_heading {
-  float: left;
   margin-bottom: 0;
 }
 
 .meta-header_date {
   float: right;
   margin-bottom: 0;
+  white-space: nowrap;
 }
 
 /* topdoc
