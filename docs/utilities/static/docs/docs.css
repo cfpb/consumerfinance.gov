@@ -45,7 +45,10 @@ pre {
   font-size: 0.8em;
   line-height: 1;
 }
-.docs-repo {
+.docs-repo:link,
+.docs-repo:visited,
+.docs-repo:hover,
+.docs-repo:active {
   float: right;
   display: inline-block;
   padding-bottom: 2px;
@@ -72,6 +75,7 @@ pre {
 }
 .docs-component_header {
   margin: 0.34375em 0 1em;
+  color: #796e65;
   font-family: 'Lora', serif;
   font-size: 2em;
   font-weight: bold;
@@ -79,7 +83,7 @@ pre {
 .docs-component_header span {
   display: inline-block;
   padding-bottom: 1px;
-  border-bottom: 3px solid #101820;
+  border-bottom: 3px solid #796e65;
 }
 .docs-component_intro {
   padding: 1.375em;
@@ -111,9 +115,11 @@ pre {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   background: #ffffff;
+  color: #796e65;
   font-family: 'Lora', serif;
   font-size: 1.125em;
   font-weight: bold;
+  line-height: 1;
 }
 .docs-pattern_pattern {
   padding: 1.375em;
@@ -185,13 +191,8 @@ pre {
 .docs-codenotes .html {
   display: inline-block;
   padding: 0.46153846em 0.76923077em;
-  background: #796e65;
-  border: 1px solid #5d554e;
-}
-.docs-codenotes .code code,
-.docs-codenotes .css code,
-.docs-codenotes .html code {
-  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid #babbbd;
 }
 .html + .docs-codenotes,
 .html + .docs-notes {
