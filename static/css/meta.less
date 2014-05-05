@@ -3,11 +3,13 @@
    meta
    ========================================================================== */
 
+
 /* topdoc
   name: Date
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default date
+      markup: |
         <span class="date">
             Nov 4, 2013
         </span>
@@ -18,6 +20,7 @@
 .date {
     .h5();
     color: @gray;
+    white-space: nowrap;
 }
 
 
@@ -25,11 +28,14 @@
   name: Category slug
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default category slug
+      markup: |
         <a href="#" class="category-slug">
             <i class="cf-icon cf-icon-credit-card"></i>
             Consumer finance
         </a>
+      notes:
+        - "Always use a link element or else you will get unwanted hover styles."
   tags:
     - cfgov-meta
 */
@@ -44,16 +50,51 @@
   name: Meta header
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default meta header
+      markup: |
         <div class="meta-header">
-            <a href="#" class="category-slug meta-header_heading">
+            <span class="meta-header_right date">
+                Nov 4, 2013
+            </span>
+            <a href="#" class="meta-header_left category-slug">
                 <i class="cf-icon cf-icon-credit-card"></i>
                 Consumer finance
             </a>
-            <span class="date meta-header_date">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .meta-header
+            .meta-header_right
+            .meta-header_left
+      notes:
+        - ".meta-header_right should come first in the markup so that when it
+          floats to the right it will appear on the same line as .meta-header_left."
+        - "Note that the example shows .meta-header_left using the
+          .category-slug pattern and .meta-header_right using the .date pattern
+          but you could use other patterns in place of them. Or you can even
+          swap them so that date is attached to .meta-header_left and
+          .category-slug is attacked to .meta-header_right."
+    - name: Alternate meta header arrangements
+      markup: |
+        <div class="meta-header">
+            <a href="#" class="meta-header_right category-slug">
+                <i class="cf-icon cf-icon-credit-card"></i>
+            </a>
+            <span class="meta-header_left date">
                 Nov 4, 2013
             </span>
         </div>
+        <br>
+        <div class="meta-header">
+            <a href="#" class="meta-header_left category-slug">
+                <i class="cf-icon cf-icon-credit-card"></i>
+                Consumer finance
+            </a>
+        </div>
+      notes:
+        - "Just some random variations to show off what you could do."
   tags:
     - cfgov-meta
 */
@@ -64,14 +105,15 @@
     border-bottom: 1px solid @gray-50;
 }
 
-.meta-header_heading {
+.meta-header_left {
     margin-bottom: 0;
 }
 
-.meta-header_date {
+.meta-header_right {
     .u-right();
     margin-bottom: 0;
 }
+
 
 /* topdoc
   name: EOF

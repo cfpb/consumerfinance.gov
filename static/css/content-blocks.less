@@ -33,8 +33,8 @@
         - |
           .post-preview
             .meta-header
-              .meta-header_date
-              .meta-header_heading
+              .meta-header_right.date
+              .meta-header_left.category-slug
             .summary
               .sumary_header
               .sumary_text
@@ -42,10 +42,10 @@
       markup: |
         <article class="post-preview">
             <div class="meta-header">
-                <span class="date meta-header_date">
+                <span class="meta-header_right date">
                     Nov 4, 2013
                 </span>
-                <a href="#" class="category-slug meta-header_heading">
+                <a href="#" class="meta-header_left category-slug">
                     <i class="cf-icon cf-icon-help"></i>
                     Consumer information
                 </a>
@@ -61,8 +61,8 @@
         - |
           .post-preview
             .meta-header
-              .meta-header_date
-              .meta-header_heading
+              .meta-header_right.date
+              .meta-header_left.slug
             .media-object
               .media-object_image-container
               .media-object_text-container.summary
@@ -72,17 +72,17 @@
       markup: |
         <article class="post-preview">
             <div class="meta-header">
-                <span class="date meta-header_date">
+                <span class="meta-header_right date">
                     Nov 4, 2013
                 </span>
-                <a href="#" class="category-slug meta-header_heading">
+                <a href="#" class="meta-header_left category-slug">
                     <i class="cf-icon cf-icon-help"></i>
                     Consumer information
                 </a>
             </div>
             <div class="media-object">
                 <div class="media-object_image-container">
-                    <img src="http://placekitten.com/290/155" class="media-object_image">
+                    <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
                 </div>
                 <div class="media-object_text-container summary">
                     <h1 class="summary_header">

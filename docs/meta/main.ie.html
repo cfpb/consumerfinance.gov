@@ -3,38 +3,38 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>cfgov-refresh meta docs</title>
+    <title>cfgov-refresh / meta docs</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="static/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
-    <link rel="stylesheet" type="text/css" href="static/demo/brackets.css">
   </head>
   <body>
-    <div class="demo-wrapper">
-      <header class="demo_header">
-        <h1 class="h5">cfgov-refresh meta docs</h1>
-      </header>
-      <ul class="demo-component-list">
-        <li id="date" class="demo-component-list_item demo-wrapper">
-          <h1 class="demo-component-list_header">Date</h1>
-          <ul class="demo-pattern-list">
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-              </header>
-              <section>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / meta docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="date" class="docs-component">
+      <h2 class="docs-component_header"><span>Date</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default date</h3>
+          <section class="docs-pattern_pattern">
 <span class="date">
     Nov 4, 2013
 </span>
-</section>
-              <footer class="demo-pattern-list_footer">
-                <pre class="html"><code data-language="html">&lt;span class=&quot;date&quot;&gt;
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;span class=&quot;date&quot;&gt;
     Nov 4, 2013
 &lt;/span&gt;</code></pre>
-              </footer>
-            </li>
-          </ul>
-          <div class="demo-pattern-css">
-            <pre class="css"><code data-language="css">
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="css"><code data-language="css">
 .date {
   margin-top: 0;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
@@ -48,36 +48,40 @@
   font-size: 0.875em;
   line-height: 1.5714285714285714;
   color: #75787b;
+  white-space: nowrap;
 }
 
 .lt-ie9 .date {
   font-weight: normal !important;
 }
 </code></pre>
-          </div>
-        </li>
-        <li id="category-slug" class="demo-component-list_item demo-wrapper">
-          <h1 class="demo-component-list_header">Category slug</h1>
-          <ul class="demo-pattern-list">
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-              </header>
-              <section>
+      </div>
+    </div>
+    <div id="category-slug" class="docs-component">
+      <h2 class="docs-component_header"><span>Category slug</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default category slug</h3>
+          <section class="docs-pattern_pattern">
 <a href="#" class="category-slug">
     <i class="cf-icon cf-icon-credit-card"></i>
     Consumer finance
 </a>
-</section>
-              <footer class="demo-pattern-list_footer">
-                <pre class="html"><code data-language="html">&lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
     &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
     Consumer finance
 &lt;/a&gt;</code></pre>
-              </footer>
-            </li>
-          </ul>
-          <div class="demo-pattern-css">
-            <pre class="css"><code data-language="css">
+            <ul class="docs-notes">
+              <li>Always use a link element or else you will get unwanted hover styles.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="css"><code data-language="css">
 .category-slug {
   margin-top: 0;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
@@ -124,62 +128,111 @@
   color: #101820;
 }
 </code></pre>
-          </div>
-        </li>
-        <li id="meta-header" class="demo-component-list_item demo-wrapper">
-          <h1 class="demo-component-list_header">Meta header</h1>
-          <ul class="demo-pattern-list">
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-              </header>
-              <section>
+      </div>
+    </div>
+    <div id="meta-header" class="docs-component">
+      <h2 class="docs-component_header"><span>Meta header</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default meta header</h3>
+          <section class="docs-pattern_pattern">
 <div class="meta-header">
-    <a href="#" class="category-slug meta-header_heading">
+    <span class="meta-header_right date">
+        Nov 4, 2013
+    </span>
+    <a href="#" class="meta-header_left category-slug">
         <i class="cf-icon cf-icon-credit-card"></i>
         Consumer finance
     </a>
-    <span class="date meta-header_date">
-        Nov 4, 2013
-    </span>
 </div>
-</section>
-              <footer class="demo-pattern-list_footer">
-                <pre class="html"><code data-language="html">&lt;div class=&quot;meta-header&quot;&gt;
-    &lt;a href=&quot;#&quot; class=&quot;category-slug meta-header_heading&quot;&gt;
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;div class=&quot;meta-header&quot;&gt;
+    &lt;span class=&quot;meta-header_right date&quot;&gt;
+        Nov 4, 2013
+    &lt;/span&gt;
+    &lt;a href=&quot;#&quot; class=&quot;meta-header_left category-slug&quot;&gt;
         &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
         Consumer finance
     &lt;/a&gt;
-    &lt;span class=&quot;date meta-header_date&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>Structural cheat sheet:
+-----------------------
+.meta-header
+  .meta-header_right
+  .meta-header_left</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.meta-header_right should come first in the markup so that when it floats to the right it will appear on the same line as .meta-header_left.</li>
+              <li>Note that the example shows .meta-header_left using the .category-slug pattern and .meta-header_right using the .date pattern but you could use other patterns in place of them. Or you can even swap them so that date is attached to .meta-header_left and .category-slug is attacked to .meta-header_right.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Alternate meta header arrangements</h3>
+          <section class="docs-pattern_pattern">
+<div class="meta-header">
+    <a href="#" class="meta-header_right category-slug">
+        <i class="cf-icon cf-icon-credit-card"></i>
+    </a>
+    <span class="meta-header_left date">
+        Nov 4, 2013
+    </span>
+</div>
+<br>
+<div class="meta-header">
+    <a href="#" class="meta-header_left category-slug">
+        <i class="cf-icon cf-icon-credit-card"></i>
+        Consumer finance
+    </a>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;div class=&quot;meta-header&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;meta-header_right category-slug&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
+    &lt;/a&gt;
+    &lt;span class=&quot;meta-header_left date&quot;&gt;
         Nov 4, 2013
     &lt;/span&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;div class=&quot;meta-header&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;meta-header_left category-slug&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/i&gt;
+        Consumer finance
+    &lt;/a&gt;
 &lt;/div&gt;</code></pre>
-              </footer>
-            </li>
-          </ul>
-          <div class="demo-pattern-css">
-            <pre class="css"><code data-language="css">
+            <ul class="docs-notes">
+              <li>Just some random variations to show off what you could do.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="css"><code data-language="css">
 .meta-header {
   padding-bottom: 0.5em;
   margin-bottom: 0.625em;
   border-bottom: 1px solid #babbbd;
 }
 
-.meta-header_heading {
+.meta-header_left {
   margin-bottom: 0;
 }
 
-.meta-header_date {
+.meta-header_right {
   float: right;
   margin-bottom: 0;
 }
 </code></pre>
-          </div>
-        </li>
-      </ul>
-      <footer class="wrapper-footer">
-        <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
-      </footer>
+      </div>
     </div>
-    <script src="static/demo/main.min.js"></script>
+    <script src="static/docs/main.min.js"></script>
   </body>
 </html>
