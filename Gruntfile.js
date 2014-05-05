@@ -322,11 +322,11 @@ module.exports = function(grunt) {
         options: {
           source: 'static/css/',
           destination: 'docs/' + key + '/',
-          template: 'node_modules/cf-component-demo/code_examples/',
+          template: 'node_modules/cf-component-demo/docs/',
           templateData: {
             family: 'cfgov-' + key,
             description: key + ' for cfgov-refresh.',
-            title: 'cfgov-refresh ' + key + ' docs',
+            title: 'cfgov-refresh / ' + key + ' docs',
             repo: '<%= pkg.homepage %>'
           }
         }

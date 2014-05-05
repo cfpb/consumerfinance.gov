@@ -4696,7 +4696,7 @@ img {
   patterns:
     - name: Size calculations
       notes:
-        - "You shouldn't need to use these vars directly,
+        - "You shouldn't need to use these variables directly,
           they're used to create the @respond-to vars which you should use instead."
       codenotes:
         - "@small-screens-min"
@@ -4715,6 +4715,8 @@ img {
         - "@respond-to-large-screens-min"
         - "@respond-to-large-screens-max"
         - "@respond-to-extralarge-screens-min"
+      notes:
+        - "Use these variables to easily target screen size ranges."
     - name: "Usage"
       codenotes:
         - |
@@ -4742,7 +4744,8 @@ img {
   name: Date
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default date
+      markup: |
         <span class="date">
             Nov 4, 2013
         </span>
@@ -4762,6 +4765,7 @@ img {
   font-size: 0.875em;
   line-height: 1.5714285714285714;
   color: #75787b;
+  white-space: nowrap;
 }
 .lt-ie9 .date {
   font-weight: normal !important;
@@ -4770,11 +4774,14 @@ img {
   name: Category slug
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default category slug
+      markup: |
         <a href="#" class="category-slug">
             <i class="cf-icon cf-icon-credit-card"></i>
             Consumer finance
         </a>
+      notes:
+        - "Always use a link element or else you will get unwanted hover styles."
   tags:
     - cfgov-meta
 */
@@ -4822,16 +4829,51 @@ img {
   name: Meta header
   family: cfgov-meta
   patterns:
-    - markup: |
+    - name: Default meta header
+      markup: |
         <div class="meta-header">
-            <a href="#" class="category-slug meta-header_heading">
+            <span class="meta-header_right date">
+                Nov 4, 2013
+            </span>
+            <a href="#" class="meta-header_left category-slug">
                 <i class="cf-icon cf-icon-credit-card"></i>
                 Consumer finance
             </a>
-            <span class="date meta-header_date">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .meta-header
+            .meta-header_right
+            .meta-header_left
+      notes:
+        - ".meta-header_right should come first in the markup so that when it
+          floats to the right it will appear on the same line as .meta-header_left."
+        - "Note that the example shows .meta-header_left using the
+          .category-slug pattern and .meta-header_right using the .date pattern
+          but you could use other patterns in place of them. Or you can even
+          swap them so that date is attached to .meta-header_left and
+          .category-slug is attacked to .meta-header_right."
+    - name: Alternate meta header arrangements
+      markup: |
+        <div class="meta-header">
+            <a href="#" class="meta-header_right category-slug">
+                <i class="cf-icon cf-icon-credit-card"></i>
+            </a>
+            <span class="meta-header_left date">
                 Nov 4, 2013
             </span>
         </div>
+        <br>
+        <div class="meta-header">
+            <a href="#" class="meta-header_left category-slug">
+                <i class="cf-icon cf-icon-credit-card"></i>
+                Consumer finance
+            </a>
+        </div>
+      notes:
+        - "Just some random variations to show off what you could do."
   tags:
     - cfgov-meta
 */
@@ -4840,10 +4882,10 @@ img {
   margin-bottom: 0.625em;
   border-bottom: 1px solid #babbbd;
 }
-.meta-header_heading {
+.meta-header_left {
   margin-bottom: 0;
 }
-.meta-header_date {
+.meta-header_right {
   float: right;
   margin-bottom: 0;
 }
@@ -4859,10 +4901,11 @@ img {
   name: Media object
   family: cfgov-media-object
   patterns:
-    - markup: |
+    - name: Default media object
+      markup: |
         <article class="media-object">
             <div class="media-object_image-container">
-                <img src="http://placekitten.com/290/155" class="media-object_image">
+                <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
             </div>
             <div class="media-object_text-container">
                 <p>
@@ -4873,6 +4916,14 @@ img {
                 </p>
             </div>
         </article>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .media-object
+            .media-object_image-container
+              .media-object_image
+            .media-object_text-container
   tags:
     - cfgov-media-object
 */
@@ -4916,7 +4967,8 @@ img {
   name: Summary
   family: cfgov-summary
   patterns:
-    - markup: |
+    - name: Default summary
+      markup: |
         <article class="summary">
             <h1 class="summary_header">
                 Preventing illegal discrimination in auto lending
@@ -5002,8 +5054,8 @@ img {
         - |
           .post-preview
             .meta-header
-              .meta-header_date
-              .meta-header_heading
+              .meta-header_right.date
+              .meta-header_left.category-slug
             .summary
               .sumary_header
               .sumary_text
@@ -5011,10 +5063,10 @@ img {
       markup: |
         <article class="post-preview">
             <div class="meta-header">
-                <span class="date meta-header_date">
+                <span class="meta-header_right date">
                     Nov 4, 2013
                 </span>
-                <a href="#" class="category-slug meta-header_heading">
+                <a href="#" class="meta-header_left category-slug">
                     <i class="cf-icon cf-icon-help"></i>
                     Consumer information
                 </a>
@@ -5030,8 +5082,8 @@ img {
         - |
           .post-preview
             .meta-header
-              .meta-header_date
-              .meta-header_heading
+              .meta-header_right.date
+              .meta-header_left.slug
             .media-object
               .media-object_image-container
               .media-object_text-container.summary
@@ -5041,17 +5093,17 @@ img {
       markup: |
         <article class="post-preview">
             <div class="meta-header">
-                <span class="date meta-header_date">
+                <span class="meta-header_right date">
                     Nov 4, 2013
                 </span>
-                <a href="#" class="category-slug meta-header_heading">
+                <a href="#" class="meta-header_left category-slug">
                     <i class="cf-icon cf-icon-help"></i>
                     Consumer information
                 </a>
             </div>
             <div class="media-object">
                 <div class="media-object_image-container">
-                    <img src="http://placekitten.com/290/155" class="media-object_image">
+                    <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
                 </div>
                 <div class="media-object_text-container summary">
                     <h1 class="summary_header">
