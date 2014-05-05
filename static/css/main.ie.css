@@ -5850,6 +5850,85 @@ img {
 
 /* ==========================================================================
    cfgov-refresh
+   cfgov-post
+   ========================================================================== */
+
+/* topdoc
+  name: Blog post
+  family: cfgov-post
+  patterns:
+    - name: Default post
+      markup: |
+        <article class="post">
+            <header>
+                <a href="#" class="category-slug meta-header_left">
+                    <i class="cf-icon cf-icon-help"></i>
+                    Announcements &amp; updates
+                </a>
+                <h1>A consumer-centered supervision program</h1>
+                <div class="post_meta">
+                    <span class="byline">By <a class="byline_link" href="#">Firstname Lastname</a></span> &ndash;
+                    <span class="short-date">Mon 32, 3001</span>
+                    <ul class="share-links">
+                        <li><a href="#"><i class="cf-icon cf-icon-email-square"></i> Email</a></li>
+                        <li><a href="#"><i class="cf-icon cf-icon-facebook-square"></i> Facebook</a></li>
+                        <li><a href="#"><i class="cf-icon cf-icon-twitter-square"></i> Twitter</a></li>
+                        <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
+                <h2>Post summary</h2>
+                <p class="summary">
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+            </header>
+            <p>
+                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                Labitur liberavisse quo ei, utamur impetus eu nam.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                Labitur liberavisse quo ei, utamur impetus eu nam.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                Labitur liberavisse quo ei, utamur impetus eu nam.
+            </p>
+            <section class="callout">
+                <div class="demo-placeholder">More information placeholder</div>
+            </section>
+            <p>
+                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                Labitur liberavisse quo ei, utamur impetus eu nam.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                Labitur liberavisse quo ei, utamur impetus eu nam.
+            </p>
+            <footer>
+                <div class="demo-placeholder">tags placeholder</div> <!-- see commented implementation on CFPB Open Tech-->
+            </footer>
+        </article>
+  tags:
+    - cfgov-post
+*/
+
+/* Less goes here */
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
+
+/* ==========================================================================
+   cfgov-refresh
    summary
    ========================================================================== */
 
@@ -5917,14 +5996,14 @@ img {
 
 /* ==========================================================================
    cfgov-refresh
-   content-blocks
+   cfgov-content-blocks
    ========================================================================== */
 
 /* topdoc
-  name: Blog
+  name: Slugs
   family: cfgov-content-blocks
   patterns:
-    - name: Category slugs
+    - name: Blog slugs
       markup: |
         <a href="#" class="category-slug">
             <i class="cf-icon cf-icon-help"></i>
@@ -5944,6 +6023,14 @@ img {
         </a>
       notes:
         - "Official icons are still being developed, hence the ?."
+  tags:
+    - cfgov-content-blocks
+*/
+
+/* topdoc
+  name: Post previews
+  family: cfgov-content-blocks
+  patterns:
     - name: Post preview (no image)
       codenotes:
         - |
@@ -5952,9 +6039,9 @@ img {
               .meta-header_right.date
               .meta-header_left.category-slug
             .summary
-              .sumary_header
-              .sumary_text
-              .sumary_byline
+              .summary_header
+              .summary_text
+              .summary_byline
       markup: |
         <article class="post-preview">
             <div class="meta-header">
@@ -5978,13 +6065,13 @@ img {
           .post-preview
             .meta-header
               .meta-header_right.date
-              .meta-header_left.slug
+              .meta-header_left.category-slug
             .media-object
               .media-object_image-container
               .media-object_text-container.summary
-                .sumary_header
-                .sumary_text
-                .sumary_byline
+                .summary_header
+                .summary_text
+                .summary_byline
       markup: |
         <article class="post-preview">
             <div class="meta-header">
@@ -6016,7 +6103,7 @@ img {
             </div>
         </article>
   tags:
-    - cfgov-blocks
+    - cfgov-content-blocks
 */
 
 .post-preview + .post-preview {
