@@ -312,6 +312,7 @@ module.exports = function(grunt) {
       'content-blocks',
       'meta',
       'media-object',
+      'post',
       'summary',
       'utilities',
       'vars'
