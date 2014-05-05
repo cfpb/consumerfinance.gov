@@ -1,14 +1,14 @@
 /* ==========================================================================
    cfgov-refresh
-   content-blocks
+   cfgov-content-blocks
    ========================================================================== */
 
 
 /* topdoc
-  name: Blog
+  name: Slugs
   family: cfgov-content-blocks
   patterns:
-    - name: Category slugs
+    - name: Blog slugs
       markup: |
         <a href="#" class="category-slug">
             <i class="cf-icon cf-icon-help"></i>
@@ -28,6 +28,15 @@
         </a>
       notes:
         - "Official icons are still being developed, hence the ?."
+  tags:
+    - cfgov-content-blocks
+*/
+
+
+/* topdoc
+  name: Post previews
+  family: cfgov-content-blocks
+  patterns:
     - name: Post preview (no image)
       codenotes:
         - |
@@ -36,9 +45,9 @@
               .meta-header_right.date
               .meta-header_left.category-slug
             .summary
-              .sumary_header
-              .sumary_text
-              .sumary_byline
+              .summary_header
+              .summary_text
+              .summary_byline
       markup: |
         <article class="post-preview">
             <div class="meta-header">
@@ -62,13 +71,13 @@
           .post-preview
             .meta-header
               .meta-header_right.date
-              .meta-header_left.slug
+              .meta-header_left.category-slug
             .media-object
               .media-object_image-container
               .media-object_text-container.summary
-                .sumary_header
-                .sumary_text
-                .sumary_byline
+                .summary_header
+                .summary_text
+                .summary_byline
       markup: |
         <article class="post-preview">
             <div class="meta-header">
@@ -100,7 +109,7 @@
             </div>
         </article>
   tags:
-    - cfgov-blocks
+    - cfgov-content-blocks
 */
 
 .post-preview + .post-preview {

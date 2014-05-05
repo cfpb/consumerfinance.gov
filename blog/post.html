@@ -22,8 +22,8 @@
     ==================
 -->
 
-    <title>Blog entry page - cfgov-refresh demo</title>
-    <meta name="description" content="Blog entry prototyping for the consumerfinance.gov refresh">
+    <title>Blog post page - cfgov-refresh demo</title>
+    <meta name="description" content="Blog post prototyping for the consumerfinance.gov refresh">
 
     <!-- Explicit favicon link needed for testing. Remove for production. -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -65,7 +65,7 @@
 
     <div class="demo-banner">
         <a class="demo-banner_back-link" href="../index.html"><i class="cf-icon cf-icon-left"></i> Back to demo home</a>
-        cfgov-refresh demo: <b>Blog entry page</b>
+        cfgov-refresh demo: <b>Blog post page</b>
     </div>
 
 
@@ -78,11 +78,15 @@
     <main class="main" role="main">
         <div class="wrapper">
             <section class="content">
-                <article class="entry">
+
+                <article class="post">
                     <header>
-                        <a class="entry_category"><i class="cf-icon cf-icon-student-loans"></i> Student loans</a>
-                        <h1>Article title</h1>
-                        <div class="entry_meta">
+                        <a href="#" class="category-slug meta-header_left">
+                            <i class="cf-icon cf-icon-help"></i>
+                            Announcements &amp; updates
+                        </a>
+                        <h1>A consumer-centered supervision program</h1>
+                        <div class="post_meta">
                             <span class="byline">By <a class="byline_link" href="#">Firstname Lastname</a></span> &ndash;
                             <span class="short-date">Mon 32, 3001</span>
                             <ul class="share-links">
@@ -92,7 +96,7 @@
                                 <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
                             </ul>
                         </div>
-                        <img class="entry_featured-img" src="image.jpg" alt="alt text" width="100%" height="200">
+                        <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
                         <h2>Post summary</h2>
                         <p class="summary">
                             Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
@@ -132,9 +136,11 @@
                         <div class="demo-placeholder">tags placeholder</div> <!-- see commented implementation on CFPB Open Tech-->
                     </footer>
                 </article>
+
                 <section class="comments">
                     <div class="demo-placeholder">comments placeholder</div>
                 </section>
+
             </section><!-- END .content -->
             <aside class="sidebar">
                 <section class="popular-stories">
