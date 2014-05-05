@@ -4832,22 +4832,24 @@ img {
     - name: Default meta header
       markup: |
         <div class="meta-header">
+            <span class="meta-header_right date">
+                Nov 4, 2013
+            </span>
             <a href="#" class="meta-header_left category-slug">
                 <i class="cf-icon cf-icon-credit-card"></i>
                 Consumer finance
             </a>
-            <span class="meta-header_right date">
-                Nov 4, 2013
-            </span>
         </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .meta-header
-            .meta-header_left
             .meta-header_right
+            .meta-header_left
       notes:
+        - ".meta-header_right should come first in the markup so that when it
+          floats to the right it will appear on the same line as .meta-header_left."
         - "Note that the example shows .meta-header_left using the
           .category-slug pattern and .meta-header_right using the .date pattern
           but you could use other patterns in place of them. Or you can even
@@ -4856,12 +4858,12 @@ img {
     - name: Alternate meta header arrangements
       markup: |
         <div class="meta-header">
-            <span class="meta-header_left date">
-                Nov 4, 2013
-            </span>
             <a href="#" class="meta-header_right category-slug">
                 <i class="cf-icon cf-icon-credit-card"></i>
             </a>
+            <span class="meta-header_left date">
+                Nov 4, 2013
+            </span>
         </div>
         <br>
         <div class="meta-header">
