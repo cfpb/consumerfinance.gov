@@ -3,60 +3,55 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>cfgov-refresh utilities docs</title>
+    <title>cfgov-refresh / utilities docs</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="static/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="static/demo/brackets.css">
   </head>
   <body>
-    <div class="demo-wrapper">
-      <header class="demo_header">
-        <h1 class="h5">cfgov-refresh utilities docs</h1>
-      </header>
-      <ul class="demo-component-list">
-        <li id="less-mixins" class="demo-component-list_item demo-wrapper">
-          <h1 class="demo-component-list_header">Less mixins</h1>
-          <ul class="demo-pattern-list">
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-                <ul class="demo_codenotes">
-                  <li>
-                    <pre class="code"><code>.u-right();</code></pre>
-                  </li>
-                </ul>
-                <ul class="demo_notes">
-                  <li>IE7 float: right drop bug fixes:</li>
-                  <li>1. If the float: right follows an element in the html structure that should be to its left (and not above it), then that preceding element(s) must be float: left. http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688</li>
-                  <li>2. Simply change the markup order so that the element floating right comes before the element to its left.</li>
-                </ul>
-              </header>
-            </li>
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-                <ul class="demo_codenotes">
-                  <li>
-                    <pre class="code"><code>.u-unstyled-link();</code></pre>
-                  </li>
-                </ul>
-              </header>
-            </li>
-            <li class="demo-pattern-list_item">
-              <header class="demo-pattern-list_header">
-                <ul class="demo_codenotes">
-                  <li>
-                    <pre class="code"><code>.u-flexible-image();</code></pre>
-                  </li>
-                </ul>
-              </header>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <footer class="wrapper-footer">
-        <h4><a href="https://github.com/cfpb/cfgov-refresh">View the repository</a></h4>
-      </footer>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / utilities docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
-    <script src="static/demo/main.min.js"></script>
+    <div id="less-mixins" class="docs-component">
+      <h2 class="docs-component_header"><span>Less mixins</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>.u-right();</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>IE7 float: right drop bug fixes:</li>
+              <li>1. If the float: right follows an element in the html structure that should be to its left (and not above it), then that preceding element(s) must be float: left. http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688</li>
+              <li>2. Simply change the markup order so that the element floating right comes before the element to its left.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>.u-unstyled-link();</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>.u-flexible-image();</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
   </body>
 </html>

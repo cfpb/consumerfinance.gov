@@ -8,10 +8,11 @@
   name: Media object
   family: cfgov-media-object
   patterns:
-    - markup: |
+    - name: Default media object
+      markup: |
         <article class="media-object">
             <div class="media-object_image-container">
-                <img src="http://placekitten.com/290/155" class="media-object_image">
+                <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
             </div>
             <div class="media-object_text-container">
                 <p>
@@ -22,6 +23,14 @@
                 </p>
             </div>
         </article>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .media-object
+            .media-object_image-container
+              .media-object_image
+            .media-object_text-container
   tags:
     - cfgov-media-object
 */
