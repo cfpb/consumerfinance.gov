@@ -41,36 +41,70 @@ img {
 @import (less) "content-blocks.less";
 
 
-.content {
+.content,
+.sidebar {
     padding: 2em 0;
 }
-.sidebar {
-    padding: 2em (@gutter-width / 2);
-    margin: 0 -(@gutter-width / 2);
-    background: @gray-10;
-}
+
 @media @respond-to-medium-screens-min {
 
-    .content {
-        .column(8);
-        margin-left: -(@gutter-width / 2);
-    }
-    .sidebar {
-        .column(4);
-        padding: 2em @gutter-width;
-        margin-left: 0;
+    .content-wrapper {
+        &__1-3 {
+            .content {
+                .column(9);
+                .push(3);
+            }
+            .sidebar {
+                .column(3);
+                .pull(9);
+            }
+        }
+        &__2-1 {
+            .content {
+                .column(8);
+            }
+            .sidebar {
+                .column(4);
+            }
+        }
     }
 
-    .bleeding-sidebar {
+} // end @media for basic content-wrapper layouts
+
+.bleedbar {
+
+    .sidebar {
+        padding: 2em (@gutter-width / 2);
+        margin: 0 -(@gutter-width / 2);
+        background: @gray-10;
+    }
+
+    @media @respond-to-medium-screens-min {
+
+        // Prevent pseudoelement background from creating horizontal scrollbar.
         overflow: hidden;
 
-        &_fg {
+        .sidebar {
+            padding: 2em @gutter-width;
+            margin-left: 0;
+        }
+
+        .sidebar {
+            padding: 2em 0 2em @gutter-width;
+            margin-left: 0;
+
             // Remove background color from actual sidebar.
             // It will now be provided by pseudoelement :after sidebar parent.
             background: transparent;
+
+            .lt-ie8 & {
+                // Make sure the sidebar still has a background in IE7.
+                padding-right: @gutter-width;
+                background: @gray-10;
+            }
         }
 
-        &_bg:after {
+        .content-wrapper:after {
             // Create faux sidebar background.
             content: '';
             display: block;
@@ -79,13 +113,22 @@ img {
             height: 100%;
             position: absolute;
             top: 0;
-            left: 66.666666667%;
             z-index: -1;
+            // The three in the below calculation is a magic number.
+            // Not entirely sure what to do about it right now.
+            margin-left: (@gutter-width / 3);
             background: @gray-10;
         }
-    }
 
-}
+        .content-wrapper__2-1:after {
+            left: 66.666666667%;    
+        }
+        .content-wrapper__3-1:after {
+            left: 75%;
+        }
+
+    } // end @media within .bleedbar
+} // end .bleedbar
 
 
 // STUFF THAT SHOULD PROBABLY MOVE TO CF-LAYOUT
@@ -95,6 +138,12 @@ img {
 }
 .header {
     border-bottom: 10px solid @green;
+
+    .demo-placeholder {
+        // Temporary style to bring into alignment.
+        // Will be unnecessary if we set up a proper grid in the header.
+        margin-left: (@gutter-width / 2);
+    }
 }
 .hero {
     padding: 1em 2em;
@@ -109,5 +158,11 @@ img {
     padding: 1.5em 0;
     border-top: 3px solid @green;
     background: @gray-10;
+
+    .demo-placeholder {
+        // Temporary style to bring into alignment.
+        // Will be unnecessary if we set up a proper grid in the header.
+        margin-left: (@gutter-width / 2);
+    }
 }
 
