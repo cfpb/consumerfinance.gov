@@ -40,14 +40,14 @@
     // The width and height of the image for medium screens and up.
     @img-size: 155px;
 
-    @media @respond-to-medium-screens-min {
+    @media only all and (min-width: 600px) {
         position: relative;
         min-height: unit((@img-size + 4px) / @base-font-size-px, em);
         padding-left: unit((@img-size + @gutter-width) / @base-font-size-px, em);
     }
 
     &_image-container {
-        @media @respond-to-medium-screens-min {
+        @media only all and (min-width: 600px) {
             position: absolute;
             top: unit(4px / @base-font-size-px, em);
             left: 0;
@@ -58,7 +58,7 @@
 
     &_image {
         margin-bottom: unit(8px / @base-font-size-px, em);
-        @media @respond-to-medium-screens-min {
+        @media only all and (min-width: 600px) {
             display: block;
             width: 290px;
             max-width: 290px;
