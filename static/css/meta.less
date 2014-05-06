@@ -47,6 +47,84 @@
 
 
 /* topdoc
+  name: Header slug
+  family: cfgov-meta
+  patterns:
+    - name: Default header slug
+      markup: |
+        <div class="header-slug">
+            <h2 class="header-slug_inner">
+                Blog summary
+            </h2>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .header-slug
+            .header-slug_inner
+  tags:
+    - cfgov-meta
+*/
+
+.header-slug {
+
+    &_inner {
+        .h5();
+        display: inline-block;
+        padding-top: unit(4px / @font-size, em);
+        margin-bottom: unit(17px / @font-size, em);
+        border-top: 4px solid @green;
+    }
+}
+
+
+/* topdoc
+  name: Header slug container
+  family: cfgov-meta
+  patterns:
+    - name: Default header slug container
+      markup: |
+        <div class="header-slug header-slug__bordered">
+            <h2 class="header-slug_inner">
+                Blog summary
+            </h2>
+            <div class="header-slug_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .header-slug.header-slug__bordered
+            .header-slug_inner
+            .header-slug_body
+  tags:
+    - cfgov-meta
+*/
+
+.header-slug__bordered {
+    margin: 0 0 unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-20;
+    border-bottom: 1px solid @gray-20;
+
+    .header-slug_inner {
+        margin-top: -1px;
+    }
+
+    .header-slug_body {
+        margin-bottom: unit(22px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
   name: Meta header
   family: cfgov-meta
   patterns:
