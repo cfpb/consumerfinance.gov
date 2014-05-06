@@ -5,6 +5,34 @@
 
 
 /* topdoc
+  name: Utility classes
+  family: cfgov-utilities
+  patterns:
+    - name: Visually hidden
+      markup: |
+        <h1>
+            <a href="#">
+                <i class="cf-icon cf-icon-twitter-square"></i>
+                <span class="visually-hidden">Email</span>
+            </a>
+        </h1>
+      notes:
+        - "Use this class to hide something from view while keeping it
+          accessible to screen readers."
+  tags:
+    - cfgov-utilities
+*/
+
+.visually-hidden { 
+  position: absolute; 
+  overflow: hidden; 
+  clip: rect(0 0 0 0); 
+  height: 1px; width: 1px; 
+  margin: -1px; padding: 0; border: 0; 
+}
+
+
+/* topdoc
   name: Less mixins
   family: cfgov-utilities
   patterns:
