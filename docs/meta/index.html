@@ -120,6 +120,120 @@
 }</code></pre>
       </div>
     </div>
+    <div id="header-slug" class="docs-component">
+      <h2 class="docs-component_header"><span>Header slug</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default header slug</h3>
+          <section class="docs-pattern_pattern">
+<div class="header-slug">
+    <h2 class="header-slug_inner">
+        Blog summary
+    </h2>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;div class=&quot;header-slug&quot;&gt;
+    &lt;h2 class=&quot;header-slug_inner&quot;&gt;
+        Blog summary
+    &lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>Structural cheat sheet:
+-----------------------
+.header-slug
+  .header-slug_inner</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="css"><code data-language="css">.header-slug_inner {
+  margin-top: 0;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-weight: normal;
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.35714285714285715em;
+  font-size: 0.875em;
+  line-height: 1.5714285714285714;
+  display: inline-block;
+  padding-top: 0.2857142857142857em;
+  margin-bottom: 1.2142857142857142em;
+  border-top: 4px solid #2cb34a;
+}
+.lt-ie9 .header-slug_inner {
+  font-weight: normal !important;
+}</code></pre>
+      </div>
+    </div>
+    <div id="header-slug-container" class="docs-component">
+      <h2 class="docs-component_header"><span>Header slug container</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default header slug container</h3>
+          <section class="docs-pattern_pattern">
+<div class="header-slug header-slug__bordered">
+    <h2 class="header-slug_inner">
+        Blog summary
+    </h2>
+    <div class="header-slug_body">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum ex provident dolorem ipsum molestias eius tenetur
+            doloribus obcaecati illum autem! Fuga commodi natus
+            distinctio accusantium esse ab dolore in aliquid.
+        </p>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="html"><code data-language="html">&lt;div class=&quot;header-slug header-slug__bordered&quot;&gt;
+    &lt;h2 class=&quot;header-slug_inner&quot;&gt;
+        Blog summary
+    &lt;/h2&gt;
+    &lt;div class=&quot;header-slug_body&quot;&gt;
+        &lt;p&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum ex provident dolorem ipsum molestias eius tenetur
+            doloribus obcaecati illum autem! Fuga commodi natus
+            distinctio accusantium esse ab dolore in aliquid.
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="code"><code>Structural cheat sheet:
+-----------------------
+.header-slug.header-slug__bordered
+  .header-slug_inner
+  .header-slug_body</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="css"><code data-language="css">.header-slug__bordered {
+  margin: 0 0 1.875em;
+  border-top: 1px solid #e3e4e5;
+  border-bottom: 1px solid #e3e4e5;
+}
+.header-slug__bordered .header-slug_inner {
+  margin-top: -1px;
+}
+.header-slug__bordered .header-slug_body {
+  margin-bottom: 1.375em;
+}</code></pre>
+      </div>
+    </div>
     <div id="meta-header" class="docs-component">
       <h2 class="docs-component_header"><span>Meta header</span></h2>
       <div class="docs-patterns">

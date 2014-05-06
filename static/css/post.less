@@ -12,28 +12,34 @@
       markup: |
         <article class="post">
             <header>
-                <a href="#" class="category-slug meta-header_left">
+                <a href="#" class="post_slug category-slug">
                     <i class="cf-icon cf-icon-help"></i>
                     Announcements &amp; updates
                 </a>
-                <h1>A consumer-centered supervision program</h1>
-                <div class="post_meta">
-                    <span class="byline">By <a class="byline_link" href="#">Firstname Lastname</a></span> &ndash;
-                    <span class="short-date">Mon 32, 3001</span>
-                    <ul class="share-links">
-                        <li><a href="#"><i class="cf-icon cf-icon-email-square"></i> Email</a></li>
-                        <li><a href="#"><i class="cf-icon cf-icon-facebook-square"></i> Facebook</a></li>
-                        <li><a href="#"><i class="cf-icon cf-icon-twitter-square"></i> Twitter</a></li>
-                        <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
-                    </ul>
-                </div>
-                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                <h2>Post summary</h2>
-                <p class="summary">
-                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                <h1 class="post_header">A consumer-centered supervision program</h1>
+                <p>
+                    <span class="post_byline">By <a href="#">Firstname&nbsp;Lastname</a> &ndash;</span>
+                    <span class="post_date date">Mon 32, 3001</span>
                 </p>
+                <ul class="post_share share-icons">
+                    <li><a href="#"><i class="cf-icon cf-icon-email-social-square"></i> Email</a></li>
+                    <li><a href="#"><i class="cf-icon cf-icon-facebook-square"></i> Facebook</a></li>
+                    <li><a href="#"><i class="cf-icon cf-icon-twitter-square"></i> Twitter</a></li>
+                    <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
+                </ul>
+                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
+                <div class="post-summary header-slug header-slug__bordered">
+                    <h2 class="post-summary_header header-slug_inner">
+                        Blog summary
+                    </h2>
+                    <div class="header-slug_body">
+                        <p class="post-summary_text">
+                            Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                            id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                            Labitur liberavisse quo ei, utamur impetus eu nam.
+                        </p>
+                    </div>
+                </div>
             </header>
             <p>
                 Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
@@ -64,15 +70,51 @@
                 Labitur liberavisse quo ei, utamur impetus eu nam.
             </p>
             <footer>
-                <div class="demo-placeholder">tags placeholder</div> <!-- see commented implementation on CFPB Open Tech-->
+                <div class="demo-placeholder">tags placeholder</div>
+                <!-- see commented implementation on CFPB Open Tech-->
             </footer>
         </article>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .post
+            .post_slug
+            .post_header
+            .post_byline
+            .post_date
+            .post_share
+            .post_featured-img
+            .post_summary
+            .post_text
   tags:
     - cfgov-post
 */
 
-/* Less goes here */
+.post_header {
+    .h2();
+    @media @respond-to-medium-screens-min {
+        .h1();
+    }
+}
 
+.post_byline {
+    .h4();
+}
+
+.post_featured-img {
+    margin: 0 0 unit(30px / @base-font-size-px, em);
+}
+
+.post-summary {
+    &_header {
+        .header-slug();
+    }
+
+    &_text {
+        .h3();
+    }
+}
 
 /* topdoc
   name: EOF
