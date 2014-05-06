@@ -6,12 +6,42 @@
 
 .demo-banner {
     padding: 0.5em 1em;
-    background: @gray-20;
-    .webfont-regular;
+    background: @darkgray;
+    color: @white;
+    .webfont-regular();
+    @media @respond-to-small-screens-max {
+        font-size: 0.875em;
+    }
 }
 
 .demo-banner_back-link {
+    padding: 0.25em 0;
     margin-right: 1em;
+
+    &:link,
+    &:visited {
+        color: @pacific-50;
+    }
+    &:hover,
+    &:focus {
+        color: @pacific-80;
+    }
+    &:active {
+        color: @gray-50;
+    }
+
+    @media @respond-to-medium-screens-min {
+        padding: 0;
+        float: left;
+    }
+}
+
+.demo-banner b {
+    .webfont-medium();
+
+    @media @respond-to-small-screens-max {
+        display: block;
+    }
 }
 
 .demo-placeholder {
