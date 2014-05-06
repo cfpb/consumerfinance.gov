@@ -44,17 +44,18 @@ img {
 
 .content_main,
 .content_sidebar {
+    .column(12);
     padding: 2em 0;
 }
 
-@media @respond-to-medium-screens-min {
+.header .demo-placeholder,
+.content_hero .demo-placeholder,
+.footer .demo-placeholder {
+    // Temporary styling to bring in line with main columns.
+    margin-left: (@gutter-width / 2);
+}
 
-    .header .demo-placeholder,
-    .content_hero .demo-placeholder,
-    .footer .demo-placeholder {
-        // Temporary styling to bring in line with main columns.
-        margin-left: (@gutter-width / 2);
-    }
+@media @respond-to-medium-screens-min {
 
     // Set up standard content area layouts
     .content {
@@ -140,12 +141,8 @@ img {
 // STUFF THAT SHOULD PROBABLY MOVE TO CF-LAYOUT
 
 .wrapper {
-    .wrapper();
-
-    // Set outside margins higher at some breakpoint between smartphone and tablet sizes.
-    // TO DO: Revisit 
-    @media only all and (min-width: 600px) and (max-width: 800px) {
-        padding: 0 @gutter-width;
+    @media only all and (min-width: 600px) {
+        .wrapper();
     }
 }
 .header {
