@@ -5610,6 +5610,73 @@ img {
 
 /* ==========================================================================
    cfgov-refresh
+   media-object
+   ========================================================================== */
+
+/* topdoc
+  name: Media object
+  family: cfgov-media-object
+  patterns:
+    - name: Default media object
+      markup: |
+        <article class="media-object">
+            <div class="media-object_image-container">
+                <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
+            </div>
+            <div class="media-object_text-container">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .media-object
+            .media-object_image-container
+              .media-object_image
+            .media-object_text-container
+  tags:
+    - cfgov-media-object
+*/
+
+.media-object {
+  position: relative;
+  min-height: 9.9375em;
+  padding-left: 11.5625em;
+}
+
+.media-object_image-container {
+  position: absolute;
+  top: 0.25em;
+  left: 0;
+  width: 9.6875em;
+  overflow: hidden;
+}
+
+.media-object_image {
+  margin-bottom: 0.5em;
+}
+
+.media-object_image {
+  display: block;
+  width: 290px;
+  max-width: 290px;
+  margin-bottom: 0;
+  margin-left: -50%;
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
+
+/* ==========================================================================
+   cfgov-refresh
    meta
    ========================================================================== */
 
@@ -5820,8 +5887,18 @@ img {
 }
 
 /* topdoc
+  name: EOF
+  eof: true
+*/
+
+/* ==========================================================================
+   cfgov-refresh
+   misc
+   ========================================================================== */
+
+/* topdoc
   name: Line container
-  family: cfgov-meta
+  family: cfgov-misc
   patterns:
     - name: Basic line container
       markup: |
@@ -5887,7 +5964,7 @@ img {
             </div>
         </div>
   tags:
-    - cfgov-meta
+    - cfgov-misc
 */
 
 .line-container {
@@ -5903,73 +5980,6 @@ img {
 
 .line-container .line-container_body {
   margin-bottom: 1.625em;
-}
-
-/* topdoc
-  name: EOF
-  eof: true
-*/
-
-/* ==========================================================================
-   cfgov-refresh
-   media-object
-   ========================================================================== */
-
-/* topdoc
-  name: Media object
-  family: cfgov-media-object
-  patterns:
-    - name: Default media object
-      markup: |
-        <article class="media-object">
-            <div class="media-object_image-container">
-                <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
-            </div>
-            <div class="media-object_text-container">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolorum non sapiente nobis molestias delectus optio ipsam
-                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
-                    accusantium doloribus dicta fugiat itaque ab porro.
-                </p>
-            </div>
-        </article>
-      codenotes:
-        - |
-          Structural sheat sheet:
-          -----------------------
-          .media-object
-            .media-object_image-container
-              .media-object_image
-            .media-object_text-container
-  tags:
-    - cfgov-media-object
-*/
-
-.media-object {
-  position: relative;
-  min-height: 9.9375em;
-  padding-left: 11.5625em;
-}
-
-.media-object_image-container {
-  position: absolute;
-  top: 0.25em;
-  left: 0;
-  width: 9.6875em;
-  overflow: hidden;
-}
-
-.media-object_image {
-  margin-bottom: 0.5em;
-}
-
-.media-object_image {
-  display: block;
-  width: 290px;
-  max-width: 290px;
-  margin-bottom: 0;
-  margin-left: -50%;
 }
 
 /* topdoc
