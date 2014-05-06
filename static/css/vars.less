@@ -47,14 +47,16 @@
     - cfgov-vars
 */
 
-@small-screens-min:                  unit((320px / @base-font-size-px), em);
-@small-screens-max:                  unit((767px / @base-font-size-px), em);
-@medium-screens-min:                 unit((768px / @base-font-size-px), em);
-@medium-screens-max:                 unit((959px / @base-font-size-px), em);
-@large-screens-min:                  unit((960px / @base-font-size-px), em);
+@extrasmall-screens-max:             unit(( 320px / @base-font-size-px), em);
+@small-screens-min:                  unit(( 321px / @base-font-size-px), em);
+@small-screens-max:                  unit(( 800px / @base-font-size-px), em);
+@medium-screens-min:                 unit(( 801px / @base-font-size-px), em);
+@medium-screens-max:                 unit(( 959px / @base-font-size-px), em);
+@large-screens-min:                  unit(( 960px / @base-font-size-px), em);
 @large-screens-max:                  unit((1199px / @base-font-size-px), em);
 @extralarge-screens-min:             unit((1200px / @base-font-size-px), em);
 
+@respond-to-extrasmall-screens-max:  ~"only all and (min-width: @{extrasmall-screens-max})";
 @respond-to-small-screens-min:       ~"only all and (min-width: @{small-screens-min})";
 @respond-to-small-screens-max:       ~"only all and (max-width: @{small-screens-max})";
 @respond-to-medium-screens-min:      ~"only all and (min-width: @{medium-screens-min})";

@@ -41,36 +41,76 @@ img {
 @import (less) "content-blocks.less";
 
 
-.content {
+.content_main,
+.content_sidebar {
+    .column(12);
     padding: 2em 0;
 }
-.sidebar {
-    padding: 2em (@gutter-width / 2);
-    margin: 0 -(@gutter-width / 2);
-    background: @gray-10;
+
+.header .demo-placeholder,
+.content_hero .demo-placeholder,
+.footer .demo-placeholder {
+    // Temporary styling to bring in line with main columns.
+    margin-left: (@gutter-width / 2);
 }
+
 @media @respond-to-medium-screens-min {
 
+    // Set up standard content area layouts
     .content {
-        .column(8);
-        margin-left: -(@gutter-width / 2);
-    }
-    .sidebar {
-        .column(4);
-        padding: 2em @gutter-width;
-        margin-left: 0;
+        &__1-3 {
+            .content_main {
+                .column(9);
+                .push(3);
+            }
+            .content_sidebar {
+                .column(3);
+                .pull(9);
+            }
+        }
+        &__2-1 {
+            .content_main {
+                .column(8);
+            }
+            .content_sidebar {
+                .column(4);
+            }
+        }
     }
 
-    .bleeding-sidebar {
+} // end @media for standard content area layouts
+
+
+
+.content__bleedbar {
+
+    .content_sidebar {
+        padding: 2em (@gutter-width / 2);
+        margin: 0 -(@gutter-width / 2);
+        background: @gray-10;
+    }
+
+    @media @respond-to-medium-screens-min {
+
+        // Prevent pseudoelement background from creating horizontal scrollbar.
         overflow: hidden;
 
-        &_fg {
+        .content_sidebar {
+            padding: 2em 0 2em @gutter-width;
+            margin-left: 0;
+
             // Remove background color from actual sidebar.
             // It will now be provided by pseudoelement :after sidebar parent.
             background: transparent;
+
+            .lt-ie8 & {
+                // Make sure the sidebar still has a background in IE7.
+                padding-right: @gutter-width;
+                background: @gray-10;
+            }
         }
 
-        &_bg:after {
+        .content_wrapper:after {
             // Create faux sidebar background.
             content: '';
             display: block;
@@ -79,25 +119,36 @@ img {
             height: 100%;
             position: absolute;
             top: 0;
-            left: 66.666666667%;
             z-index: -1;
+            // The three in the below calculation is a magic number.
+            // Not entirely sure what to do about it right now.
+            margin-left: (@gutter-width / 3);
             background: @gray-10;
         }
-    }
 
-}
+        &.content__2-1 .content_wrapper:after {
+            left: 66.666666667%;    
+        }
+        &.content__3-1 .content_wrapper:after {
+            left: 75%;
+        }
+
+    } // end @media within .bleedbar
+} // end .bleedbar
 
 
 // STUFF THAT SHOULD PROBABLY MOVE TO CF-LAYOUT
 
 .wrapper {
-    .wrapper();
+    @media only all and (min-width: 600px) {
+        .wrapper();
+    }
 }
 .header {
     border-bottom: 10px solid @green;
 }
-.hero {
-    padding: 1em 2em;
+.content_hero {
+    padding: 1em 0;
     background: @gray-20;
 
     > h1 {
