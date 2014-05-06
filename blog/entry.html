@@ -64,8 +64,10 @@
 <body>
 
     <div class="demo-banner">
-        <a class="demo-banner_back-link" href="../index.html"><i class="cf-icon cf-icon-left"></i> Back to demo home</a>
         cfgov-refresh demo: <b>Blog entry page</b>
+        <a class="demo-banner_back-link" href="../index.html">
+            <i class="cf-icon cf-icon-left"></i> Back to demo home
+        </a>
     </div>
 
 
@@ -73,11 +75,11 @@
         <div class="wrapper">
             <div class="demo-placeholder">header placeholder</div>
         </div>
-    </header><!-- END header.wrapper -->
+    </header><!-- END .header -->
 
-    <main class="main" role="main">
-        <div class="wrapper">
-            <section class="content">
+    <main class="content content__2-1 content__bleedbar" id="main" role="main">
+        <div class="wrapper content_wrapper">
+            <section class="content_main">
                 <article class="entry">
                     <header>
                         <a class="entry_category"><i class="cf-icon cf-icon-student-loans"></i> Student loans</a>
@@ -86,7 +88,7 @@
                             <span class="byline">By <a class="byline_link" href="#">Firstname Lastname</a></span> &ndash;
                             <span class="short-date">Mon 32, 3001</span>
                             <ul class="share-links">
-                                <li><a href="#"><i class="cf-icon cf-icon-email-square"></i> Email</a></li>
+                                <li><a href="#"><i class="cf-icon cf-icon-email-social-square"></i> Email</a></li>
                                 <li><a href="#"><i class="cf-icon cf-icon-facebook-square"></i> Facebook</a></li>
                                 <li><a href="#"><i class="cf-icon cf-icon-twitter-square"></i> Twitter</a></li>
                                 <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
@@ -135,8 +137,8 @@
                 <section class="comments">
                     <div class="demo-placeholder">comments placeholder</div>
                 </section>
-            </section><!-- END .content -->
-            <aside class="sidebar">
+            </section><!-- END .content_main -->
+            <aside class="content_sidebar">
                 <section class="popular-stories">
                     <div class="demo-placeholder">Related news placeholder</div>
                 </section>
@@ -146,15 +148,15 @@
                 <section class="stay-informed">
                     <div class="demo-placeholder">Stay informed placeholder</div>
                 </section>
-            </aside><!-- END .sidebar -->
-        </div><!-- END .wrapper -->
-    </main><!-- END main -->
+            </aside><!-- END .content_sidebar -->
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
 
     <footer class="footer" role="contentinfo">
         <div class="wrapper">
             <div class="demo-placeholder">footer placeholder</div>
         </div>
-    </footer><!-- END footer.wrapper -->
+    </footer><!-- END .footer -->
 
 <!--
     ============

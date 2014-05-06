@@ -135,7 +135,7 @@ pre {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-.docs-pattern_footer .html {
+.docs-pattern_footer .docs-pattern_markup {
   margin: -1.69230769em -1.69230769em 0;
   border: 1px solid #e3e4e5;
   border-top: none;
@@ -146,9 +146,7 @@ pre {
 }
 /* Notes and code
    ========================================================================== */
-.code,
-.css,
-.html {
+.docs-code {
   margin: 0;
   background: #f8f8f8;
   border: 1px solid #e3e4e5;
@@ -186,16 +184,14 @@ pre {
 .docs-codenotes li + li {
   margin-top: 1em;
 }
-.docs-codenotes .code,
-.docs-codenotes .css,
-.docs-codenotes .html {
+.docs-codenotes .docs-code {
   display: inline-block;
   padding: 0.46153846em 0.76923077em;
   background: #ffffff;
   border: 1px solid #babbbd;
 }
-.html + .docs-codenotes,
-.html + .docs-notes {
+.docs-pattern_markup + .docs-codenotes,
+.docs-pattern_markup + .docs-notes {
   margin-top: 1.57142857em;
 }
 /* Responsive
@@ -209,7 +205,7 @@ pre {
   }
   .docs-css {
     width: 45%;
-    margin: 4.25em 0 0;
+    margin: 3.9375em 0 0;
     padding-left: 1.375em;
   }
 }
