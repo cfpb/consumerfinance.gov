@@ -15,6 +15,210 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="unstyled-list" class="docs-component">
+      <h2 class="docs-component_header"><span>Unstyled list</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default unstyled list</h3>
+          <section class="docs-pattern_pattern">
+<ul class="unstyled-list">
+    <li>
+        List item 1
+    </li>
+    <li>
+        List item 2
+    </li>
+    <li>
+        List item 3
+    </li>
+    <li>
+        List item 4
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;unstyled-list&quot;&gt;
+    &lt;li&gt;
+        List item 1
+    &lt;/li&gt;
+    &lt;li&gt;
+        List item 2
+    &lt;/li&gt;
+    &lt;li&gt;
+        List item 3
+    &lt;/li&gt;
+    &lt;li&gt;
+        List item 4
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.unstyled-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="horizontal-list" class="docs-component">
+      <h2 class="docs-component_header"><span>Horizontal list</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default horizontal list</h3>
+          <section class="docs-pattern_pattern">
+<ul class="horizontal-list">
+    <li class="horizontal-list_item">
+        <i class="cf-icon cf-icon-email-social-square"></i>
+    </li>
+    <li class="horizontal-list_item">
+        <i class="cf-icon cf-icon-facebook-square"></i>
+    </li>
+    <li class="horizontal-list_item">
+        <i class="cf-icon cf-icon-twitter-square"></i>
+    </li>
+    <li class="horizontal-list_item">
+        <i class="cf-icon cf-icon-linkedin-square"></i>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;horizontal-list&quot;&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-facebook-square&quot;&gt;&lt;/i&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-linkedin-square&quot;&gt;&lt;/i&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.horizontal-list {
+  padding-left: 0;
+}
+
+.horizontal-list_item {
+  display: inline-block;
+}
+
+.horizontal-list_item + .horizontal-list_item {
+  margin-left: 0.25em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="horizontal-share-list" class="docs-component">
+      <h2 class="docs-component_header"><span>Horizontal share list</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default horizontal share-list</h3>
+          <section class="docs-pattern_pattern">
+<ul class="horizontal-list horizontal-list__share">
+    <li class="horizontal-list_item">
+        <a href="#">
+            <i class="cf-icon cf-icon-email-social-square"></i>
+        </a>
+    </li>
+    <li class="horizontal-list_item">
+        <a href="#">
+            <i class="cf-icon cf-icon-facebook-square"></i>
+        </a>
+    </li>
+    <li class="horizontal-list_item">
+        <a href="#">
+            <i class="cf-icon cf-icon-twitter-square"></i>
+        </a>
+    </li>
+    <li class="horizontal-list_item">
+        <a href="#">
+            <i class="cf-icon cf-icon-linkedin-square"></i>
+        </a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;horizontal-list horizontal-list__share&quot;&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;
+            &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;
+            &lt;i class=&quot;cf-icon cf-icon-facebook-square&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;
+            &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;horizontal-list_item&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;
+            &lt;i class=&quot;cf-icon cf-icon-linkedin-square&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.horizontal-list__share .horizontal-list_item {
+  line-height: 1;
+}
+
+.horizontal-list__share .horizontal-list_item a {
+  color: #101820;
+  border-bottom-width: 0;
+  color: #43484e;
+  font-size: 1.625em;
+}
+
+.horizontal-list__share .horizontal-list_item a:visited,
+.horizontal-list__share .horizontal-list_item a.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.horizontal-list__share .horizontal-list_item a:hover,
+.horizontal-list__share .horizontal-list_item a.hover {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.horizontal-list__share .horizontal-list_item a:focus,
+.horizontal-list__share .horizontal-list_item a.focus {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.horizontal-list__share .horizontal-list_item a:active,
+.horizontal-list__share .horizontal-list_item a.active {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #101820;
+  color: #101820;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="line-container" class="docs-component">
       <h2 class="docs-component_header"><span>Line container</span></h2>
       <div class="docs-patterns">
