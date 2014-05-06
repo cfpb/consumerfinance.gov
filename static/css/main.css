@@ -4629,13 +4629,50 @@ a .icon-flip-vertical:before {
    ========================================================================== */
 .demo-banner {
   padding: 0.5em 1em;
-  background: #e3e4e5;
+  background: #43484e;
+  color: #ffffff;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
+@media only all and (max-width: 50em) {
+  .demo-banner {
+    font-size: 0.875em;
+  }
+}
 .demo-banner_back-link {
+  padding: 0.25em 0;
   margin-right: 1em;
+}
+.demo-banner_back-link:link,
+.demo-banner_back-link:visited {
+  color: #7fb8e6;
+}
+.demo-banner_back-link:hover,
+.demo-banner_back-link:focus {
+  color: #328ed8;
+}
+.demo-banner_back-link:active {
+  color: #babbbd;
+}
+@media only all and (min-width: 50.0625em) {
+  .demo-banner_back-link {
+    padding: 0;
+    float: left;
+  }
+}
+.demo-banner b {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+.lt-ie9 .demo-banner b {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 50em) {
+  .demo-banner b {
+    display: block;
+  }
 }
 .demo-placeholder {
   display: inline-block;
@@ -4927,14 +4964,14 @@ img {
   tags:
     - cfgov-media-object
 */
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 50.0625em) {
   .media-object {
     position: relative;
     min-height: 9.9375em;
     padding-left: 11.5625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 50.0625em) {
   .media-object_image-container {
     position: absolute;
     top: 0.25em;
@@ -4946,7 +4983,7 @@ img {
 .media-object_image {
   margin-bottom: 0.5em;
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 50.0625em) {
   .media-object_image {
     display: block;
     width: 290px;
@@ -4995,7 +5032,7 @@ img {
   font-size: 1.375em;
   line-height: 1.2727272727272727;
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 50.0625em) {
   .summary_header {
     margin-top: 0;
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -5130,12 +5167,17 @@ img {
   name: EOF
   eof: true
 */
-.content,
-.sidebar {
+.content_main,
+.content_sidebar {
   padding: 2em 0;
 }
-@media only all and (min-width: 48em) {
-  .content-wrapper__1-3 .content {
+@media only all and (min-width: 50.0625em) {
+  .header .demo-placeholder,
+  .content_hero .demo-placeholder,
+  .footer .demo-placeholder {
+    margin-left: 15px;
+  }
+  .content__1-3 .content_main {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -5148,15 +5190,15 @@ img {
     position: relative;
     left: 25%;
   }
-  .ie .content-wrapper__1-3 .content {
+  .ie .content__1-3 .content_main {
     margin-right: -0.26em;
   }
-  .lt-ie8 .content-wrapper__1-3 .content {
+  .lt-ie8 .content__1-3 .content_main {
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
-  .content-wrapper__1-3 .sidebar {
+  .content__1-3 .content_sidebar {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -5169,15 +5211,15 @@ img {
     position: relative;
     right: 75%;
   }
-  .ie .content-wrapper__1-3 .sidebar {
+  .ie .content__1-3 .content_sidebar {
     margin-right: -0.26em;
   }
-  .lt-ie8 .content-wrapper__1-3 .sidebar {
+  .lt-ie8 .content__1-3 .content_sidebar {
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
-  .content-wrapper__2-1 .content {
+  .content__2-1 .content_main {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -5188,15 +5230,15 @@ img {
     vertical-align: top;
     width: 66.66666666666666%;
   }
-  .ie .content-wrapper__2-1 .content {
+  .ie .content__2-1 .content_main {
     margin-right: -0.26em;
   }
-  .lt-ie8 .content-wrapper__2-1 .content {
+  .lt-ie8 .content__2-1 .content_main {
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
-  .content-wrapper__2-1 .sidebar {
+  .content__2-1 .content_sidebar {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -5207,38 +5249,34 @@ img {
     vertical-align: top;
     width: 33.33333333333333%;
   }
-  .ie .content-wrapper__2-1 .sidebar {
+  .ie .content__2-1 .content_sidebar {
     margin-right: -0.26em;
   }
-  .lt-ie8 .content-wrapper__2-1 .sidebar {
+  .lt-ie8 .content__2-1 .content_sidebar {
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-.bleedbar .sidebar {
+.content__bleedbar .content_sidebar {
   padding: 2em 15px;
   margin: 0 -15px;
   background: #f1f2f2;
 }
-@media only all and (min-width: 48em) {
-  .bleedbar {
+@media only all and (min-width: 50.0625em) {
+  .content__bleedbar {
     overflow: hidden;
   }
-  .bleedbar .sidebar {
-    padding: 2em 30px;
-    margin-left: 0;
-  }
-  .bleedbar .sidebar {
+  .content__bleedbar .content_sidebar {
     padding: 2em 0 2em 30px;
     margin-left: 0;
     background: transparent;
   }
-  .lt-ie8 .bleedbar .sidebar {
+  .lt-ie8 .content__bleedbar .content_sidebar {
     padding-right: 30px;
     background: #f1f2f2;
   }
-  .bleedbar .content-wrapper:after {
+  .content__bleedbar .content_wrapper:after {
     content: '';
     display: block;
     width: 9999px;
@@ -5250,10 +5288,10 @@ img {
     margin-left: 10px;
     background: #f1f2f2;
   }
-  .bleedbar .content-wrapper__2-1:after {
+  .content__bleedbar.content__2-1 .content_wrapper:after {
     left: 66.666666667%;
   }
-  .bleedbar .content-wrapper__3-1:after {
+  .content__bleedbar.content__3-1 .content_wrapper:after {
     left: 75%;
   }
 }
@@ -5271,24 +5309,23 @@ img {
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
+@media only all and (min-width: 600px) and (max-width: 800px) {
+  .wrapper {
+    padding: 0 30px;
+  }
+}
 .header {
   border-bottom: 10px solid #2cb34a;
 }
-.header .demo-placeholder {
-  margin-left: 15px;
-}
-.hero {
-  padding: 1em 2em;
+.content_hero {
+  padding: 1em 0;
   background: #e3e4e5;
 }
-.hero > h1 {
+.content_hero > h1 {
   margin: 0;
 }
 .footer {
   padding: 1.5em 0;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
-}
-.footer .demo-placeholder {
-  margin-left: 15px;
 }
