@@ -30,7 +30,7 @@
         <h1 class="post_header">
             A consumer-centered supervision program
         </h1>
-        <p>
+        <p class="post_meta">
             <span class="post_byline">
                 By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
             </span>
@@ -38,26 +38,26 @@
                 Mon 32, 3001
             </span>
         </p>
-        <ul class="post_share share-icons">
-            <li>
+        <ul class="horizontal-list horizontal-list__share">
+            <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-email-social-square"></i>
                     Email
                 </a>
             </li>
-            <li>
+            <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-facebook-square"></i>
                     Facebook
                 </a>
             </li>
-            <li>
+            <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-twitter-square"></i>
                     Twitter
                 </a>
             </li>
-            <li>
+            <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-linkedin-square"></i>
                     LinkedIn
@@ -138,7 +138,7 @@
         &lt;h1 class=&quot;post_header&quot;&gt;
             A consumer-centered supervision program
         &lt;/h1&gt;
-        &lt;p&gt;
+        &lt;p class=&quot;post_meta&quot;&gt;
             &lt;span class=&quot;post_byline&quot;&gt;
                 By &lt;a href=&quot;#&quot;&gt;Firstname&amp;nbsp;Lastname&lt;/a&gt; &amp;ndash;
             &lt;/span&gt;
@@ -146,26 +146,26 @@
                 Mon 32, 3001
             &lt;/span&gt;
         &lt;/p&gt;
-        &lt;ul class=&quot;post_share share-icons&quot;&gt;
-            &lt;li&gt;
+        &lt;ul class=&quot;horizontal-list horizontal-list__share&quot;&gt;
+            &lt;li class=&quot;horizontal-list_item&quot;&gt;
                 &lt;a href=&quot;#&quot;&gt;
                     &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
                     Email
                 &lt;/a&gt;
             &lt;/li&gt;
-            &lt;li&gt;
+            &lt;li class=&quot;horizontal-list_item&quot;&gt;
                 &lt;a href=&quot;#&quot;&gt;
                     &lt;i class=&quot;cf-icon cf-icon-facebook-square&quot;&gt;&lt;/i&gt;
                     Facebook
                 &lt;/a&gt;
             &lt;/li&gt;
-            &lt;li&gt;
+            &lt;li class=&quot;horizontal-list_item&quot;&gt;
                 &lt;a href=&quot;#&quot;&gt;
                     &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
                     Twitter
                 &lt;/a&gt;
             &lt;/li&gt;
-            &lt;li&gt;
+            &lt;li class=&quot;horizontal-list_item&quot;&gt;
                 &lt;a href=&quot;#&quot;&gt;
                     &lt;i class=&quot;cf-icon cf-icon-linkedin-square&quot;&gt;&lt;/i&gt;
                     LinkedIn
@@ -241,9 +241,10 @@
 .post
   .post_slug
   .post_header
-  .post_byline
-  .post_date
-  .post_share
+  .post_meta
+    .post_byline
+    .post_date
+  .post_share-link
   .post_featured-img
   .post_summary
   .post_body</code></pre>
@@ -274,6 +275,10 @@
   line-height: 1.2941176470588236;
 }
 
+.post_meta {
+  margin-bottom: 1.125em;
+}
+
 .post_byline {
   margin-top: 0;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
@@ -291,7 +296,8 @@
 }
 
 .post_featured-img {
-  margin: 0 0 1.875em;
+  display: block;
+  margin: 1.875em 0;
 }
 
 .post_summary {

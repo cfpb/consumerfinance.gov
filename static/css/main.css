@@ -5004,6 +5004,129 @@ img {
    misc
    ========================================================================== */
 /* topdoc
+  name: Unstyled list
+  family: cfgov-misc
+  patterns:
+    - name: Default unstyled list
+      markup: |
+        <ul class="unstyled-list">
+            <li>
+                List item 1
+            </li>
+            <li>
+                List item 2
+            </li>
+            <li>
+                List item 3
+            </li>
+            <li>
+                List item 4
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.unstyled-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+/* topdoc
+  name: Horizontal list
+  family: cfgov-misc
+  patterns:
+    - name: Default horizontal list
+      markup: |
+        <ul class="horizontal-list">
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-email-social-square"></i>
+            </li>
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-facebook-square"></i>
+            </li>
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-twitter-square"></i>
+            </li>
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-linkedin-square"></i>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.horizontal-list {
+  padding-left: 0;
+}
+.horizontal-list_item {
+  display: inline-block;
+}
+.horizontal-list_item + .horizontal-list_item {
+  margin-left: 0.25em;
+}
+/* topdoc
+  name: Horizontal share list
+  family: cfgov-misc
+  patterns:
+    - name: Default horizontal share-list
+      markup: |
+        <ul class="horizontal-list horizontal-list__share">
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-email-social-square"></i>
+                </a>
+            </li>
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-facebook-square"></i>
+                </a>
+            </li>
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-twitter-square"></i>
+                </a>
+            </li>
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-linkedin-square"></i>
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.horizontal-list__share .horizontal-list_item {
+  line-height: 1;
+}
+.horizontal-list__share .horizontal-list_item a {
+  color: #101820;
+  border-bottom-width: 0;
+  color: #43484e;
+  font-size: 1.625em;
+}
+.horizontal-list__share .horizontal-list_item a:visited,
+.horizontal-list__share .horizontal-list_item a.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.horizontal-list__share .horizontal-list_item a:hover,
+.horizontal-list__share .horizontal-list_item a.hover {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.horizontal-list__share .horizontal-list_item a:focus,
+.horizontal-list__share .horizontal-list_item a.focus {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+.horizontal-list__share .horizontal-list_item a:active,
+.horizontal-list__share .horizontal-list_item a.active {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #101820;
+  color: #101820;
+}
+/* topdoc
   name: Line container
   family: cfgov-misc
   patterns:
@@ -5108,7 +5231,7 @@ img {
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
-                <p>
+                <p class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
                     </span>
@@ -5116,26 +5239,26 @@ img {
                         Mon 32, 3001
                     </span>
                 </p>
-                <ul class="post_share share-icons">
-                    <li>
+                <ul class="horizontal-list horizontal-list__share">
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-email-social-square"></i>
                             Email
                         </a>
                     </li>
-                    <li>
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-facebook-square"></i>
                             Facebook
                         </a>
                     </li>
-                    <li>
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-twitter-square"></i>
                             Twitter
                         </a>
                     </li>
-                    <li>
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-linkedin-square"></i>
                             LinkedIn
@@ -5211,9 +5334,10 @@ img {
           .post
             .post_slug
             .post_header
-            .post_byline
-            .post_date
-            .post_share
+            .post_meta
+              .post_byline
+              .post_date
+            .post_share-link
             .post_featured-img
             .post_summary
             .post_body
@@ -5240,6 +5364,9 @@ img {
     line-height: 1.2941176470588236;
   }
 }
+.post_meta {
+  margin-bottom: 1.125em;
+}
 .post_byline {
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -5255,7 +5382,8 @@ img {
   font-weight: normal !important;
 }
 .post_featured-img {
-  margin: 0 0 1.875em;
+  display: block;
+  margin: 1.875em 0;
 }
 .post_summary {
   margin-top: 0;

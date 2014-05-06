@@ -19,7 +19,7 @@
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
-                <p>
+                <p class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
                     </span>
@@ -27,26 +27,26 @@
                         Mon 32, 3001
                     </span>
                 </p>
-                <ul class="post_share share-icons">
-                    <li>
+                <ul class="horizontal-list horizontal-list__share">
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-email-social-square"></i>
                             Email
                         </a>
                     </li>
-                    <li>
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-facebook-square"></i>
                             Facebook
                         </a>
                     </li>
-                    <li>
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-twitter-square"></i>
                             Twitter
                         </a>
                     </li>
-                    <li>
+                    <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-linkedin-square"></i>
                             LinkedIn
@@ -122,9 +122,10 @@
           .post
             .post_slug
             .post_header
-            .post_byline
-            .post_date
-            .post_share
+            .post_meta
+              .post_byline
+              .post_date
+            .post_share-link
             .post_featured-img
             .post_summary
             .post_body
@@ -139,12 +140,17 @@
     }
 }
 
+.post_meta {
+    margin-bottom: unit(18px / @base-font-size-px, em);
+}
+
 .post_byline {
     .h4();
 }
 
 .post_featured-img {
-    margin: 0 0 unit(30px / @base-font-size-px, em);
+    display: block;
+    margin: unit(30px / @base-font-size-px, em) 0;
 }
 
 .post_summary {
