@@ -1,0 +1,97 @@
+/* ==========================================================================
+   cfgov-refresh
+   misc
+   ========================================================================== */
+
+
+/* topdoc
+  name: Line container
+  family: cfgov-misc
+  patterns:
+    - name: Basic line container
+      markup: |
+        <div class="line-container">
+            <div class="line-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is a light border above and below me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_body
+    - name: Line container with a 'pullup' (example 1)
+      markup: |
+        <div class="line-container">
+            <div class="line-container_pullup header-slug">
+                <h2 class="header-slug_inner">
+                    Blog summary
+                </h2>
+            </div>
+            <div class="line-container_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_pullup
+            .line-container_body
+      notes:
+        - "The 'pullup' allows you to pull an element up flush against the top
+          of a .line-container."
+        - ".line-container_pullup works well with a .header-slug but it can be
+          used with other patterns too, like the image example below."
+    - name: Line container with a 'pullup' (example 2)
+      markup: |
+        <div class="line-container">
+            <p class="line-container_pullup">
+                <img src="http://placekitten.com/700/200" alt="">
+            </p>
+            <div class="line-container_body">
+                <h2>
+                    Photo heading
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+.line-container {
+    padding: unit(26px / @base-font-size-px, em) 0 0;
+    margin: 0 0 unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-20;
+    border-bottom: 1px solid @gray-20;
+
+    .line-container_pullup {
+        margin-top: -27px;
+    }
+
+    .line-container_body {
+        margin-bottom: unit(26px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

@@ -309,8 +309,9 @@ module.exports = function(grunt) {
     var topdoc = {};
     var subtasks = [
       'content-blocks',
-      'meta',
       'media-object',
+      'meta',
+      'misc',
       'post',
       'summary',
       'utilities',
