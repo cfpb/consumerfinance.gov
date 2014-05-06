@@ -5752,50 +5752,6 @@ img {
 }
 
 /* topdoc
-  name: Header slug container
-  family: cfgov-meta
-  patterns:
-    - name: Default header slug container
-      markup: |
-        <div class="header-slug header-slug__bordered">
-            <h2 class="header-slug_inner">
-                Blog summary
-            </h2>
-            <div class="header-slug_body">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolorum ex provident dolorem ipsum molestias eius tenetur
-                    doloribus obcaecati illum autem! Fuga commodi natus
-                    distinctio accusantium esse ab dolore in aliquid.
-                </p>
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .header-slug.header-slug__bordered
-            .header-slug_inner
-            .header-slug_body
-  tags:
-    - cfgov-meta
-*/
-
-.header-slug__bordered {
-  margin: 0 0 1.875em;
-  border-top: 1px solid #e3e4e5;
-  border-bottom: 1px solid #e3e4e5;
-}
-
-.header-slug__bordered .header-slug_inner {
-  margin-top: -1px;
-}
-
-.header-slug__bordered .header-slug_body {
-  margin-bottom: 1.375em;
-}
-
-/* topdoc
   name: Meta header
   family: cfgov-meta
   patterns:
@@ -5861,6 +5817,92 @@ img {
 .meta-header_right {
   float: right;
   margin-bottom: 0;
+}
+
+/* topdoc
+  name: Line container
+  family: cfgov-meta
+  patterns:
+    - name: Basic line container
+      markup: |
+        <div class="line-container">
+            <div class="line-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is a light border above and below me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_body
+    - name: Line container with a 'pullup' (example 1)
+      markup: |
+        <div class="line-container">
+            <div class="line-container_pullup header-slug">
+                <h2 class="header-slug_inner">
+                    Blog summary
+                </h2>
+            </div>
+            <div class="line-container_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_pullup
+            .line-container_body
+      notes:
+        - "The 'pullup' allows you to pull an element up flush against the top
+          of a .line-container."
+        - ".line-container_pullup works well with a .header-slug but it can be
+          used with other patterns too, like the image example below."
+    - name: Line container with a 'pullup' (example 2)
+      markup: |
+        <div class="line-container">
+            <p class="line-container_pullup">
+                <img src="http://placekitten.com/700/200" alt="">
+            </p>
+            <div class="line-container_body">
+                <h2>
+                    Photo heading
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+  tags:
+    - cfgov-meta
+*/
+
+.line-container {
+  padding: 1.625em 0 0;
+  margin: 0 0 1.875em;
+  border-top: 1px solid #e3e4e5;
+  border-bottom: 1px solid #e3e4e5;
+}
+
+.line-container .line-container_pullup {
+  margin-top: -27px;
+}
+
+.line-container .line-container_body {
+  margin-bottom: 1.625em;
 }
 
 /* topdoc
@@ -5964,11 +6006,13 @@ img {
                     <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
                 </ul>
                 <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                <div class="post-summary header-slug header-slug__bordered">
-                    <h2 class="post-summary_header header-slug_inner">
-                        Blog summary
-                    </h2>
-                    <div class="header-slug_body">
+                <div class="post-summary line-container">
+                    <div class="header-slug">
+                        <h2 class="post-summary_header line-container_pullup header-slug_inner">
+                            Blog summary
+                        </h2>
+                    </div>
+                    <div class="line-container_body">
                         <p class="post-summary_text">
                             Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
                             id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
@@ -5977,34 +6021,36 @@ img {
                     </div>
                 </div>
             </header>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <section class="callout">
-                <div class="demo-placeholder">More information placeholder</div>
-            </section>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
+            <div class="post_body">
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <section class="callout">
+                    <div class="demo-placeholder">More information placeholder</div>
+                </section>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+            </div>
             <footer>
                 <div class="demo-placeholder">tags placeholder</div>
                 <!-- see commented implementation on CFPB Open Tech-->
@@ -6022,7 +6068,7 @@ img {
             .post_share
             .post_featured-img
             .post_summary
-            .post_text
+            .post_body
   tags:
     - cfgov-post
 */
@@ -6097,6 +6143,10 @@ img {
   margin-bottom: 0.22727272727272727em;
   font-size: 1.375em;
   line-height: 1.2727272727272727;
+}
+
+.post_body {
+  color: #43484e;
 }
 
 /* topdoc
