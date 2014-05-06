@@ -5994,65 +5994,102 @@ img {
                     <i class="cf-icon cf-icon-help"></i>
                     Announcements &amp; updates
                 </a>
-                <h1 class="post_header">A consumer-centered supervision program</h1>
+                <h1 class="post_header">
+                    A consumer-centered supervision program
+                </h1>
                 <p>
-                    <span class="post_byline">By <a href="#">Firstname&nbsp;Lastname</a> &ndash;</span>
-                    <span class="post_date date">Mon 32, 3001</span>
+                    <span class="post_byline">
+                        By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
+                    </span>
+                    <span class="post_date date">
+                        Mon 32, 3001
+                    </span>
                 </p>
                 <ul class="post_share share-icons">
-                    <li><a href="#"><i class="cf-icon cf-icon-email-social-square"></i> Email</a></li>
-                    <li><a href="#"><i class="cf-icon cf-icon-facebook-square"></i> Facebook</a></li>
-                    <li><a href="#"><i class="cf-icon cf-icon-twitter-square"></i> Twitter</a></li>
-                    <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
+                    <li>
+                        <a href="#">
+                            <i class="cf-icon cf-icon-email-social-square"></i>
+                            Email
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="cf-icon cf-icon-facebook-square"></i>
+                            Facebook
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="cf-icon cf-icon-twitter-square"></i>
+                            Twitter
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="cf-icon cf-icon-linkedin-square"></i>
+                            LinkedIn
+                        </a>
+                    </li>
                 </ul>
                 <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                <div class="post-summary line-container">
-                    <div class="header-slug">
-                        <h2 class="post-summary_header line-container_pullup header-slug_inner">
+                <div class="line-container">
+                    <div class="header-slug line-container_pullup">
+                        <h2 class="header-slug_inner">
                             Blog summary
                         </h2>
                     </div>
-                    <div class="line-container_body">
-                        <p class="post-summary_text">
-                            Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                            id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                            Labitur liberavisse quo ei, utamur impetus eu nam.
+                    <div class="post_summary line-container_body">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Quis architecto commodi cupiditate excepturi
+                            consequatur sequi quia consectetur est ea laborum
+                            saepe earum quidem a necessitatibus modi magni error
+                            ab suscipit.
                         </p>
                     </div>
                 </div>
             </header>
             <div class="post_body">
                 <p>
-                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <section class="callout">
-                    <div class="demo-placeholder">More information placeholder</div>
+                    <div class="demo-placeholder">
+                        More information placeholder
+                    </div>
                 </section>
                 <p>
-                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
                 </p>
             </div>
             <footer>
-                <div class="demo-placeholder">tags placeholder</div>
+                <div class="demo-placeholder">
+                    tags placeholder
+                </div>
                 <!-- see commented implementation on CFPB Open Tech-->
             </footer>
         </article>
@@ -6113,29 +6150,7 @@ img {
   margin: 0 0 1.875em;
 }
 
-.post-summary_header_inner {
-  margin-top: 0;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-weight: normal;
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 0.35714285714285715em;
-  font-size: 0.875em;
-  line-height: 1.5714285714285714;
-  display: inline-block;
-  padding-top: 0.2857142857142857em;
-  margin-bottom: 1.2142857142857142em;
-  border-top: 4px solid #2cb34a;
-}
-
-.lt-ie9 .post-summary_header_inner {
-  font-weight: normal !important;
-}
-
-.post-summary_text {
+.post_summary {
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
