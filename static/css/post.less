@@ -28,11 +28,13 @@
                     <li><a href="#"><i class="cf-icon cf-icon-linkedin-square"></i> LinkedIn</a></li>
                 </ul>
                 <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                <div class="post-summary header-slug header-slug__bordered">
-                    <h2 class="post-summary_header header-slug_inner">
-                        Blog summary
-                    </h2>
-                    <div class="header-slug_body">
+                <div class="post-summary line-container">
+                    <div class="header-slug">
+                        <h2 class="post-summary_header line-container_pullup header-slug_inner">
+                            Blog summary
+                        </h2>
+                    </div>
+                    <div class="line-container_body">
                         <p class="post-summary_text">
                             Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
                             id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
@@ -41,34 +43,36 @@
                     </div>
                 </div>
             </header>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <section class="callout">
-                <div class="demo-placeholder">More information placeholder</div>
-            </section>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
-                id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
-                Labitur liberavisse quo ei, utamur impetus eu nam.
-            </p>
+            <div class="post_body">
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <section class="callout">
+                    <div class="demo-placeholder">More information placeholder</div>
+                </section>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, ea has partem perpetua. Eu graeci adipisci evertitur mei,
+                    id maiestatis elaboraret dissentias his. Eos id alia graeco timeam, id malis augue quo.
+                    Labitur liberavisse quo ei, utamur impetus eu nam.
+                </p>
+            </div>
             <footer>
                 <div class="demo-placeholder">tags placeholder</div>
                 <!-- see commented implementation on CFPB Open Tech-->
@@ -86,7 +90,7 @@
             .post_share
             .post_featured-img
             .post_summary
-            .post_text
+            .post_body
   tags:
     - cfgov-post
 */
@@ -115,6 +119,11 @@
         .h3();
     }
 }
+
+.post_body {
+    color: @darkgray;
+}
+
 
 /* topdoc
   name: EOF
