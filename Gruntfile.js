@@ -75,7 +75,6 @@ module.exports = function(grunt) {
       },
       ie8: {
         options: {
-          banner: '<%= banner.cfpb %>',
           paths: ['static'],
         },
         files: {
