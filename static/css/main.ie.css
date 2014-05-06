@@ -4342,13 +4342,8 @@ img {
                 </ul>
                 <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
                 <div class="line-container">
-                    <div class="header-slug line-container_pullup">
-                        <h2 class="header-slug_inner">
-                            Blog summary
-                        </h2>
-                    </div>
-                    <div class="post_summary line-container_body">
-                        <p>
+                    <div class="line-container_body">
+                        <p class="post_summary">
                             Lorem ipsum dolor sit amet, consectetur adipisicing
                             elit. Quis architecto commodi cupiditate excepturi
                             consequatur sequi quia consectetur est ea laborum
