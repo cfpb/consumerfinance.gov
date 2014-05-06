@@ -3531,6 +3531,9 @@ img {
   tags:
     - cfgov-meta
 */
+.header-slug {
+  border-top: 1px solid #e3e4e5;
+}
 .header-slug_inner {
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -3545,8 +3548,9 @@ img {
   line-height: 1.5714285714285714;
   display: inline-block;
   padding-top: 0.2857142857142857em;
+  margin-top: -3px;
   margin-bottom: 1.2142857142857142em;
-  border-top: 4px solid #2cb34a;
+  border-top: 5px solid #2cb34a;
 }
 .lt-ie9 .header-slug_inner {
   font-weight: normal !important;
