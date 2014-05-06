@@ -3390,14 +3390,14 @@ img {
   tags:
     - cfgov-media-object
 */
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 600px) {
   .media-object {
     position: relative;
     min-height: 9.9375em;
     padding-left: 11.5625em;
   }
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 600px) {
   .media-object_image-container {
     position: absolute;
     top: 0.25em;
@@ -3409,7 +3409,7 @@ img {
 .media-object_image {
   margin-bottom: 0.5em;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 600px) {
   .media-object_image {
     display: block;
     width: 290px;
