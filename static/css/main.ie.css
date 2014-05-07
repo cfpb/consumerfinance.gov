@@ -4516,6 +4516,10 @@ img {
 
 .post_featured-img {
   display: block;
+  margin: 1em 0;
+}
+
+.post_featured-img {
   margin: 1.875em 0;
 }
 

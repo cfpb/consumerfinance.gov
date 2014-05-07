@@ -145,7 +145,10 @@
 
 .post_featured-img {
     display: block;
-    margin: unit(30px / @base-font-size-px, em) 0;
+    margin: unit(16px / @base-font-size-px, em) 0;
+    @media @respond-to-medium-screens-min {
+        margin: unit(30px / @base-font-size-px, em) 0;
+    }
 }
 
 .post_summary {
