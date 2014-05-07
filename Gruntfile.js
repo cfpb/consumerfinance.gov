@@ -308,7 +308,7 @@ module.exports = function(grunt) {
   function dynamicTopdocTasks() {
     var topdoc = {};
     var subtasks = [
-      'content-blocks',
+      'blog-docs',
       'media-object',
       'meta',
       'misc',
