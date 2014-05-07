@@ -3567,11 +3567,11 @@ img {
   patterns:
     - name: Default header slug
       markup: |
-        <div class="header-slug">
-            <h2 class="header-slug_inner">
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
                 Blog summary
-            </h2>
-        </div>
+            </span>
+        </h2>
       codenotes:
         - |
           Structural cheat sheet:
@@ -3582,9 +3582,6 @@ img {
     - cfgov-meta
 */
 .header-slug {
-  border-top: 1px solid #e3e4e5;
-}
-.header-slug_inner {
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-weight: normal;
@@ -3596,14 +3593,17 @@ img {
   margin-bottom: 0.35714285714285715em;
   font-size: 0.875em;
   line-height: 1.5714285714285714;
+  margin-bottom: 1.2142857142857142em;
+  border-top: 1px solid #e3e4e5;
+}
+.lt-ie9 .header-slug {
+  font-weight: normal !important;
+}
+.header-slug_inner {
   display: inline-block;
   padding-top: 0.2857142857142857em;
   margin-top: -3px;
-  margin-bottom: 1.2142857142857142em;
   border-top: 5px solid #2cb34a;
-}
-.lt-ie9 .header-slug_inner {
-  font-weight: normal !important;
 }
 /* topdoc
   name: Meta header
@@ -3823,11 +3823,11 @@ img {
     - name: Line container with a 'pullup' (example 1)
       markup: |
         <div class="line-container">
-            <div class="line-container_pullup header-slug">
-                <h2 class="header-slug_inner">
+            <h2 class="line-container_pullup header-slug">
+                <span class="header-slug_inner">
                     Blog summary
-                </h2>
-            </div>
+                </span>
+            </h2>
             <div class="line-container_body">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
