@@ -3663,6 +3663,65 @@ ul {
   background: #f8f8f8;
 }
 
+.demo-logo {
+  margin: 26px 0;
+}
+
+.demo-spaced {
+  margin-bottom: 1.625em;
+}
+
+.demo-cols {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.demo-col-12 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .demo-col-12 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .demo-col-12 {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.demo-col-6 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .demo-col-6 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .demo-col-6 {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
 /* Base styles
    ========================================================================== */
 
