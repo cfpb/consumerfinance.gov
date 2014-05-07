@@ -3,23 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>cfgov-refresh / content-blocks docs</title>
+    <title>cfgov-refresh / blog-docs docs</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
     <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
     <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
   </head>
   <body>
     <div class="docs-masthead">
-      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / content-blocks docs
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / blog-docs docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
-    <div id="blog" class="docs-component">
-      <h2 class="docs-component_header"><span>Blog</span></h2>
+    <div id="slugs" class="docs-component">
+      <h2 class="docs-component_header"><span>Slugs</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Category slugs</h3>
+          <h3 class="docs-pattern_header">Blog slugs</h3>
           <section class="docs-pattern_pattern">
 <a href="#" class="category-slug">
     <i class="cf-icon cf-icon-help"></i>
@@ -61,6 +61,11 @@
             </ul>
           </footer>
         </div>
+      </div>
+    </div>
+    <div id="post-previews" class="docs-component">
+      <h2 class="docs-component_header"><span>Post previews</span></h2>
+      <div class="docs-patterns">
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Post preview (no image)</h3>
           <section class="docs-pattern_pattern">
@@ -106,9 +111,9 @@
     .meta-header_right.date
     .meta-header_left.category-slug
   .summary
-    .sumary_header
-    .sumary_text
-    .sumary_byline</code></pre>
+    .summary_header
+    .summary_text
+    .summary_byline</code></pre>
               </li>
             </ul>
           </footer>
@@ -182,24 +187,22 @@
                 <pre class="docs-code"><code>.post-preview
   .meta-header
     .meta-header_right.date
-    .meta-header_left.slug
+    .meta-header_left.category-slug
   .media-object
     .media-object_image-container
     .media-object_text-container.summary
-      .sumary_header
-      .sumary_text
-      .sumary_byline</code></pre>
+      .summary_header
+      .summary_text
+      .summary_byline</code></pre>
               </li>
             </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.post-preview + .post-preview {
+        <pre class="docs-code"><code data-language="css">.post-preview + .post-preview {
   margin-top: 50px;
-}
-</code></pre>
+}</code></pre>
       </div>
     </div>
     <script src="static/docs/main.min.js"></script>

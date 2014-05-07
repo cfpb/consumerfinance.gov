@@ -15,6 +15,48 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / utilities docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="utility-classes" class="docs-component">
+      <h2 class="docs-component_header"><span>Utility classes</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Visually hidden</h3>
+          <section class="docs-pattern_pattern">
+<h1>
+    <a href="#">
+        <i class="cf-icon cf-icon-twitter-square"></i>
+        <span class="visually-hidden">Email</span>
+    </a>
+</h1>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1&gt;
+    &lt;a href=&quot;#&quot;&gt;
+        &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
+        &lt;span class=&quot;visually-hidden&quot;&gt;Email&lt;/span&gt;
+    &lt;/a&gt;
+&lt;/h1&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Use this class to hide something from view while keeping it accessible to screen readers.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="less-mixins" class="docs-component">
       <h2 class="docs-component_header"><span>Less mixins</span></h2>
       <div class="docs-patterns">

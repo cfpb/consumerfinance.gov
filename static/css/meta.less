@@ -47,6 +47,41 @@
 
 
 /* topdoc
+  name: Header slug
+  family: cfgov-meta
+  patterns:
+    - name: Default header slug
+      markup: |
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Blog summary
+            </span>
+        </h2>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .header-slug
+            .header-slug_inner
+  tags:
+    - cfgov-meta
+*/
+
+.header-slug {
+    .h5();
+    margin-bottom: unit(17px / @font-size, em);
+    border-top: 1px solid @gray-20;
+
+    &_inner {
+        display: inline-block;
+        padding-top: unit(4px / @font-size, em);
+        margin-top: -3px;
+        border-top: 5px solid @green;
+    }
+}
+
+
+/* topdoc
   name: Meta header
   family: cfgov-meta
   patterns:

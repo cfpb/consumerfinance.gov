@@ -75,7 +75,6 @@ module.exports = function(grunt) {
       },
       ie8: {
         options: {
-          banner: '<%= banner.cfpb %>',
           paths: ['static'],
         },
         files: {
@@ -309,9 +308,11 @@ module.exports = function(grunt) {
   function dynamicTopdocTasks() {
     var topdoc = {};
     var subtasks = [
-      'content-blocks',
-      'meta',
+      'blog-docs',
       'media-object',
+      'meta',
+      'misc',
+      'post',
       'summary',
       'utilities',
       'vars'

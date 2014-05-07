@@ -22,8 +22,8 @@
     ==================
 -->
 
-    <title>cfgov-refresh demo</title>
-    <meta name="description" content="Prototyping for the consumerfinance.gov refresh">
+    <title>cfgov-refresh demos and docs</title>
+    <meta name="description" content="Demos and docs for the consumerfinance.gov refresh">
 
     <!-- Explicit favicon link needed for testing. Remove for production. -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -63,35 +63,118 @@
 
 <body>
 
-    <div class="wrapper">
+    <header class="header" role="banner">
+        <div class="wrapper">
+            <h1 class="demo-col-12 demo-logo">cfgov-refresh demos and docs</h1>
+        </div>
+    </header><!-- END .header -->
 
-        <h1>cfgov-refresh demo</h1>
+    <main class="content content__2-1 content__bleedbar" id="main" role="main">
+        <div class="wrapper content_wrapper">
+            <section class="content_main">
 
-        <h2>Table of Contents</h2>
+                <section class="demo-cols">
 
-        <h3>About us</h3>
-        <h4>Blog</h4>
-        <ul>
-            <li><a href="blog/landing.html">Blog landing page</a></li>
-            <li><a href="blog/entry.html">Blog entry page</a></li>
-        </ul>
-        <h4>Newsroom</h4>
-        <ul>
-            <li><a href="newsroom/landing.html">Newsroom landing page</a></li>
-            <li>Newsroom entry page (coming soon)</li>
-        </ul>
+                    <div class="demo-col-12 demo-spaced">
+                        <h2>Static page demos</h2>
+                    </div>
+                    <div class="demo-col-6 demo-spaced">
+                        <div class="meta-header">
+                            <a href="blog/landing.html" class="meta-header_left category-slug">
+                                Blog
+                            </a>
+                        </div>
+                        <h3><a href="blog/landing.html">Landing page</a></h3>
+                        <h3><a href="blog/post.html">Post</a></h3>
+                    </div>
+                    <div class="demo-col-6 demo-spaced">
+                        <div class="meta-header">
+                            <a href="newsroom/landing.html" class="meta-header_left category-slug">
+                                Newsroom
+                            </a>
+                        </div>
+                        <h3><a href="newsroom/landing.html">Landing page</a></h3>
+                    </div>
 
-    </div><!-- END .wrapper -->
+                </section>
 
-    <!--
-        ============
-        BODY SCRIPTS
-        ============
-        The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
-        specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
-    -->
+            </section><!-- END .content_main -->
+            <aside class="content_sidebar">
 
-    <script src="static/js/main.min.js"></script>
+                <div class="demo-spaced">
+                    <h2>Documentation</h2>
+                </div>
+                <div class="demo-spaced">
+                    <div class="header-slug">
+                        <h3 class="header-slug_inner">
+                            Section docs
+                        </h3>
+                    </div>
+                    <ul class="horizontal-list">
+                        <li class="horizontal-list_item">
+                            <a href="docs/blog-docs/">Blog docs</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="demo-spaced">
+                    <div class="header-slug">
+                        <h3 class="header-slug_inner">
+                            Global patterns
+                        </h3>
+                    </div>
+                    <ul class="horizontal-list">
+                        <li class="horizontal-list_item">
+                            <a href="docs/media-object/">Media object</a>
+                        </li>
+                        <li class="horizontal-list_item">
+                            <a href="docs/meta/">Meta</a>
+                        </li>
+                        <li class="horizontal-list_item">
+                            <a href="docs/misc/">Misc</a>
+                        </li>
+                        <li class="horizontal-list_item">
+                            <a href="docs/post/">Post</a>
+                        </li>
+                        <li class="horizontal-list_item">
+                            <a href="docs/summary/">Summary</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="demo-spaced">
+                    <div class="header-slug">
+                        <h3 class="header-slug_inner">
+                            Less docs
+                        </h3>
+                    </div>
+                    <ul class="horizontal-list">
+                        <li class="horizontal-list_item">
+                            <a href="docs/utilities/">Utilities</a>
+                        </li>
+                        <li class="horizontal-list_item">
+                            <a href="docs/vars/">Vars</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </aside><!-- END .content_sidebar -->
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+    <footer class="footer" role="contentinfo">
+        <div class="wrapper">
+            <a href="https://github.com/cfpb/cfgov-refresh">View the GitHub repository</a>
+        </div>
+    </footer><!-- END .footer -->
+
+<!--
+    ============
+    BODY SCRIPTS
+    ============
+    The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
+    specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
+-->
+
+<script src="static/js/main.min.js"></script>
 
 </body>
 
