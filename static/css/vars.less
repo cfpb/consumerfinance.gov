@@ -24,7 +24,7 @@
       codenotes:
         - "@respond-to-small-screens-min"
         - "@respond-to-small-screens-max"
-        - "@respond-to-medium-screens-min"
+        - "@media @respond-to-m-min"
         - "@respond-to-medium-screens-max"
         - "@respond-to-large-screens-min"
         - "@respond-to-large-screens-max"
@@ -34,7 +34,7 @@
     - name: "Usage"
       codenotes:
         - |
-            @media @respond-to-medium-screens-min {
+            @media @respond-to-m-min {
                 ...
             }
 
@@ -47,23 +47,27 @@
     - cfgov-vars
 */
 
-@extrasmall-screens-max:             unit(( 320px / @base-font-size-px), em);
-@small-screens-min:                  unit(( 321px / @base-font-size-px), em);
-@small-screens-max:                  unit(( 800px / @base-font-size-px), em);
-@medium-screens-min:                 unit(( 801px / @base-font-size-px), em);
-@medium-screens-max:                 unit(( 959px / @base-font-size-px), em);
-@large-screens-min:                  unit(( 960px / @base-font-size-px), em);
-@large-screens-max:                  unit((1199px / @base-font-size-px), em);
-@extralarge-screens-min:             unit((1200px / @base-font-size-px), em);
+@xs-max:  unit(( 320px / @base-font-size-px), em);
+@s-min:   unit(( 321px / @base-font-size-px), em);
+@s-max:   unit(( 599px / @base-font-size-px), em);
+@m-min:   unit(( 600px / @base-font-size-px), em);
+@m-max:   unit(( 800px / @base-font-size-px), em);
+@l-min:   unit(( 801px / @base-font-size-px), em);
+@l-max:   unit(( 960px / @base-font-size-px), em);
+@xl-min:  unit(( 961px / @base-font-size-px), em);
+@xl-max:  unit(( 1200px / @base-font-size-px), em);
+@xxl-min: unit(( 1201px / @base-font-size-px), em);
 
-@respond-to-extrasmall-screens-max:  ~"only all and (min-width: @{extrasmall-screens-max})";
-@respond-to-small-screens-min:       ~"only all and (min-width: @{small-screens-min})";
-@respond-to-small-screens-max:       ~"only all and (max-width: @{small-screens-max})";
-@respond-to-medium-screens-min:      ~"only all and (min-width: @{medium-screens-min})";
-@respond-to-medium-screens-max:      ~"only all and (max-width: @{medium-screens-max})";
-@respond-to-large-screens-min:       ~"only all and (min-width: @{large-screens-min})";
-@respond-to-large-screens-max:       ~"only all and (max-width: @{large-screens-max})";
-@respond-to-extralarge-screens-min:  ~"only all and (max-width: @{extralarge-screens-min})";
+@respond-to-xs-max:  ~"only all and (min-width: @{xs-max})";
+@respond-to-s-min:   ~"only all and (min-width: @{s-min})";
+@respond-to-s-max:   ~"only all and (max-width: @{s-max})";
+@respond-to-m-min:   ~"only all and (min-width: @{m-min})";
+@respond-to-m-max:   ~"only all and (max-width: @{m-max})";
+@respond-to-l-min:   ~"only all and (min-width: @{l-min})";
+@respond-to-l-max:   ~"only all and (max-width: @{l-max})";
+@respond-to-xl-min:  ~"only all and (min-width: @{xl-min})";
+@respond-to-xl-max:  ~"only all and (max-width: @{xl-max})";
+@respond-to-xxl-min: ~"only all and (max-width: @{xxl-min})";
 
 
 /* topdoc
