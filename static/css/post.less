@@ -1,0 +1,163 @@
+/* ==========================================================================
+   cfgov-refresh
+   cfgov-post
+   ========================================================================== */
+
+
+/* topdoc
+  name: Blog post
+  family: cfgov-post
+  patterns:
+    - name: Default post
+      markup: |
+        <article class="post">
+            <header>
+                <a href="#" class="post_slug category-slug">
+                    <i class="cf-icon cf-icon-help"></i>
+                    Announcements &amp; updates
+                </a>
+                <h1 class="post_header">
+                    A consumer-centered supervision program
+                </h1>
+                <div class="post_meta">
+                    <span class="post_byline">
+                        By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
+                    </span>
+                    <span class="post_date date">
+                        Mon 32, 3001
+                    </span>
+                </div>
+                <ul class="horizontal-list horizontal-list__share">
+                    <li class="horizontal-list_item">
+                        <a href="#">
+                            <i class="cf-icon cf-icon-email-social-square"></i>
+                            <span class="visually-hidden">Email</span>
+                        </a>
+                    </li>
+                    <li class="horizontal-list_item">
+                        <a href="#">
+                            <i class="cf-icon cf-icon-facebook-square"></i>
+                            <span class="visually-hidden">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="horizontal-list_item">
+                        <a href="#">
+                            <i class="cf-icon cf-icon-twitter-square"></i>
+                            <span class="visually-hidden">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="horizontal-list_item">
+                        <a href="#">
+                            <i class="cf-icon cf-icon-linkedin-square"></i>
+                            <span class="visually-hidden">LinkedIn</span>
+                        </a>
+                    </li>
+                </ul>
+                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
+                <div class="line-container">
+                    <div class="line-container_body">
+                        <p class="post_summary">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Quis architecto commodi cupiditate excepturi
+                            consequatur sequi quia consectetur est ea laborum
+                            saepe earum quidem a necessitatibus modi magni error
+                            ab suscipit.
+                        </p>
+                    </div>
+                </div>
+            </header>
+            <div class="post_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <section class="callout">
+                    <div class="demo-placeholder">
+                        More information placeholder
+                    </div>
+                </section>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+            </div>
+            <footer>
+                <div class="demo-placeholder">
+                    tags placeholder
+                </div>
+                <!-- see commented implementation on CFPB Open Tech-->
+            </footer>
+        </article>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .post
+            .post_slug
+            .post_header
+            .post_meta
+              .post_byline
+              .post_date
+            .post_share-link
+            .post_featured-img
+            .post_summary
+            .post_body
+  tags:
+    - cfgov-post
+*/
+
+.post_header {
+    .h2();
+    @media @respond-to-medium-screens-min {
+        .h1();
+    }
+}
+
+.post_meta {
+    margin-bottom: unit(18px / @base-font-size-px, em);
+}
+
+.post_byline {
+    .h4();
+}
+
+.post_featured-img {
+    display: block;
+    margin: unit(30px / @base-font-size-px, em) 0;
+}
+
+.post_summary {
+    .h3();
+}
+
+.post_body {
+    color: @darkgray;
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

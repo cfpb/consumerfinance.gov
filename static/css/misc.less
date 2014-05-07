@@ -1,0 +1,214 @@
+/* ==========================================================================
+   cfgov-refresh
+   misc
+   ========================================================================== */
+
+
+/* topdoc
+  name: Unstyled list
+  family: cfgov-misc
+  patterns:
+    - name: Default unstyled list
+      markup: |
+        <ul class="unstyled-list">
+            <li>
+                List item 1
+            </li>
+            <li>
+                List item 2
+            </li>
+            <li>
+                List item 3
+            </li>
+            <li>
+                List item 4
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+
+.unstyled-list {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+
+/* topdoc
+  name: Horizontal list
+  family: cfgov-misc
+  patterns:
+    - name: Default horizontal list
+      markup: |
+        <ul class="horizontal-list">
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-email-social-square"></i>
+            </li>
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-facebook-square"></i>
+            </li>
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-twitter-square"></i>
+            </li>
+            <li class="horizontal-list_item">
+                <i class="cf-icon cf-icon-linkedin-square"></i>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+
+
+.horizontal-list {
+    padding-left: 0;
+
+    &_item {
+        display: inline-block;
+
+        & + & {
+            // Assuming a natural space of 4px between inline block items
+            // then the space between would be 8px (4px natural + 4px added).
+            margin-left: unit(4px / @base-font-size-px, em);
+        }
+    }
+}
+
+
+/* topdoc
+  name: Horizontal share list
+  family: cfgov-misc
+  patterns:
+    - name: Default horizontal share-list
+      markup: |
+        <ul class="horizontal-list horizontal-list__share">
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-email-social-square"></i>
+                </a>
+            </li>
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-facebook-square"></i>
+                </a>
+            </li>
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-twitter-square"></i>
+                </a>
+            </li>
+            <li class="horizontal-list_item">
+                <a href="#">
+                    <i class="cf-icon cf-icon-linkedin-square"></i>
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+
+
+.horizontal-list__share {
+
+    .horizontal-list_item {
+        line-height: 1;
+
+        a {
+            .u-unstyled-link();
+            color: @darkgray;
+            font-size: unit(26px / @base-font-size-px, em);
+        }
+    }
+}
+
+
+/* topdoc
+  name: Line container
+  family: cfgov-misc
+  patterns:
+    - name: Basic line container
+      markup: |
+        <div class="line-container">
+            <div class="line-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is a light border above and below me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_body
+    - name: Line container with a 'pullup' (example 1)
+      markup: |
+        <div class="line-container">
+            <h2 class="line-container_pullup header-slug">
+                <span class="header-slug_inner">
+                    Blog summary
+                </span>
+            </h2>
+            <div class="line-container_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_pullup
+            .line-container_body
+      notes:
+        - "The 'pullup' allows you to pull an element up flush against the top
+          of a .line-container."
+        - ".line-container_pullup works well with a .header-slug but it can be
+          used with other patterns too, like the image example below."
+    - name: Line container with a 'pullup' (example 2)
+      markup: |
+        <div class="line-container">
+            <p class="line-container_pullup">
+                <img src="http://placekitten.com/700/200" alt="">
+            </p>
+            <div class="line-container_body">
+                <h2>
+                    Photo heading
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+.line-container {
+    padding: unit(26px / @base-font-size-px, em) 0 0;
+    margin: 0 0 unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-20;
+    border-bottom: 1px solid @gray-20;
+
+    .line-container_pullup {
+        margin-top: -27px;
+    }
+
+    .line-container_body {
+        margin-bottom: unit(26px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
