@@ -3349,6 +3349,10 @@ img {
         - .u-unstyled-link();
     - codenotes:
         - .u-flexible-image();
+    - codenotes:
+        - .u-inline-block();
+      notes:
+        - "Adds a .lt-ie8 class to hack inline-block for IE 7 and below."
   tags:
     - cfgov-utilities
 */
@@ -3732,6 +3736,9 @@ img {
 }
 .horizontal-list_item {
   display: inline-block;
+}
+.lt-ie8 .horizontal-list_item {
+  display: inline;
 }
 .horizontal-list_item + .horizontal-list_item {
   margin-left: 0.25em;
