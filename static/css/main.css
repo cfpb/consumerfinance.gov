@@ -3190,7 +3190,7 @@ ul {
   font-style: normal;
   font-weight: normal;
 }
-@media only all and (max-width: 50em) {
+@media only all and (max-width: 37.5em) {
   .demo-banner {
     font-size: 0.875em;
   }
@@ -3210,7 +3210,7 @@ ul {
 .demo-banner_back-link:active {
   color: #babbbd;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 37.5625em) {
   .demo-banner_back-link {
     padding: 0;
     float: left;
@@ -3224,7 +3224,7 @@ ul {
 .lt-ie9 .demo-banner b {
   font-weight: normal !important;
 }
-@media only all and (max-width: 50em) {
+@media only all and (max-width: 37.5em) {
   .demo-banner b {
     display: block;
   }
@@ -3380,7 +3380,7 @@ img {
       codenotes:
         - "@respond-to-small-screens-min"
         - "@respond-to-small-screens-max"
-        - "@respond-to-medium-screens-min"
+        - "@media @respond-to-m-min"
         - "@respond-to-medium-screens-max"
         - "@respond-to-large-screens-min"
         - "@respond-to-large-screens-max"
@@ -3390,7 +3390,7 @@ img {
     - name: "Usage"
       codenotes:
         - |
-            @media @respond-to-medium-screens-min {
+            @media @respond-to-m-min {
                 ...
             }
 
@@ -3440,14 +3440,14 @@ img {
   tags:
     - cfgov-media-object
 */
-@media only all and (min-width: 600px) {
+@media only all and (min-width: 37.5625em) {
   .media-object {
     position: relative;
     min-height: 9.9375em;
     padding-left: 11.5625em;
   }
 }
-@media only all and (min-width: 600px) {
+@media only all and (min-width: 37.5625em) {
   .media-object_image-container {
     position: absolute;
     top: 0.25em;
@@ -3459,7 +3459,7 @@ img {
 .media-object_image {
   margin-bottom: 0.5em;
 }
-@media only all and (min-width: 600px) {
+@media only all and (min-width: 37.5625em) {
   .media-object_image {
     display: block;
     width: 290px;
@@ -4022,7 +4022,7 @@ img {
   font-size: 1.625em;
   line-height: 1.2692307692307692;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 37.5625em) {
   .post_header {
     margin-top: 0;
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -4054,7 +4054,7 @@ img {
   display: block;
   margin: 1em 0;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 20em) {
   .post_featured-img {
     margin: 1.875em 0;
   }
@@ -4111,7 +4111,7 @@ img {
   font-size: 1.375em;
   line-height: 1.2727272727272727;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 37.5625em) {
   .summary_header {
     margin-top: 0;
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -4281,7 +4281,7 @@ img {
 .footer .demo-placeholder {
   margin-left: 15px;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 37.5625em) {
   .content__1-3 .content_main {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -4368,7 +4368,7 @@ img {
   margin: 0 -15px;
   background: #f1f2f2;
 }
-@media only all and (min-width: 50.0625em) {
+@media only all and (min-width: 37.5625em) {
   .content__bleedbar {
     overflow: hidden;
   }
@@ -4400,7 +4400,7 @@ img {
     left: 75%;
   }
 }
-@media only all and (min-width: 600px) {
+@media only all and (min-width: 37.5625em) {
   .wrapper {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
