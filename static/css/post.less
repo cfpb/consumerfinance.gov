@@ -130,7 +130,7 @@
 
 .post_header {
     .h2();
-    @media @respond-to-medium-screens-min {
+    @media @respond-to-m-min {
         .h1();
     }
 }
@@ -145,7 +145,10 @@
 
 .post_featured-img {
     display: block;
-    margin: unit(30px / @base-font-size-px, em) 0;
+    margin: unit(16px / @base-font-size-px, em) 0;
+    @media @respond-to-xs-max {
+        margin: unit(30px / @base-font-size-px, em) 0;
+    }
 }
 
 .post_summary {

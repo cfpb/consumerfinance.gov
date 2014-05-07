@@ -54,7 +54,7 @@ img {
     margin-left: (@gutter-width / 2);
 }
 
-@media @respond-to-medium-screens-min {
+@media @respond-to-m-min {
 
     // Set up standard content area layouts
     .content {
@@ -90,7 +90,7 @@ img {
         background: @gray-10;
     }
 
-    @media @respond-to-medium-screens-min {
+    @media @respond-to-m-min {
 
         // Prevent pseudoelement background from creating horizontal scrollbar.
         overflow: hidden;
@@ -140,7 +140,7 @@ img {
 // STUFF THAT SHOULD PROBABLY MOVE TO CF-LAYOUT
 
 .wrapper {
-    @media only all and (min-width: 600px) {
+    @media @respond-to-m-min {
         .wrapper();
     }
 }
