@@ -4607,12 +4607,12 @@ img {
 
 /* ==========================================================================
    cfgov-refresh
-   cfgov-content-blocks
+   cfgov-blog-docs
    ========================================================================== */
 
 /* topdoc
   name: Slugs
-  family: cfgov-content-blocks
+  family: cfgov-blog-docs
   patterns:
     - name: Blog slugs
       markup: |
@@ -4635,12 +4635,12 @@ img {
       notes:
         - "Official icons are still being developed, hence the ?."
   tags:
-    - cfgov-content-blocks
+    - cfgov-blog-docs
 */
 
 /* topdoc
   name: Post previews
-  family: cfgov-content-blocks
+  family: cfgov-blog-docs
   patterns:
     - name: Post preview (no image)
       codenotes:
@@ -4714,7 +4714,7 @@ img {
             </div>
         </article>
   tags:
-    - cfgov-content-blocks
+    - cfgov-blog-docs
 */
 
 .post-preview + .post-preview {
