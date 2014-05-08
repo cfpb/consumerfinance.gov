@@ -72,16 +72,16 @@
           <section class="docs-pattern_pattern">
 <ul class="horizontal-list">
     <li class="horizontal-list_item">
-        <i class="cf-icon cf-icon-email-social-square"></i>
+        <a href="#">List item 1</a>
     </li>
     <li class="horizontal-list_item">
-        <i class="cf-icon cf-icon-facebook-square"></i>
+        <a href="#">List item 2</a>
     </li>
     <li class="horizontal-list_item">
-        <i class="cf-icon cf-icon-twitter-square"></i>
+        <a href="#">List item 3</a>
     </li>
     <li class="horizontal-list_item">
-        <i class="cf-icon cf-icon-linkedin-square"></i>
+        <a href="#">List item 4</a>
     </li>
 </ul>
 
@@ -89,18 +89,26 @@
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;horizontal-list&quot;&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;#&quot;&gt;List item 1&lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;i class=&quot;cf-icon cf-icon-facebook-square&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;#&quot;&gt;List item 2&lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;#&quot;&gt;List item 3&lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;i class=&quot;cf-icon cf-icon-linkedin-square&quot;&gt;&lt;/i&gt;
+        &lt;a href=&quot;#&quot;&gt;List item 4&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.horizontal-list
+  .horizontal-list_item</code></pre>
+              </li>
+            </ul>
           </footer>
         </div>
       </div>
@@ -134,21 +142,33 @@
     <li class="horizontal-list_item">
         <a href="#">
             <i class="cf-icon cf-icon-email-social-square"></i>
+            <span class="visually-hidden">
+                Share by email
+            </span>
         </a>
     </li>
     <li class="horizontal-list_item">
         <a href="#">
             <i class="cf-icon cf-icon-facebook-square"></i>
+            <span class="visually-hidden">
+                Share on Facebook
+            </span>
         </a>
     </li>
     <li class="horizontal-list_item">
         <a href="#">
             <i class="cf-icon cf-icon-twitter-square"></i>
+            <span class="visually-hidden">
+                Share on Twitter
+            </span>
         </a>
     </li>
     <li class="horizontal-list_item">
         <a href="#">
             <i class="cf-icon cf-icon-linkedin-square"></i>
+            <span class="visually-hidden">
+                Share on LinkedIn
+            </span>
         </a>
     </li>
 </ul>
@@ -159,30 +179,57 @@
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
         &lt;a href=&quot;#&quot;&gt;
             &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
+            &lt;span class=&quot;visually-hidden&quot;&gt;
+                Share by email
+            &lt;/span&gt;
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
         &lt;a href=&quot;#&quot;&gt;
             &lt;i class=&quot;cf-icon cf-icon-facebook-square&quot;&gt;&lt;/i&gt;
+            &lt;span class=&quot;visually-hidden&quot;&gt;
+                Share on Facebook
+            &lt;/span&gt;
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
         &lt;a href=&quot;#&quot;&gt;
             &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
+            &lt;span class=&quot;visually-hidden&quot;&gt;
+                Share on Twitter
+            &lt;/span&gt;
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;horizontal-list_item&quot;&gt;
         &lt;a href=&quot;#&quot;&gt;
             &lt;i class=&quot;cf-icon cf-icon-linkedin-square&quot;&gt;&lt;/i&gt;
+            &lt;span class=&quot;visually-hidden&quot;&gt;
+                Share on LinkedIn
+            &lt;/span&gt;
         &lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.horizontal-list.horizontal-list__share
+  .horizontal-list_item
+    a
+      .cf-icon
+      .visually-hidden (accessible text goes here)</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Text for screenreaders is added with the .visually-hidden element.</li>
+            </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .horizontal-list__share .horizontal-list_item {
+  font-size: 1.625em;
   line-height: 1;
 }
 
@@ -190,7 +237,6 @@
   color: #101820;
   border-bottom-width: 0;
   color: #43484e;
-  font-size: 1.625em;
 }
 
 .horizontal-list__share .horizontal-list_item a:visited,
