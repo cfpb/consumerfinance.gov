@@ -751,9 +751,9 @@ input[type="radio"] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 0.6428571428571429em 1em;
+  padding: 0.64285714em 1em;
   border: 0;
-  border-radius: 0.2857142857142857em;
+  border-radius: 0.28571429em;
   margin: 0;
   vertical-align: middle;
   background-color: #0072ce;
@@ -788,7 +788,7 @@ input[type="radio"] {
 }
 
 .btn + .btn {
-  margin-left: 0.42857142857142855em;
+  margin-left: 0.42857143em;
 }
 
 button.btn::-moz-focus-inner,
@@ -803,8 +803,8 @@ input.btn::-moz-focus-inner {
 .lt-ie8 button.btn,
 .lt-ie8 input.btn {
   overflow: visible;
-  padding-top: 0.5142857142857143em;
-  padding-bottom: 0.5142857142857143em;
+  padding-top: 0.51428571em;
+  padding-bottom: 0.51428571em;
 }
 
 /* topdoc
@@ -951,18 +951,18 @@ input.btn::-moz-focus-inner {
 .btn-super,
 .btn-super:link,
 .btn-super:visited {
-  padding: 0.8333333333333334em 1.6666666666666667em;
+  padding: 0.83333333em 1.66666667em;
   font-size: 1.125em;
 }
 
 .btn-super + .btn-super {
-  margin-left: 0.3333333333333333em;
+  margin-left: 0.33333333em;
 }
 
 .lt-ie8 button.btn-super,
 .lt-ie8 input.btn-super {
-  padding-top: 0.6666666666666666em;
-  padding-bottom: 0.6666666666666666em;
+  padding-top: 0.66666667em;
+  padding-bottom: 0.66666667em;
 }
 
 /* topdoc
@@ -1078,7 +1078,7 @@ input.btn::-moz-focus-inner {
 }
 
 .btn-group .btn + .btn {
-  margin-left: -0.21428571428571427em;
+  margin-left: -0.21428571em;
 }
 
 .btn-group .btn + .btn:not(:last-child) {
@@ -1091,7 +1091,7 @@ input.btn::-moz-focus-inner {
 }
 
 .btn-group .btn-super + .btn-super {
-  margin-left: -0.16666666666666666em;
+  margin-left: -0.16666667em;
 }
 
 /* topdoc
@@ -1159,8 +1159,8 @@ input.btn::-moz-focus-inner {
 }
 
 .btn-compound-action.btn-super {
-  padding-left: 1.2222222222222223em;
-  padding-right: 1.2222222222222223em;
+  padding-left: 1.22222222em;
+  padding-right: 1.22222222em;
 }
 
 /* topdoc
@@ -1200,7 +1200,7 @@ input.btn::-moz-focus-inner {
   padding: 0;
   border-bottom: 1px dotted #0072ce;
   border-radius: 0;
-  margin: 0.6428571428571429em 0;
+  margin: 0.64285714em 0;
   background-color: transparent;
   color: #0072ce;
 }
@@ -1360,7 +1360,7 @@ input.btn::-moz-focus-inner {
   font-style: normal;
   font-weight: normal;
   font-size: 0.875em;
-  line-height: 1.5714285714285714;
+  line-height: 1.57142857;
 }
 
 .expandable-content {
@@ -3078,8 +3078,8 @@ textarea {
   /* We need enough room for three digits and the number spinners for type="number" inputs */
   width: 3em;
   /* Resets the padding back to 4px now that the font-size is 14px */
-  padding: 0.2857142857142857em;
-  margin: 0 0.2857142857142857em;
+  padding: 0.28571429em;
+  margin: 0 0.28571429em;
   /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
   font-size: 0.875em;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
@@ -3290,23 +3290,23 @@ h6,
 
 h1,
 .h1 {
-  margin-bottom: 0.47058823529411764em;
+  margin-bottom: 0.47058824em;
   font-size: 2.125em;
-  line-height: 1.2941176470588236;
+  line-height: 1.29411765;
 }
 
 h2,
 .h2 {
-  margin-bottom: 0.3076923076923077em;
+  margin-bottom: 0.30769231em;
   font-size: 1.625em;
-  line-height: 1.2692307692307692;
+  line-height: 1.26923077;
 }
 
 h3,
 .h3 {
-  margin-bottom: 0.22727272727272727em;
+  margin-bottom: 0.22727273em;
   font-size: 1.375em;
-  line-height: 1.2727272727272727;
+  line-height: 1.27272727;
 }
 
 h4,
@@ -3314,9 +3314,9 @@ h4,
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 0.2777777777777778em;
+  margin-bottom: 0.27777778em;
   font-size: 1.125em;
-  line-height: 1.2222222222222223;
+  line-height: 1.22222222;
 }
 
 .lt-ie9 h4,
@@ -3344,16 +3344,16 @@ h6,
 
 h5,
 .h5 {
-  margin-bottom: 0.35714285714285715em;
+  margin-bottom: 0.35714286em;
   font-size: 0.875em;
-  line-height: 1.5714285714285714;
+  line-height: 1.57142857;
 }
 
 h6,
 .h6 {
-  margin-bottom: 0.4166666666666667em;
+  margin-bottom: 0.41666667em;
   font-size: 0.75em;
-  line-height: 1.8333333333333333;
+  line-height: 1.83333333;
 }
 
 .superheader {
@@ -3651,7 +3651,7 @@ ul {
 
 .demo-placeholder {
   display: inline-block;
-  padding: 0.5714285714285714em 0.8571428571428571em;
+  padding: 0.57142857em 0.85714286em;
   margin: 3em 0;
   color: #75787b;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -3695,6 +3695,28 @@ ul {
 }
 
 .lt-ie8 .demo-col-12 {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.demo-col-6 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .demo-col-6 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .demo-col-6 {
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -3945,9 +3967,9 @@ img {
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 0.35714285714285715em;
+  margin-bottom: 0.35714286em;
   font-size: 0.875em;
-  line-height: 1.5714285714285714;
+  line-height: 1.57142857;
   color: #75787b;
   white-space: nowrap;
 }
@@ -3979,9 +4001,9 @@ img {
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 0.2777777777777778em;
+  margin-bottom: 0.27777778em;
   font-size: 1.125em;
-  line-height: 1.2222222222222223;
+  line-height: 1.22222222;
   color: #101820;
   border-bottom-width: 0;
 }
@@ -4048,10 +4070,10 @@ img {
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 0.35714285714285715em;
+  margin-bottom: 0.35714286em;
   font-size: 0.875em;
-  line-height: 1.5714285714285714;
-  margin-bottom: 1.2142857142857142em;
+  line-height: 1.57142857;
+  margin-bottom: 1.21428571em;
   border-top: 1px solid #e3e4e5;
 }
 
@@ -4061,7 +4083,7 @@ img {
 
 .header-slug_inner {
   display: inline-block;
-  padding-top: 0.2857142857142857em;
+  padding-top: 0.28571429em;
   margin-top: -3px;
   border-top: 5px solid #2cb34a;
 }
@@ -4538,9 +4560,9 @@ img {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
-  margin-bottom: 0.3076923076923077em;
+  margin-bottom: 0.30769231em;
   font-size: 1.625em;
-  line-height: 1.2692307692307692;
+  line-height: 1.26923077;
 }
 
 .post_header {
@@ -4548,9 +4570,9 @@ img {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
-  margin-bottom: 0.47058823529411764em;
+  margin-bottom: 0.47058824em;
   font-size: 2.125em;
-  line-height: 1.2941176470588236;
+  line-height: 1.29411765;
 }
 
 .post_meta {
@@ -4564,9 +4586,9 @@ img {
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 0.2777777777777778em;
+  margin-bottom: 0.27777778em;
   font-size: 1.125em;
-  line-height: 1.2222222222222223;
+  line-height: 1.22222222;
 }
 
 .lt-ie9 .post_byline {
@@ -4578,18 +4600,14 @@ img {
   margin: 1em 0;
 }
 
-.post_featured-img {
-  margin: 1.875em 0;
-}
-
 .post_summary {
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
-  margin-bottom: 0.22727272727272727em;
+  margin-bottom: 0.22727273em;
   font-size: 1.375em;
-  line-height: 1.2727272727272727;
+  line-height: 1.27272727;
 }
 
 .post_body {
@@ -4635,9 +4653,9 @@ img {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
-  margin-bottom: 0.22727272727272727em;
+  margin-bottom: 0.22727273em;
   font-size: 1.375em;
-  line-height: 1.2727272727272727;
+  line-height: 1.27272727;
 }
 
 .summary_header {
@@ -4645,9 +4663,9 @@ img {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
-  margin-bottom: 0.3076923076923077em;
+  margin-bottom: 0.30769231em;
   font-size: 1.625em;
-  line-height: 1.2692307692307692;
+  line-height: 1.26923077;
 }
 
 .summary_text {
@@ -4878,7 +4896,7 @@ img {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 66.66666666666666%;
+  width: 66.66666667%;
 }
 
 .ie .content__2-1 .content_main {
@@ -4900,7 +4918,7 @@ img {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 33.33333333333333%;
+  width: 33.33333333%;
 }
 
 .ie .content__2-1 .content_sidebar {
