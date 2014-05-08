@@ -3352,7 +3352,7 @@ img {
     - codenotes:
         - .u-inline-block();
       notes:
-        - "Adds a .lt-ie8 class to hack inline-block for IE 7 and below."
+        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
   tags:
     - cfgov-utilities
 */
