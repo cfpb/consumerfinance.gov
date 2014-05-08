@@ -9,9 +9,10 @@
     background: @darkgray;
     color: @white;
     .webfont-regular();
-    @media @respond-to-s-max {
+
+    .u-respond-to-max(599px, {
         font-size: 0.875em;
-    }
+    });
 }
 
 .demo-banner_back-link {
@@ -30,18 +31,18 @@
         color: @gray-50;
     }
 
-    @media @respond-to-m-min {
+    .u-respond-to-min(600px, {
         padding: 0;
         float: left;
-    }
+    });
 }
 
 .demo-banner b {
     .webfont-medium();
 
-    @media @respond-to-s-max {
+    .u-respond-to-max(599px, {
         display: block;
-    }
+    });
 }
 
 .demo-placeholder {
@@ -76,5 +77,8 @@
 }
 
 .demo-col-6 {
-    .column(6);
+    .column(12);
+    .u-respond-to-min(480px, {
+        .column(6);
+    });
 }

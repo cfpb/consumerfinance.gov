@@ -47,27 +47,27 @@
     - cfgov-vars
 */
 
-@xs-max:  unit(( 320px / @base-font-size-px), em);
-@s-min:   unit(( 321px / @base-font-size-px), em);
-@s-max:   unit(( 599px / @base-font-size-px), em);
-@m-min:   unit(( 600px / @base-font-size-px), em);
-@m-max:   unit(( 800px / @base-font-size-px), em);
-@l-min:   unit(( 801px / @base-font-size-px), em);
-@l-max:   unit(( 960px / @base-font-size-px), em);
-@xl-min:  unit(( 961px / @base-font-size-px), em);
-@xl-max:  unit(( 1200px / @base-font-size-px), em);
-@xxl-min: unit(( 1201px / @base-font-size-px), em);
+.u-respond-to-min(@bp, @rules) {
+    @ems: unit((@bp / @base-font-size-px), em);
+    @media screen and (min-width: @ems) {
+        @rules();
+    }
+}
 
-@respond-to-xs-max:  ~"only all and (min-width: @{xs-max})";
-@respond-to-s-min:   ~"only all and (min-width: @{s-min})";
-@respond-to-s-max:   ~"only all and (max-width: @{s-max})";
-@respond-to-m-min:   ~"only all and (min-width: @{m-min})";
-@respond-to-m-max:   ~"only all and (max-width: @{m-max})";
-@respond-to-l-min:   ~"only all and (min-width: @{l-min})";
-@respond-to-l-max:   ~"only all and (max-width: @{l-max})";
-@respond-to-xl-min:  ~"only all and (min-width: @{xl-min})";
-@respond-to-xl-max:  ~"only all and (max-width: @{xl-max})";
-@respond-to-xxl-min: ~"only all and (max-width: @{xxl-min})";
+.u-respond-to-max(@bp, @rules) {
+    @ems: unit((@bp / @base-font-size-px), em);
+    @media screen and (max-width: @ems) {
+        @rules();
+    }
+}
+
+.u-respond-to-range(@bp1, @bp2, @rules) {
+    @ems1: unit((@bp1 / @base-font-size-px), em);
+    @ems2: unit((@bp2 / @base-font-size-px), em);
+    @media screen and (min-width: @ems1) and (max-width: @ems2) {
+        @rules();
+    }
+}
 
 
 /* topdoc
