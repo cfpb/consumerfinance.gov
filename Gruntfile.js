@@ -310,12 +310,12 @@ module.exports = function(grunt) {
     var subtasks = [
       'blog-docs',
       'media-object',
+      'media-queries',
       'meta',
       'misc',
       'post',
       'summary',
-      'utilities',
-      'vars'
+      'utilities'
     ];
     for (var i = 0; i < subtasks.length; i++) {
       var key = subtasks[i];

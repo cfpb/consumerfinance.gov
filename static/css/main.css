@@ -3167,7 +3167,7 @@ ul {
   font-style: normal;
   font-weight: normal;
 }
-@media screen and (max-width: 37.4375em) {
+@media only all and (max-width: 37.4375em) {
   .demo-banner {
     font-size: 0.875em;
   }
@@ -3187,7 +3187,7 @@ ul {
 .demo-banner_back-link:active {
   color: #babbbd;
 }
-@media screen and (min-width: 37.5em) {
+@media only all and (min-width: 37.5em) {
   .demo-banner_back-link {
     padding: 0;
     float: left;
@@ -3201,7 +3201,7 @@ ul {
 .lt-ie9 .demo-banner b {
   font-weight: normal !important;
 }
-@media screen and (max-width: 37.4375em) {
+@media only all and (max-width: 37.4375em) {
   .demo-banner b {
     display: block;
   }
@@ -3269,7 +3269,7 @@ ul {
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
-@media screen and (min-width: 30em) {
+@media only all and (min-width: 30em) {
   .demo-col-6 {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -3360,49 +3360,64 @@ img {
 */
 /* ==========================================================================
    cfgov-refresh
-   vars
+   media-queries
    ========================================================================== */
 /* topdoc
-  name: Media query vars
-  family: cfgov-vars
+  name: Media query mixins
+  family: cfgov-media-queries
   patterns:
-    - name: Size calculations
-      notes:
-        - "You shouldn't need to use these variables directly,
-          they're used to create the @respond-to vars which you should use instead."
+    - name: "min-width/max-width media queries"
       codenotes:
-        - "@small-screens-min"
-        - "@small-screens-max"
-        - "@medium-screens-min"
-        - "@medium-screens-max"
-        - "@large-screens-min"
-        - "@large-screens-max"
-        - "@extralarge-screens-min"
-    - name: Interpolated media type and expressions
-      codenotes:
-        - "@respond-to-small-screens-min"
-        - "@respond-to-small-screens-max"
-        - "@media @respond-to-m-min"
-        - "@respond-to-medium-screens-max"
-        - "@respond-to-large-screens-min"
-        - "@respond-to-large-screens-max"
-        - "@respond-to-extralarge-screens-min"
+        - ".u-respond-to-min(@bp, @rules)"
+        - ".u-respond-to-max(@bp, @rules)"
       notes:
-        - "Use these variables to easily target screen size ranges."
-    - name: "Usage"
+        - "@bp: the breakpoint size in pixels. It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query usage"
       codenotes:
         - |
-            @media @respond-to-m-min {
-                ...
-            }
+            .u-respond-to-min(768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
 
             Compiles to:
 
             @media only all and (min-width: 48em) {
-                ...
+                .title {
+                    font-size: 2em;
+                }
+            }
+    - name: "min-width/max-width media query range"
+      codenotes:
+        - ".u-respond-to-range(@bp1, @bp2, @rules)"
+      notes:
+        - "@bp1: the min-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@bp2: the max-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query range usage"
+      codenotes:
+        - |
+            .u-respond-to-range(320px, 768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
+
+            Compiles to:
+
+            @media only all and (min-width: 20em) and (max-width: 48em) {
+                .title {
+                    font-size: 2em;
+                }
             }
   tags:
-    - cfgov-vars
+    - cfgov-media-queries
 */
 /* topdoc
   name: EOF
@@ -3442,14 +3457,14 @@ img {
   tags:
     - cfgov-media-object
 */
-@media screen and (min-width: 37.5em) {
+@media only all and (min-width: 37.5em) {
   .media-object {
     position: relative;
     min-height: 9.9375em;
     padding-left: 11.5625em;
   }
 }
-@media screen and (min-width: 37.5em) {
+@media only all and (min-width: 37.5em) {
   .media-object_image-container {
     position: absolute;
     top: 0.25em;
@@ -3461,7 +3476,7 @@ img {
 .media-object_image {
   margin-bottom: 0.5em;
 }
-@media screen and (min-width: 37.5em) {
+@media only all and (min-width: 37.5em) {
   .media-object_image {
     display: block;
     width: 290px;
@@ -4056,7 +4071,7 @@ img {
   font-size: 1.625em;
   line-height: 1.26923077;
 }
-@media screen and (min-width: 37.5em) {
+@media only all and (min-width: 37.5em) {
   .post_header {
     margin-top: 0;
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -4088,7 +4103,7 @@ img {
   display: block;
   margin: 1em 0;
 }
-@media screen and (max-width: 18.6875em) {
+@media only all and (max-width: 18.6875em) {
   .post_featured-img {
     margin: 1.875em 0;
   }
@@ -4145,7 +4160,7 @@ img {
   font-size: 1.375em;
   line-height: 1.27272727;
 }
-@media screen and (min-width: 37.5em) {
+@media only all and (min-width: 37.5em) {
   .summary_header {
     margin-top: 0;
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -4315,7 +4330,7 @@ img {
 .footer .demo-placeholder {
   margin-left: 15px;
 }
-@media screen and (min-width: 50.0625em) {
+@media only all and (min-width: 50.0625em) {
   .content__1-3 .content_main {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -4402,7 +4417,7 @@ img {
   margin: 0 -15px;
   background: #f1f2f2;
 }
-@media screen and (min-width: 50.0625em) {
+@media only all and (min-width: 50.0625em) {
   .content__bleedbar {
     overflow: hidden;
   }
@@ -4434,7 +4449,7 @@ img {
     left: 75%;
   }
 }
-@media screen and (min-width: 50.0625em) {
+@media only all and (min-width: 50.0625em) {
   .wrapper {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

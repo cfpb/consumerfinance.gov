@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / media-queries docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / media-queries docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="media-query-mixins" class="docs-component">
+      <h2 class="docs-component_header"><span>Media query mixins</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media queries</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-min(@bp, @rules)</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-max(@bp, @rules)</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>@bp: the breakpoint size in pixels. It will get converted into em's.</li>
+              <li>@rules: a CSS or Less ruleset. Note that it can contain the full set of Less features.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media query usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-min(768px, {
+    .title {
+        font-size: 2em;
+    }
+});
+
+Compiles to:
+
+@media only all and (min-width: 48em) {
+    .title {
+        font-size: 2em;
+    }
+}</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media query range</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-range(@bp1, @bp2, @rules)</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>@bp1: the min-width breakpoint size in pixels. It will get converted into em's.</li>
+              <li>@bp2: the max-width breakpoint size in pixels. It will get converted into em's.</li>
+              <li>@rules: a CSS or Less ruleset. Note that it can contain the full set of Less features.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media query range usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-range(320px, 768px, {
+    .title {
+        font-size: 2em;
+    }
+});
+
+Compiles to:
+
+@media only all and (min-width: 20em) and (max-width: 48em) {
+    .title {
+        font-size: 2em;
+    }
+}</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>
