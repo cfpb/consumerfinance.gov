@@ -4615,6 +4615,10 @@ img {
   margin: 1em 0;
 }
 
+.post_featured-img {
+  margin: 1.875em 0;
+}
+
 .post_summary {
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
