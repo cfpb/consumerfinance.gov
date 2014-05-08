@@ -13,7 +13,7 @@
         <h1>
             <a href="#">
                 <i class="cf-icon cf-icon-twitter-square"></i>
-                <span class="visually-hidden">Email</span>
+                <span class="visually-hidden">Share by email</span>
             </a>
         </h1>
       notes:
@@ -50,6 +50,10 @@
         - .u-unstyled-link();
     - codenotes:
         - .u-flexible-image();
+    - codenotes:
+        - .u-inline-block();
+      notes:
+        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
   tags:
     - cfgov-utilities
 */
@@ -88,6 +92,14 @@
         border-bottom-style: solid;
         border-bottom-color: @black;
         color: @black;
+    }
+}
+
+.u-inline-block() {
+    display: inline-block;
+    .lt-ie8 & {
+        // Hack inline-block into submission
+        display: inline;
     }
 }
 
