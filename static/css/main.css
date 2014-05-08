@@ -3365,6 +3365,10 @@ img {
 /* topdoc
   name: Media query mixins
   family: cfgov-media-queries
+  notes:
+    - "These mixins allow us to write consistent media queries using pixel
+      values, which are easier to remember. The mixins handle converting the
+      pixels into em's."
   patterns:
     - name: "min-width/max-width media queries"
       codenotes:
