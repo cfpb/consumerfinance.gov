@@ -3746,7 +3746,7 @@ img {
         <h1>
             <a href="#">
                 <i class="cf-icon cf-icon-twitter-square"></i>
-                <span class="visually-hidden">Email</span>
+                <span class="visually-hidden">Share by email</span>
             </a>
         </h1>
       notes:
@@ -3785,6 +3785,10 @@ img {
         - .u-unstyled-link();
     - codenotes:
         - .u-flexible-image();
+    - codenotes:
+        - .u-inline-block();
+      notes:
+        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
   tags:
     - cfgov-utilities
 */
@@ -4177,18 +4181,24 @@ img {
       markup: |
         <ul class="horizontal-list">
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-email-social-square"></i>
+                <a href="#">List item 1</a>
             </li>
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-facebook-square"></i>
+                <a href="#">List item 2</a>
             </li>
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-twitter-square"></i>
+                <a href="#">List item 3</a>
             </li>
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-linkedin-square"></i>
+                <a href="#">List item 4</a>
             </li>
         </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .horizontal-list
+            .horizontal-list_item
   tags:
     - cfgov-misc
 */
@@ -4199,6 +4209,10 @@ img {
 
 .horizontal-list_item {
   display: inline-block;
+}
+
+.lt-ie8 .horizontal-list_item {
+  display: inline;
 }
 
 .horizontal-list_item + .horizontal-list_item {
@@ -4215,29 +4229,53 @@ img {
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-email-social-square"></i>
+                    <span class="visually-hidden">
+                        Share by email
+                    </span>
                 </a>
             </li>
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-facebook-square"></i>
+                    <span class="visually-hidden">
+                        Share on Facebook
+                    </span>
                 </a>
             </li>
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-twitter-square"></i>
+                    <span class="visually-hidden">
+                        Share on Twitter
+                    </span>
                 </a>
             </li>
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-linkedin-square"></i>
+                    <span class="visually-hidden">
+                        Share on LinkedIn
+                    </span>
                 </a>
             </li>
         </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .horizontal-list.horizontal-list__share
+            .horizontal-list_item
+              a
+                .cf-icon
+                .visually-hidden (accessible text goes here)
+      notes:
+        - "Text for screenreaders is added with the .visually-hidden element."
   tags:
     - cfgov-misc
 */
 
 .horizontal-list__share .horizontal-list_item {
+  font-size: 1.625em;
   line-height: 1;
 }
 
@@ -4245,7 +4283,6 @@ img {
   color: #101820;
   border-bottom-width: 0;
   color: #43484e;
-  font-size: 1.625em;
 }
 
 .horizontal-list__share .horizontal-list_item a:visited,
@@ -4399,25 +4436,25 @@ img {
                     <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-email-social-square"></i>
-                            <span class="visually-hidden">Email</span>
+                            <span class="visually-hidden">Share by email</span>
                         </a>
                     </li>
                     <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-facebook-square"></i>
-                            <span class="visually-hidden">Facebook</span>
+                            <span class="visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
                     <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-twitter-square"></i>
-                            <span class="visually-hidden">Twitter</span>
+                            <span class="visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
                     <li class="horizontal-list_item">
                         <a href="#">
                             <i class="cf-icon cf-icon-linkedin-square"></i>
-                            <span class="visually-hidden">LinkedIn</span>
+                            <span class="visually-hidden">Share on LinkedIn</span>
                         </a>
                     </li>
                 </ul>

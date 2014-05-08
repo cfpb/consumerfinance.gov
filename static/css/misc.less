@@ -42,18 +42,24 @@
       markup: |
         <ul class="horizontal-list">
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-email-social-square"></i>
+                <a href="#">List item 1</a>
             </li>
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-facebook-square"></i>
+                <a href="#">List item 2</a>
             </li>
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-twitter-square"></i>
+                <a href="#">List item 3</a>
             </li>
             <li class="horizontal-list_item">
-                <i class="cf-icon cf-icon-linkedin-square"></i>
+                <a href="#">List item 4</a>
             </li>
         </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .horizontal-list
+            .horizontal-list_item
   tags:
     - cfgov-misc
 */
@@ -63,8 +69,7 @@
     padding-left: 0;
 
     &_item {
-        display: inline-block;
-
+        .u-inline-block();
         & + & {
             // Assuming a natural space of 4px between inline block items
             // then the space between would be 8px (4px natural + 4px added).
@@ -84,24 +89,47 @@
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-email-social-square"></i>
+                    <span class="visually-hidden">
+                        Share by email
+                    </span>
                 </a>
             </li>
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-facebook-square"></i>
+                    <span class="visually-hidden">
+                        Share on Facebook
+                    </span>
                 </a>
             </li>
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-twitter-square"></i>
+                    <span class="visually-hidden">
+                        Share on Twitter
+                    </span>
                 </a>
             </li>
             <li class="horizontal-list_item">
                 <a href="#">
                     <i class="cf-icon cf-icon-linkedin-square"></i>
+                    <span class="visually-hidden">
+                        Share on LinkedIn
+                    </span>
                 </a>
             </li>
         </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .horizontal-list.horizontal-list__share
+            .horizontal-list_item
+              a
+                .cf-icon
+                .visually-hidden (accessible text goes here)
+      notes:
+        - "Text for screenreaders is added with the .visually-hidden element."
   tags:
     - cfgov-misc
 */
@@ -110,12 +138,12 @@
 .horizontal-list__share {
 
     .horizontal-list_item {
+        font-size: unit(26px / @base-font-size-px, em);
         line-height: 1;
 
         a {
             .u-unstyled-link();
             color: @darkgray;
-            font-size: unit(26px / @base-font-size-px, em);
         }
     }
 }
