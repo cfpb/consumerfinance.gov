@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <main class="content content__2-1 content__bleedbar" id="main" role="main">
+        <div class="wrapper content_wrapper">
+            <section class="content_main">
+
+                <article class="post">
+                    <header>
+                        <a href="#" class="post_slug category-slug">
+                            <i class="cf-icon cf-icon-help"></i>
+                            {{ post.category }}
+                        </a>
+                        <h1 class="post_header">
+                            {{ post.title }}
+                        </h1>
+                        <div class="post_meta">
+                            <span class="post_byline">
+                                By <a href="#">{{ post.author }}</a> &ndash;
+                            </span>
+                            <span class="post_date date">
+                                {{ post.date | date("%b %d, %Y") }}
+                            </span>
+                        </div>
+                        <ul class="post_share horizontal-list horizontal-list__share">
+                            <li class="horizontal-list_item">
+                                <a href="#">
+                                    <i class="cf-icon cf-icon-email-social-square"></i>
+                                    <span class="visually-hidden">Email</span>
+                                </a>
+                            </li>
+                            <li class="horizontal-list_item">
+                                <a href="#">
+                                    <i class="cf-icon cf-icon-facebook-square"></i>
+                                    <span class="visually-hidden">Facebook</span>
+                                </a>
+                            </li>
+                            <li class="horizontal-list_item">
+                                <a href="#">
+                                    <i class="cf-icon cf-icon-twitter-square"></i>
+                                    <span class="visually-hidden">Twitter</span>
+                                </a>
+                            </li>
+                            <li class="horizontal-list_item">
+                                <a href="#">
+                                    <i class="cf-icon cf-icon-linkedin-square"></i>
+                                    <span class="visually-hidden">LinkedIn</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
+                        <div class="line-container">
+                            <div class="line-container_body">
+                                <p class="post_summary">
+                                    {{ post.excerpt }}
+                                </p>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="post_body">
+                        {{ post.text | markdown }}
+                    </div>
+                    <footer>
+                        <div class="demo-placeholder">
+                            tags placeholder
+                        </div>
+                        <!-- see commented implementation on CFPB Open Tech-->
+                    </footer>
+                </article>
+
+                <section class="comments">
+                    <div class="demo-placeholder">comments placeholder</div>
+                </section>
+            </section><!-- END .content_main -->
+            <aside class="content_sidebar">
+                <section class="popular-stories">
+                    <div class="demo-placeholder">Related news placeholder</div>
+                </section>
+                <section class="related-links">
+                    <div class="demo-placeholder">Related stories placeholder</div>
+                </section>
+                <section class="stay-informed">
+                    <div class="demo-placeholder">Stay informed placeholder</div>
+                </section>
+            </aside><!-- END .content_sidebar -->
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+{% endblock %}
