@@ -1,0 +1,7 @@
+{
+  "post":{
+      "url" : "/blog/<id>",
+      "type" : "posts",
+      "permalink" : true
+    }
+}
