@@ -3798,24 +3798,27 @@ img {
     - codenotes:
         - .u-link__colors();
       notes:
-        - "Pass this mixin no arguments and it will color your link with the
-          default colors of link: pacific, hover: pacific-50, visited: teal,
-          active: navy."
+        - "Pass this mixin no arguments and it will color your link states with
+          the following defaults: :link (default state) pacific, :hover/:focus
+          pacific-50, :visited teal, :active navy."
     - codenotes:
         - .u-link__colors(@c);
       notes:
-        - "Pass this mixin one color it will be used on all states of your link."
+        - "Pass this mixin one color it will be used on all of the following
+          states of your link; :link (default state), :visited, :hover/:focus,
+          :active."
+        - ":hover and :focus share the same colors throughout this mixin."
     - codenotes:
         - .u-link__colors(@c, @h);
       notes:
         - "Pass this mixin two colors it will use the first color for the :link
-          and :visited states, and the second color for the :hover and :active
-          states."
+          and :visited states, and the second color for the :hover/:focus and
+          :active states."
     - codenotes:
         - .u-link__colors(@c, @h, @v, @a);
       notes:
-        - "Pass this mixin four colors to color :link, :hover, :visited, :active
-          states respectively."
+        - "Pass this mixin four colors to color :link, :hover/:focus, :visited,
+          :active states respectively."
         - "Note that this is basically the same as using the .u-link() mixin
           except that it allows you to stick with the same mixin naming
           convention for consistency."
@@ -3827,6 +3830,7 @@ img {
           consistent use of mixin names fro coloring links throughout this
           project. Remember that if you need to set colors for all states of a
           link you should use .u-link__colors(@c, @h, @v, @a)."
+        - "Remember that :hover and :focus share the same colors."
     - codenotes:
         - .u-link__border();
       notes:
@@ -4048,7 +4052,9 @@ img {
 }
 
 .category-slug:hover,
-.category-slug.hover {
+.category-slug.hover,
+.category-slug:focus,
+.category-slug.focus {
   border-bottom-color: #101820;
   color: #101820;
 }
@@ -4337,7 +4343,9 @@ img {
 }
 
 .horizontal-list__share .horizontal-list_item a:hover,
-.horizontal-list__share .horizontal-list_item a.hover {
+.horizontal-list__share .horizontal-list_item a.hover,
+.horizontal-list__share .horizontal-list_item a:focus,
+.horizontal-list__share .horizontal-list_item a.focus {
   border-bottom-color: #43484e;
   color: #43484e;
 }
