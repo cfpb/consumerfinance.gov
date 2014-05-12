@@ -106,7 +106,7 @@
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Pass this mixin no arguments and it will color your link with the default colors of link: pacific, hover: pacific-50, visited: teal, active: navy.</li>
+              <li>Pass this mixin no arguments and it will color your link states with the following defaults: :link (default state) pacific, :hover/:focus pacific-50, :visited teal, :active navy.</li>
             </ul>
           </footer>
         </div>
@@ -118,7 +118,8 @@
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Pass this mixin one color it will be used on all states of your link.</li>
+              <li>Pass this mixin one color it will be used on all of the following states of your link; :link (default state), :visited, :hover/:focus, :active.</li>
+              <li>:hover and :focus share the same colors throughout this mixin.</li>
             </ul>
           </footer>
         </div>
@@ -130,7 +131,7 @@
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Pass this mixin two colors it will use the first color for the :link and :visited states, and the second color for the :hover and :active states.</li>
+              <li>Pass this mixin two colors it will use the first color for the :link and :visited states, and the second color for the :hover/:focus and :active states.</li>
             </ul>
           </footer>
         </div>
@@ -142,7 +143,7 @@
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Pass this mixin four colors to color :link, :hover, :visited, :active states respectively.</li>
+              <li>Pass this mixin four colors to color :link, :hover/:focus, :visited, :active states respectively.</li>
               <li>Note that this is basically the same as using the .u-link() mixin except that it allows you to stick with the same mixin naming convention for consistency.</li>
             </ul>
           </footer>
@@ -156,6 +157,7 @@
             </ul>
             <ul class="docs-notes">
               <li>This is the base mixin that all .u-link__colors() mixins use. Please refrain from using this mixin directly in order to promote a consistent use of mixin names fro coloring links throughout this project. Remember that if you need to set colors for all states of a link you should use .u-link__colors(@c, @h, @v, @a).</li>
+              <li>Remember that :hover and :focus share the same colors.</li>
             </ul>
           </footer>
         </div>
