@@ -130,9 +130,9 @@
 
 .post_header {
     .h2();
-    @media @respond-to-m-min {
+    .u-respond-to-min(600px, {
         .h1();
-    }
+    });
 }
 
 .post_meta {
@@ -146,9 +146,9 @@
 .post_featured-img {
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
-    @media @respond-to-xs-max {
+    .u-respond-to-min(400px, {
         margin: unit(30px / @base-font-size-px, em) 0;
-    }
+    });
 }
 
 .post_summary {
