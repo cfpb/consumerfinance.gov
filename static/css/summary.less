@@ -30,6 +30,9 @@
 
 .summary {
 
+    // Incase .summary is used on an inline element like <a>
+    display: block;
+
     &_header {
         color: @black;
         .h3();
