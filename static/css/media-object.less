@@ -42,31 +42,32 @@
 
     display: block;
 
-    @media @respond-to-m-min {
+    .u-respond-to-min(600px, {
         position: relative;
         min-height: unit((@img-size + 4px) / @base-font-size-px, em);
         padding-left: unit((@img-size + @gutter-width) / @base-font-size-px, em);
-    }
+    });
 
     &_image-container {
-        @media @respond-to-m-min {
+        .u-respond-to-min(600px, {
             position: absolute;
             top: unit(4px / @base-font-size-px, em);
             left: 0;
             width: unit(@img-size / @base-font-size-px, em);
             overflow: hidden;
-        }
+        });
     }
 
     &_image {
         margin-bottom: unit(8px / @base-font-size-px, em);
-        @media @respond-to-m-min {
+
+        .u-respond-to-min(600px, {
             display: block;
             width: 290px;
             max-width: 290px;
             margin-bottom: 0;
             margin-left: -50%;
-        }
+        });
     }
 }
 
