@@ -57,7 +57,12 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
+.summary {
+  display: block;
+}
+
 .summary_header {
+  color: #101820;
   margin-top: 0;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
   font-style: normal;
@@ -65,6 +70,13 @@
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
+}
+
+a:hover .summary_header,
+a.hover .summary_header,
+a:focus .summary_header,
+a.focus .summary_header {
+  color: #328ed8;
 }
 
 .summary_header {
@@ -85,6 +97,7 @@
 }
 
 .summary_byline {
+  color: #101820;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;

@@ -47,8 +47,6 @@
         - "2. Simply change the markup order so that the element floating right
           comes before the element to its left."
     - codenotes:
-        - .u-unstyled-link();
-    - codenotes:
         - .u-flexible-image();
     - codenotes:
         - .u-inline-block();
@@ -62,44 +60,156 @@
     float: right;
 }
 
-.u-unstyled-link() {
-    color: @black;
-    border-bottom-width: 0;
-
-    &:visited,
-    &.visited {
-        border-bottom-color: @black;
-        color: @black;
-    }
-
-    &:hover,
-    &.hover {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        border-bottom-color: @black;
-        color: @black;
-    }
-
-    &:focus,
-    &.focus {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-    }
-
-    &:active,
-    &.active {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        border-bottom-color: @black;
-        color: @black;
-    }
-}
-
 .u-inline-block() {
     display: inline-block;
     .lt-ie8 & {
         // Hack inline-block into submission
         display: inline;
+    }
+}
+
+
+/* topdoc
+  name: Link mixins
+  family: cfgov-utilities
+  patterns:
+    - codenotes:
+        - .u-link__colors();
+      notes:
+        - "Pass this mixin no arguments to color your link states with the
+          following defaults: :link (default state) pacific, :hover pacific-50,
+          :focus: pacific, :visited teal, :active navy."
+    - codenotes:
+        - .u-link__colors(@c);
+      notes:
+        - "Pass this mixin one color to be used on all of the following
+          states of your link; :link (default state), :visited, :hover, :focus,
+          :active."
+    - codenotes:
+        - .u-link__colors(@c, @h);
+      notes:
+        - "Pass this mixin two colors to use the first color for the :link,
+          :visited, and :active states, and the second color for the :hover and
+          :focus states."
+    - codenotes:
+        - .u-link__colors(@c, @v, @h, @f, @a);
+      notes:
+        - "Pass this mixin five colors in 'love/hate' mnemonic order to color
+          :link, :visited, :hover, :focus, and :active states respectively."
+        - "Even though this mixin is basically the same as
+          .u-link__colors-base(@c, @v, @h, @f, @a); we encourage you to use
+          .u-link__colors(@c, @v, @h, @f, @a) to promote consistency."
+    - codenotes:
+        - .u-link__colors-base(@c, @v, @h, @f, @a);
+      notes:
+        - "This is the base mixin that all .u-link__colors() mixins use. Please
+          refrain from using this mixin directly in order to promote a
+          consistent use of mixin names for coloring links throughout this
+          project. Remember that if you need to set colors for all states of a
+          link you should use .u-link__colors(@c, @v, @h, @f, @a)."
+    - codenotes:
+        - .u-link__border();
+      notes:
+        - "Forces the default bottom border on the :link and :hover states."
+    - codenotes:
+        - .u-link__no-border();
+      notes:
+        - "Turn off the default bottom border on the :link and :hover states."
+    - codenotes:
+        - .u-link__hover-border();
+      notes:
+        - "Turn off the default bottom border on the :link state and force a
+          bottom border on the :hover state."
+    - codenotes:
+        - .u-link-child__hover();
+      notes:
+        - "When a link has child elements you may want only certain children to
+          change color when the parent link is hovered.
+          Pass no arguments to this mixin to color the child element pacific
+          when the parent link is hovered."
+    - codenotes:
+        - .u-link-child__hover(@c);
+      notes:
+        - "Pass this mixin one color to color the child element when the parent
+          link is hovered."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-link__colors() {
+    .u-link__colors-base();
+}
+
+.u-link__colors(@c) {
+    .u-link__colors-base(@c, @c, @c, @c, @c);
+}
+
+.u-link__colors(@c, @h) {
+    .u-link__colors-base(@c, @c, @h, @h, @c);
+}
+
+.u-link__colors(@c, @v, @h, @f, @a) {
+    .u-link__colors-base(@c, @v, @h, @f, @a);
+}
+
+.u-link__colors-base(@c:@pacific, @v:@teal, @h:@pacific-50, @f:@pacific, @a:@navy) {
+    color: @c;
+    border-bottom-color: @c;
+
+    &:visited,
+    &.visited {
+        color: @v;
+    }
+
+    &:hover,
+    &.hover {
+        border-bottom-color: @h;
+        color: @h;
+    }
+
+    &:focus,
+    &.focus {
+        border-bottom-color: @f;
+        color: @f;
+    }
+
+    &:active,
+    &.active {
+        border-bottom-color: @a;
+        color: @a;
+    }
+}
+
+.u-link-child__hover(@c: @pacific-50) {
+    a:hover &,
+    a.hover &,
+    a:focus &,
+    a.focus & {
+        color: @c;
+    }
+}
+
+.u-link__border() {
+    border-bottom-width: 1px;
+
+    &:hover,
+    &.hover {
+        border-bottom-width: 1px;
+    }
+}
+
+.u-link__no-border() {
+    border-bottom-width: 0 !important;
+}
+
+.u-link__hover-border() {
+    border-bottom-width: 0 !important;
+
+    &:hover,
+    &.hover,
+    &:focus,
+    &.focus {
+        border-bottom-width: 1px !important;
     }
 }
 

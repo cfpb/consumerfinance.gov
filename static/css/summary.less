@@ -30,7 +30,12 @@
 
 .summary {
 
+    // Incase .summary is used on an inline element like <a>
+    display: block;
+
     &_header {
+        color: @black;
+        .u-link-child__hover(@pacific-80);
         .h3();
         .u-respond-to-min(600px, {
             .h2();
@@ -43,6 +48,7 @@
     }
 
     &_byline {
+        color: @black;
         .webfont-regular();
     }
 }

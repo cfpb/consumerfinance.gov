@@ -78,15 +78,6 @@
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-unstyled-link();</code></pre>
-              </li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
                 <pre class="docs-code"><code>.u-flexible-image();</code></pre>
               </li>
             </ul>
@@ -101,6 +92,132 @@
             </ul>
             <ul class="docs-notes">
               <li>Also adds a .lt-ie8 class to hack inline-block for IE 7 and below.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="link-mixins" class="docs-component">
+      <h2 class="docs-component_header"><span>Link mixins</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__colors();</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Pass this mixin no arguments to color your link states with the following defaults: :link (default state) pacific, :hover pacific-50, :focus: pacific, :visited teal, :active navy.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__colors(@c);</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Pass this mixin one color to be used on all of the following states of your link; :link (default state), :visited, :hover, :focus, :active.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__colors(@c, @h);</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Pass this mixin two colors to use the first color for the :link, :visited, and :active states, and the second color for the :hover and :focus states.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__colors(@c, @v, @h, @f, @a);</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Pass this mixin five colors in 'love/hate' mnemonic order to color :link, :visited, :hover, :focus, and :active states respectively.</li>
+              <li>Even though this mixin is basically the same as .u-link__colors-base(@c, @v, @h, @f, @a); we encourage you to use .u-link__colors(@c, @v, @h, @f, @a) to promote consistency.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__colors-base(@c, @v, @h, @f, @a);</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>This is the base mixin that all .u-link__colors() mixins use. Please refrain from using this mixin directly in order to promote a consistent use of mixin names for coloring links throughout this project. Remember that if you need to set colors for all states of a link you should use .u-link__colors(@c, @v, @h, @f, @a).</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__border();</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Forces the default bottom border on the :link and :hover states.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__no-border();</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Turn off the default bottom border on the :link and :hover states.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link__hover-border();</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Turn off the default bottom border on the :link state and force a bottom border on the :hover state.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link-child__hover();</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>When a link has child elements you may want only certain children to change color when the parent link is hovered. Pass no arguments to this mixin to color the child element pacific when the parent link is hovered.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-link-child__hover(@c);</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Pass this mixin one color to color the child element when the parent link is hovered.</li>
             </ul>
           </footer>
         </div>

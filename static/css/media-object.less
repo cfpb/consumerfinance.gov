@@ -40,6 +40,8 @@
     // The width and height of the image for medium screens and up.
     @img-size: 155px;
 
+    display: block;
+
     .u-respond-to-min(600px, {
         position: relative;
         min-height: unit((@img-size + 4px) / @base-font-size-px, em);
@@ -58,6 +60,7 @@
 
     &_image {
         margin-bottom: unit(8px / @base-font-size-px, em);
+
         .u-respond-to-min(600px, {
             display: block;
             width: 290px;
