@@ -3955,6 +3955,10 @@ img {
 */
 
 .media-object {
+  display: block;
+}
+
+.media-object {
   position: relative;
   min-height: 9.9375em;
   padding-left: 11.5625em;

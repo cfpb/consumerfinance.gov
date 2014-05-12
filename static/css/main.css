@@ -3487,6 +3487,9 @@ img {
   tags:
     - cfgov-media-object
 */
+.media-object {
+  display: block;
+}
 @media only all and (min-width: 37.5em) {
   .media-object {
     position: relative;
