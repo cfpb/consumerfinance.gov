@@ -3339,38 +3339,36 @@ img {
         - .u-link__colors();
       notes:
         - "Pass this mixin no arguments to color your link states with the
-          following defaults: :link (default state) pacific, :hover/:focus
-          pacific-50, :visited teal, :active navy."
+          following defaults: :link (default state) pacific, :hover pacific-50,
+          :focus: pacific, :visited teal, :active navy."
     - codenotes:
         - .u-link__colors(@c);
       notes:
         - "Pass this mixin one color to be used on all of the following
-          states of your link; :link (default state), :visited, :hover/:focus,
+          states of your link; :link (default state), :visited, :hover, :focus,
           :active."
-        - ":hover and :focus share the same colors throughout this mixin."
     - codenotes:
         - .u-link__colors(@c, @h);
       notes:
-        - "Pass this mixin two colors to use the first color for the :link and
-          :visited states, and the second color for the :hover/:focus and
-          :active states."
+        - "Pass this mixin two colors to use the first color for the :link,
+          :visited, and :active states, and the second color for the :hover and
+          :focus states."
     - codenotes:
-        - .u-link__colors(@c, @h, @v, @a);
+        - .u-link__colors(@c, @v, @h, @f, @a);
       notes:
-        - "Pass this mixin four colors to color :link, :hover/:focus, :visited,
-          :active states respectively."
-        - "Note that this is basically the same as using the
-          .u-link__colors-base() mixin except that it allows you to stick with
-          the same mixin naming convention for consistency."
+        - "Pass this mixin five colors in 'love/hate' mnemonic order to color
+          :link, :visited, :hover, :focus, and :active states respectively."
+        - "Even though this mixin is basically the same as
+          .u-link__colors-base(@c, @v, @h, @f, @a); we encourage you to use
+          .u-link__colors(@c, @v, @h, @f, @a) to promote consistency."
     - codenotes:
-        - .u-link__colors-base(@c, @h, @v, @a);
+        - .u-link__colors-base(@c, @v, @h, @f, @a);
       notes:
         - "This is the base mixin that all .u-link__colors() mixins use. Please
           refrain from using this mixin directly in order to promote a
           consistent use of mixin names for coloring links throughout this
           project. Remember that if you need to set colors for all states of a
-          link you should use .u-link__colors(@c, @h, @v, @a)."
-        - "Remember that :hover and :focus share the same colors."
+          link you should use .u-link__colors(@c, @v, @h, @f, @a)."
     - codenotes:
         - .u-link__border();
       notes:
