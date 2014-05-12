@@ -31,10 +31,12 @@
 .summary {
 
     &_header {
+        color: @black;
         .h3();
         @media @respond-to-m-min {
             .h2();
         }
+        .u-link-child__hover();
     }
 
     &_text {
@@ -43,6 +45,7 @@
     }
 
     &_byline {
+        color: @black;
         .webfont-regular();
     }
 }
