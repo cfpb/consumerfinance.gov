@@ -4066,7 +4066,9 @@ img {
 }
 
 .category-slug:hover,
-.category-slug.hover {
+.category-slug.hover,
+.category-slug:focus,
+.category-slug.focus {
   border-bottom-width: 1px !important;
 }
 
@@ -4357,7 +4359,9 @@ img {
 }
 
 .horizontal-list__share .horizontal-list_item a:hover,
-.horizontal-list__share .horizontal-list_item a.hover {
+.horizontal-list__share .horizontal-list_item a.hover,
+.horizontal-list__share .horizontal-list_item a:focus,
+.horizontal-list__share .horizontal-list_item a.focus {
   border-bottom-width: 1px !important;
 }
 
