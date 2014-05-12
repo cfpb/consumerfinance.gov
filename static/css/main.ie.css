@@ -4397,27 +4397,20 @@ img {
 
 .horizontal-list__share .horizontal-list_item a:hover,
 .horizontal-list__share .horizontal-list_item a.hover {
-  border-bottom-color: #43484e;
-  color: #43484e;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 
 .horizontal-list__share .horizontal-list_item a:focus,
 .horizontal-list__share .horizontal-list_item a.focus {
-  border-bottom-color: #43484e;
-  color: #43484e;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 
 .horizontal-list__share .horizontal-list_item a:active,
 .horizontal-list__share .horizontal-list_item a.active {
   border-bottom-color: #43484e;
   color: #43484e;
-}
-
-.horizontal-list__share .horizontal-list_item a:hover,
-.horizontal-list__share .horizontal-list_item a.hover,
-.horizontal-list__share .horizontal-list_item a:focus,
-.horizontal-list__share .horizontal-list_item a.focus {
-  border-bottom-width: 1px !important;
 }
 
 /* topdoc
