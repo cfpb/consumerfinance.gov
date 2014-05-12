@@ -3259,7 +3259,7 @@ ul {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 50%;
+  width: 100%;
 }
 .ie .demo-col-6 {
   margin-right: -0.26em;
@@ -3268,6 +3268,27 @@ ul {
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+@media only all and (min-width: 30em) {
+  .demo-col-6 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .demo-col-6 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .demo-col-6 {
+    display: inline;
+    *zoom: 1;
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
 }
 /* Base styles
    ========================================================================== */
@@ -3403,49 +3424,68 @@ img {
 */
 /* ==========================================================================
    cfgov-refresh
-   vars
+   media-queries
    ========================================================================== */
 /* topdoc
-  name: Media query vars
-  family: cfgov-vars
+  name: Media query mixins
+  family: cfgov-media-queries
+  notes:
+    - "These mixins allow us to write consistent media queries using pixel
+      values, which are easier to remember. The mixins handle converting the
+      pixels into em's."
   patterns:
-    - name: Size calculations
-      notes:
-        - "You shouldn't need to use these variables directly,
-          they're used to create the @respond-to vars which you should use instead."
+    - name: "min-width/max-width media queries"
       codenotes:
-        - "@small-screens-min"
-        - "@small-screens-max"
-        - "@medium-screens-min"
-        - "@medium-screens-max"
-        - "@large-screens-min"
-        - "@large-screens-max"
-        - "@extralarge-screens-min"
-    - name: Interpolated media type and expressions
-      codenotes:
-        - "@respond-to-small-screens-min"
-        - "@respond-to-small-screens-max"
-        - "@media @respond-to-m-min"
-        - "@respond-to-medium-screens-max"
-        - "@respond-to-large-screens-min"
-        - "@respond-to-large-screens-max"
-        - "@respond-to-extralarge-screens-min"
+        - ".u-respond-to-min(@bp, @rules)"
+        - ".u-respond-to-max(@bp, @rules)"
       notes:
-        - "Use these variables to easily target screen size ranges."
-    - name: "Usage"
+        - "@bp: the breakpoint size in pixels. It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query usage"
       codenotes:
         - |
-            @media @respond-to-m-min {
-                ...
-            }
+            .u-respond-to-min(768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
 
             Compiles to:
 
             @media only all and (min-width: 48em) {
-                ...
+                .title {
+                    font-size: 2em;
+                }
+            }
+    - name: "min-width/max-width media query range"
+      codenotes:
+        - ".u-respond-to-range(@bp1, @bp2, @rules)"
+      notes:
+        - "@bp1: the min-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@bp2: the max-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query range usage"
+      codenotes:
+        - |
+            .u-respond-to-range(320px, 768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
+
+            Compiles to:
+
+            @media only all and (min-width: 20em) and (max-width: 48em) {
+                .title {
+                    font-size: 2em;
+                }
             }
   tags:
-    - cfgov-vars
+    - cfgov-media-queries
 */
 /* topdoc
   name: EOF
@@ -4130,7 +4170,7 @@ img {
   display: block;
   margin: 1em 0;
 }
-@media only all and (min-width: 20em) {
+@media only all and (min-width: 25em) {
   .post_featured-img {
     margin: 1.875em 0;
   }
@@ -4191,6 +4231,12 @@ img {
   font-size: 1.375em;
   line-height: 1.27272727;
 }
+a:hover .summary_header,
+a.hover .summary_header,
+a:focus .summary_header,
+a.focus .summary_header {
+  color: #328ed8;
+}
 @media only all and (min-width: 37.5em) {
   .summary_header {
     margin-top: 0;
@@ -4201,12 +4247,6 @@ img {
     font-size: 1.625em;
     line-height: 1.26923077;
   }
-}
-a:hover .summary_header,
-a.hover .summary_header,
-a:focus .summary_header,
-a.focus .summary_header {
-  color: #328ed8;
 }
 .summary_text {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -4368,7 +4408,7 @@ a.focus .summary_header {
 .footer .demo-placeholder {
   margin-left: 15px;
 }
-@media only all and (min-width: 37.5em) {
+@media only all and (min-width: 50.0625em) {
   .content__1-3 .content_main {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -4455,7 +4495,7 @@ a.focus .summary_header {
   margin: 0 -15px;
   background: #f1f2f2;
 }
-@media only all and (min-width: 37.5em) {
+@media only all and (min-width: 50.0625em) {
   .content__bleedbar {
     overflow: hidden;
   }
@@ -4487,7 +4527,7 @@ a.focus .summary_header {
     left: 75%;
   }
 }
-@media only all and (min-width: 37.5em) {
+@media only all and (min-width: 50.0625em) {
   .wrapper {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

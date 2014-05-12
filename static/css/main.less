@@ -32,7 +32,7 @@ img {
    ========================================================================== */
 
 @import (less) "utilities.less";
-@import (less) "vars.less";
+@import (less) "media-queries.less";
 @import (less) "media-object.less";
 @import (less) "meta.less";
 @import (less) "misc.less";
@@ -54,9 +54,8 @@ img {
     margin-left: (@gutter-width / 2);
 }
 
-@media @respond-to-m-min {
-
-    // Set up standard content area layouts
+// Set up standard content area layouts
+.u-respond-to-min(801px, {
     .content {
         &__1-3 {
             .content_main {
@@ -68,6 +67,7 @@ img {
                 .pull(9);
             }
         }
+
         &__2-1 {
             .content_main {
                 .column(8);
@@ -77,10 +77,8 @@ img {
             }
         }
     }
-
-} // end @media for standard content area layouts
-
-
+});
+// END .content
 
 .content__bleedbar {
 
@@ -90,9 +88,9 @@ img {
         background: @gray-10;
     }
 
-    @media @respond-to-m-min {
+    .u-respond-to-min(801px, {
 
-        // Prevent pseudoelement background from creating horizontal scrollbar.
+        // Prevent pseudo element background from creating horizontal scrollbar.
         overflow: hidden;
 
         .content_sidebar {
@@ -133,16 +131,16 @@ img {
             left: 75%;
         }
 
-    } // end @media within .bleedbar
+    });
 } // end .bleedbar
 
 
 // STUFF THAT SHOULD PROBABLY MOVE TO CF-LAYOUT
 
 .wrapper {
-    @media @respond-to-m-min {
+    .u-respond-to-min(801px, {
         .wrapper();
-    }
+    });
 }
 .header {
     border-bottom: 10px solid @green;

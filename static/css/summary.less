@@ -35,11 +35,11 @@
 
     &_header {
         color: @black;
-        .h3();
-        @media @respond-to-m-min {
-            .h2();
-        }
         .u-link-child__hover(@pacific-80);
+        .h3();
+        .u-respond-to-min(600px, {
+            .h2();
+        });
     }
 
     &_text {
