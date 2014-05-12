@@ -3344,13 +3344,77 @@ img {
         - "2. Simply change the markup order so that the element floating right
           comes before the element to its left."
     - codenotes:
-        - .u-unstyled-link();
-    - codenotes:
         - .u-flexible-image();
     - codenotes:
         - .u-inline-block();
       notes:
         - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
+  tags:
+    - cfgov-utilities
+*/
+/* topdoc
+  name: Link mixins
+  family: cfgov-utilities
+  patterns:
+    - codenotes:
+        - .u-link__colors();
+      notes:
+        - "Pass this mixin no arguments to color your link states with the
+          following defaults: :link (default state) pacific, :hover pacific-50,
+          :focus: pacific, :visited teal, :active navy."
+    - codenotes:
+        - .u-link__colors(@c);
+      notes:
+        - "Pass this mixin one color to be used on all of the following
+          states of your link; :link (default state), :visited, :hover, :focus,
+          :active."
+    - codenotes:
+        - .u-link__colors(@c, @h);
+      notes:
+        - "Pass this mixin two colors to use the first color for the :link,
+          :visited, and :active states, and the second color for the :hover and
+          :focus states."
+    - codenotes:
+        - .u-link__colors(@c, @v, @h, @f, @a);
+      notes:
+        - "Pass this mixin five colors in 'love/hate' mnemonic order to color
+          :link, :visited, :hover, :focus, and :active states respectively."
+        - "Even though this mixin is basically the same as
+          .u-link__colors-base(@c, @v, @h, @f, @a); we encourage you to use
+          .u-link__colors(@c, @v, @h, @f, @a) to promote consistency."
+    - codenotes:
+        - .u-link__colors-base(@c, @v, @h, @f, @a);
+      notes:
+        - "This is the base mixin that all .u-link__colors() mixins use. Please
+          refrain from using this mixin directly in order to promote a
+          consistent use of mixin names for coloring links throughout this
+          project. Remember that if you need to set colors for all states of a
+          link you should use .u-link__colors(@c, @v, @h, @f, @a)."
+    - codenotes:
+        - .u-link__border();
+      notes:
+        - "Forces the default bottom border on the :link and :hover states."
+    - codenotes:
+        - .u-link__no-border();
+      notes:
+        - "Turn off the default bottom border on the :link and :hover states."
+    - codenotes:
+        - .u-link__hover-border();
+      notes:
+        - "Turn off the default bottom border on the :link state and force a
+          bottom border on the :hover state."
+    - codenotes:
+        - .u-link-child__hover();
+      notes:
+        - "When a link has child elements you may want only certain children to
+          change color when the parent link is hovered.
+          Pass no arguments to this mixin to color the child element pacific
+          when the parent link is hovered."
+    - codenotes:
+        - .u-link-child__hover(@c);
+      notes:
+        - "Pass this mixin one color to color the child element when the parent
+          link is hovered."
   tags:
     - cfgov-utilities
 */
@@ -3461,6 +3525,9 @@ img {
   tags:
     - cfgov-media-object
 */
+.media-object {
+  display: block;
+}
 @media only all and (min-width: 37.5em) {
   .media-object {
     position: relative;
@@ -3553,32 +3620,27 @@ img {
   font-size: 1.125em;
   line-height: 1.22222222;
   color: #101820;
-  border-bottom-width: 0;
+  border-bottom-color: #101820;
 }
 .lt-ie9 .category-slug {
   font-weight: normal !important;
 }
 .category-slug:visited,
 .category-slug.visited {
-  border-bottom-color: #101820;
   color: #101820;
 }
 .category-slug:hover,
 .category-slug.hover {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #101820;
-  color: #101820;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 .category-slug:focus,
 .category-slug.focus {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 .category-slug:active,
 .category-slug.active {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
   border-bottom-color: #101820;
   color: #101820;
 }
@@ -3825,33 +3887,28 @@ img {
   line-height: 1;
 }
 .horizontal-list__share .horizontal-list_item a {
-  color: #101820;
-  border-bottom-width: 0;
   color: #43484e;
+  border-bottom-color: #43484e;
+  border-bottom-width: 0 !important;
 }
 .horizontal-list__share .horizontal-list_item a:visited,
 .horizontal-list__share .horizontal-list_item a.visited {
-  border-bottom-color: #101820;
-  color: #101820;
+  color: #43484e;
 }
 .horizontal-list__share .horizontal-list_item a:hover,
 .horizontal-list__share .horizontal-list_item a.hover {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #101820;
-  color: #101820;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 .horizontal-list__share .horizontal-list_item a:focus,
 .horizontal-list__share .horizontal-list_item a.focus {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 .horizontal-list__share .horizontal-list_item a:active,
 .horizontal-list__share .horizontal-list_item a.active {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #101820;
-  color: #101820;
+  border-bottom-color: #43484e;
+  color: #43484e;
 }
 /* topdoc
   name: Line container
@@ -4155,7 +4212,11 @@ img {
   tags:
     - cfgov-summary
 */
+.summary {
+  display: block;
+}
 .summary_header {
+  color: #101820;
   margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -4163,6 +4224,12 @@ img {
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
+}
+a:hover .summary_header,
+a.hover .summary_header,
+a:focus .summary_header,
+a.focus .summary_header {
+  color: #328ed8;
 }
 @media only all and (min-width: 37.5em) {
   .summary_header {
@@ -4182,6 +4249,7 @@ img {
   color: #43484e;
 }
 .summary_byline {
+  color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -4247,11 +4315,11 @@ img {
                     Consumer information
                 </a>
             </div>
-            <div class="summary">
+            <a class="summary" href="#">
                 <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
                 <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
                 <p class="summary_byline">By Patrice Ficklin</p>
-            </div>
+            </a>
         </article>
     - name: Post preview (with image)
       codenotes:
@@ -4277,7 +4345,7 @@ img {
                     Consumer information
                 </a>
             </div>
-            <div class="media-object">
+            <a class="media-object" href="#">
                 <div class="media-object_image-container">
                     <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
                 </div>
@@ -4294,7 +4362,7 @@ img {
                         By Patrice Ficklin
                     </p>
                 </div>
-            </div>
+            </a>
         </article>
   tags:
     - cfgov-blog-docs
