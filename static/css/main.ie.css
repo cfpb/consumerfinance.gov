@@ -1363,6 +1363,46 @@ input.btn::-moz-focus-inner {
   line-height: 1.57142857;
 }
 
+.expandable-button em,
+.expandable-button:link em,
+.expandable-button:visited em,
+.expandable-button i,
+.expandable-button:link i,
+.expandable-button:visited i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .expandable-button em,
+.lt-ie9 .expandable-button:link em,
+.lt-ie9 .expandable-button:visited em,
+.lt-ie9 .expandable-button i,
+.lt-ie9 .expandable-button:link i,
+.lt-ie9 .expandable-button:visited i {
+  font-style: normal !important;
+}
+
+.expandable-button strong,
+.expandable-button:link strong,
+.expandable-button:visited strong,
+.expandable-button b,
+.expandable-button:link b,
+.expandable-button:visited b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .expandable-button strong,
+.lt-ie9 .expandable-button:link strong,
+.lt-ie9 .expandable-button:visited strong,
+.lt-ie9 .expandable-button b,
+.lt-ie9 .expandable-button:link b,
+.lt-ie9 .expandable-button:visited b {
+  font-weight: normal !important;
+}
+
 .expandable-content {
   padding: 0 0.75em 0.25em;
 }
@@ -3072,6 +3112,30 @@ textarea {
   text-align: center;
 }
 
+.pagination_form em,
+.pagination_form i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .pagination_form em,
+.lt-ie9 .pagination_form i {
+  font-style: normal !important;
+}
+
+.pagination_form strong,
+.pagination_form b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .pagination_form strong,
+.lt-ie9 .pagination_form b {
+  font-weight: normal !important;
+}
+
 .pagination_current-page {
   display: inline-block;
   vertical-align: middle;
@@ -3196,6 +3260,9 @@ textarea {
         - "Avenir Next is included via the licensed-fonts.css file.
           This file contains absolute links to our paid font service.
           Fonts included this way will only work on CFPB-registered domains."
+        - "Note that when using Avenir Regular we automatically fix faux italic
+          and bold issues by overriding i, em, b, and strong tags to use the
+          appropriate fonts."
     - name: Webfont mixins
       codenotes:
         - ".webfont-regular()"
@@ -3216,10 +3283,6 @@ textarea {
           mixins so you get them automatically. Note that this requires you to
           use conditional classes on the <html> element:
           https://github.com/h5bp/html5-boilerplate/blob/v4.3.0/doc/html.md#conditional-html-classes."
-      markup: |
-        <blockquote cite="http://cfpb.github.io/cf-typography/docs/index.html#webfont-notes">
-            Any instances of Avenir Next getting <em>italic</em><i>ized</i> or <strong>bold</strong><b>ed</b> must be declared explicitly ...
-        </blockquote>
   tags:
     - cf-typography
 */
@@ -3271,25 +3334,83 @@ body {
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 .h1,
+h2,
 .h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  margin-top: 0;
+h3,
+.h3 {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
 
+h1 em,
+.h1 em,
+h2 em,
+.h2 em,
+h3 em,
+.h3 em,
+h1 i,
+.h1 i,
+h2 i,
+.h2 i,
+h3 i,
+.h3 i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 h1 em,
+.lt-ie9 .h1 em,
+.lt-ie9 h2 em,
+.lt-ie9 .h2 em,
+.lt-ie9 h3 em,
+.lt-ie9 .h3 em,
+.lt-ie9 h1 i,
+.lt-ie9 .h1 i,
+.lt-ie9 h2 i,
+.lt-ie9 .h2 i,
+.lt-ie9 h3 i,
+.lt-ie9 .h3 i {
+  font-style: normal !important;
+}
+
+h1 strong,
+.h1 strong,
+h2 strong,
+.h2 strong,
+h3 strong,
+.h3 strong,
+h1 b,
+.h1 b,
+h2 b,
+.h2 b,
+h3 b,
+.h3 b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 h1 strong,
+.lt-ie9 .h1 strong,
+.lt-ie9 h2 strong,
+.lt-ie9 .h2 strong,
+.lt-ie9 h3 strong,
+.lt-ie9 .h3 strong,
+.lt-ie9 h1 b,
+.lt-ie9 .h1 b,
+.lt-ie9 h2 b,
+.lt-ie9 .h2 b,
+.lt-ie9 h3 b,
+.lt-ie9 .h3 b {
+  font-weight: normal !important;
+}
+
 h1,
 .h1 {
+  margin-top: 0;
   margin-bottom: 0.47058824em;
   font-size: 2.125em;
   line-height: 1.29411765;
@@ -3297,6 +3418,7 @@ h1,
 
 h2,
 .h2 {
+  margin-top: 0;
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
@@ -3304,6 +3426,7 @@ h2,
 
 h3,
 .h3 {
+  margin-top: 0;
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
@@ -3311,11 +3434,12 @@ h3,
 
 h4,
 .h4 {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 0.27777778em;
-  font-size: 1.125em;
   line-height: 1.22222222;
 }
 
@@ -3344,6 +3468,7 @@ h6,
 
 h5,
 .h5 {
+  margin-top: 0;
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
@@ -3351,17 +3476,18 @@ h5,
 
 h6,
 .h6 {
+  margin-top: 0;
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
 }
 
 .superheader {
+  margin-bottom: 0.1875em;
+  font-size: 3em;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
-  margin-bottom: 0.1875em;
-  font-size: 3em;
   line-height: 1.375;
 }
 
@@ -3529,52 +3655,6 @@ nav a {
 }
 
 /* topdoc
-  name: Blockquote
-  family: cf-typography
-  patterns:
-    - name: Default blockquote
-      markup: |
-        <blockquote>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi animi facere modi eaque amet odio!
-        </blockquote> 
-  tags:
-    - cf-typography
-*/
-
-blockquote {
-  padding: 0.5em 0.75em;
-  border-left: 4px solid #2cb34a;
-  background: #addc91;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-
-blockquote em,
-blockquote i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 blockquote em,
-.lt-ie9 blockquote i {
-  font-style: normal !important;
-}
-
-blockquote strong,
-blockquote b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 blockquote strong,
-.lt-ie9 blockquote b {
-  font-weight: normal !important;
-}
-
-/* topdoc
   name: Lists
   family: cf-typography
   patterns:
@@ -3591,6 +3671,85 @@ blockquote b {
 
 ul {
   list-style: square;
+}
+
+/* topdoc
+  name: Block quote
+  family: cf-typography
+  patterns:
+    - name: Default block quote
+      markup: |
+        <blockquote cite="link-to-source">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
+            similique fugit hic eligendi praesentium officiis illum optio iusto
+            commodi eum tempore nisi ad in perferendis enim quo dolores.
+            Reprehenderit similique earum quibusdam possimus vitae esse
+            nesciunt mollitia sed beatae aliquid dolores iure a impedit quam
+            minus eum modi illum ducimus eligendi eveniet labore non sequi
+            voluptate et totam praesentium animi itaque asperiores dolorum
+            sunt laudantium repellat nam commodi. Perspiciatis natus aliquam
+            veniam officiis ducimus voluptatum ut necessitatibus non!
+        </blockquote>
+      notes:
+        - "Use a block quote to quote from an external work. See .pull-quote if
+          you need to highlight an excerpt from the current work."
+        - "It is best practice to document the URL of a quoted work using the
+          cite attribute."
+  tags:
+    - cf-typography
+*/
+
+/* topdoc
+  name: Pull quote
+  family: cf-typography
+  patterns:
+    - name: Default pull quote
+      markup: |
+        <p class="pull-quote">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Cum corrupti tempora nam nihil qui mollitia consectetur
+            corporis nemo culpa dolorum!
+        </p>
+      notes:
+        - "Use a pull quote to highlight excerpts from the current work.
+          This is not to be confused with blockquote which quotes from an
+          external work."
+  tags:
+    - cf-typography
+*/
+
+.pull-quote {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.pull-quote em,
+.pull-quote i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .pull-quote em,
+.lt-ie9 .pull-quote i {
+  font-style: normal !important;
+}
+
+.pull-quote strong,
+.pull-quote b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .pull-quote strong,
+.lt-ie9 .pull-quote b {
+  font-weight: normal !important;
 }
 
 /* topdoc
@@ -3613,6 +3772,30 @@ ul {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+}
+
+.demo-banner em,
+.demo-banner i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .demo-banner em,
+.lt-ie9 .demo-banner i {
+  font-style: normal !important;
+}
+
+.demo-banner strong,
+.demo-banner b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .demo-banner strong,
+.lt-ie9 .demo-banner b {
+  font-weight: normal !important;
 }
 
 .demo-banner_back-link {
@@ -3661,6 +3844,30 @@ ul {
   line-height: 1;
   border: 2px dashed #babbbd;
   background: #f8f8f8;
+}
+
+.demo-placeholder em,
+.demo-placeholder i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .demo-placeholder em,
+.lt-ie9 .demo-placeholder i {
+  font-style: normal !important;
+}
+
+.demo-placeholder strong,
+.demo-placeholder b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .demo-placeholder strong,
+.lt-ie9 .demo-placeholder b {
+  font-weight: normal !important;
 }
 
 .demo-logo {
@@ -4047,14 +4254,12 @@ img {
 */
 
 .date {
-  margin-top: 0;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-weight: normal;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
+  margin-top: 0;
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
@@ -4084,13 +4289,11 @@ img {
 
 .category-slug {
   margin-top: 0;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-weight: normal;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 0.27777778em;
-  font-size: 1.125em;
   line-height: 1.22222222;
   color: #101820;
   border-bottom-color: #101820;
@@ -4145,14 +4348,12 @@ img {
 */
 
 .header-slug {
-  margin-top: 0;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-weight: normal;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
+  margin-top: 0;
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
@@ -4584,17 +4785,33 @@ img {
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
+                <aside class="post_inset line-container">
+                    <div class="line-container_body">
+                        <p class="pull-quote">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Cum corrupti tempora nam nihil qui mollitia consectetur
+                            corporis nemo culpa dolorum!
+                        </p>
+                    </div>
+                </aside>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
-                <section class="callout">
-                    <div class="demo-placeholder">
-                        More information placeholder
-                    </div>
-                </section>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -4629,28 +4846,77 @@ img {
             .post_featured-img
             .post_summary
             .post_body
+            .post_inset
   tags:
     - cfgov-post
 */
 
 .post_header {
-  margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-top: 0;
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
 }
 
+.post_header em,
+.post_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .post_header em,
+.lt-ie9 .post_header i {
+  font-style: normal !important;
+}
+
+.post_header strong,
+.post_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .post_header strong,
+.lt-ie9 .post_header b {
+  font-weight: normal !important;
+}
+
 .post_header {
-  margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-top: 0;
   margin-bottom: 0.47058824em;
   font-size: 2.125em;
   line-height: 1.29411765;
+}
+
+.post_header em,
+.post_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .post_header em,
+.lt-ie9 .post_header i {
+  font-style: normal !important;
+}
+
+.post_header strong,
+.post_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .post_header strong,
+.lt-ie9 .post_header b {
+  font-weight: normal !important;
 }
 
 .post_meta {
@@ -4659,13 +4925,11 @@ img {
 
 .post_byline {
   margin-top: 0;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-weight: normal;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  margin-bottom: 0.27777778em;
-  font-size: 1.125em;
   line-height: 1.22222222;
 }
 
@@ -4683,17 +4947,47 @@ img {
 }
 
 .post_summary {
-  margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-top: 0;
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
 }
 
+.post_summary em,
+.post_summary i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .post_summary em,
+.lt-ie9 .post_summary i {
+  font-style: normal !important;
+}
+
+.post_summary strong,
+.post_summary b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .post_summary strong,
+.lt-ie9 .post_summary b {
+  font-weight: normal !important;
+}
+
 .post_body {
   color: #43484e;
+}
+
+.post_inset {
+  float: right;
+  width: 15.625em;
+  margin-left: 30px;
 }
 
 /* topdoc
@@ -4736,10 +5030,10 @@ img {
 
 .summary_header {
   color: #101820;
-  margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-top: 0;
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
@@ -4752,14 +5046,62 @@ a.focus .summary_header {
   color: #328ed8;
 }
 
+.summary_header em,
+.summary_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_header em,
+.lt-ie9 .summary_header i {
+  font-style: normal !important;
+}
+
+.summary_header strong,
+.summary_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_header strong,
+.lt-ie9 .summary_header b {
+  font-weight: normal !important;
+}
+
 .summary_header {
-  margin-top: 0;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-top: 0;
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
+}
+
+.summary_header em,
+.summary_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_header em,
+.lt-ie9 .summary_header i {
+  font-style: normal !important;
+}
+
+.summary_header strong,
+.summary_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_header strong,
+.lt-ie9 .summary_header b {
+  font-weight: normal !important;
 }
 
 .summary_text {
@@ -4769,11 +5111,59 @@ a.focus .summary_header {
   color: #43484e;
 }
 
+.summary_text em,
+.summary_text i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_text em,
+.lt-ie9 .summary_text i {
+  font-style: normal !important;
+}
+
+.summary_text strong,
+.summary_text b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_text strong,
+.lt-ie9 .summary_text b {
+  font-weight: normal !important;
+}
+
 .summary_byline {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+}
+
+.summary_byline em,
+.summary_byline i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_byline em,
+.lt-ie9 .summary_byline i {
+  font-style: normal !important;
+}
+
+.summary_byline strong,
+.summary_byline b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_byline strong,
+.lt-ie9 .summary_byline b {
+  font-weight: normal !important;
 }
 
 /* topdoc
