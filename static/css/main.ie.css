@@ -4785,17 +4785,33 @@ img {
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
+                <aside class="post_inset line-container">
+                    <div class="line-container_body">
+                        <p class="pull-quote">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Cum corrupti tempora nam nihil qui mollitia consectetur
+                            corporis nemo culpa dolorum!
+                        </p>
+                    </div>
+                </aside>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
-                <section class="callout">
-                    <div class="demo-placeholder">
-                        More information placeholder
-                    </div>
-                </section>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -4830,6 +4846,7 @@ img {
             .post_featured-img
             .post_summary
             .post_body
+            .post_inset
   tags:
     - cfgov-post
 */
@@ -4967,7 +4984,7 @@ img {
   color: #43484e;
 }
 
-.post_pull-quote {
+.post_inset {
   float: right;
   width: 15.625em;
   margin-left: 30px;
