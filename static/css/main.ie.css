@@ -4592,57 +4592,71 @@ img {
 }
 
 /* topdoc
-  name: Share link
+  name: Share icon
   family: cfgov-misc
   patterns:
     - name: Default example
       markup: |
-        <a class="share-link href="#">
+        <a class="share-icon" href="#">
             <i class="cf-icon cf-icon-email-social-square"></i>
             <span class="visually-hidden">
                 Share by email
             </span>
         </a>
+        <span class="share-icon">
+            <i class="cf-icon cf-icon-email-social-square"></i>
+            <span class="visually-hidden">
+                Share by email
+            </span>
+        </span>
       notes:
         - "Text for screenreaders is added with the .visually-hidden element."
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .share-link
+          .share-icon
             .cf-icon.cf-icon-name
             .visually-hidden
   tags:
     - cfgov-misc
 */
 
-.share-link {
+.share-icon {
+  color: #43484e;
   font-size: 1.625em;
   line-height: 1;
+}
+
+.share-icon + .share-icon {
+  margin-left: 0.07692308em;
+}
+
+a.share-icon {
   color: #43484e;
   border-bottom-color: #43484e;
   border-bottom-width: 0 !important;
 }
 
-.share-link:visited,
-.share-link.visited {
+a.share-icon:visited,
+a.share-icon.visited {
   color: #43484e;
 }
 
-.share-link:hover,
-.share-link.hover {
+a.share-icon:hover,
+a.share-icon.hover {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.share-link:focus,
-.share-link.focus {
+a.share-icon:focus,
+a.share-icon.focus {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.share-link:active,
-.share-link.active {
+a.share-icon:active,
+a.share-icon.active {
   border-bottom-color: #43484e;
   color: #43484e;
 }
@@ -4774,25 +4788,25 @@ img {
                 </div>
                 <ul class="post_share list__horizontal">
                     <li class="list_item">
-                        <a class="share-link" href="#">
+                        <a class="share-icon" href="#">
                             <i class="cf-icon cf-icon-email-social-square"></i>
                             <span class="visually-hidden">Share by email</span>
                         </a>
                     </li>
                     <li class="list_item">
-                        <a class="share-link" href="#">
+                        <a class="share-icon" href="#">
                             <i class="cf-icon cf-icon-facebook-square"></i>
                             <span class="visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
                     <li class="list_item">
-                        <a class="share-link" href="#">
+                        <a class="share-icon" href="#">
                             <i class="cf-icon cf-icon-twitter-square"></i>
                             <span class="visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
                     <li class="list_item">
-                        <a class="share-link" href="#">
+                        <a class="share-icon" href="#">
                             <i class="cf-icon cf-icon-linkedin-square"></i>
                             <span class="visually-hidden">Share on LinkedIn</span>
                         </a>
@@ -4957,7 +4971,7 @@ img {
             .post_meta
               .post_byline
               .post_date
-            .post_share-link
+            .post_share-icon
             .post_featured-img
             .post_summary
             .post_body
