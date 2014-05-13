@@ -4559,11 +4559,14 @@ a.share-icon.active {
 .post_body {
   color: #43484e;
 }
+.post_inset {
+  margin: 1.875em 0;
+}
 @media only all and (min-width: 48.0625em) {
   .post_inset {
     float: right;
     width: 15.625em;
-    margin-left: 30px;
+    margin: 1.875em 0 1.875em 1.875em;
   }
 }
 /* topdoc

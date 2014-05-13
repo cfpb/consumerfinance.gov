@@ -5114,9 +5114,13 @@ a.share-icon.active {
 }
 
 .post_inset {
+  margin: 1.875em 0;
+}
+
+.post_inset {
   float: right;
   width: 15.625em;
-  margin-left: 30px;
+  margin: 1.875em 0 1.875em 1.875em;
 }
 
 /* topdoc

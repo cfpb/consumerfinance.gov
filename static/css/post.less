@@ -253,10 +253,15 @@
 }
 
 .post_inset {
+    margin: unit(30px / @base-font-size-px, em) 0;
     .u-respond-to-min(769px, {
         .u-right();
         width: unit(250px / @base-font-size-px, em);
-        margin-left: @gutter-width;
+        margin:
+            unit(@gutter-width / @base-font-size-px, em)
+            0
+            unit(@gutter-width / @base-font-size-px, em)
+            unit(@gutter-width / @base-font-size-px, em);
     });
 }
 
