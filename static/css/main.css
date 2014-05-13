@@ -3941,152 +3941,181 @@ img {
    misc
    ========================================================================== */
 /* topdoc
-  name: Unstyled list
+  name: Lists
+  family: cfgov-misc
+  notes:
+    - "Note that modifiers are the most common use cases for this block, hence
+      the reason there are no direct styles associated with .link or .link_item."
+  patterns:
+    - name: Basic structure
+      markup: |
+        <ul class="list">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 4</a>
+            </li>
+        </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list
+            .list_item
+              .list_link
+  tags:
+    - cfgov-misc
+*/
+.list_link {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+.lt-ie9 .list_link {
+  font-weight: normal !important;
+}
+/* topdoc
+  name: Unstyled list modifier
   family: cfgov-misc
   patterns:
-    - name: Default unstyled list
+    - name: Default example
       markup: |
-        <ul class="unstyled-list">
-            <li>
-                List item 1
+        <ul class="list list__unstyled">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
             </li>
-            <li>
-                List item 2
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
             </li>
-            <li>
-                List item 3
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
             </li>
-            <li>
-                List item 4
+            <li class="list_item">
+                <a class="list_link">List item 4</a>
             </li>
         </ul>
   tags:
     - cfgov-misc
 */
-.unstyled-list {
+.list__unstyled {
   padding-left: 0;
   list-style-type: none;
 }
 /* topdoc
-  name: Horizontal list
+  name: Spaced list item modifier
   family: cfgov-misc
   patterns:
-    - name: Default horizontal list
+    - name: Default example
       markup: |
-        <ul class="horizontal-list">
-            <li class="horizontal-list_item">
-                <a href="#">List item 1</a>
+        <ul class="list">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
             </li>
-            <li class="horizontal-list_item">
-                <a href="#">List item 2</a>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
             </li>
-            <li class="horizontal-list_item">
-                <a href="#">List item 3</a>
+            <li class="list_item list_item__spaced">
+                <a class="list_link">List item 3</a>
             </li>
-            <li class="horizontal-list_item">
-                <a href="#">List item 4</a>
+            <li class="list_item">
+                <a class="list_link">List item 4</a>
             </li>
         </ul>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .horizontal-list
-            .horizontal-list_item
   tags:
     - cfgov-misc
 */
-.horizontal-list {
+.list_item__spaced {
+  margin-top: 1.5em;
+}
+/* topdoc
+  name: Horizontal list modifier
+  family: cfgov-misc
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__horizontal">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 4</a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.list__horizontal {
   padding-left: 0;
 }
-.horizontal-list_item {
+.list__horizontal .list_item {
   display: inline-block;
 }
-.lt-ie8 .horizontal-list_item {
+.lt-ie8 .list__horizontal .list_item {
   display: inline;
 }
-.horizontal-list_item + .horizontal-list_item {
+.list__horizontal .list_item + .list_item {
   margin-left: 0.25em;
 }
 /* topdoc
-  name: Horizontal share list
+  name: Share link
   family: cfgov-misc
   patterns:
-    - name: Default horizontal share-list
+    - name: Default example
       markup: |
-        <ul class="horizontal-list horizontal-list__share">
-            <li class="horizontal-list_item">
-                <a href="#">
-                    <i class="cf-icon cf-icon-email-social-square"></i>
-                    <span class="visually-hidden">
-                        Share by email
-                    </span>
-                </a>
-            </li>
-            <li class="horizontal-list_item">
-                <a href="#">
-                    <i class="cf-icon cf-icon-facebook-square"></i>
-                    <span class="visually-hidden">
-                        Share on Facebook
-                    </span>
-                </a>
-            </li>
-            <li class="horizontal-list_item">
-                <a href="#">
-                    <i class="cf-icon cf-icon-twitter-square"></i>
-                    <span class="visually-hidden">
-                        Share on Twitter
-                    </span>
-                </a>
-            </li>
-            <li class="horizontal-list_item">
-                <a href="#">
-                    <i class="cf-icon cf-icon-linkedin-square"></i>
-                    <span class="visually-hidden">
-                        Share on LinkedIn
-                    </span>
-                </a>
-            </li>
-        </ul>
+        <a class="share-link href="#">
+            <i class="cf-icon cf-icon-email-social-square"></i>
+            <span class="visually-hidden">
+                Share by email
+            </span>
+        </a>
+      notes:
+        - "Text for screenreaders is added with the .visually-hidden element."
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .horizontal-list.horizontal-list__share
-            .horizontal-list_item
-              a
-                .cf-icon
-                .visually-hidden (accessible text goes here)
-      notes:
-        - "Text for screenreaders is added with the .visually-hidden element."
+          .share-link
+            .cf-icon.cf-icon-name
+            .visually-hidden
   tags:
     - cfgov-misc
 */
-.horizontal-list__share .horizontal-list_item {
+.share-link {
   font-size: 1.625em;
   line-height: 1;
-}
-.horizontal-list__share .horizontal-list_item a {
   color: #43484e;
   border-bottom-color: #43484e;
   border-bottom-width: 0 !important;
 }
-.horizontal-list__share .horizontal-list_item a:visited,
-.horizontal-list__share .horizontal-list_item a.visited {
+.share-link:visited,
+.share-link.visited {
   color: #43484e;
 }
-.horizontal-list__share .horizontal-list_item a:hover,
-.horizontal-list__share .horizontal-list_item a.hover {
+.share-link:hover,
+.share-link.hover {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
-.horizontal-list__share .horizontal-list_item a:focus,
-.horizontal-list__share .horizontal-list_item a.focus {
+.share-link:focus,
+.share-link.focus {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
-.horizontal-list__share .horizontal-list_item a:active,
-.horizontal-list__share .horizontal-list_item a.active {
+.share-link:active,
+.share-link.active {
   border-bottom-color: #43484e;
   color: #43484e;
 }
@@ -4209,27 +4238,27 @@ img {
                         Mon 32, 3001
                     </span>
                 </div>
-                <ul class="horizontal-list horizontal-list__share">
-                    <li class="horizontal-list_item">
-                        <a href="#">
+                <ul class="post_share list__horizontal">
+                    <li class="list_item">
+                        <a class="share-link" href="#">
                             <i class="cf-icon cf-icon-email-social-square"></i>
                             <span class="visually-hidden">Share by email</span>
                         </a>
                     </li>
-                    <li class="horizontal-list_item">
-                        <a href="#">
+                    <li class="list_item">
+                        <a class="share-link" href="#">
                             <i class="cf-icon cf-icon-facebook-square"></i>
                             <span class="visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
-                    <li class="horizontal-list_item">
-                        <a href="#">
+                    <li class="list_item">
+                        <a class="share-link" href="#">
                             <i class="cf-icon cf-icon-twitter-square"></i>
                             <span class="visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
-                    <li class="horizontal-list_item">
-                        <a href="#">
+                    <li class="list_item">
+                        <a class="share-link" href="#">
                             <i class="cf-icon cf-icon-linkedin-square"></i>
                             <span class="visually-hidden">Share on LinkedIn</span>
                         </a>
@@ -4282,6 +4311,82 @@ img {
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <aside class="post_inset line-container">
+                    <h2 class="line-container_pullup header-slug">
+                        <span class="header-slug_inner">
+                            Further reading
+                        </span>
+                    </h2>
+                    <div class="line-container_body">
+                        <ul class="list list__unstyled">
+                            <li class="list_item list_item__spaced">
+                                <a class="list_link" href="#">
+                                    Consumer help
+                                </a>
+                            </li>
+                            <li class="list_item list_item__spaced">
+                                <a class="list_link" href="#">
+                                    Know before you owe
+                                </a>
+                            </li>
+                            <li class="list_item list_item__spaced">
+                                <a class="list_link" href="#">
+                                    Submit a complaint
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <blockquote>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </blockquote>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
