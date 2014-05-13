@@ -4597,18 +4597,18 @@ img {
   patterns:
     - name: Default example
       markup: |
-        <a class="share-icon" href="#">
-            <i class="cf-icon cf-icon-email-social-square"></i>
-            <span class="visually-hidden">
-                Share by email
-            </span>
-        </a>
         <span class="share-icon">
             <i class="cf-icon cf-icon-email-social-square"></i>
             <span class="visually-hidden">
                 Share by email
             </span>
         </span>
+        <a class="share-icon" href="#">
+            <i class="cf-icon cf-icon-email-social-square"></i>
+            <span class="visually-hidden">
+                Share by email
+            </span>
+        </a>
       notes:
         - "Text for screenreaders is added with the .visually-hidden element."
       codenotes:
