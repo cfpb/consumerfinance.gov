@@ -4419,6 +4419,13 @@ img {
 .post_body {
   color: #43484e;
 }
+@media only all and (min-width: 48.0625em) {
+  .post_pull-quote {
+    float: right;
+    width: 15.625em;
+    margin-left: 30px;
+  }
+}
 /* topdoc
   name: EOF
   eof: true
