@@ -143,35 +143,49 @@
 
 
 /* topdoc
-  name: Share link
+  name: Share icon
   family: cfgov-misc
   patterns:
     - name: Default example
       markup: |
-        <a class="share-link href="#">
+        <a class="share-icon" href="#">
             <i class="cf-icon cf-icon-email-social-square"></i>
             <span class="visually-hidden">
                 Share by email
             </span>
         </a>
+        <span class="share-icon">
+            <i class="cf-icon cf-icon-email-social-square"></i>
+            <span class="visually-hidden">
+                Share by email
+            </span>
+        </span>
       notes:
         - "Text for screenreaders is added with the .visually-hidden element."
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .share-link
+          .share-icon
             .cf-icon.cf-icon-name
             .visually-hidden
   tags:
     - cfgov-misc
 */
 
-.share-link {
+.share-icon {
+    color: @darkgray;
     font-size: unit(26px / @base-font-size-px, em);
     line-height: 1;
-    .u-link__colors(@darkgray, @pacific-80);
-    .u-link__no-border();
+
+    & + & {
+        margin-left: unit(2px / 26px, em);
+    }
+
+    a& {
+        .u-link__colors(@darkgray, @pacific-80);
+        .u-link__no-border();
+    }
 }
 
 

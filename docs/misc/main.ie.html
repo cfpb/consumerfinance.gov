@@ -240,32 +240,44 @@
 </code></pre>
       </div>
     </div>
-    <div id="share-link" class="docs-component">
-      <h2 class="docs-component_header"><span>Share link</span></h2>
+    <div id="share-icon" class="docs-component">
+      <h2 class="docs-component_header"><span>Share icon</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Default example</h3>
           <section class="docs-pattern_pattern">
-<a class="share-link href="#">
+<a class="share-icon" href="#">
     <i class="cf-icon cf-icon-email-social-square"></i>
     <span class="visually-hidden">
         Share by email
     </span>
 </a>
+<span class="share-icon">
+    <i class="cf-icon cf-icon-email-social-square"></i>
+    <span class="visually-hidden">
+        Share by email
+    </span>
+</span>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;share-link href=&quot;#&quot;&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;share-icon&quot; href=&quot;#&quot;&gt;
     &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
     &lt;span class=&quot;visually-hidden&quot;&gt;
         Share by email
     &lt;/span&gt;
-&lt;/a&gt;</code></pre>
+&lt;/a&gt;
+&lt;span class=&quot;share-icon&quot;&gt;
+    &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
+    &lt;span class=&quot;visually-hidden&quot;&gt;
+        Share by email
+    &lt;/span&gt;
+&lt;/span&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.share-link
+.share-icon
   .cf-icon.cf-icon-name
   .visually-hidden</code></pre>
               </li>
@@ -278,33 +290,41 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.share-link {
+.share-icon {
+  color: #43484e;
   font-size: 1.625em;
   line-height: 1;
+}
+
+.share-icon + .share-icon {
+  margin-left: 0.07692308em;
+}
+
+a.share-icon {
   color: #43484e;
   border-bottom-color: #43484e;
   border-bottom-width: 0 !important;
 }
 
-.share-link:visited,
-.share-link.visited {
+a.share-icon:visited,
+a.share-icon.visited {
   color: #43484e;
 }
 
-.share-link:hover,
-.share-link.hover {
+a.share-icon:hover,
+a.share-icon.hover {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.share-link:focus,
-.share-link.focus {
+a.share-icon:focus,
+a.share-icon.focus {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.share-link:active,
-.share-link.active {
+a.share-icon:active,
+a.share-icon.active {
   border-bottom-color: #43484e;
   color: #43484e;
 }
