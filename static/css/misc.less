@@ -152,6 +152,12 @@
 /* topdoc
   name: Line container
   family: cfgov-misc
+  notes:
+    - ".line-container is meant to contain anything you want with consistent top
+      and bottom padding. It uses a margin collapsing trick in CSS to achieve
+      this consistency which this is why .line-container_body is needed. The
+      only caveat to this consistency is if you place something inside of it
+      that has a bottom-margin that is larger than the .line-container padding."
   patterns:
     - name: Basic line container
       markup: |
