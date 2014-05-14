@@ -152,30 +152,38 @@
     .u-link__colors-base(@c, @v, @h, @f, @a);
 }
 
-.u-link__colors-base(@c:@pacific, @v:@teal, @h:@pacific-50, @f:@pacific, @a:@navy) {
+.u-link__colors(@c, @v, @h, @f, @a,
+                @bc, @bv, @bh, @bf, @ba) {
+    .u-link__colors-base(@c, @v, @h, @f, @a,
+                         @bc, @bv, @bh, @bf, @ba);
+}
+
+.u-link__colors-base(@c:@pacific, @v:@teal, @h:@pacific-50, @f:@pacific, @a:@navy,
+                     @bc:@pacific, @bv:@teal, @bh:@pacific-50, @bf:@pacific, @ba:@navy) {
     color: @c;
-    border-bottom-color: @c;
+    border-bottom-color: @bc;
 
     &:visited,
     &.visited {
+        border-bottom-color: @bv;
         color: @v;
     }
 
     &:hover,
     &.hover {
-        border-bottom-color: @h;
+        border-bottom-color: @bh;
         color: @h;
     }
 
     &:focus,
     &.focus {
-        border-bottom-color: @f;
+        border-bottom-color: @bf;
         color: @f;
     }
 
     &:active,
     &.active {
-        border-bottom-color: @a;
+        border-bottom-color: @ba;
         color: @a;
     }
 }
