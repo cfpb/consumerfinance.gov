@@ -15,98 +15,55 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
-    <div id="unstyled-list" class="docs-component">
-      <h2 class="docs-component_header"><span>Unstyled list</span></h2>
+    <div id="lists" class="docs-component">
+      <h2 class="docs-component_header"><span>Lists</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Note that modifiers are the most common use cases for this block, hence the reason there are no direct styles associated with .link or .link_item.</li>
+        </ul>
+      </div>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default unstyled list</h3>
+          <h3 class="docs-pattern_header">Basic structure</h3>
           <section class="docs-pattern_pattern">
-<ul class="unstyled-list">
-    <li>
-        List item 1
+<ul class="list">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
     </li>
-    <li>
-        List item 2
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
     </li>
-    <li>
-        List item 3
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
     </li>
-    <li>
-        List item 4
+    <li class="list_item">
+        <a class="list_link">List item 4</a>
     </li>
 </ul>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;unstyled-list&quot;&gt;
-    &lt;li&gt;
-        List item 1
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li&gt;
-        List item 2
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li&gt;
-        List item 3
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li&gt;
-        List item 4
-    &lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.unstyled-list {
-  padding-left: 0;
-  list-style-type: none;
-}
-</code></pre>
-      </div>
-    </div>
-    <div id="horizontal-list" class="docs-component">
-      <h2 class="docs-component_header"><span>Horizontal list</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default horizontal list</h3>
-          <section class="docs-pattern_pattern">
-<ul class="horizontal-list">
-    <li class="horizontal-list_item">
-        <a href="#">List item 1</a>
-    </li>
-    <li class="horizontal-list_item">
-        <a href="#">List item 2</a>
-    </li>
-    <li class="horizontal-list_item">
-        <a href="#">List item 3</a>
-    </li>
-    <li class="horizontal-list_item">
-        <a href="#">List item 4</a>
-    </li>
-</ul>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;horizontal-list&quot;&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;List item 1&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;List item 2&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;List item 3&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;List item 4&lt;/a&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.horizontal-list
-  .horizontal-list_item</code></pre>
+.list
+  .list_item
+    .list_link</code></pre>
               </li>
             </ul>
           </footer>
@@ -114,110 +71,203 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.horizontal-list {
-  padding-left: 0;
+.list_link {
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
 }
 
-.horizontal-list_item {
-  display: inline-block;
-}
-
-.lt-ie8 .horizontal-list_item {
-  display: inline;
-}
-
-.horizontal-list_item + .horizontal-list_item {
-  margin-left: 0.25em;
+.lt-ie9 .list_link {
+  font-weight: normal !important;
 }
 </code></pre>
       </div>
     </div>
-    <div id="horizontal-share-list" class="docs-component">
-      <h2 class="docs-component_header"><span>Horizontal share list</span></h2>
+    <div id="unstyled-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Unstyled list modifier</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default horizontal share-list</h3>
+          <h3 class="docs-pattern_header">Default example</h3>
           <section class="docs-pattern_pattern">
-<ul class="horizontal-list horizontal-list__share">
-    <li class="horizontal-list_item">
-        <a href="#">
-            <i class="cf-icon cf-icon-email-social-square"></i>
-            <span class="visually-hidden">
-                Share by email
-            </span>
-        </a>
+<ul class="list list__unstyled">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
     </li>
-    <li class="horizontal-list_item">
-        <a href="#">
-            <i class="cf-icon cf-icon-facebook-square"></i>
-            <span class="visually-hidden">
-                Share on Facebook
-            </span>
-        </a>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
     </li>
-    <li class="horizontal-list_item">
-        <a href="#">
-            <i class="cf-icon cf-icon-twitter-square"></i>
-            <span class="visually-hidden">
-                Share on Twitter
-            </span>
-        </a>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
     </li>
-    <li class="horizontal-list_item">
-        <a href="#">
-            <i class="cf-icon cf-icon-linkedin-square"></i>
-            <span class="visually-hidden">
-                Share on LinkedIn
-            </span>
-        </a>
+    <li class="list_item">
+        <a class="list_link">List item 4</a>
     </li>
 </ul>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;horizontal-list horizontal-list__share&quot;&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;
-            &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
-            &lt;span class=&quot;visually-hidden&quot;&gt;
-                Share by email
-            &lt;/span&gt;
-        &lt;/a&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__unstyled&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;
-            &lt;i class=&quot;cf-icon cf-icon-facebook-square&quot;&gt;&lt;/i&gt;
-            &lt;span class=&quot;visually-hidden&quot;&gt;
-                Share on Facebook
-            &lt;/span&gt;
-        &lt;/a&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;
-            &lt;i class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/i&gt;
-            &lt;span class=&quot;visually-hidden&quot;&gt;
-                Share on Twitter
-            &lt;/span&gt;
-        &lt;/a&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li class=&quot;horizontal-list_item&quot;&gt;
-        &lt;a href=&quot;#&quot;&gt;
-            &lt;i class=&quot;cf-icon cf-icon-linkedin-square&quot;&gt;&lt;/i&gt;
-            &lt;span class=&quot;visually-hidden&quot;&gt;
-                Share on LinkedIn
-            &lt;/span&gt;
-        &lt;/a&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__unstyled {
+  padding-left: 0;
+  list-style-type: none;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="spaced-list-item-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Spaced list item modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item list_item__spaced">
+        <a class="list_link">List item 3</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 4</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item list_item__spaced&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list_item__spaced {
+  margin-top: 1.5em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="horizontal-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Horizontal list modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__horizontal">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 4</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__horizontal&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__horizontal {
+  padding-left: 0;
+}
+
+.list__horizontal .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .list__horizontal .list_item {
+  display: inline;
+}
+
+.list__horizontal .list_item + .list_item {
+  margin-left: 0.25em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="share-icon" class="docs-component">
+      <h2 class="docs-component_header"><span>Share icon</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<a class="share-icon" href="#">
+    <i class="cf-icon cf-icon-email-social-square"></i>
+    <span class="visually-hidden">
+        Share by email
+    </span>
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;share-icon&quot; href=&quot;#&quot;&gt;
+    &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
+    &lt;span class=&quot;visually-hidden&quot;&gt;
+        Share by email
+    &lt;/span&gt;
+&lt;/a&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.horizontal-list.horizontal-list__share
-  .horizontal-list_item
-    a
-      .cf-icon
-      .visually-hidden (accessible text goes here)</code></pre>
+.share-icon
+  .cf-icon.cf-icon-name
+  .visually-hidden</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -228,38 +278,40 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.horizontal-list__share .horizontal-list_item {
+.share-icon {
   font-size: 1.625em;
   line-height: 1;
-}
-
-.horizontal-list__share .horizontal-list_item a {
   color: #43484e;
-  border-bottom-color: #43484e;
+  border-bottom-color: #0072ce;
   border-bottom-width: 0 !important;
 }
 
-.horizontal-list__share .horizontal-list_item a:visited,
-.horizontal-list__share .horizontal-list_item a.visited {
+.share-icon:visited,
+.share-icon.visited {
+  border-bottom-color: #005e5d;
   color: #43484e;
 }
 
-.horizontal-list__share .horizontal-list_item a:hover,
-.horizontal-list__share .horizontal-list_item a.hover {
-  border-bottom-color: #328ed8;
+.share-icon:hover,
+.share-icon.hover {
+  border-bottom-color: #7fb8e6;
   color: #328ed8;
 }
 
-.horizontal-list__share .horizontal-list_item a:focus,
-.horizontal-list__share .horizontal-list_item a.focus {
-  border-bottom-color: #328ed8;
+.share-icon:focus,
+.share-icon.focus {
+  border-bottom-color: #0072ce;
   color: #328ed8;
 }
 
-.horizontal-list__share .horizontal-list_item a:active,
-.horizontal-list__share .horizontal-list_item a.active {
-  border-bottom-color: #43484e;
+.share-icon:active,
+.share-icon.active {
+  border-bottom-color: #002d72;
   color: #43484e;
+}
+
+.share-icon + .share-icon {
+  margin-left: 0.07692308em;
 }
 </code></pre>
       </div>
