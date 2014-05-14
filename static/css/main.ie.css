@@ -5674,6 +5674,11 @@ a.focus .summary_header {
 
 .content_main,
 .content_sidebar {
+  padding: 2em 15px;
+}
+
+.content_main,
+.content_sidebar {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -5683,7 +5688,6 @@ a.focus .summary_header {
   margin-right: -0.25em;
   vertical-align: top;
   width: 100%;
-  padding: 2em 0;
 }
 
 .ie .content_main,
@@ -5796,9 +5800,13 @@ a.focus .summary_header {
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.content_main,
+.content_sidebar {
+  padding: 2em 0;
+}
+
 .content__bleedbar .content_sidebar {
   padding: 2em 15px;
-  margin: 0 -15px;
   background: #f1f2f2;
 }
 

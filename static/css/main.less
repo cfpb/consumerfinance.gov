@@ -43,8 +43,11 @@ img {
 
 .content_main,
 .content_sidebar {
-    .column(12);
-    padding: 2em 0;
+    padding: 2em (@gutter-width / 2);
+
+    .u-respond-to-min(600px, {
+        .column(12);
+    });
 }
 
 .header .demo-placeholder,
@@ -52,6 +55,10 @@ img {
 .footer .demo-placeholder {
     // Temporary styling to bring in line with main columns.
     margin-left: (@gutter-width / 2);
+
+    .u-respond-to-range(600px, 800px, {
+        margin-left: @gutter-width;
+    });
 }
 
 // Set up standard content area layouts
@@ -77,6 +84,11 @@ img {
             }
         }
     }
+
+    .content_main,
+    .content_sidebar {
+        padding: 2em 0;
+    } 
 });
 // END .content
 
@@ -84,7 +96,6 @@ img {
 
     .content_sidebar {
         padding: 2em (@gutter-width / 2);
-        margin: 0 -(@gutter-width / 2);
         background: @gray-10;
     }
 
