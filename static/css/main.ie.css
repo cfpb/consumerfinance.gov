@@ -1363,6 +1363,46 @@ input.btn::-moz-focus-inner {
   line-height: 1.57142857;
 }
 
+.expandable-button em,
+.expandable-button:link em,
+.expandable-button:visited em,
+.expandable-button i,
+.expandable-button:link i,
+.expandable-button:visited i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .expandable-button em,
+.lt-ie9 .expandable-button:link em,
+.lt-ie9 .expandable-button:visited em,
+.lt-ie9 .expandable-button i,
+.lt-ie9 .expandable-button:link i,
+.lt-ie9 .expandable-button:visited i {
+  font-style: normal !important;
+}
+
+.expandable-button strong,
+.expandable-button:link strong,
+.expandable-button:visited strong,
+.expandable-button b,
+.expandable-button:link b,
+.expandable-button:visited b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .expandable-button strong,
+.lt-ie9 .expandable-button:link strong,
+.lt-ie9 .expandable-button:visited strong,
+.lt-ie9 .expandable-button b,
+.lt-ie9 .expandable-button:link b,
+.lt-ie9 .expandable-button:visited b {
+  font-weight: normal !important;
+}
+
 .expandable-content {
   padding: 0 0.75em 0.25em;
 }
@@ -3072,6 +3112,30 @@ textarea {
   text-align: center;
 }
 
+.pagination_form em,
+.pagination_form i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .pagination_form em,
+.lt-ie9 .pagination_form i {
+  font-style: normal !important;
+}
+
+.pagination_form strong,
+.pagination_form b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .pagination_form strong,
+.lt-ie9 .pagination_form b {
+  font-weight: normal !important;
+}
+
 .pagination_current-page {
   display: inline-block;
   vertical-align: middle;
@@ -3278,6 +3342,70 @@ h3,
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+}
+
+h1 em,
+.h1 em,
+h2 em,
+.h2 em,
+h3 em,
+.h3 em,
+h1 i,
+.h1 i,
+h2 i,
+.h2 i,
+h3 i,
+.h3 i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 h1 em,
+.lt-ie9 .h1 em,
+.lt-ie9 h2 em,
+.lt-ie9 .h2 em,
+.lt-ie9 h3 em,
+.lt-ie9 .h3 em,
+.lt-ie9 h1 i,
+.lt-ie9 .h1 i,
+.lt-ie9 h2 i,
+.lt-ie9 .h2 i,
+.lt-ie9 h3 i,
+.lt-ie9 .h3 i {
+  font-style: normal !important;
+}
+
+h1 strong,
+.h1 strong,
+h2 strong,
+.h2 strong,
+h3 strong,
+.h3 strong,
+h1 b,
+.h1 b,
+h2 b,
+.h2 b,
+h3 b,
+.h3 b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 h1 strong,
+.lt-ie9 .h1 strong,
+.lt-ie9 h2 strong,
+.lt-ie9 .h2 strong,
+.lt-ie9 h3 strong,
+.lt-ie9 .h3 strong,
+.lt-ie9 h1 b,
+.lt-ie9 .h1 b,
+.lt-ie9 h2 b,
+.lt-ie9 .h2 b,
+.lt-ie9 h3 b,
+.lt-ie9 .h3 b {
+  font-weight: normal !important;
 }
 
 h1,
@@ -3616,6 +3744,30 @@ blockquote {
   color: #101820;
 }
 
+.pull-quote_body em,
+.pull-quote_body i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .pull-quote_body em,
+.lt-ie9 .pull-quote_body i {
+  font-style: normal !important;
+}
+
+.pull-quote_body strong,
+.pull-quote_body b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .pull-quote_body strong,
+.lt-ie9 .pull-quote_body b {
+  font-weight: normal !important;
+}
+
 .pull-quote_citation {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
@@ -3653,6 +3805,30 @@ blockquote {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+}
+
+.demo-banner em,
+.demo-banner i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .demo-banner em,
+.lt-ie9 .demo-banner i {
+  font-style: normal !important;
+}
+
+.demo-banner strong,
+.demo-banner b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .demo-banner strong,
+.lt-ie9 .demo-banner b {
+  font-weight: normal !important;
 }
 
 .demo-banner_back-link {
@@ -3701,6 +3877,30 @@ blockquote {
   line-height: 1;
   border: 2px dashed #babbbd;
   background: #f8f8f8;
+}
+
+.demo-placeholder em,
+.demo-placeholder i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .demo-placeholder em,
+.lt-ie9 .demo-placeholder i {
+  font-style: normal !important;
+}
+
+.demo-placeholder strong,
+.demo-placeholder b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .demo-placeholder strong,
+.lt-ie9 .demo-placeholder b {
+  font-weight: normal !important;
 }
 
 .demo-logo {
@@ -5036,6 +5236,30 @@ img {
   line-height: 1.26923077;
 }
 
+.post_header em,
+.post_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .post_header em,
+.lt-ie9 .post_header i {
+  font-style: normal !important;
+}
+
+.post_header strong,
+.post_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .post_header strong,
+.lt-ie9 .post_header b {
+  font-weight: normal !important;
+}
+
 .post_header {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -5044,6 +5268,30 @@ img {
   margin-bottom: 0.47058824em;
   font-size: 2.125em;
   line-height: 1.29411765;
+}
+
+.post_header em,
+.post_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .post_header em,
+.lt-ie9 .post_header i {
+  font-style: normal !important;
+}
+
+.post_header strong,
+.post_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .post_header strong,
+.lt-ie9 .post_header b {
+  font-weight: normal !important;
 }
 
 .post_meta {
@@ -5081,6 +5329,30 @@ img {
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
+}
+
+.post_summary em,
+.post_summary i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .post_summary em,
+.lt-ie9 .post_summary i {
+  font-style: normal !important;
+}
+
+.post_summary strong,
+.post_summary b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .post_summary strong,
+.lt-ie9 .post_summary b {
+  font-weight: normal !important;
 }
 
 .post_body {
@@ -5154,6 +5426,30 @@ a.focus .summary_header {
   color: #328ed8;
 }
 
+.summary_header em,
+.summary_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_header em,
+.lt-ie9 .summary_header i {
+  font-style: normal !important;
+}
+
+.summary_header strong,
+.summary_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_header strong,
+.lt-ie9 .summary_header b {
+  font-weight: normal !important;
+}
+
 .summary_header {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -5164,6 +5460,30 @@ a.focus .summary_header {
   line-height: 1.26923077;
 }
 
+.summary_header em,
+.summary_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_header em,
+.lt-ie9 .summary_header i {
+  font-style: normal !important;
+}
+
+.summary_header strong,
+.summary_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_header strong,
+.lt-ie9 .summary_header b {
+  font-weight: normal !important;
+}
+
 .summary_text {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -5171,11 +5491,59 @@ a.focus .summary_header {
   color: #43484e;
 }
 
+.summary_text em,
+.summary_text i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_text em,
+.lt-ie9 .summary_text i {
+  font-style: normal !important;
+}
+
+.summary_text strong,
+.summary_text b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_text strong,
+.lt-ie9 .summary_text b {
+  font-weight: normal !important;
+}
+
 .summary_byline {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+}
+
+.summary_byline em,
+.summary_byline i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_byline em,
+.lt-ie9 .summary_byline i {
+  font-style: normal !important;
+}
+
+.summary_byline strong,
+.summary_byline b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_byline strong,
+.lt-ie9 .summary_byline b {
+  font-weight: normal !important;
 }
 
 /* topdoc
