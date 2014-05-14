@@ -4303,8 +4303,15 @@ img {
     - cfgov-meta
 */
 
+.tags {
+  position: relative;
+  padding-left: 4.125em;
+}
+
 .tags_header {
-  float: left;
+  position: absolute;
+  left: 0;
+  width: 3.22222222em;
   margin-top: 0;
   margin-bottom: 0.27777778em;
   font-size: 1.125em;
@@ -4319,6 +4326,10 @@ img {
   font-weight: normal !important;
 }
 
+.tags_list {
+  padding: 0;
+}
+
 .tags_tag {
   display: inline-block;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
@@ -4330,7 +4341,7 @@ img {
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  margin-left: 1.16666667em;
+  margin-right: 1.16666667em;
 }
 
 .lt-ie8 .tags_tag {

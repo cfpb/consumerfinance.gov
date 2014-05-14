@@ -36,16 +36,27 @@
 
 .tags {
 
+    position: relative;
+    // 58px here comes from the .tags_header width.
+    padding-left: unit((58px + 8px) / @base-font-size-px, em);
+
     &_header {
-        float: left;
+        position: absolute;
+        left: 0;
+        width: unit(58px / @font-size, em);
+
         .h4();
         color: @black;
+    }
+
+    &_list {
+        padding: 0;
     }
 
     &_tag {
         .u-inline-block();
         .h6();
-        margin-left: unit(14px / @font-size, em);
+        margin-right: unit(14px / @font-size, em);
 
         &:before {
             content: "\2022";
@@ -57,6 +68,7 @@
             vertical-align: middle;
         }
     }
+
     &_link {
         .u-link__colors(@gray, @gray, @gray, @gray, @gray,
                         @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
