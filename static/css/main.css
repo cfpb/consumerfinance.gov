@@ -3751,6 +3751,101 @@ img {
    meta
    ========================================================================== */
 /* topdoc
+  name: Tags
+  family: cfgov-meta
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="tags">
+            <h4 class="tags_header">Tags:</h4>
+            <ul class="tags_list">
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        cfpb
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        cfpb
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        cfpb
+                    </a>
+                </li>
+            </ul>
+        </div> 
+  tags:
+    - cfgov-meta
+*/
+.tags_header {
+  float: left;
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  color: #101820;
+}
+.lt-ie9 .tags_header {
+  font-weight: normal !important;
+}
+.tags_tag {
+  display: inline-block;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+  margin-left: 1.16666667em;
+}
+.lt-ie8 .tags_tag {
+  display: inline;
+}
+.lt-ie9 .tags_tag {
+  font-weight: normal !important;
+}
+.tags_tag:before {
+  content: "\2022";
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  color: #ffb149;
+  font-size: 1.41666667em;
+  line-height: 1;
+  vertical-align: middle;
+}
+.tags_link {
+  color: #75787b;
+  border-bottom-color: #ffb149;
+}
+.tags_link:visited,
+.tags_link.visited {
+  border-bottom-color: #ffb149;
+  color: #75787b;
+}
+.tags_link:hover,
+.tags_link.hover {
+  border-bottom-color: #ffb149;
+  color: #75787b;
+}
+.tags_link:focus,
+.tags_link.focus {
+  border-bottom-color: #ffb149;
+  color: #75787b;
+}
+.tags_link:active,
+.tags_link.active {
+  border-bottom-color: #ffb149;
+  color: #75787b;
+}
+/* topdoc
   name: Date
   family: cfgov-meta
   patterns:
@@ -3802,28 +3897,29 @@ img {
   font-weight: 500;
   line-height: 1.22222222;
   color: #101820;
-  border-bottom-color: #101820;
+  border-bottom-color: #0072ce;
 }
 .lt-ie9 .category-slug {
   font-weight: normal !important;
 }
 .category-slug:visited,
 .category-slug.visited {
+  border-bottom-color: #005e5d;
   color: #101820;
 }
 .category-slug:hover,
 .category-slug.hover {
-  border-bottom-color: #328ed8;
+  border-bottom-color: #7fb8e6;
   color: #328ed8;
 }
 .category-slug:focus,
 .category-slug.focus {
-  border-bottom-color: #328ed8;
+  border-bottom-color: #0072ce;
   color: #328ed8;
 }
 .category-slug:active,
 .category-slug.active {
-  border-bottom-color: #101820;
+  border-bottom-color: #002d72;
   color: #101820;
 }
 /* topdoc
@@ -4109,26 +4205,27 @@ img {
 }
 a.share-icon {
   color: #43484e;
-  border-bottom-color: #43484e;
+  border-bottom-color: #0072ce;
   border-bottom-width: 0 !important;
 }
 a.share-icon:visited,
 a.share-icon.visited {
+  border-bottom-color: #005e5d;
   color: #43484e;
 }
 a.share-icon:hover,
 a.share-icon.hover {
-  border-bottom-color: #328ed8;
+  border-bottom-color: #7fb8e6;
   color: #328ed8;
 }
 a.share-icon:focus,
 a.share-icon.focus {
-  border-bottom-color: #328ed8;
+  border-bottom-color: #0072ce;
   color: #328ed8;
 }
 a.share-icon:active,
 a.share-icon.active {
-  border-bottom-color: #43484e;
+  border-bottom-color: #002d72;
   color: #43484e;
 }
 /* topdoc
@@ -4419,10 +4516,26 @@ a.share-icon.active {
                 </p>
             </div>
             <footer>
-                <div class="demo-placeholder">
-                    tags placeholder
-                </div>
-                <!-- see commented implementation on CFPB Open Tech-->
+                <div class="tags">
+                    <h4 class="tags_header">Tags:</h4>
+                    <ul class="tags_list">
+                        <li class="tags_tag">
+                            <a href="#" class="tags_link">
+                                cfpb
+                            </a>
+                        </li>
+                        <li class="tags_tag">
+                            <a href="#" class="tags_link">
+                                cfpb
+                            </a>
+                        </li>
+                        <li class="tags_tag">
+                            <a href="#" class="tags_link">
+                                cfpb
+                            </a>
+                        </li>
+                    </ul>
+                </div> 
             </footer>
         </article>
       codenotes:

@@ -5,6 +5,67 @@
 
 
 /* topdoc
+  name: Tags
+  family: cfgov-meta
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="tags">
+            <h4 class="tags_header">Tags:</h4>
+            <ul class="tags_list">
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        cfpb
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        cfpb
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        cfpb
+                    </a>
+                </li>
+            </ul>
+        </div> 
+  tags:
+    - cfgov-meta
+*/
+
+.tags {
+
+    &_header {
+        float: left;
+        .h4();
+        color: @black;
+    }
+
+    &_tag {
+        .u-inline-block();
+        .h6();
+        margin-left: unit(14px / @font-size, em);
+
+        &:before {
+            content: "\2022";
+            display: inline-block;
+            border-bottom: 1px solid transparent;
+            color: @gold-80;
+            font-size: unit(17px / @font-size, em);
+            line-height: 1;
+            vertical-align: middle;
+        }
+    }
+    &_link {
+        .u-link__colors(@gray, @gray, @gray, @gray, @gray,
+                        @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
+    }
+    
+}
+
+
+/* topdoc
   name: Date
   family: cfgov-meta
   patterns:
