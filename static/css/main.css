@@ -5077,31 +5077,43 @@ a.focus .summary_header {
 */
 .content_main,
 .content_sidebar {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 100%;
-  padding: 2em 0;
+  padding: 2em 15px;
 }
-.ie .content_main,
-.ie .content_sidebar {
-  margin-right: -0.26em;
-}
-.lt-ie8 .content_main,
-.lt-ie8 .content_sidebar {
-  display: inline;
-  *zoom: 1;
-  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+@media only all and (min-width: 37.5em) {
+  .content_main,
+  .content_sidebar {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+  }
+  .ie .content_main,
+  .ie .content_sidebar {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .content_main,
+  .lt-ie8 .content_sidebar {
+    display: inline;
+    *zoom: 1;
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
 }
 .header .demo-placeholder,
 .content_hero .demo-placeholder,
 .footer .demo-placeholder {
   margin-left: 15px;
+}
+@media only all and (min-width: 37.5em) and (max-width: 50em) {
+  .header .demo-placeholder,
+  .content_hero .demo-placeholder,
+  .footer .demo-placeholder {
+    margin-left: 30px;
+  }
 }
 @media only all and (min-width: 50.0625em) {
   .content__1-3 .content_main {
@@ -5184,10 +5196,13 @@ a.focus .summary_header {
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
+  .content_main,
+  .content_sidebar {
+    padding: 2em 0;
+  }
 }
 .content__bleedbar .content_sidebar {
   padding: 2em 15px;
-  margin: 0 -15px;
   background: #f1f2f2;
 }
 @media only all and (min-width: 50.0625em) {
