@@ -3248,25 +3248,38 @@ ul {
   tags:
     - cf-typography
 */
+blockquote {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
 /* topdoc
   name: Pull quote
   family: cf-typography
   patterns:
     - name: Default pull quote
       markup: |
-        <p class="pull-quote">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Cum corrupti tempora nam nihil qui mollitia consectetur
-            corporis nemo culpa dolorum!
-        </p>
+        <aside class="pull-quote">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+            <footer>
+                <cite class="pull-quote_citation">
+                    - Author Name
+                </cite>
+            <footer>
+        </aside>
       notes:
         - "Use a pull quote to highlight excerpts from the current work.
           This is not to be confused with blockquote which quotes from an
           external work."
+        - "Since a pull quote is an excerpt and repeats content from the
+          article it's contained within you should use the aside element."
   tags:
     - cf-typography
 */
-.pull-quote {
+.pull-quote_body {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -3274,25 +3287,42 @@ ul {
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
+  margin-bottom: 0.54545455em;
+  color: #101820;
 }
-.pull-quote em,
-.pull-quote i {
+.pull-quote_body em,
+.pull-quote_body i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .pull-quote em,
-.lt-ie9 .pull-quote i {
+.lt-ie9 .pull-quote_body em,
+.lt-ie9 .pull-quote_body i {
   font-style: normal !important;
 }
-.pull-quote strong,
-.pull-quote b {
+.pull-quote_body strong,
+.pull-quote_body b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .pull-quote strong,
-.lt-ie9 .pull-quote b {
+.lt-ie9 .pull-quote_body strong,
+.lt-ie9 .pull-quote_body b {
+  font-weight: normal !important;
+}
+.pull-quote_citation {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  color: #75787b;
+}
+.lt-ie9 .pull-quote_citation {
   font-weight: normal !important;
 }
 /* topdoc
@@ -4436,12 +4466,17 @@ img {
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <aside class="post_inset line-container">
-                    <div class="line-container_body">
-                        <p class="pull-quote">
+                    <div class="line-container_body pull-quote">
+                        <div class="pull-quote_body">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                             Cum corrupti tempora nam nihil qui mollitia consectetur
                             corporis nemo culpa dolorum!
-                        </p>
+                        </div>
+                        <footer>
+                            <cite class="pull-quote_citation">
+                                - Author Name
+                            </cite>
+                        </footer>
                     </div>
                 </aside>
                 <p>
