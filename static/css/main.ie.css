@@ -5701,6 +5701,11 @@ a.focus .summary_header {
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.content_main,
+.content_sidebar {
+  padding: 2em 0;
+}
+
 .content__bleedbar .content_sidebar {
   padding: 2em 15px;
   background: #f1f2f2;

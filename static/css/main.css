@@ -5009,6 +5009,13 @@ a.focus .summary_header {
 .footer .demo-placeholder {
   margin-left: 15px;
 }
+@media only all and (min-width: 37.5em) and (max-width: 50em) {
+  .header .demo-placeholder,
+  .content_hero .demo-placeholder,
+  .footer .demo-placeholder {
+    margin-left: 30px;
+  }
+}
 @media only all and (min-width: 50.0625em) {
   .content__1-3 .content_main {
     display: inline-block;
@@ -5089,6 +5096,10 @@ a.focus .summary_header {
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content_main,
+  .content_sidebar {
+    padding: 2em 0;
   }
 }
 .content__bleedbar .content_sidebar {

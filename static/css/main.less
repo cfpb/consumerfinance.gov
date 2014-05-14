@@ -55,6 +55,10 @@ img {
 .footer .demo-placeholder {
     // Temporary styling to bring in line with main columns.
     margin-left: (@gutter-width / 2);
+
+    .u-respond-to-range(600px, 800px, {
+        margin-left: @gutter-width;
+    });
 }
 
 // Set up standard content area layouts
@@ -80,6 +84,11 @@ img {
             }
         }
     }
+
+    .content_main,
+    .content_sidebar {
+        padding: 2em 0;
+    } 
 });
 // END .content
 
