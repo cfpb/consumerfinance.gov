@@ -43,8 +43,11 @@ img {
 
 .content_main,
 .content_sidebar {
-    .column(12);
-    padding: 2em 0;
+    padding: 2em (@gutter-width / 2);
+
+    .u-respond-to-min(600px, {
+        .column(12);
+    });
 }
 
 .header .demo-placeholder,
@@ -84,7 +87,8 @@ img {
 
     .content_sidebar {
         padding: 2em (@gutter-width / 2);
-        margin: 0 -(@gutter-width / 2);
+        // margin: 0 -(@gutter-width / 2);
+        // padding: 2em 0;
         background: @gray-10;
     }
 
