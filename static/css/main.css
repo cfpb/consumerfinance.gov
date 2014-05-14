@@ -4410,9 +4410,34 @@ img {
             <div class="post_body">
                 <aside class="post_inset line-container">
                     <div class="line-container_body">
-                        <h3>
+                        <h4>
                             Final list of rural and underserved counties
-                        </h3>
+                        </h4>
+                        <p>
+                            View or download the list in any of these formats:
+                        </p>
+                        <ul class="list list__unstyled list__horizontal">
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    CSV
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    XLS
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    PDF <i class="cf-icon cf-icon-pdf"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="line-container_body">
+                        <h4>
+                            Final list of rural and underserved counties
+                        </h4>
                         <p>
                             View or download the list in any of these formats:
                         </p>
