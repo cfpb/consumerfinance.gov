@@ -246,12 +246,6 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Default example</h3>
           <section class="docs-pattern_pattern">
-<span class="share-icon">
-    <i class="cf-icon cf-icon-email-social-square"></i>
-    <span class="visually-hidden">
-        Share by email
-    </span>
-</span>
 <a class="share-icon" href="#">
     <i class="cf-icon cf-icon-email-social-square"></i>
     <span class="visually-hidden">
@@ -261,13 +255,7 @@
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;span class=&quot;share-icon&quot;&gt;
-    &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
-    &lt;span class=&quot;visually-hidden&quot;&gt;
-        Share by email
-    &lt;/span&gt;
-&lt;/span&gt;
-&lt;a class=&quot;share-icon&quot; href=&quot;#&quot;&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;share-icon&quot; href=&quot;#&quot;&gt;
     &lt;i class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/i&gt;
     &lt;span class=&quot;visually-hidden&quot;&gt;
         Share by email
@@ -291,43 +279,39 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .share-icon {
-  color: #43484e;
   font-size: 1.625em;
   line-height: 1;
-}
-
-.share-icon + .share-icon {
-  margin-left: 0.07692308em;
-}
-
-a.share-icon {
   color: #43484e;
   border-bottom-color: #0072ce;
   border-bottom-width: 0 !important;
 }
 
-a.share-icon:visited,
-a.share-icon.visited {
+.share-icon:visited,
+.share-icon.visited {
   border-bottom-color: #005e5d;
   color: #43484e;
 }
 
-a.share-icon:hover,
-a.share-icon.hover {
+.share-icon:hover,
+.share-icon.hover {
   border-bottom-color: #7fb8e6;
   color: #328ed8;
 }
 
-a.share-icon:focus,
-a.share-icon.focus {
+.share-icon:focus,
+.share-icon.focus {
   border-bottom-color: #0072ce;
   color: #328ed8;
 }
 
-a.share-icon:active,
-a.share-icon.active {
+.share-icon:active,
+.share-icon.active {
   border-bottom-color: #002d72;
   color: #43484e;
+}
+
+.share-icon + .share-icon {
+  margin-left: 0.07692308em;
 }
 </code></pre>
       </div>

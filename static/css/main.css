@@ -4171,12 +4171,6 @@ img {
   patterns:
     - name: Default example
       markup: |
-        <span class="share-icon">
-            <i class="cf-icon cf-icon-email-social-square"></i>
-            <span class="visually-hidden">
-                Share by email
-            </span>
-        </span>
         <a class="share-icon" href="#">
             <i class="cf-icon cf-icon-email-social-square"></i>
             <span class="visually-hidden">
@@ -4196,37 +4190,34 @@ img {
     - cfgov-misc
 */
 .share-icon {
-  color: #43484e;
   font-size: 1.625em;
   line-height: 1;
-}
-.share-icon + .share-icon {
-  margin-left: 0.07692308em;
-}
-a.share-icon {
   color: #43484e;
   border-bottom-color: #0072ce;
   border-bottom-width: 0 !important;
 }
-a.share-icon:visited,
-a.share-icon.visited {
+.share-icon:visited,
+.share-icon.visited {
   border-bottom-color: #005e5d;
   color: #43484e;
 }
-a.share-icon:hover,
-a.share-icon.hover {
+.share-icon:hover,
+.share-icon.hover {
   border-bottom-color: #7fb8e6;
   color: #328ed8;
 }
-a.share-icon:focus,
-a.share-icon.focus {
+.share-icon:focus,
+.share-icon.focus {
   border-bottom-color: #0072ce;
   color: #328ed8;
 }
-a.share-icon:active,
-a.share-icon.active {
+.share-icon:active,
+.share-icon.active {
   border-bottom-color: #002d72;
   color: #43484e;
+}
+.share-icon + .share-icon {
+  margin-left: 0.07692308em;
 }
 /* topdoc
   name: Line container
