@@ -3599,6 +3599,19 @@ img {
           .u-link__colors-base(@c, @v, @h, @f, @a); we encourage you to use
           .u-link__colors(@c, @v, @h, @f, @a) to promote consistency."
     - codenotes:
+        - .u-link__colors(@c, @v, @h, @f, @a, @bc, @bv, @bh, @bf, @ba);
+      notes:
+        - "Allows you to color text and the bottom border separately."
+        - "The first five colors in 'love/hate' mnemonic order will color text
+          for the :link, :visited, :hover, :focus, and :active states
+          respectively. The last five colors in 'love/hate' mnemonic order will
+          color the bottom border for the :link, :visited, :hover, :focus, and
+          :active states respectively."
+        - "Even though this mixin is basically the same as
+          .u-link__colors-base(@c, @v, @h, @f, @a, @bc, @bv, @bh, @bf, @ba); we
+          encourage you to use .u-link__colors(@c, @v, @h, @f, @a, @bc, @bv, @bh, @bf, @ba)
+          to promote consistency."
+    - codenotes:
         - .u-link__colors-base(@c, @v, @h, @f, @a);
       notes:
         - "This is the base mixin that all .u-link__colors() mixins use. Please
