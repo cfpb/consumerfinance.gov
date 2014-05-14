@@ -3525,7 +3525,7 @@ img {
       markup: |
         <h1>
             <a href="#">
-                <i class="cf-icon cf-icon-twitter-square"></i>
+                <span class="cf-icon cf-icon-twitter-square"></span>
                 <span class="visually-hidden">Share by email</span>
             </a>
         </h1>
@@ -3910,7 +3910,7 @@ img {
     - name: Default category slug
       markup: |
         <a href="#" class="category-slug">
-            <i class="cf-icon cf-icon-credit-card"></i>
+            <span class="cf-icon cf-icon-credit-card"></span>
             Consumer finance
         </a>
       notes:
@@ -4005,7 +4005,7 @@ img {
                 Nov 4, 2013
             </span>
             <a href="#" class="meta-header_left category-slug">
-                <i class="cf-icon cf-icon-credit-card"></i>
+                <span class="cf-icon cf-icon-credit-card"></span>
                 Consumer finance
             </a>
         </div>
@@ -4028,7 +4028,7 @@ img {
       markup: |
         <div class="meta-header">
             <a href="#" class="meta-header_right category-slug">
-                <i class="cf-icon cf-icon-credit-card"></i>
+                <span class="cf-icon cf-icon-credit-card"></span>
             </a>
             <span class="meta-header_left date">
                 Nov 4, 2013
@@ -4037,7 +4037,7 @@ img {
         <br>
         <div class="meta-header">
             <a href="#" class="meta-header_left category-slug">
-                <i class="cf-icon cf-icon-credit-card"></i>
+                <span class="cf-icon cf-icon-credit-card"></span>
                 Consumer finance
             </a>
         </div>
@@ -4202,7 +4202,7 @@ img {
     - name: Default example
       markup: |
         <a class="share-icon" href="#">
-            <i class="cf-icon cf-icon-email-social-square"></i>
+            <span class="cf-icon cf-icon-email-social-square"></span>
             <span class="visually-hidden">
                 Share by email
             </span>
@@ -4354,7 +4354,7 @@ img {
         <article class="post">
             <header>
                 <a href="#" class="post_slug category-slug">
-                    <i class="cf-icon cf-icon-help"></i>
+                    <span class="cf-icon cf-icon-help"></span>
                     Announcements &amp; updates
                 </a>
                 <h1 class="post_header">
@@ -4371,25 +4371,25 @@ img {
                 <ul class="post_share list__horizontal">
                     <li class="list_item">
                         <a class="share-icon" href="#">
-                            <i class="cf-icon cf-icon-email-social-square"></i>
+                            <span class="cf-icon cf-icon-email-social-square"></span>
                             <span class="visually-hidden">Share by email</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
-                            <i class="cf-icon cf-icon-facebook-square"></i>
+                            <span class="cf-icon cf-icon-facebook-square"></span>
                             <span class="visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
-                            <i class="cf-icon cf-icon-twitter-square"></i>
+                            <span class="cf-icon cf-icon-twitter-square"></span>
                             <span class="visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
-                            <i class="cf-icon cf-icon-linkedin-square"></i>
+                            <span class="cf-icon cf-icon-linkedin-square"></span>
                             <span class="visually-hidden">Share on LinkedIn</span>
                         </a>
                     </li>
@@ -4408,6 +4408,76 @@ img {
                 </div>
             </header>
             <div class="post_body">
+                <aside class="post_inset line-container">
+                    <div class="line-container_body">
+                        <h4>
+                            Final list of rural and underserved counties
+                        </h4>
+                        <p>
+                            View or download the list in any of these formats:
+                        </p>
+                        <ul class="list list__unstyled list__horizontal">
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    CSV
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    XLS
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    PDF <span class="cf-icon cf-icon-pdf"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="line-container_body">
+                        <h4>
+                            Final list of rural and underserved counties
+                        </h4>
+                        <p>
+                            View or download the list in any of these formats:
+                        </p>
+                        <ul class="list list__unstyled list__horizontal">
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    CSV
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    XLS
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link" href="#">
+                                    PDF <span class="cf-icon cf-icon-pdf"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -4421,12 +4491,17 @@ img {
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <aside class="post_inset line-container">
-                    <div class="line-container_body">
-                        <p class="pull-quote">
+                    <div class="line-container_body pull-quote">
+                        <div class="pull-quote_body">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                             Cum corrupti tempora nam nihil qui mollitia consectetur
                             corporis nemo culpa dolorum!
-                        </p>
+                        </div>
+                        <footer>
+                            <cite class="pull-quote_citation">
+                                - Author Name
+                            </cite>
+                        </footer>
                     </div>
                 </aside>
                 <p>
@@ -4517,6 +4592,29 @@ img {
                         consequatur itaque officiis debitis quisquam! Provident!
                     </p>
                 </blockquote>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                </ul>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -4700,6 +4798,7 @@ img {
   .post_inset {
     float: right;
     width: 15.625em;
+    margin-top: 0.3125em;
     margin-left: 1.875em;
   }
 }
@@ -4871,19 +4970,19 @@ a.focus .summary_header {
     - name: Blog slugs
       markup: |
         <a href="#" class="category-slug">
-            <i class="cf-icon cf-icon-help"></i>
+            <span class="cf-icon cf-icon-help"></span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
-            <i class="cf-icon cf-icon-help"></i>
+            <span class="cf-icon cf-icon-help"></span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
-            <i class="cf-icon cf-icon-help"></i>
+            <span class="cf-icon cf-icon-help"></span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
-            <i class="cf-icon cf-icon-help"></i>
+            <span class="cf-icon cf-icon-help"></span>
             Innovation & data
         </a>
       notes:
@@ -4913,7 +5012,7 @@ a.focus .summary_header {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="meta-header_left category-slug">
-                    <i class="cf-icon cf-icon-help"></i>
+                    <span class="cf-icon cf-icon-help"></span>
                     Consumer information
                 </a>
             </div>
@@ -4943,7 +5042,7 @@ a.focus .summary_header {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="meta-header_left category-slug">
-                    <i class="cf-icon cf-icon-help"></i>
+                    <span class="cf-icon cf-icon-help"></span>
                     Consumer information
                 </a>
             </div>
