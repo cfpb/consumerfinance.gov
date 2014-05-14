@@ -4793,6 +4793,7 @@ img {
 }
 .post_inset {
   margin: 1.875em 0;
+  color: #101820;
 }
 @media only all and (min-width: 48.0625em) {
   .post_inset {
