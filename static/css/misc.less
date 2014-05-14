@@ -148,12 +148,6 @@
   patterns:
     - name: Default example
       markup: |
-        <span class="share-icon">
-            <i class="cf-icon cf-icon-email-social-square"></i>
-            <span class="visually-hidden">
-                Share by email
-            </span>
-        </span>
         <a class="share-icon" href="#">
             <i class="cf-icon cf-icon-email-social-square"></i>
             <span class="visually-hidden">
@@ -177,14 +171,11 @@
     color: @darkgray;
     font-size: unit(26px / @base-font-size-px, em);
     line-height: 1;
+    .u-link__colors(@darkgray, @pacific-80);
+    .u-link__no-border();
 
     & + & {
         margin-left: unit(2px / 26px, em);
-    }
-
-    a& {
-        .u-link__colors(@darkgray, @pacific-80);
-        .u-link__no-border();
     }
 }
 
