@@ -4521,6 +4521,8 @@ img {
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
+  display: block;
+  margin-bottom: 0.55555556em;
   color: #101820;
   border-bottom-color: #0072ce;
 }
@@ -4551,6 +4553,10 @@ img {
 .category-slug.active {
   border-bottom-color: #002d72;
   color: #101820;
+}
+
+.category-slug {
+  margin-bottom: 0.22222222em;
 }
 
 /* topdoc
@@ -5320,6 +5326,7 @@ img {
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
+  margin-bottom: 0.84615385em;
 }
 
 .post_header em,
@@ -5354,6 +5361,7 @@ img {
   margin-bottom: 0.47058824em;
   font-size: 2.125em;
   line-height: 1.29411765;
+  margin-bottom: 0.52941176em;
 }
 
 .post_header em,
