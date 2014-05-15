@@ -4500,10 +4500,13 @@ img {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-credit-card"></span>
+            <span class="visually-hidden">Category:</span>
             Consumer finance
         </a>
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
+        - "We suggest using a .visually-hidden element to add more context for
+          screen readers."
   tags:
     - cfgov-meta
 */
@@ -5646,18 +5649,22 @@ a.focus .summary_header {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Innovation & data
         </a>
       notes:
