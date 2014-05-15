@@ -35,43 +35,82 @@
 */
 
 .tags {
+    @bp: 480px;
 
-    position: relative;
-    // 58px here comes from the .tags_header width.
-    padding-left: unit((58px + 8px) / @base-font-size-px, em);
+    .u-respond-to-min(@bp, {
+        position: relative;
+        // 58px here comes from the .tags_header width.
+        padding-left: unit((58px + 8px) / @base-font-size-px, em);
+    });
 
     &_header {
-        position: absolute;
-        left: 0;
-        width: unit(58px / @font-size, em);
-
         .h4();
+        // Bottom margin is eyeballed to 20px from the baseline.
+        margin: 0 0 unit(16px / @font-size, em);
         color: @black;
+
+        .u-respond-to-min(@bp, {
+            position: absolute;
+            left: 0;
+            width: unit(58px / @font-size, em);
+            margin: 0;
+        });
     }
 
     &_list {
-        padding: 0;
+        padding-left: 0;
+        border-top: 1px dotted @gold-80;
+        list-style-type: none;
+
+        .u-respond-to-min(@bp, {
+            border-top: none;
+        });
     }
 
     &_tag {
-        .u-inline-block();
-        .h6();
-        margin-right: unit(14px / @font-size, em);
+        border-bottom: 1px dotted @gold-80;
+        line-height: 1;
 
-        &:before {
-            content: "\2022";
-            display: inline-block;
-            border-bottom: 1px solid transparent;
-            color: @gold-80;
-            font-size: unit(17px / @font-size, em);
-            line-height: 1;
-            vertical-align: middle;
-        }
+        .u-respond-to-min(@bp, {
+            .u-inline-block();
+            margin-right: unit(15px / @base-font-size-px, em);
+            border-bottom: none;
+        });
     }
 
     &_link {
+        @bullet-font-size: 17px;
+
+        .h6();
+        position: relative;
+        display: block;
+        // Eyeballed to 15px including line height.
+        padding: 12px 0 8px;
+        margin: 0 0 0 unit(@bullet-font-size / @font-size, em);
+        // Match the height of the bullet.
+        line-height: unit(@bullet-font-size / @font-size, em);
+
         .u-link__colors(@gray, @gray, @gray, @gray, @gray,
                         @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
+
+        .u-respond-to-max((@bp - 1), {
+            .u-link__no-border();
+        });
+
+        .u-respond-to-min(@bp, {
+            padding: 0;
+        });
+
+        &:before {
+            content: "\2022";
+            position: absolute;
+            left: -1em;
+            // Display block + width makes this whole area clickable.
+            display: block;
+            width: 1em;
+            color: @gold-80;
+            font-size: unit(@bullet-font-size / @font-size, em);
+        }
     }
     
 }
