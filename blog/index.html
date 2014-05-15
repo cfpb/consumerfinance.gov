@@ -47,10 +47,10 @@
             {% endfor %}
 
     {% for pagenum in range(1, posts.pages + 1) %}
-        {% if pagenum != posts.current_page %} 
-            <a href="{{ posts.url_for_page(pagenum) }}">{{ pagenum }}</a> 
+        {% if pagenum != posts.current_page %}
+            <a href="{{ posts.url_for_page(pagenum) }}">{{ pagenum }}</a>
         {% else %}
-            {{ pagenum }} 
+            {{ pagenum }}
         {% endif %}
     {% endfor %}
 
