@@ -3817,6 +3817,36 @@ img {
                         College loans
                     </a>
                 </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        College loans
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        College loans
+                    </a>
+                </li>
             </ul>
         </div> 
   tags:
@@ -3868,6 +3898,7 @@ img {
   .tags_tag {
     display: inline-block;
     margin-right: 0.9375em;
+    margin-bottom: 0.5em;
     border-bottom: none;
   }
   .lt-ie8 .tags_tag {
