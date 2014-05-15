@@ -3076,10 +3076,9 @@ ul,
 ol,
 dl,
 table,
-blockquote,
 figure {
   margin-top: 0;
-  margin-bottom: 0.75em;
+  margin-bottom: 1.25em;
 }
 /* topdoc
   name: Default link
@@ -3249,8 +3248,12 @@ ul {
     - cf-typography
 */
 blockquote {
-  margin-top: 2.5em;
-  margin-bottom: 2.5em;
+  margin: 1.25em;
+}
+@media only all and (min-width: 37.5em) {
+  blockquote {
+    margin: 1.75em 2.5em;
+  }
 }
 /* topdoc
   name: Pull quote
