@@ -22,8 +22,38 @@
           <h3 class="docs-pattern_header">Default example</h3>
           <section class="docs-pattern_pattern">
 <div class="tags">
-    <h4 class="tags_header">Tags:</h4>
+    <h4 class="tags_header">Topics:</h4>
     <ul class="tags_list">
+        <li class="tags_tag">
+            <a href="#" class="tags_link">
+                Students
+            </a>
+        </li>
+        <li class="tags_tag">
+            <a href="#" class="tags_link">
+                Consumers
+            </a>
+        </li>
+        <li class="tags_tag">
+            <a href="#" class="tags_link">
+                College loans
+            </a>
+        </li>
+        <li class="tags_tag">
+            <a href="#" class="tags_link">
+                Students
+            </a>
+        </li>
+        <li class="tags_tag">
+            <a href="#" class="tags_link">
+                Consumers
+            </a>
+        </li>
+        <li class="tags_tag">
+            <a href="#" class="tags_link">
+                College loans
+            </a>
+        </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
                 Students
@@ -45,8 +75,38 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;tags&quot;&gt;
-    &lt;h4 class=&quot;tags_header&quot;&gt;Tags:&lt;/h4&gt;
+    &lt;h4 class=&quot;tags_header&quot;&gt;Topics:&lt;/h4&gt;
     &lt;ul class=&quot;tags_list&quot;&gt;
+        &lt;li class=&quot;tags_tag&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                Students
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;tags_tag&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                Consumers
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;tags_tag&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                College loans
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;tags_tag&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                Students
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;tags_tag&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                Consumers
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;tags_tag&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                College loans
+            &lt;/a&gt;
+        &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
                 Students
@@ -69,8 +129,12 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
+.tags {
+  position: relative;
+  padding-left: 4.125em;
+}
+
 .tags_header {
-  float: left;
   margin-top: 0;
   margin-bottom: 0.27777778em;
   font-size: 1.125em;
@@ -78,6 +142,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
+  margin: 0 0 0.88888889em;
   color: #101820;
 }
 
@@ -85,8 +150,40 @@
   font-weight: normal !important;
 }
 
+.tags_header {
+  position: absolute;
+  left: 0;
+  width: 3.22222222em;
+  margin: 0;
+}
+
+.tags_list {
+  padding-left: 0;
+  border-top: 1px dotted #ffb149;
+  list-style-type: none;
+}
+
+.tags_list {
+  border-top: none;
+}
+
+.tags_tag {
+  border-bottom: 1px dotted #ffb149;
+  line-height: 1;
+}
+
 .tags_tag {
   display: inline-block;
+  margin-right: 0.9375em;
+  margin-bottom: 0.5em;
+  border-bottom: none;
+}
+
+.lt-ie8 .tags_tag {
+  display: inline;
+}
+
+.tags_link {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -96,30 +193,17 @@
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  margin-left: 1.16666667em;
-}
-
-.lt-ie8 .tags_tag {
-  display: inline;
-}
-
-.lt-ie9 .tags_tag {
-  font-weight: normal !important;
-}
-
-.tags_tag:before {
-  content: &quot;\2022&quot;;
-  display: inline-block;
-  border-bottom: 1px solid transparent;
-  color: #ffb149;
-  font-size: 1.41666667em;
-  line-height: 1;
-  vertical-align: middle;
-}
-
-.tags_link {
+  position: relative;
+  display: block;
+  padding: 12px 0 8px;
+  margin: 0 0 0 1.41666667em;
+  line-height: 1.41666667em;
   color: #75787b;
   border-bottom-color: #ffb149;
+}
+
+.lt-ie9 .tags_link {
+  font-weight: normal !important;
 }
 
 .tags_link:visited,
@@ -144,6 +228,20 @@
 .tags_link.active {
   border-bottom-color: #ffb149;
   color: #75787b;
+}
+
+.tags_link {
+  padding: 0;
+}
+
+.tags_link:before {
+  content: &quot;\2022&quot;;
+  position: absolute;
+  left: -1em;
+  display: block;
+  width: 1em;
+  color: #ffb149;
+  font-size: 1.41666667em;
 }
 </code></pre>
       </div>
@@ -196,6 +294,7 @@
           <section class="docs-pattern_pattern">
 <a href="#" class="category-slug">
     <span class="cf-icon cf-icon-credit-card"></span>
+    <span class="visually-hidden">Category:</span>
     Consumer finance
 </a>
 
@@ -203,10 +302,12 @@
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
     &lt;span class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;visually-hidden&quot;&gt;Category:&lt;/span&gt;
     Consumer finance
 &lt;/a&gt;</code></pre>
             <ul class="docs-notes">
               <li>Always use a link element or else you will get unwanted hover styles.</li>
+              <li>We suggest using a .visually-hidden element to add more context for screen readers.</li>
             </ul>
           </footer>
         </div>
