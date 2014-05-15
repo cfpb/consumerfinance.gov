@@ -4084,6 +4084,19 @@ img {
           .u-link__colors-base(@c, @v, @h, @f, @a); we encourage you to use
           .u-link__colors(@c, @v, @h, @f, @a) to promote consistency."
     - codenotes:
+        - .u-link__colors(@c, @v, @h, @f, @a, @bc, @bv, @bh, @bf, @ba);
+      notes:
+        - "Allows you to color text and the bottom border separately."
+        - "The first five colors in 'love/hate' mnemonic order will color text
+          for the :link, :visited, :hover, :focus, and :active states
+          respectively. The last five colors in 'love/hate' mnemonic order will
+          color the bottom border for the :link, :visited, :hover, :focus, and
+          :active states respectively."
+        - "Even though this mixin is basically the same as
+          .u-link__colors-base(@c, @v, @h, @f, @a, @bc, @bv, @bh, @bf, @ba); we
+          encourage you to use .u-link__colors(@c, @v, @h, @f, @a, @bc, @bv, @bh, @bf, @ba)
+          to promote consistency."
+    - codenotes:
         - .u-link__colors-base(@c, @v, @h, @f, @a);
       notes:
         - "This is the base mixin that all .u-link__colors() mixins use. Please
@@ -4280,8 +4293,38 @@ img {
     - name: Default example
       markup: |
         <div class="tags">
-            <h4 class="tags_header">Tags:</h4>
+            <h4 class="tags_header">Topics:</h4>
             <ul class="tags_list">
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        College loans
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Students
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        Consumers
+                    </a>
+                </li>
+                <li class="tags_tag">
+                    <a href="#" class="tags_link">
+                        College loans
+                    </a>
+                </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
                         Students
@@ -4303,8 +4346,12 @@ img {
     - cfgov-meta
 */
 
+.tags {
+  position: relative;
+  padding-left: 4.125em;
+}
+
 .tags_header {
-  float: left;
   margin-top: 0;
   margin-bottom: 0.27777778em;
   font-size: 1.125em;
@@ -4312,6 +4359,7 @@ img {
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
+  margin: 0 0 0.88888889em;
   color: #101820;
 }
 
@@ -4319,8 +4367,40 @@ img {
   font-weight: normal !important;
 }
 
+.tags_header {
+  position: absolute;
+  left: 0;
+  width: 3.22222222em;
+  margin: 0;
+}
+
+.tags_list {
+  padding-left: 0;
+  border-top: 1px dotted #ffb149;
+  list-style-type: none;
+}
+
+.tags_list {
+  border-top: none;
+}
+
+.tags_tag {
+  border-bottom: 1px dotted #ffb149;
+  line-height: 1;
+}
+
 .tags_tag {
   display: inline-block;
+  margin-right: 0.9375em;
+  margin-bottom: 0.5em;
+  border-bottom: none;
+}
+
+.lt-ie8 .tags_tag {
+  display: inline;
+}
+
+.tags_link {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -4330,30 +4410,17 @@ img {
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  margin-left: 1.16666667em;
-}
-
-.lt-ie8 .tags_tag {
-  display: inline;
-}
-
-.lt-ie9 .tags_tag {
-  font-weight: normal !important;
-}
-
-.tags_tag:before {
-  content: "\2022";
-  display: inline-block;
-  border-bottom: 1px solid transparent;
-  color: #ffb149;
-  font-size: 1.41666667em;
-  line-height: 1;
-  vertical-align: middle;
-}
-
-.tags_link {
+  position: relative;
+  display: block;
+  padding: 12px 0 8px;
+  margin: 0 0 0 1.41666667em;
+  line-height: 1.41666667em;
   color: #75787b;
   border-bottom-color: #ffb149;
+}
+
+.lt-ie9 .tags_link {
+  font-weight: normal !important;
 }
 
 .tags_link:visited,
@@ -4378,6 +4445,20 @@ img {
 .tags_link.active {
   border-bottom-color: #ffb149;
   color: #75787b;
+}
+
+.tags_link {
+  padding: 0;
+}
+
+.tags_link:before {
+  content: "\2022";
+  position: absolute;
+  left: -1em;
+  display: block;
+  width: 1em;
+  color: #ffb149;
+  font-size: 1.41666667em;
 }
 
 /* topdoc
@@ -4419,10 +4500,13 @@ img {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-credit-card"></span>
+            <span class="visually-hidden">Category:</span>
             Consumer finance
         </a>
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
+        - "We suggest using a .visually-hidden element to add more context for
+          screen readers."
   tags:
     - cfgov-meta
 */
@@ -4915,7 +4999,7 @@ img {
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
                     </span>
                     <span class="post_date date">
-                        Mon 32, 3001
+                        Jan 22, 2014
                     </span>
                 </div>
                 <ul class="post_share list__horizontal">
@@ -5087,7 +5171,7 @@ img {
                 <aside class="post_inset line-container">
                     <h2 class="line-container_pullup header-slug">
                         <span class="header-slug_inner">
-                            Further reading
+                            More information
                         </span>
                     </h2>
                     <div class="line-container_body">
@@ -5186,7 +5270,7 @@ img {
             </div>
             <footer>
                 <div class="tags">
-                    <h4 class="tags_header">Tags:</h4>
+                    <h4 class="tags_header">Topics:</h4>
                     <ul class="tags_list">
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
@@ -5361,6 +5445,7 @@ img {
 
 .post_inset {
   margin: 1.875em 0;
+  color: #101820;
 }
 
 .post_inset {
@@ -5564,18 +5649,22 @@ a.focus .summary_header {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
+            <span class="visually-hidden">Category:</span>
             Innovation & data
         </a>
       notes:
