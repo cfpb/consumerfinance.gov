@@ -137,6 +137,9 @@
             content: "\2022";
             position: absolute;
             left: -1em;
+            .lt-ie9 {
+                left: @bullet-font-size * -1;
+            }
             // Display block + width makes this whole area clickable.
             display: block;
             width: 1em;

@@ -4751,6 +4751,10 @@ img {
   font-size: 1.41666667em;
 }
 
+.tags_link:before .lt-ie9 {
+  left: -17px;
+}
+
 /* topdoc
   name: Date
   family: cfgov-meta
