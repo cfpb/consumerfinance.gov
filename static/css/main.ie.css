@@ -3754,6 +3754,20 @@ blockquote {
           external work."
         - "Since a pull quote is an excerpt and repeats content from the
           article it's contained within you should use the aside element."
+    - name: Large pull quote
+      markup: |
+        <aside class="pull-quote pull-quote__large">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+            <footer>
+                <cite class="pull-quote_citation">
+                    - Author Name
+                </cite>
+            <footer>
+        </aside>
   tags:
     - cf-typography
 */
@@ -3808,6 +3822,41 @@ blockquote {
 }
 
 .lt-ie9 .pull-quote_citation {
+  font-weight: normal !important;
+}
+
+.pull-quote__large .pull-quote_body {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.46153846em;
+}
+
+.pull-quote__large .pull-quote_body em,
+.pull-quote__large .pull-quote_body i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .pull-quote__large .pull-quote_body em,
+.lt-ie9 .pull-quote__large .pull-quote_body i {
+  font-style: normal !important;
+}
+
+.pull-quote__large .pull-quote_body strong,
+.pull-quote__large .pull-quote_body b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .pull-quote__large .pull-quote_body strong,
+.lt-ie9 .pull-quote__large .pull-quote_body b {
   font-weight: normal !important;
 }
 
