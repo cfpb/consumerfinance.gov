@@ -21,7 +21,7 @@
                     <div class="demo-placeholder">filters placeholder</div>
                 </div>
 
-            {% set posts = queries.posts.search_with_url_arguments(size=5) %}
+            {% set posts = queries.posts.search_with_url_arguments(size=3) %}
 
             {% for post in posts %}
                 <article class="post-preview">
@@ -46,13 +46,40 @@
                 </article>
             {% endfor %}
 
-    {% for pagenum in range(1, posts.pages + 1) %}
-        {% if pagenum != posts.current_page %}
-            <a href="{{ posts.url_for_page(pagenum) }}">{{ pagenum }}</a>
-        {% else %}
-            {{ pagenum }}
-        {% endif %}
-    {% endfor %}
+                <nav class="pagination">
+                {% if posts.current_page > 1 %}
+                    <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
+                {% else %}
+                    <a class="btn btn-disabled pagination_prev">
+                {% endif %}
+                        <span class="btn-icon-left cf-icon cf-icon-left"></span> Previous
+                    </a>
+                    <form class="pagination_form">
+                        <label class="pagination_label" for="pagination_current-page">
+                            Page
+                        </label>
+                        <input class="pagination_current-page"
+                               id="pagination_current-page"
+                               name="page"
+                               type="number"
+                               min="1"
+                               max="149"
+                               value="{{ posts.current_page }}" />
+                        <label class="pagination_label" for="pagination_current-page">
+                            of {{ posts.pages }}
+                        </label>
+                        <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
+                            Go
+                        </button>
+                    </form>
+                {% if posts.current_page < posts.pages %}
+                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
+                {% else %}
+                    <a class="btn btn-disabled pagination_next">
+                {% endif %}
+                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
+                    </a>
+                </nav>
 
             </section><!-- END .content_main -->
 
