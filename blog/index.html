@@ -43,13 +43,20 @@
                 </article>
             {% endfor %}
 
-                <nav class="post-pagination pagination">
+                <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
                 {% if posts.current_page > 1 %}
                     <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
                 {% else %}
                     <a class="btn btn-disabled pagination_prev">
                 {% endif %}
                         <span class="btn-icon-left cf-icon cf-icon-left"></span> Previous
+                    </a>
+                {% if posts.current_page < posts.pages %}
+                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
+                {% else %}
+                    <a class="btn btn-disabled pagination_next">
+                {% endif %}
+                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
                     </a>
                     <form class="pagination_form">
                         <label class="pagination_label" for="pagination_current-page">
@@ -69,13 +76,6 @@
                             Go
                         </button>
                     </form>
-                {% if posts.current_page < posts.pages %}
-                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
-                {% else %}
-                    <a class="btn btn-disabled pagination_next">
-                {% endif %}
-                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
-                    </a>
                 </nav>
 
             </section><!-- END .content_main -->
