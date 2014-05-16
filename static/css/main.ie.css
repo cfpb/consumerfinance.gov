@@ -5696,7 +5696,7 @@ img {
   color: #101820;
 }
 
-.post_inset {
+.post_inset__right {
   float: right;
   width: 15.625em;
   margin-top: 0.3125em;
