@@ -53,7 +53,7 @@
                         </a>
                     </li>
                 </ul>
-                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
+                <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
                 <div class="line-container">
                     <div class="line-container_body">
                         <p class="post_summary">
@@ -412,6 +412,11 @@
             width: unit(250px / @base-font-size-px, em);
             margin-top: unit(5px / @base-font-size-px, em);
             margin-left: unit(@gutter-width / @base-font-size-px, em);
+        });
+        .u-respond-to-min(1200px, {
+            & {
+                margin-right: -@gutter-width;
+            }
         });
     }
 }

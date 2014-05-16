@@ -72,6 +72,17 @@
     } 
 }); // END min-width 801 block
 
+.u-respond-to-min(1200px, {
+    .content {
+        &__2-1 {
+            .content_main {
+                .column(7, @total-columns, 0, 1);
+            }
+        }
+    }
+});
+
+
 .content__bleedbar {
 
     .content_sidebar {
