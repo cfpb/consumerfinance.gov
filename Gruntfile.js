@@ -264,21 +264,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * grunt-cfpb-internal: https://github.com/cfpb/grunt-cfpb-internal
-     * 
-     * Some internal CFPB tasks.
-     */
-    'build-cfpb': {
-      prod: {
-        options: {
-          commit: false,
-          tag: false,
-          push: false
-        }
-      }
-    },
-
-    /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
@@ -346,7 +331,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-banner');
   grunt.loadNpmTasks('grunt-bower-task');
-  grunt.loadNpmTasks('grunt-cfpb-internal');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -355,7 +339,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-legacssy');
-  grunt.loadNpmTasks('grunt-release');
   grunt.loadNpmTasks('grunt-topdoc');
 
   /**
