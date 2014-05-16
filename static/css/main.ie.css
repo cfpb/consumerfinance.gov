@@ -4690,6 +4690,7 @@ img {
 }
 
 .tags_link {
+  position: relative;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -4699,7 +4700,6 @@ img {
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  position: relative;
   display: block;
   padding: 12px 0 8px;
   margin: 0 0 0 1.41666667em;
@@ -4740,8 +4740,7 @@ img {
   padding: 0;
 }
 
-.tags_link:before {
-  content: "\2022";
+.tags_bullet {
   position: absolute;
   left: -1em;
   display: block;
@@ -4751,7 +4750,7 @@ img {
   font-size: 1.41666667em;
 }
 
-.tags_link:before .lt-ie9 {
+.tags_bullet .lt-ie9 {
   left: -17px;
 }
 
