@@ -6004,7 +6004,7 @@ a.focus .summary_header {
 */
 
 .post-preview + .post-preview {
-  margin-bottom: 3.125em;
+  margin-top: 3.125em;
 }
 
 .post-pagination {
