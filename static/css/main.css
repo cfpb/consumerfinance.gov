@@ -5378,8 +5378,8 @@ a.focus .summary_header {
   tags:
     - cfgov-blog-docs
 */
-.post-preview + .post-preview {
-  margin-top: 50px;
+.post-preview {
+  margin-bottom: 50px;
 }
 /* topdoc
   name: EOF
