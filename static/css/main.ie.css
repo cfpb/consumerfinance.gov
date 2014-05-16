@@ -3064,14 +3064,14 @@ textarea {
     - name: Default pagination
       markup: |
         <nav class="pagination">
-            <a class="btn pagination_prev" href="#"><i class="btn-icon-left icon-chevron-left"></i> Previous</a>
+            <a class="btn pagination_prev" href="#"><span class="btn-icon-left cf-icon cf-icon-left"></span> Previous</a>
             <form class="pagination_form">
                 <label class="pagination_label" for="pagination_current-page">Page</label>
                 <input class="pagination_current-page" id="pagination_current-page" name="pagination_current-page" type="number" min="1" max="149" value="149" />
                 <label class="pagination_label" for="pagination_current-page">of 149</label>
                 <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">Go</button>
             </form>
-            <a class="btn pagination_next" href="#">Next <i class="btn-icon-right icon-chevron-right"></i></a>
+            <a class="btn pagination_next" href="#">Next <span class="btn-icon-right cf-icon cf-icon-right"></span></a>
         </nav>
     tags:
     - fj-buttons
@@ -3136,7 +3136,7 @@ textarea {
   font-weight: normal !important;
 }
 
-.pagination_current-page {
+input[type="number"].pagination_current-page {
   display: inline-block;
   vertical-align: middle;
   /* We need enough room for three digits and the number spinners for type="number" inputs */
@@ -3152,7 +3152,7 @@ textarea {
   text-align: right;
 }
 
-.lt-ie9 .pagination_current-page {
+.lt-ie9 input[type="number"].pagination_current-page {
   font-weight: normal !important;
 }
 
@@ -3160,6 +3160,30 @@ textarea {
   display: inline-block;
   vertical-align: middle;
   margin: 0 0 0 1em;
+}
+
+.pagination_form {
+  border-radius: 0.28571429em;
+}
+
+.pagination_prev {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.pagination_prev.btn,
+.pagination_prev.btn:link,
+.pagination_prev.btn:visited {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.pagination_next.btn,
+.pagination_next.btn:link,
+.pagination_next.btn:visited {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 /* topdoc
@@ -3514,10 +3538,9 @@ ul,
 ol,
 dl,
 table,
-blockquote,
 figure {
   margin-top: 0;
-  margin-bottom: 0.75em;
+  margin-bottom: 1.25em;
 }
 
 /* topdoc
@@ -3700,8 +3723,11 @@ ul {
 */
 
 blockquote {
-  margin-top: 2.5em;
-  margin-bottom: 2.5em;
+  margin: 1.25em;
+}
+
+blockquote {
+  margin: 1.75em 2.5em;
 }
 
 /* topdoc
