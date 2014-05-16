@@ -43,7 +43,7 @@
                 </article>
             {% endfor %}
 
-                <nav class="pagination">
+                <nav class="post-pagination pagination">
                 {% if posts.current_page > 1 %}
                     <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
                 {% else %}
