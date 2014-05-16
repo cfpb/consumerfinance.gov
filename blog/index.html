@@ -31,18 +31,15 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
+                            <span class="visually-hidden">Category:</span>
                             {{ post.category }}
                         </a>
                     </div>
-                    <div class="summary">
+                    <a class="summary" href="{{ post.permalink }}">
                         <h1 class="summary_header">{{ post.title }}</h1>
                         <p class="summary_text">{{ post.excerpt }}</p>
                         <p class="summary_byline">By {{ post.author }}</p>
-                        <a href="{{ post.permalink }}">
-                            Read more
-                            <span class="cf-icon cf-icon-right"></span>
-                        </a>
-                    </div>
+                    </a>
                 </article>
             {% endfor %}
 
