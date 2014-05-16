@@ -184,6 +184,7 @@
 }
 
 .tags_link {
+  position: relative;
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -193,7 +194,6 @@
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  position: relative;
   display: block;
   padding: 12px 0 8px;
   margin: 0 0 0 1.41666667em;
@@ -234,8 +234,7 @@
   padding: 0;
 }
 
-.tags_link:before {
-  content: &quot;\2022&quot;;
+.tags_bullet {
   position: absolute;
   left: -1em;
   display: block;
@@ -245,7 +244,7 @@
   font-size: 1.41666667em;
 }
 
-.tags_link:before .lt-ie9 {
+.tags_bullet .lt-ie9 {
   left: -17px;
 }
 </code></pre>
