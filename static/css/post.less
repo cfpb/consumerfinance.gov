@@ -372,12 +372,14 @@
     margin: unit(30px / @base-font-size-px, em) 0;
     color: @black;
 
-    .u-respond-to-min(769px, {
-        .u-right();
-        width: unit(250px / @base-font-size-px, em);
-        margin-top: unit(5px / @base-font-size-px, em);
-        margin-left: unit(@gutter-width / @base-font-size-px, em);
-    });
+    &__right {
+        .u-respond-to-min(769px, {
+            .u-right();
+            width: unit(250px / @base-font-size-px, em);
+            margin-top: unit(5px / @base-font-size-px, em);
+            margin-left: unit(@gutter-width / @base-font-size-px, em);
+        });
+    }
 }
 
 
