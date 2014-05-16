@@ -4749,8 +4749,8 @@ img {
   font-size: 1.41666667em;
 }
 
-.tags_bullet .lt-ie9 {
-  left: -17px;
+.tags_bullet .lt-ie8 {
+  top: 4px;
 }
 
 /* topdoc
