@@ -3854,6 +3854,31 @@ img {
     padding: 2em 0;
   }
 }
+@media only all and (min-width: 75em) {
+  .content__2-1 .content_main {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+    padding-right: 8.33333333%;
+  }
+  .ie .content__2-1 .content_main {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .content__2-1 .content_main {
+    display: inline;
+    *zoom: 1;
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .lt-ie8 .content__2-1 .content_main {
+    padding-right: 0;
+  }
+}
 .content__bleedbar .content_sidebar {
   padding: 2em 15px;
   background: #f1f2f2;
@@ -4740,7 +4765,7 @@ img {
                         </a>
                     </li>
                 </ul>
-                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
+                <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
                 <div class="line-container">
                     <div class="line-container_body">
                         <p class="post_summary">
@@ -5183,6 +5208,11 @@ img {
     width: 15.625em;
     margin-top: 0.3125em;
     margin-left: 1.875em;
+  }
+}
+@media only all and (min-width: 75em) {
+  .post_inset__right {
+    margin-right: -30px;
   }
 }
 /* topdoc
