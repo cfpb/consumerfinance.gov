@@ -187,9 +187,35 @@
                     </a>
                 </article>
 
-                <nav class="pagination">
-                    <div class="demo-placeholder">pagination placeholder</div>
+                <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
+                    <a class="btn pagination_prev" href="#">
+                        <span class="btn-icon-left cf-icon cf-icon-left"></span>
+                        Previous
+                    </a>
+                    <a class="btn pagination_next" href="#">
+                        Next
+                        <span class="btn-icon-right cf-icon cf-icon-right"></i>
+                    </a>
+                    <form class="pagination_form">
+                        <label class="pagination_label" for="pagination_current-page">
+                            Page
+                        </label>
+                        <input class="pagination_current-page"
+                               id="pagination_current-page"
+                               name="page"
+                               type="number"
+                               min="1"
+                               max="10"
+                               value="2" />
+                        <label class="pagination_label" for="pagination_current-page">
+                            of 10
+                        </label>
+                        <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
+                            Go
+                        </button>
+                    </form>
                 </nav>
+
             </section><!-- END .content_main -->
             <aside class="content_sidebar">
                 <section class="popular-stories">

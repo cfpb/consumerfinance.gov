@@ -117,7 +117,13 @@
 */
 
 .post-preview + .post-preview {
-    margin-top: 50px;
+    // Eyeballed to 60px
+    margin-top: unit(50px / @base-font-size-px, em);
+}
+
+.post-pagination {
+    // Eyeballed to 60px
+    margin: unit(54px / @base-font-size-px, em) 0 unit(28px / @base-font-size-px, em);
 }
 
 

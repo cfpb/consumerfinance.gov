@@ -30,29 +30,33 @@
                             {{ post.date | date("%b %d, %Y") }}
                         </span>
                         <a href="#" class="category-slug meta-header_left">
-                            <i class="cf-icon cf-icon-help"></i>
+                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="visually-hidden">Category:</span>
                             {{ post.category }}
                         </a>
                     </div>
-                    <div class="summary">
+                    <a class="summary" href="{{ post.permalink }}">
                         <h1 class="summary_header">{{ post.title }}</h1>
                         <p class="summary_text">{{ post.excerpt }}</p>
                         <p class="summary_byline">By {{ post.author }}</p>
-                        <a href="{{ post.permalink }}">
-                            Read more
-                            <i class="cf-icon cf-icon-right"></i>
-                        </a>
-                    </div>
+                    </a>
                 </article>
             {% endfor %}
 
-                <nav class="pagination">
+                <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
                 {% if posts.current_page > 1 %}
                     <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
                 {% else %}
                     <a class="btn btn-disabled pagination_prev">
                 {% endif %}
                         <span class="btn-icon-left cf-icon cf-icon-left"></span> Previous
+                    </a>
+                {% if posts.current_page < posts.pages %}
+                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
+                {% else %}
+                    <a class="btn btn-disabled pagination_next">
+                {% endif %}
+                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
                     </a>
                     <form class="pagination_form">
                         <label class="pagination_label" for="pagination_current-page">
@@ -63,7 +67,7 @@
                                name="page"
                                type="number"
                                min="1"
-                               max="149"
+                               max="{{ posts.pages }}"
                                value="{{ posts.current_page }}" />
                         <label class="pagination_label" for="pagination_current-page">
                             of {{ posts.pages }}
@@ -72,13 +76,6 @@
                             Go
                         </button>
                     </form>
-                {% if posts.current_page < posts.pages %}
-                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
-                {% else %}
-                    <a class="btn btn-disabled pagination_next">
-                {% endif %}
-                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
-                    </a>
                 </nav>
 
             </section><!-- END .content_main -->

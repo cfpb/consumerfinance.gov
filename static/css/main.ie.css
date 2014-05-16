@@ -4759,6 +4759,8 @@ img {
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
+  display: block;
+  margin-bottom: 0.55555556em;
   color: #101820;
   border-bottom-color: #0072ce;
 }
@@ -4789,6 +4791,10 @@ img {
 .category-slug.active {
   border-bottom-color: #002d72;
   color: #101820;
+}
+
+.category-slug {
+  margin-bottom: 0.22222222em;
 }
 
 /* topdoc
@@ -5558,6 +5564,7 @@ img {
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
+  margin-bottom: 0.84615385em;
 }
 
 .post_header em,
@@ -5592,6 +5599,7 @@ img {
   margin-bottom: 0.47058824em;
   font-size: 2.125em;
   line-height: 1.29411765;
+  margin-bottom: 0.52941176em;
 }
 
 .post_header em,
@@ -5742,6 +5750,7 @@ img {
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
+  margin-bottom: 0.45454545em;
 }
 
 a:hover .summary_header,
@@ -5783,6 +5792,7 @@ a.focus .summary_header {
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
+  margin-bottom: 0.34615385em;
 }
 
 .summary_header em,
@@ -5810,6 +5820,7 @@ a.focus .summary_header {
 }
 
 .summary_text {
+  margin-bottom: 0.625em;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -5993,7 +6004,11 @@ a.focus .summary_header {
 */
 
 .post-preview + .post-preview {
-  margin-top: 50px;
+  margin-top: 3.125em;
+}
+
+.post-pagination {
+  margin: 3.375em 0 1.75em;
 }
 
 /* topdoc

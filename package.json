@@ -1,20 +1,18 @@
 {
   "devDependencies": {
-    "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git",
+    "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.7.7",
     "grunt": "~0.4.4",
     "grunt-autoprefixer": "~0.6.5",
-    "grunt-banner": "latest",
+    "grunt-banner": "~0.2.2",
     "grunt-bower-task": "~0.3.2",
-    "grunt-cfpb-internal": "git://github.com/cfpb/grunt-cfpb-internal.git",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-cssmin": "~0.6.2",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.9.0",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-less": "~0.11.0",
-    "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-watch": "~0.5.3",
     "grunt-legacssy": "~0.3.1",
-    "grunt-release": "latest",
     "grunt-topdoc": "~0.2.0"
   }
 }

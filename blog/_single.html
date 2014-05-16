@@ -12,7 +12,8 @@
                 <article class="post">
                     <header>
                         <a href="#" class="post_slug category-slug">
-                            <i class="cf-icon cf-icon-help"></i>
+                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="visually-hidden">Category:</span>
                             {{ post.category }}
                         </a>
                         <h1 class="post_header">
@@ -26,29 +27,29 @@
                                 {{ post.date | date("%b %d, %Y") }}
                             </span>
                         </div>
-                        <ul class="post_share horizontal-list horizontal-list__share">
-                            <li class="horizontal-list_item">
-                                <a href="#">
-                                    <i class="cf-icon cf-icon-email-social-square"></i>
-                                    <span class="visually-hidden">Email</span>
+                        <ul class="post_share list__horizontal">
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-email-social-square"></span>
+                                    <span class="visually-hidden">Share by email</span>
                                 </a>
                             </li>
-                            <li class="horizontal-list_item">
-                                <a href="#">
-                                    <i class="cf-icon cf-icon-facebook-square"></i>
-                                    <span class="visually-hidden">Facebook</span>
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-facebook-square"></span>
+                                    <span class="visually-hidden">Share on Facebook</span>
                                 </a>
                             </li>
-                            <li class="horizontal-list_item">
-                                <a href="#">
-                                    <i class="cf-icon cf-icon-twitter-square"></i>
-                                    <span class="visually-hidden">Twitter</span>
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-twitter-square"></span>
+                                    <span class="visually-hidden">Share on Twitter</span>
                                 </a>
                             </li>
-                            <li class="horizontal-list_item">
-                                <a href="#">
-                                    <i class="cf-icon cf-icon-linkedin-square"></i>
-                                    <span class="visually-hidden">LinkedIn</span>
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-linkedin-square"></span>
+                                    <span class="visually-hidden">Share on LinkedIn</span>
                                 </a>
                             </li>
                         </ul>
@@ -65,10 +66,17 @@
                         {{ post.text | markdown }}
                     </div>
                     <footer>
-                        <div class="demo-placeholder">
-                            tags placeholder
-                        </div>
-                        <!-- see commented implementation on CFPB Open Tech-->
+                        <!-- Needs Sheer integration -->
+                        <div class="tags">
+                            <h4 class="tags_header">Topics:</h4>
+                            <ul class="tags_list">
+                                <li class="tags_tag">
+                                    <a href="#" class="tags_link">
+                                        Tag 1
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> 
                     </footer>
                 </article>
 
