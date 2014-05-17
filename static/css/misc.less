@@ -5,6 +5,47 @@
 
 
 /* topdoc
+  name: Hero
+  family: cfgov-misc
+  patterns:
+    - name: Basic hero
+      markup: |
+        ...
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          ...
+  tags:
+    - cfgov-misc
+*/
+
+.hero {
+    background: @teal-80;
+
+    &_card-inner {
+        padding: @gutter-width;
+        background: @white;
+        background: fade(@white, 90%);
+    }
+
+    .u-respond-to-min(660px, {
+        padding-top: unit(30px / @base-font-size-px, em);
+
+        &_card {
+            .column(6, @total-columns, 6);
+        }
+    });
+
+    .u-respond-to-min(1024px, {
+        &_card {
+            .column(4, @total-columns, 8);
+        }
+    });
+}
+
+
+/* topdoc
   name: Lists
   family: cfgov-misc
   notes:

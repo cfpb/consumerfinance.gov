@@ -15,6 +15,72 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="hero" class="docs-component">
+      <h2 class="docs-component_header"><span>Hero</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic hero</h3>
+          <section class="docs-pattern_pattern">
+...
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">...</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+...</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.hero {
+  background: #337e7d;
+}
+
+.hero_card-inner {
+  padding: 30px;
+  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.hero {
+  padding-top: 1.875em;
+}
+
+.hero_card {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+  padding-left: 50%;
+}
+
+.ie .hero_card {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .hero_card {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.lt-ie8 .hero_card {
+  padding-left: 0;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="lists" class="docs-component">
       <h2 class="docs-component_header"><span>Lists</span></h2>
       <div class="docs-component_intro">
