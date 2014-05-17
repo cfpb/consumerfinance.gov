@@ -38,18 +38,48 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.hero {
-  background: #337e7d;
+  position: relative;
+  overflow: hidden;
+  background-color: #75787b;
 }
-.hero_card-inner {
-  padding: 30px;
-  background: #ffffff;
-  background: rgba(255, 255, 255, 0.9);
+.hero_img-container {
+  display: none;
+  line-height: 1;
+}
+.hero_img {
+  display: block;
+  height: 100%;
+  line-height: 1;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+@media only all and (min-width: 20em) {
+  .hero_img-container__small {
+    display: block;
+    height: 145px;
+  }
+}
+@media only all and (min-width: 41.25em) {
+  .hero_img-container__small {
+    display: none;
+  }
+  .hero_img-container__large {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
 }
 @media only all and (min-width: 41.25em) {
   .hero {
     padding-top: 1.875em;
   }
   .hero_card {
+    position: relative;
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -60,6 +90,7 @@
     vertical-align: top;
     width: 100%;
     padding-left: 50%;
+    z-index: 2;
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -97,6 +128,11 @@
   .lt-ie8 .hero_card {
     padding-left: 0;
   }
+}
+.hero_card-inner {
+  padding: 30px;
+  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
 }</code></pre>
       </div>
     </div>
