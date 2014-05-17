@@ -201,12 +201,9 @@
 .category-slug {
     .h4();
     display: block;
-    margin-bottom: unit(10px / @font-size, em);
+    // Eyeballed to 20px over h2.
+    margin-bottom: unit(8px / @font-size, em);
     .u-link__colors(@black, @pacific-80);
-
-    .u-respond-to-min(600px, {
-        margin-bottom: unit(4px / @font-size, em);
-    });
 }
 
 
