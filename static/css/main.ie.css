@@ -5292,6 +5292,13 @@ img {
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
+                <p class="post_dek">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Quis architecto commodi cupiditate excepturi
+                    consequatur sequi quia consectetur est ea laborum
+                    saepe earum quidem a necessitatibus modi magni error
+                    ab suscipit.
+                </p>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -5327,17 +5334,6 @@ img {
                     </li>
                 </ul>
                 <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
-                <div class="line-container">
-                    <div class="line-container_body">
-                        <p class="post_summary">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Quis architecto commodi cupiditate excepturi
-                            consequatur sequi quia consectetur est ea laborum
-                            saepe earum quidem a necessitatibus modi magni error
-                            ab suscipit.
-                        </p>
-                    </div>
-                </div>
             </header>
             <div class="post_body">
                 <aside class="post_inset post_inset__right line-container">
@@ -5630,12 +5626,12 @@ img {
           .post
             .post_slug
             .post_header
+            .post_dek
             .post_meta
               .post_byline
               .post_date
             .post_share-icon
             .post_featured-img
-            .post_summary
             .post_body
             .post_inset
   tags:
@@ -5650,7 +5646,7 @@ img {
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
-  margin-bottom: 0.84615385em;
+  margin-bottom: 0.5em;
 }
 
 .post_header em,
@@ -5685,7 +5681,7 @@ img {
   margin-bottom: 0.47058824em;
   font-size: 2.125em;
   line-height: 1.29411765;
-  margin-bottom: 0.52941176em;
+  margin-bottom: 0.29411765em;
 }
 
 .post_header em,
@@ -5709,6 +5705,21 @@ img {
 
 .lt-ie9 .post_header strong,
 .lt-ie9 .post_header b {
+  font-weight: normal !important;
+}
+
+.post_dek {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 1.11111111em;
+}
+
+.lt-ie9 .post_dek {
   font-weight: normal !important;
 }
 
@@ -5736,41 +5747,7 @@ img {
 }
 
 .post_featured-img {
-  margin: 1.875em 0;
-}
-
-.post_summary {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.22727273em;
-  font-size: 1.375em;
-  line-height: 1.27272727;
-}
-
-.post_summary em,
-.post_summary i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .post_summary em,
-.lt-ie9 .post_summary i {
-  font-style: normal !important;
-}
-
-.post_summary strong,
-.post_summary b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .post_summary strong,
-.lt-ie9 .post_summary b {
-  font-weight: normal !important;
+  margin: 1.875em 0 1.25em;
 }
 
 .post_body {

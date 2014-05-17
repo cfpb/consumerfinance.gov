@@ -19,6 +19,13 @@
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
+                <p class="post_dek">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Quis architecto commodi cupiditate excepturi
+                    consequatur sequi quia consectetur est ea laborum
+                    saepe earum quidem a necessitatibus modi magni error
+                    ab suscipit.
+                </p>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -54,17 +61,6 @@
                     </li>
                 </ul>
                 <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
-                <div class="line-container">
-                    <div class="line-container_body">
-                        <p class="post_summary">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Quis architecto commodi cupiditate excepturi
-                            consequatur sequi quia consectetur est ea laborum
-                            saepe earum quidem a necessitatibus modi magni error
-                            ab suscipit.
-                        </p>
-                    </div>
-                </div>
             </header>
             <div class="post_body">
                 <aside class="post_inset post_inset__right line-container">
@@ -357,12 +353,12 @@
           .post
             .post_slug
             .post_header
+            .post_dek
             .post_meta
               .post_byline
               .post_date
             .post_share-icon
             .post_featured-img
-            .post_summary
             .post_body
             .post_inset
   tags:
@@ -371,11 +367,19 @@
 
 .post_header {
     .h2();
-    margin-bottom: unit(22px / @font-size, em);
+    // Eyeballed to 24px.
+    margin-bottom: unit(13px / @font-size, em);
     .u-respond-to-min(600px, {
         .h1();
-        margin-bottom: unit(18px / @font-size, em);
+        // Eyeballed to 24px.
+        margin-bottom: unit(10px / @font-size, em);
     });
+}
+
+.post_dek {
+    .h4();
+    // Eyeballed to 30px.
+    margin-bottom: unit(20px / @font-size, em);
 }
 
 .post_meta {
@@ -390,12 +394,12 @@
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
     .u-respond-to-min(400px, {
-        margin: unit(30px / @base-font-size-px, em) 0;
+        margin:
+            unit(30px / @base-font-size-px, em)
+            0
+            // Eyeballed to 24px.
+            unit(20px / @base-font-size-px, em);
     });
-}
-
-.post_summary {
-    .h3();
 }
 
 .post_body {

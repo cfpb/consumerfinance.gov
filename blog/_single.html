@@ -19,6 +19,9 @@
                         <h1 class="post_header">
                             {{ post.title }}
                         </h1>
+                        <p class="post_dek">
+                            {{ post.excerpt }}
+                        </p>
                         <div class="post_meta">
                             <span class="post_byline">
                                 By <a href="#">{{ post.author }}</a> &ndash;
@@ -54,13 +57,6 @@
                             </li>
                         </ul>
                         <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
-                        <div class="line-container">
-                            <div class="line-container_body">
-                                <p class="post_summary">
-                                    {{ post.excerpt }}
-                                </p>
-                            </div>
-                        </div>
                     </header>
                     <div class="post_body">
                         {{ post.text | markdown }}
