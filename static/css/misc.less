@@ -294,13 +294,13 @@
             .line-container_body
     - name: Line container with a 'pullup' (example 1)
       markup: |
-        <div class="line-container">
-            <h2 class="line-container_pullup header-slug">
-                <span class="header-slug_inner">
-                    Blog summary
-                </span>
-            </h2>
+        <div class="line-container line-container__no-top">
             <div class="line-container_body">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Blog summary
+                    </span>
+                </h2>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -314,8 +314,8 @@
           Structural cheat sheet:
           -----------------------
           .line-container
-            .line-container_pullup
             .line-container_body
+              .line-container_pullup
       notes:
         - "The 'pullup' allows you to pull an element up flush against the top
           of a .line-container."
@@ -324,10 +324,10 @@
     - name: Line container with a 'pullup' (example 2)
       markup: |
         <div class="line-container">
-            <p class="line-container_pullup">
-                <img src="http://placekitten.com/700/200" alt="">
-            </p>
-            <div class="line-container_body">
+            <div class="line-container_body line-container__no-top">
+                <p>
+                    <img src="http://placekitten.com/700/200" alt="">
+                </p>
                 <h2>
                     Photo heading
                 </h2>
@@ -344,19 +344,26 @@
 */
 
 .line-container {
-    padding: unit(26px / @base-font-size-px, em) 0 0;
     margin: 0 0 unit(30px / @base-font-size-px, em);
     border-top: 1px solid @gray-20;
     border-bottom: 1px solid @gray-20;
 
-    .line-container_pullup {
-        margin-top: -27px;
+    &_body {
+        // 26px is eyeballed to 30px when considering line heights of potential
+        // children.
+        margin: unit(26px / @base-font-size-px, em)
+                0
+                unit(26px / @base-font-size-px, em);
     }
 
-    .line-container_body {
-        margin-bottom: unit(26px / @base-font-size-px, em);
+    &__no-top {
+        border-top: 0;
+        .line-container_body {
+            margin-top: 0;
+        }
     }
 }
+
 
 
 /* topdoc
