@@ -292,7 +292,7 @@
           -----------------------
           .line-container
             .line-container_body
-    - name: Line container with a 'pullup' (example 1)
+    - name: Line container with no top border or padding (example 1)
       markup: |
         <div class="line-container line-container__no-top">
             <div class="line-container_body">
@@ -313,15 +313,9 @@
         - |
           Structural cheat sheet:
           -----------------------
-          .line-container
+          .line-container.line-container__no-top
             .line-container_body
-              .line-container_pullup
-      notes:
-        - "The 'pullup' allows you to pull an element up flush against the top
-          of a .line-container."
-        - ".line-container_pullup works well with a .header-slug but it can be
-          used with other patterns too, like the image example below."
-    - name: Line container with a 'pullup' (example 2)
+    - name: Line container with no top border or padding (example 2)
       markup: |
         <div class="line-container">
             <div class="line-container_body line-container__no-top">
