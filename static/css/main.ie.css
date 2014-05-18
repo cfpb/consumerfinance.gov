@@ -5105,15 +5105,6 @@ img {
   background-size: cover;
 }
 
-.hero_img-container__small {
-  display: block;
-  height: 145px;
-}
-
-.hero_img-container__small {
-  display: none;
-}
-
 .hero_img-container__large {
   display: block;
   width: 100%;
