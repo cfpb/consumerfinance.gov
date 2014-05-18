@@ -13,86 +13,88 @@
             </div>
         </section>
 
-        <div class="wrapper content_wrapper">
+        <div class="content_outer-wrapper">
+            <div class="wrapper content_wrapper">
 
-            <section class="content_main">
+                <section class="content_main">
 
-                <div class="filters">
-                    <div class="demo-placeholder">filters placeholder</div>
-                </div>
-
-            {% set posts = queries.posts.search_with_url_arguments(size=3) %}
-
-            {% for post in posts %}
-                <article class="post-preview">
-                    <div class="meta-header">
-                        <span class="date meta-header_right">
-                            {{ post.date | date("%b %d, %Y") }}
-                        </span>
-                        <a href="#" class="category-slug meta-header_left">
-                            <span class="cf-icon cf-icon-help"></span>
-                            <span class="visually-hidden">Category:</span>
-                            {{ post.category }}
-                        </a>
+                    <div class="filters">
+                        <div class="demo-placeholder">filters placeholder</div>
                     </div>
-                    <a class="summary" href="{{ post.permalink }}">
-                        <h1 class="summary_header">{{ post.title }}</h1>
-                        <p class="summary_text">{{ post.excerpt }}</p>
-                        <p class="summary_byline">By {{ post.author }}</p>
-                    </a>
-                </article>
-            {% endfor %}
 
-                <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
-                {% if posts.current_page > 1 %}
-                    <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
-                {% else %}
-                    <a class="btn btn-disabled pagination_prev">
-                {% endif %}
-                        <span class="btn-icon-left cf-icon cf-icon-left"></span> Previous
-                    </a>
-                {% if posts.current_page < posts.pages %}
-                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
-                {% else %}
-                    <a class="btn btn-disabled pagination_next">
-                {% endif %}
-                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
-                    </a>
-                    <form class="pagination_form">
-                        <label class="pagination_label" for="pagination_current-page">
-                            Page
-                        </label>
-                        <input class="pagination_current-page"
-                               id="pagination_current-page"
-                               name="page"
-                               type="number"
-                               min="1"
-                               max="{{ posts.pages }}"
-                               value="{{ posts.current_page }}" />
-                        <label class="pagination_label" for="pagination_current-page">
-                            of {{ posts.pages }}
-                        </label>
-                        <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
-                            Go
-                        </button>
-                    </form>
-                </nav>
+                {% set posts = queries.posts.search_with_url_arguments(size=3) %}
 
-            </section><!-- END .content_main -->
+                {% for post in posts %}
+                    <article class="post-preview">
+                        <div class="meta-header">
+                            <span class="date meta-header_right">
+                                {{ post.date | date("%b %d, %Y") }}
+                            </span>
+                            <a href="#" class="category-slug meta-header_left">
+                                <span class="cf-icon cf-icon-help"></span>
+                                <span class="visually-hidden">Category:</span>
+                                {{ post.category }}
+                            </a>
+                        </div>
+                        <a class="summary" href="{{ post.permalink }}">
+                            <h1 class="summary_header">{{ post.title }}</h1>
+                            <p class="summary_text">{{ post.excerpt }}</p>
+                            <p class="summary_byline">By {{ post.author }}</p>
+                        </a>
+                    </article>
+                {% endfor %}
 
-            <aside class="content_sidebar">
-                <section class="popular-stories">
-                    <div class="demo-placeholder">popular stories placeholder</div>
-                </section>
-                <section class="related-links">
-                    <div class="demo-placeholder">related links placeholder</div>
-                </section>
-                <section class="stay-informed">
-                    <div class="demo-placeholder">stay informed placeholder</div>
-                </section>
-            </aside><!-- END .content_sidebar -->
+                    <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
+                    {% if posts.current_page > 1 %}
+                        <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
+                    {% else %}
+                        <a class="btn btn-disabled pagination_prev">
+                    {% endif %}
+                            <span class="btn-icon-left cf-icon cf-icon-left"></span> Previous
+                        </a>
+                    {% if posts.current_page < posts.pages %}
+                        <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
+                    {% else %}
+                        <a class="btn btn-disabled pagination_next">
+                    {% endif %}
+                            Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
+                        </a>
+                        <form class="pagination_form">
+                            <label class="pagination_label" for="pagination_current-page">
+                                Page
+                            </label>
+                            <input class="pagination_current-page"
+                                   id="pagination_current-page"
+                                   name="page"
+                                   type="number"
+                                   min="1"
+                                   max="{{ posts.pages }}"
+                                   value="{{ posts.current_page }}" />
+                            <label class="pagination_label" for="pagination_current-page">
+                                of {{ posts.pages }}
+                            </label>
+                            <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
+                                Go
+                            </button>
+                        </form>
+                    </nav>
 
-        </div><!-- END .content_wrapper -->
+                </section><!-- END .content_main -->
+
+                <aside class="content_sidebar">
+                    <section class="popular-stories">
+                        <div class="demo-placeholder">popular stories placeholder</div>
+                    </section>
+                    <section class="related-links">
+                        <div class="demo-placeholder">related links placeholder</div>
+                    </section>
+                    <section class="stay-informed">
+                        <div class="demo-placeholder">stay informed placeholder</div>
+                    </section>
+                </aside><!-- END .content_sidebar -->
+
+            </div><!-- END .content_wrapper -->
+        </div><!-- END .content_outer-wrapper -->
 
     </main><!-- END .content -->
 
