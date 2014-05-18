@@ -464,13 +464,13 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Line container with a 'pullup' (example 1)</h3>
           <section class="docs-pattern_pattern">
-<div class="line-container">
-    <h2 class="line-container_pullup header-slug">
-        <span class="header-slug_inner">
-            Blog summary
-        </span>
-    </h2>
+<div class="line-container line-container__no-top">
     <div class="line-container_body">
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Blog summary
+            </span>
+        </h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -482,13 +482,13 @@
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;line-container&quot;&gt;
-    &lt;h2 class=&quot;line-container_pullup header-slug&quot;&gt;
-        &lt;span class=&quot;header-slug_inner&quot;&gt;
-            Blog summary
-        &lt;/span&gt;
-    &lt;/h2&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;line-container line-container__no-top&quot;&gt;
     &lt;div class=&quot;line-container_body&quot;&gt;
+        &lt;h2 class=&quot;header-slug&quot;&gt;
+            &lt;span class=&quot;header-slug_inner&quot;&gt;
+                Blog summary
+            &lt;/span&gt;
+        &lt;/h2&gt;
         &lt;p&gt;
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -502,8 +502,8 @@
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
 .line-container
-  .line-container_pullup
-  .line-container_body</code></pre>
+  .line-container_body
+    .line-container_pullup</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -516,10 +516,10 @@
           <h3 class="docs-pattern_header">Line container with a 'pullup' (example 2)</h3>
           <section class="docs-pattern_pattern">
 <div class="line-container">
-    <p class="line-container_pullup">
-        <img src="http://placekitten.com/700/200" alt="">
-    </p>
-    <div class="line-container_body">
+    <div class="line-container_body line-container__no-top">
+        <p>
+            <img src="http://placekitten.com/700/200" alt="">
+        </p>
         <h2>
             Photo heading
         </h2>
@@ -535,10 +535,10 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;line-container&quot;&gt;
-    &lt;p class=&quot;line-container_pullup&quot;&gt;
-        &lt;img src=&quot;http://placekitten.com/700/200&quot; alt=&quot;&quot;&gt;
-    &lt;/p&gt;
-    &lt;div class=&quot;line-container_body&quot;&gt;
+    &lt;div class=&quot;line-container_body line-container__no-top&quot;&gt;
+        &lt;p&gt;
+            &lt;img src=&quot;http://placekitten.com/700/200&quot; alt=&quot;&quot;&gt;
+        &lt;/p&gt;
         &lt;h2&gt;
             Photo heading
         &lt;/h2&gt;
@@ -555,16 +555,18 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.line-container {
-  padding: 1.625em 0 0;
   margin: 0 0 1.875em;
   border-top: 1px solid #e3e4e5;
   border-bottom: 1px solid #e3e4e5;
 }
-.line-container .line-container_pullup {
-  margin-top: -27px;
+.line-container_body {
+  margin: 1.625em 0 1.625em;
 }
-.line-container .line-container_body {
-  margin-bottom: 1.625em;
+.line-container__no-top {
+  border-top: 0;
+}
+.line-container__no-top .line-container_body {
+  margin-top: 0;
 }</code></pre>
       </div>
     </div>

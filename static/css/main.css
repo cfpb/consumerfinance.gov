@@ -4855,13 +4855,13 @@ img {
             .line-container_body
     - name: Line container with a 'pullup' (example 1)
       markup: |
-        <div class="line-container">
-            <h2 class="line-container_pullup header-slug">
-                <span class="header-slug_inner">
-                    Blog summary
-                </span>
-            </h2>
+        <div class="line-container line-container__no-top">
             <div class="line-container_body">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Blog summary
+                    </span>
+                </h2>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -4875,8 +4875,8 @@ img {
           Structural cheat sheet:
           -----------------------
           .line-container
-            .line-container_pullup
             .line-container_body
+              .line-container_pullup
       notes:
         - "The 'pullup' allows you to pull an element up flush against the top
           of a .line-container."
@@ -4885,10 +4885,10 @@ img {
     - name: Line container with a 'pullup' (example 2)
       markup: |
         <div class="line-container">
-            <p class="line-container_pullup">
-                <img src="http://placekitten.com/700/200" alt="">
-            </p>
-            <div class="line-container_body">
+            <div class="line-container_body line-container__no-top">
+                <p>
+                    <img src="http://placekitten.com/700/200" alt="">
+                </p>
                 <h2>
                     Photo heading
                 </h2>
@@ -4904,16 +4904,18 @@ img {
     - cfgov-misc
 */
 .line-container {
-  padding: 1.625em 0 0;
   margin: 0 0 1.875em;
   border-top: 1px solid #e3e4e5;
   border-bottom: 1px solid #e3e4e5;
 }
-.line-container .line-container_pullup {
-  margin-top: -27px;
+.line-container_body {
+  margin: 1.625em 0 1.625em;
 }
-.line-container .line-container_body {
-  margin-bottom: 1.625em;
+.line-container__no-top {
+  border-top: 0;
+}
+.line-container__no-top .line-container_body {
+  margin-top: 0;
 }
 /* topdoc
   name: EOF
