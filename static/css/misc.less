@@ -25,6 +25,8 @@
     overflow: hidden;
     background-color: @gray;
 
+    // The image container is needed to suppress loading of the images until
+    // they are needed. Research: http://timkadlec.com/2012/04/media-query-asset-downloading-results/
     &_img-container {
         display: none;
         line-height: 1;
@@ -39,17 +41,14 @@
         background-size: cover;
     }
 
-    .u-respond-to-min(320px, {
+    .u-respond-to-max(659px, {
         &_img-container__small {
+            .u-flexible-container(660,300);
             display: block;
-            height: 145px;
         }
     });
 
     .u-respond-to-min(660px, {
-        &_img-container__small {
-            display: none;
-        }
         &_img-container__large {
             display: block;
             width: 100%;
