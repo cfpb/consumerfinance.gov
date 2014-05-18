@@ -4635,10 +4635,14 @@ img {
     padding-left: 0;
   }
 }
-.hero_card-inner {
-  padding: 30px;
+.hero_card-bg {
   background: #ffffff;
   background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+.hero_card-padding {
+  padding: 30px 30px 0;
+  margin-bottom: 40px;
 }
 /* topdoc
   name: Lists

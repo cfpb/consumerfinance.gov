@@ -75,10 +75,17 @@
         }
     });
 
-    &_card-inner {
-        padding: @gutter-width;
+    &_card-bg {
         background: @white;
         background: fade(@white, 90%);
+        // Overflow hidden is used to counteract the margin collapse used in
+        // .hero_card-padding.
+        overflow: hidden;
+    }
+
+    &_card-padding {
+        padding: @gutter-width @gutter-width 0;
+        margin-bottom: @gutter-width + 10px;
     }
 }
 
