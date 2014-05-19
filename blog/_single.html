@@ -6,97 +6,100 @@
 {% block content %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
-        <div class="content_outer-wrapper">
-            <div class="wrapper content_wrapper">
-                <section class="content_main">
+        
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
 
-                    <article class="post">
-                        <header>
-                            <a href="#" class="post_slug category-slug">
-                                <span class="cf-icon cf-icon-help"></span>
-                                <span class="visually-hidden">Category:</span>
-                                {{ post.category }}
-                            </a>
-                            <h1 class="post_header">
-                                {{ post.title }}
-                            </h1>
-                            <p class="post_dek">
-                                {{ post.excerpt }}
-                            </p>
-                            <div class="post_meta">
-                                <span class="post_byline">
-                                    By <a href="#">{{ post.author }}</a> &ndash;
-                                </span>
-                                <span class="post_date date">
-                                    {{ post.date | date("%b %d, %Y") }}
-                                </span>
-                            </div>
-                            <ul class="post_share list__horizontal">
-                                <li class="list_item">
-                                    <a class="share-icon" href="#">
-                                        <span class="cf-icon cf-icon-email-social-square"></span>
-                                        <span class="visually-hidden">Share by email</span>
-                                    </a>
-                                </li>
-                                <li class="list_item">
-                                    <a class="share-icon" href="#">
-                                        <span class="cf-icon cf-icon-facebook-square"></span>
-                                        <span class="visually-hidden">Share on Facebook</span>
-                                    </a>
-                                </li>
-                                <li class="list_item">
-                                    <a class="share-icon" href="#">
-                                        <span class="cf-icon cf-icon-twitter-square"></span>
-                                        <span class="visually-hidden">Share on Twitter</span>
-                                    </a>
-                                </li>
-                                <li class="list_item">
-                                    <a class="share-icon" href="#">
-                                        <span class="cf-icon cf-icon-linkedin-square"></span>
-                                        <span class="visually-hidden">Share on LinkedIn</span>
+        <div class="wrapper content_wrapper">
+            <section class="content_main">
+
+                <article class="post">
+                    <header>
+                        <a href="#" class="post_slug category-slug">
+                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="visually-hidden">Category:</span>
+                            {{ post.category }}
+                        </a>
+                        <h1 class="post_header">
+                            {{ post.title }}
+                        </h1>
+                        <p class="post_dek">
+                            {{ post.excerpt }}
+                        </p>
+                        <div class="post_meta">
+                            <span class="post_byline">
+                                By <a href="#">{{ post.author }}</a> &ndash;
+                            </span>
+                            <span class="post_date date">
+                                {{ post.date | date("%b %d, %Y") }}
+                            </span>
+                        </div>
+                        <ul class="post_share list__horizontal">
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-email-social-square"></span>
+                                    <span class="visually-hidden">Share by email</span>
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-facebook-square"></span>
+                                    <span class="visually-hidden">Share on Facebook</span>
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-twitter-square"></span>
+                                    <span class="visually-hidden">Share on Twitter</span>
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="share-icon" href="#">
+                                    <span class="cf-icon cf-icon-linkedin-square"></span>
+                                    <span class="visually-hidden">Share on LinkedIn</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
+                    </header>
+                    <div class="post_body">
+                        {{ post.text | markdown }}
+                    </div>
+                    <footer>
+                        <!-- Needs Sheer integration -->
+                        <div class="tags">
+                            <h4 class="tags_header">Topics:</h4>
+                            <ul class="tags_list">
+                                <li class="tags_tag">
+                                    <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                                        Tag 1
                                     </a>
                                 </li>
                             </ul>
-                            <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
-                        </header>
-                        <div class="post_body">
-                            {{ post.text | markdown }}
-                        </div>
-                        <footer>
-                            <!-- Needs Sheer integration -->
-                            <div class="tags">
-                                <h4 class="tags_header">Topics:</h4>
-                                <ul class="tags_list">
-                                    <li class="tags_tag">
-                                        <a href="#" class="tags_link">
-                                            <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                                            Tag 1
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> 
-                        </footer>
-                    </article>
+                        </div> 
+                    </footer>
+                </article>
 
-                    <section class="comments">
-                        <div class="demo-placeholder">comments placeholder</div>
-                    </section>
-                </section><!-- END .content_main -->
+                <section class="comments">
+                    <div class="demo-placeholder">comments placeholder</div>
+                </section>
+            </section><!-- END .content_main -->
 
-                <aside class="content_sidebar">
-                    <section class="popular-stories">
-                        <div class="demo-placeholder">Related news placeholder</div>
-                    </section>
-                    <section class="related-links">
-                        <div class="demo-placeholder">Related stories placeholder</div>
-                    </section>
-                    <section class="stay-informed">
-                        <div class="demo-placeholder">Stay informed placeholder</div>
-                    </section>
-                </aside><!-- END .content_sidebar -->
-                
-            </div><!-- END .content_wrapper -->
-        </div><!-- END .content_outer-wrapper -->
+            <aside class="content_sidebar">
+                <section class="popular-stories">
+                    <div class="demo-placeholder">Related news placeholder</div>
+                </section>
+                <section class="related-links">
+                    <div class="demo-placeholder">Related stories placeholder</div>
+                </section>
+                <section class="stay-informed">
+                    <div class="demo-placeholder">Stay informed placeholder</div>
+                </section>
+            </aside><!-- END .content_sidebar -->
+            
+        </div><!-- END .content_wrapper -->
+        
     </main><!-- END .content -->
 
 {% endblock content %}
