@@ -3813,8 +3813,9 @@ img {
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-.content_outer-wrapper {
-  border-top: 10px solid #2cb34a;
+.content_bar {
+  height: 10px;
+  background: #2cb34a;
 }
 .content_main,
 .content_sidebar {
