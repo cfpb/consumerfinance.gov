@@ -10,10 +10,12 @@
 
 - Filtering
 - Sidebar stuff
-
+- Analytics
+- Oah sheer template sharing
 
 ### Little stuff
 
+- Layout docs
 - Review hero with designers
 - Pagination button colors
 - Icons not working in IE7
