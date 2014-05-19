@@ -8,10 +8,8 @@
 
 ### Big stuff
 
-- Filtering
-- Sidebar stuff
-- Analytics
 - Oah sheer template sharing
+- Sidebar stuff
 
 ### Little stuff
 
