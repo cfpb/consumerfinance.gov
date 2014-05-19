@@ -3136,6 +3136,7 @@ textarea {
   font-weight: normal !important;
 }
 
+.pagination_current-page,
 input[type="number"].pagination_current-page {
   display: inline-block;
   vertical-align: middle;
@@ -3152,6 +3153,7 @@ input[type="number"].pagination_current-page {
   text-align: right;
 }
 
+.pagination_current-page,
 .lt-ie9 input[type="number"].pagination_current-page {
   font-weight: normal !important;
 }
