@@ -37,12 +37,70 @@
   patterns:
     - name: Basic hero
       markup: |
-        ...
+        <section class="hero" style="background-color:#337E7D;">
+            <div class="wrapper">
+                <div class="hero_card">
+                    <div class="hero_card-bg">
+                        <div class="hero_card-padding">
+                            <h1>My hero!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__small u-flexible-container">
+                <div class="hero_img u-flexible-container_inner"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          ...
+          .hero
+            .wrapper
+              .hero_card
+                .hero_card-bg
+                  .hero_card-padding
+            .hero_img-container.hero_img-container__small
+              .hero_img
+            .hero_img-container.hero_img-container__large
+              .hero_img
+    - codenotes:
+        - .hero
+      notes:
+        - "For full screen edge to edge background color. We have chosen to set
+          the background color using an inline style so that our templating
+          system can dynamically set it. If it makes more sense for your project
+          to set it with CSS then please do so."
+    - codenotes:
+        - .wrapper
+      notes:
+        - "To center the hero content with a max-width."
+    - codenotes:
+        - .hero_card-padding
+      notes:
+        - "This extra div is used to collapse the margins of child elements."
+    - codenotes:
+        - .hero_img-container
+      notes:
+        - "By using a wrapping element we can responsibly load a small or large
+          screen background image by controling the display value of this element.
+          More info on this approach can be found here:
+          http://timkadlec.com/2012/04/media-query-asset-downloading-results/"
+    - codenotes:
+        - .hero_img
+      notes:
+        - "The reason for using a background image is noted above in
+          .hero_img-container. We have chosen to set the background image using
+          an inline style so that our templating system can dynamically set the
+          source. If it makes more sense for your project to set it with CSS
+          then please do so."
   tags:
     - cfgov-misc
 */
@@ -57,6 +115,16 @@
     &_img-container {
         display: none;
         line-height: 1;
+    }
+
+    // The small her image container should scale proportionally to the image
+    // which is set as a background in the child .hero_img.
+    &_img-container__small {
+        .u-flexible-container();
+
+        & .hero_img {
+            .u-flexible-container_inner();
+        }
     }
 
     &_img {
