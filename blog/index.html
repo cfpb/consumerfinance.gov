@@ -46,7 +46,7 @@
 
             {% set posts = queries.posts.search_with_url_arguments(size=3) %}
 
-            <div class="filters">
+            <div class="post-preview-filters">
                 <div class="expandable">
                     <div class="expandable_header">
                         <!-- <h5>Blog filtered by</h5>
@@ -85,6 +85,7 @@
                                 <input type="checkbox" name="filter_category" value="announcements">
                                 Announcements
                             </label>
+                            <a href="/blog/" class="btn btn-warning btn-link">Reset filters</a>
                             <input type="submit" value="Apply filters" class="btn">
                         </form>
                     </div>
