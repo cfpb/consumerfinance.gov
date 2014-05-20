@@ -10,6 +10,7 @@
 
 - Oah sheer template sharing
 - Sidebar stuff
+- Comments
 
 ### Little stuff
 
@@ -20,7 +21,6 @@
 - No category icons yet
 - Min-width for older IE
 - Styled lists
-
 
 
 ## Sheer stuff
