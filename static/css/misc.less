@@ -5,6 +5,185 @@
 
 
 /* topdoc
+  name: Forms
+  family: cfgov-misc
+  patterns:
+    - name: Labels
+      markup: |
+        <label>Topics</label>
+        <input type="text">
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          ...
+  tags:
+    - cfgov-misc
+*/
+
+.form-label {
+    .h5();
+}
+
+.form-label__inline {
+    .webfont-regular();
+    text-transform: none;
+}
+
+
+/* topdoc
+  name: Hero
+  family: cfgov-misc
+  patterns:
+    - name: Basic hero
+      markup: |
+        <section class="hero" style="background-color:#337E7D;">
+            <div class="wrapper">
+                <div class="hero_card">
+                    <div class="hero_card-bg">
+                        <div class="hero_card-padding">
+                            <h1>My hero!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__small u-flexible-container">
+                <div class="hero_img u-flexible-container_inner"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .hero
+            .wrapper
+              .hero_card
+                .hero_card-bg
+                  .hero_card-padding
+            .hero_img-container.hero_img-container__small
+              .hero_img
+            .hero_img-container.hero_img-container__large
+              .hero_img
+    - codenotes:
+        - .hero
+      notes:
+        - "For full screen edge to edge background color. We have chosen to set
+          the background color using an inline style so that our templating
+          system can dynamically set it. If it makes more sense for your project
+          to set it with CSS then please do so."
+    - codenotes:
+        - .wrapper
+      notes:
+        - "To center the hero content with a max-width."
+    - codenotes:
+        - .hero_card-padding
+      notes:
+        - "This extra div is used to collapse the margins of child elements."
+    - codenotes:
+        - .hero_img-container
+      notes:
+        - "By using a wrapping element we can responsibly load a small or large
+          screen background image by controling the display value of this element.
+          More info on this approach can be found here:
+          http://timkadlec.com/2012/04/media-query-asset-downloading-results/"
+    - codenotes:
+        - .hero_img
+      notes:
+        - "The reason for using a background image is noted above in
+          .hero_img-container. We have chosen to set the background image using
+          an inline style so that our templating system can dynamically set the
+          source. If it makes more sense for your project to set it with CSS
+          then please do so."
+  tags:
+    - cfgov-misc
+*/
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    background-color: @gray;
+
+    // The image container is needed to suppress loading of the images until
+    // they are needed. Research: http://timkadlec.com/2012/04/media-query-asset-downloading-results/
+    &_img-container {
+        display: none;
+        line-height: 1;
+    }
+
+    // The small hero image container should scale proportionally to the image
+    // which is set as a background in the child .hero_img.
+    &_img-container__small {
+        .u-flexible-container();
+
+        & .hero_img {
+            .u-flexible-container_inner();
+        }
+    }
+
+    &_img {
+        display: block;
+        height: 100%;
+        line-height: 1;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .u-respond-to-max(659px, {
+        &_img-container__small {
+            .u-flexible-container(660,300);
+            display: block;
+        }
+    });
+
+    &_card-bg {
+        background: @white;
+        background: fade(@white, 90%);
+        // Overflow hidden is used to counteract the margin collapse used in
+        // .hero_card-padding.
+        overflow: hidden;
+    }
+
+    &_card-padding {
+        padding: @gutter-width @gutter-width 0;
+        margin-bottom: @gutter-width + 10px;
+    }
+
+    .u-respond-to-min(660px, {
+        padding-top: unit(30px / @base-font-size-px, em);
+
+        &_img-container__large {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+        }
+
+        &_card {
+            position: relative;
+            .column(6, @total-columns, 6);
+            z-index: 2;
+        }
+    });
+
+    .u-respond-to-min(1024px, {
+        &_card {
+            .column(4, @total-columns, 8);
+        }
+    });
+}
+
+
+/* topdoc
   name: Lists
   family: cfgov-misc
   notes:
@@ -206,15 +385,15 @@
           -----------------------
           .line-container
             .line-container_body
-    - name: Line container with a 'pullup' (example 1)
+    - name: Line container with no top border or padding (example 1)
       markup: |
-        <div class="line-container">
-            <h2 class="line-container_pullup header-slug">
-                <span class="header-slug_inner">
-                    Blog summary
-                </span>
-            </h2>
+        <div class="line-container line-container__no-top">
             <div class="line-container_body">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Blog summary
+                    </span>
+                </h2>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -227,21 +406,15 @@
         - |
           Structural cheat sheet:
           -----------------------
-          .line-container
-            .line-container_pullup
+          .line-container.line-container__no-top
             .line-container_body
-      notes:
-        - "The 'pullup' allows you to pull an element up flush against the top
-          of a .line-container."
-        - ".line-container_pullup works well with a .header-slug but it can be
-          used with other patterns too, like the image example below."
-    - name: Line container with a 'pullup' (example 2)
+    - name: Line container with no top border or padding (example 2)
       markup: |
         <div class="line-container">
-            <p class="line-container_pullup">
-                <img src="http://placekitten.com/700/200" alt="">
-            </p>
-            <div class="line-container_body">
+            <div class="line-container_body line-container__no-top">
+                <p>
+                    <img src="http://placekitten.com/700/200" alt="">
+                </p>
                 <h2>
                     Photo heading
                 </h2>
@@ -258,18 +431,84 @@
 */
 
 .line-container {
-    padding: unit(26px / @base-font-size-px, em) 0 0;
     margin: 0 0 unit(30px / @base-font-size-px, em);
     border-top: 1px solid @gray-20;
     border-bottom: 1px solid @gray-20;
 
-    .line-container_pullup {
-        margin-top: -27px;
+    &_body {
+        // 26px is eyeballed to 30px when considering line heights of potential
+        // children.
+        margin: unit(26px / @base-font-size-px, em)
+                0
+                unit(26px / @base-font-size-px, em);
     }
 
-    .line-container_body {
-        margin-bottom: unit(26px / @base-font-size-px, em);
+    &__no-top {
+        border-top: 0;
+        .line-container_body {
+            margin-top: 0;
+        }
     }
+}
+
+
+/* topdoc
+  name: Padded container
+  family: cfgov-misc
+  notes:
+    - ".padded-container is meant to contain anything you want with consistent
+      padding. It uses a margin collapsing trick in CSS to achieve this
+      consistency which this is why .line-container_body is needed. The only
+      caveat to this consistency is if you place something inside of it that has
+      a bottom-margin that is larger than the .padded-container padding."
+  patterns:
+    - name: Basic padded container
+      markup: |
+        <div class="padded-container">
+            <div class="padded-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is padding all around me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .padded-container
+            .padded-container_body
+  tags:
+    - cfgov-misc
+*/
+
+.padded-container {
+    margin: 0 0 unit(30px / @base-font-size-px, em);
+    background: @gray-10;
+    // Counteract the margin collapsing.
+    overflow: hidden;
+
+    &_body {
+        // 26px is eyeballed to 30px when considering line heights of potential
+        // children.
+        margin: unit(24px / @base-font-size-px, em)
+                unit(30px / @base-font-size-px, em)
+                unit(24px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Filters
+  family: cfgov-misc
+  patterns:
+    - name: Basic filter
+  tags:
+    - cfgov-misc
+*/
+
+.filters {
+    margin-bottom: unit(30px / @base-font-size-px, em);
 }
 
 

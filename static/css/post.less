@@ -19,6 +19,13 @@
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
+                <p class="post_dek">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Quis architecto commodi cupiditate excepturi
+                    consequatur sequi quia consectetur est ea laborum
+                    saepe earum quidem a necessitatibus modi magni error
+                    ab suscipit.
+                </p>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -53,25 +60,14 @@
                         </a>
                     </li>
                 </ul>
-                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                <div class="line-container">
-                    <div class="line-container_body">
-                        <p class="post_summary">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Quis architecto commodi cupiditate excepturi
-                            consequatur sequi quia consectetur est ea laborum
-                            saepe earum quidem a necessitatibus modi magni error
-                            ab suscipit.
-                        </p>
-                    </div>
-                </div>
+                <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
             </header>
             <div class="post_body">
-                <aside class="post_inset line-container">
+                <aside class="post_inset post_inset__right line-container">
                     <div class="line-container_body">
-                        <h4>
+                        <h3>
                             Final list of rural and underserved counties
-                        </h4>
+                        </h3>
                         <p>
                             View or download the list in any of these formats:
                         </p>
@@ -94,9 +90,9 @@
                         </ul>
                     </div>
                     <div class="line-container_body">
-                        <h4>
+                        <h3>
                             Final list of rural and underserved counties
-                        </h4>
+                        </h3>
                         <p>
                             View or download the list in any of these formats:
                         </p>
@@ -149,7 +145,7 @@
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
-                <aside class="post_inset line-container">
+                <aside class="post_inset post_inset__right line-container">
                     <div class="line-container_body pull-quote">
                         <div class="pull-quote_body">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -194,7 +190,33 @@
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <aside class="post_inset line-container">
-                    <h2 class="line-container_pullup header-slug">
+                    <div class="line-container_body pull-quote pull-quote__large">
+                        <div class="pull-quote_body">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Cum corrupti tempora nam nihil qui mollitia consectetur
+                            corporis nemo culpa dolorum!
+                        </div>
+                        <footer>
+                            <cite class="pull-quote_citation">
+                                - Author Name
+                            </cite>
+                        </footer>
+                    </div>
+                </aside>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <aside class="post_inset post_inset__right line-container line-container__no-top">
+                    <h2 class="header-slug">
                         <span class="header-slug_inner">
                             More information
                         </span>
@@ -274,6 +296,11 @@
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
                 </ul>
+                <ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                </ul>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -299,16 +326,19 @@
                     <ul class="tags_list">
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
+                                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                 Students
                             </a>
                         </li>
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
+                                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                 Consumers
                             </a>
                         </li>
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
+                                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                 College loans
                             </a>
                         </li>
@@ -323,12 +353,12 @@
           .post
             .post_slug
             .post_header
+            .post_dek
             .post_meta
               .post_byline
               .post_date
             .post_share-icon
             .post_featured-img
-            .post_summary
             .post_body
             .post_inset
   tags:
@@ -337,11 +367,19 @@
 
 .post_header {
     .h2();
-    margin-bottom: unit(22px / @font-size, em);
+    // Eyeballed to 24px.
+    margin-bottom: unit(13px / @font-size, em);
     .u-respond-to-min(600px, {
         .h1();
-        margin-bottom: unit(18px / @font-size, em);
+        // Eyeballed to 24px.
+        margin-bottom: unit(10px / @font-size, em);
     });
+}
+
+.post_dek {
+    .h4();
+    // Eyeballed to 30px.
+    margin-bottom: unit(20px / @font-size, em);
 }
 
 .post_meta {
@@ -356,12 +394,12 @@
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
     .u-respond-to-min(400px, {
-        margin: unit(30px / @base-font-size-px, em) 0;
+        margin:
+            unit(30px / @base-font-size-px, em)
+            0
+            // Eyeballed to 24px.
+            unit(20px / @base-font-size-px, em);
     });
-}
-
-.post_summary {
-    .h3();
 }
 
 .post_body {
@@ -372,12 +410,19 @@
     margin: unit(30px / @base-font-size-px, em) 0;
     color: @black;
 
-    .u-respond-to-min(769px, {
-        .u-right();
-        width: unit(250px / @base-font-size-px, em);
-        margin-top: unit(5px / @base-font-size-px, em);
-        margin-left: unit(@gutter-width / @base-font-size-px, em);
-    });
+    &__right {
+        .u-respond-to-min(769px, {
+            .u-right();
+            width: unit(250px / @base-font-size-px, em);
+            margin-top: unit(5px / @base-font-size-px, em);
+            margin-left: unit(@gutter-width / @base-font-size-px, em);
+        });
+        .u-respond-to-min(1200px, {
+            & {
+                margin-right: -@gutter-width;
+            }
+        });
+    }
 }
 
 

@@ -7,21 +7,89 @@
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
-        <section class="content_hero">
+        <section class="content_hero hero" style="background-color:#337E7D;">
             <div class="wrapper">
-                <div class="demo-placeholder">hero placeholder</div>
+                <div class="hero_card">
+                    <div class="hero_card-bg">
+                        <div class="hero_card-padding">
+                            <a href="#" class="category-slug">
+                                <span class="cf-icon cf-icon-help"></span>
+                                <span class="visually-hidden">Category:</span>
+                                Announcements &amp; updates
+                            </a>
+                            <a class="summary" href="#">
+                                <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
+                                <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+                                <p class="summary_byline">By Patrice Ficklin</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+            <div class="hero_img-container hero_img-container__small">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section><!-- END .content_hero -->
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
-
             <section class="content_main">
 
-                <div class="filters">
-                    <div class="demo-placeholder">filters placeholder</div>
-                </div>
-
             {% set posts = queries.posts.search_with_url_arguments(size=3) %}
+
+            <div class="filters">
+                <div class="expandable">
+                    <div class="expandable_header">
+                        <!-- <h5>Blog filtered by</h5>
+                        <ul class="list list__horizontal">
+                            <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
+                        </ul> -->
+                        <a class="expandable_target btn btn-secondary"
+                           href="#barebones-content">
+                            Filter Blogs&nbsp;&nbsp;
+                            <span class="expandable_cue-open">
+                                <span class="cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="cf-icon cf-icon-up"></span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="expandable_content padded-container">
+                        <form class="padded-container_body" id="barebones-content" method="get">
+                            <div class="form-label">
+                                Categories
+                            </div>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="consumer">
+                                Consumer
+                            </label>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                Regulation &amp; compliance
+                            </label>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="innovation">
+                                Innovation
+                            </label>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="announcements">
+                                Announcements
+                            </label>
+                            <input type="submit" value="Apply filters" class="btn">
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             {% for post in posts %}
                 <article class="post-preview">
@@ -56,7 +124,7 @@
                 {% else %}
                     <a class="btn btn-disabled pagination_next">
                 {% endif %}
-                        Next <span class="btn-icon-right cf-icon cf-icon-right"></i>
+                        Next <span class="btn-icon-right cf-icon cf-icon-right"></span>
                     </a>
                     <form class="pagination_form">
                         <label class="pagination_label" for="pagination_current-page">
@@ -93,7 +161,6 @@
             </aside><!-- END .content_sidebar -->
 
         </div><!-- END .content_wrapper -->
-
     </main><!-- END .content -->
 
 {% endblock content %}

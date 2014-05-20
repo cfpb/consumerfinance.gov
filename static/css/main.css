@@ -1105,104 +1105,220 @@ input.btn::-moz-focus-inner {
    Expandable Styling
    ========================================================================== */
 /* topdoc
-    name: Default expandable
+    name: Barebones expandable
     family: cf-expandables
     patterns:
-    - name: Default state
+    - name: Default barebones expandable pattern
       markup: |
         <div class="expandable">
-            <header class="expandable-header">
-                Expandable Header
-                <a href="" class="expandable-button">
-                    <span class="expandable-text">Show</span> <i class="icon-plus-sign"></i>
-                </a>
-            </header>
-            <div class="expandable-content expandable-hidden" style="display: none;">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <a class="expandable_target"
+               href="#barebones-content">
+                <span class="expandable_cue-open">
+                    Show
+                </span>
+                <span class="expandable_cue-close">
+                    Hide
+                </span>
+            </a>
+            <div class="expandable_content" id="barebones-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
             </div>
         </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable
+            .expandable_target
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "This is a barebones expandable pattern which our official recommended
+          expandable is based off of. Please only use this is if you need a
+          custom expandable experience."
+        - "Use the anchor tag for the .expandable_target element to allow for
+          keyboard access. The href attribute should be set to the ID of the
+          .expanded_content element as a fallback for no JavaScript support.
+          When pressed the link will jump you down to the content. Admittedly
+          this is a very minor convenience in most cases, but in some cases
+          there might actually be a significant amount of content between
+          .expandable_target and .expandable_content."
+        - "The aria-pressed attribute on .expandable_target gets automatically
+          added and updated by JavaScript."
+    - name: Expandable that is open by default
+      markup: |
+        <div class="expandable expandable__expanded">
+            <a class="expandable_target"
+               href="#expanded-by-default-content">
+                <span class="expandable_cue-open">
+                    Show
+                </span>
+                <span class="expandable_cue-close">
+                    Hide
+                </span>
+            </a>
+            <div class="expandable_content" id="expanded-by-default-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__expanded
+            .expandable_target
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "Simply add the .expandable__expanded modifier to .expanded."
     tags:
     - cf-expandables
 */
-.expandable {
-  margin-bottom: 1.375em;
-  background: #f1f2f2;
+.expandable_target {
+  cursor: pointer;
 }
-.expandable:hover,
-.expandable .open {
-  background: #e3e4e5;
-}
-.expandable-hidden {
+.expandable_cue-close {
   display: none;
 }
-.expandable-header {
-  padding: 0.625em 0.75em;
+.expandable__expanded .expandable_cue-open {
+  display: none;
+}
+.expandable__expanded .expandable_cue-close {
+  display: inline;
+}
+.expandable_content {
+  overflow: hidden;
+}
+/* topdoc
+    name: Padded expandable
+    family: cf-expandables
+    patterns:
+    - name: Default padded expandable pattern
+      markup: |
+        <div class="expandable expandable__padded">
+            <a class="expandable_target expandable_header"
+               href="#styled-expandable-content">
+                <span class="expandable_label">
+                    Expandable Header
+                </span>
+                <span class="expandable_link expandable_header-right">
+                    <span class="expandable_cue-open">
+                        Show
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </a>
+            <div class="expandable_content" id="styled-expandable-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__padded
+            .expandable_target.expandable_header
+              .expandable_label
+              .expandable_link.expandable_header-right
+                .expandable_cue-open
+                  .cf-icon.cf-icon-plus-round
+                .expandable_cue-close
+                  .cf-icon.cf-icon-minus-round
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "The padded expandable is our recommended go-to expandable pattern."
+        - "If you need a custom expandable experience first try using a
+          combination of the new elements that are used in the padded expandable
+          pattern like .expandable_header, expandable_label, expandable_link,
+          and expandable_header-right."
+    tags:
+    - cf-expandables
+*/
+.expandable_header {
+  display: block;
+}
+.expandable_header-right {
+  float: right;
+}
+.expandable_label {
+  color: #101820;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
-  cursor: pointer;
 }
-.lt-ie9 .expandable-header {
+.lt-ie9 .expandable_label {
   font-weight: normal !important;
 }
-.expandable-button,
-.expandable-button:link,
-.expandable-button:visited {
-  margin: 0;
-  border-width: 0;
-  float: right;
+.expandable_link {
+  color: #0072ce;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 0.875em;
   line-height: 1.57142857;
 }
-.expandable-button em,
-.expandable-button:link em,
-.expandable-button:visited em,
-.expandable-button i,
-.expandable-button:link i,
-.expandable-button:visited i {
+.expandable_link em,
+.expandable_link i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .expandable-button em,
-.lt-ie9 .expandable-button:link em,
-.lt-ie9 .expandable-button:visited em,
-.lt-ie9 .expandable-button i,
-.lt-ie9 .expandable-button:link i,
-.lt-ie9 .expandable-button:visited i {
+.lt-ie9 .expandable_link em,
+.lt-ie9 .expandable_link i {
   font-style: normal !important;
 }
-.expandable-button strong,
-.expandable-button:link strong,
-.expandable-button:visited strong,
-.expandable-button b,
-.expandable-button:link b,
-.expandable-button:visited b {
+.expandable_link strong,
+.expandable_link b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .expandable-button strong,
-.lt-ie9 .expandable-button:link strong,
-.lt-ie9 .expandable-button:visited strong,
-.lt-ie9 .expandable-button b,
-.lt-ie9 .expandable-button:link b,
-.lt-ie9 .expandable-button:visited b {
+.lt-ie9 .expandable_link strong,
+.lt-ie9 .expandable_link b {
   font-weight: normal !important;
 }
-.expandable-content {
-  padding: 0 0.75em 0.25em;
+.expandable__padded {
+  margin-bottom: 1.875em;
+  background: #f1f2f2;
 }
-.open .icon-plus-sign:before {
-  content: "\f056";
+.expandable__padded:hover,
+.expandable__padded.expandable__expanded {
+  background: #e3e4e5;
+}
+.expandable__padded .expandable_header {
+  padding: 0.625em 1em;
+}
+.expandable__padded .expandable_header.expandable_target {
+  border-bottom: none;
+}
+.expandable__padded .expandable_content {
+  margin: 0 1em 1.375em;
 }
 /* topdoc
   name: EOF
@@ -3279,6 +3395,20 @@ blockquote {
           external work."
         - "Since a pull quote is an excerpt and repeats content from the
           article it's contained within you should use the aside element."
+    - name: Large pull quote
+      markup: |
+        <aside class="pull-quote pull-quote__large">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+            <footer>
+                <cite class="pull-quote_citation">
+                    - Author Name
+                </cite>
+            <footer>
+        </aside>
   tags:
     - cf-typography
 */
@@ -3326,6 +3456,36 @@ blockquote {
   color: #75787b;
 }
 .lt-ie9 .pull-quote_citation {
+  font-weight: normal !important;
+}
+.pull-quote__large .pull-quote_body {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.69230769em;
+}
+.pull-quote__large .pull-quote_body em,
+.pull-quote__large .pull-quote_body i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .pull-quote__large .pull-quote_body em,
+.lt-ie9 .pull-quote__large .pull-quote_body i {
+  font-style: normal !important;
+}
+.pull-quote__large .pull-quote_body strong,
+.pull-quote__large .pull-quote_body b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .pull-quote__large .pull-quote_body strong,
+.lt-ie9 .pull-quote__large .pull-quote_body b {
   font-weight: normal !important;
 }
 /* topdoc
@@ -3521,6 +3681,101 @@ img {
    utilities
    ========================================================================== */
 /* topdoc
+  name: Flexible proportional containers
+  family: cfgov-utilities
+  notes:
+    - "Utilizes intrinsic ratios to create a flexible container that retains its
+      aspect ratio. When image tags scale they retain their aspect ratio, but if
+      you need a flexible video you will need to use this mixin."
+    - "You can read more about intrinsic rations here:
+      http://alistapart.com/article/creating-intrinsic-ratios-for-video"
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="u-flexible-container">
+            <video
+              class="u-flexible-container_inner"
+              style="background:#75787B;"
+              controls>
+            </video>
+        </div>
+      notes:
+        - "Defaults to a 16:19 ratio."
+        - "Original mixin credit: https://gist.github.com/craigmdennis/6655047"
+        - "Note that inline style usage is being used for demo purposes only.
+          Please do not use inline styles."
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .u-flexible-container
+            .u-flexible-container_inner
+    - name: Background image examples
+      markup: |
+        <div class="u-flexible-container"
+             style="
+               background-image:url(http://placekitten.com/700/394);
+               background-position: center center;
+             ">
+        </div>
+        <div class="u-flexible-container"
+             style="
+               background-image:url(http://placekitten.com/700/394);
+               background-position: center center;
+               background-size: cover;
+             ">
+        </div>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .u-flexible-container
+      notes:
+        - "If you're not using the video or object elements and all you need is
+          a proportionally cropped or scaling background image with a fluid
+          container then you can leave out u-flexible-container_inner."
+        - "Note that inline style usage is being used for demo purposes only.
+          Please do not use inline styles."
+    - name: 4-3 modifier
+      markup: |
+        <div class="u-flexible-container u-flexible-container__4-3">
+            <video
+              class="u-flexible-container_inner"
+              style="background:#75787B;"
+              controls>
+            </video>
+        </div>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .u-flexible-container.u-flexible-container__4-3
+            .u-flexible-container_inner
+      notes:
+        - "Create your own aspect ratios by using this modifier as an example."
+        - "Note that inline style usage is being used for demo purposes only.
+          Please do not use inline styles."
+  tags:
+    - cfgov-utilities
+*/
+.u-flexible-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.u-flexible-container_inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.u-flexible-container__4-3 {
+  position: relative;
+  padding-bottom: 75%;
+  height: 0;
+}
+/* topdoc
   name: Utility classes
   family: cfgov-utilities
   patterns:
@@ -3674,15 +3929,9 @@ img {
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-.header {
-  border-bottom: 10px solid #2cb34a;
-}
-.content_hero {
-  padding: 1em 0;
-  background: #e3e4e5;
-}
-.content_hero > h1 {
-  margin: 0;
+.content_bar {
+  height: 10px;
+  background: #2cb34a;
 }
 .content_main,
 .content_sidebar {
@@ -3808,6 +4057,31 @@ img {
   .content_main,
   .content_sidebar {
     padding: 2em 0;
+  }
+}
+@media only all and (min-width: 75em) {
+  .content__2-1 .content_main {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+    padding-right: 8.33333333%;
+  }
+  .ie .content__2-1 .content_main {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .content__2-1 .content_main {
+    display: inline;
+    *zoom: 1;
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .lt-ie8 .content__2-1 .content_main {
+    padding-right: 0;
   }
 }
 .content__bleedbar .content_sidebar {
@@ -4004,46 +4278,55 @@ img {
             <ul class="tags_list">
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Students
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Consumers
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         College loans
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Students
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Consumers
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         College loans
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Students
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Consumers
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         College loans
                     </a>
                 </li>
@@ -4106,6 +4389,7 @@ img {
   }
 }
 .tags_link {
+  position: relative;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -4115,7 +4399,6 @@ img {
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  position: relative;
   display: block;
   padding: 12px 0 8px;
   margin: 0 0 0 1.41666667em;
@@ -4156,14 +4439,16 @@ img {
     padding: 0;
   }
 }
-.tags_link:before {
-  content: "\2022";
+.tags_bullet {
   position: absolute;
   left: -1em;
   display: block;
   width: 1em;
   color: #ffb149;
   font-size: 1.41666667em;
+}
+.lt-ie8 .tags_bullet {
+  top: 4px;
 }
 /* topdoc
   name: Date
@@ -4220,7 +4505,7 @@ img {
   font-weight: 500;
   line-height: 1.22222222;
   display: block;
-  margin-bottom: 0.55555556em;
+  margin-bottom: 0.44444444em;
   color: #101820;
   border-bottom-color: #0072ce;
 }
@@ -4246,11 +4531,6 @@ img {
 .category-slug.active {
   border-bottom-color: #002d72;
   color: #101820;
-}
-@media only all and (min-width: 37.5em) {
-  .category-slug {
-    margin-bottom: 0.22222222em;
-  }
 }
 /* topdoc
   name: Header slug
@@ -4366,6 +4646,245 @@ img {
    cfgov-refresh
    misc
    ========================================================================== */
+/* topdoc
+  name: Forms
+  family: cfgov-misc
+  patterns:
+    - name: Labels
+      markup: |
+        <label>Topics</label>
+        <input type="text">
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          ...
+  tags:
+    - cfgov-misc
+*/
+.form-label {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+}
+.lt-ie9 .form-label {
+  font-weight: normal !important;
+}
+.form-label__inline {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+}
+.form-label__inline em,
+.form-label__inline i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .form-label__inline em,
+.lt-ie9 .form-label__inline i {
+  font-style: normal !important;
+}
+.form-label__inline strong,
+.form-label__inline b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .form-label__inline strong,
+.lt-ie9 .form-label__inline b {
+  font-weight: normal !important;
+}
+/* topdoc
+  name: Hero
+  family: cfgov-misc
+  patterns:
+    - name: Basic hero
+      markup: |
+        <section class="hero" style="background-color:#337E7D;">
+            <div class="wrapper">
+                <div class="hero_card">
+                    <div class="hero_card-bg">
+                        <div class="hero_card-padding">
+                            <h1>My hero!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__small u-flexible-container">
+                <div class="hero_img u-flexible-container_inner"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .hero
+            .wrapper
+              .hero_card
+                .hero_card-bg
+                  .hero_card-padding
+            .hero_img-container.hero_img-container__small
+              .hero_img
+            .hero_img-container.hero_img-container__large
+              .hero_img
+    - codenotes:
+        - .hero
+      notes:
+        - "For full screen edge to edge background color. We have chosen to set
+          the background color using an inline style so that our templating
+          system can dynamically set it. If it makes more sense for your project
+          to set it with CSS then please do so."
+    - codenotes:
+        - .wrapper
+      notes:
+        - "To center the hero content with a max-width."
+    - codenotes:
+        - .hero_card-padding
+      notes:
+        - "This extra div is used to collapse the margins of child elements."
+    - codenotes:
+        - .hero_img-container
+      notes:
+        - "By using a wrapping element we can responsibly load a small or large
+          screen background image by controling the display value of this element.
+          More info on this approach can be found here:
+          http://timkadlec.com/2012/04/media-query-asset-downloading-results/"
+    - codenotes:
+        - .hero_img
+      notes:
+        - "The reason for using a background image is noted above in
+          .hero_img-container. We have chosen to set the background image using
+          an inline style so that our templating system can dynamically set the
+          source. If it makes more sense for your project to set it with CSS
+          then please do so."
+  tags:
+    - cfgov-misc
+*/
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-color: #75787b;
+}
+.hero_img-container {
+  display: none;
+  line-height: 1;
+}
+.hero_img-container__small {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.hero_img-container__small .hero_img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero_img {
+  display: block;
+  height: 100%;
+  line-height: 1;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+@media only all and (max-width: 41.1875em) {
+  .hero_img-container__small {
+    position: relative;
+    padding-bottom: 45.45454545454545%;
+    height: 0;
+    display: block;
+  }
+}
+.hero_card-bg {
+  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+.hero_card-padding {
+  padding: 30px 30px 0;
+  margin-bottom: 40px;
+}
+@media only all and (min-width: 41.25em) {
+  .hero {
+    padding-top: 1.875em;
+  }
+  .hero_img-container__large {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+  .hero_card {
+    position: relative;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+    padding-left: 50%;
+    z-index: 2;
+  }
+  .ie .hero_card {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .hero_card {
+    display: inline;
+    *zoom: 1;
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .lt-ie8 .hero_card {
+    padding-left: 0;
+  }
+}
+@media only all and (min-width: 64em) {
+  .hero_card {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+    padding-left: 66.66666667%;
+  }
+  .ie .hero_card {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .hero_card {
+    display: inline;
+    *zoom: 1;
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .lt-ie8 .hero_card {
+    padding-left: 0;
+  }
+}
 /* topdoc
   name: Lists
   family: cfgov-misc
@@ -4575,15 +5094,15 @@ img {
           -----------------------
           .line-container
             .line-container_body
-    - name: Line container with a 'pullup' (example 1)
+    - name: Line container with no top border or padding (example 1)
       markup: |
-        <div class="line-container">
-            <h2 class="line-container_pullup header-slug">
-                <span class="header-slug_inner">
-                    Blog summary
-                </span>
-            </h2>
+        <div class="line-container line-container__no-top">
             <div class="line-container_body">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Blog summary
+                    </span>
+                </h2>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -4596,21 +5115,15 @@ img {
         - |
           Structural cheat sheet:
           -----------------------
-          .line-container
-            .line-container_pullup
+          .line-container.line-container__no-top
             .line-container_body
-      notes:
-        - "The 'pullup' allows you to pull an element up flush against the top
-          of a .line-container."
-        - ".line-container_pullup works well with a .header-slug but it can be
-          used with other patterns too, like the image example below."
-    - name: Line container with a 'pullup' (example 2)
+    - name: Line container with no top border or padding (example 2)
       markup: |
         <div class="line-container">
-            <p class="line-container_pullup">
-                <img src="http://placekitten.com/700/200" alt="">
-            </p>
-            <div class="line-container_body">
+            <div class="line-container_body line-container__no-top">
+                <p>
+                    <img src="http://placekitten.com/700/200" alt="">
+                </p>
                 <h2>
                     Photo heading
                 </h2>
@@ -4626,16 +5139,66 @@ img {
     - cfgov-misc
 */
 .line-container {
-  padding: 1.625em 0 0;
   margin: 0 0 1.875em;
   border-top: 1px solid #e3e4e5;
   border-bottom: 1px solid #e3e4e5;
 }
-.line-container .line-container_pullup {
-  margin-top: -27px;
+.line-container_body {
+  margin: 1.625em 0 1.625em;
 }
-.line-container .line-container_body {
-  margin-bottom: 1.625em;
+.line-container__no-top {
+  border-top: 0;
+}
+.line-container__no-top .line-container_body {
+  margin-top: 0;
+}
+/* topdoc
+  name: Padded container
+  family: cfgov-misc
+  notes:
+    - ".padded-container is meant to contain anything you want with consistent
+      padding. It uses a margin collapsing trick in CSS to achieve this
+      consistency which this is why .line-container_body is needed. The only
+      caveat to this consistency is if you place something inside of it that has
+      a bottom-margin that is larger than the .padded-container padding."
+  patterns:
+    - name: Basic padded container
+      markup: |
+        <div class="padded-container">
+            <div class="padded-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is padding all around me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .padded-container
+            .padded-container_body
+  tags:
+    - cfgov-misc
+*/
+.padded-container {
+  margin: 0 0 1.875em;
+  background: #f1f2f2;
+  overflow: hidden;
+}
+.padded-container_body {
+  margin: 1.5em 1.875em 1.5em;
+}
+/* topdoc
+  name: Filters
+  family: cfgov-misc
+  patterns:
+    - name: Basic filter
+  tags:
+    - cfgov-misc
+*/
+.filters {
+  margin-bottom: 1.875em;
 }
 /* topdoc
   name: EOF
@@ -4660,6 +5223,13 @@ img {
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
+                <p class="post_dek">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Quis architecto commodi cupiditate excepturi
+                    consequatur sequi quia consectetur est ea laborum
+                    saepe earum quidem a necessitatibus modi magni error
+                    ab suscipit.
+                </p>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -4694,25 +5264,14 @@ img {
                         </a>
                     </li>
                 </ul>
-                <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                <div class="line-container">
-                    <div class="line-container_body">
-                        <p class="post_summary">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Quis architecto commodi cupiditate excepturi
-                            consequatur sequi quia consectetur est ea laborum
-                            saepe earum quidem a necessitatibus modi magni error
-                            ab suscipit.
-                        </p>
-                    </div>
-                </div>
+                <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
             </header>
             <div class="post_body">
-                <aside class="post_inset line-container">
+                <aside class="post_inset post_inset__right line-container">
                     <div class="line-container_body">
-                        <h4>
+                        <h3>
                             Final list of rural and underserved counties
-                        </h4>
+                        </h3>
                         <p>
                             View or download the list in any of these formats:
                         </p>
@@ -4735,9 +5294,9 @@ img {
                         </ul>
                     </div>
                     <div class="line-container_body">
-                        <h4>
+                        <h3>
                             Final list of rural and underserved counties
-                        </h4>
+                        </h3>
                         <p>
                             View or download the list in any of these formats:
                         </p>
@@ -4790,7 +5349,7 @@ img {
                     corporis nemo culpa dolorum! Laborum at eos deleniti
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
-                <aside class="post_inset line-container">
+                <aside class="post_inset post_inset__right line-container">
                     <div class="line-container_body pull-quote">
                         <div class="pull-quote_body">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -4835,7 +5394,33 @@ img {
                     consequatur itaque officiis debitis quisquam! Provident!
                 </p>
                 <aside class="post_inset line-container">
-                    <h2 class="line-container_pullup header-slug">
+                    <div class="line-container_body pull-quote pull-quote__large">
+                        <div class="pull-quote_body">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Cum corrupti tempora nam nihil qui mollitia consectetur
+                            corporis nemo culpa dolorum!
+                        </div>
+                        <footer>
+                            <cite class="pull-quote_citation">
+                                - Author Name
+                            </cite>
+                        </footer>
+                    </div>
+                </aside>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                    corporis nemo culpa dolorum! Laborum at eos deleniti
+                    consequatur itaque officiis debitis quisquam! Provident!
+                </p>
+                <aside class="post_inset post_inset__right line-container line-container__no-top">
+                    <h2 class="header-slug">
                         <span class="header-slug_inner">
                             More information
                         </span>
@@ -4915,6 +5500,11 @@ img {
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
                 </ul>
+                <ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                </ul>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -4940,16 +5530,19 @@ img {
                     <ul class="tags_list">
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
+                                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                 Students
                             </a>
                         </li>
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
+                                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                 Consumers
                             </a>
                         </li>
                         <li class="tags_tag">
                             <a href="#" class="tags_link">
+                                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                 College loans
                             </a>
                         </li>
@@ -4964,12 +5557,12 @@ img {
           .post
             .post_slug
             .post_header
+            .post_dek
             .post_meta
               .post_byline
               .post_date
             .post_share-icon
             .post_featured-img
-            .post_summary
             .post_body
             .post_inset
   tags:
@@ -4983,7 +5576,7 @@ img {
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
-  margin-bottom: 0.84615385em;
+  margin-bottom: 0.5em;
 }
 .post_header em,
 .post_header i {
@@ -5014,7 +5607,7 @@ img {
     margin-bottom: 0.47058824em;
     font-size: 2.125em;
     line-height: 1.29411765;
-    margin-bottom: 0.52941176em;
+    margin-bottom: 0.29411765em;
   }
   .post_header em,
   .post_header i {
@@ -5037,6 +5630,19 @@ img {
     font-weight: normal !important;
   }
 }
+.post_dek {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 1.11111111em;
+}
+.lt-ie9 .post_dek {
+  font-weight: normal !important;
+}
 .post_meta {
   margin-bottom: 1.125em;
 }
@@ -5058,37 +5664,8 @@ img {
 }
 @media only all and (min-width: 25em) {
   .post_featured-img {
-    margin: 1.875em 0;
+    margin: 1.875em 0 1.25em;
   }
-}
-.post_summary {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.22727273em;
-  font-size: 1.375em;
-  line-height: 1.27272727;
-}
-.post_summary em,
-.post_summary i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-.lt-ie9 .post_summary em,
-.lt-ie9 .post_summary i {
-  font-style: normal !important;
-}
-.post_summary strong,
-.post_summary b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .post_summary strong,
-.lt-ie9 .post_summary b {
-  font-weight: normal !important;
 }
 .post_body {
   color: #43484e;
@@ -5098,11 +5675,16 @@ img {
   color: #101820;
 }
 @media only all and (min-width: 48.0625em) {
-  .post_inset {
+  .post_inset__right {
     float: right;
     width: 15.625em;
     margin-top: 0.3125em;
     margin-left: 1.875em;
+  }
+}
+@media only all and (min-width: 75em) {
+  .post_inset__right {
+    margin-right: -30px;
   }
 }
 /* topdoc
@@ -5299,6 +5881,58 @@ a.focus .summary_header {
         - "Official icons are still being developed, hence the ?."
   tags:
     - cfgov-blog-docs
+*/
+/* topdoc
+  name: Hero
+  family: cfgov-blog-docs
+  patterns:
+    - name: Blog hero
+      markup: |
+        <section class="hero" style="background-color:#337E7D;">
+            <div class="wrapper">
+                <div class="hero_card">
+                    <div class="hero_card-bg">
+                        <div class="hero_card-padding">
+                            <a href="#" class="category-slug">
+                                <span class="cf-icon cf-icon-help"></span>
+                                <span class="visually-hidden">Category:</span>
+                                Category
+                            </a>
+                            <a class="summary" href="#">
+                                <h1 class="summary_header">Header</h1>
+                                <p class="summary_text">Text.</p>
+                                <p class="summary_byline">Byline</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__small u-flexible-container">
+                <div class="hero_img u-flexible-container_inner"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .hero
+            .wrapper
+              .hero_card
+                .hero_card-bg
+                  .hero_card-padding
+                    .category-slug (collapsed for brevity)
+                    .summary (collapsed for brevity)
+            .hero_img-container.hero_img-container__small
+              .hero_img
+            .hero_img-container.hero_img-container__large
+              .hero_img
 */
 /* topdoc
   name: Post previews

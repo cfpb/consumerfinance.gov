@@ -78,6 +78,10 @@
     </header><!-- END .header -->
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
+        
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
@@ -91,6 +95,13 @@
                         <h1 class="post_header">
                             A consumer-centered supervision program
                         </h1>
+                        <p class="post_dek">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Quis architecto commodi cupiditate excepturi
+                            consequatur sequi quia consectetur est ea laborum
+                            saepe earum quidem a necessitatibus modi magni error
+                            ab suscipit.
+                        </p>
                         <div class="post_meta">
                             <span class="post_byline">
                                 By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -125,21 +136,10 @@
                                 </a>
                             </li>
                         </ul>
-                        <img class="post_featured-img" src="http://placekitten.com/706/408" alt="alt text">
-                        <div class="line-container">
-                            <div class="line-container_body">
-                                <p class="post_summary">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit. Quis architecto commodi cupiditate excepturi
-                                    consequatur sequi quia consectetur est ea laborum
-                                    saepe earum quidem a necessitatibus modi magni error
-                                    ab suscipit.
-                                </p>
-                            </div>
-                        </div>
+                        <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
                     </header>
                     <div class="post_body">
-                        <aside class="post_inset line-container">
+                        <aside class="post_inset post_inset__right line-container">
                             <div class="line-container_body">
                                 <h3>
                                     Final list of rural and underserved counties
@@ -221,7 +221,7 @@
                             corporis nemo culpa dolorum! Laborum at eos deleniti
                             consequatur itaque officiis debitis quisquam! Provident!
                         </p>
-                        <aside class="post_inset line-container">
+                        <aside class="post_inset post_inset__right line-container">
                             <div class="line-container_body pull-quote">
                                 <div class="pull-quote_body">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -266,12 +266,38 @@
                             consequatur itaque officiis debitis quisquam! Provident!
                         </p>
                         <aside class="post_inset line-container">
-                            <h2 class="line-container_pullup header-slug">
-                                <span class="header-slug_inner">
-                                    More information
-                                </span>
-                            </h2>
+                            <div class="line-container_body pull-quote pull-quote__large">
+                                <div class="pull-quote_body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                    Cum corrupti tempora nam nihil qui mollitia consectetur
+                                    corporis nemo culpa dolorum!
+                                </div>
+                                <footer>
+                                    <cite class="pull-quote_citation">
+                                        - Author Name
+                                    </cite>
+                                </footer>
+                            </div>
+                        </aside>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Cum corrupti tempora nam nihil qui mollitia consectetur
+                            corporis nemo culpa dolorum! Laborum at eos deleniti
+                            consequatur itaque officiis debitis quisquam! Provident!
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Cum corrupti tempora nam nihil qui mollitia consectetur
+                            corporis nemo culpa dolorum! Laborum at eos deleniti
+                            consequatur itaque officiis debitis quisquam! Provident!
+                        </p>
+                        <aside class="post_inset post_inset__right line-container line-container__no-top">
                             <div class="line-container_body">
+                                <h2 class="header-slug">
+                                    <span class="header-slug_inner">
+                                        More information
+                                    </span>
+                                </h2>
                                 <ul class="list list__unstyled">
                                     <li class="list_item list_item__spaced">
                                         <a class="list_link" href="#">
@@ -376,46 +402,55 @@
                             <ul class="tags_list">
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         Students
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         Consumers
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         College loans
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         Students
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         Consumers
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         College loans
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         Students
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         Consumers
                                     </a>
                                 </li>
                                 <li class="tags_tag">
                                     <a href="#" class="tags_link">
+                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                                         College loans
                                     </a>
                                 </li>
@@ -427,7 +462,9 @@
                 <section class="comments">
                     <div class="demo-placeholder">comments placeholder</div>
                 </section>
+
             </section><!-- END .content_main -->
+
             <aside class="content_sidebar">
                 <section class="popular-stories">
                     <div class="demo-placeholder">Related news placeholder</div>
@@ -439,6 +476,7 @@
                     <div class="demo-placeholder">Stay informed placeholder</div>
                 </section>
             </aside><!-- END .content_sidebar -->
+
         </div><!-- END .content_wrapper -->
     </main><!-- END .content -->
 

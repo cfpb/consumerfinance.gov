@@ -9,17 +9,9 @@
     });
 }
 
-.header {
-    border-bottom: 10px solid @green;
-}
-
-.content_hero {
-    padding: 1em 0;
-    background: @gray-20;
-
-    > h1 {
-        margin: 0;
-    }
+.content_bar {
+    height: 10px;
+    background: @green;
 }
 
 .content_main,
@@ -71,6 +63,17 @@
         padding: 2em 0;
     } 
 }); // END min-width 801 block
+
+.u-respond-to-min(1200px, {
+    .content {
+        &__2-1 {
+            .content_main {
+                .column(7, @total-columns, 0, 1);
+            }
+        }
+    }
+});
+
 
 .content__bleedbar {
 

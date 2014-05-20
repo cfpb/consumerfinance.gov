@@ -10315,27 +10315,41 @@ return jQuery;
  */
 
 (function($) {
-
   $(function() {
 
-      $('.expandable').on( 'click', '.expandable-header', function( ev ){
+    $('.expandable').each(function(){
 
-        var $header = $( this ),
-            $container = $header.parent('.expandable'),
-            $button = $header.children('.expandable-button');
+      var $this = $( this ),
+          $target = $this.find('.expandable_target'),
+          $content = $this.find('.expandable_content');
+
+      if ($this.hasClass('expandable__expanded')) {
+        $content.css('display','block');
+        $target.attr('aria-pressed','true');
+      } else {
+        $content.css('display','none');
+        $target.attr('aria-pressed','false');
+      }
+
+      $target.on( 'click', function( ev ){
 
         ev.preventDefault();
         ev.stopPropagation();
 
-        $container.toggleClass('open');
-        $header.next('.expandable-content').slideToggle();
-        $button.toggleClass('open');
-        $button.children('.expandable-text').text( $container.hasClass('open') ? 'Hide' : 'Show' );
+        if ($target.attr('aria-pressed') === 'true') {
+          $target.attr('aria-pressed','false');
+        } else {
+          $target.attr('aria-pressed','true');
+        }
+
+        $this.toggleClass('expandable__expanded');
+        $content.slideToggle();
 
       });
 
-  });
+    });
 
+  });
 }(jQuery));
 // Count all features included in the test page.
 $('.feature-list').append(

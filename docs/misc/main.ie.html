@@ -15,6 +15,301 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="forms" class="docs-component">
+      <h2 class="docs-component_header"><span>Forms</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Labels</h3>
+          <section class="docs-pattern_pattern">
+<label>Topics</label>
+<input type="text">
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label&gt;Topics&lt;/label&gt;
+&lt;input type=&quot;text&quot;&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+...</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.form-label {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+}
+
+.lt-ie9 .form-label {
+  font-weight: normal !important;
+}
+
+.form-label__inline {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+}
+
+.form-label__inline em,
+.form-label__inline i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .form-label__inline em,
+.lt-ie9 .form-label__inline i {
+  font-style: normal !important;
+}
+
+.form-label__inline strong,
+.form-label__inline b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .form-label__inline strong,
+.lt-ie9 .form-label__inline b {
+  font-weight: normal !important;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="hero" class="docs-component">
+      <h2 class="docs-component_header"><span>Hero</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic hero</h3>
+          <section class="docs-pattern_pattern">
+<section class="hero" style="background-color:#337E7D;">
+    <div class="wrapper">
+        <div class="hero_card">
+            <div class="hero_card-bg">
+                <div class="hero_card-padding">
+                    <h1>My hero!</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero_img-container hero_img-container__small u-flexible-container">
+        <div class="hero_img u-flexible-container_inner"
+             style="background-image:url(../static/img/hero-small.png);">
+        </div>
+    </div>
+    <div class="hero_img-container hero_img-container__large">
+        <div class="hero_img"
+             style="background-image:url(../static/img/hero-large.png);">
+        </div>
+    </div>
+</section>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section class=&quot;hero&quot; style=&quot;background-color:#337E7D;&quot;&gt;
+    &lt;div class=&quot;wrapper&quot;&gt;
+        &lt;div class=&quot;hero_card&quot;&gt;
+            &lt;div class=&quot;hero_card-bg&quot;&gt;
+                &lt;div class=&quot;hero_card-padding&quot;&gt;
+                    &lt;h1&gt;My hero!&lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;hero_img-container hero_img-container__small u-flexible-container&quot;&gt;
+        &lt;div class=&quot;hero_img u-flexible-container_inner&quot;
+             style=&quot;background-image:url(../static/img/hero-small.png);&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;hero_img-container hero_img-container__large&quot;&gt;
+        &lt;div class=&quot;hero_img&quot;
+             style=&quot;background-image:url(../static/img/hero-large.png);&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.hero
+  .wrapper
+    .hero_card
+      .hero_card-bg
+        .hero_card-padding
+  .hero_img-container.hero_img-container__small
+    .hero_img
+  .hero_img-container.hero_img-container__large
+    .hero_img</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.hero</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>For full screen edge to edge background color. We have chosen to set the background color using an inline style so that our templating system can dynamically set it. If it makes more sense for your project to set it with CSS then please do so.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.wrapper</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>To center the hero content with a max-width.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.hero_card-padding</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>This extra div is used to collapse the margins of child elements.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.hero_img-container</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>By using a wrapping element we can responsibly load a small or large screen background image by controling the display value of this element. More info on this approach can be found here: http://timkadlec.com/2012/04/media-query-asset-downloading-results/</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.hero_img</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The reason for using a background image is noted above in .hero_img-container. We have chosen to set the background image using an inline style so that our templating system can dynamically set the source. If it makes more sense for your project to set it with CSS then please do so.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-color: #75787b;
+}
+
+.hero_img-container {
+  display: none;
+  line-height: 1;
+}
+
+.hero_img-container__small {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.hero_img-container__small .hero_img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero_img {
+  display: block;
+  height: 100%;
+  line-height: 1;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+.hero_card-bg {
+  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+.hero_card-padding {
+  padding: 30px 30px 0;
+  margin-bottom: 40px;
+}
+
+.hero {
+  padding-top: 1.875em;
+}
+
+.hero_img-container__large {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.hero_card {
+  position: relative;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+  padding-left: 50%;
+  z-index: 2;
+}
+
+.ie .hero_card {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .hero_card {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.lt-ie8 .hero_card {
+  padding-left: 0;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="lists" class="docs-component">
       <h2 class="docs-component_header"><span>Lists</span></h2>
       <div class="docs-component_intro">
@@ -357,15 +652,15 @@
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Line container with a 'pullup' (example 1)</h3>
+          <h3 class="docs-pattern_header">Line container with no top border or padding (example 1)</h3>
           <section class="docs-pattern_pattern">
-<div class="line-container">
-    <h2 class="line-container_pullup header-slug">
-        <span class="header-slug_inner">
-            Blog summary
-        </span>
-    </h2>
+<div class="line-container line-container__no-top">
     <div class="line-container_body">
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Blog summary
+            </span>
+        </h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -377,13 +672,13 @@
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;line-container&quot;&gt;
-    &lt;h2 class=&quot;line-container_pullup header-slug&quot;&gt;
-        &lt;span class=&quot;header-slug_inner&quot;&gt;
-            Blog summary
-        &lt;/span&gt;
-    &lt;/h2&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;line-container line-container__no-top&quot;&gt;
     &lt;div class=&quot;line-container_body&quot;&gt;
+        &lt;h2 class=&quot;header-slug&quot;&gt;
+            &lt;span class=&quot;header-slug_inner&quot;&gt;
+                Blog summary
+            &lt;/span&gt;
+        &lt;/h2&gt;
         &lt;p&gt;
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -396,25 +691,20 @@
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.line-container
-  .line-container_pullup
+.line-container.line-container__no-top
   .line-container_body</code></pre>
               </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>The 'pullup' allows you to pull an element up flush against the top of a .line-container.</li>
-              <li>.line-container_pullup works well with a .header-slug but it can be used with other patterns too, like the image example below.</li>
             </ul>
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Line container with a 'pullup' (example 2)</h3>
+          <h3 class="docs-pattern_header">Line container with no top border or padding (example 2)</h3>
           <section class="docs-pattern_pattern">
 <div class="line-container">
-    <p class="line-container_pullup">
-        <img src="http://placekitten.com/700/200" alt="">
-    </p>
-    <div class="line-container_body">
+    <div class="line-container_body line-container__no-top">
+        <p>
+            <img src="http://placekitten.com/700/200" alt="">
+        </p>
         <h2>
             Photo heading
         </h2>
@@ -430,10 +720,10 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;line-container&quot;&gt;
-    &lt;p class=&quot;line-container_pullup&quot;&gt;
-        &lt;img src=&quot;http://placekitten.com/700/200&quot; alt=&quot;&quot;&gt;
-    &lt;/p&gt;
-    &lt;div class=&quot;line-container_body&quot;&gt;
+    &lt;div class=&quot;line-container_body line-container__no-top&quot;&gt;
+        &lt;p&gt;
+            &lt;img src=&quot;http://placekitten.com/700/200&quot; alt=&quot;&quot;&gt;
+        &lt;/p&gt;
         &lt;h2&gt;
             Photo heading
         &lt;/h2&gt;
@@ -451,18 +741,91 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .line-container {
-  padding: 1.625em 0 0;
   margin: 0 0 1.875em;
   border-top: 1px solid #e3e4e5;
   border-bottom: 1px solid #e3e4e5;
 }
 
-.line-container .line-container_pullup {
-  margin-top: -27px;
+.line-container_body {
+  margin: 1.625em 0 1.625em;
 }
 
-.line-container .line-container_body {
-  margin-bottom: 1.625em;
+.line-container__no-top {
+  border-top: 0;
+}
+
+.line-container__no-top .line-container_body {
+  margin-top: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="padded-container" class="docs-component">
+      <h2 class="docs-component_header"><span>Padded container</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>.padded-container is meant to contain anything you want with consistent padding. It uses a margin collapsing trick in CSS to achieve this consistency which this is why .line-container_body is needed. The only caveat to this consistency is if you place something inside of it that has a bottom-margin that is larger than the .padded-container padding.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic padded container</h3>
+          <section class="docs-pattern_pattern">
+<div class="padded-container">
+    <div class="padded-container_body">
+        <p>
+            ¯\_(ツ)_/¯<br>
+            There is padding all around me!
+        </p>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;padded-container&quot;&gt;
+    &lt;div class=&quot;padded-container_body&quot;&gt;
+        &lt;p&gt;
+            ¯\_(ツ)_/¯&lt;br&gt;
+            There is padding all around me!
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.padded-container
+  .padded-container_body</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.padded-container {
+  margin: 0 0 1.875em;
+  background: #f1f2f2;
+  overflow: hidden;
+}
+
+.padded-container_body {
+  margin: 1.5em 1.875em 1.5em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="filters" class="docs-component">
+      <h2 class="docs-component_header"><span>Filters</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic filter</h3>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.filters {
+  margin-bottom: 1.875em;
 }
 </code></pre>
       </div>
