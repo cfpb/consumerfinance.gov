@@ -15,6 +15,154 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / utilities docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="flexible-proportional-containers" class="docs-component">
+      <h2 class="docs-component_header"><span>Flexible proportional containers</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Utilizes intrinsic ratios to create a flexible container that retains its aspect ratio. When image tags scale they retain their aspect ratio, but if you need a flexible video you will need to use this mixin.</li>
+          <li>You can read more about intrinsic rations here: http://alistapart.com/article/creating-intrinsic-ratios-for-video</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<div class="u-flexible-container">
+    <video
+      class="u-flexible-container_inner"
+      style="background:#75787B;"
+      controls>
+    </video>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-flexible-container&quot;&gt;
+    &lt;video
+      class=&quot;u-flexible-container_inner&quot;
+      style=&quot;background:#75787B;&quot;
+      controls&gt;
+    &lt;/video&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural sheat sheet:
+-----------------------
+.u-flexible-container
+  .u-flexible-container_inner</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Defaults to a 16:19 ratio.</li>
+              <li>Original mixin credit: https://gist.github.com/craigmdennis/6655047</li>
+              <li>Note that inline style usage is being used for demo purposes only. Please do not use inline styles.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Background image examples</h3>
+          <section class="docs-pattern_pattern">
+<div class="u-flexible-container"
+     style="
+       background-image:url(http://placekitten.com/700/394);
+       background-position: center center;
+     ">
+</div>
+<div class="u-flexible-container"
+     style="
+       background-image:url(http://placekitten.com/700/394);
+       background-position: center center;
+       background-size: cover;
+     ">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-flexible-container&quot;
+     style=&quot;
+       background-image:url(http://placekitten.com/700/394);
+       background-position: center center;
+     &quot;&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-flexible-container&quot;
+     style=&quot;
+       background-image:url(http://placekitten.com/700/394);
+       background-position: center center;
+       background-size: cover;
+     &quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural sheat sheet:
+-----------------------
+.u-flexible-container</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>If you're not using the video or object elements and all you need is a proportionally cropped or scaling background image with a fluid container then you can leave out u-flexible-container_inner.</li>
+              <li>Note that inline style usage is being used for demo purposes only. Please do not use inline styles.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">4-3 modifier</h3>
+          <section class="docs-pattern_pattern">
+<div class="u-flexible-container u-flexible-container__4-3">
+    <video
+      class="u-flexible-container_inner"
+      style="background:#75787B;"
+      controls>
+    </video>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-flexible-container u-flexible-container__4-3&quot;&gt;
+    &lt;video
+      class=&quot;u-flexible-container_inner&quot;
+      style=&quot;background:#75787B;&quot;
+      controls&gt;
+    &lt;/video&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural sheat sheet:
+-----------------------
+.u-flexible-container.u-flexible-container__4-3
+  .u-flexible-container_inner</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Create your own aspect ratios by using this modifier as an example.</li>
+              <li>Note that inline style usage is being used for demo purposes only. Please do not use inline styles.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-flexible-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.u-flexible-container_inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.u-flexible-container__4-3 {
+  position: relative;
+  padding-bottom: 75%;
+  height: 0;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="utility-classes" class="docs-component">
       <h2 class="docs-component_header"><span>Utility classes</span></h2>
       <div class="docs-patterns">

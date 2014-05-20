@@ -15,46 +15,55 @@
             <ul class="tags_list">
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Students
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Consumers
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         College loans
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Students
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Consumers
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         College loans
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Students
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         Consumers
                     </a>
                 </li>
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         College loans
                     </a>
                 </li>
@@ -110,11 +119,11 @@
         });
     }
 
-    &_link {
-        @bullet-font-size: 17px;
+    @bullet-font-size: 17px;
 
-        .h6();
+    &_link {
         position: relative;
+        .h6();
         display: block;
         // Eyeballed to 15px including line height.
         padding: 12px 0 8px;
@@ -132,19 +141,21 @@
         .u-respond-to-min(@bp, {
             padding: 0;
         });
-
-        &:before {
-            content: "\2022";
-            position: absolute;
-            left: -1em;
-            // Display block + width makes this whole area clickable.
-            display: block;
-            width: 1em;
-            color: @gold-80;
-            font-size: unit(@bullet-font-size / @font-size, em);
-        }
     }
     
+    &_bullet {
+        position: absolute;
+        left: -1em;
+        .lt-ie8 & {
+            top: 4px;
+        }
+        // Display block + width makes this whole area clickable.
+        display: block;
+        width: 1em;
+        color: @gold-80;
+        // 12px is the font size of .tags_link
+        font-size: unit(@bullet-font-size / 12px, em);
+    }
 }
 
 
@@ -190,12 +201,9 @@
 .category-slug {
     .h4();
     display: block;
-    margin-bottom: unit(10px / @font-size, em);
+    // Eyeballed to 20px over h2.
+    margin-bottom: unit(8px / @font-size, em);
     .u-link__colors(@black, @pacific-80);
-
-    .u-respond-to-min(600px, {
-        margin-bottom: unit(4px / @font-size, em);
-    });
 }
 
 

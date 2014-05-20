@@ -26,46 +26,55 @@
     <ul class="tags_list">
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 Students
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 Consumers
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 College loans
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 Students
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 Consumers
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 College loans
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 Students
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 Consumers
             </a>
         </li>
         <li class="tags_tag">
             <a href="#" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 College loans
             </a>
         </li>
@@ -79,46 +88,55 @@
     &lt;ul class=&quot;tags_list&quot;&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 Students
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 Consumers
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 College loans
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 Students
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 Consumers
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 College loans
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 Students
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 Consumers
             &lt;/a&gt;
         &lt;/li&gt;
         &lt;li class=&quot;tags_tag&quot;&gt;
             &lt;a href=&quot;#&quot; class=&quot;tags_link&quot;&gt;
+                &lt;span class=&quot;tags_bullet&quot; aria-hidden=&quot;true&quot;&gt;&amp;bull;&lt;/span&gt;
                 College loans
             &lt;/a&gt;
         &lt;/li&gt;
@@ -184,6 +202,7 @@
 }
 
 .tags_link {
+  position: relative;
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -193,7 +212,6 @@
   margin-bottom: 0.41666667em;
   font-size: 0.75em;
   line-height: 1.83333333;
-  position: relative;
   display: block;
   padding: 12px 0 8px;
   margin: 0 0 0 1.41666667em;
@@ -234,14 +252,17 @@
   padding: 0;
 }
 
-.tags_link:before {
-  content: &quot;\2022&quot;;
+.tags_bullet {
   position: absolute;
   left: -1em;
   display: block;
   width: 1em;
   color: #ffb149;
   font-size: 1.41666667em;
+}
+
+.lt-ie8 .tags_bullet {
+  top: 4px;
 }
 </code></pre>
       </div>
@@ -323,7 +344,7 @@
   font-weight: 500;
   line-height: 1.22222222;
   display: block;
-  margin-bottom: 0.55555556em;
+  margin-bottom: 0.44444444em;
   color: #101820;
   border-bottom-color: #0072ce;
 }
@@ -354,10 +375,6 @@
 .category-slug.active {
   border-bottom-color: #002d72;
   color: #101820;
-}
-
-.category-slug {
-  margin-bottom: 0.22222222em;
 }
 </code></pre>
       </div>
