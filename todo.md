@@ -20,6 +20,7 @@
 - No category icons yet
 - Min-width for older IE
 - Styled lists
+- Need focus styling of links wrapping large blocks
 
 
 
