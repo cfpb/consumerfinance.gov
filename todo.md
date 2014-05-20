@@ -19,7 +19,7 @@
 - Icons not working in IE7
 - No category icons yet
 - Min-width for older IE
-
+- Styled lists
 
 
 
