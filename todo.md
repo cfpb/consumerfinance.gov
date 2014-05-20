@@ -16,7 +16,7 @@
 
 - Layout docs
 - Review hero with designers
-- Pagination button colors
+- Pagination style conflict with design manual
 - Icons not working in IE7
 - No category icons yet
 - Min-width for older IE
