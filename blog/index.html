@@ -23,17 +23,24 @@
 
             <div class="filters">
                 <div class="expandable">
-                    <header class="expandable-header">
-                        Filter Blogs
-                        <a href="" class="expandable-button">
-                            <span class="expandable-text">
-                                Show
+                    <div class="expandable_header">
+                        <!-- <h5>Blog filtered by</h5>
+                        <ul class="list list__horizontal">
+                            <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
+                        </ul> -->
+                        <a class="expandable_target btn btn-secondary"
+                           href="#barebones-content">
+                            Filter Blogs&nbsp;&nbsp;
+                            <span class="expandable_cue-open">
+                                <span class="cf-icon cf-icon-down"></span>
                             </span>
-                            <span class="cf-icon cf-icon-plus-round"></span>
+                            <span class="expandable_cue-close">
+                                <span class="cf-icon cf-icon-up"></span>
+                            </span>
                         </a>
-                    </header>
-                    <div class="expandable-content expandable-hidden" style="display: none;">
-                        <form method="get">
+                    </div>
+                    <div class="expandable_content padded-container">
+                        <form class="padded-container_body" id="barebones-content" method="get">
                             <div class="form-label">
                                 Categories
                             </div>

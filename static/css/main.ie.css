@@ -1299,63 +1299,189 @@ input.btn::-moz-focus-inner {
    ========================================================================== */
 
 /* topdoc
-    name: Default expandable
+    name: Barebones expandable
     family: cf-expandables
     patterns:
-    - name: Default state
+    - name: Default barebones expandable pattern
       markup: |
         <div class="expandable">
-            <header class="expandable-header">
-                Expandable Header
-                <a href="" class="expandable-button">
-                    <span class="expandable-text">Show</span> <i class="icon-plus-sign"></i>
-                </a>
-            </header>
-            <div class="expandable-content expandable-hidden" style="display: none;">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <a class="expandable_target"
+               href="#barebones-content">
+                <span class="expandable_cue-open">
+                    Show
+                </span>
+                <span class="expandable_cue-close">
+                    Hide
+                </span>
+            </a>
+            <div class="expandable_content" id="barebones-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
             </div>
         </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable
+            .expandable_target
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "This is a barebones expandable pattern which our official recommended
+          expandable is based off of. Please only use this is if you need a
+          custom expandable experience."
+        - "Use the anchor tag for the .expandable_target element to allow for
+          keyboard access. The href attribute should be set to the ID of the
+          .expanded_content element as a fallback for no JavaScript support.
+          When pressed the link will jump you down to the content. Admittedly
+          this is a very minor convenience in most cases, but in some cases
+          there might actually be a significant amount of content between
+          .expandable_target and .expandable_content."
+        - "The aria-pressed attribute on .expandable_target gets automatically
+          added and updated by JavaScript."
+    - name: Expandable that is open by default
+      markup: |
+        <div class="expandable expandable__expanded">
+            <a class="expandable_target"
+               href="#expanded-by-default-content">
+                <span class="expandable_cue-open">
+                    Show
+                </span>
+                <span class="expandable_cue-close">
+                    Hide
+                </span>
+            </a>
+            <div class="expandable_content" id="expanded-by-default-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__expanded
+            .expandable_target
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "Simply add the .expandable__expanded modifier to .expanded."
     tags:
     - cf-expandables
 */
 
-.expandable {
-  margin-bottom: 1.375em;
-  background: #f1f2f2;
-}
-
-.expandable:hover,
-.expandable .open {
-  background: #e3e4e5;
-}
-
-.expandable-hidden {
-  display: none;
-}
-
-.expandable-header {
-  padding: 0.625em 0.75em;
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
+.expandable_target {
   cursor: pointer;
 }
 
-.lt-ie9 .expandable-header {
+.expandable_cue-close {
+  display: none;
+}
+
+.expandable__expanded .expandable_cue-open {
+  display: none;
+}
+
+.expandable__expanded .expandable_cue-close {
+  display: inline;
+}
+
+.expandable_content {
+  overflow: hidden;
+}
+
+/* topdoc
+    name: Padded expandable
+    family: cf-expandables
+    patterns:
+    - name: Default padded expandable pattern
+      markup: |
+        <div class="expandable expandable__padded">
+            <a class="expandable_target expandable_header"
+               href="#styled-expandable-content">
+                <span class="expandable_label">
+                    Expandable Header
+                </span>
+                <span class="expandable_link expandable_header-right">
+                    <span class="expandable_cue-open">
+                        Show
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </a>
+            <div class="expandable_content" id="styled-expandable-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__padded
+            .expandable_target.expandable_header
+              .expandable_label
+              .expandable_link.expandable_header-right
+                .expandable_cue-open
+                  .cf-icon.cf-icon-plus-round
+                .expandable_cue-close
+                  .cf-icon.cf-icon-minus-round
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "The padded expandable is our recommended go-to expandable pattern."
+        - "If you need a custom expandable experience first try using a
+          combination of the new elements that are used in the padded expandable
+          pattern like .expandable_header, expandable_label, expandable_link,
+          and expandable_header-right."
+    tags:
+    - cf-expandables
+*/
+
+.expandable_header {
+  display: block;
+}
+
+.expandable_header-right {
+  float: right;
+}
+
+.expandable_label {
+  color: #101820;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .expandable_label {
   font-weight: normal !important;
 }
 
-.expandable-button,
-.expandable-button:link,
-.expandable-button:visited {
-  margin: 0;
-  border-width: 0;
-  float: right;
+.expandable_link {
+  color: #0072ce;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -1363,52 +1489,50 @@ input.btn::-moz-focus-inner {
   line-height: 1.57142857;
 }
 
-.expandable-button em,
-.expandable-button:link em,
-.expandable-button:visited em,
-.expandable-button i,
-.expandable-button:link i,
-.expandable-button:visited i {
+.expandable_link em,
+.expandable_link i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
 
-.lt-ie9 .expandable-button em,
-.lt-ie9 .expandable-button:link em,
-.lt-ie9 .expandable-button:visited em,
-.lt-ie9 .expandable-button i,
-.lt-ie9 .expandable-button:link i,
-.lt-ie9 .expandable-button:visited i {
+.lt-ie9 .expandable_link em,
+.lt-ie9 .expandable_link i {
   font-style: normal !important;
 }
 
-.expandable-button strong,
-.expandable-button:link strong,
-.expandable-button:visited strong,
-.expandable-button b,
-.expandable-button:link b,
-.expandable-button:visited b {
+.expandable_link strong,
+.expandable_link b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
 
-.lt-ie9 .expandable-button strong,
-.lt-ie9 .expandable-button:link strong,
-.lt-ie9 .expandable-button:visited strong,
-.lt-ie9 .expandable-button b,
-.lt-ie9 .expandable-button:link b,
-.lt-ie9 .expandable-button:visited b {
+.lt-ie9 .expandable_link strong,
+.lt-ie9 .expandable_link b {
   font-weight: normal !important;
 }
 
-.expandable-content {
-  padding: 0 0.75em 0.25em;
+.expandable__padded {
+  margin-bottom: 1.875em;
+  background: #f1f2f2;
 }
 
-.open .icon-plus-sign:before {
-  content: "\f056";
+.expandable__padded:hover,
+.expandable__padded.expandable__expanded {
+  background: #e3e4e5;
+}
+
+.expandable__padded .expandable_header {
+  padding: 0.625em 1em;
+}
+
+.expandable__padded .expandable_header.expandable_target {
+  border-bottom: none;
+}
+
+.expandable__padded .expandable_content {
+  margin: 0 1em 1.375em;
 }
 
 /* topdoc
@@ -5512,6 +5636,59 @@ img {
 
 .line-container__no-top .line-container_body {
   margin-top: 0;
+}
+
+/* topdoc
+  name: Padded container
+  family: cfgov-misc
+  notes:
+    - ".padded-container is meant to contain anything you want with consistent
+      padding. It uses a margin collapsing trick in CSS to achieve this
+      consistency which this is why .line-container_body is needed. The only
+      caveat to this consistency is if you place something inside of it that has
+      a bottom-margin that is larger than the .padded-container padding."
+  patterns:
+    - name: Basic padded container
+      markup: |
+        <div class="padded-container">
+            <div class="padded-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is padding all around me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .padded-container
+            .padded-container_body
+  tags:
+    - cfgov-misc
+*/
+
+.padded-container {
+  margin: 0 0 1.875em;
+  background: #f1f2f2;
+  overflow: hidden;
+}
+
+.padded-container_body {
+  margin: 1.5em 1.875em 1.5em;
+}
+
+/* topdoc
+  name: Filters
+  family: cfgov-misc
+  patterns:
+    - name: Basic filter
+  tags:
+    - cfgov-misc
+*/
+
+.filters {
+  margin-bottom: 1.875em;
 }
 
 /* topdoc

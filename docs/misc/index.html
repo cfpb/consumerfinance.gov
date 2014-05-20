@@ -631,6 +631,71 @@
 }</code></pre>
       </div>
     </div>
+    <div id="padded-container" class="docs-component">
+      <h2 class="docs-component_header"><span>Padded container</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>.padded-container is meant to contain anything you want with consistent padding. It uses a margin collapsing trick in CSS to achieve this consistency which this is why .line-container_body is needed. The only caveat to this consistency is if you place something inside of it that has a bottom-margin that is larger than the .padded-container padding.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic padded container</h3>
+          <section class="docs-pattern_pattern">
+<div class="padded-container">
+    <div class="padded-container_body">
+        <p>
+            ¯\_(ツ)_/¯<br>
+            There is padding all around me!
+        </p>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;padded-container&quot;&gt;
+    &lt;div class=&quot;padded-container_body&quot;&gt;
+        &lt;p&gt;
+            ¯\_(ツ)_/¯&lt;br&gt;
+            There is padding all around me!
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.padded-container
+  .padded-container_body</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.padded-container {
+  margin: 0 0 1.875em;
+  background: #f1f2f2;
+  overflow: hidden;
+}
+.padded-container_body {
+  margin: 1.5em 1.875em 1.5em;
+}</code></pre>
+      </div>
+    </div>
+    <div id="filters" class="docs-component">
+      <h2 class="docs-component_header"><span>Filters</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic filter</h3>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.filters {
+  margin-bottom: 1.875em;
+}</code></pre>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>
