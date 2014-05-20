@@ -4531,6 +4531,62 @@ img {
    misc
    ========================================================================== */
 /* topdoc
+  name: Forms
+  family: cfgov-misc
+  patterns:
+    - name: Labels
+      markup: |
+        <label>Topics</label>
+        <input type="text">
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          ...
+  tags:
+    - cfgov-misc
+*/
+.form-label {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+}
+.lt-ie9 .form-label {
+  font-weight: normal !important;
+}
+.form-label__inline {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+}
+.form-label__inline em,
+.form-label__inline i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .form-label__inline em,
+.lt-ie9 .form-label__inline i {
+  font-style: normal !important;
+}
+.form-label__inline strong,
+.form-label__inline b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .form-label__inline strong,
+.lt-ie9 .form-label__inline b {
+  font-weight: normal !important;
+}
+/* topdoc
   name: Hero
   family: cfgov-misc
   patterns:

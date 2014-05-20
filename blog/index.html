@@ -19,11 +19,45 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-                <div class="filters">
-                    <div class="demo-placeholder">filters placeholder</div>
-                </div>
-
             {% set posts = queries.posts.search_with_url_arguments(size=3) %}
+
+            <div class="filters">
+                <div class="expandable">
+                    <header class="expandable-header">
+                        Filter Blogs
+                        <a href="" class="expandable-button">
+                            <span class="expandable-text">
+                                Show
+                            </span>
+                            <span class="cf-icon cf-icon-plus-round"></span>
+                        </a>
+                    </header>
+                    <div class="expandable-content expandable-hidden" style="display: none;">
+                        <form method="get">
+                            <div class="form-label">
+                                Categories
+                            </div>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="consumer">
+                                Consumer
+                            </label>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                Regulation &amp; compliance
+                            </label>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="innovation">
+                                Innovation
+                            </label>
+                            <label class="form-label__inline">
+                                <input type="checkbox" name="filter_category" value="announcements">
+                                Announcements
+                            </label>
+                            <input type="submit" value="Apply filters" class="btn">
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             {% for post in posts %}
                 <article class="post-preview">
