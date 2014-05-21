@@ -19,7 +19,7 @@
       <h2 class="docs-component_header"><span>Forms</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Labels</h3>
+          <h3 class="docs-pattern_header">Form element showcase</h3>
           <section class="docs-pattern_pattern">
 <div class="form-group">
     <label class="form-group_header">Form group header</label>
@@ -70,12 +70,115 @@
     &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
     &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
 &lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form label</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label">
+    Form label
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label&quot;&gt;
+    Form label
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form element nested within a label</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label">
+    <input type="checkbox">
+    Form label
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label&quot;&gt;
+    &lt;input type=&quot;checkbox&quot;&gt;
+    Form label
+&lt;/label&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>When nesting a form input the input will receive a right margin to space it from the label text.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form groups</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-group">
+    <label class="form-group_header">Form group header</label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+</div>
+<div class="form-group">
+    <label class="form-group_header">Form group header</label>
+    <select class="form-group_item" name="select">
+        <option value="value1">Value 1</option>
+        <option value="value2">Value 2</option>
+        <option value="value3">Value 3</option>
+    </select>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
+        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
+        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
+        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-...</code></pre>
+.form-group
+  .form-group_header
+  .form-group_item</code></pre>
               </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>A form group is recommended you need to associate several form elements with each other like a label and an input, or a heading and a group of checkboxes, or even a group of select menus that are realted to each other.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Simply adds some top margin to set it apart from form groups.</li>
             </ul>
           </footer>
         </div>
