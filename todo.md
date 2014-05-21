@@ -14,6 +14,7 @@
 - Comments
 - Related posts done with Sheer
 - Update CF components with patterns
+- Analytics/SEO
 
 ### Little stuff
 
