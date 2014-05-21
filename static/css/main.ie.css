@@ -5509,11 +5509,6 @@ img {
   padding-top: 1.875em;
 }
 
-.hero_wrapper {
-  position: relative;
-  z-index: 200;
-}
-
 .hero_img-container__large {
   display: block;
   width: 100%;
