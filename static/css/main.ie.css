@@ -1412,7 +1412,7 @@ input.btn::-moz-focus-inner {
         <div class="expandable expandable__padded">
             <a class="expandable_target expandable_header"
                href="#styled-expandable-content">
-                <span class="expandable_label">
+                <span class="expandable_label expandable_header-left">
                     Expandable Header
                 </span>
                 <span class="expandable_link expandable_header-right">
@@ -1442,7 +1442,7 @@ input.btn::-moz-focus-inner {
           -----------------------
           .expandable.expandable__padded
             .expandable_target.expandable_header
-              .expandable_label
+              .expandable_label.expandable_header-left
               .expandable_link.expandable_header-right
                 .expandable_cue-open
                   .cf-icon.cf-icon-plus-round
@@ -1456,13 +1456,18 @@ input.btn::-moz-focus-inner {
         - "If you need a custom expandable experience first try using a
           combination of the new elements that are used in the padded expandable
           pattern like .expandable_header, expandable_label, expandable_link,
-          and expandable_header-right."
+          expandable_header-left. and expandable_header-right."
     tags:
     - cf-expandables
 */
 
 .expandable_header {
   display: block;
+  overflow: hidden;
+}
+
+.expandable_header-left {
+  float: left;
 }
 
 .expandable_header-right {
