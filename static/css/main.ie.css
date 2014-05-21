@@ -5202,7 +5202,7 @@ img {
   name: Forms
   family: cfgov-misc
   patterns:
-    - name: Labels
+    - name: Form element showcase
       markup: |
         <div class="form-group">
             <label class="form-group_header">Form group header</label>
@@ -5227,11 +5227,61 @@ img {
             <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
             <input type="submit" value="Apply filters" class="btn form-actions_item">
         </div>
+    - name: Form label
+      markup: |
+        <label class="form-label">
+            Form label
+        </label>
+    - name: Form element nested within a label
+      markup: |
+        <label class="form-label">
+            <input type="checkbox">
+            Form label
+        </label>
+      notes:
+        - "When nesting a form input the input will receive a right margin to
+          space it from the label text."
+    - name: Form groups
+      markup: |
+        <div class="form-group">
+            <label class="form-group_header">Form group header</label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-group_header">Form group header</label>
+            <select class="form-group_item" name="select">
+                <option value="value1">Value 1</option>
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+        </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          ...
+          .form-group
+            .form-group_header
+            .form-group_item
+      notes:
+        - "A form group is recommended you need to associate several form
+          elements with each other like a label and an input, or a heading and a
+          group of checkboxes, or even a group of select menus that are realted
+          to each other."
+    - name: Form actions
+      markup: |
+        <div class="form-actions">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      notes:
+        - "Simply adds some top margin to set it apart from form groups."
   tags:
     - cfgov-misc
 */
