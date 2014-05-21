@@ -34,5 +34,5 @@
   - Category slug links
   - Author links
   - Share links
-  - Featued image
+  - Featured image
   - Insets
