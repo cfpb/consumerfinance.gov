@@ -8,7 +8,7 @@
 
 ### Big stuff
 
-- What does wuthor click to?
+- Link author to filtered posts of just author
 - Oah sheer template sharing
 - Sidebar stuff
 - Comments
