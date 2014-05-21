@@ -19,6 +19,7 @@
 
 - Layout docs
 - Pagination style conflict with design manual
+- Pagination not working ine IE7
 - Icons not working in IE7
 - No category icons yet
 - Min-width for older IE
