@@ -5199,8 +5199,29 @@ img {
   patterns:
     - name: Labels
       markup: |
-        <label>Topics</label>
-        <input type="text">
+        <div class="form-group">
+            <label class="form-group_header">Form group header</label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-group_header">Form group header</label>
+            <select class="form-group_item" name="select">
+                <option value="value1">Value 1</option>
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
       codenotes:
         - |
           Structural cheat sheet:
@@ -5211,6 +5232,44 @@ img {
 */
 
 .form-label {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.form-label em,
+.form-label i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .form-label em,
+.lt-ie9 .form-label i {
+  font-style: normal !important;
+}
+
+.form-label strong,
+.form-label b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .form-label strong,
+.lt-ie9 .form-label b {
+  font-weight: normal !important;
+}
+
+.form-label input {
+  margin-right: 0.375em;
+}
+
+.form-group + .form-group {
+  margin-top: 1.375em;
+}
+
+.form-group_header {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -5220,41 +5279,23 @@ img {
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
+  margin-bottom: 0.71428571em;
 }
 
-.lt-ie9 .form-label {
+.lt-ie9 .form-group_header {
   font-weight: normal !important;
 }
 
-.form-label__inline {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  text-transform: none;
+.form-group_item {
+  margin-bottom: 0.375em;
 }
 
-.form-label__inline em,
-.form-label__inline i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
+.form-actions {
+  margin-top: 1.625em;
 }
 
-.lt-ie9 .form-label__inline em,
-.lt-ie9 .form-label__inline i {
-  font-style: normal !important;
-}
-
-.form-label__inline strong,
-.form-label__inline b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .form-label__inline strong,
-.lt-ie9 .form-label__inline b {
-  font-weight: normal !important;
+.form-actions_item + .form-actions_item {
+  margin-left: 1.875em;
 }
 
 /* topdoc
@@ -5748,19 +5789,6 @@ img {
 
 .padded-container_body {
   margin: 1.5em 1.875em 1.5em;
-}
-
-/* topdoc
-  name: Filters
-  family: cfgov-misc
-  patterns:
-    - name: Basic filter
-  tags:
-    - cfgov-misc
-*/
-
-.filters {
-  margin-bottom: 1.875em;
 }
 
 /* topdoc
@@ -6535,6 +6563,23 @@ a.focus .summary_header {
             .hero_img-container.hero_img-container__large
               .hero_img
 */
+
+/* topdoc
+  name: Post preview filters
+  family: cfgov-blog-docs
+  patterns:
+    - name: Blog filters
+      markup: |
+        ...
+      notes:
+        - "..."
+  tags:
+    - cfgov-blog-docs
+*/
+
+.post-preview-filters {
+  margin-bottom: 1.875em;
+}
 
 /* topdoc
   name: Post previews
