@@ -21,13 +21,55 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Labels</h3>
           <section class="docs-pattern_pattern">
-<label>Topics</label>
-<input type="text">
+<div class="form-group">
+    <label class="form-group_header">Form group header</label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+</div>
+<div class="form-group">
+    <label class="form-group_header">Form group header</label>
+    <select class="form-group_item" name="select">
+        <option value="value1">Value 1</option>
+        <option value="value2">Value 2</option>
+        <option value="value3">Value 3</option>
+    </select>
+</div>
+<div class="form-actions">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label&gt;Topics&lt;/label&gt;
-&lt;input type=&quot;text&quot;&gt;</code></pre>
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
+        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
+        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
+        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-actions&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
@@ -40,6 +82,37 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.form-label {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.form-label em,
+.form-label i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .form-label em,
+.lt-ie9 .form-label i {
+  font-style: normal !important;
+}
+.form-label strong,
+.form-label b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .form-label strong,
+.lt-ie9 .form-label b {
+  font-weight: normal !important;
+}
+.form-label input {
+  margin-right: 0.375em;
+}
+.form-group + .form-group {
+  margin-top: 1.375em;
+}
+.form-group_header {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -49,35 +122,19 @@
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
+  margin-bottom: 0.71428571em;
 }
-.lt-ie9 .form-label {
+.lt-ie9 .form-group_header {
   font-weight: normal !important;
 }
-.form-label__inline {
-  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  text-transform: none;
+.form-group_item {
+  margin-bottom: 0.375em;
 }
-.form-label__inline em,
-.form-label__inline i {
-  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
+.form-actions {
+  margin-top: 1.625em;
 }
-.lt-ie9 .form-label__inline em,
-.lt-ie9 .form-label__inline i {
-  font-style: normal !important;
-}
-.form-label__inline strong,
-.form-label__inline b {
-  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .form-label__inline strong,
-.lt-ie9 .form-label__inline b {
-  font-weight: normal !important;
+.form-actions_item + .form-actions_item {
+  margin-left: 1.875em;
 }</code></pre>
       </div>
     </div>
@@ -798,19 +855,6 @@
 }
 .padded-container_body {
   margin: 1.5em 1.875em 1.5em;
-}</code></pre>
-      </div>
-    </div>
-    <div id="filters" class="docs-component">
-      <h2 class="docs-component_header"><span>Filters</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Basic filter</h3>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.filters {
-  margin-bottom: 1.875em;
 }</code></pre>
       </div>
     </div>

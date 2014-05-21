@@ -115,7 +115,7 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-                <div class="filters">
+                <div class="post-preview-filters">
                     <div class="expandable">
                         <div class="expandable_header">
                             <!-- <h5>Blog filtered by</h5>
@@ -124,7 +124,7 @@
                             </ul> -->
                             <a class="expandable_target btn btn-secondary"
                                href="#barebones-content">
-                                Filter Blogs&nbsp;&nbsp;
+                                Filter posts&nbsp;&nbsp;
                                 <span class="expandable_cue-open">
                                     <span class="cf-icon cf-icon-down"></span>
                                 </span>
@@ -135,26 +135,31 @@
                         </div>
                         <div class="expandable_content padded-container">
                             <form class="padded-container_body" id="barebones-content" method="get">
-                                <div class="form-label">
-                                    Categories
+                                <div class="form-group">
+                                    <label class="form-group_header">
+                                        Categories
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="consumer">
+                                        Announcements &amp; updates
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                        Consumer information
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="innovation">
+                                        Engagement
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="announcements">
+                                        Innovation &amp; data
+                                    </label>
+                                    <div class="form-actions">
+                                        <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+                                        <input type="submit" value="Apply filters" class="btn form-actions_item">
+                                    </div>
                                 </div>
-                                <label class="form-label__inline">
-                                    <input type="checkbox" name="filter_category" value="consumer">
-                                    Consumer
-                                </label>
-                                <label class="form-label__inline">
-                                    <input type="checkbox" name="filter_category" value="regulation & compliance">
-                                    Regulation &amp; compliance
-                                </label>
-                                <label class="form-label__inline">
-                                    <input type="checkbox" name="filter_category" value="innovation">
-                                    Innovation
-                                </label>
-                                <label class="form-label__inline">
-                                    <input type="checkbox" name="filter_category" value="announcements">
-                                    Announcements
-                                </label>
-                                <input type="submit" value="Apply filters" class="btn">
                             </form>
                         </div>
                     </div>
@@ -261,10 +266,10 @@
                 <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
                     <a class="btn pagination_prev" href="#">
                         <span class="btn-icon-left cf-icon cf-icon-left"></span>
-                        Previous
+                        Newer
                     </a>
                     <a class="btn pagination_next" href="#">
-                        Next
+                        Older
                         <span class="btn-icon-right cf-icon cf-icon-right"></span>
                     </a>
                     <form class="pagination_form">

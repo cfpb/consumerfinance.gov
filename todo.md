@@ -8,9 +8,12 @@
 
 ### Big stuff
 
+- Link author to filtered posts of just author
 - Oah sheer template sharing
 - Sidebar stuff
 - Comments
+- Related posts done with Sheer
+- Update CF components with patterns
 
 ### Little stuff
 
@@ -26,6 +29,9 @@
 
 ## Sheer stuff
 
+**Post issues to Sheer repo**
+
+- Calling dynamic content
 - Tags not working
 - Blog landing integration
   - Hero images
@@ -34,5 +40,5 @@
   - Category slug links
   - Author links
   - Share links
-  - Featued image
+  - Featured image
   - Insets
