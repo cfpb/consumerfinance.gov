@@ -3631,7 +3631,7 @@ blockquote {
 .lt-ie8 .demo-col-12 {
   display: inline;
   *zoom: 1;
-  *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 .demo-col-6 {
   display: inline-block;
@@ -3650,7 +3650,7 @@ blockquote {
 .lt-ie8 .demo-col-6 {
   display: inline;
   *zoom: 1;
-  *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 @media only all and (min-width: 30em) {
   .demo-col-6 {
@@ -3670,7 +3670,7 @@ blockquote {
   .lt-ie8 .demo-col-6 {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 /* Base styles
@@ -3930,7 +3930,7 @@ img {
   }
   .lt-ie8 .wrapper {
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 .content_bar {
@@ -3962,7 +3962,7 @@ img {
   .lt-ie8 .content_sidebar {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 .header .demo-placeholder,
@@ -3997,7 +3997,7 @@ img {
   .lt-ie8 .content__1-3 .content_main {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content__1-3 .content_sidebar {
     display: inline-block;
@@ -4018,7 +4018,7 @@ img {
   .lt-ie8 .content__1-3 .content_sidebar {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content__2-1 .content_main {
     display: inline-block;
@@ -4037,7 +4037,7 @@ img {
   .lt-ie8 .content__2-1 .content_main {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content__2-1 .content_sidebar {
     display: inline-block;
@@ -4056,7 +4056,7 @@ img {
   .lt-ie8 .content__2-1 .content_sidebar {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content_main,
   .content_sidebar {
@@ -4082,7 +4082,7 @@ img {
   .lt-ie8 .content__2-1 .content_main {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .content__2-1 .content_main {
     padding-right: 0;
@@ -4799,7 +4799,7 @@ img {
     - name: Basic hero
       markup: |
         <section class="hero" style="background-color:#337E7D;">
-            <div class="wrapper">
+            <div class="hero_wrapper">
                 <div class="hero_card">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
@@ -4824,7 +4824,7 @@ img {
           Structural cheat sheet:
           -----------------------
           .hero
-            .wrapper
+            .hero_wrapper
               .hero_card
                 .hero_card-bg
                   .hero_card-padding
@@ -4840,7 +4840,7 @@ img {
           system can dynamically set it. If it makes more sense for your project
           to set it with CSS then please do so."
     - codenotes:
-        - .wrapper
+        - .hero_wrapper
       notes:
         - "To center the hero content with a max-width."
     - codenotes:
@@ -4869,6 +4869,38 @@ img {
   position: relative;
   overflow: hidden;
   background-color: #75787b;
+}
+@media only all and (min-width: 50.0625em) {
+  .hero_wrapper {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+  }
+  .lt-ie8 .hero_wrapper {
+    *zoom: 1;
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 50.0625em) and only all and (min-width: 50.0625em) {
+  .hero_wrapper {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+  }
+  .lt-ie8 .hero_wrapper {
+    *zoom: 1;
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
 }
 .hero_img-container {
   display: none;
@@ -4916,6 +4948,10 @@ img {
   .hero {
     padding-top: 1.875em;
   }
+  .hero_wrapper {
+    position: relative;
+    z-index: 200;
+  }
   .hero_img-container__large {
     display: block;
     width: 100%;
@@ -4925,7 +4961,6 @@ img {
     z-index: 1;
   }
   .hero_card {
-    position: relative;
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -4936,7 +4971,6 @@ img {
     vertical-align: top;
     width: 100%;
     padding-left: 50%;
-    z-index: 200;
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -4944,7 +4978,7 @@ img {
   .lt-ie8 .hero_card {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .hero_card {
     padding-left: 0;
@@ -4969,7 +5003,7 @@ img {
   .lt-ie8 .hero_card {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .hero_card {
     padding-left: 0;

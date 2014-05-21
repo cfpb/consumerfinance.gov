@@ -248,7 +248,7 @@
           <h3 class="docs-pattern_header">Basic hero</h3>
           <section class="docs-pattern_pattern">
 <section class="hero" style="background-color:#337E7D;">
-    <div class="wrapper">
+    <div class="hero_wrapper">
         <div class="hero_card">
             <div class="hero_card-bg">
                 <div class="hero_card-padding">
@@ -272,7 +272,7 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section class=&quot;hero&quot; style=&quot;background-color:#337E7D;&quot;&gt;
-    &lt;div class=&quot;wrapper&quot;&gt;
+    &lt;div class=&quot;hero_wrapper&quot;&gt;
         &lt;div class=&quot;hero_card&quot;&gt;
             &lt;div class=&quot;hero_card-bg&quot;&gt;
                 &lt;div class=&quot;hero_card-padding&quot;&gt;
@@ -297,7 +297,7 @@
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
 .hero
-  .wrapper
+  .hero_wrapper
     .hero_card
       .hero_card-bg
         .hero_card-padding
@@ -325,7 +325,7 @@
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.wrapper</code></pre>
+                <pre class="docs-code"><code>.hero_wrapper</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -376,6 +376,38 @@
   overflow: hidden;
   background-color: #75787b;
 }
+@media only all and (min-width: 50.0625em) {
+  .hero_wrapper {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+  }
+  .lt-ie8 .hero_wrapper {
+    *zoom: 1;
+    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 50.0625em) and only all and (min-width: 50.0625em) {
+  .hero_wrapper {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+  }
+  .lt-ie8 .hero_wrapper {
+    *zoom: 1;
+    *behavior: url('http://cfpb.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
 .hero_img-container {
   display: none;
   line-height: 1;
@@ -422,6 +454,10 @@
   .hero {
     padding-top: 1.875em;
   }
+  .hero_wrapper {
+    position: relative;
+    z-index: 200;
+  }
   .hero_img-container__large {
     display: block;
     width: 100%;
@@ -431,7 +467,6 @@
     z-index: 1;
   }
   .hero_card {
-    position: relative;
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -442,7 +477,6 @@
     vertical-align: top;
     width: 100%;
     padding-left: 50%;
-    z-index: 200;
   }
   .ie .hero_card {
     margin-right: -0.26em;
