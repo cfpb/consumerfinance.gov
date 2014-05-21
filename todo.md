@@ -8,9 +8,11 @@
 
 ### Big stuff
 
+- What does wuthor click to?
 - Oah sheer template sharing
 - Sidebar stuff
 - Comments
+- Related posts done with Sheer
 
 ### Little stuff
 
@@ -26,6 +28,9 @@
 
 ## Sheer stuff
 
+**Post issues to Sheer repo**
+
+- Calling dynamic content
 - Tags not working
 - Blog landing integration
   - Hero images
