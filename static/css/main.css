@@ -4925,6 +4925,7 @@ img {
     z-index: 1;
   }
   .hero_card {
+    position: relative;
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
