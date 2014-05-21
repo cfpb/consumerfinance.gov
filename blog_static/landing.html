@@ -63,6 +63,38 @@
 
 <body>
 
+<!--
+    =========
+    Analytics
+    =========
+    We are double tagging with classic analytics and tag manager so that we can
+    test any differences between the two.
+-->
+
+    <!-- CLASSIC ANALYTICS -->
+    <script>
+        var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script> 
+
+    <!-- GOOGLE TAG MANAGER -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KSMF3R"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KSMF3R');</script>
+    <!-- /GOOGLE TAG MANAGER -->
+
+<!--
+    =================
+    Begin page source
+    =================
+-->
+
     <div class="demo-banner">
         cfgov-refresh demo: <b>Blog landing page</b>
         <a class="demo-banner_back-link" href="../index.html">
