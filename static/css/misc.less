@@ -132,7 +132,7 @@
     - name: Basic hero
       markup: |
         <section class="hero" style="background-color:#337E7D;">
-            <div class="wrapper">
+            <div class="hero_wrapper">
                 <div class="hero_card">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
@@ -157,7 +157,7 @@
           Structural cheat sheet:
           -----------------------
           .hero
-            .wrapper
+            .hero_wrapper
               .hero_card
                 .hero_card-bg
                   .hero_card-padding
@@ -173,7 +173,7 @@
           system can dynamically set it. If it makes more sense for your project
           to set it with CSS then please do so."
     - codenotes:
-        - .wrapper
+        - .hero_wrapper
       notes:
         - "To center the hero content with a max-width."
     - codenotes:
@@ -203,6 +203,12 @@
     position: relative;
     overflow: hidden;
     background-color: @gray;
+
+    .u-respond-to-min(801px, {
+        &_wrapper {
+            .wrapper();
+        }
+    });
 
     // The image container is needed to suppress loading of the images until
     // they are needed. Research: http://timkadlec.com/2012/04/media-query-asset-downloading-results/
@@ -253,6 +259,11 @@
     .u-respond-to-min(660px, {
         padding-top: unit(30px / @base-font-size-px, em);
 
+        &_wrapper {
+            position: relative;
+            z-index: 200;
+        }
+
         &_img-container__large {
             display: block;
             width: 100%;
@@ -263,14 +274,7 @@
         }
 
         &_card {
-            // Position relative messes up IE 8 and 7
-            position: relative;
             .column(6, @total-columns, 6);
-            z-index: 200;
-
-            // .lt-ie8 & {
-            //     position: 
-            // }
         }
     });
 
