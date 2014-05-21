@@ -13,6 +13,7 @@
 - Sidebar stuff
 - Comments
 - Related posts done with Sheer
+- Update CF components with patterns
 
 ### Little stuff
 
