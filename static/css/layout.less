@@ -6,7 +6,7 @@
 .wrapper {
     .u-respond-to-min(801px, {
         width: 100%;
-        .wrapper();
+        .grid_wrapper();
     });
     .lt-ie8 & {
         min-width: 800px;
@@ -21,10 +21,10 @@
 
 .content_main,
 .content_sidebar {
-    padding: 2em (@gutter-width / 2);
+    padding: 2em (@grid_gutter-width / 2);
 
     .u-respond-to-min(600px, {
-        .column(12);
+        .grid_column(12);
     });
 }
 
@@ -32,10 +32,10 @@
 .content_hero .demo-placeholder,
 .footer .demo-placeholder {
     // Temporary styling to bring in line with main columns.
-    margin-left: (@gutter-width / 2);
+    margin-left: (@grid_gutter-width / 2);
 
     .u-respond-to-range(600px, 800px, {
-        margin-left: @gutter-width;
+        margin-left: @grid_gutter-width;
     });
 }
 
@@ -44,21 +44,21 @@
     .content {
         &__1-3 {
             .content_main {
-                .column(9);
-                .push(3);
+                .grid_column(9);
+                .grid_push(3);
             }
             .content_sidebar {
-                .column(3);
-                .pull(9);
+                .grid_column(3);
+                .grid_pull(9);
             }
         }
 
         &__2-1 {
             .content_main {
-                .column(8);
+                .grid_column(8);
             }
             .content_sidebar {
-                .column(4);
+                .grid_column(4);
             }
         }
     }
@@ -73,7 +73,7 @@
     .content {
         &__2-1 {
             .content_main {
-                .column(7, @total-columns, 0, 1);
+                .grid_column(7, @grid_total-columns, 0, 1);
             }
         }
     }
@@ -83,7 +83,7 @@
 .content__bleedbar {
 
     .content_sidebar {
-        padding: 2em (@gutter-width / 2);
+        padding: 2em (@grid_gutter-width / 2);
         background: @gray-10;
     }
 
@@ -93,7 +93,7 @@
         overflow: hidden;
 
         .content_sidebar {
-            padding: 2em 0 2em @gutter-width;
+            padding: 2em 0 2em @grid_gutter-width;
             margin-left: 0;
 
             // Remove background color from actual sidebar.
@@ -102,7 +102,7 @@
 
             .lt-ie8 & {
                 // Make sure the sidebar still has a background in IE7.
-                padding-right: @gutter-width;
+                padding-right: @grid_gutter-width;
                 background: @gray-10;
             }
         }
@@ -119,7 +119,7 @@
             z-index: -1;
             // The three in the below calculation is a magic number.
             // Not entirely sure what to do about it right now.
-            margin-left: (@gutter-width / 3);
+            margin-left: (@grid_gutter-width / 3);
             background: @gray-10;
         }
 
