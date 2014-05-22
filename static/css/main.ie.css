@@ -4465,6 +4465,10 @@ img {
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.lt-ie8 .wrapper {
+  width: 960px;
+}
+
 .content_bar {
   height: 10px;
   background: #2cb34a;
