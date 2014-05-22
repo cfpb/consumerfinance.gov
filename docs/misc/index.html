@@ -454,6 +454,10 @@
   .hero {
     padding-top: 1.875em;
   }
+  .hero_wrapper {
+    position: relative;
+    z-index: 2;
+  }
   .hero_img-container__large {
     display: block;
     width: 100%;
@@ -471,14 +475,15 @@
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-    padding-left: 50%;
+    width: 50%;
     border-left-color: #FFB149;
     border-left-color: rgba(255, 158, 27, 0.25);
     border-right-color: #FFB149;
     border-right-color: rgba(255, 158, 27, 0.25);
     background-color: #F6D9D3;
     background-color: rgba(209, 33, 36, 0.2);
+    position: relative;
+    left: 50%;
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -487,9 +492,6 @@
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-  .lt-ie8 .hero_card {
-    padding-left: 0;
   }
   .hero_card:before,
   .hero_card:after {
@@ -517,14 +519,15 @@
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-    padding-left: 66.66666667%;
+    width: 33.33333333%;
     border-left-color: #FFB149;
     border-left-color: rgba(255, 158, 27, 0.25);
     border-right-color: #FFB149;
     border-right-color: rgba(255, 158, 27, 0.25);
     background-color: #F6D9D3;
     background-color: rgba(209, 33, 36, 0.2);
+    position: relative;
+    left: 66.66666667%;
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -533,9 +536,6 @@
     display: inline;
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-  .lt-ie8 .hero_card {
-    padding-left: 0;
   }
   .hero_card:before,
   .hero_card:after {
