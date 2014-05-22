@@ -4135,10 +4135,11 @@ blockquote {
 }
 
 .ie .demo-col-12 {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .demo-col-12 {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4157,10 +4158,11 @@ blockquote {
 }
 
 .ie .demo-col-6 {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .demo-col-6 {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4179,10 +4181,11 @@ blockquote {
 }
 
 .ie .demo-col-6 {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .demo-col-6 {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4488,11 +4491,12 @@ img {
 
 .ie .content_main,
 .ie .content_sidebar {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .content_main,
 .lt-ie8 .content_sidebar {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4519,10 +4523,11 @@ img {
 }
 
 .ie .content__1-3 .content_main {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .content__1-3 .content_main {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4543,10 +4548,11 @@ img {
 }
 
 .ie .content__1-3 .content_sidebar {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .content__1-3 .content_sidebar {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4565,10 +4571,11 @@ img {
 }
 
 .ie .content__2-1 .content_main {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .content__2-1 .content_main {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -4587,10 +4594,11 @@ img {
 }
 
 .ie .content__2-1 .content_sidebar {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .content__2-1 .content_sidebar {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
@@ -5507,10 +5515,11 @@ img {
 }
 
 .ie .hero_card {
-  margin-right: 0;
+  margin-right: -0.26em;
 }
 
 .lt-ie8 .hero_card {
+  margin-right: 0;
   display: inline;
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
