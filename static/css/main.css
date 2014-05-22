@@ -4875,9 +4875,6 @@ img {
   overflow: hidden;
   background-color: #75787b;
 }
-.hero .lt-ie8 {
-  width: 100%;
-}
 @media only all and (min-width: 50.0625em) {
   .hero_wrapper {
     -webkit-box-sizing: border-box;
