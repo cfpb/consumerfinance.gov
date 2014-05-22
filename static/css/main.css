@@ -809,39 +809,35 @@ input.btn::-moz-focus-inner {
     - name: Button icon left
       markup: |
         <a href="#" class="btn">
-            <i class="btn-icon-left icon-chevron-left"><span class="jekyll-bug"></span></i>
+            <span class="btn-icon-left cf-icon cf-icon-left"></span>
             Anchor Tag
         </a>
         <button class="btn">
-            <i class="btn-icon-left icon-chevron-left"><span class="jekyll-bug"></span></i>
+            <span class="btn-icon-left cf-icon cf-icon-left"></span>
             Button Tag
         </button>
     - name: Button icon right
       markup: |
         <a href="#" class="btn">
             Anchor Tag
-            <i class="btn-icon-right icon-chevron-right"><span class="jekyll-bug"></span></i>
+            <span class="btn-icon-right cf-icon cf-icon-right"></span>
         </a>
         <button class="btn">
             Button Tag
-            <i class="btn-icon-right icon-chevron-right"><span class="jekyll-bug"></span></i>
+            <span class="btn-icon-right cf-icon cf-icon-right"></span>
         </button>
     - name: Just an icon
       markup: |
         <a href="#" class="btn">
-            <i class="icon-search"><span class="jekyll-bug"></span></i>
+            <span class="cf-icon cf-icon-search"></span>
         </a>
         <button class="btn">
-            <i class="icon-search"><span class="jekyll-bug"></span></i>
+            <span class="cf-icon cf-icon-search"></span>
         </button>
     tags:
     - cf-buttons
     - fj-icons
 */
-.btn [class^="icon-"],
-.btn [class*="icon-"] {
-  line-height: 1;
-}
 .btn-icon-left {
   padding: 0 0.75em 0 0;
   border-right: 1px solid #ffffff;
@@ -930,31 +926,31 @@ input.btn::-moz-focus-inner {
       markup: |
         <div class="btn-group">
             <a href="#" class="btn">Anchor</a>
-            <a href="#" class="btn btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
+            <a href="#" class="btn btn-compound-action"><span class="cf-icon cf-icon-down"></span></a>
         </div><br>
         <div class="btn-group">
             <button class="btn">Button</button>
-            <button class="btn btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
+            <button class="btn btn-compound-action"><span class="cf-icon cf-icon-down"></span></button>
         </div><br>
     - name: Secondary button style
       markup: |
         <div class="btn-group">
             <a href="#" class="btn btn-secondary">Anchor</a>
-            <a href="#" class="btn btn-secondary btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
+            <a href="#" class="btn btn-secondary btn-compound-action"><span class="cf-icon cf-icon-down"></span></a>
         </div><br>
         <div class="btn-group">
             <button class="btn btn-secondary">Button</button>
-            <button class="btn btn-secondary btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
+            <button class="btn btn-secondary btn-compound-action"><span class="cf-icon cf-icon-down"></span></button>
         </div>
     - name: Super button style
       markup: |
         <div class="btn-group">
             <a href="#" class="btn btn-super">Anchor</a>
-            <a href="#" class="btn btn-super btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></a>
+            <a href="#" class="btn btn-super btn-compound-action"><span class="cf-icon cf-icon-down"></span></a>
         </div><br>
         <div class="btn-group">
             <button class="btn btn-super">Button</button>
-            <button class="btn btn-super btn-compound-action"><i class="icon-caret-down"><span class="jekyll-bug"></span></i></button>
+            <button class="btn btn-super btn-compound-action"><span class="cf-icon cf-icon-down"></span></button>
         </div>
     tags:
     - cf-buttons
@@ -1212,7 +1208,7 @@ input.btn::-moz-focus-inner {
         <div class="expandable expandable__padded">
             <a class="expandable_target expandable_header"
                href="#styled-expandable-content">
-                <span class="expandable_label">
+                <span class="expandable_label expandable_header-left">
                     Expandable Header
                 </span>
                 <span class="expandable_link expandable_header-right">
@@ -1242,7 +1238,7 @@ input.btn::-moz-focus-inner {
           -----------------------
           .expandable.expandable__padded
             .expandable_target.expandable_header
-              .expandable_label
+              .expandable_label.expandable_header-left
               .expandable_link.expandable_header-right
                 .expandable_cue-open
                   .cf-icon.cf-icon-plus-round
@@ -1256,12 +1252,16 @@ input.btn::-moz-focus-inner {
         - "If you need a custom expandable experience first try using a
           combination of the new elements that are used in the padded expandable
           pattern like .expandable_header, expandable_label, expandable_link,
-          and expandable_header-right."
+          expandable_header-left. and expandable_header-right."
     tags:
     - cf-expandables
 */
 .expandable_header {
   display: block;
+  overflow: hidden;
+}
+.expandable_header-left {
+  float: left;
 }
 .expandable_header-right {
   float: right;
@@ -1690,24 +1690,24 @@ textarea {
   family: "cf-grid"
   patterns:
     - codenotes:
-        - "@box-sizing-polyfill-path: '/cf-grid/custom-demo/static/css';"
+        - "@grid_box-sizing-polyfill-path: '/cf-grid/custom-demo/static/css';"
       notes:
         - "The path where boxsizing.htc is located."
         - "This path MUST be overridden in your project and set to a root relative url."
     - codenotes:
-        - "@wrapper-width: 1200px;"
+        - "@grid_wrapper-width: 1200px;"
       notes:
         - "The grid's maximum width in px."
     - codenotes:
-        - "@gutter-width: 30px;"
+        - "@grid_gutter-width: 30px;"
       notes:
         - "The fixed width between columns."
     - codenotes:
-        - "@total-columns: 12;"
+        - "@grid_total-columns: 12;"
       notes:
         - "The total number of columns used in calculating column widths."
     - codenotes:
-        - "@debug"
+        - "@grid_debug"
       notes:
         - "Gives column blocks a background color if set to true."
   tags:
@@ -1719,13 +1719,13 @@ textarea {
     - "Wrappers are centered containers with a max-width and fixed gutters
       that match the gutter widths of columns."
     - "To support IE 6/7, ensure that the path to boxsizing.htc is set using
-      the @box-sizing-polyfill-path Less variable.
+      the @grid_box-sizing-polyfill-path Less variable.
       Read more: https://github.com/Schepp/box-sizing-polyfill."
   family: "cf-grid"
   patterns:
     - name: "Less mixin"
       codenotes:
-        - ".wrapper( @wrapper-width: @wrapper-width )"
+        - ".grid_wrapper( @grid_wrapper-width: @grid_wrapper-width )"
       notes:
         - "You can create wrappers with different max-widths by passing a pixel
           value into the mixin."
@@ -1733,10 +1733,10 @@ textarea {
       codenotes:
         - |
           .main-wrapper {
-            .wrapper();
+            .grid_wrapper();
           }
           .wide-wrapper {
-            .wrapper( 1900px );
+            .grid_wrapper( 1900px );
           }
         - |
           <div class="main-wrapper">
@@ -1754,7 +1754,7 @@ textarea {
   patterns:
     - name: "Less mixin"
       codenotes:
-        - ".column( @columns: 1; @total: @total-columns; @prefix: 0; @suffix: 0 )"
+        - ".grid_column( @columns: 1; @total: @grid_total-columns; @prefix: 0; @suffix: 0 )"
       notes:
         - "Computes column widths and prefix/suffix padding."
         - "CSS borders are used for fixed gutters."
@@ -1762,10 +1762,10 @@ textarea {
       codenotes:
         - |
           .main-wrapper {
-            .wrapper();
+            .grid_wrapper();
           }
           .half {
-            .column(1, 2);
+            .grid_column(1, 2);
           }
         - |
           <div class="main-wrapper">
@@ -1783,18 +1783,18 @@ textarea {
   family: "cf-grid"
   patterns:
     - codenotes:
-        - ".push( @offset: 1, @total-columns: @total-columns )"
-        - ".pull( @offset: 1, @total-columns: @total-columns )"
+        - ".push( @offset: 1, @grid_total-columns: @grid_total-columns )"
+        - ".pull( @offset: 1, @grid_total-columns: @grid_total-columns )"
     - name: "Usage"
       codenotes:
         - |
           .first {
-            .column(1, 2);
-            .pull(1)l
+            .grid_column(1, 2);
+            .grid_pull(1);
           }
           .second {
-            .column(1, 2);
-            .push(1)l
+            .grid_column(1, 2);
+            .grid_push(1);
           }
         - |
           <div>
@@ -1812,7 +1812,7 @@ textarea {
       Normally this is removed with complex selectors or by adding classes
       to the first and last column per 'row'.
       In cf-grid the way to get around this is by wrapping your columns in a
-      container that utilizes the .nested-col-group() mixin.
+      container that utilizes the .grid_nested-col-group() mixin.
       This mixin uses negative left and right margins to pull the columns back
       into alignment with parent columns."
     - "NOTE: Working this way allows you to easily create responsive grids.
@@ -1826,18 +1826,18 @@ textarea {
   patterns:
     - name: "Less mixin"
       codenotes:
-        - ".nested-col-group()"
+        - ".grid_nested-col-group()"
     - name: "Usage"
       codenotes:
         - |
           .main-wrapper {
-            .wrapper();
+            .grid_wrapper();
           }
           .cols {
-            .nested-col-group();
+            .grid_nested-col-group();
           }
           .half {
-            .column(1, 2);
+            .grid_column(1, 2);
           }
         - |
           <div class="main-wrapper">
@@ -3242,6 +3242,7 @@ a.hover {
 a:focus,
 a.focus {
   border-bottom-style: solid;
+  outline: thin dotted;
 }
 a:active,
 a.active {
@@ -3626,8 +3627,9 @@ blockquote {
 }
 .lt-ie8 .demo-col-12 {
   display: inline;
-  *zoom: 1;
-  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 .demo-col-6 {
   display: inline-block;
@@ -3645,8 +3647,9 @@ blockquote {
 }
 .lt-ie8 .demo-col-6 {
   display: inline;
-  *zoom: 1;
-  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 @media only all and (min-width: 30em) {
   .demo-col-6 {
@@ -3665,8 +3668,9 @@ blockquote {
   }
   .lt-ie8 .demo-col-6 {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 /* Base styles
@@ -3915,19 +3919,16 @@ img {
    ========================================================================== */
 @media only all and (min-width: 50.0625em) {
   .wrapper {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    max-width: 1200px;
+    max-width: 1170px;
     padding: 0 15px;
     margin: 0 auto;
     position: relative;
     clear: both;
   }
-  .lt-ie8 .wrapper {
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
+}
+.lt-ie9 .wrapper {
+  min-width: 800px;
+  max-width: 960px;
 }
 .content_bar {
   height: 10px;
@@ -3957,8 +3958,9 @@ img {
   .lt-ie8 .content_main,
   .lt-ie8 .content_sidebar {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 .header .demo-placeholder,
@@ -3992,8 +3994,9 @@ img {
   }
   .lt-ie8 .content__1-3 .content_main {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content__1-3 .content_sidebar {
     display: inline-block;
@@ -4013,8 +4016,9 @@ img {
   }
   .lt-ie8 .content__1-3 .content_sidebar {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content__2-1 .content_main {
     display: inline-block;
@@ -4032,8 +4036,9 @@ img {
   }
   .lt-ie8 .content__2-1 .content_main {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content__2-1 .content_sidebar {
     display: inline-block;
@@ -4051,8 +4056,9 @@ img {
   }
   .lt-ie8 .content__2-1 .content_sidebar {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .content_main,
   .content_sidebar {
@@ -4077,8 +4083,9 @@ img {
   }
   .lt-ie8 .content__2-1 .content_main {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .content__2-1 .content_main {
     padding-right: 0;
@@ -4650,7 +4657,7 @@ img {
   name: Forms
   family: cfgov-misc
   patterns:
-    - name: Labels
+    - name: Form element showcase
       markup: |
         <div class="form-group">
             <label class="form-group_header">Form group header</label>
@@ -4675,11 +4682,61 @@ img {
             <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
             <input type="submit" value="Apply filters" class="btn form-actions_item">
         </div>
+    - name: Form label
+      markup: |
+        <label class="form-label">
+            Form label
+        </label>
+    - name: Form element nested within a label
+      markup: |
+        <label class="form-label">
+            <input type="checkbox">
+            Form label
+        </label>
+      notes:
+        - "When nesting a form input the input will receive a right margin to
+          space it from the label text."
+    - name: Form groups
+      markup: |
+        <div class="form-group">
+            <label class="form-group_header">Form group header</label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-group_header">Form group header</label>
+            <select class="form-group_item" name="select">
+                <option value="value1">Value 1</option>
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+        </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          ...
+          .form-group
+            .form-group_header
+            .form-group_item
+      notes:
+        - "A form group is recommended you need to associate several form
+          elements with each other like a label and an input, or a heading and a
+          group of checkboxes, or even a group of select menus that are realted
+          to each other."
+    - name: Form actions
+      markup: |
+        <div class="form-actions">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      notes:
+        - "Simply adds some top margin to set it apart from form groups."
   tags:
     - cfgov-misc
 */
@@ -4745,7 +4802,7 @@ img {
     - name: Basic hero
       markup: |
         <section class="hero" style="background-color:#337E7D;">
-            <div class="wrapper">
+            <div class="hero_wrapper">
                 <div class="hero_card">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
@@ -4770,7 +4827,7 @@ img {
           Structural cheat sheet:
           -----------------------
           .hero
-            .wrapper
+            .hero_wrapper
               .hero_card
                 .hero_card-bg
                   .hero_card-padding
@@ -4786,7 +4843,7 @@ img {
           system can dynamically set it. If it makes more sense for your project
           to set it with CSS then please do so."
     - codenotes:
-        - .wrapper
+        - .hero_wrapper
       notes:
         - "To center the hero content with a max-width."
     - codenotes:
@@ -4815,6 +4872,19 @@ img {
   position: relative;
   overflow: hidden;
   background-color: #75787b;
+}
+@media only all and (min-width: 50.0625em) {
+  .hero_wrapper {
+    max-width: 1170px;
+    padding: 0 15px;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+  }
+}
+.lt-ie9 .hero_wrapper {
+  min-width: 800px;
+  max-width: 960px;
 }
 .hero_img-container {
   display: none;
@@ -4862,6 +4932,10 @@ img {
   .hero {
     padding-top: 1.875em;
   }
+  .hero_wrapper {
+    position: relative;
+    z-index: 2;
+  }
   .hero_img-container__large {
     display: block;
     width: 100%;
@@ -4871,7 +4945,6 @@ img {
     z-index: 1;
   }
   .hero_card {
-    position: relative;
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -4880,20 +4953,18 @@ img {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-    padding-left: 50%;
-    z-index: 2;
+    width: 50%;
+    position: relative;
+    left: 50%;
   }
   .ie .hero_card {
     margin-right: -0.26em;
   }
   .lt-ie8 .hero_card {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-  .lt-ie8 .hero_card {
-    padding-left: 0;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 @media only all and (min-width: 64em) {
@@ -4906,19 +4977,18 @@ img {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-    padding-left: 66.66666667%;
+    width: 33.33333333%;
+    position: relative;
+    left: 66.66666667%;
   }
   .ie .hero_card {
     margin-right: -0.26em;
   }
   .lt-ie8 .hero_card {
     display: inline;
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-  .lt-ie8 .hero_card {
-    padding-left: 0;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 /* topdoc
