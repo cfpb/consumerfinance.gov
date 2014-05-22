@@ -246,8 +246,8 @@
     }
 
     &_card-padding {
-        padding: @gutter-width @gutter-width 0;
-        margin-bottom: @gutter-width + 10px;
+        padding: @grid_gutter-width @grid_gutter-width 0;
+        margin-bottom: @grid_gutter-width + 10px;
     }
 
     .u-respond-to-min(660px, {
@@ -268,15 +268,15 @@
         }
 
         &_card {
-            .column(6);
-            .push(6);
+            .grid_column(6);
+            .grid_push(6);
         }
     });
 
     .u-respond-to-min(1024px, {
         &_card {
-            .column(4);
-            .push(8);
+            .grid_column(4);
+            .grid_push(8);
         }
     });
 }
