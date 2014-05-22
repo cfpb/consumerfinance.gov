@@ -3936,7 +3936,8 @@ img {
   }
 }
 .lt-ie8 .wrapper {
-  width: 960px;
+  min-width: 800px;
+  max-width: 960px;
 }
 .content_bar {
   height: 10px;
