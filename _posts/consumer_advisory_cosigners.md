@@ -5,7 +5,6 @@ excerpt: Today, we released a report that describes complaints we received relat
 category: Announcements
 author: Rohit Chopra
 tags:
-- congress
 - ops
 - students
 ---
