@@ -28,7 +28,7 @@
                         </p>
                         <div class="post_meta">
                             <span class="post_byline">
-                                By <a href="#">{{ post.author }}</a> &ndash;
+                                By <a href="/blog/?filter_author={{ post.author }}">{{ post.author }}</a> &ndash;
                             </span>
                             <span class="post_date date">
                                 {{ post.date | date("%b %d, %Y") }}
@@ -66,16 +66,17 @@
                         {{ post.text | markdown }}
                     </div>
                     <footer>
-                        <!-- Needs Sheer integration -->
                         <div class="tags">
                             <h4 class="tags_header">Topics:</h4>
                             <ul class="tags_list">
+                            {% for tag in post.tags %}
                                 <li class="tags_tag">
-                                    <a href="#" class="tags_link">
+                                    <a class="tags_link" href="/blog/?filter_tags={{ tag }}">
                                         <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                                        Tag 1
+                                        {{ tag }}
                                     </a>
                                 </li>
+                            {% endfor %}
                             </ul>
                         </div> 
                     </footer>
