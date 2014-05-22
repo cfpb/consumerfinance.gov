@@ -3934,9 +3934,6 @@ img {
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
-  .wrapper .lt-ie8 {
-    width: 100%;
-  }
 }
 .content_bar {
   height: 10px;
@@ -4906,9 +4903,6 @@ img {
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
-  .hero_wrapper .lt-ie8 {
-    width: 100%;
-  }
 }
 .hero_img-container {
   display: none;
@@ -4980,6 +4974,7 @@ img {
     width: 50%;
     position: relative;
     left: 50%;
+    margin-right: 0 !important;
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -5003,6 +4998,7 @@ img {
     width: 33.33333333%;
     position: relative;
     left: 66.66666667%;
+    margin-right: 0 !important;
   }
   .ie .hero_card {
     margin-right: -0.26em;
