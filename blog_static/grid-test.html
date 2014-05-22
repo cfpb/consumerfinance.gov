@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+
+<!--
+    ===========
+    GLOBAL META
+    ===========
+-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+    ==================
+    PAGE-SPECIFIC META
+    ==================
+-->
+
+    <title>Blog landing page - cfgov-refresh demo</title>
+    <meta name="description" content="Blog landing page prototyping for the consumerfinance.gov refresh">
+
+    <!-- Explicit favicon link needed for testing. Remove for production. -->
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+<!--
+    ======
+    STYLES
+    ======
+    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
+    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
+-->
+
+<!--[if lt IE 9]>      <link rel="stylesheet" href="../static/css/main.ie.min.css"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="../static/css/main.min.css"> <!--<![endif]-->
+
+<!--
+    ============
+    HEAD SCRIPTS
+    ============
+    The following scripts must be included in the head. DO NOT ADD ANY MORE.
+    All other scripts should go before the closing body tag.
+    If you come across a script that makes a convincing case to be included in
+    the head, then file an issue or PR to discuss including it.
+-->
+
+<!--[if lt IE 9]>
+    <script src="../static/vendor/html5shiv/html5shiv-printshiv.min.js"></script>
+<![endif]-->
+
+    <script>
+        // Confirm availability of JS and remove no-js class from html
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+
+</head>
+
+<body>
+
+<!--
+    =========
+    Analytics
+    =========
+    We are double tagging with classic analytics and tag manager so that we can
+    test any differences between the two.
+-->
+
+    <!-- CLASSIC ANALYTICS -->
+    <script>
+        var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script> 
+
+    <!-- GOOGLE TAG MANAGER -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KSMF3R"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KSMF3R');</script>
+    <!-- /GOOGLE TAG MANAGER -->
+
+<!--
+    =================
+    Begin page source
+    =================
+-->
+
+    <div class="demo-banner">
+        cfgov-refresh demo: <b>Blog landing page</b>
+        <a class="demo-banner_back-link" href="../index.html">
+            <span class="cf-icon cf-icon-left"></span> Back to demo home
+        </a>
+    </div>
+
+    <div class="wrapper">
+        <div class="col col_1-2">1-2</div>
+        <div class="col col_1-2">1-2</div>
+        <div class="col col_1-2 col_p1">1-2 p-1</div>
+
+        <div class="col col_1-4">1-4</div>
+        <div class="col col_1-4">1-4</div>
+        <div class="col col_1-4">1-4</div>
+        <div class="col col_1-4">1-4</div>
+    </div>
+
+<!--
+    ============
+    BODY SCRIPTS
+    ============
+    The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
+    specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
+-->
+
+<script src="../static/js/main.min.js"></script>
+
+</body>
+
+</html>

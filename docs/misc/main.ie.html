@@ -404,7 +404,7 @@
 
 .lt-ie8 .hero_wrapper {
   *zoom: 1;
-  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .hero_wrapper {
@@ -420,7 +420,7 @@
 
 .lt-ie8 .hero_wrapper {
   *zoom: 1;
-  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .hero_img-container {
@@ -487,6 +487,12 @@
   vertical-align: top;
   width: 100%;
   padding-left: 50%;
+  border-left-color: #FFB149;
+  border-left-color: rgba(255, 158, 27, 0.25);
+  border-right-color: #FFB149;
+  border-right-color: rgba(255, 158, 27, 0.25);
+  background-color: #F6D9D3;
+  background-color: rgba(209, 33, 36, 0.2);
 }
 
 .ie .hero_card {
@@ -496,11 +502,29 @@
 .lt-ie8 .hero_card {
   display: inline;
   *zoom: 1;
-  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .lt-ie8 .hero_card {
   padding-left: 0;
+}
+
+.hero_card:before,
+.hero_card:after {
+  content: &quot;&quot;;
+  display: block;
+  width: 100%;
+  height: 7.5px;
+  background-color: #DA6750;
+  background-color: rgba(218, 103, 80, 0.75);
+}
+
+.hero_card:before {
+  margin-bottom: 7.5px;
+}
+
+.hero_card:after {
+  margin-top: 7.5px;
 }
 </code></pre>
       </div>

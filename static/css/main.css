@@ -3624,6 +3624,12 @@ blockquote {
   margin-right: -0.25em;
   vertical-align: top;
   width: 100%;
+  border-left-color: #FFB149;
+  border-left-color: rgba(255, 158, 27, 0.25);
+  border-right-color: #FFB149;
+  border-right-color: rgba(255, 158, 27, 0.25);
+  background-color: #F6D9D3;
+  background-color: rgba(209, 33, 36, 0.2);
 }
 .ie .demo-col-12 {
   margin-right: -0.26em;
@@ -3631,7 +3637,22 @@ blockquote {
 .lt-ie8 .demo-col-12 {
   display: inline;
   *zoom: 1;
-  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+.demo-col-12:before,
+.demo-col-12:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 7.5px;
+  background-color: #DA6750;
+  background-color: rgba(218, 103, 80, 0.75);
+}
+.demo-col-12:before {
+  margin-bottom: 7.5px;
+}
+.demo-col-12:after {
+  margin-top: 7.5px;
 }
 .demo-col-6 {
   display: inline-block;
@@ -3643,6 +3664,12 @@ blockquote {
   margin-right: -0.25em;
   vertical-align: top;
   width: 100%;
+  border-left-color: #FFB149;
+  border-left-color: rgba(255, 158, 27, 0.25);
+  border-right-color: #FFB149;
+  border-right-color: rgba(255, 158, 27, 0.25);
+  background-color: #F6D9D3;
+  background-color: rgba(209, 33, 36, 0.2);
 }
 .ie .demo-col-6 {
   margin-right: -0.26em;
@@ -3650,7 +3677,22 @@ blockquote {
 .lt-ie8 .demo-col-6 {
   display: inline;
   *zoom: 1;
-  *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+.demo-col-6:before,
+.demo-col-6:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 7.5px;
+  background-color: #DA6750;
+  background-color: rgba(218, 103, 80, 0.75);
+}
+.demo-col-6:before {
+  margin-bottom: 7.5px;
+}
+.demo-col-6:after {
+  margin-top: 7.5px;
 }
 @media only all and (min-width: 30em) {
   .demo-col-6 {
@@ -3663,6 +3705,12 @@ blockquote {
     margin-right: -0.25em;
     vertical-align: top;
     width: 50%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .demo-col-6 {
     margin-right: -0.26em;
@@ -3670,8 +3718,152 @@ blockquote {
   .lt-ie8 .demo-col-6 {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
+  .demo-col-6:before,
+  .demo-col-6:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .demo-col-6:before {
+    margin-bottom: 7.5px;
+  }
+  .demo-col-6:after {
+    margin-top: 7.5px;
+  }
+}
+/* Grid test
+   ========================================================================== */
+.col {
+  margin-top: 1em;
+}
+.col_1-2 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+  border-left-color: #FFB149;
+  border-left-color: rgba(255, 158, 27, 0.25);
+  border-right-color: #FFB149;
+  border-right-color: rgba(255, 158, 27, 0.25);
+  background-color: #F6D9D3;
+  background-color: rgba(209, 33, 36, 0.2);
+}
+.ie .col_1-2 {
+  margin-right: -0.26em;
+}
+.lt-ie8 .col_1-2 {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+.col_1-2:before,
+.col_1-2:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 7.5px;
+  background-color: #DA6750;
+  background-color: rgba(218, 103, 80, 0.75);
+}
+.col_1-2:before {
+  margin-bottom: 7.5px;
+}
+.col_1-2:after {
+  margin-top: 7.5px;
+}
+.col_1-2.col_p1 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+  padding-left: 50%;
+  border-left-color: #FFB149;
+  border-left-color: rgba(255, 158, 27, 0.25);
+  border-right-color: #FFB149;
+  border-right-color: rgba(255, 158, 27, 0.25);
+  background-color: #F6D9D3;
+  background-color: rgba(209, 33, 36, 0.2);
+}
+.ie .col_1-2.col_p1 {
+  margin-right: -0.26em;
+}
+.lt-ie8 .col_1-2.col_p1 {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+.lt-ie8 .col_1-2.col_p1 {
+  padding-left: 0;
+}
+.col_1-2.col_p1:before,
+.col_1-2.col_p1:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 7.5px;
+  background-color: #DA6750;
+  background-color: rgba(218, 103, 80, 0.75);
+}
+.col_1-2.col_p1:before {
+  margin-bottom: 7.5px;
+}
+.col_1-2.col_p1:after {
+  margin-top: 7.5px;
+}
+.col_1-4 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+  border-left-color: #FFB149;
+  border-left-color: rgba(255, 158, 27, 0.25);
+  border-right-color: #FFB149;
+  border-right-color: rgba(255, 158, 27, 0.25);
+  background-color: #F6D9D3;
+  background-color: rgba(209, 33, 36, 0.2);
+}
+.ie .col_1-4 {
+  margin-right: -0.26em;
+}
+.lt-ie8 .col_1-4 {
+  display: inline;
+  *zoom: 1;
+  *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+.col_1-4:before,
+.col_1-4:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 7.5px;
+  background-color: #DA6750;
+  background-color: rgba(218, 103, 80, 0.75);
+}
+.col_1-4:before {
+  margin-bottom: 7.5px;
+}
+.col_1-4:after {
+  margin-top: 7.5px;
 }
 /* Base styles
    ========================================================================== */
@@ -3930,7 +4122,7 @@ img {
   }
   .lt-ie8 .wrapper {
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 .content_bar {
@@ -3953,6 +4145,12 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 100%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .content_main,
   .ie .content_sidebar {
@@ -3962,7 +4160,26 @@ img {
   .lt-ie8 .content_sidebar {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content_main:before,
+  .content_sidebar:before,
+  .content_main:after,
+  .content_sidebar:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .content_main:before,
+  .content_sidebar:before {
+    margin-bottom: 7.5px;
+  }
+  .content_main:after,
+  .content_sidebar:after {
+    margin-top: 7.5px;
   }
 }
 .header .demo-placeholder,
@@ -3988,6 +4205,12 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 75%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
     position: relative;
     left: 25%;
   }
@@ -3997,7 +4220,22 @@ img {
   .lt-ie8 .content__1-3 .content_main {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content__1-3 .content_main:before,
+  .content__1-3 .content_main:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .content__1-3 .content_main:before {
+    margin-bottom: 7.5px;
+  }
+  .content__1-3 .content_main:after {
+    margin-top: 7.5px;
   }
   .content__1-3 .content_sidebar {
     display: inline-block;
@@ -4009,6 +4247,12 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 25%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
     position: relative;
     right: 75%;
   }
@@ -4018,7 +4262,22 @@ img {
   .lt-ie8 .content__1-3 .content_sidebar {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content__1-3 .content_sidebar:before,
+  .content__1-3 .content_sidebar:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .content__1-3 .content_sidebar:before {
+    margin-bottom: 7.5px;
+  }
+  .content__1-3 .content_sidebar:after {
+    margin-top: 7.5px;
   }
   .content__2-1 .content_main {
     display: inline-block;
@@ -4030,6 +4289,12 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 66.66666667%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .content__2-1 .content_main {
     margin-right: -0.26em;
@@ -4037,7 +4302,22 @@ img {
   .lt-ie8 .content__2-1 .content_main {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content__2-1 .content_main:before,
+  .content__2-1 .content_main:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .content__2-1 .content_main:before {
+    margin-bottom: 7.5px;
+  }
+  .content__2-1 .content_main:after {
+    margin-top: 7.5px;
   }
   .content__2-1 .content_sidebar {
     display: inline-block;
@@ -4049,6 +4329,12 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 33.33333333%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .content__2-1 .content_sidebar {
     margin-right: -0.26em;
@@ -4056,7 +4342,22 @@ img {
   .lt-ie8 .content__2-1 .content_sidebar {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content__2-1 .content_sidebar:before,
+  .content__2-1 .content_sidebar:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .content__2-1 .content_sidebar:before {
+    margin-bottom: 7.5px;
+  }
+  .content__2-1 .content_sidebar:after {
+    margin-top: 7.5px;
   }
   .content_main,
   .content_sidebar {
@@ -4075,6 +4376,12 @@ img {
     vertical-align: top;
     width: 66.66666667%;
     padding-right: 8.33333333%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .content__2-1 .content_main {
     margin-right: -0.26em;
@@ -4082,10 +4389,25 @@ img {
   .lt-ie8 .content__2-1 .content_main {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .content__2-1 .content_main {
     padding-right: 0;
+  }
+  .content__2-1 .content_main:before,
+  .content__2-1 .content_main:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .content__2-1 .content_main:before {
+    margin-bottom: 7.5px;
+  }
+  .content__2-1 .content_main:after {
+    margin-top: 7.5px;
   }
 }
 .content__bleedbar .content_sidebar {
@@ -4883,7 +5205,7 @@ img {
   }
   .lt-ie8 .hero_wrapper {
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 @media only all and (min-width: 50.0625em) and only all and (min-width: 50.0625em) {
@@ -4899,7 +5221,7 @@ img {
   }
   .lt-ie8 .hero_wrapper {
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 .hero_img-container {
@@ -4967,6 +5289,12 @@ img {
     vertical-align: top;
     width: 100%;
     padding-left: 50%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -4974,10 +5302,25 @@ img {
   .lt-ie8 .hero_card {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .hero_card {
     padding-left: 0;
+  }
+  .hero_card:before,
+  .hero_card:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .hero_card:before {
+    margin-bottom: 7.5px;
+  }
+  .hero_card:after {
+    margin-top: 7.5px;
   }
 }
 @media only all and (min-width: 64em) {
@@ -4992,6 +5335,12 @@ img {
     vertical-align: top;
     width: 100%;
     padding-left: 66.66666667%;
+    border-left-color: #FFB149;
+    border-left-color: rgba(255, 158, 27, 0.25);
+    border-right-color: #FFB149;
+    border-right-color: rgba(255, 158, 27, 0.25);
+    background-color: #F6D9D3;
+    background-color: rgba(209, 33, 36, 0.2);
   }
   .ie .hero_card {
     margin-right: -0.26em;
@@ -4999,10 +5348,25 @@ img {
   .lt-ie8 .hero_card {
     display: inline;
     *zoom: 1;
-    *behavior: url('http://himedlooff.github.io/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .lt-ie8 .hero_card {
     padding-left: 0;
+  }
+  .hero_card:before,
+  .hero_card:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 7.5px;
+    background-color: #DA6750;
+    background-color: rgba(218, 103, 80, 0.75);
+  }
+  .hero_card:before {
+    margin-bottom: 7.5px;
+  }
+  .hero_card:after {
+    margin-top: 7.5px;
   }
 }
 /* topdoc
