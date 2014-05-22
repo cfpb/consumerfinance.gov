@@ -3626,7 +3626,6 @@ blockquote {
   width: 100%;
 }
 .ie .demo-col-12 {
-  margin-right: -0.26em;
   margin-right: 0;
 }
 .lt-ie8 .demo-col-12 {
@@ -3646,7 +3645,6 @@ blockquote {
   width: 100%;
 }
 .ie .demo-col-6 {
-  margin-right: -0.26em;
   margin-right: 0;
 }
 .lt-ie8 .demo-col-6 {
@@ -3667,7 +3665,6 @@ blockquote {
     width: 50%;
   }
   .ie .demo-col-6 {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .demo-col-6 {
@@ -3925,18 +3922,11 @@ img {
 @media only all and (min-width: 50.0625em) {
   .wrapper {
     width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    max-width: 1200px;
-    padding: 0 15px;
+    max-width: 1170px;
+    padding: 0;
     margin: 0 auto;
     position: relative;
     clear: both;
-  }
-  .lt-ie8 .wrapper {
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
 .lt-ie8 .wrapper {
@@ -3966,7 +3956,6 @@ img {
   }
   .ie .content_main,
   .ie .content_sidebar {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .content_main,
@@ -4003,7 +3992,6 @@ img {
     left: 25%;
   }
   .ie .content__1-3 .content_main {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .content__1-3 .content_main {
@@ -4025,7 +4013,6 @@ img {
     right: 75%;
   }
   .ie .content__1-3 .content_sidebar {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .content__1-3 .content_sidebar {
@@ -4045,7 +4032,6 @@ img {
     width: 66.66666667%;
   }
   .ie .content__2-1 .content_main {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .content__2-1 .content_main {
@@ -4065,7 +4051,6 @@ img {
     width: 33.33333333%;
   }
   .ie .content__2-1 .content_sidebar {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .content__2-1 .content_sidebar {
@@ -4092,7 +4077,6 @@ img {
     padding-right: 8.33333333%;
   }
   .ie .content__2-1 .content_main {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .content__2-1 .content_main {
@@ -4958,7 +4942,6 @@ img {
     left: 50%;
   }
   .ie .hero_card {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .hero_card {
@@ -4982,7 +4965,6 @@ img {
     left: 66.66666667%;
   }
   .ie .hero_card {
-    margin-right: -0.26em;
     margin-right: 0;
   }
   .lt-ie8 .hero_card {
