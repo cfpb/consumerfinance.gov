@@ -3782,6 +3782,7 @@ blockquote {
   margin-top: 7.5px;
 }
 .col_1-2.col_p1 {
+  position: relative;
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
