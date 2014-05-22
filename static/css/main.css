@@ -4872,38 +4872,6 @@ img {
   overflow: hidden;
   background-color: #75787b;
 }
-@media only all and (min-width: 50.0625em) {
-  .hero_wrapper {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    max-width: 1200px;
-    padding: 0 15px;
-    margin: 0 auto;
-    position: relative;
-    clear: both;
-  }
-  .lt-ie8 .hero_wrapper {
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 50.0625em) and only all and (min-width: 50.0625em) {
-  .hero_wrapper {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    max-width: 1200px;
-    padding: 0 15px;
-    margin: 0 auto;
-    position: relative;
-    clear: both;
-  }
-  .lt-ie8 .hero_wrapper {
-    *zoom: 1;
-    *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
 .hero_img-container {
   display: none;
   line-height: 1;
