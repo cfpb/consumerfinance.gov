@@ -5441,7 +5441,7 @@ img {
 }
 
 .hero .lt-ie8 {
-  zoom: 1;
+  width: 100%;
 }
 
 .hero_wrapper {
