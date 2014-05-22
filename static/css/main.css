@@ -4873,6 +4873,19 @@ img {
   overflow: hidden;
   background-color: #75787b;
 }
+@media only all and (min-width: 50.0625em) {
+  .hero_wrapper {
+    max-width: 1170px;
+    padding: 0 15px;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+  }
+}
+.lt-ie9 .hero_wrapper {
+  min-width: 800px;
+  max-width: 960px;
+}
 .hero_img-container {
   display: none;
   line-height: 1;
