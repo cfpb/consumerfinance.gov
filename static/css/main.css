@@ -3926,7 +3926,7 @@ img {
     clear: both;
   }
 }
-.lt-ie8 .wrapper {
+.lt-ie9 .wrapper {
   min-width: 800px;
   max-width: 960px;
 }
