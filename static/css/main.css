@@ -3934,6 +3934,9 @@ img {
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
+  .wrapper .lt-ie8 {
+    width: 100%;
+  }
 }
 .content_bar {
   height: 10px;
@@ -4905,6 +4908,9 @@ img {
   .lt-ie8 .hero_wrapper {
     *zoom: 1;
     *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .hero_wrapper .lt-ie8 {
+    width: 100%;
   }
 }
 .hero_img-container {
