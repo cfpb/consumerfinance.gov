@@ -3921,6 +3921,7 @@ img {
    ========================================================================== */
 @media only all and (min-width: 50.0625em) {
   .wrapper {
+    width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
