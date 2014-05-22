@@ -4453,17 +4453,17 @@ img {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  max-width: 1200px;
+  max-width: 1170px;
   padding: 0 15px;
   margin: 0 auto;
   position: relative;
   clear: both;
 }
 
-.lt-ie8 .wrapper {
+/*.lt-ie8 .wrapper {
   *zoom: 1;
   *behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
+}*/
 
 .lt-ie8 .wrapper {
   width: 960px;
