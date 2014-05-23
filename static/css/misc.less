@@ -188,38 +188,38 @@
     - cfgov-misc
 */
 
+.filter_cols {
+    .u-respond-to-min(600px, {
+        .grid_nested-col-group();
+    });
+}
+
 .filter_col {
     // Eyeballed to 30px considering line-height.
     margin-bottom: unit(16px / @base-font-size-px, em);
 }
 
-.u-respond-to-min(600px, {
-    .filter_cols {
-        .grid_nested-col-group();
-    }
-    .filter_col-1-3 {
-        .grid_column(6);
-    }
-});
-
-.u-respond-to-min(768px, {
-    .filter_col-1-3 {
-        .grid_column(4);
-    }
-});
-
-.filter-actions {
-    margin-top: unit(30px / @base-font-size-px, em);
+.filter_col-1-3 {
     .u-respond-to-min(600px, {
-        & {
-            // Take into account the bottom margin for .filter_col.
-            margin-top: unit(14px / @base-font-size-px, em);
-        }
+        .grid_column(6);
+    });
+
+    .u-respond-to-min(768px, {
+        .grid_column(4);
     });
 }
 
-.filter-actions__right {
-    text-align: right;
+.filter-actions {
+    margin-top: unit(30px / @base-font-size-px, em);
+
+    &__right {
+        text-align: right;
+    }
+
+    .u-respond-to-min(600px, {
+        // Take into account the bottom margin for .filter_col.
+        margin-top: unit(14px / @base-font-size-px, em);
+    });
 }
 
 .expandable {
