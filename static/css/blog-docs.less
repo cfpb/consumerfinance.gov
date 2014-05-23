@@ -92,40 +92,6 @@
 
 
 /* topdoc
-  name: Post preview filters
-  family: cfgov-blog-docs
-  patterns:
-    - name: Blog filters
-      markup: |
-        ...
-      notes:
-        - "..."
-  tags:
-    - cfgov-blog-docs
-*/
-
-.post-preview-filters {
-    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-    .expandable_header {
-        margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-    }
-    .u-respond-to-min(600px, {
-        .filter_wrapper {
-            .grid_nested-col-group();
-        }
-        .filter_col {
-            .grid_column(6);
-        }
-    });
-    .u-respond-to-min(768px, {
-        .filter_col {
-            .grid_column(4);
-        }
-    });
-}
-
-
-/* topdoc
   name: Post previews
   family: cfgov-blog-docs
   patterns:

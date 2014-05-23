@@ -126,6 +126,54 @@
 
 
 /* topdoc
+  name: Filters
+  family: cfgov-misc
+  patterns:
+    - name: Default filters example
+      markup: |
+        ...
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .filters
+      notes:
+        - "..."
+  tags:
+    - cfgov-misc
+*/
+
+.filters {
+    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+    &_header {
+        margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    }
+    &_col + &_col {
+        margin-top: unit(22px / @base-font-size-px, em);
+    }
+    .u-respond-to-min(600px, {
+        &_wrapper {
+            .grid_nested-col-group();
+        }
+        &_col {
+            .grid_column(6);
+        }
+        &_col + &_col {
+            margin-top: 0;
+        }
+        &_actions {
+            text-align: right;
+        }
+    });
+    .u-respond-to-min(768px, {
+        &_col {
+            .grid_column(4);
+        }
+    });
+}
+
+
+/* topdoc
   name: Hero
   family: cfgov-misc
   patterns:
