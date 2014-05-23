@@ -24,6 +24,38 @@
                 By Patrice Ficklin
             </p>
         </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary
+            .summary_header
+            .summary_text
+            .summary_byline
+    - name: Max-width summary text
+      markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="summary_text summary_text__max">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="summary_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary_text.summary_text__max
+      notes:
+        - "Optionally set a max-width on .summary_text to keep line lengths
+          readable."
   tags:
     - cfgov-summary
 */
@@ -51,6 +83,10 @@
         margin-bottom: unit(10px / @base-font-size-px, em);
         .webfont-regular();
         color: @darkgray;
+
+        &__max {
+            max-width: percentage(7 / 8);
+        }
     }
 
     &_byline {
