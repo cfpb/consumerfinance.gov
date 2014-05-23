@@ -8,3 +8,4 @@
 - Layout docs
 - Update CF components with patterns
 
+Jira, stories VS tasks
