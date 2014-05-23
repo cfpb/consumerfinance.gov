@@ -148,7 +148,7 @@
             <section class="content_main">
 
                 <div class="post-preview-filters">
-                    <div class="expandable">
+                    <div class="expandable expandable__expanded">
                         <div class="expandable_header">
                             <!-- <h5>Blog filtered by</h5>
                             <ul class="list list__horizontal">
@@ -167,30 +167,51 @@
                         </div>
                         <div class="expandable_content padded-container">
                             <form class="padded-container_body" id="barebones-content" method="get">
-                                <div class="form-group">
-                                    <label class="form-group_header">
-                                        Categories
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="consumer">
-                                        Announcements &amp; updates
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="regulation & compliance">
-                                        Consumer information
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="innovation">
-                                        Engagement
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="announcements">
-                                        Innovation &amp; data
-                                    </label>
-                                    <div class="form-actions">
-                                        <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-                                        <input type="submit" value="Apply filters" class="btn form-actions_item">
+                                <div class="filter_wrapper">
+                                    <div class="filter_col form-group">
+                                        <div class="form-group">
+                                            <label class="form-group_header">
+                                                Categories
+                                            </label>
+                                            <label class="form-group_item form-label">
+                                                <input type="checkbox" name="filter_category" value="consumer">
+                                                Announcements &amp; updates
+                                            </label>
+                                            <label class="form-group_item form-label">
+                                                <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                                Consumer information
+                                            </label>
+                                            <label class="form-group_item form-label">
+                                                <input type="checkbox" name="filter_category" value="innovation">
+                                                Engagement
+                                            </label>
+                                            <label class="form-group_item form-label">
+                                                <input type="checkbox" name="filter_category" value="announcements">
+                                                Innovation &amp; data
+                                            </label>
+                                        </div>
                                     </div>
+                                    <div class="filter_col form-group">
+                                        <div class="form-group">
+                                            <label class="form-group_header">
+                                                Topics
+                                            </label>
+                                            <input type="text" name="filter_tags" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-group_header">
+                                                Author
+                                            </label>
+                                            <input type="text" name="filter_author" value="">
+                                        </div>
+                                    </div>
+                                    <div class="filter_col">
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-actions form-group">
+                                    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+                                    <input type="submit" value="Apply filters" class="btn form-actions_item">
                                 </div>
                             </form>
                         </div>
