@@ -15,6 +15,102 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / utilities docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="visually-hidden" class="docs-component">
+      <h2 class="docs-component_header"><span>Visually hidden</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Utility class</h3>
+          <section class="docs-pattern_pattern">
+<h1>
+    <a href="#">
+        <span class="cf-icon cf-icon-twitter-square"></span>
+        <span class="u-visually-hidden">Share on Twitter</span>
+    </a>
+</h1>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1&gt;
+    &lt;a href=&quot;#&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;u-visually-hidden&quot;&gt;Share on Twitter&lt;/span&gt;
+    &lt;/a&gt;
+&lt;/h1&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-visually-hidden;</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use this class to hide something from view while keeping it accessible to screen readers.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.u-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}</code></pre>
+      </div>
+    </div>
+    <div id="inline-block" class="docs-component">
+      <h2 class="docs-component_header"><span>Inline block</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Utility class</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-inline-block;</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Also adds a .lt-ie8 class to hack inline-block for IE 7 and below.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.u-inline-block {
+  display: inline-block;
+}
+.lt-ie8 .u-inline-block {
+  display: inline;
+}</code></pre>
+      </div>
+    </div>
+    <div id="floating-right" class="docs-component">
+      <h2 class="docs-component_header"><span>Floating right</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Utility class</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-right;</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>IE7 float: right drop bug fixes:</li>
+              <li>1. If the float: right follows an element in the html structure that should be to its left (and not above it), then that preceding element(s) must be float: left. http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688</li>
+              <li>2. Simply change the markup order so that the element floating right comes before the element to its left.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.u-right {
+  float: right;
+}</code></pre>
+      </div>
+    </div>
     <div id="flexible-proportional-containers" class="docs-component">
       <h2 class="docs-component_header"><span>Flexible proportional containers</span></h2>
       <div class="docs-component_intro">
@@ -159,86 +255,6 @@
 }</code></pre>
       </div>
     </div>
-    <div id="utility-classes" class="docs-component">
-      <h2 class="docs-component_header"><span>Utility classes</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Visually hidden</h3>
-          <section class="docs-pattern_pattern">
-<h1>
-    <a href="#">
-        <span class="cf-icon cf-icon-twitter-square"></span>
-        <span class="u-visually-hidden">Share by email</span>
-    </a>
-</h1>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1&gt;
-    &lt;a href=&quot;#&quot;&gt;
-        &lt;span class=&quot;cf-icon cf-icon-twitter-square&quot;&gt;&lt;/span&gt;
-        &lt;span class=&quot;u-visually-hidden&quot;&gt;Share by email&lt;/span&gt;
-    &lt;/a&gt;
-&lt;/h1&gt;</code></pre>
-            <ul class="docs-notes">
-              <li>Use this class to hide something from view while keeping it accessible to screen readers.</li>
-            </ul>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.u-visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-}</code></pre>
-      </div>
-    </div>
-    <div id="less-mixins" class="docs-component">
-      <h2 class="docs-component_header"><span>Less mixins</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.u-right();</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>IE7 float: right drop bug fixes:</li>
-              <li>1. If the float: right follows an element in the html structure that should be to its left (and not above it), then that preceding element(s) must be float: left. http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688</li>
-              <li>2. Simply change the markup order so that the element floating right comes before the element to its left.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.u-flexible-image();</code></pre>
-              </li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.u-inline-block();</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>Also adds a .lt-ie8 class to hack inline-block for IE 7 and below.</li>
-            </ul>
-          </footer>
-        </div>
-      </div>
-    </div>
     <div id="link-mixins" class="docs-component">
       <h2 class="docs-component_header"><span>Link mixins</span></h2>
       <div class="docs-patterns">
@@ -374,6 +390,92 @@
             </ul>
             <ul class="docs-notes">
               <li>Pass this mixin one color to color the child element when the parent link is hovered.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="media-query-mixins" class="docs-component">
+      <h2 class="docs-component_header"><span>Media query mixins</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>These mixins allow us to write consistent media queries using pixel values, which are easier to remember. The mixins handle converting the pixels into em's.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media queries</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-min(@bp, @rules)</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-max(@bp, @rules)</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>@bp: the breakpoint size in pixels. It will get converted into em's.</li>
+              <li>@rules: a CSS or Less ruleset. Note that it can contain the full set of Less features.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media query usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-min(768px, {
+    .title {
+        font-size: 2em;
+    }
+});
+
+Compiles to:
+
+@media only all and (min-width: 48em) {
+    .title {
+        font-size: 2em;
+    }
+}</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media query range</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-range(@bp1, @bp2, @rules)</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>@bp1: the min-width breakpoint size in pixels. It will get converted into em's.</li>
+              <li>@bp2: the max-width breakpoint size in pixels. It will get converted into em's.</li>
+              <li>@rules: a CSS or Less ruleset. Note that it can contain the full set of Less features.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">min-width/max-width media query range usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-respond-to-range(320px, 768px, {
+    .title {
+        font-size: 2em;
+    }
+});
+
+Compiles to:
+
+@media only all and (min-width: 20em) and (max-width: 48em) {
+    .title {
+        font-size: 2em;
+    }
+}</code></pre>
+              </li>
             </ul>
           </footer>
         </div>

@@ -4203,6 +4203,85 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Visually hidden
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      markup: |
+        <h1>
+            <a href="#">
+                <span class="cf-icon cf-icon-twitter-square"></span>
+                <span class="u-visually-hidden">Share on Twitter</span>
+            </a>
+        </h1>
+      codenotes:
+        - .u-visually-hidden;
+      notes:
+        - "Use this class to hide something from view while keeping it
+          accessible to screen readers."
+      notes:
+        - "Use this class to hide something from view while keeping it
+          accessible to screen readers."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+/* topdoc
+  name: Inline block
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      codenotes:
+        - .u-inline-block;
+      notes:
+        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-inline-block {
+  display: inline-block;
+}
+
+.lt-ie8 .u-inline-block {
+  display: inline;
+}
+
+/* topdoc
+  name: Floating right
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      codenotes:
+        - .u-right;
+      notes:
+        - "IE7 float: right drop bug fixes:"
+        - "1. If the float: right follows an element in the html structure that
+          should be to its left (and not above it), then that preceding
+          element(s) must be float: left.
+          http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688"
+        - "2. Simply change the markup order so that the element floating right
+          comes before the element to its left."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-right {
+  float: right;
+}
+
+/* topdoc
   name: Flexible proportional containers
   family: cfgov-utilities
   notes:
@@ -4302,60 +4381,6 @@ img {
 }
 
 /* topdoc
-  name: Utility classes
-  family: cfgov-utilities
-  patterns:
-    - name: Visually hidden
-      markup: |
-        <h1>
-            <a href="#">
-                <span class="cf-icon cf-icon-twitter-square"></span>
-                <span class="u-visually-hidden">Share by email</span>
-            </a>
-        </h1>
-      notes:
-        - "Use this class to hide something from view while keeping it
-          accessible to screen readers."
-  tags:
-    - cfgov-utilities
-*/
-
-.u-visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-}
-
-/* topdoc
-  name: Less mixins
-  family: cfgov-utilities
-  patterns:
-    - codenotes:
-        - .u-right();
-      notes:
-        - "IE7 float: right drop bug fixes:"
-        - "1. If the float: right follows an element in the html structure that
-          should be to its left (and not above it), then that preceding
-          element(s) must be float: left.
-          http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688"
-        - "2. Simply change the markup order so that the element floating right
-          comes before the element to its left."
-    - codenotes:
-        - .u-flexible-image();
-    - codenotes:
-        - .u-inline-block();
-      notes:
-        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
-  tags:
-    - cfgov-utilities
-*/
-
-/* topdoc
   name: Link mixins
   family: cfgov-utilities
   patterns:
@@ -4431,6 +4456,68 @@ img {
       notes:
         - "Pass this mixin one color to color the child element when the parent
           link is hovered."
+  tags:
+    - cfgov-utilities
+*/
+
+/* topdoc
+  name: Media query mixins
+  family: cfgov-utilities
+  notes:
+    - "These mixins allow us to write consistent media queries using pixel
+      values, which are easier to remember. The mixins handle converting the
+      pixels into em's."
+  patterns:
+    - name: "min-width/max-width media queries"
+      codenotes:
+        - ".u-respond-to-min(@bp, @rules)"
+        - ".u-respond-to-max(@bp, @rules)"
+      notes:
+        - "@bp: the breakpoint size in pixels. It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query usage"
+      codenotes:
+        - |
+            .u-respond-to-min(768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
+
+            Compiles to:
+
+            @media only all and (min-width: 48em) {
+                .title {
+                    font-size: 2em;
+                }
+            }
+    - name: "min-width/max-width media query range"
+      codenotes:
+        - ".u-respond-to-range(@bp1, @bp2, @rules)"
+      notes:
+        - "@bp1: the min-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@bp2: the max-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query range usage"
+      codenotes:
+        - |
+            .u-respond-to-range(320px, 768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
+
+            Compiles to:
+
+            @media only all and (min-width: 20em) and (max-width: 48em) {
+                .title {
+                    font-size: 2em;
+                }
+            }
   tags:
     - cfgov-utilities
 */
@@ -4647,78 +4734,6 @@ img {
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
 }
-
-/* ==========================================================================
-   cfgov-refresh
-   media-queries
-   ========================================================================== */
-
-/* topdoc
-  name: Media query mixins
-  family: cfgov-media-queries
-  notes:
-    - "These mixins allow us to write consistent media queries using pixel
-      values, which are easier to remember. The mixins handle converting the
-      pixels into em's."
-  patterns:
-    - name: "min-width/max-width media queries"
-      codenotes:
-        - ".u-respond-to-min(@bp, @rules)"
-        - ".u-respond-to-max(@bp, @rules)"
-      notes:
-        - "@bp: the breakpoint size in pixels. It will get converted into em's."
-        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
-          of Less features."
-    - name: "min-width/max-width media query usage"
-      codenotes:
-        - |
-            .u-respond-to-min(768px, {
-                .title {
-                    font-size: 2em;
-                }
-            });
-
-            Compiles to:
-
-            @media only all and (min-width: 48em) {
-                .title {
-                    font-size: 2em;
-                }
-            }
-    - name: "min-width/max-width media query range"
-      codenotes:
-        - ".u-respond-to-range(@bp1, @bp2, @rules)"
-      notes:
-        - "@bp1: the min-width breakpoint size in pixels.
-          It will get converted into em's."
-        - "@bp2: the max-width breakpoint size in pixels.
-          It will get converted into em's."
-        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
-          of Less features."
-    - name: "min-width/max-width media query range usage"
-      codenotes:
-        - |
-            .u-respond-to-range(320px, 768px, {
-                .title {
-                    font-size: 2em;
-                }
-            });
-
-            Compiles to:
-
-            @media only all and (min-width: 20em) and (max-width: 48em) {
-                .title {
-                    font-size: 2em;
-                }
-            }
-  tags:
-    - cfgov-media-queries
-*/
-
-/* topdoc
-  name: EOF
-  eof: true
-*/
 
 /* ==========================================================================
    cfgov-refresh
