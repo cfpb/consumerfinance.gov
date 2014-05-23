@@ -295,7 +295,6 @@ module.exports = function(grunt) {
     var subtasks = [
       'blog-docs',
       'media-object',
-      'media-queries',
       'meta',
       'misc',
       'post',
