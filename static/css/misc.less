@@ -5,40 +5,64 @@
 
 
 /* topdoc
-  name: Forms
+  name: Form pattern showcase
   family: cfgov-misc
   patterns:
-    - name: Form element showcase
-      markup: |
-        <div class="form-group">
-            <label class="form-label-header">Form label header</label>
-            <label class="form-group_item form-label">
-                <input type="checkbox">
-                Form label
-            </label>
-            <label class="form-group_item form-label">
-                <input type="checkbox">
-                Form label
-            </label>
+    - markup: |
+        <div class="form-l">
+            <div class="form-l_col form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header">
+                        Form layout column 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 2
+                    </label>
+                </div>
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header">
+                        Form layout column 2
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header">
+                        Form layout column 3
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="form-label-header">Form label header</label>
-            <select class="form-group_item" name="select">
-                <option value="value1">Value 1</option>
-                <option value="value2">Value 2</option>
-                <option value="value3">Value 3</option>
-            </select>
+        <div class="form-actions form-actions__right">
+            <input type="reset" value="Reset filters"
+                   class="btn btn-warning btn-link form-actions_item">
+            <input type="submit" value="Apply filters"
+                   class="btn form-actions_item">
         </div>
-        <div class="form-actions">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-    - name: Form label header
+  tags:
+    - cfgov-misc
+*/
+
+
+/* topdoc
+  name: Form labels
+  family: cfgov-misc
+  patterns:
+    - name: Label header
       markup: |
         <label class="form-label-header">
             Form label header
         </label>
-    - name: Form label
+    - name: Normal label
       markup: |
         <label class="form-label">
             Form label
@@ -52,7 +76,29 @@
       notes:
         - "When nesting a form input the input will receive a right margin to
           space it from the label text."
-    - name: Form groups
+  tags:
+    - cfgov-misc
+*/
+
+.form-label {
+    .webfont-regular();
+
+    & input {
+        margin-right: unit(6px / @base-font-size-px, em);
+    }
+}
+
+.form-label-header {
+    .h5();
+    margin-bottom: unit(10px / @font-size, em);
+}
+
+
+/* topdoc
+  name: Form groups
+  family: cfgov-misc
+  patterns:
+    - name: Form group
       markup: |
         <div class="form-group">
             <label class="form-label-header">Form label header</label>
@@ -84,30 +130,9 @@
           elements with each other like a label and an input, or a heading and a
           group of checkboxes, or even a group of select menus that are realted
           to each other."
-    - name: Form actions
-      markup: |
-        <div class="form-actions">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-      notes:
-        - "Simply adds some top margin to set it apart from form groups."
   tags:
     - cfgov-misc
 */
-
-.form-label {
-    .webfont-regular();
-
-    & input {
-        margin-right: unit(6px / @base-font-size-px, em);
-    }
-}
-
-.form-label-header {
-    .h5();
-    margin-bottom: unit(10px / @font-size, em);
-}
 
 .form-group + .form-group {
     margin-top: unit(22px / @base-font-size-px, em);
@@ -118,10 +143,72 @@
     margin-bottom: unit(6px / @base-font-size-px, em);
 }
 
+
+/* topdoc
+  name: Form actions
+  family: cfgov-misc
+  patterns:
+    - name: Form actions
+      markup: |
+        <div class="form-actions">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions
+            .form-actions_item
+      notes:
+        - ".form-actions adds a top margin to set it apart from form groups."
+        - ".form-actions_item adds margins between each other."
+    - name: "Form actions modifier: right align"
+      markup: |
+        <div class="form-actions form-actions__right">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions.form-actions__right
+            .form-actions_item
+      notes:
+        - "Align text to the right."
+    - name: "Form actions modifier: right align on medium screens or larger"
+      markup: |
+        <div class="form-actions form-actions__right-on-med">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions.form-actions__right-on-med
+            .form-actions_item
+      notes:
+        - "Align text to the right at 600px or larger."
+  tags:
+    - cfgov-misc
+*/
+
 .form-actions {
     // Eyeballed to 30px considering line-height.
     margin-top: unit(26px / @base-font-size-px, em);
 }
+
+.form-actions__right {
+    text-align: right;
+}    
+
+.form-actions__right-on-med {
+    .u-respond-to-min(600px, {
+        text-align: right;
+    });
+}    
 
 .form-actions_item + .form-actions_item {
     // Eyeballed to 30px considering ~4px of space between inline-block items.
@@ -130,124 +217,80 @@
 
 
 /* topdoc
-  name: Filters
+  name: Form layouts
   family: cfgov-misc
   patterns:
-    - name: Barebones filter pattern
+    - name: Form columns
       markup: |
-        <div class="filter_cols">
-            <div class="filter_col filter_col-1-3">
-                Filter column 1
+        <div class="form-l">
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 1
             </div>
-            <div class="filter_col filter_col-1-3">
-                Filter column 2
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 2
             </div>
-            <div class="filter_col filter_col-1-3">
-                Filter column 3
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 3
             </div>
-        </div>
-        <div class="filter_actions">
-            <input type="submit" value="Filter action 1"
-                   class="btn">
         </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .filter
-            .filter_cols
-              .filter_col.filter_col-1-3
-            .filter_actions
-    - name: Filter columns
+          .form-l
+            .form-l_col.form-l_col-1-3
+    - name: "Form layout modifier: flush"
+      markup: |
+        <div class="form-l form-l__flush">
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 1
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 2
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 3
+            </div>
+        </div>
       codenotes:
-        - .filter_col
-        - .filter_col-1-3
+        - .form-l.form-l__flush
       notes:
-        - ".filter_col-1-3 elements are stacked for small screens. When the
+        - "Form layout columns have left and right gutters. If you want the
+          first and last column in each row to site flush left/right
+          respectively then use the .form-l__flush modifier."
+    - name: Form layout columns
+      codenotes:
+        - .form-l_col
+        - .form-l_col-1-3
+      notes:
+        - ".form-l_col-1-3 elements are stacked for small screens. When the
           viewport reaches 600px they transform into columns with one half the
           width of the container. When the viewport reaches 768px their width
           updates to one third of the container."
-    - name: Right aligned filter actions modifier
-      codenotes:
-        - .filter_actions__right
-      notes:
-        - "Right aligns the text within .filter_actions."
-    - name: Real-world filter pattern
-      markup: |
-        <div class="filter_cols">
-            <div class="filter_col filter_col-1-3">
-                <div class="form-group">
-                    <label class="form-label-header">
-                        Filter column 1
-                    </label>
-                    <label class="form-group_item form-label">
-                        <input type="checkbox" name="" value="">
-                        Checkbox 1
-                    </label>
-                    <label class="form-group_item form-label">
-                        <input type="checkbox" name="" value="">
-                        Checkbox 2
-                    </label>
-                </div>
-            </div>
-            <div class="filter_col filter_col-1-3">
-                <div class="form-group">
-                    <label class="form-label-header">
-                        Filter column 2
-                    </label>
-                    <input type="text" name="" value="">
-                </div>
-            </div>
-            <div class="filter_col filter_col-1-3">
-                <div class="form-group">
-                    <label class="form-label-header">
-                        Filter column 3
-                    </label>
-                    <input type="text" name="" value="">
-                </div>
-            </div>
-        </div>
-        <div class="filter_actions filter_actions__right form-actions">
-            <input type="reset" value="Reset filters"
-                   class="btn btn-warning btn-link form-actions_item">
-            <input type="submit" value="Apply filters"
-                   class="btn form-actions_item">
-        </div>
   tags:
     - cfgov-misc
 */
 
-.filter_cols {
-    .u-respond-to-min(600px, {
-        .grid_nested-col-group();
-    });
+.form-l {
+    &__flush {
+        .u-respond-to-min(600px, {
+            .grid_nested-col-group();
+        });
+    }
 }
 
-.filter_col {
+.form-l_col {
     // Eyeballed to 30px considering line-height.
     margin-bottom: unit(16px / @base-font-size-px, em);
 }
 
-.filter_col-1-3 {
+.form-l_col-1-3 {
     .u-respond-to-min(600px, {
         .grid_column(6);
     });
 
     .u-respond-to-min(768px, {
         .grid_column(4);
-    });
-}
-
-.filter_actions {
-    margin-top: unit(30px / @base-font-size-px, em);
-
-    &__right {
-        text-align: right;
-    }
-
-    .u-respond-to-min(600px, {
-        // Take into account the bottom margin for .filter_col.
-        margin-top: unit(14px / @base-font-size-px, em);
     });
 }
 

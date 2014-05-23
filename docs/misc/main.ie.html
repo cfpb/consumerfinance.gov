@@ -15,65 +15,101 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
-    <div id="forms" class="docs-component">
-      <h2 class="docs-component_header"><span>Forms</span></h2>
+    <div id="form-pattern-showcase" class="docs-component">
+      <h2 class="docs-component_header"><span>Form pattern showcase</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form element showcase</h3>
           <section class="docs-pattern_pattern">
-<div class="form-group">
-    <label class="form-label-header">Form label header</label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
+<div class="form-l">
+    <div class="form-l_col form-l_col-1-3">
+        <div class="form-group">
+            <label class="form-label-header">
+                Form layout column 1
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox" name="" value="">
+                Checkbox 1
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox" name="" value="">
+                Checkbox 2
+            </label>
+        </div>
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        <div class="form-group">
+            <label class="form-label-header">
+                Form layout column 2
+            </label>
+            <input type="text" name="" value="">
+        </div>
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        <div class="form-group">
+            <label class="form-label-header">
+                Form layout column 3
+            </label>
+            <input type="text" name="" value="">
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <label class="form-label-header">Form label header</label>
-    <select class="form-group_item" name="select">
-        <option value="value1">Value 1</option>
-        <option value="value2">Value 2</option>
-        <option value="value3">Value 3</option>
-    </select>
-</div>
-<div class="form-actions">
-    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-    <input type="submit" value="Apply filters" class="btn form-actions_item">
+<div class="form-actions form-actions__right">
+    <input type="reset" value="Reset filters"
+           class="btn btn-warning btn-link form-actions_item">
+    <input type="submit" value="Apply filters"
+           class="btn form-actions_item">
 </div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
+                Form layout column 1
+            &lt;/label&gt;
+            &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                Checkbox 1
+            &lt;/label&gt;
+            &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                Checkbox 2
+            &lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
+                Form layout column 2
+            &lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
+                Form layout column 3
+            &lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
-    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
-        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
-        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
-        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-actions&quot;&gt;
-    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;div class=&quot;form-actions form-actions__right&quot;&gt;
+    &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot;
+           class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot;
+           class=&quot;btn form-actions_item&quot;&gt;
 &lt;/div&gt;</code></pre>
           </footer>
         </div>
+      </div>
+    </div>
+    <div id="form-labels" class="docs-component">
+      <h2 class="docs-component_header"><span>Form labels</span></h2>
+      <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form label header</h3>
+          <h3 class="docs-pattern_header">Label header</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label-header">
     Form label header
@@ -87,7 +123,7 @@
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form label</h3>
+          <h3 class="docs-pattern_header">Normal label</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label">
     Form label
@@ -116,82 +152,6 @@
 &lt;/label&gt;</code></pre>
             <ul class="docs-notes">
               <li>When nesting a form input the input will receive a right margin to space it from the label text.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form groups</h3>
-          <section class="docs-pattern_pattern">
-<div class="form-group">
-    <label class="form-label-header">Form label header</label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
-</div>
-<div class="form-group">
-    <label class="form-label-header">Form label header</label>
-    <select class="form-group_item" name="select">
-        <option value="value1">Value 1</option>
-        <option value="value2">Value 2</option>
-        <option value="value3">Value 3</option>
-    </select>
-</div>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
-    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
-        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
-        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
-        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/div&gt;</code></pre>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>Structural cheat sheet:
------------------------
-.form-group
-  .form-group_item</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>A form group is recommended you need to associate several form elements with each other like a label and an input, or a heading and a group of checkboxes, or even a group of select menus that are realted to each other.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form actions</h3>
-          <section class="docs-pattern_pattern">
-<div class="form-actions">
-    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-    <input type="submit" value="Apply filters" class="btn form-actions_item">
-</div>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions&quot;&gt;
-    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
-&lt;/div&gt;</code></pre>
-            <ul class="docs-notes">
-              <li>Simply adds some top margin to set it apart from form groups.</li>
             </ul>
           </footer>
         </div>
@@ -248,7 +208,72 @@
 .lt-ie9 .form-label-header {
   font-weight: normal !important;
 }
+</code></pre>
+      </div>
+    </div>
+    <div id="form-groups" class="docs-component">
+      <h2 class="docs-component_header"><span>Form groups</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form group</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-group">
+    <label class="form-label-header">Form label header</label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+</div>
+<div class="form-group">
+    <label class="form-label-header">Form label header</label>
+    <select class="form-group_item" name="select">
+        <option value="value1">Value 1</option>
+        <option value="value2">Value 2</option>
+        <option value="value3">Value 3</option>
+    </select>
+</div>
 
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
+    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
+        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
+        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
+        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-group
+  .form-group_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>A form group is recommended you need to associate several form elements with each other like a label and an input, or a heading and a group of checkboxes, or even a group of select menus that are realted to each other.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
 .form-group + .form-group {
   margin-top: 1.375em;
 }
@@ -256,9 +281,107 @@
 .form-group_item {
   margin-bottom: 0.375em;
 }
+</code></pre>
+      </div>
+    </div>
+    <div id="form-actions" class="docs-component">
+      <h2 class="docs-component_header"><span>Form actions</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
 
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.form-actions adds a top margin to set it apart from form groups.</li>
+              <li>.form-actions_item adds margins between each other.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions modifier: right align</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions form-actions__right">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions form-actions__right&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions.form-actions__right
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Align text to the right.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions modifier: right align on medium screens or larger</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions form-actions__right-on-med">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions form-actions__right-on-med&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions.form-actions__right-on-med
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Align text to the right at 600px or larger.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
 .form-actions {
   margin-top: 1.625em;
+}
+
+.form-actions__right {
+  text-align: right;
+}
+
+.form-actions__right-on-med {
+  text-align: right;
 }
 
 .form-actions_item + .form-actions_item {
@@ -267,187 +390,116 @@
 </code></pre>
       </div>
     </div>
-    <div id="filters" class="docs-component">
-      <h2 class="docs-component_header"><span>Filters</span></h2>
+    <div id="form-layouts" class="docs-component">
+      <h2 class="docs-component_header"><span>Form layouts</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Barebones filter pattern</h3>
+          <h3 class="docs-pattern_header">Form columns</h3>
           <section class="docs-pattern_pattern">
-<div class="filter_cols">
-    <div class="filter_col filter_col-1-3">
-        Filter column 1
+<div class="form-l">
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 1
     </div>
-    <div class="filter_col filter_col-1-3">
-        Filter column 2
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 2
     </div>
-    <div class="filter_col filter_col-1-3">
-        Filter column 3
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 3
     </div>
-</div>
-<div class="filter_actions">
-    <input type="submit" value="Filter action 1"
-           class="btn">
 </div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;filter_cols&quot;&gt;
-    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
-        Filter column 1
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 1
     &lt;/div&gt;
-    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
-        Filter column 2
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 2
     &lt;/div&gt;
-    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
-        Filter column 3
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 3
     &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;filter_actions&quot;&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Filter action 1&quot;
-           class=&quot;btn&quot;&gt;
 &lt;/div&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.filter
-  .filter_cols
-    .filter_col.filter_col-1-3
-  .filter_actions</code></pre>
+.form-l
+  .form-l_col.form-l_col-1-3</code></pre>
               </li>
             </ul>
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Filter columns</h3>
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.filter_col</code></pre>
-              </li>
-              <li>
-                <pre class="docs-code"><code>.filter_col-1-3</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>.filter_col-1-3 elements are stacked for small screens. When the viewport reaches 600px they transform into columns with one half the width of the container. When the viewport reaches 768px their width updates to one third of the container.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Right aligned filter actions modifier</h3>
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.filter_actions__right</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>Right aligns the text within .filter_actions.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Real-world filter pattern</h3>
+          <h3 class="docs-pattern_header">Form layout modifier: flush</h3>
           <section class="docs-pattern_pattern">
-<div class="filter_cols">
-    <div class="filter_col filter_col-1-3">
-        <div class="form-group">
-            <label class="form-label-header">
-                Filter column 1
-            </label>
-            <label class="form-group_item form-label">
-                <input type="checkbox" name="" value="">
-                Checkbox 1
-            </label>
-            <label class="form-group_item form-label">
-                <input type="checkbox" name="" value="">
-                Checkbox 2
-            </label>
-        </div>
+<div class="form-l form-l__flush">
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 1
     </div>
-    <div class="filter_col filter_col-1-3">
-        <div class="form-group">
-            <label class="form-label-header">
-                Filter column 2
-            </label>
-            <input type="text" name="" value="">
-        </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 2
     </div>
-    <div class="filter_col filter_col-1-3">
-        <div class="form-group">
-            <label class="form-label-header">
-                Filter column 3
-            </label>
-            <input type="text" name="" value="">
-        </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 3
     </div>
-</div>
-<div class="filter_actions filter_actions__right form-actions">
-    <input type="reset" value="Reset filters"
-           class="btn btn-warning btn-link form-actions_item">
-    <input type="submit" value="Apply filters"
-           class="btn form-actions_item">
 </div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;filter_cols&quot;&gt;
-    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
-        &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;form-label-header&quot;&gt;
-                Filter column 1
-            &lt;/label&gt;
-            &lt;label class=&quot;form-group_item form-label&quot;&gt;
-                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
-                Checkbox 1
-            &lt;/label&gt;
-            &lt;label class=&quot;form-group_item form-label&quot;&gt;
-                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
-                Checkbox 2
-            &lt;/label&gt;
-        &lt;/div&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l form-l__flush&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 1
     &lt;/div&gt;
-    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
-        &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;form-label-header&quot;&gt;
-                Filter column 2
-            &lt;/label&gt;
-            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
-        &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 2
     &lt;/div&gt;
-    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
-        &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;form-label-header&quot;&gt;
-                Filter column 3
-            &lt;/label&gt;
-            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
-        &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 3
     &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;filter_actions filter_actions__right form-actions&quot;&gt;
-    &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot;
-           class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot;
-           class=&quot;btn form-actions_item&quot;&gt;
 &lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.form-l.form-l__flush</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Form layout columns have left and right gutters. If you want the first and last column in each row to site flush left/right respectively then use the .form-l__flush modifier.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form layout columns</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.form-l_col</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.form-l_col-1-3</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.form-l_col-1-3 elements are stacked for small screens. When the viewport reaches 600px they transform into columns with one half the width of the container. When the viewport reaches 768px their width updates to one third of the container.</li>
+            </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.filter_cols {
+.form-l__flush {
   display: block;
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
 }
 
-.filter_col {
+.form-l_col {
   margin-bottom: 1em;
 }
 
-.filter_col-1-3 {
+.form-l_col-1-3 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -459,18 +511,18 @@
   width: 50%;
 }
 
-.ie .filter_col-1-3 {
+.ie .form-l_col-1-3 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .filter_col-1-3 {
+.lt-ie8 .form-l_col-1-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.filter_col-1-3 {
+.form-l_col-1-3 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -482,27 +534,15 @@
   width: 33.33333333%;
 }
 
-.ie .filter_col-1-3 {
+.ie .form-l_col-1-3 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .filter_col-1-3 {
+.lt-ie8 .form-l_col-1-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.filter_actions {
-  margin-top: 1.875em;
-}
-
-.filter_actions__right {
-  text-align: right;
-}
-
-.filter_actions {
-  margin-top: 0.875em;
 }
 
 .expandable {
