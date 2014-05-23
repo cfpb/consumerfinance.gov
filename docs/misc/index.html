@@ -358,16 +358,18 @@
         </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.filter_col {
-  margin-bottom: 1em;
-}
-@media only all and (min-width: 37.5em) {
+        <pre class="docs-code"><code data-language="css">@media only all and (min-width: 37.5em) {
   .filter_cols {
     display: block;
     position: relative;
     margin-left: -15px;
     margin-right: -15px;
   }
+}
+.filter_col {
+  margin-bottom: 1em;
+}
+@media only all and (min-width: 37.5em) {
   .filter_col-1-3 {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -414,13 +416,13 @@
 .filter-actions {
   margin-top: 1.875em;
 }
+.filter-actions__right {
+  text-align: right;
+}
 @media only all and (min-width: 37.5em) {
   .filter-actions {
     margin-top: 0.875em;
   }
-}
-.filter-actions__right {
-  text-align: right;
 }
 .expandable {
   margin-bottom: 1.875em;
