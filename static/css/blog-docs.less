@@ -109,6 +109,19 @@
     .expandable_header {
         margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     }
+    .u-respond-to-min(600px, {
+        .filter_wrapper {
+            .grid_nested-col-group();
+        }
+        .filter_col {
+            .grid_column(6);
+        }
+    });
+    .u-respond-to-min(768px, {
+        .filter_col {
+            .grid_column(4);
+        }
+    });
 }
 
 

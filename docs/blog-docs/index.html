@@ -184,6 +184,56 @@
 }
 .post-preview-filters .expandable_header {
   margin-bottom: 0.9375em;
+}
+@media only all and (min-width: 37.5em) {
+  .post-preview-filters .filter_wrapper {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .post-preview-filters .filter_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .post-preview-filters .filter_col {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .post-preview-filters .filter_col {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 48em) {
+  .post-preview-filters .filter_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+  }
+  .ie .post-preview-filters .filter_col {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .post-preview-filters .filter_col {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
 }</code></pre>
       </div>
     </div>
