@@ -3788,7 +3788,7 @@ img {
         <h1>
             <a href="#">
                 <span class="cf-icon cf-icon-twitter-square"></span>
-                <span class="visually-hidden">Share by email</span>
+                <span class="u-visually-hidden">Share by email</span>
             </a>
         </h1>
       notes:
@@ -3797,7 +3797,7 @@ img {
   tags:
     - cfgov-utilities
 */
-.visually-hidden {
+.u-visually-hidden {
   position: absolute;
   overflow: hidden;
   clip: rect(0 0 0 0);
@@ -4493,12 +4493,12 @@ img {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-credit-card"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Consumer finance
         </a>
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
-        - "We suggest using a .visually-hidden element to add more context for
+        - "We suggest using a .u-visually-hidden element to add more context for
           screen readers."
   tags:
     - cfgov-meta
@@ -5326,19 +5326,19 @@ img {
       markup: |
         <a class="share-icon" href="#">
             <span class="cf-icon cf-icon-email-social-square"></span>
-            <span class="visually-hidden">
+            <span class="u-visually-hidden">
                 Share by email
             </span>
         </a>
       notes:
-        - "Text for screenreaders is added with the .visually-hidden element."
+        - "Text for screenreaders is added with the .u-visually-hidden element."
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .share-icon
             .cf-icon.cf-icon-name
-            .visually-hidden
+            .u-visually-hidden
   tags:
     - cfgov-misc
 */
@@ -5535,25 +5535,25 @@ img {
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-email-social-square"></span>
-                            <span class="visually-hidden">Share by email</span>
+                            <span class="u-visually-hidden">Share by email</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-facebook-square"></span>
-                            <span class="visually-hidden">Share on Facebook</span>
+                            <span class="u-visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-twitter-square"></span>
-                            <span class="visually-hidden">Share on Twitter</span>
+                            <span class="u-visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-linkedin-square"></span>
-                            <span class="visually-hidden">Share on LinkedIn</span>
+                            <span class="u-visually-hidden">Share on LinkedIn</span>
                         </a>
                     </li>
                 </ul>
@@ -6182,22 +6182,22 @@ a.focus .summary_header {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Innovation & data
         </a>
       notes:
@@ -6218,7 +6218,7 @@ a.focus .summary_header {
                         <div class="hero_card-padding">
                             <a href="#" class="category-slug">
                                 <span class="cf-icon cf-icon-help"></span>
-                                <span class="visually-hidden">Category:</span>
+                                <span class="u-visually-hidden">Category:</span>
                                 Category
                             </a>
                             <a class="summary" href="#">
