@@ -52,6 +52,62 @@
         By Patrice Ficklin
     &lt;/p&gt;
 &lt;/article&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.summary
+  .summary_header
+  .summary_text
+  .summary_byline</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Max-width summary text</h3>
+          <section class="docs-pattern_pattern">
+<article class="summary">
+    <h1 class="summary_header">
+        Preventing illegal discrimination in auto lending
+    </h1>
+    <p class="summary_text summary_text__max">
+        Every year, millions of American families buy a car –
+        and it will be one of the most significant purchases they make.
+        One key priority for us is protecting consumers from the silent
+        pickpocket of discrimination.
+    </p>
+    <p class="summary_byline">
+        By Patrice Ficklin
+    </p>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;summary&quot;&gt;
+    &lt;h1 class=&quot;summary_header&quot;&gt;
+        Preventing illegal discrimination in auto lending
+    &lt;/h1&gt;
+    &lt;p class=&quot;summary_text summary_text__max&quot;&gt;
+        Every year, millions of American families buy a car –
+        and it will be one of the most significant purchases they make.
+        One key priority for us is protecting consumers from the silent
+        pickpocket of discrimination.
+    &lt;/p&gt;
+    &lt;p class=&quot;summary_byline&quot;&gt;
+        By Patrice Ficklin
+    &lt;/p&gt;
+&lt;/article&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.summary_text.summary_text__max</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Optionally set a max-width on .summary_text to keep line lengths readable.</li>
+            </ul>
           </footer>
         </div>
       </div>
@@ -154,6 +210,9 @@ a.focus .summary_header {
 .lt-ie9 .summary_text strong,
 .lt-ie9 .summary_text b {
   font-weight: normal !important;
+}
+.summary_text__max {
+  max-width: 87.5%;
 }
 .summary_byline {
   color: #101820;

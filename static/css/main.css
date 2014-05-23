@@ -4065,8 +4065,8 @@ img {
     padding: 2em 0;
   }
 }
-@media only all and (min-width: 75em) {
-  .content__2-1 .content_main {
+@media only all and (min-width: 64em) {
+  .content__2-1 .content_main__narrow {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -4078,16 +4078,16 @@ img {
     width: 66.66666667%;
     padding-right: 8.33333333%;
   }
-  .ie .content__2-1 .content_main {
+  .ie .content__2-1 .content_main__narrow {
     margin-right: -0.26em;
   }
-  .lt-ie8 .content__2-1 .content_main {
+  .lt-ie8 .content__2-1 .content_main__narrow {
     display: inline;
     margin-right: 0;
     zoom: 1;
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
-  .lt-ie8 .content__2-1 .content_main {
+  .lt-ie8 .content__2-1 .content_main__narrow {
     padding-right: 0;
   }
 }
@@ -5777,11 +5777,6 @@ img {
     margin-left: 1.875em;
   }
 }
-@media only all and (min-width: 75em) {
-  .post_inset__right {
-    margin-right: -30px;
-  }
-}
 /* topdoc
   name: EOF
   eof: true
@@ -5810,6 +5805,38 @@ img {
                 By Patrice Ficklin
             </p>
         </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary
+            .summary_header
+            .summary_text
+            .summary_byline
+    - name: Max-width summary text
+      markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="summary_text summary_text__max">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="summary_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary_text.summary_text__max
+      notes:
+        - "Optionally set a max-width on .summary_text to keep line lengths
+          readable."
   tags:
     - cfgov-summary
 */
@@ -5911,6 +5938,9 @@ a.focus .summary_header {
 .lt-ie9 .summary_text strong,
 .lt-ie9 .summary_text b {
   font-weight: normal !important;
+}
+.summary_text__max {
+  max-width: 87.5%;
 }
 .summary_byline {
   color: #101820;
