@@ -69,7 +69,9 @@
 }
 
 .demo-cols {
-    .grid_nested-col-group();
+    .u-respond-to-min(480px, {
+        .grid_nested-col-group();
+    });
 }
 
 .demo-col-12 {
