@@ -258,48 +258,119 @@
       <h2 class="docs-component_header"><span>Filters</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default filters example</h3>
+          <h3 class="docs-pattern_header">Basic filter patterns</h3>
           <section class="docs-pattern_pattern">
-...
+<div class="filter_cols">
+    <div class="filter_col filter_col-1-3">
+        <div class="form-group">
+            <label class="form-group_header">
+                Filter column 1
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox" name="" value="">
+                Checkbox 1
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox" name="" value="">
+                Checkbox 2
+            </label>
+        </div>
+    </div>
+    <div class="filter_col filter_col-1-3">
+        <div class="form-group">
+            <label class="form-group_header">
+                Filter column 2
+            </label>
+            <input type="text" name="" value="">
+        </div>
+    </div>
+    <div class="filter_col filter_col-1-3">
+        <div class="form-group">
+            <label class="form-group_header">
+                Filter column 3
+            </label>
+            <input type="text" name="" value="">
+        </div>
+    </div>
+</div>
+<div class="filter-actions filter-actions__right form-actions">
+    <input type="reset" value="Reset filters"
+           class="btn btn-warning btn-link form-actions_item">
+    <input type="submit" value="Apply filters"
+           class="btn form-actions_item">
+</div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">...</code></pre>
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;filter_cols&quot;&gt;
+    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-group_header&quot;&gt;
+                Filter column 1
+            &lt;/label&gt;
+            &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                Checkbox 1
+            &lt;/label&gt;
+            &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                Checkbox 2
+            &lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-group_header&quot;&gt;
+                Filter column 2
+            &lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-group_header&quot;&gt;
+                Filter column 3
+            &lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;filter-actions filter-actions__right form-actions&quot;&gt;
+    &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot;
+           class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot;
+           class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.filters</code></pre>
+.filter
+  .filter_cols
+    .filter_col.filter_col-1-3
+  .filter-actions.filter-actions__right</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>...</li>
+              <li>The filters pattern relies on expandables.</li>
             </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.filters {
-  margin-bottom: 1.875em;
+.filter_col {
+  margin-bottom: 1em;
 }
 
-.filters_header {
-  margin-bottom: 0.9375em;
-}
-
-.filters_col + .filters_col {
-  margin-top: 1.375em;
-}
-
-.filters_wrapper {
+.filter_cols {
   display: block;
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
 }
 
-.filters_col {
+.filter_col-1-3 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -311,26 +382,18 @@
   width: 50%;
 }
 
-.ie .filters_col {
+.ie .filter_col-1-3 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .filters_col {
+.lt-ie8 .filter_col-1-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.filters_col + .filters_col {
-  margin-top: 0;
-}
-
-.filters_actions {
-  text-align: right;
-}
-
-.filters_col {
+.filter_col-1-3 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -342,15 +405,35 @@
   width: 33.33333333%;
 }
 
-.ie .filters_col {
+.ie .filter_col-1-3 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .filters_col {
+.lt-ie8 .filter_col-1-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.filter-actions {
+  margin-top: 1.875em;
+}
+
+.filter-actions {
+  margin-top: 0.875em;
+}
+
+.filter-actions__right {
+  text-align: right;
+}
+
+.expandable {
+  margin-bottom: 1.875em;
+}
+
+.expandable_header__spaced {
+  margin-bottom: 0.9375em;
 }
 </code></pre>
       </div>

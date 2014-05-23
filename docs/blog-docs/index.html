@@ -306,6 +306,166 @@
 }</code></pre>
       </div>
     </div>
+    <div id="post-filters" class="docs-component">
+      <h2 class="docs-component_header"><span>Post filters</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Post filters</h3>
+          <section class="docs-pattern_pattern">
+<div class="expandable expandable__expanded">
+    <div class="expandable_header expandable_header__spaced">
+        <!-- <h5>Blog filtered by</h5>
+        <ul class="list list__horizontal">
+            <li class="list_item">
+                <a href="?filter_category=consumer">
+                    Consumer
+                </a>
+            </li>
+        </ul> -->
+        <a class="expandable_target btn btn-secondary"
+           href="#post-filters-form">
+            Filter posts&nbsp;&nbsp;
+            <span class="expandable_cue-open">
+                <span class="cf-icon cf-icon-down"></span>
+            </span>
+            <span class="expandable_cue-close">
+                <span class="cf-icon cf-icon-up"></span>
+            </span>
+        </a>
+    </div>
+    <div class="expandable_content padded-container">
+        <form class="padded-container_body" id="post-filters-form" method="get">
+            <div class="filter_cols">
+                <div class="filter_col filter_col-1-3">
+                    <div class="form-group">
+                        <label class="form-group_header">
+                            Filter column 1
+                        </label>
+                        <label class="form-group_item form-label">
+                            <input type="checkbox" name="" value="">
+                            Checkbox 1
+                        </label>
+                        <label class="form-group_item form-label">
+                            <input type="checkbox" name="" value="">
+                            Checkbox 2
+                        </label>
+                    </div>
+                </div>
+                <div class="filter_col filter_col-1-3">
+                    <div class="form-group">
+                        <label class="form-group_header">
+                            Filter column 2
+                        </label>
+                        <input type="text" name="" value="">
+                    </div>
+                </div>
+                <div class="filter_col filter_col-1-3">
+                    <div class="form-group">
+                        <label class="form-group_header">
+                            Filter column 3
+                        </label>
+                        <input type="text" name="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="filter-actions filter-actions__right form-actions">
+                <input type="reset" value="Reset filters"
+                       class="btn btn-warning btn-link form-actions_item">
+                <input type="submit" value="Apply filters"
+                       class="btn form-actions_item">
+            </div>
+        </form>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;expandable expandable__expanded&quot;&gt;
+    &lt;div class=&quot;expandable_header expandable_header__spaced&quot;&gt;
+        &lt;!-- &lt;h5&gt;Blog filtered by&lt;/h5&gt;
+        &lt;ul class=&quot;list list__horizontal&quot;&gt;
+            &lt;li class=&quot;list_item&quot;&gt;
+                &lt;a href=&quot;?filter_category=consumer&quot;&gt;
+                    Consumer
+                &lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt; --&gt;
+        &lt;a class=&quot;expandable_target btn btn-secondary&quot;
+           href=&quot;#post-filters-form&quot;&gt;
+            Filter posts&amp;nbsp;&amp;nbsp;
+            &lt;span class=&quot;expandable_cue-open&quot;&gt;
+                &lt;span class=&quot;cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+            &lt;/span&gt;
+            &lt;span class=&quot;expandable_cue-close&quot;&gt;
+                &lt;span class=&quot;cf-icon cf-icon-up&quot;&gt;&lt;/span&gt;
+            &lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;expandable_content padded-container&quot;&gt;
+        &lt;form class=&quot;padded-container_body&quot; id=&quot;post-filters-form&quot; method=&quot;get&quot;&gt;
+            &lt;div class=&quot;filter_cols&quot;&gt;
+                &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-group_header&quot;&gt;
+                            Filter column 1
+                        &lt;/label&gt;
+                        &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                            Checkbox 1
+                        &lt;/label&gt;
+                        &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                            Checkbox 2
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-group_header&quot;&gt;
+                            Filter column 2
+                        &lt;/label&gt;
+                        &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-group_header&quot;&gt;
+                            Filter column 3
+                        &lt;/label&gt;
+                        &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;filter-actions filter-actions__right form-actions&quot;&gt;
+                &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot;
+                       class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot;
+                       class=&quot;btn form-actions_item&quot;&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.expandable
+  .expandable_header__spaced
+    .expandable_target.btn.btn-secondary
+  .expandable_content.padded-container
+    .padded-container_body
+      .filter_cols
+        .filter_col.filter_col-1-3
+      .filter-actions.filter-actions__right</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The filters pattern relies on expandables.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>
