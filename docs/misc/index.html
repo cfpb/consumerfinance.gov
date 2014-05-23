@@ -22,7 +22,7 @@
           <h3 class="docs-pattern_header">Form element showcase</h3>
           <section class="docs-pattern_pattern">
 <div class="form-group">
-    <label class="form-group_header">Form group header</label>
+    <label class="form-label-header">Form label header</label>
     <label class="form-group_item form-label">
         <input type="checkbox">
         Form label
@@ -33,7 +33,7 @@
     </label>
 </div>
 <div class="form-group">
-    <label class="form-group_header">Form group header</label>
+    <label class="form-label-header">Form label header</label>
     <select class="form-group_item" name="select">
         <option value="value1">Value 1</option>
         <option value="value2">Value 2</option>
@@ -48,7 +48,7 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
     &lt;label class=&quot;form-group_item form-label&quot;&gt;
         &lt;input type=&quot;checkbox&quot;&gt;
         Form label
@@ -59,7 +59,7 @@
     &lt;/label&gt;
 &lt;/div&gt;
 &lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
     &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
         &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
         &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
@@ -70,6 +70,20 @@
     &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
     &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
 &lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form label header</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label-header">
+    Form label header
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label-header&quot;&gt;
+    Form label header
+&lt;/label&gt;</code></pre>
           </footer>
         </div>
         <div class="docs-pattern">
@@ -109,7 +123,7 @@
           <h3 class="docs-pattern_header">Form groups</h3>
           <section class="docs-pattern_pattern">
 <div class="form-group">
-    <label class="form-group_header">Form group header</label>
+    <label class="form-label-header">Form label header</label>
     <label class="form-group_item form-label">
         <input type="checkbox">
         Form label
@@ -120,7 +134,7 @@
     </label>
 </div>
 <div class="form-group">
-    <label class="form-group_header">Form group header</label>
+    <label class="form-label-header">Form label header</label>
     <select class="form-group_item" name="select">
         <option value="value1">Value 1</option>
         <option value="value2">Value 2</option>
@@ -131,7 +145,7 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
     &lt;label class=&quot;form-group_item form-label&quot;&gt;
         &lt;input type=&quot;checkbox&quot;&gt;
         Form label
@@ -142,7 +156,7 @@
     &lt;/label&gt;
 &lt;/div&gt;
 &lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
     &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
         &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
         &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
@@ -154,7 +168,6 @@
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
 .form-group
-  .form-group_header
   .form-group_item</code></pre>
               </li>
             </ul>
@@ -212,10 +225,7 @@
 .form-label input {
   margin-right: 0.375em;
 }
-.form-group + .form-group {
-  margin-top: 1.375em;
-}
-.form-group_header {
+.form-label-header {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -227,8 +237,11 @@
   line-height: 1.57142857;
   margin-bottom: 0.71428571em;
 }
-.lt-ie9 .form-group_header {
+.lt-ie9 .form-label-header {
   font-weight: normal !important;
+}
+.form-group + .form-group {
+  margin-top: 1.375em;
 }
 .form-group_item {
   margin-bottom: 0.375em;
@@ -250,7 +263,7 @@
 <div class="filter_cols">
     <div class="filter_col filter_col-1-3">
         <div class="form-group">
-            <label class="form-group_header">
+            <label class="form-label-header">
                 Filter column 1
             </label>
             <label class="form-group_item form-label">
@@ -265,7 +278,7 @@
     </div>
     <div class="filter_col filter_col-1-3">
         <div class="form-group">
-            <label class="form-group_header">
+            <label class="form-label-header">
                 Filter column 2
             </label>
             <input type="text" name="" value="">
@@ -273,7 +286,7 @@
     </div>
     <div class="filter_col filter_col-1-3">
         <div class="form-group">
-            <label class="form-group_header">
+            <label class="form-label-header">
                 Filter column 3
             </label>
             <input type="text" name="" value="">
@@ -292,7 +305,7 @@
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;filter_cols&quot;&gt;
     &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
         &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;form-group_header&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
                 Filter column 1
             &lt;/label&gt;
             &lt;label class=&quot;form-group_item form-label&quot;&gt;
@@ -307,7 +320,7 @@
     &lt;/div&gt;
     &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
         &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;form-group_header&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
                 Filter column 2
             &lt;/label&gt;
             &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
@@ -315,7 +328,7 @@
     &lt;/div&gt;
     &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
         &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;form-group_header&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
                 Filter column 3
             &lt;/label&gt;
             &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
