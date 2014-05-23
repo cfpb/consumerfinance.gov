@@ -3605,11 +3605,13 @@ blockquote {
 .demo-spaced {
   margin-bottom: 1.625em;
 }
-.demo-cols {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
+@media only all and (min-width: 30em) {
+  .demo-cols {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
 }
 .demo-col-12 {
   display: inline-block;
