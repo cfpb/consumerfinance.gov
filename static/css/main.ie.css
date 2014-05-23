@@ -5358,40 +5358,73 @@ img {
   name: Filters
   family: cfgov-misc
   patterns:
-    - name: Default filters example
+    - name: Basic filter patterns
       markup: |
-        ...
+        <div class="filter_cols">
+            <div class="filter_col filter_col-1-3">
+                <div class="form-group">
+                    <label class="form-group_header">
+                        Filter column 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 2
+                    </label>
+                </div>
+            </div>
+            <div class="filter_col filter_col-1-3">
+                <div class="form-group">
+                    <label class="form-group_header">
+                        Filter column 2
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+            <div class="filter_col filter_col-1-3">
+                <div class="form-group">
+                    <label class="form-group_header">
+                        Filter column 3
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+        </div>
+        <div class="filter-actions filter-actions__right form-actions">
+            <input type="reset" value="Reset filters"
+                   class="btn btn-warning btn-link form-actions_item">
+            <input type="submit" value="Apply filters"
+                   class="btn form-actions_item">
+        </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .filters
+          .filter
+            .filter_cols
+              .filter_col.filter_col-1-3
+            .filter-actions.filter-actions__right
       notes:
-        - "..."
+        - "The filters pattern relies on expandables."
   tags:
     - cfgov-misc
 */
 
-.filters {
-  margin-bottom: 1.875em;
+.filter_col {
+  margin-bottom: 1em;
 }
 
-.filters_header {
-  margin-bottom: 0.9375em;
-}
-
-.filters_col + .filters_col {
-  margin-top: 1.375em;
-}
-
-.filters_wrapper {
+.filter_cols {
   display: block;
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
 }
 
-.filters_col {
+.filter_col-1-3 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -5403,26 +5436,18 @@ img {
   width: 50%;
 }
 
-.ie .filters_col {
+.ie .filter_col-1-3 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .filters_col {
+.lt-ie8 .filter_col-1-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.filters_col + .filters_col {
-  margin-top: 0;
-}
-
-.filters_actions {
-  text-align: right;
-}
-
-.filters_col {
+.filter_col-1-3 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -5434,15 +5459,35 @@ img {
   width: 33.33333333%;
 }
 
-.ie .filters_col {
+.ie .filter_col-1-3 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .filters_col {
+.lt-ie8 .filter_col-1-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.filter-actions {
+  margin-top: 1.875em;
+}
+
+.filter-actions {
+  margin-top: 0.875em;
+}
+
+.filter-actions__right {
+  text-align: right;
+}
+
+.expandable {
+  margin-bottom: 1.875em;
+}
+
+.expandable_header__spaced {
+  margin-bottom: 0.9375em;
 }
 
 /* topdoc
@@ -6847,6 +6892,95 @@ a.focus .summary_header {
 .post-pagination {
   margin: 3.375em 0 1.75em;
 }
+
+/* topdoc
+  name: Post filters
+  family: cfgov-blog-docs
+  patterns:
+    - name: Post filters
+      markup: |
+        <div class="expandable expandable__expanded">
+            <div class="expandable_header expandable_header__spaced">
+                <!-- <h5>Blog filtered by</h5>
+                <ul class="list list__horizontal">
+                    <li class="list_item">
+                        <a href="?filter_category=consumer">
+                            Consumer
+                        </a>
+                    </li>
+                </ul> -->
+                <a class="expandable_target btn btn-secondary"
+                   href="#post-filters-form">
+                    Filter posts&nbsp;&nbsp;
+                    <span class="expandable_cue-open">
+                        <span class="cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="cf-icon cf-icon-up"></span>
+                    </span>
+                </a>
+            </div>
+            <div class="expandable_content padded-container">
+                <form class="padded-container_body" id="post-filters-form" method="get">
+                    <div class="filter_cols">
+                        <div class="filter_col filter_col-1-3">
+                            <div class="form-group">
+                                <label class="form-group_header">
+                                    Filter column 1
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="" value="">
+                                    Checkbox 1
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="" value="">
+                                    Checkbox 2
+                                </label>
+                            </div>
+                        </div>
+                        <div class="filter_col filter_col-1-3">
+                            <div class="form-group">
+                                <label class="form-group_header">
+                                    Filter column 2
+                                </label>
+                                <input type="text" name="" value="">
+                            </div>
+                        </div>
+                        <div class="filter_col filter_col-1-3">
+                            <div class="form-group">
+                                <label class="form-group_header">
+                                    Filter column 3
+                                </label>
+                                <input type="text" name="" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-actions filter-actions__right form-actions">
+                        <input type="reset" value="Reset filters"
+                               class="btn btn-warning btn-link form-actions_item">
+                        <input type="submit" value="Apply filters"
+                               class="btn form-actions_item">
+                    </div>
+                </form>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable
+            .expandable_header__spaced
+              .expandable_target.btn.btn-secondary
+            .expandable_content.padded-container
+              .padded-container_body
+                .filter_cols
+                  .filter_col.filter_col-1-3
+                .filter-actions.filter-actions__right
+      notes:
+        - "The filters pattern relies on expandables."
+  tags:
+    - cfgov-blog-docs
+*/
 
 /* topdoc
   name: EOF

@@ -129,47 +129,101 @@
   name: Filters
   family: cfgov-misc
   patterns:
-    - name: Default filters example
+    - name: Basic filter patterns
       markup: |
-        ...
+        <div class="filter_cols">
+            <div class="filter_col filter_col-1-3">
+                <div class="form-group">
+                    <label class="form-group_header">
+                        Filter column 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 2
+                    </label>
+                </div>
+            </div>
+            <div class="filter_col filter_col-1-3">
+                <div class="form-group">
+                    <label class="form-group_header">
+                        Filter column 2
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+            <div class="filter_col filter_col-1-3">
+                <div class="form-group">
+                    <label class="form-group_header">
+                        Filter column 3
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+        </div>
+        <div class="filter-actions filter-actions__right form-actions">
+            <input type="reset" value="Reset filters"
+                   class="btn btn-warning btn-link form-actions_item">
+            <input type="submit" value="Apply filters"
+                   class="btn form-actions_item">
+        </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .filters
+          .filter
+            .filter_cols
+              .filter_col.filter_col-1-3
+            .filter-actions.filter-actions__right
       notes:
-        - "..."
+        - "The filters pattern relies on expandables."
   tags:
     - cfgov-misc
 */
 
-.filters {
-    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-    &_header {
-        margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+.filter_col {
+    // Eyeballed to 30px considering line-height.
+    margin-bottom: unit(16px / @base-font-size-px, em);
+}
+
+.u-respond-to-min(600px, {
+    .filter_cols {
+        .grid_nested-col-group();
     }
-    &_col + &_col {
-        margin-top: unit(22px / @base-font-size-px, em);
+    .filter_col-1-3 {
+        .grid_column(6);
     }
+});
+
+.u-respond-to-min(768px, {
+    .filter_col-1-3 {
+        .grid_column(4);
+    }
+});
+
+.filter-actions {
+    margin-top: unit(30px / @base-font-size-px, em);
     .u-respond-to-min(600px, {
-        &_wrapper {
-            .grid_nested-col-group();
-        }
-        &_col {
-            .grid_column(6);
-        }
-        &_col + &_col {
-            margin-top: 0;
-        }
-        &_actions {
-            text-align: right;
+        & {
+            // Take into account the bottom margin for .filter_col.
+            margin-top: unit(14px / @base-font-size-px, em);
         }
     });
-    .u-respond-to-min(768px, {
-        &_col {
-            .grid_column(4);
-        }
-    });
+}
+
+.filter-actions__right {
+    text-align: right;
+}
+
+.expandable {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+}
+
+.expandable_header__spaced {
+    margin-bottom: unit(15px / @base-font-size-px, em);
 }
 
 
