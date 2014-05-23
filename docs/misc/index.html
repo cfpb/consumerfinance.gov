@@ -241,6 +241,98 @@
 }</code></pre>
       </div>
     </div>
+    <div id="filters" class="docs-component">
+      <h2 class="docs-component_header"><span>Filters</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default filters example</h3>
+          <section class="docs-pattern_pattern">
+...
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">...</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.filters</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>...</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.filters {
+  margin-bottom: 1.875em;
+}
+.filters_header {
+  margin-bottom: 0.9375em;
+}
+.filters_col + .filters_col {
+  margin-top: 1.375em;
+}
+@media only all and (min-width: 37.5em) {
+  .filters_wrapper {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .filters_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .filters_col {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .filters_col {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .filters_col + .filters_col {
+    margin-top: 0;
+  }
+  .filters_actions {
+    text-align: right;
+  }
+}
+@media only all and (min-width: 48em) {
+  .filters_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+  }
+  .ie .filters_col {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .filters_col {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}</code></pre>
+      </div>
+    </div>
     <div id="hero" class="docs-component">
       <h2 class="docs-component_header"><span>Hero</span></h2>
       <div class="docs-patterns">

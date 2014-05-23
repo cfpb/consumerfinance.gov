@@ -5355,6 +5355,97 @@ img {
 }
 
 /* topdoc
+  name: Filters
+  family: cfgov-misc
+  patterns:
+    - name: Default filters example
+      markup: |
+        ...
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .filters
+      notes:
+        - "..."
+  tags:
+    - cfgov-misc
+*/
+
+.filters {
+  margin-bottom: 1.875em;
+}
+
+.filters_header {
+  margin-bottom: 0.9375em;
+}
+
+.filters_col + .filters_col {
+  margin-top: 1.375em;
+}
+
+.filters_wrapper {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.filters_col {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .filters_col {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .filters_col {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.filters_col + .filters_col {
+  margin-top: 0;
+}
+
+.filters_actions {
+  text-align: right;
+}
+
+.filters_col {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 33.33333333%;
+}
+
+.ie .filters_col {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .filters_col {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+/* topdoc
   name: Hero
   family: cfgov-misc
   patterns:
@@ -6669,80 +6760,6 @@ a.focus .summary_header {
             .hero_img-container.hero_img-container__large
               .hero_img
 */
-
-/* topdoc
-  name: Post preview filters
-  family: cfgov-blog-docs
-  patterns:
-    - name: Blog filters
-      markup: |
-        ...
-      notes:
-        - "..."
-  tags:
-    - cfgov-blog-docs
-*/
-
-.post-preview-filters {
-  margin-bottom: 1.875em;
-}
-
-.post-preview-filters .expandable_header {
-  margin-bottom: 0.9375em;
-}
-
-.post-preview-filters .filter_wrapper {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.post-preview-filters .filter_col {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 50%;
-}
-
-.ie .post-preview-filters .filter_col {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .post-preview-filters .filter_col {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.post-preview-filters .filter_col {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 33.33333333%;
-}
-
-.ie .post-preview-filters .filter_col {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .post-preview-filters .filter_col {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
 
 /* topdoc
   name: Post previews

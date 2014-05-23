@@ -147,9 +147,9 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-                <div class="post-preview-filters">
-                    <div class="expandable">
-                        <div class="expandable_header">
+                <div class="filters">
+                    <div class="expandable expandable__expanded">
+                        <div class="filters_header expandable_header">
                             <!-- <h5>Blog filtered by</h5>
                             <ul class="list list__horizontal">
                                 <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
@@ -167,8 +167,8 @@
                         </div>
                         <div class="expandable_content padded-container">
                             <form class="padded-container_body" id="barebones-content" method="get">
-                                <div class="filter_wrapper">
-                                    <div class="filter_col form-group">
+                                <div class="filters_wrapper">
+                                    <div class="filters_col">
                                         <div class="form-group">
                                             <label class="form-group_header">
                                                 Categories
@@ -191,7 +191,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="filter_col form-group">
+                                    <div class="filters_col">
                                         <div class="form-group">
                                             <label class="form-group_header">
                                                 Topics
@@ -205,18 +205,22 @@
                                             <input type="text" name="filter_author" value="">
                                         </div>
                                     </div>
-                                    <div class="filter_col">
-                                        
-                                    </div>
+                                    <!-- <div class="filters_col">
+                                        <div class="form-group">
+                                            <label class="form-group_header">
+                                                Date range
+                                            </label>
+                                        </div>
+                                    </div> -->
                                 </div>
-                                <div class="form-actions form-group">
+                                <div class="filters_actions form-actions form-group">
                                     <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
                                     <input type="submit" value="Apply filters" class="btn form-actions_item">
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div><!-- END .post-preview-filters -->
+                </div><!-- END .filters -->
 
                 <article class="post-preview">
                     <div class="meta-header">
