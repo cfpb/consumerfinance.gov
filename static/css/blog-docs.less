@@ -105,7 +105,10 @@
 */
 
 .post-preview-filters {
-    margin-bottom: unit(30px / @base-font-size-px, em);
+    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+    .expandable_header {
+        margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    }
 }
 
 

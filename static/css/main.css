@@ -6044,6 +6044,9 @@ a.focus .summary_header {
 .post-preview-filters {
   margin-bottom: 1.875em;
 }
+.post-preview-filters .expandable_header {
+  margin-bottom: 0.9375em;
+}
 /* topdoc
   name: Post previews
   family: cfgov-blog-docs
