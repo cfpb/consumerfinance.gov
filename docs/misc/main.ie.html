@@ -271,7 +271,84 @@
       <h2 class="docs-component_header"><span>Filters</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Basic filter patterns</h3>
+          <h3 class="docs-pattern_header">Barebones filter pattern</h3>
+          <section class="docs-pattern_pattern">
+<div class="filter_cols">
+    <div class="filter_col filter_col-1-3">
+        Filter column 1
+    </div>
+    <div class="filter_col filter_col-1-3">
+        Filter column 2
+    </div>
+    <div class="filter_col filter_col-1-3">
+        Filter column 3
+    </div>
+</div>
+<div class="filter_actions">
+    <input type="submit" value="Filter action 1"
+           class="btn">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;filter_cols&quot;&gt;
+    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+        Filter column 1
+    &lt;/div&gt;
+    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+        Filter column 2
+    &lt;/div&gt;
+    &lt;div class=&quot;filter_col filter_col-1-3&quot;&gt;
+        Filter column 3
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;filter_actions&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Filter action 1&quot;
+           class=&quot;btn&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.filter
+  .filter_cols
+    .filter_col.filter_col-1-3
+  .filter_actions</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Filter columns</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.filter_col</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.filter_col-1-3</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.filter_col-1-3 elements are stacked for small screens. When the viewport reaches 600px they transform into columns with one half the width of the container. When the viewport reaches 768px their width updates to one third of the container.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Right aligned filter actions modifier</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.filter_actions__right</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Right aligns the text within .filter_actions.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Real-world filter pattern</h3>
           <section class="docs-pattern_pattern">
 <div class="filter_cols">
     <div class="filter_col filter_col-1-3">
@@ -306,7 +383,7 @@
         </div>
     </div>
 </div>
-<div class="filter-actions filter-actions__right form-actions">
+<div class="filter_actions filter_actions__right form-actions">
     <input type="reset" value="Reset filters"
            class="btn btn-warning btn-link form-actions_item">
     <input type="submit" value="Apply filters"
@@ -348,25 +425,12 @@
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;filter-actions filter-actions__right form-actions&quot;&gt;
+&lt;div class=&quot;filter_actions filter_actions__right form-actions&quot;&gt;
     &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot;
            class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
     &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot;
            class=&quot;btn form-actions_item&quot;&gt;
 &lt;/div&gt;</code></pre>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>Structural cheat sheet:
------------------------
-.filter
-  .filter_cols
-    .filter_col.filter_col-1-3
-  .filter-actions.filter-actions__right</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>The filters pattern relies on expandables.</li>
-            </ul>
           </footer>
         </div>
       </div>
@@ -429,15 +493,15 @@
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.filter-actions {
+.filter_actions {
   margin-top: 1.875em;
 }
 
-.filter-actions__right {
+.filter_actions__right {
   text-align: right;
 }
 
-.filter-actions {
+.filter_actions {
   margin-top: 0.875em;
 }
 
