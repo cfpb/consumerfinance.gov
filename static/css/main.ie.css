@@ -5881,9 +5881,69 @@ img {
           .list
             .list_item
               .list_link
+    - name: List link
+      markup: |
+        <a class="list_link">List link</a>
+        <span class="list_link">List link</span>
+      codenotes:
+        - .list_link
+      notes:
+        - "Notice that you can use any element for .list_link."
+    - name: List label
+      markup: |
+        <ul class="list">
+            <li class="list_item">
+                <h3 class="list_label">Unordered</h3>
+                <ul class="list">
+                    <li class="list_item">
+                        <h4 class="list_label">Unordered</h4>
+                        <ul class="list">
+                            <li class="list_item">
+                                <a class="list_link">List item 1</a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link">List item 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="list_item">
+                <h3 class="list_label">Definition list</h3>
+                <ul class="list">
+                    <li class="list_item">
+                        <a class="list_link">List item 1</a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link">List item 2</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+      codenotes:
+        - .list_label
+      notes:
+        - "Notice that you can use any element for .list_label."
   tags:
     - cfgov-misc
 */
+
+.list_label {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  display: block;
+}
+
+.lt-ie9 .list_label {
+  font-weight: normal !important;
+}
 
 .list_link {
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
@@ -5903,6 +5963,9 @@ img {
       markup: |
         <ul class="list list__unstyled">
             <li class="list_item">
+                <h3 class="list_label">Unordered list</h3>
+            </li>
+            <li class="list_item">
                 <a class="list_link">List item 1</a>
             </li>
             <li class="list_item">
@@ -5911,10 +5974,30 @@ img {
             <li class="list_item">
                 <a class="list_link">List item 3</a>
             </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
-            </li>
         </ul>
+        <dl class="list list__unstyled">
+            <dt class="list_item">
+                <span class="list_label">Definition list</span>
+            </dt>
+            <dd class="list_item">
+                <a class="list_link">List item 1</a>
+            </dd>
+            <dd class="list_item">
+                <a class="list_link">List item 2</a>
+            </dd>
+            <dd class="list_item">
+                <a class="list_link">List item 3</a>
+            </dd>
+        </dl>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list.list__unstyled
+            .list_item
+              .list_label
+            .list_item
+              .list_link
   tags:
     - cfgov-misc
 */
@@ -5922,6 +6005,10 @@ img {
 .list__unstyled {
   padding-left: 0;
   list-style-type: none;
+}
+
+.list__unstyled .list_item {
+  margin-left: 0;
 }
 
 /* topdoc
@@ -5960,6 +6047,9 @@ img {
       markup: |
         <ul class="list list__horizontal">
             <li class="list_item">
+                <h3 class="list_label">List label</h3>
+            </li>
+            <li class="list_item">
                 <a class="list_link">List item 1</a>
             </li>
             <li class="list_item">
@@ -5967,9 +6057,6 @@ img {
             </li>
             <li class="list_item">
                 <a class="list_link">List item 3</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
             </li>
         </ul>
   tags:
@@ -5988,8 +6075,110 @@ img {
   display: inline;
 }
 
-.list__horizontal .list_item + .list_item {
-  margin-left: 0.25em;
+.list__horizontal .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
+/* topdoc
+  name: Filtered-by list
+  family: cfgov-misc
+  patterns:
+    - name: A list of applied filters
+      markup: |
+        <dl class="list list__filtered-by list__horizontal">
+            <dt class="list_item">
+                <span class="list_label">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="list_link">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Amet,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Consectetur,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Adipisicing,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Id,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Accusantium,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Adipisci,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Voluptatem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Quibusdam,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Ducimus</span>
+            </dd>
+        </dl>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list.list__filtered-by.list__horizontal
+            .list_item
+              .list_label
+            .list_item
+              .list_link
+      notes:
+        - "If you need a vertical 'filtered by' list you can replace
+          .list__horizontal with .list__unstyled."
+  tags:
+    - cfgov-misc
+*/
+
+.list__filtered-by.list__horizontal .list_label {
+  margin-bottom: 0;
+}
+
+.list__filtered-by .list_link {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #75787b;
+}
+
+.list__filtered-by .list_link em,
+.list__filtered-by .list_link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__filtered-by .list_link em,
+.lt-ie9 .list__filtered-by .list_link i {
+  font-style: normal !important;
+}
+
+.list__filtered-by .list_link strong,
+.list__filtered-by .list_link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__filtered-by .list_link strong,
+.lt-ie9 .list__filtered-by .list_link b {
+  font-weight: normal !important;
 }
 
 /* topdoc
@@ -7086,65 +7275,77 @@ a.focus .summary_header {
       markup: |
         <div class="expandable expandable__expanded">
             <div class="expandable_header expandable_header__spaced">
-                <!-- <h5>Blog filtered by</h5>
-                <ul class="list list__horizontal">
-                    <li class="list_item">
-                        <a href="?filter_category=consumer">
-                            Consumer
-                        </a>
-                    </li>
-                </ul> -->
-                <a class="expandable_target btn btn-secondary"
-                   href="#post-filters-form">
-                    Filter posts&nbsp;&nbsp;
-                    <span class="expandable_cue-open">
-                        <span class="cf-icon cf-icon-down"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        <span class="cf-icon cf-icon-up"></span>
-                    </span>
-                </a>
+                <div class="div expandable_header-right">
+                    <a class="expandable_target btn btn-secondary"
+                       href="#post-filters-form">
+                        Filter posts&nbsp;&nbsp;
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon cf-icon-down"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon cf-icon-up"></span>
+                        </span>
+                    </a>
+                </div>
+                <div class="expandable_header-left">
+                    <dl class="list list__horizontal">
+                        <span class="h5">Blog filtered by</span>&nbsp;
+                        <a href="?filter_category=consumer">Consumer</a>,
+                        <a href="?filter_category=students">Students</a>
+                    </dl>
+                </div>
             </div>
             <div class="expandable_content padded-container">
                 <form class="padded-container_body" id="post-filters-form" method="get">
-                    <div class="filter_cols">
-                        <div class="filter_col filter_col-1-3">
+                    <div class="form-l form-l__flush">
+                        <div class="form-l_col form-l_col-1-3">
                             <div class="form-group">
                                 <label class="form-label-header">
-                                    Filter column 1
+                                    Categories
                                 </label>
                                 <label class="form-group_item form-label">
-                                    <input type="checkbox" name="" value="">
-                                    Checkbox 1
+                                    <input type="checkbox" name="filter_category" value="consumer">
+                                    Announcements &amp; updates
                                 </label>
                                 <label class="form-group_item form-label">
-                                    <input type="checkbox" name="" value="">
-                                    Checkbox 2
+                                    <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                    Consumer information
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="filter_category" value="innovation">
+                                    Engagement
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="filter_category" value="announcements">
+                                    Innovation &amp; data
                                 </label>
                             </div>
                         </div>
-                        <div class="filter_col filter_col-1-3">
+                        <div class="form-l_col form-l_col-1-3">
                             <div class="form-group">
                                 <label class="form-label-header">
-                                    Filter column 2
+                                    Topics
                                 </label>
-                                <input type="text" name="" value="">
+                                <input type="text" name="filter_tags" value="">
                             </div>
-                        </div>
-                        <div class="filter_col filter_col-1-3">
                             <div class="form-group">
                                 <label class="form-label-header">
-                                    Filter column 3
+                                    Author
                                 </label>
-                                <input type="text" name="" value="">
+                                <input type="text" name="filter_author" value="">
                             </div>
                         </div>
+                        <!-- <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Date range
+                                </label>
+                            </div>
+                        </div> -->
                     </div>
-                    <div class="filter-actions filter-actions__right form-actions">
-                        <input type="reset" value="Reset filters"
-                               class="btn btn-warning btn-link form-actions_item">
-                        <input type="submit" value="Apply filters"
-                               class="btn form-actions_item">
+                    <div class="form-actions form-actions__right-on-med">
+                        <input type="reset" value="Reset filters" class="btn btn-warning btn-link form-actions_item">
+                        <input type="submit" value="Apply filters" class="btn form-actions_item">
                     </div>
                 </form>
             </div>

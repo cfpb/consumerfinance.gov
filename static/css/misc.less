@@ -486,9 +486,57 @@
           .list
             .list_item
               .list_link
+    - name: List link
+      markup: |
+        <a class="list_link">List link</a>
+        <span class="list_link">List link</span>
+      codenotes:
+        - .list_link
+      notes:
+        - "Notice that you can use any element for .list_link."
+    - name: List label
+      markup: |
+        <ul class="list">
+            <li class="list_item">
+                <h3 class="list_label">Unordered</h3>
+                <ul class="list">
+                    <li class="list_item">
+                        <h4 class="list_label">Unordered</h4>
+                        <ul class="list">
+                            <li class="list_item">
+                                <a class="list_link">List item 1</a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link">List item 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="list_item">
+                <h3 class="list_label">Definition list</h3>
+                <ul class="list">
+                    <li class="list_item">
+                        <a class="list_link">List item 1</a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link">List item 2</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+      codenotes:
+        - .list_label
+      notes:
+        - "Notice that you can use any element for .list_label."
   tags:
     - cfgov-misc
 */
+
+.list_label {
+    .h5();
+    display: block;
+}
 
 .list_link {
     .webfont-medium();
@@ -503,6 +551,9 @@
       markup: |
         <ul class="list list__unstyled">
             <li class="list_item">
+                <h3 class="list_label">Unordered list</h3>
+            </li>
+            <li class="list_item">
                 <a class="list_link">List item 1</a>
             </li>
             <li class="list_item">
@@ -511,10 +562,30 @@
             <li class="list_item">
                 <a class="list_link">List item 3</a>
             </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
-            </li>
         </ul>
+        <dl class="list list__unstyled">
+            <dt class="list_item">
+                <span class="list_label">Definition list</span>
+            </dt>
+            <dd class="list_item">
+                <a class="list_link">List item 1</a>
+            </dd>
+            <dd class="list_item">
+                <a class="list_link">List item 2</a>
+            </dd>
+            <dd class="list_item">
+                <a class="list_link">List item 3</a>
+            </dd>
+        </dl>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list.list__unstyled
+            .list_item
+              .list_label
+            .list_item
+              .list_link
   tags:
     - cfgov-misc
 */
@@ -522,6 +593,11 @@
 .list__unstyled {
     padding-left: 0;
     list-style-type: none;
+
+    // This is needed for dd elements.
+    .list_item {
+        margin-left: 0;
+    }
 }
 
 
@@ -562,6 +638,9 @@
       markup: |
         <ul class="list list__horizontal">
             <li class="list_item">
+                <h3 class="list_label">List label</h3>
+            </li>
+            <li class="list_item">
                 <a class="list_link">List item 1</a>
             </li>
             <li class="list_item">
@@ -569,9 +648,6 @@
             </li>
             <li class="list_item">
                 <a class="list_link">List item 3</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
             </li>
         </ul>
   tags:
@@ -586,11 +662,94 @@
         .u-inline-block();
     }
 
-    .list_item + .list_item {
+    .list_item {
         // Assuming a natural space of 4px between inline block items
         // then the space between would be 8px (4px natural + 4px added).
-        margin-left: unit(4px / @base-font-size-px, em);
+        margin-right: unit(4px / @base-font-size-px, em);
+        margin-left: 0;
     }
+}
+
+
+/* topdoc
+  name: Filtered-by list
+  family: cfgov-misc
+  patterns:
+    - name: A list of applied filters
+      markup: |
+        <dl class="list list__filtered-by list__horizontal">
+            <dt class="list_item">
+                <span class="list_label">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="list_link">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Amet,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Consectetur,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Adipisicing,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Id,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Accusantium,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Adipisci,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Voluptatem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Quibusdam,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="list_link">Ducimus</span>
+            </dd>
+        </dl>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list.list__filtered-by.list__horizontal
+            .list_item
+              .list_label
+            .list_item
+              .list_link
+      notes:
+        - "If you need a vertical 'filtered by' list you can replace
+          .list__horizontal with .list__unstyled."
+  tags:
+    - cfgov-misc
+*/
+
+.list__filtered-by {
+
+    &.list__horizontal .list_label {
+        // 6px + 4px of inline block space = 10px total.
+        // margin: 0 unit(6px / @font-size, em) 0 0;
+        margin-bottom: 0;
+    }
+
+    .list_link {
+        .webfont-regular();
+        color: @gray;
+    }
+
 }
 
 

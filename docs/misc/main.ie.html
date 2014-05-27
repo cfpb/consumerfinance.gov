@@ -835,9 +835,120 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">List link</h3>
+          <section class="docs-pattern_pattern">
+<a class="list_link">List link</a>
+<span class="list_link">List link</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot;&gt;List link&lt;/a&gt;
+&lt;span class=&quot;list_link&quot;&gt;List link&lt;/span&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list_link</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice that you can use any element for .list_link.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">List label</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list">
+    <li class="list_item">
+        <h3 class="list_label">Unordered</h3>
+        <ul class="list">
+            <li class="list_item">
+                <h4 class="list_label">Unordered</h4>
+                <ul class="list">
+                    <li class="list_item">
+                        <a class="list_link">List item 1</a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link">List item 2</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="list_item">
+        <h3 class="list_label">Definition list</h3>
+        <ul class="list">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;h3 class=&quot;list_label&quot;&gt;Unordered&lt;/h3&gt;
+        &lt;ul class=&quot;list&quot;&gt;
+            &lt;li class=&quot;list_item&quot;&gt;
+                &lt;h4 class=&quot;list_label&quot;&gt;Unordered&lt;/h4&gt;
+                &lt;ul class=&quot;list&quot;&gt;
+                    &lt;li class=&quot;list_item&quot;&gt;
+                        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+                    &lt;/li&gt;
+                    &lt;li class=&quot;list_item&quot;&gt;
+                        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;h3 class=&quot;list_label&quot;&gt;Definition list&lt;/h3&gt;
+        &lt;ul class=&quot;list&quot;&gt;
+            &lt;li class=&quot;list_item&quot;&gt;
+                &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li class=&quot;list_item&quot;&gt;
+                &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list_label</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice that you can use any element for .list_label.</li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
+.list_label {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  display: block;
+}
+
+.lt-ie9 .list_label {
+  font-weight: normal !important;
+}
+
 .list_link {
   font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
   font-style: normal;
@@ -858,6 +969,9 @@
           <section class="docs-pattern_pattern">
 <ul class="list list__unstyled">
     <li class="list_item">
+        <h3 class="list_label">Unordered list</h3>
+    </li>
+    <li class="list_item">
         <a class="list_link">List item 1</a>
     </li>
     <li class="list_item">
@@ -866,14 +980,28 @@
     <li class="list_item">
         <a class="list_link">List item 3</a>
     </li>
-    <li class="list_item">
-        <a class="list_link">List item 4</a>
-    </li>
 </ul>
+<dl class="list list__unstyled">
+    <dt class="list_item">
+        <span class="list_label">Definition list</span>
+    </dt>
+    <dd class="list_item">
+        <a class="list_link">List item 1</a>
+    </dd>
+    <dd class="list_item">
+        <a class="list_link">List item 2</a>
+    </dd>
+    <dd class="list_item">
+        <a class="list_link">List item 3</a>
+    </dd>
+</dl>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__unstyled&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;h3 class=&quot;list_label&quot;&gt;Unordered list&lt;/h3&gt;
+    &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
     &lt;/li&gt;
@@ -883,10 +1011,32 @@
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;</code></pre>
+&lt;/ul&gt;
+&lt;dl class=&quot;list list__unstyled&quot;&gt;
+    &lt;dt class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_label&quot;&gt;Definition list&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.list.list__unstyled
+  .list_item
+    .list_label
+  .list_item
+    .list_link</code></pre>
+              </li>
+            </ul>
           </footer>
         </div>
       </div>
@@ -895,6 +1045,10 @@
 .list__unstyled {
   padding-left: 0;
   list-style-type: none;
+}
+
+.list__unstyled .list_item {
+  margin-left: 0;
 }
 </code></pre>
       </div>
@@ -955,6 +1109,9 @@
           <section class="docs-pattern_pattern">
 <ul class="list list__horizontal">
     <li class="list_item">
+        <h3 class="list_label">List label</h3>
+    </li>
+    <li class="list_item">
         <a class="list_link">List item 1</a>
     </li>
     <li class="list_item">
@@ -963,14 +1120,14 @@
     <li class="list_item">
         <a class="list_link">List item 3</a>
     </li>
-    <li class="list_item">
-        <a class="list_link">List item 4</a>
-    </li>
 </ul>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__horizontal&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;h3 class=&quot;list_label&quot;&gt;List label&lt;/h3&gt;
+    &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
     &lt;/li&gt;
@@ -979,9 +1136,6 @@
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
           </footer>
@@ -1001,8 +1155,162 @@
   display: inline;
 }
 
-.list__horizontal .list_item + .list_item {
-  margin-left: 0.25em;
+.list__horizontal .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="filtered-by-list" class="docs-component">
+      <h2 class="docs-component_header"><span>Filtered-by list</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">A list of applied filters</h3>
+          <section class="docs-pattern_pattern">
+<dl class="list list__filtered-by list__horizontal">
+    <dt class="list_item">
+        <span class="list_label">Filtered by</span>
+    </dt>
+    <dd class="list_item">
+        <span class="list_link">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Amet,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Consectetur,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Adipisicing,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Id,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Accusantium,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Adipisci,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Voluptatem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Quibusdam,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="list_link">Ducimus</span>
+    </dd>
+</dl>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;dl class=&quot;list list__filtered-by list__horizontal&quot;&gt;
+    &lt;dt class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_label&quot;&gt;Filtered by&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Consectetur,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Adipisicing,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Id,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Accusantium,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Adipisci,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Voluptatem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Quibusdam,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;list_link&quot;&gt;Ducimus&lt;/span&gt;
+    &lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.list.list__filtered-by.list__horizontal
+  .list_item
+    .list_label
+  .list_item
+    .list_link</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>If you need a vertical 'filtered by' list you can replace .list__horizontal with .list__unstyled.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__filtered-by.list__horizontal .list_label {
+  margin-bottom: 0;
+}
+
+.list__filtered-by .list_link {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #75787b;
+}
+
+.list__filtered-by .list_link em,
+.list__filtered-by .list_link i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__filtered-by .list_link em,
+.lt-ie9 .list__filtered-by .list_link i {
+  font-style: normal !important;
+}
+
+.list__filtered-by .list_link strong,
+.list__filtered-by .list_link b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__filtered-by .list_link strong,
+.lt-ie9 .list__filtered-by .list_link b {
+  font-weight: normal !important;
 }
 </code></pre>
       </div>
