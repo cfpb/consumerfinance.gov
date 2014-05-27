@@ -149,20 +149,40 @@
 
                     <div class="expandable expandable__expanded">
                         <div class="expandable_header expandable_header__spaced">
-                            <!-- <h5>Blog filtered by</h5>
-                            <ul class="list list__horizontal">
-                                <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
-                            </ul> -->
-                            <a class="expandable_target btn btn-secondary"
-                               href="#post-filters-form">
-                                Filter posts&nbsp;&nbsp;
-                                <span class="expandable_cue-open">
-                                    <span class="cf-icon cf-icon-down"></span>
-                                </span>
-                                <span class="expandable_cue-close">
-                                    <span class="cf-icon cf-icon-up"></span>
-                                </span>
-                            </a>
+                            <div class="div expandable_header-right">
+                                <a class="expandable_target btn btn-secondary"
+                                   href="#post-filters-form">
+                                    Filter posts&nbsp;&nbsp;
+                                    <span class="expandable_cue-open">
+                                        <span class="cf-icon cf-icon-down"></span>
+                                    </span>
+                                    <span class="expandable_cue-close">
+                                        <span class="cf-icon cf-icon-up"></span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="expandable_header-left">
+                                <dl class="list list__filtered-by list__horizontal">
+                                    <dt class="list_label list_item">
+                                        Filtered by
+                                    </dt>
+                                    <dd class="list_item">
+                                        <span class="list_link">Lorem,</span>
+                                    </dd>
+                                    <dd class="list_item">
+                                        <span class="list_link">Ipsum,</span>
+                                    </dd>
+                                    <dd class="list_item">
+                                        <span class="list_link">Dolor,</span>
+                                    </dd>
+                                    <dd class="list_item">
+                                        <span class="list_link">Sit,</span>
+                                    </dd>
+                                    <dd class="list_item">
+                                        <span class="list_link">Amet,</span>
+                                    </dd>
+                                </dl>
+                            </div>
                         </div>
                         <div class="expandable_content padded-container">
                             <form class="padded-container_body" id="post-filters-form" method="get">
