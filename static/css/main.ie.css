@@ -1301,7 +1301,7 @@ input.btn::-moz-focus-inner {
       markup: |
         <div class="expandable">
             <a class="expandable_target"
-               href="#barebones-content">
+               href="#expandable-barebones-content">
                 <span class="expandable_cue-open">
                     Show
                 </span>
@@ -1309,7 +1309,7 @@ input.btn::-moz-focus-inner {
                     Hide
                 </span>
             </a>
-            <div class="expandable_content" id="barebones-content">
+            <div class="expandable_content" id="expandable-barebones-content">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Neque ipsa voluptatibus soluta nobis unde quisquam
@@ -1345,7 +1345,7 @@ input.btn::-moz-focus-inner {
       markup: |
         <div class="expandable expandable__expanded">
             <a class="expandable_target"
-               href="#expanded-by-default-content">
+               href="#expandable-expanded-by-default-content">
                 <span class="expandable_cue-open">
                     Show
                 </span>
@@ -1353,7 +1353,7 @@ input.btn::-moz-focus-inner {
                     Hide
                 </span>
             </a>
-            <div class="expandable_content" id="expanded-by-default-content">
+            <div class="expandable_content" id="expandable-expanded-by-default-content">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Neque ipsa voluptatibus soluta nobis unde quisquam
@@ -1378,6 +1378,10 @@ input.btn::-moz-focus-inner {
     - cf-expandables
 */
 
+.expandable {
+  margin-bottom: 1.875em;
+}
+
 .expandable_target {
   cursor: pointer;
 }
@@ -1399,29 +1403,29 @@ input.btn::-moz-focus-inner {
 }
 
 /* topdoc
-    name: Padded expandable
+    name: Expandable header
     family: cf-expandables
     patterns:
-    - name: Default padded expandable pattern
+    - name: Basic expandable header example
       markup: |
-        <div class="expandable expandable__padded">
-            <a class="expandable_target expandable_header"
-               href="#styled-expandable-content">
-                <span class="expandable_label expandable_header-left">
-                    Expandable Header
+        <div class="expandable expandable__expanded">
+            <div class="expandable_header">
+                <span class="expandable_header-left">
+                    <em>Now you can put some info on the left and right.</em>
                 </span>
-                <span class="expandable_link expandable_header-right">
-                    <span class="expandable_cue-open">
-                        Show
-                        <span class="cf-icon cf-icon-plus-round"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        Hide
-                        <span class="cf-icon cf-icon-minus-round"></span>
-                    </span>
+                <span class="expandable_header-right">
+                    <a class="expandable_target"
+                       href="#expandable-header-content">
+                        <span class="expandable_cue-open">
+                            Show
+                        </span>
+                        <span class="expandable_cue-close">
+                            Hide
+                        </span>
+                    </a>
                 </span>
-            </a>
-            <div class="expandable_content" id="styled-expandable-content">
+            </div>
+            <div class="expandable_content" id="expandable-header-content">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Neque ipsa voluptatibus soluta nobis unde quisquam
@@ -1435,23 +1439,45 @@ input.btn::-moz-focus-inner {
         - |
           Structural cheat sheet:
           -----------------------
-          .expandable.expandable__padded
-            .expandable_target.expandable_header
-              .expandable_label.expandable_header-left
-              .expandable_link.expandable_header-right
-                .expandable_cue-open
-                  .cf-icon.cf-icon-plus-round
-                .expandable_cue-close
-                  .cf-icon.cf-icon-minus-round
-              .expandable_cue-open
-              .expandable_cue-close
-            .expandable_content
+          .expandable_header
+            .expandable_header-left
+            .expandable_header-right
       notes:
-        - "The padded expandable is our recommended go-to expandable pattern."
-        - "If you need a custom expandable experience first try using a
-          combination of the new elements that are used in the padded expandable
-          pattern like .expandable_header, expandable_label, expandable_link,
-          expandable_header-left. and expandable_header-right."
+        - ".expandable_header is good when you need an .expandable_target with
+          information on the left and right."
+    - name: "Expandable header modifier: spaced"
+      markup: |
+        <div class="expandable expandable__expanded">
+            <div class="expandable_header expandable_header__spaced">
+                <a class="expandable_target"
+                   href="#expandable-header-spaced-content">
+                    <span class="expandable_cue-open">
+                        Show
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                    </span>
+                </a>
+            </div>
+            <div class="expandable_content"
+                 id="expandable-header-spaced-content"
+                 style="background-color:#ccc;">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable_header.expandable_header__spaced
+      notes:
+        - "Adds some margin underneath .expandable_header."
     tags:
     - cf-expandables
 */
@@ -1461,6 +1487,10 @@ input.btn::-moz-focus-inner {
   overflow: hidden;
 }
 
+.expandable_header__spaced {
+  margin-bottom: 0.9375em;
+}
+
 .expandable_header-left {
   float: left;
 }
@@ -1468,6 +1498,30 @@ input.btn::-moz-focus-inner {
 .expandable_header-right {
   float: right;
 }
+
+/* topdoc
+    name: Expandable text elements
+    family: cf-expandables
+    patterns:
+    - name: Expandable label
+      markup: |
+        <span class="expandable_label">
+            Expandable label
+        </span>
+    - name: Expandable link
+      markup: |
+        <a href="#expandable-text-elements" class="expandable_link">
+            Expandable link
+            <span class="expandable_cue-open">
+                <span class="cf-icon cf-icon-plus-round"></span>
+            </span>
+            <span class="expandable_cue-close">
+                <span class="cf-icon cf-icon-minus-round"></span>
+            </span>
+        </a>
+    tags:
+    - cf-expandables
+*/
 
 .expandable_label {
   color: #101820;
@@ -1513,6 +1567,64 @@ input.btn::-moz-focus-inner {
   font-weight: normal !important;
 }
 
+/* topdoc
+    name: Padded expandable
+    family: cf-expandables
+    patterns:
+    - name: Default padded expandable pattern
+      markup: |
+        <div class="expandable expandable__padded">
+            <a class="expandable_target expandable_header"
+               href="#expandable-padded-content">
+                <span class="expandable_label expandable_header-left">
+                    Expandable Header
+                </span>
+                <span class="expandable_link expandable_header-right">
+                    <span class="expandable_cue-open">
+                        Show
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </a>
+            <div class="expandable_content" id="expandable-padded-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__padded
+            .expandable_target.expandable_header
+              .expandable_label.expandable_header-left
+              .expandable_link.expandable_header-right
+                .expandable_cue-open
+                  .cf-icon.cf-icon-plus-round
+                .expandable_cue-close
+                  .cf-icon.cf-icon-minus-round
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "The padded expandable is our recommended go-to expandable pattern."
+        - "If you need a custom expandable experience try using a combination of
+          the expandable elements that already exists like .expandable_header,
+          expandable_label, expandable_link, expandable_header-left. and
+          expandable_header-right."
+    tags:
+    - cf-expandables
+*/
+
 .expandable__padded {
   margin-bottom: 1.875em;
   background: #f1f2f2;
@@ -1525,10 +1637,6 @@ input.btn::-moz-focus-inner {
 
 .expandable__padded .expandable_header {
   padding: 0.625em 1em;
-}
-
-.expandable__padded .expandable_header.expandable_target {
-  border-bottom: none;
 }
 
 .expandable__padded .expandable_content {
