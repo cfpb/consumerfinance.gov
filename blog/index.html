@@ -8,13 +8,13 @@
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         <section class="content_hero hero" style="background-color:#337E7D;">
-            <div class="wrapper">
+            <div class="hero_wrapper">
                 <div class="hero_card">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
                             <a href="#" class="category-slug">
                                 <span class="cf-icon cf-icon-help"></span>
-                                <span class="visually-hidden">Category:</span>
+                                <span class="u-visually-hidden">Category:</span>
                                 Announcements &amp; updates
                             </a>
                             <a class="summary" href="#">
@@ -46,55 +46,88 @@
 
             {% set posts = queries.posts.search_with_url_arguments(size=3) %}
 
-            <div class="post-preview-filters">
-                <div class="expandable">
-                    <div class="expandable_header">
-                        <!-- <h5>Blog filtered by</h5>
-                        <ul class="list list__horizontal">
-                            <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
-                        </ul> -->
-                        <a class="expandable_target btn btn-secondary"
-                           href="#barebones-content">
-                            Filter posts&nbsp;&nbsp;
-                            <span class="expandable_cue-open">
-                                <span class="cf-icon cf-icon-down"></span>
-                            </span>
-                            <span class="expandable_cue-close">
-                                <span class="cf-icon cf-icon-up"></span>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="expandable_content padded-container">
-                        <form class="padded-container_body" id="barebones-content" method="get">
-                            <div class="form-group">
-                                <label class="form-group_header">
-                                    Categories
-                                </label>
-                                <label class="form-group_item form-label">
-                                    <input type="checkbox" name="filter_category" value="consumer">
-                                    Announcements &amp; updates
-                                </label>
-                                <label class="form-group_item form-label">
-                                    <input type="checkbox" name="filter_category" value="regulation & compliance">
-                                    Consumer information
-                                </label>
-                                <label class="form-group_item form-label">
-                                    <input type="checkbox" name="filter_category" value="innovation">
-                                    Engagement
-                                </label>
-                                <label class="form-group_item form-label">
-                                    <input type="checkbox" name="filter_category" value="announcements">
-                                    Innovation &amp; data
-                                </label>
-                                <div class="form-actions">
-                                    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-                                    <input type="submit" value="Apply filters" class="btn form-actions_item">
+            <div class="expandable">
+                <div class="expandable_header expandable_header__spaced">
+                    <!-- <h5>Blog filtered by</h5>
+                    <ul class="list list__horizontal">
+                        <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
+                    </ul> -->
+                    <a class="expandable_target btn btn-secondary"
+                       href="#post-filters-form">
+                        Filter posts&nbsp;&nbsp;
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon cf-icon-down"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon cf-icon-up"></span>
+                        </span>
+                    </a>
+                </div>
+                <div class="expandable_content padded-container">
+                    <form class="padded-container_body" id="post-filters-form" method="get">
+                        <div class="form-l form-l__flush">
+                            <div class="form-l_col form-l_col-1-3">
+                                <div class="form-group">
+                                    <label class="form-label-header">
+                                        Categories
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="announcements">
+                                        Announcements &amp; updates
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="consumer">
+                                        Consumer information
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="engagement">
+                                        Engagement
+                                    </label>
+                                    <label class="form-group_item form-label">
+                                        <input type="checkbox" name="filter_category" value="innovation">
+                                        Innovation &amp; data
+                                    </label>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="form-l_col form-l_col-1-3">
+                                <div class="form-group">
+                                    <label class="form-label-header">
+                                        Topics
+                                    </label>
+                                    <!-- <input type="text" name="filter_tags" value=""> -->
+                                    <select name="filter_tags" multiple>
+                                        {% for tags in queries.posts.possible_values_for('tags') %}
+                                        <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label-header">
+                                        Author
+                                    </label>
+                                    <!-- <input type="text" name="filter_author" value=""> -->
+                                    <select name="filter_author" multiple>
+                                        {% for author in queries.posts.possible_values_for('author') %}
+                                        <option value="{{author.term}}">{{author.term}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-l_col form-l_col-1-3">
+                                <div class="form-group">
+                                    <label class="form-label-header">
+                                        Date range
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions form-actions__right-on-med">
+                            <input type="reset" value="Reset filters" class="btn btn-warning btn-link form-actions_item">
+                            <input type="submit" value="Apply filters" class="btn form-actions_item">
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </div><!-- END .expandable -->
 
             {% for post in posts %}
                 <article class="post-preview">
@@ -104,13 +137,13 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
-                            <span class="visually-hidden">Category:</span>
+                            <span class="u-visually-hidden">Category:</span>
                             {{ post.category }}
                         </a>
                     </div>
                     <a class="summary" href="{{ post.permalink }}">
                         <h1 class="summary_header">{{ post.title }}</h1>
-                        <p class="summary_text">{{ post.excerpt }}</p>
+                        <p class="summary_text summary_text__max">{{ post.excerpt }}</p>
                         <p class="summary_byline">By {{ post.author }}</p>
                     </a>
                 </article>
