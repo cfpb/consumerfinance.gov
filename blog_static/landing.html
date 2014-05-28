@@ -117,7 +117,7 @@
                         <div class="hero_card-padding">
                             <a href="#" class="category-slug">
                                 <span class="cf-icon cf-icon-help"></span>
-                                <span class="visually-hidden">Category:</span>
+                                <span class="u-visually-hidden">Category:</span>
                                 Announcements &amp; updates
                             </a>
                             <a class="summary" href="#">
@@ -147,15 +147,11 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-                <div class="post-preview-filters">
-                    <div class="expandable">
-                        <div class="expandable_header">
-                            <!-- <h5>Blog filtered by</h5>
-                            <ul class="list list__horizontal">
-                                <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
-                            </ul> -->
+                <div class="expandable expandable__expanded">
+                    <div class="expandable_header expandable_header__spaced">
+                        <div class="expandable_header-right expandable_header-right__float-on-medium">
                             <a class="expandable_target btn btn-secondary"
-                               href="#barebones-content">
+                               href="#post-filters-form">
                                 Filter posts&nbsp;&nbsp;
                                 <span class="expandable_cue-open">
                                     <span class="cf-icon cf-icon-down"></span>
@@ -165,37 +161,150 @@
                                 </span>
                             </a>
                         </div>
-                        <div class="expandable_content padded-container">
-                            <form class="padded-container_body" id="barebones-content" method="get">
-                                <div class="form-group">
-                                    <label class="form-group_header">
-                                        Categories
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="consumer">
-                                        Announcements &amp; updates
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="regulation & compliance">
-                                        Consumer information
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="innovation">
-                                        Engagement
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="announcements">
-                                        Innovation &amp; data
-                                    </label>
-                                    <div class="form-actions">
-                                        <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-                                        <input type="submit" value="Apply filters" class="btn form-actions_item">
+                        <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+                            <dt class="list_item">
+                                <span class="filtered-by_header">Filtered by</span>
+                            </dt>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Lorem,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Ipsum,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Dolor,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Sit,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Amet,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Lorem,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Ipsum,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Dolor,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Sit,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Amet,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Lorem,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Ipsum,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Dolor,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Sit,</span>
+                            </dd>
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">Amet,</span>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="expandable_content padded-container">
+                        <form class="padded-container_body" id="post-filters-form" method="get">
+                            <div class="form-l form-l__flush">
+                                <div class="form-l_col form-l_col-1-3">
+                                    <div class="form-group">
+                                        <label class="form-label-header">
+                                            Categories
+                                        </label>
+                                        <label class="form-group_item form-label">
+                                            <input type="checkbox" name="filter_category" value="announcements">
+                                            Announcements &amp; updates
+                                        </label>
+                                        <label class="form-group_item form-label">
+                                            <input type="checkbox" name="filter_category" value="consumer">
+                                            Consumer information
+                                        </label>
+                                        <label class="form-group_item form-label">
+                                            <input type="checkbox" name="filter_category" value="engagement">
+                                            Engagement
+                                        </label>
+                                        <label class="form-group_item form-label">
+                                            <input type="checkbox" name="filter_category" value="innovation">
+                                            Innovation &amp; data
+                                        </label>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="form-l_col form-l_col-1-3">
+                                    <div class="form-group">
+                                        <label class="form-label-header">
+                                            Topics
+                                        </label>
+                                        <!-- <input type="text" name="filter_tags" value=""> -->
+                                        <select name="filter_tags" multiple>
+                                            <option value="tag1">Tag 1</option>
+                                            <option value="tag2">Tag 2</option>
+                                            <option value="tag3">Tag 3</option>
+                                            <option value="tag4">Tag 4</option>
+                                            <option value="tag5">Tag 5</option>
+                                            <option value="tag6">Tag 6</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label-header">
+                                            Author
+                                        </label>
+                                        <!-- <input type="text" name="filter_author" value=""> -->
+                                        <select name="filter_author" multiple>
+                                            <option value="author1">Author 1</option>
+                                            <option value="author2">Author 2</option>
+                                            <option value="author3">Author 3</option>
+                                            <option value="author4">Author 4</option>
+                                            <option value="author5">Author 5</option>
+                                            <option value="author6">Author 6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-l_col form-l_col-1-3">
+                                    <div class="form-group">
+                                        <label class="form-label-header">
+                                            Date range
+                                        </label>
+                                        <select>
+                                            <option value="">Month</option>
+                                            <option value="">January</option>
+                                            <option value="">February</option>
+                                            <option value="">March</option>
+                                            <option value="">April</option>
+                                            <option value="">May</option>
+                                            <option value="">June</option>
+                                            <option value="">July</option>
+                                            <option value="">August</option>
+                                            <option value="">September</option>
+                                            <option value="">October</option>
+                                            <option value="">November</option>
+                                            <option value="">December</option>
+                                        </select>
+                                        <select>
+                                            <option value="">Year</option>
+                                            <option value="">2014</option>
+                                            <option value="">2013</option>
+                                            <option value="">2012</option>
+                                            <option value="">2011</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions form-actions__right-on-med">
+                                <input type="reset" value="Reset filters" class="btn btn-warning btn-link form-actions_item">
+                                <input type="submit" value="Apply filters" class="btn form-actions_item">
+                            </div>
+                        </form>
                     </div>
-                </div><!-- END .filters -->
+                </div><!-- END .expandable -->
 
                 <article class="post-preview">
                     <div class="meta-header">
@@ -204,13 +313,13 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
-                            <span class="visually-hidden">Category:</span>
+                            <span class="u-visually-hidden">Category:</span>
                             Announcements &amp; updates
                         </a>
                     </div>
                     <a class="summary" href="#">
                         <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
-                        <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+                        <p class="summary_text summary_text__max">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
                         <p class="summary_byline">By Patrice Ficklin</p>
                     </a>
                 </article>
@@ -222,7 +331,7 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
-                            <span class="visually-hidden">Category:</span>
+                            <span class="u-visually-hidden">Category:</span>
                             Consumer information
                         </a>
                     </div>
@@ -253,13 +362,13 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
-                            <span class="visually-hidden">Category:</span>
+                            <span class="u-visually-hidden">Category:</span>
                             Engagement
                         </a>
                     </div>
                     <a class="summary" href="#">
                         <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
-                        <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+                        <p class="summary_text summary_text__max">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
                         <p class="summary_byline">By Patrice Ficklin</p>
                     </a>
                 </article>
@@ -271,7 +380,7 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
-                            <span class="visually-hidden">Category:</span>
+                            <span class="u-visually-hidden">Category:</span>
                             Innovation &amp; data
                         </a>
                     </div>

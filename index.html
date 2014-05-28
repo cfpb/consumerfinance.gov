@@ -1,36 +1,145 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
-{% block title %}Home{% endblock %}
-{% block demo_title %}{% endblock %}
+<head>
 
-{% block content %}
+<!--
+    ===========
+    GLOBAL META
+    ===========
+-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+    ==================
+    PAGE-SPECIFIC META
+    ==================
+-->
+
+    <title>cfgov-refresh demos and docs</title>
+    <meta name="description" content="Demos and docs for the consumerfinance.gov refresh">
+
+<!--
+    ======
+    STYLES
+    ======
+    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
+    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
+-->
+
+<!--[if lt IE 9]>      <link rel="stylesheet" href="static/css/main.ie.min.css"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="static/css/main.min.css"> <!--<![endif]-->
+
+<!--
+    ============
+    HEAD SCRIPTS
+    ============
+    The following scripts must be included in the head. DO NOT ADD ANY MORE.
+    All other scripts should go before the closing body tag.
+    If you come across a script that makes a convincing case to be included in
+    the head, then file an issue or PR to discuss including it.
+-->
+
+<!--[if lt IE 9]>
+    <script src="static/vendor/html5shiv/html5shiv-printshiv.min.js"></script>
+<![endif]-->
+
+    <script>
+        // Confirm availability of JS and remove no-js class from html
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+
+</head>
+
+<body>
+
+<!--
+    =========
+    Analytics
+    =========
+    We are double tagging with classic analytics and tag manager so that we can
+    test any differences between the two.
+-->
+
+    <!-- CLASSIC ANALYTICS -->
+    <script>
+        var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script> 
+
+    <!-- GOOGLE TAG MANAGER -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KSMF3R"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KSMF3R');</script>
+    <!-- /GOOGLE TAG MANAGER -->
+
+<!--
+    =================
+    Begin page source
+    =================
+-->
+
+    <header class="header" role="banner">
+        <div class="wrapper">
+            <h1 class="demo-col-12 demo-logo">cfgov-refresh demos and docs</h1>
+        </div>
+    </header><!-- END .header -->
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-                <section class="demo-cols">
+                <section>
 
-                    <div class="demo-col-12 demo-spaced">
-                        <h2>Static page demos</h2>
+                    <div class="demo-spaced">
+                        <h2>Demos</h2>
                     </div>
-                    <div class="demo-col-6 demo-spaced">
-                        <div class="meta-header">
-                            <a href="blog/" class="meta-header_left category-slug">
-                                Blog
-                            </a>
+
+                    <div class="demo-cols">
+                        <div class="demo-col-6 demo-spaced">
+                            <div class="meta-header">
+                                <span class="meta-header_left category-slug">
+                                    Static demos
+                                </span>
+                            </div>
+                            <h3><a href="blog_static/landing.html">Blog landing page</a></h3>
+                            <h3><a href="blog_static/post.html">Blog post</a></h3>
                         </div>
-                        <h3><a href="blog/">Landing page</a></h3>
-                        <h3><a href="blog/consumer_advisory_cosigners">Post</a></h3>
+                        <div class="demo-col-6 demo-spaced">
+                            <div class="meta-header">
+                                <span class="meta-header_left category-slug">
+                                    Sheer demos
+                                </span>
+                            </div>
+                            <h3><a href="blog/index.html">Blog landing page</a></h3>
+                            <h3><a href="blog/post.html">Blog post</a></h3>
+                        </div>
+                        <div class="demo-col-6 demo-spaced">
+                            <div class="meta-header">
+                                <span class="meta-header_left category-slug">
+                                    Static demos
+                                </span>
+                            </div>
+                            <h3><a href="newsroom_static/landing.html">Newsroom landing page</a></h3>
+                        </div>
                     </div>
-                    <!-- <div class="demo-col-6 demo-spaced">
-                        <div class="meta-header">
-                            <a href="newsroom/landing.html" class="meta-header_left category-slug">
-                                Newsroom
-                            </a>
-                        </div>
-                        <h3><a href="newsroom/landing.html">Landing page</a></h3>
-                    </div> -->
 
                 </section>
 
@@ -40,12 +149,13 @@
                 <div class="demo-spaced">
                     <h2>Documentation</h2>
                 </div>
+
                 <div class="demo-spaced">
-                    <h3 class="header-slug">
-                        <span class="header-slug_inner">
+                    <div class="meta-header">
+                        <h3 class="meta-header_left category-slug">
                             Section docs
-                        </span>
-                    </h3>
+                        </h3>
+                    </div>
                     <ul class="list list__horizontal">
                         <li class="list_item">
                             <a class="list_link" href="docs/blog-docs/">Blog docs</a>
@@ -53,11 +163,11 @@
                     </ul>
                 </div>
                 <div class="demo-spaced">
-                    <h3 class="header-slug">
-                        <span class="header-slug_inner">
+                    <div class="meta-header">
+                        <h3 class="meta-header_left category-slug">
                             Global patterns
-                        </span>
-                    </h3>
+                        </h3>
+                    </div>
                     <ul class="list list__horizontal">
                         <li class="list_item">
                             <a class="list_link" href="docs/media-object/">Media object</a>
@@ -77,17 +187,14 @@
                     </ul>
                 </div>
                 <div class="demo-spaced">
-                    <h3 class="header-slug">
-                        <span class="header-slug_inner">
+                    <div class="meta-header">
+                        <h3 class="meta-header_left category-slug">
                             Less docs
-                        </span>
-                    </h3>
+                        </h3>
+                    </div>
                     <ul class="list list__horizontal">
                         <li class="list_item">
                             <a class="list_link" href="docs/utilities/">Utilities</a>
-                        </li>
-                        <li class="list_item">
-                            <a class="list_link" href="docs/media-queries/">Media queries</a>
                         </li>
                     </ul>
                 </div>
@@ -96,4 +203,12 @@
         </div><!-- END .content_wrapper -->
     </main><!-- END .content -->
 
-{% endblock content %}
+    <footer class="footer" role="contentinfo">
+        <div class="wrapper">
+            <a class="demo-col-12" href="https://github.com/cfpb/cfgov-refresh">View the GitHub repository</a>
+        </div>
+    </footer><!-- END .footer -->
+
+</body>
+
+</html>

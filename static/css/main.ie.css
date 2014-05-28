@@ -1301,7 +1301,7 @@ input.btn::-moz-focus-inner {
       markup: |
         <div class="expandable">
             <a class="expandable_target"
-               href="#barebones-content">
+               href="#expandable-barebones-content">
                 <span class="expandable_cue-open">
                     Show
                 </span>
@@ -1309,7 +1309,7 @@ input.btn::-moz-focus-inner {
                     Hide
                 </span>
             </a>
-            <div class="expandable_content" id="barebones-content">
+            <div class="expandable_content" id="expandable-barebones-content">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Neque ipsa voluptatibus soluta nobis unde quisquam
@@ -1345,7 +1345,7 @@ input.btn::-moz-focus-inner {
       markup: |
         <div class="expandable expandable__expanded">
             <a class="expandable_target"
-               href="#expanded-by-default-content">
+               href="#expandable-expanded-by-default-content">
                 <span class="expandable_cue-open">
                     Show
                 </span>
@@ -1353,7 +1353,7 @@ input.btn::-moz-focus-inner {
                     Hide
                 </span>
             </a>
-            <div class="expandable_content" id="expanded-by-default-content">
+            <div class="expandable_content" id="expandable-expanded-by-default-content">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Neque ipsa voluptatibus soluta nobis unde quisquam
@@ -1378,6 +1378,10 @@ input.btn::-moz-focus-inner {
     - cf-expandables
 */
 
+.expandable {
+  margin-bottom: 1.875em;
+}
+
 .expandable_target {
   cursor: pointer;
 }
@@ -1399,29 +1403,29 @@ input.btn::-moz-focus-inner {
 }
 
 /* topdoc
-    name: Padded expandable
+    name: Expandable header
     family: cf-expandables
     patterns:
-    - name: Default padded expandable pattern
+    - name: Basic expandable header example
       markup: |
-        <div class="expandable expandable__padded">
-            <a class="expandable_target expandable_header"
-               href="#styled-expandable-content">
-                <span class="expandable_label expandable_header-left">
-                    Expandable Header
+        <div class="expandable expandable__expanded">
+            <div class="expandable_header">
+                <span class="expandable_header-left">
+                    <em>Now you can put some info on the left and right.</em>
                 </span>
-                <span class="expandable_link expandable_header-right">
-                    <span class="expandable_cue-open">
-                        Show
-                        <span class="cf-icon cf-icon-plus-round"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        Hide
-                        <span class="cf-icon cf-icon-minus-round"></span>
-                    </span>
+                <span class="expandable_header-right">
+                    <a class="expandable_target"
+                       href="#expandable-header-content">
+                        <span class="expandable_cue-open">
+                            Show
+                        </span>
+                        <span class="expandable_cue-close">
+                            Hide
+                        </span>
+                    </a>
                 </span>
-            </a>
-            <div class="expandable_content" id="styled-expandable-content">
+            </div>
+            <div class="expandable_content" id="expandable-header-content">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Neque ipsa voluptatibus soluta nobis unde quisquam
@@ -1435,23 +1439,45 @@ input.btn::-moz-focus-inner {
         - |
           Structural cheat sheet:
           -----------------------
-          .expandable.expandable__padded
-            .expandable_target.expandable_header
-              .expandable_label.expandable_header-left
-              .expandable_link.expandable_header-right
-                .expandable_cue-open
-                  .cf-icon.cf-icon-plus-round
-                .expandable_cue-close
-                  .cf-icon.cf-icon-minus-round
-              .expandable_cue-open
-              .expandable_cue-close
-            .expandable_content
+          .expandable_header
+            .expandable_header-left
+            .expandable_header-right
       notes:
-        - "The padded expandable is our recommended go-to expandable pattern."
-        - "If you need a custom expandable experience first try using a
-          combination of the new elements that are used in the padded expandable
-          pattern like .expandable_header, expandable_label, expandable_link,
-          expandable_header-left. and expandable_header-right."
+        - ".expandable_header is good when you need an .expandable_target with
+          information on the left and right."
+    - name: "Expandable header modifier: spaced"
+      markup: |
+        <div class="expandable expandable__expanded">
+            <div class="expandable_header expandable_header__spaced">
+                <a class="expandable_target"
+                   href="#expandable-header-spaced-content">
+                    <span class="expandable_cue-open">
+                        Show
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                    </span>
+                </a>
+            </div>
+            <div class="expandable_content"
+                 id="expandable-header-spaced-content"
+                 style="background-color:#ccc;">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable_header.expandable_header__spaced
+      notes:
+        - "Adds some margin underneath .expandable_header."
     tags:
     - cf-expandables
 */
@@ -1461,6 +1487,10 @@ input.btn::-moz-focus-inner {
   overflow: hidden;
 }
 
+.expandable_header__spaced {
+  margin-bottom: 0.9375em;
+}
+
 .expandable_header-left {
   float: left;
 }
@@ -1468,6 +1498,30 @@ input.btn::-moz-focus-inner {
 .expandable_header-right {
   float: right;
 }
+
+/* topdoc
+    name: Expandable text elements
+    family: cf-expandables
+    patterns:
+    - name: Expandable label
+      markup: |
+        <span class="expandable_label">
+            Expandable label
+        </span>
+    - name: Expandable link
+      markup: |
+        <a href="#expandable-text-elements" class="expandable_link">
+            Expandable link
+            <span class="expandable_cue-open">
+                <span class="cf-icon cf-icon-plus-round"></span>
+            </span>
+            <span class="expandable_cue-close">
+                <span class="cf-icon cf-icon-minus-round"></span>
+            </span>
+        </a>
+    tags:
+    - cf-expandables
+*/
 
 .expandable_label {
   color: #101820;
@@ -1513,6 +1567,64 @@ input.btn::-moz-focus-inner {
   font-weight: normal !important;
 }
 
+/* topdoc
+    name: Padded expandable
+    family: cf-expandables
+    patterns:
+    - name: Default padded expandable pattern
+      markup: |
+        <div class="expandable expandable__padded">
+            <a class="expandable_target expandable_header"
+               href="#expandable-padded-content">
+                <span class="expandable_label expandable_header-left">
+                    Expandable Header
+                </span>
+                <span class="expandable_link expandable_header-right">
+                    <span class="expandable_cue-open">
+                        Show
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </a>
+            <div class="expandable_content" id="expandable-padded-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__padded
+            .expandable_target.expandable_header
+              .expandable_label.expandable_header-left
+              .expandable_link.expandable_header-right
+                .expandable_cue-open
+                  .cf-icon.cf-icon-plus-round
+                .expandable_cue-close
+                  .cf-icon.cf-icon-minus-round
+              .expandable_cue-open
+              .expandable_cue-close
+            .expandable_content
+      notes:
+        - "The padded expandable is our recommended go-to expandable pattern."
+        - "If you need a custom expandable experience try using a combination of
+          the expandable elements that already exists like .expandable_header,
+          expandable_label, expandable_link, expandable_header-left. and
+          expandable_header-right."
+    tags:
+    - cf-expandables
+*/
+
 .expandable__padded {
   margin-bottom: 1.875em;
   background: #f1f2f2;
@@ -1525,10 +1637,6 @@ input.btn::-moz-focus-inner {
 
 .expandable__padded .expandable_header {
   padding: 0.625em 1em;
-}
-
-.expandable__padded .expandable_header.expandable_target {
-  border-bottom: none;
 }
 
 .expandable__padded .expandable_content {
@@ -1600,7 +1708,8 @@ input[type="email"],
 input[type="url"],
 input[type="tel"],
 input[type="number"],
-textarea {
+textarea,
+select {
   display: inline-block;
   width: 85%;
   margin: 0;
@@ -1628,7 +1737,9 @@ input[type="tel"].focus,
 input[type="number"]:focus,
 input[type="number"].focus,
 textarea:focus,
-textarea.focus {
+textarea.focus,
+select:focus,
+select.focus {
   border: 1px solid #0072ce;
   border-color: #0072ce;
   outline: 1px solid #0072ce;
@@ -1643,7 +1754,8 @@ input[type="email"].error,
 input[type="url"].error,
 input[type="tel"].error,
 input[type="number"].error,
-textarea.error {
+textarea.error,
+select.error {
   border: 1px solid #d12124;
   outline: 1px solid #d12124;
 }
@@ -1654,7 +1766,8 @@ input[type="email"].success,
 input[type="url"].success,
 input[type="tel"].success,
 input[type="number"].success,
-textarea.success {
+textarea.success,
+select.success {
   border: 1px solid #2cb34a;
   outline: 1px solid #2cb34a;
 }
@@ -4203,6 +4316,102 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Visually hidden
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      markup: |
+        <h1>
+            <a href="#">
+                <span class="cf-icon cf-icon-twitter-square"></span>
+                <span class="u-visually-hidden">Share on Twitter</span>
+            </a>
+        </h1>
+      codenotes:
+        - .u-visually-hidden;
+      notes:
+        - "Use this class to hide something from view while keeping it
+          accessible to screen readers."
+      notes:
+        - "Use this class to hide something from view while keeping it
+          accessible to screen readers."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+/* topdoc
+  name: Inline block
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      codenotes:
+        - .u-inline-block;
+      notes:
+        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-inline-block {
+  display: inline-block;
+}
+
+.lt-ie8 .u-inline-block {
+  display: inline;
+}
+
+/* topdoc
+  name: Floating right
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      codenotes:
+        - .u-right;
+      notes:
+        - "IE7 float: right drop bug fixes:"
+        - "1. If the float: right follows an element in the html structure that
+          should be to its left (and not above it), then that preceding
+          element(s) must be float: left.
+          http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688"
+        - "2. Simply change the markup order so that the element floating right
+          comes before the element to its left."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-right {
+  float: right;
+}
+
+/* topdoc
+  name: Align with button
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      codenotes:
+        - ".u-align-with-btn(@font-size: @base-font-size-px);"
+      notes:
+        - "Adds top padding (among other things) to help alignment with buttons."
+        - "If you pass no arguments then the padding will be calculated using
+          @base-font-size-px."
+        - "Pass one argument to use a custom font size to calculate the top
+          padding."
+  tags:
+    - cfgov-utilities
+*/
+
+/* topdoc
   name: Flexible proportional containers
   family: cfgov-utilities
   notes:
@@ -4302,60 +4511,6 @@ img {
 }
 
 /* topdoc
-  name: Utility classes
-  family: cfgov-utilities
-  patterns:
-    - name: Visually hidden
-      markup: |
-        <h1>
-            <a href="#">
-                <span class="cf-icon cf-icon-twitter-square"></span>
-                <span class="visually-hidden">Share by email</span>
-            </a>
-        </h1>
-      notes:
-        - "Use this class to hide something from view while keeping it
-          accessible to screen readers."
-  tags:
-    - cfgov-utilities
-*/
-
-.visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-}
-
-/* topdoc
-  name: Less mixins
-  family: cfgov-utilities
-  patterns:
-    - codenotes:
-        - .u-right();
-      notes:
-        - "IE7 float: right drop bug fixes:"
-        - "1. If the float: right follows an element in the html structure that
-          should be to its left (and not above it), then that preceding
-          element(s) must be float: left.
-          http://stackoverflow.com/questions/10981767/clean-css-fix-of-ie7s-float-right-drop-bug#answer-11437688"
-        - "2. Simply change the markup order so that the element floating right
-          comes before the element to its left."
-    - codenotes:
-        - .u-flexible-image();
-    - codenotes:
-        - .u-inline-block();
-      notes:
-        - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
-  tags:
-    - cfgov-utilities
-*/
-
-/* topdoc
   name: Link mixins
   family: cfgov-utilities
   patterns:
@@ -4431,6 +4586,68 @@ img {
       notes:
         - "Pass this mixin one color to color the child element when the parent
           link is hovered."
+  tags:
+    - cfgov-utilities
+*/
+
+/* topdoc
+  name: Media query mixins
+  family: cfgov-utilities
+  notes:
+    - "These mixins allow us to write consistent media queries using pixel
+      values, which are easier to remember. The mixins handle converting the
+      pixels into em's."
+  patterns:
+    - name: "min-width/max-width media queries"
+      codenotes:
+        - ".u-respond-to-min(@bp, @rules)"
+        - ".u-respond-to-max(@bp, @rules)"
+      notes:
+        - "@bp: the breakpoint size in pixels. It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query usage"
+      codenotes:
+        - |
+            .u-respond-to-min(768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
+
+            Compiles to:
+
+            @media only all and (min-width: 48em) {
+                .title {
+                    font-size: 2em;
+                }
+            }
+    - name: "min-width/max-width media query range"
+      codenotes:
+        - ".u-respond-to-range(@bp1, @bp2, @rules)"
+      notes:
+        - "@bp1: the min-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@bp2: the max-width breakpoint size in pixels.
+          It will get converted into em's."
+        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
+          of Less features."
+    - name: "min-width/max-width media query range usage"
+      codenotes:
+        - |
+            .u-respond-to-range(320px, 768px, {
+                .title {
+                    font-size: 2em;
+                }
+            });
+
+            Compiles to:
+
+            @media only all and (min-width: 20em) and (max-width: 48em) {
+                .title {
+                    font-size: 2em;
+                }
+            }
   tags:
     - cfgov-utilities
 */
@@ -4647,78 +4864,6 @@ img {
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
 }
-
-/* ==========================================================================
-   cfgov-refresh
-   media-queries
-   ========================================================================== */
-
-/* topdoc
-  name: Media query mixins
-  family: cfgov-media-queries
-  notes:
-    - "These mixins allow us to write consistent media queries using pixel
-      values, which are easier to remember. The mixins handle converting the
-      pixels into em's."
-  patterns:
-    - name: "min-width/max-width media queries"
-      codenotes:
-        - ".u-respond-to-min(@bp, @rules)"
-        - ".u-respond-to-max(@bp, @rules)"
-      notes:
-        - "@bp: the breakpoint size in pixels. It will get converted into em's."
-        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
-          of Less features."
-    - name: "min-width/max-width media query usage"
-      codenotes:
-        - |
-            .u-respond-to-min(768px, {
-                .title {
-                    font-size: 2em;
-                }
-            });
-
-            Compiles to:
-
-            @media only all and (min-width: 48em) {
-                .title {
-                    font-size: 2em;
-                }
-            }
-    - name: "min-width/max-width media query range"
-      codenotes:
-        - ".u-respond-to-range(@bp1, @bp2, @rules)"
-      notes:
-        - "@bp1: the min-width breakpoint size in pixels.
-          It will get converted into em's."
-        - "@bp2: the max-width breakpoint size in pixels.
-          It will get converted into em's."
-        - "@rules: a CSS or Less ruleset. Note that it can contain the full set
-          of Less features."
-    - name: "min-width/max-width media query range usage"
-      codenotes:
-        - |
-            .u-respond-to-range(320px, 768px, {
-                .title {
-                    font-size: 2em;
-                }
-            });
-
-            Compiles to:
-
-            @media only all and (min-width: 20em) and (max-width: 48em) {
-                .title {
-                    font-size: 2em;
-                }
-            }
-  tags:
-    - cfgov-media-queries
-*/
-
-/* topdoc
-  name: EOF
-  eof: true
-*/
 
 /* ==========================================================================
    cfgov-refresh
@@ -5022,12 +5167,12 @@ img {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-credit-card"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Consumer finance
         </a>
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
-        - "We suggest using a .visually-hidden element to add more context for
+        - "We suggest using a .u-visually-hidden element to add more context for
           screen readers."
   tags:
     - cfgov-meta
@@ -5200,35 +5345,134 @@ img {
    ========================================================================== */
 
 /* topdoc
-  name: Forms
+  name: Expandables
   family: cfgov-misc
   patterns:
-    - name: Form element showcase
+    - name: Header right float on medium modifier
+      codenotes:
+        - .expandable_header-right__float-on-medium
+  tags:
+    - cfgov-misc
+*/
+
+.expandable_header-right__float-on-medium {
+  float: none;
+}
+
+.expandable_header-right__float-on-medium {
+  float: right;
+}
+
+/* topdoc
+  name: Form pattern showcase
+  family: cfgov-misc
+  patterns:
+    - markup: |
+        <div class="form-l">
+            <div class="form-l_col form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header">
+                        Form layout column 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 1
+                    </label>
+                    <label class="form-group_item form-label">
+                        <input type="checkbox" name="" value="">
+                        Checkbox 2
+                    </label>
+                </div>
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header">
+                        Form layout column 2
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header">
+                        Form layout column 3
+                    </label>
+                    <input type="text" name="" value="">
+                </div>
+            </div>
+        </div>
+        <div class="form-actions form-actions__right">
+            <input type="reset" value="Reset filters"
+                   class="btn btn-warning btn-link form-actions_item">
+            <input type="submit" value="Apply filters"
+                   class="btn form-actions_item">
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+/* topdoc
+    name: Multi select
+    family: cfgov-misc
+    patterns:
+    - name: Default multi select
       markup: |
-        <div class="form-group">
-            <label class="form-group_header">Form group header</label>
-            <label class="form-group_item form-label">
-                <input type="checkbox">
-                Form label
-            </label>
-            <label class="form-group_item form-label">
-                <input type="checkbox">
-                Form label
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="form-group_header">Form group header</label>
-            <select class="form-group_item" name="select">
-                <option value="value1">Value 1</option>
-                <option value="value2">Value 2</option>
-                <option value="value3">Value 3</option>
-            </select>
-        </div>
-        <div class="form-actions">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-    - name: Form label
+        <select multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+    - name: Focused state
+      markup: |
+        <select class="focus" multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <select class="error" multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+        <span class="cf-form_input-icon cf-icon cf-icon-delete-round" role="alert">
+          <span class="jekyll-bug"></span>
+        </span>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <select class="success" multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+        <span class="cf-form_input-icon cf-icon cf-icon-approved-round">
+          <span class="jekyll-bug"></span>
+        </span>
+    tags:
+    - cfgov-misc
+*/
+
+/* NOTE: all select[multiple] styles extend input[type="text"]. */
+
+/* topdoc
+  name: Form labels
+  family: cfgov-misc
+  patterns:
+    - name: Label header
+      markup: |
+        <label class="form-label-header">
+            Form label header
+        </label>
+    - name: Normal label
       markup: |
         <label class="form-label">
             Form label
@@ -5242,47 +5486,6 @@ img {
       notes:
         - "When nesting a form input the input will receive a right margin to
           space it from the label text."
-    - name: Form groups
-      markup: |
-        <div class="form-group">
-            <label class="form-group_header">Form group header</label>
-            <label class="form-group_item form-label">
-                <input type="checkbox">
-                Form label
-            </label>
-            <label class="form-group_item form-label">
-                <input type="checkbox">
-                Form label
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="form-group_header">Form group header</label>
-            <select class="form-group_item" name="select">
-                <option value="value1">Value 1</option>
-                <option value="value2">Value 2</option>
-                <option value="value3">Value 3</option>
-            </select>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-group
-            .form-group_header
-            .form-group_item
-      notes:
-        - "A form group is recommended you need to associate several form
-          elements with each other like a label and an input, or a heading and a
-          group of checkboxes, or even a group of select menus that are realted
-          to each other."
-    - name: Form actions
-      markup: |
-        <div class="form-actions">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-      notes:
-        - "Simply adds some top margin to set it apart from form groups."
   tags:
     - cfgov-misc
 */
@@ -5321,11 +5524,7 @@ img {
   margin-right: 0.375em;
 }
 
-.form-group + .form-group {
-  margin-top: 1.375em;
-}
-
-.form-group_header {
+.form-label-header {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -5338,20 +5537,239 @@ img {
   margin-bottom: 0.71428571em;
 }
 
-.lt-ie9 .form-group_header {
+.lt-ie9 .form-label-header {
   font-weight: normal !important;
+}
+
+/* topdoc
+  name: Form groups
+  family: cfgov-misc
+  patterns:
+    - name: Form group
+      markup: |
+        <div class="form-group">
+            <label class="form-label-header">Form label header</label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox">
+                Form label
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-label-header">Form label header</label>
+            <select class="form-group_item" name="select">
+                <option value="value1">Value 1</option>
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-group
+            .form-group_item
+      notes:
+        - "A form group is recommended you need to associate several form
+          elements with each other like a label and an input, or a heading and a
+          group of checkboxes, or even a group of select menus that are realted
+          to each other."
+  tags:
+    - cfgov-misc
+*/
+
+.form-group + .form-group {
+  margin-top: 1.375em;
 }
 
 .form-group_item {
   margin-bottom: 0.375em;
 }
 
+/* topdoc
+  name: Form actions
+  family: cfgov-misc
+  patterns:
+    - name: Form actions
+      markup: |
+        <div class="form-actions">
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions
+            .form-actions_item
+      notes:
+        - ".form-actions adds a top margin to set it apart from form groups."
+        - ".form-actions_item adds margins between each other."
+    - name: "Form actions modifier: right align"
+      markup: |
+        <div class="form-actions form-actions__right">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions.form-actions__right
+            .form-actions_item
+      notes:
+        - "Align text to the right."
+    - name: "Form actions modifier: right align on medium screens or larger"
+      markup: |
+        <div class="form-actions form-actions__right-on-med">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions.form-actions__right-on-med
+            .form-actions_item
+      notes:
+        - "Align text to the right at 600px or larger."
+  tags:
+    - cfgov-misc
+*/
+
 .form-actions {
   margin-top: 1.625em;
 }
 
+.form-l + .form-actions {
+  margin-top: 0.9375em;
+}
+
+.form-actions__right {
+  text-align: right;
+}
+
+.form-actions__right-on-med {
+  text-align: right;
+}
+
 .form-actions_item + .form-actions_item {
   margin-left: 1.875em;
+}
+
+/* topdoc
+  name: Form layouts
+  family: cfgov-misc
+  patterns:
+    - name: Form columns
+      markup: |
+        <div class="form-l">
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 1
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 2
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 3
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-l
+            .form-l_col.form-l_col-1-3
+    - name: "Form layout modifier: flush"
+      markup: |
+        <div class="form-l form-l__flush">
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 1
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 2
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 3
+            </div>
+        </div>
+      codenotes:
+        - .form-l.form-l__flush
+      notes:
+        - "Form layout columns have left and right gutters. If you want the
+          first and last column in each row to site flush left/right
+          respectively then use the .form-l__flush modifier."
+    - name: Form layout columns
+      codenotes:
+        - .form-l_col
+        - .form-l_col-1-3
+      notes:
+        - ".form-l_col-1-3 elements are stacked for small screens. When the
+          viewport reaches 600px they transform into columns with one half the
+          width of the container. When the viewport reaches 768px their width
+          updates to one third of the container."
+  tags:
+    - cfgov-misc
+*/
+
+.form-l__flush {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.form-l_col {
+  margin-bottom: 1em;
+}
+
+.form-l_col-1-3 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .form-l_col-1-3 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .form-l_col-1-3 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.form-l_col-1-3 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 33.33333333%;
+}
+
+.ie .form-l_col-1-3 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .form-l_col-1-3 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 /* topdoc
@@ -5560,6 +5978,14 @@ img {
           .list
             .list_item
               .list_link
+    - name: List link
+      markup: |
+        <a class="list_link">List link</a>
+        <span class="list_link">List link</span>
+      codenotes:
+        - .list_link
+      notes:
+        - "Notice that you can use any element for .list_link."
   tags:
     - cfgov-misc
 */
@@ -5590,10 +6016,9 @@ img {
             <li class="list_item">
                 <a class="list_link">List item 3</a>
             </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
-            </li>
         </ul>
+      codenotes:
+        - .list.list__unstyled
   tags:
     - cfgov-misc
 */
@@ -5601,6 +6026,10 @@ img {
 .list__unstyled {
   padding-left: 0;
   list-style-type: none;
+}
+
+.list__unstyled .list_item {
+  margin-left: 0;
 }
 
 /* topdoc
@@ -5647,9 +6076,6 @@ img {
             <li class="list_item">
                 <a class="list_link">List item 3</a>
             </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
-            </li>
         </ul>
   tags:
     - cfgov-misc
@@ -5667,8 +6093,168 @@ img {
   display: inline;
 }
 
-.list__horizontal .list_item + .list_item {
-  margin-left: 0.25em;
+.list__horizontal .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
+/* topdoc
+  name: Filtered-by list
+  family: cfgov-misc
+  notes:
+    - "A list of applied filters."
+    - "This pattern is subject to change. This initial style simply highlights
+      the filters that have been applied. In the future this pattern will evolve
+      so that each applied filter can be removed by clicking/tapping it."
+  patterns:
+    - name: Default example
+      markup: |
+        <dl class="filtered-by list list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet</span>
+            </dd>
+        </dl>
+    - name: Filters aligned with a button
+      markup: |
+        <a class="btn btn-secondary"
+           style="float:right;"
+           href="#">
+            Filter
+        </a>
+        <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+        </dl>
+  tags:
+    - cfgov-misc
+*/
+
+.filtered-by {
+  margin: 0;
+}
+
+.filtered-by__show-on-medium {
+  display: none;
+}
+
+.filtered-by__show-on-medium {
+  display: block;
+}
+
+.filtered-by_header {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  margin: 0;
+  color: #101820;
+}
+
+.lt-ie9 .filtered-by_header {
+  font-weight: normal !important;
+}
+
+.filtered-by__align-with-btn .filtered-by_header {
+  display: inline-block;
+  padding-top: 0.64285714em;
+  line-height: normal;
+}
+
+.filtered-by_filter {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #75787b;
+}
+
+.filtered-by_filter em,
+.filtered-by_filter i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .filtered-by_filter em,
+.lt-ie9 .filtered-by_filter i {
+  font-style: normal !important;
+}
+
+.filtered-by_filter strong,
+.filtered-by_filter b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .filtered-by_filter strong,
+.lt-ie9 .filtered-by_filter b {
+  font-weight: normal !important;
 }
 
 /* topdoc
@@ -5679,19 +6265,19 @@ img {
       markup: |
         <a class="share-icon" href="#">
             <span class="cf-icon cf-icon-email-social-square"></span>
-            <span class="visually-hidden">
+            <span class="u-visually-hidden">
                 Share by email
             </span>
         </a>
       notes:
-        - "Text for screenreaders is added with the .visually-hidden element."
+        - "Text for screenreaders is added with the .u-visually-hidden element."
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .share-icon
             .cf-icon.cf-icon-name
-            .visually-hidden
+            .u-visually-hidden
   tags:
     - cfgov-misc
 */
@@ -5905,25 +6491,25 @@ img {
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-email-social-square"></span>
-                            <span class="visually-hidden">Share by email</span>
+                            <span class="u-visually-hidden">Share by email</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-facebook-square"></span>
-                            <span class="visually-hidden">Share on Facebook</span>
+                            <span class="u-visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-twitter-square"></span>
-                            <span class="visually-hidden">Share on Twitter</span>
+                            <span class="u-visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-linkedin-square"></span>
-                            <span class="visually-hidden">Share on LinkedIn</span>
+                            <span class="u-visually-hidden">Share on LinkedIn</span>
                         </a>
                     </li>
                 </ul>
@@ -6390,6 +6976,38 @@ img {
                 By Patrice Ficklin
             </p>
         </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary
+            .summary_header
+            .summary_text
+            .summary_byline
+    - name: Max-width summary text
+      markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <p class="summary_text summary_text__max">
+                Every year, millions of American families buy a car –
+                and it will be one of the most significant purchases they make.
+                One key priority for us is protecting consumers from the silent
+                pickpocket of discrimination.
+            </p>
+            <p class="summary_byline">
+                By Patrice Ficklin
+            </p>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary_text.summary_text__max
+      notes:
+        - "Optionally set a max-width on .summary_text to keep line lengths
+          readable."
   tags:
     - cfgov-summary
 */
@@ -6508,6 +7126,10 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
+.summary_text__max {
+  max-width: 41em;
+}
+
 .summary_byline {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -6557,22 +7179,22 @@ a.focus .summary_header {
       markup: |
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
             <span class="cf-icon cf-icon-help"></span>
-            <span class="visually-hidden">Category:</span>
+            <span class="u-visually-hidden">Category:</span>
             Innovation & data
         </a>
       notes:
@@ -6594,7 +7216,7 @@ a.focus .summary_header {
                         <div class="hero_card-padding">
                             <a href="#" class="category-slug">
                                 <span class="cf-icon cf-icon-help"></span>
-                                <span class="visually-hidden">Category:</span>
+                                <span class="u-visually-hidden">Category:</span>
                                 Category
                             </a>
                             <a class="summary" href="#">
@@ -6633,23 +7255,6 @@ a.focus .summary_header {
             .hero_img-container.hero_img-container__large
               .hero_img
 */
-
-/* topdoc
-  name: Post preview filters
-  family: cfgov-blog-docs
-  patterns:
-    - name: Blog filters
-      markup: |
-        ...
-      notes:
-        - "..."
-  tags:
-    - cfgov-blog-docs
-*/
-
-.post-preview-filters {
-  margin-bottom: 1.875em;
-}
 
 /* topdoc
   name: Post previews
@@ -6737,6 +7342,267 @@ a.focus .summary_header {
 .post-pagination {
   margin: 3.375em 0 1.75em;
 }
+
+/* topdoc
+  name: Post filters
+  family: cfgov-blog-docs
+  notes:
+    - "Post filters are a combination of a few smaller patterns like expandables,
+      filtered-by, list, padded-container, and a few form patterns."
+  patterns:
+    - name: Post filters
+      markup: |
+        <div class="expandable expandable__expanded">
+            <div class="expandable_header expandable_header__spaced">
+                <div class="expandable_header-right expandable_header-right__float-on-medium">
+                    <a class="expandable_target btn btn-secondary"
+                       href="#post-filters-form">
+                        Filter posts&nbsp;&nbsp;
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon cf-icon-down"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon cf-icon-up"></span>
+                        </span>
+                    </a>
+                </div>
+                <dl class="filtered-by
+                           filtered-by__show-on-medium
+                           filtered-by__align-with-btn
+                           list
+                           list__horizontal">
+                    <dt class="list_item">
+                        <span class="filtered-by_header">Filtered by</span>
+                    </dt>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Lorem,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Ipsum,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Dolor,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Sit,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Amet,</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="expandable_content padded-container">
+                <form class="padded-container_body" id="post-filters-form" method="get">
+                    <div class="form-l form-l__flush">
+                        <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Categories
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="filter_category" value="consumer">
+                                    Announcements &amp; updates
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                    Consumer information
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="filter_category" value="innovation">
+                                    Engagement
+                                </label>
+                                <label class="form-group_item form-label">
+                                    <input type="checkbox" name="filter_category" value="announcements">
+                                    Innovation &amp; data
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Topics
+                                </label>
+                                <input type="text" name="filter_tags" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Author
+                                </label>
+                                <input type="text" name="filter_author" value="">
+                            </div>
+                        </div>
+                        <!-- <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Date range
+                                </label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="form-actions form-actions__right-on-med">
+                        <input type="reset" value="Reset filters" class="btn btn-warning btn-link form-actions_item">
+                        <input type="submit" value="Apply filters" class="btn form-actions_item">
+                    </div>
+                </form>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable
+            .expandable_header__spaced
+              .expandable_header-right.expandable_header-right__float-on-medium
+                .expandable_target.btn.btn-secondary
+                  .expandable_cue-open
+                    .cf-icon.cf-icon-down
+                  .expandable_cue-close
+                    .cf-icon.cf-icon-up
+              .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
+            .expandable_content.padded-container
+              .padded-container_body
+                .form-l.form-l__flush
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item.form-label
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item.form-label
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item.form-label
+                .form-actions.form-actions__right-on-med
+  tags:
+    - cfgov-blog-docs
+*/
+
+/* topdoc
+  name: Insets
+  family: cfgov-blog-docs
+  patterns:
+    - name: Inset (default layout and content type)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset]Quote text here[/inset]"
+        - "[inset layout='float' content='pullquote']Quote text here[/inset]"
+      notes:
+        - "Insets default to a floating right layout but can also span the full
+          width of the article using the layout attribute. They also default to
+          a pullquote content type."
+    - name: Inset (full layout)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset line-container">
+                <div class="line-container_body pull-quote pull-quote__large">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset layout='full']Quote text here[/inset]"
+      notes:
+        - "Note that .pull-quote needs the .pull-quote__large modifier class."
+    - name: Inset (with attribution)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                    <footer>
+                        <cite class="pull-quote_citation">
+                            - Author Name
+                        </cite>
+                    </footer>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset attribution='Author Name']Quote text here[/inset]"
+      notes:
+        - "Only the pullquote content type can make use of the atrribution
+          attribute."
+    - name: Inset (with HTML content)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body">
+                    <!-- Begin custon HTML -->
+                    <h3>
+                        Final list of rural and underserved counties
+                    </h3>
+                    <p>
+                        View or download the list in any of these formats:
+                    </p>
+                    <ul class="list list__unstyled list__horizontal">
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                CSV
+                            </a>
+                        </li>
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                XLS
+                            </a>
+                        </li>
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                PDF <span class="cf-icon cf-icon-pdf"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- End custon HTML -->
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset content='html']
+             Custom HTML here.
+           [/inset]"
+      notes:
+        - "Note that .line-container_body no longer uses the .pull-quote class."
+        - "Insets using the html content type should not be allowed to use
+          layout='full'."
+  tags:
+    - cfgov-blog-docs
+*/
 
 /* topdoc
   name: EOF

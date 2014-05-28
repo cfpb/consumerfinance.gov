@@ -23,22 +23,22 @@
           <section class="docs-pattern_pattern">
 <a href="#" class="category-slug">
     <span class="cf-icon cf-icon-help"></span>
-    <span class="visually-hidden">Category:</span>
+    <span class="u-visually-hidden">Category:</span>
     Announcements & updates
 </a><br>
 <a href="#" class="category-slug">
     <span class="cf-icon cf-icon-help"></span>
-    <span class="visually-hidden">Category:</span>
+    <span class="u-visually-hidden">Category:</span>
     Consumer information
 </a><br>
 <a href="#" class="category-slug">
     <span class="cf-icon cf-icon-help"></span>
-    <span class="visually-hidden">Category:</span>
+    <span class="u-visually-hidden">Category:</span>
     Engagement
 </a><br>
 <a href="#" class="category-slug">
     <span class="cf-icon cf-icon-help"></span>
-    <span class="visually-hidden">Category:</span>
+    <span class="u-visually-hidden">Category:</span>
     Innovation & data
 </a>
 
@@ -46,22 +46,22 @@
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
     &lt;span class=&quot;cf-icon cf-icon-help&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;visually-hidden&quot;&gt;Category:&lt;/span&gt;
+    &lt;span class=&quot;u-visually-hidden&quot;&gt;Category:&lt;/span&gt;
     Announcements &amp; updates
 &lt;/a&gt;&lt;br&gt;
 &lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
     &lt;span class=&quot;cf-icon cf-icon-help&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;visually-hidden&quot;&gt;Category:&lt;/span&gt;
+    &lt;span class=&quot;u-visually-hidden&quot;&gt;Category:&lt;/span&gt;
     Consumer information
 &lt;/a&gt;&lt;br&gt;
 &lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
     &lt;span class=&quot;cf-icon cf-icon-help&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;visually-hidden&quot;&gt;Category:&lt;/span&gt;
+    &lt;span class=&quot;u-visually-hidden&quot;&gt;Category:&lt;/span&gt;
     Engagement
 &lt;/a&gt;&lt;br&gt;
 &lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
     &lt;span class=&quot;cf-icon cf-icon-help&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;visually-hidden&quot;&gt;Category:&lt;/span&gt;
+    &lt;span class=&quot;u-visually-hidden&quot;&gt;Category:&lt;/span&gt;
     Innovation &amp; data
 &lt;/a&gt;</code></pre>
             <ul class="docs-notes">
@@ -84,7 +84,7 @@
                 <div class="hero_card-padding">
                     <a href="#" class="category-slug">
                         <span class="cf-icon cf-icon-help"></span>
-                        <span class="visually-hidden">Category:</span>
+                        <span class="u-visually-hidden">Category:</span>
                         Category
                     </a>
                     <a class="summary" href="#">
@@ -117,7 +117,7 @@
                 &lt;div class=&quot;hero_card-padding&quot;&gt;
                     &lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
                         &lt;span class=&quot;cf-icon cf-icon-help&quot;&gt;&lt;/span&gt;
-                        &lt;span class=&quot;visually-hidden&quot;&gt;Category:&lt;/span&gt;
+                        &lt;span class=&quot;u-visually-hidden&quot;&gt;Category:&lt;/span&gt;
                         Category
                     &lt;/a&gt;
                     &lt;a class=&quot;summary&quot; href=&quot;#&quot;&gt;
@@ -159,31 +159,6 @@
             </ul>
           </footer>
         </div>
-      </div>
-    </div>
-    <div id="post-preview-filters" class="docs-component">
-      <h2 class="docs-component_header"><span>Post preview filters</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Blog filters</h3>
-          <section class="docs-pattern_pattern">
-...
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">...</code></pre>
-            <ul class="docs-notes">
-              <li>...</li>
-            </ul>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.post-preview-filters {
-  margin-bottom: 1.875em;
-}
-</code></pre>
       </div>
     </div>
     <div id="post-previews" class="docs-component">
@@ -332,6 +307,486 @@
   margin: 3.375em 0 1.75em;
 }
 </code></pre>
+      </div>
+    </div>
+    <div id="post-filters" class="docs-component">
+      <h2 class="docs-component_header"><span>Post filters</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Post filters are a combination of a few smaller patterns like expandables, filtered-by, list, padded-container, and a few form patterns.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Post filters</h3>
+          <section class="docs-pattern_pattern">
+<div class="expandable expandable__expanded">
+    <div class="expandable_header expandable_header__spaced">
+        <div class="expandable_header-right expandable_header-right__float-on-medium">
+            <a class="expandable_target btn btn-secondary"
+               href="#post-filters-form">
+                Filter posts&nbsp;&nbsp;
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-up"></span>
+                </span>
+            </a>
+        </div>
+        <dl class="filtered-by
+                   filtered-by__show-on-medium
+                   filtered-by__align-with-btn
+                   list
+                   list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+        </dl>
+    </div>
+    <div class="expandable_content padded-container">
+        <form class="padded-container_body" id="post-filters-form" method="get">
+            <div class="form-l form-l__flush">
+                <div class="form-l_col form-l_col-1-3">
+                    <div class="form-group">
+                        <label class="form-label-header">
+                            Categories
+                        </label>
+                        <label class="form-group_item form-label">
+                            <input type="checkbox" name="filter_category" value="consumer">
+                            Announcements &amp; updates
+                        </label>
+                        <label class="form-group_item form-label">
+                            <input type="checkbox" name="filter_category" value="regulation & compliance">
+                            Consumer information
+                        </label>
+                        <label class="form-group_item form-label">
+                            <input type="checkbox" name="filter_category" value="innovation">
+                            Engagement
+                        </label>
+                        <label class="form-group_item form-label">
+                            <input type="checkbox" name="filter_category" value="announcements">
+                            Innovation &amp; data
+                        </label>
+                    </div>
+                </div>
+                <div class="form-l_col form-l_col-1-3">
+                    <div class="form-group">
+                        <label class="form-label-header">
+                            Topics
+                        </label>
+                        <input type="text" name="filter_tags" value="">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label-header">
+                            Author
+                        </label>
+                        <input type="text" name="filter_author" value="">
+                    </div>
+                </div>
+                <!-- <div class="form-l_col form-l_col-1-3">
+                    <div class="form-group">
+                        <label class="form-label-header">
+                            Date range
+                        </label>
+                    </div>
+                </div> -->
+            </div>
+            <div class="form-actions form-actions__right-on-med">
+                <input type="reset" value="Reset filters" class="btn btn-warning btn-link form-actions_item">
+                <input type="submit" value="Apply filters" class="btn form-actions_item">
+            </div>
+        </form>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;expandable expandable__expanded&quot;&gt;
+    &lt;div class=&quot;expandable_header expandable_header__spaced&quot;&gt;
+        &lt;div class=&quot;expandable_header-right expandable_header-right__float-on-medium&quot;&gt;
+            &lt;a class=&quot;expandable_target btn btn-secondary&quot;
+               href=&quot;#post-filters-form&quot;&gt;
+                Filter posts&amp;nbsp;&amp;nbsp;
+                &lt;span class=&quot;expandable_cue-open&quot;&gt;
+                    &lt;span class=&quot;cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class=&quot;expandable_cue-close&quot;&gt;
+                    &lt;span class=&quot;cf-icon cf-icon-up&quot;&gt;&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;dl class=&quot;filtered-by
+                   filtered-by__show-on-medium
+                   filtered-by__align-with-btn
+                   list
+                   list__horizontal&quot;&gt;
+            &lt;dt class=&quot;list_item&quot;&gt;
+                &lt;span class=&quot;filtered-by_header&quot;&gt;Filtered by&lt;/span&gt;
+            &lt;/dt&gt;
+            &lt;dd class=&quot;list_item&quot;&gt;
+                &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dd class=&quot;list_item&quot;&gt;
+                &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dd class=&quot;list_item&quot;&gt;
+                &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dd class=&quot;list_item&quot;&gt;
+                &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dd class=&quot;list_item&quot;&gt;
+                &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+            &lt;/dd&gt;
+        &lt;/dl&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;expandable_content padded-container&quot;&gt;
+        &lt;form class=&quot;padded-container_body&quot; id=&quot;post-filters-form&quot; method=&quot;get&quot;&gt;
+            &lt;div class=&quot;form-l form-l__flush&quot;&gt;
+                &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-label-header&quot;&gt;
+                            Categories
+                        &lt;/label&gt;
+                        &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;filter_category&quot; value=&quot;consumer&quot;&gt;
+                            Announcements &amp;amp; updates
+                        &lt;/label&gt;
+                        &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;filter_category&quot; value=&quot;regulation &amp; compliance&quot;&gt;
+                            Consumer information
+                        &lt;/label&gt;
+                        &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;filter_category&quot; value=&quot;innovation&quot;&gt;
+                            Engagement
+                        &lt;/label&gt;
+                        &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;filter_category&quot; value=&quot;announcements&quot;&gt;
+                            Innovation &amp;amp; data
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-label-header&quot;&gt;
+                            Topics
+                        &lt;/label&gt;
+                        &lt;input type=&quot;text&quot; name=&quot;filter_tags&quot; value=&quot;&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-label-header&quot;&gt;
+                            Author
+                        &lt;/label&gt;
+                        &lt;input type=&quot;text&quot; name=&quot;filter_author&quot; value=&quot;&quot;&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;!-- &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label class=&quot;form-label-header&quot;&gt;
+                            Date range
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt; --&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;form-actions form-actions__right-on-med&quot;&gt;
+                &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.expandable
+  .expandable_header__spaced
+    .expandable_header-right.expandable_header-right__float-on-medium
+      .expandable_target.btn.btn-secondary
+        .expandable_cue-open
+          .cf-icon.cf-icon-down
+        .expandable_cue-close
+          .cf-icon.cf-icon-up
+    .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
+  .expandable_content.padded-container
+    .padded-container_body
+      .form-l.form-l__flush
+        .form-l_col.form-l_col-1-3
+          .form-group
+            .form-label-header
+            .form-group_item.form-label
+        .form-l_col.form-l_col-1-3
+          .form-group
+            .form-label-header
+            .form-group_item.form-label
+        .form-l_col.form-l_col-1-3
+          .form-group
+            .form-label-header
+            .form-group_item.form-label
+      .form-actions.form-actions__right-on-med</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="insets" class="docs-component">
+      <h2 class="docs-component_header"><span>Insets</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (default layout and content type)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset post_inset__right line-container">
+        <div class="line-container_body pull-quote">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset post_inset__right line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body pull-quote&quot;&gt;
+            &lt;div class=&quot;pull-quote_body&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset]Quote text here[/inset]</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>[inset layout='float' content='pullquote']Quote text here[/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Insets default to a floating right layout but can also span the full width of the article using the layout attribute. They also default to a pullquote content type.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (full layout)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset line-container">
+        <div class="line-container_body pull-quote pull-quote__large">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body pull-quote pull-quote__large&quot;&gt;
+            &lt;div class=&quot;pull-quote_body&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset layout='full']Quote text here[/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Note that .pull-quote needs the .pull-quote__large modifier class.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (with attribution)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset post_inset__right line-container">
+        <div class="line-container_body pull-quote">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+            <footer>
+                <cite class="pull-quote_citation">
+                    - Author Name
+                </cite>
+            </footer>
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset post_inset__right line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body pull-quote&quot;&gt;
+            &lt;div class=&quot;pull-quote_body&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            &lt;/div&gt;
+            &lt;footer&gt;
+                &lt;cite class=&quot;pull-quote_citation&quot;&gt;
+                    - Author Name
+                &lt;/cite&gt;
+            &lt;/footer&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset attribution='Author Name']Quote text here[/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Only the pullquote content type can make use of the atrribution attribute.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (with HTML content)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset post_inset__right line-container">
+        <div class="line-container_body">
+            <!-- Begin custon HTML -->
+            <h3>
+                Final list of rural and underserved counties
+            </h3>
+            <p>
+                View or download the list in any of these formats:
+            </p>
+            <ul class="list list__unstyled list__horizontal">
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        CSV
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        XLS
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        PDF <span class="cf-icon cf-icon-pdf"></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- End custon HTML -->
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset post_inset__right line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body&quot;&gt;
+            &lt;!-- Begin custon HTML --&gt;
+            &lt;h3&gt;
+                Final list of rural and underserved counties
+            &lt;/h3&gt;
+            &lt;p&gt;
+                View or download the list in any of these formats:
+            &lt;/p&gt;
+            &lt;ul class=&quot;list list__unstyled list__horizontal&quot;&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;
+                        CSV
+                    &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;
+                        XLS
+                    &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;
+                        PDF &lt;span class=&quot;cf-icon cf-icon-pdf&quot;&gt;&lt;/span&gt;
+                    &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;!-- End custon HTML --&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset content='html'] Custom HTML here. [/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Note that .line-container_body no longer uses the .pull-quote class.</li>
+              <li>Insets using the html content type should not be allowed to use layout='full'.</li>
+            </ul>
+          </footer>
+        </div>
       </div>
     </div>
     <script src="static/docs/main.min.js"></script>

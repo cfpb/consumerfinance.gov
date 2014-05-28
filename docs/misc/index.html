@@ -15,65 +15,246 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
-    <div id="forms" class="docs-component">
-      <h2 class="docs-component_header"><span>Forms</span></h2>
+    <div id="expandables" class="docs-component">
+      <h2 class="docs-component_header"><span>Expandables</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form element showcase</h3>
+          <h3 class="docs-pattern_header">Header right float on medium modifier</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.expandable_header-right__float-on-medium</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.expandable_header-right__float-on-medium {
+  float: none;
+}
+@media only all and (min-width: 37.5em) {
+  .expandable_header-right__float-on-medium {
+    float: right;
+  }
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-pattern-showcase" class="docs-component">
+      <h2 class="docs-component_header"><span>Form pattern showcase</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
           <section class="docs-pattern_pattern">
-<div class="form-group">
-    <label class="form-group_header">Form group header</label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
+<div class="form-l">
+    <div class="form-l_col form-l_col-1-3">
+        <div class="form-group">
+            <label class="form-label-header">
+                Form layout column 1
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox" name="" value="">
+                Checkbox 1
+            </label>
+            <label class="form-group_item form-label">
+                <input type="checkbox" name="" value="">
+                Checkbox 2
+            </label>
+        </div>
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        <div class="form-group">
+            <label class="form-label-header">
+                Form layout column 2
+            </label>
+            <input type="text" name="" value="">
+        </div>
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        <div class="form-group">
+            <label class="form-label-header">
+                Form layout column 3
+            </label>
+            <input type="text" name="" value="">
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <label class="form-group_header">Form group header</label>
-    <select class="form-group_item" name="select">
-        <option value="value1">Value 1</option>
-        <option value="value2">Value 2</option>
-        <option value="value3">Value 3</option>
-    </select>
-</div>
-<div class="form-actions">
-    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-    <input type="submit" value="Apply filters" class="btn form-actions_item">
+<div class="form-actions form-actions__right">
+    <input type="reset" value="Reset filters"
+           class="btn btn-warning btn-link form-actions_item">
+    <input type="submit" value="Apply filters"
+           class="btn form-actions_item">
 </div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
+                Form layout column 1
+            &lt;/label&gt;
+            &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                Checkbox 1
+            &lt;/label&gt;
+            &lt;label class=&quot;form-group_item form-label&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+                Checkbox 2
+            &lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
+                Form layout column 2
+            &lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label-header&quot;&gt;
+                Form layout column 3
+            &lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
-    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
-        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
-        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
-        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-actions&quot;&gt;
-    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;div class=&quot;form-actions form-actions__right&quot;&gt;
+    &lt;input type=&quot;reset&quot; value=&quot;Reset filters&quot;
+           class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot;
+           class=&quot;btn form-actions_item&quot;&gt;
 &lt;/div&gt;</code></pre>
           </footer>
         </div>
+      </div>
+    </div>
+    <div id="multi-select" class="docs-component">
+      <h2 class="docs-component_header"><span>Multi select</span></h2>
+      <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form label</h3>
+          <h3 class="docs-pattern_header">Default multi select</h3>
+          <section class="docs-pattern_pattern">
+<select multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Focused state</h3>
+          <section class="docs-pattern_pattern">
+<select class="focus" multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select class=&quot;focus&quot; multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Error state</h3>
+          <section class="docs-pattern_pattern">
+<select class="error" multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+<span class="cf-form_input-icon cf-icon cf-icon-delete-round" role="alert">
+  <span class="jekyll-bug"></span>
+</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select class=&quot;error&quot; multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;
+&lt;span class=&quot;cf-form_input-icon cf-icon cf-icon-delete-round&quot; role=&quot;alert&quot;&gt;
+  &lt;span class=&quot;jekyll-bug&quot;&gt;&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Please review the notes on form input error icons in the form icons section below.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Success state</h3>
+          <section class="docs-pattern_pattern">
+<select class="success" multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+<span class="cf-form_input-icon cf-icon cf-icon-approved-round">
+  <span class="jekyll-bug"></span>
+</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select class=&quot;success&quot; multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;
+&lt;span class=&quot;cf-form_input-icon cf-icon cf-icon-approved-round&quot;&gt;
+  &lt;span class=&quot;jekyll-bug&quot;&gt;&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Please review the notes on form input success icons in the form icons section below.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */</code></pre>
+      </div>
+    </div>
+    <div id="form-labels" class="docs-component">
+      <h2 class="docs-component_header"><span>Form labels</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Label header</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label-header">
+    Form label header
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label-header&quot;&gt;
+    Form label header
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Normal label</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label">
     Form label
@@ -102,83 +283,6 @@
 &lt;/label&gt;</code></pre>
             <ul class="docs-notes">
               <li>When nesting a form input the input will receive a right margin to space it from the label text.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form groups</h3>
-          <section class="docs-pattern_pattern">
-<div class="form-group">
-    <label class="form-group_header">Form group header</label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
-    <label class="form-group_item form-label">
-        <input type="checkbox">
-        Form label
-    </label>
-</div>
-<div class="form-group">
-    <label class="form-group_header">Form group header</label>
-    <select class="form-group_item" name="select">
-        <option value="value1">Value 1</option>
-        <option value="value2">Value 2</option>
-        <option value="value3">Value 3</option>
-    </select>
-</div>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
-    &lt;label class=&quot;form-group_item form-label&quot;&gt;
-        &lt;input type=&quot;checkbox&quot;&gt;
-        Form label
-    &lt;/label&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;form-group_header&quot;&gt;Form group header&lt;/label&gt;
-    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
-        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
-        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
-        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/div&gt;</code></pre>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>Structural cheat sheet:
------------------------
-.form-group
-  .form-group_header
-  .form-group_item</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>A form group is recommended you need to associate several form elements with each other like a label and an input, or a heading and a group of checkboxes, or even a group of select menus that are realted to each other.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Form actions</h3>
-          <section class="docs-pattern_pattern">
-<div class="form-actions">
-    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
-    <input type="submit" value="Apply filters" class="btn form-actions_item">
-</div>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions&quot;&gt;
-    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
-&lt;/div&gt;</code></pre>
-            <ul class="docs-notes">
-              <li>Simply adds some top margin to set it apart from form groups.</li>
             </ul>
           </footer>
         </div>
@@ -212,10 +316,7 @@
 .form-label input {
   margin-right: 0.375em;
 }
-.form-group + .form-group {
-  margin-top: 1.375em;
-}
-.form-group_header {
+.form-label-header {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -227,17 +328,340 @@
   line-height: 1.57142857;
   margin-bottom: 0.71428571em;
 }
-.lt-ie9 .form-group_header {
+.lt-ie9 .form-label-header {
   font-weight: normal !important;
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-groups" class="docs-component">
+      <h2 class="docs-component_header"><span>Form groups</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form group</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-group">
+    <label class="form-label-header">Form label header</label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+    <label class="form-group_item form-label">
+        <input type="checkbox">
+        Form label
+    </label>
+</div>
+<div class="form-group">
+    <label class="form-label-header">Form label header</label>
+    <select class="form-group_item" name="select">
+        <option value="value1">Value 1</option>
+        <option value="value2">Value 2</option>
+        <option value="value3">Value 3</option>
+    </select>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+    &lt;label class=&quot;form-group_item form-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot;&gt;
+        Form label
+    &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
+    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
+        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
+        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
+        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-group
+  .form-group_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>A form group is recommended you need to associate several form elements with each other like a label and an input, or a heading and a group of checkboxes, or even a group of select menus that are realted to each other.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.form-group + .form-group {
+  margin-top: 1.375em;
 }
 .form-group_item {
   margin-bottom: 0.375em;
-}
-.form-actions {
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-actions" class="docs-component">
+      <h2 class="docs-component_header"><span>Form actions</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions">
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.form-actions adds a top margin to set it apart from form groups.</li>
+              <li>.form-actions_item adds margins between each other.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions modifier: right align</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions form-actions__right">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions form-actions__right&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions.form-actions__right
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Align text to the right.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions modifier: right align on medium screens or larger</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions form-actions__right-on-med">
+    <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions form-actions__right-on-med&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn-warning btn-link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions.form-actions__right-on-med
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Align text to the right at 600px or larger.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.form-actions {
   margin-top: 1.625em;
+}
+@media only all and (min-width: 37.5em) {
+  .form-l + .form-actions {
+    margin-top: 0.9375em;
+  }
+}
+.form-actions__right {
+  text-align: right;
+}
+@media only all and (min-width: 37.5em) {
+  .form-actions__right-on-med {
+    text-align: right;
+  }
 }
 .form-actions_item + .form-actions_item {
   margin-left: 1.875em;
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-layouts" class="docs-component">
+      <h2 class="docs-component_header"><span>Form layouts</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form columns</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-l">
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 1
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 2
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 3
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 1
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 2
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 3
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-l
+  .form-l_col.form-l_col-1-3</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form layout modifier: flush</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-l form-l__flush">
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 1
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 2
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 3
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l form-l__flush&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 1
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 2
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 3
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.form-l.form-l__flush</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Form layout columns have left and right gutters. If you want the first and last column in each row to site flush left/right respectively then use the .form-l__flush modifier.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form layout columns</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.form-l_col</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.form-l_col-1-3</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.form-l_col-1-3 elements are stacked for small screens. When the viewport reaches 600px they transform into columns with one half the width of the container. When the viewport reaches 768px their width updates to one third of the container.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">@media only all and (min-width: 37.5em) {
+  .form-l__flush {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+.form-l_col {
+  margin-bottom: 1em;
+}
+@media only all and (min-width: 37.5em) {
+  .form-l_col-1-3 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .form-l_col-1-3 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-1-3 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 48em) {
+  .form-l_col-1-3 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+  }
+  .ie .form-l_col-1-3 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-1-3 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
 }</code></pre>
       </div>
     </div>
@@ -549,6 +973,26 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">List link</h3>
+          <section class="docs-pattern_pattern">
+<a class="list_link">List link</a>
+<span class="list_link">List link</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot;&gt;List link&lt;/a&gt;
+&lt;span class=&quot;list_link&quot;&gt;List link&lt;/span&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list_link</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice that you can use any element for .list_link.</li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.list_link {
@@ -577,9 +1021,6 @@
     <li class="list_item">
         <a class="list_link">List item 3</a>
     </li>
-    <li class="list_item">
-        <a class="list_link">List item 4</a>
-    </li>
 </ul>
 
           </section>
@@ -594,10 +1035,12 @@
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
     &lt;/li&gt;
-    &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
-    &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list.list__unstyled</code></pre>
+              </li>
+            </ul>
           </footer>
         </div>
       </div>
@@ -605,6 +1048,9 @@
         <pre class="docs-code"><code data-language="css">.list__unstyled {
   padding-left: 0;
   list-style-type: none;
+}
+.list__unstyled .list_item {
+  margin-left: 0;
 }</code></pre>
       </div>
     </div>
@@ -670,9 +1116,6 @@
     <li class="list_item">
         <a class="list_link">List item 3</a>
     </li>
-    <li class="list_item">
-        <a class="list_link">List item 4</a>
-    </li>
 </ul>
 
           </section>
@@ -686,9 +1129,6 @@
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
           </footer>
@@ -704,8 +1144,246 @@
 .lt-ie8 .list__horizontal .list_item {
   display: inline;
 }
-.list__horizontal .list_item + .list_item {
-  margin-left: 0.25em;
+.list__horizontal .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}</code></pre>
+      </div>
+    </div>
+    <div id="filtered-by-list" class="docs-component">
+      <h2 class="docs-component_header"><span>Filtered-by list</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>A list of applied filters.</li>
+          <li>This pattern is subject to change. This initial style simply highlights the filters that have been applied. In the future this pattern will evolve so that each applied filter can be removed by clicking/tapping it.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<dl class="filtered-by list list__horizontal">
+    <dt class="list_item">
+        <span class="filtered-by_header">Filtered by</span>
+    </dt>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet</span>
+    </dd>
+</dl>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;dl class=&quot;filtered-by list list__horizontal&quot;&gt;
+    &lt;dt class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_header&quot;&gt;Filtered by&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet&lt;/span&gt;
+    &lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Filters aligned with a button</h3>
+          <section class="docs-pattern_pattern">
+<a class="btn btn-secondary"
+   style="float:right;"
+   href="#">
+    Filter
+</a>
+<dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+    <dt class="list_item">
+        <span class="filtered-by_header">Filtered by</span>
+    </dt>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet,</span>
+    </dd>
+</dl>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;btn btn-secondary&quot;
+   style=&quot;float:right;&quot;
+   href=&quot;#&quot;&gt;
+    Filter
+&lt;/a&gt;
+&lt;dl class=&quot;filtered-by filtered-by__align-with-btn list list__horizontal&quot;&gt;
+    &lt;dt class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_header&quot;&gt;Filtered by&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.filtered-by {
+  margin: 0;
+}
+.filtered-by__show-on-medium {
+  display: none;
+}
+@media only all and (min-width: 37.5em) {
+  .filtered-by__show-on-medium {
+    display: block;
+  }
+}
+.filtered-by_header {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  margin: 0;
+  color: #101820;
+}
+.lt-ie9 .filtered-by_header {
+  font-weight: normal !important;
+}
+.filtered-by__align-with-btn .filtered-by_header {
+  display: inline-block;
+  padding-top: 0.64285714em;
+  line-height: normal;
+}
+.filtered-by_filter {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #75787b;
+}
+.filtered-by_filter em,
+.filtered-by_filter i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .filtered-by_filter em,
+.lt-ie9 .filtered-by_filter i {
+  font-style: normal !important;
+}
+.filtered-by_filter strong,
+.filtered-by_filter b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .filtered-by_filter strong,
+.lt-ie9 .filtered-by_filter b {
+  font-weight: normal !important;
 }</code></pre>
       </div>
     </div>
@@ -717,7 +1395,7 @@
           <section class="docs-pattern_pattern">
 <a class="share-icon" href="#">
     <span class="cf-icon cf-icon-email-social-square"></span>
-    <span class="visually-hidden">
+    <span class="u-visually-hidden">
         Share by email
     </span>
 </a>
@@ -726,7 +1404,7 @@
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;share-icon&quot; href=&quot;#&quot;&gt;
     &lt;span class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;visually-hidden&quot;&gt;
+    &lt;span class=&quot;u-visually-hidden&quot;&gt;
         Share by email
     &lt;/span&gt;
 &lt;/a&gt;</code></pre>
@@ -736,11 +1414,11 @@
 -----------------------
 .share-icon
   .cf-icon.cf-icon-name
-  .visually-hidden</code></pre>
+  .u-visually-hidden</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Text for screenreaders is added with the .visually-hidden element.</li>
+              <li>Text for screenreaders is added with the .u-visually-hidden element.</li>
             </ul>
           </footer>
         </div>
