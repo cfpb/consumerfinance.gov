@@ -7452,7 +7452,7 @@ a.focus .summary_header {
 
             <!-- Begin [inset] HTML -->
             <aside class="post_inset line-container">
-                <div class="line-container_body pull-quote">
+                <div class="line-container_body pull-quote pull-quote__large">
                     <div class="pull-quote_body">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         Cum corrupti tempora nam nihil qui mollitia consectetur
@@ -7465,6 +7465,8 @@ a.focus .summary_header {
         </div>
       codenotes:
         - "[inset layout='full']Quote text here[/inset]"
+      notes:
+        - "Note that .pull-quote needs the .pull-quote__large modifier class."
     - name: Inset (with attribution)
       markup: |
         <div style="overflow:hidden;">
