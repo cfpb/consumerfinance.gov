@@ -95,8 +95,7 @@
                                         Topics
                                     </label>
                                     <!-- <input type="text" name="filter_tags" value=""> -->
-                                    <select name="filter_tags"> 
-                                        <option value="">Select a topic</option>
+                                    <select name="filter_tags" multiple>
                                         {% for tags in queries.posts.possible_values_for('tags') %}
                                         <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
                                         {% endfor %}
@@ -107,8 +106,7 @@
                                         Author
                                     </label>
                                     <!-- <input type="text" name="filter_author" value=""> -->
-                                    <select name="filter_author"> 
-                                        <option value="">Select an author</option>
+                                    <select name="filter_author" multiple>
                                         {% for author in queries.posts.possible_values_for('author') %}
                                         <option value="{{author.term}}">{{author.term}}</option>
                                         {% endfor %}
