@@ -94,13 +94,25 @@
                                     <label class="form-label-header">
                                         Topics
                                     </label>
-                                    <input type="text" name="filter_tags" value="">
+                                    <!-- <input type="text" name="filter_tags" value=""> -->
+                                    <select name="filter_tags"> 
+                                        <option value="">Select a topic</option>
+                                        {% for tags in queries.posts.possible_values_for('tags') %}
+                                        <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label-header">
                                         Author
                                     </label>
-                                    <input type="text" name="filter_author" value="">
+                                    <!-- <input type="text" name="filter_author" value=""> -->
+                                    <select name="filter_author"> 
+                                        <option value="">Select an author</option>
+                                        {% for author in queries.posts.possible_values_for('author') %}
+                                        <option value="{{author.term}}">{{author.term}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <!-- <div class="form-l_col form-l_col-1-3">
