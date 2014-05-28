@@ -119,17 +119,6 @@
         <span class="cf-form_input-icon cf-icon cf-icon-approved-round">
           <span class="jekyll-bug"></span>
         </span>
-    - name: Styled select
-      markup: |
-        <div class="select">
-            <span class="select_icon cf-icon cf-icon-play"></span>
-            <select class="input__light">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-            </select>
-        </div>
     tags:
     - cfgov-misc
 */
@@ -154,38 +143,6 @@ select.success {
     &:extend(input[type="text"].success);
 }
 
-.input__light {
-    border-color: @gray-50;
-    color: @gray-50;
-}
-
-.select {
-    position: relative;
-    background: @white;
-
-    select {
-        box-sizing: border-box;
-        display: block;
-        width: 100%;
-        position: relative;
-        z-index: 2;
-        background: transparent;
-    }
-
-    &_icon {
-        position: absolute;
-        // 4px = input top padding and 1px = input top border.
-        top: unit((4px + 1px) / @base-font-size-px, em);
-        right: 9px;
-        z-index: 1;
-        line-height: @base-line-height;
-        color: @gray-50;
-
-        &.cf-icon-play {
-            transform: rotate(90deg);
-        }
-    }
-}
 
 /* topdoc
   name: Form labels
