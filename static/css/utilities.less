@@ -84,6 +84,30 @@
 
 
 /* topdoc
+  name: Align with button
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      codenotes:
+        - ".u-align-with-btn(@font-size: @base-font-size-px);"
+      notes:
+        - "Adds top padding (among other things) to help alignment with buttons."
+        - "If you pass no arguments then the padding will be calculated using
+          @base-font-size-px."
+        - "Pass one argument to use a custom font size to calculate the top
+          padding."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-align-with-btn(@font-size: @base-font-size-px) {
+    display: inline-block;
+    padding-top: unit(9px / @font-size, em);
+    line-height: normal;
+}
+
+
+/* topdoc
   name: Flexible proportional containers
   family: cfgov-utilities
   notes:
