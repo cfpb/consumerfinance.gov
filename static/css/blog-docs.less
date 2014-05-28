@@ -184,12 +184,15 @@
 /* topdoc
   name: Post filters
   family: cfgov-blog-docs
+  notes:
+    - "Post filters are a combination of a few smaller patterns like expandables,
+      filtered-by, list, padded-container, and a few form patterns."
   patterns:
     - name: Post filters
       markup: |
         <div class="expandable expandable__expanded">
             <div class="expandable_header expandable_header__spaced">
-                <div class="div expandable_header-right">
+                <div class="expandable_header-right">
                     <a class="expandable_target btn btn-secondary"
                        href="#post-filters-form">
                         Filter posts&nbsp;&nbsp;
@@ -201,13 +204,26 @@
                         </span>
                     </a>
                 </div>
-                <div class="expandable_header-left">
-                    <dl class="list list__horizontal">
-                        <span class="h5">Blog filtered by</span>&nbsp;
-                        <a href="?filter_category=consumer">Consumer</a>,
-                        <a href="?filter_category=students">Students</a>
-                    </dl>
-                </div>
+                <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+                    <dt class="list_item">
+                        <span class="filtered-by_header">Filtered by</span>
+                    </dt>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Lorem,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Ipsum,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Dolor,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Sit,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Amet,</span>
+                    </dd>
+                </dl>
             </div>
             <div class="expandable_content padded-container">
                 <form class="padded-container_body" id="post-filters-form" method="get">
@@ -270,14 +286,29 @@
           -----------------------
           .expandable
             .expandable_header__spaced
-              .expandable_target.btn.btn-secondary
+              .expandable_header-right
+                .expandable_target.btn.btn-secondary
+                  .expandable_cue-open
+                    .cf-icon.cf-icon-down
+                  .expandable_cue-close
+                    .cf-icon.cf-icon-up
+              .filtered-by.filtered-by__align-with-btn.list.list__horizontal
             .expandable_content.padded-container
               .padded-container_body
-                .filter_cols
-                  .filter_col.filter_col-1-3
-                .filter-actions.filter-actions__right
-      notes:
-        - "The filters pattern relies on expandables."
+                .form-l.form-l__flush
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item.form-label
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item.form-label
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item.form-label
+                .form-actions.form-actions__right-on-med
   tags:
     - cfgov-blog-docs
 */
