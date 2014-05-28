@@ -130,6 +130,112 @@
         </div>
       </div>
     </div>
+    <div id="multi-select" class="docs-component">
+      <h2 class="docs-component_header"><span>Multi select</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default multi select</h3>
+          <section class="docs-pattern_pattern">
+<select multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Focused state</h3>
+          <section class="docs-pattern_pattern">
+<select class="focus" multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select class=&quot;focus&quot; multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Error state</h3>
+          <section class="docs-pattern_pattern">
+<select class="error" multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+<span class="cf-form_input-icon cf-icon cf-icon-delete-round" role="alert">
+  <span class="jekyll-bug"></span>
+</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select class=&quot;error&quot; multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;
+&lt;span class=&quot;cf-form_input-icon cf-icon cf-icon-delete-round&quot; role=&quot;alert&quot;&gt;
+  &lt;span class=&quot;jekyll-bug&quot;&gt;&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Please review the notes on form input error icons in the form icons section below.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Success state</h3>
+          <section class="docs-pattern_pattern">
+<select class="success" multiple>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+</select>
+<span class="cf-form_input-icon cf-icon cf-icon-approved-round">
+  <span class="jekyll-bug"></span>
+</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;select class=&quot;success&quot; multiple&gt;
+    &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+    &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+&lt;/select&gt;
+&lt;span class=&quot;cf-form_input-icon cf-icon cf-icon-approved-round&quot;&gt;
+  &lt;span class=&quot;jekyll-bug&quot;&gt;&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Please review the notes on form input success icons in the form icons section below.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */</code></pre>
+      </div>
+    </div>
     <div id="form-labels" class="docs-component">
       <h2 class="docs-component_header"><span>Form labels</span></h2>
       <div class="docs-patterns">
