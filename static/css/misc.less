@@ -494,49 +494,9 @@
         - .list_link
       notes:
         - "Notice that you can use any element for .list_link."
-    - name: List label
-      markup: |
-        <ul class="list">
-            <li class="list_item">
-                <h3 class="list_label">Unordered</h3>
-                <ul class="list">
-                    <li class="list_item">
-                        <h4 class="list_label">Unordered</h4>
-                        <ul class="list">
-                            <li class="list_item">
-                                <a class="list_link">List item 1</a>
-                            </li>
-                            <li class="list_item">
-                                <a class="list_link">List item 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="list_item">
-                <h3 class="list_label">Definition list</h3>
-                <ul class="list">
-                    <li class="list_item">
-                        <a class="list_link">List item 1</a>
-                    </li>
-                    <li class="list_item">
-                        <a class="list_link">List item 2</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-      codenotes:
-        - .list_label
-      notes:
-        - "Notice that you can use any element for .list_label."
   tags:
     - cfgov-misc
 */
-
-.list_label {
-    .h5();
-    display: block;
-}
 
 .list_link {
     .webfont-medium();
@@ -551,9 +511,6 @@
       markup: |
         <ul class="list list__unstyled">
             <li class="list_item">
-                <h3 class="list_label">Unordered list</h3>
-            </li>
-            <li class="list_item">
                 <a class="list_link">List item 1</a>
             </li>
             <li class="list_item">
@@ -563,29 +520,8 @@
                 <a class="list_link">List item 3</a>
             </li>
         </ul>
-        <dl class="list list__unstyled">
-            <dt class="list_item">
-                <span class="list_label">Definition list</span>
-            </dt>
-            <dd class="list_item">
-                <a class="list_link">List item 1</a>
-            </dd>
-            <dd class="list_item">
-                <a class="list_link">List item 2</a>
-            </dd>
-            <dd class="list_item">
-                <a class="list_link">List item 3</a>
-            </dd>
-        </dl>
       codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .list.list__unstyled
-            .list_item
-              .list_label
-            .list_item
-              .list_link
+        - .list.list__unstyled
   tags:
     - cfgov-misc
 */
@@ -638,9 +574,6 @@
       markup: |
         <ul class="list list__horizontal">
             <li class="list_item">
-                <h3 class="list_label">List label</h3>
-            </li>
-            <li class="list_item">
                 <a class="list_link">List item 1</a>
             </li>
             <li class="list_item">
@@ -672,84 +605,110 @@
 
 
 /* topdoc
-  name: Filtered-by list
+  name: Filter list
   family: cfgov-misc
   patterns:
-    - name: A list of applied filters
+    - name: Default example
       markup: |
-        <dl class="list list__filtered-by list__horizontal">
+        <dl class="filtered-by list list__horizontal">
             <dt class="list_item">
-                <span class="list_label">Filtered by</span>
+                <span class="filtered-by_header">Filtered by</span>
             </dt>
             <dd class="list_item">
-                <span class="list_link">Lorem,</span>
+                <span class="filtered-by_filter">Lorem,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Ipsum,</span>
+                <span class="filtered-by_filter">Ipsum,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Dolor,</span>
+                <span class="filtered-by_filter">Dolor,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Sit,</span>
+                <span class="filtered-by_filter">Sit,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Amet,</span>
+                <span class="filtered-by_filter">Amet,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Consectetur,</span>
+                <span class="filtered-by_filter">Lorem,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Adipisicing,</span>
+                <span class="filtered-by_filter">Ipsum,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Id,</span>
+                <span class="filtered-by_filter">Dolor,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Accusantium,</span>
+                <span class="filtered-by_filter">Sit,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Adipisci,</span>
+                <span class="filtered-by_filter">Amet,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Voluptatem,</span>
+                <span class="filtered-by_filter">Lorem,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Quibusdam,</span>
+                <span class="filtered-by_filter">Ipsum,</span>
             </dd>
             <dd class="list_item">
-                <span class="list_link">Ducimus</span>
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet</span>
             </dd>
         </dl>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .list.list__filtered-by.list__horizontal
-            .list_item
-              .list_label
-            .list_item
-              .list_link
-      notes:
-        - "If you need a vertical 'filtered by' list you can replace
-          .list__horizontal with .list__unstyled."
+    - name: Filters aligned with a button
+      markup: |
+        <a class="btn btn-secondary"
+           style="float:right;"
+           href="#">
+            Filter
+        </a>
+        <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+        </dl>
   tags:
     - cfgov-misc
 */
 
-.list__filtered-by {
 
-    &.list__horizontal .list_label {
-        // 6px + 4px of inline block space = 10px total.
-        // margin: 0 unit(6px / @font-size, em) 0 0;
-        margin-bottom: 0;
+.filtered-by {
+    margin: 0;
+
+    &_header {
+        .form-label-header;
+        margin: 0;
+        color: @black;
+
+        .filtered-by__align-with-btn & {
+            .u-align-with-btn(@font-size);
+        }
     }
 
-    .list_link {
-        .webfont-regular();
+    &_filter {
+        .form-label;
         color: @gray;
     }
-
 }
 
 
