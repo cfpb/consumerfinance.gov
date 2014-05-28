@@ -125,21 +125,21 @@
 
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 
-select[multiple] {
+select {
     &:extend(input[type="text"]);
 }
 
-select[multiple]:focus,
-select[multiple].focus {
+select:focus,
+select.focus {
     // Class included for static state examples
     &:extend(input[type="text"]:focus);
 }
 
-select[multiple].error {
+select.error {
     &:extend(input[type="text"].error);
 }
 
-select[multiple].success {
+select.success {
     &:extend(input[type="text"].success);
 }
 

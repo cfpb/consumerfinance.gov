@@ -1709,7 +1709,7 @@ input[type="url"],
 input[type="tel"],
 input[type="number"],
 textarea,
-select[multiple] {
+select {
   display: inline-block;
   width: 85%;
   margin: 0;
@@ -1738,8 +1738,8 @@ input[type="number"]:focus,
 input[type="number"].focus,
 textarea:focus,
 textarea.focus,
-select[multiple]:focus,
-select[multiple].focus {
+select:focus,
+select.focus {
   border: 1px solid #0072ce;
   border-color: #0072ce;
   outline: 1px solid #0072ce;
@@ -1755,7 +1755,7 @@ input[type="url"].error,
 input[type="tel"].error,
 input[type="number"].error,
 textarea.error,
-select[multiple].error {
+select.error {
   border: 1px solid #d12124;
   outline: 1px solid #d12124;
 }
@@ -1767,7 +1767,7 @@ input[type="url"].success,
 input[type="tel"].success,
 input[type="number"].success,
 textarea.success,
-select[multiple].success {
+select.success {
   border: 1px solid #2cb34a;
   outline: 1px solid #2cb34a;
 }
@@ -7123,7 +7123,7 @@ a.focus .summary_header {
 }
 
 .summary_text__max {
-  max-width: 87.5%;
+  max-width: 41em;
 }
 
 .summary_byline {
