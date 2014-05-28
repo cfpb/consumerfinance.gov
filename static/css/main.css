@@ -5030,8 +5030,8 @@ img {
     - name: Form actions
       markup: |
         <div class="form-actions">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
             <input type="submit" value="Apply filters" class="btn form-actions_item">
+            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
         </div>
       codenotes:
         - |
