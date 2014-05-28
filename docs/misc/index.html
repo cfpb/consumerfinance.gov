@@ -231,9 +231,66 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Styled select</h3>
+          <section class="docs-pattern_pattern">
+<div class="select">
+    <span class="select_icon cf-icon cf-icon-play"></span>
+    <select class="input__light">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;select&quot;&gt;
+    &lt;span class=&quot;select_icon cf-icon cf-icon-play&quot;&gt;&lt;/span&gt;
+    &lt;select class=&quot;input__light&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */</code></pre>
+        <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */
+.input__light {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+.select {
+  position: relative;
+  background: #ffffff;
+}
+.select select {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+.select_icon {
+  position: absolute;
+  top: 0.3125em;
+  right: 9px;
+  z-index: 1;
+  line-height: 1.375;
+  color: #babbbd;
+}
+.select_icon.cf-icon-play {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}</code></pre>
       </div>
     </div>
     <div id="form-labels" class="docs-component">
@@ -330,6 +387,80 @@
 }
 .lt-ie9 .form-label-header {
   font-weight: normal !important;
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-inputs" class="docs-component">
+      <h2 class="docs-component_header"><span>Form inputs</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Horizontal inputs</h3>
+          <section class="docs-pattern_pattern">
+<div class="input-group">
+    <input class="input-group_item" type="text">
+    <input class="input-group_item" type="text">
+</div>
+<br>
+<br>
+<div class="input-group">
+    <select class="input-group_item">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <select class="input-group_item">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;input-group&quot;&gt;
+    &lt;input class=&quot;input-group_item&quot; type=&quot;text&quot;&gt;
+    &lt;input class=&quot;input-group_item&quot; type=&quot;text&quot;&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;div class=&quot;input-group&quot;&gt;
+    &lt;select class=&quot;input-group_item&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;select class=&quot;input-group_item&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.input-group_item,
+.input-group_item[type=&quot;text&quot;] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 50%;
+  z-index: 1;
+  position: relative;
+}
+.input-group_item + .input-group_item,
+.input-group_item + .input-group_item[type=&quot;text&quot;],
+.input-group_item[type=&quot;text&quot;] + .input-group_item,
+.input-group_item[type=&quot;text&quot;] + .input-group_item[type=&quot;text&quot;] {
+  margin-left: -5px;
+}
+.input-group_item:focus,
+.input-group_item[type=&quot;text&quot;]:focus {
+  z-index: 2;
 }</code></pre>
       </div>
     </div>
