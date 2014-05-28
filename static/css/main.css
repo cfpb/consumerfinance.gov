@@ -5076,6 +5076,11 @@ img {
 .form-actions {
   margin-top: 1.625em;
 }
+@media only all and (min-width: 37.5em) {
+  .form-l + .form-actions {
+    margin-top: 0.9375em;
+  }
+}
 .form-actions__right {
   text-align: right;
 }

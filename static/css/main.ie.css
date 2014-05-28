@@ -5644,6 +5644,10 @@ img {
   margin-top: 1.625em;
 }
 
+.form-l + .form-actions {
+  margin-top: 0.9375em;
+}
+
 .form-actions__right {
   text-align: right;
 }
