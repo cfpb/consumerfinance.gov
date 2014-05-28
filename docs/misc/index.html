@@ -19,22 +19,22 @@
       <h2 class="docs-component_header"><span>Expandables</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Header right on medium</h3>
+          <h3 class="docs-pattern_header">Header right float on medium modifier</h3>
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.expandable_header-right__on-medium</code></pre>
+                <pre class="docs-code"><code>.expandable_header-right__float-on-medium</code></pre>
               </li>
             </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.expandable_header-right__on-medium {
+        <pre class="docs-code"><code data-language="css">.expandable_header-right__float-on-medium {
   float: none;
 }
 @media only all and (min-width: 37.5em) {
-  .expandable_header-right__on-medium {
+  .expandable_header-right__float-on-medium {
     float: right;
   }
 }</code></pre>
@@ -1218,6 +1218,14 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.filtered-by {
   margin: 0;
+}
+.filtered-by__show-on-medium {
+  display: none;
+}
+@media only all and (min-width: 37.5em) {
+  .filtered-by__show-on-medium {
+    display: block;
+  }
 }
 .filtered-by_header {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;

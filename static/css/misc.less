@@ -8,14 +8,14 @@
   name: Expandables
   family: cfgov-misc
   patterns:
-    - name: Header right on medium
+    - name: Header right float on medium modifier
       codenotes:
-        - .expandable_header-right__on-medium
+        - .expandable_header-right__float-on-medium
   tags:
     - cfgov-misc
 */
 
-.expandable_header-right__on-medium {
+.expandable_header-right__float-on-medium {
     float: none;
 
     .u-respond-to-min(600px, {
@@ -719,6 +719,13 @@
 
 .filtered-by {
     margin: 0;
+
+    &__show-on-medium {
+        display: none;
+        .u-respond-to-min(600px, {
+            display: block;
+        });
+    }
 
     &_header {
         .h5();

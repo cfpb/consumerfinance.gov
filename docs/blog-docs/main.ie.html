@@ -322,7 +322,7 @@
           <section class="docs-pattern_pattern">
 <div class="expandable expandable__expanded">
     <div class="expandable_header expandable_header__spaced">
-        <div class="expandable_header-right">
+        <div class="expandable_header-right expandable_header-right__float-on-medium">
             <a class="expandable_target btn btn-secondary"
                href="#post-filters-form">
                 Filter posts&nbsp;&nbsp;
@@ -334,7 +334,11 @@
                 </span>
             </a>
         </div>
-        <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+        <dl class="filtered-by
+                   filtered-by__show-on-medium
+                   filtered-by__align-with-btn
+                   list
+                   list__horizontal">
             <dt class="list_item">
                 <span class="filtered-by_header">Filtered by</span>
             </dt>
@@ -415,7 +419,7 @@
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;expandable expandable__expanded&quot;&gt;
     &lt;div class=&quot;expandable_header expandable_header__spaced&quot;&gt;
-        &lt;div class=&quot;expandable_header-right&quot;&gt;
+        &lt;div class=&quot;expandable_header-right expandable_header-right__float-on-medium&quot;&gt;
             &lt;a class=&quot;expandable_target btn btn-secondary&quot;
                href=&quot;#post-filters-form&quot;&gt;
                 Filter posts&amp;nbsp;&amp;nbsp;
@@ -427,7 +431,11 @@
                 &lt;/span&gt;
             &lt;/a&gt;
         &lt;/div&gt;
-        &lt;dl class=&quot;filtered-by filtered-by__align-with-btn list list__horizontal&quot;&gt;
+        &lt;dl class=&quot;filtered-by
+                   filtered-by__show-on-medium
+                   filtered-by__align-with-btn
+                   list
+                   list__horizontal&quot;&gt;
             &lt;dt class=&quot;list_item&quot;&gt;
                 &lt;span class=&quot;filtered-by_header&quot;&gt;Filtered by&lt;/span&gt;
             &lt;/dt&gt;
@@ -509,13 +517,13 @@
 -----------------------
 .expandable
   .expandable_header__spaced
-    .expandable_header-right
+    .expandable_header-right.expandable_header-right__float-on-medium
       .expandable_target.btn.btn-secondary
         .expandable_cue-open
           .cf-icon.cf-icon-down
         .expandable_cue-close
           .cf-icon.cf-icon-up
-    .filtered-by.filtered-by__align-with-btn.list.list__horizontal
+    .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
   .expandable_content.padded-container
     .padded-container_body
       .form-l.form-l__flush
