@@ -1485,7 +1485,8 @@ input[type="email"],
 input[type="url"],
 input[type="tel"],
 input[type="number"],
-textarea {
+textarea,
+select[multiple] {
   display: inline-block;
   width: 85%;
   margin: 0;
@@ -1512,7 +1513,9 @@ input[type="tel"].focus,
 input[type="number"]:focus,
 input[type="number"].focus,
 textarea:focus,
-textarea.focus {
+textarea.focus,
+select[multiple]:focus,
+select[multiple].focus {
   border: 1px solid #0072ce;
   border-color: #0072ce;
   outline: 1px solid #0072ce;
@@ -1526,7 +1529,8 @@ input[type="email"].error,
 input[type="url"].error,
 input[type="tel"].error,
 input[type="number"].error,
-textarea.error {
+textarea.error,
+select[multiple].error {
   border: 1px solid #d12124;
   outline: 1px solid #d12124;
 }
@@ -1536,7 +1540,8 @@ input[type="email"].success,
 input[type="url"].success,
 input[type="tel"].success,
 input[type="number"].success,
-textarea.success {
+textarea.success,
+select[multiple].success {
   border: 1px solid #2cb34a;
   outline: 1px solid #2cb34a;
 }
@@ -4854,6 +4859,56 @@ img {
   tags:
     - cfgov-misc
 */
+/* topdoc
+    name: Multi select
+    family: cfgov-misc
+    patterns:
+    - name: Default multi select
+      markup: |
+        <select multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+    - name: Focused state
+      markup: |
+        <select class="focus" multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <select class="error" multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+        <span class="cf-form_input-icon cf-icon cf-icon-delete-round" role="alert">
+          <span class="jekyll-bug"></span>
+        </span>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <select class="success" multiple>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+        <span class="cf-form_input-icon cf-icon cf-icon-approved-round">
+          <span class="jekyll-bug"></span>
+        </span>
+    tags:
+    - cfgov-misc
+*/
+/* NOTE: all select[multiple] styles extend input[type="text"]. */
 /* topdoc
   name: Form labels
   family: cfgov-misc
