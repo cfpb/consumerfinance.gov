@@ -543,6 +543,246 @@
         </div>
       </div>
     </div>
+    <div id="insets" class="docs-component">
+      <h2 class="docs-component_header"><span>Insets</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (default layout and content type)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset post_inset__right line-container">
+        <div class="line-container_body pull-quote">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset post_inset__right line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body pull-quote&quot;&gt;
+            &lt;div class=&quot;pull-quote_body&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset]Quote text here[/inset]</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>[inset layout='float' content='pullquote']Quote text here[/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Insets default to a floating right layout but can also span the full width of the article using the layout attribute. They also default to a pullquote content type.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (full layout)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset line-container">
+        <div class="line-container_body pull-quote">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body pull-quote&quot;&gt;
+            &lt;div class=&quot;pull-quote_body&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset layout='full']Quote text here[/inset]</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (with attribution)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset post_inset__right line-container">
+        <div class="line-container_body pull-quote">
+            <div class="pull-quote_body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            </div>
+            <footer>
+                <cite class="pull-quote_citation">
+                    - Author Name
+                </cite>
+            </footer>
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset post_inset__right line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body pull-quote&quot;&gt;
+            &lt;div class=&quot;pull-quote_body&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum!
+            &lt;/div&gt;
+            &lt;footer&gt;
+                &lt;cite class=&quot;pull-quote_citation&quot;&gt;
+                    - Author Name
+                &lt;/cite&gt;
+            &lt;/footer&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset attribution='Author Name']Quote text here[/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Only the pullquote content type can make use of the atrribution attribute.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Inset (with HTML content)</h3>
+          <section class="docs-pattern_pattern">
+<div style="overflow:hidden;">
+
+    <!-- Begin [inset] HTML -->
+    <aside class="post_inset post_inset__right line-container">
+        <div class="line-container_body">
+            <!-- Begin custon HTML -->
+            <h3>
+                Final list of rural and underserved counties
+            </h3>
+            <p>
+                View or download the list in any of these formats:
+            </p>
+            <ul class="list list__unstyled list__horizontal">
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        CSV
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        XLS
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        PDF <span class="cf-icon cf-icon-pdf"></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- End custon HTML -->
+        </div>
+    </aside>
+    <!-- End [inset] HTML -->
+
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;overflow:hidden;&quot;&gt;
+
+    &lt;!-- Begin [inset] HTML --&gt;
+    &lt;aside class=&quot;post_inset post_inset__right line-container&quot;&gt;
+        &lt;div class=&quot;line-container_body&quot;&gt;
+            &lt;!-- Begin custon HTML --&gt;
+            &lt;h3&gt;
+                Final list of rural and underserved counties
+            &lt;/h3&gt;
+            &lt;p&gt;
+                View or download the list in any of these formats:
+            &lt;/p&gt;
+            &lt;ul class=&quot;list list__unstyled list__horizontal&quot;&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;
+                        CSV
+                    &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;
+                        XLS
+                    &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;
+                        PDF &lt;span class=&quot;cf-icon cf-icon-pdf&quot;&gt;&lt;/span&gt;
+                    &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;!-- End custon HTML --&gt;
+        &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;!-- End [inset] HTML --&gt;
+
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>[inset content='html'] Custom HTML here. [/inset]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Note that .line-container_body no longer uses the .pull-quote class.</li>
+              <li>Insets using the html content type should not be allowed to use layout='full'.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>

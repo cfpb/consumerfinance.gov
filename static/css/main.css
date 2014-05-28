@@ -6782,6 +6782,128 @@ a.focus .summary_header {
     - cfgov-blog-docs
 */
 /* topdoc
+  name: Insets
+  family: cfgov-blog-docs
+  patterns:
+    - name: Inset (default layout and content type)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset]Quote text here[/inset]"
+        - "[inset layout='float' content='pullquote']Quote text here[/inset]"
+      notes:
+        - "Insets default to a floating right layout but can also span the full
+          width of the article using the layout attribute. They also default to
+          a pullquote content type."
+    - name: Inset (full layout)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset layout='full']Quote text here[/inset]"
+    - name: Inset (with attribution)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                    <footer>
+                        <cite class="pull-quote_citation">
+                            - Author Name
+                        </cite>
+                    </footer>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset attribution='Author Name']Quote text here[/inset]"
+      notes:
+        - "Only the pullquote content type can make use of the atrribution
+          attribute."
+    - name: Inset (with HTML content)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body">
+                    <!-- Begin custon HTML -->
+                    <h3>
+                        Final list of rural and underserved counties
+                    </h3>
+                    <p>
+                        View or download the list in any of these formats:
+                    </p>
+                    <ul class="list list__unstyled list__horizontal">
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                CSV
+                            </a>
+                        </li>
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                XLS
+                            </a>
+                        </li>
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                PDF <span class="cf-icon cf-icon-pdf"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- End custon HTML -->
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset content='html']
+             Custom HTML here.
+           [/inset]"
+      notes:
+        - "Note that .line-container_body no longer uses the .pull-quote class."
+        - "Insets using the html content type should not be allowed to use
+          layout='full'."
+  tags:
+    - cfgov-blog-docs
+*/
+/* topdoc
   name: EOF
   eof: true
 */
