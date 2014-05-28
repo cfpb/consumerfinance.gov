@@ -6119,7 +6119,6 @@ img {
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
-  margin-bottom: 0.71428571em;
   margin: 0;
   color: #101820;
 }
@@ -6163,10 +6162,6 @@ img {
 .lt-ie9 .filtered-by_filter strong,
 .lt-ie9 .filtered-by_filter b {
   font-weight: normal !important;
-}
-
-.filtered-by_filter input {
-  margin-right: 0.375em;
 }
 
 /* topdoc
