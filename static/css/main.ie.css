@@ -6019,8 +6019,13 @@ img {
 }
 
 /* topdoc
-  name: Filter list
+  name: Filtered-by list
   family: cfgov-misc
+  notes:
+    - "A list of applied filters."
+    - "This pattern is subject to change. This initial style simply highlights
+      the filters that have been applied. In the future this pattern will evolve
+      so that each applied filter can be removed by clicking/tapping it."
   patterns:
     - name: Default example
       markup: |
