@@ -5340,6 +5340,25 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Expandables
+  family: cfgov-misc
+  patterns:
+    - name: Header right on medium
+      codenotes:
+        - .expandable_header-right__on-medium
+  tags:
+    - cfgov-misc
+*/
+
+.expandable_header-right__on-medium {
+  float: none;
+}
+
+.expandable_header-right__on-medium {
+  float: right;
+}
+
+/* topdoc
   name: Form pattern showcase
   family: cfgov-misc
   patterns:
