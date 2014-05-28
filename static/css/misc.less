@@ -289,6 +289,15 @@ select.success {
 .form-actions {
     // Eyeballed to 30px considering line-height.
     margin-top: unit(26px / @base-font-size-px, em);
+
+    // Once the form layouts start using columns their margins won't collapse
+    // so we'll need to update the top margin from .form-actions to avoid
+    // double margins.
+    .form-l + & {
+        .u-respond-to-min(600px, {
+            margin-top: unit(15px / @base-font-size-px, em);
+        });
+    }
 }
 
 .form-actions__right {
