@@ -618,16 +618,16 @@ select[multiple].success {
       markup: |
         <ul class="list">
             <li class="list_item">
-                <a class="list_link">List item 1</a>
+                <a class="list_link" href="#">List item 1</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 2</a>
+                <a class="list_link" href="#">List item 2</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 3</a>
+                <a class="list_link" href="#">List item 3</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 4</a>
+                <a class="list_link" href="#">List item 4</a>
             </li>
         </ul>
       codenotes:
@@ -639,7 +639,7 @@ select[multiple].success {
               .list_link
     - name: List link
       markup: |
-        <a class="list_link">List link</a>
+        <a class="list_link" href="#">List link</a>
         <span class="list_link">List link</span>
       codenotes:
         - .list_link
@@ -647,7 +647,7 @@ select[multiple].success {
         - "Notice that you can use any element for .list_link."
     - name: List link large modifier
       markup: |
-        <a class="list_link list_link__large">List link</a>
+        <a class="list_link list_link__large" href="#">List link</a>
         <span class="list_link list_link__large">List link</span>
       codenotes:
         - .list_link__large
