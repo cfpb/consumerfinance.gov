@@ -147,7 +147,7 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-                <div class="expandable expandable__expanded">
+                <div class="expandable">
                     <div class="expandable_header expandable_header__spaced">
                         <div class="expandable_header-right expandable_header-right__float-on-medium">
                             <a class="expandable_target btn btn-secondary"
@@ -273,7 +273,7 @@
                                         <label class="form-label-header">
                                             Date range
                                         </label>
-                                        <select>
+                                        <select class="form-input-month">
                                             <option value="">Month</option>
                                             <option value="">January</option>
                                             <option value="">February</option>
@@ -288,7 +288,7 @@
                                             <option value="">November</option>
                                             <option value="">December</option>
                                         </select>
-                                        <select>
+                                        <select class="form-input_year">
                                             <option value="">Year</option>
                                             <option value="">2014</option>
                                             <option value="">2013</option>
@@ -405,11 +405,11 @@
                 </article>
 
                 <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
-                    <a class="btn pagination_prev" href="#">
+                    <a class="btn btn-secondary pagination_prev" href="#">
                         <span class="btn-icon-left cf-icon cf-icon-left"></span>
                         Newer
                     </a>
-                    <a class="btn pagination_next" href="#">
+                    <a class="btn btn-secondary pagination_next" href="#">
                         Older
                         <span class="btn-icon-right cf-icon cf-icon-right"></span>
                     </a>
@@ -437,7 +437,38 @@
 
             <aside class="content_sidebar">
                 <section class="popular-stories">
-                    <div class="demo-placeholder">popular stories placeholder</div>
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Popular stories
+                        </span>
+                    </h1>
+                    <ul class="list list__unstyled">
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link list_link__large" href="#">
+                                How to protect vulnerable children from credit reporting problems
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link list_link__large" href="#">
+                                Preventing illegal discrimination in auto lending
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link list_link__large" href="#">
+                                Our new mortgage visualization tool
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link list_link__large" href="#">
+                                Consumer advisory: Co-signers can cause surprise defaults on your private student loans
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link list_link__large" href="#">
+                                Our work on fair lending
+                            </a>
+                        </li>
+                    </ul>
                 </section>
                 <section class="related-links">
                     <div class="demo-placeholder">related links placeholder</div>

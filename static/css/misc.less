@@ -125,21 +125,21 @@
 
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 
-select {
+select[multiple] {
     &:extend(input[type="text"]);
 }
 
-select:focus,
-select.focus {
+select[multiple]:focus,
+select[multiple].focus {
     // Class included for static state examples
     &:extend(input[type="text"]:focus);
 }
 
-select.error {
+select[multiple].error {
     &:extend(input[type="text"].error);
 }
 
-select.success {
+select[multiple].success {
     &:extend(input[type="text"].success);
 }
 
@@ -182,6 +182,57 @@ select.success {
 .form-label-header {
     .h5();
     margin-bottom: unit(10px / @font-size, em);
+}
+
+
+/* topdoc
+  name: Form inputs
+  family: cfgov-misc
+  patterns:
+    - name: Horizontal inputs
+      markup: |
+        <div class="input-group">
+            <input class="input-group_item" type="text">
+            <input class="input-group_item" type="text">
+        </div>
+        <br>
+        <br>
+        <div class="input-group">
+            <select class="input-group_item">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <select class="input-group_item">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+.input-group {
+
+    &_item,
+    &_item[type="text"] {
+        box-sizing: border-box;
+        width: 50%;
+        z-index: 1;
+        position: relative;
+
+        & + & {
+            margin-left: -5px;
+        }
+
+        &:focus {
+            z-index: 2;
+        }
+    }
+
 }
 
 
@@ -567,16 +618,16 @@ select.success {
       markup: |
         <ul class="list">
             <li class="list_item">
-                <a class="list_link">List item 1</a>
+                <a class="list_link" href="#">List item 1</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 2</a>
+                <a class="list_link" href="#">List item 2</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 3</a>
+                <a class="list_link" href="#">List item 3</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 4</a>
+                <a class="list_link" href="#">List item 4</a>
             </li>
         </ul>
       codenotes:
@@ -588,18 +639,35 @@ select.success {
               .list_link
     - name: List link
       markup: |
-        <a class="list_link">List link</a>
+        <a class="list_link" href="#">List link</a>
         <span class="list_link">List link</span>
       codenotes:
         - .list_link
       notes:
         - "Notice that you can use any element for .list_link."
+    - name: List link large modifier
+      markup: |
+        <a class="list_link list_link__large" href="#">List link</a>
+        <span class="list_link list_link__large">List link</span>
+      codenotes:
+        - .list_link__large
+      notes:
+        - "Notice that you can use any element for .list_link__large."
   tags:
     - cfgov-misc
 */
 
 .list_link {
     .webfont-medium();
+}
+
+.list_link__large {
+    .h3();
+
+    a& {
+        .u-link__colors(@black, @pacific-80);
+        .u-link__no-border();
+    }
 }
 
 
