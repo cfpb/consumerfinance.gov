@@ -5549,6 +5549,31 @@ img {
   margin-left: 0;
 }
 /* topdoc
+  name: Spaced list modifier
+  family: cfgov-misc
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__spaced">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+      codenotes:
+        - .list.list__unstyled
+  tags:
+    - cfgov-misc
+*/
+.list__spaced .list_item + .list_item {
+  margin-top: 1.5em;
+}
+/* topdoc
   name: Spaced list item modifier
   family: cfgov-misc
   patterns:

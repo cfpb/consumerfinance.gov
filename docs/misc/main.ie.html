@@ -1138,6 +1138,53 @@
 </code></pre>
       </div>
     </div>
+    <div id="spaced-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Spaced list modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__spaced">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__spaced&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list.list__unstyled</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__spaced .list_item + .list_item {
+  margin-top: 1.5em;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="spaced-list-item-modifier" class="docs-component">
       <h2 class="docs-component_header"><span>Spaced list item modifier</span></h2>
       <div class="docs-patterns">
