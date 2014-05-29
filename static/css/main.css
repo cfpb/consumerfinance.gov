@@ -1486,7 +1486,7 @@ input[type="url"],
 input[type="tel"],
 input[type="number"],
 textarea,
-select {
+select[multiple] {
   display: inline-block;
   width: 85%;
   margin: 0;
@@ -1514,8 +1514,8 @@ input[type="number"]:focus,
 input[type="number"].focus,
 textarea:focus,
 textarea.focus,
-select:focus,
-select.focus {
+select[multiple]:focus,
+select[multiple].focus {
   border: 1px solid #0072ce;
   border-color: #0072ce;
   outline: 1px solid #0072ce;
@@ -1530,7 +1530,7 @@ input[type="url"].error,
 input[type="tel"].error,
 input[type="number"].error,
 textarea.error,
-select.error {
+select[multiple].error {
   border: 1px solid #d12124;
   outline: 1px solid #d12124;
 }
@@ -1541,7 +1541,7 @@ input[type="url"].success,
 input[type="tel"].success,
 input[type="number"].success,
 textarea.success,
-select.success {
+select[multiple].success {
   border: 1px solid #2cb34a;
   outline: 1px solid #2cb34a;
 }
@@ -2901,11 +2901,6 @@ textarea {
   top: 0;
   right: 0;
 }
-.pagination_label {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.875em;
-}
 .pagination_form {
   display: block;
   padding: 0.25em 1.875em;
@@ -2937,7 +2932,18 @@ textarea {
 .lt-ie9 .pagination_form b {
   font-weight: normal !important;
 }
-input[type="number"].pagination_current-page {
+.pagination_label {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.875em;
+}
+.lt-ie8 .pagination_label {
+  zoom: 1;
+  display: inline;
+}
+.pagination_current-page,
+input[type="number"].pagination_current-page,
+input[type="text"].pagination_current-page {
   display: inline-block;
   vertical-align: middle;
   /* We need enough room for three digits and the number spinners for type="number" inputs */
@@ -2952,17 +2958,35 @@ input[type="number"].pagination_current-page {
   font-weight: bold;
   text-align: right;
 }
-.lt-ie9 input[type="number"].pagination_current-page {
+.lt-ie9 .pagination_current-page,
+.lt-ie9 input[type="number"].pagination_current-page,
+.lt-ie9 input[type="text"].pagination_current-page {
   font-weight: normal !important;
+}
+.lt-ie8 .pagination_current-page,
+.lt-ie8 input[type="number"].pagination_current-page,
+.lt-ie8 input[type="text"].pagination_current-page {
+  zoom: 1;
+  display: inline;
+  margin: 0 4px;
 }
 .pagination_submit.btn {
   display: inline-block;
   vertical-align: middle;
   margin: 0 0 0 1em;
 }
+.lt-ie8 .pagination_submit.btn {
+  zoom: 1;
+  display: inline;
+  border: none;
+  padding-left: 1em;
+  margin: 0;
+  text-decoration: underline;
+}
 @media only screen and (min-width: 30em) {
   .pagination_form {
     border-radius: 0.28571429em;
+    margin: 0;
   }
   .pagination_prev {
     position: absolute;
@@ -4146,7 +4170,7 @@ img {
 }
 .content_main,
 .content_sidebar {
-  padding: 2em 15px;
+  padding: 1.875em 0.9375em;
 }
 @media only all and (min-width: 37.5em) {
   .content_main,
@@ -4160,6 +4184,7 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 100%;
+    padding: 3.75em 0.9375em;
   }
   .ie .content_main,
   .ie .content_sidebar {
@@ -4272,7 +4297,7 @@ img {
   }
   .content_main,
   .content_sidebar {
-    padding: 2em 0;
+    padding: 3.75em 0;
   }
 }
 @media only all and (min-width: 64em) {
@@ -4302,7 +4327,7 @@ img {
   }
 }
 .content__bleedbar .content_sidebar {
-  padding: 2em 15px;
+  padding: 2em 0.9375em;
   background: #f1f2f2;
 }
 @media only all and (min-width: 50.0625em) {
@@ -4310,7 +4335,7 @@ img {
     overflow: hidden;
   }
   .content__bleedbar .content_sidebar {
-    padding: 2em 0 2em 30px;
+    padding: 3.75em 0 0.9375em 1.875em;
     margin-left: 0;
     background: transparent;
   }
@@ -4655,29 +4680,29 @@ img {
   display: block;
   margin-bottom: 0.44444444em;
   color: #101820;
-  border-bottom-color: #0072ce;
+  border-bottom-color: #101820;
 }
 .lt-ie9 .category-slug {
   font-weight: normal !important;
 }
 .category-slug:visited,
 .category-slug.visited {
-  border-bottom-color: #005e5d;
+  border-bottom-color: #101820;
   color: #101820;
 }
 .category-slug:hover,
 .category-slug.hover {
-  border-bottom-color: #7fb8e6;
+  border-bottom-color: #328ed8;
   color: #328ed8;
 }
 .category-slug:focus,
 .category-slug.focus {
-  border-bottom-color: #0072ce;
+  border-bottom-color: #328ed8;
   color: #328ed8;
 }
 .category-slug:active,
 .category-slug.active {
-  border-bottom-color: #002d72;
+  border-bottom-color: #101820;
   color: #101820;
 }
 /* topdoc
@@ -4977,6 +5002,54 @@ img {
 }
 .lt-ie9 .form-label-header {
   font-weight: normal !important;
+}
+/* topdoc
+  name: Form inputs
+  family: cfgov-misc
+  patterns:
+    - name: Horizontal inputs
+      markup: |
+        <div class="input-group">
+            <input class="input-group_item" type="text">
+            <input class="input-group_item" type="text">
+        </div>
+        <br>
+        <br>
+        <div class="input-group">
+            <select class="input-group_item">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <select class="input-group_item">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+.input-group_item,
+.input-group_item[type="text"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 50%;
+  z-index: 1;
+  position: relative;
+}
+.input-group_item + .input-group_item,
+.input-group_item + .input-group_item[type="text"],
+.input-group_item[type="text"] + .input-group_item,
+.input-group_item[type="text"] + .input-group_item[type="text"] {
+  margin-left: -5px;
+}
+.input-group_item:focus,
+.input-group_item[type="text"]:focus {
+  z-index: 2;
 }
 /* topdoc
   name: Form groups
@@ -5408,16 +5481,16 @@ img {
       markup: |
         <ul class="list">
             <li class="list_item">
-                <a class="list_link">List item 1</a>
+                <a class="list_link" href="#">List item 1</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 2</a>
+                <a class="list_link" href="#">List item 2</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 3</a>
+                <a class="list_link" href="#">List item 3</a>
             </li>
             <li class="list_item">
-                <a class="list_link">List item 4</a>
+                <a class="list_link" href="#">List item 4</a>
             </li>
         </ul>
       codenotes:
@@ -5429,12 +5502,20 @@ img {
               .list_link
     - name: List link
       markup: |
-        <a class="list_link">List link</a>
+        <a class="list_link" href="#">List link</a>
         <span class="list_link">List link</span>
       codenotes:
         - .list_link
       notes:
         - "Notice that you can use any element for .list_link."
+    - name: List link large modifier
+      markup: |
+        <a class="list_link list_link__large" href="#">List link</a>
+        <span class="list_link list_link__large">List link</span>
+      codenotes:
+        - .list_link__large
+      notes:
+        - "Notice that you can use any element for .list_link__large."
   tags:
     - cfgov-misc
 */
@@ -5445,6 +5526,60 @@ img {
 }
 .lt-ie9 .list_link {
   font-weight: normal !important;
+}
+.list_link__large {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+.list_link__large em,
+.list_link__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .list_link__large em,
+.lt-ie9 .list_link__large i {
+  font-style: normal !important;
+}
+.list_link__large strong,
+.list_link__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .list_link__large strong,
+.lt-ie9 .list_link__large b {
+  font-weight: normal !important;
+}
+a.list_link__large {
+  color: #101820;
+  border-bottom-color: #101820;
+  border-bottom-width: 0 !important;
+}
+a.list_link__large:visited,
+a.list_link__large.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+a.list_link__large:hover,
+a.list_link__large.hover {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+a.list_link__large:focus,
+a.list_link__large.focus {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+a.list_link__large:active,
+a.list_link__large.active {
+  border-bottom-color: #101820;
+  color: #101820;
 }
 /* topdoc
   name: Unstyled list modifier
@@ -5711,27 +5846,27 @@ img {
   font-size: 1.625em;
   line-height: 1;
   color: #43484e;
-  border-bottom-color: #0072ce;
+  border-bottom-color: #43484e;
   border-bottom-width: 0 !important;
 }
 .share-icon:visited,
 .share-icon.visited {
-  border-bottom-color: #005e5d;
+  border-bottom-color: #43484e;
   color: #43484e;
 }
 .share-icon:hover,
 .share-icon.hover {
-  border-bottom-color: #7fb8e6;
+  border-bottom-color: #328ed8;
   color: #328ed8;
 }
 .share-icon:focus,
 .share-icon.focus {
-  border-bottom-color: #0072ce;
+  border-bottom-color: #328ed8;
   color: #328ed8;
 }
 .share-icon:active,
 .share-icon.active {
-  border-bottom-color: #002d72;
+  border-bottom-color: #43484e;
   color: #43484e;
 }
 .share-icon + .share-icon {

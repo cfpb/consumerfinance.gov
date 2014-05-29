@@ -151,7 +151,7 @@
 
                 <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
                 {% if posts.current_page > 1 %}
-                    <a class="btn pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
+                    <a class="btn btn-secondary pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
                 {% else %}
                     <a class="btn btn-disabled pagination_prev">
                 {% endif %}
@@ -159,7 +159,7 @@
                         Newer
                     </a>
                 {% if posts.current_page < posts.pages %}
-                    <a class="btn pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
+                    <a class="btn btn-secondary pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
                 {% else %}
                     <a class="btn btn-disabled pagination_next">
                 {% endif %}
@@ -190,7 +190,18 @@
 
             <aside class="content_sidebar">
                 <section class="popular-stories">
-                    <div class="demo-placeholder">popular stories placeholder</div>
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Popular stories
+                        </span>
+                    </h1>
+                    <ul class="list list__unstyled">
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link list_link__large" href="#">
+                                Title here
+                            </a>
+                        </li>
+                    </ul>
                 </section>
                 <section class="related-links">
                     <div class="demo-placeholder">related links placeholder</div>

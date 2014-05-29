@@ -345,6 +345,84 @@
 </code></pre>
       </div>
     </div>
+    <div id="form-inputs" class="docs-component">
+      <h2 class="docs-component_header"><span>Form inputs</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Horizontal inputs</h3>
+          <section class="docs-pattern_pattern">
+<div class="input-group">
+    <input class="input-group_item" type="text">
+    <input class="input-group_item" type="text">
+</div>
+<br>
+<br>
+<div class="input-group">
+    <select class="input-group_item">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <select class="input-group_item">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;input-group&quot;&gt;
+    &lt;input class=&quot;input-group_item&quot; type=&quot;text&quot;&gt;
+    &lt;input class=&quot;input-group_item&quot; type=&quot;text&quot;&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;div class=&quot;input-group&quot;&gt;
+    &lt;select class=&quot;input-group_item&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;select class=&quot;input-group_item&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.input-group_item,
+.input-group_item[type=&quot;text&quot;] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 50%;
+  z-index: 1;
+  position: relative;
+}
+
+.input-group_item + .input-group_item,
+.input-group_item + .input-group_item[type=&quot;text&quot;],
+.input-group_item[type=&quot;text&quot;] + .input-group_item,
+.input-group_item[type=&quot;text&quot;] + .input-group_item[type=&quot;text&quot;] {
+  margin-left: -5px;
+}
+
+.input-group_item:focus,
+.input-group_item[type=&quot;text&quot;]:focus {
+  z-index: 2;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="form-groups" class="docs-component">
       <h2 class="docs-component_header"><span>Form groups</span></h2>
       <div class="docs-patterns">
@@ -933,16 +1011,16 @@
           <section class="docs-pattern_pattern">
 <ul class="list">
     <li class="list_item">
-        <a class="list_link">List item 1</a>
+        <a class="list_link" href="#">List item 1</a>
     </li>
     <li class="list_item">
-        <a class="list_link">List item 2</a>
+        <a class="list_link" href="#">List item 2</a>
     </li>
     <li class="list_item">
-        <a class="list_link">List item 3</a>
+        <a class="list_link" href="#">List item 3</a>
     </li>
     <li class="list_item">
-        <a class="list_link">List item 4</a>
+        <a class="list_link" href="#">List item 4</a>
     </li>
 </ul>
 
@@ -950,16 +1028,16 @@
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list&quot;&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 1&lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 2&lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 3&lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 4&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
             <ul class="docs-codenotes">
@@ -976,12 +1054,12 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">List link</h3>
           <section class="docs-pattern_pattern">
-<a class="list_link">List link</a>
+<a class="list_link" href="#">List link</a>
 <span class="list_link">List link</span>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot;&gt;List link&lt;/a&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List link&lt;/a&gt;
 &lt;span class=&quot;list_link&quot;&gt;List link&lt;/span&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
@@ -990,6 +1068,26 @@
             </ul>
             <ul class="docs-notes">
               <li>Notice that you can use any element for .list_link.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">List link large modifier</h3>
+          <section class="docs-pattern_pattern">
+<a class="list_link list_link__large" href="#">List link</a>
+<span class="list_link list_link__large">List link</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link list_link__large&quot; href=&quot;#&quot;&gt;List link&lt;/a&gt;
+&lt;span class=&quot;list_link list_link__large&quot;&gt;List link&lt;/span&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list_link__large</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice that you can use any element for .list_link__large.</li>
             </ul>
           </footer>
         </div>
@@ -1004,6 +1102,70 @@
 
 .lt-ie9 .list_link {
   font-weight: normal !important;
+}
+
+.list_link__large {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.list_link__large em,
+.list_link__large i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list_link__large em,
+.lt-ie9 .list_link__large i {
+  font-style: normal !important;
+}
+
+.list_link__large strong,
+.list_link__large b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list_link__large strong,
+.lt-ie9 .list_link__large b {
+  font-weight: normal !important;
+}
+
+a.list_link__large {
+  color: #101820;
+  border-bottom-color: #101820;
+  border-bottom-width: 0 !important;
+}
+
+a.list_link__large:visited,
+a.list_link__large.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+a.list_link__large:hover,
+a.list_link__large.hover {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+
+a.list_link__large:focus,
+a.list_link__large.focus {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+
+a.list_link__large:active,
+a.list_link__large.active {
+  border-bottom-color: #101820;
+  color: #101820;
 }
 </code></pre>
       </div>
@@ -1452,31 +1614,31 @@
   font-size: 1.625em;
   line-height: 1;
   color: #43484e;
-  border-bottom-color: #0072ce;
+  border-bottom-color: #43484e;
   border-bottom-width: 0 !important;
 }
 
 .share-icon:visited,
 .share-icon.visited {
-  border-bottom-color: #005e5d;
+  border-bottom-color: #43484e;
   color: #43484e;
 }
 
 .share-icon:hover,
 .share-icon.hover {
-  border-bottom-color: #7fb8e6;
+  border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
 .share-icon:focus,
 .share-icon.focus {
-  border-bottom-color: #0072ce;
+  border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
 .share-icon:active,
 .share-icon.active {
-  border-bottom-color: #002d72;
+  border-bottom-color: #43484e;
   color: #43484e;
 }
 
