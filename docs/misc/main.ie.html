@@ -1054,12 +1054,12 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">List link</h3>
           <section class="docs-pattern_pattern">
-<a class="list_link" href="#">List link</a>
+<a class="list_link" href="#">List link</a>,&nbsp;
 <span class="list_link">List link</span>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List link&lt;/a&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List link&lt;/a&gt;,&amp;nbsp;
 &lt;span class=&quot;list_link&quot;&gt;List link&lt;/span&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
@@ -1074,19 +1074,20 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">List link large modifier</h3>
           <section class="docs-pattern_pattern">
-<a class="list_link list_link__large" href="#">List link</a>
-<span class="list_link list_link__large">List link</span>
+<a class="list_link list_link__large" href="#">List link large</a>,&nbsp;
+<span class="list_link list_link__large">List link large</span>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link list_link__large&quot; href=&quot;#&quot;&gt;List link&lt;/a&gt;
-&lt;span class=&quot;list_link list_link__large&quot;&gt;List link&lt;/span&gt;</code></pre>
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link list_link__large&quot; href=&quot;#&quot;&gt;List link large&lt;/a&gt;,&amp;nbsp;
+&lt;span class=&quot;list_link list_link__large&quot;&gt;List link large&lt;/span&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>.list_link__large</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
+              <li>On small screens the font-size uses .h4(). At 600px the font-size changes to .h3();.</li>
               <li>Notice that you can use any element for .list_link__large.</li>
             </ul>
           </footer>
@@ -1102,6 +1103,50 @@
 
 .lt-ie9 .list_link {
   font-weight: normal !important;
+}
+
+.list_link__large {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+}
+
+.lt-ie9 .list_link__large {
+  font-weight: normal !important;
+}
+
+a.list_link__large {
+  color: #101820;
+  border-bottom-color: #101820;
+  border-bottom-width: 0 !important;
+}
+
+a.list_link__large:visited,
+a.list_link__large.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+a.list_link__large:hover,
+a.list_link__large.hover {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+
+a.list_link__large:focus,
+a.list_link__large.focus {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+
+a.list_link__large:active,
+a.list_link__large.active {
+  border-bottom-color: #101820;
+  color: #101820;
 }
 
 .list_link__large {
@@ -1136,36 +1181,6 @@
 .lt-ie9 .list_link__large strong,
 .lt-ie9 .list_link__large b {
   font-weight: normal !important;
-}
-
-a.list_link__large {
-  color: #101820;
-  border-bottom-color: #101820;
-  border-bottom-width: 0 !important;
-}
-
-a.list_link__large:visited,
-a.list_link__large.visited {
-  border-bottom-color: #101820;
-  color: #101820;
-}
-
-a.list_link__large:hover,
-a.list_link__large.hover {
-  border-bottom-color: #328ed8;
-  color: #328ed8;
-}
-
-a.list_link__large:focus,
-a.list_link__large.focus {
-  border-bottom-color: #328ed8;
-  color: #328ed8;
-}
-
-a.list_link__large:active,
-a.list_link__large.active {
-  border-bottom-color: #101820;
-  color: #101820;
 }
 </code></pre>
       </div>
