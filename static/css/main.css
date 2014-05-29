@@ -4146,7 +4146,7 @@ img {
 }
 .content_main,
 .content_sidebar {
-  padding: 2em 15px;
+  padding: 1.875em 0.9375em;
 }
 @media only all and (min-width: 37.5em) {
   .content_main,
@@ -4160,6 +4160,7 @@ img {
     margin-right: -0.25em;
     vertical-align: top;
     width: 100%;
+    padding: 3.75em 0.9375em;
   }
   .ie .content_main,
   .ie .content_sidebar {
@@ -4272,7 +4273,7 @@ img {
   }
   .content_main,
   .content_sidebar {
-    padding: 2em 0;
+    padding: 3.75em 0;
   }
 }
 @media only all and (min-width: 64em) {
@@ -4302,7 +4303,7 @@ img {
   }
 }
 .content__bleedbar .content_sidebar {
-  padding: 2em 15px;
+  padding: 2em 0.9375em;
   background: #f1f2f2;
 }
 @media only all and (min-width: 50.0625em) {
@@ -4310,7 +4311,7 @@ img {
     overflow: hidden;
   }
   .content__bleedbar .content_sidebar {
-    padding: 2em 0 2em 30px;
+    padding: 3.75em 0 0.9375em 1.875em;
     margin-left: 0;
     background: transparent;
   }

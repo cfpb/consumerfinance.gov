@@ -20,10 +20,13 @@
 
 .content_main,
 .content_sidebar {
-    padding: 2em (@grid_gutter-width / 2);
+    padding: unit(@grid_gutter-width / @base-font-size-px, em)
+             unit((@grid_gutter-width / 2) / @base-font-size-px, em);
 
     .u-respond-to-min(600px, {
         .grid_column(12);
+        padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     });
 }
 
@@ -64,7 +67,7 @@
 
     .content_main,
     .content_sidebar {
-        padding: 2em 0;
+        padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em) 0;
     } 
 }); // END min-width 801 block
 
@@ -82,7 +85,7 @@
 .content__bleedbar {
 
     .content_sidebar {
-        padding: 2em (@grid_gutter-width / 2);
+        padding: 2em unit((@grid_gutter-width / 2) / @base-font-size-px, em);
         background: @gray-10;
     }
 
@@ -92,7 +95,10 @@
         overflow: hidden;
 
         .content_sidebar {
-            padding: 2em 0 2em @grid_gutter-width;
+            padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em)
+                     0
+                     unit((@grid_gutter-width / 2) / @base-font-size-px, em)
+                     unit(@grid_gutter-width / @base-font-size-px, em);
             margin-left: 0;
 
             // Remove background color from actual sidebar.
