@@ -5544,24 +5544,18 @@ a.list_link__large.visited {
 }
 a.list_link__large:hover,
 a.list_link__large.hover {
-  border-bottom-color: #101820;
-  color: #101820;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 a.list_link__large:focus,
 a.list_link__large.focus {
-  border-bottom-color: #101820;
-  color: #101820;
+  border-bottom-color: #328ed8;
+  color: #328ed8;
 }
 a.list_link__large:active,
 a.list_link__large.active {
   border-bottom-color: #101820;
   color: #101820;
-}
-a.list_link__large:hover,
-a.list_link__large.hover,
-a.list_link__large:focus,
-a.list_link__large.focus {
-  border-bottom-width: 1px !important;
 }
 /* topdoc
   name: Unstyled list modifier
