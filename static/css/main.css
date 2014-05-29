@@ -7101,7 +7101,7 @@ a.focus .summary_header {
       markup: |
         <div style="overflow:hidden;">
 
-            <!-- Begin [inset] HTML -->
+            <!-- Begin [moreinfo] HTML -->
             <aside class="post_inset post_inset__right line-container line-container__no-top">
                 <div class="line-container_body">
                     <h2 class="header-slug">
@@ -7128,7 +7128,7 @@ a.focus .summary_header {
                     </ul>
                 </div>
             </aside>
-            <!-- End [inset] HTML -->
+            <!-- End [moreinfo] HTML -->
 
         </div>
       codenotes:
