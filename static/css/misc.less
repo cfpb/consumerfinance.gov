@@ -639,35 +639,18 @@ select[multiple].success {
               .list_link
     - name: List link
       markup: |
-        <a class="list_link" href="#">List link</a>
+        <a class="list_link" href="#">List link</a>,&nbsp;
         <span class="list_link">List link</span>
       codenotes:
         - .list_link
       notes:
         - "Notice that you can use any element for .list_link."
-    - name: List link large modifier
-      markup: |
-        <a class="list_link list_link__large" href="#">List link</a>
-        <span class="list_link list_link__large">List link</span>
-      codenotes:
-        - .list_link__large
-      notes:
-        - "Notice that you can use any element for .list_link__large."
   tags:
     - cfgov-misc
 */
 
 .list_link {
     .webfont-medium();
-}
-
-.list_link__large {
-    .h3();
-
-    a& {
-        .u-link__colors(@black, @pacific-80);
-        .u-link__no-border();
-    }
 }
 
 
@@ -701,6 +684,36 @@ select[multiple].success {
     // This is needed for dd elements.
     .list_item {
         margin-left: 0;
+    }
+}
+
+
+/* topdoc
+  name: Spaced list modifier
+  family: cfgov-misc
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__spaced">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+      codenotes:
+        - .list.list__spaced
+  tags:
+    - cfgov-misc
+*/
+
+.list__spaced {
+    .list_item + .list_item {
+        margin-top: unit(24px / @base-font-size-px, em);
     }
 }
 

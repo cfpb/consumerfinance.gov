@@ -5502,20 +5502,12 @@ img {
               .list_link
     - name: List link
       markup: |
-        <a class="list_link" href="#">List link</a>
+        <a class="list_link" href="#">List link</a>,&nbsp;
         <span class="list_link">List link</span>
       codenotes:
         - .list_link
       notes:
         - "Notice that you can use any element for .list_link."
-    - name: List link large modifier
-      markup: |
-        <a class="list_link list_link__large" href="#">List link</a>
-        <span class="list_link list_link__large">List link</span>
-      codenotes:
-        - .list_link__large
-      notes:
-        - "Notice that you can use any element for .list_link__large."
   tags:
     - cfgov-misc
 */
@@ -5526,60 +5518,6 @@ img {
 }
 .lt-ie9 .list_link {
   font-weight: normal !important;
-}
-.list_link__large {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.22727273em;
-  font-size: 1.375em;
-  line-height: 1.27272727;
-}
-.list_link__large em,
-.list_link__large i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-.lt-ie9 .list_link__large em,
-.lt-ie9 .list_link__large i {
-  font-style: normal !important;
-}
-.list_link__large strong,
-.list_link__large b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .list_link__large strong,
-.lt-ie9 .list_link__large b {
-  font-weight: normal !important;
-}
-a.list_link__large {
-  color: #101820;
-  border-bottom-color: #101820;
-  border-bottom-width: 0 !important;
-}
-a.list_link__large:visited,
-a.list_link__large.visited {
-  border-bottom-color: #101820;
-  color: #101820;
-}
-a.list_link__large:hover,
-a.list_link__large.hover {
-  border-bottom-color: #328ed8;
-  color: #328ed8;
-}
-a.list_link__large:focus,
-a.list_link__large.focus {
-  border-bottom-color: #328ed8;
-  color: #328ed8;
-}
-a.list_link__large:active,
-a.list_link__large.active {
-  border-bottom-color: #101820;
-  color: #101820;
 }
 /* topdoc
   name: Unstyled list modifier
@@ -5609,6 +5547,31 @@ a.list_link__large.active {
 }
 .list__unstyled .list_item {
   margin-left: 0;
+}
+/* topdoc
+  name: Spaced list modifier
+  family: cfgov-misc
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__spaced">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+      codenotes:
+        - .list.list__spaced
+  tags:
+    - cfgov-misc
+*/
+.list__spaced .list_item + .list_item {
+  margin-top: 1.5em;
 }
 /* topdoc
   name: Spaced list item modifier
@@ -6475,6 +6438,106 @@ a.list_link__large.active {
     margin-left: 1.875em;
   }
 }
+@media only all and (min-width: 37.5em) and (max-width: 50em) {
+  .popular-stories .list {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .popular-stories .list .list_item {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .popular-stories .list .list_item {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .popular-stories .list .list_item {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .popular-stories .list.list__spaced {
+    margin-top: -1.5em;
+  }
+  .popular-stories .list.list__spaced .list_item {
+    margin-top: 1.5em;
+  }
+}
+.popular-stories .list_link {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  color: #101820;
+  border-bottom-color: #101820;
+  border-bottom-width: 0 !important;
+}
+.lt-ie9 .popular-stories .list_link {
+  font-weight: normal !important;
+}
+.popular-stories .list_link:visited,
+.popular-stories .list_link.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.popular-stories .list_link:hover,
+.popular-stories .list_link.hover {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+.popular-stories .list_link:focus,
+.popular-stories .list_link.focus {
+  border-bottom-color: #328ed8;
+  color: #328ed8;
+}
+.popular-stories .list_link:active,
+.popular-stories .list_link.active {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+@media only all and (min-width: 37.5em) {
+  .popular-stories .list_link {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.22727273em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .popular-stories .list_link em,
+  .popular-stories .list_link i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .popular-stories .list_link em,
+  .lt-ie9 .popular-stories .list_link i {
+    font-style: normal !important;
+  }
+  .popular-stories .list_link strong,
+  .popular-stories .list_link b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .popular-stories .list_link strong,
+  .lt-ie9 .popular-stories .list_link b {
+    font-weight: normal !important;
+  }
+}
 /* topdoc
   name: EOF
   eof: true
@@ -7097,6 +7160,45 @@ a.focus .summary_header {
         - "Note that .line-container_body no longer uses the .pull-quote class."
         - "Insets using the html content type should not be allowed to use
           layout='full'."
+    - name: More information
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [moreinfo] HTML -->
+            <aside class="post_inset post_inset__right line-container line-container__no-top">
+                <div class="line-container_body">
+                    <h2 class="header-slug">
+                        <span class="header-slug_inner">
+                            More information
+                        </span>
+                    </h2>
+                    <ul class="list list__unstyled">
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link" href="#">
+                                Consumer help
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link" href="#">
+                                Know before you owe
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link" href="#">
+                                Submit a complaint
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <!-- End [moreinfo] HTML -->
+
+        </div>
+      codenotes:
+        - "[moreinfo]"
+      notes:
+        - "There are no attribute customizations allowed in [moreinfo]."
+        - "Note that .line-containeruses the .line-container__no-top modifier."
   tags:
     - cfgov-blog-docs
 */

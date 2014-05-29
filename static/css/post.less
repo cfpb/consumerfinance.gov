@@ -420,6 +420,42 @@
     }
 }
 
+.popular-stories {
+    .list {
+        .u-respond-to-range(600px, 800px, {
+            .grid_nested-col-group();
+
+            & .list_item {
+                .grid_column(6);
+            }
+
+            // Using .list__spaced items within a grid column causes unwanted
+            // extra margins because grid columns suppress margin collapsing.
+            // To counteract that we need to use a negative margin on the list.
+            // This means we also need to add a top margin to the first list
+            // item since the default .list__spaced only applies margins to
+            // .list_item + .list_item.
+            &.list__spaced {
+                margin-top: unit(-24px / @base-font-size-px, em);
+
+                .list_item {
+                    margin-top: unit(24px / @base-font-size-px, em);
+                }
+            }
+        });
+    }
+
+    .list_link {
+        .h4();
+        .u-link__colors(@black, @pacific-80);
+        .u-link__no-border();
+
+        .u-respond-to-min(600px, {
+            .h3();
+        });
+    }
+}
+
 
 /* topdoc
   name: EOF
