@@ -1071,6 +1071,26 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">List link large modifier</h3>
+          <section class="docs-pattern_pattern">
+<a class="list_link list_link__large">List link</a>
+<span class="list_link list_link__large">List link</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link list_link__large&quot;&gt;List link&lt;/a&gt;
+&lt;span class=&quot;list_link list_link__large&quot;&gt;List link&lt;/span&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list_link__large</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice that you can use any element for .list_link__large.</li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
@@ -1081,6 +1101,40 @@
 }
 
 .lt-ie9 .list_link {
+  font-weight: normal !important;
+}
+
+.list_link__large {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.list_link__large em,
+.list_link__large i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list_link__large em,
+.lt-ie9 .list_link__large i {
+  font-style: normal !important;
+}
+
+.list_link__large strong,
+.list_link__large b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list_link__large strong,
+.lt-ie9 .list_link__large b {
   font-weight: normal !important;
 }
 </code></pre>
