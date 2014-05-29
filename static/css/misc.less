@@ -645,12 +645,24 @@ select[multiple].success {
         - .list_link
       notes:
         - "Notice that you can use any element for .list_link."
+    - name: List link large modifier
+      markup: |
+        <a class="list_link list_link__large">List link</a>
+        <span class="list_link list_link__large">List link</span>
+      codenotes:
+        - .list_link__large
+      notes:
+        - "Notice that you can use any element for .list_link__large."
   tags:
     - cfgov-misc
 */
 
 .list_link {
     .webfont-medium();
+}
+
+.list_link__large {
+    .h3();
 }
 
 
