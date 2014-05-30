@@ -4379,7 +4379,7 @@ img {
       markup: |
         <article class="media-object">
             <div class="media-object_image-container">
-                <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
+                <img class="media-object_image" src="http://placekitten.com/276/155" alt="">
             </div>
             <div class="media-object_text-container">
                 <p>
@@ -4398,6 +4398,8 @@ img {
             .media-object_image-container
               .media-object_image
             .media-object_text-container
+      notes:
+        - "The thumbnail uses a 16:9 aspect ratio."
   tags:
     - cfgov-media-object
 */
@@ -4426,8 +4428,8 @@ img {
 @media only all and (min-width: 37.5em) {
   .media-object_image {
     display: block;
-    width: 290px;
-    max-width: 290px;
+    width: 276px;
+    max-width: 276px;
     margin-bottom: 0;
     margin-left: -50%;
   }
@@ -6020,7 +6022,7 @@ img {
                         </a>
                     </li>
                 </ul>
-                <img class="post_featured-img" src="http://placekitten.com/740/410" alt="alt text">
+                <img class="post_featured-img" src="http://placekitten.com/740/416" alt="alt text">
             </header>
             <div class="post_body">
                 <aside class="post_inset post_inset__right line-container">
@@ -6321,6 +6323,8 @@ img {
             .post_featured-img
             .post_body
             .post_inset
+      notes:
+        - ".post_featured-img uses a 16:9 aspect ratio."
   tags:
     - cfgov-post
 */
