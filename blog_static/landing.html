@@ -240,11 +240,14 @@
                                 </div>
                                 <div class="form-l_col form-l_col-1-3">
                                     <div class="form-group">
-                                        <label class="form-label-header">
+                                        <label class="form-label-header" for="filter_tags">
                                             Topics
                                         </label>
                                         <!-- <input type="text" name="filter_tags" value=""> -->
-                                        <select name="filter_tags" multiple>
+                                        <select
+                                            id="filter_tags"
+                                            name="filter_tags"
+                                            multiple>
                                             <option value="tag1">Tag 1</option>
                                             <option value="tag2">Tag 2</option>
                                             <option value="tag3">Tag 3</option>
@@ -254,11 +257,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label-header">
+                                        <label class="form-label-header" for="filter_author">
                                             Author
                                         </label>
                                         <!-- <input type="text" name="filter_author" value=""> -->
-                                        <select name="filter_author" multiple>
+                                        <select
+                                            id="filter_author"
+                                            name="filter_author"
+                                            multiple>
                                             <option value="author1">Author 1</option>
                                             <option value="author2">Author 2</option>
                                             <option value="author3">Author 3</option>
@@ -273,28 +279,78 @@
                                         <label class="form-label-header">
                                             Date range
                                         </label>
-                                        <select class="form-input-month">
-                                            <option value="">Month</option>
-                                            <option value="">January</option>
-                                            <option value="">February</option>
-                                            <option value="">March</option>
-                                            <option value="">April</option>
-                                            <option value="">May</option>
-                                            <option value="">June</option>
-                                            <option value="">July</option>
-                                            <option value="">August</option>
-                                            <option value="">September</option>
-                                            <option value="">October</option>
-                                            <option value="">November</option>
-                                            <option value="">December</option>
-                                        </select>
-                                        <select class="form-input_year">
-                                            <option value="">Year</option>
-                                            <option value="">2014</option>
-                                            <option value="">2013</option>
-                                            <option value="">2012</option>
-                                            <option value="">2011</option>
-                                        </select>
+                                        <div class="form-group_item">
+                                            <label class="u-visually-hidden" for="filter_from_month">
+                                                From month
+                                            </label>
+                                            <select
+                                                class="form-input-month"
+                                                id="filter_from_month"
+                                                name="filter_from_month">
+                                                <option value="">Month</option>
+                                                <option value="">January</option>
+                                                <option value="">February</option>
+                                                <option value="">March</option>
+                                                <option value="">April</option>
+                                                <option value="">May</option>
+                                                <option value="">June</option>
+                                                <option value="">July</option>
+                                                <option value="">August</option>
+                                                <option value="">September</option>
+                                                <option value="">October</option>
+                                                <option value="">November</option>
+                                                <option value="">December</option>
+                                            </select>
+                                            <label class="u-visually-hidden" for="filter_from_year">
+                                                From year
+                                            </label>
+                                            <select
+                                                class="form-input_year"
+                                                id="filter_from_year"
+                                                name="filter_from_year">
+                                                <option value="">Year</option>
+                                                <option value="">2014</option>
+                                                <option value="">2013</option>
+                                                <option value="">2012</option>
+                                                <option value="">2011</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group_item">
+                                            <label class="u-visually-hidden" for="filter_to_month">
+                                                To month
+                                            </label>
+                                            <select
+                                                class="form-input-month"
+                                                id="filter_to_month"
+                                                name="filter_to_month">
+                                                <option value="">Month</option>
+                                                <option value="">January</option>
+                                                <option value="">February</option>
+                                                <option value="">March</option>
+                                                <option value="">April</option>
+                                                <option value="">May</option>
+                                                <option value="">June</option>
+                                                <option value="">July</option>
+                                                <option value="">August</option>
+                                                <option value="">September</option>
+                                                <option value="">October</option>
+                                                <option value="">November</option>
+                                                <option value="">December</option>
+                                            </select>
+                                            <label class="u-visually-hidden" for="filter_to_year">
+                                                To yeat
+                                            </label>
+                                            <select
+                                                class="form-input_year"
+                                                id="filter_to_year"
+                                                name="filter_to_year">
+                                                <option value="">Year</option>
+                                                <option value="">2014</option>
+                                                <option value="">2013</option>
+                                                <option value="">2012</option>
+                                                <option value="">2011</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -305,6 +361,8 @@
                         </form>
                     </div>
                 </div><!-- END .expandable -->
+
+                <div id="pagination_content"></div>
 
                 <article class="post-preview">
                     <div class="meta-header">
@@ -337,7 +395,7 @@
                     </div>
                     <a class="media-object" href="#">
                         <div class="media-object_image-container">
-                            <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
+                            <img class="media-object_image" src="http://placekitten.com/276/155" alt="">
                         </div>
                         <div class="media-object_text-container summary">
                             <h1 class="summary_header">
@@ -386,7 +444,7 @@
                     </div>
                     <a class="media-object" href="#">
                         <div class="media-object_image-container">
-                            <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
+                            <img class="media-object_image" src="http://placekitten.com/276/155" alt="">
                         </div>
                         <div class="media-object_text-container summary">
                             <h1 class="summary_header">
@@ -405,17 +463,20 @@
                 </article>
 
                 <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
-                    <a class="btn btn-secondary pagination_prev" href="#">
+                    <a class="btn btn-secondary pagination_prev" href="#pagination_content">
                         <span class="btn-icon-left cf-icon cf-icon-left"></span>
                         Newer
                     </a>
-                    <a class="btn btn-secondary pagination_next" href="#">
+                    <a class="btn btn-secondary pagination_next" href="#pagination_content">
                         Older
                         <span class="btn-icon-right cf-icon cf-icon-right"></span>
                     </a>
-                    <form class="pagination_form">
+                    <form class="pagination_form" action="landing.html#pagination_content">
                         <label class="pagination_label" for="pagination_current-page">
                             Page
+                            <span class="u-visually-hidden">
+                                number out of 10 total pages
+                            </span>
                         </label>
                         <input class="pagination_current-page"
                                id="pagination_current-page"
@@ -424,9 +485,11 @@
                                min="1"
                                max="10"
                                value="2" />
-                        <label class="pagination_label" for="pagination_current-page">
-                            of 10
-                        </label>
+                        <span class="pagination_label">
+                            <span aria-hidden="true">
+                                of 10
+                            </span>
+                        </span>
                         <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
                             Go
                         </button>
