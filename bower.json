@@ -20,7 +20,6 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "chosen": "~1.1.0",
     "cf-buttons": "git://github.com/cfpb/cf-buttons.git",
     "cf-colors": "git://github.com/cfpb/cf-colors.git",
     "cf-expandables": "git://github.com/cfpb/cf-expandables.git",
@@ -29,6 +28,7 @@
     "cf-icons": "git://github.com/cfpb/cf-icons.git",
     "cf-pagination": "git://github.com/cfpb/cf-pagination.git",
     "cf-typography": "git://github.com/cfpb/cf-typography.git",
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "html5shiv": "latest",
     "jquery": "~1.11.0",
     "normalize-css": "~3.0.0",
