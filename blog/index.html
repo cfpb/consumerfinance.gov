@@ -44,7 +44,7 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-            {% set posts = queries.posts.search_with_url_arguments(size=3) %}
+            {% set posts = queries.posts.search_with_url_arguments(size=10) %}
 
             <div class="expandable">
                 <div class="expandable_header expandable_header__spaced">
@@ -95,10 +95,9 @@
                                         Topics
                                     </label>
                                     <!-- <input type="text" name="filter_tags" value=""> -->
-                                    <select
-                                        id="filter_tags"
-                                        name="filter_tags"
-                                        multiple>
+                                    <select id="filter_tags"
+                                            name="filter_tags"
+                                            multiple>
                                         {% for tags in queries.posts.possible_values_for('tags') %}
                                         <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
                                         {% endfor %}
@@ -109,10 +108,9 @@
                                         Author
                                     </label>
                                     <!-- <input type="text" name="filter_author" value=""> -->
-                                    <select
-                                        id="filter_author"
-                                        name="filter_author"
-                                        multiple>
+                                    <select id="filter_author"
+                                            name="filter_author"
+                                            multiple>
                                         {% for author in queries.posts.possible_values_for('author') %}
                                         <option value="{{author.term}}">{{author.term}}</option>
                                         {% endfor %}
@@ -128,10 +126,9 @@
                                         <label class="u-visually-hidden" for="filter_from_month">
                                             From month
                                         </label>
-                                        <select
-                                            class="form-input-month"
-                                            id="filter_from_month"
-                                            name="filter_from_month">
+                                        <select class="form-input-month"
+                                                id="filter_from_month"
+                                                name="filter_from_month">
                                             <option value="">Month</option>
                                             <option value="">January</option>
                                             <option value="">February</option>
@@ -149,10 +146,9 @@
                                         <label class="u-visually-hidden" for="filter_from_year">
                                             From year
                                         </label>
-                                        <select
-                                            class="form-input_year"
-                                            id="filter_from_year"
-                                            name="filter_from_year">
+                                        <select class="form-input_year"
+                                                id="filter_from_year"
+                                                name="filter_from_year">
                                             <option value="">Year</option>
                                             <option value="">2014</option>
                                             <option value="">2013</option>
@@ -164,10 +160,9 @@
                                         <label class="u-visually-hidden" for="filter_to_month">
                                             To month
                                         </label>
-                                        <select
-                                            class="form-input-month"
-                                            id="filter_to_month"
-                                            name="filter_to_month">
+                                        <select class="form-input-month"
+                                                id="filter_to_month"
+                                                name="filter_to_month">
                                             <option value="">Month</option>
                                             <option value="">January</option>
                                             <option value="">February</option>
@@ -185,10 +180,9 @@
                                         <label class="u-visually-hidden" for="filter_to_year">
                                             To yeat
                                         </label>
-                                        <select
-                                            class="form-input_year"
-                                            id="filter_to_year"
-                                            name="filter_to_year">
+                                        <select class="form-input_year"
+                                                id="filter_to_year"
+                                                name="filter_to_year">
                                             <option value="">Year</option>
                                             <option value="">2014</option>
                                             <option value="">2013</option>
@@ -200,8 +194,12 @@
                             </div>
                         </div>
                         <div class="form-actions form-actions__right-on-med">
-                            <input type="reset" value="Reset filters" class="btn btn-warning btn-link form-actions_item">
-                            <input type="submit" value="Apply filters" class="btn form-actions_item">
+                            <input class="btn btn-warning btn-link form-actions_item"
+                                   type="reset"
+                                   value="Reset filters">
+                            <input class="btn form-actions_item"
+                                   type="submit"
+                                   value="Apply filters">
                         </div>
                     </form>
                 </div>
@@ -218,20 +216,21 @@
                         <a href="#" class="category-slug meta-header_left">
                             <span class="cf-icon cf-icon-help"></span>
                             <span class="u-visually-hidden">Category:</span>
-                            {{ post.category }}
+                            {{ post.category.0 }}
                         </a>
                     </div>
                     <a class="summary" href="{{ post.permalink }}">
                         <h1 class="summary_header">{{ post.title }}</h1>
                         <p class="summary_text summary_text__max">{{ post.excerpt }}</p>
-                        <p class="summary_byline">By {{ post.author }}</p>
+                        <p class="summary_byline">By {{ post.author.0 }}</p>
                     </a>
                 </article>
             {% endfor %}
 
                 <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
                 {% if posts.current_page > 1 %}
-                    <a class="btn btn-secondary pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
+                    <a class="btn pagination_prev"
+                       href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
                 {% else %}
                     <a class="btn btn-disabled pagination_prev">
                 {% endif %}
@@ -239,7 +238,8 @@
                         Newer
                     </a>
                 {% if posts.current_page < posts.pages %}
-                    <a class="btn btn-secondary pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
+                    <a class="btn pagination_next"
+                       href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
                 {% else %}
                     <a class="btn btn-disabled pagination_next">
                 {% endif %}
