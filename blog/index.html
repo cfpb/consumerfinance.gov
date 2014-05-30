@@ -247,7 +247,9 @@
                     <form class="pagination_form">
                         <label class="pagination_label" for="pagination_current-page">
                             Page
-                            <span class="u-visually-hidden">number</span>
+                            <span class="u-visually-hidden">
+                                number out of {{ posts.pages }} total pages
+                            </span>
                         </label>
                         <input class="pagination_current-page"
                                id="pagination_current-page"
@@ -257,7 +259,9 @@
                                max="{{ posts.pages }}"
                                value="{{ posts.current_page }}" />
                         <label class="pagination_label">
-                            of {{ posts.pages }}
+                            <span aria-hidden="true">
+                                of {{ posts.pages }}
+                            </span>
                         </label>
                         <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
                             Go
