@@ -3,6 +3,7 @@
 - Post stuff
   - Posts with annoying deks
     - /blog/save-the-date-detroit-michigan
+    - /blog/understanding-reverse-mortgages
   - Posts with videos, might want to make them full-width using the
     .u-flexible-container utility
     - /blog/live-from-atlanta
