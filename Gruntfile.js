@@ -38,6 +38,29 @@ module.exports = function(grunt) {
     },
 
     /**
+     * String replace: https://github.com/erickrdch/grunt-string-replace
+     * 
+     * Replace strings on files by using string or regex patters.
+     */
+    'string-replace': {
+      chosen: {
+        files: {
+          'vendor/chosen/': 'vendor/chosen/chosen.css'
+        }
+      },
+      options: {
+        replacements: [{
+          pattern: /url\('chosen-sprite.png'\)/ig,
+          replacement: 'url("../img/chosen-sprite.png")'
+        },
+        {
+          pattern: /url\('chosen-sprite@2x.png'\)/ig,
+          replacement: 'url("../img/chosen-sprite@2x.png")'
+        }]
+      }
+    },
+
+    /**
      * Concat: https://github.com/gruntjs/grunt-contrib-concat
      * 
      * Concatenate cf-* Less files prior to compiling them.
@@ -339,12 +362,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-legacssy');
+  grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-topdoc');
 
   /**
    * Create custom task aliases and combinations
    */
-  grunt.registerTask('vendor', ['bower:install', 'concat:cf-less']);
+  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'topdoc']);
