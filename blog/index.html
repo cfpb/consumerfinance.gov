@@ -207,6 +207,8 @@
                 </div>
             </div><!-- END .expandable -->
 
+            <div id="pagination_content"></div>
+
             {% for post in posts %}
                 <article class="post-preview">
                     <div class="meta-header">
@@ -229,7 +231,7 @@
 
                 <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
                 {% if posts.current_page > 1 %}
-                    <a class="btn btn-secondary pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}">
+                    <a class="btn btn-secondary pagination_prev" href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
                 {% else %}
                     <a class="btn btn-disabled pagination_prev">
                 {% endif %}
@@ -237,14 +239,14 @@
                         Newer
                     </a>
                 {% if posts.current_page < posts.pages %}
-                    <a class="btn btn-secondary pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}">
+                    <a class="btn btn-secondary pagination_next" href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
                 {% else %}
                     <a class="btn btn-disabled pagination_next">
                 {% endif %}
                         Older
                         <span class="btn-icon-right cf-icon cf-icon-right"></span>
                     </a>
-                    <form class="pagination_form">
+                    <form class="pagination_form" action="index.html#pagination_content">
                         <label class="pagination_label" for="pagination_current-page">
                             Page
                             <span class="u-visually-hidden">
