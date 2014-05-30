@@ -95,7 +95,8 @@
                                         Topics
                                     </label>
                                     <!-- <input type="text" name="filter_tags" value=""> -->
-                                    <select id="filter_tags"
+                                    <select class="chosen-select"
+                                            id="filter_tags"
                                             name="filter_tags"
                                             multiple>
                                         {% for tags in queries.posts.possible_values_for('tags') %}
@@ -108,7 +109,8 @@
                                         Author
                                     </label>
                                     <!-- <input type="text" name="filter_author" value=""> -->
-                                    <select id="filter_author"
+                                    <select class="chosen-select"
+                                            id="filter_author"
                                             name="filter_author"
                                             multiple>
                                         {% for author in queries.posts.possible_values_for('author') %}

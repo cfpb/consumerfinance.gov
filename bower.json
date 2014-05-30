@@ -20,10 +20,6 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "html5shiv": "latest",
-    "jquery": "~1.11.0",
-    "normalize-css": "~3.0.0",
-    "normalize-legacy-addon": "git://github.com/cfpb/normalize-legacy-addon.git#0.1.0",
     "cf-buttons": "git://github.com/cfpb/cf-buttons.git",
     "cf-colors": "git://github.com/cfpb/cf-colors.git",
     "cf-expandables": "git://github.com/cfpb/cf-expandables.git",
@@ -31,21 +27,24 @@
     "cf-grid": "git://github.com/cfpb/cf-grid.git",
     "cf-icons": "git://github.com/cfpb/cf-icons.git",
     "cf-pagination": "git://github.com/cfpb/cf-pagination.git",
-    "cf-typography": "git://github.com/cfpb/cf-typography.git"
+    "cf-typography": "git://github.com/cfpb/cf-typography.git",
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
+    "html5shiv": "latest",
+    "jquery": "~1.11.0",
+    "normalize-css": "~3.0.0",
+    "normalize-legacy-addon": "git://github.com/cfpb/normalize-legacy-addon.git#0.1.0"
   },
   "exportsOverride": {
-    "cf-grid": {
-      "less": "src/cf-grid.less"
-    },
     "cf-*": {
       "css": "src/**/*.css",
       "less": "src/**/*.less",
       "fonts": "src/fonts/*.*",
       "js": "src/**/*.js"
     },
-    "font-awesome": {
-      "css": "css/*.css",
-      "fonts": "font/*.*"
+    "chosen": {
+      "css": "chosen.css",
+      "img": "*.png",
+      "js": "chosen.jquery.js"
     },
     "html5shiv": {
       "js": "dist/html5shiv-printshiv.min.js"
