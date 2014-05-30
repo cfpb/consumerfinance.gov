@@ -6470,11 +6470,11 @@ img {
 */
 .padded-container {
   margin: 0 0 1.875em;
+  padding: 0.0625em;
   background: #f1f2f2;
-  overflow: hidden;
 }
 .padded-container_body {
-  margin: 1.5em 1.875em 1.5em;
+  margin: 1.4375em 1.8125em 1.4375em;
 }
 /* topdoc
   name: EOF

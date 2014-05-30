@@ -1068,16 +1068,17 @@ select[multiple].success {
 
 .padded-container {
     margin: 0 0 unit(30px / @base-font-size-px, em);
+    padding: unit(1px / @base-font-size-px, em);
     background: @gray-10;
-    // Counteract the margin collapsing.
-    overflow: hidden;
 
     &_body {
-        // 26px is eyeballed to 30px when considering line heights of potential
-        // children.
-        margin: unit(24px / @base-font-size-px, em)
-                unit(30px / @base-font-size-px, em)
-                unit(24px / @base-font-size-px, em);
+        // 23px is eyeballed to 30px when considering line heights of potential
+        // children. One pixel has been taken off of each value to account for
+        // the 1px padding on the parent. This padding stops margin collapsing
+        // from extending outside of the padded box.
+        margin: unit(23px / @base-font-size-px, em)
+                unit(29px / @base-font-size-px, em)
+                unit(23px / @base-font-size-px, em);
     }
 }
 
