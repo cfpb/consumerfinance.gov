@@ -44,10 +44,6 @@
       "fonts": "src/fonts/*.*",
       "js": "src/**/*.js"
     },
-    "font-awesome": {
-      "css": "css/*.css",
-      "fonts": "font/*.*"
-    },
     "html5shiv": {
       "js": "dist/html5shiv-printshiv.min.js"
     }
