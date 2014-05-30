@@ -1972,7 +1972,7 @@ input.btn::-moz-focus-inner {
 }
 
 .expandable_content {
-  overflow: hidden;
+  padding: 1px;
 }
 
 /* topdoc
