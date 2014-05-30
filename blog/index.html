@@ -98,7 +98,8 @@
                                     <select class="chosen-select"
                                             id="filter_tags"
                                             name="filter_tags"
-                                            multiple>
+                                            multiple
+                                            data-placeholder="Select some options">
                                         {% for tags in queries.posts.possible_values_for('tags') %}
                                         <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
                                         {% endfor %}
@@ -112,7 +113,8 @@
                                     <select class="chosen-select"
                                             id="filter_author"
                                             name="filter_author"
-                                            multiple>
+                                            multiple
+                                            data-placeholder="Select some options">
                                         {% for author in queries.posts.possible_values_for('author') %}
                                         <option value="{{author.term}}">{{author.term}}</option>
                                         {% endfor %}
