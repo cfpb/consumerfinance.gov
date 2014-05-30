@@ -4,6 +4,7 @@
   - Posts with videos, might want to make them full-width using the
     .u-flexible-container utility
     - /blog/live-from-atlanta
+    - /blog/live-from-phoenix
   - Posts with floating images, might want to make them flixble or stop floating
     at smaller screens
     - /blog/four-steps-you-can-take-if-you-think-your-credit-or-debit-card-data-was-hacked
