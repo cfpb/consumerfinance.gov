@@ -5,9 +5,18 @@
     .u-flexible-container utility
     - /blog/live-from-atlanta
     - /blog/live-from-phoenix
+    - /blog/remittance-rule-session
   - Posts with floating images, might want to make them flixble or stop floating
     at smaller screens
     - /blog/four-steps-you-can-take-if-you-think-your-credit-or-debit-card-data-was-hacked
+  - Posts with hand-coded insets, might want to pull them out of the post and
+    make them use the inset widget, also note that there is some style blocks
+    used here which we should get rid of
+    - /blog/exemption-from-escrow-requirement-for-small-creditors-in-rural-or-underserved-counties
+    - /blog/you-have-a-right-to-see-specialty-consumer-reports-too
+  - Posts with tables
+    - /blog/student-banking-101
+    - /blog/explainer-why-did-it-take-1099-pages-to-propose-a-three-page-mortgage-disclosure
   - Styled lists
     - http://codepen.io/anon/pen/tqJBp
     - http://codepen.io/anon/pen/bryAo
