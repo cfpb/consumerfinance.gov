@@ -20,10 +20,7 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "html5shiv": "latest",
-    "jquery": "~1.11.0",
-    "normalize-css": "~3.0.0",
-    "normalize-legacy-addon": "git://github.com/cfpb/normalize-legacy-addon.git#0.1.0",
+    "chosen": "~1.1.0",
     "cf-buttons": "git://github.com/cfpb/cf-buttons.git",
     "cf-colors": "git://github.com/cfpb/cf-colors.git",
     "cf-expandables": "git://github.com/cfpb/cf-expandables.git",
@@ -31,7 +28,11 @@
     "cf-grid": "git://github.com/cfpb/cf-grid.git",
     "cf-icons": "git://github.com/cfpb/cf-icons.git",
     "cf-pagination": "git://github.com/cfpb/cf-pagination.git",
-    "cf-typography": "git://github.com/cfpb/cf-typography.git"
+    "cf-typography": "git://github.com/cfpb/cf-typography.git",
+    "html5shiv": "latest",
+    "jquery": "~1.11.0",
+    "normalize-css": "~3.0.0",
+    "normalize-legacy-addon": "git://github.com/cfpb/normalize-legacy-addon.git#0.1.0"
   },
   "exportsOverride": {
     "cf-grid": {
