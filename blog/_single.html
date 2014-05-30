@@ -18,7 +18,7 @@
                         <a href="#" class="post_slug category-slug">
                             <span class="cf-icon cf-icon-help"></span>
                             <span class="u-visually-hidden">Category:</span>
-                            {{ post.category }}
+                            {{ post.category.0 }}
                         </a>
                         <h1 class="post_header">
                             {{ post.title }}
@@ -28,7 +28,15 @@
                         </p>
                         <div class="post_meta">
                             <span class="post_byline">
-                                By <a href="/blog/?filter_author={{ post.author }}">{{ post.author }}</a> &ndash;
+                                By <a href="/blog/?filter_author={{ post.author.0 }}">
+                                    {{ post.author.0 }}
+                                </a>
+                            {% if post.author.1 %}
+                                and <a href="/blog/?filter_author={{ post.author.1 }}">
+                                    {{ post.author.1 }}
+                                </a>
+                            {% endif %}
+                                &ndash;
                             </span>
                             <span class="post_date date">
                                 {{ post.date | date("%b %d, %Y") }}
@@ -63,7 +71,7 @@
                         <img class="post_featured-img" src="http://placekitten.com/740/416" alt="alt text">
                     </header>
                     <div class="post_body">
-                        {{ post.text | markdown }}
+                        {{ post.content }}
                     </div>
                     <footer>
                         <div class="tags">
