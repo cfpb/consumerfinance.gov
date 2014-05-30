@@ -16,6 +16,8 @@
     used here which we should get rid of
     - /blog/exemption-from-escrow-requirement-for-small-creditors-in-rural-or-underserved-counties
     - /blog/you-have-a-right-to-see-specialty-consumer-reports-too
+  - Posts with forms
+    - /blog/know-before-you-owe-how-we-learned-to-build-a-better-mortgage-disclosure
   - Posts with tables
     - /blog/student-banking-101
     - /blog/explainer-why-did-it-take-1099-pages-to-propose-a-three-page-mortgage-disclosure
