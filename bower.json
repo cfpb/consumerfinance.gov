@@ -35,9 +35,6 @@
     "normalize-legacy-addon": "git://github.com/cfpb/normalize-legacy-addon.git#0.1.0"
   },
   "exportsOverride": {
-    "cf-grid": {
-      "less": "src/cf-grid.less"
-    },
     "cf-*": {
       "css": "src/**/*.css",
       "less": "src/**/*.less",
