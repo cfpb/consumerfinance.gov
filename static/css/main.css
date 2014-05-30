@@ -1681,7 +1681,7 @@ input.btn::-moz-focus-inner {
   display: inline;
 }
 .expandable_content {
-  overflow: hidden;
+  padding: 1px;
 }
 /* topdoc
     name: Expandable header
