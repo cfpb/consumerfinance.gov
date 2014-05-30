@@ -52,6 +52,7 @@ module.exports = function(grunt) {
       bodyScripts: {
         src: [
           'vendor/jquery/jquery.js',
+          'vendor/chosen/chosen.jquery.js',
           'vendor/cf-*/*.js',
           'static/js/app.js'
         ],
