@@ -54,12 +54,12 @@
                     </ul> -->
                     <a class="expandable_target btn btn-secondary"
                        href="#post-filters-form">
-                        Filter posts&nbsp;&nbsp;
+                        Filter posts
                         <span class="expandable_cue-open">
-                            <span class="cf-icon cf-icon-down"></span>
+                            <span class="btn-icon-right cf-icon cf-icon-down"></span>
                         </span>
                         <span class="expandable_cue-close">
-                            <span class="cf-icon cf-icon-up"></span>
+                            <span class="btn-icon-right cf-icon cf-icon-up"></span>
                         </span>
                     </a>
                 </div>
@@ -98,7 +98,8 @@
                                     <select class="chosen-select"
                                             id="filter_tags"
                                             name="filter_tags"
-                                            multiple>
+                                            multiple
+                                            data-placeholder="Select some options">
                                         {% for tags in queries.posts.possible_values_for('tags') %}
                                         <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
                                         {% endfor %}
@@ -112,7 +113,8 @@
                                     <select class="chosen-select"
                                             id="filter_author"
                                             name="filter_author"
-                                            multiple>
+                                            multiple
+                                            data-placeholder="Select some options">
                                         {% for author in queries.posts.possible_values_for('author') %}
                                         <option value="{{author.term}}">{{author.term}}</option>
                                         {% endfor %}
@@ -223,7 +225,7 @@
                     </div>
                     <a class="summary" href="{{ post.permalink }}">
                         <h1 class="summary_header">{{ post.title }}</h1>
-                        <p class="summary_text summary_text__max">{{ post.excerpt }}</p>
+                        <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
                         <p class="summary_byline">By {{ post.author.0 }}</p>
                     </a>
                 </article>
