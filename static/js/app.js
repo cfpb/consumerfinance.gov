@@ -9,8 +9,9 @@ $(".chosen-select").chosen({
 
 // Reset buttons sould also reset Chosen.js elements
 $('input[type="reset"]').on('click', function() {
-    var $this = $(this),
-        $form = $this.parents('form'),
-        $chosenSelects = $form.find('.chosen-select');
-        $chosenSelects.val('').trigger("chosen:updated");
+    $(this)
+    .parents('form')
+    .find('.chosen-select')
+    .val('')
+    .trigger("chosen:updated");
 });
