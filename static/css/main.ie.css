@@ -7158,7 +7158,7 @@ img {
 
 .padded-container {
   margin: 0 0 1.875em;
-  padding: 0.0625em;
+  padding: 1px;
   background: #f1f2f2;
 }
 
