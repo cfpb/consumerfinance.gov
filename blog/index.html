@@ -15,7 +15,7 @@
 
     {% macro filter_checkbox(field,value) %}
         <input type="checkbox"
-               name="filter_{{field}}"
+               name="filter_{{ field }}"
                value="{{ value }}"
             {% if is_filter_selected(field, value) %}
                checked
