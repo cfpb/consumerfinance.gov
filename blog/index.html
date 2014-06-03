@@ -24,6 +24,16 @@
         {{value}}
     {% endmacro %}
 
+    {% macro filter_option(field,value) %}
+        <option value="{{ value }}"
+            {% if is_filter_selected(field, value) %}
+               selected
+            {% endif %}
+                >
+            {{ value|capitalize }}
+        </option>
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         <section class="content_hero hero" style="background-color:#337E7D;">
@@ -120,7 +130,7 @@
                                             multiple
                                             data-placeholder="Select some options">
                                         {% for tags in queries.posts.possible_values_for('tags') %}
-                                        <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
+                                        {{ filter_option('tags', tags.term) }}
                                         {% endfor %}
                                     </select>
                                 </div>
