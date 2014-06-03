@@ -68,7 +68,11 @@
                                 </a>
                             </li>
                         </ul>
-                        <img class="post_featured-img" src="http://placekitten.com/740/416" alt="alt text">
+                        {% if post.thumbnail_images %}
+                        <img class="post_featured-img"
+                             src="{{ post.thumbnail_images.full.url }}"
+                             alt="alt text">
+                        {% endif %}
                     </header>
                     <div class="post_body">
                         {{ post.content }}

@@ -5,6 +5,35 @@
 
 {% block content %}
 
+    {% set active_filters =
+       selected_filters_for_field('category') +
+       selected_filters_for_field('tags') +
+       selected_filters_for_field('author')
+    %}
+
+    {% set posts = queries.posts.search_with_url_arguments(size=10) %}
+
+    {% macro filter_checkbox(field,value) %}
+        <input type="checkbox"
+               name="filter_{{ field }}"
+               value="{{ value }}"
+            {% if is_filter_selected(field, value) %}
+               checked
+            {% endif %}
+               >
+        {{ value|capitalize }}
+    {% endmacro %}
+
+    {% macro filter_option(field,value) %}
+        <option value="{{ value }}"
+            {% if is_filter_selected(field, value) %}
+               selected
+            {% endif %}
+                >
+            {{ value|capitalize }}
+        </option>
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         <section class="content_hero hero" style="background-color:#337E7D;">
@@ -44,24 +73,35 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-            {% set posts = queries.posts.search_with_url_arguments(size=10) %}
-
             <div class="expandable">
                 <div class="expandable_header expandable_header__spaced">
-                    <!-- <h5>Blog filtered by</h5>
-                    <ul class="list list__horizontal">
-                        <li class="list_item"><a href="?filter_category=consumer">Consumer</a></li>
-                    </ul> -->
-                    <a class="expandable_target btn btn-secondary"
-                       href="#post-filters-form">
-                        Filter posts
-                        <span class="expandable_cue-open">
-                            <span class="btn-icon-right cf-icon cf-icon-down"></span>
-                        </span>
-                        <span class="expandable_cue-close">
-                            <span class="btn-icon-right cf-icon cf-icon-up"></span>
-                        </span>
-                    </a>
+                    <div class="expandable_header-right expandable_header-right__float-on-medium">
+                        <a class="expandable_target btn btn-secondary"
+                           href="#post-filters-form">
+                            Filter posts
+                            <span class="expandable_cue-open">
+                                <span class="btn-icon-right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn-icon-right cf-icon cf-icon-up"></span>
+                            </span>
+                        </a>
+                    </div>
+                {% if active_filters|length > 0 %}
+                    <dl class="expandable_header-left filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+                        <dt class="list_item">
+                            <span class="filtered-by_header">Filtered by</span>
+                        </dt>
+                    {% for filter in active_filters %}
+                        <dd class="list_item">
+                            <span class="filtered-by_filter">
+                                {{ filter|capitalize }}
+                                {% if not loop.last %},{% endif %}
+                            </span>
+                        </dd>
+                    {% endfor %}
+                    </dl>
+                {% endif %}
                 </div>
                 <div class="expandable_content padded-container">
                     <form class="padded-container_body" id="post-filters-form" method="get">
@@ -71,22 +111,11 @@
                                     <label class="form-label-header">
                                         Categories
                                     </label>
+                                    {% for category in queries.posts.possible_values_for('category') %}
                                     <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="announcements">
-                                        Announcements &amp; updates
+                                    {{ filter_checkbox('category', category.term) }}
                                     </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="consumer">
-                                        Consumer information
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="engagement">
-                                        Engagement
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="innovation">
-                                        Innovation &amp; data
-                                    </label>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="form-l_col form-l_col-1-3">
@@ -94,14 +123,13 @@
                                     <label class="form-label-header" for="filter_tags">
                                         Topics
                                     </label>
-                                    <!-- <input type="text" name="filter_tags" value=""> -->
                                     <select class="chosen-select"
                                             id="filter_tags"
                                             name="filter_tags"
                                             multiple
                                             data-placeholder="Select some options">
                                         {% for tags in queries.posts.possible_values_for('tags') %}
-                                        <option value="{{tags.term}}">{{tags.term|capitalize}}</option>
+                                        {{ filter_option('tags', tags.term) }}
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -109,19 +137,18 @@
                                     <label class="form-label-header" for="filter_author">
                                         Author
                                     </label>
-                                    <!-- <input type="text" name="filter_author" value=""> -->
                                     <select class="chosen-select"
                                             id="filter_author"
                                             name="filter_author"
                                             multiple
                                             data-placeholder="Select some options">
                                         {% for author in queries.posts.possible_values_for('author') %}
-                                        <option value="{{author.term}}">{{author.term}}</option>
+                                        {{ filter_option('author', author.term) }}
                                         {% endfor %}
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-l_col form-l_col-1-3">
+                            <!-- <div class="form-l_col form-l_col-1-3">
                                 <div class="form-group">
                                     <label class="form-label-header">
                                         Date range
@@ -182,7 +209,7 @@
                                             <option value="">December</option>
                                         </select>
                                         <label class="u-visually-hidden" for="filter_to_year">
-                                            To yeat
+                                            To year
                                         </label>
                                         <select class="form-input_year"
                                                 id="filter_to_year"
@@ -195,7 +222,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="form-actions form-actions__right-on-med">
                             <input class="btn btn-warning btn-link form-actions_item"
@@ -223,11 +250,26 @@
                             {{ post.category.0 }}
                         </a>
                     </div>
+                    {% if post.thumbnail_images %}
+                    <a class="media-object" href="{{ post.permalink }}">
+                        <div class="media-object_image-container">
+                            <img class="media-object_image"
+                                 src="{{ post.thumbnail_images.full.url }}"
+                                 alt="alt text">
+                        </div>
+                        <div class="media-object_text-container summary">
+                            <h1 class="summary_header">{{ post.title }}</h1>
+                            <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
+                            <p class="summary_byline">By {{ post.author.0 }}</p>
+                        </div>
+                    </a>
+                    {% else %}
                     <a class="summary" href="{{ post.permalink }}">
                         <h1 class="summary_header">{{ post.title }}</h1>
                         <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
                         <p class="summary_byline">By {{ post.author.0 }}</p>
                     </a>
+                    {% endif %}
                 </article>
             {% endfor %}
 
