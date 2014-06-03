@@ -46,6 +46,17 @@
 
             {% set posts = queries.posts.search_with_url_arguments(size=10) %}
 
+            {% macro filter_checkbox(field,value) %}
+                <input type="checkbox"
+                       name="filter_{{field}}"
+                       value="{{ value }}"
+                    {% if is_filter_selected(field, value) %}
+                       checked
+                    {% endif %}
+                       >
+                {{value}}
+            {% endmacro %}
+
             <div class="expandable">
                 <div class="expandable_header expandable_header__spaced">
                     <!-- <h5>Blog filtered by</h5>
@@ -71,14 +82,11 @@
                                     <label class="form-label-header">
                                         Categories
                                     </label>
-                                {% for category in queries.posts.possible_values_for('category') %}
+                                    {% for category in queries.posts.possible_values_for('category') %}
                                     <label class="form-group_item form-label">
-                                        <input type="checkbox"
-                                               name="filter_category"
-                                               value="{{ category.term }}">
-                                        {{ category.term|capitalize }}
+                                    {{ filter_checkbox('category', category.term) }}
                                     </label>
-                                {% endfor %}
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="form-l_col form-l_col-1-3">
