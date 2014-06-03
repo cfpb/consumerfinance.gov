@@ -5565,10 +5565,11 @@ img {
 
 .media-object_image {
   display: block;
-  width: 276px;
-  max-width: 276px;
+  width: 17.25em;
+  max-width: 17.25em;
+  max-height: 9.6875em;
   margin-bottom: 0;
-  margin-left: -50%;
+  margin-left: -3.78125em;
 }
 
 /* topdoc
@@ -7191,13 +7192,15 @@ img {
                 <h1 class="post_header">
                     A consumer-centered supervision program
                 </h1>
-                <p class="post_dek">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit. Quis architecto commodi cupiditate excepturi
-                    consequatur sequi quia consectetur est ea laborum
-                    saepe earum quidem a necessitatibus modi magni error
-                    ab suscipit.
-                </p>
+                <div class="post_dek">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quis architecto commodi cupiditate excepturi
+                        consequatur sequi quia consectetur est ea laborum
+                        saepe earum quidem a necessitatibus modi magni error
+                        ab suscipit.
+                    </p>
+                </div>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -8162,7 +8165,8 @@ a.focus .summary_header {
                         </span>
                     </a>
                 </div>
-                <dl class="filtered-by
+                <dl class="expandable_header-left
+                           filtered-by
                            filtered-by__show-on-medium
                            filtered-by__align-with-btn
                            list
