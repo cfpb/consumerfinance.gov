@@ -8,10 +8,22 @@ $(".chosen-select").chosen({
 });
 
 // Reset buttons sould also reset Chosen.js elements
-$('input[type="reset"]').on('click', function() {
-    $(this)
-    .parents('form')
-    .find('.chosen-select')
+$('.js-form_clear').on('click', function() {
+    var $this = $(this),
+        $form = $this.parents('form');
+
+    // Reset checkboxes
+    $form.find('[type="checkbox"]')
+    .removeAttr('checked');
+    
+    // Reset select options
+    $form.find('select option')
+    .removeAttr('selected');
+    $form.find('select option:first')
+    .attr('selected', true);
+    
+    // Reset Chosen.js elements
+    $form.find('.chosen-select')
     .val('')
     .trigger("chosen:updated");
 });
