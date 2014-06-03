@@ -145,7 +145,7 @@
                                             multiple
                                             data-placeholder="Select some options">
                                         {% for author in queries.posts.possible_values_for('author') %}
-                                        <option value="{{author.term}}">{{author.term}}</option>
+                                        {{ filter_option('author', author.term) }}
                                         {% endfor %}
                                     </select>
                                 </div>
