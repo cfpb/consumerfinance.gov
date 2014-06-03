@@ -36,20 +36,29 @@
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
-        <section class="content_hero hero" style="background-color:#337E7D;">
+        <section class="content_hero hero"
+                 style="background-color:{{ view.hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
                 <div class="hero_card">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
-                            <a href="#" class="category-slug">
+                            <!-- <a href="#"
+                               class="category-slug">
                                 <span class="cf-icon cf-icon-help"></span>
                                 <span class="u-visually-hidden">Category:</span>
                                 Announcements &amp; updates
-                            </a>
-                            <a class="summary" href="#">
-                                <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
-                                <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
-                                <p class="summary_byline">By Patrice Ficklin</p>
+                            </a> -->
+                            <a class="summary"
+                               href="{{ view.hero.custom_fields.link[0] }}">
+                                <h1 class="summary_header">
+                                    {{ view.hero.title }}
+                                </h1>
+                                <p class="summary_text">
+                                    {{ view.hero.content|striptags }}
+                                </p>
+                                <p class="summary_byline">
+                                    By {{ view.hero.author.name }}
+                                </p>
                             </a>
                         </div>
                     </div>
@@ -57,12 +66,12 @@
             </div>
             <div class="hero_img-container hero_img-container__small">
                 <div class="hero_img"
-                     style="background-image:url(../static/img/hero-small.png);">
+                     style="background-image:url({{ view.hero.custom_fields.mobile_image[0] }});">
                 </div>
             </div>
             <div class="hero_img-container hero_img-container__large">
                 <div class="hero_img"
-                     style="background-image:url(../static/img/hero-large.png);">
+                     style="background-image:url({{ view.hero.custom_fields.desktop_image[0] }});">
                 </div>
             </div>
         </section><!-- END .content_hero -->
@@ -88,7 +97,7 @@
                         </a>
                     </div>
                 {% if active_filters|length > 0 %}
-                    <dl class="expandable_header-left filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+                    <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
                         <dt class="list_item">
                             <span class="filtered-by_header">Filtered by</span>
                         </dt>
@@ -327,11 +336,14 @@
                         </span>
                     </h1>
                     <ul class="list list__popular-stories list__unstyled list__unstyled">
+                        {% for link in view.related_links %}
                         <li class="list_item">
-                            <a class="list_link list_link__large" href="#">
-                                Title here
+                            <a class="list_link list_link__large"
+                               href="{{ link[0] }}">
+                                {{ link[1] }}
                             </a>
                         </li>
+                        {% endfor %}
                     </ul>
                 </section>
                 <section class="related-links">
