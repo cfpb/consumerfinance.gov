@@ -71,22 +71,14 @@
                                     <label class="form-label-header">
                                         Categories
                                     </label>
+                                {% for category in queries.posts.possible_values_for('category') %}
                                     <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="announcements">
-                                        Announcements &amp; updates
+                                        <input type="checkbox"
+                                               name="filter_category"
+                                               value="{{ category.term }}">
+                                        {{ category.term|capitalize }}
                                     </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="consumer">
-                                        Consumer information
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="engagement">
-                                        Engagement
-                                    </label>
-                                    <label class="form-group_item form-label">
-                                        <input type="checkbox" name="filter_category" value="innovation">
-                                        Innovation &amp; data
-                                    </label>
+                                {% endfor %}
                                 </div>
                             </div>
                             <div class="form-l_col form-l_col-1-3">
