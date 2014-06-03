@@ -39,15 +39,17 @@
 
 .media-object {
 
-    // The width and height of the image for medium screens and up.
-    @img-size: 155px;
+    // The width of the image for medium screens and up.
+    @img-size-w: 276px;
+    // The height of the image for medium screens and up.
+    @img-size-h: 155px;
 
     display: block;
 
     .u-respond-to-min(600px, {
         position: relative;
-        min-height: unit((@img-size + 4px) / @base-font-size-px, em);
-        padding-left: unit((@img-size + @grid_gutter-width) / @base-font-size-px, em);
+        min-height: unit((@img-size-h + 4px) / @base-font-size-px, em);
+        padding-left: unit((@img-size-h + @grid_gutter-width) / @base-font-size-px, em);
     });
 
     &_image-container {
@@ -55,7 +57,7 @@
             position: absolute;
             top: unit(4px / @base-font-size-px, em);
             left: 0;
-            width: unit(@img-size / @base-font-size-px, em);
+            width: unit(@img-size-h / @base-font-size-px, em);
             overflow: hidden;
         });
     }
@@ -65,10 +67,11 @@
 
         .u-respond-to-min(600px, {
             display: block;
-            width: 276px;
-            max-width: 276px;
+            width: unit(@img-size-w / @base-font-size-px, em);
+            max-width: unit(@img-size-w / @base-font-size-px, em);
+            max-height: unit(@img-size-h / @base-font-size-px, em);
             margin-bottom: 0;
-            margin-left: -50%;
+            margin-left: unit(-((@img-size-w - @img-size-h) / 2) / @base-font-size-px, em);
         });
     }
 }
