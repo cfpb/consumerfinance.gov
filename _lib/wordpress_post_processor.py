@@ -28,7 +28,6 @@ def documents(name, url, **kwargs):
 
 def process_post(post):
     del post['comments']
-    # del post['content']
     post['_id'] = post['slug']
     # remove fields we're not interested in
     post['category'] = [cat['title'] for cat in post['taxonomy_fj_category']]

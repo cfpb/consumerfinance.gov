@@ -940,6 +940,99 @@
 }</code></pre>
       </div>
     </div>
+    <div id="disqus-integration" class="docs-component">
+      <h2 class="docs-component_header"><span>Disqus integration</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default layout</h3>
+          <section class="docs-pattern_pattern">
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        // * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * //
+        // required: replace example with your forum shortname
+        var disqus_shortname = 'cfpbflapjackdemo';
+
+        // * * DON'T EDIT BELOW THIS LINE * * //
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>
+        Please enable JavaScript to view the
+        <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+    </noscript>
+    <a href="http://disqus.com" class="dsq-brlink">
+        comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+    <p class="comments_policy">
+        CF.gov Refresh follows the
+        <a href="http://www.consumerfinance.gov/comment-policy">
+            consumerfinance.gov comment policy</a>.
+    </p>
+</section>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section class=&quot;comments&quot;&gt;
+    &lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        // * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * //
+        // required: replace example with your forum shortname
+        var disqus_shortname = 'cfpbflapjackdemo';
+
+        // * * DON'T EDIT BELOW THIS LINE * * //
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    &lt;/script&gt;
+    &lt;noscript&gt;
+        Please enable JavaScript to view the
+        &lt;a href=&quot;http://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+    &lt;/noscript&gt;
+    &lt;a href=&quot;http://disqus.com&quot; class=&quot;dsq-brlink&quot;&gt;
+        comments powered by &lt;span class=&quot;logo-disqus&quot;&gt;Disqus&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;p class=&quot;comments_policy&quot;&gt;
+        CF.gov Refresh follows the
+        &lt;a href=&quot;http://www.consumerfinance.gov/comment-policy&quot;&gt;
+            consumerfinance.gov comment policy&lt;/a&gt;.
+    &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural sheat sheet:
+-----------------------
+.comments
+  #disqus_thread
+  script
+  noscript
+  .dsq-brlink
+  .comments_policy</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Will only load on authorized domains.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.comments {
+  border-top: 1px solid #babbbd;
+  margin-top: 3em;
+}
+.comments_policy {
+  color: #75787B;
+  font-size: 0.8125em;
+  font-style: italic;
+}</code></pre>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>

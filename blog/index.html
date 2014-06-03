@@ -21,7 +21,7 @@
                checked
             {% endif %}
                >
-        {{ value|capitalize }}
+        {{ value|title }}
     {% endmacro %}
 
     {% macro filter_option(field,value) %}
@@ -30,7 +30,7 @@
                selected
             {% endif %}
                 >
-            {{ value|capitalize }}
+            {{ value|title }}
         </option>
     {% endmacro %}
 
