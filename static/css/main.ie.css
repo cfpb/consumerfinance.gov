@@ -7772,7 +7772,7 @@ img {
             <a href="http://disqus.com" class="dsq-brlink">
                 comments powered by <span class="logo-disqus">Disqus</span>
             </a>
-            <p class="comment-policy">
+            <p class="comment_policy">
                 CF.gov Refresh follows the
                 <a href="http://www.consumerfinance.gov/comment-policy">
                     consumerfinance.gov comment policy</a>.
@@ -7787,7 +7787,7 @@ img {
             script
             noscript
             .dsq-brlink
-            .comment-policy
+            .comment_policy
       notes:
         - "Will only load on authorized domains."
   tags:
@@ -7799,7 +7799,7 @@ img {
   margin-top: 3em;
 }
 
-.comment-policy {
+.comment_policy {
   color: #75787B;
   font-size: 0.8125em;
   font-style: italic;
