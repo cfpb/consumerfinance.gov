@@ -3,5 +3,8 @@
       "url" : "/blog/<id>",
       "type" : "posts",
       "permalink" : true
-    }
+    },
+  "view":{
+    "module_name" : "wpview_lookup"
+  }
 }
