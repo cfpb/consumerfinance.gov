@@ -7746,6 +7746,66 @@ img {
 }
 
 /* topdoc
+  name: Disqus integration
+  family: cfgov-post
+  patterns:
+    - name: Default layout
+      markup: |
+        <section class="comments">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                // * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * //
+                // required: replace example with your forum shortname
+                var disqus_shortname = 'cfpbflapjackdemo';
+
+                // * * DON'T EDIT BELOW THIS LINE * * //
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>
+                Please enable JavaScript to view the
+                <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+            <a href="http://disqus.com" class="dsq-brlink">
+                comments powered by <span class="logo-disqus">Disqus</span>
+            </a>
+            <p class="comment-policy">
+                CF.gov Refresh follows the
+                <a href="http://www.consumerfinance.gov/comment-policy">
+                    consumerfinance.gov comment policy</a>.
+            </p>
+        </section>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .comments
+            #disqus_thread
+            script
+            noscript
+            .dsq-brlink
+            .comment-policy
+      notes:
+        - "Will only load on authorized domains."
+  tags:
+    - cfgov-post
+*/
+
+.comments {
+  border-top: 1px solid #babbbd;
+  margin-top: 3em;
+}
+
+.comment-policy {
+  color: #75787B;
+  font-size: 0.8125em;
+  font-style: italic;
+}
+
+/* topdoc
   name: EOF
   eof: true
 */
