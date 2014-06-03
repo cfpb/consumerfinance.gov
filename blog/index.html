@@ -336,11 +336,14 @@
                         </span>
                     </h1>
                     <ul class="list list__popular-stories list__unstyled list__unstyled">
+                        {% for link in view.related_links %}
                         <li class="list_item">
-                            <a class="list_link list_link__large" href="#">
-                                Title here
+                            <a class="list_link list_link__large"
+                               href="{{ link[0] }}">
+                                {{ link[1] }}
                             </a>
                         </li>
+                        {% endfor %}
                     </ul>
                 </section>
                 <section class="related-links">
