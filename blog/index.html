@@ -259,12 +259,12 @@
                             {{ post.category.0 }}
                         </a>
                     </div>
-                    {% if post.thumbnail_images %}
+                    {% if post.thumbnail.images %}
                     <a class="media-object" href="{{ post.permalink }}">
                         <div class="media-object_image-container">
                             <img class="media-object_image"
-                                 src="{{ post.thumbnail_images.full.url }}"
-                                 alt="alt text">
+                                 src="{{ post.thumbnail.images.full.url }}"
+                                 alt="{{ post.thumbnail.alt_text }}">
                         </div>
                         <div class="media-object_text-container summary">
                             <h1 class="summary_header">{{ post.title }}</h1>

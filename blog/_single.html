@@ -68,10 +68,10 @@
                                 </a>
                             </li>
                         </ul>
-                        {% if post.thumbnail_images %}
+                        {% if post.thumbnail.images %}
                         <img class="post_featured-img"
-                             src="{{ post.thumbnail_images.full.url }}"
-                             alt="alt text">
+                             src="{{ post.thumbnail.images.full.url }}"
+                             alt="{{ post.thumbnail.alt_text }}">
                         {% endif %}
                     </header>
                     <div class="post_body">
