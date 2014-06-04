@@ -20,7 +20,7 @@ class WPView(object):
     def related_links(self):
         custom_fields = self.data['custom_fields']
         related =[]
-        for x in xrange(0,4):
+        for x in xrange(0,5):
             key = 'related_link_%s' % x
             if key in custom_fields:
                 related.append(custom_fields[key])
