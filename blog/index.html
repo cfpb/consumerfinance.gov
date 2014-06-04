@@ -275,9 +275,13 @@
                             {{ post.date | date("%b %d, %Y") }}
                         </span>
                         <a href="#" class="category-slug meta-header_left">
+                        {% if post.category.0 %}
                             <span class="cf-icon cf-icon-help"></span>
                             <span class="u-visually-hidden">Category:</span>
                             {{ post.category.0 }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
                         </a>
                     </div>
                     {% if post.thumbnail.images %}
