@@ -36,6 +36,11 @@
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
+        {# Only show the hero when:
+           1. No filters have been applied
+           2. We are on the first page of paginated results
+        #}
+        {% if active_filters|length == 0 and posts.current_page == 1 %}
         <section class="content_hero hero"
                  style="background-color:{{ view.hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
@@ -75,6 +80,7 @@
                 </div>
             </div>
         </section><!-- END .content_hero -->
+        {% endif %}
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
         <div class="content_bar"></div>
