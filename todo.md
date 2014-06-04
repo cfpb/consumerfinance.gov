@@ -40,11 +40,5 @@ Review notes
   ghe/flapjack/blog/issues/32
 - Featured image needs alt text and thumbnail size
   ghe/flapjack/blog/issues/33
-- When filtering or using pagination the hero should go away
-- The whole hero text area should be clickable, including the category which should
-  link to the story.
-- If there is no manually entered excerpt we should not show it on the post page.
-  But we should show it on the landing page.
-- We need to transfer old categories, tags, and authors to the new FJ ones.
 
 Jira, stories VS tasks
