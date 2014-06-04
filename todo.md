@@ -25,11 +25,26 @@
   - Styled lists
     - http://codepen.io/anon/pen/tqJBp
     - http://codepen.io/anon/pen/bryAo
+- BB wordwrap issue
+- IE wrapper is messed up at smaller sizes
 - Green bar under header needs bg image
 - Layout docs
 - Update CF components with patterns
   - Make utilities a component
   - Update cf-forms with the form patterns
   - Update cf-typography with some of the meta patterns and the summary
+
+Review notes
+
+- Sidebar link lists
+  ghe/flapjack/blog/issues/32
+- Featured image needs alt text and thumbnail size
+  ghe/flapjack/blog/issues/33
+- When filtering or using pagination the hero should go away
+- The whole hero text area should be clickable, including the category which should
+  link to the story.
+- If there is no manually entered excerpt we should not show it on the post page.
+  But we should show it on the landing page.
+- We need to transfer old categories, tags, and authors to the new FJ ones.
 
 Jira, stories VS tasks
