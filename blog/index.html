@@ -34,6 +34,19 @@
         </option>
     {% endmacro %}
 
+    {% macro post_summary(post) %}
+        <h1 class="summary_header">{{ post.title }}</h1>
+        <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
+        {% if post.author.0 %}
+        <p class="summary_byline">
+            By {{ post.author.0 }}
+        {% if post.author.1 %}
+            and {{ post.author.1 }}
+        {% endif %}
+        </p>
+        {% endif %}
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         {# Only show the hero when:
@@ -275,30 +288,12 @@
                                  alt="{{ post.thumbnail.alt_text }}">
                         </div>
                         <div class="media-object_text-container summary">
-                            <h1 class="summary_header">{{ post.title }}</h1>
-                            <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
-                            {% if post.author.0 %}
-                            <p class="summary_byline">
-                                By {{ post.author.0 }}
-                            {% if post.author.1 %}
-                                and {{ post.author.1 }}
-                            {% endif %}
-                            </p>
-                            {% endif %}
+                            {{ post_summary(post) }}
                         </div>
                     </a>
                     {% else %}
                     <a class="summary" href="{{ post.permalink }}">
-                        <h1 class="summary_header">{{ post.title }}</h1>
-                        <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
-                        {% if post.author.0 %}
-                        <p class="summary_byline">
-                            By {{ post.author.0 }}
-                        {% if post.author.1 %}
-                            and {{ post.author.1 }}
-                        {% endif %}
-                        </p>
-                        {% endif %}
+                        {{ post_summary(post) }}
                     </a>
                     {% endif %}
                 </article>
