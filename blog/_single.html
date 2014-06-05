@@ -15,11 +15,13 @@
 
                 <article class="post">
                     <header>
+                    {% if post.category.0 %}
                         <a href="#" class="post_slug category-slug">
                             <span class="cf-icon cf-icon-help"></span>
                             <span class="u-visually-hidden">Category:</span>
                             {{ post.category.0 }}
                         </a>
+                    {% endif %}
                         <h1 class="post_header">
                             {{ post.title }}
                         </h1>
