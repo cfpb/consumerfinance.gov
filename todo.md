@@ -33,12 +33,11 @@
   - Make utilities a component
   - Update cf-forms with the form patterns
   - Update cf-typography with some of the meta patterns and the summary
-
-Review notes
-
 - Sidebar link lists
   ghe/flapjack/blog/issues/32
 - Featured image needs alt text and thumbnail size
   ghe/flapjack/blog/issues/33
+- Ampersand filter bug
+  https://github.com/rosskarchner/sheer/issues/17
 
 Jira, stories VS tasks

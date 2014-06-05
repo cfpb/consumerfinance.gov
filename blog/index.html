@@ -34,6 +34,19 @@
         </option>
     {% endmacro %}
 
+    {% macro post_summary(post) %}
+        <h1 class="summary_header">{{ post.title }}</h1>
+        <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
+        {% if post.author.0 %}
+        <p class="summary_byline">
+            By {{ post.author.0 }}
+        {% if post.author.1 %}
+            and {{ post.author.1 }}
+        {% endif %}
+        </p>
+        {% endif %}
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         {# Only show the hero when:
@@ -61,9 +74,11 @@
                                 <p class="summary_text">
                                     {{ view.hero.content|striptags }}
                                 </p>
+                                {% if view.hero.author.name %}
                                 <p class="summary_byline">
                                     By {{ view.hero.author.name }}
                                 </p>
+                                {% endif %}
                             </a>
                         </div>
                     </div>
@@ -260,9 +275,21 @@
                             {{ post.date | date("%b %d, %Y") }}
                         </span>
                         <a href="#" class="category-slug meta-header_left">
+                        {% if post.category.0 %}
+                            {% if post.category.0|lower == 'announcements &amp; updates' %}
                             <span class="cf-icon cf-icon-help"></span>
+                            {% elif post.category.0|lower == 'consumer information' %}
+                            <span class="cf-icon cf-icon-help"></span>
+                            {% elif post.category.0|lower == 'engagement' %}
+                            <span class="cf-icon cf-icon-help"></span>
+                            {% elif post.category.0|lower == 'innovation &amp; data' %}
+                            <span class="cf-icon cf-icon-help"></span>
+                            {% endif %}
                             <span class="u-visually-hidden">Category:</span>
                             {{ post.category.0 }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
                         </a>
                     </div>
                     {% if post.thumbnail.images %}
@@ -273,16 +300,12 @@
                                  alt="{{ post.thumbnail.alt_text }}">
                         </div>
                         <div class="media-object_text-container summary">
-                            <h1 class="summary_header">{{ post.title }}</h1>
-                            <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
-                            <p class="summary_byline">By {{ post.author.0 }}</p>
+                            {{ post_summary(post) }}
                         </div>
                     </a>
                     {% else %}
                     <a class="summary" href="{{ post.permalink }}">
-                        <h1 class="summary_header">{{ post.title }}</h1>
-                        <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
-                        <p class="summary_byline">By {{ post.author.0 }}</p>
+                        {{ post_summary(post) }}
                     </a>
                     {% endif %}
                 </article>
@@ -341,7 +364,7 @@
                             Popular stories
                         </span>
                     </h1>
-                    <ul class="list list__popular-stories list__unstyled list__unstyled">
+                    <ul class="list list__popular-stories list__unstyled list__spaced">
                         {% for link in view.related_links %}
                         <li class="list_item">
                             <a class="list_link list_link__large"
