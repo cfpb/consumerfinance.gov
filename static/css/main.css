@@ -5269,10 +5269,17 @@ img {
     - name: Default category slug
       markup: |
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-credit-card"></span>
+            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
             <span class="u-visually-hidden">Category:</span>
             Consumer finance
         </a>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .category-slug
+            .category-slug_icon
+            .u-visually-hidden
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
         - "We suggest using a .u-visually-hidden element to add more context for
@@ -5288,7 +5295,7 @@ img {
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
-  display: block;
+  display: inline-block;
   margin-bottom: 0.44444444em;
   color: #101820;
   border-bottom-color: #101820;
@@ -5315,6 +5322,9 @@ img {
 .category-slug.active {
   border-bottom-color: #101820;
   color: #101820;
+}
+.category-slug_icon {
+  margin-right: 0.11111111em;
 }
 /* topdoc
   name: Header slug
@@ -6584,7 +6594,8 @@ img {
         <article class="post">
             <header>
                 <a href="#" class="post_slug category-slug">
-                    <span class="cf-icon cf-icon-help"></span>
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
                     Announcements &amp; updates
                 </a>
                 <h1 class="post_header">
@@ -7416,22 +7427,22 @@ a.focus .summary_header {
     - name: Blog slugs
       markup: |
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-bullhorn"></span>
+            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
             <span class="u-visually-hidden">Category:</span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-information"></span>
+            <span class="category-slug_icon cf-icon cf-icon-information"></span>
             <span class="u-visually-hidden">Category:</span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-dialogue"></span>
+            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
             <span class="u-visually-hidden">Category:</span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-lightbulb"></span>
+            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
             <span class="u-visually-hidden">Category:</span>
             Innovation & data
         </a>
@@ -7452,9 +7463,9 @@ a.focus .summary_header {
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
                             <a href="#" class="category-slug">
-                                <span class="cf-icon cf-icon-help"></span>
+                                <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
                                 <span class="u-visually-hidden">Category:</span>
-                                Category
+                                Announcements & updates
                             </a>
                             <a class="summary" href="#">
                                 <h1 class="summary_header">Header</h1>
@@ -7514,8 +7525,9 @@ a.focus .summary_header {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="meta-header_left category-slug">
-                    <span class="cf-icon cf-icon-help"></span>
-                    Consumer information
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
+                    Announcements & updates
                 </a>
             </div>
             <a class="summary" href="#">
@@ -7544,8 +7556,9 @@ a.focus .summary_header {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="meta-header_left category-slug">
-                    <span class="cf-icon cf-icon-help"></span>
-                    Consumer information
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
+                    Announcements & updates
                 </a>
             </div>
             <a class="media-object" href="#">
