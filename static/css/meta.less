@@ -186,10 +186,17 @@
     - name: Default category slug
       markup: |
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-credit-card"></span>
+            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
             <span class="u-visually-hidden">Category:</span>
             Consumer finance
         </a>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .category-slug
+            .category-slug_icon
+            .u-visually-hidden
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
         - "We suggest using a .u-visually-hidden element to add more context for
@@ -200,10 +207,14 @@
 
 .category-slug {
     .h4();
-    display: block;
+    display: inline-block;
     // Eyeballed to 20px over h2.
     margin-bottom: unit(8px / @font-size, em);
     .u-link__colors(@black, @pacific-80);
+
+    &_icon {
+        margin-right: unit(2px / @font-size, em);
+    }
 }
 
 
