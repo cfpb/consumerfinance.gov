@@ -276,7 +276,15 @@
                         </span>
                         <a href="#" class="category-slug meta-header_left">
                         {% if post.category.0 %}
+                            {% if post.category.0|lower == 'announcements &amp; updates' %}
                             <span class="cf-icon cf-icon-help"></span>
+                            {% elif post.category.0|lower == 'consumer information' %}
+                            <span class="cf-icon cf-icon-help"></span>
+                            {% elif post.category.0|lower == 'engagement' %}
+                            <span class="cf-icon cf-icon-help"></span>
+                            {% elif post.category.0|lower == 'innovation &amp; data' %}
+                            <span class="cf-icon cf-icon-help"></span>
+                            {% endif %}
                             <span class="u-visually-hidden">Category:</span>
                             {{ post.category.0 }}
                         {% else %}
