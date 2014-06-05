@@ -3405,7 +3405,7 @@ textarea {
         markup: |
           <i class="cf-icon cf-icon-buying-car"></i>
           <i class="cf-icon cf-icon-buying-car-round"></i>
-      - name: mortgage
+      - name: paying-college
         markup: |
           <i class="cf-icon cf-icon-paying-college"></i>
           <i class="cf-icon cf-icon-paying-college-round"></i>
@@ -3685,6 +3685,42 @@ textarea {
         markup: |
           <i class="cf-icon cf-icon-play"></i>
           <i class="cf-icon cf-icon-play-round"></i>
+      - name: newspaper
+        markup: |
+          <i class="cf-icon cf-icon-newspaper"></i>
+          <i class="cf-icon cf-icon-newspaper-round"></i>
+      - name: microphone
+        markup: |
+          <i class="cf-icon cf-icon-microphone"></i>
+          <i class="cf-icon cf-icon-microphone-round"></i>
+      - name: bullhorn
+        markup: |
+          <i class="cf-icon cf-icon-bullhorn"></i>
+          <i class="cf-icon cf-icon-bullhorn-round"></i>
+      - name: double-quote
+        markup: |
+          <i class="cf-icon cf-icon-double-quote"></i>
+          <i class="cf-icon cf-icon-double-quote-round"></i>
+      - name: speech-bubble
+        markup: |
+          <i class="cf-icon cf-icon-speech-bubble"></i>
+          <i class="cf-icon cf-icon-speech-bubble-round"></i>
+      - name: information
+        markup: |
+          <i class="cf-icon cf-icon-information"></i>
+          <i class="cf-icon cf-icon-information-round"></i>
+      - name: lightbulb
+        markup: |
+          <i class="cf-icon cf-icon-lightbulb"></i>
+          <i class="cf-icon cf-icon-lightbulb-round"></i>
+      - name: dialogue
+        markup: |
+          <i class="cf-icon cf-icon-dialogue"></i>
+          <i class="cf-icon cf-icon-dialogue-round"></i>
+      - name: date
+        markup: |
+          <i class="cf-icon cf-icon-date"></i>
+          <i class="cf-icon cf-icon-date-round"></i>
     tags:
       - cf-icons
 */
@@ -3855,6 +3891,78 @@ textarea {
 
 .cf-icon-play-round:before {
   content: "\e641";
+}
+
+.cf-icon-newspaper:before {
+  content: "\e700";
+}
+
+.cf-icon-newspaper-round:before {
+  content: "\e701";
+}
+
+.cf-icon-microphone:before {
+  content: "\e702";
+}
+
+.cf-icon-microphone-round:before {
+  content: "\e703";
+}
+
+.cf-icon-bullhorn:before {
+  content: "\e704";
+}
+
+.cf-icon-bullhorn-round:before {
+  content: "\e705";
+}
+
+.cf-icon-double-quote:before {
+  content: "\e708";
+}
+
+.cf-icon-double-quote-round:before {
+  content: "\e709";
+}
+
+.cf-icon-speech-bubble:before {
+  content: "\e710";
+}
+
+.cf-icon-speech-bubble-round:before {
+  content: "\e711";
+}
+
+.cf-icon-information:before {
+  content: "\e712";
+}
+
+.cf-icon-information-round:before {
+  content: "\e713";
+}
+
+.cf-icon-lightbulb:before {
+  content: "\e714";
+}
+
+.cf-icon-lightbulb-round:before {
+  content: "\e715";
+}
+
+.cf-icon-dialogue:before {
+  content: "\e716";
+}
+
+.cf-icon-dialogue-round:before {
+  content: "\e717";
+}
+
+.cf-icon-date:before {
+  content: "\e718";
+}
+
+.cf-icon-date-round:before {
+  content: "\e719";
 }
 
 /* topdoc
