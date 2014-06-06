@@ -277,13 +277,13 @@
                         <a href="#" class="category-slug meta-header_left">
                         {% if post.category.0 %}
                             {% if post.category.0|lower == 'announcements &amp; updates' %}
-                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
                             {% elif post.category.0|lower == 'consumer information' %}
-                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="category-slug_icon cf-icon cf-icon-information"></span>
                             {% elif post.category.0|lower == 'engagement' %}
-                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
                             {% elif post.category.0|lower == 'innovation &amp; data' %}
-                            <span class="cf-icon cf-icon-help"></span>
+                            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
                             {% endif %}
                             <span class="u-visually-hidden">Category:</span>
                             {{ post.category.0 }}

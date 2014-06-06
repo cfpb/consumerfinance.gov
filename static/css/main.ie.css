@@ -2809,32 +2809,56 @@ textarea {
   patterns:
     - name: CSS prefix
       codenotes:
-        - "@cf-css-prefix: cf-icon;"
+        - "@cf-icon-prefix: cf-icon;"
     - name: Path to icon font files
       codenotes:
         - "@cf-icon-path: '../fonts';"
+    - name: Toggle IE7 support
+      codenotes:
+        - "@cf-icon-ie7-support: true;"
+      notes:
+        - "More on IE7 support can be found in the 'IE7 Support' section."
+  tags:
+    - cf-icons
+*/
+
+/* topdoc
+  name: IE7 Support
+  family: cf-icons
+  notes:
+    - "IE7 support is added by using dynamic properties (CSS expressions)."
+    - "To turn off IE7 support simply set @cf-icon-ie7-support to false."
+  tags:
+    - cf-icons
+*/
+
+/* topdoc
+  name: The basics
+  family: cf-icons
+  patterns:
+    - name: "@font-face declaration"
+    - name: Base icon class
+      notes:
+        - "The cf-icon-prefix class applies all shared icon styles including the
+          font family."
+        - "All icons must use two classes, one for this base class and another
+          to set the font character. For example:
+          <span class='cf-icon cf-icon-left'></span>."
+        - "Please use the span element instead of the i element. This avoids
+          font family cascading conflicts when using an italic webfont on i
+          elements and then another font for the icons. Note that this issue
+          only pops up in older versions of Internet Explorer."
   tags:
     - cf-icons
 */
 
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url('../fonts/cf-icons.eot');
-  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
+  src: url('../fonts//cf-icons.eot');
+  src: url('../fonts//cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts//cf-icons.woff') format('woff'), url('../fonts//cf-icons.ttf') format('truetype'), url('../fonts//cf-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
-
-/* topdoc
-  name: Icon class
-  family: cf-icons
-  patterns:
-    - name: Use of icon class
-      notes:
-        - "The cf-css-prefix class applies the font family to an element."
-  tags:
-    - cf-icons
-*/
 
 .cf-icon {
   font-family: 'CFPB Minicons';
@@ -2851,36 +2875,36 @@ textarea {
     patterns:
       - name: left
         markup: |
-          <i class="cf-icon cf-icon-left"></i>
-          <i class="cf-icon cf-icon-left-round"></i>
+          <span class="cf-icon cf-icon-left"></span>
+          <span class="cf-icon cf-icon-left-round"></span>
       - name: right
         markup: |
-          <i class="cf-icon cf-icon-right"></i>
-          <i class="cf-icon cf-icon-right-round"></i>
+          <span class="cf-icon cf-icon-right"></span>
+          <span class="cf-icon cf-icon-right-round"></span>
       - name: up
         markup: |
-          <i class="cf-icon cf-icon-up"></i>
-          <i class="cf-icon cf-icon-up-round"></i>
+          <span class="cf-icon cf-icon-up"></span>
+          <span class="cf-icon cf-icon-up-round"></span>
       - name: down
         markup: |
-          <i class="cf-icon cf-icon-down"></i>
-          <i class="cf-icon cf-icon-down-round"></i>
+          <span class="cf-icon cf-icon-down"></span>
+          <span class="cf-icon cf-icon-down-round"></span>
       - name: arrow-left
         markup: |
-          <i class="cf-icon cf-icon-arrow-left"></i>
-          <i class="cf-icon cf-icon-arrow-left-round"></i>
+          <span class="cf-icon cf-icon-arrow-left"></span>
+          <span class="cf-icon cf-icon-arrow-left-round"></span>
       - name: arrow-right
         markup: |
-          <i class="cf-icon cf-icon-arrow-right"></i>
-          <i class="cf-icon cf-icon-arrow-right-round"></i>
+          <span class="cf-icon cf-icon-arrow-right"></span>
+          <span class="cf-icon cf-icon-arrow-right-round"></span>
       - name: arrow-up
         markup: |
-          <i class="cf-icon cf-icon-arrow-up"></i>
-          <i class="cf-icon cf-icon-arrow-up-round"></i>
+          <span class="cf-icon cf-icon-arrow-up"></span>
+          <span class="cf-icon cf-icon-arrow-up-round"></span>
       - name: arrow-down
         markup: |
-          <i class="cf-icon cf-icon-arrow-down"></i>
-          <i class="cf-icon cf-icon-arrow-down-round"></i>
+          <span class="cf-icon cf-icon-arrow-down"></span>
+          <span class="cf-icon cf-icon-arrow-down-round"></span>
     tags:
       - cf-icons
 */
@@ -2889,64 +2913,128 @@ textarea {
   content: "\e000";
 }
 
+.lt-ie8 .cf-icon-left {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e000');
+}
+
 .cf-icon-left-round:before {
   content: "\e001";
+}
+
+.lt-ie8 .cf-icon-left-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e001');
 }
 
 .cf-icon-right:before {
   content: "\e002";
 }
 
+.lt-ie8 .cf-icon-right {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
+}
+
 .cf-icon-right-round:before {
   content: "\e003";
+}
+
+.lt-ie8 .cf-icon-right-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e003');
 }
 
 .cf-icon-up:before {
   content: "\e004";
 }
 
+.lt-ie8 .cf-icon-up {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e004');
+}
+
 .cf-icon-up-round:before {
   content: "\e005";
+}
+
+.lt-ie8 .cf-icon-up-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e005');
 }
 
 .cf-icon-down:before {
   content: "\e006";
 }
 
+.lt-ie8 .cf-icon-down {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e006');
+}
+
 .cf-icon-down-round:before {
   content: "\e007";
+}
+
+.lt-ie8 .cf-icon-down-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e007');
 }
 
 .cf-icon-arrow-left:before {
   content: "\e008";
 }
 
+.lt-ie8 .cf-icon-arrow-left {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e008');
+}
+
 .cf-icon-arrow-left-round:before {
   content: "\e009";
+}
+
+.lt-ie8 .cf-icon-arrow-left-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e009');
 }
 
 .cf-icon-arrow-right:before {
   content: "\e010";
 }
 
+.lt-ie8 .cf-icon-arrow-right {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e010');
+}
+
 .cf-icon-arrow-right-round:before {
   content: "\e011";
+}
+
+.lt-ie8 .cf-icon-arrow-right-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e011');
 }
 
 .cf-icon-arrow-up:before {
   content: "\e012";
 }
 
+.lt-ie8 .cf-icon-arrow-up {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e012');
+}
+
 .cf-icon-arrow-up-round:before {
   content: "\e013";
+}
+
+.lt-ie8 .cf-icon-arrow-up-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e013');
 }
 
 .cf-icon-arrow-down:before {
   content: "\e014";
 }
 
+.lt-ie8 .cf-icon-arrow-down {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e014');
+}
+
 .cf-icon-arrow-down-round:before {
   content: "\e015";
+}
+
+.lt-ie8 .cf-icon-arrow-down-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e015');
 }
 
 /* topdoc
@@ -2955,32 +3043,32 @@ textarea {
     patterns:
       - name: approved
         markup: |
-          <i class="cf-icon cf-icon-approved"></i>
-          <i class="cf-icon cf-icon-approved-round"></i>
+          <span class="cf-icon cf-icon-approved"></span>
+          <span class="cf-icon cf-icon-approved-round"></span>
       - name: error
         markup: |
-          <i class="cf-icon cf-icon-error"></i>
-          <i class="cf-icon cf-icon-error-round"></i>
+          <span class="cf-icon cf-icon-error"></span>
+          <span class="cf-icon cf-icon-error-round"></span>
       - name: help
         markup: |
-          <i class="cf-icon cf-icon-help"></i>
-          <i class="cf-icon cf-icon-help-round"></i>
+          <span class="cf-icon cf-icon-help"></span>
+          <span class="cf-icon cf-icon-help-round"></span>
       - name: delete
         markup: |
-          <i class="cf-icon cf-icon-delete"></i>
-          <i class="cf-icon cf-icon-delete-round"></i>
+          <span class="cf-icon cf-icon-delete"></span>
+          <span class="cf-icon cf-icon-delete-round"></span>
       - name: plus
         markup: |
-          <i class="cf-icon cf-icon-plus"></i>
-          <i class="cf-icon cf-icon-plus-round"></i>
+          <span class="cf-icon cf-icon-plus"></span>
+          <span class="cf-icon cf-icon-plus-round"></span>
       - name: minus
         markup: |
-          <i class="cf-icon cf-icon-minus"></i>
-          <i class="cf-icon cf-icon-minus-round"></i>
+          <span class="cf-icon cf-icon-minus"></span>
+          <span class="cf-icon cf-icon-minus-round"></span>
       - name: update
         markup: |
-          <i class="cf-icon cf-icon-update"></i>
-          <i class="cf-icon cf-icon-update-round"></i>
+          <span class="cf-icon cf-icon-update"></span>
+          <span class="cf-icon cf-icon-update-round"></span>
     tags:
       - cf-icons
 */
@@ -2989,56 +3077,112 @@ textarea {
   content: "\e100";
 }
 
+.lt-ie8 .cf-icon-approved {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e100');
+}
+
 .cf-icon-approved-round:before {
   content: "\e101";
+}
+
+.lt-ie8 .cf-icon-approved-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e101');
 }
 
 .cf-icon-error:before {
   content: "\e102";
 }
 
+.lt-ie8 .cf-icon-error {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e102');
+}
+
 .cf-icon-error-round:before {
   content: "\e103";
+}
+
+.lt-ie8 .cf-icon-error-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e103');
 }
 
 .cf-icon-help:before {
   content: "\e104";
 }
 
+.lt-ie8 .cf-icon-help {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e104');
+}
+
 .cf-icon-help-round:before {
   content: "\e105";
+}
+
+.lt-ie8 .cf-icon-help-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e105');
 }
 
 .cf-icon-delete:before {
   content: "\e106";
 }
 
+.lt-ie8 .cf-icon-delete {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e106');
+}
+
 .cf-icon-delete-round:before {
   content: "\e107";
+}
+
+.lt-ie8 .cf-icon-delete-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e107');
 }
 
 .cf-icon-plus:before {
   content: "\e108";
 }
 
+.lt-ie8 .cf-icon-plus {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e108');
+}
+
 .cf-icon-plus-round:before {
   content: "\e109";
+}
+
+.lt-ie8 .cf-icon-plus-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e109');
 }
 
 .cf-icon-minus:before {
   content: "\e110";
 }
 
+.lt-ie8 .cf-icon-minus {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e110');
+}
+
 .cf-icon-minus-round:before {
   content: "\e111";
+}
+
+.lt-ie8 .cf-icon-minus-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e111');
 }
 
 .cf-icon-update:before {
   content: "\e112";
 }
 
+.lt-ie8 .cf-icon-update {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e112');
+}
+
 .cf-icon-update-round:before {
   content: "\e113";
+}
+
+.lt-ie8 .cf-icon-update-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e113');
 }
 
 /* topdoc
@@ -3047,32 +3191,32 @@ textarea {
     patterns:
       - name: youtube
         markup: |
-          <i class="cf-icon cf-icon-youtube"></i>
-          <i class="cf-icon cf-icon-youtube-square"></i>
+          <span class="cf-icon cf-icon-youtube"></span>
+          <span class="cf-icon cf-icon-youtube-square"></span>
       - name: linkedin
         markup: |
-          <i class="cf-icon cf-icon-linkedin"></i>
-          <i class="cf-icon cf-icon-linkedin-square"></i>
+          <span class="cf-icon cf-icon-linkedin"></span>
+          <span class="cf-icon cf-icon-linkedin-square"></span>
       - name: facebook
         markup: |
-          <i class="cf-icon cf-icon-facebook"></i>
-          <i class="cf-icon cf-icon-facebook-square"></i>
+          <span class="cf-icon cf-icon-facebook"></span>
+          <span class="cf-icon cf-icon-facebook-square"></span>
       - name: flickr
         markup: |
-          <i class="cf-icon cf-icon-flickr"></i>
-          <i class="cf-icon cf-icon-flickr-square"></i>
+          <span class="cf-icon cf-icon-flickr"></span>
+          <span class="cf-icon cf-icon-flickr-square"></span>
       - name: plus
         markup: |
-          <i class="cf-icon cf-icon-twitter"></i>
-          <i class="cf-icon cf-icon-twitter-square"></i>
+          <span class="cf-icon cf-icon-twitter"></span>
+          <span class="cf-icon cf-icon-twitter-square"></span>
       - name: github
         markup: |
-          <i class="cf-icon cf-icon-github"></i>
-          <i class="cf-icon cf-icon-github-square"></i>
+          <span class="cf-icon cf-icon-github"></span>
+          <span class="cf-icon cf-icon-github-square"></span>
       - name: email-social
         markup: |
-          <i class="cf-icon cf-icon-email-social"></i>
-          <i class="cf-icon cf-icon-email-social-square"></i>
+          <span class="cf-icon cf-icon-email-social"></span>
+          <span class="cf-icon cf-icon-email-social-square"></span>
     tags:
       - cf-icons
 */
@@ -3081,56 +3225,112 @@ textarea {
   content: "\e200";
 }
 
+.lt-ie8 .cf-icon-youtube {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e200');
+}
+
 .cf-icon-youtube-square:before {
   content: "\e201";
+}
+
+.lt-ie8 .cf-icon-youtube-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e201');
 }
 
 .cf-icon-linkedin:before {
   content: "\e202";
 }
 
+.lt-ie8 .cf-icon-linkedin {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e202');
+}
+
 .cf-icon-linkedin-square:before {
   content: "\e203";
+}
+
+.lt-ie8 .cf-icon-linkedin-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e203');
 }
 
 .cf-icon-facebook:before {
   content: "\e204";
 }
 
+.lt-ie8 .cf-icon-facebook {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e204');
+}
+
 .cf-icon-facebook-square:before {
   content: "\e205";
+}
+
+.lt-ie8 .cf-icon-facebook-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e205');
 }
 
 .cf-icon-flickr:before {
   content: "\e206";
 }
 
+.lt-ie8 .cf-icon-flickr {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e206');
+}
+
 .cf-icon-flickr-square:before {
   content: "\e207";
+}
+
+.lt-ie8 .cf-icon-flickr-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e207');
 }
 
 .cf-icon-twitter:before {
   content: "\e208";
 }
 
+.lt-ie8 .cf-icon-twitter {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e208');
+}
+
 .cf-icon-twitter-square:before {
   content: "\e209";
+}
+
+.lt-ie8 .cf-icon-twitter-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e209');
 }
 
 .cf-icon-github:before {
   content: "\e210";
 }
 
+.lt-ie8 .cf-icon-github {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e210');
+}
+
 .cf-icon-github-square:before {
   content: "\e211";
+}
+
+.lt-ie8 .cf-icon-github-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e211');
 }
 
 .cf-icon-email-social:before {
   content: "\e212";
 }
 
+.lt-ie8 .cf-icon-email-social {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e212');
+}
+
 .cf-icon-email-social-square:before {
   content: "\e213";
+}
+
+.lt-ie8 .cf-icon-email-social-square {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e213');
 }
 
 /* topdoc
@@ -3139,28 +3339,28 @@ textarea {
     patterns:
       - name: web
         markup: |
-          <i class="cf-icon cf-icon-web"></i>
-          <i class="cf-icon cf-icon-web-round"></i>
+          <span class="cf-icon cf-icon-web"></span>
+          <span class="cf-icon cf-icon-web-round"></span>
       - name: email
         markup: |
-          <i class="cf-icon cf-icon-email"></i>
-          <i class="cf-icon cf-icon-email-round"></i>
+          <span class="cf-icon cf-icon-email"></span>
+          <span class="cf-icon cf-icon-email-round"></span>
       - name: mail
         markup: |
-          <i class="cf-icon cf-icon-mail"></i>
-          <i class="cf-icon cf-icon-mail-round"></i>
+          <span class="cf-icon cf-icon-mail"></span>
+          <span class="cf-icon cf-icon-mail-round"></span>
       - name: phone
         markup: |
-          <i class="cf-icon cf-icon-phone"></i>
-          <i class="cf-icon cf-icon-phone-round"></i>
+          <span class="cf-icon cf-icon-phone"></span>
+          <span class="cf-icon cf-icon-phone-round"></span>
       - name: technology
         markup: |
-          <i class="cf-icon cf-icon-technology"></i>
-          <i class="cf-icon cf-icon-technology-round"></i>
+          <span class="cf-icon cf-icon-technology"></span>
+          <span class="cf-icon cf-icon-technology-round"></span>
       - name: fax
         markup: |
-          <i class="cf-icon cf-icon-fax"></i>
-          <i class="cf-icon cf-icon-fax-round"></i>
+          <span class="cf-icon cf-icon-fax"></span>
+          <span class="cf-icon cf-icon-fax-round"></span>
     tags:
       - cf-icons
 */
@@ -3169,48 +3369,96 @@ textarea {
   content: "\e300";
 }
 
+.lt-ie8 .cf-icon-web {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e300');
+}
+
 .cf-icon-web-round:before {
   content: "\e301";
+}
+
+.lt-ie8 .cf-icon-web-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e301');
 }
 
 .cf-icon-email:before {
   content: "\e302";
 }
 
+.lt-ie8 .cf-icon-email {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e302');
+}
+
 .cf-icon-email-round:before {
   content: "\e303";
+}
+
+.lt-ie8 .cf-icon-email-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e303');
 }
 
 .cf-icon-mail:before {
   content: "\e304";
 }
 
+.lt-ie8 .cf-icon-mail {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e304');
+}
+
 .cf-icon-mail-round:before {
   content: "\e305";
+}
+
+.lt-ie8 .cf-icon-mail-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e305');
 }
 
 .cf-icon-phone:before {
   content: "\e306";
 }
 
+.lt-ie8 .cf-icon-phone {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e306');
+}
+
 .cf-icon-phone-round:before {
   content: "\e307";
+}
+
+.lt-ie8 .cf-icon-phone-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e307');
 }
 
 .cf-icon-technology:before {
   content: "\e308";
 }
 
+.lt-ie8 .cf-icon-technology {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e308');
+}
+
 .cf-icon-technology-round:before {
   content: "\e309";
+}
+
+.lt-ie8 .cf-icon-technology-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e309');
 }
 
 .cf-icon-fax:before {
   content: "\e310";
 }
 
+.lt-ie8 .cf-icon-fax {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e310');
+}
+
 .cf-icon-fax-round:before {
   content: "\e311";
+}
+
+.lt-ie8 .cf-icon-fax-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e311');
 }
 
 /* topdoc
@@ -3219,44 +3467,44 @@ textarea {
     patterns:
       - name: document
         markup: |
-          <i class="cf-icon cf-icon-document"></i>
-          <i class="cf-icon cf-icon-document-round"></i>
+          <span class="cf-icon cf-icon-document"></span>
+          <span class="cf-icon cf-icon-document-round"></span>
       - name: pdf
         markup: |
-          <i class="cf-icon cf-icon-pdf"></i>
-          <i class="cf-icon cf-icon-pdf-round"></i>
+          <span class="cf-icon cf-icon-pdf"></span>
+          <span class="cf-icon cf-icon-pdf-round"></span>
       - name: upload
         markup: |
-          <i class="cf-icon cf-icon-upload"></i>
-          <i class="cf-icon cf-icon-upload-round"></i>
+          <span class="cf-icon cf-icon-upload"></span>
+          <span class="cf-icon cf-icon-upload-round"></span>
       - name: copy
         markup: |
-          <i class="cf-icon cf-icon-copy"></i>
-          <i class="cf-icon cf-icon-copy-round"></i>
+          <span class="cf-icon cf-icon-copy"></span>
+          <span class="cf-icon cf-icon-copy-round"></span>
       - name: edit
         markup: |
-          <i class="cf-icon cf-icon-edit"></i>
-          <i class="cf-icon cf-icon-edit-round"></i>
+          <span class="cf-icon cf-icon-edit"></span>
+          <span class="cf-icon cf-icon-edit-round"></span>
       - name: attach
         markup: |
-          <i class="cf-icon cf-icon-attach"></i>
-          <i class="cf-icon cf-icon-attach-round"></i>
+          <span class="cf-icon cf-icon-attach"></span>
+          <span class="cf-icon cf-icon-attach-round"></span>
       - name: print
         markup: |
-          <i class="cf-icon cf-icon-print"></i>
-          <i class="cf-icon cf-icon-print-round"></i>
+          <span class="cf-icon cf-icon-print"></span>
+          <span class="cf-icon cf-icon-print-round"></span>
       - name: save
         markup: |
-          <i class="cf-icon cf-icon-save"></i>
-          <i class="cf-icon cf-icon-save-round"></i>
+          <span class="cf-icon cf-icon-save"></span>
+          <span class="cf-icon cf-icon-save-round"></span>
       - name: appendix
         markup: |
-          <i class="cf-icon cf-icon-appendix"></i>
-          <i class="cf-icon cf-icon-appendix-round"></i>
+          <span class="cf-icon cf-icon-appendix"></span>
+          <span class="cf-icon cf-icon-appendix-round"></span>
       - name: supplement
         markup: |
-          <i class="cf-icon cf-icon-supplement"></i>
-          <i class="cf-icon cf-icon-supplement-round"></i>
+          <span class="cf-icon cf-icon-supplement"></span>
+          <span class="cf-icon cf-icon-supplement-round"></span>
     tags:
       - cf-icons
 */
@@ -3265,88 +3513,176 @@ textarea {
   content: "\e400";
 }
 
+.lt-ie8 .cf-icon-document {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e400');
+}
+
 .cf-icon-document-round:before {
   content: "\e401";
+}
+
+.lt-ie8 .cf-icon-document-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e401');
 }
 
 .cf-icon-pdf:before {
   content: "\e402";
 }
 
+.lt-ie8 .cf-icon-pdf {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e402');
+}
+
 .cf-icon-pdf-round:before {
   content: "\e403";
+}
+
+.lt-ie8 .cf-icon-pdf-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e403');
 }
 
 .cf-icon-upload:before {
   content: "\e404";
 }
 
+.lt-ie8 .cf-icon-upload {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e404');
+}
+
 .cf-icon-upload-round:before {
   content: "\e405";
+}
+
+.lt-ie8 .cf-icon-upload-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e405');
 }
 
 .cf-icon-download:before {
   content: "\e406";
 }
 
+.lt-ie8 .cf-icon-download {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
+}
+
 .cf-icon-download-round:before {
   content: "\e407";
+}
+
+.lt-ie8 .cf-icon-download-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e407');
 }
 
 .cf-icon-copy:before {
   content: "\e408";
 }
 
+.lt-ie8 .cf-icon-copy {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e408');
+}
+
 .cf-icon-copy-round:before {
   content: "\e409";
+}
+
+.lt-ie8 .cf-icon-copy-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e409');
 }
 
 .cf-icon-edit:before {
   content: "\e410";
 }
 
+.lt-ie8 .cf-icon-edit {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e410');
+}
+
 .cf-icon-edit-round:before {
   content: "\e411";
+}
+
+.lt-ie8 .cf-icon-edit-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e411');
 }
 
 .cf-icon-attach:before {
   content: "\e412";
 }
 
+.lt-ie8 .cf-icon-attach {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e412');
+}
+
 .cf-icon-attach-round:before {
   content: "\e413";
+}
+
+.lt-ie8 .cf-icon-attach-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e413');
 }
 
 .cf-icon-print:before {
   content: "\e414";
 }
 
+.lt-ie8 .cf-icon-print {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e414');
+}
+
 .cf-icon-print-round:before {
   content: "\e415";
+}
+
+.lt-ie8 .cf-icon-print-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e415');
 }
 
 .cf-icon-save:before {
   content: "\e416";
 }
 
+.lt-ie8 .cf-icon-save {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e416');
+}
+
 .cf-icon-save-round:before {
   content: "\e417";
+}
+
+.lt-ie8 .cf-icon-save-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e417');
 }
 
 .cf-icon-appendix:before {
   content: "\e418";
 }
 
+.lt-ie8 .cf-icon-appendix {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e418');
+}
+
 .cf-icon-appendix-round:before {
   content: "\e419";
+}
+
+.lt-ie8 .cf-icon-appendix-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e419');
 }
 
 .cf-icon-supplement:before {
   content: "\e420";
 }
 
+.lt-ie8 .cf-icon-supplement {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e420');
+}
+
 .cf-icon-supplement-round:before {
   content: "\e421";
+}
+
+.lt-ie8 .cf-icon-supplement-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e421');
 }
 
 /* topdoc
@@ -3355,84 +3691,84 @@ textarea {
     patterns:
       - name: bank-account
         markup: |
-          <i class="cf-icon cf-icon-bank-account"></i>
-          <i class="cf-icon cf-icon-bank-account-round"></i>
+          <span class="cf-icon cf-icon-bank-account"></span>
+          <span class="cf-icon cf-icon-bank-account-round"></span>
       - name: credit-card
         markup: |
-          <i class="cf-icon cf-icon-credit-card"></i>
-          <i class="cf-icon cf-icon-credit-card-round"></i>
+          <span class="cf-icon cf-icon-credit-card"></span>
+          <span class="cf-icon cf-icon-credit-card-round"></span>
       - name: loan
         markup: |
-          <i class="cf-icon cf-icon-loan"></i>
-          <i class="cf-icon cf-icon-loan-round"></i>
+          <span class="cf-icon cf-icon-loan"></span>
+          <span class="cf-icon cf-icon-loan-round"></span>
       - name: money-transfer
         markup: |
-          <i class="cf-icon cf-icon-money-transfer"></i>
-          <i class="cf-icon cf-icon-money-transfer-round"></i>
+          <span class="cf-icon cf-icon-money-transfer"></span>
+          <span class="cf-icon cf-icon-money-transfer-round"></span>
       - name: mortgage
         markup: |
-          <i class="cf-icon cf-icon-mortgage"></i>
-          <i class="cf-icon cf-icon-mortgage-round"></i>
+          <span class="cf-icon cf-icon-mortgage"></span>
+          <span class="cf-icon cf-icon-mortgage-round"></span>
       - name: debt-collection
         markup: |
-          <i class="cf-icon cf-icon-debt-collection"></i>
-          <i class="cf-icon cf-icon-debt-collection-round"></i>
+          <span class="cf-icon cf-icon-debt-collection"></span>
+          <span class="cf-icon cf-icon-debt-collection-round"></span>
       - name: credit-report
         markup: |
-          <i class="cf-icon cf-icon-credit-report"></i>
-          <i class="cf-icon cf-icon-credit-report-round"></i>
+          <span class="cf-icon cf-icon-credit-report"></span>
+          <span class="cf-icon cf-icon-credit-report-round"></span>
       - name: money
         markup: |
-          <i class="cf-icon cf-icon-money"></i>
-          <i class="cf-icon cf-icon-money-round"></i>
+          <span class="cf-icon cf-icon-money"></span>
+          <span class="cf-icon cf-icon-money-round"></span>
       - name: quick-cash
         markup: |
-          <i class="cf-icon cf-icon-quick-cash"></i>
-          <i class="cf-icon cf-icon-quick-cash-round"></i>
+          <span class="cf-icon cf-icon-quick-cash"></span>
+          <span class="cf-icon cf-icon-quick-cash-round"></span>
       - name: contract
         markup: |
-          <i class="cf-icon cf-icon-contract"></i>
-          <i class="cf-icon cf-icon-contract-round"></i>
+          <span class="cf-icon cf-icon-contract"></span>
+          <span class="cf-icon cf-icon-contract-round"></span>
       - name: comlaint
         markup: |
-          <i class="cf-icon cf-icon-complaint"></i>
-          <i class="cf-icon cf-icon-complaint-round"></i>
+          <span class="cf-icon cf-icon-complaint"></span>
+          <span class="cf-icon cf-icon-complaint-round"></span>
       - name: getting-credit-card
         markup: |
-          <i class="cf-icon cf-icon-getting-credit-card"></i>
-          <i class="cf-icon cf-icon-getting-credit-card-round"></i>
+          <span class="cf-icon cf-icon-getting-credit-card"></span>
+          <span class="cf-icon cf-icon-getting-credit-card-round"></span>
       - name: buying-car
         markup: |
-          <i class="cf-icon cf-icon-buying-car"></i>
-          <i class="cf-icon cf-icon-buying-car-round"></i>
-      - name: mortgage
+          <span class="cf-icon cf-icon-buying-car"></span>
+          <span class="cf-icon cf-icon-buying-car-round"></span>
+      - name: paying-college
         markup: |
-          <i class="cf-icon cf-icon-paying-college"></i>
-          <i class="cf-icon cf-icon-paying-college-round"></i>
+          <span class="cf-icon cf-icon-paying-college"></span>
+          <span class="cf-icon cf-icon-paying-college-round"></span>
       - name: owning-home
         markup: |
-          <i class="cf-icon cf-icon-owning-home"></i>
-          <i class="cf-icon cf-icon-owning-home-round"></i>
+          <span class="cf-icon cf-icon-owning-home"></span>
+          <span class="cf-icon cf-icon-owning-home-round"></span>
       - name: debt
         markup: |
-          <i class="cf-icon cf-icon-debt"></i>
-          <i class="cf-icon cf-icon-debt-round"></i>
+          <span class="cf-icon cf-icon-debt"></span>
+          <span class="cf-icon cf-icon-debt-round"></span>
       - name: building-credit
         markup: |
-          <i class="cf-icon cf-icon-building-credit"></i>
-          <i class="cf-icon cf-icon-building-credit-round"></i>
+          <span class="cf-icon cf-icon-building-credit"></span>
+          <span class="cf-icon cf-icon-building-credit-round"></span>
       - name: prepaid-cards
         markup: |
-          <i class="cf-icon cf-icon-prepaid-cards"></i>
-          <i class="cf-icon cf-icon-prepaid-cards-round"></i>
+          <span class="cf-icon cf-icon-prepaid-cards"></span>
+          <span class="cf-icon cf-icon-prepaid-cards-round"></span>
       - name: payday-loan
         markup: |
-          <i class="cf-icon cf-icon-payday-loan"></i>
-          <i class="cf-icon cf-icon-payday-loan-round"></i>
+          <span class="cf-icon cf-icon-payday-loan"></span>
+          <span class="cf-icon cf-icon-payday-loan-round"></span>
       - name: retirement
         markup: |
-          <i class="cf-icon cf-icon-retirement"></i>
-          <i class="cf-icon cf-icon-retirement-round"></i>
+          <span class="cf-icon cf-icon-retirement"></span>
+          <span class="cf-icon cf-icon-retirement-round"></span>
     tags:
       - cf-icons
 */
@@ -3441,160 +3777,320 @@ textarea {
   content: "\e500";
 }
 
+.lt-ie8 .cf-icon-bank-account {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e500');
+}
+
 .cf-icon-bank-account-round:before {
   content: "\e501";
+}
+
+.lt-ie8 .cf-icon-bank-account-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e501');
 }
 
 .cf-icon-credit-card:before {
   content: "\e502";
 }
 
+.lt-ie8 .cf-icon-credit-card {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e502');
+}
+
 .cf-icon-credit-card-round:before {
   content: "\e503";
+}
+
+.lt-ie8 .cf-icon-credit-card-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e503');
 }
 
 .cf-icon-loan:before {
   content: "\e504";
 }
 
+.lt-ie8 .cf-icon-loan {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e504');
+}
+
 .cf-icon-loan-round:before {
   content: "\e505";
+}
+
+.lt-ie8 .cf-icon-loan-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e505');
 }
 
 .cf-icon-money-transfer:before {
   content: "\e506";
 }
 
+.lt-ie8 .cf-icon-money-transfer {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e506');
+}
+
 .cf-icon-money-transfer-round:before {
   content: "\e507";
+}
+
+.lt-ie8 .cf-icon-money-transfer-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e507');
 }
 
 .cf-icon-mortgage:before {
   content: "\e508";
 }
 
+.lt-ie8 .cf-icon-mortgage {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e508');
+}
+
 .cf-icon-mortgage-round:before {
   content: "\e509";
+}
+
+.lt-ie8 .cf-icon-mortgage-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e509');
 }
 
 .cf-icon-debt-collection:before {
   content: "\e510";
 }
 
+.lt-ie8 .cf-icon-debt-collection {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e510');
+}
+
 .cf-icon-debt-collection-round:before {
   content: "\e511";
+}
+
+.lt-ie8 .cf-icon-debt-collection-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e511');
 }
 
 .cf-icon-credit-report:before {
   content: "\e512";
 }
 
+.lt-ie8 .cf-icon-credit-report {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e512');
+}
+
 .cf-icon-credit-report-round:before {
   content: "\e513";
+}
+
+.lt-ie8 .cf-icon-credit-report-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e513');
 }
 
 .cf-icon-money:before {
   content: "\e514";
 }
 
+.lt-ie8 .cf-icon-money {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e514');
+}
+
 .cf-icon-money-round:before {
   content: "\e515";
+}
+
+.lt-ie8 .cf-icon-money-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e515');
 }
 
 .cf-icon-quick-cash:before {
   content: "\e516";
 }
 
+.lt-ie8 .cf-icon-quick-cash {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e516');
+}
+
 .cf-icon-quick-cash-round:before {
   content: "\e517";
+}
+
+.lt-ie8 .cf-icon-quick-cash-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e517');
 }
 
 .cf-icon-contract:before {
   content: "\e518";
 }
 
+.lt-ie8 .cf-icon-contract {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e518');
+}
+
 .cf-icon-contract-round:before {
   content: "\e519";
+}
+
+.lt-ie8 .cf-icon-contract-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e519');
 }
 
 .cf-icon-complaint:before {
   content: "\e520";
 }
 
+.lt-ie8 .cf-icon-complaint {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e520');
+}
+
 .cf-icon-complaint-round:before {
   content: "\e521";
+}
+
+.lt-ie8 .cf-icon-complaint-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e521');
 }
 
 .cf-icon-getting-credit-card:before {
   content: "\e522";
 }
 
+.lt-ie8 .cf-icon-getting-credit-card {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e522');
+}
+
 .cf-icon-getting-credit-card-round:before {
   content: "\e523";
+}
+
+.lt-ie8 .cf-icon-getting-credit-card-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e523');
 }
 
 .cf-icon-buying-car:before {
   content: "\e524";
 }
 
+.lt-ie8 .cf-icon-buying-car {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e524');
+}
+
 .cf-icon-buying-car-round:before {
   content: "\e525";
+}
+
+.lt-ie8 .cf-icon-buying-car-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e525');
 }
 
 .cf-icon-paying-college:before {
   content: "\e526";
 }
 
+.lt-ie8 .cf-icon-paying-college {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e526');
+}
+
 .cf-icon-paying-college-round:before {
   content: "\e527";
+}
+
+.lt-ie8 .cf-icon-paying-college-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e527');
 }
 
 .cf-icon-owning-home:before {
   content: "\e528";
 }
 
+.lt-ie8 .cf-icon-owning-home {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e528');
+}
+
 .cf-icon-owning-home-round:before {
   content: "\e529";
+}
+
+.lt-ie8 .cf-icon-owning-home-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e529');
 }
 
 .cf-icon-debt:before {
   content: "\e530";
 }
 
+.lt-ie8 .cf-icon-debt {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e530');
+}
+
 .cf-icon-debt-round:before {
   content: "\e531";
+}
+
+.lt-ie8 .cf-icon-debt-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e531');
 }
 
 .cf-icon-building-credit:before {
   content: "\e532";
 }
 
+.lt-ie8 .cf-icon-building-credit {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e532');
+}
+
 .cf-icon-building-credit-round:before {
   content: "\e533";
+}
+
+.lt-ie8 .cf-icon-building-credit-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e533');
 }
 
 .cf-icon-prepaid-cards:before {
   content: "\e534";
 }
 
+.lt-ie8 .cf-icon-prepaid-cards {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e534');
+}
+
 .cf-icon-prepaid-cards-round:before {
   content: "\e535";
+}
+
+.lt-ie8 .cf-icon-prepaid-cards-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e535');
 }
 
 .cf-icon-payday-loan:before {
   content: "\e536";
 }
 
+.lt-ie8 .cf-icon-payday-loan {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e536');
+}
+
 .cf-icon-payday-loan-round:before {
   content: "\e537";
+}
+
+.lt-ie8 .cf-icon-payday-loan-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e537');
 }
 
 .cf-icon-retirement:before {
   content: "\e538";
 }
 
+.lt-ie8 .cf-icon-retirement {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e538');
+}
+
 .cf-icon-retirement-round:before {
   content: "\e539";
+}
+
+.lt-ie8 .cf-icon-retirement-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e539');
 }
 
 /* topdoc
@@ -3603,88 +4099,124 @@ textarea {
     patterns:
       - name: user
         markup: |
-          <i class="cf-icon cf-icon-user"></i>
-          <i class="cf-icon cf-icon-user-round"></i>
+          <span class="cf-icon cf-icon-user"></span>
+          <span class="cf-icon cf-icon-user-round"></span>
       - name: wifi
         markup: |
-          <i class="cf-icon cf-icon-wifi"></i>
-          <i class="cf-icon cf-icon-wifi-round"></i>
+          <span class="cf-icon cf-icon-wifi"></span>
+          <span class="cf-icon cf-icon-wifi-round"></span>
       - name: search
         markup: |
-          <i class="cf-icon cf-icon-search"></i>
-          <i class="cf-icon cf-icon-search-round"></i>
+          <span class="cf-icon cf-icon-search"></span>
+          <span class="cf-icon cf-icon-search-round"></span>
       - name: share
         markup: |
-          <i class="cf-icon cf-icon-share"></i>
-          <i class="cf-icon cf-icon-share-round"></i>
+          <span class="cf-icon cf-icon-share"></span>
+          <span class="cf-icon cf-icon-share-round"></span>
       - name: link
         markup: |
-          <i class="cf-icon cf-icon-link"></i>
-          <i class="cf-icon cf-icon-link-round"></i>
+          <span class="cf-icon cf-icon-link"></span>
+          <span class="cf-icon cf-icon-link-round"></span>
       - name: external-link
         markup: |
-          <i class="cf-icon cf-icon-external-link"></i>
-          <i class="cf-icon cf-icon-external-link-round"></i>
+          <span class="cf-icon cf-icon-external-link"></span>
+          <span class="cf-icon cf-icon-external-link-round"></span>
       - name: audio-mute
         markup: |
-          <i class="cf-icon cf-icon-audio-mute"></i>
-          <i class="cf-icon cf-icon-audio-mute-round"></i>
+          <span class="cf-icon cf-icon-audio-mute"></span>
+          <span class="cf-icon cf-icon-audio-mute-round"></span>
       - name: audio-low
         markup: |
-          <i class="cf-icon cf-icon-audio-low"></i>
-          <i class="cf-icon cf-icon-audio-low-round"></i>
+          <span class="cf-icon cf-icon-audio-low"></span>
+          <span class="cf-icon cf-icon-audio-low-round"></span>
       - name: audio-medium
         markup: |
-          <i class="cf-icon cf-icon-audio-medium"></i>
-          <i class="cf-icon cf-icon-audio-medium-round"></i>
+          <span class="cf-icon cf-icon-audio-medium"></span>
+          <span class="cf-icon cf-icon-audio-medium-round"></span>
       - name: audio-max
         markup: |
-          <i class="cf-icon cf-icon-audio-max"></i>
-          <i class="cf-icon cf-icon-audio-max-round"></i>
+          <span class="cf-icon cf-icon-audio-max"></span>
+          <span class="cf-icon cf-icon-audio-max-round"></span>
       - name: favorite
         markup: |
-          <i class="cf-icon cf-icon-favorite"></i>
-          <i class="cf-icon cf-icon-favorite-round"></i>
+          <span class="cf-icon cf-icon-favorite"></span>
+          <span class="cf-icon cf-icon-favorite-round"></span>
       - name: unfavorite
         markup: |
-          <i class="cf-icon cf-icon-unfavorite"></i>
-          <i class="cf-icon cf-icon-unfavorite-round"></i>
+          <span class="cf-icon cf-icon-unfavorite"></span>
+          <span class="cf-icon cf-icon-unfavorite-round"></span>
       - name: bookmark
         markup: |
-          <i class="cf-icon cf-icon-bookmark"></i>
-          <i class="cf-icon cf-icon-bookmark-round"></i>
+          <span class="cf-icon cf-icon-bookmark"></span>
+          <span class="cf-icon cf-icon-bookmark-round"></span>
       - name: unbookmark
         markup: |
-          <i class="cf-icon cf-icon-unbookmark"></i>
-          <i class="cf-icon cf-icon-unbookmark-round"></i>
+          <span class="cf-icon cf-icon-unbookmark"></span>
+          <span class="cf-icon cf-icon-unbookmark-round"></span>
       - name: settings
         markup: |
-          <i class="cf-icon cf-icon-settings"></i>
-          <i class="cf-icon cf-icon-settings-round"></i>
+          <span class="cf-icon cf-icon-settings"></span>
+          <span class="cf-icon cf-icon-settings-round"></span>
       - name: menu
         markup: |
-          <i class="cf-icon cf-icon-menu"></i>
-          <i class="cf-icon cf-icon-menu-round"></i>
+          <span class="cf-icon cf-icon-menu"></span>
+          <span class="cf-icon cf-icon-menu-round"></span>
       - name: lock
         markup: |
-          <i class="cf-icon cf-icon-lock"></i>
-          <i class="cf-icon cf-icon-lock-round"></i>
+          <span class="cf-icon cf-icon-lock"></span>
+          <span class="cf-icon cf-icon-lock-round"></span>
       - name: unlock
         markup: |
-          <i class="cf-icon cf-icon-unlock"></i>
-          <i class="cf-icon cf-icon-unlock-round"></i>
+          <span class="cf-icon cf-icon-unlock"></span>
+          <span class="cf-icon cf-icon-unlock-round"></span>
       - name: clock
         markup: |
-          <i class="cf-icon cf-icon-clock"></i>
-          <i class="cf-icon cf-icon-clock-round"></i>
+          <span class="cf-icon cf-icon-clock"></span>
+          <span class="cf-icon cf-icon-clock-round"></span>
       - name: chart
         markup: |
-          <i class="cf-icon cf-icon-chart"></i>
-          <i class="cf-icon cf-icon-chart-round"></i>
+          <span class="cf-icon cf-icon-chart"></span>
+          <span class="cf-icon cf-icon-chart-round"></span>
       - name: play
         markup: |
-          <i class="cf-icon cf-icon-play"></i>
-          <i class="cf-icon cf-icon-play-round"></i>
+          <span class="cf-icon cf-icon-play"></span>
+          <span class="cf-icon cf-icon-play-round"></span>
+      - name: newspaper
+        markup: |
+          <span class="cf-icon cf-icon-newspaper"></span>
+          <span class="cf-icon cf-icon-newspaper-round"></span>
+      - name: microphone
+        markup: |
+          <span class="cf-icon cf-icon-microphone"></span>
+          <span class="cf-icon cf-icon-microphone-round"></span>
+      - name: bullhorn
+        markup: |
+          <span class="cf-icon cf-icon-bullhorn"></span>
+          <span class="cf-icon cf-icon-bullhorn-round"></span>
+      - name: double-quote
+        markup: |
+          <span class="cf-icon cf-icon-double-quote"></span>
+          <span class="cf-icon cf-icon-double-quote-round"></span>
+      - name: speech-bubble
+        markup: |
+          <span class="cf-icon cf-icon-speech-bubble"></span>
+          <span class="cf-icon cf-icon-speech-bubble-round"></span>
+      - name: information
+        markup: |
+          <span class="cf-icon cf-icon-information"></span>
+          <span class="cf-icon cf-icon-information-round"></span>
+      - name: lightbulb
+        markup: |
+          <span class="cf-icon cf-icon-lightbulb"></span>
+          <span class="cf-icon cf-icon-lightbulb-round"></span>
+      - name: dialogue
+        markup: |
+          <span class="cf-icon cf-icon-dialogue"></span>
+          <span class="cf-icon cf-icon-dialogue-round"></span>
+      - name: date
+        markup: |
+          <span class="cf-icon cf-icon-date"></span>
+          <span class="cf-icon cf-icon-date-round"></span>
     tags:
       - cf-icons
 */
@@ -3693,168 +4225,480 @@ textarea {
   content: "\e600";
 }
 
+.lt-ie8 .cf-icon-user {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e600');
+}
+
 .cf-icon-user-round:before {
   content: "\e601";
+}
+
+.lt-ie8 .cf-icon-user-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e601');
 }
 
 .cf-icon-wifi:before {
   content: "\e602";
 }
 
+.lt-ie8 .cf-icon-wifi {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e602');
+}
+
 .cf-icon-wifi-round:before {
   content: "\e603";
+}
+
+.lt-ie8 .cf-icon-wifi-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e603');
 }
 
 .cf-icon-search:before {
   content: "\e604";
 }
 
+.lt-ie8 .cf-icon-search {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e604');
+}
+
 .cf-icon-search-round:before {
   content: "\e605";
+}
+
+.lt-ie8 .cf-icon-search-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e605');
 }
 
 .cf-icon-share:before {
   content: "\e606";
 }
 
+.lt-ie8 .cf-icon-share {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e606');
+}
+
 .cf-icon-share-round:before {
   content: "\e607";
+}
+
+.lt-ie8 .cf-icon-share-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e607');
 }
 
 .cf-icon-link:before {
   content: "\e608";
 }
 
+.lt-ie8 .cf-icon-link {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e608');
+}
+
 .cf-icon-link-round:before {
   content: "\e609";
+}
+
+.lt-ie8 .cf-icon-link-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e609');
 }
 
 .cf-icon-external-link:before {
   content: "\e610";
 }
 
+.lt-ie8 .cf-icon-external-link {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e610');
+}
+
 .cf-icon-external-link-round:before {
   content: "\e611";
+}
+
+.lt-ie8 .cf-icon-external-link-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e611');
 }
 
 .cf-icon-audio-mute:before {
   content: "\e612";
 }
 
+.lt-ie8 .cf-icon-audio-mute {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e612');
+}
+
 .cf-icon-audio-mute-round:before {
   content: "\e616";
+}
+
+.lt-ie8 .cf-icon-audio-mute-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e616');
 }
 
 .cf-icon-audio-low:before {
   content: "\e613";
 }
 
+.lt-ie8 .cf-icon-audio-low {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e613');
+}
+
 .cf-icon-audio-low-round:before {
   content: "\e617";
+}
+
+.lt-ie8 .cf-icon-audio-low-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e617');
 }
 
 .cf-icon-audio-medium:before {
   content: "\e614";
 }
 
+.lt-ie8 .cf-icon-audio-medium {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e614');
+}
+
 .cf-icon-audio-medium-round:before {
   content: "\e618";
+}
+
+.lt-ie8 .cf-icon-audio-medium-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e618');
 }
 
 .cf-icon-audio-max:before {
   content: "\e615";
 }
 
+.lt-ie8 .cf-icon-audio-max {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e615');
+}
+
 .cf-icon-audio-max-round:before {
   content: "\e619";
+}
+
+.lt-ie8 .cf-icon-audio-max-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e619');
 }
 
 .cf-icon-favorite:before {
   content: "\e620";
 }
 
+.lt-ie8 .cf-icon-favorite {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e620');
+}
+
 .cf-icon-favorite-round:before {
   content: "\e621";
+}
+
+.lt-ie8 .cf-icon-favorite-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e621');
 }
 
 .cf-icon-unfavorite:before {
   content: "\e622";
 }
 
+.lt-ie8 .cf-icon-unfavorite {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e622');
+}
+
 .cf-icon-unfavorite-round:before {
   content: "\e623";
+}
+
+.lt-ie8 .cf-icon-unfavorite-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e623');
 }
 
 .cf-icon-bookmark:before {
   content: "\e624";
 }
 
+.lt-ie8 .cf-icon-bookmark {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e624');
+}
+
 .cf-icon-bookmark-round:before {
   content: "\e625";
+}
+
+.lt-ie8 .cf-icon-bookmark-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e625');
 }
 
 .cf-icon-unbookmark:before {
   content: "\e626";
 }
 
+.lt-ie8 .cf-icon-unbookmark {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e626');
+}
+
 .cf-icon-unbookmark-round:before {
   content: "\e627";
+}
+
+.lt-ie8 .cf-icon-unbookmark-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e627');
 }
 
 .cf-icon-settings:before {
   content: "\e628";
 }
 
+.lt-ie8 .cf-icon-settings {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e628');
+}
+
 .cf-icon-settings-round:before {
   content: "\e629";
+}
+
+.lt-ie8 .cf-icon-settings-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e629');
 }
 
 .cf-icon-menu:before {
   content: "\e630";
 }
 
+.lt-ie8 .cf-icon-menu {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e630');
+}
+
 .cf-icon-menu-round:before {
   content: "\e631";
+}
+
+.lt-ie8 .cf-icon-menu-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e631');
 }
 
 .cf-icon-lock:before {
   content: "\e632";
 }
 
+.lt-ie8 .cf-icon-lock {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e632');
+}
+
 .cf-icon-lock-round:before {
   content: "\e633";
+}
+
+.lt-ie8 .cf-icon-lock-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e633');
 }
 
 .cf-icon-unlock:before {
   content: "\e634";
 }
 
+.lt-ie8 .cf-icon-unlock {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e634');
+}
+
 .cf-icon-unlock-round:before {
   content: "\e635";
+}
+
+.lt-ie8 .cf-icon-unlock-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e635');
 }
 
 .cf-icon-clock:before {
   content: "\e636";
 }
 
+.lt-ie8 .cf-icon-clock {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e636');
+}
+
 .cf-icon-clock-round:before {
   content: "\e637";
+}
+
+.lt-ie8 .cf-icon-clock-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e637');
 }
 
 .cf-icon-chart:before {
   content: "\e638";
 }
 
+.lt-ie8 .cf-icon-chart {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e638');
+}
+
 .cf-icon-chart-round:before {
   content: "\e639";
+}
+
+.lt-ie8 .cf-icon-chart-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e639');
 }
 
 .cf-icon-play:before {
   content: "\e640";
 }
 
+.lt-ie8 .cf-icon-play {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e640');
+}
+
 .cf-icon-play-round:before {
   content: "\e641";
+}
+
+.lt-ie8 .cf-icon-play-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e641');
+}
+
+.cf-icon-newspaper:before {
+  content: "\e700";
+}
+
+.lt-ie8 .cf-icon-newspaper {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e700');
+}
+
+.cf-icon-newspaper-round:before {
+  content: "\e701";
+}
+
+.lt-ie8 .cf-icon-newspaper-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e701');
+}
+
+.cf-icon-microphone:before {
+  content: "\e702";
+}
+
+.lt-ie8 .cf-icon-microphone {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e702');
+}
+
+.cf-icon-microphone-round:before {
+  content: "\e703";
+}
+
+.lt-ie8 .cf-icon-microphone-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e703');
+}
+
+.cf-icon-bullhorn:before {
+  content: "\e704";
+}
+
+.lt-ie8 .cf-icon-bullhorn {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e704');
+}
+
+.cf-icon-bullhorn-round:before {
+  content: "\e705";
+}
+
+.lt-ie8 .cf-icon-bullhorn-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e705');
+}
+
+.cf-icon-double-quote:before {
+  content: "\e708";
+}
+
+.lt-ie8 .cf-icon-double-quote {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e708');
+}
+
+.cf-icon-double-quote-round:before {
+  content: "\e709";
+}
+
+.lt-ie8 .cf-icon-double-quote-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e709');
+}
+
+.cf-icon-speech-bubble:before {
+  content: "\e710";
+}
+
+.lt-ie8 .cf-icon-speech-bubble {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e710');
+}
+
+.cf-icon-speech-bubble-round:before {
+  content: "\e711";
+}
+
+.lt-ie8 .cf-icon-speech-bubble-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e711');
+}
+
+.cf-icon-information:before {
+  content: "\e712";
+}
+
+.lt-ie8 .cf-icon-information {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e712');
+}
+
+.cf-icon-information-round:before {
+  content: "\e713";
+}
+
+.lt-ie8 .cf-icon-information-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e713');
+}
+
+.cf-icon-lightbulb:before {
+  content: "\e714";
+}
+
+.lt-ie8 .cf-icon-lightbulb {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e714');
+}
+
+.cf-icon-lightbulb-round:before {
+  content: "\e715";
+}
+
+.lt-ie8 .cf-icon-lightbulb-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e715');
+}
+
+.cf-icon-dialogue:before {
+  content: "\e716";
+}
+
+.lt-ie8 .cf-icon-dialogue {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e716');
+}
+
+.cf-icon-dialogue-round:before {
+  content: "\e717";
+}
+
+.lt-ie8 .cf-icon-dialogue-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e717');
+}
+
+.cf-icon-date:before {
+  content: "\e718";
+}
+
+.lt-ie8 .cf-icon-date {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e718');
+}
+
+.cf-icon-date-round:before {
+  content: "\e719";
+}
+
+.lt-ie8 .cf-icon-date-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e719');
 }
 
 /* topdoc
@@ -5308,8 +6152,11 @@ img {
 }
 
 .lt-ie9 .wrapper {
-  min-width: 800px;
   max-width: 960px;
+}
+
+.lt-ie9 body {
+  min-width: 800px;
 }
 
 .content_bar {
@@ -5807,10 +6654,17 @@ img {
     - name: Default category slug
       markup: |
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-credit-card"></span>
+            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
             <span class="u-visually-hidden">Category:</span>
             Consumer finance
         </a>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .category-slug
+            .category-slug_icon
+            .u-visually-hidden
       notes:
         - "Always use a link element or else you will get unwanted hover styles."
         - "We suggest using a .u-visually-hidden element to add more context for
@@ -5827,7 +6681,7 @@ img {
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
-  display: block;
+  display: inline-block;
   margin-bottom: 0.44444444em;
   color: #101820;
   border-bottom-color: #101820;
@@ -5859,6 +6713,10 @@ img {
 .category-slug.active {
   border-bottom-color: #101820;
   color: #101820;
+}
+
+.category-slug_icon {
+  margin-right: 0.11111111em;
 }
 
 /* topdoc
@@ -6553,11 +7411,6 @@ img {
   clear: both;
 }
 
-.lt-ie9 .hero_wrapper {
-  min-width: 800px;
-  max-width: 960px;
-}
-
 .hero_img-container {
   display: none;
   line-height: 1;
@@ -7186,7 +8039,8 @@ img {
         <article class="post">
             <header>
                 <a href="#" class="post_slug category-slug">
-                    <span class="cf-icon cf-icon-help"></span>
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
                     Announcements &amp; updates
                 </a>
                 <h1 class="post_header">
@@ -8037,22 +8891,22 @@ a.focus .summary_header {
     - name: Blog slugs
       markup: |
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-help"></span>
+            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
             <span class="u-visually-hidden">Category:</span>
             Announcements & updates
         </a><br>
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-help"></span>
+            <span class="category-slug_icon cf-icon cf-icon-information"></span>
             <span class="u-visually-hidden">Category:</span>
             Consumer information
         </a><br>
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-help"></span>
+            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
             <span class="u-visually-hidden">Category:</span>
             Engagement
         </a><br>
         <a href="#" class="category-slug">
-            <span class="cf-icon cf-icon-help"></span>
+            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
             <span class="u-visually-hidden">Category:</span>
             Innovation & data
         </a>
@@ -8074,9 +8928,9 @@ a.focus .summary_header {
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
                             <a href="#" class="category-slug">
-                                <span class="cf-icon cf-icon-help"></span>
+                                <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
                                 <span class="u-visually-hidden">Category:</span>
-                                Category
+                                Announcements & updates
                             </a>
                             <a class="summary" href="#">
                                 <h1 class="summary_header">Header</h1>
@@ -8137,8 +8991,9 @@ a.focus .summary_header {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="meta-header_left category-slug">
-                    <span class="cf-icon cf-icon-help"></span>
-                    Consumer information
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
+                    Announcements & updates
                 </a>
             </div>
             <a class="summary" href="#">
@@ -8167,8 +9022,9 @@ a.focus .summary_header {
                     Nov 4, 2013
                 </span>
                 <a href="#" class="meta-header_left category-slug">
-                    <span class="cf-icon cf-icon-help"></span>
-                    Consumer information
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
+                    Announcements & updates
                 </a>
             </div>
             <a class="media-object" href="#">

@@ -39,5 +39,7 @@
   ghe/flapjack/blog/issues/33
 - Ampersand filter bug
   https://github.com/rosskarchner/sheer/issues/17
+- Tags in filter list bug
+  https://github.com/rosskarchner/sheer/issues/18
 
 Jira, stories VS tasks
