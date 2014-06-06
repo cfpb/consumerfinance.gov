@@ -6666,7 +6666,6 @@ img {
             .category-slug_icon
             .u-visually-hidden
       notes:
-        - "Always use a link element or else you will get unwanted hover styles."
         - "We suggest using a .u-visually-hidden element to add more context for
           screen readers."
   tags:
@@ -6684,33 +6683,37 @@ img {
   display: inline-block;
   margin-bottom: 0.44444444em;
   color: #101820;
-  border-bottom-color: #101820;
 }
 
 .lt-ie9 .category-slug {
   font-weight: normal !important;
 }
 
-.category-slug:visited,
-.category-slug.visited {
+a.category-slug {
+  color: #101820;
+  border-bottom-color: #101820;
+}
+
+a.category-slug:visited,
+a.category-slug.visited {
   border-bottom-color: #101820;
   color: #101820;
 }
 
-.category-slug:hover,
-.category-slug.hover {
+a.category-slug:hover,
+a.category-slug.hover {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.category-slug:focus,
-.category-slug.focus {
+a.category-slug:focus,
+a.category-slug.focus {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.category-slug:active,
-.category-slug.active {
+a.category-slug:active,
+a.category-slug.active {
   border-bottom-color: #101820;
   color: #101820;
 }
@@ -8923,23 +8926,23 @@ a.focus .summary_header {
     - name: Blog hero
       markup: |
         <section class="hero" style="background-color:#337E7D;">
-            <div class="wrapper">
-                <div class="hero_card">
+            <div class="hero_wrapper">
+                <a class="hero_card" href="#">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
-                            <a href="#" class="category-slug">
+                            <div class="category-slug">
                                 <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
                                 <span class="u-visually-hidden">Category:</span>
-                                Announcements & updates
-                            </a>
-                            <a class="summary" href="#">
+                                Category slug
+                            </div>
+                            <div class="summary">
                                 <h1 class="summary_header">Header</h1>
                                 <p class="summary_text">Text.</p>
                                 <p class="summary_byline">Byline</p>
-                            </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="hero_img-container hero_img-container__small u-flexible-container">
                 <div class="hero_img u-flexible-container_inner"
