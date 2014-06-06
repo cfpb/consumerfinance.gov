@@ -57,16 +57,16 @@
         <section class="content_hero hero"
                  style="background-color:{{ view.hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
-                <div class="hero_card">
+                <a class="hero_card"
+                   href="{{ view.hero.custom_fields.link[0] }}">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
-                            <!-- <a href="#"
-                               class="category-slug">
+                            <!-- <span class="category-slug">
                                 <span class="cf-icon cf-icon-help"></span>
                                 <span class="u-visually-hidden">Category:</span>
                                 Announcements &amp; updates
-                            </a> -->
-                            <a class="summary"
+                            </span> -->
+                            <div class="summary"
                                href="{{ view.hero.custom_fields.link[0] }}">
                                 <h1 class="summary_header">
                                     {{ view.hero.title }}
@@ -79,10 +79,10 @@
                                     By {{ view.hero.author.name }}
                                 </p>
                                 {% endif %}
-                            </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="hero_img-container hero_img-container__small">
                 <div class="hero_img"
