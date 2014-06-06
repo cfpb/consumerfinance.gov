@@ -6966,6 +6966,132 @@ a.category-slug.active {
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 
 /* topdoc
+  name: Custom checkboxes
+  family: cfgov-misc
+  patterns:
+    - name: Default
+      markup: |
+        <span class="input">
+            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-01" value="lorem">
+            <label for="checkboxes-styled-01"> Lorem</label>
+        </span>
+        <span class="input">
+            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-02" value="ipsum">
+            <label for="checkboxes-styled-02"> Ipsum</label>
+        </span>
+        <span class="input">
+            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-03" value="dolor">
+            <label for="checkboxes-styled-03"> Dolor</label>
+        </span>
+        <span class="input">
+            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-04" value="sit">
+            <label for="checkboxes-styled-04"> Sit</label>
+        </span>
+        <script src="/static/js/main.min.js"></script>
+      notes:
+        - ".."
+  tags:
+    - cfgov-misc
+*/
+
+.input.is-enabled {
+  display: inline-block;
+  position: relative;
+  margin-right: 0.375em;
+  padding: 0 0 0 1.25em;
+}
+
+.input.is-enabled input {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 0;
+}
+
+.input.is-enabled .input_checkbox,
+.input.is-enabled .input_radio {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 1.25em;
+  height: 1.25em;
+  background: #ffffff;
+  border: 1px solid #101820;
+}
+
+.input.is-enabled .input_radio {
+  border-radius: 100%;
+}
+
+.input.is-enabled .input_label {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 0 -1.25em;
+  padding-left: 1.25em;
+  line-height: 1;
+}
+
+.input.is-enabled .input_text {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  padding: 0 0.375em 0 0.5em;
+  line-height: 1.25;
+}
+
+.input.is-enabled .input_text em,
+.input.is-enabled .input_text i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .input.is-enabled .input_text em,
+.lt-ie9 .input.is-enabled .input_text i {
+  font-style: normal !important;
+}
+
+.input.is-enabled .input_text strong,
+.input.is-enabled .input_text b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .input.is-enabled .input_text strong,
+.lt-ie9 .input.is-enabled .input_text b {
+  font-weight: normal !important;
+}
+
+.input.is-enabled .input_text input {
+  margin-right: 0.375em;
+}
+
+.input.is-enabled.is-hovered .input_checkbox,
+.input.is-enabled.is-hovered .input_radio {
+  background-color: #dbedd4;
+  border-color: #2cb34a;
+  outline: 1px solid #2cb34a;
+}
+
+.input.is-enabled.is-checked .input_checkbox,
+.input.is-enabled.is-checked .input_radio {
+  background-color: #2cb34a;
+  border-color: #2cb34a;
+}
+
+.input.is-enabled.is-focused .input_checkbox,
+.input.is-enabled.is-focused .input_radio {
+  border-color: #ffffff;
+  outline: 2px solid #2cb34a;
+}
+
+/* topdoc
   name: Form labels
   family: cfgov-misc
   patterns:
