@@ -6149,6 +6149,15 @@ a.category-slug.active {
                    value="dolor">
             Dolor
         </label>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          label.custom-form
+            input[type=checkbox]
+      notes:
+        - "Remember to use for and id attributes. This will allow IE less than 8
+          to trigger the input on label click."
     - name: Radio buttons
       markup: |
         <label class="form-label"
@@ -6178,6 +6187,15 @@ a.category-slug.active {
                    value="dolor">
             Dolor
         </label>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          label.custom-form
+            input[type=radio]
+      notes:
+        - "Remember to use for and id attributes. This will allow IE less than 8
+          to trigger the input on label click."
     - name: JavaScript setup
       markup: |
         <script src="/vendor/jquery/jquery.js"></script>
