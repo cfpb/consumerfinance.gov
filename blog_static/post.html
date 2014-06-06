@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
 
 <!--
     ===========
@@ -23,7 +23,24 @@
 -->
 
     <title>Blog entry page - cfgov-refresh demo</title>
-    <meta name="description" content="Blog entry prototyping for the consumerfinance.gov refresh">
+    <meta name="description"
+          content="Blog entry page prototype for the consumerfinance.gov refresh">
+
+    <!-- Open Graph properties -->
+        <!--   Required  -->
+        <meta property="og:title" content="Blog entry page - cfgov-refresh demo">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://cfpb.github.io/cfgov-refresh/blog_static/post.html">
+        <meta property="og:image"
+              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
+        <!--   Optional -->
+        <meta property="og:description"
+              content="Blog entry page prototype for the consumerfinance.gov refresh">
+        <meta property="og:site_name" content="Consumer Financial Protection Bureau">
+        <!--   Facebook -->
+        <meta property="fb:app_id" content="210516218981921">
+        <meta property="article:author" content="https://www.facebook.com/CFPB">
+    <!-- End of Open Graph properties -->
 
     <!-- Explicit favicon link needed for testing. Remove for production. -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />

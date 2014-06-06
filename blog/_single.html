@@ -3,8 +3,8 @@
 {% block demo_title %}Blog post{% endblock %}
 
 {% block title %}{{ post.title }}{% endblock %}
+{% block desc %}{{ post.excerpt|striptags }}{% endblock %}
 
-{% block og_desc %}{{ post.excerpt|striptags }}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_article_prefix %}article: http://ogp.me/ns/article#{% endblock %}
 {% block og_article_author -%}

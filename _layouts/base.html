@@ -23,7 +23,8 @@
 -->
 
     <title>{% block title %}MISSING TITLE{% endblock title %} - cfgov-refresh demo</title>
-    <meta name="description" content="Blog landing page prototyping for the consumerfinance.gov refresh">
+    <meta name="description"
+          content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
 
     <!-- Open Graph properties -->
         <!--   Required  -->
@@ -31,9 +32,9 @@
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
         <meta property="og:image"
-              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.png">
+              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
         <!--   Optional -->
-        <meta property="og:description" content="{% block og_desc %}{% endblock %}">
+        <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
         <meta property="og:site_name" content="Consumer Financial Protection Bureau">
         <!--   Facebook -->
         <meta property="fb:app_id" content="210516218981921">
@@ -110,20 +111,23 @@
     =================
 -->
 
+    {# Build a Twitter share URL based on }
     {% set share_twitter_url = "http://twitter.com/intent/tweet" %}
     {% set share_twitter_url = share_twitter_url + "?url=" + request.url|urlencode %}
     {% set share_twitter_url = share_twitter_url + "&amp;via=CFPB" %}
-    {% if post.custom_fields.twtr_text %}
-        {% set share_twitter_url = share_twitter_url + "&amp;text=" + post.custom_fields.twtr_text.0|urlencode + "%20--" %}
-    {% endif %}
-    {% if post.custom_fields.twtr_rel %}
-        {% set share_twitter_url = share_twitter_url + "&amp;related=" + post.custom_fields.twtr_rel.0 %}
-    {% endif %}
-    {% if post.custom_fields.twtr_lang %}
-        {% set share_twitter_url = share_twitter_url + "&amp;lang=" + post.custom_fields.twtr_lang.0 %}
-    {% endif %}
-    {% if post.custom_fields.twtr_hash %}
-        {% set share_twitter_url = share_twitter_url + "&amp;hashtags=" + post.custom_fields.twtr_hash.0 %}
+    {% if post %}
+        {% if post.custom_fields.twtr_text %}
+            {% set share_twitter_url = share_twitter_url + "&amp;text=" + post.custom_fields.twtr_text.0|urlencode + "%20--" %}
+        {% endif %}
+        {% if post.custom_fields.twtr_rel %}
+            {% set share_twitter_url = share_twitter_url + "&amp;related=" + post.custom_fields.twtr_rel.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_lang %}
+            {% set share_twitter_url = share_twitter_url + "&amp;lang=" + post.custom_fields.twtr_lang.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_hash %}
+            {% set share_twitter_url = share_twitter_url + "&amp;hashtags=" + post.custom_fields.twtr_hash.0 %}
+        {% endif %}
     {% endif %}
 
     <div class="demo-banner">
