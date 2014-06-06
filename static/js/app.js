@@ -39,52 +39,56 @@ $('.js-form_clear').on('click', function() {
                         'clickCallback': function(e){}
                     }, userSettings ),
                     clickCallback = settings.clickCallback,
-                    input = $(this),
-                    label = input.siblings('label[for="'+input.attr('id')+'"]').addClass('input_label'),
-                    labelText = label.text(),
-                    wrapper = input.parents('.input');
+                    input = $(this).addClass('custom-input_input'),
+                    label = input.parents('label').addClass('custom-input_label'),
+                    labelText = label.text();
 
-                // Add a class that activates the styling
-                wrapper.addClass('is-enabled');
+                // Add a class to activate the styling
+                label.addClass('is-enabled');
 
-                // add a fake input we can style
-                label.after('<span class="input_' + input.attr('type') + '"></span>');
+                // Wrap the label text for extra styling
+                label.html('');
+                label.append('<span class="custom-input_text">' + labelText + '</span>');
+                label.append(input);
 
-                // move the label text from the label to a child span that we need to add extra styling
-                label.text('');
-                label.append('<span class="input_text">' + labelText + '</span>');
+                // Add a simple element to act as our new visual input.
+                // This will give us complete styling control.
+                label.append('<span class="custom-input_' + input.attr('type') + '"></span>');
 
-                // necessary for browsers that do not support the :hover pseudo class on divs
-                wrapper.hover(
-                    function(){ wrapper.addClass('is-hovered'); },
-                    function(){ wrapper.removeClass('is-hovered'); }
+                // Backfill support for :hover on certain elements.
+                label.hover(
+                    function(){ label.addClass('is-hovered'); },
+                    function(){
+                        label.removeClass('is-hovered');
+                        label.removeClass('is-focused');
+                        label.removeClass('is-checkedFocused');
+                    }
                 );
 
-                //bind custom event, trigger it, bind click,focus,blur events                   
+                // Bind click, focus, blur and custom events.
                 input.on('updateState', function(){
-                    input.is(':checked') ? wrapper.addClass('is-checked') : wrapper.removeClass('is-checked is-checkedHovered is-checkedFocused');
+                    input.is(':checked') ? label.addClass('is-checked') : label.removeClass('is-checked is-checkedHovered is-checkedFocused');
                 })
                 .trigger('updateState')
                 .on('click', function(){
-                    $('input[name="'+ $(this).attr('name') +'"]').trigger('updateState');
+                    $(this).trigger('updateState');
                     clickCallback({
                         'input': input,
-                        'label': label,
-                        'wrapper': wrapper
+                        'label': label
                     });
                 })
                 .on('focus', function(){
-                    wrapper.addClass('is-focused');
+                    label.addClass('is-focused');
                     if( input.is(':checked') ){
-                        wrapper.addClass('is-checkedFocus');
+                        label.addClass('is-checkedFocus');
                     }
                 })
-                .on('blur', function(){ wrapper.removeClass('is-focused is-checkedFocused'); });
+                .on('blur', function(){ label.removeClass('is-focused is-checkedFocused'); });
             }
         });
     };
 
     // Auto init
-    $('.input input').customInput();
+    $('.custom-input').customInput();
 
 }(jQuery));
