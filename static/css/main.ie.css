@@ -5416,8 +5416,11 @@ img {
 }
 
 .lt-ie9 .wrapper {
-  min-width: 800px;
   max-width: 960px;
+}
+
+.lt-ie9 body {
+  min-width: 800px;
 }
 
 .content_bar {
@@ -6670,11 +6673,6 @@ img {
   margin: 0 auto;
   position: relative;
   clear: both;
-}
-
-.lt-ie9 .hero_wrapper {
-  min-width: 800px;
-  max-width: 960px;
 }
 
 .hero_img-container {
