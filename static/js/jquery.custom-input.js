@@ -58,16 +58,16 @@
                     }
                 })
                 .on('blur', function(){ label.removeClass('is-focused is-checkedFocused'); });
-
-                function mirrorCheckedStateWithClasses($input, $label) {
-                    if($input.is(':checked')) {
-                        $label.addClass('is-checked');
-                    } else {
-                        $label.removeClass('is-checked is-checkedHovered is-checkedFocused');                        
-                    }
-                }
             }
         });
+
+        function mirrorCheckedStateWithClasses($input, $label) {
+            if($input.is(':checked')) {
+                $label.addClass('is-checked');
+            } else {
+                $label.removeClass('is-checked is-checkedHovered is-checkedFocused');                        
+            }
+        }
     };
 
     // Auto init
