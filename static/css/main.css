@@ -6212,18 +6212,23 @@ a.category-slug.active {
   margin-right: 0.375em;
 }
 .input.is-enabled.is-hovered .input_checkbox,
-.input.is-enabled.is-hovered .input_radio {
+.input.is-enabled.is-focused .input_checkbox,
+.input.is-enabled.is-hovered .input_radio,
+.input.is-enabled.is-focused .input_radio {
   background-color: #dbedd4;
-  border-color: #2cb34a;
-  outline: 1px solid #2cb34a;
+  border-color: #ffffff;
+  outline: 2px solid #2cb34a;
 }
 .input.is-enabled.is-checked .input_checkbox,
 .input.is-enabled.is-checked .input_radio {
   background-color: #2cb34a;
   border-color: #2cb34a;
 }
-.input.is-enabled.is-focused .input_checkbox,
-.input.is-enabled.is-focused .input_radio {
+.input.is-enabled.is-checked.is-hovered .input_checkbox,
+.input.is-enabled.is-checked.is-focused .input_checkbox,
+.input.is-enabled.is-checked.is-hovered .input_radio,
+.input.is-enabled.is-checked.is-focused .input_radio {
+  background-color: #2cb34a;
   border-color: #ffffff;
   outline: 2px solid #2cb34a;
 }
