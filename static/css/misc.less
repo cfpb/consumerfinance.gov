@@ -416,6 +416,12 @@ select[multiple].success {
                 <option value="value2">Value 2</option>
                 <option value="value3">Value 3</option>
             </select>
+            <br>
+            <select class="form-group_item" name="select">
+                <option value="value1">Value 1</option>
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
         </div>
       codenotes:
         - |
@@ -437,8 +443,7 @@ select[multiple].success {
 }
 
 .form-group_item {
-    // Eyeballed to 15px considering line-height.
-    margin-bottom: unit(6px / @base-font-size-px, em);
+    margin-bottom: unit(15px / @base-font-size-px, em);
 }
 
 
