@@ -256,7 +256,8 @@ select[multiple].success {
         z-index: 0;
         // Use this to try and make the input as small as possible so that it
         // doesn't stick out from underneath .input_checkbox or .input_radio.
-        appearance: none;
+           -moz-appearance: none;
+        -webkit-appearance: none;
     }
 
     // Hide the real input by using absolute positioning to layer a styled div
