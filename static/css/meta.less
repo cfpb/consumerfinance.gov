@@ -198,7 +198,6 @@
             .category-slug_icon
             .u-visually-hidden
       notes:
-        - "Always use a link element or else you will get unwanted hover styles."
         - "We suggest using a .u-visually-hidden element to add more context for
           screen readers."
   tags:
@@ -210,7 +209,11 @@
     display: inline-block;
     // Eyeballed to 20px over h2.
     margin-bottom: unit(8px / @font-size, em);
-    .u-link__colors(@black, @pacific-80);
+    color: @black;
+
+    a& {
+        .u-link__colors(@black, @pacific-80);
+    }
 
     &_icon {
         margin-right: unit(2px / @font-size, em);

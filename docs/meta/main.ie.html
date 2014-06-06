@@ -336,7 +336,6 @@
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Always use a link element or else you will get unwanted hover styles.</li>
               <li>We suggest using a .u-visually-hidden element to add more context for screen readers.</li>
             </ul>
           </footer>
@@ -355,33 +354,37 @@
   display: inline-block;
   margin-bottom: 0.44444444em;
   color: #101820;
-  border-bottom-color: #101820;
 }
 
 .lt-ie9 .category-slug {
   font-weight: normal !important;
 }
 
-.category-slug:visited,
-.category-slug.visited {
+a.category-slug {
+  color: #101820;
+  border-bottom-color: #101820;
+}
+
+a.category-slug:visited,
+a.category-slug.visited {
   border-bottom-color: #101820;
   color: #101820;
 }
 
-.category-slug:hover,
-.category-slug.hover {
+a.category-slug:hover,
+a.category-slug.hover {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.category-slug:focus,
-.category-slug.focus {
+a.category-slug:focus,
+a.category-slug.focus {
   border-bottom-color: #328ed8;
   color: #328ed8;
 }
 
-.category-slug:active,
-.category-slug.active {
+a.category-slug:active,
+a.category-slug.active {
   border-bottom-color: #101820;
   color: #101820;
 }
