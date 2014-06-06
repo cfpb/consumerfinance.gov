@@ -236,11 +236,11 @@
         <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */</code></pre>
       </div>
     </div>
-    <div id="custom-checkboxes" class="docs-component">
-      <h2 class="docs-component_header"><span>Custom checkboxes</span></h2>
+    <div id="custom-form-inputs" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom form inputs</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default</h3>
+          <h3 class="docs-pattern_header">Checkboxes</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label">
     <input class="custom-input"
@@ -263,14 +263,6 @@
            value="dolor">
     Dolor
 </label>
-<label class="form-label">
-    <input class="custom-input"
-           type="checkbox"
-           name="checkboxes-styled"
-           value="sit">
-    Sit
-</label>
-<script src="/static/js/main.min.js"></script>
 
           </section>
           <footer class="docs-pattern_footer">
@@ -294,18 +286,69 @@
            name=&quot;checkboxes-styled&quot;
            value=&quot;dolor&quot;&gt;
     Dolor
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Radio buttons</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label">
+    <input class="custom-input"
+           type="radio"
+           name="radios-styled"
+           value="lorem">
+    Lorem
+</label>
+<label class="form-label">
+    <input class="custom-input"
+           type="radio"
+           name="radios-styled"
+           value="ipsum">
+    Ipsum
+</label>
+<label class="form-label">
+    <input class="custom-input"
+           type="radio"
+           name="radios-styled"
+           value="dolor">
+    Dolor
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    Lorem
 &lt;/label&gt;
 &lt;label class=&quot;form-label&quot;&gt;
     &lt;input class=&quot;custom-input&quot;
-           type=&quot;checkbox&quot;
-           name=&quot;checkboxes-styled&quot;
-           value=&quot;sit&quot;&gt;
-    Sit
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;ipsum&quot;&gt;
+    Ipsum
 &lt;/label&gt;
-&lt;script src=&quot;/static/js/main.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-            <ul class="docs-notes">
-              <li>..</li>
-            </ul>
+&lt;label class=&quot;form-label&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;dolor&quot;&gt;
+    Dolor
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <section class="docs-pattern_pattern">
+<script src="/vendor/jquery/jquery.js"></script>
+<script src="/static/js/jquery.custom-input.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;/vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
           </footer>
         </div>
       </div>
@@ -344,11 +387,12 @@
   position: relative;
   z-index: 2;
   padding-left: 1.25em;
+  margin-right: 0.375em;
   line-height: 1;
 }
 .custom-input_text {
   display: inline-block;
-  padding: 0 0.375em 0 0.5em;
+  padding-left: 0.5em;
   line-height: 1.25;
 }
 .is-hovered .custom-input_checkbox,
@@ -370,6 +414,20 @@
 .is-checked.is-focused .custom-input_radio {
   background-color: #2cb34a;
   border-color: #ffffff;
+  outline: 2px solid #2cb34a;
+}
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_radio,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 2px #2cb34a;
+  box-shadow: 0px 0px 0px 2px #2cb34a;
+}
+.is-hovered .custom-input_radio .lt-ie9,
+.is-focused .custom-input_radio .lt-ie9,
+.is-checked.is-hovered .custom-input_radio .lt-ie9,
+.is-checked.is-focused .custom-input_radio .lt-ie9 {
   outline: 2px solid #2cb34a;
 }</code></pre>
       </div>

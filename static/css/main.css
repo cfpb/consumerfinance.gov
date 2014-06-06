@@ -6117,10 +6117,10 @@ a.category-slug.active {
 */
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 /* topdoc
-  name: Custom checkboxes
+  name: Custom form inputs
   family: cfgov-misc
   patterns:
-    - name: Default
+    - name: Checkboxes
       markup: |
         <label class="form-label">
             <input class="custom-input"
@@ -6143,16 +6143,33 @@ a.category-slug.active {
                    value="dolor">
             Dolor
         </label>
+    - name: Radio buttons
+      markup: |
         <label class="form-label">
             <input class="custom-input"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="sit">
-            Sit
+                   type="radio"
+                   name="radios-styled"
+                   value="lorem">
+            Lorem
         </label>
-        <script src="/static/js/main.min.js"></script>
-      notes:
-        - ".."
+        <label class="form-label">
+            <input class="custom-input"
+                   type="radio"
+                   name="radios-styled"
+                   value="ipsum">
+            Ipsum
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="radio"
+                   name="radios-styled"
+                   value="dolor">
+            Dolor
+        </label>
+    - name: JavaScript setup
+      markup: |
+        <script src="/vendor/jquery/jquery.js"></script>
+        <script src="/static/js/jquery.custom-input.js"></script>
   tags:
     - cfgov-misc
 */
@@ -6190,11 +6207,12 @@ a.category-slug.active {
   position: relative;
   z-index: 2;
   padding-left: 1.25em;
+  margin-right: 0.375em;
   line-height: 1;
 }
 .custom-input_text {
   display: inline-block;
-  padding: 0 0.375em 0 0.5em;
+  padding-left: 0.5em;
   line-height: 1.25;
 }
 .is-hovered .custom-input_checkbox,
@@ -6216,6 +6234,20 @@ a.category-slug.active {
 .is-checked.is-focused .custom-input_radio {
   background-color: #2cb34a;
   border-color: #ffffff;
+  outline: 2px solid #2cb34a;
+}
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_radio,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 2px #2cb34a;
+  box-shadow: 0px 0px 0px 2px #2cb34a;
+}
+.is-hovered .custom-input_radio .lt-ie9,
+.is-focused .custom-input_radio .lt-ie9,
+.is-checked.is-hovered .custom-input_radio .lt-ie9,
+.is-checked.is-focused .custom-input_radio .lt-ie9 {
   outline: 2px solid #2cb34a;
 }
 /* topdoc
