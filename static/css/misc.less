@@ -150,22 +150,34 @@ select[multiple].success {
   patterns:
     - name: Default
       markup: |
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-01" value="lorem">
-            <label for="checkboxes-styled-01"> Lorem</label>
-        </span>
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-02" value="ipsum">
-            <label for="checkboxes-styled-02"> Ipsum</label>
-        </span>
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-03" value="dolor">
-            <label for="checkboxes-styled-03"> Dolor</label>
-        </span>
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-04" value="sit">
-            <label for="checkboxes-styled-04"> Sit</label>
-        </span>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            Lorem
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="ipsum">
+            Ipsum
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="dolor">
+            Dolor
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="sit">
+            Sit
+        </label>
         <script src="/static/js/main.min.js"></script>
       notes:
         - ".."
@@ -173,33 +185,35 @@ select[multiple].success {
     - cfgov-misc
 */
 
-.input.is-enabled {
+.custom-input {
 
     @input-width-px: 20px;
     @input-width: unit(@input-width-px / @base-font-size-px, em);
 
-    // Wrapper styles
-    display: inline-block;
-    position: relative;
-    // Same margin as label elements.
-    margin-right: unit(6px / @base-font-size-px, em);
-    // Left padding that matches the input width so we can use absolute
-    // positioning to place the input here.
-    padding: 0 0 0 @input-width;
+    &.is-enabled {
 
-    // Hide the input by layering a styled div on top
-    input {
+        display: inline-block;
+        position: relative;
+        margin-right: unit(6px / @base-font-size-px, em);
+        // Left padding that matches the input width so we can use absolute
+        // positioning to place the input here.
+        padding: 0 0 0 @input-width;
+    }
+
+    // Hide the real input by using absolute positioning to layer a styled div
+    // over it.
+    &_input {
         position: absolute;
             top: 4px;
             left: 4px;
         z-index: 0;
     }
 
-    .input_checkbox,
-    .input_radio {
-        -webkit-box-sizing: border-box;
-           -moz-box-sizing: border-box;
-                box-sizing: border-box;
+    // Hide the real input by using absolute positioning to layer a styled div
+    // over it.
+    &_checkbox,
+    &_radio {
+        box-sizing: border-box;
         position: absolute;
             top: 0;
             left: 0;
@@ -209,24 +223,19 @@ select[multiple].success {
         background: @white;
         border: 1px solid @black;
     }
-    .input_radio {
+    &_radio {
         border-radius: 100%;
     }
 
 
-    // The label should be layered on top of everything so that when a user
-    // clicks it they will activate the input.
-
-    .input_label {
+    &_label {
+        display: inline-block;
         position: relative;
         z-index: 2;
-        margin: 0 0 0 -@input-width;
         padding-left: @input-width;
         line-height: 1;
     }
-
-    .input_text {
-        .form-label;
+    &_text {
         display: inline-block;
         padding: 0
                  unit(6 / @base-font-size-px, em)
@@ -236,34 +245,25 @@ select[multiple].success {
         line-height: unit(@input-width-px / @base-font-size-px);
     }
 
-    &.is-hovered,
-    &.is-focused {
-        .input_checkbox,
-        .input_radio {
+    &_checkbox,
+    &_radio {
+        .is-hovered &,
+        .is-focused & {
             background-color: @green-tint;
             border-color: @white;
             outline: 2px solid @green;
         }
-    }
-
-    &.is-checked {
-        .input_checkbox,
-        .input_radio {
+        .is-checked & {
             background-color: @green;
             border-color: @green;
         }
-    }
-
-    &.is-checked.is-hovered,
-    &.is-checked.is-focused {
-        .input_checkbox,
-        .input_radio {
+        .is-checked.is-hovered &,
+        .is-checked.is-focused & {
             background-color: @green;
             border-color: @white;
             outline: 2px solid @green;
         }
     }
-
 }
 
 

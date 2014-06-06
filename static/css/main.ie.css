@@ -6971,22 +6971,34 @@ a.category-slug.active {
   patterns:
     - name: Default
       markup: |
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-01" value="lorem">
-            <label for="checkboxes-styled-01"> Lorem</label>
-        </span>
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-02" value="ipsum">
-            <label for="checkboxes-styled-02"> Ipsum</label>
-        </span>
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-03" value="dolor">
-            <label for="checkboxes-styled-03"> Dolor</label>
-        </span>
-        <span class="input">
-            <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-04" value="sit">
-            <label for="checkboxes-styled-04"> Sit</label>
-        </span>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            Lorem
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="ipsum">
+            Ipsum
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="dolor">
+            Dolor
+        </label>
+        <label class="form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="sit">
+            Sit
+        </label>
         <script src="/static/js/main.min.js"></script>
       notes:
         - ".."
@@ -6994,22 +7006,22 @@ a.category-slug.active {
     - cfgov-misc
 */
 
-.input.is-enabled {
+.custom-input.is-enabled {
   display: inline-block;
   position: relative;
   margin-right: 0.375em;
   padding: 0 0 0 1.25em;
 }
 
-.input.is-enabled input {
+.custom-input_input {
   position: absolute;
   top: 4px;
   left: 4px;
   z-index: 0;
 }
 
-.input.is-enabled .input_checkbox,
-.input.is-enabled .input_radio {
+.custom-input_checkbox,
+.custom-input_radio {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -7023,74 +7035,43 @@ a.category-slug.active {
   border: 1px solid #101820;
 }
 
-.input.is-enabled .input_radio {
+.custom-input_radio {
   border-radius: 100%;
 }
 
-.input.is-enabled .input_label {
+.custom-input_label {
+  display: inline-block;
   position: relative;
   z-index: 2;
-  margin: 0 0 0 -1.25em;
   padding-left: 1.25em;
   line-height: 1;
 }
 
-.input.is-enabled .input_text {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
+.custom-input_text {
   display: inline-block;
   padding: 0 0.375em 0 0.5em;
   line-height: 1.25;
 }
 
-.input.is-enabled .input_text em,
-.input.is-enabled .input_text i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .input.is-enabled .input_text em,
-.lt-ie9 .input.is-enabled .input_text i {
-  font-style: normal !important;
-}
-
-.input.is-enabled .input_text strong,
-.input.is-enabled .input_text b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .input.is-enabled .input_text strong,
-.lt-ie9 .input.is-enabled .input_text b {
-  font-weight: normal !important;
-}
-
-.input.is-enabled .input_text input {
-  margin-right: 0.375em;
-}
-
-.input.is-enabled.is-hovered .input_checkbox,
-.input.is-enabled.is-focused .input_checkbox,
-.input.is-enabled.is-hovered .input_radio,
-.input.is-enabled.is-focused .input_radio {
+.is-hovered .custom-input_checkbox,
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_checkbox,
+.is-focused .custom-input_radio {
   background-color: #dbedd4;
   border-color: #ffffff;
   outline: 2px solid #2cb34a;
 }
 
-.input.is-enabled.is-checked .input_checkbox,
-.input.is-enabled.is-checked .input_radio {
+.is-checked .custom-input_checkbox,
+.is-checked .custom-input_radio {
   background-color: #2cb34a;
   border-color: #2cb34a;
 }
 
-.input.is-enabled.is-checked.is-hovered .input_checkbox,
-.input.is-enabled.is-checked.is-focused .input_checkbox,
-.input.is-enabled.is-checked.is-hovered .input_radio,
-.input.is-enabled.is-checked.is-focused .input_radio {
+.is-checked.is-hovered .custom-input_checkbox,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_checkbox,
+.is-checked.is-focused .custom-input_radio {
   background-color: #2cb34a;
   border-color: #ffffff;
   outline: 2px solid #2cb34a;
