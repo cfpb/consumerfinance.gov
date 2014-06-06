@@ -6210,6 +6210,8 @@ a.category-slug.active {
   padding: 0 0 0 1.25em;
 }
 .custom-input_input {
+  width: 4px;
+  height: 4px;
   position: absolute;
   top: 4px;
   left: 4px;
