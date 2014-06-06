@@ -314,7 +314,7 @@
           <h3 class="docs-pattern_header">Default category slug</h3>
           <section class="docs-pattern_pattern">
 <a href="#" class="category-slug">
-    <span class="cf-icon cf-icon-credit-card"></span>
+    <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
     <span class="u-visually-hidden">Category:</span>
     Consumer finance
 </a>
@@ -322,10 +322,19 @@
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a href=&quot;#&quot; class=&quot;category-slug&quot;&gt;
-    &lt;span class=&quot;cf-icon cf-icon-credit-card&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;category-slug_icon cf-icon cf-icon-dialogue&quot;&gt;&lt;/span&gt;
     &lt;span class=&quot;u-visually-hidden&quot;&gt;Category:&lt;/span&gt;
     Consumer finance
 &lt;/a&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.category-slug
+  .category-slug_icon
+  .u-visually-hidden</code></pre>
+              </li>
+            </ul>
             <ul class="docs-notes">
               <li>Always use a link element or else you will get unwanted hover styles.</li>
               <li>We suggest using a .u-visually-hidden element to add more context for screen readers.</li>
@@ -343,7 +352,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 1.22222222;
-  display: block;
+  display: inline-block;
   margin-bottom: 0.44444444em;
   color: #101820;
   border-bottom-color: #101820;
@@ -375,6 +384,10 @@
 .category-slug.active {
   border-bottom-color: #101820;
   color: #101820;
+}
+
+.category-slug_icon {
+  margin-right: 0.11111111em;
 }
 </code></pre>
       </div>
