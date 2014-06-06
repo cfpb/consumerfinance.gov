@@ -5840,7 +5840,6 @@ img {
             .category-slug_icon
             .u-visually-hidden
       notes:
-        - "Always use a link element or else you will get unwanted hover styles."
         - "We suggest using a .u-visually-hidden element to add more context for
           screen readers."
   tags:
