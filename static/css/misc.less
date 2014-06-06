@@ -236,12 +236,13 @@ select[multiple].success {
         line-height: unit(@input-width-px / @base-font-size-px);
     }
 
-    &.is-hovered {
+    &.is-hovered,
+    &.is-focused {
         .input_checkbox,
         .input_radio {
             background-color: @green-tint;
-            border-color: @green;
-            outline: 1px solid @green;
+            border-color: @white;
+            outline: 2px solid @green;
         }
     }
 
@@ -253,9 +254,11 @@ select[multiple].success {
         }
     }
 
-    &.is-focused {
+    &.is-checked.is-hovered,
+    &.is-checked.is-focused {
         .input_checkbox,
         .input_radio {
+            background-color: @green;
             border-color: @white;
             outline: 2px solid @green;
         }
