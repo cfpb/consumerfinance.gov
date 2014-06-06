@@ -7288,7 +7288,7 @@ a.category-slug.active {
 */
 
 .form-group + .form-group {
-  margin-top: 1.375em;
+  margin-top: 1.875em;
 }
 
 .form-group_item {
@@ -7347,7 +7347,7 @@ a.category-slug.active {
 */
 
 .form-actions {
-  margin-top: 1.625em;
+  margin-top: 1.875em;
 }
 
 .form-l + .form-actions {
