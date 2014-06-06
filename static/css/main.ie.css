@@ -7265,6 +7265,12 @@ a.category-slug.active {
                 <option value="value2">Value 2</option>
                 <option value="value3">Value 3</option>
             </select>
+            <br>
+            <select class="form-group_item" name="select">
+                <option value="value1">Value 1</option>
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
         </div>
       codenotes:
         - |
@@ -7286,7 +7292,7 @@ a.category-slug.active {
 }
 
 .form-group_item {
-  margin-bottom: 0.375em;
+  margin-bottom: 0.9375em;
 }
 
 /* topdoc
