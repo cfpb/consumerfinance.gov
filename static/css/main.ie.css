@@ -7107,7 +7107,6 @@ a.category-slug.active {
 .is-hovered .custom-input_radio,
 .is-focused .custom-input_checkbox,
 .is-focused .custom-input_radio {
-  background-color: #dbedd4;
   border-color: #ffffff;
   outline: 2px solid #2cb34a;
 }
