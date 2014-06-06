@@ -22,6 +22,9 @@ $('.js-form_clear').on('click', function() {
     $form.find('select option:first')
     .attr('selected', true);
     
+    // Reset .custom-input elements
+    $form.find('.custom-input').trigger('updateState');
+
     // Reset Chosen.js elements
     $form.find('.chosen-select')
     .val('')
