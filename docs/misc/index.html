@@ -236,6 +236,141 @@
         <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */</code></pre>
       </div>
     </div>
+    <div id="custom-checkboxes" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom checkboxes</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default</h3>
+          <section class="docs-pattern_pattern">
+<span class="input">
+    <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-01" value="lorem">
+    <label for="checkboxes-styled-01"> Lorem</label>
+</span>
+<span class="input">
+    <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-02" value="ipsum">
+    <label for="checkboxes-styled-02"> Ipsum</label>
+</span>
+<span class="input">
+    <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-03" value="dolor">
+    <label for="checkboxes-styled-03"> Dolor</label>
+</span>
+<span class="input">
+    <input type="checkbox" name="checkboxes-styled" id="checkboxes-styled-04" value="sit">
+    <label for="checkboxes-styled-04"> Sit</label>
+</span>
+<script src="/static/js/main.min.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;span class=&quot;input&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;checkboxes-styled&quot; id=&quot;checkboxes-styled-01&quot; value=&quot;lorem&quot;&gt;
+    &lt;label for=&quot;checkboxes-styled-01&quot;&gt; Lorem&lt;/label&gt;
+&lt;/span&gt;
+&lt;span class=&quot;input&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;checkboxes-styled&quot; id=&quot;checkboxes-styled-02&quot; value=&quot;ipsum&quot;&gt;
+    &lt;label for=&quot;checkboxes-styled-02&quot;&gt; Ipsum&lt;/label&gt;
+&lt;/span&gt;
+&lt;span class=&quot;input&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;checkboxes-styled&quot; id=&quot;checkboxes-styled-03&quot; value=&quot;dolor&quot;&gt;
+    &lt;label for=&quot;checkboxes-styled-03&quot;&gt; Dolor&lt;/label&gt;
+&lt;/span&gt;
+&lt;span class=&quot;input&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;checkboxes-styled&quot; id=&quot;checkboxes-styled-04&quot; value=&quot;sit&quot;&gt;
+    &lt;label for=&quot;checkboxes-styled-04&quot;&gt; Sit&lt;/label&gt;
+&lt;/span&gt;
+&lt;script src=&quot;/static/js/main.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>..</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.input.is-enabled {
+  display: inline-block;
+  position: relative;
+  margin-right: 0.375em;
+  padding: 0 0 0 1.25em;
+}
+.input.is-enabled input {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 0;
+}
+.input.is-enabled .input_checkbox,
+.input.is-enabled .input_radio {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 1.25em;
+  height: 1.25em;
+  background: #ffffff;
+  border: 1px solid #101820;
+}
+.input.is-enabled .input_radio {
+  border-radius: 100%;
+}
+.input.is-enabled .input_label {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 0 -1.25em;
+  padding-left: 1.25em;
+  line-height: 1;
+}
+.input.is-enabled .input_text {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  padding: 0 0.375em 0 0.5em;
+  line-height: 1.25;
+}
+.input.is-enabled .input_text em,
+.input.is-enabled .input_text i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .input.is-enabled .input_text em,
+.lt-ie9 .input.is-enabled .input_text i {
+  font-style: normal !important;
+}
+.input.is-enabled .input_text strong,
+.input.is-enabled .input_text b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .input.is-enabled .input_text strong,
+.lt-ie9 .input.is-enabled .input_text b {
+  font-weight: normal !important;
+}
+.input.is-enabled .input_text input {
+  margin-right: 0.375em;
+}
+.input.is-enabled.is-hovered .input_checkbox,
+.input.is-enabled.is-hovered .input_radio {
+  background-color: #dbedd4;
+  border-color: #2cb34a;
+  outline: 1px solid #2cb34a;
+}
+.input.is-enabled.is-checked .input_checkbox,
+.input.is-enabled.is-checked .input_radio {
+  background-color: #2cb34a;
+  border-color: #2cb34a;
+}
+.input.is-enabled.is-focused .input_checkbox,
+.input.is-enabled.is-focused .input_radio {
+  border-color: #ffffff;
+  outline: 2px solid #2cb34a;
+}</code></pre>
+      </div>
+    </div>
     <div id="form-labels" class="docs-component">
       <h2 class="docs-component_header"><span>Form labels</span></h2>
       <div class="docs-patterns">
