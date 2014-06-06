@@ -7,9 +7,15 @@
     .u-respond-to-min(801px, {
         .grid_wrapper();
     });
-    .lt-ie9 & {
-        min-width: 800px;
+}
+
+.lt-ie9 {
+    & .wrapper {
         max-width: 960px;
+    }
+
+    & body {
+        min-width: 800px;
     }
 }
 
