@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
 <!--
     ===========
@@ -23,7 +23,23 @@
 -->
 
     <title>{% block title %}MISSING TITLE{% endblock title %} - cfgov-refresh demo</title>
-    <meta name="description" content="Blog landing page prototyping for the consumerfinance.gov refresh">
+    <meta name="description"
+          content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
+
+    <!-- Open Graph properties -->
+        <!--   Required  -->
+        <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+        <meta property="og:url" content="{{ request.url }}">
+        <meta property="og:image"
+              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
+        <!--   Optional -->
+        <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
+        <meta property="og:site_name" content="Consumer Financial Protection Bureau">
+        <!--   Facebook -->
+        <meta property="fb:app_id" content="210516218981921">
+        {% block og_article_author %}{% endblock %}
+    <!-- End of Open Graph properties -->
 
     <!-- Explicit favicon link needed for testing. Remove for production. -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -95,6 +111,26 @@
     =================
 -->
 
+    {# Build a Twitter share URL #}
+    {% set share_twitter_url = "http://twitter.com/intent/tweet" %}
+    {% set share_twitter_url = share_twitter_url + "?url=" + request.url|urlencode %}
+    {% set share_twitter_url = share_twitter_url + "&amp;via=CFPB" %}
+    {% if post %}
+        {# If this is a post object, check for custom fields having been set #}
+        {% if post.custom_fields.twtr_text %}
+            {% set share_twitter_url = share_twitter_url + "&amp;text=" + post.custom_fields.twtr_text.0|urlencode + "%20--" %}
+        {% endif %}
+        {% if post.custom_fields.twtr_rel %}
+            {% set share_twitter_url = share_twitter_url + "&amp;related=" + post.custom_fields.twtr_rel.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_lang %}
+            {% set share_twitter_url = share_twitter_url + "&amp;lang=" + post.custom_fields.twtr_lang.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_hash %}
+            {% set share_twitter_url = share_twitter_url + "&amp;hashtags=" + post.custom_fields.twtr_hash.0 %}
+        {% endif %}
+    {% endif %}
+
     <div class="demo-banner">
         cfgov-refresh demo: <b>{% block demo_title %}MISSING DEMO TITLE{% endblock demo_title %}</b>
         <a class="demo-banner_back-link" href="../index.html">
@@ -106,7 +142,7 @@
 
 
     <!-- PRIMARY CONTENT -->
-    {% block content %}
+    {% block content scoped %}
         This will be replaced in templates that extend this template and override "content".
     {% endblock content %}
     <!-- /PRIMARY CONTENT -->
