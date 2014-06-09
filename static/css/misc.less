@@ -232,8 +232,10 @@ select[multiple].success {
         position: absolute;
         top: 0;
         right: 0;
-        padding: unit( 4px / @base-font-size-px, em );
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 6px / @base-font-size-px, em );
         z-index: 1;
+        background: @gray-10;
         color: @gray-50;
         line-height: 1.375;
     }
