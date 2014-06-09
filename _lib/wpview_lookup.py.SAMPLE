@@ -27,7 +27,7 @@ class WPView(object):
         return related
 
 def do_lookup():
-    request = flask.request    
+    request = flask.request
     json_url = "http://your.wordpress.domain/view" + request.path + "?json=1"
     response = requests.get(json_url)
     data = json.loads(response.text)
