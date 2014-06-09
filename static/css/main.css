@@ -6197,6 +6197,7 @@ a.category-slug.active {
   top: 0;
   right: 0;
   padding: 0.25em;
+  z-index: 1;
   color: #babbbd;
   line-height: 1.375;
 }
@@ -6498,8 +6499,8 @@ a.category-slug.active {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 50%;
-  z-index: 1;
   position: relative;
+  z-index: 1;
 }
 .input-group_item + .input-group_item,
 .input-group_item + .input-group_item[type="text"],
