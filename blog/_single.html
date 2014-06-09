@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}{{ post.title }}{% endblock %}
 {% block demo_title %}Blog post{% endblock %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block desc %}{{ post.excerpt|striptags }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+{% block og_article_prefix %}article: http://ogp.me/ns/article#{% endblock %}
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
 
 {% block content %}
 
@@ -58,29 +66,33 @@
                         </div>
                         <ul class="post_share list__horizontal">
                             <li class="list_item">
-                                <a class="share-icon" href="#">
+                                <a class="share-icon"
+                                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ post.title }}&amp;pubid=ra-4da354ee346886d2">
                                     <span class="cf-icon cf-icon-email-social-square"></span>
                                     <span class="u-visually-hidden">Share by email</span>
                                 </a>
                             </li>
                             <li class="list_item">
-                                <a class="share-icon" href="#">
+                                <a class="share-icon"
+                                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}">
                                     <span class="cf-icon cf-icon-facebook-square"></span>
                                     <span class="u-visually-hidden">Share on Facebook</span>
                                 </a>
                             </li>
                             <li class="list_item">
-                                <a class="share-icon" href="#">
+                                <a class="share-icon"
+                                   href="{{ share_twitter_url }}"
+                                   target="_blank">
                                     <span class="cf-icon cf-icon-twitter-square"></span>
                                     <span class="u-visually-hidden">Share on Twitter</span>
                                 </a>
                             </li>
-                            <li class="list_item">
+                            <!-- <li class="list_item">
                                 <a class="share-icon" href="#">
                                     <span class="cf-icon cf-icon-linkedin-square"></span>
                                     <span class="u-visually-hidden">Share on LinkedIn</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                         {% if post.thumbnail.images %}
                         <img class="post_featured-img"

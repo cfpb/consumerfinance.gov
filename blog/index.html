@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Blog{% endblock %}
 {% block demo_title %}Blog listing{% endblock %}
+
+{% block title %}Blog{% endblock %}
+
+{% block desc %}The official blog of the Consumer Financial Protection Bureau{% endblock %}
 
 {% block content %}
 
@@ -22,7 +25,7 @@
                checked
             {% endif %}
                >
-        {{ value|title }}
+        {{ value }}
     {% endmacro %}
 
     {% macro filter_option(field,value) %}
@@ -31,7 +34,7 @@
                selected
             {% endif %}
                 >
-            {{ value|title }}
+            {{ value }}
         </option>
     {% endmacro %}
 
@@ -126,7 +129,7 @@
                     {% for filter in active_filters %}
                         <dd class="list_item">
                             <span class="filtered-by_filter">
-                                {{ filter|capitalize }}
+                                {{ filter }}
                                 {% if not loop.last %},{% endif %}
                             </span>
                         </dd>
