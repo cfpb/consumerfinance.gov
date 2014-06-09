@@ -6196,8 +6196,9 @@ a.category-slug.active {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 0.25em;
+  padding: 0.25em 0.375em;
   z-index: 1;
+  background: #f1f2f2;
   color: #babbbd;
   line-height: 1.375;
 }
