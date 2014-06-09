@@ -6502,7 +6502,7 @@ a.category-slug.active {
 .input-group_item + .input-group_item[type="text"],
 .input-group_item[type="text"] + .input-group_item,
 .input-group_item[type="text"] + .input-group_item[type="text"] {
-  margin-left: -5px;
+  margin-left: -0.3125em;
 }
 .input-group_item:focus,
 .input-group_item[type="text"]:focus {

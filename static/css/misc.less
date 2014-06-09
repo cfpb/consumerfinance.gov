@@ -540,7 +540,7 @@ select[multiple].success {
         position: relative;
 
         & + & {
-            margin-left: -5px;
+            margin-left: unit(-5px / @base-font-size-px, em);
         }
 
         &:focus {
