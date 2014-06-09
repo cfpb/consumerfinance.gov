@@ -298,6 +298,85 @@
 }</code></pre>
       </div>
     </div>
+    <div id="custom-select" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom select</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default custom select</h3>
+          <section class="docs-pattern_pattern">
+<div class="custom-select">
+    <select>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
+<script src="/vendor/jquery/jquery.js"></script>
+<script src="/static/js/jquery.custom-select.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select&quot;&gt;
+    &lt;select&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;script src=&quot;/vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/static/js/jquery.custom-select.js&quot;&gt;&lt;/script&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.custom-select {
+  overflow: hidden;
+  position: relative;
+  border: solid 1px #75787b;
+  background: #ffffff;
+}
+.custom-select.is-hovered,
+.custom-select.is-focused {
+  border-color: #0072ce;
+  outline: 1px solid #0072ce;
+}
+.custom-select_icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.25em;
+  line-height: 1.375;
+}
+.custom-select_text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25em;
+  font-family: Arial, sans-serif;
+  line-height: 1.375;
+}
+.custom-select_select {
+  width: 100%;
+  padding: 0.25em;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #101820;
+}
+.is-hovered .custom-select_select,
+.is-focused .custom-select_select {
+  outline: none;
+}</code></pre>
+      </div>
+    </div>
     <div id="jquerycustom-input" class="docs-component">
       <h2 class="docs-component_header"><span>jquery.custom-input</span></h2>
       <div class="docs-patterns">
