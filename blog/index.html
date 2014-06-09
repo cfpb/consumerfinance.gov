@@ -14,7 +14,8 @@
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
 
     {% macro filter_checkbox(field,value) %}
-        <input type="checkbox"
+        <input class="custom-input"
+               type="checkbox"
                name="filter_{{ field }}"
                value="{{ value }}"
             {% if is_filter_selected(field, value) %}

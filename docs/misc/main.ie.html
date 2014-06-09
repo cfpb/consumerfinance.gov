@@ -239,6 +239,261 @@
 </code></pre>
       </div>
     </div>
+    <div id="custom-form-inputs" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom form inputs</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Checkboxes</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label"
+       for="custom-input_checkbox-lorem">
+    <input class="custom-input"
+           id="custom-input_checkbox-lorem"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="lorem">
+    Lorem
+</label>
+<label class="form-label"
+       for="custom-input_checkbox-ipsum">
+    <input class="custom-input"
+           id="custom-input_checkbox-ipsum"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="ipsum">
+    Ipsum
+</label>
+<label class="form-label"
+       for="custom-input_checkbox-dolor">
+    <input class="custom-input"
+           id="custom-input_checkbox-dolor"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="dolor">
+    Dolor
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label&quot;
+       for=&quot;custom-input_checkbox-lorem&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_checkbox-lorem&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    Lorem
+&lt;/label&gt;
+&lt;label class=&quot;form-label&quot;
+       for=&quot;custom-input_checkbox-ipsum&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_checkbox-ipsum&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;ipsum&quot;&gt;
+    Ipsum
+&lt;/label&gt;
+&lt;label class=&quot;form-label&quot;
+       for=&quot;custom-input_checkbox-dolor&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_checkbox-dolor&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;dolor&quot;&gt;
+    Dolor
+&lt;/label&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+label.custom-form
+  input[type=checkbox]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Radio buttons</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label"
+       for="custom-input_radio-lorem">
+    <input class="custom-input"
+           id="custom-input_radio-lorem"
+           type="radio"
+           name="radios-styled"
+           value="lorem">
+    Lorem
+</label>
+<label class="form-label"
+       for="custom-input_radio-ipsum">
+    <input class="custom-input"
+           id="custom-input_radio-ipsum"
+           type="radio"
+           name="radios-styled"
+           value="ipsum">
+    Ipsum
+</label>
+<label class="form-label"
+       for="custom-input_radio-dolor">
+    <input class="custom-input"
+           id="custom-input_radio-dolor"
+           type="radio"
+           name="radios-styled"
+           value="dolor">
+    Dolor
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label&quot;
+       for=&quot;custom-input_radio-lorem&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_radio-lorem&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    Lorem
+&lt;/label&gt;
+&lt;label class=&quot;form-label&quot;
+       for=&quot;custom-input_radio-ipsum&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_radio-ipsum&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;ipsum&quot;&gt;
+    Ipsum
+&lt;/label&gt;
+&lt;label class=&quot;form-label&quot;
+       for=&quot;custom-input_radio-dolor&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_radio-dolor&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;dolor&quot;&gt;
+    Dolor
+&lt;/label&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+label.custom-form
+  input[type=radio]</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <section class="docs-pattern_pattern">
+<script src="/vendor/jquery/jquery.js"></script>
+<script src="/static/js/jquery.custom-input.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;/vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.custom-input.is-enabled {
+  display: inline-block;
+  position: relative;
+  margin-right: 0.375em;
+  padding: 0 0 0 1.25em;
+}
+
+.custom-input_input {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.custom-input_checkbox,
+.custom-input_radio {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 1.25em;
+  height: 1.25em;
+  background: #ffffff;
+  border: 1px solid #101820;
+}
+
+.custom-input_radio {
+  border-radius: 100%;
+}
+
+.custom-input_label {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  padding-left: 1.25em;
+  margin-right: 0.375em;
+  line-height: 1;
+}
+
+.custom-input_text {
+  display: inline-block;
+  padding-left: 0.5em;
+  line-height: 1.25;
+}
+
+.is-hovered .custom-input_checkbox,
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_checkbox,
+.is-focused .custom-input_radio {
+  border-color: #ffffff;
+  outline: 2px solid #2cb34a;
+}
+
+.is-checked .custom-input_checkbox,
+.is-checked .custom-input_radio {
+  background-color: #2cb34a;
+  border-color: #2cb34a;
+}
+
+.is-checked.is-hovered .custom-input_checkbox,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_checkbox,
+.is-checked.is-focused .custom-input_radio {
+  background-color: #2cb34a;
+  border-color: #ffffff;
+  outline: 2px solid #2cb34a;
+}
+
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_radio,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 2px #2cb34a;
+  box-shadow: 0px 0px 0px 2px #2cb34a;
+}
+
+.is-hovered .custom-input_radio .lt-ie9,
+.is-focused .custom-input_radio .lt-ie9,
+.is-checked.is-hovered .custom-input_radio .lt-ie9,
+.is-checked.is-focused .custom-input_radio .lt-ie9 {
+  outline: 2px solid #2cb34a;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="form-labels" class="docs-component">
       <h2 class="docs-component_header"><span>Form labels</span></h2>
       <div class="docs-patterns">
@@ -447,6 +702,12 @@
         <option value="value2">Value 2</option>
         <option value="value3">Value 3</option>
     </select>
+    <br>
+    <select class="form-group_item" name="select">
+        <option value="value1">Value 1</option>
+        <option value="value2">Value 2</option>
+        <option value="value3">Value 3</option>
+    </select>
 </div>
 
           </section>
@@ -464,6 +725,12 @@
 &lt;/div&gt;
 &lt;div class=&quot;form-group&quot;&gt;
     &lt;label class=&quot;form-label-header&quot;&gt;Form label header&lt;/label&gt;
+    &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
+        &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
+        &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
+        &lt;option value=&quot;value3&quot;&gt;Value 3&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;br&gt;
     &lt;select class=&quot;form-group_item&quot; name=&quot;select&quot;&gt;
         &lt;option value=&quot;value1&quot;&gt;Value 1&lt;/option&gt;
         &lt;option value=&quot;value2&quot;&gt;Value 2&lt;/option&gt;
@@ -487,11 +754,11 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .form-group + .form-group {
-  margin-top: 1.375em;
+  margin-top: 1.875em;
 }
 
 .form-group_item {
-  margin-bottom: 0.375em;
+  margin-bottom: 0.9375em;
 }
 </code></pre>
       </div>
@@ -585,7 +852,7 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .form-actions {
-  margin-top: 1.625em;
+  margin-top: 1.875em;
 }
 
 .form-l + .form-actions {

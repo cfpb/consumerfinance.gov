@@ -77,6 +77,7 @@ module.exports = function(grunt) {
           'vendor/jquery/jquery.js',
           'vendor/chosen/chosen.jquery.js',
           'vendor/cf-*/*.js',
+          'static/js/jquery.custom-input.js',
           'static/js/app.js'
         ],
         dest: 'static/js/main.js'
