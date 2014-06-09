@@ -111,11 +111,12 @@
     =================
 -->
 
-    {# Build a Twitter share URL based on }
+    {# Build a Twitter share URL #}
     {% set share_twitter_url = "http://twitter.com/intent/tweet" %}
     {% set share_twitter_url = share_twitter_url + "?url=" + request.url|urlencode %}
     {% set share_twitter_url = share_twitter_url + "&amp;via=CFPB" %}
     {% if post %}
+        {# If this is a post object, check for custom fields having been set #}
         {% if post.custom_fields.twtr_text %}
             {% set share_twitter_url = share_twitter_url + "&amp;text=" + post.custom_fields.twtr_text.0|urlencode + "%20--" %}
         {% endif %}
