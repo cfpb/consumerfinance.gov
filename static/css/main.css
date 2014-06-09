@@ -6184,7 +6184,7 @@ a.category-slug.active {
 .custom-select {
   overflow: hidden;
   position: relative;
-  border: solid 1px #75787b;
+  border: solid 1px #babbbd;
   background: #ffffff;
 }
 .custom-select.is-hovered,
@@ -6197,6 +6197,7 @@ a.category-slug.active {
   top: 0;
   right: 0;
   padding: 0.25em;
+  color: #babbbd;
   line-height: 1.375;
 }
 .custom-select_text {
@@ -6206,6 +6207,7 @@ a.category-slug.active {
   padding: 0.25em;
   font-family: Arial, sans-serif;
   line-height: 1.375;
+  color: #babbbd;
 }
 .custom-select_select {
   width: 100%;
