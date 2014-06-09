@@ -6117,7 +6117,7 @@ a.category-slug.active {
 */
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 /* topdoc
-  name: Custom form inputs
+  name: jquery.custom-input
   family: cfgov-misc
   patterns:
     - name: Checkboxes
