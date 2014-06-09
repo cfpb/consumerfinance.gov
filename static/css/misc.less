@@ -196,6 +196,77 @@ select[multiple].success {
 
 
 /* topdoc
+    name: Custom select
+    family: cfgov-misc
+    patterns:
+    - name: Default custom select
+      markup: |
+        <div class="custom-select">
+            <select>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+        <script src="/vendor/jquery/jquery.js"></script>
+        <script src="/static/js/jquery.custom-select.js"></script>
+    tags:
+    - cfgov-misc
+*/
+
+.custom-select {
+    overflow: hidden;
+    position: relative;
+    border: solid 1px @gray;
+    background: @white;
+
+    &.is-hovered,
+    &.is-focused {
+        border-color: @pacific;
+        outline: 1px solid @pacific;
+    }
+
+    &_icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: unit( 4px / @base-font-size-px, em );
+        line-height: 1.375;
+    }
+
+    &_text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: unit( 4px / @base-font-size-px, em );
+        font-family: Arial, sans-serif;
+        line-height: 1.375;
+    }
+
+    &_select {
+        // Push the native select arrow out of view
+        width: 100%;
+        padding: unit( 4px / @base-font-size-px, em );
+        // Customize the colors
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+        box-shadow: none;
+        color: @black;
+
+        .is-hovered &,
+        .is-focused & {
+            outline: none;
+        }
+    }
+}
+
+
+/* topdoc
   name: jquery.custom-input
   family: cfgov-misc
   patterns:

@@ -11656,25 +11656,32 @@ $(".chosen-select").chosen({
     no_results_text: "Oops, nothing found!"
 });
 
-// Reset buttons sould also reset Chosen.js elements
+/* ==========================================================================
+   Clear form button
+   - Clear checkboxes and selects
+   - Clear Chosen.js elements
+   - Clear jquery.custom-input elements
+   ========================================================================== */
+
 $('.js-form_clear').on('click', function() {
     var $this = $(this),
         $form = $this.parents('form');
 
-    // Reset checkboxes
+    // Clear checkboxes
     $form.find('[type="checkbox"]')
     .removeAttr('checked');
     
-    // Reset select options
+    // Clear select options
     $form.find('select option')
     .removeAttr('selected');
     $form.find('select option:first')
     .attr('selected', true);
     
-    // Reset .custom-input elements
-    $form.find('.custom-input').trigger('updateState');
+    // Clear .custom-input elements
+    $form.find('.custom-input')
+    .trigger('updateState');
 
-    // Reset Chosen.js elements
+    // Clear Chosen.js elements
     $form.find('.chosen-select')
     .val('')
     .trigger("chosen:updated");
