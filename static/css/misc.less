@@ -219,7 +219,7 @@ select[multiple].success {
 .custom-select {
     overflow: hidden;
     position: relative;
-    border: solid 1px @gray;
+    border: solid 1px @gray-50;
     background: @white;
 
     &.is-hovered,
@@ -233,6 +233,7 @@ select[multiple].success {
         top: 0;
         right: 0;
         padding: unit( 4px / @base-font-size-px, em );
+        color: @gray-50;
         line-height: 1.375;
     }
 
@@ -243,6 +244,7 @@ select[multiple].success {
         padding: unit( 4px / @base-font-size-px, em );
         font-family: Arial, sans-serif;
         line-height: 1.375;
+        color: @gray-50;
     }
 
     &_select {
