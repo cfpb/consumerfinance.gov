@@ -7061,7 +7061,7 @@ a.category-slug.active {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0.25em;
+  padding: 0.25em 0.625em;
   font-family: Arial, sans-serif;
   line-height: 1.375;
   color: #babbbd;
