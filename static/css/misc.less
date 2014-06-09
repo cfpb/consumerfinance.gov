@@ -233,6 +233,7 @@ select[multiple].success {
         top: 0;
         right: 0;
         padding: unit( 4px / @base-font-size-px, em );
+        z-index: 1;
         color: @gray-50;
         line-height: 1.375;
     }
@@ -243,15 +244,18 @@ select[multiple].success {
         left: 0;
         padding: unit( 4px / @base-font-size-px, em )
                  unit( 10px / @base-font-size-px, em );
+        z-index: 1;
         font-family: Arial, sans-serif;
         line-height: 1.375;
         color: @gray-50;
     }
 
     &_select {
+        position: relative;
         // Push the native select arrow out of view
         width: 100%;
         padding: unit( 4px / @base-font-size-px, em );
+        z-index: 2;
         // Customize the colors
         border: 0;
         border-radius: 0;
