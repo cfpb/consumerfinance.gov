@@ -27,15 +27,16 @@
                 $select.fadeTo(0, 0);
 
                 // Backfill support for :hover on certain elements.
-                $select.hover(
+                $select
+                .hover(
                     function(){ $this.addClass('is-hovered'); },
                     function(){
                         $this.removeClass('is-hovered');
                         $this.removeClass('is-focused');
                         $this.removeClass('is-checkedFocused');
                     }
-                );
-                $select.focus(
+                )
+                .focus(
                     function(){ $this.addClass('is-hovered'); },
                     function(){
                         $this.removeClass('is-hovered');
