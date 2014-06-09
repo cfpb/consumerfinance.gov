@@ -97,14 +97,6 @@ module.exports = function(grunt) {
         files: {
           'static/css/main.css': ['static/css/main.less']
         }
-      },
-      ie8: {
-        options: {
-          paths: ['static'],
-        },
-        files: {
-          'static/css/ie8.css': ['static/css/ie/ie8.less']
-        }
       }
     },
 
