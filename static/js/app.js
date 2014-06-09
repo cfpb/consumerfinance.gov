@@ -29,7 +29,8 @@ $('.js-form_clear').on('click', function() {
     .attr('selected', true);
     
     // Clear .custom-input elements
-    $form.find('.custom-input').trigger('updateState');
+    $form.find('.custom-input')
+    .trigger('updateState');
 
     // Clear Chosen.js elements
     $form.find('.chosen-select')
