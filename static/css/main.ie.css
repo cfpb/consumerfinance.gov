@@ -6966,6 +6966,89 @@ a.category-slug.active {
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 
 /* topdoc
+    name: Custom select
+    family: cfgov-misc
+    patterns:
+    - name: Default custom select
+      markup: |
+        <label class="select"
+               for="select-default">
+            <select class="select_input"
+                    id="select-input">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="select_icon cf-icon cf-icon-down"></span>
+        </label>
+    - name: Focused state
+      markup: |
+        <select class="focus">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+    - name: Error state
+      notes:
+        - Please review the notes on form input error icons in the form icons section below.
+      markup: |
+        <select class="error">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+        <span class="cf-form_input-icon cf-icon cf-icon-delete-round" role="alert">
+          <span class="jekyll-bug"></span>
+        </span>
+    - name: Success state
+      notes:
+        - Please review the notes on form input success icons in the form icons section below.
+      markup: |
+        <select class="success">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+        </select>
+        <span class="cf-form_input-icon cf-icon cf-icon-approved-round">
+          <span class="jekyll-bug"></span>
+        </span>
+    tags:
+    - cfgov-misc
+*/
+
+.select {
+  overflow: hidden;
+  position: relative;
+  border: solid 1px #75787b;
+  background: #ffffff;
+}
+
+.select_icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.25em;
+  line-height: 1.375;
+}
+
+.select_input {
+  width: 115%;
+  padding: 0.25em;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #101820;
+}
+
+/* topdoc
   name: jquery.custom-input
   family: cfgov-misc
   patterns:
