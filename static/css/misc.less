@@ -217,10 +217,15 @@ select[multiple].success {
 */
 
 .custom-select {
-    overflow: hidden;
-    position: relative;
-    border: solid 1px @gray-50;
-    background: @white;
+
+    & {
+        .is-enabled& {
+            overflow: hidden;
+            position: relative;
+            border: solid 1px @gray-50;
+            background: @white;
+        }
+    }
 
     &.is-hovered,
     &.is-focused {
@@ -229,15 +234,22 @@ select[multiple].success {
     }
 
     &_icon {
+        display: none;
         position: absolute;
         top: 0;
         right: 0;
+        z-index: 2;
         padding: unit( 4px / @base-font-size-px, em )
                  unit( 6px / @base-font-size-px, em );
-        z-index: 1;
+        // This will overlay .custom-select_text and make it appear as if any
+        // long words get cut off before they touch the icon.
+        border-left: 4px solid @white;
         background: @gray-10;
         color: @gray-50;
         line-height: 1.375;
+        .is-enabled & {
+            display: inline-block;
+        }
     }
 
     &_text {
@@ -257,7 +269,7 @@ select[multiple].success {
         // Push the native select arrow out of view
         width: 100%;
         padding: unit( 4px / @base-font-size-px, em );
-        z-index: 2;
+        z-index: 3;
         // Customize the colors
         border: 0;
         border-radius: 0;

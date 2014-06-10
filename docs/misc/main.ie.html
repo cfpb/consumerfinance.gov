@@ -341,7 +341,7 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.custom-select {
+.is-enabled.custom-select {
   overflow: hidden;
   position: relative;
   border: solid 1px #babbbd;
@@ -355,14 +355,20 @@
 }
 
 .custom-select_icon {
+  display: none;
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 2;
   padding: 0.25em 0.375em;
-  z-index: 1;
+  border-left: 4px solid #ffffff;
   background: #f1f2f2;
   color: #babbbd;
   line-height: 1.375;
+}
+
+.is-enabled .custom-select_icon {
+  display: inline-block;
 }
 
 .custom-select_text {
@@ -380,7 +386,7 @@
   position: relative;
   width: 100%;
   padding: 0.25em;
-  z-index: 2;
+  z-index: 3;
   border: 0;
   border-radius: 0;
   background-color: transparent;
