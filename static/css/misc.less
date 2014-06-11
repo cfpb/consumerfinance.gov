@@ -222,6 +222,7 @@ select[multiple].success {
         .is-enabled& {
             overflow: hidden;
             position: relative;
+            z-index: 1;
             border: solid 1px @gray-50;
             background: @white;
         }
@@ -229,6 +230,7 @@ select[multiple].success {
 
     &.is-hovered,
     &.is-focused {
+        z-index: 2;
         border-color: @pacific;
         outline: 1px solid @pacific;
     }

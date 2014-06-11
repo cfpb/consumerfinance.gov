@@ -344,12 +344,14 @@
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
+  z-index: 1;
   border: solid 1px #babbbd;
   background: #ffffff;
 }
 
 .custom-select.is-hovered,
 .custom-select.is-focused {
+  z-index: 2;
   border-color: #0072ce;
   outline: 1px solid #0072ce;
 }
