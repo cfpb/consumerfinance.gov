@@ -6161,6 +6161,14 @@ a.category-slug.active {
             <span class="custom-select_text">Option 1</span>
             <span class="custom-select_icon cf-icon cf-icon-down"></span>
         </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .custom-select.is-enabled
+            .custom-select_select
+            .custom-select_text
+            .custom-select_icon
     - name: Hovered/focused state
       markup: |
         <div class="custom-select is-enabled is-hovered">
@@ -6174,6 +6182,14 @@ a.category-slug.active {
             <span class="custom-select_text">Option 1</span>
             <span class="custom-select_icon cf-icon cf-icon-down"></span>
         </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .custom-select.is-enabled.is-hovered/.is-focusd
+            .custom-select_select
+            .custom-select_text
+            .custom-select_icon
     - name: JavaScript setup
       codenotes:
         - |
@@ -6247,7 +6263,7 @@ a.category-slug.active {
   name: jquery.custom-input
   family: cfgov-misc
   patterns:
-    - name: Custom checkbox
+    - name: Initial markup structure (the non JavaScript default)
       markup: |
         <label class="form-label"
                for="custom-input_checkbox-lorem">
@@ -6291,6 +6307,62 @@ a.category-slug.active {
         - "You MUST wrap input[type=radio].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
+    - name: JS enabled
+      markup: |
+        <label class="form-label custom-input_label is-enabled"
+               for="custom-input_checkbox-lorem">
+            <span class="custom-input_text">
+                Lorem
+            </span>
+            <input class="custom-input custom-input_input"
+                   id="custom-input_checkbox-lorem"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            <span class="custom-input_checkbox"></span>
+        </label>
+    - name: JS hovered/focused
+      markup: |
+        <label class="form-label custom-input_label is-hovered"
+               for="custom-input_checkbox-lorem">
+            <span class="custom-input_text">
+                Lorem
+            </span>
+            <input class="custom-input custom-input_input"
+                   id="custom-input_checkbox-lorem"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            <span class="custom-input_checkbox"></span>
+        </label>
+    - name: JS checked
+      markup: |
+        <label class="form-label custom-input_label is-checked"
+               for="custom-input_checkbox-lorem">
+            <span class="custom-input_text">
+                Lorem
+            </span>
+            <input class="custom-input custom-input_input"
+                   id="custom-input_checkbox-lorem"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            <span class="custom-input_checkbox"></span>
+        </label>
+    - name: JS checked/focused
+      markup: |
+        <label class="form-label custom-input_label is-checked is-focused is-checkedFocused"
+               for="custom-input_checkbox-lorem">
+            <span class="custom-input_text">
+                Lorem
+            </span>
+            <input class="custom-input custom-input_input"
+                   id="custom-input_checkbox-lorem"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            <span class="custom-input_checkbox"></span>
+        </label>
     - name: Custom radio button
       markup: |
         <label class="form-label"

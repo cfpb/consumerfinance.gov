@@ -314,6 +314,16 @@
     &lt;span class=&quot;custom-select_text&quot;&gt;Option 1&lt;/span&gt;
     &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
 &lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.custom-select.is-enabled
+  .custom-select_select
+  .custom-select_text
+  .custom-select_icon</code></pre>
+              </li>
+            </ul>
           </footer>
         </div>
         <div class="docs-pattern">
@@ -344,6 +354,16 @@
     &lt;span class=&quot;custom-select_text&quot;&gt;Option 1&lt;/span&gt;
     &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
 &lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.custom-select.is-enabled.is-hovered/.is-focusd
+  .custom-select_select
+  .custom-select_text
+  .custom-select_icon</code></pre>
+              </li>
+            </ul>
           </footer>
         </div>
         <div class="docs-pattern">
@@ -434,7 +454,7 @@
       <h2 class="docs-component_header"><span>jquery.custom-input</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Custom checkbox</h3>
+          <h3 class="docs-pattern_header">Initial markup structure (the non JavaScript default)</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label"
        for="custom-input_checkbox-lorem">
@@ -506,6 +526,134 @@ label.custom-form
               <li>You MUST wrap input[type=radio].custom-input in a label.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
             </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JS enabled</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label custom-input_label is-enabled"
+       for="custom-input_checkbox-lorem">
+    <span class="custom-input_text">
+        Lorem
+    </span>
+    <input class="custom-input custom-input_input"
+           id="custom-input_checkbox-lorem"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="lorem">
+    <span class="custom-input_checkbox"></span>
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label custom-input_label is-enabled&quot;
+       for=&quot;custom-input_checkbox-lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_text&quot;&gt;
+        Lorem
+    &lt;/span&gt;
+    &lt;input class=&quot;custom-input custom-input_input&quot;
+           id=&quot;custom-input_checkbox-lorem&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_checkbox&quot;&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JS hovered/focused</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label custom-input_label is-hovered"
+       for="custom-input_checkbox-lorem">
+    <span class="custom-input_text">
+        Lorem
+    </span>
+    <input class="custom-input custom-input_input"
+           id="custom-input_checkbox-lorem"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="lorem">
+    <span class="custom-input_checkbox"></span>
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label custom-input_label is-hovered&quot;
+       for=&quot;custom-input_checkbox-lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_text&quot;&gt;
+        Lorem
+    &lt;/span&gt;
+    &lt;input class=&quot;custom-input custom-input_input&quot;
+           id=&quot;custom-input_checkbox-lorem&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_checkbox&quot;&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JS checked</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label custom-input_label is-checked"
+       for="custom-input_checkbox-lorem">
+    <span class="custom-input_text">
+        Lorem
+    </span>
+    <input class="custom-input custom-input_input"
+           id="custom-input_checkbox-lorem"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="lorem">
+    <span class="custom-input_checkbox"></span>
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label custom-input_label is-checked&quot;
+       for=&quot;custom-input_checkbox-lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_text&quot;&gt;
+        Lorem
+    &lt;/span&gt;
+    &lt;input class=&quot;custom-input custom-input_input&quot;
+           id=&quot;custom-input_checkbox-lorem&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_checkbox&quot;&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JS checked/focused</h3>
+          <section class="docs-pattern_pattern">
+<label class="form-label custom-input_label is-checked is-focused is-checkedFocused"
+       for="custom-input_checkbox-lorem">
+    <span class="custom-input_text">
+        Lorem
+    </span>
+    <input class="custom-input custom-input_input"
+           id="custom-input_checkbox-lorem"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="lorem">
+    <span class="custom-input_checkbox"></span>
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label class=&quot;form-label custom-input_label is-checked is-focused is-checkedFocused&quot;
+       for=&quot;custom-input_checkbox-lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_text&quot;&gt;
+        Lorem
+    &lt;/span&gt;
+    &lt;input class=&quot;custom-input custom-input_input&quot;
+           id=&quot;custom-input_checkbox-lorem&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    &lt;span class=&quot;custom-input_checkbox&quot;&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
           </footer>
         </div>
         <div class="docs-pattern">
