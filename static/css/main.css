@@ -6119,8 +6119,11 @@ a.category-slug.active {
 /* topdoc
     name: jquery.custom-select
     family: cfgov-misc
+    notes:
+      - "Note that this is a non-working example used to document the states
+        and structure."
     patterns:
-    - name: Custom select
+    - name: Initial markup structure (the non JavaScript default)
       markup: |
         <div class="custom-select">
             <select>
@@ -6145,10 +6148,40 @@ a.category-slug.active {
           The jQuery plugin transforms this initial HTML by adding more markup
           and classes. If JavaScript is unavailable the new elements and classes
           won't be added, leaving the select still usable."
-    - name: JavaScript setup
+    - name: Enabled state (JavaScript-enhanced)
       markup: |
-        <script src="../../vendor/jquery/jquery.js"></script>
-        <script src="../../static/js/jquery.custom-select.js"></script>
+        <div class="custom-select is-enabled">
+            <select class="custom-select_select"
+                    style="opacity: 0;">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="custom-select_text">Option 1</span>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+    - name: Hovered/focused state
+      markup: |
+        <div class="custom-select is-enabled is-hovered">
+            <select class="custom-select_select"
+                    style="opacity: 0;">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="custom-select_text">Option 1</span>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+    - name: JavaScript setup
+      codenotes:
+        - |
+          <script src="path-to/jquery.js"></script>
+          <script src="path-to/jquery.custom-select.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all select elements that are
+          wrapped in a parent with the class of custom-select."
     tags:
     - cfgov-misc
 */
@@ -6255,6 +6288,7 @@ a.category-slug.active {
           The jQuery plugin transforms this initial HTML by adding more markup
           and classes. If JavaScript is unavailable the new elements and classes
           won't be added, leaving the select still usable."
+        - "You MUST wrap input[type=radio].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
     - name: Custom radio button
@@ -6290,20 +6324,25 @@ a.category-slug.active {
         - |
           Structural cheat sheet:
           -----------------------
-          label.custom-form
-            input[type=radio]
+          label
+            input[type=radio].custom-input
       notes:
         - "Use the markup structure above to add .custom-input elements.
           It is meant to allow for cases where JavaScript is unavailable.
           The jQuery plugin transforms this initial HTML by adding more markup
           and classes. If JavaScript is unavailable the new elements and classes
           won't be added, leaving the select still usable."
+        - "You MUST wrap input[type=radio].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
     - name: JavaScript setup
-      markup: |
-        <script src="../../vendor/jquery/jquery.js"></script>
-        <script src="../../static/js/jquery.custom-input.js"></script>
+      codenotes:
+        - |
+          <script src="path-to/jquery.js"></script>
+          <script src="path-to/jquery.custom-input.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all input[type=radio]
+          elements with the class of .custom-input."
   tags:
     - cfgov-misc
 */

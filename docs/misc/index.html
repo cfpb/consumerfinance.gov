@@ -238,9 +238,14 @@
     </div>
     <div id="jquerycustom-select" class="docs-component">
       <h2 class="docs-component_header"><span>jquery.custom-select</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Note that this is a non-working example used to document the states and structure.</li>
+        </ul>
+      </div>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Custom select</h3>
+          <h3 class="docs-pattern_header">Initial markup structure (the non JavaScript default)</h3>
           <section class="docs-pattern_pattern">
 <div class="custom-select">
     <select>
@@ -279,15 +284,77 @@
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <h3 class="docs-pattern_header">Enabled state (JavaScript-enhanced)</h3>
           <section class="docs-pattern_pattern">
-<script src="../../vendor/jquery/jquery.js"></script>
-<script src="../../static/js/jquery.custom-select.js"></script>
+<div class="custom-select is-enabled">
+    <select class="custom-select_select"
+            style="opacity: 0;">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <span class="custom-select_text">Option 1</span>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;../../vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;../../static/js/jquery.custom-select.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select is-enabled&quot;&gt;
+    &lt;select class=&quot;custom-select_select&quot;
+            style=&quot;opacity: 0;&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_text&quot;&gt;Option 1&lt;/span&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Hovered/focused state</h3>
+          <section class="docs-pattern_pattern">
+<div class="custom-select is-enabled is-hovered">
+    <select class="custom-select_select"
+            style="opacity: 0;">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <span class="custom-select_text">Option 1</span>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select is-enabled is-hovered&quot;&gt;
+    &lt;select class=&quot;custom-select_select&quot;
+            style=&quot;opacity: 0;&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_text&quot;&gt;Option 1&lt;/span&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>&lt;script src=&quot;path-to/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;path-to/jquery.custom-select.js&quot;&gt;&lt;/script&gt;</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The jQuery plugin will auto intitiate all select elements that are wrapped in a parent with the class of custom-select.</li>
+            </ul>
           </footer>
         </div>
       </div>
@@ -425,6 +492,7 @@ label.custom-form
             </ul>
             <ul class="docs-notes">
               <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added, leaving the select still usable.</li>
+              <li>You MUST wrap input[type=radio].custom-input in a label.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
             </ul>
           </footer>
@@ -493,26 +561,29 @@ label.custom-form
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-label.custom-form
-  input[type=radio]</code></pre>
+label
+  input[type=radio].custom-input</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
               <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added, leaving the select still usable.</li>
+              <li>You MUST wrap input[type=radio].custom-input in a label.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
             </ul>
           </footer>
         </div>
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">JavaScript setup</h3>
-          <section class="docs-pattern_pattern">
-<script src="../../vendor/jquery/jquery.js"></script>
-<script src="../../static/js/jquery.custom-input.js"></script>
-
-          </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;../../vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;../../static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>&lt;script src=&quot;path-to/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;path-to/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The jQuery plugin will auto intitiate all input[type=radio] elements with the class of .custom-input.</li>
+            </ul>
           </footer>
         </div>
       </div>
