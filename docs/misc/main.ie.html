@@ -270,11 +270,14 @@
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-label.custom-select
+.custom-select
   select
     option
   .custom-select-icon</code></pre>
               </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-select elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added, leaving the select still usable.</li>
             </ul>
           </footer>
         </div>
@@ -430,6 +433,7 @@ label.custom-form
               </li>
             </ul>
             <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added, leaving the select still usable.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
             </ul>
           </footer>
@@ -503,6 +507,7 @@ label.custom-form
               </li>
             </ul>
             <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added, leaving the select still usable.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
             </ul>
           </footer>
