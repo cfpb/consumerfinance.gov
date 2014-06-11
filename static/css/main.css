@@ -6147,8 +6147,8 @@ a.category-slug.active {
           won't be added, leaving the select still usable."
     - name: JavaScript setup
       markup: |
-        <script src="/vendor/jquery/jquery.js"></script>
-        <script src="/static/js/jquery.custom-select.js"></script>
+        <script src="../../vendor/jquery/jquery.js"></script>
+        <script src="../../static/js/jquery.custom-select.js"></script>
     tags:
     - cfgov-misc
 */
@@ -6302,8 +6302,8 @@ a.category-slug.active {
           to trigger the input on label click."
     - name: JavaScript setup
       markup: |
-        <script src="/vendor/jquery/jquery.js"></script>
-        <script src="/static/js/jquery.custom-input.js"></script>
+        <script src="../../vendor/jquery/jquery.js"></script>
+        <script src="../../static/js/jquery.custom-input.js"></script>
   tags:
     - cfgov-misc
 */
