@@ -222,6 +222,8 @@ select[multiple].success {
         .is-enabled& {
             overflow: hidden;
             position: relative;
+            // Since an input-group_item can overlap another we need to use z-index
+            // is needed to allow the focused input to pop over unfocused inputs.
             z-index: 1;
             border: solid 1px @gray-50;
             background: @white;
@@ -557,6 +559,8 @@ select[multiple].success {
         box-sizing: border-box;
         width: 50%;
         position: relative;
+        // Since an input-group_item can overlap another we need to use z-index
+        // is needed to allow the focused input to pop over unfocused inputs.
         z-index: 1;
 
         & + & {
