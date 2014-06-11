@@ -6117,10 +6117,10 @@ a.category-slug.active {
 */
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 /* topdoc
-    name: Custom select
+    name: jquery.custom-select
     family: cfgov-misc
     patterns:
-    - name: Default custom select
+    - name: Custom select
       markup: |
         <div class="custom-select">
             <select>
@@ -6131,6 +6131,16 @@ a.category-slug.active {
             </select>
             <span class="custom-select_icon cf-icon cf-icon-down"></span>
         </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          label.custom-select
+            select
+              option
+            .custom-select-icon
+    - name: JavaScript setup
+      markup: |
         <script src="/vendor/jquery/jquery.js"></script>
         <script src="/static/js/jquery.custom-select.js"></script>
     tags:
@@ -6196,7 +6206,7 @@ a.category-slug.active {
   name: jquery.custom-input
   family: cfgov-misc
   patterns:
-    - name: Checkboxes
+    - name: Custom checkbox
       markup: |
         <label class="form-label"
                for="custom-input_checkbox-lorem">
@@ -6234,7 +6244,7 @@ a.category-slug.active {
       notes:
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
-    - name: Radio buttons
+    - name: Custom radio button
       markup: |
         <label class="form-label"
                for="custom-input_radio-lorem">

@@ -236,11 +236,11 @@
         <pre class="docs-code"><code data-language="css">/* NOTE: all select[multiple] styles extend input[type=&quot;text&quot;]. */</code></pre>
       </div>
     </div>
-    <div id="custom-select" class="docs-component">
-      <h2 class="docs-component_header"><span>Custom select</span></h2>
+    <div id="jquerycustom-select" class="docs-component">
+      <h2 class="docs-component_header"><span>jquery.custom-select</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default custom select</h3>
+          <h3 class="docs-pattern_header">Custom select</h3>
           <section class="docs-pattern_pattern">
 <div class="custom-select">
     <select>
@@ -251,8 +251,6 @@
     </select>
     <span class="custom-select_icon cf-icon cf-icon-down"></span>
 </div>
-<script src="/vendor/jquery/jquery.js"></script>
-<script src="/static/js/jquery.custom-select.js"></script>
 
           </section>
           <footer class="docs-pattern_footer">
@@ -264,8 +262,28 @@
         &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
     &lt;/select&gt;
     &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;
-&lt;script src=&quot;/vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+label.custom-select
+  select
+    option
+  .custom-select-icon</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <section class="docs-pattern_pattern">
+<script src="/vendor/jquery/jquery.js"></script>
+<script src="/static/js/jquery.custom-select.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;/vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;/static/js/jquery.custom-select.js&quot;&gt;&lt;/script&gt;</code></pre>
           </footer>
         </div>
@@ -333,7 +351,7 @@
       <h2 class="docs-component_header"><span>jquery.custom-input</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Checkboxes</h3>
+          <h3 class="docs-pattern_header">Custom checkbox</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label"
        for="custom-input_checkbox-lorem">
@@ -406,7 +424,7 @@ label.custom-form
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Radio buttons</h3>
+          <h3 class="docs-pattern_header">Custom radio button</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label"
        for="custom-input_radio-lorem">
