@@ -579,7 +579,7 @@ label
   width: 1.25em;
   height: 1.25em;
   background: #ffffff;
-  border: 1px solid #101820;
+  outline: 1px solid #101820;
 }
 
 .custom-input_radio {
@@ -605,22 +605,27 @@ label
 .is-focused .custom-input_checkbox,
 .is-focused .custom-input_radio {
   border-color: #ffffff;
-  outline: 2px solid #2cb34a;
+  outline: 2px solid #0072ce;
 }
 
 .is-checked .custom-input_checkbox,
 .is-checked .custom-input_radio {
-  background-color: #2cb34a;
-  border-color: #2cb34a;
+  background-color: #0072ce;
+  border: 3px solid #ffffff;
+  outline: 1px solid #0072ce;
 }
 
 .is-checked.is-hovered .custom-input_checkbox,
 .is-checked.is-hovered .custom-input_radio,
 .is-checked.is-focused .custom-input_checkbox,
 .is-checked.is-focused .custom-input_radio {
-  background-color: #2cb34a;
-  border-color: #ffffff;
-  outline: 2px solid #2cb34a;
+  outline: 2px solid #0072ce;
+}
+
+.is-active .custom-input_checkbox,
+.is-active .custom-input_radio {
+  background-color: #7fb8e6;
+  border: 3px solid #ffffff;
 }
 
 .is-hovered .custom-input_radio,
@@ -628,15 +633,15 @@ label
 .is-checked.is-hovered .custom-input_radio,
 .is-checked.is-focused .custom-input_radio {
   outline: none;
-  -webkit-box-shadow: 0px 0px 0px 2px #2cb34a;
-  box-shadow: 0px 0px 0px 2px #2cb34a;
+  -webkit-box-shadow: 0px 0px 0px 2px #0072ce;
+  box-shadow: 0px 0px 0px 2px #0072ce;
 }
 
 .is-hovered .custom-input_radio .lt-ie9,
 .is-focused .custom-input_radio .lt-ie9,
 .is-checked.is-hovered .custom-input_radio .lt-ie9,
 .is-checked.is-focused .custom-input_radio .lt-ie9 {
-  outline: 2px solid #2cb34a;
+  outline: 2px solid #0072ce;
 }
 </code></pre>
       </div>

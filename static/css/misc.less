@@ -426,7 +426,7 @@ select[multiple].success {
         width: @input-width;
         height: @input-width;
         background: @white;
-        border: 1px solid @black;
+        outline: 1px solid @black;
     }
     &_radio {
         // IE older than 9 does not support border-radius so checkboxes and
@@ -454,17 +454,20 @@ select[multiple].success {
         .is-hovered &,
         .is-focused & {
             border-color: @white;
-            outline: 2px solid @green;
+            outline: 2px solid @pacific;
         }
         .is-checked & {
-            background-color: @green;
-            border-color: @green;
+            background-color: @pacific;
+            border: 3px solid @white;
+            outline: 1px solid @pacific;
         }
         .is-checked.is-hovered &,
         .is-checked.is-focused & {
-            background-color: @green;
-            border-color: @white;
-            outline: 2px solid @green;
+            outline: 2px solid @pacific;
+        }
+        .is-active & {
+            background-color: @pacific-50;
+            border: 3px solid @white;
         }
     }
     &_radio {
@@ -475,11 +478,11 @@ select[multiple].success {
             // box-shadow is being used instead of outline because outline
             // does not respect border-radius.
             outline: none;
-            box-shadow: 0px 0px 0px 2px @green;
+            box-shadow: 0px 0px 0px 2px @pacific;
             // Older IE does not support border-radius or box-shadow it's ok to
             // use outline here.
             .lt-ie9 {
-                outline: 2px solid @green;
+                outline: 2px solid @pacific;
             }
         }
     }

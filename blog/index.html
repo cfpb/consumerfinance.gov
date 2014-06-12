@@ -131,7 +131,7 @@
                         <dd class="list_item">
                             <span class="filtered-by_filter">
                                 {{ filter }}
-                                {% if not loop.last %},{% endif %}
+                                {%- if not loop.last -%},{% endif %}
                             </span>
                         </dd>
                     {% endfor %}
