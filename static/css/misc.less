@@ -432,6 +432,15 @@ select[multiple].success {
         // IE older than 9 does not support border-radius so checkboxes and
         // radio buttons will look the same.
         border-radius: 100%;
+        // box-shadow is being used instead of outline because outline
+        // does not respect border-radius.
+        outline: none;
+        box-shadow: 0px 0px 0px 1px @black;
+        // Older IE does not support border-radius or box-shadow it's ok to
+        // use outline here.
+        .lt-ie9 {
+            outline: 1px solid @black;
+        }
     }
 
 
@@ -471,6 +480,17 @@ select[multiple].success {
         }
     }
     &_radio {
+        .is-checked & {
+            // box-shadow is being used instead of outline because outline
+            // does not respect border-radius.
+            outline: none;
+            box-shadow: 0px 0px 0px 1px @pacific;
+            // Older IE does not support border-radius or box-shadow it's ok to
+            // use outline here.
+            .lt-ie9 {
+                outline: 1px solid @pacific;
+            }
+        }
         .is-hovered &,
         .is-focused &,
         .is-checked.is-hovered &,
