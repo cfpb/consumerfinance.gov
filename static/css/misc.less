@@ -145,10 +145,136 @@ select[multiple].success {
 
 
 /* topdoc
-  name: Custom form inputs
+    name: Custom select menus via jquery.custom-input
+    family: cfgov-misc
+    patterns:
+    - name: Custom select menu demo with initialization markup
+      markup: |
+        <div class="custom-select">
+            <select>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .custom-select
+            select
+              option
+            .custom-select-icon
+      notes:
+        - "Use the markup structure above to add .custom-select elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default select behavior."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-select by detecting :hover and :focus on .custom-select."
+        - "The jQuery plugin will auto intitiate all select elements that are
+          wrapped in a parent with the class of custom-select."
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-select.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all select elements with the
+          class of .custom-select and append the the .is-enabled class which
+          activates the styling."
+    tags:
+    - cfgov-misc
+*/
+
+.custom-select {
+
+    & {
+        .is-enabled& {
+            overflow: hidden;
+            position: relative;
+            min-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
+            // Since an input-group_item can overlap another we need to use z-index
+            // is needed to allow the focused input to pop over unfocused inputs.
+            z-index: 1;
+            border: solid 1px @gray-50;
+            background: @white;
+        }
+    }
+
+    &.is-hovered,
+    &.is-focused {
+        z-index: 2;
+        border-color: @pacific;
+        outline: 1px solid @pacific;
+    }
+
+    &_icon {
+        // This element does not get added dynamically so it should be hidden
+        // until JavaScript is enabled.
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        min-width: 1em;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 6px / @base-font-size-px, em );
+        // This will overlay .custom-select_text and make it appear as if any
+        // long words get cut off before they touch the icon.
+        border-left: 4px solid @white;
+        background: @gray-10;
+        color: @gray-50;
+        line-height: @base-line-height;
+        text-align: center;
+        .is-enabled & {
+            display: inline-block;
+        }
+    }
+
+    &_text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 10px / @base-font-size-px, em );
+        z-index: 1;
+        font-family: Arial, sans-serif;
+        line-height: @base-line-height;
+        color: @gray-50;
+    }
+
+    &_select {
+        position: relative;
+        // Push the native select arrow out of view
+        width: 100%;
+        max-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
+        padding: unit( 4px / @base-font-size-px, em );
+        z-index: 3;
+        // Customize the colors
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+        background-image: none;
+        color: @black;
+        -webkit-appearance: none;
+        box-shadow: none;
+
+        .is-hovered &,
+        .is-focused & {
+            outline: none;
+        }
+    }
+}
+
+
+/* topdoc
+  name: Custom checkboxes and radio buttons via jquery.custom-input
   family: cfgov-misc
   patterns:
-    - name: Checkboxes
+    - name: Custom checkbox demo with initialization markup
       markup: |
         <label class="form-label"
                for="custom-input_checkbox-lorem">
@@ -159,6 +285,7 @@ select[multiple].success {
                    value="lorem">
             Lorem
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_checkbox-ipsum">
             <input class="custom-input"
@@ -168,6 +295,7 @@ select[multiple].success {
                    value="ipsum">
             Ipsum
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_checkbox-dolor">
             <input class="custom-input"
@@ -181,12 +309,23 @@ select[multiple].success {
         - |
           Structural cheat sheet:
           -----------------------
-          label.custom-form
-            input[type=checkbox]
+          label
+            input[type=checkbox].custom-input
       notes:
+        - "Use the markup structure above to add .custom-input elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default input behavior."
+        - "You MUST wrap input[type=checkbox].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
-    - name: Radio buttons
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-input by detecting :hover and :focus on .custom-input."
+        - "JavaScript is used to detect change events to the input. By clicking
+          the label element you change the checked property and the plugin will
+          add the .is-checked class."
+    - name: Custom radio button demo with initialization markup
       markup: |
         <label class="form-label"
                for="custom-input_radio-lorem">
@@ -197,6 +336,7 @@ select[multiple].success {
                    value="lorem">
             Lorem
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_radio-ipsum">
             <input class="custom-input"
@@ -206,6 +346,7 @@ select[multiple].success {
                    value="ipsum">
             Ipsum
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_radio-dolor">
             <input class="custom-input"
@@ -219,15 +360,30 @@ select[multiple].success {
         - |
           Structural cheat sheet:
           -----------------------
-          label.custom-form
-            input[type=radio]
+          label
+            input[type=radio].custom-input
       notes:
+        - "Use the markup structure above to add .custom-input elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default input behavior."
+        - "You MUST wrap input[type=radio].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-input by detecting :hover and :focus on .custom-input."
+        - "JavaScript is used to detect change events to the input. By clicking
+          the label element you change the checked property and the plugin will
+          add the .is-checked class."
     - name: JavaScript setup
       markup: |
-        <script src="/vendor/jquery/jquery.js"></script>
-        <script src="/static/js/jquery.custom-input.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-input.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all input[type=checkbox] and
+          input[type=radio] elements with the class of .custom-input and append
+          the the .is-enabled class which activates the styling."
   tags:
     - cfgov-misc
 */
@@ -239,7 +395,7 @@ select[multiple].success {
 
     &.is-enabled {
 
-        display: inline-block;
+        display: block;
         position: relative;
         margin-right: unit(6px / @base-font-size-px, em);
         // Left padding that matches the input width so we can use absolute
@@ -278,11 +434,19 @@ select[multiple].success {
         // IE older than 9 does not support border-radius so checkboxes and
         // radio buttons will look the same.
         border-radius: 100%;
+        // box-shadow is being used instead of outline because outline
+        // does not respect border-radius.
+        outline: none;
+        box-shadow: 0px 0px 0px 1px @black;
+        // Older IE does not support border-radius or box-shadow it's ok to
+        // use outline here.
+        .lt-ie9 {
+            outline: 1px solid @black;
+        }
     }
 
 
     &_label {
-        display: inline-block;
         position: relative;
         z-index: 2;
         padding-left: @input-width;
@@ -318,6 +482,17 @@ select[multiple].success {
         }
     }
     &_radio {
+        .is-checked & {
+            // box-shadow is being used instead of outline because outline
+            // does not respect border-radius.
+            outline: none;
+            box-shadow: 0px 0px 0px 1px @pacific;
+            // Older IE does not support border-radius or box-shadow it's ok to
+            // use outline here.
+            .lt-ie9 {
+                outline: 1px solid @pacific;
+            }
+        }
         .is-hovered &,
         .is-focused &,
         .is-checked.is-hovered &,
@@ -411,13 +586,16 @@ select[multiple].success {
 
     &_item,
     &_item[type="text"] {
+        display: inline-block;
         box-sizing: border-box;
         width: 50%;
-        z-index: 1;
         position: relative;
+        // Since an input-group_item can overlap another we need to use z-index
+        // is needed to allow the focused input to pop over unfocused inputs.
+        z-index: 1;
 
         & + & {
-            margin-left: -5px;
+            margin-left: unit(-5px / @base-font-size-px, em);
         }
 
         &:focus {
