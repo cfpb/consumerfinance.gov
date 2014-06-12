@@ -6163,7 +6163,7 @@ a.category-slug.active {
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
-  min-height: 1.5em;
+  min-height: 1.875em;
   z-index: 1;
   border: solid 1px #babbbd;
   background: #ffffff;
@@ -6181,12 +6181,11 @@ a.category-slug.active {
   right: 0;
   z-index: 2;
   min-width: 1em;
-  min-height: 1.5em;
   padding: 0.25em 0.375em;
   border-left: 4px solid #ffffff;
   background: #f1f2f2;
   color: #babbbd;
-  line-height: normal;
+  line-height: 1.375;
   text-align: center;
 }
 .is-enabled .custom-select_icon {
@@ -6199,7 +6198,7 @@ a.category-slug.active {
   padding: 0.25em 0.625em;
   z-index: 1;
   font-family: Arial, sans-serif;
-  line-height: normal;
+  line-height: 1.375;
   color: #babbbd;
 }
 .custom-select_select {
@@ -6213,7 +6212,6 @@ a.category-slug.active {
   background-color: transparent;
   background-image: none;
   color: #101820;
-  line-height: normal;
   -webkit-appearance: none;
   -webkit-box-shadow: none;
   box-shadow: none;
