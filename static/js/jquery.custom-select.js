@@ -33,7 +33,6 @@
                     function(){
                         $this.removeClass('is-hovered');
                         $this.removeClass('is-focused');
-                        $this.removeClass('is-checkedFocused');
                     }
                 )
                 .focus(
@@ -41,7 +40,6 @@
                     function(){
                         $this.removeClass('is-hovered');
                         $this.removeClass('is-focused');
-                        $this.removeClass('is-checkedFocused');
                     }
                 );
 
