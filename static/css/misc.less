@@ -250,6 +250,7 @@ select[multiple].success {
         position: relative;
         // Push the native select arrow out of view
         width: 100%;
+        max-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
         padding: unit( 4px / @base-font-size-px, em );
         z-index: 3;
         // Customize the colors
@@ -258,7 +259,6 @@ select[multiple].success {
         background-color: transparent;
         background-image: none;
         color: @black;
-        line-height: 1;
         -webkit-appearance: none;
         box-shadow: none;
 
