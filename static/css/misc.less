@@ -195,7 +195,7 @@ select[multiple].success {
         .is-enabled& {
             overflow: hidden;
             position: relative;
-            min-height: unit(@base-line-height-px / @base-font-size-px, em);
+            min-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
             // Since an input-group_item can overlap another we need to use z-index
             // is needed to allow the focused input to pop over unfocused inputs.
             z-index: 1;
