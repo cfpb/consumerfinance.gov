@@ -195,6 +195,7 @@ select[multiple].success {
         .is-enabled& {
             overflow: hidden;
             position: relative;
+            min-height: unit(@base-line-height-px / @base-font-size-px, em);
             // Since an input-group_item can overlap another we need to use z-index
             // is needed to allow the focused input to pop over unfocused inputs.
             z-index: 1;
@@ -249,7 +250,6 @@ select[multiple].success {
         position: relative;
         // Push the native select arrow out of view
         width: 100%;
-        min-height: unit(@base-line-height-px / @base-font-size-px, em);
         padding: unit( 4px / @base-font-size-px, em );
         z-index: 3;
         // Customize the colors
