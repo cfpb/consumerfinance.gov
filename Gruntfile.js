@@ -78,6 +78,7 @@ module.exports = function(grunt) {
           'vendor/chosen/chosen.jquery.js',
           'vendor/cf-*/*.js',
           'static/js/jquery.custom-input.js',
+          'static/js/jquery.custom-select.js',
           'static/js/app.js'
         ],
         dest: 'static/js/main.js'
@@ -96,14 +97,6 @@ module.exports = function(grunt) {
         },
         files: {
           'static/css/main.css': ['static/css/main.less']
-        }
-      },
-      ie8: {
-        options: {
-          paths: ['static'],
-        },
-        files: {
-          'static/css/ie8.css': ['static/css/ie/ie8.less']
         }
       }
     },

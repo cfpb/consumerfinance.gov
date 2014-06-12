@@ -6117,10 +6117,114 @@ a.category-slug.active {
 */
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 /* topdoc
-  name: Custom form inputs
+    name: Custom select menus via jquery.custom-input
+    family: cfgov-misc
+    patterns:
+    - name: Custom select menu demo with initialization markup
+      markup: |
+        <div class="custom-select">
+            <select>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .custom-select
+            select
+              option
+            .custom-select-icon
+      notes:
+        - "Use the markup structure above to add .custom-select elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default select behavior."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-select by detecting :hover and :focus on .custom-select."
+        - "The jQuery plugin will auto intitiate all select elements that are
+          wrapped in a parent with the class of custom-select."
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-select.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all select elements with the
+          class of .custom-select and append the the .is-enabled class which
+          activates the styling."
+    tags:
+    - cfgov-misc
+*/
+.is-enabled.custom-select {
+  overflow: hidden;
+  position: relative;
+  min-height: 1.875em;
+  z-index: 1;
+  border: solid 1px #babbbd;
+  background: #ffffff;
+}
+.custom-select.is-hovered,
+.custom-select.is-focused {
+  z-index: 2;
+  border-color: #0072ce;
+  outline: 1px solid #0072ce;
+}
+.custom-select_icon {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  min-width: 1em;
+  padding: 0.25em 0.375em;
+  border-left: 4px solid #ffffff;
+  background: #f1f2f2;
+  color: #babbbd;
+  line-height: 1.375;
+  text-align: center;
+}
+.is-enabled .custom-select_icon {
+  display: inline-block;
+}
+.custom-select_text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25em 0.625em;
+  z-index: 1;
+  font-family: Arial, sans-serif;
+  line-height: 1.375;
+  color: #babbbd;
+}
+.custom-select_select {
+  position: relative;
+  width: 100%;
+  max-height: 1.875em;
+  padding: 0.25em;
+  z-index: 3;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+  color: #101820;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.is-hovered .custom-select_select,
+.is-focused .custom-select_select {
+  outline: none;
+}
+/* topdoc
+  name: Custom checkboxes and radio buttons via jquery.custom-input
   family: cfgov-misc
   patterns:
-    - name: Checkboxes
+    - name: Custom checkbox demo with initialization markup
       markup: |
         <label class="form-label"
                for="custom-input_checkbox-lorem">
@@ -6131,6 +6235,7 @@ a.category-slug.active {
                    value="lorem">
             Lorem
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_checkbox-ipsum">
             <input class="custom-input"
@@ -6140,6 +6245,7 @@ a.category-slug.active {
                    value="ipsum">
             Ipsum
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_checkbox-dolor">
             <input class="custom-input"
@@ -6153,12 +6259,23 @@ a.category-slug.active {
         - |
           Structural cheat sheet:
           -----------------------
-          label.custom-form
-            input[type=checkbox]
+          label
+            input[type=checkbox].custom-input
       notes:
+        - "Use the markup structure above to add .custom-input elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default input behavior."
+        - "You MUST wrap input[type=checkbox].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
-    - name: Radio buttons
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-input by detecting :hover and :focus on .custom-input."
+        - "JavaScript is used to detect change events to the input. By clicking
+          the label element you change the checked property and the plugin will
+          add the .is-checked class."
+    - name: Custom radio button demo with initialization markup
       markup: |
         <label class="form-label"
                for="custom-input_radio-lorem">
@@ -6169,6 +6286,7 @@ a.category-slug.active {
                    value="lorem">
             Lorem
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_radio-ipsum">
             <input class="custom-input"
@@ -6178,6 +6296,7 @@ a.category-slug.active {
                    value="ipsum">
             Ipsum
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_radio-dolor">
             <input class="custom-input"
@@ -6191,20 +6310,35 @@ a.category-slug.active {
         - |
           Structural cheat sheet:
           -----------------------
-          label.custom-form
-            input[type=radio]
+          label
+            input[type=radio].custom-input
       notes:
+        - "Use the markup structure above to add .custom-input elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default input behavior."
+        - "You MUST wrap input[type=radio].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-input by detecting :hover and :focus on .custom-input."
+        - "JavaScript is used to detect change events to the input. By clicking
+          the label element you change the checked property and the plugin will
+          add the .is-checked class."
     - name: JavaScript setup
       markup: |
-        <script src="/vendor/jquery/jquery.js"></script>
-        <script src="/static/js/jquery.custom-input.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-input.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all input[type=checkbox] and
+          input[type=radio] elements with the class of .custom-input and append
+          the the .is-enabled class which activates the styling."
   tags:
     - cfgov-misc
 */
 .custom-input.is-enabled {
-  display: inline-block;
+  display: block;
   position: relative;
   margin-right: 0.375em;
   padding: 0 0 0 1.25em;
@@ -6233,9 +6367,14 @@ a.category-slug.active {
 }
 .custom-input_radio {
   border-radius: 100%;
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 1px #101820;
+  box-shadow: 0px 0px 0px 1px #101820;
+}
+.custom-input_radio .lt-ie9 {
+  outline: 1px solid #101820;
 }
 .custom-input_label {
-  display: inline-block;
   position: relative;
   z-index: 2;
   padding-left: 1.25em;
@@ -6270,6 +6409,14 @@ a.category-slug.active {
 .is-active .custom-input_radio {
   background-color: #7fb8e6;
   border: 3px solid #ffffff;
+}
+.is-checked .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 1px #0072ce;
+  box-shadow: 0px 0px 0px 1px #0072ce;
+}
+.is-checked .custom-input_radio .lt-ie9 {
+  outline: 1px solid #0072ce;
 }
 .is-hovered .custom-input_radio,
 .is-focused .custom-input_radio,
@@ -6385,18 +6532,19 @@ a.category-slug.active {
 */
 .input-group_item,
 .input-group_item[type="text"] {
+  display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 50%;
-  z-index: 1;
   position: relative;
+  z-index: 1;
 }
 .input-group_item + .input-group_item,
 .input-group_item + .input-group_item[type="text"],
 .input-group_item[type="text"] + .input-group_item,
 .input-group_item[type="text"] + .input-group_item[type="text"] {
-  margin-left: -5px;
+  margin-left: -0.3125em;
 }
 .input-group_item:focus,
 .input-group_item[type="text"]:focus {

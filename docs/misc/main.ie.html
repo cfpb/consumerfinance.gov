@@ -239,11 +239,142 @@
 </code></pre>
       </div>
     </div>
-    <div id="custom-form-inputs" class="docs-component">
-      <h2 class="docs-component_header"><span>Custom form inputs</span></h2>
+    <div id="custom-select-menus-via-jquerycustom-input" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom select menus via jquery.custom-input</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Checkboxes</h3>
+          <h3 class="docs-pattern_header">Custom select menu demo with initialization markup</h3>
+          <section class="docs-pattern_pattern">
+<div class="custom-select">
+    <select>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select&quot;&gt;
+    &lt;select&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.custom-select
+  select
+    option
+  .custom-select-icon</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-select elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default select behavior.</li>
+              <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-select by detecting :hover and :focus on .custom-select.</li>
+              <li>The jQuery plugin will auto intitiate all select elements that are wrapped in a parent with the class of custom-select.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <section class="docs-pattern_pattern">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../../static/js/jquery.custom-select.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;//code.jquery.com/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../../static/js/jquery.custom-select.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>The jQuery plugin will auto intitiate all select elements with the class of .custom-select and append the the .is-enabled class which activates the styling.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.is-enabled.custom-select {
+  overflow: hidden;
+  position: relative;
+  min-height: 1.875em;
+  z-index: 1;
+  border: solid 1px #babbbd;
+  background: #ffffff;
+}
+
+.custom-select.is-hovered,
+.custom-select.is-focused {
+  z-index: 2;
+  border-color: #0072ce;
+  outline: 1px solid #0072ce;
+}
+
+.custom-select_icon {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  min-width: 1em;
+  padding: 0.25em 0.375em;
+  border-left: 4px solid #ffffff;
+  background: #f1f2f2;
+  color: #babbbd;
+  line-height: 1.375;
+  text-align: center;
+}
+
+.is-enabled .custom-select_icon {
+  display: inline-block;
+}
+
+.custom-select_text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25em 0.625em;
+  z-index: 1;
+  font-family: Arial, sans-serif;
+  line-height: 1.375;
+  color: #babbbd;
+}
+
+.custom-select_select {
+  position: relative;
+  width: 100%;
+  max-height: 1.875em;
+  padding: 0.25em;
+  z-index: 3;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+  color: #101820;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.is-hovered .custom-select_select,
+.is-focused .custom-select_select {
+  outline: none;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="custom-checkboxes-and-radio-buttons-via-jquerycustom-input" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom checkboxes and radio buttons via jquery.custom-input</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Custom checkbox demo with initialization markup</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label"
        for="custom-input_checkbox-lorem">
@@ -254,6 +385,7 @@
            value="lorem">
     Lorem
 </label>
+<br>
 <label class="form-label"
        for="custom-input_checkbox-ipsum">
     <input class="custom-input"
@@ -263,6 +395,7 @@
            value="ipsum">
     Ipsum
 </label>
+<br>
 <label class="form-label"
        for="custom-input_checkbox-dolor">
     <input class="custom-input"
@@ -284,6 +417,7 @@
            value=&quot;lorem&quot;&gt;
     Lorem
 &lt;/label&gt;
+&lt;br&gt;
 &lt;label class=&quot;form-label&quot;
        for=&quot;custom-input_checkbox-ipsum&quot;&gt;
     &lt;input class=&quot;custom-input&quot;
@@ -293,6 +427,7 @@
            value=&quot;ipsum&quot;&gt;
     Ipsum
 &lt;/label&gt;
+&lt;br&gt;
 &lt;label class=&quot;form-label&quot;
        for=&quot;custom-input_checkbox-dolor&quot;&gt;
     &lt;input class=&quot;custom-input&quot;
@@ -306,17 +441,21 @@
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-label.custom-form
-  input[type=checkbox]</code></pre>
+label
+  input[type=checkbox].custom-input</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default input behavior.</li>
+              <li>You MUST wrap input[type=checkbox].custom-input in a label.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
+              <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-input by detecting :hover and :focus on .custom-input.</li>
+              <li>JavaScript is used to detect change events to the input. By clicking the label element you change the checked property and the plugin will add the .is-checked class.</li>
             </ul>
           </footer>
         </div>
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Radio buttons</h3>
+          <h3 class="docs-pattern_header">Custom radio button demo with initialization markup</h3>
           <section class="docs-pattern_pattern">
 <label class="form-label"
        for="custom-input_radio-lorem">
@@ -327,6 +466,7 @@ label.custom-form
            value="lorem">
     Lorem
 </label>
+<br>
 <label class="form-label"
        for="custom-input_radio-ipsum">
     <input class="custom-input"
@@ -336,6 +476,7 @@ label.custom-form
            value="ipsum">
     Ipsum
 </label>
+<br>
 <label class="form-label"
        for="custom-input_radio-dolor">
     <input class="custom-input"
@@ -357,6 +498,7 @@ label.custom-form
            value=&quot;lorem&quot;&gt;
     Lorem
 &lt;/label&gt;
+&lt;br&gt;
 &lt;label class=&quot;form-label&quot;
        for=&quot;custom-input_radio-ipsum&quot;&gt;
     &lt;input class=&quot;custom-input&quot;
@@ -366,6 +508,7 @@ label.custom-form
            value=&quot;ipsum&quot;&gt;
     Ipsum
 &lt;/label&gt;
+&lt;br&gt;
 &lt;label class=&quot;form-label&quot;
        for=&quot;custom-input_radio-dolor&quot;&gt;
     &lt;input class=&quot;custom-input&quot;
@@ -379,32 +522,39 @@ label.custom-form
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-label.custom-form
-  input[type=radio]</code></pre>
+label
+  input[type=radio].custom-input</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default input behavior.</li>
+              <li>You MUST wrap input[type=radio].custom-input in a label.</li>
               <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
+              <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-input by detecting :hover and :focus on .custom-input.</li>
+              <li>JavaScript is used to detect change events to the input. By clicking the label element you change the checked property and the plugin will add the .is-checked class.</li>
             </ul>
           </footer>
         </div>
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">JavaScript setup</h3>
           <section class="docs-pattern_pattern">
-<script src="/vendor/jquery/jquery.js"></script>
-<script src="/static/js/jquery.custom-input.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../../static/js/jquery.custom-input.js"></script>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;/vendor/jquery/jquery.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;/static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;//code.jquery.com/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../../static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>The jQuery plugin will auto intitiate all input[type=checkbox] and input[type=radio] elements with the class of .custom-input and append the the .is-enabled class which activates the styling.</li>
+            </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .custom-input.is-enabled {
-  display: inline-block;
+  display: block;
   position: relative;
   margin-right: 0.375em;
   padding: 0 0 0 1.25em;
@@ -436,10 +586,16 @@ label.custom-form
 
 .custom-input_radio {
   border-radius: 100%;
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 1px #101820;
+  box-shadow: 0px 0px 0px 1px #101820;
+}
+
+.custom-input_radio .lt-ie9 {
+  outline: 1px solid #101820;
 }
 
 .custom-input_label {
-  display: inline-block;
   position: relative;
   z-index: 2;
   padding-left: 1.25em;
@@ -479,6 +635,16 @@ label.custom-form
 .is-active .custom-input_radio {
   background-color: #7fb8e6;
   border: 3px solid #ffffff;
+}
+
+.is-checked .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 1px #0072ce;
+  box-shadow: 0px 0px 0px 1px #0072ce;
+}
+
+.is-checked .custom-input_radio .lt-ie9 {
+  outline: 1px solid #0072ce;
 }
 
 .is-hovered .custom-input_radio,
@@ -661,19 +827,20 @@ label.custom-form
         <pre class="docs-code"><code data-language="css">
 .input-group_item,
 .input-group_item[type=&quot;text&quot;] {
+  display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 50%;
-  z-index: 1;
   position: relative;
+  z-index: 1;
 }
 
 .input-group_item + .input-group_item,
 .input-group_item + .input-group_item[type=&quot;text&quot;],
 .input-group_item[type=&quot;text&quot;] + .input-group_item,
 .input-group_item[type=&quot;text&quot;] + .input-group_item[type=&quot;text&quot;] {
-  margin-left: -5px;
+  margin-left: -0.3125em;
 }
 
 .input-group_item:focus,
