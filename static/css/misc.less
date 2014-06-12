@@ -195,7 +195,7 @@ select[multiple].success {
         .is-enabled& {
             overflow: hidden;
             position: relative;
-            min-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
+            min-height: unit((@base-font-size-px + (4px * 2)) / @base-font-size-px, em);
             // Since an input-group_item can overlap another we need to use z-index
             // is needed to allow the focused input to pop over unfocused inputs.
             z-index: 1;
@@ -220,6 +220,7 @@ select[multiple].success {
         right: 0;
         z-index: 2;
         min-width: 1em;
+        min-height: unit((@base-font-size-px + (4px * 2)) / @base-font-size-px, em);
         padding: unit( 4px / @base-font-size-px, em )
                  unit( 6px / @base-font-size-px, em );
         // This will overlay .custom-select_text and make it appear as if any
@@ -227,7 +228,7 @@ select[multiple].success {
         border-left: 4px solid @white;
         background: @gray-10;
         color: @gray-50;
-        line-height: 1.375;
+        line-height: normal;
         text-align: center;
         .is-enabled & {
             display: inline-block;
@@ -242,7 +243,7 @@ select[multiple].success {
                  unit( 10px / @base-font-size-px, em );
         z-index: 1;
         font-family: Arial, sans-serif;
-        line-height: 1.375;
+        line-height: normal;
         color: @gray-50;
     }
 
@@ -259,6 +260,7 @@ select[multiple].success {
         background-color: transparent;
         background-image: none;
         color: @black;
+        line-height: normal;
         -webkit-appearance: none;
         box-shadow: none;
 
