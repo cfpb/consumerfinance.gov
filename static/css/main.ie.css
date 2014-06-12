@@ -7013,7 +7013,7 @@ a.category-slug.active {
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
-  min-height: 2em;
+  min-height: 1.875em;
   z-index: 1;
   border: solid 1px #babbbd;
   background: #ffffff;
