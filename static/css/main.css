@@ -6117,13 +6117,10 @@ a.category-slug.active {
 */
 /* NOTE: all select[multiple] styles extend input[type="text"]. */
 /* topdoc
-    name: jquery.custom-select
+    name: Custom select menus via jquery.custom-input
     family: cfgov-misc
-    notes:
-      - "Note that this is a non-working example used to document the states
-        and structure."
     patterns:
-    - name: Initial markup structure (the non JavaScript default)
+    - name: Custom select menu demo with initialization markup
       markup: |
         <div class="custom-select">
             <select>
@@ -6147,57 +6144,19 @@ a.category-slug.active {
           It is meant to allow for cases where JavaScript is unavailable.
           The jQuery plugin transforms this initial HTML by adding more markup
           and classes. If JavaScript is unavailable the new elements and classes
-          won't be added, leaving the select still usable."
-    - name: Enabled state (JavaScript-enhanced)
-      markup: |
-        <div class="custom-select is-enabled">
-            <select class="custom-select_select"
-                    style="opacity: 0;">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-            </select>
-            <span class="custom-select_text">Option 1</span>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .custom-select.is-enabled
-            .custom-select_select
-            .custom-select_text
-            .custom-select_icon
-    - name: Hovered/focused state
-      markup: |
-        <div class="custom-select is-enabled is-hovered">
-            <select class="custom-select_select"
-                    style="opacity: 0;">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-            </select>
-            <span class="custom-select_text">Option 1</span>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .custom-select.is-enabled.is-hovered/.is-focusd
-            .custom-select_select
-            .custom-select_text
-            .custom-select_icon
-    - name: JavaScript setup
-      codenotes:
-        - |
-          <script src="path-to/jquery.js"></script>
-          <script src="path-to/jquery.custom-select.js"></script>
-      notes:
+          won't be added and won't interfere with default select behavior."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-select by detecting :hover and :focus on .custom-select."
         - "The jQuery plugin will auto intitiate all select elements that are
           wrapped in a parent with the class of custom-select."
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-select.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all select elements with the
+          class of .custom-select and append the the .is-enabled class which
+          activates the styling."
     tags:
     - cfgov-misc
 */
@@ -6260,10 +6219,10 @@ a.category-slug.active {
   outline: none;
 }
 /* topdoc
-  name: jquery.custom-input
+  name: Custom checkboxes and radio buttons via jquery.custom-input
   family: cfgov-misc
   patterns:
-    - name: Initial markup structure (the non JavaScript default)
+    - name: Custom checkbox demo with initialization markup
       markup: |
         <label class="form-label"
                for="custom-input_checkbox-lorem">
@@ -6274,6 +6233,7 @@ a.category-slug.active {
                    value="lorem">
             Lorem
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_checkbox-ipsum">
             <input class="custom-input"
@@ -6283,6 +6243,7 @@ a.category-slug.active {
                    value="ipsum">
             Ipsum
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_checkbox-dolor">
             <input class="custom-input"
@@ -6296,74 +6257,23 @@ a.category-slug.active {
         - |
           Structural cheat sheet:
           -----------------------
-          label.custom-form
-            input[type=checkbox]
+          label
+            input[type=checkbox].custom-input
       notes:
         - "Use the markup structure above to add .custom-input elements.
           It is meant to allow for cases where JavaScript is unavailable.
           The jQuery plugin transforms this initial HTML by adding more markup
           and classes. If JavaScript is unavailable the new elements and classes
-          won't be added, leaving the select still usable."
-        - "You MUST wrap input[type=radio].custom-input in a label."
+          won't be added and won't interfere with default input behavior."
+        - "You MUST wrap input[type=checkbox].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
-    - name: JS enabled
-      markup: |
-        <label class="form-label custom-input_label is-enabled"
-               for="custom-input_checkbox-lorem">
-            <span class="custom-input_text">
-                Lorem
-            </span>
-            <input class="custom-input custom-input_input"
-                   id="custom-input_checkbox-lorem"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="lorem">
-            <span class="custom-input_checkbox"></span>
-        </label>
-    - name: JS hovered/focused
-      markup: |
-        <label class="form-label custom-input_label is-hovered"
-               for="custom-input_checkbox-lorem">
-            <span class="custom-input_text">
-                Lorem
-            </span>
-            <input class="custom-input custom-input_input"
-                   id="custom-input_checkbox-lorem"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="lorem">
-            <span class="custom-input_checkbox"></span>
-        </label>
-    - name: JS checked
-      markup: |
-        <label class="form-label custom-input_label is-checked"
-               for="custom-input_checkbox-lorem">
-            <span class="custom-input_text">
-                Lorem
-            </span>
-            <input class="custom-input custom-input_input"
-                   id="custom-input_checkbox-lorem"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="lorem">
-            <span class="custom-input_checkbox"></span>
-        </label>
-    - name: JS checked/focused
-      markup: |
-        <label class="form-label custom-input_label is-checked is-focused is-checkedFocused"
-               for="custom-input_checkbox-lorem">
-            <span class="custom-input_text">
-                Lorem
-            </span>
-            <input class="custom-input custom-input_input"
-                   id="custom-input_checkbox-lorem"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="lorem">
-            <span class="custom-input_checkbox"></span>
-        </label>
-    - name: Custom radio button
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-input by detecting :hover and :focus on .custom-input."
+        - "JavaScript is used to detect change events to the input. By clicking
+          the label element you change the checked property and the plugin will
+          add the .is-checked class."
+    - name: Custom radio button demo with initialization markup
       markup: |
         <label class="form-label"
                for="custom-input_radio-lorem">
@@ -6374,6 +6284,7 @@ a.category-slug.active {
                    value="lorem">
             Lorem
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_radio-ipsum">
             <input class="custom-input"
@@ -6383,6 +6294,7 @@ a.category-slug.active {
                    value="ipsum">
             Ipsum
         </label>
+        <br>
         <label class="form-label"
                for="custom-input_radio-dolor">
             <input class="custom-input"
@@ -6403,23 +6315,28 @@ a.category-slug.active {
           It is meant to allow for cases where JavaScript is unavailable.
           The jQuery plugin transforms this initial HTML by adding more markup
           and classes. If JavaScript is unavailable the new elements and classes
-          won't be added, leaving the select still usable."
+          won't be added and won't interfere with default input behavior."
         - "You MUST wrap input[type=radio].custom-input in a label."
         - "Remember to use for and id attributes. This will allow IE less than 8
           to trigger the input on label click."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-input by detecting :hover and :focus on .custom-input."
+        - "JavaScript is used to detect change events to the input. By clicking
+          the label element you change the checked property and the plugin will
+          add the .is-checked class."
     - name: JavaScript setup
-      codenotes:
-        - |
-          <script src="path-to/jquery.js"></script>
-          <script src="path-to/jquery.custom-input.js"></script>
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-input.js"></script>
       notes:
-        - "The jQuery plugin will auto intitiate all input[type=radio]
-          elements with the class of .custom-input."
+        - "The jQuery plugin will auto intitiate all input[type=checkbox] and
+          input[type=radio] elements with the class of .custom-input and append
+          the the .is-enabled class which activates the styling."
   tags:
     - cfgov-misc
 */
 .custom-input.is-enabled {
-  display: inline-block;
+  display: block;
   position: relative;
   margin-right: 0.375em;
   padding: 0 0 0 1.25em;
@@ -6450,7 +6367,6 @@ a.category-slug.active {
   border-radius: 100%;
 }
 .custom-input_label {
-  display: inline-block;
   position: relative;
   z-index: 2;
   padding-left: 1.25em;
