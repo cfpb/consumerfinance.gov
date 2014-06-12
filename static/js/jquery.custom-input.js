@@ -40,7 +40,13 @@
                         label.removeClass('is-focused');
                         label.removeClass('is-checkedFocused');
                     }
-                );
+                )
+                .on('mousedown', function(){
+                    label.addClass('is-active');
+                })
+                .on('mouseup', function(){
+                    label.removeClass('is-active');
+                });
 
                 // Bind click, focus, blur and custom events.
                 input.on('updateState', function(){
