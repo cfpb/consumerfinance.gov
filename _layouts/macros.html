@@ -1,0 +1,22 @@
+{# Build a Twitter share URL #}
+{% macro share_twitter_url() %}
+    {% set share_twitter_url = "http://twitter.com/intent/tweet" %}
+    {% set share_twitter_url = share_twitter_url + "?url=" + request.url|urlencode %}
+    {% set share_twitter_url = share_twitter_url + "&amp;via=CFPB" %}
+    {% if post %}
+        {# If this is a post object, check for custom fields having been set #}
+        {% if post.custom_fields.twtr_text %}
+            {% set share_twitter_url = share_twitter_url + "&amp;text=" + post.custom_fields.twtr_text.0|urlencode + "%20--" %}
+        {% endif %}
+        {% if post.custom_fields.twtr_rel %}
+            {% set share_twitter_url = share_twitter_url + "&amp;related=" + post.custom_fields.twtr_rel.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_lang %}
+            {% set share_twitter_url = share_twitter_url + "&amp;lang=" + post.custom_fields.twtr_lang.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_hash %}
+            {% set share_twitter_url = share_twitter_url + "&amp;hashtags=" + post.custom_fields.twtr_hash.0 %}
+        {% endif %}
+    {% endif %}
+    {{ share_twitter_url }}
+{% endmacro %}
