@@ -1,25 +1,22 @@
 (function ($) {
 
-    $.fn.cf_pagination = function(){
+    $.fn.cf_pagination = function(userSettings){
 
         // Todo: Modify the URL using https://github.com/browserstate/history.js
 
-        /**
-         * ...
-         * @param {eventObject}
-         */
-        function submit(e) {
+        function submit(e, callback) {
+            var action = getAjaxAction(e);
+
             e.preventDefault();
 
-            $.when(getPaginatedPosts(getAjaxAction(e)))
-            .then(updatePosts);
+            $.when(getPaginatedPosts(action))
+            .then(function(results) {
+                updatePosts(results);
+                callback(e);
+            });
         }
 
-        /**
-         * ...
-         * @param {string}
-         */
-        function updatePosts(results){
+        function updatePosts(results) {
             // Animation
             // $('#pagination_content')
             // .fadeOut(400, function(){
@@ -35,10 +32,6 @@
             $('html,body').animate({scrollTop: $('.content_main').offset().top}, 0);
         }
 
-        /**
-         * ...
-         * @param {eventObject}
-         */
         function getAjaxAction(e) {
             var action = '' + 
                          // Remove everything after the '?'
@@ -48,25 +41,23 @@
                          '?' +
                          $(e.currentTarget).serialize() +
                          '#pagination_content';
-            console.log(action);
             return action;
         }
 
-        /**
-         * ...
-         * @param {string}
-         */
         function getPaginatedPosts(page) {
             var promise = $.get(page);
             return promise;
         }
 
         return $(this).each(function(){
-            $(this).on('submit', '.pagination_form', submit)​;
+            var settings = $.extend({
+                        'callback': function(e){}
+                    }, userSettings );
+
+            $(this).on('submit', '.pagination_form', function(e){
+                submit(e, settings.callback);
+            })​;
         });
     };
-
-    // Auto init
-    $('body').cf_pagination();
 
 }(jQuery));
