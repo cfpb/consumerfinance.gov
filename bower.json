@@ -48,7 +48,7 @@
       "js": "chosen.jquery.js"
     },
     "history.js": {
-      "js": "scripts/bundled-uncompressed/html4+html5/jquery.history.js"
+      "js": "scripts/bundled-uncompressed/html5/jquery.history.js"
     },
     "html5shiv": {
       "js": "dist/html5shiv-printshiv.min.js"

@@ -74,8 +74,8 @@ module.exports = function(grunt) {
       },
       bodyScripts: {
         src: [
-          'vendor/history.js/jquery.history.js',
           'vendor/jquery/jquery.js',
+          'vendor/history.js/jquery.history.js',
           'vendor/chosen/chosen.jquery.js',
           'vendor/cf-*/*.js',
           'static/js/jquery.custom-input.js',
