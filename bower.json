@@ -29,7 +29,7 @@
     "cf-pagination": "git://github.com/cfpb/cf-pagination.git",
     "cf-typography": "git://github.com/cfpb/cf-typography.git",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
-    "history": "~1.8.0",
+    "history.js": "~1.8.0",
     "html5shiv": "latest",
     "jquery": "~1.11.0",
     "normalize-css": "~3.0.0",
@@ -46,6 +46,9 @@
       "css": "chosen.css",
       "img": "*.png",
       "js": "chosen.jquery.js"
+    },
+    "history.js": {
+      "js": "scripts/bundled-uncompressed/html4+html5/jquery.history.js"
     },
     "html5shiv": {
       "js": "dist/html5shiv-printshiv.min.js"
