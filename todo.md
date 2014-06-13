@@ -42,4 +42,7 @@
 - Tags in filter list bug
   https://github.com/rosskarchner/sheer/issues/18
 
-Jira, stories VS tasks
+- Scrum stuff
+  - Our backlog is not in good shape for sprint planning
+  - We need to input issues ourselves
+  - Jira, stories VS tasks?
