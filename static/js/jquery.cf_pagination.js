@@ -2,6 +2,8 @@
 
     $.fn.cf_pagination = function(){
 
+        // Todo: Modify the URL using https://github.com/browserstate/history.js
+
         /**
          * ...
          * @param {eventObject}
