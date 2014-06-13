@@ -39,3 +39,15 @@ $('.js-form_clear').on('click', function() {
     .trigger('chosen:updated');
 });
 
+
+/* ==========================================================================
+   Init pagination
+   ========================================================================== */
+
+$('body').cf_pagination(
+    {
+        callback: function(e) {
+            History.pushState(null, null, '?' + $(e.currentTarget).serialize());
+        }
+    }
+);
