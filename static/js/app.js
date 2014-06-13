@@ -7,6 +7,7 @@ $(".chosen-select").chosen({
     no_results_text: "Oops, nothing found!"
 });
 
+
 /* ==========================================================================
    Clear form button
    - Clear checkboxes and selects
@@ -35,5 +36,6 @@ $('.js-form_clear').on('click', function() {
     // Clear Chosen.js elements
     $form.find('.chosen-select')
     .val('')
-    .trigger("chosen:updated");
+    .trigger('chosen:updated');
 });
+
