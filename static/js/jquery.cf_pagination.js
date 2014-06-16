@@ -25,11 +25,9 @@
             //     .hide()
             //     .fadeIn(400);
             // });
-            // $('html,body').animate({scrollTop: $('#pagination_content').offset().top}, 800);
 
             // No animation
             $('#pagination_content').replaceWith(results);
-            $('html,body').animate({scrollTop: $('.content_main').offset().top}, 0);
         }
 
         function getAjaxAction(e) {
