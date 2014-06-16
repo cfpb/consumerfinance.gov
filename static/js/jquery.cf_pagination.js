@@ -31,11 +31,7 @@
         }
 
         function getAjaxAction(e) {
-            var action = '' + 
-                         // Remove everything after the '?'
-                         e.currentTarget.action.split('?')[0]
-                         .replace('#pagination_content','') + // Remove '#pagination_content' so we can add it in the right spot
-                         $(e.currentTarget).parents('.pagination').data('ajax-action') +
+            var action = $(e.currentTarget).parents('.pagination').data('ajax-action') +
                          '?' +
                          $(e.currentTarget).serialize() +
                          '#pagination_content';
