@@ -38,19 +38,6 @@
         </option>
     {% endmacro %}
 
-    {% macro post_summary(post) %}
-        <h1 class="summary_header">{{ post.title }}</h1>
-        <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
-        {% if post.author.0 %}
-        <p class="summary_byline">
-            By {{ post.author.0 }}
-        {% if post.author.1 %}
-            and {{ post.author.1 }}
-        {% endif %}
-        </p>
-        {% endif %}
-    {% endmacro %}
-
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         {# Only show the hero when:
@@ -271,94 +258,7 @@
                 </div>
             </div><!-- END .expandable -->
 
-            <div id="pagination_content"></div>
-
-            {% for post in posts %}
-                <article class="post-preview">
-                    <div class="meta-header">
-                        <span class="date meta-header_right">
-                            {{ post.date | date("%b %d, %Y") }}
-                        </span>
-                        <a href="#" class="category-slug meta-header_left">
-                        {% if post.category.0 %}
-                            {% if post.category.0|lower == 'announcements &amp; updates' %}
-                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                            {% elif post.category.0|lower == 'consumer information' %}
-                            <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                            {% elif post.category.0|lower == 'engagement' %}
-                            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-                            {% elif post.category.0|lower == 'innovation &amp; data' %}
-                            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-                            {% endif %}
-                            <span class="u-visually-hidden">Category:</span>
-                            {{ post.category.0 }}
-                        {% else %}
-                            &nbsp;
-                        {% endif %}
-                        </a>
-                    </div>
-                    {% if post.thumbnail.images %}
-                    <a class="media-object" href="{{ post.permalink }}">
-                        <div class="media-object_image-container">
-                            <img class="media-object_image"
-                                 src="{{ post.thumbnail.images.full.url }}"
-                                 alt="{{ post.thumbnail.alt_text }}">
-                        </div>
-                        <div class="media-object_text-container summary">
-                            {{ post_summary(post) }}
-                        </div>
-                    </a>
-                    {% else %}
-                    <a class="summary" href="{{ post.permalink }}">
-                        {{ post_summary(post) }}
-                    </a>
-                    {% endif %}
-                </article>
-            {% endfor %}
-
-                <nav class="post-pagination pagination" role="navigation" aria-label="Pagination">
-                {% if posts.current_page > 1 %}
-                    <a class="btn pagination_prev"
-                       href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
-                {% else %}
-                    <a class="btn btn-disabled pagination_prev">
-                {% endif %}
-                        <span class="btn-icon-left cf-icon cf-icon-left"></span>
-                        Newer
-                    </a>
-                {% if posts.current_page < posts.pages %}
-                    <a class="btn pagination_next"
-                       href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
-                {% else %}
-                    <a class="btn btn-disabled pagination_next">
-                {% endif %}
-                        Older
-                        <span class="btn-icon-right cf-icon cf-icon-right"></span>
-                    </a>
-                    <form class="pagination_form" action="#pagination_content">
-                        <label class="pagination_label" for="pagination_current-page">
-                            Page
-                            <span class="u-visually-hidden">
-                                number out of {{ posts.pages }} total pages
-                            </span>
-                        </label>
-                        <input class="pagination_current-page"
-                               id="pagination_current-page"
-                               name="page"
-                               type="number"
-                               min="1"
-                               max="{{ posts.pages }}"
-                               value="{{ posts.current_page }}" />
-                        <label class="pagination_label">
-                            <span aria-hidden="true">
-                                of {{ posts.pages }}
-                            </span>
-                        </label>
-                        <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
-                            Go
-                        </button>
-                    </form>
-                </nav>
+            {% include "posts-paginated.html" %}
 
             </section><!-- END .content_main -->
 

@@ -6757,7 +6757,7 @@ a.category-slug.active {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 66.25em) {
   .form-l_col-1-3 {
     display: inline-block;
     -webkit-box-sizing: border-box;
