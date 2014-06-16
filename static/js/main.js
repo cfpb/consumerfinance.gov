@@ -13981,13 +13981,12 @@ $('body').cf_pagination(
 // Based on http://css-tricks.com/snippets/javascript/get-url-variables/ and
 // added optional second argument.
 
-function getQueryVariable(variable /*, queryString*/)
-{
+function getQueryVariable(variable, queryString) {
     var query;
     var vars;
 
-    if (arguments.length > 1) {
-        query = arguments[1];
+    if (typeof queryString === 'string') {
+        query = queryString;
     } else {
         query = window.location.search.substring(1);
     }
