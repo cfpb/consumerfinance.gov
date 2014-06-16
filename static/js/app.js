@@ -77,7 +77,7 @@ $('body').cf_pagination(
 // Based on http://css-tricks.com/snippets/javascript/get-url-variables/ and
 // added optional second argument.
 
-function getQueryVariable(variable/*,queryString*/)
+function getQueryVariable(variable /*, queryString*/)
 {
     var query;
     var vars;
