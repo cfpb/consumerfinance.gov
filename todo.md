@@ -26,7 +26,6 @@
     - http://codepen.io/anon/pen/tqJBp
     - http://codepen.io/anon/pen/bryAo
 - BB wordwrap issue
-- IE wrapper is messed up at smaller sizes
 - Green bar under header needs bg image
 - Layout docs
 - Update CF components with patterns
