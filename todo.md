@@ -26,7 +26,6 @@
     - http://codepen.io/anon/pen/tqJBp
     - http://codepen.io/anon/pen/bryAo
 - BB wordwrap issue
-- IE wrapper is messed up at smaller sizes
 - Green bar under header needs bg image
 - Layout docs
 - Update CF components with patterns
@@ -42,4 +41,8 @@
 - Tags in filter list bug
   https://github.com/rosskarchner/sheer/issues/18
 
-Jira, stories VS tasks
+- Scrum stuff
+  - Our backlog is not in good shape for sprint planning
+  - We need to input issues ourselves
+  - Hard to know what's ready for front end
+  - Jira, stories VS tasks?
