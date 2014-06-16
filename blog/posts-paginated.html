@@ -3,7 +3,13 @@
 
 {% macro post_summary(post) %}
     <h1 class="summary_header">{{ post.title }}</h1>
-    <p class="summary_text summary_text__max">{{ post.excerpt|striptags }}</p>
+    <p class="summary_text summary_text__max">
+    {% if post.dek %}
+        {{ post.dek|striptags }}
+    {% else %}
+        {{ post.excerpt|striptags }}
+    {% endif %}
+    </p>
     {% if post.author.0 %}
     <p class="summary_byline">
         By {{ post.author.0 }}
