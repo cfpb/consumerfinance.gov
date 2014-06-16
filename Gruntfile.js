@@ -168,14 +168,24 @@ module.exports = function(grunt) {
       ' */',
 
     usebanner: {
-      taskName: {
+      css: {
         options: {
           position: 'top',
           banner: '<%= banner %>',
           linebreak: true
         },
         files: {
-          src: [ 'static/css/*.min.css', 'static/js/*.min.js' ]
+          src: ['static/css/*.min.css']
+        }
+      },
+      js: {
+        options: {
+          position: 'top',
+          banner: '<%= banner %>',
+          linebreak: true
+        },
+        files: {
+          src: ['static/js/*.min.js']
         }
       }
     },
@@ -365,8 +375,8 @@ module.exports = function(grunt) {
    * Create custom task aliases and combinations
    */
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'concat:cf-less']);
-  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin']);
-  grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner']);
+  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin', 'usebanner:css']);
+  grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'topdoc']);
   grunt.registerTask('test', ['jshint']);
 
