@@ -13956,7 +13956,7 @@ $('body').cf_pagination(
             // Update the URL
             History.pushState(
                 { page:pageNum },
-                'Posts pagination',
+                document.title,
                 '?' + $(e.currentTarget).serialize()
             );
 
