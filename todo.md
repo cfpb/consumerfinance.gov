@@ -42,7 +42,6 @@
   https://github.com/rosskarchner/sheer/issues/18
 
 - Scrum stuff
-  - Our backlog is not in good shape for sprint planning
-  - We need to input issues ourselves
   - Hard to know what's ready for front end
   - Jira, stories VS tasks?
+  - No cf updates
