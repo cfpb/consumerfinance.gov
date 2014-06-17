@@ -271,6 +271,24 @@
                         </span>
                     </h1>
                     <ul class="list list__popular-stories list__unstyled list__spaced">
+                        {% for slug in view.custom_fields.popular_posts %}
+                        {% set pop_post = get_document('posts', slug) %}
+                        <li class="list_item">
+                            <a class="list_link"
+                               href="{{ pop_post.permalink }}">
+                                {{ pop_post.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="related-links">
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Related links
+                        </span>
+                    </h1>
+                    <ul class="list list__popular-stories list__unstyled list__spaced">
                         {% for link in view.related_links %}
                         <li class="list_item">
                             <a class="list_link list_link__large"
@@ -280,9 +298,6 @@
                         </li>
                         {% endfor %}
                     </ul>
-                </section>
-                <section class="related-links">
-                    <div class="demo-placeholder">related links placeholder</div>
                 </section>
                 <section class="stay-informed">
                     <div class="demo-placeholder">stay informed placeholder</div>
