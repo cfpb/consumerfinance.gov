@@ -29,8 +29,8 @@
             <span class="date meta-header_right">
                 {{ post.date | date("%b %d, %Y") }}
             </span>
-            <a href="#" class="category-slug meta-header_left">
             {% if post.category.0 %}
+            <a href="/blog/?filter_category={{ post.category.0 }}" class="category-slug meta-header_left">
                 {% if post.category.0|lower == 'announcements &amp; updates' %}
                 <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
                 {% elif post.category.0|lower == 'consumer information' %}
@@ -42,10 +42,10 @@
                 {% endif %}
                 <span class="u-visually-hidden">Category:</span>
                 {{ post.category.0|safe }}
+            </a>
             {% else %}
                 &nbsp;
             {% endif %}
-            </a>
         </div>
         {% if post.thumbnail.images %}
         <a class="media-object" href="{{ post.permalink }}">
