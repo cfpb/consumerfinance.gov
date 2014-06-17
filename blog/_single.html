@@ -158,11 +158,27 @@
             </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
+                <section class="related-posts">
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Related blog posts
+                        </span>
+                    </h1>
+                    <ul class="list list__unstyled list__spaced">
+                    {% for similar in more_like_this(post) %}
+                    {% if loop.index < 6 %}
+                        <li class="list_item">
+                            <a class="list_link"
+                               href="{{ similar.permalink }}">
+                                {{ similar.title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                    </ul>
+                </section>
                 <section class="popular-stories">
                     <div class="demo-placeholder">Related news placeholder</div>
-                </section>
-                <section class="related-links">
-                    <div class="demo-placeholder">Related stories placeholder</div>
                 </section>
                 <section class="stay-informed">
                     <div class="demo-placeholder">Stay informed placeholder</div>
