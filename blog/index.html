@@ -15,6 +15,7 @@
     %}
 
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
+    {% set view = get_document('views', 'blog') %}
 
     {% macro filter_checkbox(field,value) %}
         <input class="custom-input"
@@ -45,7 +46,7 @@
            2. We are on the first page of paginated results
         #}
         {% if active_filters|length == 0 and posts.current_page == 1 %}
-        {% set hero = view.hero %}
+        {% set hero = view.hero.post %}
         <section class="content_hero hero"
                  style="background-color:{{ hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
