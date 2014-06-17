@@ -44,30 +44,40 @@ $('.js-form_clear').on('click', function() {
    Init pagination
    ========================================================================== */
 
-$('body').cf_pagination(
-    {
-        callback: function(e) {
-            var pageNum = getQueryVariable('page', $(e.currentTarget).serialize());
+$('body').cf_pagination({
+    callback: function(e) {
+        var pageNum = getQueryVariable('page', $(e.currentTarget).serialize());
+        var newQueryString = replaceQueryVariable('page', pageNum);
 
-            // Update the URL
-            History.pushState(
-                { page:pageNum },
-                'Posts pagination',
-                '?' + $(e.currentTarget).serialize()
-            );
-
-            // Hide the hero if this page is > 1
-            if (pageNum > 1) {
-                $('.content_hero').hide();
+        // If replaceQueryVariable returns false it measn that 'page' was not
+        // found within the query string. This means we should set 'page'
+        // manually.
+        if (newQueryString === false) {
+            if (getQuery() === false) {
+                // There is no current query string in this condition so we need
+                // to build our own.
+                newQueryString = '?' + $(e.currentTarget).serialize();
             } else {
-                $('.content_hero').show();
+                // The page query is not present in this condition so let's add
+                // it to the existing query string.
+                newQueryString = getQuery() + '&' + $(e.currentTarget).serialize();
             }
-
-            // Scroll to the top of the results
-            $('html,body').animate({scrollTop: $('.content_main').offset().top}, 0);
         }
+
+        // Update the URL
+        History.pushState({ page:pageNum }, document.title, newQueryString);
+
+        // Hide the hero if this page is > 1
+        if (pageNum > 1) {
+            $('.content_hero').hide();
+        } else {
+            $('.content_hero').show();
+        }
+
+        // Scroll to the top of the results
+        $('html,body').animate({scrollTop: $('.content_main').offset().top}, 800);
     }
-);
+});
 
 
 /* ==========================================================================
@@ -77,7 +87,7 @@ $('body').cf_pagination(
 // Based on http://css-tricks.com/snippets/javascript/get-url-variables/ and
 // added optional second argument.
 
-function getQueryVariable(variable, queryString) {
+function getQueryVariable(key, queryString) {
     var query;
     var vars;
 
@@ -91,10 +101,47 @@ function getQueryVariable(variable, queryString) {
 
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        if (pair[0] == variable) {
+        if (pair[0] == key) {
             return pair[1];
         }
     }
 
-    return(false);
+    return false;
+}
+
+function replaceQueryVariable(key, value, queryString) {
+    var query;
+    var vars;
+
+    if (typeof queryString === 'string') {
+        query = queryString;
+    } else {
+        if (window.location.search.charAt(0) === '?') {
+            query = window.location.search.substring(1);
+        } else {
+            query = window.location.search;
+        }
+    }
+
+    vars = query.split('&');
+
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (pair[0] == key) {
+            return '?' + query.replace(
+                pair[0] + '=' + pair[1],
+                pair[0] + '=' + value
+            );
+        }
+    }
+
+    return false;
+}
+
+function getQuery() {
+    if (window.location.search.charAt(0) === '') {
+        return false;
+    } else {
+        return window.location.search;
+    }
 }

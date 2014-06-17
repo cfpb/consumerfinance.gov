@@ -18,16 +18,16 @@
 
         function updatePosts(results) {
             // Animation
-            // $('#pagination_content')
-            // .fadeOut(400, function(){
-            //     $(this).replaceWith(results);
-            //     $('#pagination_content')
-            //     .hide()
-            //     .fadeIn(400);
-            // });
+            $('#pagination_content')
+            .fadeOut(400, function(){
+                $(this).replaceWith(results);
+                $('#pagination_content')
+                .hide()
+                .fadeIn(400);
+            });
 
             // No animation
-            $('#pagination_content').replaceWith(results);
+            // $('#pagination_content').replaceWith(results);
         }
 
         function getAjaxAction(e) {
