@@ -47,11 +47,11 @@
                 &nbsp;
             {% endif %}
         </div>
-        {% if post.thumbnail.images %}
+        {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
         <a class="media-object" href="{{ post.permalink }}">
             <div class="media-object_image-container">
                 <img class="media-object_image"
-                     src="{{ post.thumbnail.images.full.url }}"
+                     src="{{ post.thumbnail.images.fj_thumbnail.url }}"
                      alt="{{ post.thumbnail.alt_text }}">
             </div>
             <div class="media-object_text-container summary">
