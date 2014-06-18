@@ -264,13 +264,13 @@
             </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
-                <section class="popular-stories">
+                <section class="content_sidebar-item popular-stories">
                     <h1 class="header-slug">
                         <span class="header-slug_inner">
                             Popular stories
                         </span>
                     </h1>
-                    <ul class="list list__popular-stories list__unstyled list__spaced">
+                    <ul class="list list__unstyled list__spaced">
                         {% for slug in view.custom_fields.popular_posts %}
                         {% set pop_post = get_document('posts', slug) %}
                         <li class="list_item">
@@ -282,7 +282,7 @@
                         {% endfor %}
                     </ul>
                 </section>
-                <section class="related-links">
+                <section class="content_sidebar-item related-links">
                     <h1 class="header-slug">
                         <span class="header-slug_inner">
                             Related links
@@ -299,7 +299,7 @@
                         {% endfor %}
                     </ul>
                 </section>
-                <section class="stay-informed">
+                <section class="content_sidebar-item stay-informed">
                     <div class="demo-placeholder">stay informed placeholder</div>
                 </section>
             </aside><!-- END .content_sidebar -->

@@ -6196,6 +6196,10 @@ img {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.content_sidebar-item + .content_sidebar-item {
+  margin-top: 3.75em;
+}
+
 .header .demo-placeholder,
 .content_hero .demo-placeholder,
 .footer .demo-placeholder {
