@@ -33,7 +33,8 @@
                 },
 
                 onNewInputChange: function() {
-                    // We need to use inputSplit instead of this here.
+                    // We need to use `inputSplit` instead of `this` because
+                    // it's getting used as an event handler.
                     inputSplit.updateOldInputVal();
                 },
 
