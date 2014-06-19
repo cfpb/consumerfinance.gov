@@ -96,7 +96,7 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-            <div class="expandable">
+            <div class="expandable expandable__expanded">
                 <div class="expandable_header expandable_header__spaced">
                     <div class="expandable_header-right expandable_header-right__float-on-medium">
                         <a class="expandable_target btn btn-secondary"
@@ -177,10 +177,101 @@
                                         Date range
                                     </label>
                                     <div class="form-group_item">
-                                        <input type="date" name="filter_range_date_gte">
-                                        <input type="date"
+                                        <input class="input-split"
+                                               type="text"
+                                               name="filter_range_date_gte"
+                                               value="2014-05">
+                                    </div>
+                                    <div class="form-group_item input-group"
+                                         id="filter_range_date_gte-replacement"
+                                         style="display:none;">
+                                        <div class="input-group_item custom-select">
+                                            <label class="u-visually-hidden" for="filter_from_month">
+                                                From month
+                                            </label>
+                                            <select class="form-input-month"
+                                                    id="filter_from_month"
+                                                    name="filter_from_month">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="input-group_item custom-select">
+                                            <label class="u-visually-hidden" for="filter_from_year">
+                                                From year
+                                            </label>
+                                            <select class="form-input_year"
+                                                    id="filter_from_year"
+                                                    name="filter_from_year">
+                                                <option value="">Year</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group_item">
+                                        <input class="input-split"
+                                               type="text"
                                                name="filter_range_date_lte"
-                                               value="2014-05-01">
+                                               value="2012-05">
+                                    </div>
+                                    <div class="form-group_item input-group"
+                                         id="filter_range_date_lte-replacement"
+                                         style="display:none;">
+                                        <div class="custom-select input-group_item">
+                                            <label class="u-visually-hidden" for="filter_to_month">
+                                                To month
+                                            </label>
+                                            <select class="form-input-month"
+                                                    id="filter_to_month"
+                                                    name="filter_to_month">
+                                                <option value="">Month</option>
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="custom-select input-group_item">
+                                            <label class="u-visually-hidden" for="filter_to_year">
+                                                To year
+                                            </label>
+                                            <select class="form-input_year"
+                                                    id="filter_to_year"
+                                                    name="filter_to_year">
+                                                <option value="">Year</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
