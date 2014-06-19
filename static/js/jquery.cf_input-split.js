@@ -1,7 +1,7 @@
 (function ($) {
 
     $.fn.cf_inputSplit = function(replacement, inputs, delimeter) {
-        return $(this).each(function() {
+        return this.each(function() {
             var inputSplit = {
                 $oldHTML: $(this),
                 $replacementHTML: $(replacement),
@@ -17,7 +17,7 @@
                     this.$oldInput = this.getFormElements(this.$oldHTML);
 
                     // Hide the old input and show the new ones
-                    this.$oldInput.hide();
+                    this.$oldHTML.hide();
                     this.$replacementHTML.show();
 
                     for (var i = 0; i < inputs.length; i++) {
@@ -33,6 +33,7 @@
                 },
 
                 onNewInputChange: function() {
+                    // We need to use inputSplit instead of this here.
                     inputSplit.updateOldInputVal();
                 },
 
