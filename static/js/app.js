@@ -41,7 +41,23 @@ $('.js-form_clear').on('click', function() {
 
 
 /* ==========================================================================
-   Init pagination
+   Init jquery.cf_inputSplit
+   ========================================================================== */
+
+$('#filter_range_date_gte').cf_inputSplit(
+    '#filter_range_date_gte-replacement',
+    ['#filter_from_year', '#filter_from_month'],
+    '-'
+);
+$('#filter_range_date_lte').cf_inputSplit(
+    '#filter_range_date_lte-replacement',
+    ['#filter_to_year', '#filter_to_month'],
+    '-'
+);
+
+
+/* ==========================================================================
+   Init jquery.cf_pagination
    ========================================================================== */
 
 $('body').cf_pagination({
