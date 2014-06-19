@@ -45,3 +45,8 @@
   - Hard to know what's ready for front end
   - Jira, stories VS tasks?
   - No cf updates
+
+- jQuery plugins with methods:
+  - http://viget.com/inspire/jquery-plugin-patterns
+  - http://stackoverflow.com/questions/1117086/how-to-create-a-jquery-plugin-with-methods
+  - https://github.com/twitter/typeahead.js/blob/master/src/typeahead/plugin.js
