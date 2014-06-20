@@ -44,16 +44,14 @@ $('.js-form_clear').on('click', function() {
    Init jquery.cf_inputSplit
    ========================================================================== */
 
-$('#filter_range_date_gte').cf_inputSplit(
-    '#filter_range_date_gte-replacement',
-    ['#filter_from_year', '#filter_from_month'],
-    '-'
-);
-$('#filter_range_date_lte').cf_inputSplit(
-    '#filter_range_date_lte-replacement',
-    ['#filter_to_year', '#filter_to_month'],
-    '-'
-);
+$('#filter_range_date_gte').cf_inputSplit({
+    newHTML: '#filter_range_date_gte-replacement',
+    newInputsOrder: ['#filter_from_year', '#filter_from_month']
+});
+$('#filter_range_date_lte').cf_inputSplit({
+    newHTML: '#filter_range_date_lte-replacement',
+    newInputsOrder: ['#filter_to_year', '#filter_to_month']
+});
 
 
 /* ==========================================================================
