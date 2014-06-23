@@ -2,9 +2,9 @@
    Initialize Chosen.js
    ========================================================================== */
 
-$(".chosen-select").chosen({
+$('.chosen-select').chosen({
     width: '100%',
-    no_results_text: "Oops, nothing found!"
+    no_results_text: 'Oops, nothing found!'
 });
 
 
@@ -49,6 +49,7 @@ $('#filter_range_date_gte').cf_inputSplit({
     newInputsOrder: ['#filter_from_year', '#filter_from_month'],
     delimiter: '-'
 });
+
 $('#filter_range_date_lte').cf_inputSplit({
     newHTML: '#filter_range_date_lte-replacement',
     newInputsOrder: ['#filter_to_year', '#filter_to_month'],
