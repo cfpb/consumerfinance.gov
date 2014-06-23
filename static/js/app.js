@@ -60,6 +60,7 @@ $('#filter_range_date_lte').cf_inputSplit({
    Init jquery.cf_pagination
    ========================================================================== */
 
+/*
 $('body').cf_pagination({
     callback: function(e) {
         var pageNum = getQueryVariable('page', $(e.currentTarget).serialize());
@@ -94,6 +95,7 @@ $('body').cf_pagination({
         $('html,body').animate({scrollTop: $('.content_main').offset().top}, 800);
     }
 });
+*/
 
 
 /* ==========================================================================
