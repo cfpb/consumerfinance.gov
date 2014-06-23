@@ -176,11 +176,12 @@
                                     <label class="form-label-header">
                                         Date range
                                     </label>
+                                    {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
                                     <div class="form-group_item"
                                           id="filter_range_date_gte">
                                         <input name="filter_range_date_gte"
                                                type="text"
-                                               value="2011-02">
+                                               value="{{ from_date if from_date }}">
                                     </div>
                                     <div class="form-group_item input-group"
                                          id="filter_range_date_gte-replacement"
@@ -222,11 +223,12 @@
                                             <span class="custom-select_icon cf-icon cf-icon-down"></span>
                                         </div>
                                     </div>
+                                    {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
                                     <div class="form-group_item"
                                          id="filter_range_date_lte">
                                         <input name="filter_range_date_lte"
                                                type="text"
-                                               value="2014-12">
+                                               value="{{ to_date if to_date }}">
                                     </div>
                                     <div class="form-group_item input-group"
                                          id="filter_range_date_lte-replacement"
