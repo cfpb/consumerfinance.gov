@@ -67,7 +67,7 @@
             var options = $.extend({
                 newHTML: '',
                 newInputsOrder: [],
-                delimiter: '-',
+                delimiter: '',
                 genericFields: 'input, select, textarea'
             }, userOptions);
 
