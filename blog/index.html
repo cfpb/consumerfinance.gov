@@ -11,7 +11,9 @@
     {% set active_filters =
        selected_filters_for_field('category') +
        selected_filters_for_field('tags') +
-       selected_filters_for_field('author')
+       selected_filters_for_field('author') + 
+       selected_filters_for_field('range_date_gte') + 
+       selected_filters_for_field('range_date_lte')
     %}
 
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
