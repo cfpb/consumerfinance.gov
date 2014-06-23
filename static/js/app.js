@@ -58,6 +58,9 @@ $('#filter_range_date_lte').cf_inputSplit({
     delimiter: '-'
 });
 
+$('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
+.trigger('updateState');
+
 
 /* ==========================================================================
    Init jquery.cf_pagination
