@@ -1,6 +1,8 @@
 # To do
 
 - Post stuff
+  - Posts with tags in title
+    - /blog/protecting-funds-from-the-cobell-v-salazar-settlement
   - Posts with annoying deks
     - /blog/save-the-date-detroit-michigan
     - /blog/understanding-reverse-mortgages
