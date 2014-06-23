@@ -65,6 +65,8 @@
 {% endfor %}
 
 
+{# Only show pagination if there #}
+{% if posts.pages > 1 %}
     <nav class="post-pagination pagination"
          role="navigation"
          aria-label="Pagination"
@@ -111,5 +113,6 @@
             </button>
         </form>
     </nav>
+{% endif %}
 
 </div> <!-- END #pagination_content -->
