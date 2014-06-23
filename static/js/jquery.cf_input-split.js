@@ -59,6 +59,13 @@
                delimiter: '.'
            });
 
+       initialValues: Sets the selected state for each replacement field.
+       Currently only select elements are supported.
+
+           $('#myinput').cf_inputSplit({
+               initialValues: ['2014', '01']
+           });
+
        ========================================================================== */
     $.fn.cf_inputSplit = function(userOptions) {
         return this.each(function() {
@@ -67,6 +74,7 @@
             var options = $.extend({
                 newHTML: '',
                 newInputsOrder: [],
+                initialValues: [],
                 delimiter: '',
                 genericFields: 'input, select, textarea'
             }, userOptions);
@@ -76,6 +84,7 @@
                 $newHTML: $(options.newHTML),
                 $oldInput: $(),
                 newInputs: options.newInputsOrder,
+                initialValues: options.initialValues,
                 delimiter: options.delimiter,
                 genericFields: options.genericFields,
 
@@ -108,13 +117,28 @@
                         }
                     }
 
-                    // Attach an event listener to the new inputs so we can
-                    // update the value of the old input whenever a new input
-                    // changes. Note: we need to use `inputSplit` instead of
-                    // `this` because it's getting called from the scope of
-                    // this.newInputs.
+                    // Now that we have an array of new inputs we can loop
+                    // through them and add stuff.
                     for (var i = 0; i < this.newInputs.length; i++) {
-                        $(this.newInputs[i]).on('change', inputSplit.onNewInputChange);
+                        var $input = $(this.newInputs[i]);
+
+                        // Attach an event listener to the new inputs so we can
+                        // update the value of the old input whenever a new input
+                        // changes. Note: we need to use `inputSplit` instead of
+                        // `this` because it's getting called from the scope of
+                        // this.newInputs.
+                        $input.on('change', inputSplit.onNewInputChange);
+
+                        // Add an intial value if one was specified.
+                        // Currently only select elements are supported.
+                        if ($input.is('select')) {
+                            $input.find('option').each(function(){
+                                if ($(this).val() == inputSplit.initialValues[i]) {
+                                    $(this).prop('selected', true);
+                                    $(this).attr('selected', true);
+                                }
+                            });
+                        }
                     }
 
                     // Hide the old input and show the new ones
