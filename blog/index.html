@@ -98,7 +98,7 @@
         <div class="wrapper content_wrapper">
             <section class="content_main">
 
-            <div class="expandable expandable__expanded">
+            <div class="expandable">
                 <div class="expandable_header expandable_header__spaced">
                     <div class="expandable_header-right expandable_header-right__float-on-medium">
                         <a class="expandable_target btn btn-secondary"
@@ -115,7 +115,13 @@
                 {% if active_filters|length > 0 %}
                     <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
                         <dt class="list_item">
-                            <span class="filtered-by_header">Filtered by</span>
+                            <span class="filtered-by_header">
+                            {%- if posts|list|length > 0 -%}
+                                Filtered by
+                            {% else %}
+                                No results for
+                            {% endif %}
+                            </span>
                         </dt>
                     {% for filter in active_filters %}
                         <dd class="list_item">
