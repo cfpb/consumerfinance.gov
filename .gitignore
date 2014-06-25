@@ -53,4 +53,5 @@ bower_components/
 *.swp
 *.pyc
 _lib/wpview_lookup.py
+_lib/wordpress_view_processor.py
 _settings/processors.json

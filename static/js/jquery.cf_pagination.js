@@ -50,7 +50,7 @@
 
             $(this).on('submit', '.pagination_form', function(e){
                 submit(e, settings.callback);
-            })​;
+            });
         });
     };
 

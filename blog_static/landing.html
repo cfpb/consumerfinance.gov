@@ -136,11 +136,11 @@
                                 <span class="u-visually-hidden">Category:</span>
                                 Announcements & updates
                             </span>
-                            <span class="summary">
+                            <div class="summary">
                                 <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
                                 <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
                                 <p class="summary_byline">By Patrice Ficklin</p>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -315,27 +315,35 @@
                                         <label class="form-label-header">
                                             Date range
                                         </label>
-                                        <div class="form-group_item input-group">
+                                        <div class="form-group_item"
+                                             id="filter_range_date_gte">
+                                            <input name="filter_range_date_gte"
+                                                   type="text"
+                                                   value="2011-02"
+                                                   placeholder="YYYY-MM">
+                                        </div>
+                                        <div class="form-group_item input-group"
+                                             id="filter_range_date_gte-replacement"
+                                             style="display:none;">
                                             <div class="input-group_item custom-select">
                                                 <label class="u-visually-hidden" for="filter_from_month">
                                                     From month
                                                 </label>
                                                 <select class="form-input-month"
-                                                        id="filter_from_month"
-                                                        name="filter_from_month">
+                                                        id="filter_from_month">
                                                     <option value="">Month</option>
-                                                    <option value="Jan">Jan</option>
-                                                    <option value="Feb">Feb</option>
-                                                    <option value="Mar">Mar</option>
-                                                    <option value="Apr">Apr</option>
-                                                    <option value="May">May</option>
-                                                    <option value="Jun">Jun</option>
-                                                    <option value="Jul">Jul</option>
-                                                    <option value="Aug">Aug</option>
-                                                    <option value="Sep">Sep</option>
-                                                    <option value="Oct">Oct</option>
-                                                    <option value="Nov">Nov</option>
-                                                    <option value="Dec">Dec</option>
+                                                    <option value="01">Jan</option>
+                                                    <option value="02">Feb</option>
+                                                    <option value="03">Mar</option>
+                                                    <option value="04">Apr</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">Jun</option>
+                                                    <option value="07">Jul</option>
+                                                    <option value="08">Aug</option>
+                                                    <option value="09">Sep</option>
+                                                    <option value="10">Oct</option>
+                                                    <option value="11">Nov</option>
+                                                    <option value="12">Dec</option>
                                                 </select>
                                                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
                                             </div>
@@ -344,8 +352,7 @@
                                                     From year
                                                 </label>
                                                 <select class="form-input_year"
-                                                        id="filter_from_year"
-                                                        name="filter_from_year">
+                                                        id="filter_from_year">
                                                     <option value="">Year</option>
                                                     <option value="2014">2014</option>
                                                     <option value="2013">2013</option>
@@ -355,27 +362,35 @@
                                                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
                                             </div>
                                         </div>
-                                        <div class="form-group_item input-group">
+                                        <div class="form-group_item"
+                                             id="filter_range_date_lte">
+                                            <input name="filter_range_date_lte"
+                                                   type="text"
+                                                   value="2014-12"
+                                                   placeholder="YYYY-MM">
+                                        </div>
+                                        <div class="form-group_item input-group"
+                                             id="filter_range_date_lte-replacement"
+                                             style="display:none;">
                                             <div class="custom-select input-group_item">
                                                 <label class="u-visually-hidden" for="filter_to_month">
                                                     To month
                                                 </label>
                                                 <select class="form-input-month"
-                                                        id="filter_to_month"
-                                                        name="filter_to_month">
+                                                        id="filter_to_month">
                                                     <option value="">Month</option>
-                                                    <option value="January">January</option>
-                                                    <option value="February">February</option>
-                                                    <option value="March">March</option>
-                                                    <option value="April">April</option>
-                                                    <option value="May">May</option>
-                                                    <option value="June">June</option>
-                                                    <option value="July">July</option>
-                                                    <option value="August">August</option>
-                                                    <option value="September">September</option>
-                                                    <option value="October">October</option>
-                                                    <option value="November">November</option>
-                                                    <option value="December">December</option>
+                                                    <option value="01">Jan</option>
+                                                    <option value="02">Feb</option>
+                                                    <option value="03">Mar</option>
+                                                    <option value="04">Apr</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">Jun</option>
+                                                    <option value="07">Jul</option>
+                                                    <option value="08">Aug</option>
+                                                    <option value="09">Sep</option>
+                                                    <option value="10">Oct</option>
+                                                    <option value="11">Nov</option>
+                                                    <option value="12">Dec</option>
                                                 </select>
                                                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
                                             </div>
@@ -384,8 +399,7 @@
                                                     To year
                                                 </label>
                                                 <select class="form-input_year"
-                                                        id="filter_to_year"
-                                                        name="filter_to_year">
+                                                        id="filter_to_year">
                                                     <option value="">Year</option>
                                                     <option value="2014">2014</option>
                                                     <option value="2013">2013</option>
@@ -552,13 +566,13 @@
             </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
-                <section class="popular-stories">
+                <section class="content_sidebar-item popular-stories">
                     <h1 class="header-slug">
                         <span class="header-slug_inner">
                             Popular stories
                         </span>
                     </h1>
-                    <ul class="list list__popular-stories list__unstyled list__spaced">
+                    <ul class="list list__unstyled list__spaced">
                         <li class="list_item">
                             <a class="list_link list_link__large" href="#">
                                 How to protect vulnerable children from credit reporting problems
@@ -586,10 +600,10 @@
                         </li>
                     </ul>
                 </section>
-                <section class="related-links">
+                <section class="content_sidebar-item related-links">
                     <div class="demo-placeholder">related links placeholder</div>
                 </section>
-                <section class="stay-informed">
+                <section class="content_sidebar-item stay-informed">
                     <div class="demo-placeholder">stay informed placeholder</div>
                 </section>
             </aside><!-- END .content_sidebar -->

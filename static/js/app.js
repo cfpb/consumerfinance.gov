@@ -2,9 +2,9 @@
    Initialize Chosen.js
    ========================================================================== */
 
-$(".chosen-select").chosen({
+$('.chosen-select').chosen({
     width: '100%',
-    no_results_text: "Oops, nothing found!"
+    no_results_text: 'Oops, nothing found!'
 });
 
 
@@ -41,9 +41,32 @@ $('.js-form_clear').on('click', function() {
 
 
 /* ==========================================================================
-   Init pagination
+   Init jquery.cf_inputSplit
    ========================================================================== */
 
+$('#filter_range_date_gte').cf_inputSplit({
+    newHTML: '#filter_range_date_gte-replacement',
+    newInputsOrder: ['#filter_from_year', '#filter_from_month'],
+    initialValues: $('#filter_range_date_gte input').val().split('-'),
+    delimiter: '-'
+});
+
+$('#filter_range_date_lte').cf_inputSplit({
+    newHTML: '#filter_range_date_lte-replacement',
+    newInputsOrder: ['#filter_to_year', '#filter_to_month'],
+    initialValues: $('#filter_range_date_lte input').val().split('-'),
+    delimiter: '-'
+});
+
+$('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
+.trigger('updateState');
+
+
+/* ==========================================================================
+   Init jquery.cf_pagination
+   ========================================================================== */
+
+/*
 $('body').cf_pagination({
     callback: function(e) {
         var pageNum = getQueryVariable('page', $(e.currentTarget).serialize());
@@ -78,6 +101,7 @@ $('body').cf_pagination({
         $('html,body').animate({scrollTop: $('.content_main').offset().top}, 800);
     }
 });
+*/
 
 
 /* ==========================================================================
