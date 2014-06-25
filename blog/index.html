@@ -11,10 +11,13 @@
     {% set active_filters =
        selected_filters_for_field('category') +
        selected_filters_for_field('tags') +
-       selected_filters_for_field('author')
+       selected_filters_for_field('author') + 
+       selected_filters_for_field('range_date_gte') + 
+       selected_filters_for_field('range_date_lte')
     %}
 
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
+    {% set view = get_document('views', 'blog') %}
 
     {% macro filter_checkbox(field,value) %}
         <input class="custom-input"
@@ -45,7 +48,7 @@
            2. We are on the first page of paginated results
         #}
         {% if active_filters|length == 0 and posts.current_page == 1 %}
-        {% set hero = view.hero %}
+        {% set hero = view.hero.post %}
         <section class="content_hero hero"
                  style="background-color:{{ hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
@@ -112,7 +115,13 @@
                 {% if active_filters|length > 0 %}
                     <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
                         <dt class="list_item">
-                            <span class="filtered-by_header">Filtered by</span>
+                            <span class="filtered-by_header">
+                            {%- if posts|list|length > 0 -%}
+                                Filtered by
+                            {%- else -%}
+                                No results for
+                            {% endif %}
+                            </span>
                         </dt>
                     {% for filter in active_filters %}
                         <dd class="list_item">
@@ -170,81 +179,109 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="form-l_col form-l_col-1-3">
+                            <div class="form-l_col form-l_col-1-3">
                                 <div class="form-group">
                                     <label class="form-label-header">
                                         Date range
                                     </label>
-                                    <div class="form-group_item">
-                                        <label class="u-visually-hidden" for="filter_from_month">
-                                            From month
-                                        </label>
-                                        <select class="form-input-month"
-                                                id="filter_from_month"
-                                                name="filter_from_month">
-                                            <option value="">Month</option>
-                                            <option value="">January</option>
-                                            <option value="">February</option>
-                                            <option value="">March</option>
-                                            <option value="">April</option>
-                                            <option value="">May</option>
-                                            <option value="">June</option>
-                                            <option value="">July</option>
-                                            <option value="">August</option>
-                                            <option value="">September</option>
-                                            <option value="">October</option>
-                                            <option value="">November</option>
-                                            <option value="">December</option>
-                                        </select>
-                                        <label class="u-visually-hidden" for="filter_from_year">
-                                            From year
-                                        </label>
-                                        <select class="form-input_year"
-                                                id="filter_from_year"
-                                                name="filter_from_year">
-                                            <option value="">Year</option>
-                                            <option value="">2014</option>
-                                            <option value="">2013</option>
-                                            <option value="">2012</option>
-                                            <option value="">2011</option>
-                                        </select>
+                                    {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
+                                    <div class="form-group_item"
+                                         id="filter_range_date_gte">
+                                        <input name="filter_range_date_gte"
+                                               type="text"
+                                               value="{{ from_date if from_date }}"
+                                               placeholder="YYYY-MM">
                                     </div>
-                                    <div class="form-group_item">
-                                        <label class="u-visually-hidden" for="filter_to_month">
-                                            To month
-                                        </label>
-                                        <select class="form-input-month"
-                                                id="filter_to_month"
-                                                name="filter_to_month">
-                                            <option value="">Month</option>
-                                            <option value="">January</option>
-                                            <option value="">February</option>
-                                            <option value="">March</option>
-                                            <option value="">April</option>
-                                            <option value="">May</option>
-                                            <option value="">June</option>
-                                            <option value="">July</option>
-                                            <option value="">August</option>
-                                            <option value="">September</option>
-                                            <option value="">October</option>
-                                            <option value="">November</option>
-                                            <option value="">December</option>
-                                        </select>
-                                        <label class="u-visually-hidden" for="filter_to_year">
-                                            To year
-                                        </label>
-                                        <select class="form-input_year"
-                                                id="filter_to_year"
-                                                name="filter_to_year">
-                                            <option value="">Year</option>
-                                            <option value="">2014</option>
-                                            <option value="">2013</option>
-                                            <option value="">2012</option>
-                                            <option value="">2011</option>
-                                        </select>
+                                    <div class="form-group_item input-group"
+                                         id="filter_range_date_gte-replacement"
+                                         style="display:none;">
+                                        <div class="input-group_item custom-select">
+                                            <label class="u-visually-hidden" for="filter_from_month">
+                                                From month
+                                            </label>
+                                            <select class="form-input-month"
+                                                    id="filter_from_month">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="input-group_item custom-select">
+                                            <label class="u-visually-hidden" for="filter_from_year">
+                                                From year
+                                            </label>
+                                            <select class="form-input_year"
+                                                    id="filter_from_year">
+                                                <option value="">Year</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                    </div>
+                                    {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
+                                    <div class="form-group_item"
+                                         id="filter_range_date_lte">
+                                        <input name="filter_range_date_lte"
+                                               type="text"
+                                               value="{{ to_date if to_date }}"
+                                               placeholder="YYYY-MM">
+                                    </div>
+                                    <div class="form-group_item input-group"
+                                         id="filter_range_date_lte-replacement"
+                                         style="display:none;">
+                                        <div class="custom-select input-group_item">
+                                            <label class="u-visually-hidden" for="filter_to_month">
+                                                To month
+                                            </label>
+                                            <select class="form-input-month"
+                                                    id="filter_to_month">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="custom-select input-group_item">
+                                            <label class="u-visually-hidden" for="filter_to_year">
+                                                To year
+                                            </label>
+                                            <select class="form-input_year"
+                                                    id="filter_to_year">
+                                                <option value="">Year</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                         <div class="form-actions form-actions__right-on-med">
                             <input class="btn btn-warning btn-link form-actions_item js-form_clear"
@@ -263,16 +300,34 @@
             </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
-                <section class="popular-stories">
+                <section class="content_sidebar-item popular-stories">
                     <h1 class="header-slug">
                         <span class="header-slug_inner">
                             Popular stories
                         </span>
                     </h1>
-                    <ul class="list list__popular-stories list__unstyled list__spaced">
+                    <ul class="list list__unstyled list__spaced">
+                        {% for slug in view.custom_fields.popular_posts %}
+                        {% set pop_post = get_document('posts', slug) %}
+                        <li class="list_item">
+                            <a class="list_link"
+                               href="{{ pop_post.permalink }}">
+                                {{ pop_post.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="content_sidebar-item related-links">
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Related links
+                        </span>
+                    </h1>
+                    <ul class="list list__unstyled list__spaced">
                         {% for link in view.related_links %}
                         <li class="list_item">
-                            <a class="list_link list_link__large"
+                            <a class="list_link"
                                href="{{ link[0] }}">
                                 {{ link[1] }}
                             </a>
@@ -280,10 +335,7 @@
                         {% endfor %}
                     </ul>
                 </section>
-                <section class="related-links">
-                    <div class="demo-placeholder">related links placeholder</div>
-                </section>
-                <section class="stay-informed">
+                <section class="content_sidebar-item stay-informed">
                     <div class="demo-placeholder">stay informed placeholder</div>
                 </section>
             </aside><!-- END .content_sidebar -->

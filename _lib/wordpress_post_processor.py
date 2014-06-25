@@ -16,7 +16,9 @@ def posts_at_url(url):
         results = json.loads(resp.content) 
         current_page += 1
         max_page = results['pages']
+        total = 0
         for p in results['posts']:
+            total += 1
             yield p
      
 
@@ -30,10 +32,10 @@ def process_post(post):
     del post['comments']
     post['_id'] = post['slug']
     # remove fields we're not interested in
-    post['category'] = [cat['title'] for cat in post['taxonomy_fj_category']]
+    post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_fj_category']]
     post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
     author_template = Template("$first_name $last_name")
-    post['author'] = [author['title'] for author in post['taxonomy_fj_author']]
+    post['author'] = [author['title'] for author in post['taxonomy_author']]
     dt = dateutil.parser.parse(post['date'])
     dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
     post['date'] = dt_string

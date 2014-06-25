@@ -23,9 +23,8 @@
 
                 <article class="post">
                     <header>
-                    {% if post.category.0 %}
-                        <a href="#" class="post_slug category-slug">
                         {% if post.category.0 %}
+                        <a href="/blog/?filter_category={{ post.category.0 }}" class="post_slug category-slug">
                             {% if post.category.0|lower == 'announcements &amp; updates' %}
                             <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
                             {% elif post.category.0|lower == 'consumer information' %}
@@ -37,11 +36,8 @@
                             {% endif %}
                             <span class="u-visually-hidden">Category:</span>
                             {{ post.category.0 }}
-                        {% else %}
-                            &nbsp;
                         {% endif %}
                         </a>
-                    {% endif %}
                         <h1 class="post_header">
                             {{ post.title }}
                         </h1>
@@ -158,13 +154,27 @@
             </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
-                <section class="popular-stories">
+                <section class="content_sidebar-item related-posts">
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Related blog posts
+                        </span>
+                    </h1>
+                    <ul class="list list__unstyled list__spaced">
+                    {% for similar in more_like_this(post, search_size=5) %}
+                        <li class="list_item">
+                            <a class="list_link"
+                               href="{{ similar.permalink }}">
+                                {{ similar.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </section>
+                <section class="content_sidebar-item related-news">
                     <div class="demo-placeholder">Related news placeholder</div>
                 </section>
-                <section class="related-links">
-                    <div class="demo-placeholder">Related stories placeholder</div>
-                </section>
-                <section class="stay-informed">
+                <section class="content_sidebar-item stay-informed">
                     <div class="demo-placeholder">Stay informed placeholder</div>
                 </section>
             </aside><!-- END .content_sidebar -->

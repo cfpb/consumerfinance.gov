@@ -1,6 +1,8 @@
 # To do
 
 - Post stuff
+  - Posts with tags in title
+    - /blog/protecting-funds-from-the-cobell-v-salazar-settlement
   - Posts with annoying deks
     - /blog/save-the-date-detroit-michigan
     - /blog/understanding-reverse-mortgages
@@ -42,7 +44,11 @@
   https://github.com/rosskarchner/sheer/issues/18
 
 - Scrum stuff
-  - Our backlog is not in good shape for sprint planning
-  - We need to input issues ourselves
   - Hard to know what's ready for front end
   - Jira, stories VS tasks?
+  - No cf updates
+
+- jQuery plugins with methods:
+  - http://viget.com/inspire/jquery-plugin-patterns
+  - http://stackoverflow.com/questions/1117086/how-to-create-a-jquery-plugin-with-methods
+  - https://github.com/twitter/typeahead.js/blob/master/src/typeahead/plugin.js
