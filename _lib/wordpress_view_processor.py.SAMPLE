@@ -40,7 +40,7 @@ def process_view(post):
 
     # append the her information
     hero_id = post['custom_fields']['related_hero'][0]
-    hero_url = "http://your.wordpress.domain/api/get_post/?post_id=" + hero_id + "&post_type=cfpb_hero"
+    hero_url = "http://your.wordpress.domain/api/get_post/?post_id=" + hero_id + "/?json=1"
     response = requests.get(hero_url)
     hero_data = json.loads(response.text)
     post['hero'] = hero_data
