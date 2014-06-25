@@ -30,6 +30,10 @@ def process_view(post):
     post['_id'] = post['slug']
     custom_fields = post['custom_fields']
 
+    # limit popular posts to five items
+    popular_posts = [slug for slug in custom_fields['popular_posts'][:5]]
+    post['popular_posts'] = popular_posts
+
     # convert related links into a proper list
     related =[]
     for x in xrange(0,5):
@@ -38,7 +42,7 @@ def process_view(post):
             related.append(custom_fields[key])
     post['related_links'] = related
 
-    # append the her information
+    # append the hero information
     hero_id = post['custom_fields']['related_hero'][0]
     hero_url = "http://your.wordpress.domain/api/get_post/?post_id=" + hero_id + "/?json=1"
     response = requests.get(hero_url)
