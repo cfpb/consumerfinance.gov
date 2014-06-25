@@ -65,8 +65,8 @@
 {% endfor %}
 
 
-{# Only show pagination if there #}
-{% if posts.pages > 1 %}
+{# Only show pagination if there is more than one page. #}
+{% if posts.pages > 0 %}
     <nav class="post-pagination pagination"
          role="navigation"
          aria-label="Pagination"

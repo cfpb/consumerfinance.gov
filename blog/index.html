@@ -118,7 +118,7 @@
                             <span class="filtered-by_header">
                             {%- if posts|list|length > 0 -%}
                                 Filtered by
-                            {% else %}
+                            {%- else -%}
                                 No results for
                             {% endif %}
                             </span>
@@ -186,10 +186,11 @@
                                     </label>
                                     {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
                                     <div class="form-group_item"
-                                          id="filter_range_date_gte">
+                                         id="filter_range_date_gte">
                                         <input name="filter_range_date_gte"
                                                type="text"
-                                               value="{{ from_date if from_date }}">
+                                               value="{{ from_date if from_date }}"
+                                               placeholder="YYYY-MM">
                                     </div>
                                     <div class="form-group_item input-group"
                                          id="filter_range_date_gte-replacement"
@@ -236,7 +237,8 @@
                                          id="filter_range_date_lte">
                                         <input name="filter_range_date_lte"
                                                type="text"
-                                               value="{{ to_date if to_date }}">
+                                               value="{{ to_date if to_date }}"
+                                               placeholder="YYYY-MM">
                                     </div>
                                     <div class="form-group_item input-group"
                                          id="filter_range_date_lte-replacement"

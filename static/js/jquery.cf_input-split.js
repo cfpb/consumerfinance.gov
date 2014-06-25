@@ -5,7 +5,7 @@
 
        Takes multiple form field values and moves them to a single field.
        Useful for query strings that require one field-value pair that need to
-       be created from tiple form fields.
+       be created from multiple form fields.
 
        Setup:
 
@@ -67,10 +67,10 @@
            });
 
        ========================================================================== */
+
     $.fn.cf_inputSplit = function(userOptions) {
         return this.each(function() {
 
-            // 
             var options = $.extend({
                 newHTML: '',
                 newInputsOrder: [],
@@ -133,7 +133,7 @@
                         // Currently only select elements are supported.
                         if ($input.is('select')) {
                             $input.find('option').each(function(){
-                                if ($(this).val() == inputSplit.initialValues[i]) {
+                                if ($(this).val() === inputSplit.initialValues[i]) {
                                     $(this).prop('selected', true);
                                     $(this).attr('selected', true);
                                 }
