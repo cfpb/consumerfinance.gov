@@ -16,7 +16,9 @@ def posts_at_url(url):
         results = json.loads(resp.content) 
         current_page += 1
         max_page = results['pages']
+        total = 0
         for p in results['posts']:
+            total += 1
             yield p
      
 
