@@ -60,7 +60,7 @@
         #}
         {% if active_filters|length == 0 and posts.current_page == 1 %}
         {% set hero = view.hero.post %}
-        {% set hero_related_post = get_document('posts', hero.custom_fields.related_post.0).category.0 %}
+        {% set hero_related_post = get_document('posts', hero.custom_fields.related_post.0) %}
         <section class="content_hero hero"
                  style="background-color:{{ hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
@@ -69,17 +69,17 @@
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
                             <span class="category-slug">
-                                {% if hero_related_post|lower == 'announcements &amp; updates' %}
+                                {% if hero_related_post.category.0|lower == 'announcements &amp; updates' %}
                                 <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                                {% elif hero_related_post|lower == 'consumer information' %}
+                                {% elif hero_related_post.category.0|lower == 'consumer information' %}
                                 <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                                {% elif hero_related_post|lower == 'engagement' %}
+                                {% elif hero_related_post.category.0|lower == 'engagement' %}
                                 <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-                                {% elif hero_related_post|lower == 'innovation &amp; data' %}
+                                {% elif hero_related_post.category.0|lower == 'innovation &amp; data' %}
                                 <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
                                 {% endif %}
                                 <span class="u-visually-hidden">Category:</span>
-                                {{ hero_related_post|safe }}
+                                {{ hero_related_post.category.0|safe }}
                             </span>
                             <div class="summary"
                                href="{{ hero.custom_fields.link[0] }}">
@@ -87,11 +87,22 @@
                                     {{ hero.title }}
                                 </h1>
                                 <p class="summary_text">
-                                    {{ hero.content|striptags }}
+                                    {% if hero.content %}
+                                        {{ hero.content|striptags }}
+                                    {% else %}
+                                        {% if hero_related_post.dek %}
+                                            {{ hero_related_post.dek|striptags }}
+                                        {% else %}
+                                            {{ hero_related_post.excerpt|striptags }}
+                                        {% endif %}
+                                    {% endif %}
                                 </p>
-                                {% if hero.author.name %}
+                                {% if hero_related_post.author.0 %}
                                 <p class="summary_byline">
-                                    By {{ hero.author.name }}
+                                    By {{ hero_related_post.author.0 }}
+                                {% if hero_related_post.author.1 %}
+                                    and {{ hero_related_post.author.1 }}
+                                {% endif %}
                                 </p>
                                 {% endif %}
                             </div>
