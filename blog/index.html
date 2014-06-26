@@ -60,6 +60,7 @@
         #}
         {% if active_filters|length == 0 and posts.current_page == 1 %}
         {% set hero = view.hero.post %}
+        {% set hero_related_post = get_document('posts', hero.custom_fields.related_post.0).category.0 %}
         <section class="content_hero hero"
                  style="background-color:{{ hero.custom_fields.background_color[0] }}">
             <div class="hero_wrapper">
@@ -67,11 +68,19 @@
                    href="{{ hero.custom_fields.link[0] }}">
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
-                            <!-- <span class="category-slug">
-                                <span class="cf-icon cf-icon-help"></span>
+                            <span class="category-slug">
+                                {% if hero_related_post|lower == 'announcements &amp; updates' %}
+                                <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                                {% elif hero_related_post|lower == 'consumer information' %}
+                                <span class="category-slug_icon cf-icon cf-icon-information"></span>
+                                {% elif hero_related_post|lower == 'engagement' %}
+                                <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
+                                {% elif hero_related_post|lower == 'innovation &amp; data' %}
+                                <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
+                                {% endif %}
                                 <span class="u-visually-hidden">Category:</span>
-                                Announcements &amp; updates
-                            </span> -->
+                                {{ hero_related_post|safe }}
+                            </span>
                             <div class="summary"
                                href="{{ hero.custom_fields.link[0] }}">
                                 <h1 class="summary_header">
