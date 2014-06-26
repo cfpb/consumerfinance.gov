@@ -307,7 +307,7 @@
                         </span>
                     </h1>
                     <ul class="list list__unstyled list__spaced">
-                        {% for slug in view.custom_fields.popular_posts %}
+                        {% for slug in view.popular_posts %}
                         {% set pop_post = get_document('posts', slug) %}
                         <li class="list_item">
                             <a class="list_link"
