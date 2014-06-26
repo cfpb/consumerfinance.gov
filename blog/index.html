@@ -62,7 +62,7 @@
         {% set hero = view.hero.post %}
         {% set hero_related_post = get_document('posts', hero.custom_fields.related_post.0) %}
         <section class="content_hero hero"
-                 style="background-color:{{ hero.custom_fields.background_color[0] }}">
+                 style="background-color:{{ hero.custom_fields['background_color'][0] }}">
             <div class="hero_wrapper">
                 <a class="hero_card"
                    href="{{ hero.custom_fields.link[0] }}">
