@@ -41,18 +41,14 @@
         </option>
     {% endmacro %}
 
-    {% macro filter_hidden(field, value) %}
-        <input type="hidden" name="filter_{{ field }}" value="{{ value }}">
-    {% endmacro %}
-
     {% macro print_hidden_filters(filter_fields) %}
         {%- for field in filter_fields -%}
             {% set selected_filters = selected_filters_for_field(field) %}
-            {%- if selected_filters|length > 0 -%}
-                {% for value in selected_filters -%}
-                    {{ filter_hidden(field, value) }}
-                {%- endfor %}
-            {%- endif -%}
+            {%- for value in selected_filters -%}
+                {%- if value %}
+                <input type="hidden" name="filter_{{ field }}" value="{{ value }}">
+                {%- endif -%}
+            {%- endfor -%}
         {%- endfor -%}
     {% endmacro %}
 
