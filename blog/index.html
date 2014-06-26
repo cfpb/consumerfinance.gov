@@ -19,26 +19,41 @@
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
     {% set view = get_document('views', 'blog') %}
 
-    {% macro filter_checkbox(field,value) %}
+    {% macro filter_checkbox(field, value, classes, hidden) %}
         <input class="custom-input"
-               type="checkbox"
-               name="filter_{{ field }}"
-               value="{{ value }}"
-            {% if is_filter_selected(field, value) %}
-               checked
-            {% endif %}
-               >
-        {{ value }}
+            type="checkbox"
+            name="filter_{{ field }}"
+            value="{{ value }}"
+            {% if is_filter_selected(field, value) -%}
+            checked
+            {%- endif -%}
+            >
+            {{ value }}
     {% endmacro %}
 
-    {% macro filter_option(field,value) %}
+    {% macro filter_option(field, value) %}
         <option value="{{ value }}"
             {% if is_filter_selected(field, value) %}
                selected
             {% endif %}
                 >
-            {{ value }}
+        {{ value }}
         </option>
+    {% endmacro %}
+
+    {% macro filter_hidden(field, value) %}
+        <input type="hidden" name="filter_{{ field }}" value="{{ value }}">
+    {% endmacro %}
+
+    {% macro print_hidden_filters(filter_fields) %}
+        {%- for field in filter_fields -%}
+            {% set selected_filters = selected_filters_for_field(field) %}
+            {%- if selected_filters|length > 0 -%}
+                {% for value in selected_filters -%}
+                    {{ filter_hidden(field, value) }}
+                {%- endfor %}
+            {%- endif -%}
+        {%- endfor -%}
     {% endmacro %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
@@ -120,7 +135,7 @@
                                 Filtered by
                             {%- else -%}
                                 No results for
-                            {% endif %}
+                            {%- endif -%}
                             </span>
                         </dt>
                     {% for filter in active_filters %}
@@ -142,9 +157,9 @@
                                     <label class="form-label-header">
                                         Categories
                                     </label>
-                                    {% for category in queries.posts.possible_values_for('category') %}
+                                    {% for category in queries.posts.possible_values_for('category') -%}
                                     <label class="form-group_item form-label">
-                                    {{ filter_checkbox('category', category.term) }}
+                                        {{ filter_checkbox('category', category.term) }}
                                     </label>
                                     {% endfor %}
                                 </div>
@@ -160,7 +175,7 @@
                                             multiple
                                             data-placeholder="Select some options">
                                         {% for tags in queries.posts.possible_values_for('tags') %}
-                                        {{ filter_option('tags', tags.term) }}
+                                            {{ filter_option('tags', tags.term) }}
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -174,7 +189,7 @@
                                             multiple
                                             data-placeholder="Select some options">
                                         {% for author in queries.posts.possible_values_for('author') %}
-                                        {{ filter_option('author', author.term) }}
+                                            {{ filter_option('author', author.term) }}
                                         {% endfor %}
                                     </select>
                                 </div>

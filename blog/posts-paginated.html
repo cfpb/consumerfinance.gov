@@ -103,6 +103,14 @@
                    min="1"
                    max="{{ posts.pages }}"
                    value="{{ posts.current_page }}" />
+
+            {#- Include any current filters when submitting this form to allow
+               for paginating through a filtered set of results.
+               Without this the form would change the url to `?page=X` and we
+               would lose any currently applied filters that are in the URL. -#}
+
+            {{ print_hidden_filters(['category', 'tags'])|safe }}
+
             <label class="pagination_label">
                 <span aria-hidden="true">
                     of {{ posts.pages }}
