@@ -21,21 +21,21 @@
 
     {% macro filter_checkbox(field, value, classes, hidden) %}
         <input class="custom-input"
-            type="checkbox"
-            name="filter_{{ field }}"
-            value="{{ value }}"
-            {% if is_filter_selected(field, value) -%}
-            checked
-            {%- endif -%}
-            >
-            {{ value }}
+               type="checkbox"
+               name="filter_{{ field }}"
+               value="{{ value }}"
+               {% if is_filter_selected(field, value) -%}
+               checked
+               {%- endif -%}
+               >
+               {{ value }}
     {% endmacro %}
 
     {% macro filter_option(field, value) %}
         <option value="{{ value }}"
-            {% if is_filter_selected(field, value) %}
-               selected
-            {% endif %}
+            {% if is_filter_selected(field, value) -%}
+                selected
+            {%- endif -%}
                 >
         {{ value }}
         </option>
