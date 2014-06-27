@@ -19,6 +19,9 @@ $('.js-form_clear').on('click', function() {
     var $this = $(this),
         $form = $this.parents('form');
 
+    // Clear text inputs
+    $form.find('input[type="text"]').val('');
+
     // Clear checkboxes
     $form.find('[type="checkbox"]')
     .removeAttr('checked');
@@ -33,15 +36,14 @@ $('.js-form_clear').on('click', function() {
     $form.find('.custom-input')
     .trigger('updateState');
 
+    // Clear .custom-select elements
+    $form.find('.custom-select_select')
+    .trigger('updateState');
+
     // Clear Chosen.js elements
     $form.find('.chosen-select')
     .val('')
     .trigger('chosen:updated');
-
-    // Clear jQuery.cf_input-split elements
-    $form.find('#filter_range_date_gte input, #filter_range_date_lte input').val('');
-    $form.find('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
-    .trigger('updateState');
 });
 
 
