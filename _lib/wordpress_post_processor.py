@@ -20,8 +20,6 @@ def posts_at_url(url):
         for p in results['posts']:
             total += 1
             yield p
-     
-
 
 def documents(name, url, **kwargs):
     
