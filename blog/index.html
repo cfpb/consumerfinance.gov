@@ -52,6 +52,18 @@
         {%- endfor -%}
     {% endmacro %}
 
+    {% macro category_icon(category, additional_classes) %}
+        {% if category|lower == 'announcements & updates' %}
+        <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+        {% elif category|lower == 'consumer information' %}
+        <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
+        {% elif category|lower == 'engagement' %}
+        <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
+        {% elif category|lower == 'innovation & data' %}
+        <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
+        {% endif %}
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         {# Only show the hero when:
@@ -68,17 +80,9 @@
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
                             <span class="category-slug">
-                                {% if hero.related_post.category.0|lower == 'announcements &amp; updates' %}
-                                <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                                {% elif hero.related_post.category.0|lower == 'consumer information' %}
-                                <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                                {% elif hero.related_post.category.0|lower == 'engagement' %}
-                                <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-                                {% elif hero.related_post.category.0|lower == 'innovation &amp; data' %}
-                                <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-                                {% endif %}
+                                {{ category_icon(hero.related_post.category.0, 'category-slug_icon') }}
                                 <span class="u-visually-hidden">Category:</span>
-                                {{ hero.related_post.category.0|safe }}
+                                {{ hero.related_post.category.0 }}
                             </span>
                             <div class="summary"
                                href="{{ hero.custom_fields.link[0] }}">
