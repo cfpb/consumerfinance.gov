@@ -151,7 +151,7 @@
                         <dt class="list_item">
                             <span class="filtered-by_header">
                             {%- if posts|list|length > 0 -%}
-                                Filtered by
+                                {{ posts.total }} Filtered result{{ 's' if posts.total > 1 }} for
                             {%- else -%}
                                 No results for
                             {%- endif -%}
