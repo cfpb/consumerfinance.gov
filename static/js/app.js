@@ -39,8 +39,8 @@ $('.js-form_clear').on('click', function() {
     .trigger('chosen:updated');
 
     // Clear jQuery.cf_input-split elements
-    $('#filter_range_date_gte input, #filter_range_date_lte input').val('');
-    $('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
+    $form.find('#filter_range_date_gte input, #filter_range_date_lte input').val('');
+    $form.find('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
     .trigger('updateState');
 });
 
