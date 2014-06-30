@@ -21,6 +21,18 @@ We welcome your feedback and contributions.
 
 ## Getting started
 
+### Back end
+
+Set up [Sheer](https://github.com/rosskarchner/sheer),
+a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
+
+Run Sheer
+  - `export wordpress=http://your.wp.domain`
+  - `sher index`
+  - `sheer serve`
+
+### Front end
+
 Since cfgov-refresh is based off of cf-demo we encourage you to start with the
 [cf-demo docs](http://cfpb.github.io/capital-framework/cf-demo/).
 _More specific cfgov-refresh docs are coming soon._
