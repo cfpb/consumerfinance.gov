@@ -2,7 +2,7 @@ import sys
 import json
 import os.path
 from string import Template
-from WORDPRESS_post_processor import process_post
+from wordpress_post_processor import process_post
 
 import requests
 
