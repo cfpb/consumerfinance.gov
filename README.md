@@ -27,7 +27,7 @@ Set up [Sheer](https://github.com/rosskarchner/sheer),
 a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
 
 Run Sheer
-  - `export wordpress=http://your.wp.domain`
+  - `export WORDPRESS=http://your.wp.domain`
   - `sheer index`
   - `sheer serve`
 
