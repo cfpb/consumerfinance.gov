@@ -6836,8 +6836,13 @@ a.category-slug.active {
 }
 
 .meta-header_right {
-  float: right;
+  display: block;
   margin-bottom: 0;
+}
+
+.meta-header_right {
+  float: right;
+  display: inline-block;
 }
 
 /* topdoc
