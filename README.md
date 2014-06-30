@@ -28,8 +28,11 @@ a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
 
 Run Sheer
   - `export wordpress=http://your.wp.domain`
-  - `sher index`
+  - `sheer index`
   - `sheer serve`
+
+_You can also add the `export` line to your `.bash_profile`,
+or use your favorite alternative method of setting environment variables._
 
 ### Front end
 
