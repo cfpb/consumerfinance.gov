@@ -2,7 +2,7 @@ import sys
 import json
 import os.path
 from string import Template
-from wordpress_post_processor import process_post
+from WORDPRESS_post_processor import process_post
 
 import requests
 
@@ -46,11 +46,11 @@ def process_view(post):
 
     # append the hero information
     hero_id = post['custom_fields']['related_hero'][0]
-    hero_url = os.path.expandvars("$wordpress/hero/" + hero_id + "/?json=1")
+    hero_url = os.path.expandvars("$WORDPRESS/hero/" + hero_id + "/?json=1")
     response = requests.get(hero_url)
     hero_data = json.loads(response.text)
     hero_data = hero_data['post']
-    related_post_url = os.path.expandvars("$wordpress/api/get_post/?post_slug=" + hero_data['custom_fields']['related_post'][0])
+    related_post_url = os.path.expandvars("$WORDPRESS/api/get_post/?post_slug=" + hero_data['custom_fields']['related_post'][0])
     related_post_response = requests.get(related_post_url)
     hero_data['related_post'] = process_post(json.loads(related_post_response.text)['post'])
     post['hero'] = hero_data
