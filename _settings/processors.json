@@ -1,11 +1,11 @@
 {
   "posts" : {
-    "url" :       "$wordpress/?json=1",
+    "url" :       "$WORDPRESS/?json=1",
     "processor" : "wordpress_post_processor",
     "mappings" :  "_defaults/posts_mappings.json"
   },
   "views" : {
-    "url" :       "$wordpress/?json=1&post_type=view",
+    "url" :       "$WORDPRESS/?json=1&post_type=view",
     "processor" : "wordpress_view_processor"
   }
 }
