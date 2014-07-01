@@ -52,3 +52,12 @@
   - http://viget.com/inspire/jquery-plugin-patterns
   - http://stackoverflow.com/questions/1117086/how-to-create-a-jquery-plugin-with-methods
   - https://github.com/twitter/typeahead.js/blob/master/src/typeahead/plugin.js
+
+- New tasks
+  - Date range filtering should use validation.
+  - Date range filtering should be able to use the `possible_values_for` Sheer
+    function to dynamically set the end date.
+  - Hero image options for very large screens.
+  - Should make the whole hero (including the image) clickable?
+
+
