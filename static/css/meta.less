@@ -320,8 +320,12 @@
 }
 
 .meta-header_right {
-    .u-right();
+    display: block;
     margin-bottom: 0;
+    .u-respond-to-min(600px, {
+        .u-right();
+        display: inline-block;
+    });
 }
 
 
