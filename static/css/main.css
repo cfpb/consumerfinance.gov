@@ -5002,9 +5002,6 @@ img {
       notes:
         - "Use this class to hide something from view while keeping it
           accessible to screen readers."
-      notes:
-        - "Use this class to hide something from view while keeping it
-          accessible to screen readers."
   tags:
     - cfgov-utilities
 */
@@ -5316,6 +5313,22 @@ img {
    cfgov-refresh
    layout
    ========================================================================== */
+/* topdoc
+  name: Base layout
+  family: cfgov-layout
+  patterns:
+    - name: Wrapper class
+      markup: |
+        <div class="wrapper">
+            This div will become a cf-grid wrapper at 801px and above.
+        </div>
+    - name: IE fixes
+      notes:
+        - "Use this class to hide something from view while keeping it
+          accessible to screen readers."
+  tags:
+    - cfgov-layout
+*/
 @media only all and (min-width: 50.0625em) {
   .wrapper {
     max-width: 1170px;
@@ -5331,10 +5344,43 @@ img {
 .lt-ie9 body {
   min-width: 800px;
 }
-.content_bar {
-  height: 10px;
-  background: #2cb34a;
-}
+/* topdoc
+  name: Main content and sidebar
+  family: cfgov-layout
+  patterns:
+    - name: Standard styling for the main content area and sidebar
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <section class="content_hero">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    Main content area
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar">
+                    Sidebar
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          main.content
+            .content_hero
+            .content_bar
+            .content_wrapper
+              .content_main
+              .content_sidebar
+      notes:
+        - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper"
+        - ".content_main and .content_sidebar are stacked up to 800px, and then they go side-by-side"
+        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+  tags:
+    - cfgov-layout
+*/
 .content_main,
 .content_sidebar {
   padding: 1.875em 0.9375em;
@@ -5363,21 +5409,6 @@ img {
     margin-right: 0;
     zoom: 1;
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-.content_sidebar-item + .content_sidebar-item {
-  margin-top: 3.75em;
-}
-.header .demo-placeholder,
-.content_hero .demo-placeholder,
-.footer .demo-placeholder {
-  margin-left: 15px;
-}
-@media only all and (min-width: 37.5em) and (max-width: 50em) {
-  .header .demo-placeholder,
-  .content_hero .demo-placeholder,
-  .footer .demo-placeholder {
-    margin-left: 30px;
   }
 }
 @media only all and (min-width: 50.0625em) {
@@ -5496,6 +5527,68 @@ img {
     padding-right: 0;
   }
 }
+/* topdoc
+  name: Sidebar
+  family: cfgov-layout
+  patterns:
+    - name: Sidebar item spacing
+      markup: |
+        <section class="content_sidebar-item related-posts">
+            Related posts
+        </section>
+        <section class="content_sidebar-item related-news">
+            Related news
+        </section>
+      notes:
+        - "Gives some vertical margin between sidebar items."
+  tags:
+    - cfgov-layout
+*/
+.content_sidebar-item + .content_sidebar-item {
+  margin-top: 3.75em;
+}
+/* topdoc
+  name: Content bar
+  family: cfgov-layout
+  patterns:
+    - name: A 10 pixel bar that divides the header or hero from the main content
+      markup: |
+        <div class="content_bar"></div>
+      notes:
+        - ".content_bar must come after .content_hero but before .content_wrapper"
+  tags:
+    - cfgov-layout
+*/
+.content_bar {
+  height: 10px;
+  background: #2cb34a;
+}
+/* topdoc
+  name: Bleedbar sidebar styling
+  family: cfgov-layout
+  patterns:
+    - name: Give the sidebar a background color that bleeds off the edge of the screen
+      markup: |
+        <main class="content content__2-1 content_bleedbar" id="main" role="main">
+            <section class="content_hero">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    Main content area
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar">
+                    Bleeding sidebar
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      notes:
+        - "Simply add class .content__bleedbar to main.content."
+        - "Only supports sidebars on the right, for now."
+  tags:
+    - cfgov-layout
+*/
 .content__bleedbar .content_sidebar {
   padding: 2em 0.9375em;
   background: #f1f2f2;
@@ -5532,10 +5625,40 @@ img {
     left: 75%;
   }
 }
+/* topdoc
+  name: Footer
+  family: cfgov-layout
+  patterns:
+    - name: Standard footer styling
+      markup: |
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer><!-- END .footer -->
+  tags:
+    - cfgov-layout
+*/
 .footer {
   padding: 1.5em 0;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
+}
+/* topdoc
+    name: EOF
+    eof: true
+*/
+.header .demo-placeholder,
+.content_hero .demo-placeholder,
+.footer .demo-placeholder {
+  margin-left: 15px;
+}
+@media only all and (min-width: 37.5em) and (max-width: 50em) {
+  .header .demo-placeholder,
+  .content_hero .demo-placeholder,
+  .footer .demo-placeholder {
+    margin-left: 30px;
+  }
 }
 /* ==========================================================================
    cfgov-refresh
