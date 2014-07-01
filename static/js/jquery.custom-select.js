@@ -2,14 +2,24 @@
 
     $.fn.customSelect = function( userSettings ){
 
-        function getSelectedOption($customSelect) {
+        function getSelectedOptionText($customSelect) {
             return $customSelect.find('option[value="' + $customSelect.find('.custom-select_select').val() + '"]').text();
-         }
+        }
 
         function updateSelectText($customSelect) {
-            return $customSelect
-                   .find('.custom-select_text')
-                   .text(getSelectedOption($customSelect));
+            var $text = $customSelect.find('.custom-select_text');
+            
+            // Update the text
+            $text.text(getSelectedOptionText($customSelect));
+
+            // If the value is empty treat it as a placeholder
+            if ($customSelect.find('select').val() === '') {
+                $text.addClass('custom-select_placeholder');
+            } else {
+                $text.removeClass('custom-select_placeholder');
+            }
+
+            return $text;
         }
 
         return $(this).each(function(){

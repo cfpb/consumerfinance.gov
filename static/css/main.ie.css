@@ -6836,8 +6836,13 @@ a.category-slug.active {
 }
 
 .meta-header_right {
-  float: right;
+  display: block;
   margin-bottom: 0;
+}
+
+.meta-header_right {
+  float: right;
+  display: inline-block;
 }
 
 /* topdoc
@@ -7057,6 +7062,10 @@ a.category-slug.active {
   z-index: 1;
   font-family: Arial, sans-serif;
   line-height: 1.375;
+  color: #101820;
+}
+
+.custom-select_placeholder {
   color: #babbbd;
 }
 

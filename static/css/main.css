@@ -5993,8 +5993,14 @@ a.category-slug.active {
   margin-bottom: 0;
 }
 .meta-header_right {
-  float: right;
+  display: block;
   margin-bottom: 0;
+}
+@media only all and (min-width: 37.5em) {
+  .meta-header_right {
+    float: right;
+    display: inline-block;
+  }
 }
 /* topdoc
   name: EOF
@@ -6202,6 +6208,9 @@ a.category-slug.active {
   z-index: 1;
   font-family: Arial, sans-serif;
   line-height: 1.375;
+  color: #101820;
+}
+.custom-select_placeholder {
   color: #babbbd;
 }
 .custom-select_select {
