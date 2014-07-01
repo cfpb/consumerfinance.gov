@@ -11936,6 +11936,9 @@ $('.js-form_clear').on('click', function() {
     var $this = $(this),
         $form = $this.parents('form');
 
+    // Clear text inputs
+    $form.find('input[type="text"]').val('');
+
     // Clear checkboxes
     $form.find('[type="checkbox"]')
     .removeAttr('checked');
@@ -11948,6 +11951,10 @@ $('.js-form_clear').on('click', function() {
     
     // Clear .custom-input elements
     $form.find('.custom-input')
+    .trigger('updateState');
+
+    // Clear .custom-select elements
+    $form.find('.custom-select_select')
     .trigger('updateState');
 
     // Clear Chosen.js elements

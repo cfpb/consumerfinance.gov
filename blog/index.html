@@ -52,6 +52,18 @@
         {%- endfor -%}
     {% endmacro %}
 
+    {% macro category_icon(category, additional_classes) %}
+        {%- if category|lower == 'announcements & updates' -%}
+        <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+        {% elif category|lower == 'consumer information' -%}
+        <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
+        {% elif category|lower == 'engagement' -%}
+        <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
+        {% elif category|lower == 'innovation & data' -%}
+        <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
+        {%- endif -%}
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         {# Only show the hero when:
@@ -59,8 +71,7 @@
            2. We are on the first page of paginated results
         #}
         {% if active_filters|length == 0 and posts.current_page == 1 %}
-        {% set hero = view.hero.post %}
-        {% set hero_related_post = get_document('posts', hero.custom_fields.related_post.0) %}
+        {% set hero = view.hero %}
         <section class="content_hero hero"
                  style="background-color:{{ hero.custom_fields['background_color'][0] }}">
             <div class="hero_wrapper">
@@ -69,17 +80,9 @@
                     <div class="hero_card-bg">
                         <div class="hero_card-padding">
                             <span class="category-slug">
-                                {% if hero_related_post.category.0|lower == 'announcements &amp; updates' %}
-                                <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                                {% elif hero_related_post.category.0|lower == 'consumer information' %}
-                                <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                                {% elif hero_related_post.category.0|lower == 'engagement' %}
-                                <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-                                {% elif hero_related_post.category.0|lower == 'innovation &amp; data' %}
-                                <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-                                {% endif %}
+                                {{ category_icon(hero.related_post.category.0, 'category-slug_icon') }}
                                 <span class="u-visually-hidden">Category:</span>
-                                {{ hero_related_post.category.0|safe }}
+                                {{ hero.related_post.category.0 }}
                             </span>
                             <div class="summary"
                                href="{{ hero.custom_fields.link[0] }}">
@@ -90,18 +93,18 @@
                                     {% if hero.content %}
                                         {{ hero.content|striptags }}
                                     {% else %}
-                                        {% if hero_related_post.dek %}
-                                            {{ hero_related_post.dek|striptags }}
+                                        {% if hero.related_post.dek %}
+                                            {{ hero.related_post.dek|striptags }}
                                         {% else %}
-                                            {{ hero_related_post.excerpt|striptags }}
+                                            {{ hero.related_post.excerpt|striptags }}
                                         {% endif %}
                                     {% endif %}
                                 </p>
-                                {% if hero_related_post.author.0 %}
+                                {% if hero.related_post.author.0 %}
                                 <p class="summary_byline">
-                                    By {{ hero_related_post.author.0 }}
-                                {% if hero_related_post.author.1 %}
-                                    and {{ hero_related_post.author.1 }}
+                                    By {{ hero.related_post.author.0 }}
+                                {% if hero.related_post.author.1 %}
+                                    and {{ hero.related_post.author.1 }}
                                 {% endif %}
                                 </p>
                                 {% endif %}
@@ -148,7 +151,7 @@
                         <dt class="list_item">
                             <span class="filtered-by_header">
                             {%- if posts|list|length > 0 -%}
-                                Filtered by
+                                {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
                             {%- else -%}
                                 No results for
                             {%- endif -%}

@@ -1,5 +1,6 @@
 import sys
 import json
+import os.path
 import requests
 from string import Template
 
@@ -12,6 +13,7 @@ def posts_at_url(url):
 
     while current_page <= max_page:
 
+        url = os.path.expandvars(url)
         resp = requests.get(url, params={'json':1,'page':current_page})
         results = json.loads(resp.content) 
         current_page += 1
@@ -20,8 +22,6 @@ def posts_at_url(url):
         for p in results['posts']:
             total += 1
             yield p
-     
-
 
 def documents(name, url, **kwargs):
     
