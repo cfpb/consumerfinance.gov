@@ -6147,12 +6147,11 @@ img {
     - name: Wrapper class
       markup: |
         <div class="wrapper">
-            This div will become a cf-grid wrapper at 801px and above.
+            Wrapper
         </div>
-    - name: IE fixes
       notes:
-        - "Use this class to hide something from view while keeping it
-          accessible to screen readers."
+        - "Turns an element into a cf-grid wrapper at 801px and above."
+        - "Includes some explicit declarations for IE8 due to the fact that it doesn't support media queries."
   tags:
     - cfgov-layout
 */
@@ -6174,13 +6173,32 @@ img {
 }
 
 /* topdoc
+  name: Content bar
+  family: cfgov-layout
+  patterns:
+    - name: A 10 pixel bar that divides the header or hero from the main content
+      markup: |
+        <div class="content_bar"></div>
+      notes:
+        - "This is necessary because we don't have a predictable place to put a full-width border. It needs to be under the hero on pages with heroes, but under the header if there is no hero."
+        - ".content_bar must come after .content_hero but before .content_wrapper"
+  tags:
+    - cfgov-layout
+*/
+
+.content_bar {
+  height: 10px;
+  background: #2cb34a;
+}
+
+/* topdoc
   name: Main content and sidebar
   family: cfgov-layout
   patterns:
     - name: Standard styling for the main content area and sidebar
       markup: |
         <main class="content content__1-3" id="main" role="main">
-            <section class="content_hero">
+            <section class="content_hero" style="background: #E3E4E5">
                 Content hero
             </section>
             <div class="content_bar"></div>
@@ -6188,7 +6206,7 @@ img {
                 <section class="content_main">
                     Main content area
                 </section><!-- END .content_main -->
-                <aside class="content_sidebar">
+                <aside class="content_sidebar" style="background: #F1F2F2">
                     Sidebar
                 </aside><!-- END .content_sidebar -->
             </div><!-- END .content_wrapper -->
@@ -6206,7 +6224,18 @@ img {
       notes:
         - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper"
         - ".content_main and .content_sidebar are stacked up to 800px, and then they go side-by-side"
-        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+    - name: Width classes
+      codenotes:
+        - .content__1-3
+        - .content__2-1
+      notes:
+        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+    - name: Narrow content column option
+      codenotes:
+        - .content_main__narrow
+      notes:
+        - "Add a class of .content-main__narrow to .content-main to get a one-column (in a 12-column grid) gutter on the right side."
   tags:
     - cfgov-layout
 */
@@ -6350,14 +6379,15 @@ img {
   patterns:
     - name: Sidebar item spacing
       markup: |
-        <section class="content_sidebar-item related-posts">
+        <section class="content_sidebar-item related-posts" style="background: #F1F2F2">
             Related posts
         </section>
-        <section class="content_sidebar-item related-news">
+        <section class="content_sidebar-item related-news" style="background: #F1F2F2">
             Related news
         </section>
       notes:
         - "Gives some vertical margin between sidebar items."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
   tags:
     - cfgov-layout
 */
@@ -6367,31 +6397,13 @@ img {
 }
 
 /* topdoc
-  name: Content bar
-  family: cfgov-layout
-  patterns:
-    - name: A 10 pixel bar that divides the header or hero from the main content
-      markup: |
-        <div class="content_bar"></div>
-      notes:
-        - ".content_bar must come after .content_hero but before .content_wrapper"
-  tags:
-    - cfgov-layout
-*/
-
-.content_bar {
-  height: 10px;
-  background: #2cb34a;
-}
-
-/* topdoc
   name: Bleedbar sidebar styling
   family: cfgov-layout
   patterns:
     - name: Give the sidebar a background color that bleeds off the edge of the screen
       markup: |
-        <main class="content content__2-1 content_bleedbar" id="main" role="main">
-            <section class="content_hero">
+        <main class="content content__2-1 content__bleedbar" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
                 Content hero
             </section>
             <div class="content_bar"></div>
@@ -6407,6 +6419,7 @@ img {
       notes:
         - "Simply add class .content__bleedbar to main.content."
         - "Only supports sidebars on the right, for now."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
   tags:
     - cfgov-layout
 */
@@ -6423,6 +6436,8 @@ img {
 .content__bleedbar .content_sidebar {
   padding: 3.75em 0 0.9375em 1.875em;
   margin-left: 0;
+  position: relative;
+  z-index: 1;
   background: transparent;
 }
 
@@ -6439,7 +6454,7 @@ img {
   height: 100%;
   position: absolute;
   top: 0;
-  z-index: -1;
+  z-index: 0;
   margin-left: 10px;
   background: #f1f2f2;
 }
