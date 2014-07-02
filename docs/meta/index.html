@@ -528,8 +528,14 @@ a.category-slug.active {
   margin-bottom: 0;
 }
 .meta-header_right {
-  float: right;
+  display: block;
   margin-bottom: 0;
+}
+@media only all and (min-width: 37.5em) {
+  .meta-header_right {
+    float: right;
+    display: inline-block;
+  }
 }</code></pre>
       </div>
     </div>
