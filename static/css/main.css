@@ -1758,7 +1758,7 @@ input.btn::-moz-focus-inner {
           -----------------------
           .expandable_header.expandable_header__spaced
       notes:
-        - "Adds some margin underneath .expandable_header."
+        - "Adds some padding underneath .expandable_header."
     tags:
     - cf-expandables
 */
@@ -1767,7 +1767,7 @@ input.btn::-moz-focus-inner {
   overflow: hidden;
 }
 .expandable_header__spaced {
-  margin-bottom: 0.9375em;
+  padding-bottom: 0.9375em;
 }
 .expandable_header-left {
   float: left;
