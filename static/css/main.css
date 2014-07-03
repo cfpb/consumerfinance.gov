@@ -5364,9 +5364,9 @@ img {
   name: Main content and sidebar
   family: cfgov-layout
   patterns:
-    - name: Standard styling for the main content area and sidebar
+    - name: Standard mobile styling for the main content area and sidebar
       markup: |
-        <main class="content content__1-3" id="main" role="main">
+        <main class="content" id="main" role="main">
             <section class="content_hero" style="background: #E3E4E5">
                 Content hero
             </section>
@@ -5394,17 +5394,87 @@ img {
         - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper"
         - ".content_main and .content_sidebar are stacked up to 800px, and then they go side-by-side"
         - "Inline styling is for demonstration purposes only; do not include it in your markup."
-    - name: Width classes
+    - name: Left-hand navigation layout
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
       codenotes:
         - .content__1-3
+      notes:
+        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+    - name: Right-hand sidebar layout
+      markup: |
+        <main class="content content__2-1" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      codenotes:
         - .content__2-1
       notes:
         - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
     - name: Narrow content column option
+      markup: |
+        <main class="content content__2-1" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main content_main__narrow">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
       codenotes:
         - .content_main__narrow
       notes:
-        - "Add a class of .content-main__narrow to .content-main to get a one-column (in a 12-column grid) gutter on the right side."
+        - "Add a class of .content_main__narrow to .content_main to get a one-column (in a 12-column grid) gutter on the right side."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
   tags:
     - cfgov-layout
 */
