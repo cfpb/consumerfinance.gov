@@ -60,7 +60,7 @@
   name: Main content and sidebar
   family: cfgov-layout
   patterns:
-    - name: Standard mobile styling for the main content area and sidebar
+    - name: Standard layout for the main content area and sidebar
       markup: |
         <main class="content" id="main" role="main">
             <section class="content_hero" style="background: #E3E4E5">
@@ -87,8 +87,8 @@
               .content_main
               .content_sidebar
       notes:
-        - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper"
-        - ".content_main and .content_sidebar are stacked up to 800px, and then they go side-by-side"
+        - "By default .content_main and .content_sidebar stack vertically. When using the modifiers described below to create columns, the columns will remain stacked for smaller screens and then convert to to columns at 801px."
+        - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper."
         - "Inline styling is for demonstration purposes only; do not include it in your markup."
     - name: Left-hand navigation layout
       markup: |
