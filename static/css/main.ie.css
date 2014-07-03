@@ -2050,7 +2050,7 @@ input.btn::-moz-focus-inner {
           -----------------------
           .expandable_header.expandable_header__spaced
       notes:
-        - "Adds some margin underneath .expandable_header."
+        - "Adds some padding underneath .expandable_header."
     tags:
     - cf-expandables
 */
@@ -2061,7 +2061,7 @@ input.btn::-moz-focus-inner {
 }
 
 .expandable_header__spaced {
-  margin-bottom: 0.9375em;
+  padding-bottom: 0.9375em;
 }
 
 .expandable_header-left {
@@ -2854,8 +2854,8 @@ textarea {
 
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url('../fonts//cf-icons.eot');
-  src: url('../fonts//cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts//cf-icons.woff') format('woff'), url('../fonts//cf-icons.ttf') format('truetype'), url('../fonts//cf-icons.svg') format('svg');
+  src: url('../fonts/cf-icons.eot');
+  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -3729,7 +3729,7 @@ textarea {
         markup: |
           <span class="cf-icon cf-icon-contract"></span>
           <span class="cf-icon cf-icon-contract-round"></span>
-      - name: comlaint
+      - name: complaint
         markup: |
           <span class="cf-icon cf-icon-complaint"></span>
           <span class="cf-icon cf-icon-complaint-round"></span>
