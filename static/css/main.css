@@ -1758,7 +1758,7 @@ input.btn::-moz-focus-inner {
           -----------------------
           .expandable_header.expandable_header__spaced
       notes:
-        - "Adds some padding underneath .expandable_header."
+        - "Adds some margin underneath .expandable_header."
     tags:
     - cf-expandables
 */
@@ -1767,7 +1767,7 @@ input.btn::-moz-focus-inner {
   overflow: hidden;
 }
 .expandable_header__spaced {
-  padding-bottom: 0.9375em;
+  margin-bottom: 0.9375em;
 }
 .expandable_header-left {
   float: left;
@@ -3218,7 +3218,7 @@ textarea {
         markup: |
           <span class="cf-icon cf-icon-contract"></span>
           <span class="cf-icon cf-icon-contract-round"></span>
-      - name: complaint
+      - name: comlaint
         markup: |
           <span class="cf-icon cf-icon-complaint"></span>
           <span class="cf-icon cf-icon-complaint-round"></span>
@@ -4193,7 +4193,7 @@ input[type="text"].pagination_current-page {
 @font-face {
   font-family: "AvenirNextLTW01-Regular";
   src: url("//fast.fonts.net/dv2/2/e9167238-3b3f-4813-a04a-a384394eed42.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
-  src: url("//fast.fonts.net/dv2/3/1e9892c0-6927-4412-9874-1b82801ba47a.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("//fast.fonts.net/dv2/1/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("//fast.fonts.net/dv2/11/52a192b1-bea5-4b48-879f-107f009b666f.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
+  src: url("//fast.fonts.net/dv2/3/1e9892c0-6927-4412-9874-1b82801ba47a.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/52a192b1-bea5-4b48-879f-107f009b666f.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
   font-style: normal;
   font-weight: normal;
 }
@@ -4206,7 +4206,7 @@ input[type="text"].pagination_current-page {
 @font-face {
   font-family: "AvenirNextLTW01-Italic";
   src: url("//fast.fonts.net/dv2/2/d1fddef1-d940-4904-8f6c-17e809462301.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
-  src: url("//fast.fonts.net/dv2/3/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("//fast.fonts.net/dv2/1/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("//fast.fonts.net/dv2/11/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585") format("svg");
+  src: url("//fast.fonts.net/dv2/3/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585") format("svg");
   font-style: italic;
   font-weight: normal;
 }
@@ -4219,7 +4219,7 @@ input[type="text"].pagination_current-page {
 @font-face {
   font-family: "AvenirNextLTW01-Medium";
   src: url("//fast.fonts.net/dv2/2/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
-  src: url("//fast.fonts.net/dv2/3/f26faddb-86cc-4477-a253-1e1287684336.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("//fast.fonts.net/dv2/1/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("//fast.fonts.net/dv2/11/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
+  src: url("//fast.fonts.net/dv2/3/f26faddb-86cc-4477-a253-1e1287684336.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
   font-style: normal;
   font-weight: 500;
 }
@@ -4232,7 +4232,7 @@ input[type="text"].pagination_current-page {
 @font-face {
   font-family: "AvenirNextLTW01-Demi";
   src: url("//fast.fonts.net/dv2/2/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50");
-  src: url("//fast.fonts.net/dv2/3/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("//fast.fonts.net/dv2/1/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("//fast.fonts.net/dv2/11/99affa9a-a5e9-4559-bd07-20cf0071852d.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#99affa9a-a5e9-4559-bd07-20cf0071852d") format("svg");
+  src: url("//fast.fonts.net/dv2/3/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("woff"), url("/dv2/1/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50") format("truetype"), url("/dv2/11/99affa9a-a5e9-4559-bd07-20cf0071852d.svg?d44f19a684109620e4841571a690e818cea9a73cdbefb96cc08b5f82c9643b8106f94c545aff54485afc29351de72df4c681903f94243a8ad3f8f7f3f4b731d284a63003295e1c4f141ecc37bd9693ccedef43b147c8706230ef9c6e062115412795c31498d70a4e2d358f5d2e442be6a33c0248c4f72b87d584c4932c4713c2ebd47afa654dcf9c065671093ee5a31481c54c9852622bbce930f0aa9bcaa05bee3fd5c5c196d9a0e667431b93a90315c185a882e5&projectId=44e8c964-4684-44c6-a6e3-3f3da8787b50#99affa9a-a5e9-4559-bd07-20cf0071852d") format("svg");
   font-style: normal;
   font-weight: 700;
 }
@@ -5002,9 +5002,6 @@ img {
       notes:
         - "Use this class to hide something from view while keeping it
           accessible to screen readers."
-      notes:
-        - "Use this class to hide something from view while keeping it
-          accessible to screen readers."
   tags:
     - cfgov-utilities
 */
@@ -5316,6 +5313,21 @@ img {
    cfgov-refresh
    layout
    ========================================================================== */
+/* topdoc
+  name: Base layout
+  family: cfgov-layout
+  patterns:
+    - name: Wrapper class
+      markup: |
+        <div class="wrapper">
+            Wrapper
+        </div>
+      notes:
+        - "Turns an element into a cf-grid wrapper at 801px and above."
+        - "Includes some explicit declarations for IE8 due to the fact that it doesn't support media queries."
+  tags:
+    - cfgov-layout
+*/
 @media only all and (min-width: 50.0625em) {
   .wrapper {
     max-width: 1170px;
@@ -5331,10 +5343,141 @@ img {
 .lt-ie9 body {
   min-width: 800px;
 }
+/* topdoc
+  name: Content bar
+  family: cfgov-layout
+  patterns:
+    - name: A 10 pixel bar that divides the header or hero from the main content
+      markup: |
+        <div class="content_bar"></div>
+      notes:
+        - "This is necessary because we don't have a predictable place to put a full-width border. It needs to be under the hero on pages with heroes, but under the header if there is no hero."
+        - ".content_bar must come after .content_hero but before .content_wrapper"
+  tags:
+    - cfgov-layout
+*/
 .content_bar {
   height: 10px;
   background: #2cb34a;
 }
+/* topdoc
+  name: Main content and sidebar
+  family: cfgov-layout
+  patterns:
+    - name: Standard layout for the main content area and sidebar
+      markup: |
+        <main class="content" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    Main content area
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Sidebar
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          main.content
+            .content_hero
+            .content_bar
+            .content_wrapper
+              .content_main
+              .content_sidebar
+      notes:
+        - "By default .content_main and .content_sidebar stack vertically. When using the modifiers described below to create columns, the columns will remain stacked for smaller screens and then convert to to columns at 801px."
+        - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+    - name: Left-hand navigation layout
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      codenotes:
+        - .content__1-3
+      notes:
+        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+    - name: Right-hand sidebar layout
+      markup: |
+        <main class="content content__2-1" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      codenotes:
+        - .content__2-1
+      notes:
+        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+    - name: Narrow content column option
+      markup: |
+        <main class="content content__2-1" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main content_main__narrow">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar" style="background: #F1F2F2">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      codenotes:
+        - .content_main__narrow
+      notes:
+        - "Add a class of .content_main__narrow to .content_main to get a one-column (in a 12-column grid) gutter on the right side."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+  tags:
+    - cfgov-layout
+*/
 .content_main,
 .content_sidebar {
   padding: 1.875em 0.9375em;
@@ -5363,21 +5506,6 @@ img {
     margin-right: 0;
     zoom: 1;
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-.content_sidebar-item + .content_sidebar-item {
-  margin-top: 3.75em;
-}
-.header .demo-placeholder,
-.content_hero .demo-placeholder,
-.footer .demo-placeholder {
-  margin-left: 15px;
-}
-@media only all and (min-width: 37.5em) and (max-width: 50em) {
-  .header .demo-placeholder,
-  .content_hero .demo-placeholder,
-  .footer .demo-placeholder {
-    margin-left: 30px;
   }
 }
 @media only all and (min-width: 50.0625em) {
@@ -5496,6 +5624,54 @@ img {
     padding-right: 0;
   }
 }
+/* topdoc
+  name: Sidebar
+  family: cfgov-layout
+  patterns:
+    - name: Sidebar item spacing
+      markup: |
+        <section class="content_sidebar-item related-posts" style="background: #F1F2F2">
+            Related posts
+        </section>
+        <section class="content_sidebar-item related-news" style="background: #F1F2F2">
+            Related news
+        </section>
+      notes:
+        - "Gives some vertical margin between sidebar items."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+  tags:
+    - cfgov-layout
+*/
+.content_sidebar-item + .content_sidebar-item {
+  margin-top: 3.75em;
+}
+/* topdoc
+  name: Bleedbar sidebar styling
+  family: cfgov-layout
+  patterns:
+    - name: Give the sidebar a background color that bleeds off the edge of the screen
+      markup: |
+        <main class="content content__2-1 content__bleedbar" id="main" role="main">
+            <section class="content_hero" style="background: #E3E4E5">
+                Content hero
+            </section>
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    Main content area
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar">
+                    Bleeding sidebar
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+      notes:
+        - "Simply add class .content__bleedbar to main.content."
+        - "Only supports sidebars on the right, for now."
+        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+  tags:
+    - cfgov-layout
+*/
 .content__bleedbar .content_sidebar {
   padding: 2em 0.9375em;
   background: #f1f2f2;
@@ -5507,6 +5683,8 @@ img {
   .content__bleedbar .content_sidebar {
     padding: 3.75em 0 0.9375em 1.875em;
     margin-left: 0;
+    position: relative;
+    z-index: 1;
     background: transparent;
   }
   .lt-ie8 .content__bleedbar .content_sidebar {
@@ -5521,7 +5699,7 @@ img {
     height: 100%;
     position: absolute;
     top: 0;
-    z-index: -1;
+    z-index: 0;
     margin-left: 10px;
     background: #f1f2f2;
   }
@@ -5532,10 +5710,40 @@ img {
     left: 75%;
   }
 }
+/* topdoc
+  name: Footer
+  family: cfgov-layout
+  patterns:
+    - name: Standard footer styling
+      markup: |
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer><!-- END .footer -->
+  tags:
+    - cfgov-layout
+*/
 .footer {
   padding: 1.5em 0;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
+}
+/* topdoc
+    name: EOF
+    eof: true
+*/
+.header .demo-placeholder,
+.content_hero .demo-placeholder,
+.footer .demo-placeholder {
+  margin-left: 15px;
+}
+@media only all and (min-width: 37.5em) and (max-width: 50em) {
+  .header .demo-placeholder,
+  .content_hero .demo-placeholder,
+  .footer .demo-placeholder {
+    margin-left: 30px;
+  }
 }
 /* ==========================================================================
    cfgov-refresh
