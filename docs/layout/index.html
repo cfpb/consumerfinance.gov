@@ -84,7 +84,7 @@
       <h2 class="docs-component_header"><span>Main content and sidebar</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Standard mobile styling for the main content area and sidebar</h3>
+          <h3 class="docs-pattern_header">Standard layout for the main content area and sidebar</h3>
           <section class="docs-pattern_pattern">
 <main class="content" id="main" role="main">
     <section class="content_hero" style="background: #E3E4E5">
@@ -130,8 +130,8 @@ main.content
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>.content_bar must come after .content_hero (if it exists) but before .content_wrapper</li>
-              <li>.content_main and .content_sidebar are stacked up to 800px, and then they go side-by-side</li>
+              <li>By default .content_main and .content_sidebar stack vertically. When using the modifiers described below to create columns, the columns will remain stacked for smaller screens and then convert to to columns at 801px.</li>
+              <li>.content_bar must come after .content_hero (if it exists) but before .content_wrapper.</li>
               <li>Inline styling is for demonstration purposes only; do not include it in your markup.</li>
             </ul>
           </footer>
