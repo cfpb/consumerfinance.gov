@@ -1,8 +1,6 @@
 # To do
 
 - Post stuff
-  - Posts with tags in title
-    - /blog/protecting-funds-from-the-cobell-v-salazar-settlement
   - Posts with annoying deks
     - /blog/save-the-date-detroit-michigan
     - /blog/understanding-reverse-mortgages
@@ -29,19 +27,10 @@
     - http://codepen.io/anon/pen/bryAo
 - BB wordwrap issue
 - Green bar under header needs bg image
-- Layout docs
 - Update CF components with patterns
   - Make utilities a component
   - Update cf-forms with the form patterns
   - Update cf-typography with some of the meta patterns and the summary
-- Sidebar link lists
-  ghe/flapjack/blog/issues/32
-- Featured image needs alt text and thumbnail size
-  ghe/flapjack/blog/issues/33
-- Ampersand filter bug
-  https://github.com/rosskarchner/sheer/issues/17
-- Tags in filter list bug
-  https://github.com/rosskarchner/sheer/issues/18
 
 - Scrum stuff
   - Hard to know what's ready for front end
