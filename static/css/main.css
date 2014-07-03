@@ -2506,8 +2506,8 @@ textarea {
 */
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url('../fonts//cf-icons.eot');
-  src: url('../fonts//cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts//cf-icons.woff') format('woff'), url('../fonts//cf-icons.ttf') format('truetype'), url('../fonts//cf-icons.svg') format('svg');
+  src: url('../fonts/cf-icons.eot');
+  src: url('../fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('../fonts/cf-icons.woff') format('woff'), url('../fonts/cf-icons.ttf') format('truetype'), url('../fonts/cf-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }

@@ -11,10 +11,15 @@
     {% set active_filters =
        selected_filters_for_field('category') +
        selected_filters_for_field('tags') +
-       selected_filters_for_field('author') + 
+       selected_filters_for_field('author')
+    %}
+
+    {% set active_date_filters =
        selected_filters_for_field('range_date_gte') + 
        selected_filters_for_field('range_date_lte')
     %}
+
+    {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
     {% set view = get_document('views', 'blog') %}
@@ -70,7 +75,7 @@
            1. No filters have been applied
            2. We are on the first page of paginated results
         #}
-        {% if active_filters|length == 0 and posts.current_page == 1 %}
+        {% if active_filters_total == 0 and posts.current_page == 1 %}
         {% set hero = view.hero %}
         <section class="content_hero hero"
                  style="background-color:{{ hero.custom_fields.background_color[0] }}">
@@ -145,7 +150,7 @@
                             </span>
                         </a>
                     </div>
-                {% if active_filters|length > 0 %}
+                {% if active_filters_total > 0 %}
                     <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
                         <dt class="list_item">
                             <span class="filtered-by_header">
@@ -160,7 +165,19 @@
                         <dd class="list_item">
                             <span class="filtered-by_filter">
                                 {{ filter }}
-                                {%- if not loop.last -%},{% endif %}
+                                {%- if not loop.last -%}
+                                ,
+                                {%- elif active_date_filters|length > 0 -%}
+                                ,
+                                {%- endif -%}
+                            </span>
+                        </dd>
+                    {% endfor %}
+                    {% for filter in active_date_filters %}
+                        <dd class="list_item">
+                            <span class="filtered-by_filter">
+                                {{ filter | date("%B %Y") }}
+                                {% if not loop.last -%}&nbsp;&ndash;{% endif %}
                             </span>
                         </dd>
                     {% endfor %}
