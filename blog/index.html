@@ -210,16 +210,16 @@
                                             multiple
                                             data-placeholder="Select some options">
                                         <optgroup label="Most frequent">
-                                        {% for tags in queries.posts.possible_values_for('tags') %}
-                                            {% if loop.index < 4 %}
+                                        {%- for tags in queries.posts.possible_values_for('tags') -%}
+                                            {%- if loop.index < 4 -%}
                                             {{ filter_option('tags', tags.term) }}
-                                            {% endif %}
-                                        {% endfor %}
+                                            {%- endif -%}
+                                        {%- endfor -%}
                                         </optgroup>
                                         <optgroup label="All topics">
-                                        {% for tags in queries.posts.possible_values_for('tags')|sort(attribute='term') %}
+                                        {%- for tags in queries.posts.possible_values_for('tags')|sort(attribute='term') -%}
                                             {{ filter_option('tags', tags.term) }}
-                                        {% endfor %}
+                                        {%- endfor -%}
                                         </optgroup>
                                     </select>
                                 </div>
