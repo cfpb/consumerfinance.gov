@@ -208,7 +208,7 @@
                                             id="filter_tags"
                                             name="filter_tags"
                                             multiple
-                                            data-placeholder="Select some options">
+                                            data-placeholder="Search for topics">
                                         <optgroup label="Most frequent">
                                         {%- for tags in queries.posts.possible_values_for('tags') -%}
                                             {%- if loop.index < 4 -%}
@@ -231,7 +231,7 @@
                                             id="filter_author"
                                             name="filter_author"
                                             multiple
-                                            data-placeholder="Select some options">
+                                            data-placeholder="Search for authors">
                                         {% for author in queries.posts.possible_values_for('author')|sort(attribute='term') %}
                                             {{ filter_option('author', author.term) }}
                                         {% endfor %}
