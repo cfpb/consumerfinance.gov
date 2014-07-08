@@ -12247,6 +12247,31 @@ $('body').cf_pagination({
 
 
 /* ==========================================================================
+   #post-filters-form validation
+   ========================================================================== */
+
+function validDateRange(date1, date2) {
+   return date2.getTime() > date1.getTime();
+}
+
+$('#post-filters-form').on('submit', function(e) {
+    // Check the date range values.
+    // If the from (gte) date is larger than the to (lte) date then swap them.
+    var validDate = validDateRange(
+        new Date(Date.parse($('#filter_range_date_gte input').val())),
+        new Date(Date.parse($('#filter_range_date_lte input').val()))
+    );
+    if (!validDate) {
+        // Swap the values
+        var gteVal = $('#filter_range_date_gte input').val();
+        var lteVal = $('#filter_range_date_lte input').val();
+        $('#filter_range_date_gte input').val(lteVal);
+        $('#filter_range_date_lte input').val(gteVal);
+    }
+});
+
+
+/* ==========================================================================
    Utilities
    ========================================================================== */
 
