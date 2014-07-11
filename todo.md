@@ -1,5 +1,7 @@
 # To do
 
+- No "number of results" message on smaller screens
+
 - Post stuff
   - Posts with annoying deks
     - /blog/save-the-date-detroit-michigan

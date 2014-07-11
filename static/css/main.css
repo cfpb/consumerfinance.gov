@@ -6682,6 +6682,7 @@ a.category-slug.active {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-bottom: 0.3125em;
 }
 .form-label em,
 .form-label i {
@@ -6944,7 +6945,7 @@ a.category-slug.active {
   tags:
     - cfgov-misc
 */
-@media only all and (min-width: 37.5em) {
+@media only all and (min-width: 66.25em) {
   .form-l__flush {
     display: block;
     position: relative;
@@ -6953,10 +6954,10 @@ a.category-slug.active {
   }
 }
 .form-l_col {
-  margin-bottom: 1em;
+  margin-bottom: 1.875em;
 }
-@media only all and (min-width: 37.5em) {
-  .form-l_col-1-3 {
+@media only all and (min-width: 66.25em) {
+  .form-l_col-1-2 {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -6967,10 +6968,10 @@ a.category-slug.active {
     vertical-align: top;
     width: 50%;
   }
-  .ie .form-l_col-1-3 {
+  .ie .form-l_col-1-2 {
     margin-right: -0.26em;
   }
-  .lt-ie8 .form-l_col-1-3 {
+  .lt-ie8 .form-l_col-1-2 {
     display: inline;
     margin-right: 0;
     zoom: 1;
@@ -6993,6 +6994,28 @@ a.category-slug.active {
     margin-right: -0.26em;
   }
   .lt-ie8 .form-l_col-1-3 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 66.25em) {
+  .form-l_col-2-3 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+  }
+  .ie .form-l_col-2-3 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-2-3 {
     display: inline;
     margin-right: 0;
     zoom: 1;
