@@ -9,7 +9,7 @@
                 <label class="form-label-header">
                     Categories
                 </label>
-                {% for category in queries.posts.possible_values_for('category') -%}
+                {% for category in queries.posts.possible_values_for('category')|sort(attribute='term') -%}
                 <label class="form-group_item form-label">
                     {{ filter_checkbox('category', category.term)|safe }}
                 </label>
