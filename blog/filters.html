@@ -1,0 +1,204 @@
+<form class="padded-container_body" id="post-filters-form" method="get">
+
+    <!-- Pull the columns out with .form-l__flush so their gutters won't double
+         the padding from .padded-container -->
+    <div class="form-l form-l__flush">
+
+        <div class="form-l_col form-l_col-1-3">
+            <div class="form-group">
+                <label class="form-label-header">
+                    Categories
+                </label>
+                {% for category in queries.posts.possible_values_for('category') -%}
+                <label class="form-group_item form-label">
+                    {{ filter_checkbox('category', category.term)|safe }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-l_col form-l_col-2-3">
+            <!-- Nested columns need a .form-l__flush wrapper to avoid
+                 double gutters. -->
+            <div class="form-l form-l__flush">
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header" for="filter_tags">
+                        Topics
+                    </label>
+                    <select class="chosen-select"
+                            id="filter_tags"
+                            name="filter_tags"
+                            multiple
+                            data-placeholder="Search for topics">
+                        <optgroup label="Most frequent">
+                        {%- for tags in queries.posts.possible_values_for('tags') -%}
+                            {%- if loop.index < 4 -%}
+                            {{ filter_option('tags', tags.term)|safe }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                        </optgroup>
+                        <optgroup label="All topics">
+                        {%- for tags in queries.posts.possible_values_for('tags')|sort(attribute='term') -%}
+                            {{ filter_option('tags', tags.term)|safe }}
+                        {%- endfor -%}
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header" for="filter_author">
+                        Author
+                    </label>
+                    <select class="chosen-select"
+                            id="filter_author"
+                            name="filter_author"
+                            multiple
+                            data-placeholder="Search for authors">
+                        {% for author in queries.posts.possible_values_for('author')|sort(attribute='term') %}
+                            {{ filter_option('author', author.term)|safe }}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div> <!-- END .form-l__flush -->
+
+            <label class="form-label-header">
+                Date range
+            </label>
+
+            <!-- Nested columns need a .form-l__flush wrapper to avoid
+                 double gutters. -->
+            <div class="form-l form-l__flush form-group">
+                <!--
+                    =================
+                    "From" date input
+                    =================
+                -->
+                <!-- No-JS date input -->
+                {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
+                <div class="form-group_item form-l_col-1-2"
+                     id="filter_range_date_gte-container">
+                     <label class="form-label"
+                            for="filter_range_date_gte">
+                         From:
+                     </label>
+                    <input id="filter_range_date_gte"
+                           name="filter_range_date_gte"
+                           type="text"
+                           value="{{ from_date if from_date }}"
+                           placeholder="YYYY-MM">
+                </div>
+                <!-- JS date input -->
+                <div class="form-group_item form-l_col-1-2 input-group"
+                     id="filter_range_date_gte-replacement"
+                     style="display:none;">
+                    <label class="form-label"
+                           for="filter_from_month">
+                        From:
+                    </label>
+                    <div class="input-group_item custom-select">
+                        <select class="form-input-month"
+                                id="filter_from_month">
+                            <option value="">Month</option>
+                            <option value="01">Jan</option>
+                            <option value="02">Feb</option>
+                            <option value="03">Mar</option>
+                            <option value="04">Apr</option>
+                            <option value="05">May</option>
+                            <option value="06">Jun</option>
+                            <option value="07">Jul</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+                        </select>
+                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                    </div>
+                    <div class="input-group_item custom-select">
+                        <select class="form-input_year"
+                                id="filter_from_year">
+                            <option value="">Year</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                        </select>
+                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                    </div>
+                </div> <!-- END js date input -->
+                <!-- END "From" date input -->
+
+                <!--
+                    ===============
+                    "To" date input
+                    ===============
+                -->
+                <!-- No-JS date input -->
+                {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
+                <div class="form-group_item form-l_col-1-2"
+                     id="filter_range_date_lte-container">
+                     <label class="form-label"
+                            for="filter_range_date_lte">
+                         To:
+                     </label>
+                    <input id="filter_range_date_lte"
+                           name="filter_range_date_lte"
+                           type="text"
+                           value="{{ to_date if to_date }}"
+                           placeholder="YYYY-MM">
+                </div>
+                <!-- JS date input -->
+                <div class="form-group_item form-l_col-1-2 input-group"
+                     id="filter_range_date_lte-replacement"
+                     style="display:none;">
+                    <label class="form-label"
+                           for="filter_to_month">
+                        To:
+                    </label>
+                    <div class="custom-select input-group_item">
+                        <select class="form-input-month"
+                                id="filter_to_month">
+                            <option value="">Month</option>
+                            <option value="01">Jan</option>
+                            <option value="02">Feb</option>
+                            <option value="03">Mar</option>
+                            <option value="04">Apr</option>
+                            <option value="05">May</option>
+                            <option value="06">Jun</option>
+                            <option value="07">Jul</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+                        </select>
+                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                    </div>
+                    <div class="custom-select input-group_item">
+                        <select class="form-input_year"
+                                id="filter_to_year">
+                            <option value="">Year</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                        </select>
+                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                    </div>
+                </div> <!-- END JS date input -->
+                <!-- END "To" date input -->
+
+            </div> <!-- END .form-l__flush -->
+
+        </div> <!-- END .form-l_col-2-3 -->
+    </div> <!-- END .form-l__flush -->
+
+    <div class="form-actions form-actions__right-on-med">
+        <input class="btn btn-warning btn-link form-actions_item js-form_clear"
+               type="button"
+               value="Clear filters">
+        <input class="btn form-actions_item"
+               type="submit"
+               value="Apply filters">
+    </div>
+
+</form>

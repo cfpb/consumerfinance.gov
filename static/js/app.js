@@ -51,17 +51,17 @@ $('.js-form_clear').on('click', function() {
    Init jquery.cf_inputSplit
    ========================================================================== */
 
-$('#filter_range_date_gte').cf_inputSplit({
+$('#filter_range_date_gte-container').cf_inputSplit({
     newHTML: '#filter_range_date_gte-replacement',
     newInputsOrder: ['#filter_from_year', '#filter_from_month'],
-    initialValues: $('#filter_range_date_gte input').val().split('-'),
+    initialValues: $('#filter_range_date_gte').val().split('-'),
     delimiter: '-'
 });
 
-$('#filter_range_date_lte').cf_inputSplit({
+$('#filter_range_date_lte-container').cf_inputSplit({
     newHTML: '#filter_range_date_lte-replacement',
     newInputsOrder: ['#filter_to_year', '#filter_to_month'],
-    initialValues: $('#filter_range_date_lte input').val().split('-'),
+    initialValues: $('#filter_range_date_lte').val().split('-'),
     delimiter: '-'
 });
 
@@ -123,15 +123,15 @@ $('#post-filters-form').on('submit', function(e) {
     // Check the date range values.
     // If the from (gte) date is larger than the to (lte) date then swap them.
     var validDate = validDateRange(
-        new Date(Date.parse($('#filter_range_date_gte input').val())),
-        new Date(Date.parse($('#filter_range_date_lte input').val()))
+        new Date(Date.parse($('#filter_range_date_gte').val())),
+        new Date(Date.parse($('#filter_range_date_lte').val()))
     );
     if (!validDate) {
         // Swap the values
-        var gteVal = $('#filter_range_date_gte input').val();
-        var lteVal = $('#filter_range_date_lte input').val();
-        $('#filter_range_date_gte input').val(lteVal);
-        $('#filter_range_date_lte input').val(gteVal);
+        var gteVal = $('#filter_range_date_gte').val();
+        var lteVal = $('#filter_range_date_lte').val();
+        $('#filter_range_date_gte').val(lteVal);
+        $('#filter_range_date_lte').val(gteVal);
     }
 });
 
