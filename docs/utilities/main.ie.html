@@ -15,6 +15,47 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / utilities docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="clearfix" class="docs-component">
+      <h2 class="docs-component_header"><span>Clearfix</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Utility class</h3>
+          <section class="docs-pattern_pattern">
+<div class="u-clearfix">
+    <div style="float:left; width:100%; height:60px; background:black;"></div>
+</h1>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-clearfix&quot;&gt;
+    &lt;div style=&quot;float:left; width:100%; height:60px; background:black;&quot;&gt;&lt;/div&gt;
+&lt;/h1&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-clearfix;</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use this class to clear floats. For example, without .u-clearfix the black box would spill into the markup section.</li>
+              <li>More information: http://css-tricks.com/snippets/css/clear-fix/</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-clearfix:after {
+  content: &quot;&quot;;
+  display: table;
+  clear: both;
+}
+
+.lt-ie8 .u-clearfix {
+  zoom: 1;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="visually-hidden" class="docs-component">
       <h2 class="docs-component_header"><span>Visually hidden</span></h2>
       <div class="docs-patterns">
