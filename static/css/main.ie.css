@@ -5797,6 +5797,35 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Clearfix
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      markup: |
+        <div class="u-clearfix">
+            <div style="float:left; width:100%; height:60px; background:black;"></div>
+        </h1>
+      codenotes:
+        - .u-clearfix;
+      notes:
+        - "Use this class to clear floats. For example, without .u-clearfix the
+           black box would spill into the markup section."
+        - "More information: http://css-tricks.com/snippets/css/clear-fix/"
+  tags:
+    - cfgov-utilities
+*/
+
+.u-clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lt-ie8 .u-clearfix {
+  zoom: 1;
+}
+
+/* topdoc
   name: Visually hidden
   family: cfgov-utilities
   patterns:

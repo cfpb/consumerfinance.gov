@@ -808,6 +808,14 @@ select[multiple].success {
             .grid_nested-col-group();
         });
     }
+    &__float {
+        .u-respond-to-min(1060px, {
+            .u-clearfix();
+            & .form-l_col {
+                float: left;
+            }
+        });
+    }
 }
 
 .form-l_col {
@@ -822,10 +830,6 @@ select[multiple].success {
 }
 
 .form-l_col-1-3 {
-    // .u-respond-to-min(600px, {
-    //     .grid_column(6);
-    // });
-
     .u-respond-to-min(1060px, {
         .grid_column(4);
     });
@@ -834,6 +838,12 @@ select[multiple].success {
 .form-l_col-2-3 {
     .u-respond-to-min(1060px, {
         .grid_column(8);
+    });
+}
+
+.form-l_col-1 {
+    .u-respond-to-min(1060px, {
+        .grid_column(12);
     });
 }
 
