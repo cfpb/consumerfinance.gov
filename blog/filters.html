@@ -110,10 +110,9 @@
                 <select class="form-input_year"
                         id="filter_from_year">
                     <option value="">Year</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
+                    {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {%- endfor -%}
                 </select>
                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
             </div>
@@ -170,10 +169,9 @@
                 <select class="form-input_year"
                         id="filter_to_year">
                     <option value="">Year</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
+                    {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {%- endfor %}
                 </select>
                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
             </div>
