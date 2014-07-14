@@ -1,5 +1,8 @@
 # To do
 
+- Should we pull out hero, main, sidebar, and others into their own files?
+- No "number of results" message on smaller screens
+
 - Post stuff
   - Posts with annoying deks
     - /blog/save-the-date-detroit-michigan

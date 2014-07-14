@@ -229,53 +229,58 @@
                         </dl>
                     </div>
                     <div class="expandable_content padded-container">
-                        <form class="padded-container_body" id="post-filters-form" method="get">
-                            <div class="form-l form-l__flush">
-                                <div class="form-l_col form-l_col-1-3">
-                                    <div class="form-group">
-                                        <label class="form-label-header">
-                                            Categories
-                                        </label>
-                                        <label class="form-group_item form-label"
-                                               for="filter_category_announcements">
-                                            <input class="custom-input"
-                                                   id="filter_category_announcements"
-                                                   type="checkbox"
-                                                   name="filter_category"
-                                                   value="announcements">
-                                            Announcements &amp; updates
-                                        </label>
-                                        <label class="form-group_item form-label"
-                                               for="filter_category_consumer">
-                                            <input class="custom-input"
-                                                   id="filter_category_consumer"
-                                                   type="checkbox"
-                                                   name="filter_category"
-                                                   value="consumer">
-                                            Consumer information
-                                        </label>
-                                        <label class="form-group_item form-label"
-                                               for="filter_category_engagement">
-                                            <input class="custom-input"
-                                                   id="filter_category_engagement"
-                                                   type="checkbox"
-                                                   name="filter_category"
-                                                   value="engagement">
-                                            Engagement
-                                        </label>
-                                        <label class="form-group_item form-label"
-                                               for="filter_category_innovation">
-                                            <input class="custom-input"
-                                                   id="filter_category_innovation"
-                                                   type="checkbox"
-                                                   name="filter_category"
-                                                   value="innovation">
-                                            Innovation &amp; data
-                                        </label>
+                        <div class="padded-container_body">
+                            <form id="post-filters-form" method="get">
+
+                                <!-- Pull the columns out with .form-l__flush so their gutters won't double
+                                     the padding from .padded-container -->
+                                <div class="form-l form-l__float form-l__flush">
+
+                                    <div class="form-l_col form-l_col-1-3">
+                                        <div class="form-group">
+                                            <label class="form-label-header">
+                                                Categories
+                                            </label>
+                                            <label class="form-group_item form-label"
+                                                   for="filter_category_announcements">
+                                                <input class="custom-input"
+                                                       id="filter_category_announcements"
+                                                       type="checkbox"
+                                                       name="filter_category"
+                                                       value="announcements">
+                                                Announcements &amp; updates
+                                            </label>
+                                            <label class="form-group_item form-label"
+                                                   for="filter_category_consumer">
+                                                <input class="custom-input"
+                                                       id="filter_category_consumer"
+                                                       type="checkbox"
+                                                       name="filter_category"
+                                                       value="consumer">
+                                                Consumer information
+                                            </label>
+                                            <label class="form-group_item form-label"
+                                                   for="filter_category_engagement">
+                                                <input class="custom-input"
+                                                       id="filter_category_engagement"
+                                                       type="checkbox"
+                                                       name="filter_category"
+                                                       value="engagement">
+                                                Engagement
+                                            </label>
+                                            <label class="form-group_item form-label"
+                                                   for="filter_category_innovation">
+                                                <input class="custom-input"
+                                                       id="filter_category_innovation"
+                                                       type="checkbox"
+                                                       name="filter_category"
+                                                       value="innovation">
+                                                Innovation &amp; data
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-l_col form-l_col-1-3">
-                                    <div class="form-group">
+
+                                    <div class="form-l_col form-l_col-1-3">
                                         <label class="form-label-header" for="filter_tags">
                                             Topics
                                         </label>
@@ -299,7 +304,8 @@
                                             </optgroup>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+
+                                    <div class="form-l_col form-l_col-1-3">
                                         <label class="form-label-header" for="filter_author">
                                             Author
                                         </label>
@@ -316,119 +322,143 @@
                                             <option value="author6">Author 6</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-l_col form-l_col-1-3">
-                                    <div class="form-group">
-                                        <label class="form-label-header">
-                                            Date range
-                                        </label>
-                                        <div class="form-group_item"
-                                             id="filter_range_date_gte">
-                                            <input name="filter_range_date_gte"
-                                                   type="text"
-                                                   value="2011-02"
-                                                   placeholder="YYYY-MM">
-                                        </div>
-                                        <div class="form-group_item input-group"
-                                             id="filter_range_date_gte-replacement"
-                                             style="display:none;">
-                                            <div class="input-group_item custom-select">
-                                                <label class="u-visually-hidden" for="filter_from_month">
-                                                    From month
-                                                </label>
-                                                <select class="form-input-month"
-                                                        id="filter_from_month">
-                                                    <option value="">Month</option>
-                                                    <option value="01">Jan</option>
-                                                    <option value="02">Feb</option>
-                                                    <option value="03">Mar</option>
-                                                    <option value="04">Apr</option>
-                                                    <option value="05">May</option>
-                                                    <option value="06">Jun</option>
-                                                    <option value="07">Jul</option>
-                                                    <option value="08">Aug</option>
-                                                    <option value="09">Sep</option>
-                                                    <option value="10">Oct</option>
-                                                    <option value="11">Nov</option>
-                                                    <option value="12">Dec</option>
-                                                </select>
-                                                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                                            </div>
-                                            <div class="input-group_item custom-select">
-                                                <label class="u-visually-hidden" for="filter_from_year">
-                                                    From year
-                                                </label>
-                                                <select class="form-input_year"
-                                                        id="filter_from_year">
-                                                    <option value="">Year</option>
-                                                    <option value="2014">2014</option>
-                                                    <option value="2013">2013</option>
-                                                    <option value="2012">2012</option>
-                                                    <option value="2011">2011</option>
-                                                </select>
-                                                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group_item"
-                                             id="filter_range_date_lte">
-                                            <input name="filter_range_date_lte"
-                                                   type="text"
-                                                   value="2014-12"
-                                                   placeholder="YYYY-MM">
-                                        </div>
-                                        <div class="form-group_item input-group"
-                                             id="filter_range_date_lte-replacement"
-                                             style="display:none;">
-                                            <div class="custom-select input-group_item">
-                                                <label class="u-visually-hidden" for="filter_to_month">
-                                                    To month
-                                                </label>
-                                                <select class="form-input-month"
-                                                        id="filter_to_month">
-                                                    <option value="">Month</option>
-                                                    <option value="01">Jan</option>
-                                                    <option value="02">Feb</option>
-                                                    <option value="03">Mar</option>
-                                                    <option value="04">Apr</option>
-                                                    <option value="05">May</option>
-                                                    <option value="06">Jun</option>
-                                                    <option value="07">Jul</option>
-                                                    <option value="08">Aug</option>
-                                                    <option value="09">Sep</option>
-                                                    <option value="10">Oct</option>
-                                                    <option value="11">Nov</option>
-                                                    <option value="12">Dec</option>
-                                                </select>
-                                                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                                            </div>
-                                            <div class="custom-select input-group_item">
-                                                <label class="u-visually-hidden" for="filter_to_year">
-                                                    To year
-                                                </label>
-                                                <select class="form-input_year"
-                                                        id="filter_to_year">
-                                                    <option value="">Year</option>
-                                                    <option value="2014">2014</option>
-                                                    <option value="2013">2013</option>
-                                                    <option value="2012">2012</option>
-                                                    <option value="2011">2011</option>
-                                                </select>
-                                                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                                            </div>
-                                        </div>
+
+                                    <label class="form-l_col-2-3 form-label-header">
+                                        Date range
+                                    </label>
+
+                                    <!--
+                                        =================
+                                        "From" date input
+                                        =================
+                                    -->
+                                    <!-- No-JS date input -->
+                                    <div class="form-l_col-1-3"
+                                         id="filter_range_date_gte-container">
+                                         <label class="form-label"
+                                                for="filter_range_date_gte">
+                                             From:
+                                         </label>
+                                        <input id="filter_range_date_gte"
+                                               name="filter_range_date_gte"
+                                               type="text"
+                                               value=""
+                                               placeholder="YYYY-MM">
                                     </div>
+                                    <!-- JS date input -->
+                                    <div class="form-l_col-1-3 input-group"
+                                         id="filter_range_date_gte-replacement"
+                                         style="display:none;">
+                                        <label class="form-label"
+                                               for="filter_from_month">
+                                            From:
+                                        </label>
+                                        <div class="input-group_item custom-select">
+                                            <select class="form-input-month"
+                                                    id="filter_from_month">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="input-group_item custom-select">
+                                            <select class="form-input_year"
+                                                    id="filter_from_year">
+                                                <option value="">Year</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                    </div> <!-- END js date input -->
+                                    <!-- END "From" date input -->
+
+                                    <!--
+                                        ===============
+                                        "To" date input
+                                        ===============
+                                    -->
+                                    <!-- No-JS date input -->
+                                    <div class="form-l_col-1-3"
+                                         id="filter_range_date_lte-container">
+                                         <label class="form-label"
+                                                for="filter_range_date_lte">
+                                             To:
+                                         </label>
+                                        <input id="filter_range_date_lte"
+                                               name="filter_range_date_lte"
+                                               type="text"
+                                               value=""
+                                               placeholder="YYYY-MM">
+                                    </div>
+                                    <!-- JS date input -->
+                                    <div class="form-l_col-1-3 input-group"
+                                         id="filter_range_date_lte-replacement"
+                                         style="display:none;">
+                                        <label class="form-label"
+                                               for="filter_to_month">
+                                            To:
+                                        </label>
+                                        <div class="custom-select input-group_item">
+                                            <select class="form-input-month"
+                                                    id="filter_to_month">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="custom-select input-group_item">
+                                            <select class="form-input_year"
+                                                    id="filter_to_year">
+                                                <option value="">Year</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                    </div> <!-- END JS date input -->
+                                    <!-- END "To" date input -->
+
+                                </div> <!-- END .form-l__flush -->
+
+                                <div class="form-actions form-actions__right-on-med">
+                                    <input class="btn btn-warning btn-link form-actions_item js-form_clear"
+                                           type="button"
+                                           value="Clear filters">
+                                    <input class="btn form-actions_item"
+                                           type="submit"
+                                           value="Apply filters">
                                 </div>
-                            </div>
-                            <div class="form-actions form-actions__right-on-med">
-                                <input class="btn btn-warning btn-link form-actions_item js-form_clear"
-                                       type="button"
-                                       value="Clear filters">
-                                <input class="btn form-actions_item"
-                                       type="submit"
-                                       value="Apply filters">
-                            </div>
-                        </form>
-                    </div>
+
+                            </form>
+                        </div> <!-- END .padded-container_body -->
+                    </div> <!-- END .expandable_content -->
                 </div><!-- END .expandable -->
 
                 <div id="pagination_content">

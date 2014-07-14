@@ -544,6 +544,8 @@ select[multiple].success {
 
 .form-label {
     .webfont-regular();
+    // 5px is eyeballed to 10px when considering line height.
+    margin-bottom: unit(5px / @base-font-size-px, em);
 
     & input {
         margin-right: unit(6px / @base-font-size-px, em);
@@ -802,24 +804,46 @@ select[multiple].success {
 
 .form-l {
     &__flush {
-        .u-respond-to-min(600px, {
+        .u-respond-to-min(1060px, {
             .grid_nested-col-group();
+        });
+    }
+    &__float {
+        .u-respond-to-min(1060px, {
+            .u-clearfix();
+            & .form-l_col {
+                float: left;
+            }
         });
     }
 }
 
 .form-l_col {
     // Eyeballed to 30px considering line-height.
-    margin-bottom: unit(16px / @base-font-size-px, em);
+    margin-bottom: unit(30px / @base-font-size-px, em);
+}
+
+.form-l_col-1-2 {
+    .u-respond-to-min(1060px, {
+        .grid_column(6);
+    });
 }
 
 .form-l_col-1-3 {
-    .u-respond-to-min(600px, {
-        .grid_column(6);
-    });
-
     .u-respond-to-min(1060px, {
         .grid_column(4);
+    });
+}
+
+.form-l_col-2-3 {
+    .u-respond-to-min(1060px, {
+        .grid_column(8);
+    });
+}
+
+.form-l_col-1 {
+    .u-respond-to-min(1060px, {
+        .grid_column(12);
     });
 }
 
