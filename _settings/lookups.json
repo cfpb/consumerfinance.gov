@@ -3,5 +3,10 @@
     "url" : "/blog/<id>",
     "type" : "posts",
     "permalink" : true
+  },
+  "post":{
+    "url" : "/newsroom/<id>",
+    "type" : "posts",
+    "permalink" : true
   }
 }
