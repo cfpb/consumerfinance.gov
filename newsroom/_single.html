@@ -30,125 +30,12 @@
 
         <div class="wrapper content_wrapper">
             <section class="content_main content_main__narrow">
-
-                <article class="post">
-                    <header>
-                        {% if post.category.0 %}
-                        <a href="/blog/?filter_category={{ post.category.0 }}" class="post_slug category-slug">
-                            {% if post.category.0|lower == 'announcements &amp; updates' %}
-                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                            {% elif post.category.0|lower == 'consumer information' %}
-                            <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                            {% elif post.category.0|lower == 'engagement' %}
-                            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-                            {% elif post.category.0|lower == 'innovation &amp; data' %}
-                            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-                            {% endif %}
-                            <span class="u-visually-hidden">Category:</span>
-                            {{ post.category.0 }}
-                        {% endif %}
-                        </a>
-                        <h1 class="post_header">
-                            {{ post.title }}
-                        </h1>
-                    {% if post.dek %}
-                        <div class="post_dek">
-                            {{ post.dek }}
-                        </div>
-                    {% endif %}
-                        <div class="post_meta">
-                            <span class="post_byline">
-                                By <a href="/blog/?filter_author={{ post.author.0 }}">
-                                    {{ post.author.0 }}
-                                </a>
-                            {% if post.author.1 %}
-                                and <a href="/blog/?filter_author={{ post.author.1 }}">
-                                    {{ post.author.1 }}
-                                </a>
-                            {% endif %}
-                                &ndash;
-                            </span>
-                            <span class="post_date date">
-                                {{ post.date | date("%b %d, %Y") }}
-                            </span>
-                        </div>
-                        <ul class="post_share list__horizontal">
-                            <li class="list_item">
-                                <a class="share-icon"
-                                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ post.title }}&amp;pubid=ra-4da354ee346886d2">
-                                    <span class="cf-icon cf-icon-email-social-square"></span>
-                                    <span class="u-visually-hidden">Share by email</span>
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="share-icon"
-                                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}">
-                                    <span class="cf-icon cf-icon-facebook-square"></span>
-                                    <span class="u-visually-hidden">Share on Facebook</span>
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="share-icon"
-                                   href="{{ share_twitter_url() }}"
-                                   target="_blank">
-                                    <span class="cf-icon cf-icon-twitter-square"></span>
-                                    <span class="u-visually-hidden">Share on Twitter</span>
-                                </a>
-                            </li>
-                            <!-- <li class="list_item">
-                                <a class="share-icon" href="#">
-                                    <span class="cf-icon cf-icon-linkedin-square"></span>
-                                    <span class="u-visually-hidden">Share on LinkedIn</span>
-                                </a>
-                            </li> -->
-                        </ul>
-                        {% if post.thumbnail.images %}
-                        <img class="post_featured-img"
-                             src="{{ post.thumbnail.images.full.url }}"
-                             alt="{{ post.thumbnail.alt_text }}">
-                        {% endif %}
-                    </header>
-                    <div class="post_body">
-                        {{ post.content }}
-                    </div>
-                    {% if post.tags|length %}
-                    <footer>
-                        <div class="tags">
-                            <h4 class="tags_header">Topics:</h4>
-                            <ul class="tags_list">
-                            {% for tag in post.tags %}
-                                <li class="tags_tag">
-                                    <a class="tags_link" href="/blog/?filter_tags={{ tag }}">
-                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                                        {{ tag }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        </div> 
-                    </footer>
-                    {% endif %}
-                </article>
-
-            </section><!-- END .content_main -->
+                {% include "article.html" %}
+            </section>
 
             <aside class="content_sidebar">
-                <section class="content_sidebar-item related-posts">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Related posts
-                        </span>
-                    </h1>
-                    <ul class="list list__unstyled list__spaced">
-                    {% for similar in more_like_this(post, search_size=5) %}
-                        <li class="list_item">
-                            <a class="list_link"
-                               href="{{ similar.permalink }}">
-                                {{ similar.title }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
+                <section class="content_sidebar-item">
+                    {% include "related-posts.html" %}
                 </section>
                 <section class="content_sidebar-item related-news">
                     <div class="demo-placeholder">Related news placeholder</div>
