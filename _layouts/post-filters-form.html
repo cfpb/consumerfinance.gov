@@ -9,11 +9,11 @@
                 <label class="form-label-header">
                     Categories
                 </label>
-                {% for category in queries.posts.possible_values_for('category')|sort(attribute='term') -%}
+            {% for category in queries.posts.possible_values_for('category')|sort(attribute='term') -%}
                 <label class="form-group_item form-label">
-                    {{ filter_checkbox('category', category.term)|safe }}
+                    {{ post_macros.filter_checkbox('category', category.term)|safe }}
                 </label>
-                {% endfor %}
+            {% endfor %}
             </div>
         </div>
 
@@ -27,16 +27,16 @@
                     multiple
                     data-placeholder="Search for topics">
                 <optgroup label="Most frequent">
-                {%- for tags in queries.posts.possible_values_for('tags') -%}
-                    {%- if loop.index < 4 -%}
-                    {{ filter_option('tags', tags.term)|safe }}
-                    {%- endif -%}
-                {%- endfor -%}
+            {%- for tags in queries.posts.possible_values_for('tags') -%}
+                {%- if loop.index < 4 -%}
+                    {{ post_macros.filter_option('tags', tags.term)|safe }}
+                {%- endif -%}
+            {%- endfor -%}
                 </optgroup>
                 <optgroup label="All topics">
-                {%- for tags in queries.posts.possible_values_for('tags')|sort(attribute='term') -%}
-                    {{ filter_option('tags', tags.term)|safe }}
-                {%- endfor -%}
+            {%- for tags in queries.posts.possible_values_for('tags')|sort(attribute='term') -%}
+                    {{ post_macros.filter_option('tags', tags.term)|safe }}
+            {%- endfor -%}
                 </optgroup>
             </select>
         </div>
@@ -51,7 +51,7 @@
                     multiple
                     data-placeholder="Search for authors">
                 {% for author in queries.posts.possible_values_for('author')|sort(attribute='term') %}
-                    {{ filter_option('author', author.term)|safe }}
+                    {{ post_macros.filter_option('author', author.term)|safe }}
                 {% endfor %}
             </select>
         </div>
@@ -110,9 +110,9 @@
                 <select class="form-input_year"
                         id="filter_from_year">
                     <option value="">Year</option>
-                    {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
+                {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
                     <option value="{{ year }}">{{ year }}</option>
-                    {%- endfor -%}
+                {%- endfor -%}
                 </select>
                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
             </div>
@@ -169,9 +169,9 @@
                 <select class="form-input_year"
                         id="filter_to_year">
                     <option value="">Year</option>
-                    {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
+                {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
                     <option value="{{ year }}">{{ year }}</option>
-                    {%- endfor %}
+                {%- endfor %}
                 </select>
                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
             </div>

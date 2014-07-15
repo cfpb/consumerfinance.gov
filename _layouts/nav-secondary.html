@@ -1,0 +1,12 @@
+<nav class="nav-secondary">
+    <ul class="nav-secondary_list">
+    {%- for href, id, caption in navigation_bar %}
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_page }}"
+               href="{{ href|e }}">
+               {{ caption|e }}
+           </a>
+        </li>
+    {%- endfor %}
+    </ul>
+</nav>

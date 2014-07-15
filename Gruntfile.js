@@ -330,6 +330,7 @@ module.exports = function(grunt) {
       'media-object',
       'meta',
       'misc',
+      'nav-secondary',
       'post',
       'summary',
       'utilities'

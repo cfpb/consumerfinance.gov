@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block demo_title -%}
+    Newsroom listing
+{%- endblock %}
+
+{% block title -%}
+    Newsroom
+{%- endblock %}
+{% block desc -%}
+    Press releases, speeches, op-eds, testimony, and blog posts produced by our Office of Communications
+{%- endblock %}
+
+{% block content %}
+
+
+    {# Variables #}
+
+    {% set active_filters =
+       selected_filters_for_field('category') +
+       selected_filters_for_field('tags') +
+       selected_filters_for_field('author')
+    %}
+
+    {% set active_date_filters =
+       selected_filters_for_field('range_date_gte') + 
+       selected_filters_for_field('range_date_lte')
+    %}
+
+    {% set active_filters_total = active_filters|length + active_date_filters|length %}
+
+    {% set posts = queries.posts.search_with_url_arguments(size=10) %}
+    {% set view = get_document('views', 'blog') %}
+
+    {# Macros #}
+
+    {% import "post-macros.html" as post_macros with context %}
+
+
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <section class="content_main">
+
+                {% include "post-filters.html" %}
+
+                <div class="demo-placeholder">watchroom placeholder</div>
+
+                {% include "posts-paginated.html" %}
+
+                <aside>
+                    <section class="content_sidebar-item stay-informed">
+                        <div class="demo-placeholder">stay informed placeholder</div>
+                    </section>
+                    <section class="content_sidebar-item related-links">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Related links
+                            </span>
+                        </h1>
+                        <ul class="list list__unstyled list__spaced">
+                            {% for link in view.related_links %}
+                            <li class="list_item">
+                                <a class="list_link"
+                                   href="{{ link[0] }}">
+                                    {{ link[1] }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                </aside>
+
+            </section><!-- END .content_main -->
+
+            <aside class="content_sidebar">
+                {% include "nav.html" %}
+            </aside><!-- END .content_sidebar -->
+
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+{% endblock content %}

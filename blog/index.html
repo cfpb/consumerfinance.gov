@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 
-{% block demo_title %}Blog listing{% endblock %}
+{% block demo_title -%}
+    Blog listing
+{%- endblock %}
 
-{% block title %}Blog{% endblock %}
-
-{% block desc %}The official blog of the Consumer Financial Protection Bureau{% endblock %}
+{% block title -%}
+    Blog
+{%- endblock %}
+{% block desc -%}
+    The official blog of the Consumer Financial Protection Bureau
+{%- endblock %}
 
 {% block content %}
+
+
+    {# Variables #}
 
     {% set active_filters =
        selected_filters_for_field('category') +
@@ -24,174 +32,25 @@
     {% set posts = queries.posts.search_with_url_arguments(size=10) %}
     {% set view = get_document('views', 'blog') %}
 
-    {% macro filter_checkbox(field, value, classes, hidden) %}
-        <input class="custom-input"
-               type="checkbox"
-               name="filter_{{ field }}"
-               value="{{ value }}"
-               {%- if is_filter_selected(field, value) %}
-               checked
-               {%- endif -%}
-               >
-            {{ value }}
-    {% endmacro %}
+    {# Macros #}
 
-    {% macro filter_option(field, value) %}
-        <option value="{{ value }}"
-            {%- if is_filter_selected(field, value) %}
-                selected
-            {%- endif -%}
-                >
-            {{ value }}
-        </option>
-    {% endmacro %}
+    {% import "post-macros.html" as post_macros with context %}
 
-    {% macro print_hidden_filters(filter_fields) %}
-        {%- for field in filter_fields -%}
-            {% set selected_filters = selected_filters_for_field(field) %}
-            {%- for value in selected_filters -%}
-                {%- if value %}
-                <input type="hidden" name="filter_{{ field }}" value="{{ value }}">
-                {%- endif -%}
-            {%- endfor -%}
-        {%- endfor -%}
-    {% endmacro %}
-
-    {% macro category_icon(category, additional_classes) %}
-        {%- if category|lower == 'announcements & updates' -%}
-        <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
-        {% elif category|lower == 'consumer information' -%}
-        <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
-        {% elif category|lower == 'engagement' -%}
-        <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
-        {% elif category|lower == 'innovation & data' -%}
-        <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
-        {%- endif -%}
-    {% endmacro %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
-        {# Only show the hero when:
-           1. No filters have been applied
-           2. We are on the first page of paginated results
-        #}
-        {% if active_filters_total == 0 and posts.current_page == 1 %}
-        {% set hero = view.hero %}
-        <section class="content_hero hero"
-                 style="background-color:{{ hero.custom_fields.background_color[0] }}">
-            <div class="hero_wrapper">
-                <a class="hero_card"
-                   href="{{ hero.custom_fields.link[0] }}">
-                    <div class="hero_card-bg">
-                        <div class="hero_card-padding">
-                            <span class="category-slug">
-                                {{ category_icon(hero.related_post.category.0, 'category-slug_icon') }}
-                                <span class="u-visually-hidden">Category:</span>
-                                {{ hero.related_post.category.0 }}
-                            </span>
-                            <div class="summary">
-                                <h1 class="summary_header">
-                                    {{ hero.title }}
-                                </h1>
-                                <p class="summary_text">
-                                    {% if hero.content %}
-                                        {{ hero.content|striptags }}
-                                    {% else %}
-                                        {% if hero.related_post.dek %}
-                                            {{ hero.related_post.dek|striptags }}
-                                        {% else %}
-                                            {{ hero.related_post.excerpt|striptags }}
-                                        {% endif %}
-                                    {% endif %}
-                                </p>
-                                {% if hero.related_post.author.0 %}
-                                <p class="summary_byline">
-                                    By {{ hero.related_post.author.0 }}
-                                {% if hero.related_post.author.1 %}
-                                    and {{ hero.related_post.author.1 }}
-                                {% endif %}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="hero_img-container hero_img-container__small">
-                <div class="hero_img"
-                     style="background-image:url({{ hero.custom_fields.mobile_image[0] }});">
-                </div>
-            </div>
-            <div class="hero_img-container hero_img-container__large">
-                <div class="hero_img"
-                     style="background-image:url({{ hero.custom_fields.desktop_image[0] }});">
-                </div>
-            </div>
-        </section><!-- END .content_hero -->
-        {% endif %}
+        {% include "hero.html" %}
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
+
             <section class="content_main">
 
-            <div class="expandable">
-                <div class="expandable_header expandable_header__spaced">
-                    <div class="expandable_header-right expandable_header-right__float-on-medium">
-                        <a class="expandable_target btn btn-secondary"
-                           href="#post-filters-form">
-                            Filter posts
-                            <span class="expandable_cue-open">
-                                <span class="btn-icon-right cf-icon cf-icon-down"></span>
-                            </span>
-                            <span class="expandable_cue-close">
-                                <span class="btn-icon-right cf-icon cf-icon-up"></span>
-                            </span>
-                        </a>
-                    </div>
-                {% if active_filters_total > 0 %}
-                    <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
-                        <dt class="list_item">
-                            <span class="filtered-by_header">
-                            {%- if posts|list|length > 0 -%}
-                                {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
-                            {%- else -%}
-                                No results for
-                            {%- endif -%}
-                            </span>
-                        </dt>
-                    {% for filter in active_filters %}
-                        <dd class="list_item">
-                            <span class="filtered-by_filter">
-                                {{ filter }}
-                                {%- if not loop.last -%}
-                                ,
-                                {%- elif active_date_filters|length > 0 -%}
-                                ,
-                                {%- endif -%}
-                            </span>
-                        </dd>
-                    {% endfor %}
-                    {% for filter in active_date_filters %}
-                        <dd class="list_item">
-                            <span class="filtered-by_filter">
-                                {{ filter | date("%B %Y") }}
-                                {% if not loop.last -%}&nbsp;&ndash;{% endif %}
-                            </span>
-                        </dd>
-                    {% endfor %}
-                    </dl>
-                {% endif %}
-                </div>
-                <div class="expandable_content padded-container">
-                    <div class="padded-container_body">
-                        {% include "filters.html" %}
-                    </div>
-                </div>
-            </div><!-- END .expandable -->
+                {% include "post-filters.html" %}
 
-            {% include "posts-paginated.html" %}
+                {% include "posts-paginated.html" %}
 
             </section><!-- END .content_main -->
 
@@ -203,7 +62,7 @@
                         </span>
                     </h1>
                     <ul class="list list__unstyled list__spaced">
-                        {% for slug in view.popular_posts %}
+                    {% for slug in view.popular_posts %}
                         {% set pop_post = get_document('posts', slug) %}
                         <li class="list_item">
                             <a class="list_link"
@@ -211,7 +70,7 @@
                                 {{ pop_post.title }}
                             </a>
                         </li>
-                        {% endfor %}
+                    {% endfor %}
                     </ul>
                 </section>
                 <section class="content_sidebar-item related-links">
@@ -221,14 +80,14 @@
                         </span>
                     </h1>
                     <ul class="list list__unstyled list__spaced">
-                        {% for link in view.related_links %}
+                    {% for link in view.related_links %}
                         <li class="list_item">
                             <a class="list_link"
                                href="{{ link[0] }}">
                                 {{ link[1] }}
                             </a>
                         </li>
-                        {% endfor %}
+                    {% endfor %}
                     </ul>
                 </section>
                 <section class="content_sidebar-item stay-informed">

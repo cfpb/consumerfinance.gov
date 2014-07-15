@@ -1,0 +1,64 @@
+
+{% macro filter_checkbox(field, value, classes, hidden) %}
+    <input class="custom-input"
+           type="checkbox"
+           name="filter_{{ field }}"
+           value="{{ value }}"
+           {%- if is_filter_selected(field, value) %}
+           checked
+           {%- endif -%}
+           >
+        {{ value }}
+{% endmacro %}
+
+{% macro filter_option(field, value) %}
+    <option value="{{ value }}"
+        {%- if is_filter_selected(field, value) %}
+            selected
+        {%- endif -%}
+            >
+        {{ value }}
+    </option>
+{% endmacro %}
+
+{% macro print_hidden_filters(filter_fields) %}
+    {%- for field in filter_fields -%}
+        {% set selected_filters = selected_filters_for_field(field) %}
+        {%- for value in selected_filters -%}
+            {%- if value %}
+            <input type="hidden" name="filter_{{ field }}" value="{{ value }}">
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endfor -%}
+{% endmacro %}
+
+{% macro category_icon(category, additional_classes) %}
+    {%- if category|lower == 'announcements & updates' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+    {% elif category|lower == 'consumer information' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
+    {% elif category|lower == 'engagement' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
+    {% elif category|lower == 'innovation & data' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
+    {%- endif -%}
+{% endmacro %}
+
+{% macro post_summary(post) %}
+    <h1 class="summary_header">{{ post.title|safe }}</h1>
+    <p class="summary_text summary_text__max">
+    {% if post.dek %}
+        {{ post.dek|striptags }}
+    {% else %}
+        {{ post.excerpt|striptags }}
+    {% endif %}
+    </p>
+    {% if post.author.0 %}
+    <p class="summary_byline">
+        By {{ post.author.0 }}
+    {% if post.author.1 %}
+        and {{ post.author.1 }}
+    {% endif %}
+    </p>
+    {% endif %}
+{% endmacro %}
