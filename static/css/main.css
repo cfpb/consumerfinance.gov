@@ -5672,6 +5672,109 @@ img {
   margin-top: 3.75em;
 }
 /* topdoc
+  name: Content footer
+  family: cfgov-layout
+  patterns:
+    - name: Standard content footer example
+      markup: |
+        <section class="content_main">
+            <h2>Main content area</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum! Laborum at eos deleniti
+                consequatur itaque officiis debitis quisquam! Provident!
+            </p>
+            <aside class="content_footer">
+                Content footer
+            </aside><!-- END .content_footer -->
+        </section><!-- END .content_main -->
+      codenotes:
+        - .content_footer
+      notes:
+        - "The content footer is useful when you have sidebar-like content in a
+           layout without a sidebar. For example when you have a side nav layout
+           you can place sidebar content in the content_footer area."
+    - name: Flush content footer example
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                    <aside class="content_footer content_footer__bg">
+                        Content footer flush
+                    </aside><!-- END .content_footer -->
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer><!-- END .footer -->
+      codenotes:
+        - .content_footer__bg
+      notes:
+        - "Adds a background with padding."
+  tags:
+    - cfgov-layout
+*/
+.content_footer {
+  margin-top: 3.75em;
+}
+.content_footer_item + .content_footer_item {
+  margin-top: 3.75em;
+}
+@media only all and (min-width: 50.0625em) {
+  .content_footer_item {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .content_footer_item {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .content_footer_item {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .content_footer_item + .content_footer_item {
+    margin-top: 0;
+  }
+}
+.content_footer__bg {
+  padding: 2em 30px;
+  margin-right: -15px;
+  margin-bottom: -1.875em;
+  margin-left: -15px;
+  background: #f1f2f2;
+}
+@media only all and (min-width: 37.5em) {
+  .content_footer__bg {
+    margin-right: -30px;
+    margin-bottom: -3.75em;
+    margin-left: -30px;
+  }
+}
+/* topdoc
   name: Bleedbar sidebar styling
   family: cfgov-layout
   patterns:
@@ -7892,7 +7995,7 @@ a.category-slug.active {
     - cfgov-misc
 */
 .padded-container {
-  margin: 0 0 1.875em;
+  margin-bottom: 1.875em;
   padding: 1px;
   background: #f1f2f2;
 }
