@@ -69,99 +69,101 @@
         {%- endif -%}
     {% endmacro %}
 
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
+    <main class="content content__1-3" id="main" role="main">
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
 
-            {% include "nav.html" %}
-
             <section class="content_main">
 
-            <div class="expandable">
-                <div class="expandable_header expandable_header__spaced">
-                    <div class="expandable_header-right expandable_header-right__float-on-medium">
-                        <a class="expandable_target btn btn-secondary"
-                           href="#post-filters-form">
-                            Filter newsroom
-                            <span class="expandable_cue-open">
-                                <span class="btn-icon-right cf-icon cf-icon-down"></span>
-                            </span>
-                            <span class="expandable_cue-close">
-                                <span class="btn-icon-right cf-icon cf-icon-up"></span>
-                            </span>
-                        </a>
-                    </div>
-                {% if active_filters_total > 0 %}
-                    <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
-                        <dt class="list_item">
-                            <span class="filtered-by_header">
-                            {%- if posts|list|length > 0 -%}
-                                {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
-                            {%- else -%}
-                                No results for
-                            {%- endif -%}
-                            </span>
-                        </dt>
-                    {% for filter in active_filters %}
-                        <dd class="list_item">
-                            <span class="filtered-by_filter">
-                                {{ filter }}
-                                {%- if not loop.last -%}
-                                ,
-                                {%- elif active_date_filters|length > 0 -%}
-                                ,
+                <div class="expandable">
+                    <div class="expandable_header expandable_header__spaced">
+                        <div class="expandable_header-right expandable_header-right__float-on-medium">
+                            <a class="expandable_target btn btn-secondary"
+                               href="#post-filters-form">
+                                Filter newsroom
+                                <span class="expandable_cue-open">
+                                    <span class="btn-icon-right cf-icon cf-icon-down"></span>
+                                </span>
+                                <span class="expandable_cue-close">
+                                    <span class="btn-icon-right cf-icon cf-icon-up"></span>
+                                </span>
+                            </a>
+                        </div>
+                    {% if active_filters_total > 0 %}
+                        <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+                            <dt class="list_item">
+                                <span class="filtered-by_header">
+                                {%- if posts|list|length > 0 -%}
+                                    {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
+                                {%- else -%}
+                                    No results for
                                 {%- endif -%}
-                            </span>
-                        </dd>
-                    {% endfor %}
-                    {% for filter in active_date_filters %}
-                        <dd class="list_item">
-                            <span class="filtered-by_filter">
-                                {{ filter | date("%B %Y") }}
-                                {% if not loop.last -%}&nbsp;&ndash;{% endif %}
-                            </span>
-                        </dd>
-                    {% endfor %}
-                    </dl>
-                {% endif %}
-                </div>
-                <div class="expandable_content padded-container">
-                    <div class="padded-container_body">
-                        {% include "filters.html" %}
+                                </span>
+                            </dt>
+                        {% for filter in active_filters %}
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">
+                                    {{ filter }}
+                                    {%- if not loop.last -%}
+                                    ,
+                                    {%- elif active_date_filters|length > 0 -%}
+                                    ,
+                                    {%- endif -%}
+                                </span>
+                            </dd>
+                        {% endfor %}
+                        {% for filter in active_date_filters %}
+                            <dd class="list_item">
+                                <span class="filtered-by_filter">
+                                    {{ filter | date("%B %Y") }}
+                                    {% if not loop.last -%}&nbsp;&ndash;{% endif %}
+                                </span>
+                            </dd>
+                        {% endfor %}
+                        </dl>
+                    {% endif %}
                     </div>
-                </div>
-            </div><!-- END .expandable -->
+                    <div class="expandable_content padded-container">
+                        <div class="padded-container_body">
+                            {% include "filters.html" %}
+                        </div>
+                    </div>
+                </div><!-- END .expandable -->
 
-            <div class="demo-placeholder">watchroom placeholder</div>
+                <div class="demo-placeholder">watchroom placeholder</div>
 
-            {% include "posts-paginated.html" %}
+                {% include "posts-paginated.html" %}
+
+                <aside>
+                    <section class="content_sidebar-item stay-informed">
+                        <div class="demo-placeholder">stay informed placeholder</div>
+                    </section>
+                    <section class="content_sidebar-item related-links">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Related links
+                            </span>
+                        </h1>
+                        <ul class="list list__unstyled list__spaced">
+                            {% for link in view.related_links %}
+                            <li class="list_item">
+                                <a class="list_link"
+                                   href="{{ link[0] }}">
+                                    {{ link[1] }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                </aside>
 
             </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
-                <section class="content_sidebar-item stay-informed">
-                    <div class="demo-placeholder">stay informed placeholder</div>
-                </section>
-                <section class="content_sidebar-item related-links">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Related links
-                        </span>
-                    </h1>
-                    <ul class="list list__unstyled list__spaced">
-                        {% for link in view.related_links %}
-                        <li class="list_item">
-                            <a class="list_link"
-                               href="{{ link[0] }}">
-                                {{ link[1] }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </section>
+                {% include "nav.html" %}
             </aside><!-- END .content_sidebar -->
 
         </div><!-- END .content_wrapper -->
