@@ -1,24 +1,4 @@
 
-{% macro post_summary(post) %}
-    <h1 class="summary_header">{{ post.title|safe }}</h1>
-    <p class="summary_text summary_text__max">
-    {% if post.dek %}
-        {{ post.dek|striptags }}
-    {% else %}
-        {{ post.excerpt|striptags }}
-    {% endif %}
-    </p>
-    {% if post.author.0 %}
-    <p class="summary_byline">
-        By {{ post.author.0 }}
-    {% if post.author.1 %}
-        and {{ post.author.1 }}
-    {% endif %}
-    </p>
-    {% endif %}
-{% endmacro %}
-
-
 <div id="pagination_content">
 
 {% for post in posts %}
@@ -27,18 +7,18 @@
             <span class="date meta-header_right">
                 {{ post.date | date("%b %d, %Y") }}
             </span>
-            {% if post.category.0 %}
+        {% if post.category.0 %}
             <a class="category-slug meta-header_left"
                href="/blog/?filter_category={{ post.category.0|urlencode|replace('%20', '+') }}">
-                {{ category_icon(post.category.0, 'category-slug_icon')|safe }}
+                {{ post_macros.category_icon(post.category.0, 'category-slug_icon')|safe }}
                 <span class="u-visually-hidden">Category:</span>
                 {{ post.category.0 }}
             </a>
-            {% else %}
-                &nbsp;
-            {% endif %}
+        {% else %}
+            &nbsp;
+        {% endif %}
         </div>
-        {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
+    {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
         <a class="media-object" href="{{ post.permalink }}">
             <div class="media-object_image-container">
                 <img class="media-object_image"
@@ -46,14 +26,14 @@
                      alt="{{ post.thumbnail.alt_text }}">
             </div>
             <div class="media-object_text-container summary">
-                {{ post_summary(post) }}
+                {{ post_macros.post_summary(post) }}
             </div>
         </a>
-        {% else %}
+    {% else %}
         <a class="summary" href="{{ post.permalink }}">
-            {{ post_summary(post) }}
+            {{ post_macros.post_summary(post) }}
         </a>
-        {% endif %}
+    {% endif %}
     </article>
 {% endfor %}
 
@@ -102,7 +82,7 @@
                 Without this the form would change the url to `?page=X` and we
                 would lose any currently applied filters that are in the URL. -#}
 
-            {{ print_hidden_filters([
+            {{ post_macros.print_hidden_filters([
                 'category',
                 'tags',
                 'author',

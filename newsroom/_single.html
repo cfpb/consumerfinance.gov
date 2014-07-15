@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
-{% block demo_title %}Newsroom post{% endblock %}
+{% block demo_title -%}
+    Newsroom post
+{%- endblock %}
 
-{% block title %}{{ post.title }}{% endblock %}
-{% block desc %}{{ post.excerpt|striptags }}{% endblock %}
+{% block title -%}
+    {{ post.title }}
+{%- endblock %}
+{% block desc -%}
+    {{ post.excerpt|striptags }}
+{%- endblock %}
 
-{% block og_type %}article{% endblock %}
-{% block og_article_prefix %}article: http://ogp.me/ns/article#{% endblock %}
+{% block og_type -%}
+    article
+{%- endblock %}
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
 {% block og_article_author -%}
     <meta property="article:author" content="https://www.facebook.com/CFPB">
 {%- endblock %}
