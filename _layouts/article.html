@@ -3,15 +3,15 @@
     <header>
         {% if post.category.0 %}
         <a href="/blog/?filter_category={{ post.category.0 }}" class="post_slug category-slug">
-            {% if post.category.0|lower == 'announcements &amp; updates' %}
+        {% if post.category.0|lower == 'announcements &amp; updates' %}
             <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-            {% elif post.category.0|lower == 'consumer information' %}
+        {% elif post.category.0|lower == 'consumer information' %}
             <span class="category-slug_icon cf-icon cf-icon-information"></span>
-            {% elif post.category.0|lower == 'engagement' %}
+        {% elif post.category.0|lower == 'engagement' %}
             <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-            {% elif post.category.0|lower == 'innovation &amp; data' %}
+        {% elif post.category.0|lower == 'innovation &amp; data' %}
             <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-            {% endif %}
+        {% endif %}
             <span class="u-visually-hidden">Category:</span>
             {{ post.category.0 }}
         {% endif %}
@@ -37,7 +37,7 @@
                 &ndash;
             </span>
             <span class="post_date date">
-                {{ post.date | date("%b %d, %Y") }}
+                {{ post.date|date("%b %d, %Y") }}
             </span>
         </div>
         <ul class="post_share list__horizontal">
@@ -70,16 +70,16 @@
                 </a>
             </li> -->
         </ul>
-        {% if post.thumbnail.images %}
+    {% if post.thumbnail.images %}
         <img class="post_featured-img"
              src="{{ post.thumbnail.images.full.url }}"
              alt="{{ post.thumbnail.alt_text }}">
-        {% endif %}
+    {% endif %}
     </header>
     <div class="post_body">
         {{ post.content|safe }}
     </div>
-    {% if post.tags|length %}
+{% if post.tags|length %}
     <footer>
         <div class="tags">
             <h4 class="tags_header">Topics:</h4>
@@ -95,5 +95,5 @@
             </ul>
         </div> 
     </footer>
-    {% endif %}
+{% endif %}
 </article>
