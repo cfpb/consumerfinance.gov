@@ -44,6 +44,10 @@
 
         <div class="wrapper content_wrapper">
 
+            <aside class="content_sidebar">
+                {% include "nav.html" %}
+            </aside><!-- END .content_sidebar -->
+
             <section class="content_main">
 
                 {% include "post-filters.html" %}
@@ -76,10 +80,6 @@
                 </aside>
 
             </section><!-- END .content_main -->
-
-            <aside class="content_sidebar">
-                {% include "nav.html" %}
-            </aside><!-- END .content_sidebar -->
 
         </div><!-- END .content_wrapper -->
     </main><!-- END .content -->
