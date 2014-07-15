@@ -253,6 +253,95 @@
 
 
 /* topdoc
+  name: Content footer
+  family: cfgov-layout
+  patterns:
+    - name: Standard content footer example
+      markup: |
+        <section class="content_main">
+            <h2>Main content area</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum! Laborum at eos deleniti
+                consequatur itaque officiis debitis quisquam! Provident!
+            </p>
+            <aside class="content_footer">
+                Content footer
+            </aside><!-- END .content_footer -->
+        </section><!-- END .content_main -->
+      codenotes:
+        - .content_footer
+      notes:
+        - "The content footer is useful when you have sidebar-like content in a
+           layout without a sidebar. For example when you have a side nav layout
+           you can place sidebar content in the content_footer area."
+    - name: Flush content footer example
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <h2>Main content area</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum! Laborum at eos deleniti
+                        consequatur itaque officiis debitis quisquam! Provident!
+                    </p>
+                    <aside class="content_footer content_footer__bg">
+                        Content footer flush
+                    </aside><!-- END .content_footer -->
+                </section><!-- END .content_main -->
+                <aside class="content_sidebar">
+                    Section navigation
+                </aside><!-- END .content_sidebar -->
+            </div><!-- END .content_wrapper -->
+        </main><!-- END .content -->
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer><!-- END .footer -->
+      codenotes:
+        - .content_footer__bg
+      notes:
+        - "Adds a background with padding."
+  tags:
+    - cfgov-layout
+*/
+
+.content_footer {
+    margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+
+    &_item {
+        & + & {
+            margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+        }
+        .u-respond-to-min(801px, {
+            .grid_column(6);
+            & + & {
+                margin-top: 0;
+            }
+        });
+    }
+
+    &__bg {
+        padding: 2em @grid_gutter-width;
+        margin-right: (@grid_gutter-width / 2) * -1;
+        margin-bottom: unit((@grid_gutter-width * -1) / @base-font-size-px, em);
+        margin-left: (@grid_gutter-width / 2) * -1;
+        background: @gray-10;
+        .u-respond-to-min(600px, {
+            margin-right: @grid_gutter-width * -1;
+            margin-bottom: unit(((@grid_gutter-width * 2) *-1) / @base-font-size-px, em);
+            margin-left: @grid_gutter-width * -1;
+        });
+    }
+}
+
+
+/* topdoc
   name: Bleedbar sidebar styling
   family: cfgov-layout
   patterns:
