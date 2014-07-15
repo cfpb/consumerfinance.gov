@@ -47,55 +47,23 @@
         <div class="wrapper content_wrapper">
 
             <section class="content_main">
-
                 {% include "post-filters.html" %}
-
                 {% include "posts-paginated.html" %}
-
-            </section><!-- END .content_main -->
+            </section>
 
             <aside class="content_sidebar">
-                <section class="content_sidebar-item popular-stories">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Popular stories
-                        </span>
-                    </h1>
-                    <ul class="list list__unstyled list__spaced">
-                    {% for slug in view.popular_posts %}
-                        {% set pop_post = get_document('posts', slug) %}
-                        <li class="list_item">
-                            <a class="list_link"
-                               href="{{ pop_post.permalink }}">
-                                {{ pop_post.title }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
+                <section class="content_sidebar-item">
+                    {% include "popular-stories.html" %}
                 </section>
-                <section class="content_sidebar-item related-links">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Related links
-                        </span>
-                    </h1>
-                    <ul class="list list__unstyled list__spaced">
-                    {% for link in view.related_links %}
-                        <li class="list_item">
-                            <a class="list_link"
-                               href="{{ link[0] }}">
-                                {{ link[1] }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
+                <section class="content_sidebar-item">
+                    {% include "related-links.html" %}
                 </section>
-                <section class="content_sidebar-item stay-informed">
-                    <div class="demo-placeholder">stay informed placeholder</div>
+                <section class="content_sidebar-item">
+                    {% include "stay-informed.html" %}
                 </section>
-            </aside><!-- END .content_sidebar -->
+            </aside>
 
-        </div><!-- END .content_wrapper -->
-    </main><!-- END .content -->
+        </div>
+    </main>
 
 {% endblock content %}
