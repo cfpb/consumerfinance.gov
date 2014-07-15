@@ -45,62 +45,27 @@
         <div class="wrapper content_wrapper">
 
             <section class="content_main">
-
                 {% include "post-filters.html" %}
-
                 <div class="demo-placeholder">watchroom placeholder</div>
-
                 {% include "posts-paginated.html" %}
-
-                <aside class="content_footer stay-informed">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Stay informed
-                        </span>
-                    </h1>
-                    <div class="demo-placeholder">
-                        placeholder
-                    </div>
+                <aside class="content_footer">
+                    {% include "stay-informed.html" %}
                 </aside>
-
                 <aside class="content_footer content_footer__bg">
-                        <section class="content_footer_item related-links">
-                            <h1 class="header-slug">
-                                <span class="header-slug_inner">
-                                    Related links
-                                </span>
-                            </h1>
-                            <ul class="list list__unstyled list__spaced">
-                                {% for link in view.related_links %}
-                                <li class="list_item">
-                                    <a class="list_link"
-                                       href="{{ link[0] }}">
-                                        {{ link[1] }}
-                                    </a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </section>
-
-                        <section class="content_footer_item">
-                            <h1 class="header-slug">
-                                <span class="header-slug_inner">
-                                    Upcoming events
-                                </span>
-                            </h1>
-                            <div class="demo-placeholder">
-                                placeholder
-                            </div>
-                        </section>
+                    <section class="content_footer_item">
+                        {% include "related-links.html" %}
+                    </section>
+                    <section class="content_footer_item">
+                        {% include "upcoming-events.html" %}
+                    </section>
                 </aside>
-
-            </section><!-- END .content_main -->
+            </section>
 
             <aside class="content_sidebar">
                 {% include "nav.html" %}
-            </aside><!-- END .content_sidebar -->
+            </aside>
 
-        </div><!-- END .content_wrapper -->
-    </main><!-- END .content -->
+        </div>
+    </main>
 
 {% endblock content %}
