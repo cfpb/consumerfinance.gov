@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / nav-secondary docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / nav-secondary docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="secondary-navigation" class="docs-component">
+      <h2 class="docs-component_header"><span>Secondary navigation</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<nav class="nav-secondary">
+    <ul class="nav-secondary_list">
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link nav-secondary_link__current" href="#">
+               Item 1
+           </a>
+        </li>
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link" href="#">
+               Item 2
+           </a>
+        </li>
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link" href="#">
+               Item 3
+           </a>
+        </li>
+    </ul>
+</nav>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;nav class=&quot;nav-secondary&quot;&gt;
+    &lt;ul class=&quot;nav-secondary_list&quot;&gt;
+        &lt;li class=&quot;nav-secondary_item&quot;&gt;
+            &lt;a class=&quot;nav-secondary_link nav-secondary_link__current&quot; href=&quot;#&quot;&gt;
+               Item 1
+           &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-secondary_item&quot;&gt;
+            &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+               Item 2
+           &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-secondary_item&quot;&gt;
+            &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+               Item 3
+           &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.nav-secondary
+  .nav-secondary_list
+    .nav-secondary_item
+      .nav-secondary_link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Current link modifier</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.nav-secondary_link__current</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.nav-secondary {
+  margin-bottom: 1.875em;
+}
+.nav-secondary_list {
+  margin: 0;
+  padding: 0;
+}
+.nav-secondary_item {
+  list-style: none;
+}
+.nav-secondary_link {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  display: block;
+  padding: 0.55555556em;
+  border-left: 4px solid transparent;
+  font-size: 1.125em;
+  line-height: 1;
+  color: #0072ce;
+  border-bottom-color: #0072ce;
+}
+.nav-secondary_link em,
+.nav-secondary_link i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .nav-secondary_link em,
+.lt-ie9 .nav-secondary_link i {
+  font-style: normal !important;
+}
+.nav-secondary_link strong,
+.nav-secondary_link b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .nav-secondary_link strong,
+.lt-ie9 .nav-secondary_link b {
+  font-weight: normal !important;
+}
+.nav-secondary_link:visited,
+.nav-secondary_link.visited {
+  border-bottom-color: #0072ce;
+  color: #0072ce;
+}
+.nav-secondary_link:hover,
+.nav-secondary_link.hover {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.nav-secondary_link:focus,
+.nav-secondary_link.focus {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.nav-secondary_link:active,
+.nav-secondary_link.active {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.nav-secondary_link:hover,
+.nav-secondary_link:focus,
+.nav-secondary_link__current {
+  border-left-color: #2cb34a;
+}
+.nav-secondary_link__current {
+  color: #101820;
+  border-bottom-color: #101820;
+}
+.nav-secondary_link__current:visited,
+.nav-secondary_link__current.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.nav-secondary_link__current:hover,
+.nav-secondary_link__current.hover {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.nav-secondary_link__current:focus,
+.nav-secondary_link__current.focus {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+.nav-secondary_link__current:active,
+.nav-secondary_link__current.active {
+  border-bottom-color: #101820;
+  color: #101820;
+}</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

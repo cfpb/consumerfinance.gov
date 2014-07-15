@@ -1,0 +1,84 @@
+/* ==========================================================================
+   cfgov-refresh
+   nav-secondary
+   ========================================================================== */
+
+/* topdoc
+  name: Secondary navigation
+  family: cfgov-nav-secondary
+  patterns:
+    - name: Default example
+      markup: |
+        <nav class="nav-secondary">
+            <ul class="nav-secondary_list">
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                       Item 1
+                   </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 2
+                   </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 3
+                   </a>
+                </li>
+            </ul>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .nav-secondary
+            .nav-secondary_list
+              .nav-secondary_item
+                .nav-secondary_link
+    - name: Current link modifier
+      codenotes:
+        - ".nav-secondary_link__current"
+  tags:
+    - cfgov-nav-secondary
+*/
+
+.nav-secondary {
+
+    margin-bottom: unit(30px / @base-font-size-px, em);
+
+    &_list {
+        margin: 0;
+        padding: 0;
+    }
+
+    &_item {
+        list-style: none;
+    }
+
+    &_link {
+        .webfont-regular();
+        display: block;
+        padding: unit(10px / 18px, em);
+        border-left: 4px solid transparent;
+        font-size: unit(18px / @base-font-size-px, em);
+        line-height: 1;
+        .u-link__colors(@pacific, @pacific, @black, @black, @black);
+    }
+
+    &_link:hover,
+    &_link:focus,
+    &_link__current {
+        border-left-color: @green;
+    }
+
+    &_link__current {
+        .u-link__colors(@black);
+    }
+}
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

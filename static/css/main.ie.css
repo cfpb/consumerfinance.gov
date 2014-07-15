@@ -6600,6 +6600,165 @@ img {
 
 /* ==========================================================================
    cfgov-refresh
+   nav-secondary
+   ========================================================================== */
+
+/* topdoc
+  name: Secondary navigation
+  family: cfgov-nav-secondary
+  patterns:
+    - name: Default example
+      markup: |
+        <nav class="nav-secondary">
+            <ul class="nav-secondary_list">
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                       Item 1
+                   </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 2
+                   </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 3
+                   </a>
+                </li>
+            </ul>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .nav-secondary
+            .nav-secondary_list
+              .nav-secondary_item
+                .nav-secondary_link
+    - name: Current link modifier
+      codenotes:
+        - ".nav-secondary_link__current"
+  tags:
+    - cfgov-nav-secondary
+*/
+
+.nav-secondary {
+  margin-bottom: 1.875em;
+}
+
+.nav-secondary_list {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-secondary_item {
+  list-style: none;
+}
+
+.nav-secondary_link {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  display: block;
+  padding: 0.55555556em;
+  border-left: 4px solid transparent;
+  font-size: 1.125em;
+  line-height: 1;
+  color: #0072ce;
+  border-bottom-color: #0072ce;
+}
+
+.nav-secondary_link em,
+.nav-secondary_link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .nav-secondary_link em,
+.lt-ie9 .nav-secondary_link i {
+  font-style: normal !important;
+}
+
+.nav-secondary_link strong,
+.nav-secondary_link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .nav-secondary_link strong,
+.lt-ie9 .nav-secondary_link b {
+  font-weight: normal !important;
+}
+
+.nav-secondary_link:visited,
+.nav-secondary_link.visited {
+  border-bottom-color: #0072ce;
+  color: #0072ce;
+}
+
+.nav-secondary_link:hover,
+.nav-secondary_link.hover {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.nav-secondary_link:focus,
+.nav-secondary_link.focus {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.nav-secondary_link:active,
+.nav-secondary_link.active {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.nav-secondary_link:hover,
+.nav-secondary_link:focus,
+.nav-secondary_link__current {
+  border-left-color: #2cb34a;
+}
+
+.nav-secondary_link__current {
+  color: #101820;
+  border-bottom-color: #101820;
+}
+
+.nav-secondary_link__current:visited,
+.nav-secondary_link__current.visited {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.nav-secondary_link__current:hover,
+.nav-secondary_link__current.hover {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.nav-secondary_link__current:focus,
+.nav-secondary_link__current.focus {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+.nav-secondary_link__current:active,
+.nav-secondary_link__current.active {
+  border-bottom-color: #101820;
+  color: #101820;
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
+
+/* ==========================================================================
+   cfgov-refresh
    media-object
    ========================================================================== */
 
