@@ -346,6 +346,30 @@ main.content
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.content__1-3 .content_sidebar {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+  padding-right: 1.875em;
+}
+
+.ie .content__1-3 .content_sidebar {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content__1-3 .content_sidebar {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
 .content__1-3 .content_main {
   display: inline-block;
   -webkit-box-sizing: border-box;
@@ -356,8 +380,6 @@ main.content
   margin-right: -0.25em;
   vertical-align: top;
   width: 75%;
-  position: relative;
-  left: 25%;
 }
 
 .ie .content__1-3 .content_main {
@@ -371,29 +393,8 @@ main.content
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.content__1-3 .content_sidebar {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-  position: relative;
-  right: 75%;
-}
-
-.ie .content__1-3 .content_sidebar {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .content__1-3 .content_sidebar {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+.content__1-3 .content_main:after {
+  left: -1.875em;
 }
 
 .content__2-1 .content_main {
@@ -419,6 +420,10 @@ main.content
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.content__2-1 .content_main:after {
+  right: -1.875em;
+}
+
 .content__2-1 .content_sidebar {
   display: inline-block;
   -webkit-box-sizing: border-box;
@@ -429,6 +434,7 @@ main.content
   margin-right: -0.25em;
   vertical-align: top;
   width: 33.33333333%;
+  padding-left: 1.875em;
 }
 
 .ie .content__2-1 .content_sidebar {
@@ -445,6 +451,18 @@ main.content
 .content_main,
 .content_sidebar {
   padding: 3.75em 0;
+}
+
+.content_main {
+  position: relative;
+}
+
+.content_main:after {
+  content: '';
+  border-left: 1px solid #babbbd;
+  position: absolute;
+  top: 3.75em;
+  bottom: 3.75em;
 }
 </code></pre>
       </div>
@@ -695,6 +713,10 @@ main.content
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
+.content__bleedbar .content_main:after {
+  content: none;
+}
+
 .content__bleedbar .content_sidebar {
   padding: 2em 0.9375em;
   background: #f1f2f2;

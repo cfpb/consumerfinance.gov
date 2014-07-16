@@ -191,22 +191,32 @@
 .u-respond-to-min(801px, {
     .content {
         &__1-3 {
-            .content_main {
-                .grid_column(9);
-                .grid_push(3);
-            }
             .content_sidebar {
                 .grid_column(3);
-                .grid_pull(9);
+
+                padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
+            }
+            .content_main {
+                .grid_column(9);
+
+                &:after {
+                    left: unit(-1 * @grid_gutter-width / @base-font-size-px, em);
+                }
             }
         }
 
         &__2-1 {
             .content_main {
                 .grid_column(8);
+
+                &:after {
+                    right: unit(-1 * @grid_gutter-width / @base-font-size-px, em);
+                }
             }
             .content_sidebar {
                 .grid_column(4);
+
+                padding-left: unit(@grid_gutter-width / @base-font-size-px, em);
             }
         }
     }
@@ -215,6 +225,18 @@
     .content_sidebar {
         padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em) 0;
     } 
+
+    .content_main {
+        position: relative;
+
+        &:after {
+            content: '';
+            border-left: 1px solid @gray-50;
+            position: absolute;
+            top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+            bottom: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+        }
+    }
 }); // END min-width 801 block
 
 .u-respond-to-min(1024px, {
@@ -370,6 +392,11 @@
 */
 
 .content__bleedbar {
+
+    // Overrides the border between main and sidebar, because bleedbar makes its own.
+    .content_main:after {
+        content: none;
+    }
 
     .content_sidebar {
         padding: 2em unit((@grid_gutter-width / 2) / @base-font-size-px, em);

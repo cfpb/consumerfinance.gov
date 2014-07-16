@@ -44,6 +44,10 @@
 
         <div class="wrapper content_wrapper">
 
+            <aside class="content_sidebar">
+                {% include "nav.html" %}
+            </aside><!-- END .content_sidebar -->
+
             <section class="content_main">
                 {% include "post-filters.html" %}
                 <div class="demo-placeholder">watchroom placeholder</div>
@@ -61,11 +65,7 @@
                 </aside>
             </section>
 
-            <aside class="content_sidebar">
-                {% include "nav.html" %}
-            </aside>
-
-        </div>
-    </main>
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
 
 {% endblock content %}
