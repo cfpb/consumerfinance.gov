@@ -25,15 +25,15 @@
                             {{ hero.title }}
                         </h1>
                         <p class="summary_text">
-                            {% if hero.content %}
-                                {{ hero.content|striptags }}
+                        {% if hero.content %}
+                            {{ hero.content|striptags }}
+                        {% else %}
+                            {% if hero.related_post.dek %}
+                                {{ hero.related_post.dek|striptags }}
                             {% else %}
-                                {% if hero.related_post.dek %}
-                                    {{ hero.related_post.dek|striptags }}
-                                {% else %}
-                                    {{ hero.related_post.excerpt|striptags }}
-                                {% endif %}
+                                {{ hero.related_post.excerpt|striptags }}
                             {% endif %}
+                        {% endif %}
                         </p>
                         {% if hero.related_post.author.0 %}
                         <p class="summary_byline">

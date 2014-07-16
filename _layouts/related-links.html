@@ -1,0 +1,18 @@
+
+<div class="related-links">
+    <h1 class="header-slug">
+        <span class="header-slug_inner">
+            Related links
+        </span>
+    </h1>
+    <ul class="list list__unstyled list__spaced">
+        {% for link in view.related_links %}
+        <li class="list_item">
+            <a class="list_link"
+               href="{{ link[0] }}">
+                {{ link[1] }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
