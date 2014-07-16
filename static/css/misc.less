@@ -199,7 +199,7 @@ select[multiple].success {
             // Since an input-group_item can overlap another we need to use z-index
             // is needed to allow the focused input to pop over unfocused inputs.
             z-index: 1;
-            border: solid 1px @gray-50;
+            border: solid 1px @gray-80;
             background: @white;
         }
     }
@@ -247,7 +247,7 @@ select[multiple].success {
     }
 
     &_placeholder {
-        color: @gray-50;
+        color: @gray;
     }
 
     &_select {
@@ -432,7 +432,7 @@ select[multiple].success {
         width: @input-width;
         height: @input-width;
         background: @white;
-        outline: 1px solid @black;
+        outline: 1px solid @gray-80;
     }
     &_radio {
         // IE older than 9 does not support border-radius so checkboxes and
@@ -441,11 +441,11 @@ select[multiple].success {
         // box-shadow is being used instead of outline because outline
         // does not respect border-radius.
         outline: none;
-        box-shadow: 0px 0px 0px 1px @black;
+        box-shadow: 0px 0px 0px 1px @gray-80;
         // Older IE does not support border-radius or box-shadow it's ok to
         // use outline here.
         .lt-ie9 & {
-            outline: 1px solid @black;
+            outline: 1px solid @gray-80;
         }
     }
 
