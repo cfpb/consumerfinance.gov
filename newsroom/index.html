@@ -29,8 +29,18 @@
 
     {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
-    {% set posts = queries.posts.search_with_url_arguments(size=10) %}
-    {% set view = get_document('views', 'blog') %}
+    {% set newsroom = queries.newsroom.search_with_url_arguments(size=10) %}
+    {% set view = get_document('views', 'newsroom') %}
+
+
+
+
+
+    {% set posts = newsroom %}
+
+
+
+
 
     {# Macros #}
 
