@@ -4,9 +4,9 @@
     "type" : "posts",
     "permalink" : true
   },
-  "post":{
+  "newsroom":{
     "url" : "/newsroom/<id>",
-    "type" : "posts",
+    "type" : "newsroom",
     "permalink" : true
   }
 }

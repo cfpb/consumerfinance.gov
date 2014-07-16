@@ -4,6 +4,11 @@
     "processor" : "wordpress_post_processor",
     "mappings" :  "_defaults/posts_mappings.json"
   },
+  "newsroom": {
+    "url" :       "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
+    "processor" : "wordpress_post_processor",
+    "mappings" :  "_defaults/posts_mappings.json"
+  },
   "views" : {
     "url" :       "$WORDPRESS/api/get_recent_posts/?post_type=view",
     "processor" : "wordpress_view_processor"
