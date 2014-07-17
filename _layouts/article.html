@@ -17,25 +17,27 @@
         {% endif %}
         </a>
         <h1 class="post_header">
-            {{ post.title }}
+            {{ post.title|safe }}
         </h1>
     {% if post.dek %}
         <div class="post_dek">
-            {{ post.dek }}
+            {{ post.dek|safe }}
         </div>
     {% endif %}
         <div class="post_meta">
+        {% if post.author.0 %}
             <span class="post_byline">
                 By <a href="/blog/?filter_author={{ post.author.0 }}">
                     {{ post.author.0 }}
                 </a>
-            {% if post.author.1 %}
-                and <a href="/blog/?filter_author={{ post.author.1 }}">
-                    {{ post.author.1 }}
-                </a>
-            {% endif %}
+                {% if post.author.1 %}
+                    and <a href="/blog/?filter_author={{ post.author.1 }}">
+                        {{ post.author.1 }}
+                    </a>
+                {% endif %}
                 &ndash;
             </span>
+        {% endif %}
             <span class="post_date date">
                 {{ post.date|date("%b %d, %Y") }}
             </span>

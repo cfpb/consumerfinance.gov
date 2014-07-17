@@ -5,10 +5,10 @@
 {%- endblock %}
 
 {% block title -%}
-    {{ post.title }}
+    {{ newsroom.title }}
 {%- endblock %}
 {% block desc -%}
-    {{ post.excerpt|striptags }}
+    {{ newsroom.excerpt|striptags }}
 {%- endblock %}
 
 {% block og_type -%}
@@ -22,6 +22,10 @@
 {%- endblock %}
 
 {% block content %}
+
+    {# Create 'post' variable to enable sharing of
+       included partials with blog #}
+    {% set post = newsroom %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
         
