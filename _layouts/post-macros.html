@@ -41,6 +41,16 @@
     <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
     {% elif category|lower == 'innovation & data' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
+    {% elif category|lower == 'speech' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-microphone"></span>
+    {% elif category|lower == 'press release' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+    {% elif category|lower == 'op-ed' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-contract"></span>
+    {% elif category|lower == 'testimony' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-double-quote"></span>
+    {% elif category|lower == 'blog' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-speech-bubble"></span>
     {%- endif -%}
 {% endmacro %}
 
