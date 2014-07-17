@@ -9,7 +9,7 @@
                 <label class="form-label-header">
                     Categories
                 </label>
-            {% for category in queries.posts.possible_values_for('category')|sort(attribute='term') -%}
+            {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
                 <label class="form-group_item form-label">
                     {{ post_macros.filter_checkbox('category', category.term)|safe }}
                 </label>
@@ -27,14 +27,17 @@
                     multiple
                     data-placeholder="Search for topics">
                 <optgroup label="Most frequent">
-            {%- for tags in queries.posts.possible_values_for('tags') -%}
+            {% set possible_tags = query.possible_values_for('tags') %}
+            {# set most_frequent = [] #}
+            {%- for tags in possible_tags -%}
                 {%- if loop.index < 4 -%}
                     {{ post_macros.filter_option('tags', tags.term)|safe }}
+                    {# most_frequent.push() #}
                 {%- endif -%}
             {%- endfor -%}
                 </optgroup>
-                <optgroup label="All topics">
-            {%- for tags in queries.posts.possible_values_for('tags')|sort(attribute='term') -%}
+                <optgroup label="All other topics">
+            {%- for tags in possible_tags[3:]|sort(attribute='term') -%}
                     {{ post_macros.filter_option('tags', tags.term)|safe }}
             {%- endfor -%}
                 </optgroup>
@@ -50,7 +53,7 @@
                     name="filter_author"
                     multiple
                     data-placeholder="Search for authors">
-                {% for author in queries.posts.possible_values_for('author')|sort(attribute='term') %}
+                {% for author in query.possible_values_for('author')|sort(attribute='term') %}
                     {{ post_macros.filter_option('author', author.term)|safe }}
                 {% endfor %}
             </select>
