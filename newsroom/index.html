@@ -29,8 +29,16 @@
 
     {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
-    {% set posts = queries.posts.search_with_url_arguments(size=10) %}
-    {% set view = get_document('views', 'blog') %}
+    {# Set a common 'query' variable to enable sharing of filtering functions
+       between blog and newsroom. #}
+    {% set query = queries.newsroom %}
+
+    {% set newsroom = query.search_with_url_arguments(size=10) %}
+    {% set view = get_document('views', 'newsroom') %}
+
+    {# Set 'posts' to the newsroom query to enable
+       some functions already developed for blog. #}
+    {% set posts = newsroom %}
 
     {# Macros #}
 
