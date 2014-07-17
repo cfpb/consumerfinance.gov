@@ -503,6 +503,169 @@ main.content
 </code></pre>
       </div>
     </div>
+    <div id="content-footer" class="docs-component">
+      <h2 class="docs-component_header"><span>Content footer</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Standard content footer example</h3>
+          <section class="docs-pattern_pattern">
+<section class="content_main">
+    <h2>Main content area</h2>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Cum corrupti tempora nam nihil qui mollitia consectetur
+        corporis nemo culpa dolorum! Laborum at eos deleniti
+        consequatur itaque officiis debitis quisquam! Provident!
+    </p>
+    <aside class="content_footer">
+        Content footer
+    </aside><!-- END .content_footer -->
+</section><!-- END .content_main -->
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section class=&quot;content_main&quot;&gt;
+    &lt;h2&gt;Main content area&lt;/h2&gt;
+    &lt;p&gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Cum corrupti tempora nam nihil qui mollitia consectetur
+        corporis nemo culpa dolorum! Laborum at eos deleniti
+        consequatur itaque officiis debitis quisquam! Provident!
+    &lt;/p&gt;
+    &lt;aside class=&quot;content_footer&quot;&gt;
+        Content footer
+    &lt;/aside&gt;&lt;!-- END .content_footer --&gt;
+&lt;/section&gt;&lt;!-- END .content_main --&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content_footer</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The content footer is useful when you have sidebar-like content in a layout without a sidebar. For example when you have a side nav layout you can place sidebar content in the content_footer area.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Flush content footer example</h3>
+          <section class="docs-pattern_pattern">
+<main class="content content__1-3" id="main" role="main">
+    <div class="content_bar"></div>
+    <div class="wrapper content_wrapper">
+        <section class="content_main">
+            <h2>Main content area</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum! Laborum at eos deleniti
+                consequatur itaque officiis debitis quisquam! Provident!
+            </p>
+            <aside class="content_footer content_footer__bg">
+                Content footer flush
+            </aside><!-- END .content_footer -->
+        </section><!-- END .content_main -->
+        <aside class="content_sidebar">
+            Section navigation
+        </aside><!-- END .content_sidebar -->
+    </div><!-- END .content_wrapper -->
+</main><!-- END .content -->
+<footer class="footer" role="contentinfo">
+    <div class="wrapper">
+        Footer
+    </div>
+</footer><!-- END .footer -->
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;main class=&quot;content content__1-3&quot; id=&quot;main&quot; role=&quot;main&quot;&gt;
+    &lt;div class=&quot;content_bar&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;wrapper content_wrapper&quot;&gt;
+        &lt;section class=&quot;content_main&quot;&gt;
+            &lt;h2&gt;Main content area&lt;/h2&gt;
+            &lt;p&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Cum corrupti tempora nam nihil qui mollitia consectetur
+                corporis nemo culpa dolorum! Laborum at eos deleniti
+                consequatur itaque officiis debitis quisquam! Provident!
+            &lt;/p&gt;
+            &lt;aside class=&quot;content_footer content_footer__bg&quot;&gt;
+                Content footer flush
+            &lt;/aside&gt;&lt;!-- END .content_footer --&gt;
+        &lt;/section&gt;&lt;!-- END .content_main --&gt;
+        &lt;aside class=&quot;content_sidebar&quot;&gt;
+            Section navigation
+        &lt;/aside&gt;&lt;!-- END .content_sidebar --&gt;
+    &lt;/div&gt;&lt;!-- END .content_wrapper --&gt;
+&lt;/main&gt;&lt;!-- END .content --&gt;
+&lt;footer class=&quot;footer&quot; role=&quot;contentinfo&quot;&gt;
+    &lt;div class=&quot;wrapper&quot;&gt;
+        Footer
+    &lt;/div&gt;
+&lt;/footer&gt;&lt;!-- END .footer --&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content_footer__bg</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Adds a background with padding.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.content_footer {
+  margin-top: 3.75em;
+}
+
+.content_footer_item + .content_footer_item {
+  margin-top: 3.75em;
+}
+
+.content_footer_item {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .content_footer_item {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content_footer_item {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content_footer_item + .content_footer_item {
+  margin-top: 0;
+}
+
+.content_footer__bg {
+  padding: 2em 30px;
+  margin-right: -15px;
+  margin-bottom: -1.875em;
+  margin-left: -15px;
+  background: #f1f2f2;
+}
+
+.content_footer__bg {
+  margin-right: -30px;
+  margin-bottom: -3.75em;
+  margin-left: -30px;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="bleedbar-sidebar-styling" class="docs-component">
       <h2 class="docs-component_header"><span>Bleedbar sidebar styling</span></h2>
       <div class="docs-patterns">
