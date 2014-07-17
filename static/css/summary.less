@@ -32,30 +32,6 @@
             .summary_header
             .summary_text
             .summary_byline
-    - name: Max-width summary text
-      markup: |
-        <article class="summary">
-            <h1 class="summary_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
-            <p class="summary_text summary_text__max">
-                Every year, millions of American families buy a car –
-                and it will be one of the most significant purchases they make.
-                One key priority for us is protecting consumers from the silent
-                pickpocket of discrimination.
-            </p>
-            <p class="summary_byline">
-                By Patrice Ficklin
-            </p>
-        </article>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .summary_text.summary_text__max
-      notes:
-        - "Optionally set a max-width on .summary_text to keep line lengths
-          readable."
   tags:
     - cfgov-summary
 */
@@ -83,16 +59,128 @@
         margin-bottom: unit(10px / @base-font-size-px, em);
         .webfont-regular();
         color: @darkgray;
-
-        &__max {
-            max-width: unit(656px / @base-font-size-px, em);
-        }
     }
 
     &_byline {
         color: @black;
         .webfont-regular();
     }
+}
+
+
+/* topdoc
+  name: Layouts
+  family: cfgov-summary
+  patterns:
+    - name: Two columns at large screen
+      markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <div class="summary_cols">
+                <div class="summary_col">
+                    <p class="summary_text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+                <div class="summary_col">
+                    <p class="summary_text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+            </div>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary_cols
+            .summary_col
+  tags:
+    - cfgov-summary
+*/
+
+.summary_col + .summary_col {
+    // Eyeballed to 30px when factoring baseline and line-height.
+    margin-top: unit(20px / @base-font-size-px, em);
+}
+
+.u-respond-to-min(600px, {
+    .summary_cols {
+        .grid_nested-col-group();
+    }
+    .summary_col + .summary_col {
+        margin-top: 0;
+    }
+
+    .summary_col {
+        .grid_column(6);
+    }
+});
+
+
+/* topdoc
+  name: Modifiers
+  family: cfgov-summary
+  patterns:
+    - name: Large header
+      markup: |
+        <h1 class="summary_header summary_header__large">
+            Preventing illegal discrimination in auto lending
+        </h1>
+      codenotes:
+        - .summary_header__large
+    - name: Dark text
+      markup: |
+        <p class="summary_text summary_text__dark">
+            Every year, millions of American families buy a car –
+            and it will be one of the most significant purchases they make.
+            One key priority for us is protecting consumers from the silent
+            pickpocket of discrimination.
+        </p>
+      codenotes:
+        - .summary_text__dark
+    - name: Max-width text
+      markup: |
+        <p class="summary_text summary_text__max">
+            Every year, millions of American families buy a car –
+            and it will be one of the most significant purchases they make.
+            One key priority for us is protecting consumers from the silent
+            pickpocket of discrimination.
+        </p>
+      codenotes:
+        - .summary_text__max
+      notes:
+        - "Optionally set a max-width on .summary_text to keep line lengths
+          readable."
+  tags:
+    - cfgov-summary
+*/
+
+.summary_header__large {
+    .h2();
+    // Eyeballed to 30px from the baseline.
+    margin-bottom: unit(16px / @font-size, em);
+    .u-respond-to-min(600px, {
+        .h1();
+        // Eyeballed to 25px from the baseline.
+        margin-bottom: unit(11px / @font-size, em);
+    });
+}
+
+.summary_text__dark {
+    color: @black;
+}
+
+.summary_text__max {
+    max-width: unit(656px / @base-font-size-px, em);
 }
 
 
