@@ -28,11 +28,9 @@
                     data-placeholder="Search for topics">
                 <optgroup label="Most frequent">
             {% set possible_tags = query.possible_values_for('tags') %}
-            {# set most_frequent = [] #}
             {%- for tags in possible_tags -%}
                 {%- if loop.index < 4 -%}
                     {{ post_macros.filter_option('tags', tags.term)|safe }}
-                    {# most_frequent.push() #}
                 {%- endif -%}
             {%- endfor -%}
                 </optgroup>
