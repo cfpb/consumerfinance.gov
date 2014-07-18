@@ -311,46 +311,50 @@
     }
 
     &_ribbon {
+        position: relative;
         display: inline-block;
-        width: unit(7px / @font-size, em);
+        width: 12px;
+        padding: unit(8px / @font-size, em) 0;
+        background-repeat: no-repeat;
 
         &:before,
         &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: -1px;
-            bottom: -1px;
-            width: 0;
-            height: 0;
-            border-color: transparent;
-            border-style: solid;
-            border-width: unit(16px / @font-size, em);
+                content: "";
+                position: absolute;
+                z-index: 3;
+                display: block;
+                width: 12px;
+                height: 50%;
+                background: @white;
         }
 
         &__left {
-            // Remove inline-block space
             margin-right: unit(-4px / @font-size, em);
             &:before {
-                left: 0;
-                border-left: unit(8px / @font-size, em) solid @gray-50;
+                top: 0;
+                border-left: 1px solid @gray-50;
+                transform:  skewX(33deg) translateX(5px);
             }
             &:after {
-                left: -1px;
-                border-left: unit(8px / @font-size, em) solid @white;
+                bottom: 0;
+                border-left: 1px solid @gray-50;
+                transform:  skewX(-33deg) translateX(5px);
             }
         }
 
         &__right {
-            // Remove inline-block space
             margin-left: unit(-4px / @font-size, em);
             &:before {
+                top: 0;
                 right: 0;
-                border-right: unit(8px / @font-size, em) solid @gray-50;
+                border-right: 1px solid @gray-50;
+                transform:  skewX(-33deg) translateX(-5px);
             }
             &:after {
-                right: -1px;
-                border-right: unit(8px / @font-size, em) solid @white;
+                right: 0;
+                bottom: 0;
+                border-right: 1px solid @gray-50;
+                transform:  skewX(33deg) translateX(-5px);
             }
         }
     }
