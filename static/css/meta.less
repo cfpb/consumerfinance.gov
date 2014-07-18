@@ -257,6 +257,109 @@
 
 
 /* topdoc
+  name: Fancy slug
+  family: cfgov-meta
+  patterns:
+    - name: Default fancy slug
+      markup: |
+        <h2 class="fancy-slug">
+            <span class="fancy-slug_inner">
+                Blog summary
+            </span>
+        </h2>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .fancy-slug
+            .fancy-slug_inner
+  tags:
+    - cfgov-meta
+*/
+
+.fancy-slug {
+    .h5();
+    position: relative;
+    line-height: 1;
+    // Bottom margin is eyeballed to 15px when considering baseline and line-height.
+    margin-bottom: unit(8px / @font-size, em);
+    text-align: center;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: unit(((@font-size / 2) + 8) / @font-size, em);
+        right: 0;
+        left: 0;
+        z-index: 1;
+        border-bottom: 1px solid @gray-50;
+    }
+
+    &_inner {
+        position: relative;
+        display: inline-block;
+        border-top: 1px solid @gray-50;
+        border-bottom: 1px solid @gray-50;
+    }
+
+    &_text {
+        position: relative;
+        z-index: 2;
+        display: inline-block;
+        padding: unit(8px / @font-size, em) unit(20px / @font-size, em);
+        margin: 0 -1px;
+        background: @white;
+    }
+
+    &_ribbon {
+        @arrow-size: 16px;
+
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+        }
+
+        &__left {
+            &:before {
+                top: -1px;
+                left: 0;
+                border-width: @arrow-size;
+                border-left: 9px solid @gray-50;
+            }
+            &:after {
+                top: 0;
+                left: 0;
+                border-width: @arrow-size - 1px;
+                border-left: 8px solid @white;
+            }
+        }
+
+        &__right {
+            &:before {
+                top: -1px;
+                right: 0;
+                border-width: @arrow-size;
+                border-right: 9px solid @gray-50;
+            }
+            &:after {
+                top: 0;
+                right: 0;
+                border-width: @arrow-size - 1px;
+                border-right: 8px solid @white;
+            }
+        }
+    }
+}
+
+
+/* topdoc
   name: Meta header
   family: cfgov-meta
   patterns:
