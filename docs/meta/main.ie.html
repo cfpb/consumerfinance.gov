@@ -532,22 +532,22 @@ a.category-slug.active {
 }
 
 .fancy-slug_ribbon {
+  position: relative;
   display: inline-block;
-  width: 0.5em;
+  width: 12px;
+  padding: 0.57142857em 0;
+  background-repeat: no-repeat;
 }
 
 .fancy-slug_ribbon:before,
 .fancy-slug_ribbon:after {
   content: &quot;&quot;;
-  display: block;
   position: absolute;
-  top: -1px;
-  bottom: -1px;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 1.14285714em;
+  z-index: 3;
+  display: block;
+  width: 12px;
+  height: 50%;
+  background: #ffffff;
 }
 
 .fancy-slug_ribbon__left {
@@ -555,13 +555,19 @@ a.category-slug.active {
 }
 
 .fancy-slug_ribbon__left:before {
-  left: 0;
-  border-left: 0.57142857em solid #babbbd;
+  top: 0;
+  border-left: 1px solid #babbbd;
+  -webkit-transform: skewX(33deg) translateX(5px);
+  -ms-transform: skewX(33deg) translateX(5px);
+  transform: skewX(33deg) translateX(5px);
 }
 
 .fancy-slug_ribbon__left:after {
-  left: -1px;
-  border-left: 0.57142857em solid #ffffff;
+  bottom: 0;
+  border-left: 1px solid #babbbd;
+  -webkit-transform: skewX(-33deg) translateX(5px);
+  -ms-transform: skewX(-33deg) translateX(5px);
+  transform: skewX(-33deg) translateX(5px);
 }
 
 .fancy-slug_ribbon__right {
@@ -569,13 +575,21 @@ a.category-slug.active {
 }
 
 .fancy-slug_ribbon__right:before {
+  top: 0;
   right: 0;
-  border-right: 0.57142857em solid #babbbd;
+  border-right: 1px solid #babbbd;
+  -webkit-transform: skewX(-33deg) translateX(-5px);
+  -ms-transform: skewX(-33deg) translateX(-5px);
+  transform: skewX(-33deg) translateX(-5px);
 }
 
 .fancy-slug_ribbon__right:after {
-  right: -1px;
-  border-right: 0.57142857em solid #ffffff;
+  right: 0;
+  bottom: 0;
+  border-right: 1px solid #babbbd;
+  -webkit-transform: skewX(33deg) translateX(-5px);
+  -ms-transform: skewX(33deg) translateX(-5px);
+  transform: skewX(33deg) translateX(-5px);
 }
 </code></pre>
       </div>
