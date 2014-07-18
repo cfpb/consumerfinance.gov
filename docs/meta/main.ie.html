@@ -454,6 +454,126 @@ a.category-slug.active {
 </code></pre>
       </div>
     </div>
+    <div id="fancy-slug" class="docs-component">
+      <h2 class="docs-component_header"><span>Fancy slug</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default fancy slug</h3>
+          <section class="docs-pattern_pattern">
+<h2 class="fancy-slug">
+    <span class="fancy-slug_inner">
+        Blog summary
+    </span>
+</h2>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h2 class=&quot;fancy-slug&quot;&gt;
+    &lt;span class=&quot;fancy-slug_inner&quot;&gt;
+        Blog summary
+    &lt;/span&gt;
+&lt;/h2&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.fancy-slug
+  .fancy-slug_inner</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.fancy-slug {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  position: relative;
+  line-height: 1;
+  margin-bottom: 0.57142857em;
+  text-align: center;
+}
+
+.lt-ie9 .fancy-slug {
+  font-weight: normal !important;
+}
+
+.fancy-slug:before {
+  content: &quot;&quot;;
+  position: absolute;
+  top: 1.07142857em;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  border-bottom: 1px solid #babbbd;
+}
+
+.fancy-slug_inner {
+  position: relative;
+  display: inline-block;
+  border-top: 1px solid #babbbd;
+  border-bottom: 1px solid #babbbd;
+}
+
+.fancy-slug_text {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  padding: 0.57142857em 1.42857143em;
+  margin: 0 -1px;
+  background: #ffffff;
+}
+
+.fancy-slug_ribbon:before,
+.fancy-slug_ribbon:after {
+  content: &quot;&quot;;
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.fancy-slug_ribbon__left:before {
+  top: -1px;
+  left: 0;
+  border-width: 16px;
+  border-left: 9px solid #babbbd;
+}
+
+.fancy-slug_ribbon__left:after {
+  top: 0;
+  left: 0;
+  border-width: 15px;
+  border-left: 8px solid #ffffff;
+}
+
+.fancy-slug_ribbon__right:before {
+  top: -1px;
+  right: 0;
+  border-width: 16px;
+  border-right: 9px solid #babbbd;
+}
+
+.fancy-slug_ribbon__right:after {
+  top: 0;
+  right: 0;
+  border-width: 15px;
+  border-right: 8px solid #ffffff;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="meta-header" class="docs-component">
       <h2 class="docs-component_header"><span>Meta header</span></h2>
       <div class="docs-patterns">
