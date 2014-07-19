@@ -6482,12 +6482,14 @@ a.category-slug.active {
   z-index: 2;
   display: inline-block;
   padding: 0.57142857em 1.42857143em;
+  border-left: 1px solid #babbbd;
+  border-right: 1px solid #babbbd;
   background: #ffffff;
 }
 .fancy-slug_ribbon {
   position: relative;
   display: inline-block;
-  width: 12px;
+  width: 0.85714286em;
   padding: 0.57142857em 0;
   background-repeat: no-repeat;
 }
@@ -6502,40 +6504,40 @@ a.category-slug.active {
   background: #ffffff;
 }
 .fancy-slug_ribbon__left {
-  margin-right: -0.28571429em;
+  margin-right: -0.35714286em;
 }
 .fancy-slug_ribbon__left:before {
   top: 0;
   border-left: 1px solid #babbbd;
-  -webkit-transform: skewX(33deg) translateX(5px);
-  -ms-transform: skewX(33deg) translateX(5px);
-  transform: skewX(33deg) translateX(5px);
+  -webkit-transform: skewX(33deg) translateX(0.35714286em);
+  -ms-transform: skewX(33deg) translateX(0.35714286em);
+  transform: skewX(33deg) translateX(0.35714286em);
 }
 .fancy-slug_ribbon__left:after {
   bottom: 0;
   border-left: 1px solid #babbbd;
-  -webkit-transform: skewX(-33deg) translateX(5px);
-  -ms-transform: skewX(-33deg) translateX(5px);
-  transform: skewX(-33deg) translateX(5px);
+  -webkit-transform: skewX(-33deg) translateX(0.35714286em);
+  -ms-transform: skewX(-33deg) translateX(0.35714286em);
+  transform: skewX(-33deg) translateX(0.35714286em);
 }
 .fancy-slug_ribbon__right {
-  margin-left: -0.28571429em;
+  margin-left: -0.35714286em;
 }
 .fancy-slug_ribbon__right:before {
   top: 0;
   right: 0;
   border-right: 1px solid #babbbd;
-  -webkit-transform: skewX(-33deg) translateX(-5px);
-  -ms-transform: skewX(-33deg) translateX(-5px);
-  transform: skewX(-33deg) translateX(-5px);
+  -webkit-transform: skewX(-33deg) translateX(-0.35714286em);
+  -ms-transform: skewX(-33deg) translateX(-0.35714286em);
+  transform: skewX(-33deg) translateX(-0.35714286em);
 }
 .fancy-slug_ribbon__right:after {
   right: 0;
   bottom: 0;
   border-right: 1px solid #babbbd;
-  -webkit-transform: skewX(33deg) translateX(-5px);
-  -ms-transform: skewX(33deg) translateX(-5px);
-  transform: skewX(33deg) translateX(-5px);
+  -webkit-transform: skewX(33deg) translateX(-0.35714286em);
+  -ms-transform: skewX(33deg) translateX(-0.35714286em);
+  transform: skewX(33deg) translateX(-0.35714286em);
 }
 /* topdoc
   name: Meta header
