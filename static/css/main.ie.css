@@ -7373,16 +7373,16 @@ a.category-slug.active {
   background: #ffffff;
 }
 
-.fancy-slug .lt-ie8_inner {
+.lt-ie8 .fancy-slug_inner {
   display: block;
   border: 1px solid #babbbd;
 }
 
-.fancy-slug .lt-ie8_inner {
+.lt-ie8 .fancy-slug_inner {
   border: none;
 }
 
-.fancy-slug .lt-ie8_ribbon {
+.lt-ie8 .fancy-slug_ribbon {
   display: none;
 }
 

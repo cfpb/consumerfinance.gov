@@ -312,15 +312,15 @@
         background: @white;
     }
 
-    .lt-ie8 {
-        &_inner {
+    & {
+        .lt-ie8 &_inner {
             display: block;
             border: 1px solid @gray-50;
         }
-        &_inner {
+        .lt-ie8 &_inner {
             border: none;
         }
-        &_ribbon {
+        .lt-ie8 &_ribbon {
             display: none;
         }
     }
