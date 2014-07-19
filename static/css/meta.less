@@ -312,16 +312,25 @@
         background: @white;
     }
 
+    .lt-ie8 {
+        &_inner {
+            display: block;
+            border: 1px solid @gray-50;
+        }
+        &_inner {
+            border: none;
+        }
+        &_ribbon {
+            display: none;
+        }
+    }
+
     &_ribbon {
         position: relative;
         display: inline-block;
         width: unit(12px / @font-size, em);
         padding: unit(8px / @font-size, em) 0;
         background-repeat: no-repeat;
-
-        .lt-ie8 & {
-            display: none;
-        }
 
         &:before,
         &:after {
