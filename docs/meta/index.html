@@ -479,24 +479,17 @@ a.category-slug.active {
   line-height: 1;
   margin-bottom: 0.57142857em;
   text-align: center;
+  border-top: 1px solid #babbbd;
 }
 .lt-ie9 .fancy-slug {
   font-weight: normal !important;
-}
-.fancy-slug:before {
-  content: &quot;&quot;;
-  position: absolute;
-  top: 1.07142857em;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  border-bottom: 1px solid #babbbd;
 }
 .fancy-slug_inner {
   position: relative;
   display: inline-block;
   border-top: 1px solid #babbbd;
   border-bottom: 1px solid #babbbd;
+  top: -1.07142857em;
 }
 .fancy-slug_text {
   position: relative;
@@ -513,7 +506,6 @@ a.category-slug.active {
   border-bottom: 1px solid #babbbd;
 }
 .lt-ie8 .fancy-slug_text {
-  margin-bottom: 0.5em;
   border: 1px solid #babbbd;
 }
 .lt-ie8 .fancy-slug_ribbon {

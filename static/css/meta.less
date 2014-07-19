@@ -285,21 +285,24 @@
     margin-bottom: unit(8px / @font-size, em);
     text-align: center;
 
-    &:before {
-        content: "";
-        position: absolute;
-        top: unit(((@font-size / 2) + 8) / @font-size, em);
-        right: 0;
-        left: 0;
-        z-index: 1;
-        border-bottom: 1px solid @gray-50;
-    }
+    border-top: 1px solid @gray-50;
+
+    // &:before {
+    //     content: "";
+    //     position: absolute;
+    //     top: unit(((@font-size / 2) + 8) / @font-size, em);
+    //     right: 0;
+    //     left: 0;
+    //     z-index: 1;
+    // }
 
     &_inner {
         position: relative;
         display: inline-block;
         border-top: 1px solid @gray-50;
         border-bottom: 1px solid @gray-50;
+
+        top: unit(((@font-size / 2) + 8) * -1 / @font-size, em);
     }
 
     &_text {
@@ -319,7 +322,6 @@
             border-bottom: 1px solid @gray-50;
         }
         .lt-ie8 &_text {
-            margin-bottom: unit((@font-size / 2) / @font-size, em);
             border: 1px solid @gray-50;
         }
         .lt-ie8 &_ribbon {
