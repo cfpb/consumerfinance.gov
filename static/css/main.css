@@ -6431,24 +6431,20 @@ a.category-slug.active {
     - name: Default fancy slug
       markup: |
         <h2 class="fancy-slug">
-            <span class="fancy-slug_ribbon-left">&nbsp;</span>
             <span class="fancy-slug_text">
+                <span class="fancy-slug_ribbon-left"></span>
                 Watchroom
+                <span class="fancy-slug_ribbon-right"></span>
             </span>
-            <span class="fancy-slug_ribbon-right">&nbsp;</span>
         </h2>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .fancy-slug
-            .fancy-slug_ribbon-left
             .fancy-slug_text
-            .fancy-slug_ribbon-right
-      notes:
-        - "Make sure to add a non-breaking space inside of
-           .fancy-slug_ribbon-left and .fancy-slug_ribbon-right to match the
-           height of the text."
+                .fancy-slug_ribbon-left
+                .fancy-slug_ribbon-right
   tags:
     - cfgov-meta
 */
@@ -6464,6 +6460,7 @@ a.category-slug.active {
   line-height: 1.57142857;
   position: relative;
   height: 1.14285714em;
+  padding: 0 1.21428571em;
   margin-top: 1.14285714em;
   margin-bottom: 0.57142857em;
   border-top: 1px solid #babbbd;
@@ -6483,11 +6480,11 @@ a.category-slug.active {
 }
 .fancy-slug_ribbon-left,
 .fancy-slug_ribbon-right {
-  display: inline-block;
-  position: relative;
-  top: -1.14285714em;
-  width: 0.85714286em;
-  padding: 0.57142857em 0;
+  display: block;
+  position: absolute;
+  top: -1px;
+  width: 1.21428571em;
+  height: 100%;
   border-top: 1px solid #babbbd;
   border-bottom: 1px solid #babbbd;
 }
@@ -6503,13 +6500,13 @@ a.category-slug.active {
   content: "";
   position: absolute;
   z-index: 3;
-  width: 12px;
+  width: 1.21428571em;
   height: 50%;
   background: #ffffff;
   border: 0 solid #babbbd;
 }
 .fancy-slug_ribbon-left {
-  margin-right: -0.35714286em;
+  left: -1.21428571em;
 }
 .fancy-slug_ribbon-left:before {
   top: 0;
@@ -6532,7 +6529,7 @@ a.category-slug.active {
   transform: skewX(-33deg);
 }
 .fancy-slug_ribbon-right {
-  margin-left: -0.35714286em;
+  right: -1.21428571em;
 }
 .fancy-slug_ribbon-right:before {
   top: 0;
