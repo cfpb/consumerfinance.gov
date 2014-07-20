@@ -282,14 +282,13 @@
 
     .h5();
     position: relative;
-    line-height: 1;
     // Create a space for the text to pull itself up into.
     margin-top: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
     // Bottom margin is eyeballed to 15px when considering baseline and line-height.
     margin-bottom: unit(8px / @font-size, em);
-    text-align: center;
-
     border-top: 1px solid @gray-50;
+    line-height: 1;
+    text-align: center;
 
     &_inner {
         display: inline-block;

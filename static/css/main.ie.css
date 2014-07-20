@@ -7337,11 +7337,11 @@ a.category-slug.active {
   font-size: 0.875em;
   line-height: 1.57142857;
   position: relative;
-  line-height: 1;
   margin-top: 1.14285714em;
   margin-bottom: 0.57142857em;
-  text-align: center;
   border-top: 1px solid #babbbd;
+  line-height: 1;
+  text-align: center;
 }
 
 .lt-ie9 .fancy-slug {
