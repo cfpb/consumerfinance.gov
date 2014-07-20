@@ -476,6 +476,7 @@ a.category-slug.active {
   font-size: 0.875em;
   line-height: 1.57142857;
   position: relative;
+  height: 1.14285714em;
   margin-top: 1.14285714em;
   margin-bottom: 0.57142857em;
   border-top: 1px solid #babbbd;
@@ -485,28 +486,23 @@ a.category-slug.active {
 .lt-ie9 .fancy-slug {
   font-weight: normal !important;
 }
-.fancy-slug_inner {
+.fancy-slug_text {
   display: inline-block;
   position: relative;
   top: -1.14285714em;
-  border-top: 1px solid #babbbd;
-  border-bottom: 1px solid #babbbd;
-}
-.fancy-slug_text {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
   padding: 0.57142857em 1.42857143em;
-  border-left: 1px solid #babbbd;
-  border-right: 1px solid #babbbd;
+  border: 1px solid #babbbd;
   background: #ffffff;
 }
 .fancy-slug_ribbon-left,
 .fancy-slug_ribbon-right {
-  position: relative;
   display: inline-block;
+  position: relative;
+  top: -1.14285714em;
   width: 0.85714286em;
   padding: 0.57142857em 0;
+  border-top: 1px solid #babbbd;
+  border-bottom: 1px solid #babbbd;
 }
 .lt-ie9 .fancy-slug_ribbon-left,
 .lt-ie9 .fancy-slug_ribbon-right {
@@ -516,10 +512,10 @@ a.category-slug.active {
 .fancy-slug_ribbon-right:before,
 .fancy-slug_ribbon-left:after,
 .fancy-slug_ribbon-right:after {
+  display: block;
   content: &quot;&quot;;
   position: absolute;
   z-index: 3;
-  display: block;
   width: 12px;
   height: 50%;
   background: #ffffff;

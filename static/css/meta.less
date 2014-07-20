@@ -282,7 +282,10 @@
 
     .h5();
     position: relative;
-    // Create a space for the text to pull itself up into.
+    // Cut the height in half since we will be adding it back with margin.
+    height: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
+    // Add back half of the height to create a space for the text to pull
+    // itself up into.
     margin-top: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
     // Bottom margin is eyeballed to 15px when considering baseline and line-height.
     margin-bottom: unit(8px / @font-size, em);
@@ -290,23 +293,15 @@
     line-height: 1;
     text-align: center;
 
-    &_inner {
+    &_text {
         display: inline-block;
         position: relative;
         // Pull the text up up by half of its height so that it is vertically
-        // centered with .fancy-slugs top border.
+        // centered with .fancy-slugs top border. "Height" means half the
+        // font-size plus half the total padding and half the borders.
         top: unit(((@font-size / 2) + @v-padding + 1) * -1 / @font-size, em);
-        border-top: 1px solid @gray-50;
-        border-bottom: 1px solid @gray-50;
-    }
-
-    &_text {
-        position: relative;
-        z-index: 2;
-        display: inline-block;
         padding: unit(@v-padding / @font-size, em) unit(20px / @font-size, em);
-        border-left: 1px solid @gray-50;
-        border-right: 1px solid @gray-50;
+        border: 1px solid @gray-50;
         background: @white;
     }
 
@@ -319,10 +314,16 @@
     // Use :before as the top corner and :after as the bottom corner.
     &_ribbon-left,
     &_ribbon-right {
-        position: relative;
         display: inline-block;
+        position: relative;
+        // Pull the ribbons up up by half of their height so that it is vertically
+        // centered with .fancy-slugs top border. "Height" means half the
+        // font-size plus half the total padding and half the borders.
+        top: unit(((@font-size / 2) + @v-padding + 1) * -1 / @font-size, em);
         width: unit(12px / @font-size, em);
         padding: unit(@v-padding / @font-size, em) 0;
+        border-top: 1px solid @gray-50;
+        border-bottom: 1px solid @gray-50;
 
         .lt-ie9 & {
             display: none;
@@ -330,10 +331,10 @@
 
         &:before,
         &:after {
+                display: block;
                 content: "";
                 position: absolute;
                 z-index: 3;
-                display: block;
                 width: 12px;
                 height: 50%;
                 background: @white;
