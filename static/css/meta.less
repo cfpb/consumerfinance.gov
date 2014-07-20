@@ -263,16 +263,24 @@
     - name: Default fancy slug
       markup: |
         <h2 class="fancy-slug">
-            <span class="fancy-slug_inner">
-                Blog summary
+            <span class="fancy-slug_ribbon-left">&nbsp;</span>
+            <span class="fancy-slug_text">
+                Watchroom
             </span>
+            <span class="fancy-slug_ribbon-right">&nbsp;</span>
         </h2>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .fancy-slug
-            .fancy-slug_inner
+            .fancy-slug_ribbon-left
+            .fancy-slug_text
+            .fancy-slug_ribbon-right
+      notes:
+        - "Make sure to add a non-breaking space inside of
+           .fancy-slug_ribbon-left and .fancy-slug_ribbon-right to match the
+           height of the text."
   tags:
     - cfgov-meta
 */
@@ -309,7 +317,7 @@
     // After skewing the pseudo element we need to align it with the top
     // border. This number will need to change if changing the angle. This
     // value is eyeballed.
-    @offset: unit(5px / @font-size, em);
+    @offset: 5/14;
 
     // Use :before as the top corner and :after as the bottom corner.
     &_ribbon-left,
@@ -347,12 +355,14 @@
         &:before {
             top: 0;
             border-left-width: 1px;
-            transform:  skewX(@angle) translateX(@offset);
+            transform-origin: 0 0;
+            transform: skewX(@angle);
         }
         &:after {
             bottom: 0;
             border-left-width: 1px;
-            transform:  skewX(-@angle) translateX(@offset);
+            transform-origin: 0 100%;
+            transform: skewX(-@angle);
         }
     }
 
@@ -362,13 +372,15 @@
             top: 0;
             right: 0;
             border-right-width: 1px;
-            transform:  skewX(-@angle) translateX(-@offset);
+            transform-origin: 100% 0;
+            transform:  skewX(-@angle);
         }
         &:after {
             right: 0;
             bottom: 0;
             border-right-width: 1px;
-            transform:  skewX(@angle) translateX(-@offset);
+            transform-origin: 100% 100%;
+            transform:  skewX(@angle);
         }
     }
 }
