@@ -7312,16 +7312,24 @@ a.category-slug.active {
     - name: Default fancy slug
       markup: |
         <h2 class="fancy-slug">
-            <span class="fancy-slug_inner">
-                Blog summary
+            <span class="fancy-slug_ribbon-left">&nbsp;</span>
+            <span class="fancy-slug_text">
+                Watchroom
             </span>
+            <span class="fancy-slug_ribbon-right">&nbsp;</span>
         </h2>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .fancy-slug
-            .fancy-slug_inner
+            .fancy-slug_ribbon-left
+            .fancy-slug_text
+            .fancy-slug_ribbon-right
+      notes:
+        - "Make sure to add a non-breaking space inside of
+           .fancy-slug_ribbon-left and .fancy-slug_ribbon-right to match the
+           height of the text."
   tags:
     - cfgov-meta
 */
@@ -7395,17 +7403,23 @@ a.category-slug.active {
 .fancy-slug_ribbon-left:before {
   top: 0;
   border-left-width: 1px;
-  -webkit-transform: skewX(33deg) translateX(0.35714286em);
-  -ms-transform: skewX(33deg) translateX(0.35714286em);
-  transform: skewX(33deg) translateX(0.35714286em);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
 }
 
 .fancy-slug_ribbon-left:after {
   bottom: 0;
   border-left-width: 1px;
-  -webkit-transform: skewX(-33deg) translateX(0.35714286em);
-  -ms-transform: skewX(-33deg) translateX(0.35714286em);
-  transform: skewX(-33deg) translateX(0.35714286em);
+  -webkit-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
 }
 
 .fancy-slug_ribbon-right {
@@ -7416,18 +7430,24 @@ a.category-slug.active {
   top: 0;
   right: 0;
   border-right-width: 1px;
-  -webkit-transform: skewX(-33deg) translateX(-0.35714286em);
-  -ms-transform: skewX(-33deg) translateX(-0.35714286em);
-  transform: skewX(-33deg) translateX(-0.35714286em);
+  -webkit-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
 }
 
 .fancy-slug_ribbon-right:after {
   right: 0;
   bottom: 0;
   border-right-width: 1px;
-  -webkit-transform: skewX(33deg) translateX(-0.35714286em);
-  -ms-transform: skewX(33deg) translateX(-0.35714286em);
-  transform: skewX(33deg) translateX(-0.35714286em);
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
 }
 
 /* topdoc

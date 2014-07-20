@@ -441,25 +441,34 @@ a.category-slug.active {
           <h3 class="docs-pattern_header">Default fancy slug</h3>
           <section class="docs-pattern_pattern">
 <h2 class="fancy-slug">
-    <span class="fancy-slug_inner">
-        Blog summary
+    <span class="fancy-slug_ribbon-left">&nbsp;</span>
+    <span class="fancy-slug_text">
+        Watchroom
     </span>
+    <span class="fancy-slug_ribbon-right">&nbsp;</span>
 </h2>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h2 class=&quot;fancy-slug&quot;&gt;
-    &lt;span class=&quot;fancy-slug_inner&quot;&gt;
-        Blog summary
+    &lt;span class=&quot;fancy-slug_ribbon-left&quot;&gt;&amp;nbsp;&lt;/span&gt;
+    &lt;span class=&quot;fancy-slug_text&quot;&gt;
+        Watchroom
     &lt;/span&gt;
+    &lt;span class=&quot;fancy-slug_ribbon-right&quot;&gt;&amp;nbsp;&lt;/span&gt;
 &lt;/h2&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
 .fancy-slug
-  .fancy-slug_inner</code></pre>
+  .fancy-slug_ribbon-left
+  .fancy-slug_text
+  .fancy-slug_ribbon-right</code></pre>
               </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Make sure to add a non-breaking space inside of .fancy-slug_ribbon-left and .fancy-slug_ribbon-right to match the height of the text.</li>
             </ul>
           </footer>
         </div>
@@ -527,16 +536,22 @@ a.category-slug.active {
 .fancy-slug_ribbon-left:before {
   top: 0;
   border-left-width: 1px;
-  -webkit-transform: skewX(33deg) translateX(0.35714286em);
-  -ms-transform: skewX(33deg) translateX(0.35714286em);
-  transform: skewX(33deg) translateX(0.35714286em);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
 }
 .fancy-slug_ribbon-left:after {
   bottom: 0;
   border-left-width: 1px;
-  -webkit-transform: skewX(-33deg) translateX(0.35714286em);
-  -ms-transform: skewX(-33deg) translateX(0.35714286em);
-  transform: skewX(-33deg) translateX(0.35714286em);
+  -webkit-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
 }
 .fancy-slug_ribbon-right {
   margin-left: -0.35714286em;
@@ -545,17 +560,23 @@ a.category-slug.active {
   top: 0;
   right: 0;
   border-right-width: 1px;
-  -webkit-transform: skewX(-33deg) translateX(-0.35714286em);
-  -ms-transform: skewX(-33deg) translateX(-0.35714286em);
-  transform: skewX(-33deg) translateX(-0.35714286em);
+  -webkit-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
 }
 .fancy-slug_ribbon-right:after {
   right: 0;
   bottom: 0;
   border-right-width: 1px;
-  -webkit-transform: skewX(33deg) translateX(-0.35714286em);
-  -ms-transform: skewX(33deg) translateX(-0.35714286em);
-  transform: skewX(33deg) translateX(-0.35714286em);
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
 }</code></pre>
       </div>
     </div>
