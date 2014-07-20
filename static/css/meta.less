@@ -263,35 +263,34 @@
     - name: Default fancy slug
       markup: |
         <h2 class="fancy-slug">
-            <span class="fancy-slug_ribbon-left">&nbsp;</span>
             <span class="fancy-slug_text">
+                <span class="fancy-slug_ribbon-left"></span>
                 Watchroom
+                <span class="fancy-slug_ribbon-right"></span>
             </span>
-            <span class="fancy-slug_ribbon-right">&nbsp;</span>
         </h2>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .fancy-slug
-            .fancy-slug_ribbon-left
             .fancy-slug_text
-            .fancy-slug_ribbon-right
-      notes:
-        - "Make sure to add a non-breaking space inside of
-           .fancy-slug_ribbon-left and .fancy-slug_ribbon-right to match the
-           height of the text."
+                .fancy-slug_ribbon-left
+                .fancy-slug_ribbon-right
   tags:
     - cfgov-meta
 */
 
 .fancy-slug {
     @v-padding: 8px;
+    @ribbon-width: 17px;
+    @ribbon-angle: 33deg;
 
     .h5();
     position: relative;
     // Cut the height in half since we will be adding it back with margin.
     height: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
+    padding: 0 unit(@ribbon-width / @font-size, em);
     // Add back half of the height to create a space for the text to pull
     // itself up into.
     margin-top: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
@@ -313,23 +312,14 @@
         background: @white;
     }
 
-    @angle: 33deg;
-    // After skewing the pseudo element we need to align it with the top
-    // border. This number will need to change if changing the angle. This
-    // value is eyeballed.
-    @offset: 5/14;
-
     // Use :before as the top corner and :after as the bottom corner.
     &_ribbon-left,
     &_ribbon-right {
-        display: inline-block;
-        position: relative;
-        // Pull the ribbons up up by half of their height so that it is vertically
-        // centered with .fancy-slugs top border. "Height" means half the
-        // font-size plus half the total padding and half the borders.
-        top: unit(((@font-size / 2) + @v-padding + 1) * -1 / @font-size, em);
-        width: unit(12px / @font-size, em);
-        padding: unit(@v-padding / @font-size, em) 0;
+        display: block;
+        position: absolute;
+        top: -1px;
+        width: unit(@ribbon-width / @font-size, em);
+        height: 100%;
         border-top: 1px solid @gray-50;
         border-bottom: 1px solid @gray-50;
 
@@ -343,7 +333,7 @@
                 content: "";
                 position: absolute;
                 z-index: 3;
-                width: 12px;
+                width: unit(@ribbon-width / @font-size, em);
                 height: 50%;
                 background: @white;
                 border: 0 solid @gray-50;
@@ -351,36 +341,36 @@
     }
 
     &_ribbon-left {
-        margin-right: unit(-5px / @font-size, em);
+        left: unit(-@ribbon-width / @font-size, em);
         &:before {
             top: 0;
             border-left-width: 1px;
             transform-origin: 0 0;
-            transform: skewX(@angle);
+            transform: skewX(@ribbon-angle);
         }
         &:after {
             bottom: 0;
             border-left-width: 1px;
             transform-origin: 0 100%;
-            transform: skewX(-@angle);
+            transform: skewX(-@ribbon-angle);
         }
     }
 
     &_ribbon-right {
-        margin-left: unit(-5px / @font-size, em);
+        right: unit(-@ribbon-width / @font-size, em);
         &:before {
             top: 0;
             right: 0;
             border-right-width: 1px;
             transform-origin: 100% 0;
-            transform:  skewX(-@angle);
+            transform:  skewX(-@ribbon-angle);
         }
         &:after {
             right: 0;
             bottom: 0;
             border-right-width: 1px;
             transform-origin: 100% 100%;
-            transform:  skewX(@angle);
+            transform:  skewX(@ribbon-angle);
         }
     }
 }
