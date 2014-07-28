@@ -33,16 +33,15 @@ def process_post(post):
     post['_id'] = post['slug']
     # remove fields we're not interested in
     if post['type'] == 'cfpb_newsroom':
-        post['category'] = ([cat['title'].replace('&amp;', '&')
-                            for cat
-                            in post['taxonomy_cfpb_newsroom_cat_taxonomy']])
+        post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_cfpb_newsroom_cat_taxonomy']]
+    elif post['type'] == 'post':
+        post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_fj_category']]
+    if post['type'] == 'watchroom':
+        post['author'] = [post['author']['name']]
     else:
-        post['category'] = ([cat['title'].replace('&amp;', '&')
-                            for cat
-                            in post['taxonomy_fj_category']])
-    post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
+        post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
+        post['author'] = [author['title'] for author in post['taxonomy_author']]
     author_template = Template("$first_name $last_name")
-    post['author'] = [author['title'] for author in post['taxonomy_author']]
     dt = dateutil.parser.parse(post['date'])
     dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
     post['date'] = dt_string

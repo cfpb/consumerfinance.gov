@@ -8,5 +8,10 @@
     "url" : "/newsroom/<id>",
     "type" : "newsroom",
     "permalink" : true
+  },
+  "watchroom":{
+    "url" : "/watchroom/<id>",
+    "type" : "watchroom",
+    "permalink" : true
   }
 }
