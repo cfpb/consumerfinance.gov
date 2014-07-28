@@ -64,52 +64,6 @@
             </ul>
           </footer>
         </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Max-width summary text</h3>
-          <section class="docs-pattern_pattern">
-<article class="summary">
-    <h1 class="summary_header">
-        Preventing illegal discrimination in auto lending
-    </h1>
-    <p class="summary_text summary_text__max">
-        Every year, millions of American families buy a car –
-        and it will be one of the most significant purchases they make.
-        One key priority for us is protecting consumers from the silent
-        pickpocket of discrimination.
-    </p>
-    <p class="summary_byline">
-        By Patrice Ficklin
-    </p>
-</article>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;summary&quot;&gt;
-    &lt;h1 class=&quot;summary_header&quot;&gt;
-        Preventing illegal discrimination in auto lending
-    &lt;/h1&gt;
-    &lt;p class=&quot;summary_text summary_text__max&quot;&gt;
-        Every year, millions of American families buy a car –
-        and it will be one of the most significant purchases they make.
-        One key priority for us is protecting consumers from the silent
-        pickpocket of discrimination.
-    &lt;/p&gt;
-    &lt;p class=&quot;summary_byline&quot;&gt;
-        By Patrice Ficklin
-    &lt;/p&gt;
-&lt;/article&gt;</code></pre>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>Structural cheat sheet:
------------------------
-.summary_text.summary_text__max</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>Optionally set a max-width on .summary_text to keep line lengths readable.</li>
-            </ul>
-          </footer>
-        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.summary {
@@ -211,9 +165,6 @@ a.focus .summary_header {
 .lt-ie9 .summary_text b {
   font-weight: normal !important;
 }
-.summary_text__max {
-  max-width: 41em;
-}
 .summary_byline {
   color: #101820;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
@@ -239,6 +190,256 @@ a.focus .summary_header {
 .lt-ie9 .summary_byline strong,
 .lt-ie9 .summary_byline b {
   font-weight: normal !important;
+}</code></pre>
+      </div>
+    </div>
+    <div id="layouts" class="docs-component">
+      <h2 class="docs-component_header"><span>Layouts</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Two columns at large screen</h3>
+          <section class="docs-pattern_pattern">
+<article class="summary">
+    <h1 class="summary_header">
+        Preventing illegal discrimination in auto lending
+    </h1>
+    <div class="summary_cols">
+        <div class="summary_col">
+            <p class="summary_text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            </p>
+        </div>
+        <div class="summary_col">
+            <p class="summary_text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            </p>
+        </div>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;summary&quot;&gt;
+    &lt;h1 class=&quot;summary_header&quot;&gt;
+        Preventing illegal discrimination in auto lending
+    &lt;/h1&gt;
+    &lt;div class=&quot;summary_cols&quot;&gt;
+        &lt;div class=&quot;summary_col&quot;&gt;
+            &lt;p class=&quot;summary_text&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;summary_col&quot;&gt;
+            &lt;p class=&quot;summary_text&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.summary_cols
+  .summary_col</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.summary_col + .summary_col {
+  margin-top: 1.25em;
+}
+@media only all and (min-width: 37.5em) {
+  .summary_cols {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .summary_col + .summary_col {
+    margin-top: 0;
+  }
+  .summary_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .summary_col {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .summary_col {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}</code></pre>
+      </div>
+    </div>
+    <div id="modifiers" class="docs-component">
+      <h2 class="docs-component_header"><span>Modifiers</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Large header</h3>
+          <section class="docs-pattern_pattern">
+<h1 class="summary_header summary_header__large">
+    Preventing illegal discrimination in auto lending
+</h1>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1 class=&quot;summary_header summary_header__large&quot;&gt;
+    Preventing illegal discrimination in auto lending
+&lt;/h1&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.summary_header__large</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Dark text</h3>
+          <section class="docs-pattern_pattern">
+<p class="summary_text summary_text__dark">
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p class=&quot;summary_text summary_text__dark&quot;&gt;
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+&lt;/p&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.summary_text__dark</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Max-width text</h3>
+          <section class="docs-pattern_pattern">
+<p class="summary_text summary_text__max">
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p class=&quot;summary_text summary_text__max&quot;&gt;
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+&lt;/p&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.summary_text__max</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Optionally set a max-width on .summary_text to keep line lengths readable.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.summary_header__large {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.61538462em;
+}
+.summary_header__large em,
+.summary_header__large i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .summary_header__large em,
+.lt-ie9 .summary_header__large i {
+  font-style: normal !important;
+}
+.summary_header__large strong,
+.summary_header__large b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .summary_header__large strong,
+.lt-ie9 .summary_header__large b {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 37.5em) {
+  .summary_header__large {
+    font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.47058824em;
+    font-size: 2.125em;
+    line-height: 1.29411765;
+    margin-bottom: 0.32352941em;
+  }
+  .summary_header__large em,
+  .summary_header__large i {
+    font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .summary_header__large em,
+  .lt-ie9 .summary_header__large i {
+    font-style: normal !important;
+  }
+  .summary_header__large strong,
+  .summary_header__large b {
+    font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .summary_header__large strong,
+  .lt-ie9 .summary_header__large b {
+    font-weight: normal !important;
+  }
+}
+.summary_text__dark {
+  color: #101820;
+}
+.summary_text__max {
+  max-width: 41em;
 }</code></pre>
       </div>
     </div>

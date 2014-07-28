@@ -257,6 +257,126 @@
 
 
 /* topdoc
+  name: Fancy slug
+  family: cfgov-meta
+  patterns:
+    - name: Default fancy slug
+      markup: |
+        <h2 class="fancy-slug">
+            <span class="fancy-slug_text">
+                <span class="fancy-slug_ribbon-left"></span>
+                Watchroom
+                <span class="fancy-slug_ribbon-right"></span>
+            </span>
+        </h2>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .fancy-slug
+            .fancy-slug_text
+                .fancy-slug_ribbon-left
+                .fancy-slug_ribbon-right
+  tags:
+    - cfgov-meta
+*/
+
+.fancy-slug {
+    @v-padding: 8px;
+    @ribbon-width: 17px;
+    @ribbon-angle: 33deg;
+
+    .h5();
+    position: relative;
+    // Cut the height in half since we will be adding it back with margin.
+    height: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
+    padding: 0 unit(@ribbon-width / @font-size, em);
+    // Add back half of the height to create a space for the text to pull
+    // itself up into.
+    margin-top: unit(((@font-size / 2) + @v-padding + 1) / @font-size, em);
+    // Bottom margin is eyeballed to 15px when considering baseline and line-height.
+    margin-bottom: unit(8px / @font-size, em);
+    border-top: 1px solid @gray-50;
+    line-height: 1;
+    text-align: center;
+
+    &_text {
+        display: inline-block;
+        position: relative;
+        // Pull the text up up by half of its height so that it is vertically
+        // centered with .fancy-slugs top border. "Height" means half the
+        // font-size plus half the total padding and half the borders.
+        top: unit(((@font-size / 2) + @v-padding + 1) * -1 / @font-size, em);
+        padding: unit(@v-padding / @font-size, em) unit(20px / @font-size, em);
+        border: 1px solid @gray-50;
+        background: @white;
+    }
+
+    // Use :before as the top corner and :after as the bottom corner.
+    &_ribbon-left,
+    &_ribbon-right {
+        display: block;
+        position: absolute;
+        top: -1px;
+        width: unit(@ribbon-width / @font-size, em);
+        height: 100%;
+        border-top: 1px solid @gray-50;
+        border-bottom: 1px solid @gray-50;
+
+        .lt-ie9 & {
+            display: none;
+        }
+
+        &:before,
+        &:after {
+                display: block;
+                content: "";
+                position: absolute;
+                z-index: 3;
+                width: unit(@ribbon-width / @font-size, em);
+                height: 50%;
+                background: @white;
+                border: 0 solid @gray-50;
+        }
+    }
+
+    &_ribbon-left {
+        left: unit(-@ribbon-width / @font-size, em);
+        &:before {
+            top: 0;
+            border-left-width: 1px;
+            transform-origin: 0 0;
+            transform: skewX(@ribbon-angle);
+        }
+        &:after {
+            bottom: 0;
+            border-left-width: 1px;
+            transform-origin: 0 100%;
+            transform: skewX(-@ribbon-angle);
+        }
+    }
+
+    &_ribbon-right {
+        right: unit(-@ribbon-width / @font-size, em);
+        &:before {
+            top: 0;
+            right: 0;
+            border-right-width: 1px;
+            transform-origin: 100% 0;
+            transform:  skewX(-@ribbon-angle);
+        }
+        &:after {
+            right: 0;
+            bottom: 0;
+            border-right-width: 1px;
+            transform-origin: 100% 100%;
+            transform:  skewX(@ribbon-angle);
+        }
+    }
+}
+
+
+/* topdoc
   name: Meta header
   family: cfgov-meta
   patterns:

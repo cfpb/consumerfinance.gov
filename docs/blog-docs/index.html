@@ -165,6 +165,117 @@
       <h2 class="docs-component_header"><span>Post previews</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Watchroom</h3>
+          <section class="docs-pattern_pattern">
+<article class="watchroom summary">
+    <h1 class="summary_header summary_header__large">Watchroom header</h1>
+    <div class="summary_cols">
+        <div class="summary_col">
+            <p class="summary_text summary_text__dark">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            </p>
+        </div>
+        <div class="summary_col">
+            <ul class="list list__spaced list__unstyled">
+                <li class="list_item">
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <a class="list_link"
+                       href="#">
+                       Student Debt Domino Effect?
+                   </a>
+                </li>
+                <li class="list_item">
+                    <span class="category-slug_icon cf-icon cf-icon-contract"></span>
+                    <a class="list_link"
+                       href="#">
+                       CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
+                   </a>
+                </li>
+                <li class="list_item">
+                    <span class="category-slug_icon cf-icon cf-icon-double-quote"></span>
+                    <a class="list_link"
+                       href="#">
+                       Student Debt Domino Effect?
+                   </a>
+                </li>
+                <li class="list_item">
+                    <span class="category-slug_icon cf-icon cf-icon-microphone"></span>
+                    <a class="list_link"
+                       href="#">
+                       Student Debt Domino Effect?
+                   </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;watchroom summary&quot;&gt;
+    &lt;h1 class=&quot;summary_header summary_header__large&quot;&gt;Watchroom header&lt;/h1&gt;
+    &lt;div class=&quot;summary_cols&quot;&gt;
+        &lt;div class=&quot;summary_col&quot;&gt;
+            &lt;p class=&quot;summary_text summary_text__dark&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;summary_col&quot;&gt;
+            &lt;ul class=&quot;list list__spaced list__unstyled&quot;&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;span class=&quot;category-slug_icon cf-icon cf-icon-bullhorn&quot;&gt;&lt;/span&gt;
+                    &lt;a class=&quot;list_link&quot;
+                       href=&quot;#&quot;&gt;
+                       Student Debt Domino Effect?
+                   &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;span class=&quot;category-slug_icon cf-icon cf-icon-contract&quot;&gt;&lt;/span&gt;
+                    &lt;a class=&quot;list_link&quot;
+                       href=&quot;#&quot;&gt;
+                       CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
+                   &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;span class=&quot;category-slug_icon cf-icon cf-icon-double-quote&quot;&gt;&lt;/span&gt;
+                    &lt;a class=&quot;list_link&quot;
+                       href=&quot;#&quot;&gt;
+                       Student Debt Domino Effect?
+                   &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;list_item&quot;&gt;
+                    &lt;span class=&quot;category-slug_icon cf-icon cf-icon-microphone&quot;&gt;&lt;/span&gt;
+                    &lt;a class=&quot;list_link&quot;
+                       href=&quot;#&quot;&gt;
+                       Student Debt Domino Effect?
+                   &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.watchroom.summary
+  .summary__header.summary_header__large
+  .summary_cols
+    .summary_col
+      .summary_text
+    .summary_col
+      .list.list__spaced.list__unstyled
+        .list_item
+          .list_link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
           <h3 class="docs-pattern_header">Post preview (no image)</h3>
           <section class="docs-pattern_pattern">
 <article class="post-preview">
@@ -302,7 +413,10 @@
         </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.post-preview + .post-preview {
+        <pre class="docs-code"><code data-language="css">.watchroom {
+  margin-bottom: 3.75em;
+}
+.post-preview + .post-preview {
   margin-top: 3.125em;
 }
 .post-pagination {
