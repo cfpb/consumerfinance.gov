@@ -95,6 +95,64 @@
   name: Post previews
   family: cfgov-blog-docs
   patterns:
+    - name: Watchroom
+      markup: |
+        <article class="watchroom summary">
+            <h1 class="summary_header summary_header__large">Watchroom header</h1>
+            <div class="summary_cols">
+                <div class="summary_col">
+                    <p class="summary_text summary_text__dark">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+                <div class="summary_col">
+                    <ul class="list list__spaced list__unstyled">
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-contract"></span>
+                            <a class="list_link"
+                               href="#">
+                               CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-double-quote"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-microphone"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+      codenotes:
+        - |
+          .watchroom.summary
+            .summary__header.summary_header__large
+            .summary_cols
+              .summary_col
+                .summary_text
+              .summary_col
+                .list.list__spaced.list__unstyled
+                  .list_item
+                    .list_link
     - name: Post preview (no image)
       codenotes:
         - |
@@ -171,6 +229,10 @@
   tags:
     - cfgov-blog-docs
 */
+
+.watchroom {
+    margin-bottom: unit(60px / @base-font-size-px, em);
+}
 
 .post-preview + .post-preview {
     // Eyeballed to 60px

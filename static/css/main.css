@@ -6425,6 +6425,135 @@ a.category-slug.active {
   border-top: 5px solid #2cb34a;
 }
 /* topdoc
+  name: Fancy slug
+  family: cfgov-meta
+  patterns:
+    - name: Default fancy slug
+      markup: |
+        <h2 class="fancy-slug">
+            <span class="fancy-slug_text">
+                <span class="fancy-slug_ribbon-left"></span>
+                Watchroom
+                <span class="fancy-slug_ribbon-right"></span>
+            </span>
+        </h2>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .fancy-slug
+            .fancy-slug_text
+                .fancy-slug_ribbon-left
+                .fancy-slug_ribbon-right
+  tags:
+    - cfgov-meta
+*/
+.fancy-slug {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  position: relative;
+  height: 1.14285714em;
+  padding: 0 1.21428571em;
+  margin-top: 1.14285714em;
+  margin-bottom: 0.57142857em;
+  border-top: 1px solid #babbbd;
+  line-height: 1;
+  text-align: center;
+}
+.lt-ie9 .fancy-slug {
+  font-weight: normal !important;
+}
+.fancy-slug_text {
+  display: inline-block;
+  position: relative;
+  top: -1.14285714em;
+  padding: 0.57142857em 1.42857143em;
+  border: 1px solid #babbbd;
+  background: #ffffff;
+}
+.fancy-slug_ribbon-left,
+.fancy-slug_ribbon-right {
+  display: block;
+  position: absolute;
+  top: -1px;
+  width: 1.21428571em;
+  height: 100%;
+  border-top: 1px solid #babbbd;
+  border-bottom: 1px solid #babbbd;
+}
+.lt-ie9 .fancy-slug_ribbon-left,
+.lt-ie9 .fancy-slug_ribbon-right {
+  display: none;
+}
+.fancy-slug_ribbon-left:before,
+.fancy-slug_ribbon-right:before,
+.fancy-slug_ribbon-left:after,
+.fancy-slug_ribbon-right:after {
+  display: block;
+  content: "";
+  position: absolute;
+  z-index: 3;
+  width: 1.21428571em;
+  height: 50%;
+  background: #ffffff;
+  border: 0 solid #babbbd;
+}
+.fancy-slug_ribbon-left {
+  left: -1.21428571em;
+}
+.fancy-slug_ribbon-left:before {
+  top: 0;
+  border-left-width: 1px;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
+}
+.fancy-slug_ribbon-left:after {
+  bottom: 0;
+  border-left-width: 1px;
+  -webkit-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
+}
+.fancy-slug_ribbon-right {
+  right: -1.21428571em;
+}
+.fancy-slug_ribbon-right:before {
+  top: 0;
+  right: 0;
+  border-right-width: 1px;
+  -webkit-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
+}
+.fancy-slug_ribbon-right:after {
+  right: 0;
+  bottom: 0;
+  border-right-width: 1px;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
+}
+/* topdoc
   name: Meta header
   family: cfgov-meta
   patterns:
@@ -8724,30 +8853,6 @@ a.category-slug.active {
             .summary_header
             .summary_text
             .summary_byline
-    - name: Max-width summary text
-      markup: |
-        <article class="summary">
-            <h1 class="summary_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
-            <p class="summary_text summary_text__max">
-                Every year, millions of American families buy a car –
-                and it will be one of the most significant purchases they make.
-                One key priority for us is protecting consumers from the silent
-                pickpocket of discrimination.
-            </p>
-            <p class="summary_byline">
-                By Patrice Ficklin
-            </p>
-        </article>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .summary_text.summary_text__max
-      notes:
-        - "Optionally set a max-width on .summary_text to keep line lengths
-          readable."
   tags:
     - cfgov-summary
 */
@@ -8850,9 +8955,6 @@ a.focus .summary_header {
 .lt-ie9 .summary_text b {
   font-weight: normal !important;
 }
-.summary_text__max {
-  max-width: 41em;
-}
 .summary_byline {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -8878,6 +8980,183 @@ a.focus .summary_header {
 .lt-ie9 .summary_byline strong,
 .lt-ie9 .summary_byline b {
   font-weight: normal !important;
+}
+/* topdoc
+  name: Layouts
+  family: cfgov-summary
+  patterns:
+    - name: Two columns at large screen
+      markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <div class="summary_cols">
+                <div class="summary_col">
+                    <p class="summary_text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+                <div class="summary_col">
+                    <p class="summary_text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+            </div>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .summary_cols
+            .summary_col
+  tags:
+    - cfgov-summary
+*/
+.summary_col + .summary_col {
+  margin-top: 1.25em;
+}
+@media only all and (min-width: 37.5em) {
+  .summary_cols {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .summary_col + .summary_col {
+    margin-top: 0;
+  }
+  .summary_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .summary_col {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .summary_col {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+/* topdoc
+  name: Modifiers
+  family: cfgov-summary
+  patterns:
+    - name: Large header
+      markup: |
+        <h1 class="summary_header summary_header__large">
+            Preventing illegal discrimination in auto lending
+        </h1>
+      codenotes:
+        - .summary_header__large
+    - name: Dark text
+      markup: |
+        <p class="summary_text summary_text__dark">
+            Every year, millions of American families buy a car –
+            and it will be one of the most significant purchases they make.
+            One key priority for us is protecting consumers from the silent
+            pickpocket of discrimination.
+        </p>
+      codenotes:
+        - .summary_text__dark
+    - name: Max-width text
+      markup: |
+        <p class="summary_text summary_text__max">
+            Every year, millions of American families buy a car –
+            and it will be one of the most significant purchases they make.
+            One key priority for us is protecting consumers from the silent
+            pickpocket of discrimination.
+        </p>
+      codenotes:
+        - .summary_text__max
+      notes:
+        - "Optionally set a max-width on .summary_text to keep line lengths
+          readable."
+  tags:
+    - cfgov-summary
+*/
+.summary_header__large {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.61538462em;
+}
+.summary_header__large em,
+.summary_header__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .summary_header__large em,
+.lt-ie9 .summary_header__large i {
+  font-style: normal !important;
+}
+.summary_header__large strong,
+.summary_header__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .summary_header__large strong,
+.lt-ie9 .summary_header__large b {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 37.5em) {
+  .summary_header__large {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.47058824em;
+    font-size: 2.125em;
+    line-height: 1.29411765;
+    margin-bottom: 0.32352941em;
+  }
+  .summary_header__large em,
+  .summary_header__large i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .summary_header__large em,
+  .lt-ie9 .summary_header__large i {
+    font-style: normal !important;
+  }
+  .summary_header__large strong,
+  .summary_header__large b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .summary_header__large strong,
+  .lt-ie9 .summary_header__large b {
+    font-weight: normal !important;
+  }
+}
+.summary_text__dark {
+  color: #101820;
+}
+.summary_text__max {
+  max-width: 41em;
 }
 /* topdoc
   name: EOF
@@ -8974,6 +9253,64 @@ a.focus .summary_header {
   name: Post previews
   family: cfgov-blog-docs
   patterns:
+    - name: Watchroom
+      markup: |
+        <article class="watchroom summary">
+            <h1 class="summary_header summary_header__large">Watchroom header</h1>
+            <div class="summary_cols">
+                <div class="summary_col">
+                    <p class="summary_text summary_text__dark">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+                <div class="summary_col">
+                    <ul class="list list__spaced list__unstyled">
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-contract"></span>
+                            <a class="list_link"
+                               href="#">
+                               CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-double-quote"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-microphone"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+      codenotes:
+        - |
+          .watchroom.summary
+            .summary__header.summary_header__large
+            .summary_cols
+              .summary_col
+                .summary_text
+              .summary_col
+                .list.list__spaced.list__unstyled
+                  .list_item
+                    .list_link
     - name: Post preview (no image)
       codenotes:
         - |
@@ -9050,6 +9387,9 @@ a.focus .summary_header {
   tags:
     - cfgov-blog-docs
 */
+.watchroom {
+  margin-bottom: 3.75em;
+}
 .post-preview + .post-preview {
   margin-top: 3.125em;
 }

@@ -434,6 +434,150 @@ a.category-slug.active {
 }</code></pre>
       </div>
     </div>
+    <div id="fancy-slug" class="docs-component">
+      <h2 class="docs-component_header"><span>Fancy slug</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default fancy slug</h3>
+          <section class="docs-pattern_pattern">
+<h2 class="fancy-slug">
+    <span class="fancy-slug_text">
+        <span class="fancy-slug_ribbon-left"></span>
+        Watchroom
+        <span class="fancy-slug_ribbon-right"></span>
+    </span>
+</h2>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h2 class=&quot;fancy-slug&quot;&gt;
+    &lt;span class=&quot;fancy-slug_text&quot;&gt;
+        &lt;span class=&quot;fancy-slug_ribbon-left&quot;&gt;&lt;/span&gt;
+        Watchroom
+        &lt;span class=&quot;fancy-slug_ribbon-right&quot;&gt;&lt;/span&gt;
+    &lt;/span&gt;
+&lt;/h2&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.fancy-slug
+  .fancy-slug_text
+      .fancy-slug_ribbon-left
+      .fancy-slug_ribbon-right</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.fancy-slug {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  position: relative;
+  height: 1.14285714em;
+  padding: 0 1.21428571em;
+  margin-top: 1.14285714em;
+  margin-bottom: 0.57142857em;
+  border-top: 1px solid #babbbd;
+  line-height: 1;
+  text-align: center;
+}
+.lt-ie9 .fancy-slug {
+  font-weight: normal !important;
+}
+.fancy-slug_text {
+  display: inline-block;
+  position: relative;
+  top: -1.14285714em;
+  padding: 0.57142857em 1.42857143em;
+  border: 1px solid #babbbd;
+  background: #ffffff;
+}
+.fancy-slug_ribbon-left,
+.fancy-slug_ribbon-right {
+  display: block;
+  position: absolute;
+  top: -1px;
+  width: 1.21428571em;
+  height: 100%;
+  border-top: 1px solid #babbbd;
+  border-bottom: 1px solid #babbbd;
+}
+.lt-ie9 .fancy-slug_ribbon-left,
+.lt-ie9 .fancy-slug_ribbon-right {
+  display: none;
+}
+.fancy-slug_ribbon-left:before,
+.fancy-slug_ribbon-right:before,
+.fancy-slug_ribbon-left:after,
+.fancy-slug_ribbon-right:after {
+  display: block;
+  content: &quot;&quot;;
+  position: absolute;
+  z-index: 3;
+  width: 1.21428571em;
+  height: 50%;
+  background: #ffffff;
+  border: 0 solid #babbbd;
+}
+.fancy-slug_ribbon-left {
+  left: -1.21428571em;
+}
+.fancy-slug_ribbon-left:before {
+  top: 0;
+  border-left-width: 1px;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
+}
+.fancy-slug_ribbon-left:after {
+  bottom: 0;
+  border-left-width: 1px;
+  -webkit-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
+}
+.fancy-slug_ribbon-right {
+  right: -1.21428571em;
+}
+.fancy-slug_ribbon-right:before {
+  top: 0;
+  right: 0;
+  border-right-width: 1px;
+  -webkit-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+  -webkit-transform: skewX(-33deg);
+  -ms-transform: skewX(-33deg);
+  transform: skewX(-33deg);
+}
+.fancy-slug_ribbon-right:after {
+  right: 0;
+  bottom: 0;
+  border-right-width: 1px;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -webkit-transform: skewX(33deg);
+  -ms-transform: skewX(33deg);
+  transform: skewX(33deg);
+}</code></pre>
+      </div>
+    </div>
     <div id="meta-header" class="docs-component">
       <h2 class="docs-component_header"><span>Meta header</span></h2>
       <div class="docs-patterns">
