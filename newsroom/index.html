@@ -40,6 +40,8 @@
        some functions already developed for blog. #}
     {% set posts = newsroom %}
 
+    {% set watchroom = queries.watchroom.search_with_url_arguments(size=1) %}
+
     {# Macros #}
 
     {% import "post-macros.html" as post_macros with context %}
