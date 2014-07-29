@@ -70,10 +70,16 @@
                         </span>
                     </h1>
                     <div class="content_footer_item">
-                        {% include "email-subscribe.html" %}
+                        <p class="sans">
+                            Subscribe to our email newsletter. We will update you on new newsroom updates.
+                        </p>
+                        {% include "email-subscribe-form.html" %}
                     </div>
                     <div class="content_footer_item">
-                        {% include "rss-subscribe.html" %}
+                        <p class="sans">
+                            Subscribe to our RSS feed to get the latest content in your reader.
+                        </p>
+                        {{ post_macros.rss_button('newsroom') }}
                     </div>
                 </aside>
                 <aside class="content_footer content_footer__bg">
