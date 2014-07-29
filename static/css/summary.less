@@ -103,33 +103,6 @@
           -----------------------
           .summary_cols
             .summary_col
-    - name: Skinny column modifier
-      markup: |
-        <article class="summary">
-            <h1 class="summary_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
-            <div class="summary_cols">
-                <div class="summary_col summary_col__skinny">
-                    <p class="summary_text">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
-                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
-                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
-                        voluptatem nihil.
-                    </p>
-                </div>
-                <div class="summary_col">
-                    <ul>
-                        <li>List item</li>
-                        <li>List item</li>
-                        <li>List item</li>
-                        <li>List item</li>
-                    </ul>
-                </div>
-            </div>
-        </article>
-      codenotes:
-        - .summary_col__skinny
   tags:
     - cfgov-summary
 */
@@ -149,12 +122,6 @@
 
     .summary_col {
         .grid_column(6);
-    }
-});
-
-.u-respond-to-min(1024px, {
-    .summary_col__skinny {
-        .grid_column(5, @grid_total-columns, 0, 1);
     }
 });
 

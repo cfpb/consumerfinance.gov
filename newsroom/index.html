@@ -59,7 +59,7 @@
                 {% include "nav.html" %}
             </aside><!-- END .content_sidebar -->
 
-            <section class="content_main">
+            <section class="content_main content_main__flush-bottom">
                 {% include "post-filters.html" %}
                 {% include "watchroom.html" %}
                 {% include "posts-paginated.html" %}
@@ -69,30 +69,34 @@
                             Stay informed
                         </span>
                     </h1>
-                    <div class="content_footer_item">
-                        <p class="sans">
-                            Subscribe to our email newsletter. We will update you on new newsroom updates.
-                        </p>
-                        {% include "email-subscribe-form.html" %}
-                    </div>
-                    <div class="content_footer_item">
-                        <p class="sans">
-                            Subscribe to our RSS feed to get the latest content in your reader.
-                        </p>
-                        <a class="btn"
-                           href="/feed/newsroom">
-                            <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
-                            Subscribe to RSS
-                        </a>
+                    <div class="content-footer-l">
+                        <div class="content-footer-l_col">
+                            <p class="sans">
+                                Subscribe to our email newsletter. We will update you on new newsroom updates.
+                            </p>
+                            {% include "email-subscribe-form.html" %}
+                        </div>
+                        <div class="content-footer-l_col">
+                            <p class="sans">
+                                Subscribe to our RSS feed to get the latest content in your reader.
+                            </p>
+                            <a class="btn"
+                               href="/feed/newsroom">
+                                <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
+                                Subscribe to RSS
+                            </a>
+                        </div>
                     </div>
                 </aside>
                 <aside class="content_footer content_footer__bg">
-                    <section class="content_footer_item">
-                        {% include "related-links.html" %}
-                    </section>
-                    <section class="content_footer_item">
-                        {% include "upcoming-events.html" %}
-                    </section>
+                    <div class="content-footer-l">
+                        <section class="content-footer-l_col">
+                            {% include "related-links.html" %}
+                        </section>
+                        <section class="content-footer-l_col">
+                            {% include "upcoming-events.html" %}
+                        </section>
+                    </div>
                 </aside>
             </section>
 
