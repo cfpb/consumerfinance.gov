@@ -38,6 +38,14 @@ def process_post(post):
         post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_fj_category']]
     if post['type'] == 'watchroom':
         post['author'] = [post['author']['name']]
+        # convert watchroom_data_x into a proper list
+        links = []
+        for x in xrange(0,5):
+            custom_fields = post['custom_fields']
+            key = 'watchroom_data_%s' % x
+            if key in custom_fields:
+                links.append(custom_fields[key])
+        post['links'] = links
     else:
         post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
         post['author'] = [author['title'] for author in post['taxonomy_author']]

@@ -40,6 +40,7 @@
        some functions already developed for blog. #}
     {% set posts = newsroom %}
 
+    {# Get the latest watchroom post. #}
     {% set watchroom = queries.watchroom.search_with_url_arguments(size=1) %}
 
     {# Macros #}
