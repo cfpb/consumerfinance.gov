@@ -8664,6 +8664,7 @@ a.category-slug.active {
   family: cfgov-misc
   notes:
     - "Set up a list with icons on the left, in place of bullets."
+    - "Will need some more work to allow lines to wrap."
   patterns:
     - name: Default example
       markup: |
@@ -8715,19 +8716,19 @@ a.category-slug.active {
       markup: |
         <ul class="list list__links list__icons">
             <li class="list_item">
-                <a class="list_item">
+                <a class="list_link">
                     <span class="cf-icon cf-icon-email"></span>
                     List item 1
                 </a>
             </li>
             <li class="list_item">
-                <a class="list_item">
+                <a class="list_link">
                     <span class="cf-icon cf-icon-phone"></span>
                     List item 2
                 </a>
             </li>
             <li class="list_item">
-                <a class="list_item">
+                <a class="list_link">
                     <span class="cf-icon cf-icon-fax"></span>
                     List item 3
                 </a>
@@ -8736,36 +8737,6 @@ a.category-slug.active {
   tags:
     - cfgov-misc
 */
-
-.list__links {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.list__links em,
-.list__links i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .list__links em,
-.lt-ie9 .list__links i {
-  font-style: normal !important;
-}
-
-.list__links strong,
-.list__links b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .list__links strong,
-.lt-ie9 .list__links b {
-  font-weight: normal !important;
-}
 
 .list__links > .list_item {
   margin-bottom: 0.5em;
@@ -10724,3 +10695,224 @@ a.focus .summary_header {
   name: EOF
   eof: true
 */
+
+/* ==========================================================================
+   cfgov-refresh
+   Press resources (Newsroom)
+   ========================================================================== */
+
+.press-section {
+  padding-top: 2em;
+  border-top: 1px solid #e3e4e5;
+  margin-top: 2em;
+}
+
+.press-section:first-child {
+  padding-top: 0;
+  border-top: none;
+  margin-top: 0;
+}
+
+.contact-person {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.contact-person em,
+.contact-person i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .contact-person em,
+.lt-ie9 .contact-person i {
+  font-style: normal !important;
+}
+
+.contact-person strong,
+.contact-person b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .contact-person strong,
+.lt-ie9 .contact-person b {
+  font-weight: normal !important;
+}
+
+.jump-link {
+  margin-top: 1.25em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.125em;
+}
+
+.jump-link em,
+.jump-link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .jump-link em,
+.lt-ie9 .jump-link i {
+  font-style: normal !important;
+}
+
+.jump-link strong,
+.jump-link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .jump-link strong,
+.lt-ie9 .jump-link b {
+  font-weight: normal !important;
+}
+
+.press-section {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.press-section_title,
+.press-section_intro,
+.jump-link {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .press-section_title,
+.ie .press-section_intro,
+.ie .jump-link {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .press-section_title,
+.lt-ie8 .press-section_intro,
+.lt-ie8 .jump-link {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.press-contacts .contact-person,
+.contact-person__director {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .press-contacts .contact-person,
+.ie .contact-person__director {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .press-contacts .contact-person,
+.lt-ie8 .contact-person__director {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.contact-person__director {
+  text-align: center;
+}
+
+.press-logo_intro {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 66.66666667%;
+}
+
+.ie .press-logo_intro {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .press-logo_intro {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.press-logo_logo {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 33.33333333%;
+}
+
+.ie .press-logo_logo {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .press-logo_logo {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.press-contacts .list__links {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.press-contacts .list__links_item {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .press-contacts .list__links_item {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .press-contacts .list__links_item {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}

@@ -1681,6 +1681,7 @@ label
       <div class="docs-component_intro">
         <ul class="docs-notes">
           <li>Set up a list with icons on the left, in place of bullets.</li>
+          <li>Will need some more work to allow lines to wrap.</li>
         </ul>
       </div>
       <div class="docs-patterns">
@@ -1773,19 +1774,19 @@ label
           <section class="docs-pattern_pattern">
 <ul class="list list__links list__icons">
     <li class="list_item">
-        <a class="list_item">
+        <a class="list_link">
             <span class="cf-icon cf-icon-email"></span>
             List item 1
         </a>
     </li>
     <li class="list_item">
-        <a class="list_item">
+        <a class="list_link">
             <span class="cf-icon cf-icon-phone"></span>
             List item 2
         </a>
     </li>
     <li class="list_item">
-        <a class="list_item">
+        <a class="list_link">
             <span class="cf-icon cf-icon-fax"></span>
             List item 3
         </a>
@@ -1796,19 +1797,19 @@ label
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__links list__icons&quot;&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;
             &lt;span class=&quot;cf-icon cf-icon-email&quot;&gt;&lt;/span&gt;
             List item 1
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;
             &lt;span class=&quot;cf-icon cf-icon-phone&quot;&gt;&lt;/span&gt;
             List item 2
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;a class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;
             &lt;span class=&quot;cf-icon cf-icon-fax&quot;&gt;&lt;/span&gt;
             List item 3
         &lt;/a&gt;
@@ -1819,36 +1820,6 @@ label
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.list__links {
-  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.list__links em,
-.list__links i {
-  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .list__links em,
-.lt-ie9 .list__links i {
-  font-style: normal !important;
-}
-
-.list__links strong,
-.list__links b {
-  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .list__links strong,
-.lt-ie9 .list__links b {
-  font-weight: normal !important;
-}
-
 .list__links &gt; .list_item {
   margin-bottom: 0.5em;
 }
