@@ -16,7 +16,7 @@ def posts_at_url(url):
 
     while current_page <= max_page:
 
-        resp = requests.get(url, params={'json':1,'page':current_page})
+        resp = requests.get(url, params={'page':current_page})
         results = json.loads(resp.content) 
         current_page += 1
         max_page = results['pages']
