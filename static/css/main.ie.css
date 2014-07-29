@@ -7550,6 +7550,50 @@ a.category-slug.active {
 }
 
 /* topdoc
+  name: Sans
+  family: cfgov-misc
+  patterns:
+    - name: San serif text
+      markup: |
+        <p class="sans">I am using a  san serif font.</p>
+      codenotes:
+        - .sans
+  tags:
+    - cfgov-misc
+*/
+
+.sans {
+  color: #101820;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sans em,
+.sans i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sans em,
+.lt-ie9 .sans i {
+  font-style: normal !important;
+}
+
+.sans strong,
+.sans b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sans strong,
+.lt-ie9 .sans b {
+  font-weight: normal !important;
+}
+
+/* topdoc
   name: Form pattern showcase
   family: cfgov-misc
   patterns:
