@@ -1192,6 +1192,7 @@ select[multiple].success {
   family: cfgov-misc
   notes:
     - "Set up a list with icons on the left, in place of bullets."
+    - "Will need some more work to allow lines to wrap."
   patterns:
     - name: Default example
       markup: |
@@ -1252,19 +1253,19 @@ select[multiple].success {
       markup: |
         <ul class="list list__links list__icons">
             <li class="list_item">
-                <a class="list_item">
+                <a class="list_link">
                     <span class="cf-icon cf-icon-email"></span>
                     List item 1
                 </a>
             </li>
             <li class="list_item">
-                <a class="list_item">
+                <a class="list_link">
                     <span class="cf-icon cf-icon-phone"></span>
                     List item 2
                 </a>
             </li>
             <li class="list_item">
-                <a class="list_item">
+                <a class="list_link">
                     <span class="cf-icon cf-icon-fax"></span>
                     List item 3
                 </a>
@@ -1277,7 +1278,6 @@ select[multiple].success {
 
 .list__links {
     &:extend(.list__unstyled);
-    .webfont-regular();
 
     > .list_item {
         margin-bottom: 0.5em;
