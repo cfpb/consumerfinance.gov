@@ -7733,7 +7733,9 @@ a.category-slug.active {
   tags:
     - cfgov-misc
 */
-.list__unstyled {
+.list__unstyled,
+.list__icons,
+.list__links {
   padding-left: 0;
   list-style-type: none;
 }
@@ -7823,6 +7825,133 @@ a.category-slug.active {
 .list__horizontal .list_item {
   margin-right: 0.25em;
   margin-left: 0;
+}
+/* topdoc
+  name: Icon list modifier
+  family: cfgov-misc
+  notes:
+    - "Set up a list with icons on the left, in place of bullets."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax"></span>
+                List item 1
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.list__icons > .list_item .cf-icon {
+  width: 1.5em;
+  text-align: center;
+}
+/* topdoc
+  name: Link list modifier
+  family: cfgov-misc
+  notes:
+    - "The link list modifier is intended to be used for lists where each item
+      is a link. It converts to a finger-friendly link with a large tap area
+      on smaller screens."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+    - name: Link list with icons
+      markup: |
+        <ul class="list list__links list__icons">
+            <li class="list_item">
+                <a class="list_item">
+                    <span class="cf-icon cf-icon-email"></span>
+                    List item 1
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_item">
+                    <span class="cf-icon cf-icon-phone"></span>
+                    List item 2
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_item">
+                    <span class="cf-icon cf-icon-fax"></span>
+                    List item 3
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.list__links {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.list__links em,
+.list__links i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .list__links em,
+.lt-ie9 .list__links i {
+  font-style: normal !important;
+}
+.list__links strong,
+.list__links b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .list__links strong,
+.lt-ie9 .list__links b {
+  font-weight: normal !important;
+}
+.list__links > .list_item {
+  margin-bottom: 0.5em;
+}
+@media only all and (max-width: 47.9375em) {
+  .list__links {
+    border-top: 1px dotted #0072ce;
+  }
+  .list__links > .list_item {
+    margin-bottom: 0;
+  }
+  .list__links > .list_item > a {
+    display: block;
+    padding: 0.5em 0;
+  }
+}
+@media only all and (min-width: 48em) {
+  .list__links.list__icons > .list_item > a {
+    margin-bottom: 1em;
+    margin-left: 1.5em;
+    position: relative;
+  }
+  .list__links.list__icons > .list_item > a > [class^='cf-icon'] {
+    position: absolute;
+    top: 0.0625em;
+    left: -1.625em;
+  }
 }
 /* topdoc
   name: Filtered-by list
