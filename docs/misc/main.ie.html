@@ -1513,7 +1513,9 @@ label
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.list__unstyled {
+.list__unstyled,
+.list__icons,
+.list__links {
   padding-left: 0;
   list-style-type: none;
 }
@@ -1670,6 +1672,197 @@ label
 .list__horizontal .list_item {
   margin-right: 0.25em;
   margin-left: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="icon-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Icon list modifier</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Set up a list with icons on the left, in place of bullets.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__icons">
+    <li class="list_item">
+        <span class="cf-icon cf-icon-email"></span>
+        List item 1
+    </li>
+    <li class="list_item">
+        <span class="cf-icon cf-icon-phone"></span>
+        List item 1
+    </li>
+    <li class="list_item">
+        <span class="cf-icon cf-icon-fax"></span>
+        List item 1
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__icons&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-email&quot;&gt;&lt;/span&gt;
+        List item 1
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-phone&quot;&gt;&lt;/span&gt;
+        List item 1
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-fax&quot;&gt;&lt;/span&gt;
+        List item 1
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__icons &gt; .list_item .cf-icon {
+  width: 1.5em;
+  text-align: center;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="link-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Link list modifier</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>The link list modifier is intended to be used for lists where each item is a link. It converts to a finger-friendly link with a large tap area on smaller screens.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__links">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__links&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Link list with icons</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__links list__icons">
+    <li class="list_item">
+        <a class="list_item">
+            <span class="cf-icon cf-icon-email"></span>
+            List item 1
+        </a>
+    </li>
+    <li class="list_item">
+        <a class="list_item">
+            <span class="cf-icon cf-icon-phone"></span>
+            List item 2
+        </a>
+    </li>
+    <li class="list_item">
+        <a class="list_item">
+            <span class="cf-icon cf-icon-fax"></span>
+            List item 3
+        </a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__links list__icons&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_item&quot;&gt;
+            &lt;span class=&quot;cf-icon cf-icon-email&quot;&gt;&lt;/span&gt;
+            List item 1
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_item&quot;&gt;
+            &lt;span class=&quot;cf-icon cf-icon-phone&quot;&gt;&lt;/span&gt;
+            List item 2
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_item&quot;&gt;
+            &lt;span class=&quot;cf-icon cf-icon-fax&quot;&gt;&lt;/span&gt;
+            List item 3
+        &lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__links {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.list__links em,
+.list__links i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__links em,
+.lt-ie9 .list__links i {
+  font-style: normal !important;
+}
+
+.list__links strong,
+.list__links b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__links strong,
+.lt-ie9 .list__links b {
+  font-weight: normal !important;
+}
+
+.list__links &gt; .list_item {
+  margin-bottom: 0.5em;
+}
+
+.list__links.list__icons &gt; .list_item &gt; a {
+  margin-bottom: 1em;
+  margin-left: 1.5em;
+  position: relative;
+}
+
+.list__links.list__icons &gt; .list_item &gt; a &gt; [class^='cf-icon'] {
+  position: absolute;
+  top: 0.0625em;
+  left: -1.625em;
 }
 </code></pre>
       </div>
