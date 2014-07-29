@@ -17,34 +17,15 @@
             </div>
             <div class="summary_col">
                 <ul class="list list__spaced list__unstyled">
+                {% for link in post.links %}
                     <li class="list_item">
-                        <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                        <!-- <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span> -->
                         <a class="list_link"
-                           href="#">
-                           Student Debt Domino Effect?
+                           href="{{ link[0] }}">
+                           {{ link[1] }}
                        </a>
                     </li>
-                    <li class="list_item">
-                        <span class="category-slug_icon cf-icon cf-icon-contract"></span>
-                        <a class="list_link"
-                           href="#">
-                           CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
-                       </a>
-                    </li>
-                    <li class="list_item">
-                        <span class="category-slug_icon cf-icon cf-icon-double-quote"></span>
-                        <a class="list_link"
-                           href="#">
-                           Student Debt Domino Effect?
-                       </a>
-                    </li>
-                    <li class="list_item">
-                        <span class="category-slug_icon cf-icon cf-icon-microphone"></span>
-                        <a class="list_link"
-                           href="#">
-                           Student Debt Domino Effect?
-                       </a>
-                    </li>
+                {% endfor %}
                 </ul>
             </div>
         </div>
