@@ -64,7 +64,17 @@
                 {% include "watchroom.html" %}
                 {% include "posts-paginated.html" %}
                 <aside class="content_footer">
-                    {% include "stay-informed.html" %}
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Stay informed
+                        </span>
+                    </h1>
+                    <div class="content_footer_item">
+                        {% include "email-subscribe.html" %}
+                    </div>
+                    <div class="content_footer_item">
+                        {% include "rss-subscribe.html" %}
+                    </div>
                 </aside>
                 <aside class="content_footer content_footer__bg">
                     <section class="content_footer_item">
