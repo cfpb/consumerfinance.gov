@@ -60,10 +60,23 @@
                     {% include "popular-stories.html" %}
                 </section>
                 <section class="content_sidebar-item">
-                    {% include "related-links.html" %}
-                </section>
-                <section class="content_sidebar-item">
-                    {% include "stay-informed.html" %}
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Stay informed
+                        </span>
+                    </h1>
+                    <div class="">
+                        <p class="sans">
+                            Subscribe to our email newsletter. We will update you on new blogs.
+                        </p>
+                        {% include "email-subscribe-form.html" %}
+                    </div>
+                    <div class="">
+                        <p class="sans">
+                            Subscribe to our RSS feed to get the latest content in your reader.
+                        </p>
+                        {{ post_macros.rss_button('posts') }}
+                    </div>
                 </section>
             </aside>
 
