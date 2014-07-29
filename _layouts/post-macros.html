@@ -1,4 +1,12 @@
 
+{% macro rss_button(post_type) %}
+    <a class="btn"
+       href="/feed/{{ post_type }}">
+        <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
+        Subscribe to RSS
+    </a>
+{% endmacro %}
+
 {% macro filter_checkbox(field, value, classes, hidden) %}
     <input class="custom-input"
            type="checkbox"
