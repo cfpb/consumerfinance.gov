@@ -9016,6 +9016,33 @@ a.focus .summary_header {
           -----------------------
           .summary_cols
             .summary_col
+    - name: Skinny column modifier
+      markup: |
+        <article class="summary">
+            <h1 class="summary_header">
+                Preventing illegal discrimination in auto lending
+            </h1>
+            <div class="summary_cols">
+                <div class="summary_col summary_col__skinny">
+                    <p class="summary_text">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+                <div class="summary_col">
+                    <ul>
+                        <li>List item</li>
+                        <li>List item</li>
+                        <li>List item</li>
+                        <li>List item</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+      codenotes:
+        - .summary_col__skinny
   tags:
     - cfgov-summary
 */
@@ -9051,6 +9078,32 @@ a.focus .summary_header {
     margin-right: 0;
     zoom: 1;
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 64em) {
+  .summary_col__skinny {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+    padding-right: 8.33333333%;
+  }
+  .ie .summary_col__skinny {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .summary_col__skinny {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .lt-ie8 .summary_col__skinny {
+    padding-right: 0;
   }
 }
 /* topdoc
