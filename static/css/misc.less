@@ -38,8 +38,34 @@
 */
 
 .sans {
-    color: @black;
     .webfont-regular();
+}
+
+
+/* topdoc
+  name: Link modifiers
+  family: cfgov-misc
+  patterns:
+    - name: Block link on small screens
+      markup: |
+        <a class="link__block-on-small">
+            On small screens I am a block, on larger screens I am a normal link.
+        </a>
+      codenotes:
+        - .link__block-on-small
+  tags:
+    - cfgov-misc
+*/
+
+.link__block-on-small {
+    .webfont-medium() !important;
+
+    .u-respond-to-max(599px, {
+        display: block !important;
+        padding: 0.5em 0 !important;
+        border-top: 1px dotted @pacific !important;
+        border-bottom: 1px dotted @pacific !important;
+    });
 }
 
 
