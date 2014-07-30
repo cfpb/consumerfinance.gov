@@ -1,162 +1,220 @@
 {% extends "base.html" %}
 
 {% block demo_title -%}
-    Newsroom post
+    Press resources
 {%- endblock %}
 
 {% block title -%}
-    {{ newsroom.title }}
+    Press resources
 {%- endblock %}
 {% block desc -%}
-    {{ newsroom.excerpt|striptags }}
-{%- endblock %}
-
-{% block og_type -%}
-    article
-{%- endblock %}
-{% block og_article_prefix -%}
-    article: http://ogp.me/ns/article#
-{%- endblock %}
-{% block og_article_author -%}
-    <meta property="article:author" content="https://www.facebook.com/CFPB">
+    Contact information and downloadable resources for members of the press.
 {%- endblock %}
 
 {% block content %}
+    {% set active_page = 'press-resources' %}
 
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-        
+    <main class="content content__1-3" id="main" role="main">
+
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
-            <section class="content_main content_main__narrow">
-
-                <article class="post">
-                    <header>
-                        {% if newsroom.category.0 %}
-                        <a href="/blog/?filter_category={{ newsroom.category.0 }}" class="post_slug category-slug">
-                            {% if newsroom.category.0|lower == 'announcements &amp; updates' %}
-                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                            {% elif newsroom.category.0|lower == 'consumer information' %}
-                            <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                            {% elif newsroom.category.0|lower == 'engagement' %}
-                            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-                            {% elif newsroom.category.0|lower == 'innovation &amp; data' %}
-                            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-                            {% endif %}
-                            <span class="u-visually-hidden">Category:</span>
-                            {{ newsroom.category.0 }}
-                        {% endif %}
-                        </a>
-                        <h1 class="post_header">
-                            {{ newsroom.title }}
-                        </h1>
-                    {% if newsroom.dek %}
-                        <div class="post_dek">
-                            {{ newsroom.dek }}
-                        </div>
-                    {% endif %}
-                        <div class="post_meta">
-                            <span class="post_byline">
-                                By <a href="/blog/?filter_author={{ newsroom.author.0 }}">
-                                    {{ newsroom.author.0 }}
-                                </a>
-                            {% if newsroom.author.1 %}
-                                and <a href="/blog/?filter_author={{ newsroom.author.1 }}">
-                                    {{ newsroom.author.1 }}
-                                </a>
-                            {% endif %}
-                                &ndash;
-                            </span>
-                            <span class="post_date date">
-                                {{ newsroom.date | date("%b %d, %Y") }}
-                            </span>
-                        </div>
-                        <ul class="post_share list__horizontal">
-                            <li class="list_item">
-                                <a class="share-icon"
-                                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ newsroom.title }}&amp;pubid=ra-4da354ee346886d2">
-                                    <span class="cf-icon cf-icon-email-social-square"></span>
-                                    <span class="u-visually-hidden">Share by email</span>
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="share-icon"
-                                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}">
-                                    <span class="cf-icon cf-icon-facebook-square"></span>
-                                    <span class="u-visually-hidden">Share on Facebook</span>
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="share-icon"
-                                   href="{{ share_twitter_url() }}"
-                                   target="_blank">
-                                    <span class="cf-icon cf-icon-twitter-square"></span>
-                                    <span class="u-visually-hidden">Share on Twitter</span>
-                                </a>
-                            </li>
-                            <!-- <li class="list_item">
-                                <a class="share-icon" href="#">
-                                    <span class="cf-icon cf-icon-linkedin-square"></span>
-                                    <span class="u-visually-hidden">Share on LinkedIn</span>
-                                </a>
-                            </li> -->
-                        </ul>
-                        {% if newsroom.thumbnail.images %}
-                        <img class="post_featured-img"
-                             src="{{ newsroom.thumbnail.images.full.url }}"
-                             alt="{{ newsroom.thumbnail.alt_text }}">
-                        {% endif %}
-                    </header>
-                    <div class="post_body">
-                        {{ newsroom.content }}
-                    </div>
-                    {% if newsroom.tags|length %}
-                    <footer>
-                        <div class="tags">
-                            <h4 class="tags_header">Topics:</h4>
-                            <ul class="tags_list">
-                            {% for tag in newsroom.tags %}
-                                <li class="tags_tag">
-                                    <a class="tags_link" href="/blog/?filter_tags={{ tag }}">
-                                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                                        {{ tag }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        </div> 
-                    </footer>
-                    {% endif %}
-                </article>
-
-            </section><!-- END .content_main -->
 
             <aside class="content_sidebar">
-                <section class="content_sidebar-item related-posts">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Related blog posts
-                        </span>
-                    </h1>
-                    <ul class="list list__unstyled list__spaced">
-                    {% for similar in more_like_this(newsroom, search_size=5) %}
-                        <li class="list_item">
-                            <a class="list_link"
-                               href="{{ similar.permalink }}">
-                                {{ similar.title }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </section>
-                <section class="content_sidebar-item related-news">
-                    <div class="demo-placeholder">Related news placeholder</div>
-                </section>
-                <section class="content_sidebar-item stay-informed">
-                    <div class="demo-placeholder">Stay informed placeholder</div>
-                </section>
-            </aside><!-- END .content_sidebar -->
+                {% include "nav.html" %}
+            </aside>
+            
+            <section class="content_main">
+        
+                <h1 class="u-visually-hidden">Press Resources</h1>
+
+                <section class="press-section press-contacts">
+
+                    <h1 class="press-section_title">Press contacts</h1>
+
+                    <div class="press-section_intro press-contacts_intro">
+
+                        <p>We are committed to engaging with the public
+                            and members of the media regularly with accurate and up-to-date information on
+                            our work. Content materials are produced by our Office of Communications.</p>
+
+                        <ul class="list list__links list__icons">
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="mailto:inquiries@cfpb.gov">
+                                    <span class="cf-icon cf-icon-email list_icon"></span>
+                                    press@consumerfinance.gov
+                                </a>
+                            </li>
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="tel:8888888888">
+                                    <span class="cf-icon cf-icon-phone list_icon"></span>
+                                    (202) 435-7000
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="press-contacts_people">
+
+                        <section class="contact-person">
+                            <h1 class="contact-person_name">Jen Howard</h1>
+                            <div class="contact-person_title">Assistant Director of Communications</div>
+                            <ul class="list list__unstyled">
+                                <li class="list_item">
+                                    <a href="mailto:jennifer.howard@cfpb.gov">
+                                        jennifer.howard@cfpb.gov
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a href="tel:2024357170">(202) 435-7170</a>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="contact-person">
+                            <h1 class="contact-person_name">Mallory McLean</h1>
+                            <div class="contact-person_title">Regional Spokesperson</div>
+                            <ul class="list list__unstyled">
+                                <li class="list_item">
+                                    <a href="mailto:mallory.mclean@cfpb.gov">
+                                        mallory.mclean@cfpb.gov
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a href="tel:2024357955">(202) 435-7955</a>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="contact-person">
+                            <h1 class="contact-person_name">Michelle Person</h1>
+                            <div class="contact-person_title">Spokesperson</div>
+                            <ul class="list list__unstyled">
+                                <li class="list_item">
+                                    <a href="mailto:michelle.person@cfpb.gov">
+                                        michelle.person@cfpb.gov
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a href="tel:2024357857">(202) 435-7857</a>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="contact-person">
+                            <h1 class="contact-person_name">Moira Vahey</h1>
+                            <div class="contact-person_title">Spokesperson</div>
+                            <ul class="list list__unstyled">
+                                <li class="list_item">
+                                    <a href="mailto:moira.vahey@cfpb.gov">
+                                        moira.vahey@cfpb.gov
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a href="tel:2024359151">(202) 435-9151</a>
+                                </li>
+                            </ul>
+                        </section>
+
+                    </div>
+
+                </section> <!-- END .press-section.press-contacts -->
+
+                <section class="press-section press-photos-bios">
+
+                    <h1 class="press-section_title">Photos and bios</h1>
+
+                    <p class="press-section_intro">Our director is appointed by the president and
+                        confirmed by the Senate. He heads a bureau of more than 1,200 people working for
+                        American consumers. The CFPB works through six divisions, each headed by an
+                        associate director.</p>
+
+                    <section class="contact-person contact-person__director">
+                        <img class="contact-person_photo" src="" alt="" width="200" height="200">
+                        <div class="contact-person_title">Director</div>
+                        <h1 class="contact-person_name">Richard Cordray</h1>
+                        <ul class="list list__links">
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="#">
+                                    Biography <span class="cf-icon cf-icon-right"></span>
+                                </a>
+                            </li>
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="#">
+                                    High-res portrait <span class="cf-icon cf-icon-download"></span>
+                                </a>
+                            </li>
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="#">
+                                    Low-res portrait <span class="cf-icon cf-icon-download"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="contact-person contact-person__director">
+                        <img class="contact-person_photo" src="" alt="" width="200" height="200">
+                        <div class="contact-person_title">Deputy Director</div>
+                        <h1 class="contact-person_name">Steve Antonakes</h1>
+                        <ul class="list list__links">
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="#">
+                                    Biography <span class="cf-icon cf-icon-right"></span>
+                                </a>
+                            </li>
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="#">
+                                    High-res portrait <span class="cf-icon cf-icon-download"></span>
+                                </a>
+                            </li>
+                            <li class="list_item list__links_item">
+                                <a class="list_link" href="#">
+                                    Low-res portrait <span class="cf-icon cf-icon-download"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <a class="jump-link" href="#">
+                        Find out more about our leadership
+                        <span class="cf-icon cf-icon-right"></span>
+                    </a>
+
+                </section> <!-- END .press-section.press-photos-bios -->
+
+                <section class="press-section press-logo">
+
+                    <h1 class="press-section_title">Logo and usage</h1>
+
+                    <p class="press-section_intro press-logo_intro">The CFPB logo was designed to symbolize
+                        vigilance, transparency, and a consumer focus. Consumers are the foundation and
+                        focus of our mission and our logo reflects that. A soft beam of light symbolizes our
+                        efforts to illuminate the financial landscape and foster transparency in the
+                        marketplace.</p>
+
+                    <div class="press-logo_logo">
+                        <img src="" alt="CFPB logo" width="200" height="100">
+                    </div>
+
+                    <a class="jump-link" href="https://cfpb.github.io/design-manual/identity/logo/">
+                        Logo files and more in the CFPB Design Manual
+                        <span class="cf-icon cf-icon-right"></span>
+                    </a>
+
+                </section> <!-- END .press-section.press-logo -->
+
+                <aside class="content_footer content_footer__bg">
+                    <section class="content_footer_item">
+                        {% include "stay-informed.html" %}
+                    </section>
+                    <section class="content_footer_item">
+                        {% include "upcoming-events.html" %}
+                    </section>
+                </aside>
+
+            </section><!-- END .content_main -->
             
         </div><!-- END .content_wrapper -->
         

@@ -8163,6 +8163,123 @@ a.category-slug.active {
   margin-left: 0;
 }
 /* topdoc
+  name: Icon list modifier
+  family: cfgov-misc
+  notes:
+    - "Set up a list with icons on the left, in place of bullets."
+    - "Will need some more work to allow lines to wrap."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax list_icon"></span>
+                List item 1
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.list__icons {
+  padding-left: 0;
+  list-style-type: none;
+}
+.list__icons .list_item {
+  margin-left: 0;
+}
+.list__icons .list_icon {
+  width: 1.5em;
+  text-align: center;
+}
+/* topdoc
+  name: Link list modifier
+  family: cfgov-misc
+  notes:
+    - "The link list modifier is intended to be used for lists where each item
+      is a link. It converts to a finger-friendly link with a large tap area
+      on smaller screens."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+    - name: Link list with icons
+      markup: |
+        <ul class="list list__links list__icons">
+            <li class="list_item">
+                <a class="list_link">
+                    <span class="cf-icon cf-icon-email list_icon"></span>
+                    List item 1
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
+                    List item 2
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">
+                    <span class="cf-icon cf-icon-fax list_icon"></span>
+                    List item 3
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+.list__links {
+  padding-left: 0;
+  list-style-type: none;
+}
+.list__links .list_item {
+  margin-left: 0;
+}
+.list__links .list_item {
+  margin-bottom: 0.625em;
+}
+@media only all and (max-width: 47.9375em) {
+  .list__links {
+    border-top: 1px dotted #0072ce;
+  }
+  .list__links .list_item {
+    margin-bottom: 0;
+  }
+  .list__links .list_link {
+    display: block;
+    padding: 0.625em 0;
+  }
+}
+@media only all and (min-width: 48em) {
+  .list__links.list__icons .list_link {
+    margin-bottom: 0.9375em;
+    margin-left: 1.5em;
+    position: relative;
+  }
+  .list__links.list__icons .list_icon {
+    position: absolute;
+    top: 0.0625em;
+    left: -1.625em;
+  }
+}
+/* topdoc
   name: Filtered-by list
   family: cfgov-misc
   notes:
@@ -10086,3 +10203,370 @@ a.focus .summary_header {
   name: EOF
   eof: true
 */
+/* ==========================================================================
+   cfgov-refresh
+   Press resources (Newsroom)
+   ========================================================================== */
+.press-section + .press-section {
+  padding-top: 1.875em;
+  border-top: 1px solid #e3e4e5;
+  margin-top: 2.8125em;
+}
+.press-section_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+.press-section_title em,
+.press-section_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .press-section_title em,
+.lt-ie9 .press-section_title i {
+  font-style: normal !important;
+}
+.press-section_title strong,
+.press-section_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .press-section_title strong,
+.lt-ie9 .press-section_title b {
+  font-weight: normal !important;
+}
+.press-contacts_people {
+  margin-top: 1.75em;
+}
+.contact-person {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.contact-person em,
+.contact-person i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .contact-person em,
+.lt-ie9 .contact-person i {
+  font-style: normal !important;
+}
+.contact-person strong,
+.contact-person b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .contact-person strong,
+.lt-ie9 .contact-person b {
+  font-weight: normal !important;
+}
+.contact-person_name {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+}
+.lt-ie9 .contact-person_name {
+  font-weight: normal !important;
+}
+.contact-person__director {
+  margin-top: 1.875em;
+}
+.contact-person__director .contact-person_name {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.9375em;
+}
+.contact-person__director .contact-person_name em,
+.contact-person__director .contact-person_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .contact-person__director .contact-person_name em,
+.lt-ie9 .contact-person__director .contact-person_name i {
+  font-style: normal !important;
+}
+.contact-person__director .contact-person_name strong,
+.contact-person__director .contact-person_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .contact-person__director .contact-person_name strong,
+.lt-ie9 .contact-person__director .contact-person_name b {
+  font-weight: normal !important;
+}
+.contact-person__director .contact-person_title {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+}
+.lt-ie9 .contact-person__director .contact-person_title {
+  font-weight: normal !important;
+}
+.jump-link {
+  display: block;
+  margin-top: 1.5em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.125em;
+}
+.jump-link em,
+.jump-link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .jump-link em,
+.lt-ie9 .jump-link i {
+  font-style: normal !important;
+}
+.jump-link strong,
+.jump-link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .jump-link strong,
+.lt-ie9 .jump-link b {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 47.9375em) {
+  .jump-link {
+    padding: 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+  }
+}
+@media only all and (min-width: 48em) {
+  .press-section {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .press-section_title {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.30769231em;
+    font-size: 1.625em;
+    line-height: 1.26923077;
+  }
+  .press-section_title em,
+  .press-section_title i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .press-section_title em,
+  .lt-ie9 .press-section_title i {
+    font-style: normal !important;
+  }
+  .press-section_title strong,
+  .press-section_title b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .press-section_title strong,
+  .lt-ie9 .press-section_title b {
+    font-weight: normal !important;
+  }
+  .press-section_title,
+  .press-section_intro,
+  .jump-link {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+  }
+  .ie .press-section_title,
+  .ie .press-section_intro,
+  .ie .jump-link {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-section_title,
+  .lt-ie8 .press-section_intro,
+  .lt-ie8 .jump-link {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .press-contacts .contact-person,
+  .contact-person__director {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .press-contacts .contact-person,
+  .ie .contact-person__director {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-contacts .contact-person,
+  .lt-ie8 .contact-person__director {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .contact-person__director {
+    text-align: center;
+  }
+  .press-logo_intro {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+  }
+  .ie .press-logo_intro {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-logo_intro {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .press-logo_logo {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+  }
+  .ie .press-logo_logo {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-logo_logo {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 48em) and (max-width: 63.9375em) {
+  .press-contacts .list__links {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .press-contacts .list__links_item {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .press-contacts .list__links_item {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-contacts .list__links_item {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 64em) {
+  .press-contacts_intro {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+  }
+  .ie .press-contacts_intro {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-contacts_intro {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .press-contacts_people {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+    margin-top: 0;
+  }
+  .ie .press-contacts_people {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-contacts_people {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+  .contact-person__director {
+    text-align: left;
+  }
+  .contact-person__director .contact-person_photo {
+    float: left;
+    margin-right: 1.875em;
+  }
+}

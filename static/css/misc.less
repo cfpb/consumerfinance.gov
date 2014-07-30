@@ -1233,6 +1233,130 @@ select[multiple].success {
 
 
 /* topdoc
+  name: Icon list modifier
+  family: cfgov-misc
+  notes:
+    - "Set up a list with icons on the left, in place of bullets."
+    - "Will need some more work to allow lines to wrap."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax list_icon"></span>
+                List item 1
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+
+
+.list__icons {
+    .list__unstyled();
+
+    .list_icon {
+        width: 1.5em;
+        text-align: center;
+    }
+}
+
+
+/* topdoc
+  name: Link list modifier
+  family: cfgov-misc
+  notes:
+    - "The link list modifier is intended to be used for lists where each item
+      is a link. It converts to a finger-friendly link with a large tap area
+      on smaller screens."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+    - name: Link list with icons
+      markup: |
+        <ul class="list list__links list__icons">
+            <li class="list_item">
+                <a class="list_link">
+                    <span class="cf-icon cf-icon-email list_icon"></span>
+                    List item 1
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
+                    List item 2
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">
+                    <span class="cf-icon cf-icon-fax list_icon"></span>
+                    List item 3
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-misc
+*/
+
+
+.list__links {
+    .list__unstyled();
+
+    .list_item {
+        margin-bottom: unit(10x / @base-font-size-px, em);
+    }
+
+    .u-respond-to-max(767px, {
+        border-top: 1px dotted @pacific;
+
+        .list_item {
+            margin-bottom: 0;
+        }
+
+        .list_link {
+            display: block;
+            padding: unit(10px / @base-font-size-px, em) 0;
+        }
+    });
+
+    .u-respond-to-min(768px, {
+        &.list__icons {
+            .list_link {
+                margin-bottom: unit(15px / @base-font-size-px, em);
+                margin-left: 1.5em; // magic number representing approximate width of an icon glyph
+                position: relative;
+            }
+
+            .list_icon {
+                position: absolute;
+                top: unit(1px / @base-font-size-px, em);
+                left: -1.625em; // pulling back slightly more than width of icon for optical alignment
+            }
+        }
+    });
+}
+
+
+/* topdoc
   name: Filtered-by list
   family: cfgov-misc
   notes:

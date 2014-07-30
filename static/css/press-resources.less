@@ -1,0 +1,109 @@
+/* ==========================================================================
+   cfgov-refresh
+   Press resources (Newsroom)
+   ========================================================================== */
+
+.press-section + .press-section {
+    padding-top: unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-20;
+    margin-top: unit(45px / @base-font-size-px, em);
+}
+
+.press-section_title {
+    .h3();
+}
+
+.press-contacts_people {
+    margin-top: 1.75em; // works out to about 30px including line-height
+}
+
+.contact-person {
+    .webfont-regular();
+}
+.contact-person_name {
+    .h4();
+}
+.contact-person__director {
+    margin-top: unit(30px / @base-font-size-px, em);
+
+    .contact-person_name {
+        .h3();
+        margin-bottom: unit(15px / @base-font-size-px, em);
+    }
+
+    .contact-person_title {
+        .h5();
+    }
+}
+
+.jump-link {
+    display: block;
+    margin-top: 1.5em; // works out to about 30px including line-height
+    .webfont-regular();
+    font-size: unit(18px / @base-font-size-px, em);
+
+    .u-respond-to-max(767px, {
+        padding: unit(10px / @base-font-size-px, em) 0;
+        border: dotted @pacific;
+        border-width: 1px 0;
+    });
+}
+
+.u-respond-to-min(768px, {
+    .press-section {
+        .grid_nested-col-group();
+    }
+
+    .press-section_title {
+        .h2();
+    }
+
+    .press-section_title,
+    .press-section_intro,
+    .jump-link {
+        .grid_column(12);
+    }
+
+    .press-contacts .contact-person,
+    .contact-person__director {
+        .grid_column(6);
+    }
+
+    .contact-person__director {
+        text-align: center;
+    }
+
+    .press-logo_intro {
+        .grid_column(8);
+    }
+    .press-logo_logo {
+        .grid_column(4);
+    }
+});
+
+.u-respond-to-range(768px, 1023px, {
+    .press-contacts .list__links {
+        .grid_nested-col-group();
+    }
+    .press-contacts .list__links_item {
+        .grid_column(6);
+    }
+});
+
+.u-respond-to-min(1024px, {
+    .press-contacts_intro {
+        .grid_column(4);
+    }
+    .press-contacts_people {
+        .grid_column(8);
+        margin-top: 0;
+    }
+    .contact-person__director {
+        text-align: left;
+
+        .contact-person_photo {
+            float: left;
+            margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
+        }
+    }
+});
