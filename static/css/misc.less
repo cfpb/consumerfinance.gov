@@ -1198,15 +1198,15 @@ select[multiple].success {
       markup: |
         <ul class="list list__icons">
             <li class="list_item">
-                <span class="cf-icon cf-icon-email"></span>
+                <span class="cf-icon cf-icon-email list_icon"></span>
                 List item 1
             </li>
             <li class="list_item">
-                <span class="cf-icon cf-icon-phone"></span>
+                <span class="cf-icon cf-icon-phone list_icon"></span>
                 List item 1
             </li>
             <li class="list_item">
-                <span class="cf-icon cf-icon-fax"></span>
+                <span class="cf-icon cf-icon-fax list_icon"></span>
                 List item 1
             </li>
         </ul>
@@ -1216,14 +1216,11 @@ select[multiple].success {
 
 
 .list__icons {
-    &:extend(.list__unstyled);
+    .list__unstyled();
 
-    > .list_item {
-
-        .cf-icon {
-            width: 1.5em;
-            text-align: center;
-        }
+    .list_icon {
+        width: 1.5em;
+        text-align: center;
     }
 }
 
@@ -1254,19 +1251,19 @@ select[multiple].success {
         <ul class="list list__links list__icons">
             <li class="list_item">
                 <a class="list_link">
-                    <span class="cf-icon cf-icon-email"></span>
+                    <span class="cf-icon cf-icon-email list_icon"></span>
                     List item 1
                 </a>
             </li>
             <li class="list_item">
                 <a class="list_link">
-                    <span class="cf-icon cf-icon-phone"></span>
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
                     List item 2
                 </a>
             </li>
             <li class="list_item">
                 <a class="list_link">
-                    <span class="cf-icon cf-icon-fax"></span>
+                    <span class="cf-icon cf-icon-fax list_icon"></span>
                     List item 3
                 </a>
             </li>
@@ -1277,35 +1274,37 @@ select[multiple].success {
 
 
 .list__links {
-    &:extend(.list__unstyled);
+    .list__unstyled();
 
-    > .list_item {
-        margin-bottom: 0.5em;
+    .list_item {
+        margin-bottom: unit(10x / @base-font-size-px, em);
     }
 
     .u-respond-to-max(767px, {
         border-top: 1px dotted @pacific;
 
-        > .list_item {
+        .list_item {
             margin-bottom: 0;
+        }
 
-            > a {
-                display: block;
-                padding: 0.5em 0;
-            }
+        .list_link {
+            display: block;
+            padding: unit(10px / @base-font-size-px, em) 0;
         }
     });
 
     .u-respond-to-min(768px, {
-        &.list__icons > .list_item > a {
-            margin-bottom: 1em;
-            margin-left: 1.5em;
-            position: relative;
+        &.list__icons {
+            .list_link {
+                margin-bottom: unit(15px / @base-font-size-px, em);
+                margin-left: 1.5em; // magic number representing approximate width of an icon glyph
+                position: relative;
+            }
 
-            > [class^='cf-icon'] {
+            .list_icon {
                 position: absolute;
-                top: 0.0625em;
-                left: -1.625em;
+                top: unit(1px / @base-font-size-px, em);
+                left: -1.625em; // pulling back slightly more than width of icon for optical alignment
             }
         }
     });

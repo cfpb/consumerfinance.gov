@@ -3,32 +3,59 @@
    Press resources (Newsroom)
    ========================================================================== */
 
-.press-section {
-    padding-top: 2em;
+.press-section + .press-section {
+    padding-top: unit(30px / @base-font-size-px, em);
     border-top: 1px solid @gray-20;
-    margin-top: 2em;
+    margin-top: unit(45px / @base-font-size-px, em);
+}
 
-    &:first-child {
-        padding-top: 0;
-        border-top: none;
-        margin-top: 0;
-    }
+.press-section_title {
+    .h3();
+}
+
+.press-contacts_people {
+    margin-top: 1.75em; // works out to about 30px including line-height
 }
 
 .contact-person {
     .webfont-regular();
 }
+.contact-person_name {
+    .h4();
+}
+.contact-person__director {
+    margin-top: unit(30px / @base-font-size-px, em);
+
+    .contact-person_name {
+        .h3();
+        margin-bottom: unit(15px / @base-font-size-px, em);
+    }
+
+    .contact-person_title {
+        .h5();
+    }
+}
 
 .jump-link {
-    margin-top: 1.25em; // eyeballed to 30px between descender and ascender
+    display: block;
+    margin-top: 1.5em; // works out to about 30px including line-height
     .webfont-regular();
-    font-size: 1.125em;
+    font-size: unit(18px / @base-font-size-px, em);
+
+    .u-respond-to-max(767px, {
+        padding: unit(10px / @base-font-size-px, em) 0;
+        border: dotted @pacific;
+        border-width: 1px 0;
+    });
 }
 
 .u-respond-to-min(768px, {
     .press-section {
         .grid_nested-col-group();
+    }
 
+    .press-section_title {
+        .h2();
     }
 
     .press-section_title,
@@ -47,10 +74,10 @@
     }
 
     .press-logo_intro {
-        .grid_column(8)
+        .grid_column(8);
     }
     .press-logo_logo {
-        .grid_column(4)
+        .grid_column(4);
     }
 });
 
@@ -65,15 +92,16 @@
 
 .u-respond-to-min(1024px, {
     .press-contacts_intro {
-        .grid_column(4)
+        .grid_column(4);
     }
     .press-contacts_people {
-        .grid_column(8)
+        .grid_column(8);
+        margin-top: 0;
     }
     .contact-person__director {
         text-align: left;
 
-        > img {
+        .contact-person_photo {
             float: left;
             margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
         }

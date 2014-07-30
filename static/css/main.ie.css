@@ -8555,9 +8555,7 @@ a.category-slug.active {
     - cfgov-misc
 */
 
-.list__unstyled,
-.list__icons,
-.list__links {
+.list__unstyled {
   padding-left: 0;
   list-style-type: none;
 }
@@ -8670,15 +8668,15 @@ a.category-slug.active {
       markup: |
         <ul class="list list__icons">
             <li class="list_item">
-                <span class="cf-icon cf-icon-email"></span>
+                <span class="cf-icon cf-icon-email list_icon"></span>
                 List item 1
             </li>
             <li class="list_item">
-                <span class="cf-icon cf-icon-phone"></span>
+                <span class="cf-icon cf-icon-phone list_icon"></span>
                 List item 1
             </li>
             <li class="list_item">
-                <span class="cf-icon cf-icon-fax"></span>
+                <span class="cf-icon cf-icon-fax list_icon"></span>
                 List item 1
             </li>
         </ul>
@@ -8686,7 +8684,16 @@ a.category-slug.active {
     - cfgov-misc
 */
 
-.list__icons > .list_item .cf-icon {
+.list__icons {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list__icons .list_item {
+  margin-left: 0;
+}
+
+.list__icons .list_icon {
   width: 1.5em;
   text-align: center;
 }
@@ -8717,19 +8724,19 @@ a.category-slug.active {
         <ul class="list list__links list__icons">
             <li class="list_item">
                 <a class="list_link">
-                    <span class="cf-icon cf-icon-email"></span>
+                    <span class="cf-icon cf-icon-email list_icon"></span>
                     List item 1
                 </a>
             </li>
             <li class="list_item">
                 <a class="list_link">
-                    <span class="cf-icon cf-icon-phone"></span>
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
                     List item 2
                 </a>
             </li>
             <li class="list_item">
                 <a class="list_link">
-                    <span class="cf-icon cf-icon-fax"></span>
+                    <span class="cf-icon cf-icon-fax list_icon"></span>
                     List item 3
                 </a>
             </li>
@@ -8738,17 +8745,26 @@ a.category-slug.active {
     - cfgov-misc
 */
 
-.list__links > .list_item {
-  margin-bottom: 0.5em;
+.list__links {
+  padding-left: 0;
+  list-style-type: none;
 }
 
-.list__links.list__icons > .list_item > a {
-  margin-bottom: 1em;
+.list__links .list_item {
+  margin-left: 0;
+}
+
+.list__links .list_item {
+  margin-bottom: 0.625em;
+}
+
+.list__links.list__icons .list_link {
+  margin-bottom: 0.9375em;
   margin-left: 1.5em;
   position: relative;
 }
 
-.list__links.list__icons > .list_item > a > [class^='cf-icon'] {
+.list__links.list__icons .list_icon {
   position: absolute;
   top: 0.0625em;
   left: -1.625em;
@@ -10701,16 +10717,48 @@ a.focus .summary_header {
    Press resources (Newsroom)
    ========================================================================== */
 
-.press-section {
-  padding-top: 2em;
+.press-section + .press-section {
+  padding-top: 1.875em;
   border-top: 1px solid #e3e4e5;
-  margin-top: 2em;
+  margin-top: 2.8125em;
 }
 
-.press-section:first-child {
-  padding-top: 0;
-  border-top: none;
+.press-section_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
   margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.press-section_title em,
+.press-section_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .press-section_title em,
+.lt-ie9 .press-section_title i {
+  font-style: normal !important;
+}
+
+.press-section_title strong,
+.press-section_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .press-section_title strong,
+.lt-ie9 .press-section_title b {
+  font-weight: normal !important;
+}
+
+.press-contacts_people {
+  margin-top: 1.75em;
 }
 
 .contact-person {
@@ -10743,8 +10791,78 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
+.contact-person_name {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+}
+
+.lt-ie9 .contact-person_name {
+  font-weight: normal !important;
+}
+
+.contact-person__director {
+  margin-top: 1.875em;
+}
+
+.contact-person__director .contact-person_name {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.9375em;
+}
+
+.contact-person__director .contact-person_name em,
+.contact-person__director .contact-person_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .contact-person__director .contact-person_name em,
+.lt-ie9 .contact-person__director .contact-person_name i {
+  font-style: normal !important;
+}
+
+.contact-person__director .contact-person_name strong,
+.contact-person__director .contact-person_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .contact-person__director .contact-person_name strong,
+.lt-ie9 .contact-person__director .contact-person_name b {
+  font-weight: normal !important;
+}
+
+.contact-person__director .contact-person_title {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+}
+
+.lt-ie9 .contact-person__director .contact-person_title {
+  font-weight: normal !important;
+}
+
 .jump-link {
-  margin-top: 1.25em;
+  display: block;
+  margin-top: 1.5em;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -10780,6 +10898,40 @@ a.focus .summary_header {
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
+}
+
+.press-section_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.press-section_title em,
+.press-section_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .press-section_title em,
+.lt-ie9 .press-section_title i {
+  font-style: normal !important;
+}
+
+.press-section_title strong,
+.press-section_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .press-section_title strong,
+.lt-ie9 .press-section_title b {
+  font-weight: normal !important;
 }
 
 .press-section_title,
