@@ -7684,13 +7684,13 @@ a.category-slug.active {
 */
 
 .link__block-on-small {
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 500 !important;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
 }
 
 .lt-ie9 .link__block-on-small {
-  font-weight: normal !important !important;
+  font-weight: normal !important;
 }
 
 /* topdoc
