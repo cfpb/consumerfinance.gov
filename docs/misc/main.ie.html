@@ -1513,9 +1513,7 @@ label
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.list__unstyled,
-.list__icons,
-.list__links {
+.list__unstyled {
   padding-left: 0;
   list-style-type: none;
 }
@@ -1690,15 +1688,15 @@ label
           <section class="docs-pattern_pattern">
 <ul class="list list__icons">
     <li class="list_item">
-        <span class="cf-icon cf-icon-email"></span>
+        <span class="cf-icon cf-icon-email list_icon"></span>
         List item 1
     </li>
     <li class="list_item">
-        <span class="cf-icon cf-icon-phone"></span>
+        <span class="cf-icon cf-icon-phone list_icon"></span>
         List item 1
     </li>
     <li class="list_item">
-        <span class="cf-icon cf-icon-fax"></span>
+        <span class="cf-icon cf-icon-fax list_icon"></span>
         List item 1
     </li>
 </ul>
@@ -1707,15 +1705,15 @@ label
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__icons&quot;&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;span class=&quot;cf-icon cf-icon-email&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;cf-icon cf-icon-email list_icon&quot;&gt;&lt;/span&gt;
         List item 1
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;span class=&quot;cf-icon cf-icon-phone&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;cf-icon cf-icon-phone list_icon&quot;&gt;&lt;/span&gt;
         List item 1
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
-        &lt;span class=&quot;cf-icon cf-icon-fax&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;cf-icon cf-icon-fax list_icon&quot;&gt;&lt;/span&gt;
         List item 1
     &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
@@ -1724,7 +1722,16 @@ label
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.list__icons &gt; .list_item .cf-icon {
+.list__icons {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list__icons .list_item {
+  margin-left: 0;
+}
+
+.list__icons .list_icon {
   width: 1.5em;
   text-align: center;
 }
@@ -1775,19 +1782,19 @@ label
 <ul class="list list__links list__icons">
     <li class="list_item">
         <a class="list_link">
-            <span class="cf-icon cf-icon-email"></span>
+            <span class="cf-icon cf-icon-email list_icon"></span>
             List item 1
         </a>
     </li>
     <li class="list_item">
         <a class="list_link">
-            <span class="cf-icon cf-icon-phone"></span>
+            <span class="cf-icon cf-icon-phone list_icon"></span>
             List item 2
         </a>
     </li>
     <li class="list_item">
         <a class="list_link">
-            <span class="cf-icon cf-icon-fax"></span>
+            <span class="cf-icon cf-icon-fax list_icon"></span>
             List item 3
         </a>
     </li>
@@ -1798,19 +1805,19 @@ label
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__links list__icons&quot;&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;
-            &lt;span class=&quot;cf-icon cf-icon-email&quot;&gt;&lt;/span&gt;
+            &lt;span class=&quot;cf-icon cf-icon-email list_icon&quot;&gt;&lt;/span&gt;
             List item 1
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;
-            &lt;span class=&quot;cf-icon cf-icon-phone&quot;&gt;&lt;/span&gt;
+            &lt;span class=&quot;cf-icon cf-icon-phone list_icon&quot;&gt;&lt;/span&gt;
             List item 2
         &lt;/a&gt;
     &lt;/li&gt;
     &lt;li class=&quot;list_item&quot;&gt;
         &lt;a class=&quot;list_link&quot;&gt;
-            &lt;span class=&quot;cf-icon cf-icon-fax&quot;&gt;&lt;/span&gt;
+            &lt;span class=&quot;cf-icon cf-icon-fax list_icon&quot;&gt;&lt;/span&gt;
             List item 3
         &lt;/a&gt;
     &lt;/li&gt;
@@ -1820,17 +1827,26 @@ label
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.list__links &gt; .list_item {
-  margin-bottom: 0.5em;
+.list__links {
+  padding-left: 0;
+  list-style-type: none;
 }
 
-.list__links.list__icons &gt; .list_item &gt; a {
-  margin-bottom: 1em;
+.list__links .list_item {
+  margin-left: 0;
+}
+
+.list__links .list_item {
+  margin-bottom: 0.625em;
+}
+
+.list__links.list__icons .list_link {
+  margin-bottom: 0.9375em;
   margin-left: 1.5em;
   position: relative;
 }
 
-.list__links.list__icons &gt; .list_item &gt; a &gt; [class^='cf-icon'] {
+.list__links.list__icons .list_icon {
   position: absolute;
   top: 0.0625em;
   left: -1.625em;
