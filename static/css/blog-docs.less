@@ -226,6 +226,23 @@
                 </div>
             </a>
         </article>
+    - name: Press Information
+      markup: |
+        <div class="press-information">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Press information
+                </span>
+            </h1>
+            <p class="sans">
+                If you want to repbulish the article or have questions about the content,
+                please contact the press office.
+            </p>
+            <p>
+                <a class="sans"
+                   href="/newsroom/press-resources/">Go to press resources page</a>
+            </p>
+        </div>
   tags:
     - cfgov-blog-docs
 */
@@ -242,6 +259,14 @@
 .post-pagination {
     // Eyeballed to 60px
     margin: unit(54px / @base-font-size-px, em) 0 unit(28px / @base-font-size-px, em);
+}
+
+.press-information {
+    margin-top: unit(60px / @base-font-size-px, em);
+    .u-respond-to-min(600px, {
+        .grid_column(7, @grid_total-columns);
+        .grid_nested-col-group();
+    });
 }
 
 

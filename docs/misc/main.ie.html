@@ -63,7 +63,6 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .sans {
-  color: #101820;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -91,6 +90,43 @@
 .lt-ie9 .sans strong,
 .lt-ie9 .sans b {
   font-weight: normal !important;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="link-modifiers" class="docs-component">
+      <h2 class="docs-component_header"><span>Link modifiers</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Block link on small screens</h3>
+          <section class="docs-pattern_pattern">
+<a class="link__block-on-small">
+    On small screens I am a block, on larger screens I am a normal link.
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;link__block-on-small&quot;&gt;
+    On small screens I am a block, on larger screens I am a normal link.
+&lt;/a&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.link__block-on-small</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.link__block-on-small {
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+}
+
+.lt-ie9 .link__block-on-small {
+  font-weight: normal !important !important;
 }
 </code></pre>
       </div>
