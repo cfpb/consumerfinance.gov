@@ -5288,36 +5288,36 @@ figure {
 */
 
 a {
-  border-bottom-width: 0;
-  border-bottom-style: dotted;
-  border-bottom-color: #0072ce;
+  border-width: 0;
+  border-style: dotted;
+  border-color: #0072ce;
   color: #0072ce;
   text-decoration: none;
 }
 
 a:visited,
 a.visited {
-  border-bottom-color: #005e5d;
+  border-color: #005e5d;
   color: #005e5d;
 }
 
 a:hover,
 a.hover {
-  border-bottom-style: solid;
-  border-bottom-color: #7fb8e6;
+  border-style: solid;
+  border-color: #7fb8e6;
   color: #7fb8e6;
 }
 
 a:focus,
 a.focus {
-  border-bottom-style: solid;
+  border-style: solid;
   outline: thin dotted;
 }
 
 a:active,
 a.active {
-  border-bottom-style: solid;
-  border-bottom-color: #002d72;
+  border-style: solid;
+  border-color: #002d72;
   color: #002d72;
 }
 
