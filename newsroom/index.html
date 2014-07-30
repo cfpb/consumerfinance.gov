@@ -63,20 +63,20 @@
                 {% include "post-filters.html" %}
                 {% include "watchroom.html" %}
                 {% include "posts-paginated.html" %}
-                <aside class="content_footer">
+                <aside class="content_block">
                     <h1 class="header-slug">
                         <span class="header-slug_inner">
                             Stay informed
                         </span>
                     </h1>
-                    <div class="content-footer-l">
-                        <div class="content-footer-l_col">
+                    <div class="content-l">
+                        <div class="content-l_col content-l_col-1-2">
                             <p class="sans">
                                 Subscribe to our email newsletter. We will update you on new newsroom updates.
                             </p>
                             {% include "email-subscribe-form.html" %}
                         </div>
-                        <div class="content-footer-l_col">
+                        <div class="content-l_col content-l_col-1-2">
                             <p class="sans">
                                 Subscribe to our RSS feed to get the latest content in your reader.
                             </p>
@@ -87,12 +87,12 @@
                         </div>
                     </div>
                 </aside>
-                <aside class="content_footer content_footer__bg">
-                    <div class="content-footer-l">
-                        <section class="content-footer-l_col">
+                <aside class="content_block content_block__flush-bottom content_block__flush-sides content_block__bg">
+                    <div class="content-l">
+                        <section class="content-l_col content-l_col-1-2">
                             {% include "related-links.html" %}
                         </section>
-                        <section class="content-footer-l_col">
+                        <section class="content-l_col content-l_col-1-2">
                             {% include "upcoming-events.html" %}
                         </section>
                     </div>
