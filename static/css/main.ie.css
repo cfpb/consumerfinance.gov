@@ -7822,45 +7822,45 @@ a.category-slug.active {
 }
 
 /* topdoc
-  name: Sans
+  name: Short description
   family: cfgov-misc
   patterns:
-    - name: San serif text
+    - name: Simple styling for short descriptions
       markup: |
-        <p class="sans">I am using a  san serif font.</p>
+        <p class="short-desc">I am short description.</p>
       codenotes:
-        - .sans
+        - .short-desc
   tags:
     - cfgov-misc
 */
 
-.sans {
+.short-desc {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
 
-.sans em,
-.sans i {
+.short-desc em,
+.short-desc i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
 
-.lt-ie9 .sans em,
-.lt-ie9 .sans i {
+.lt-ie9 .short-desc em,
+.lt-ie9 .short-desc i {
   font-style: normal !important;
 }
 
-.sans strong,
-.sans b {
+.short-desc strong,
+.short-desc b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
 
-.lt-ie9 .sans strong,
-.lt-ie9 .sans b {
+.lt-ie9 .short-desc strong,
+.lt-ie9 .short-desc b {
   font-weight: normal !important;
 }
 
@@ -10735,7 +10735,7 @@ a.focus .summary_header {
                     Press information
                 </span>
             </h1>
-            <p class="sans">
+            <p class="short-desc">
                 If you want to repbulish the article or have questions about the content,
                 please contact the press office.
             </p>
