@@ -60,20 +60,19 @@
         .webfont-regular();
         display: inline-block;
         padding: unit(10px / 18px, em);
-        border-left: 4px solid transparent;
+        border-left-style: solid;
+        border-left-width: 4px;
         font-size: unit(18px / @base-font-size-px, em);
         line-height: 1;
-        .u-link__colors(@pacific, @pacific, @black, @black, @black);
+        .u-link__colors(@pacific, @pacific, @black, @black, @black,
+                        transparent, transparent, transparent, transparent, transparent);
     }
 
     &_link:hover,
     &_link:focus,
     &_link__current {
-        border-left-color: @green;
-    }
-
-    &_link__current {
-        .u-link__colors(@black);
+        .u-link__colors(@black, @black, @black, @black, @black,
+                        @green, @green, @green, @green, @green);
     }
 }
 
