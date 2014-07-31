@@ -25,7 +25,7 @@
                 {% include "nav.html" %}
             </aside>
             
-            <section class="content_main">
+            <section class="content_main content__flush-bottom">
         
                 <h1 class="u-visually-hidden">Press Resources</h1>
 
@@ -205,11 +205,26 @@
 
                 </section> <!-- END .press-section.press-logo -->
 
-                <aside class="content_footer content_footer__bg">
-                    <section class="content_footer_item">
-                        {% include "stay-informed.html" %}
+                <aside class="content_block content_block__flush-bottom content_block__flush-sides content_block__bg">
+                    <section class="content-l_col content-l_col-1-2">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new newsroom updates.
+                        </p>
+                        {% include "email-subscribe-form.html" %}
+                        <p class="short-desc">
+                            Subscribe to our RSS feed to get the latest content in your reader.
+                        </p>
+                        <a class="btn" href="/feed/newsroom">
+                            <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
+                            Subscribe to RSS
+                        </a>
                     </section>
-                    <section class="content_footer_item">
+                    <section class="content-l_col content-l_col-1-2">
                         {% include "upcoming-events.html" %}
                     </section>
                 </aside>
