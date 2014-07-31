@@ -14,7 +14,8 @@
         </div>
       notes:
         - "Turns an element into a cf-grid wrapper at 801px and above."
-        - "Includes some explicit declarations for IE8 due to the fact that it doesn't support media queries."
+        - "Includes some explicit declarations for IE8 due to the fact that it
+           doesn't support media queries."
   tags:
     - cfgov-layout
 */
@@ -44,7 +45,9 @@
       markup: |
         <div class="content_bar"></div>
       notes:
-        - "This is necessary because we don't have a predictable place to put a full-width border. It needs to be under the hero on pages with heroes, but under the header if there is no hero."
+        - "This is necessary because we don't have a predictable place to put a
+           full-width border. It needs to be under the hero on pages with
+           heroes, but under the header if there is no hero."
         - ".content_bar must come after .content_hero but before .content_wrapper"
   tags:
     - cfgov-layout
@@ -70,12 +73,12 @@
             <div class="wrapper content_wrapper">
                 <section class="content_main">
                     Main content area
-                </section><!-- END .content_main -->
+                </section>
                 <aside class="content_sidebar" style="background: #F1F2F2">
                     Sidebar
-                </aside><!-- END .content_sidebar -->
-            </div><!-- END .content_wrapper -->
-        </main><!-- END .content -->
+                </aside>
+            </div>
+        </main>
       codenotes:
         - |
           Structural cheat sheet:
@@ -84,20 +87,25 @@
             .content_hero
             .content_bar
             .content_wrapper
-              .content_main
               .content_sidebar
+              .content_main
       notes:
-        - "By default .content_main and .content_sidebar stack vertically. When using the modifiers described below to create columns, the columns will remain stacked for smaller screens and then convert to to columns at 801px."
-        - ".content_bar must come after .content_hero (if it exists) but before .content_wrapper."
-        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+        - "By default .content_main and .content_sidebar stack vertically. When
+           using the modifiers described below to create columns, the columns
+           will remain stacked for smaller screens and then convert to to
+           columns at 801px."
+        - ".content_bar must come after .content_hero (if it exists) but before
+           .content_wrapper."
+        - "Inline styling is for demonstration purposes only; do not include it
+           in your markup."
     - name: Left-hand navigation layout
       markup: |
         <main class="content content__1-3" id="main" role="main">
-            <section class="content_hero" style="background: #E3E4E5">
-                Content hero
-            </section>
             <div class="content_bar"></div>
             <div class="wrapper content_wrapper">
+                <aside class="content_sidebar">
+                    Section navigation
+                </aside>
                 <section class="content_main">
                     <h2>Main content area</h2>
                     <p>
@@ -106,23 +114,27 @@
                         corporis nemo culpa dolorum! Laborum at eos deleniti
                         consequatur itaque officiis debitis quisquam! Provident!
                     </p>
-                </section><!-- END .content_main -->
-                <aside class="content_sidebar" style="background: #F1F2F2">
-                    Section navigation
-                </aside><!-- END .content_sidebar -->
-            </div><!-- END .content_wrapper -->
-        </main><!-- END .content -->
+                </section>
+            </div>
+        </main>
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer>
       codenotes:
         - .content__1-3
       notes:
-        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
-        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+        - "Add a class of .content__L-R to main.content to determine the width
+           ratio of .content_main and .content_sidebar, where 'L' is the
+           left-hand item and 'R' is the right-hand item. The two common
+           configurations are 1-3 (sidebar on the left, content on the right, in
+           a ratio of 1:3) and 2-1 (content on the left, sidebar on the right,
+           in a ratio of 2:1). It is assumed that the content is wider than the
+           sidebar."
     - name: Right-hand sidebar layout
       markup: |
         <main class="content content__2-1" id="main" role="main">
-            <section class="content_hero" style="background: #E3E4E5">
-                Content hero
-            </section>
             <div class="content_bar"></div>
             <div class="wrapper content_wrapper">
                 <section class="content_main">
@@ -133,23 +145,32 @@
                         corporis nemo culpa dolorum! Laborum at eos deleniti
                         consequatur itaque officiis debitis quisquam! Provident!
                     </p>
-                </section><!-- END .content_main -->
+                </section>
                 <aside class="content_sidebar" style="background: #F1F2F2">
-                    Section navigation
-                </aside><!-- END .content_sidebar -->
-            </div><!-- END .content_wrapper -->
-        </main><!-- END .content -->
+                    Sidebar
+                </aside>
+            </div>
+        </main>
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer>
       codenotes:
         - .content__2-1
       notes:
-        - "Add a class of .content__L-R to main.content to determine the width ratio of .content_main and .content_sidebar, where 'L' is the left-hand item and 'R' is the right-hand item. The two common configurations are 1-3 (sidebar on the left, content on the right, in a ratio of 1:3) and 2-1 (content on the left, sidebar on the right, in a ratio of 2:1). It is assumed that the content is wider than the sidebar."
-        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+        - "Add a class of .content__L-R to main.content to determine the width
+           ratio of .content_main and .content_sidebar, where 'L' is the
+           left-hand item and 'R' is the right-hand item. The two common
+           configurations are 1-3 (sidebar on the left, content on the right, in
+           a ratio of 1:3) and 2-1 (content on the left, sidebar on the right,
+           in a ratio of 2:1). It is assumed that the content is wider than the
+           sidebar."
+        - "Inline styling is for demonstration purposes only; do not include it
+           in your markup."
     - name: Narrow content column option
       markup: |
         <main class="content content__2-1" id="main" role="main">
-            <section class="content_hero" style="background: #E3E4E5">
-                Content hero
-            </section>
             <div class="content_bar"></div>
             <div class="wrapper content_wrapper">
                 <section class="content_main content_main__narrow">
@@ -160,17 +181,55 @@
                         corporis nemo culpa dolorum! Laborum at eos deleniti
                         consequatur itaque officiis debitis quisquam! Provident!
                     </p>
-                </section><!-- END .content_main -->
+                </section>
                 <aside class="content_sidebar" style="background: #F1F2F2">
-                    Section navigation
-                </aside><!-- END .content_sidebar -->
-            </div><!-- END .content_wrapper -->
-        </main><!-- END .content -->
+                    Sidebar
+                </aside>
+            </div>
+        </main>
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer>
       codenotes:
         - .content_main__narrow
       notes:
-        - "Add a class of .content_main__narrow to .content_main to get a one-column (in a 12-column grid) gutter on the right side."
-        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+        - "Add a class of .content_main__narrow to .content_main to get a
+           one-column (in a 12-column grid) gutter on the right side."
+        - "Inline styling is for demonstration purposes only; do not include it
+           in your markup."
+    - name: Flush bottom modifier
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="wrapper content_wrapper">
+                <aside class="content_sidebar content__flush-bottom">
+                    Side with no bottom padding...
+                </aside>
+                <section class="content_main content__flush-bottom">
+                    Main content with no bottom padding...
+                    <div class="content_block
+                                content_block__flush-bottom
+                                content_block__flush-sides
+                                content_block__bg">
+                        .content__flush-bottom is very useful when you have a
+                        content block inside of .content_main with a background
+                        and flush sides.
+                    </div>
+                </section>
+            </div>
+        </main>
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer>
+      codenotes:
+        - .content_main__flush-bottom
+      notes:
+        - "Add a class of .content_main__flush-bottom to .content_main or
+           .content_sidebar__flush-bottom to .content_sidebar to remove 
+           bottom padding."
   tags:
     - cfgov-layout
 */
@@ -185,7 +244,17 @@
         padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em)
                  unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     });
+
+    .u-respond-to-min(801px, {
+        padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em)
+                 0;
+    });
 }
+
+.content__flush-bottom {
+    padding-bottom: 0;
+}
+
 
 // Set up standard multi-column content area layouts
 .u-respond-to-min(801px, {
@@ -198,8 +267,14 @@
             }
             .content_main {
                 .grid_column(9);
+                position: relative;
 
                 &:after {
+                    content: '';
+                    border-left: 1px solid @gray-50;
+                    position: absolute;
+                    top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+                    bottom: 0;
                     left: unit(-1 * @grid_gutter-width / @base-font-size-px, em);
                 }
             }
@@ -218,23 +293,6 @@
 
                 padding-left: unit(@grid_gutter-width / @base-font-size-px, em);
             }
-        }
-    }
-
-    .content_main,
-    .content_sidebar {
-        padding: unit((@grid_gutter-width * 2) / @base-font-size-px, em) 0;
-    } 
-
-    .content_main {
-        position: relative;
-
-        &:after {
-            content: '';
-            border-left: 1px solid @gray-50;
-            position: absolute;
-            top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
-            bottom: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
         }
     }
 }); // END min-width 801 block
@@ -264,102 +322,14 @@
         </section>
       notes:
         - "Gives some vertical margin between sidebar items."
-        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+        - "Inline styling is for demonstration purposes only; do not include it
+           in your markup."
   tags:
     - cfgov-layout
 */
 
 .content_sidebar-item + .content_sidebar-item {
     margin-top: unit(60px / @base-font-size-px, em);
-}
-
-
-/* topdoc
-  name: Content footer
-  family: cfgov-layout
-  patterns:
-    - name: Standard content footer example
-      markup: |
-        <section class="content_main">
-            <h2>Main content area</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Cum corrupti tempora nam nihil qui mollitia consectetur
-                corporis nemo culpa dolorum! Laborum at eos deleniti
-                consequatur itaque officiis debitis quisquam! Provident!
-            </p>
-            <aside class="content_footer">
-                Content footer
-            </aside><!-- END .content_footer -->
-        </section><!-- END .content_main -->
-      codenotes:
-        - .content_footer
-      notes:
-        - "The content footer is useful when you have sidebar-like content in a
-           layout without a sidebar. For example when you have a side nav layout
-           you can place sidebar content in the content_footer area."
-    - name: Flush content footer example
-      markup: |
-        <main class="content content__1-3" id="main" role="main">
-            <div class="content_bar"></div>
-            <div class="wrapper content_wrapper">
-                <section class="content_main">
-                    <h2>Main content area</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Cum corrupti tempora nam nihil qui mollitia consectetur
-                        corporis nemo culpa dolorum! Laborum at eos deleniti
-                        consequatur itaque officiis debitis quisquam! Provident!
-                    </p>
-                    <aside class="content_footer content_footer__bg">
-                        Content footer flush
-                    </aside><!-- END .content_footer -->
-                </section><!-- END .content_main -->
-                <aside class="content_sidebar">
-                    Section navigation
-                </aside><!-- END .content_sidebar -->
-            </div><!-- END .content_wrapper -->
-        </main><!-- END .content -->
-        <footer class="footer" role="contentinfo">
-            <div class="wrapper">
-                Footer
-            </div>
-        </footer><!-- END .footer -->
-      codenotes:
-        - .content_footer__bg
-      notes:
-        - "Adds a background with padding."
-  tags:
-    - cfgov-layout
-*/
-
-.content_footer {
-    margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
-
-    &_item {
-        & + & {
-            margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
-        }
-        .u-respond-to-min(801px, {
-            .grid_column(6);
-            & + & {
-                margin-top: 0;
-            }
-        });
-    }
-
-    &__bg {
-        padding: 2em @grid_gutter-width;
-        margin-right: (@grid_gutter-width / 2) * -1;
-        margin-bottom: unit((@grid_gutter-width * -1) / @base-font-size-px, em);
-        margin-left: (@grid_gutter-width / 2) * -1;
-        background: @gray-10;
-        .u-respond-to-min(600px, {
-            margin-right: @grid_gutter-width * -1;
-            margin-bottom: unit(((@grid_gutter-width * 2) *-1) / @base-font-size-px, em);
-            margin-left: @grid_gutter-width * -1;
-        });
-    }
 }
 
 
@@ -377,16 +347,19 @@
             <div class="wrapper content_wrapper">
                 <section class="content_main">
                     Main content area
-                </section><!-- END .content_main -->
+                </section>
                 <aside class="content_sidebar">
                     Bleeding sidebar
-                </aside><!-- END .content_sidebar -->
-            </div><!-- END .content_wrapper -->
-        </main><!-- END .content -->
+                </aside>
+            </div>
+        </main>
+      codenotes:
+        - ".content__bleedbar"
       notes:
         - "Simply add class .content__bleedbar to main.content."
         - "Only supports sidebars on the right, for now."
-        - "Inline styling is for demonstration purposes only; do not include it in your markup."
+        - "Inline styling is for demonstration purposes only; do not include it
+           in your markup."
   tags:
     - cfgov-layout
 */
@@ -399,12 +372,12 @@
     }
 
     .content_sidebar {
-        padding: 2em unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+        padding: unit(@grid_gutter-width / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
         background: @gray-10;
     }
 
     .u-respond-to-min(801px, {
-
         // Prevent pseudo element background from creating horizontal scrollbar.
         overflow: hidden;
 
@@ -451,9 +424,8 @@
             left: 75%;
         }
 
-    }); // END min-width 801 block
-
-} // END .content__bleedbar
+    });
+}
 
 
 /* topdoc
@@ -466,7 +438,7 @@
             <div class="wrapper">
                 Footer
             </div>
-        </footer><!-- END .footer -->
+        </footer>
   tags:
     - cfgov-layout
 */
@@ -479,17 +451,267 @@
 
 
 /* topdoc
+  name: Content block
+  family: cfgov-layout
+  notes:
+    - ".content_block elements are built to be used within .content_main."
+  patterns:
+    - name: Standard content block example
+      markup: |
+        Main content...
+        <div class="content_block">
+            Content block
+        </div>
+        <div class="content_block">
+            Content block
+        </div>
+        <div class="content_block">
+            Content block
+        </div>
+      codenotes:
+        - .content_block
+      notes:
+        - "Useful for when you need some consistent margin between content
+           blocks within .content_main."
+    - name: Flush-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__flush-top">
+            Content block with no top margin.
+        </div>
+        <div class="content_block">
+            Content block
+        </div>
+      codenotes:
+        - .content_block.content_block__flush-top
+      notes:
+        - "Removes the top margin from .content_block."
+    - name: Flush-bottom modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__flush-bottom">
+            Content block with no bottom margin.
+        </div>
+        <div class="content_block content_block__flush-top">
+            Content block with no top margin.
+        </div>
+      codenotes:
+        - .content_block.content_block__flush-bottom
+      notes:
+        - "Removes the bottom margin from .content_block."
+    - name: Flush-sides modifier
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="wrapper content_wrapper">
+                <aside class="content_sidebar">
+                    Section navigation
+                </aside>
+                <section class="content_main">
+                    Main content...
+                    <aside class="content_block content_block__flush-sides">
+                        Content block with no side margins.
+                    </aside>
+                </section>
+            </div>
+        </main>
+      codenotes:
+        - .content_block.content_block__flush-sides
+      notes:
+        - "Removes the side margin from .content_block."
+    - name: Background modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__bg">
+            Content block with a background
+        </div>
+      codenotes:
+        - .content_block.content_block__bg
+      notes:
+        - "Adds a background color and padding to .content_block."
+    - name: Background and flush-sides modifier combo example
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="wrapper content_wrapper">
+                <aside class="content_sidebar">
+                    Section navigation
+                </aside>
+                <section class="content_main content_main__flush-bottom">
+                    Main content...
+                    <div class="content_block content_block__flush-sides content_block__bg">
+                        Content block with a background and flush sides
+                    </div>
+                </section>
+            </div>
+        </main>
+      codenotes:
+        - .content_block.content_block__sides.content_block__bg
+      notes:
+        - "This is an example of combining modifiers to get a flush padded bg
+           with a .content_block."
+  tags:
+    - cfgov-layout
+*/
+
+.content_block {
+    margin: unit((@grid_gutter-width * 2) / @base-font-size-px, em) 0;
+
+    &__flush-top {
+        margin-top: 0 !important;
+    }
+
+    &__flush-bottom {
+        margin-bottom: 0 !important;
+    }
+
+    &__flush-sides {
+        margin-right: -(@grid_gutter-width / 2);
+        margin-left: -(@grid_gutter-width / 2);
+        .u-respond-to-min(600px, {
+            margin-right: -@grid_gutter-width;
+            margin-left: -@grid_gutter-width;
+        });
+    }
+
+    &__bg {
+        padding: unit(@grid_gutter-width / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+        background: @gray-10;
+        .u-respond-to-min(600px, {
+            padding: unit(45 / @base-font-size-px, em)
+                     unit(@grid_gutter-width / @base-font-size-px, em);
+        });
+    }
+}
+
+
+/* topdoc
+  name: Content layouts
+  family: cfgov-layout
+  patterns:
+    - name: Standard content columns
+      markup: |
+        <div class="content-l">
+            <div class="content-l_col content-l_col-1">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Full-width column (spans 12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-2-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;">
+                    Two thirds-width column (spans 8/12 columns)
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .content-l
+            .content-l_col.content-l_col-(RATIO)
+        - .content-l_col.content-l_col-1
+        - .content-l_col.content-l_col-1-2
+        - .content-l_col.content-l_col-1-3
+        - .content-l_col.content-l_col-2-3
+      notes:
+        - "These layout classes have breakpoints that are specific for use
+           within .content_main."
+        - "Since .content-l_col's are nested within .content_main extra
+           margins will occur. The .content-l container uses the
+           grid_nested-col-group mixin to counter this."
+        - "Note that the divs with inline styles are for demonstration purposes
+           only and should not be used in production."
+  tags:
+    - cfgov-layout
+*/
+
+.content-l {
+    .u-respond-to-min(600px, {
+        .grid_nested-col-group();
+    });
+}
+
+.content-l_col {
+    & + & {
+        margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+    }
+    .u-respond-to-min(600px, {
+        & + & {
+            margin-top: 0;
+        }
+    });
+}
+
+.content-l_col-1 {
+    .u-respond-to-min(600px, {
+        .grid_column(12);
+    });
+}
+
+.content-l_col-1-2 {
+    .u-respond-to-min(600px, {
+        .grid_column(6);
+    });
+}
+
+.content-l_col-1-3 {
+    .u-respond-to-min(768px, {
+        .grid_column(4);
+    });
+}
+
+.content-l_col-2-3 {
+    .u-respond-to-min(768px, {
+        .grid_column(8);
+    });
+}
+
+
+/* topdoc
     name: EOF
     eof: true
 */
-
-.header .demo-placeholder,
-.content_hero .demo-placeholder,
-.footer .demo-placeholder {
-    // Temporary styling to bring in line with main columns.
-    margin-left: (@grid_gutter-width / 2);
-
-    .u-respond-to-range(600px, 800px, {
-        margin-left: @grid_gutter-width;
-    });
-}
