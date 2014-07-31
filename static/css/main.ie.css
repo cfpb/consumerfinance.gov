@@ -8820,6 +8820,10 @@ a.category-slug.active {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+a.hero_card {
+  border-color: transparent;
+}
+
 /* topdoc
   name: Lists
   family: cfgov-misc
