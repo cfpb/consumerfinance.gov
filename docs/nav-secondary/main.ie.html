@@ -22,45 +22,75 @@
           <h3 class="docs-pattern_header">Default example</h3>
           <section class="docs-pattern_pattern">
 <nav class="nav-secondary">
-    <ul class="nav-secondary_list">
-        <li class="nav-secondary_item">
-            <a class="nav-secondary_link nav-secondary_link__current" href="#">
-               Item 1
-           </a>
-        </li>
-        <li class="nav-secondary_item">
-            <a class="nav-secondary_link" href="#">
-               Item 2
-           </a>
-        </li>
-        <li class="nav-secondary_item">
-            <a class="nav-secondary_link" href="#">
-               Item 3
-           </a>
-        </li>
-    </ul>
+    <div class="expandable">
+        <div class="expandable_header">
+            <button class="expandable_target nav-secondary_link nav-secondary_link__current">
+                Item 1
+                <span class="expandable_cue-open">
+                    <span class="btn-icon-right cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="btn-icon-right cf-icon cf-icon-up"></span>
+                </span>
+            </button>
+        </div>
+        <div class="expandable_content">
+            <ul class="nav-secondary_list">
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                       Item 1
+                    </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 2
+                    </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 3
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;nav class=&quot;nav-secondary&quot;&gt;
-    &lt;ul class=&quot;nav-secondary_list&quot;&gt;
-        &lt;li class=&quot;nav-secondary_item&quot;&gt;
-            &lt;a class=&quot;nav-secondary_link nav-secondary_link__current&quot; href=&quot;#&quot;&gt;
-               Item 1
-           &lt;/a&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-secondary_item&quot;&gt;
-            &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
-               Item 2
-           &lt;/a&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-secondary_item&quot;&gt;
-            &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
-               Item 3
-           &lt;/a&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;div class=&quot;expandable&quot;&gt;
+        &lt;div class=&quot;expandable_header&quot;&gt;
+            &lt;button class=&quot;expandable_target nav-secondary_link nav-secondary_link__current&quot;&gt;
+                Item 1
+                &lt;span class=&quot;expandable_cue-open&quot;&gt;
+                    &lt;span class=&quot;btn-icon-right cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class=&quot;expandable_cue-close&quot;&gt;
+                    &lt;span class=&quot;btn-icon-right cf-icon cf-icon-up&quot;&gt;&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;expandable_content&quot;&gt;
+            &lt;ul class=&quot;nav-secondary_list&quot;&gt;
+                &lt;li class=&quot;nav-secondary_item&quot;&gt;
+                    &lt;a class=&quot;nav-secondary_link nav-secondary_link__current&quot; href=&quot;#&quot;&gt;
+                       Item 1
+                    &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;nav-secondary_item&quot;&gt;
+                    &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+                       Item 2
+                    &lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;nav-secondary_item&quot;&gt;
+                    &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+                       Item 3
+                    &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/nav&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
