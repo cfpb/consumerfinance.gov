@@ -6371,14 +6371,18 @@ img {
       markup: |
         <main class="content content__1-3" id="main" role="main">
             <div class="wrapper content_wrapper">
-                <aside class="content_sidebar">
-                    Section navigation
+                <aside class="content_sidebar content__flush-bottom">
+                    Side with no bottom padding...
                 </aside>
-                <section class="content_main content_main__flush-bottom">
-                    Main content...
-                    <aside class="content_footer content_footer__bg">
-                        Content footer
-                    </aside>
+                <section class="content_main content__flush-bottom">
+                    Main content with no bottom padding...
+                    <div class="content_block
+                                content_block__flush-bottom
+                                content_block__flush-sides
+                                content_block__bg">
+                        .content__flush-bottom is very useful when you have a
+                        content block with a background and flush sides.
+                    </div>
                 </section>
             </div>
         </main>
@@ -6386,7 +6390,7 @@ img {
             <div class="wrapper">
                 Footer
             </div>
-        </footer><!-- END .footer -->
+        </footer>
       codenotes:
         - .content_main__flush-bottom
       notes:
@@ -6434,8 +6438,7 @@ img {
   padding: 3.75em 0;
 }
 
-.content_main__flush-bottom,
-.content_sidebar__flush-bottom {
+.content__flush-bottom {
   padding-bottom: 0;
 }
 
