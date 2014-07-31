@@ -6381,7 +6381,8 @@ img {
                                 content_block__flush-sides
                                 content_block__bg">
                         .content__flush-bottom is very useful when you have a
-                        content block with a background and flush sides.
+                        content block inside of .content_main with a background
+                        and flush sides.
                     </div>
                 </section>
             </div>
@@ -8832,7 +8833,7 @@ a.hero_card {
   family: cfgov-misc
   notes:
     - "Note that modifiers are the most common use cases for this block, hence
-      the reason there are no direct styles associated with .link or .link_item."
+      the reason there are no direct styles associated with .list or .list_item."
   patterns:
     - name: Basic structure
       markup: |
