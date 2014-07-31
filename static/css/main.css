@@ -6275,28 +6275,41 @@ img {
 .nav-secondary_link:hover,
 .nav-secondary_link:focus,
 .nav-secondary_link__current {
-  border-left-color: #2cb34a;
-}
-.nav-secondary_link__current {
   color: #101820;
   border-color: #2cb34a;
 }
+.nav-secondary_link:hover:visited,
+.nav-secondary_link:focus:visited,
 .nav-secondary_link__current:visited,
+.nav-secondary_link:hover.visited,
+.nav-secondary_link:focus.visited,
 .nav-secondary_link__current.visited {
   border-color: #2cb34a;
   color: #101820;
 }
+.nav-secondary_link:hover:hover,
+.nav-secondary_link:focus:hover,
 .nav-secondary_link__current:hover,
+.nav-secondary_link:hover.hover,
+.nav-secondary_link:focus.hover,
 .nav-secondary_link__current.hover {
   border-color: #2cb34a;
   color: #101820;
 }
+.nav-secondary_link:hover:focus,
+.nav-secondary_link:focus:focus,
 .nav-secondary_link__current:focus,
+.nav-secondary_link:hover.focus,
+.nav-secondary_link:focus.focus,
 .nav-secondary_link__current.focus {
   border-color: #2cb34a;
   color: #101820;
 }
+.nav-secondary_link:hover:active,
+.nav-secondary_link:focus:active,
 .nav-secondary_link__current:active,
+.nav-secondary_link:hover.active,
+.nav-secondary_link:focus.active,
 .nav-secondary_link__current.active {
   border-color: #2cb34a;
   color: #101820;
