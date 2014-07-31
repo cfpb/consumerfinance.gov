@@ -1042,6 +1042,12 @@ select[multiple].success {
         &_card {
             .grid_column(6);
             .grid_push(6);
+
+            a& {
+                // Columns that are links should not change border color when
+                // interacting with them.
+                border-color: transparent;
+            }
         }
     });
 
