@@ -1,13 +1,29 @@
 
 <nav class="nav-secondary">
-    <ul class="nav-secondary_list">
-    {%- for href, id, caption in navigation_bar %}
-        <li class="nav-secondary_item">
-            <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_page }}"
-               href="{{ href|e }}">
-               {{ caption|e }}
-           </a>
-        </li>
-    {%- endfor %}
-    </ul>
+    <div class="expandable">
+        <div class="expandable_header">
+            <button class="expandable_target nav-secondary_link nav-secondary_link__current">
+                Item 1
+                <span class="expandable_cue-open">
+                    <span class="btn-icon-right cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="btn-icon-right cf-icon cf-icon-up"></span>
+                </span>
+            </button>
+        </div>
+        <div class="expandable_content">
+            <ul class="nav-secondary_list">
+            {%- for href, id, caption in navigation_bar %}
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_page }}"
+                       href="{{ href|e }}">
+                       {{ caption|e }}
+                   </a>
+                </li>
+            {%- endfor %}
+            </ul>
+        </div>
+    </div>
 </nav>
+
