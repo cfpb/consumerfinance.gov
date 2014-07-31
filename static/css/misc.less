@@ -25,6 +25,51 @@
 
 
 /* topdoc
+  name: Short description
+  family: cfgov-misc
+  patterns:
+    - name: Simple styling for short descriptions
+      markup: |
+        <p class="short-desc">I am short description.</p>
+      codenotes:
+        - .short-desc
+  tags:
+    - cfgov-misc
+*/
+
+.short-desc {
+    .webfont-regular();
+}
+
+
+/* topdoc
+  name: Link modifiers
+  family: cfgov-misc
+  patterns:
+    - name: Block link on small screens
+      markup: |
+        <a class="link__block-on-small">
+            On small screens I am a block, on larger screens I am a normal link.
+        </a>
+      codenotes:
+        - .link__block-on-small
+  tags:
+    - cfgov-misc
+*/
+
+.link__block-on-small {
+    .webfont-medium();
+
+    .u-respond-to-max(599px, {
+        display: block;
+        padding: 0.5em 0;
+        border-top: 1px dotted @pacific;
+        border-bottom: 1px dotted @pacific;
+    });
+}
+
+
+/* topdoc
   name: Form pattern showcase
   family: cfgov-misc
   patterns:
@@ -997,6 +1042,12 @@ select[multiple].success {
         &_card {
             .grid_column(6);
             .grid_push(6);
+
+            a& {
+                // Columns that are links should not change border color when
+                // interacting with them.
+                border-color: transparent;
+            }
         }
     });
 

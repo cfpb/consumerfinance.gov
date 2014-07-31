@@ -44,7 +44,22 @@
                     <div class="demo-placeholder">Related news placeholder</div>
                 </section>
                 <section class="content_sidebar-item stay-informed">
-                    <div class="demo-placeholder">Stay informed placeholder</div>
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Stay informed
+                        </span>
+                    </h1>
+                    <p class="short-desc">
+                        Subscribe to our email newsletter. We will update you on new blogs.
+                    </p>
+                    {% include "email-subscribe-form.html" %}
+                    <p class="short-desc">
+                        Subscribe to our RSS feed to get the latest content in your reader.
+                    </p>
+                    <a class="btn" href="/feed/posts">
+                        <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
+                        Subscribe to RSS
+                    </a>
                 </section>
             </aside><!-- END .content_sidebar -->
             
