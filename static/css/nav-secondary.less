@@ -44,7 +44,6 @@
 */
 
 .nav-secondary {
-
     margin-bottom: unit(30px / @base-font-size-px, em);
 
     &_list {
@@ -57,11 +56,11 @@
     }
 
     &_link {
-        .webfont-regular();
         display: inline-block;
         padding: unit(10px / 18px, em);
         border-left-style: solid;
         border-left-width: 4px;
+        .webfont-medium();
         font-size: unit(18px / @base-font-size-px, em);
         line-height: 1;
         .u-link__colors(@pacific, @pacific, @black, @black, @black,
