@@ -5288,36 +5288,36 @@ figure {
 */
 
 a {
-  border-width: 0;
-  border-style: dotted;
-  border-color: #0072ce;
+  border-bottom-width: 0;
+  border-bottom-style: dotted;
+  border-bottom-color: #0072ce;
   color: #0072ce;
   text-decoration: none;
 }
 
 a:visited,
 a.visited {
-  border-color: #005e5d;
+  border-bottom-color: #005e5d;
   color: #005e5d;
 }
 
 a:hover,
 a.hover {
-  border-style: solid;
-  border-color: #7fb8e6;
+  border-bottom-style: solid;
+  border-bottom-color: #7fb8e6;
   color: #7fb8e6;
 }
 
 a:focus,
 a.focus {
-  border-style: solid;
+  border-bottom-style: solid;
   outline: thin dotted;
 }
 
 a:active,
 a.active {
-  border-style: solid;
-  border-color: #002d72;
+  border-bottom-style: solid;
+  border-bottom-color: #002d72;
   color: #002d72;
 }
 
@@ -6962,6 +6962,29 @@ img {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
+  width: 100%;
+}
+
+.ie .content-l_col-1-3 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col-1-3 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content-l_col-1-3 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
   width: 33.33333333%;
 }
 
@@ -6970,6 +6993,29 @@ img {
 }
 
 .lt-ie8 .content-l_col-1-3 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content-l_col-2-3 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .content-l_col-2-3 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col-2-3 {
   display: inline;
   margin-right: 0;
   zoom: 1;
@@ -11115,7 +11161,7 @@ a.focus .summary_header {
 
 .press-section + .press-section {
   padding-top: 1.875em;
-  border-top: 1px solid #e3e4e5;
+  border-top: 1px solid #babbbd;
   margin-top: 2.8125em;
 }
 
@@ -11205,6 +11251,11 @@ a.focus .summary_header {
   margin-top: 1.875em;
 }
 
+.contact-person__director .contact-person_photo {
+  display: block;
+  margin: 0 auto 0.625em;
+}
+
 .contact-person__director .contact-person_name {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -11256,6 +11307,10 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
+.press-logo_logo {
+  text-align: center;
+}
+
 .jump-link {
   display: block;
   margin-top: 1.5em;
@@ -11287,13 +11342,6 @@ a.focus .summary_header {
 .lt-ie9 .jump-link strong,
 .lt-ie9 .jump-link b {
   font-weight: normal !important;
-}
-
-.press-section {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
 }
 
 .press-section_title {
@@ -11330,86 +11378,8 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
-.press-section_title,
-.press-section_intro,
-.jump-link {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 100%;
-}
-
-.ie .press-section_title,
-.ie .press-section_intro,
-.ie .jump-link {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .press-section_title,
-.lt-ie8 .press-section_intro,
-.lt-ie8 .jump-link {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.press-contacts .contact-person,
-.contact-person__director {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 50%;
-}
-
-.ie .press-contacts .contact-person,
-.ie .contact-person__director {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .press-contacts .contact-person,
-.lt-ie8 .contact-person__director {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
 .contact-person__director {
   text-align: center;
-}
-
-.press-logo_intro {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 66.66666667%;
-}
-
-.ie .press-logo_intro {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .press-logo_intro {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .press-logo_logo {
@@ -11421,7 +11391,9 @@ a.focus .summary_header {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 33.33333333%;
+  width: 25%;
+  position: relative;
+  left: 8.33333333%;
 }
 
 .ie .press-logo_logo {
