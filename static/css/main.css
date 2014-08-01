@@ -6317,6 +6317,18 @@ img {
     color: #101820;
   }
 }
+.nav-secondary_link__button {
+  width: 100%;
+  text-align: left;
+}
+@media only all and (min-width: 50em) {
+  .nav-secondary_link__button {
+    display: none;
+  }
+}
+.nav-secondary_link__button:focus {
+  outline: thin dotted;
+}
 @media only all and (max-width: 49.9375em) {
   .nav-secondary_link__current {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
@@ -6374,6 +6386,15 @@ img {
     border-color: #2cb34a;
     color: #101820;
   }
+}
+.nav-secondary_icon {
+  color: #2cb34a;
+}
+.nav-secondary .expandable_header {
+  overflow: visible;
+}
+.nav-secondary .expandable_content {
+  padding: 0;
 }
 /* topdoc
     name: EOF
