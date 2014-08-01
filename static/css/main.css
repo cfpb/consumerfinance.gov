@@ -6176,48 +6176,62 @@ img {
   patterns:
     - name: Default example
       markup: |
-        <nav class="nav-secondary">
-            <div class="expandable">
-                <div class="expandable_header">
-                    <button class="expandable_target nav-secondary_link nav-secondary_link__current">
+        <nav class="nav-secondary expandable">
+            <div class="expandable_header">
+                <button class="expandable_target
+                        nav-secondary_link
+                        nav-secondary_link__button
+                        nav-secondary_link__current">
+                    <span class="expandable_header-left">
                         Item 1
+                    </span>
+                    <span class="expandable_header-right">
                         <span class="expandable_cue-open">
-                            <span class="btn-icon-right cf-icon cf-icon-down"></span>
+                            <span class="cf-icon cf-icon-down nav-secondary_icon"></span>
                         </span>
                         <span class="expandable_cue-close">
-                            <span class="btn-icon-right cf-icon cf-icon-up"></span>
+                            <span class="cf-icon cf-icon-up nav-secondary_icon"></span>
                         </span>
-                    </button>
-                </div>
-                <div class="expandable_content">
-                    <ul class="nav-secondary_list">
-                        <li class="nav-secondary_item">
-                            <a class="nav-secondary_link nav-secondary_link__current" href="#">
-                               Item 1
-                            </a>
-                        </li>
-                        <li class="nav-secondary_item">
-                            <a class="nav-secondary_link" href="#">
-                               Item 2
-                            </a>
-                        </li>
-                        <li class="nav-secondary_item">
-                            <a class="nav-secondary_link" href="#">
-                               Item 3
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    </span>
+                </button>
+            </div>
+            <div class="expandable_content">
+                <ul class="nav-secondary_list">
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                           Item 1
+                       </a>
+                    </li>
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link" href="#">
+                           Item 2
+                       </a>
+                    </li>
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link" href="#">
+                           Item 3
+                       </a>
+                    </li>
+                </ul>
             </div>
         </nav>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .nav-secondary
-            .nav-secondary_list
-              .nav-secondary_item
-                .nav-secondary_link
+          .nav-secondary.expandable
+            .expandable_header
+              .expandable_target.nav-secondary_link.nav-secondary_link__button.nav-secondary_link__current
+                .expandable_header-left
+                .expandable_header-right
+                  .expandable_cue-open
+                    .cf-icon.cf-icon-down.nav-secondary_icon
+                  .expandable_cue-close
+                    .cf-icon.cf-icon-up.nav-secondary_icon
+            .expandable_content
+              .nav-secondary_list
+                .nav-secondary_item
+                  .nav-secondary_link
     - name: Current link modifier
       codenotes:
         - ".nav-secondary_link__current"
