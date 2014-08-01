@@ -102,6 +102,17 @@
             .u-link__colors(@pacific, @pacific, @black, @black, @black,
                             transparent, transparent, transparent, transparent, transparent);
         });
+        &__button {
+            width: 100%;
+            text-align: left;
+            .u-respond-to-min(800px, {
+                display: none;
+            });
+
+            &:focus {
+                outline: thin dotted;
+            }
+        }
     }
 
     &_link__current {
@@ -122,6 +133,25 @@
             .u-link__colors(@black, @black, @black, @black, @black,
                             @green, @green, @green, @green, @green);
         });
+    }
+
+    &_icon {
+        color: @green;
+    }
+
+    // Overrides the overflow: hidden set in .expandable_header for float clearing.
+    // In cf-expandables we should try to change this to our clear float utility
+    // instead so we don't have to do this here.
+    & .expandable_header {
+        overflow: visible;
+    }
+
+    // Overrides the 1px padding used to prevent margin collapse. It's noticeable
+    // in this pattern because of the background colors and bottom borders.
+    // In cf-expandables we should try to change this to our clear float utility
+    // instead so we don't have to do this here.
+    & .expandable_content {
+        padding: 0;
     }
 }
 
