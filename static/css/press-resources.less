@@ -5,7 +5,7 @@
 
 .press-section + .press-section {
     padding-top: unit(30px / @base-font-size-px, em);
-    border-top: 1px solid @gray-20;
+    border-top: 1px solid @gray-50;
     margin-top: unit(45px / @base-font-size-px, em);
 }
 
@@ -26,6 +26,11 @@
 .contact-person__director {
     margin-top: unit(30px / @base-font-size-px, em);
 
+    .contact-person_photo {
+        display: block;
+        margin: 0 auto unit(10px / @base-font-size-px, em);
+    }
+
     .contact-person_name {
         .h3();
         margin-bottom: unit(15px / @base-font-size-px, em);
@@ -34,6 +39,10 @@
     .contact-person_title {
         .h5();
     }
+}
+
+.press-logo_logo {
+    text-align: center;
 }
 
 .jump-link {
@@ -50,34 +59,21 @@
 }
 
 .u-respond-to-min(768px, {
-    .press-section {
-        .grid_nested-col-group();
-    }
-
     .press-section_title {
         .h2();
     }
 
-    .press-section_title,
-    .press-section_intro,
-    .jump-link {
-        .grid_column(12);
-    }
-
-    .press-contacts .contact-person,
-    .contact-person__director {
-        .grid_column(6);
-    }
+    // .press-contacts .contact-person {
+    //     .grid_column(6);
+    // }
 
     .contact-person__director {
         text-align: center;
     }
 
-    .press-logo_intro {
-        .grid_column(8);
-    }
     .press-logo_logo {
-        .grid_column(4);
+        .grid_column(3);
+        .grid_push(1);
     }
 });
 
@@ -91,19 +87,35 @@
 });
 
 .u-respond-to-min(1024px, {
+    .press-contacts {
+        .grid_nested-col-group();
+    }
+    .press-contacts_title {
+        .grid_column(12)
+    }
     .press-contacts_intro {
         .grid_column(4);
     }
     .press-contacts_people {
         .grid_column(8);
         margin-top: 0;
+        margin-left: 0; // override the negative margin from .grid_nested-col-group
     }
+
     .contact-person__director {
         text-align: left;
 
         .contact-person_photo {
+            width: 150px;
+            margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
             float: left;
-            margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
         }
+    }
+});
+
+.u-respond-to-min(1200px, {
+    .contact-person__director  .contact-person_photo {
+        width: 180px;
+        margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
     }
 });
