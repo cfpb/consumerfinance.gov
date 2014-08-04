@@ -7067,12 +7067,12 @@ img {
             </button>
             <ul class="nav-secondary_list">
                 <li class="nav-secondary_item">
-                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                    <a class="nav-secondary_link" href="#">
                        Item 1
                     </a>
                 </li>
                 <li class="nav-secondary_item">
-                    <a class="nav-secondary_link" href="#">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
                        Item 2
                     </a>
                 </li>
@@ -7091,7 +7091,7 @@ img {
             .nav-secondary_link.nav-secondary_link__button
             .nav-secondary_list
               .nav-secondary_item
-                .nav-secondary_link
+                .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
     - name: Current link modifier
       markup: |
         <a class="nav-secondary_link nav-secondary_link__current" href="#">
@@ -7126,7 +7126,7 @@ img {
                         nav-secondary_link
                         nav-secondary_link__button">
                     <span class="expandable_header-left">
-                        Item 1
+                        Item 2
                     </span>
                     <span class="expandable_header-right">
                         <span class="expandable_cue-open">
@@ -7141,12 +7141,12 @@ img {
             <div class="expandable_content">
                 <ul class="nav-secondary_list">
                     <li class="nav-secondary_item">
-                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                        <a class="nav-secondary_link" href="#">
                            Item 1
                         </a>
                     </li>
                     <li class="nav-secondary_item">
-                        <a class="nav-secondary_link" href="#">
+                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
                            Item 2
                         </a>
                     </li>
@@ -7174,7 +7174,7 @@ img {
             .expandable_content
               .nav-secondary_list
                 .nav-secondary_item
-                  .nav-secondary_link
+                  .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
   tags:
     - cfgov-nav-secondary
 */
