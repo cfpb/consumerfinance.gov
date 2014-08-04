@@ -1,7 +1,7 @@
 
 <nav class="nav-secondary expandable">
     <div class="expandable_header">
-        <button class="expandable_target nav-secondary_link nav-secondary_link__button nav-secondary_link__current">
+        <button class="expandable_target nav-secondary_link nav-secondary_link__button">
             <span class="expandable_header-left">
         {%- for href, id, caption in navigation_bar %}
             {% if id == active_page %}
@@ -11,10 +11,10 @@
             </span>
             <span class="expandable_header-right">
                 <span class="expandable_cue-open">
-                    <span class="cf-icon cf-icon-down nav-secondary_icon"></span>
+                    <span class="cf-icon cf-icon-down cf-icon__green"></span>
                 </span>
                 <span class="expandable_cue-close">
-                    <span class="cf-icon cf-icon-up nav-secondary_icon"></span>
+                    <span class="cf-icon cf-icon-up cf-icon__green"></span>
                 </span>
             </span>
         </button>
