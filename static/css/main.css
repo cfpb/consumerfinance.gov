@@ -10472,7 +10472,7 @@ a.focus .summary_header {
     margin-left: -15px;
     margin-right: -15px;
   }
-  .press-contacts .list__links_item {
+  .press-contacts .list__links .list_item {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -10483,10 +10483,10 @@ a.focus .summary_header {
     vertical-align: top;
     width: 50%;
   }
-  .ie .press-contacts .list__links_item {
+  .ie .press-contacts .list__links .list_item {
     margin-right: -0.26em;
   }
-  .lt-ie8 .press-contacts .list__links_item {
+  .lt-ie8 .press-contacts .list__links .list_item {
     display: inline;
     margin-right: 0;
     zoom: 1;
@@ -10519,7 +10519,7 @@ a.focus .summary_header {
   }
 }
 @media only all and (min-width: 64em) {
-  .press-contacts .list__links_item,
+  .press-contacts .list__links .list_item,
   .press-contacts .contact-person {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -10531,11 +10531,11 @@ a.focus .summary_header {
     vertical-align: top;
     width: 33.33333333%;
   }
-  .ie .press-contacts .list__links_item,
+  .ie .press-contacts .list__links .list_item,
   .ie .press-contacts .contact-person {
     margin-right: -0.26em;
   }
-  .lt-ie8 .press-contacts .list__links_item,
+  .lt-ie8 .press-contacts .list__links .list_item,
   .lt-ie8 .press-contacts .contact-person {
     display: inline;
     margin-right: 0;
