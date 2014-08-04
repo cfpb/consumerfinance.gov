@@ -8,6 +8,7 @@
   - Make utilities a component
   - Update cf-forms with the form patterns
   - Update cf-typography with some of the meta patterns and the summary
+  - Move the cf tweaks from nav-secondary
 
 - Post stuff
   - Posts with annoying deks
