@@ -2,6 +2,12 @@
 
 - Better README, like OAH
 - No "number of results" message on smaller screens
+- BB wordwrap issue
+- Green bar under header needs bg image
+- Update CF components with patterns
+  - Make utilities a component
+  - Update cf-forms with the form patterns
+  - Update cf-typography with some of the meta patterns and the summary
 
 - Post stuff
   - Posts with annoying deks
@@ -28,12 +34,6 @@
   - Styled lists
     - http://codepen.io/anon/pen/tqJBp
     - http://codepen.io/anon/pen/bryAo
-- BB wordwrap issue
-- Green bar under header needs bg image
-- Update CF components with patterns
-  - Make utilities a component
-  - Update cf-forms with the form patterns
-  - Update cf-typography with some of the meta patterns and the summary
 
 - Scrum stuff
   - Hard to know what's ready for front end
