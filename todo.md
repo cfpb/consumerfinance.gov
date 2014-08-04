@@ -1,6 +1,6 @@
 # To do
 
-- Should we pull out hero, main, sidebar, and others into their own files?
+- Better README, like OAH
 - No "number of results" message on smaller screens
 
 - Post stuff
