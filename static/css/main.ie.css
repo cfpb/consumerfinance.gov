@@ -11365,6 +11365,7 @@ a.focus .summary_header {
   margin-bottom: 0.30769231em;
   font-size: 1.625em;
   line-height: 1.26923077;
+  margin-bottom: 1.15384615em;
 }
 
 .press-section_title em,
@@ -11391,35 +11392,6 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
-.contact-person__director {
-  text-align: center;
-}
-
-.press-logo_logo {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-  position: relative;
-  left: 8.33333333%;
-}
-
-.ie .press-logo_logo {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .press-logo_logo {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
 .press-contacts .list__links {
   display: block;
   position: relative;
@@ -11444,6 +11416,35 @@ a.focus .summary_header {
 }
 
 .lt-ie8 .press-contacts .list__links_item {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.contact-person__director {
+  text-align: center;
+}
+
+.press-logo_logo {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+  position: relative;
+  left: 8.33333333%;
+}
+
+.ie .press-logo_logo {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .press-logo_logo {
   display: inline;
   margin-right: 0;
   zoom: 1;

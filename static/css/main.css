@@ -10444,6 +10444,7 @@ a.focus .summary_header {
     margin-bottom: 0.30769231em;
     font-size: 1.625em;
     line-height: 1.26923077;
+    margin-bottom: 1.15384615em;
   }
   .press-section_title em,
   .press-section_title i {
@@ -10464,6 +10465,32 @@ a.focus .summary_header {
   .lt-ie9 .press-section_title strong,
   .lt-ie9 .press-section_title b {
     font-weight: normal !important;
+  }
+  .press-contacts .list__links {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  .press-contacts .list__links_item {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .press-contacts .list__links_item {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .press-contacts .list__links_item {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .contact-person__director {
     text-align: center;
@@ -10491,62 +10518,9 @@ a.focus .summary_header {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-@media only all and (min-width: 48em) and (max-width: 63.9375em) {
-  .press-contacts .list__links {
-    display: block;
-    position: relative;
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-  .press-contacts .list__links_item {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 50%;
-  }
-  .ie .press-contacts .list__links_item {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .press-contacts .list__links_item {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
 @media only all and (min-width: 64em) {
-  .press-contacts {
-    display: block;
-    position: relative;
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-  .press-contacts_title {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 100%;
-  }
-  .ie .press-contacts_title {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .press-contacts_title {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-  .press-contacts_intro {
+  .press-contacts .list__links_item,
+  .press-contacts .contact-person {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -10557,32 +10531,12 @@ a.focus .summary_header {
     vertical-align: top;
     width: 33.33333333%;
   }
-  .ie .press-contacts_intro {
+  .ie .press-contacts .list__links_item,
+  .ie .press-contacts .contact-person {
     margin-right: -0.26em;
   }
-  .lt-ie8 .press-contacts_intro {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-  .press-contacts_people {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 66.66666667%;
-    margin-top: 0;
-    margin-left: 0;
-  }
-  .ie .press-contacts_people {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .press-contacts_people {
+  .lt-ie8 .press-contacts .list__links_item,
+  .lt-ie8 .press-contacts .contact-person {
     display: inline;
     margin-right: 0;
     zoom: 1;
