@@ -11,7 +11,7 @@
         <li class="list_item">
             <a class="list_link"
                href="{{ pop_post.permalink }}">
-                {{ pop_post.title }}
+                {{ pop_post.title|safe }}
             </a>
         </li>
     {% endfor %}
