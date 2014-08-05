@@ -1,4 +1,34 @@
 /* ==========================================================================
+   Nav-secondary
+   ========================================================================== */
+
+$(document).ready(function(){
+    // This needs to be in document ready because that is when the jquery plugins
+    // are instantiated.
+
+    // Call this right away to test on document ready if we need to expand the nav.
+    navSecondaryToggle();
+
+    // Then on window resize check to see when we need to toggle the nav.
+    $(window).resize(function() {
+        navSecondaryToggle();
+    });
+
+    // Tests whether or not the secondary nav should be toggled.
+    function navSecondaryToggleTest() {
+        var isSmall = $('.nav-secondary .nav-secondary_link__button').is(':visible'),
+            isExpanded = $('.nav-secondary .expandable_content').attr('aria-expanded') === 'true';
+        return isSmall && isExpanded || !isSmall && !isExpanded;
+    }
+
+    function navSecondaryToggle() {
+        if (navSecondaryToggleTest()) {
+            $('.nav-secondary .expandable_target').trigger('click');
+        }
+    }
+});
+
+/* ==========================================================================
    Initialize Chosen.js
    ========================================================================== */
 
@@ -51,19 +81,23 @@ $('.js-form_clear').on('click', function() {
    Init jquery.cf_inputSplit
    ========================================================================== */
 
-$('#filter_range_date_gte-container').cf_inputSplit({
-    newHTML: '#filter_range_date_gte-replacement',
-    newInputsOrder: ['#filter_from_year', '#filter_from_month'],
-    initialValues: $('#filter_range_date_gte').val().split('-'),
-    delimiter: '-'
-});
+if ($('#filter_range_date_gte-container').length > 0) {
+    $('#filter_range_date_gte-container').cf_inputSplit({
+        newHTML: '#filter_range_date_gte-replacement',
+        newInputsOrder: ['#filter_from_year', '#filter_from_month'],
+        initialValues: $('#filter_range_date_gte').val().split('-'),
+        delimiter: '-'
+    });
+}
 
-$('#filter_range_date_lte-container').cf_inputSplit({
-    newHTML: '#filter_range_date_lte-replacement',
-    newInputsOrder: ['#filter_to_year', '#filter_to_month'],
-    initialValues: $('#filter_range_date_lte').val().split('-'),
-    delimiter: '-'
-});
+if ($('#filter_range_date_lte-container').length > 0) {
+    $('#filter_range_date_lte-container').cf_inputSplit({
+        newHTML: '#filter_range_date_lte-replacement',
+        newInputsOrder: ['#filter_to_year', '#filter_to_month'],
+        initialValues: $('#filter_range_date_lte').val().split('-'),
+        delimiter: '-'
+    });
+}
 
 $('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
 .trigger('updateState');
