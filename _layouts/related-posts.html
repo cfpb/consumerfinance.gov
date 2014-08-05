@@ -10,7 +10,7 @@
         <li class="list_item">
             <a class="list_link"
                href="{{ similar.permalink }}">
-                {{ similar.title }}
+                {{ similar.title|safe }}
             </a>
         </li>
     {% endfor %}
