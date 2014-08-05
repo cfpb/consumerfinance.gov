@@ -12216,19 +12216,23 @@ $('.js-form_clear').on('click', function() {
    Init jquery.cf_inputSplit
    ========================================================================== */
 
-$('#filter_range_date_gte-container').cf_inputSplit({
-    newHTML: '#filter_range_date_gte-replacement',
-    newInputsOrder: ['#filter_from_year', '#filter_from_month'],
-    initialValues: $('#filter_range_date_gte').val().split('-'),
-    delimiter: '-'
-});
+if ($('#filter_range_date_gte-container').length > 0) {
+    $('#filter_range_date_gte-container').cf_inputSplit({
+        newHTML: '#filter_range_date_gte-replacement',
+        newInputsOrder: ['#filter_from_year', '#filter_from_month'],
+        initialValues: $('#filter_range_date_gte').val().split('-'),
+        delimiter: '-'
+    });
+}
 
-$('#filter_range_date_lte-container').cf_inputSplit({
-    newHTML: '#filter_range_date_lte-replacement',
-    newInputsOrder: ['#filter_to_year', '#filter_to_month'],
-    initialValues: $('#filter_range_date_lte').val().split('-'),
-    delimiter: '-'
-});
+if ($('#filter_range_date_lte-container').length > 0) {
+    $('#filter_range_date_lte-container').cf_inputSplit({
+        newHTML: '#filter_range_date_lte-replacement',
+        newInputsOrder: ['#filter_to_year', '#filter_to_month'],
+        initialValues: $('#filter_range_date_lte').val().split('-'),
+        delimiter: '-'
+    });
+}
 
 $('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
 .trigger('updateState');
