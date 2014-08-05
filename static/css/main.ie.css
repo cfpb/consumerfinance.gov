@@ -11269,41 +11269,6 @@ a.focus .summary_header {
   margin: 0 auto 0.625em;
 }
 
-.contact-person__director .contact-person_name {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.22727273em;
-  font-size: 1.375em;
-  line-height: 1.27272727;
-  margin-bottom: 0.9375em;
-}
-
-.contact-person__director .contact-person_name em,
-.contact-person__director .contact-person_name i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .contact-person__director .contact-person_name em,
-.lt-ie9 .contact-person__director .contact-person_name i {
-  font-style: normal !important;
-}
-
-.contact-person__director .contact-person_name strong,
-.contact-person__director .contact-person_name b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .contact-person__director .contact-person_name strong,
-.lt-ie9 .contact-person__director .contact-person_name b {
-  font-weight: normal !important;
-}
-
 .contact-person__director .contact-person_title {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
@@ -11311,12 +11276,28 @@ a.focus .summary_header {
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-top: 0;
-  margin-bottom: 0.35714286em;
-  font-size: 0.875em;
-  line-height: 1.57142857;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+  line-height: 1;
 }
 
 .lt-ie9 .contact-person__director .contact-person_title {
+  font-weight: normal !important;
+}
+
+.contact-person__director .contact-person_name {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 0.83333333em;
+}
+
+.lt-ie9 .contact-person__director .contact-person_name {
   font-weight: normal !important;
 }
 
@@ -11325,36 +11306,56 @@ a.focus .summary_header {
 }
 
 .jump-link {
-  display: block;
+  display: inline-block;
+  border-bottom-width: 1px;
   margin-top: 1.5em;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  margin-right: 1.5em;
+  position: relative;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 1.125em;
 }
 
-.jump-link em,
-.jump-link i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .jump-link em,
-.lt-ie9 .jump-link i {
-  font-style: normal !important;
-}
-
-.jump-link strong,
-.jump-link b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .jump-link strong,
-.lt-ie9 .jump-link b {
+.lt-ie9 .jump-link {
   font-weight: normal !important;
+}
+
+.jump-link:before {
+  content: "\e002";
+}
+
+.lt-ie8 .jump-link {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
+}
+
+.jump-link__download:before {
+  content: "\e406";
+}
+
+.lt-ie8 .jump-link__download {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
+}
+
+.jump-link:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+  position: absolute;
+  top: 0.25em;
+  right: -1.5em;
+  padding-left: 0.25em;
+  width: 1em;
+  border-bottom: none;
+}
+
+.list__links .jump-link {
+  margin-top: -1px;
+  font-size: 1em;
 }
 
 .press-section_title {
@@ -11392,14 +11393,14 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
-.press-contacts .list__links {
+.press-contacts_main-contact-list {
   display: block;
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
 }
 
-.press-contacts .list__links .list_item {
+.press-contacts_main-contact-list .list_item {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -11411,11 +11412,11 @@ a.focus .summary_header {
   width: 50%;
 }
 
-.ie .press-contacts .list__links .list_item {
+.ie .press-contacts_main-contact-list .list_item {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .press-contacts .list__links .list_item {
+.lt-ie8 .press-contacts_main-contact-list .list_item {
   display: inline;
   margin-right: 0;
   zoom: 1;
@@ -11424,6 +11425,58 @@ a.focus .summary_header {
 
 .contact-person__director {
   text-align: center;
+}
+
+.contact-person__director .contact-person_title {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  line-height: 1;
+}
+
+.lt-ie9 .contact-person__director .contact-person_title {
+  font-weight: normal !important;
+}
+
+.contact-person__director .contact-person_name {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.68181818em;
+}
+
+.contact-person__director .contact-person_name em,
+.contact-person__director .contact-person_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .contact-person__director .contact-person_name em,
+.lt-ie9 .contact-person__director .contact-person_name i {
+  font-style: normal !important;
+}
+
+.contact-person__director .contact-person_name strong,
+.contact-person__director .contact-person_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .contact-person__director .contact-person_name strong,
+.lt-ie9 .contact-person__director .contact-person_name b {
+  font-weight: normal !important;
 }
 
 .press-logo_logo {
