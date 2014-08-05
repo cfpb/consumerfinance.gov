@@ -5288,36 +5288,36 @@ figure {
 */
 
 a {
-  border-bottom-width: 0;
-  border-bottom-style: dotted;
-  border-bottom-color: #0072ce;
+  border-width: 0;
+  border-style: dotted;
+  border-color: #0072ce;
   color: #0072ce;
   text-decoration: none;
 }
 
 a:visited,
 a.visited {
-  border-bottom-color: #005e5d;
+  border-color: #005e5d;
   color: #005e5d;
 }
 
 a:hover,
 a.hover {
-  border-bottom-style: solid;
-  border-bottom-color: #7fb8e6;
+  border-style: solid;
+  border-color: #7fb8e6;
   color: #7fb8e6;
 }
 
 a:focus,
 a.focus {
-  border-bottom-style: solid;
+  border-style: solid;
   outline: thin dotted;
 }
 
 a:active,
 a.active {
-  border-bottom-style: solid;
-  border-bottom-color: #002d72;
+  border-style: solid;
+  border-color: #002d72;
   color: #002d72;
 }
 
@@ -7062,21 +7062,24 @@ img {
     - name: Default example
       markup: |
         <nav class="nav-secondary">
+            <button class="nav-secondary_link nav-secondary_link__button">
+                Item 1
+            </button>
             <ul class="nav-secondary_list">
                 <li class="nav-secondary_item">
-                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                    <a class="nav-secondary_link" href="#">
                        Item 1
-                   </a>
+                    </a>
                 </li>
                 <li class="nav-secondary_item">
-                    <a class="nav-secondary_link" href="#">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
                        Item 2
-                   </a>
+                    </a>
                 </li>
                 <li class="nav-secondary_item">
                     <a class="nav-secondary_link" href="#">
                        Item 3
-                   </a>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -7085,12 +7088,93 @@ img {
           Structural cheat sheet:
           -----------------------
           .nav-secondary
+            .nav-secondary_link.nav-secondary_link__button
             .nav-secondary_list
               .nav-secondary_item
-                .nav-secondary_link
+                .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
     - name: Current link modifier
+      markup: |
+        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+           Current nav link
+        </a>
       codenotes:
         - ".nav-secondary_link__current"
+      notes:
+        - "Current links are hidden on small screens and the link button is
+           revealed."
+        - "Currentl links have a left green border on large screens."
+    - name: Link button modifier
+      markup: |
+        <button class="nav-secondary_link nav-secondary_link__button">
+            Button nav link
+        </button>
+      codenotes:
+        - ".nav-secondary_link__button"
+      notes:
+        - "This modifier is only visible on smaller screens."
+        - "The button link modifier is used to convey the current link for small
+           screens. It also acts as a toggle button when mixing this pattern
+           with the expandable pattern."
+        - "The inline style is for demonstration purposes only and is needed
+           because the modifier hides the element at larger screen size.
+           Please do not use it in production."
+    - name: Secondary nav mixed with cf-expandable
+      markup: |
+        <nav class="nav-secondary expandable">
+            <div class="expandable_header">
+                <button class="expandable_target
+                        nav-secondary_link
+                        nav-secondary_link__button">
+                    <span class="expandable_header-left">
+                        Item 2
+                    </span>
+                    <span class="expandable_header-right">
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon cf-icon-down cf-icon__green"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon cf-icon-up cf-icon__green"></span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+            <div class="expandable_content">
+                <ul class="nav-secondary_list">
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link" href="#">
+                           Item 1
+                        </a>
+                    </li>
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                           Item 2
+                        </a>
+                    </li>
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link" href="#">
+                           Item 3
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .nav-secondary.expandable
+            .expandable_header
+              .expandable_target.nav-secondary_link.nav-secondary_link__button
+                .expandable_header-left
+                .expandable_header-right
+                  .expandable_cue-open
+                    .cf-icon.cf-icon-down.cf-icon__green
+                  .expandable_cue-close
+                    .cf-icon.cf-icon-up.cf-icon__green
+            .expandable_content
+              .nav-secondary_list
+                .nav-secondary_item
+                  .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
   tags:
     - cfgov-nav-secondary
 */
@@ -7108,41 +7192,25 @@ img {
   list-style: none;
 }
 
+.nav-secondary_item + .nav-secondary_item {
+  margin-top: 1px;
+}
+
 .nav-secondary_link {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
   display: inline-block;
   padding: 0.55555556em;
   border-left-style: solid;
-  border-left-width: 4px;
+  border-left-width: 5px;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
   font-size: 1.125em;
   line-height: 1;
   color: #0072ce;
   border-color: transparent;
 }
 
-.nav-secondary_link em,
-.nav-secondary_link i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .nav-secondary_link em,
-.lt-ie9 .nav-secondary_link i {
-  font-style: normal !important;
-}
-
-.nav-secondary_link strong,
-.nav-secondary_link b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .nav-secondary_link strong,
-.lt-ie9 .nav-secondary_link b {
+.lt-ie9 .nav-secondary_link {
   font-weight: normal !important;
 }
 
@@ -7154,67 +7222,82 @@ img {
 
 .nav-secondary_link:hover,
 .nav-secondary_link.hover {
-  border-color: transparent;
+  border-color: #2cb34a;
   color: #101820;
 }
 
 .nav-secondary_link:focus,
 .nav-secondary_link.focus {
-  border-color: transparent;
+  border-color: #2cb34a;
   color: #101820;
 }
 
 .nav-secondary_link:active,
 .nav-secondary_link.active {
-  border-color: transparent;
+  border-color: #2cb34a;
   color: #101820;
 }
 
-.nav-secondary_link:hover,
-.nav-secondary_link:focus,
 .nav-secondary_link__current {
   color: #101820;
   border-color: #2cb34a;
 }
 
-.nav-secondary_link:hover:visited,
-.nav-secondary_link:focus:visited,
 .nav-secondary_link__current:visited,
-.nav-secondary_link:hover.visited,
-.nav-secondary_link:focus.visited,
 .nav-secondary_link__current.visited {
   border-color: #2cb34a;
   color: #101820;
 }
 
-.nav-secondary_link:hover:hover,
-.nav-secondary_link:focus:hover,
 .nav-secondary_link__current:hover,
-.nav-secondary_link:hover.hover,
-.nav-secondary_link:focus.hover,
 .nav-secondary_link__current.hover {
   border-color: #2cb34a;
   color: #101820;
 }
 
-.nav-secondary_link:hover:focus,
-.nav-secondary_link:focus:focus,
 .nav-secondary_link__current:focus,
-.nav-secondary_link:hover.focus,
-.nav-secondary_link:focus.focus,
 .nav-secondary_link__current.focus {
   border-color: #2cb34a;
   color: #101820;
 }
 
-.nav-secondary_link:hover:active,
-.nav-secondary_link:focus:active,
 .nav-secondary_link__current:active,
-.nav-secondary_link:hover.active,
-.nav-secondary_link:focus.active,
 .nav-secondary_link__current.active {
   border-color: #2cb34a;
   color: #101820;
+}
+
+.nav-secondary_link__button {
+  width: 100%;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.lt-ie9 .nav-secondary_link__button {
+  font-weight: normal !important;
+}
+
+.nav-secondary_link__button:focus {
+  outline: thin dotted;
+}
+
+.nav-secondary_link__button {
+  display: none;
+}
+
+.nav-secondary .cf-icon__green {
+  color: #2cb34a;
+}
+
+.nav-secondary .expandable_header {
+  overflow: visible;
+}
+
+.nav-secondary .expandable_content {
+  padding: 0;
 }
 
 /* topdoc
