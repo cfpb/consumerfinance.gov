@@ -9,21 +9,79 @@
   patterns:
     - name: Default example
       markup: |
+        <nav class="nav-secondary">
+            <button class="nav-secondary_link nav-secondary_link__button">
+                Item 1
+            </button>
+            <ul class="nav-secondary_list">
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 1
+                    </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                       Item 2
+                    </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 3
+                    </a>
+                </li>
+            </ul>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .nav-secondary
+            .nav-secondary_link.nav-secondary_link__button
+            .nav-secondary_list
+              .nav-secondary_item
+                .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
+    - name: Current link modifier
+      markup: |
+        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+           Current nav link
+        </a>
+      codenotes:
+        - ".nav-secondary_link__current"
+      notes:
+        - "Current links are hidden on small screens and the link button is
+           revealed."
+        - "Currentl links have a left green border on large screens."
+    - name: Link button modifier
+      markup: |
+        <button class="nav-secondary_link nav-secondary_link__button">
+            Button nav link
+        </button>
+      codenotes:
+        - ".nav-secondary_link__button"
+      notes:
+        - "This modifier is only visible on smaller screens."
+        - "The button link modifier is used to convey the current link for small
+           screens. It also acts as a toggle button when mixing this pattern
+           with the expandable pattern."
+        - "The inline style is for demonstration purposes only and is needed
+           because the modifier hides the element at larger screen size.
+           Please do not use it in production."
+    - name: Secondary nav mixed with cf-expandable
+      markup: |
         <nav class="nav-secondary expandable">
             <div class="expandable_header">
                 <button class="expandable_target
                         nav-secondary_link
-                        nav-secondary_link__button
-                        nav-secondary_link__current">
+                        nav-secondary_link__button">
                     <span class="expandable_header-left">
-                        Item 1
+                        Item 2
                     </span>
                     <span class="expandable_header-right">
                         <span class="expandable_cue-open">
-                            <span class="cf-icon cf-icon-down nav-secondary_icon"></span>
+                            <span class="cf-icon cf-icon-down cf-icon__green"></span>
                         </span>
                         <span class="expandable_cue-close">
-                            <span class="cf-icon cf-icon-up nav-secondary_icon"></span>
+                            <span class="cf-icon cf-icon-up cf-icon__green"></span>
                         </span>
                     </span>
                 </button>
@@ -31,19 +89,19 @@
             <div class="expandable_content">
                 <ul class="nav-secondary_list">
                     <li class="nav-secondary_item">
-                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                        <a class="nav-secondary_link" href="#">
                            Item 1
-                       </a>
+                        </a>
                     </li>
                     <li class="nav-secondary_item">
-                        <a class="nav-secondary_link" href="#">
+                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
                            Item 2
-                       </a>
+                        </a>
                     </li>
                     <li class="nav-secondary_item">
                         <a class="nav-secondary_link" href="#">
                            Item 3
-                       </a>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -54,20 +112,17 @@
           -----------------------
           .nav-secondary.expandable
             .expandable_header
-              .expandable_target.nav-secondary_link.nav-secondary_link__button.nav-secondary_link__current
+              .expandable_target.nav-secondary_link.nav-secondary_link__button
                 .expandable_header-left
                 .expandable_header-right
                   .expandable_cue-open
-                    .cf-icon.cf-icon-down.nav-secondary_icon
+                    .cf-icon.cf-icon-down.cf-icon__green
                   .expandable_cue-close
-                    .cf-icon.cf-icon-up.nav-secondary_icon
+                    .cf-icon.cf-icon-up.cf-icon__green
             .expandable_content
               .nav-secondary_list
                 .nav-secondary_item
-                  .nav-secondary_link
-    - name: Current link modifier
-      codenotes:
-        - ".nav-secondary_link__current"
+                  .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
   tags:
     - cfgov-nav-secondary
 */
@@ -105,6 +160,7 @@
                             @gray-20, @gray-20, @gray-20, @gray-20, @gray-20);
             text-align: left; // Needed to override button styles
         });
+
         .u-respond-to-min(801px, {
             display: inline-block;
             padding: unit(10px / 18px, em);
@@ -114,42 +170,37 @@
             font-size: unit(18px / @base-font-size-px, em);
             line-height: 1;
             .u-link__colors(@pacific, @pacific, @black, @black, @black,
-                            transparent, transparent, transparent, transparent, transparent);
+                            transparent, transparent, @green, @green, @green);
         });
-        &__button {
-            width: 100%;
-            text-align: left;
-            .u-respond-to-min(801px, {
+
+        &__current {
+            .u-respond-to-max(800px, {
                 display: none;
             });
+            .u-respond-to-min(801px, {
+                .u-link__colors(@black, @black, @black, @black, @black,
+                                @green, @green, @green, @green, @green);
+            });
+        }
+
+        &__button {
+            width: 100%;
+            .webfont-demi();
+            text-align: left;
+            text-transform: uppercase;
 
             &:focus {
                 outline: thin dotted;
             }
+
+            .u-respond-to-min(801px, {
+                display: none;
+            });
         }
     }
 
-    &_link__current {
-        .u-respond-to-max(800px, {
-            .webfont-demi();
-            text-transform: uppercase;
-
-            .nav-secondary_item & {
-                display: none;
-            }
-        });
-    }
-
-    &_link:hover,
-    &_link:focus,
-    &_link__current {
-        .u-respond-to-min(801px, {
-            .u-link__colors(@black, @black, @black, @black, @black,
-                            @green, @green, @green, @green, @green);
-        });
-    }
-
-    &_icon {
+    // This modifier should be moved to cf-icons.
+    .cf-icon__green {
         color: @green;
     }
 
