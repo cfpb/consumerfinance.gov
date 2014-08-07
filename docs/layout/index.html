@@ -322,6 +322,7 @@ main.content
           <h3 class="docs-pattern_header">Flush bottom modifier</h3>
           <section class="docs-pattern_pattern">
 <main class="content content__1-3" id="main" role="main">
+    <div class="content_bar"></div>
     <div class="wrapper content_wrapper">
         <aside class="content_sidebar content__flush-bottom">
             Side with no bottom padding...
@@ -348,6 +349,7 @@ main.content
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;main class=&quot;content content__1-3&quot; id=&quot;main&quot; role=&quot;main&quot;&gt;
+    &lt;div class=&quot;content_bar&quot;&gt;&lt;/div&gt;
     &lt;div class=&quot;wrapper content_wrapper&quot;&gt;
         &lt;aside class=&quot;content_sidebar content__flush-bottom&quot;&gt;
             Side with no bottom padding...
@@ -372,11 +374,107 @@ main.content
 &lt;/footer&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.content_main__flush-bottom</code></pre>
+                <pre class="docs-code"><code>.content__flush-bottom</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Add a class of .content_main__flush-bottom to .content_main or .content_sidebar__flush-bottom to .content_sidebar to remove  bottom padding.</li>
+              <li>Add a class of .content__flush-bottom to .content_main or content_sidebar to remove bottom padding.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Flush top modifier (only on small screens)</h3>
+          <section class="docs-pattern_pattern">
+<main class="content content__1-3" id="main" role="main">
+    <div class="content_bar"></div>
+    <div class="wrapper content_wrapper">
+        <aside class="content_sidebar content__flush-top-on-small">
+            Side with no top padding on small screens...
+        </aside>
+        <section class="content_main">
+            Main content
+        </section>
+    </div>
+</main>
+<footer class="footer" role="contentinfo">
+    <div class="wrapper">
+        Footer
+    </div>
+</footer>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;main class=&quot;content content__1-3&quot; id=&quot;main&quot; role=&quot;main&quot;&gt;
+    &lt;div class=&quot;content_bar&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;wrapper content_wrapper&quot;&gt;
+        &lt;aside class=&quot;content_sidebar content__flush-top-on-small&quot;&gt;
+            Side with no top padding on small screens...
+        &lt;/aside&gt;
+        &lt;section class=&quot;content_main&quot;&gt;
+            Main content
+        &lt;/section&gt;
+    &lt;/div&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot; role=&quot;contentinfo&quot;&gt;
+    &lt;div class=&quot;wrapper&quot;&gt;
+        Footer
+    &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content__flush-top-on-small</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Add a class of .content__flush-top-on-small to .content_main or .content_sidebar to remove top padding on small screens only. 'Small' screens in this case refers to the breakpoint where .content_main and .content_sidebar single column layout.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Flush all modifier (only on small screens)</h3>
+          <section class="docs-pattern_pattern">
+<main class="content content__1-3" id="main" role="main">
+    <div class="content_bar"></div>
+    <div class="wrapper content_wrapper">
+        <aside class="content_sidebar content__flush-all-on-small">
+            Side with no padding or border-based gutters on small screens...
+        </aside>
+        <section class="content_main">
+            Main content
+        </section>
+    </div>
+</main>
+<footer class="footer" role="contentinfo">
+    <div class="wrapper">
+        Footer
+    </div>
+</footer>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;main class=&quot;content content__1-3&quot; id=&quot;main&quot; role=&quot;main&quot;&gt;
+    &lt;div class=&quot;content_bar&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;wrapper content_wrapper&quot;&gt;
+        &lt;aside class=&quot;content_sidebar content__flush-all-on-small&quot;&gt;
+            Side with no padding or border-based gutters on small screens...
+        &lt;/aside&gt;
+        &lt;section class=&quot;content_main&quot;&gt;
+            Main content
+        &lt;/section&gt;
+    &lt;/div&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot; role=&quot;contentinfo&quot;&gt;
+    &lt;div class=&quot;wrapper&quot;&gt;
+        Footer
+    &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content__flush-all-on-small</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Add a class of .content__flush-all-on-small to .content_main or .content_sidebar to remove all padding and border-based gutters on small screens only. 'Small' screens in this case refers to the breakpoint where .content_main and .content_sidebar single column layout.</li>
             </ul>
           </footer>
         </div>
@@ -417,9 +515,6 @@ main.content
   .content_sidebar {
     padding: 3.75em 0;
   }
-}
-.content__flush-bottom {
-  padding-bottom: 0;
 }
 @media only all and (min-width: 50.0625em) {
   .content__1-3 .content_sidebar {
@@ -541,6 +636,20 @@ main.content
   }
   .lt-ie8 .content__2-1 .content_main__narrow {
     padding-right: 0;
+  }
+}
+.content__flush-bottom {
+  padding-bottom: 0;
+}
+@media only all and (max-width: 50em) {
+  .content__flush-top-on-small {
+    padding-top: 0;
+  }
+}
+@media only all and (max-width: 50em) {
+  .content__flush-all-on-small {
+    padding: 0;
+    border-width: 0;
   }
 }</code></pre>
       </div>
@@ -881,7 +990,7 @@ Main content...
         <aside class="content_sidebar">
             Section navigation
         </aside>
-        <section class="content_main content_main__flush-bottom">
+        <section class="content_main content__flush-bottom">
             Main content...
             <div class="content_block content_block__flush-sides content_block__bg">
                 Content block with a background and flush sides
@@ -897,7 +1006,7 @@ Main content...
         &lt;aside class=&quot;content_sidebar&quot;&gt;
             Section navigation
         &lt;/aside&gt;
-        &lt;section class=&quot;content_main content_main__flush-bottom&quot;&gt;
+        &lt;section class=&quot;content_main content__flush-bottom&quot;&gt;
             Main content...
             &lt;div class=&quot;content_block content_block__flush-sides content_block__bg&quot;&gt;
                 Content block with a background and flush sides
