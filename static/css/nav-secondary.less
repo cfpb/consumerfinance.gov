@@ -149,7 +149,8 @@
         .u-respond-to-max(800px, {
             display: block;
             // width: 100%; // Needed to override button styles
-            padding: unit(15px / 16px, em);
+            padding: unit((@grid_gutter-width / 2) / 16px, em)
+                     unit(@grid_gutter-width / 16px, em);
             border-bottom-style: solid;
             border-width: 0; // Needed to override button styles
             border-bottom-width: 1px;
@@ -159,6 +160,11 @@
             .u-link__colors(@darkgray, @darkgray, @darkgray, @darkgray, @darkgray,
                             @gray-20, @gray-20, @gray-20, @gray-20, @gray-20);
             text-align: left; // Needed to override button styles
+        });
+
+        .u-respond-to-max(600px, {
+            padding-left: unit((@grid_gutter-width / 2) / 16px, em);
+            padding-right: unit((@grid_gutter-width / 2) / 16px, em);
         });
 
         .u-respond-to-min(801px, {
