@@ -6370,6 +6370,7 @@ img {
     - name: Flush bottom modifier
       markup: |
         <main class="content content__1-3" id="main" role="main">
+            <div class="content_bar"></div>
             <div class="wrapper content_wrapper">
                 <aside class="content_sidebar content__flush-bottom">
                     Side with no bottom padding...
@@ -6393,11 +6394,60 @@ img {
             </div>
         </footer>
       codenotes:
-        - .content_main__flush-bottom
+        - .content__flush-bottom
       notes:
-        - "Add a class of .content_main__flush-bottom to .content_main or
-           .content_sidebar__flush-bottom to .content_sidebar to remove 
-           bottom padding."
+        - "Add a class of .content__flush-bottom to .content_main or
+           content_sidebar to remove bottom padding."
+    - name: Flush top modifier (only on small screens)
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <aside class="content_sidebar content__flush-top-on-small">
+                    Side with no top padding on small screens...
+                </aside>
+                <section class="content_main">
+                    Main content
+                </section>
+            </div>
+        </main>
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer>
+      codenotes:
+        - .content__flush-top-on-small
+      notes:
+        - "Add a class of .content__flush-top-on-small to .content_main or
+           .content_sidebar to remove top padding on small screens only.
+           'Small' screens in this case refers to the breakpoint where
+           .content_main and .content_sidebar single column layout."
+    - name: Flush all modifier (only on small screens)
+      markup: |
+        <main class="content content__1-3" id="main" role="main">
+            <div class="content_bar"></div>
+            <div class="wrapper content_wrapper">
+                <aside class="content_sidebar content__flush-all-on-small">
+                    Side with no padding or border-based gutters on small screens...
+                </aside>
+                <section class="content_main">
+                    Main content
+                </section>
+            </div>
+        </main>
+        <footer class="footer" role="contentinfo">
+            <div class="wrapper">
+                Footer
+            </div>
+        </footer>
+      codenotes:
+        - .content__flush-all-on-small
+      notes:
+        - "Add a class of .content__flush-all-on-small to .content_main or
+           .content_sidebar to remove all padding and border-based gutters on
+           small screens only. 'Small' screens in this case refers to the
+           breakpoint where .content_main and .content_sidebar single column layout."
   tags:
     - cfgov-layout
 */
@@ -6437,10 +6487,6 @@ img {
 .content_main,
 .content_sidebar {
   padding: 3.75em 0;
-}
-
-.content__flush-bottom {
-  padding-bottom: 0;
 }
 
 .content__1-3 .content_sidebar {
@@ -6549,6 +6595,10 @@ img {
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content__flush-bottom {
+  padding-bottom: 0;
 }
 
 /* topdoc
@@ -6759,7 +6809,7 @@ img {
                 <aside class="content_sidebar">
                     Section navigation
                 </aside>
-                <section class="content_main content_main__flush-bottom">
+                <section class="content_main content__flush-bottom">
                     Main content...
                     <div class="content_block content_block__flush-sides content_block__bg">
                         Content block with a background and flush sides
