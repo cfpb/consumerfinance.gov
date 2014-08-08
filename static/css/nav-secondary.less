@@ -146,28 +146,37 @@
     }
 
     &_link {
+        @font-size-small: 16px;
+        @font-size-large: 18px;
+
         .u-respond-to-max(800px, {
             display: block;
             // width: 100%; // Needed to override button styles
-            padding: unit(15px / 16px, em);
+            padding: unit((@grid_gutter-width / 2) / @font-size-small, em)
+                     unit(@grid_gutter-width / @font-size-small, em);
             border-bottom-style: solid;
             border-width: 0; // Needed to override button styles
             border-bottom-width: 1px;
             background: @gray-10;
             .webfont-medium();
-            font-size: unit(16px / @base-font-size-px, em);
+            font-size: unit(@font-size-small / @base-font-size-px, em);
             .u-link__colors(@darkgray, @darkgray, @darkgray, @darkgray, @darkgray,
                             @gray-20, @gray-20, @gray-20, @gray-20, @gray-20);
             text-align: left; // Needed to override button styles
         });
 
+        .u-respond-to-max(600px, {
+            padding-left: unit((@grid_gutter-width / 2) / @font-size-small, em);
+            padding-right: unit((@grid_gutter-width / 2) / @font-size-small, em);
+        });
+
         .u-respond-to-min(801px, {
             display: inline-block;
-            padding: unit(10px / 18px, em);
+            padding: unit(10px / @font-size-large, em);
             border-left-style: solid;
             border-left-width: 5px;
             .webfont-medium();
-            font-size: unit(18px / @base-font-size-px, em);
+            font-size: unit(@font-size-large / @base-font-size-px, em);
             line-height: 1;
             .u-link__colors(@pacific, @pacific, @black, @black, @black,
                             transparent, transparent, @green, @green, @green);
