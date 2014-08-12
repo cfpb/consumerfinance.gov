@@ -1,4 +1,24 @@
 
-<p class="demo-placeholder">
-    placeholder
-</p>
+<form id="email-subscribe-form">
+
+    <div class="form-group">
+        <input type="text" placeholder="Your email">
+    </div>
+
+    <div class="form-group">
+    {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
+        <label class="form-group_item form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name=""
+                   value="">
+            {{ category.term }}
+        </label>
+    {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <input class="btn" type="submit" class="btn" value="Sign up">
+    </div>
+
+</form>

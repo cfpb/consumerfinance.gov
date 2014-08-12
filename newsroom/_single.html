@@ -23,6 +23,10 @@
 
 {% block content %}
 
+    {# Set a common 'query' variable to enable sharing of filtering functions
+       between blog and newsroom. #}
+    {% set query = queries.newsroom %}
+
     {# Create 'post' variable to enable sharing of
        included partials with blog #}
     {% set post = newsroom %}
