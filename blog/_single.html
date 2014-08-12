@@ -23,6 +23,10 @@
 
 {% block content %}
 
+    {# Set a common 'query' variable to enable sharing of filtering functions
+       between blog and newsroom. #}
+    {% set query = queries.posts %}
+
     {% import "post-macros.html" as post_macros with context %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
