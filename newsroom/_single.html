@@ -27,9 +27,9 @@
        between blog and newsroom. #}
     {% set query = queries.newsroom %}
 
-    {# Create 'post' variable to enable sharing of
-       included partials with blog #}
+    {# Set variables needed to enable sharing of included partials with blog. #}
     {% set post = newsroom %}
+    {% set path = '/newsroom/' %}
 
     {% import "post-macros.html" as post_macros with context %}
 
