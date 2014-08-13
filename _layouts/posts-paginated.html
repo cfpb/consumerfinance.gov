@@ -2,6 +2,13 @@
 <div id="pagination_content">
 
 {% for post in posts %}
+
+    {% if path == '/newsroom' and post.custom_fields.display_in_newsroom %}
+        {% set permalink = '/blog/' + post.slug + '/' %}
+    {% else %}
+        {% set permalink = post.permalink %}
+    {% endif %}
+
     <article class="post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
@@ -9,7 +16,7 @@
             </span>
         {% if post.category.0 %}
             <a class="category-slug meta-header_left"
-               href="/blog/?filter_category={{ post.category.0|urlencode|replace('%20', '+') }}">
+               href="?filter_category={{ post.category.0|urlencode|replace('%20', '+') }}">
                 {{ post_macros.category_icon(post.category.0, 'category-slug_icon')|safe }}
                 <span class="u-visually-hidden">Category:</span>
                 {{ post.category.0 }}
@@ -19,7 +26,7 @@
         {% endif %}
         </div>
     {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
-        <a class="media-object" href="{{ post.permalink }}">
+        <a class="media-object" href="{{ permalink }}">
             <div class="media-object_image-container">
                 <img class="media-object_image"
                      src="{{ post.thumbnail.images.fj_thumbnail.url }}"
@@ -30,11 +37,12 @@
             </div>
         </a>
     {% else %}
-        <a class="summary" href="{{ post.permalink }}">
+        <a class="summary" href="{{ permalink }}">
             {{ post_macros.post_summary(post) }}
         </a>
     {% endif %}
     </article>
+
 {% endfor %}
 
 

@@ -1,16 +1,16 @@
 {
   "post":{
-    "url" : "/blog/<id>",
+    "url" : "/blog/<id>/",
     "type" : "posts",
     "permalink" : true
   },
   "newsroom":{
-    "url" : "/newsroom/<id>",
+    "url" : "/newsroom/<id>/",
     "type" : "newsroom",
     "permalink" : true
   },
   "watchroom":{
-    "url" : "/watchroom/<id>",
+    "url" : "/watchroom/<id>/",
     "type" : "watchroom",
     "permalink" : true
   }
