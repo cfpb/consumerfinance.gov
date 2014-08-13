@@ -28,6 +28,15 @@ def documents(name, url, **kwargs):
     for post in posts_at_url(url):
         yield process_post(post)
 
+    # Optionally include additional documents with specific values in custom fields
+    if 'supplement' in kwargs:
+        supplement = kwargs['supplement']
+        for post in posts_at_url(supplement['url']):
+            if supplement['field'] in post['custom_fields'] and \
+               supplement['expected_value'] in post['custom_fields'][supplement['field']]:
+                yield process_post(post)
+
+
 def process_post(post):
     del post['comments']
     post['_id'] = post['slug']
