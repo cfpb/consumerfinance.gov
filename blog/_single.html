@@ -23,6 +23,9 @@
 
 {% block content %}
 
+    {# Set path variable so links in shared partial templates will work. #} 
+    {% set path = '/blog/' %}
+
     {% import "post-macros.html" as post_macros with context %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
