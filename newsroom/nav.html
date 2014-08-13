@@ -1,8 +1,8 @@
 {% extends "nav-secondary.html" %}
 
 {% set navigation_bar = [
-    ('/newsroom/', 'index', 'Newsroom'),
-    ('/newsroom/press-resources.html', 'press-resources', 'Press Resources')
+    (path, 'index', 'Newsroom'),
+    (path + 'press-resources/', 'press-resources', 'Press Resources')
 ] -%}
 
 {% set active_page = active_page|default('index') -%}

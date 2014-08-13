@@ -28,7 +28,16 @@ def documents(name, url, **kwargs):
     for post in posts_at_url(url):
         yield process_post(post)
 
-def process_post(post):
+    # Optionally include additional documents with specific values in custom fields
+    if 'supplement' in kwargs:
+        supplement = kwargs['supplement']
+        for post in posts_at_url(supplement['url']):
+            if supplement['field'] in post['custom_fields'] and \
+               supplement['expected_value'] in post['custom_fields'][supplement['field']]:
+                yield process_post(post, True)
+
+
+def process_post(post, newsroom = False):
     del post['comments']
     post['_id'] = post['slug']
     # remove fields we're not interested in
@@ -49,6 +58,8 @@ def process_post(post):
     else:
         post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
         post['author'] = [author['title'] for author in post['taxonomy_author']]
+    if newsroom and post['type'] == 'post':
+        post['category'][0] = "Blog"
     author_template = Template("$first_name $last_name")
     dt = dateutil.parser.parse(post['date'])
     dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
