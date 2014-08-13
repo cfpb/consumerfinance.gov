@@ -12171,9 +12171,10 @@ $(document).ready(function(){
 $('.reveal-on-focus')
     .find('.reveal-on-focus_content').hide()
     .end()
-    .find('.reveal-on-focus_trigger').on('focus', function() {
+    .find('.reveal-on-focus_target').on('focus', function() {
         $(this).parents('.reveal-on-focus').find('.reveal-on-focus_content').slideDown();
     });
+
 
 /* ==========================================================================
    Initialize Chosen.js
