@@ -39,7 +39,7 @@
     {# Set 'posts' to the newsroom query to enable
        some functions already developed for blog. #}
     {% set posts = newsroom %}
-    {% set path = '/newsroom' %}
+    {% set path = '/newsroom/' %}
 
     {# Get the latest watchroom post. #}
     {% set watchroom = queries.watchroom.search_with_url_arguments(size=1) %}

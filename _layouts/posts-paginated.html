@@ -4,7 +4,7 @@
 {% for post in posts %}
 
     {% if path == '/newsroom' and post.custom_fields.display_in_newsroom %}
-        {% set permalink = '/blog/' + post.slug %}
+        {% set permalink = '/blog/' + post.slug + '/' %}
     {% else %}
         {% set permalink = post.permalink %}
     {% endif %}
