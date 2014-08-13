@@ -5,10 +5,8 @@
 
     {% if path == '/newsroom' and post.custom_fields.display_in_newsroom %}
         {% set permalink = '/blog/' + post.slug %}
-        {% set category = "Blog" %}
     {% else %}
         {% set permalink = post.permalink %}
-        {% set category = post.category.0 %}
     {% endif %}
 
     <article class="post-preview">
@@ -18,10 +16,10 @@
             </span>
         {% if post.category.0 %}
             <a class="category-slug meta-header_left"
-               href="?filter_category={{ category|urlencode|replace('%20', '+') }}">
-                {{ post_macros.category_icon(category, 'category-slug_icon')|safe }}
+               href="?filter_category={{ post.category.0|urlencode|replace('%20', '+') }}">
+                {{ post_macros.category_icon(post.category.0, 'category-slug_icon')|safe }}
                 <span class="u-visually-hidden">Category:</span>
-                {{ category }}
+                {{ post.category.0 }}
             </a>
         {% else %}
             &nbsp;
