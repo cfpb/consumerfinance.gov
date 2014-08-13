@@ -601,6 +601,56 @@
       notes:
         - "This is an example of combining modifiers to get a flush padded bg
            with a .content_block."
+    - name: Sub blocks
+      markup: |
+        <div class="content_block content_block__sub">
+            <div style="background: #F1F2F2; padding: 8px;">
+                Sub content block
+            </div>
+        </div>
+        <div class="content_block content_block__sub">
+            <div style="background: #F1F2F2; padding: 8px;">
+                Sub content block
+            </div>
+        </div>
+        <div class="content_block content_block__sub">
+            <div style="background: #F1F2F2; padding: 8px;">
+                Sub content block
+            </div>
+        </div>
+      codenotes:
+        - .content_block.content_block__sub
+      notes:
+        - "Useful for when you need some consistent margins between
+           .content_block's that are nested within other content_blocks."
+        - "Note that the divs with inline styles are for demonstration purposes
+           only and should not be used in production."
+    - name: Mixing content blocks with content layouts
+      markup: |
+        <div class="content-l">
+            <div class="content_block content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2; padding: 8px;">
+                    Content block that is also a content column.
+                    Notice how my top margins only exist on smaller screens when
+                    I need to stack vertically.
+                </div>
+            </div>
+            <div class="content_block content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2; padding: 8px;">
+                    Content block that is also a content column.
+                    Notice how my top margins only exist on smaller screens when
+                    I need to stack vertically.
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - .content_block.content-l_col
+      notes:
+        - "You can safely combine .content_block__sub with .content-l_col to
+           achieve a column-based layout at larger screens with no top margins
+           and a vertical layout at smaller screens that do have margins."
+        - "Note that the divs with inline styles are for demonstration purposes
+           only and should not be used in production."
   tags:
     - cfgov-layout
 */
@@ -635,20 +685,20 @@
                      unit(@grid_gutter-width / @base-font-size-px, em);
         });
     }
-}
 
-.content_block__sub {
-    margin-top: unit(30px / @base-font-size-px, em);
-    margin-bottom: unit(30px / @base-font-size-px, em);
-}
+    &__sub {
+        margin-top: unit(30px / @base-font-size-px, em);
+        margin-bottom: unit(30px / @base-font-size-px, em);
+    }
 
-.content-l_col.content_block,
-.content-l_col.content_block__sub {
-    .u-respond-to-min(600px, {
-        margin-top: 0;
-    });
+    // Overrides for when .content_block is also a column
+    .content-l_col&,
+    .content-l_col&__sub {
+        .u-respond-to-min(600px, {
+            margin-top: 0;
+        });
+    }
 }
-
 
 
 /* topdoc
