@@ -2,7 +2,7 @@
 <article class="post">
     <header>
         {% if post.category.0 %}
-        <a href="{{ path }}/?filter_category={{ post.category.0 }}" class="post_slug category-slug">
+        <a href="{{ path }}?filter_category={{ post.category.0 }}" class="post_slug category-slug">
             {{ post_macros.category_icon(post.category.0, 'category-slug_icon')|safe }}
             <span class="u-visually-hidden">Category:</span>
             {{ post.category.0 }}
@@ -19,11 +19,11 @@
         <div class="post_meta">
         {% if post.author.0 %}
             <span class="post_byline">
-                By <a href="{{ path }}/?filter_author={{ post.author.0 }}">
+                By <a href="{{ path }}?filter_author={{ post.author.0 }}">
                     {{ post.author.0 }}
                 </a>
                 {% if post.author.1 %}
-                    and <a href="{{ path }}/?filter_author={{ post.author.1 }}">
+                    and <a href="{{ path }}?filter_author={{ post.author.1 }}">
                         {{ post.author.1 }}
                     </a>
                 {% endif %}
@@ -80,7 +80,7 @@
             <ul class="tags_list">
             {% for tag in post.tags %}
                 <li class="tags_tag">
-                    <a class="tags_link" href="{{ path }}/?filter_tags={{ tag }}">
+                    <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}">
                         <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         {{ tag }}
                     </a>
