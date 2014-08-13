@@ -1060,6 +1060,56 @@ Main content...
       <h2 class="docs-component_header"><span>Content layouts</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Content blocks for .content_sidebar</h3>
+          <section class="docs-pattern_pattern">
+<div class="sidebar-content-block">
+    Sidebar content block
+</div>
+<div class="sidebar-content-block">
+    Sidebar content block
+</div>
+<div class="sidebar-content-block">
+    Sidebar content block
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;sidebar-content-block&quot;&gt;
+    Sidebar content block
+&lt;/div&gt;
+&lt;div class=&quot;sidebar-content-block&quot;&gt;
+    Sidebar content block
+&lt;/div&gt;
+&lt;div class=&quot;sidebar-content-block&quot;&gt;
+    Sidebar content block
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.sidebar-content-block</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Allows for grouping and spacing content blocks within .content_sidebar</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.sidebar-content-block {
+  margin: 0.9375em 0;
+}
+.sidebar-content-block__medium-top-margin {
+  margin-top: 1.875em;
+}
+.sidebar-content-block__large-top-margin {
+  margin-top: 3.75em;
+}</code></pre>
+      </div>
+    </div>
+    <div id="content-layouts" class="docs-component">
+      <h2 class="docs-component_header"><span>Content layouts</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
           <h3 class="docs-pattern_header">Standard content columns</h3>
           <section class="docs-pattern_pattern">
 <div class="content-l">
@@ -1217,6 +1267,12 @@ Main content...
   }
 }
 .content-l_col + .content-l_col {
+  margin-top: 0.9375em;
+}
+.content-l_col__medium-top-margin {
+  margin-top: 1.875em;
+}
+.content-l_col__large-top-margin {
   margin-top: 3.75em;
 }
 @media only all and (min-width: 37.5em) {
