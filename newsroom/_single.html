@@ -23,7 +23,8 @@
 
 {% block content %}
 
-    {# Set variables needed to enable sharing of included partials with blog. #}
+    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
+    {% set query = queries.newsroom %}
     {% set post = newsroom %}
     {% set path = '/newsroom/' %}
 
@@ -35,35 +36,41 @@
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
-            <section class="content_main content_main__narrow">
-                {% include "article.html" %}
-                {% include "press-information.html" %}
-            </section>
+            <div class="content_main content_main__narrow">
+                <section>
+                    {% include "article.html" %}
+                    {% include "press-information.html" %}
+                </section>
+            </div>
 
             <aside class="content_sidebar">
-                <section class="content_sidebar-item">
+                <section class="content_block content_block__flush-top">
                     {% include "related-posts.html" %}
                 </section>
-                <section class="content_sidebar-item related-news">
-                    <div class="demo-placeholder">Related news placeholder</div>
+                <section class="content_block related-news">
+                    <h1 class="demo-placeholder">Related news placeholder</h1>
                 </section>
-                <section class="content_sidebar-item stay-informed">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Stay informed
-                        </span>
-                    </h1>
-                    <p class="short-desc">
-                        Subscribe to our email newsletter. We will update you on new newsroom updates.
-                    </p>
-                    {% include "email-subscribe-form.html" %}
-                    <p class="short-desc">
-                        Subscribe to our RSS feed to get the latest content in your reader.
-                    </p>
-                    <a class="btn" href="/feed/newsroom">
-                        <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
-                        Subscribe to RSS
-                    </a>
+                <section class="content_block stay-informed">
+                    <div class="content_block__sub">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new newsroom updates.
+                        </p>
+                        {% include "email-subscribe-form.html" %}
+                    </div>
+                    <div class="content_block__sub">
+                        <p class="short-desc">
+                            Subscribe to our RSS feed to get the latest content in your reader.
+                        </p>
+                        <a class="btn" href="/feed/newsroom/">
+                            <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
+                            Subscribe to RSS
+                        </a>
+                    </div>
                 </section>
             </aside><!-- END .content_sidebar -->
             

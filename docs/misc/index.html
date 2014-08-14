@@ -453,6 +453,15 @@
     </div>
     <div id="custom-checkboxes-and-radio-buttons-via-jquerycustom-input" class="docs-component">
       <h2 class="docs-component_header"><span>Custom checkboxes and radio buttons via jquery.custom-input</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>This plugin auto-initiates and will transform your initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default input behavior.</li>
+          <li>You MUST wrap your input.custom-input in a label.</li>
+          <li>Remember to use 'for' and 'id' attributes. This will allow IE less than 8 to trigger the input on label click.</li>
+          <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-input by detecting :hover and :focus on .custom-input.</li>
+          <li>JavaScript is used to detect change events to the input. By clicking the label element you change the checked property and the plugin will add the .is-checked class.</li>
+        </ul>
+      </div>
       <div class="docs-patterns">
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Custom checkbox demo with initialization markup</h3>
@@ -527,11 +536,7 @@ label
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default input behavior.</li>
-              <li>You MUST wrap input[type=checkbox].custom-input in a label.</li>
-              <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
-              <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-input by detecting :hover and :focus on .custom-input.</li>
-              <li>JavaScript is used to detect change events to the input. By clicking the label element you change the checked property and the plugin will add the .is-checked class.</li>
+              <li>Use the markup structure above to add .custom-input elements.</li>
             </ul>
           </footer>
         </div>
@@ -608,11 +613,7 @@ label
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Use the markup structure above to add .custom-input elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default input behavior.</li>
-              <li>You MUST wrap input[type=radio].custom-input in a label.</li>
-              <li>Remember to use for and id attributes. This will allow IE less than 8 to trigger the input on label click.</li>
-              <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-input by detecting :hover and :focus on .custom-input.</li>
-              <li>JavaScript is used to detect change events to the input. By clicking the label element you change the checked property and the plugin will add the .is-checked class.</li>
+              <li>Use the markup structure above to add .custom-input elements.</li>
             </ul>
           </footer>
         </div>
@@ -626,20 +627,11 @@ label
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;//code.jquery.com/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;../../static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
-            <ul class="docs-notes">
-              <li>The jQuery plugin will auto intitiate all input[type=checkbox] and input[type=radio] elements with the class of .custom-input and append the the .is-enabled class which activates the styling.</li>
-            </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.custom-input.is-enabled {
-  display: block;
-  position: relative;
-  margin-right: 0.375em;
-  padding: 0 0 0 1.25em;
-}
-.custom-input_input {
+        <pre class="docs-code"><code data-language="css">.custom-input_input {
   position: absolute;
   top: 4px;
   left: 4px;
@@ -653,8 +645,8 @@ label
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1px;
+  left: 1px;
   z-index: 1;
   width: 1.25em;
   height: 1.25em;
@@ -673,14 +665,14 @@ label
 .custom-input_label {
   position: relative;
   z-index: 2;
-  padding-left: 1.25em;
+  padding-left: 1.375em;
   margin-right: 0.375em;
   line-height: 1;
 }
 .custom-input_text {
   display: inline-block;
   padding-left: 0.5em;
-  line-height: 1.25;
+  line-height: 1.375;
 }
 .is-hovered .custom-input_checkbox,
 .is-hovered .custom-input_radio,
@@ -980,8 +972,8 @@ label
         <pre class="docs-code"><code data-language="css">.form-group + .form-group {
   margin-top: 1.875em;
 }
-.form-group_item {
-  margin-bottom: 0.9375em;
+.form-group_item + .form-group_item {
+  margin-top: 0.9375em;
 }</code></pre>
       </div>
     </div>
