@@ -31,7 +31,6 @@
 
     {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
     {% set query = queries.newsroom %}
-
     {% set newsroom = query.search_with_url_arguments(size=10) %}
     {% set view = get_document('views', 'newsroom') %}
 
