@@ -13,8 +13,7 @@
 
 {% block content %}
 
-    {# Set a common 'query' variable to enable sharing of filtering functions
-       between blog and newsroom. #}
+    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
     {% set query = queries.newsroom %}
 
     {% set path = '/newsroom/' %}
