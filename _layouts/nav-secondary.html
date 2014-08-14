@@ -1,5 +1,12 @@
 
 <nav class="nav-secondary expandable">
+    <h1 class="u-visually-hidden">
+{%- for href, id, caption in navigation_bar %}
+    {% if id == 'index' %}
+        {{ caption|e }} navigation
+    {% endif %}
+{%- endfor %}
+    </h1>
     <div class="expandable_header">
         <button class="expandable_target nav-secondary_link nav-secondary_link__button">
             <span class="expandable_header-left">

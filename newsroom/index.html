@@ -29,10 +29,8 @@
 
     {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
-    {# Set a common 'query' variable to enable sharing of filtering functions
-       between blog and newsroom. #}
+    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
     {% set query = queries.newsroom %}
-
     {% set newsroom = query.search_with_url_arguments(size=10) %}
     {% set view = get_document('views', 'newsroom') %}
 
@@ -60,45 +58,49 @@
                 {% include "nav.html" %}
             </aside>
 
-            <section class="content_main content__flush-bottom content__flush-top-on-small">
-                {% include "post-filters.html" %}
-                {% include "watchroom.html" %}
-                {% include "posts-paginated.html" %}
-                <aside class="content_block">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Stay informed
-                        </span>
-                    </h1>
-                    <div class="content-l">
-                        <div class="content-l_col content-l_col-1-2">
-                            <p class="short-desc">
-                                Subscribe to our email newsletter. We will update you on new newsroom updates.
-                            </p>
-                            {% include "email-subscribe-form.html" %}
+            <div class="content_main content__flush-bottom content__flush-top-on-small">
+                <section>
+                    {% include "post-filters.html" %}
+                    {% include "watchroom.html" %}
+                    {% include "posts-paginated.html" %}
+                </section>
+                <aside>
+                    <section class="content_block">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <div class="content-l">
+                            <div class="content_block__sub content-l_col content-l_col-1-2">
+                                <p class="short-desc">
+                                    Subscribe to our email newsletter. We will update you on new newsroom updates.
+                                </p>
+                                {% include "email-subscribe-form.html" %}
+                            </div>
+                            <div class="content_block__sub content-l_col content-l_col-1-2">
+                                <p class="short-desc">
+                                    Subscribe to our RSS feed to get the latest content in your reader.
+                                </p>
+                                <a class="btn" href="/feed/newsroom/">
+                                    <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
+                                    Subscribe to RSS
+                                </a>
+                            </div>
                         </div>
-                        <div class="content-l_col content-l_col-1-2">
-                            <p class="short-desc">
-                                Subscribe to our RSS feed to get the latest content in your reader.
-                            </p>
-                            <a class="btn" href="/feed/newsroom">
-                                <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
-                                Subscribe to RSS
-                            </a>
+                    </section>
+                    <div class="content_block content_block__flush-bottom content_block__flush-sides content_block__bg">
+                        <div class="content-l">
+                            <section class="content_block content_block__flush-top content-l_col content-l_col-1-2">
+                                {% include "related-links.html" %}
+                            </section>
+                            <section class="content_block content-l_col content-l_col-1-2">
+                                {% include "upcoming-events.html" %}
+                            </section>
                         </div>
                     </div>
                 </aside>
-                <aside class="content_block content_block__flush-bottom content_block__flush-sides content_block__bg">
-                    <div class="content-l">
-                        <section class="content-l_col content-l_col-1-2">
-                            {% include "related-links.html" %}
-                        </section>
-                        <section class="content-l_col content-l_col-1-2">
-                            {% include "upcoming-events.html" %}
-                        </section>
-                    </div>
-                </aside>
-            </section>
+            </div><!-- END .content_main -->
 
         </div><!-- END .content_wrapper -->
     </main><!-- END .content -->
