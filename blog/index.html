@@ -50,10 +50,12 @@
 
         <div class="wrapper content_wrapper">
 
-            <section class="content_main">
-                {% include "post-filters.html" %}
-                {% include "posts-paginated.html" %}
-            </section>
+            <div class="content_main">
+                <section>
+                    {% include "post-filters.html" %}
+                    {% include "posts-paginated.html" %}
+                </section>
+            </div>
 
             <aside class="content_sidebar">
                 <section class="content_block content_block__flush-top">

@@ -39,17 +39,19 @@
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
-            <section class="content_main content_main__narrow">
-                {% include "article.html" %}
-                {% include "press-information.html" %}
-            </section>
+            <div class="content_main content_main__narrow">
+                <section>
+                    {% include "article.html" %}
+                    {% include "press-information.html" %}
+                </section>
+            </div>
 
             <aside class="content_sidebar">
                 <section class="content_block content_block__flush-top">
                     {% include "related-posts.html" %}
                 </section>
                 <section class="content_block related-news">
-                    <div class="demo-placeholder">Related news placeholder</div>
+                    <h1 class="demo-placeholder">Related news placeholder</h1>
                 </section>
                 <section class="content_block stay-informed">
                     <div class="content_block__sub">
