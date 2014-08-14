@@ -23,8 +23,7 @@
 
 {% block content %}
 
-    {# Set a common 'query' variable to enable sharing of filtering functions
-       between blog and newsroom. #}
+    {# Set a common 'query' variable. #}
     {% set query = queries.posts %}
 
     {# Set path variable so links in shared partial templates will work. #} 
@@ -38,17 +37,19 @@
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
-            <section class="content_main content_main__narrow">
-                {% include "article.html" %}
-                {% include "comments.html" %}
-            </section>
+            <div class="content_main content_main__narrow">
+                <section>
+                    {% include "article.html" %}
+                    {% include "comments.html" %}
+                </section>
+            </div>
 
             <aside class="content_sidebar">
                 <section class="content_sidebar-item">
                     {% include "related-posts.html" %}
                 </section>
                 <section class="content_sidebar-item related-news">
-                    <div class="demo-placeholder">Related news placeholder</div>
+                    <h1 class="demo-placeholder">Related news placeholder</h1>
                 </section>
                 <section class="content_sidebar-item stay-informed">
                     <h1 class="header-slug">
