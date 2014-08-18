@@ -4,6 +4,26 @@
    ========================================================================== */
 
 /* topdoc
+  name: Expandables
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Header right float on medium modifier
+      codenotes:
+        - .expandable_header-right__float-on-medium
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.expandable_header-right__float-on-medium {
+    float: none;
+
+    .u-respond-to-min(600px, {
+        float: right;
+    });
+}
+
+
+/* topdoc
   name: cf-grid column dividers
   family: cfgov-cf-enhancements
   notes:
