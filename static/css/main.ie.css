@@ -6174,6 +6174,25 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Expandables
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Header right float on medium modifier
+      codenotes:
+        - .expandable_header-right__float-on-medium
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.expandable_header-right__float-on-medium {
+  float: none;
+}
+
+.expandable_header-right__float-on-medium {
+  float: right;
+}
+
+/* topdoc
   name: cf-grid column dividers
   family: cfgov-cf-enhancements
   notes:
@@ -8260,25 +8279,6 @@ a.category-slug.active {
    cfgov-refresh
    misc
    ========================================================================== */
-
-/* topdoc
-  name: Expandables
-  family: cfgov-misc
-  patterns:
-    - name: Header right float on medium modifier
-      codenotes:
-        - .expandable_header-right__float-on-medium
-  tags:
-    - cfgov-misc
-*/
-
-.expandable_header-right__float-on-medium {
-  float: none;
-}
-
-.expandable_header-right__float-on-medium {
-  float: right;
-}
 
 /* topdoc
   name: Short description
