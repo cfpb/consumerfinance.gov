@@ -5,6 +5,39 @@
 
 
 /* topdoc
+  name: Micro copy
+  family: cfgov-misc
+  patterns:
+    - name: Standard micro copy
+      markup: |
+        <p class="micro-copy">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
+    - name: Large micro copy
+      markup: |
+        <p class="micro-copy micro-copy__large">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
+  tags:
+    - cfgov-misc
+*/
+
+.micro-copy {
+    color: @gray;
+    font-size: unit(14px / @base-font-size-px, em);
+    .webfont-regular();
+
+    &__large {
+        font-size: unit(16px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
   name: Short description
   family: cfgov-misc
   patterns:

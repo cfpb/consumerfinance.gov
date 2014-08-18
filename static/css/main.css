@@ -7452,6 +7452,57 @@ a.category-slug.active {
    misc
    ========================================================================== */
 /* topdoc
+  name: Micro copy
+  family: cfgov-misc
+  patterns:
+    - name: Standard micro copy
+      markup: |
+        <p class="micro-copy">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
+    - name: Large micro copy
+      markup: |
+        <p class="micro-copy micro-copy__large">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
+  tags:
+    - cfgov-misc
+*/
+.micro-copy {
+  color: #75787b;
+  font-size: 0.875em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.micro-copy em,
+.micro-copy i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .micro-copy em,
+.lt-ie9 .micro-copy i {
+  font-style: normal !important;
+}
+.micro-copy strong,
+.micro-copy b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .micro-copy strong,
+.lt-ie9 .micro-copy b {
+  font-weight: normal !important;
+}
+.micro-copy__large {
+  font-size: 1em;
+}
+/* topdoc
   name: Short description
   family: cfgov-misc
   patterns:
