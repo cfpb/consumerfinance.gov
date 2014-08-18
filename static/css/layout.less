@@ -123,6 +123,9 @@
 */
 
 .content-l {
+    // Used to position __divider modifiers
+    position: relative;
+
     .u-respond-to-min(600px, {
         .grid_nested-col-group();
     });
@@ -133,7 +136,12 @@
         margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
     .u-respond-to-min(600px, {
-        & + & {
+        &.content-l_col-1-2 + &.content-l_col-1-2 {
+            margin-top: 0;
+        }
+    });
+    .u-respond-to-min(768px, {
+        &.content-l_col-1-3 + &.content-l_col-1-3 {
             margin-top: 0;
         }
     });
@@ -171,6 +179,73 @@
 
 
 /* topdoc
+  name: Content layout column dividers
+  family: cfgov-layout
+  notes:
+    - "Adds dividers between specified .content-l_col-X-X classes."
+    - "Layout dividers work in conjunction with .content-l_col-X-X elements and
+       have specific needs depending on which column element variant they are
+       attached to. For example .content-l_col-1-2 has different divider needs
+       than .content-l_col-1-3 because they break to single columns at different
+       breakpoints."
+    - "Dividers use absolute positioning relative to the .content-l element and
+       depends on .content-l using `position: relative;`. This allows vertical
+       dividers to span the height of the tallest column. Just be aware that if
+       you have more than one row of columns, and each row has columns of
+       different widths, the borders will cause unwanted overlapping since they
+       will span the height of the entire .content-l element."
+  patterns:
+    - name: .content-l_col__before-divider (modifier)
+      markup: |
+        <div class="content-l">
+            <div class="content-l_col content-l_col-1-2">
+                Half-width column (spans 6/12 columns)
+            </div>
+            <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                Half-width column (spans 6/12 columns)
+            </div>
+        </div>
+        <br>
+        <!-- Starting a new .content-l so that the dividers from
+             .content-l_col.content-l_col-1-2.content-l_col__before-divider
+             won't overlap the .content-l_col-1-3 columns. -->
+        <div class="content-l">
+            <div class="content-l_col content-l_col-1-3">
+                Third-width column (spans 4/12 columns)
+            </div>
+            <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
+                Third-width column (spans 4/12 columns)
+            </div>
+            <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
+                Third-width column (spans 4/12 columns)
+            </div>
+        </div>
+      codenotes:
+        - .content-l_col__before-divider
+  tags:
+    - cfgov-layout
+*/
+
+.content-l_col__before-divider.content-l_col-1-2 {
+    .u-respond-to-max(599px {
+        .grid_column__top-divider();
+    });
+    .u-respond-to-min(600px, {
+        .grid_column__left-divider();
+    });
+}
+
+.content-l_col__before-divider.content-l_col-1-3 {
+    .u-respond-to-max(767px {
+        .grid_column__top-divider();
+    });
+    .u-respond-to-min(768px, {
+        .grid_column__left-divider();
+    });
+}
+
+
+/* topdoc
   name: Content bar
   family: cfgov-layout
   patterns:
@@ -189,6 +264,23 @@
 .content_bar {
     height: 10px;
     background: @green;
+}
+
+
+/* topdoc
+  name: Content line
+  family: cfgov-layout
+  patterns:
+    - name: "A 1 pixel edge to edge bar that can divide content."
+      markup: |
+        <div class="content_line"></div>
+  tags:
+    - cfgov-layout
+*/
+
+.content_line {
+    height: 1px;
+    background: @gray-50;
 }
 
 
@@ -417,6 +509,7 @@
     - cfgov-layout
 */
 
+.content_intro,
 .content_main,
 .content_sidebar {
     padding: unit(@grid_gutter-width / @base-font-size-px, em)
@@ -433,6 +526,12 @@
                  0;
     });
 }
+
+.u-respond-to-min(801px, {
+    .content_intro {
+        .grid_column(12);
+    }
+});
 
 // Set up standard multi-column content area layouts
 .u-respond-to-min(801px, {
