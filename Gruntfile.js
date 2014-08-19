@@ -326,6 +326,7 @@ module.exports = function(grunt) {
     var topdoc = {};
     var subtasks = [
       'blog-docs',
+      'cf-enhancements',
       'layout',
       'media-object',
       'meta',

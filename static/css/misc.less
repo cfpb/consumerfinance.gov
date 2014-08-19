@@ -5,22 +5,35 @@
 
 
 /* topdoc
-  name: Expandables
+  name: Micro copy
   family: cfgov-misc
   patterns:
-    - name: Header right float on medium modifier
+    - name: Standard micro copy
+      markup: |
+        <p class="micro-copy">
+            Lorem ipsum dolor sit amet
+        </p>
       codenotes:
-        - .expandable_header-right__float-on-medium
+        - .micro-copy
+    - name: Large micro copy
+      markup: |
+        <p class="micro-copy micro-copy__large">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
   tags:
     - cfgov-misc
 */
 
-.expandable_header-right__float-on-medium {
-    float: none;
+.micro-copy {
+    color: @gray;
+    font-size: unit(14px / @base-font-size-px, em);
+    .webfont-regular();
 
-    .u-respond-to-min(600px, {
-        float: right;
-    });
+    &__large {
+        font-size: unit(16px / @base-font-size-px, em);
+    }
 }
 
 
