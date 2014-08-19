@@ -211,6 +211,10 @@
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .content-l {
+  position: relative;
+}
+
+.content-l {
   display: block;
   position: relative;
   margin-left: -15px;
@@ -221,7 +225,11 @@
   margin-top: 1.875em;
 }
 
-.content-l_col + .content-l_col {
+.content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
+  margin-top: 0;
+}
+
+.content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
   margin-top: 0;
 }
 
@@ -362,6 +370,202 @@
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
+
+.content-l_col-3-8 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .content-l_col-3-8 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col-3-8 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content-l_col-3-8 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 37.5%;
+}
+
+.ie .content-l_col-3-8 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col-3-8 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content-l_col-5-8 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .content-l_col-5-8 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col-5-8 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content-l_col-5-8 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 62.5%;
+}
+
+.ie .content-l_col-5-8 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col-5-8 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="content-layout-column-dividers" class="docs-component">
+      <h2 class="docs-component_header"><span>Content layout column dividers</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Adds dividers between specified .content-l_col-X-X classes.</li>
+          <li>Layout dividers work in conjunction with .content-l_col-X-X elements and have specific needs depending on which column element variant they are attached to. For example .content-l_col-1-2 has different divider needs than .content-l_col-1-3 because they break to single columns at different breakpoints.</li>
+          <li>Dividers use absolute positioning relative to the .content-l element and depends on .content-l using `position: relative;`. This allows vertical dividers to span the height of the tallest column. Just be aware that if you have more than one row of columns, and each row has columns of different widths, the borders will cause unwanted overlapping since they will span the height of the entire .content-l element.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.content-l_col__before-divider (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<div class="content-l">
+    <div class="content-l_col content-l_col-1-2">
+        Half-width column (spans 6/12 columns)
+    </div>
+    <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+        Half-width column (spans 6/12 columns)
+    </div>
+</div>
+<br>
+<!-- Starting a new .content-l so that the dividers from
+     .content-l_col.content-l_col-1-2.content-l_col__before-divider
+     won't overlap the .content-l_col-1-3 columns. -->
+<div class="content-l">
+    <div class="content-l_col content-l_col-1-3">
+        Third-width column (spans 4/12 columns)
+    </div>
+    <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
+        Third-width column (spans 4/12 columns)
+    </div>
+    <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
+        Third-width column (spans 4/12 columns)
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;content-l&quot;&gt;
+    &lt;div class=&quot;content-l_col content-l_col-1-2&quot;&gt;
+        Half-width column (spans 6/12 columns)
+    &lt;/div&gt;
+    &lt;div class=&quot;content-l_col content-l_col-1-2 content-l_col__before-divider&quot;&gt;
+        Half-width column (spans 6/12 columns)
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;!-- Starting a new .content-l so that the dividers from
+     .content-l_col.content-l_col-1-2.content-l_col__before-divider
+     won't overlap the .content-l_col-1-3 columns. --&gt;
+&lt;div class=&quot;content-l&quot;&gt;
+    &lt;div class=&quot;content-l_col content-l_col-1-3&quot;&gt;
+        Third-width column (spans 4/12 columns)
+    &lt;/div&gt;
+    &lt;div class=&quot;content-l_col content-l_col-1-3 content-l_col__before-divider&quot;&gt;
+        Third-width column (spans 4/12 columns)
+    &lt;/div&gt;
+    &lt;div class=&quot;content-l_col content-l_col-1-3 content-l_col__before-divider&quot;&gt;
+        Third-width column (spans 4/12 columns)
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content-l_col__before-divider</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.content-l_col__before-divider.content-l_col-1-2 {
+  padding-left: 30px;
+}
+
+.content-l_col__before-divider.content-l_col-1-2:before {
+  content: &quot;&quot;;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  display: block;
+  background-color: #babbbd;
+  margin-left: -45px;
+}
+
+.content-l_col__before-divider.content-l_col-1-3 {
+  padding-left: 30px;
+}
+
+.content-l_col__before-divider.content-l_col-1-3:before {
+  content: &quot;&quot;;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  display: block;
+  background-color: #babbbd;
+  margin-left: -45px;
+}
 </code></pre>
       </div>
     </div>
@@ -388,6 +592,29 @@
 .content_bar {
   height: 10px;
   background: #2cb34a;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="content-line" class="docs-component">
+      <h2 class="docs-component_header"><span>Content line</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">A 1 pixel edge to edge bar that can divide content.</h3>
+          <section class="docs-pattern_pattern">
+<div class="content_line"></div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;content_line&quot;&gt;&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.content_line {
+  height: 1px;
+  background: #babbbd;
 }
 </code></pre>
       </div>
@@ -793,11 +1020,13 @@ main.content
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
+.content_intro,
 .content_main,
 .content_sidebar {
   padding: 1.875em 0.9375em;
 }
 
+.content_intro,
 .content_main,
 .content_sidebar {
   display: inline-block;
@@ -812,11 +1041,13 @@ main.content
   padding: 3.75em 0.9375em;
 }
 
+.ie .content_intro,
 .ie .content_main,
 .ie .content_sidebar {
   margin-right: -0.26em;
 }
 
+.lt-ie8 .content_intro,
 .lt-ie8 .content_main,
 .lt-ie8 .content_sidebar {
   display: inline;
@@ -825,9 +1056,33 @@ main.content
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.content_intro,
 .content_main,
 .content_sidebar {
   padding: 3.75em 0;
+}
+
+.content_intro {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .content_intro {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content_intro {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .content__1-3 .content_sidebar {
