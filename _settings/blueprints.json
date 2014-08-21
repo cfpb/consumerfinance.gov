@@ -1,0 +1,6 @@
+{
+  "flask_govdelivery":{
+      "package" : "flask_govdelivery.govdelivery.controllers",
+      "module" : "govdelivery"
+    }
+}
