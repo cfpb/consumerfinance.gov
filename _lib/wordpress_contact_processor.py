@@ -32,22 +32,30 @@ def process_contact(post):
     del post['comments']
     post['_id'] = post['slug']
     if 'email' in post['custom_fields']:
-        post['email'] = post['custom_fields']['email'][0]
-        post['email_desc'] = post['custom_fields']['email'][1]
+        if post['custom_fields']['email'][0] != '':
+            post['email'] = post['custom_fields']['email'][0]
+        if post['custom_fields']['email'][1] != '':
+            post['email_desc'] = post['custom_fields']['email'][1]
     if 'email_2' in post['custom_fields']:
-        post['email_2'] = post['custom_fields']['email_2'][0]
-        post['email_2_desc'] = post['custom_fields']['email_2'][1]
+        if post['custom_fields']['email_2'][0] != '':
+            post['email_2'] = post['custom_fields']['email_2'][0]
+        if post['custom_fields']['email_2'][1] != '':
+            post['email_2_desc'] = post['custom_fields']['email_2'][1]
     if 'phone' in post['custom_fields']:
-        post['phone'] = post['custom_fields']['phone'][0]
-        post['phone_desc'] = post['custom_fields']['phone'][1]
+        if post['custom_fields']['phone'][0] != '':
+            post['phone'] = post['custom_fields']['phone'][0]
+        if post['custom_fields']['phone'][1] != '':
+            post['phone_desc'] = post['custom_fields']['phone'][1]
     if 'phone_2' in post['custom_fields']:
-        post['phone_2'] = post['custom_fields']['phone_2'][0]
-        post['phone_2_desc'] = post['custom_fields']['phone_2'][1]
+        if post['custom_fields']['phone_2'][0] != '':
+            post['phone_2'] = post['custom_fields']['phone_2'][0]
+        if post['custom_fields']['phone_2'][1] != '':
+            post['phone_2_desc'] = post['custom_fields']['phone_2'][1]
     if 'sitewide_desc' in post['custom_fields']:
         post['sitewide_desc'] = post['custom_fields']['sitewide_desc'][0]
     if 'fax' in post['custom_fields']:
         post['fax'] = post['custom_fields']['fax'][0]
-    if 'street' in post['custom_fields']:
+    if post['custom_fields'].get('street') is not None:
         post['street'] = post['custom_fields']['street'][0]
     if 'street_2' in post['custom_fields']:
         post['street_2'] = post['custom_fields']['street_2'][0]
