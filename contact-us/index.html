@@ -16,8 +16,6 @@
     {# Variables #}
     {% set query = queries.contact %}
     {% set contacts = query.search_with_url_arguments(size=10) %}
-    {% set general_inqueries = get_document('contact', 'general-inqueries') %}
-    {% set submit_a_complaint = get_document('contact', 'submit-a-complaint') %}
 
     {# Macros #}
     {% import "macros.html" as macros with context %}
@@ -33,79 +31,10 @@
 
                 <div class="content-l">
                     <section class="content-l_col content-l_col-1-2">
-                        <h1 class="h4">
-                            {{ general_inqueries.title }}
-                        </h1>
-                        <p class="short-desc">
-                            {{ general_inqueries.sitewide_desc }}
-                        </p>
-                        <ul class="list list__icons">
-                        {%- if general_inqueries.email != 'None' %}
-                            <li class="list_item">
-                                <span class="cf-icon cf-icon-email list_icon"></span>
-                                <a class="list_link" href="mailto:{{ general_inqueries.email }}">
-                                    {{ general_inqueries.email }}
-                                </a>
-                            </li>
-                        {%- endif %}
-                        {%- if general_inqueries.phone != 'None' %}
-                            <li class="list_item">
-                                <span class="cf-icon cf-icon-phone list_icon"></span>
-                                <span class="short-desc">
-                                    {{ macros.format_phone(general_inqueries.phone) }}
-                                </span>
-                            </li>
-                        {%- endif %}
-                        {%- if general_inqueries.fax != 'None' %}
-                            <li class="list_item">
-                                <span class="cf-icon cf-icon-fax list_icon"></span>
-                                <span class="short-desc">
-                                    {{ macros.format_phone(general_inqueries.fax) }}
-                                </span>
-                            </li>
-                        {%- endif %}                            
-                        </ul>
+                        {% include "general-inqueries.html" %}
                     </section>
                     <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                        <h1 class="h4">
-                            {{ submit_a_complaint.title }}
-                        </h1>
-                        <p class="short-desc">
-                            {{ submit_a_complaint.sitewide_desc }}
-                        </p>
-                        <div class="content-l">
-                            <div class="content-l_col content-l_col-1-2">
-                                <ul class="list list__unstyled">
-                                {%- if submit_a_complaint.phone != 'None' %}
-                                    <li class="list_item short-desc">
-                                        {{ macros.format_phone(submit_a_complaint.phone) }}
-                                    {%- if submit_a_complaint.phone_desc != 'None' %}
-                                        <span class="micro-copy micro-copy__large">
-                                            {{ submit_a_complaint.phone_desc }}
-                                        </span>
-                                    {%- endif %}
-                                    </li>
-                                {%- endif %}
-                                {%- if submit_a_complaint.phone_2 != 'None' %}
-                                    <li class="list_item short-desc">
-                                        {{ macros.format_phone(submit_a_complaint.phone_2) }}
-                                    {%- if submit_a_complaint.phone_2_desc != 'None' %}
-                                        <span class="micro-copy micro-copy__large">
-                                            {{ submit_a_complaint.phone_2_desc }}
-                                        </span>
-                                    {%- endif %}
-                                    </li>
-                                {%- endif %}
-                                </ul>
-                            </div>
-                            <div class="content-l_col content-l_col-1-2">
-                                <p class="micro-copy">
-                                    8AM - 8PM EST Mon. - Fri.<br>
-                                    180+ languages available
-                                </p>
-                            </div>
-                        </div><!-- END .content-l -->
-                        <a class="jump-link" href="#">Submit a complaint online</a>
+                        {% include "submit-a-complaint.html" %}
                     </section>
                 </div>
 
@@ -119,60 +48,7 @@
 
             <div class="content_main">
                 <section>
-                {%- for contact in contacts|sort(attribute='title') %}
-                    <article class="content_block{{ ' content_block__flush-top' if loop.first }}">
-                        <h1 class="h4">
-                            {{ contact.title }}
-                        </h1>
-                        <div class="content-l">
-                            <div class="content-l_col-5-8">
-                                {{ contact.content }}
-                                {%- if contact.web != 'None' %}
-                                <a class="jump-link" href="{{ contact.web }}">
-                                    {{ contact.web }}
-                                </a>
-                                {%- endif %}
-                            </div>
-                            <div class="content-l_col-3-8">
-                                <ul class="list list__icons">
-                                {%- if contact.email != 'None' %}
-                                    <li class="list_item">
-                                        <span class="cf-icon cf-icon-email list_icon"></span>
-                                        <a class="list_link" href="mailto:{{ contact.email }}">
-                                            {{ contact.email }}
-                                        </a>
-                                    </li>
-                                {%- endif %}
-                                {%- if contact.phone != 'None' %}
-                                    <li class="list_item">
-                                        <span class="cf-icon cf-icon-phone list_icon"></span>
-                                        <span class="short-desc">
-                                            {{ macros.format_phone(contact.phone) }}
-                                        </span>
-                                    </li>
-                                {%- endif %}
-                                {%- if contact.fax != 'None' %}
-                                    <li class="list_item">
-                                        <span class="cf-icon cf-icon-fax list_icon"></span>
-                                        <span class="short-desc">
-                                            {{ macros.format_phone(contact.fax) }}
-                                        </span>
-                                    </li>
-                                {%- endif %}
-                                </ul>
-                            {%- if contact.street != 'None' %}
-                                <p class="short-desc">
-                                    {{ contact.street if contact.street != 'None' }}<br>
-                                    {{ contact.street_2 if contact.street_2 != 'None' }}<br>
-                                    {{ contact.city + ',' if contact.city != 'None' }}
-                                    {{ contact.state if contact.state != 'None' }}
-                                    {{ contact.zip_code if contact.zip_code != 'None' }}
-                                </p>
-                            {%- endif %}
-                            </div>
-                        </div>
-                    </artivle>
-                {%- endfor %}
+                    {%- include "contact-list.html" %}
                 </section>
             </div>
 
