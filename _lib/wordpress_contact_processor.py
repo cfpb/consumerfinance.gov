@@ -31,42 +31,43 @@ def documents(name, url, **kwargs):
 def process_contact(post):
     del post['comments']
     post['_id'] = post['slug']
-    if 'email' in post['custom_fields']:
-        if post['custom_fields']['email'][0] != '':
-            post['email'] = post['custom_fields']['email'][0]
-        if post['custom_fields']['email'][1] != '':
-            post['email_desc'] = post['custom_fields']['email'][1]
-    if 'email_2' in post['custom_fields']:
-        if post['custom_fields']['email_2'][0] != '':
-            post['email_2'] = post['custom_fields']['email_2'][0]
-        if post['custom_fields']['email_2'][1] != '':
-            post['email_2_desc'] = post['custom_fields']['email_2'][1]
-    if 'phone' in post['custom_fields']:
-        if post['custom_fields']['phone'][0] != '':
-            post['phone'] = post['custom_fields']['phone'][0]
-        if post['custom_fields']['phone'][1] != '':
-            post['phone_desc'] = post['custom_fields']['phone'][1]
-    if 'phone_2' in post['custom_fields']:
-        if post['custom_fields']['phone_2'][0] != '':
-            post['phone_2'] = post['custom_fields']['phone_2'][0]
-        if post['custom_fields']['phone_2'][1] != '':
-            post['phone_2_desc'] = post['custom_fields']['phone_2'][1]
-    if 'sitewide_desc' in post['custom_fields']:
-        post['sitewide_desc'] = post['custom_fields']['sitewide_desc'][0]
-    if 'fax' in post['custom_fields']:
-        post['fax'] = post['custom_fields']['fax'][0]
-    if post['custom_fields'].get('street') is not None:
-        post['street'] = post['custom_fields']['street'][0]
-    if 'street_2' in post['custom_fields']:
-        post['street_2'] = post['custom_fields']['street_2'][0]
-    if 'city' in post['custom_fields']:
-        post['city'] = post['custom_fields']['city'][0]
-    if 'state' in post['custom_fields']:
-        post['state'] = post['custom_fields']['state'][0]
-    if 'zip_code' in post['custom_fields']:
-        post['zip_code'] = post['custom_fields']['zip_code'][0]
-    if 'addr_desc' in post['custom_fields']:
-        post['addr_desc'] = post['custom_fields']['addr_desc'][0]
-    if 'web' in post['custom_fields']:
-        post['web'] = post['custom_fields']['web'][0]
+    custom_fields = post['custom_fields']
+    if 'email' in custom_fields:
+        if custom_fields['email'][0] != '':
+            post['email'] = custom_fields['email'][0]
+        if custom_fields['email'][1] != '':
+            post['email_desc'] = custom_fields['email'][1]
+    if 'email_2' in custom_fields:
+        if custom_fields['email_2'][0] != '':
+            post['email_2'] = custom_fields['email_2'][0]
+        if custom_fields['email_2'][1] != '':
+            post['email_2_desc'] = custom_fields['email_2'][1]
+    if 'phone' in custom_fields:
+        if custom_fields['phone'][0] != '':
+            post['phone'] = custom_fields['phone'][0]
+        if custom_fields['phone'][1] != '':
+            post['phone_desc'] = custom_fields['phone'][1]
+    if 'phone_2' in custom_fields:
+        if custom_fields['phone_2'][0] != '':
+            post['phone_2'] = custom_fields['phone_2'][0]
+        if custom_fields['phone_2'][1] != '':
+            post['phone_2_desc'] = custom_fields['phone_2'][1]
+    if 'sitewide_desc' in custom_fields:
+        post['sitewide_desc'] = custom_fields['sitewide_desc'][0]
+    if 'fax' in custom_fields:
+        post['fax'] = custom_fields['fax'][0]
+    if 'street' in custom_fields:
+        post['street'] = custom_fields['street'][0]
+    if 'street_2' in custom_fields:
+        post['street_2'] = custom_fields['street_2'][0]
+    if 'city' in custom_fields:
+        post['city'] = custom_fields['city'][0]
+    if 'state' in custom_fields:
+        post['state'] = custom_fields['state'][0]
+    if 'zip_code' in custom_fields:
+        post['zip_code'] = custom_fields['zip_code'][0]
+    if 'addr_desc' in custom_fields:
+        post['addr_desc'] = custom_fields['addr_desc'][0]
+    if 'web' in custom_fields:
+        post['web'] = custom_fields['web'][0]
     return post
