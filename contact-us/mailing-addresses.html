@@ -7,19 +7,21 @@
 
 {# Google Image Maps API Docs:
    https://developers.google.com/maps/documentation/staticmaps/index #}
-<img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=300x226&markers=color:red%7C1275+First+St.+NE+Washington,+DC+20010" alt="">
+<p>
+    <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=300x226&markers=color:red%7C1275+First+St.+NE+Washington,+DC+20010" alt="">
+</p>
 
 <section class="content_block content_block__flush-top">
     <h1 class="h5">
         Administrative offices
     </h1>
     <p class="short-desc">
-        {{ macros.format_address(administrative_offices) }}
+        {{- macros.format_address(administrative_offices) -}}
     </p>
     <h1 class="h5">
         Consumer Contact center
     </h1>
     <p class="short-desc">
-        {{ macros.format_address(consumer_contact_center) }}
+        {{- macros.format_address(consumer_contact_center) -}}
     </p>
 </section>
