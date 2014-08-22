@@ -13,6 +13,18 @@
 
 {% block content %}
 
+    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
+    {% set query = queries.contact %}
+    {% set contacts = query.search_with_url_arguments(size=10) %}
+
+    {% macro address(contact) %}
+        {{ contact.street if contact.street != 'None' }}
+        {{ contact.street_2 if contact.street_2 != 'None' }}
+        {{ contact.city + ',' if contact.city != 'None' }}
+        {{ contact.state if contact.state != 'None' }}
+        {{ contact.zip if contact.zip != 'None' }}
+    {% endmacro %}
+
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
@@ -88,6 +100,52 @@
 
             <div class="content_main">
                 <section>
+                    {% for contact in contacts %}
+                    <div class="padded-container">
+                        <div class="padded-container_body">
+                            <h1 class="h4">
+                                {{ contact.title }}
+                            </h1>
+                            <div class="content-l">
+                                <div class="content-l_col-5-8">
+                                    {{ contact.content }}
+                                    <!-- <a class="jump-link" href="#">
+                                        Jump link
+                                    </a> -->
+                                </div>
+                                <div class="content-l_col-3-8">
+                                    <ul class="list list__icons">
+                                    {% if contact.email != 'None' %}
+                                        <li class="list_item">
+                                            <span class="cf-icon cf-icon-email list_icon"></span>
+                                            <a class="list_link" href="mailto:{{ contact.email }}">
+                                                {{ contact.email }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if contact.phone != 'None' %}
+                                        <li class="list_item">
+                                            <span class="cf-icon cf-icon-phone list_icon"></span>
+                                            <span class="short-desc">{{ contact.phone }}</span>
+                                        </li>
+                                    {% endif %}
+                                    {% if contact.fax != 'None' %}
+                                        <li class="list_item">
+                                            <span class="cf-icon cf-icon-fax list_icon"></span>
+                                            <span class="short-desc">{{ contact.fax }}</span>
+                                        </li>
+                                    {% endif %}
+                                    </ul>
+                                {% if contact.street != 'None' %}
+                                    <p class="short-desc">
+                                        {{ address(contact) }}
+                                    </p>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                     <article class="content_block content_block__flush-top">
                         <h1 class="h4">
                             Office of Financial Institutions and Business Liaison
