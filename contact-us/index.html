@@ -13,11 +13,14 @@
 
 {% block content %}
 
-    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
+    {# Variables #}
     {% set query = queries.contact %}
     {% set contacts = query.search_with_url_arguments(size=10) %}
     {% set general_inqueries = get_document('contact', 'general-inqueries') %}
     {% set submit_a_complaint = get_document('contact', 'submit-a-complaint') %}
+
+    {# Macros #}
+    {% import "macros.html" as macros with context %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
@@ -49,7 +52,7 @@
                             <li class="list_item">
                                 <span class="cf-icon cf-icon-phone list_icon"></span>
                                 <span class="short-desc">
-                                    {{ format_phone(general_inqueries.phone) }}
+                                    {{ macros.format_phone(general_inqueries.phone) }}
                                 </span>
                             </li>
                         {%- endif %}
@@ -57,7 +60,7 @@
                             <li class="list_item">
                                 <span class="cf-icon cf-icon-fax list_icon"></span>
                                 <span class="short-desc">
-                                    {{ format_phone(general_inqueries.fax) }}
+                                    {{ macros.format_phone(general_inqueries.fax) }}
                                 </span>
                             </li>
                         {%- endif %}                            
@@ -75,7 +78,7 @@
                                 <ul class="list list__unstyled">
                                 {%- if submit_a_complaint.phone != 'None' %}
                                     <li class="list_item short-desc">
-                                        {{ format_phone(submit_a_complaint.phone) }}
+                                        {{ macros.format_phone(submit_a_complaint.phone) }}
                                     {%- if submit_a_complaint.phone_desc != 'None' %}
                                         <span class="micro-copy micro-copy__large">
                                             {{ submit_a_complaint.phone_desc }}
@@ -85,7 +88,7 @@
                                 {%- endif %}
                                 {%- if submit_a_complaint.phone_2 != 'None' %}
                                     <li class="list_item short-desc">
-                                        {{ format_phone(submit_a_complaint.phone_2) }}
+                                        {{ macros.format_phone(submit_a_complaint.phone_2) }}
                                     {%- if submit_a_complaint.phone_2_desc != 'None' %}
                                         <span class="micro-copy micro-copy__large">
                                             {{ submit_a_complaint.phone_2_desc }}
@@ -144,7 +147,7 @@
                                     <li class="list_item">
                                         <span class="cf-icon cf-icon-phone list_icon"></span>
                                         <span class="short-desc">
-                                            {{ format_phone(contact.phone) }}
+                                            {{ macros.format_phone(contact.phone) }}
                                         </span>
                                     </li>
                                 {%- endif %}
@@ -152,7 +155,7 @@
                                     <li class="list_item">
                                         <span class="cf-icon cf-icon-fax list_icon"></span>
                                         <span class="short-desc">
-                                            {{ format_phone(contact.fax) }}
+                                            {{ macros.format_phone(contact.fax) }}
                                         </span>
                                     </li>
                                 {%- endif %}
