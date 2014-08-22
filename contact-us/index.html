@@ -18,11 +18,11 @@
     {% set contacts = query.search_with_url_arguments(size=10) %}
 
     {% macro address(contact) %}
-        {{ contact.street if contact.street != 'None' }}
-        {{ contact.street_2 if contact.street_2 != 'None' }}
-        {{ contact.city + ',' if contact.city != 'None' }}
-        {{ contact.state if contact.state != 'None' }}
-        {{ contact.zip if contact.zip != 'None' }}
+        {{ contact.street if contact.street is defined }}<br>
+        {{ contact.street_2 if contact.street_2 is defined }}<br>
+        {{ contact.city + ',' if contact.city is defined }}
+        {{ contact.state if contact.state is defined }}
+        {{ contact.zip_code if contact.zip_code is defined }}
     {% endmacro %}
 
     <main class="content content__2-1 content__bleedbar" id="main" role="main">
@@ -98,6 +98,7 @@
 
         <div class="wrapper content_wrapper">
 
+
             <div class="content_main">
                 <section>
                     {% for contact in contacts %}
@@ -115,7 +116,7 @@
                                 </div>
                                 <div class="content-l_col-3-8">
                                     <ul class="list list__icons">
-                                    {% if contact.email != 'None' %}
+                                    {% if contact.email is defined %}
                                         <li class="list_item">
                                             <span class="cf-icon cf-icon-email list_icon"></span>
                                             <a class="list_link" href="mailto:{{ contact.email }}">
@@ -123,20 +124,20 @@
                                             </a>
                                         </li>
                                     {% endif %}
-                                    {% if contact.phone != 'None' %}
+                                    {% if contact.phone is defined %}
                                         <li class="list_item">
                                             <span class="cf-icon cf-icon-phone list_icon"></span>
                                             <span class="short-desc">{{ contact.phone }}</span>
                                         </li>
                                     {% endif %}
-                                    {% if contact.fax != 'None' %}
+                                    {% if contact.fax is defined %}
                                         <li class="list_item">
                                             <span class="cf-icon cf-icon-fax list_icon"></span>
                                             <span class="short-desc">{{ contact.fax }}</span>
                                         </li>
                                     {% endif %}
                                     </ul>
-                                {% if contact.street != 'None' %}
+                                {% if contact.street is defined %}
                                     <p class="short-desc">
                                         {{ address(contact) }}
                                     </p>
