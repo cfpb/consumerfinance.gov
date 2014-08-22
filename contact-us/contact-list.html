@@ -13,6 +13,7 @@
                 {%- endif %}
             </div>
             <div class="content-l_col-3-8">
+            {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}
                 <ul class="list list__icons">
                 {%- if contact.email != 'None' %}
                     <li class="list_item">
@@ -39,6 +40,7 @@
                     </li>
                 {%- endif %}
                 </ul>
+            {%- endif %}
             {%- if contact.street != 'None' %}
                 <p class="short-desc">
                     {{ contact.street if contact.street != 'None' }}<br>
