@@ -1,0 +1,21 @@
+{% set administrative_offices = get_document('contact', 'administrative-offices') %}
+{% set consumer_contact_center = get_document('contact', 'consumer-contact-center') %}
+
+<h1 class="h3">
+    Mailing addresses
+</h1>
+<img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=300x226&markers=color:red%7C1275+First+St.+NE+Washington,+DC+20010" alt="">
+<section class="content_block content_block__flush-top">
+    <h1 class="h5">
+        Administrative offices
+    </h1>
+    <p class="short-desc">
+        {{ macros.format_address(administrative_offices) }}
+    </p>
+    <h1 class="h5">
+        Consumer Contact center
+    </h1>
+    <p class="short-desc">
+        {{ macros.format_address(consumer_contact_center) }}
+    </p>
+</section>
