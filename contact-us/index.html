@@ -28,7 +28,6 @@
         <div class="wrapper">
             <section class="content_intro">
                 <h1>Contact us</h1>
-
                 <div class="content-l">
                     <section class="content-l_col content-l_col-1-2">
                         {% include "general-inqueries.html" %}
@@ -37,14 +36,12 @@
                         {% include "submit-a-complaint.html" %}
                     </section>
                 </div>
-
             </section>
         </div>
 
         <div class="content_line"></div>
 
         <div class="wrapper content_wrapper">
-
 
             <div class="content_main">
                 <section>
@@ -54,26 +51,7 @@
 
             <!-- This might actually not be aside content. Maybe change to section? -->
             <aside class="content_sidebar">
-                <h1 class="h3">
-                    Mailing addresses
-                </h1>
-                <img src="" alt="" height="230">
-                <section class="content_block content_block__flush-top">
-                    <h1 class="h5">
-                        Administrative offices
-                    </h1>
-                    <p class="short-desc">
-                        Consumer Financial Protection Bureau<br>
-                        1275 First St. NE Washington, DC 20010
-                    </p>
-                    <h1 class="h5">
-                        Consumer Contact center
-                    </h1>
-                    <p class="short-desc">
-                        Consumer Financial Protection Bureau<br>
-                        P.O. Box 4503 Iowa City, Iowa 52244
-                    </p>
-                </section>
+                {%- include "mailing-addresses.html" %}
                 <section class="content_block">
                     <h1 class="h5">
                         Accessibility feedback
