@@ -21,13 +21,13 @@
     {{ share_twitter_url }}
 {% endmacro %}
 
-{# Format a phone number to `(XXX) XXX - XXXX` when given `XXXXXXXXXX` #}
+{# Format a phone number to `(XXX) XXX-XXXX` when given `XXXXXXXXXX` #}
 {% macro format_phone(number) %}
     {%- for char in number -%}
         {{- '(' if loop.index == 1 -}}
         {{ char }}
         {{- ') ' if loop.index == 3 -}}
-        {{- ' - ' if loop.index == 6 -}}
+        {{- '-' if loop.index == 6 -}}
     {%- endfor %}
 {% endmacro %}
 
