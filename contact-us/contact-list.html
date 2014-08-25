@@ -1,4 +1,4 @@
-{%- for contact in contacts %}
+{%- for contact in contacts|sort(attribute='title') %}
     <article class="content_block{{ ' content_block__flush-top' if loop.first }}">
         <h1 class="h4">
             {{ contact.title }}

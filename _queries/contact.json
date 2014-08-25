@@ -1,5 +1,5 @@
 {
   "doc_type": "contact",
-  "size": 10000,
-  "sort": "title:asc"
+  "size": 500,
+  "sort": "date:asc"
 }
