@@ -11,6 +11,7 @@
         <ul class="list list__unstyled">
         {%- if submit_a_complaint.phone != 'None' %}
             <li class="list_item short-desc">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
                 {{ macros.format_phone(submit_a_complaint.phone) }}
             {%- if submit_a_complaint.phone_desc != 'None' %}
                 <span class="micro-copy micro-copy__large">
@@ -21,6 +22,7 @@
         {%- endif %}
         {%- if submit_a_complaint.phone_2 != 'None' %}
             <li class="list_item short-desc">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
                 {{ macros.format_phone(submit_a_complaint.phone_2) }}
             {%- if submit_a_complaint.phone_2_desc != 'None' %}
                 <span class="micro-copy micro-copy__large">
