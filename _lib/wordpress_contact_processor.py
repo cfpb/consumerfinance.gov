@@ -54,19 +54,19 @@ def process_contact(post):
             post['phone_2_desc'] = custom_fields['phone_2'][1]
     if 'sitewide_desc' in custom_fields:
         post['sitewide_desc'] = custom_fields['sitewide_desc'][0]
-    if 'fax' in custom_fields:
+    if 'fax' in custom_fields and custom_fields['fax'][0] != '':
         post['fax'] = custom_fields['fax'][0]
-    if 'street' in custom_fields:
+    if 'street' in custom_fields and custom_fields['street'] != '':
         post['street'] = custom_fields['street'][0]
-    if 'street_2' in custom_fields:
+    if 'street_2' in custom_fields and custom_fields['street_2'] != '':
         post['street_2'] = custom_fields['street_2'][0]
-    if 'city' in custom_fields:
+    if 'city' in custom_fields and custom_fields['city'] != '':
         post['city'] = custom_fields['city'][0]
-    if 'state' in custom_fields:
+    if 'state' in custom_fields and custom_fields['state'] != '':
         post['state'] = custom_fields['state'][0]
-    if 'zip_code' in custom_fields:
+    if 'zip_code' in custom_fields and custom_fields['zip_code'] != '':
         post['zip_code'] = custom_fields['zip_code'][0]
-    if 'addr_desc' in custom_fields:
+    if 'addr_desc' in custom_fields and custom_fields['addr_desc'] != '':
         post['addr_desc'] = custom_fields['addr_desc'][0]
     if 'web' in custom_fields:
         if custom_fields['web'][0] and custom_fields['web'][0] != '':
