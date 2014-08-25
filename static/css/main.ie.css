@@ -6174,6 +6174,24 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Base styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: figure
+      markup: |
+        <figure>
+            <img src="" width="100" height="100">
+        </figure>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* topdoc
   name: Expandables
   family: cfgov-cf-enhancements
   patterns:
