@@ -19,6 +19,10 @@
 
 .contact-person {
     .webfont-regular();
+    margin-bottom: unit(30px / @base-font-size-px, em);
+    .u-respond-to-min(600px, {
+        margin-bottom: unit(10px / @base-font-size-px, em);
+    });
 }
 .contact-person_name {
     .h4();
