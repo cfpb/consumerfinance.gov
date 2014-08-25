@@ -46,52 +46,6 @@
     text-align: center;
 }
 
-.jump-link {
-    display: inline-block;
-    border-bottom-width: 1px;
-    margin-top: 1.5em; // works out to about 30px including line-height
-    margin-right: 1.5em;
-    position: relative;
-    .webfont-medium();
-    font-size: unit(18px / @base-font-size-px, em);
-    .cf-icon-right;
-
-    &__download {
-        .cf-icon-download;
-    }
-
-    &:before {
-        .cf-icon;
-        display: block;
-        position: absolute;
-        top: 0.25em;
-        right: -1.5em;
-        padding-left: 0.25em;
-        width: 1em;
-        border-bottom: none;
-    }
-
-    .list__links & {
-        margin-top: -1px;
-        font-size: 1em;
-    }
-
-    .u-respond-to-max(767px, {
-        display: block;
-        padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
-        border: dotted @pacific;
-        border-width: 1px 0;
-        margin-right: 0;
-
-        &:before {
-            margin-top: -0.5em;
-            top: 50%;
-            right: 0;
-            text-align: right;
-        }
-    });
-}
-
 .u-respond-to-min(768px, {
     .press-section_title {
         .h2();
