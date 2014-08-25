@@ -7622,7 +7622,6 @@ a.category-slug.active {
 }
 .list__links .jump-link {
   margin-top: -1px;
-  font-size: 1em;
 }
 @media only all and (max-width: 47.9375em) {
   .jump-link {
@@ -10999,6 +10998,7 @@ a.focus .summary_header {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-bottom: 1.875em;
 }
 .contact-person em,
 .contact-person i {
@@ -11019,6 +11019,11 @@ a.focus .summary_header {
 .lt-ie9 .contact-person strong,
 .lt-ie9 .contact-person b {
   font-weight: normal !important;
+}
+@media only all and (min-width: 37.5em) {
+  .contact-person {
+    margin-bottom: 0.625em;
+  }
 }
 .contact-person_name {
   margin-top: 0;
