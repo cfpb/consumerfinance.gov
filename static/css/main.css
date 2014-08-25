@@ -7577,8 +7577,8 @@ a.category-slug.active {
     - cfgov-misc
 */
 .jump-link {
+  display: inline-block;
   position: relative;
-  margin-top: 1.1875em;
   margin-right: 1.5em;
   border-bottom-width: 1px;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
@@ -7596,7 +7596,6 @@ a.category-slug.active {
   *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
 }
 .jump-link__large {
-  margin-top: 1.05555556em;
   margin-right: 1.5em;
   font-size: 1.125em;
 }

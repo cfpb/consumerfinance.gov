@@ -29,9 +29,8 @@
 .jump-link {
     @font-size: 16px;
 
+    display: inline-block;
     position: relative;
-    // 30px top margin when considering line height.
-    margin-top: unit(19px / @font-size, em);
     // Right margin gives the absolutely positioned icon somewhere to go without
     // inheriting the bottom border.
     margin-right: 1.5em;
@@ -42,8 +41,6 @@
 
     &__large {
         @font-size: 18px;
-        // 30px top margin when considering line height.
-        margin-top: unit(19px / @font-size, em);
         // Right margin gives the absolutely positioned icon somewhere to go without
         // inheriting the bottom border.
         margin-right: 1.5em;
