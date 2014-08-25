@@ -23,11 +23,27 @@
                         </a>
                     </li>
                 {%- endif %}
+                {%- if contact.email_2 != 'None' %}
+                    <li class="list_item">
+                        <span class="cf-icon cf-icon-email list_icon"></span>
+                        <a class="list_link" href="mailto:{{ contact.email_2 }}">
+                            {{ contact.email_2 }}
+                        </a>
+                    </li>
+                {%- endif %}
                 {%- if contact.phone != 'None' %}
                     <li class="list_item">
                         <span class="cf-icon cf-icon-phone list_icon"></span>
                         <span class="short-desc">
                             {{ macros.format_phone(contact.phone) }}
+                        </span>
+                    </li>
+                {%- endif %}
+                {%- if contact.phone_2 != 'None' %}
+                    <li class="list_item">
+                        <span class="cf-icon cf-icon-phone list_icon"></span>
+                        <span class="short-desc">
+                            {{ macros.format_phone(contact.phone_2) }}
                         </span>
                     </li>
                 {%- endif %}
