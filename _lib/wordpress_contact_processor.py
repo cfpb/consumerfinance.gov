@@ -69,5 +69,8 @@ def process_contact(post):
     if 'addr_desc' in custom_fields:
         post['addr_desc'] = custom_fields['addr_desc'][0]
     if 'web' in custom_fields:
-        post['web'] = custom_fields['web'][0]
+        if custom_fields['web'][0] and custom_fields['web'][0] != '':
+            post['web'] = custom_fields['web'][0]
+        if custom_fields['web'][1] and custom_fields['web'][1] != '':
+            post['web_desc'] = custom_fields['web'][1]
     return post
