@@ -6,11 +6,11 @@
         <div class="content-l">
             <div class="content-l_col-5-8">
                 {{ contact.content|safe }}
-                {%- if contact.web != 'None' %}
+            {%- if contact.web != 'None' %}
                 <a class="jump-link" href="{{ contact.web }}">
-                    {{ contact.web }}
+                    {{ contact.web_desc if contact.web_desc != 'None' else contact.web }}
                 </a>
-                {%- endif %}
+            {%- endif %}
             </div>
             <div class="content-l_col-3-8">
             {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}

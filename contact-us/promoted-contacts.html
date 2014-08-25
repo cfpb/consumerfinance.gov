@@ -11,9 +11,9 @@
         {{ accessibility_feedback.sitewide_desc }}
     </p>
 {%- endif %}
-{%- if accessibility_feedback.web != 'none' %}
+{%- if accessibility_feedback.web != 'None' %}
     <a class="jump-link" href="{{ accessibility_feedback.web }}">
-        {{ accessibility_feedback.web }}
+        {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc != 'None' else accessibility_feedback.web }}
     </a>
 {%- endif %}
 </section>
