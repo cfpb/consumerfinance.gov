@@ -2,70 +2,74 @@
 {% set whistleblowers = get_document('contact', 'whistleblowers') %}
 {% set tribal_consultation = get_document('contact', 'tribal-consultation') %}
 
-<section class="content_block">
-    <h1 class="h5">
-        {{ accessibility_feedback.title }}
-    </h1>
-{%- if accessibility_feedback.sitewide_desc != 'none' %}
-    <p>
-        {{ accessibility_feedback.sitewide_desc }}
-    </p>
-{%- endif %}
-{%- if accessibility_feedback.web != 'None' %}
-    <a class="jump-link" href="{{ accessibility_feedback.web }}">
-        {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc != 'None' else accessibility_feedback.web }}
-    </a>
-{%- endif %}
-</section>
-
-<section class="content_block">
-    <h1 class="h5">
-        {{ whistleblowers.title }}
-    </h1>
-{%- if whistleblowers.sitewide_desc != 'none' %}
-    <p>
-        {{ whistleblowers.sitewide_desc }}
-    </p>
-{%- endif %}
-{%- if whistleblowers.email != 'None' or whistleblowers.phone != 'None' %}
-    <ul class="list list__icons">
-    {%- if whistleblowers.email != 'None' %}
-        <li class="list_item">
-            <span class="cf-icon cf-icon-email list_icon"></span>
-            <a class="list_link" href="mailto:{{ whistleblowers.email }}">
-                {{ whistleblowers.email }}
-            </a>
-        </li>
+<div class="content-l">
+    
+    <section class="content_block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h1 class="h5">
+            {{ accessibility_feedback.title }}
+        </h1>
+    {%- if accessibility_feedback.sitewide_desc != 'none' %}
+        <p>
+            {{ accessibility_feedback.sitewide_desc }}
+        </p>
     {%- endif %}
-    {%- if whistleblowers.phone != 'None' %}
-        <li class="list_item">
-            <span class="cf-icon cf-icon-phone list_icon"></span>
-            <span class="short-desc">
-                {{ macros.format_phone(whistleblowers.phone) }}
-            </span>
-        </li>
+    {%- if accessibility_feedback.web != 'None' %}
+        <a class="jump-link" href="{{ accessibility_feedback.web }}">
+            {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc != 'None' else accessibility_feedback.web }}
+        </a>
     {%- endif %}
-    </ul>
-{%- endif %}
-</section>
+    </section>
 
-<section class="content_block">
-    <h1 class="h5">
-        {{ tribal_consultation.title }}
-    </h1>
-{%- if tribal_consultation.sitewide_desc != 'none' %}
-    <p>
-        {{ tribal_consultation.sitewide_desc }}
-    </p>
-{%- endif %}
-{%- if tribal_consultation.email != 'None' %}
-    <ul class="list list__icons">
-        <li class="list_item">
-            <span class="cf-icon cf-icon-email list_icon"></span>
-            <a class="list_link" href="mailto:{{ tribal_consultation.email }}">
-                {{ tribal_consultation.email }}
-            </a>
-        </li>
-    </ul>
-{%- endif %}
-</section>
+    <section class="content_block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h1 class="h5">
+            {{ whistleblowers.title }}
+        </h1>
+    {%- if whistleblowers.sitewide_desc != 'none' %}
+        <p>
+            {{ whistleblowers.sitewide_desc }}
+        </p>
+    {%- endif %}
+    {%- if whistleblowers.email != 'None' or whistleblowers.phone != 'None' %}
+        <ul class="list list__icons">
+        {%- if whistleblowers.email != 'None' %}
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:{{ whistleblowers.email }}">
+                    {{ whistleblowers.email }}
+                </a>
+            </li>
+        {%- endif %}
+        {%- if whistleblowers.phone != 'None' %}
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                <span class="short-desc">
+                    {{ macros.format_phone(whistleblowers.phone) }}
+                </span>
+            </li>
+        {%- endif %}
+        </ul>
+    {%- endif %}
+    </section>
+
+    <section class="content_block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h1 class="h5">
+            {{ tribal_consultation.title }}
+        </h1>
+    {%- if tribal_consultation.sitewide_desc != 'none' %}
+        <p>
+            {{ tribal_consultation.sitewide_desc }}
+        </p>
+    {%- endif %}
+    {%- if tribal_consultation.email != 'None' %}
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:{{ tribal_consultation.email }}">
+                    {{ tribal_consultation.email }}
+                </a>
+            </li>
+        </ul>
+    {%- endif %}
+    </section>
+
+</div>

@@ -207,6 +207,51 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.content-l_col__stack-on-cols (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+    <div style="background: #F1F2F2;
+                text-align: center;
+                padding: 8px;">
+        Half-width column from 600px to 801px
+    </div>
+</div>
+<div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+    <div style="background: #F1F2F2;
+                text-align: center;
+                padding: 8px;">
+        Half-width column from 600px to 801px
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;content-l_col content-l_col__stack-on-cols content-l_col-1-2&quot;&gt;
+    &lt;div style=&quot;background: #F1F2F2;
+                text-align: center;
+                padding: 8px;&quot;&gt;
+        Half-width column from 600px to 801px
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;content-l_col content-l_col__stack-on-cols content-l_col-1-2&quot;&gt;
+    &lt;div style=&quot;background: #F1F2F2;
+                text-align: center;
+                padding: 8px;&quot;&gt;
+        Half-width column from 600px to 801px
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content-l_col__stack-on-cols</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>A modifier that allows you to have columns that behave as normal but stack at the larger multi-column views. For example a .content-l_col-1-2 would stack as normal from 0-599px, at 600px it would convert into a column, and at 801px it would stack again.</li>
+              <li>This is really only useful for .content-l_col-1-2 since there is a decent range between when it becomes a column (600px) to when the modifier converts it back into a full-width container (801px). .content-l_col-1-3 on the other hand would have a much smaller range, 768 to 801px.</li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
@@ -457,6 +502,29 @@
 }
 
 .lt-ie8 .content-l_col-5-8 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.content-l_col__stack-on-cols {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .content-l_col__stack-on-cols {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .content-l_col__stack-on-cols {
   display: inline;
   margin-right: 0;
   zoom: 1;
