@@ -6188,11 +6188,11 @@ img {
         </a>
       notes:
         - "Anchor links should break words in order to remain confined to their
-           containers."    
+           containers."
     - name: figure
       markup: |
         <figure>
-            <img src="" width="100" height="100">
+            <img src="http://placekitten.com/300/300">
         </figure>
   tags:
     - cfgov-cf-enhancements
@@ -6207,7 +6207,20 @@ figure {
   margin-right: 0;
 }
 
-figure img {
+/* topdoc
+  name: Simple base style modifiers
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: figure.figure__bordered
+      markup: |
+        <figure class="figure__bordered">
+            <img src="http://placekitten.com/300/300">
+        </figure>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.figure__bordered img {
   border: 1px solid #babbbd;
 }
 
