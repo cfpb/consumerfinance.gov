@@ -15,6 +15,88 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / cf-enhancements docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="base-styles" class="docs-component">
+      <h2 class="docs-component_header"><span>Base styles</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">a</h3>
+          <section class="docs-pattern_pattern">
+<a href="#">
+    Some really really really really really really really really really
+    really really really really really long text.
+</a>
+<a href="#">
+    SomeReallyReallyReallyReallyReallyReallyReallyReallyReallyLongWord.
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a href=&quot;#&quot;&gt;
+    Some really really really really really really really really really
+    really really really really really long text.
+&lt;/a&gt;
+&lt;a href=&quot;#&quot;&gt;
+    SomeReallyReallyReallyReallyReallyReallyReallyReallyReallyLongWord.
+&lt;/a&gt;</code></pre>
+            <ul class="docs-notes">
+              <li>Anchor links should break words in order to remain confined to their containers.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">figure</h3>
+          <section class="docs-pattern_pattern">
+<figure>
+    <img src="http://placekitten.com/300/300">
+</figure>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure&gt;
+    &lt;img src=&quot;http://placekitten.com/300/300&quot;&gt;
+&lt;/figure&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+a {
+  word-break: break-all;
+}
+
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="simple-base-style-modifiers" class="docs-component">
+      <h2 class="docs-component_header"><span>Simple base style modifiers</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">figure.figure__bordered</h3>
+          <section class="docs-pattern_pattern">
+<figure class="figure__bordered">
+    <img src="http://placekitten.com/300/300">
+</figure>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure class=&quot;figure__bordered&quot;&gt;
+    &lt;img src=&quot;http://placekitten.com/300/300&quot;&gt;
+&lt;/figure&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.figure__bordered img {
+  border: 1px solid #babbbd;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="expandables" class="docs-component">
       <h2 class="docs-component_header"><span>Expandables</span></h2>
       <div class="docs-patterns">
