@@ -12148,3 +12148,12 @@ a.focus .summary_header {
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
+
+/* ==========================================================================
+   cfgov-refresh
+   Contact us
+   ========================================================================== */
+
+.contact-us-map {
+  max-width: 330px;
+}
