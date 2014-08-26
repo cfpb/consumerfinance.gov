@@ -6177,6 +6177,18 @@ img {
   name: Base styles
   family: cfgov-cf-enhancements
   patterns:
+    - name: a
+      markup: |
+        <a href="#">
+            Some really really really really really really really really really
+            really really really really really long text.
+        </a>
+        <a href="#">
+            SomeReallyReallyReallyReallyReallyReallyReallyReallyReallyLongWord.
+        </a>
+      notes:
+        - "Anchor links should break words in order to remain confined to their
+           containers."    
     - name: figure
       markup: |
         <figure>
@@ -6185,6 +6197,10 @@ img {
   tags:
     - cfgov-cf-enhancements
 */
+
+a {
+  word-break: break-all;
+}
 
 figure {
   margin-left: 0;
