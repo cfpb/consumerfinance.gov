@@ -11313,3 +11313,15 @@ a.focus .summary_header {
     margin-right: 1.875em;
   }
 }
+/* ==========================================================================
+   cfgov-refresh
+   Contact us
+   ========================================================================== */
+.contact-us-map {
+  max-width: 330px;
+}
+@media only all and (min-width: 37.5em) and (max-width: 50.0625em) {
+  .contact-us-map {
+    float: right;
+  }
+}
