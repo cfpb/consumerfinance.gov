@@ -4,7 +4,7 @@
             {{ contact.title }}
         </h1>
         <div class="content-l">
-            <div class="content-l_col-5-8">
+            <div class="content-l_col content-l_col-5-8">
                 {{ contact.content|safe }}
             {%- if contact.web != 'None' %}
                 <a class="jump-link" href="{{ contact.web }}">
@@ -12,7 +12,7 @@
                 </a>
             {%- endif %}
             </div>
-            <div class="content-l_col-3-8">
+            <div class="content-l_col content-l_col-3-8">
             {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}
                 <ul class="list list__icons">
                 {%- if contact.email != 'None' %}
