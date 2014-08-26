@@ -4,6 +4,59 @@
    ========================================================================== */
 
 /* topdoc
+  name: Base styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: a
+      markup: |
+        <a href="#">
+            Some really really really really really really really really really
+            really really really really really long text.
+        </a>
+        <a href="#">
+            SomeReallyReallyReallyReallyReallyReallyReallyReallyReallyLongWord.
+        </a>
+      notes:
+        - "Anchor links should break words in order to remain confined to their
+           containers."
+    - name: figure
+      markup: |
+        <figure>
+            <img src="http://placekitten.com/300/300">
+        </figure>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+a {
+    word-break: break-all;
+}
+
+figure {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+/* topdoc
+  name: Simple base style modifiers
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: figure.figure__bordered
+      markup: |
+        <figure class="figure__bordered">
+            <img src="http://placekitten.com/300/300">
+        </figure>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.figure__bordered img {
+    border: 1px solid @gray-50;
+}
+
+
+/* topdoc
   name: Expandables
   family: cfgov-cf-enhancements
   patterns:

@@ -5,6 +5,85 @@
 
 
 /* topdoc
+  name: Jump link
+  family: cfgov-misc
+  patterns:
+    - name: .jump-link
+      markup: |
+        <a class="jump-link" href="#">
+            Default jump link
+        </a>
+      codenotes:
+        - .jump-link
+    - name: .jump-link__large (modifier)
+      markup: |
+        <a class="jump-link jump-link__large" href="#">
+            Large jump link
+        </a>
+      codenotes:
+        - .jump-link__large
+  tags:
+    - cfgov-misc
+*/
+
+.jump-link {
+    @font-size: 16px;
+
+    display: inline-block;
+    position: relative;
+    // Right margin gives the absolutely positioned icon somewhere to go without
+    // inheriting the bottom border.
+    margin-right: 1.5em;
+    border-bottom-width: 1px;
+    .webfont-medium();
+    font-size: unit(@font-size / @base-font-size-px, em);
+    .cf-icon-right();
+
+    &__large {
+        @font-size: 18px;
+        // Right margin gives the absolutely positioned icon somewhere to go without
+        // inheriting the bottom border.
+        margin-right: 1.5em;
+        font-size: unit(@font-size / @base-font-size-px, em);
+    }
+
+    &__download {
+        .cf-icon-download();
+    }
+
+    &:before {
+        .cf-icon();
+        display: block;
+        position: absolute;
+        top: 0.25em;
+        right: -1.5em;
+        padding-left: 0.25em;
+        width: 1em;
+        border-bottom: none;
+    }
+
+    .list__links & {
+        margin-top: -1px;
+    }
+
+    .u-respond-to-max(599px, {
+        display: block;
+        padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
+        border: dotted @pacific;
+        border-width: 1px 0;
+        margin-right: 0;
+
+        &:before {
+            margin-top: -0.5em;
+            top: 50%;
+            right: 0;
+            text-align: right;
+        }
+    });
+}
+
+
+/* topdoc
   name: Micro copy
   family: cfgov-misc
   patterns:

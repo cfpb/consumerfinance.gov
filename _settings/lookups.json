@@ -1,4 +1,9 @@
 {
+  "contact":{
+    "url" : "/contact-us/<id>/",
+    "type" : "contact",
+    "permalink" : true
+  },
   "post":{
     "url" : "/blog/<id>/",
     "type" : "posts",

@@ -1,4 +1,8 @@
 {
+  "contact": {
+    "url":        "$WORDPRESS/api/get_posts/?post_type=contact",
+    "processor":  "wordpress_contact_processor"
+  },
   "posts": {
     "url":        "$WORDPRESS/api/get_posts/",
     "processor":  "wordpress_post_processor",

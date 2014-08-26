@@ -5349,6 +5349,52 @@ img {
    capital framework enhancements
    ========================================================================== */
 /* topdoc
+  name: Base styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: a
+      markup: |
+        <a href="#">
+            Some really really really really really really really really really
+            really really really really really long text.
+        </a>
+        <a href="#">
+            SomeReallyReallyReallyReallyReallyReallyReallyReallyReallyLongWord.
+        </a>
+      notes:
+        - "Anchor links should break words in order to remain confined to their
+           containers."
+    - name: figure
+      markup: |
+        <figure>
+            <img src="http://placekitten.com/300/300">
+        </figure>
+  tags:
+    - cfgov-cf-enhancements
+*/
+a {
+  word-break: break-all;
+}
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+/* topdoc
+  name: Simple base style modifiers
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: figure.figure__bordered
+      markup: |
+        <figure class="figure__bordered">
+            <img src="http://placekitten.com/300/300">
+        </figure>
+  tags:
+    - cfgov-cf-enhancements
+*/
+.figure__bordered img {
+  border: 1px solid #babbbd;
+}
+/* topdoc
   name: Expandables
   family: cfgov-cf-enhancements
   patterns:
@@ -5544,6 +5590,34 @@ img {
            grid_nested-col-group mixin to counter this."
         - "Note that the divs with inline styles are for demonstration purposes
            only and should not be used in production."
+    - name: .content-l_col__stack-on-cols (modifier)
+      markup: |
+            <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;">
+                    Half-width column from 600px to 801px
+                </div>
+            </div>
+            <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;">
+                    Half-width column from 600px to 801px
+                </div>
+            </div>
+      codenotes:
+        - .content-l_col__stack-on-cols
+      notes:
+        - "A modifier that allows you to have columns that behave as normal but
+           stack at the larger multi-column views. For example a
+           .content-l_col-1-2 would stack as normal from 0-599px, at 600px it
+           would convert into a column, and at 801px it would stack again."
+        - "This is really only useful for .content-l_col-1-2 since there is a
+           decent range between when it becomes a column (600px) to when the
+           modifier converts it back into a full-width container (801px).
+           .content-l_col-1-3 on the other hand would have a much smaller range,
+           768 to 801px."
   tags:
     - cfgov-layout
 */
@@ -5567,7 +5641,10 @@ img {
   }
 }
 @media only all and (min-width: 48em) {
-  .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+  .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3,
+  .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8,
+  .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+  .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
     margin-top: 0;
   }
 }
@@ -5785,6 +5862,28 @@ img {
     margin-right: -0.26em;
   }
   .lt-ie8 .content-l_col-5-8 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .content-l_col__stack-on-cols {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+  }
+  .ie .content-l_col__stack-on-cols {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .content-l_col__stack-on-cols {
     display: inline;
     margin-right: 0;
     zoom: 1;
@@ -7539,6 +7638,89 @@ a.category-slug.active {
    cfgov-refresh
    misc
    ========================================================================== */
+/* topdoc
+  name: Jump link
+  family: cfgov-misc
+  patterns:
+    - name: .jump-link
+      markup: |
+        <a class="jump-link" href="#">
+            Default jump link
+        </a>
+      codenotes:
+        - .jump-link
+    - name: .jump-link__large (modifier)
+      markup: |
+        <a class="jump-link jump-link__large" href="#">
+            Large jump link
+        </a>
+      codenotes:
+        - .jump-link__large
+  tags:
+    - cfgov-misc
+*/
+.jump-link {
+  display: inline-block;
+  position: relative;
+  margin-right: 1.5em;
+  border-bottom-width: 1px;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+}
+.lt-ie9 .jump-link {
+  font-weight: normal !important;
+}
+.jump-link:before {
+  content: "\e002";
+}
+.lt-ie8 .jump-link {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
+}
+.jump-link__large {
+  margin-right: 1.5em;
+  font-size: 1.125em;
+}
+.jump-link__download:before {
+  content: "\e406";
+}
+.lt-ie8 .jump-link__download {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
+}
+.jump-link:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+  position: absolute;
+  top: 0.25em;
+  right: -1.5em;
+  padding-left: 0.25em;
+  width: 1em;
+  border-bottom: none;
+}
+.list__links .jump-link {
+  margin-top: -1px;
+}
+@media only all and (max-width: 37.4375em) {
+  .jump-link {
+    display: block;
+    padding: 0.625em 1.25em 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+    margin-right: 0;
+  }
+  .jump-link:before {
+    margin-top: -0.5em;
+    top: 50%;
+    right: 0;
+    text-align: right;
+  }
+}
 /* topdoc
   name: Micro copy
   family: cfgov-misc
@@ -10899,6 +11081,7 @@ a.focus .summary_header {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  margin-bottom: 1.875em;
 }
 .contact-person em,
 .contact-person i {
@@ -10919,6 +11102,11 @@ a.focus .summary_header {
 .lt-ie9 .contact-person strong,
 .lt-ie9 .contact-person b {
   font-weight: normal !important;
+}
+@media only all and (min-width: 37.5em) {
+  .contact-person {
+    margin-bottom: 0.625em;
+  }
 }
 .contact-person_name {
   margin-top: 0;
@@ -10969,66 +11157,6 @@ a.focus .summary_header {
 }
 .press-logo_logo {
   text-align: center;
-}
-.jump-link {
-  display: inline-block;
-  border-bottom-width: 1px;
-  margin-top: 1.5em;
-  margin-right: 1.5em;
-  position: relative;
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.125em;
-}
-.lt-ie9 .jump-link {
-  font-weight: normal !important;
-}
-.jump-link:before {
-  content: "\e002";
-}
-.lt-ie8 .jump-link {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
-}
-.jump-link__download:before {
-  content: "\e406";
-}
-.lt-ie8 .jump-link__download {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
-}
-.jump-link:before {
-  font-family: 'CFPB Minicons';
-  display: inline-block;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  display: block;
-  position: absolute;
-  top: 0.25em;
-  right: -1.5em;
-  padding-left: 0.25em;
-  width: 1em;
-  border-bottom: none;
-}
-.list__links .jump-link {
-  margin-top: -1px;
-  font-size: 1em;
-}
-@media only all and (max-width: 47.9375em) {
-  .jump-link {
-    display: block;
-    padding: 0.625em 1.25em 0.625em 0;
-    border: dotted #0072ce;
-    border-width: 1px 0;
-    margin-right: 0;
-  }
-  .jump-link:before {
-    margin-top: -0.5em;
-    top: 50%;
-    right: 0;
-    text-align: right;
-  }
 }
 @media only all and (min-width: 48em) {
   .press-section_title {
@@ -11195,5 +11323,17 @@ a.focus .summary_header {
   .contact-person__director .contact-person_photo {
     width: 180px;
     margin-right: 1.875em;
+  }
+}
+/* ==========================================================================
+   cfgov-refresh
+   Contact us
+   ========================================================================== */
+.contact-us-map {
+  max-width: 330px;
+}
+@media only all and (min-width: 37.5em) and (max-width: 50.0625em) {
+  .contact-us-map {
+    float: right;
   }
 }
