@@ -1,7 +1,7 @@
 {% set administrative_offices = get_document('contact', 'administrative-offices') %}
 {% set consumer_contact_center = get_document('contact', 'consumer-contact-center') %}
 
-<div class="content-l">
+<section class="content-l">
 
     <h1 class="h3 content-l_col content-l_col__stack-on-cols content-l_col-1-2">
         Mailing addresses
@@ -25,18 +25,18 @@
     {% endif %}
 
     <div class="content_block content_block__flush-top content-l_col content-l_col__stack-on-cols content-l_col-1-2">
-        <h1 class="h5">
+        <h2 class="h5">
             {{ administrative_offices.title }}
-        </h1>
+        </h2>
         <p class="short-desc">
             {{- macros.format_address(administrative_offices) -}}
         </p>
-        <h1 class="h5">
+        <h2 class="h5">
             {{ consumer_contact_center.title }}
-        </h1>
+        </h2>
         <p class="short-desc">
             {{- macros.format_address(consumer_contact_center) -}}
         </p>
     </div>
     
-</div>
+</section>
