@@ -6207,6 +6207,10 @@ figure {
   margin-right: 0;
 }
 
+figure img {
+  border: 1px solid #babbbd;
+}
+
 /* topdoc
   name: Expandables
   family: cfgov-cf-enhancements
