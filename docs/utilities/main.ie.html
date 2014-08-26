@@ -32,7 +32,7 @@
 &lt;/h1&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-clearfix;</code></pre>
+                <pre class="docs-code"><code>.u-clearfix</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -79,7 +79,7 @@
 &lt;/h1&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-visually-hidden;</code></pre>
+                <pre class="docs-code"><code>.u-visually-hidden</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -111,7 +111,7 @@
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-inline-block;</code></pre>
+                <pre class="docs-code"><code>.u-inline-block</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -140,7 +140,7 @@
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-right;</code></pre>
+                <pre class="docs-code"><code>.u-right</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
@@ -155,6 +155,62 @@
         <pre class="docs-code"><code data-language="css">
 .u-right {
   float: right;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="break-word" class="docs-component">
+      <h2 class="docs-component_header"><span>Break word</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Utility class</h3>
+          <section class="docs-pattern_pattern">
+<div style="width: 100px;">
+    This link should break:
+    <br>
+    <a class="u-break-word" href="#">
+        something@something.com
+    </a>
+    <br>
+    <br>
+    This link should not:
+    <br>
+    <a href="#">
+        something@something.com
+    </a>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;width: 100px;&quot;&gt;
+    This link should break:
+    &lt;br&gt;
+    &lt;a class=&quot;u-break-word&quot; href=&quot;#&quot;&gt;
+        something@something.com
+    &lt;/a&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    This link should not:
+    &lt;br&gt;
+    &lt;a href=&quot;#&quot;&gt;
+        something@something.com
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-break-word</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use this on elements where you need the words to break when confined to small containers.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-break-word {
+  word-break: break-all;
 }
 </code></pre>
       </div>

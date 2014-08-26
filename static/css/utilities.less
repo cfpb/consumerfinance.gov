@@ -14,7 +14,7 @@
             <div style="float:left; width:100%; height:60px; background:black;"></div>
         </h1>
       codenotes:
-        - .u-clearfix;
+        - .u-clearfix
       notes:
         - "Use this class to clear floats. For example, without .u-clearfix the
            black box would spill into the markup section."
@@ -48,7 +48,7 @@
             </a>
         </h1>
       codenotes:
-        - .u-visually-hidden;
+        - .u-visually-hidden
       notes:
         - "Use this class to hide something from view while keeping it
           accessible to screen readers."
@@ -71,7 +71,7 @@
   patterns:
     - name: Utility class
       codenotes:
-        - .u-inline-block;
+        - .u-inline-block
       notes:
         - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
   tags:
@@ -93,7 +93,7 @@
   patterns:
     - name: Utility class
       codenotes:
-        - .u-right;
+        - .u-right
       notes:
         - "IE7 float: right drop bug fixes:"
         - "1. If the float: right follows an element in the html structure that
@@ -108,6 +108,40 @@
 
 .u-right {
     float: right;
+}
+
+
+/* topdoc
+  name: Break word
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      markup: |
+        <div style="width: 100px;">
+            This link should break:
+            <br>
+            <a class="u-break-word" href="#">
+                something@something.com
+            </a>
+            <br>
+            <br>
+            This link should not:
+            <br>
+            <a href="#">
+                something@something.com
+            </a>
+        </div>
+      codenotes:
+        - .u-break-word
+      notes:
+        - "Use this on elements where you need the words to break when confined
+           to small containers."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-break-word {
+    word-break: break-all;
 }
 
 
