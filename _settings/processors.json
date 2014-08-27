@@ -11,12 +11,7 @@
   "newsroom": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
     "processor":  "wordpress_post_processor",
-    "mappings":   "_defaults/posts_mappings.json",
-    "supplement": {
-      "url":            "$WORDPRESS/api/get_posts/",
-      "field":          "display_in_newsroom",
-      "expected_value": "on"
-    }
+    "mappings":   "_defaults/posts_mappings.json"
   },
   "watchroom": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=watchroom",
