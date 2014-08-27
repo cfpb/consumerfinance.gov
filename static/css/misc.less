@@ -11,19 +11,14 @@
     - name: .jump-link
       markup: |
         <a class="jump-link" href="#">
-            Default jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
+            Default jump link
         </a>
       codenotes:
         - .jump-link
-      notes:
-        - "It is very important that the .jump-link_icon is positioned next to
-           the text without spaces between them. When there are spaces between
-           the icon and the text then there might be cases where the icon drops
-           to its own line."
     - name: .jump-link__large (modifier)
       markup: |
         <a class="jump-link jump-link__large" href="#">
-            Large jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
+            Large jump link
         </a>
       codenotes:
         - .jump-link__large
@@ -34,10 +29,15 @@
 .jump-link {
     @font-size: 16px;
 
+    display: inline-block;
     position: relative;
+    // Right margin gives the absolutely positioned icon somewhere to go without
+    // inheriting the bottom border.
+    margin-right: 1.5em;
     border-bottom-width: 1px;
     .webfont-medium();
     font-size: unit(@font-size / @base-font-size-px, em);
+    .cf-icon-right();
 
     &__large {
         @font-size: 18px;
@@ -47,11 +47,19 @@
         font-size: unit(@font-size / @base-font-size-px, em);
     }
 
-    &_icon {
-        display: inline-block;
+    &__download {
+        .cf-icon-download();
+    }
+
+    &:before {
+        .cf-icon();
+        display: block;
         position: absolute;
-        padding-top: 0.25em;
-        padding-left: 0.5em;
+        top: 0.25em;
+        right: -1.5em;
+        padding-left: 0.25em;
+        width: 1em;
+        border-bottom: none;
     }
 
     .list__links & {
@@ -65,11 +73,10 @@
         border-width: 1px 0;
         margin-right: 0;
 
-        &_icon {
+        &:before {
+            margin-top: -0.5em;
             top: 50%;
             right: 0;
-            padding: 0;
-            margin-top: -0.5em;
             text-align: right;
         }
     });

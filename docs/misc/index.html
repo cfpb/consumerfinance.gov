@@ -22,21 +22,18 @@
           <h3 class="docs-pattern_header">.jump-link</h3>
           <section class="docs-pattern_pattern">
 <a class="jump-link" href="#">
-    Default jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
+    Default jump link
 </a>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link&quot; href=&quot;#&quot;&gt;
-    Default jump link&lt;span class=&quot;cf-icon cf-icon-right jump-link_icon&quot;&gt;&lt;/span&gt;
+    Default jump link
 &lt;/a&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>.jump-link</code></pre>
               </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>It is very important that the .jump-link_icon is positioned next to the text without spaces between them. When there are spaces between the icon and the text then there might be cases where the icon drops to its own line.</li>
             </ul>
           </footer>
         </div>
@@ -44,13 +41,13 @@
           <h3 class="docs-pattern_header">.jump-link__large (modifier)</h3>
           <section class="docs-pattern_pattern">
 <a class="jump-link jump-link__large" href="#">
-    Large jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
+    Large jump link
 </a>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__large&quot; href=&quot;#&quot;&gt;
-    Large jump link&lt;span class=&quot;cf-icon cf-icon-right jump-link_icon&quot;&gt;&lt;/span&gt;
+    Large jump link
 &lt;/a&gt;</code></pre>
             <ul class="docs-codenotes">
               <li>
@@ -62,7 +59,9 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.jump-link {
+  display: inline-block;
   position: relative;
+  margin-right: 1.5em;
   border-bottom-width: 1px;
   font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
   font-style: normal;
@@ -72,15 +71,36 @@
 .lt-ie9 .jump-link {
   font-weight: normal !important;
 }
+.jump-link:before {
+  content: &quot;\e002&quot;;
+}
+.lt-ie8 .jump-link {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
+}
 .jump-link__large {
   margin-right: 1.5em;
   font-size: 1.125em;
 }
-.jump-link_icon {
+.jump-link__download:before {
+  content: &quot;\e406&quot;;
+}
+.lt-ie8 .jump-link__download {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
+}
+.jump-link:before {
+  font-family: 'CFPB Minicons';
   display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: block;
   position: absolute;
-  padding-top: 0.25em;
-  padding-left: 0.5em;
+  top: 0.25em;
+  right: -1.5em;
+  padding-left: 0.25em;
+  width: 1em;
+  border-bottom: none;
 }
 .list__links .jump-link {
   margin-top: -1px;
@@ -93,11 +113,10 @@
     border-width: 1px 0;
     margin-right: 0;
   }
-  .jump-link_icon {
+  .jump-link:before {
+    margin-top: -0.5em;
     top: 50%;
     right: 0;
-    padding: 0;
-    margin-top: -0.5em;
     text-align: right;
   }
 }</code></pre>
