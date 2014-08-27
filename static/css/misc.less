@@ -29,7 +29,6 @@
 .jump-link {
     @font-size: 16px;
 
-    display: inline-block;
     position: relative;
     // Right margin gives the absolutely positioned icon somewhere to go without
     // inheriting the bottom border.
@@ -37,7 +36,10 @@
     border-bottom-width: 1px;
     .webfont-medium();
     font-size: unit(@font-size / @base-font-size-px, em);
-    .cf-icon-right();
+    //.cf-icon-right() property set manually to use :after instead of before
+    &:after {
+        content: "\e002";
+    }
 
     &__large {
         @font-size: 18px;
@@ -48,14 +50,17 @@
     }
 
     &__download {
-        .cf-icon-download();
+        //.cf-icon-download() property set manually to use :after instead of before
+        &:after {
+            content: "\e406";
+        }
     }
 
-    &:before {
+    &:after {
         .cf-icon();
         display: block;
         position: absolute;
-        top: 0.25em;
+        bottom: 0;
         right: -1.5em;
         padding-left: 0.25em;
         width: 1em;
@@ -73,10 +78,10 @@
         border-width: 1px 0;
         margin-right: 0;
 
-        &:before {
-            margin-top: -0.5em;
-            top: 50%;
+        &:after {
+            margin-bottom: -0.625em;
             right: 0;
+            bottom: 50%;
             text-align: right;
         }
     });
