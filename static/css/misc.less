@@ -36,8 +36,8 @@
     border-bottom-width: 1px;
     .webfont-medium();
     font-size: unit(@font-size / @base-font-size-px, em);
-    //.cf-icon-right() property set manually to use :after instead of before
     &:after {
+        // Inserts the cf-icon-right (arrow) glyph.
         content: "\e002";
     }
 
@@ -50,20 +50,18 @@
     }
 
     &__download {
-        //.cf-icon-download() property set manually to use :after instead of before
         &:after {
+            // Inserts the cf-icon-download glyph.
             content: "\e406";
         }
     }
 
     &:after {
         .cf-icon();
-        display: block;
         position: absolute;
         bottom: 0;
-        right: -1.5em;
+        right: -1em;
         padding-left: 0.25em;
-        width: 1em;
         border-bottom: none;
     }
 

@@ -7707,12 +7707,10 @@ a.category-slug.active {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
-  display: block;
   position: absolute;
   bottom: 0;
-  right: -1.5em;
+  right: -1em;
   padding-left: 0.25em;
-  width: 1em;
   border-bottom: none;
 }
 .list__links .jump-link {
