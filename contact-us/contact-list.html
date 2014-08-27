@@ -16,7 +16,7 @@
             {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}
                 <ul class="list list__icons">
                 {%- if contact.email != 'None' %}
-                    <li class="list_item">
+                    <li class="list_item u-break-word">
                         <span class="cf-icon cf-icon-email list_icon"></span>
                         <a class="list_link" href="mailto:{{ contact.email }}">
                             {{ contact.email }}
@@ -24,7 +24,7 @@
                     </li>
                 {%- endif %}
                 {%- if contact.email_2 != 'None' %}
-                    <li class="list_item">
+                    <li class="list_item u-break-word">
                         <span class="cf-icon cf-icon-email list_icon"></span>
                         <a class="list_link" href="mailto:{{ contact.email_2 }}">
                             {{ contact.email_2 }}
