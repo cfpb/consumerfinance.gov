@@ -43,6 +43,6 @@
 </div>
 {%- if submit_a_complaint.web != 'None' %}
 <a class="jump-link" href="{{ submit_a_complaint.web }}">
-    {{ submit_a_complaint.web_desc if submit_a_complaint.web_desc != 'None' else submit_a_complaint.web }}
+    {{ submit_a_complaint.web_desc if submit_a_complaint.web_desc != 'None' else submit_a_complaint.web }}<span class="cf-icon cf-icon-right jump-link_icon"></span>
 </a>
 {%- endif %}

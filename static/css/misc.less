@@ -11,14 +11,14 @@
     - name: .jump-link
       markup: |
         <a class="jump-link" href="#">
-            Default jump link
+            Default jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
         </a>
       codenotes:
         - .jump-link
     - name: .jump-link__large (modifier)
       markup: |
         <a class="jump-link jump-link__large" href="#">
-            Large jump link
+            Large jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
         </a>
       codenotes:
         - .jump-link__large
@@ -29,15 +29,10 @@
 .jump-link {
     @font-size: 16px;
 
-    display: inline-block;
     position: relative;
-    // Right margin gives the absolutely positioned icon somewhere to go without
-    // inheriting the bottom border.
-    margin-right: 1.5em;
     border-bottom-width: 1px;
     .webfont-medium();
     font-size: unit(@font-size / @base-font-size-px, em);
-    .cf-icon-right();
 
     &__large {
         @font-size: 18px;
@@ -47,18 +42,11 @@
         font-size: unit(@font-size / @base-font-size-px, em);
     }
 
-    &__download {
-        .cf-icon-download();
-    }
-
-    &:before {
-        .cf-icon();
-        display: block;
+    &_icon {
+        display: inline-block;
         position: absolute;
-        top: 0.25em;
-        right: -1.5em;
+        padding-top: 0.25em;
         padding-left: 0.25em;
-        width: 1em;
         border-bottom: none;
     }
 
@@ -73,7 +61,7 @@
         border-width: 1px 0;
         margin-right: 0;
 
-        &:before {
+        &_icon {
             margin-top: -0.5em;
             top: 50%;
             right: 0;
