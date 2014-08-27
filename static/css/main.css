@@ -5114,6 +5114,9 @@ img {
       notes:
         - "Use this on elements where you need the words to break when confined
            to small containers."
+        - "This only works in IE8 when the element with the .u-break-word class
+           has layout. See <http://stackoverflow.com/questions/3997223/word-wrapbreak-word-not-working-in-ie8>
+           for more information."
   tags:
     - cfgov-utilities
 */
@@ -7661,14 +7664,14 @@ a.category-slug.active {
     - name: .jump-link
       markup: |
         <a class="jump-link" href="#">
-            Default jump link
+            Default jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
         </a>
       codenotes:
         - .jump-link
     - name: .jump-link__large (modifier)
       markup: |
         <a class="jump-link jump-link__large" href="#">
-            Large jump link
+            Large jump link<span class="cf-icon cf-icon-right jump-link_icon"></span>
         </a>
       codenotes:
         - .jump-link__large
@@ -7676,9 +7679,7 @@ a.category-slug.active {
     - cfgov-misc
 */
 .jump-link {
-  display: inline-block;
   position: relative;
-  margin-right: 1.5em;
   border-bottom-width: 1px;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -7688,35 +7689,15 @@ a.category-slug.active {
 .lt-ie9 .jump-link {
   font-weight: normal !important;
 }
-.jump-link:before {
-  content: "\e002";
-}
-.lt-ie8 .jump-link {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
-}
 .jump-link__large {
   margin-right: 1.5em;
   font-size: 1.125em;
 }
-.jump-link__download:before {
-  content: "\e406";
-}
-.lt-ie8 .jump-link__download {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
-}
-.jump-link:before {
-  font-family: 'CFPB Minicons';
+.jump-link_icon {
   display: inline-block;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  display: block;
   position: absolute;
-  top: 0.25em;
-  right: -1.5em;
+  padding-top: 0.25em;
   padding-left: 0.25em;
-  width: 1em;
   border-bottom: none;
 }
 .list__links .jump-link {
@@ -7730,7 +7711,7 @@ a.category-slug.active {
     border-width: 1px 0;
     margin-right: 0;
   }
-  .jump-link:before {
+  .jump-link_icon {
     margin-top: -0.5em;
     top: 50%;
     right: 0;
