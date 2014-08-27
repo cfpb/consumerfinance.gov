@@ -59,7 +59,6 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.jump-link {
-  display: inline-block;
   position: relative;
   margin-right: 1.5em;
   border-bottom-width: 1px;
@@ -71,23 +70,17 @@
 .lt-ie9 .jump-link {
   font-weight: normal !important;
 }
-.jump-link:before {
+.jump-link:after {
   content: &quot;\e002&quot;;
-}
-.lt-ie8 .jump-link {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
 }
 .jump-link__large {
   margin-right: 1.5em;
   font-size: 1.125em;
 }
-.jump-link__download:before {
+.jump-link__download:after {
   content: &quot;\e406&quot;;
 }
-.lt-ie8 .jump-link__download {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
-}
-.jump-link:before {
+.jump-link:after {
   font-family: 'CFPB Minicons';
   display: inline-block;
   font-style: normal;
@@ -96,7 +89,7 @@
   -webkit-font-smoothing: antialiased;
   display: block;
   position: absolute;
-  top: 0.25em;
+  bottom: 0;
   right: -1.5em;
   padding-left: 0.25em;
   width: 1em;
@@ -113,10 +106,10 @@
     border-width: 1px 0;
     margin-right: 0;
   }
-  .jump-link:before {
-    margin-top: -0.5em;
-    top: 50%;
+  .jump-link:after {
+    margin-bottom: -0.625em;
     right: 0;
+    bottom: 50%;
     text-align: right;
   }
 }</code></pre>

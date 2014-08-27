@@ -8500,7 +8500,6 @@ a.category-slug.active {
 */
 
 .jump-link {
-  display: inline-block;
   position: relative;
   margin-right: 1.5em;
   border-bottom-width: 1px;
@@ -8514,12 +8513,8 @@ a.category-slug.active {
   font-weight: normal !important;
 }
 
-.jump-link:before {
+.jump-link:after {
   content: "\e002";
-}
-
-.lt-ie8 .jump-link {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
 }
 
 .jump-link__large {
@@ -8527,15 +8522,11 @@ a.category-slug.active {
   font-size: 1.125em;
 }
 
-.jump-link__download:before {
+.jump-link__download:after {
   content: "\e406";
 }
 
-.lt-ie8 .jump-link__download {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e406');
-}
-
-.jump-link:before {
+.jump-link:after {
   font-family: 'CFPB Minicons';
   display: inline-block;
   font-style: normal;
@@ -8544,7 +8535,7 @@ a.category-slug.active {
   -webkit-font-smoothing: antialiased;
   display: block;
   position: absolute;
-  top: 0.25em;
+  bottom: 0;
   right: -1.5em;
   padding-left: 0.25em;
   width: 1em;
