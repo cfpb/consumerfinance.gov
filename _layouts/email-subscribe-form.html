@@ -1,13 +1,13 @@
 
-<form class="reveal-on-focus"
-      id="email-subscribe-form"
-      action="/govdelivery-subscribe/success/">
-
 <!-- <form class="reveal-on-focus"
+      id="email-subscribe-form"
+      action="/govdelivery-subscribe/success/"> -->
+
+<form class="reveal-on-focus"
       id="email-subscribe-form"
       action="/subscriptions/new/"
       method="POST"
-      enctype="application/x-www-form-urlencoded"> -->
+      enctype="application/x-www-form-urlencoded">
 
     <div class="form-group">
         <label class="u-visually-hidden" for="email-subscribe-form_email">
@@ -21,17 +21,25 @@
     </div>
 
     <div class="form-group reveal-on-focus_content u-clearfix">
+        <label class="form-group_item form-label">
+            <input class="custom-input"
+                   type="checkbox"
+                   name="code"
+                   value="USCFPB_4">
+            Blog
+        </label>
+    {#
     {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
         <label class="form-group_item form-label">
             <input class="custom-input"
                    type="checkbox"
                    name="code"
-                   value="tbd">
+                   value="USCFPB_4">
             {{ category.term }}
         </label>
     {% endfor %}
+    #}
     </div>
-
     <div class="form-group">
         <input class="btn" type="submit" class="btn" value="Sign up">
     </div>
