@@ -8,7 +8,7 @@
                 {{ contact.content|safe }}
             {%- if contact.web != 'None' %}
                 <a class="jump-link" href="{{ contact.web }}">
-                    {{ contact.web_desc if contact.web_desc != 'None' else contact.web }}<span class="cf-icon cf-icon-right jump-link_icon"></span>
+                    {{ contact.web_desc if contact.web_desc != 'None' else contact.web }}
                 </a>
             {%- endif %}
             </div>
