@@ -26,7 +26,7 @@ We welcome your feedback and contributions.
 Set up [Sheer](https://github.com/cfpb/sheer),
 a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
 
-###$ Additional setup requirements for this site
+#### Additional setup requirements for this site
 
 Install these dependencies:
 
