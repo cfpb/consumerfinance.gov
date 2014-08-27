@@ -14,7 +14,7 @@ def posts_at_url(url):
     while current_page <= max_page:
 
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={'page':current_page})
+        resp = requests.get(url, params={'page':current_page, 'count': '-1'})
         results = json.loads(resp.content) 
         current_page += 1
         max_page = results['pages']
@@ -27,14 +27,6 @@ def documents(name, url, **kwargs):
     
     for post in posts_at_url(url):
         yield process_post(post)
-
-    # Optionally include additional documents with specific values in custom fields
-    if 'supplement' in kwargs:
-        supplement = kwargs['supplement']
-        for post in posts_at_url(supplement['url']):
-            if supplement['field'] in post['custom_fields'] and \
-               supplement['expected_value'] in post['custom_fields'][supplement['field']]:
-                yield process_post(post, True)
 
 
 def process_post(post, newsroom = False):
