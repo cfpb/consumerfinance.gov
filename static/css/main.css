@@ -7702,8 +7702,7 @@ a.category-slug.active {
   display: inline-block;
   position: absolute;
   padding-top: 0.25em;
-  padding-left: 0.25em;
-  border-bottom: none;
+  padding-left: 0.5em;
 }
 .list__links .jump-link {
   margin-top: -1px;
@@ -7717,9 +7716,10 @@ a.category-slug.active {
     margin-right: 0;
   }
   .jump-link_icon {
-    margin-top: -0.5em;
     top: 50%;
     right: 0;
+    padding: 0;
+    margin-top: -0.5em;
     text-align: right;
   }
 }
