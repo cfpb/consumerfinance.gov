@@ -5810,7 +5810,7 @@ img {
             <div style="float:left; width:100%; height:60px; background:black;"></div>
         </h1>
       codenotes:
-        - .u-clearfix;
+        - .u-clearfix
       notes:
         - "Use this class to clear floats. For example, without .u-clearfix the
            black box would spill into the markup section."
@@ -5842,7 +5842,7 @@ img {
             </a>
         </h1>
       codenotes:
-        - .u-visually-hidden;
+        - .u-visually-hidden
       notes:
         - "Use this class to hide something from view while keeping it
           accessible to screen readers."
@@ -5867,7 +5867,7 @@ img {
   patterns:
     - name: Utility class
       codenotes:
-        - .u-inline-block;
+        - .u-inline-block
       notes:
         - "Also adds a .lt-ie8 class to hack inline-block for IE 7 and below."
   tags:
@@ -5888,7 +5888,7 @@ img {
   patterns:
     - name: Utility class
       codenotes:
-        - .u-right;
+        - .u-right
       notes:
         - "IE7 float: right drop bug fixes:"
         - "1. If the float: right follows an element in the html structure that
@@ -5903,6 +5903,42 @@ img {
 
 .u-right {
   float: right;
+}
+
+/* topdoc
+  name: Break word
+  family: cfgov-utilities
+  patterns:
+    - name: Utility class
+      markup: |
+        <div style="width: 100px;">
+            This link should break:
+            <br>
+            <a class="u-break-word" href="#">
+                something@something.com
+            </a>
+            <br>
+            <br>
+            This link should not:
+            <br>
+            <a href="#">
+                something@something.com
+            </a>
+        </div>
+      codenotes:
+        - .u-break-word
+      notes:
+        - "Use this on elements where you need the words to break when confined
+           to small containers."
+        - "This only works in IE8 when the element with the .u-break-word class
+           has layout. See <http://stackoverflow.com/questions/3997223/word-wrapbreak-word-not-working-in-ie8>
+           for more information."
+  tags:
+    - cfgov-utilities
+*/
+
+.u-break-word {
+  word-break: break-all;
 }
 
 /* topdoc
@@ -6177,18 +6213,6 @@ img {
   name: Base styles
   family: cfgov-cf-enhancements
   patterns:
-    - name: a
-      markup: |
-        <a href="#">
-            Some really really really really really really really really really
-            really really really really really long text.
-        </a>
-        <a href="#">
-            SomeReallyReallyReallyReallyReallyReallyReallyReallyReallyLongWord.
-        </a>
-      notes:
-        - "Anchor links should break words in order to remain confined to their
-           containers."
     - name: figure
       markup: |
         <figure>
@@ -6197,10 +6221,6 @@ img {
   tags:
     - cfgov-cf-enhancements
 */
-
-a {
-  word-break: break-all;
-}
 
 figure {
   margin-left: 0;
