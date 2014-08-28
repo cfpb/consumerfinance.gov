@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block demo_title -%}
-    Subscription success
+    GovDelivery subscription error
 {%- endblock %}
 
 {% block title -%}
-    Subscription success
+    GovDelivery subscription error
 {%- endblock %}
 {% block desc -%}
-    Your subscription was successfuly received.
+    Your subscription to GovDelivery was not successful because of a server error, please try again later.
 {%- endblock %}
 
 {% block content %}
@@ -20,8 +20,8 @@
 
         <div class="wrapper">
             <section class="content_intro">
-                <h1><span class="cf-icon cf-icon-approved-round"></span> Success!</h1>
-                <p class="short-desc">Your subscription was successfuly received.</p>
+                <h1><span class="cf-icon cf-icon-error-round"></span> Please try again later.</h1>
+                <p class="short-desc">Your subscription to GovDelivery was not successful because of a server error, please try again later.</p>
             </section>
         </div>
 
