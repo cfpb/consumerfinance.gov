@@ -51,7 +51,7 @@ figure {
     - cfgov-cf-enhancements
 */
 
-.expandable_target__btn-secondary {
+.expandable_target__btn__secondary {
     .btn();
     .btn__secondary();
 }
@@ -59,7 +59,7 @@ figure {
 .expandable_header-right__float-on-medium {
     float: none;
 
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         float: right;
     });
 }
@@ -90,12 +90,12 @@ figure {
               .grid_column(6, 12);
 
               // Add a top divider only at screen 599px and smaller.
-              .u-respond-to-max(599px {
+              .respond-to-max(599px {
                   .grid_column__top-divider();
               });
 
               // Add a left divider only at screen 600px and larger.
-              .u-respond-to-min(600px, {
+              .respond-to-min(600px, {
                   .grid_column__left-divider();
               });
 
