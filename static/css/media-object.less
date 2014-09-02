@@ -46,14 +46,14 @@
 
     display: block;
 
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         position: relative;
         min-height: unit((@img-size-h + 4px) / @base-font-size-px, em);
         padding-left: unit((@img-size-h + @grid_gutter-width) / @base-font-size-px, em);
     });
 
     &_image-container {
-        .u-respond-to-min(600px, {
+        .respond-to-min(600px, {
             position: absolute;
             top: unit(4px / @base-font-size-px, em);
             left: 0;
@@ -65,7 +65,7 @@
     &_image {
         margin-bottom: unit(8px / @base-font-size-px, em);
 
-        .u-respond-to-min(600px, {
+        .respond-to-min(600px, {
             display: block;
             width: unit(@img-size-w / @base-font-size-px, em);
             max-width: unit(@img-size-w / @base-font-size-px, em);

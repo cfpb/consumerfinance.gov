@@ -69,7 +69,7 @@
         margin-top: -1px;
     }
 
-    .u-respond-to-max(599px, {
+    .respond-to-max(599px, {
         display: block;
         padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
         border: dotted @pacific;
@@ -155,132 +155,12 @@
 .link__block-on-small {
     .webfont-medium();
 
-    .u-respond-to-max(599px, {
+    .respond-to-max(599px, {
         display: block;
         padding: 0.5em 0;
         border-top: 1px dotted @pacific;
         border-bottom: 1px dotted @pacific;
     });
-}
-
-
-/* topdoc
-  name: Form pattern showcase
-  family: cfgov-misc
-  patterns:
-    - markup: |
-        <div class="form-l">
-            <div class="form-l_col form-l_col-1-3">
-                <div class="form-group">
-                    <label class="form-label-header">
-                        Form layout column 1
-                    </label>
-                    <label class="form-group_item form-label">
-                        <input type="checkbox" name="" value="">
-                        Checkbox 1
-                    </label>
-                    <label class="form-group_item form-label">
-                        <input type="checkbox" name="" value="">
-                        Checkbox 2
-                    </label>
-                </div>
-            </div>
-            <div class="form-l_col form-l_col-1-3">
-                <div class="form-group">
-                    <label class="form-label-header">
-                        Form layout column 2
-                    </label>
-                    <input type="text" name="" value="">
-                </div>
-            </div>
-            <div class="form-l_col form-l_col-1-3">
-                <div class="form-group">
-                    <label class="form-label-header">
-                        Form layout column 3
-                    </label>
-                    <input type="text" name="" value="">
-                </div>
-            </div>
-        </div>
-        <div class="form-actions form-actions__right">
-            <input type="reset" value="Reset filters"
-                   class="btn btn-warning btn-link form-actions_item">
-            <input type="submit" value="Apply filters"
-                   class="btn form-actions_item">
-        </div>
-  tags:
-    - cfgov-misc
-*/
-
-
-/* topdoc
-    name: Multi select
-    family: cfgov-misc
-    patterns:
-    - name: Default multi select
-      markup: |
-        <select multiple>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4">Option 4</option>
-        </select>
-    - name: Focused state
-      markup: |
-        <select class="focus" multiple>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4">Option 4</option>
-        </select>
-    - name: Error state
-      notes:
-        - Please review the notes on form input error icons in the form icons section below.
-      markup: |
-        <select class="error" multiple>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4">Option 4</option>
-        </select>
-        <span class="cf-form_input-icon cf-icon cf-icon-delete-round" role="alert">
-          <span class="jekyll-bug"></span>
-        </span>
-    - name: Success state
-      notes:
-        - Please review the notes on form input success icons in the form icons section below.
-      markup: |
-        <select class="success" multiple>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4">Option 4</option>
-        </select>
-        <span class="cf-form_input-icon cf-icon cf-icon-approved-round">
-          <span class="jekyll-bug"></span>
-        </span>
-    tags:
-    - cfgov-misc
-*/
-
-/* NOTE: all select[multiple] styles extend input[type="text"]. */
-
-select[multiple] {
-    &:extend(input[type="text"]);
-}
-
-select[multiple]:focus,
-select[multiple].focus {
-    // Class included for static state examples
-    &:extend(input[type="text"]:focus);
-}
-
-select[multiple].error {
-    &:extend(input[type="text"].error);
-}
-
-select[multiple].success {
-    &:extend(input[type="text"].success);
 }
 
 
@@ -633,11 +513,6 @@ select[multiple].success {
   name: Form labels
   family: cfgov-misc
   patterns:
-    - name: Label header
-      markup: |
-        <label class="form-label-header">
-            Form label header
-        </label>
     - name: Normal label
       markup: |
         <label class="form-label">
@@ -664,11 +539,6 @@ select[multiple].success {
     & input {
         margin-right: unit(6px / @base-font-size-px, em);
     }
-}
-
-.form-label-header {
-    .h5();
-    margin-bottom: unit(10px / @font-size, em);
 }
 
 
@@ -789,7 +659,7 @@ select[multiple].success {
       markup: |
         <div class="form-actions">
             <input type="submit" value="Apply filters" class="btn form-actions_item">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
         </div>
       codenotes:
         - |
@@ -803,7 +673,7 @@ select[multiple].success {
     - name: "Form actions modifier: right align"
       markup: |
         <div class="form-actions form-actions__right">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
             <input type="submit" value="Apply filters" class="btn form-actions_item">
         </div>
       codenotes:
@@ -817,7 +687,7 @@ select[multiple].success {
     - name: "Form actions modifier: right align on medium screens or larger"
       markup: |
         <div class="form-actions form-actions__right-on-med">
-            <a href="/blog/" class="btn btn-warning btn-link form-actions_item">Reset filters</a>
+            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
             <input type="submit" value="Apply filters" class="btn form-actions_item">
         </div>
       codenotes:
@@ -839,7 +709,7 @@ select[multiple].success {
     // so we'll need to update the top margin from .form-actions to avoid
     // double margins.
     .form-l + & {
-        .u-respond-to-min(600px, {
+        .respond-to-min(600px, {
             margin-top: unit(15px / @base-font-size-px, em);
         });
     }
@@ -850,7 +720,7 @@ select[multiple].success {
 }    
 
 .form-actions__right-on-med {
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         text-align: right;
     });
 }    
@@ -918,12 +788,12 @@ select[multiple].success {
 
 .form-l {
     &__flush {
-        .u-respond-to-min(1060px, {
+        .respond-to-min(1060px, {
             .grid_nested-col-group();
         });
     }
     &__float {
-        .u-respond-to-min(1060px, {
+        .respond-to-min(1060px, {
             .u-clearfix();
             & .form-l_col {
                 float: left;
@@ -938,25 +808,25 @@ select[multiple].success {
 }
 
 .form-l_col-1-2 {
-    .u-respond-to-min(1060px, {
+    .respond-to-min(1060px, {
         .grid_column(6);
     });
 }
 
 .form-l_col-1-3 {
-    .u-respond-to-min(1060px, {
+    .respond-to-min(1060px, {
         .grid_column(4);
     });
 }
 
 .form-l_col-2-3 {
-    .u-respond-to-min(1060px, {
+    .respond-to-min(1060px, {
         .grid_column(8);
     });
 }
 
 .form-l_col-1 {
-    .u-respond-to-min(1060px, {
+    .respond-to-min(1060px, {
         .grid_column(12);
     });
 }
@@ -1071,9 +941,9 @@ select[multiple].success {
         background-size: cover;
     }
 
-    .u-respond-to-max(659px, {
+    .respond-to-max(659px, {
         &_img-container__small {
-            .u-flexible-container(660,300);
+            .u-flexible-container-mixin(660,300);
             display: block;
         }
     });
@@ -1091,7 +961,7 @@ select[multiple].success {
         margin-bottom: @grid_gutter-width + 10px;
     }
 
-    .u-respond-to-min(660px, {
+    .respond-to-min(660px, {
         padding-top: unit(30px / @base-font-size-px, em);
 
         &_wrapper {
@@ -1120,7 +990,7 @@ select[multiple].success {
         }
     });
 
-    .u-respond-to-min(1024px, {
+    .respond-to-min(1024px, {
         &_card {
             .grid_column(4);
             .grid_push(8);
@@ -1400,7 +1270,7 @@ select[multiple].success {
         margin-bottom: unit(10x / @base-font-size-px, em);
     }
 
-    .u-respond-to-max(767px, {
+    .respond-to-max(767px, {
         border-top: 1px dotted @pacific;
 
         .list_item {
@@ -1413,7 +1283,7 @@ select[multiple].success {
         }
     });
 
-    .u-respond-to-min(768px, {
+    .respond-to-min(768px, {
         &.list__icons {
             .list_link {
                 margin-bottom: unit(15px / @base-font-size-px, em);
@@ -1494,7 +1364,7 @@ select[multiple].success {
         </dl>
     - name: Filters aligned with a button
       markup: |
-        <a class="btn btn-secondary"
+        <a class="btn btn__secondary"
            style="float:right;"
            href="#">
             Filter
@@ -1529,7 +1399,7 @@ select[multiple].success {
 
     &__show-on-medium {
         display: none;
-        .u-respond-to-min(600px, {
+        .respond-to-min(600px, {
             display: block;
         });
     }
