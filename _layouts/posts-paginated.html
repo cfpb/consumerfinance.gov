@@ -56,19 +56,19 @@
         <a class="btn pagination_prev"
            href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
     {% else %}
-        <a class="btn btn-disabled pagination_prev">
+        <a class="btn btn__disabled pagination_prev">
     {% endif %}
-            <span class="btn-icon-left cf-icon cf-icon-left"></span>
+            <span class="btn_icon__left cf-icon cf-icon-left"></span>
             Newer
         </a>
     {% if posts.current_page < posts.pages %}
         <a class="btn pagination_next"
            href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
     {% else %}
-        <a class="btn btn-disabled pagination_next">
+        <a class="btn btn__disabled pagination_next">
     {% endif %}
             Older
-            <span class="btn-icon-right cf-icon cf-icon-right"></span>
+            <span class="btn_icon__right cf-icon cf-icon-right"></span>
         </a>
         <form class="pagination_form" action="#pagination_content">
             <label class="pagination_label" for="pagination_current-page">
@@ -104,7 +104,7 @@
                     of {{ posts.pages }}
                 </span>
             </label>
-            <button class="btn btn-link pagination_submit" id="pagination_submit" type="submit">
+            <button class="btn btn__link pagination_submit" id="pagination_submit" type="submit">
                 Go
             </button>
         </form>
