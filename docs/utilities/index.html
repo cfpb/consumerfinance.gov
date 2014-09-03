@@ -15,6 +15,61 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / utilities docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="break-word" class="docs-component">
+      <h2 class="docs-component_header"><span>Break word</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Utility class</h3>
+          <section class="docs-pattern_pattern">
+<div style="width: 100px;">
+    This link should break:
+    <br>
+    <a class="u-break-word" href="#">
+        something@something.com
+    </a>
+    <br>
+    <br>
+    This link should not:
+    <br>
+    <a href="#">
+        something@something.com
+    </a>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div style=&quot;width: 100px;&quot;&gt;
+    This link should break:
+    &lt;br&gt;
+    &lt;a class=&quot;u-break-word&quot; href=&quot;#&quot;&gt;
+        something@something.com
+    &lt;/a&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    This link should not:
+    &lt;br&gt;
+    &lt;a href=&quot;#&quot;&gt;
+        something@something.com
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-break-word</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use this on elements where you need the words to break when confined to small containers.</li>
+              <li>This only works in IE8 when the element with the .u-break-word class has layout. See &lt;http://stackoverflow.com/questions/3997223/word-wrapbreak-word-not-working-in-ie8&gt; for more information.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.u-break-word {
+  word-break: break-all;
+}</code></pre>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>
