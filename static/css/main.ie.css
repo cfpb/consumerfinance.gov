@@ -8866,6 +8866,85 @@ input[type="text"].pagination_current-page {
   margin: 26px 0;
 }
 
+.demo-file-name {
+  font-family: Consolas, monaco, monospace;
+}
+
+.demo-sheer-link {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.75em;
+}
+
+.demo-sheer-link em,
+.demo-sheer-link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .demo-sheer-link em,
+.lt-ie9 .demo-sheer-link i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .demo-sheer-link em,
+.lt-ie9 .demo-sheer-link i {
+  font-style: normal !important;
+}
+
+.demo-sheer-link strong,
+.demo-sheer-link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .demo-sheer-link strong,
+.lt-ie9 .demo-sheer-link b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .demo-sheer-link strong,
+.lt-ie9 .demo-sheer-link b {
+  font-weight: normal !important;
+}
+
+.demo-sheer-link em,
+.demo-sheer-link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .demo-sheer-link em,
+.lt-ie9 .demo-sheer-link i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .demo-sheer-link em,
+.lt-ie9 .demo-sheer-link i {
+  font-style: normal !important;
+}
+
+.demo-sheer-link strong,
+.demo-sheer-link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .demo-sheer-link strong,
+.lt-ie9 .demo-sheer-link b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .demo-sheer-link strong,
+.lt-ie9 .demo-sheer-link b {
+  font-weight: normal !important;
+}
+
 .demo-spaced {
   margin-bottom: 1.625em;
 }
@@ -8882,6 +8961,32 @@ input[type="text"].pagination_current-page {
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
+}
+
+.header .demo-col-12,
+.footer .demo-col-12 {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+}
+
+.ie .header .demo-col-12,
+.ie .footer .demo-col-12 {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .header .demo-col-12,
+.lt-ie8 .footer .demo-col-12 {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .demo-col-12 {
@@ -8907,7 +9012,7 @@ input[type="text"].pagination_current-page {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.demo-col-6 {
+.demo-col-12 {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -8919,11 +9024,11 @@ input[type="text"].pagination_current-page {
   width: 100%;
 }
 
-.ie .demo-col-6 {
+.ie .demo-col-12 {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .demo-col-6 {
+.lt-ie8 .demo-col-12 {
   display: inline;
   margin-right: 0;
   zoom: 1;
@@ -8990,52 +9095,6 @@ img {
 
 /* Project-specific styles
    ========================================================================== */
-
-/* ==========================================================================
-   cfgov-refresh
-   utilities
-   ========================================================================== */
-
-/* topdoc
-  name: Break word
-  family: cfgov-utilities
-  patterns:
-    - name: Utility class
-      markup: |
-        <div style="width: 100px;">
-            This link should break:
-            <br>
-            <a class="u-break-word" href="#">
-                something@something.com
-            </a>
-            <br>
-            <br>
-            This link should not:
-            <br>
-            <a href="#">
-                something@something.com
-            </a>
-        </div>
-      codenotes:
-        - .u-break-word
-      notes:
-        - "Use this on elements where you need the words to break when confined
-           to small containers."
-        - "This only works in IE8 when the element with the .u-break-word class
-           has layout. See <http://stackoverflow.com/questions/3997223/word-wrapbreak-word-not-working-in-ie8>
-           for more information."
-  tags:
-    - cfgov-utilities
-*/
-
-.u-break-word {
-  word-break: break-all;
-}
-
-/* topdoc
-    name: EOF
-    eof: true
-*/
 
 /* ==========================================================================
    cfgov-refresh
