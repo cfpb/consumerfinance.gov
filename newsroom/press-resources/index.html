@@ -18,6 +18,7 @@
     {% set path = '/newsroom/' %}
 
     {% set active_page = 'press-resources' %}
+    {% set rss_path = '/feed/newsroom/' %}
 
     <main class="content content__1-3" id="main" role="main">
 
@@ -264,13 +265,7 @@
                                 {% include "email-subscribe-form.html" %}
                             </div>
                             <div class="content_block content_block__sub">
-                                <p class="short-desc">
-                                    Subscribe to our RSS feed to get the latest content in your reader.
-                                </p>
-                                <a class="btn" href="/feed/posts/">
-                                    <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
-                                    Subscribe to RSS
-                                </a>
+                                {% include "rss.html" %}
                             </div>
                         </section>
                         <section class="content-l_col content-l_col-1-2">

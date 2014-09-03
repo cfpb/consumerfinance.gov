@@ -374,7 +374,7 @@
     .h2();
     // Eyeballed to 24px.
     margin-bottom: unit(13px / @font-size, em);
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         .h1();
         // Eyeballed to 24px.
         margin-bottom: unit(10px / @font-size, em);
@@ -398,7 +398,7 @@
 .post_featured-img {
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
-    .u-respond-to-min(400px, {
+    .respond-to-min(400px, {
         margin:
             unit(30px / @base-font-size-px, em)
             0
@@ -416,7 +416,7 @@
     color: @black;
 
     &__right {
-        .u-respond-to-min(769px, {
+        .respond-to-min(769px, {
             .u-right();
             width: unit(250px / @base-font-size-px, em);
             margin-top: unit(5px / @base-font-size-px, em);
@@ -428,7 +428,7 @@
 .popular-stories,
 .related-posts {
     .list {
-        .u-respond-to-range(600px, 800px, {
+        .respond-to-range(600px, 800px, {
             .grid_nested-col-group();
 
             & .list_item {
@@ -456,7 +456,7 @@
         .u-link__colors(@black, @pacific-80);
         .u-link__no-border();
 
-        .u-respond-to-min(600px, {
+        .respond-to-min(600px, {
             .h3();
         });
     }

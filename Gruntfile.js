@@ -333,8 +333,7 @@ module.exports = function(grunt) {
       'misc',
       'nav-secondary',
       'post',
-      'summary',
-      'utilities'
+      'summary'
     ];
     for (var i = 0; i < subtasks.length; i++) {
       var key = subtasks[i];

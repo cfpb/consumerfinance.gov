@@ -20,7 +20,7 @@
 .contact-person {
     .webfont-regular();
     margin-bottom: unit(30px / @base-font-size-px, em);
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         margin-bottom: unit(10px / @base-font-size-px, em);
     });
 }
@@ -50,7 +50,7 @@
     text-align: center;
 }
 
-.u-respond-to-min(768px, {
+.respond-to-min(768px, {
     .press-section_title {
         .h2();
         margin-bottom: unit(30px / @font-size, em);
@@ -83,7 +83,7 @@
     }
 });
 
-.u-respond-to-min(1024px, {
+.respond-to-min(1024px, {
     .press-contacts_main-contact-list .list_item,
     .press-contacts .contact-person {
         .grid_column(4);
@@ -100,7 +100,7 @@
     }
 });
 
-.u-respond-to-min(1200px, {
+.respond-to-min(1200px, {
     .contact-person__director  .contact-person_photo {
         width: 180px;
         margin-right: unit(@grid_gutter-width / @base-font-size-px, em);

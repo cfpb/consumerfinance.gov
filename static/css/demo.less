@@ -10,7 +10,7 @@
     color: @white;
     .webfont-regular();
 
-    .u-respond-to-max(599px, {
+    .respond-to-max(599px, {
         font-size: 0.875em;
     });
 }
@@ -31,7 +31,7 @@
         color: @gray-50;
     }
 
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         padding: 0;
         float: left;
     });
@@ -40,7 +40,7 @@
 .demo-banner b {
     .webfont-medium();
 
-    .u-respond-to-max(599px, {
+    .respond-to-max(599px, {
         display: block;
     });
 }
@@ -63,23 +63,37 @@
     margin: 26px 0;
 }
 
+.demo-file-name {
+    font-family: Consolas, monaco, monospace;
+}
+
+.demo-sheer-link {
+    .webfont-regular();
+    font-size: unit(12px / @base-font-size-px, em);
+}
+
 .demo-spaced {
     margin-bottom: unit(26px / @base-font-size-px, em);
 }
 
 .demo-cols {
-    .u-respond-to-min(480px, {
+    .respond-to-min(768px, {
         .grid_nested-col-group();
     });
 }
 
 .demo-col-12 {
-    .grid_column(12);
+    .header &,
+    .footer & {
+        .grid_column(12);
+    }
+    .respond-to-min(768px, {
+        .grid_column(12);
+    });
 }
 
 .demo-col-6 {
-    .grid_column(12);
-    .u-respond-to-min(480px, {
+    .respond-to-min(768px, {
         .grid_column(6);
     });
 }
@@ -89,7 +103,7 @@
     // Temporary styling to bring in line with main columns.
     margin: (@grid_gutter-width / 2);
 
-    .u-respond-to-range(600px, 800px, {
+    .respond-to-range(600px, 800px, {
         margin: @grid_gutter-width;
     });
 }
