@@ -263,7 +263,7 @@
 
 .press-information {
     margin-top: unit(60px / @base-font-size-px, em);
-    .u-respond-to-min(600px, {
+    .respond-to-min(600px, {
         .grid_column(7, @grid_total-columns);
         .grid_nested-col-group();
     });
@@ -282,7 +282,7 @@
         <div class="expandable expandable__expanded">
             <div class="expandable_header expandable_header__spaced">
                 <div class="expandable_header-right expandable_header-right__float-on-medium">
-                    <a class="expandable_target btn btn-secondary"
+                    <a class="expandable_target btn btn__secondary"
                        href="#post-filters-form">
                         Filter posts&nbsp;&nbsp;
                         <span class="expandable_cue-open">
@@ -367,7 +367,7 @@
                         </div> -->
                     </div>
                     <div class="form-actions form-actions__right-on-med">
-                        <input class="btn btn-warning btn-link form-actions_item js-form_clear"
+                        <input class="btn btn__warning btn__link form-actions_item js-form_clear"
                                type="button"
                                value="Clear filters">
                         <input class="btn form-actions_item"
@@ -384,7 +384,7 @@
           .expandable
             .expandable_header__spaced
               .expandable_header-right.expandable_header-right__float-on-medium
-                .expandable_target.btn.btn-secondary
+                .expandable_target.btn.btn__secondary
                   .expandable_cue-open
                     .cf-icon.cf-icon-down
                   .expandable_cue-close

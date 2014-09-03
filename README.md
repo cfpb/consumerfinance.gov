@@ -1,13 +1,12 @@
 # cfgov-refresh
 
-cfgov-refresh is based off of [cf-demo](),
-a the recommended workflow for using Capital Framework components.
+cfgov-refresh is based off of [cf-demo](https://github.com/cfpb/cf-demo),
+the recommended workflow for using Capital Framework components.
 
 If you're new to Capital Framework, we encourage you to
 [start here](http://cfpb.github.io/capital-framework/).
 
-- [View the docs](http://cfpb.github.io/cfgov-refresh/docs/)
-- [See the demos](http://cfpb.github.io/cfgov-refresh/)
+- [cfgov-refresh templates and pattern library](http://cfpb.github.io/cfgov-refresh/)
 
 
 ## Contributing

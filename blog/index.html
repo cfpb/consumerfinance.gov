@@ -34,6 +34,8 @@
     {% set posts = query.search_with_url_arguments(size=10) %}
     {% set view = get_document('views', 'blog') %}
 
+    {% set rss_path = '/feed/posts/' %}
+
     {# Macros #}
 
     {% import "post-macros.html" as post_macros with context %}
@@ -72,13 +74,7 @@
                         {% include "email-subscribe-form.html" %}
                     </div>
                     <div class="content_block content_block__sub">
-                        <p class="short-desc">
-                            Subscribe to our RSS feed to get the latest content in your reader.
-                        </p>
-                        <a class="btn" href="/feed/posts/">
-                            <!-- <span class="btn-icon-left cf-icon cf-icon-rss"></span> -->
-                            Subscribe to RSS
-                        </a>
+                        {% include "rss.html" %}
                     </div>
                 </section>
             </aside>
