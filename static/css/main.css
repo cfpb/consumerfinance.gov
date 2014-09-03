@@ -2039,6 +2039,10 @@ figure {
   margin-top: 0;
   margin-bottom: 1.25em;
 }
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
 /* topdoc
   name: Default link
   notes:
@@ -3586,6 +3590,10 @@ table,
 figure {
   margin-top: 0;
   margin-bottom: 1.25em;
+}
+figure {
+  margin-left: 0;
+  margin-right: 0;
 }
 /* topdoc
   name: Default link
@@ -5574,8 +5582,8 @@ textarea.success {
 .form-group + .form-group {
   margin-top: 1.875em;
 }
-.form-group_item {
-  margin-bottom: 0.9375em;
+.form-group_item + .form-group_item {
+  margin-top: 0.9375em;
 }
 /* topdoc
   name: EOF
