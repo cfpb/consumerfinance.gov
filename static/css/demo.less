@@ -63,23 +63,37 @@
     margin: 26px 0;
 }
 
+.demo-file-name {
+    font-family: Consolas, monaco, monospace;
+}
+
+.demo-sheer-link {
+    .webfont-regular();
+    font-size: unit(12px / @base-font-size-px, em);
+}
+
 .demo-spaced {
     margin-bottom: unit(26px / @base-font-size-px, em);
 }
 
 .demo-cols {
-    .respond-to-min(480px, {
+    .respond-to-min(768px, {
         .grid_nested-col-group();
     });
 }
 
 .demo-col-12 {
-    .grid_column(12);
+    .header &,
+    .footer & {
+        .grid_column(12);
+    }
+    .respond-to-min(768px, {
+        .grid_column(12);
+    });
 }
 
 .demo-col-6 {
-    .grid_column(12);
-    .respond-to-min(480px, {
+    .respond-to-min(768px, {
         .grid_column(6);
     });
 }
