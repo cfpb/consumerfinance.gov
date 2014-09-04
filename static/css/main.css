@@ -2923,6 +2923,35 @@ select[multiple].focus {
    Utilities
    ========================================================================== */
 /* topdoc
+  name: JS-only
+  family: cf-core
+  patterns:
+    - name: Setup
+      codenotes:
+        - <html class="no-js">
+        - |
+            <script>
+                // Confirm availability of JS and remove no-js class from html
+                var docElement = document.documentElement;
+                docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+            </script>
+      notes:
+        - "First add the .no-js class to the HTML element."
+        - "Then add the script to your HEAD which removes the .no-js class when
+           JS is available."
+    - name: Utility class
+      codenotes:
+        - .u-js-only;
+      notes:
+        - "Hide stuff when JavaScript isn't available. Depends on having a small
+           script in the HEAD of your HTML document that removes a .no-js class."
+  tags:
+    - cf-core
+*/
+.no-js .u-js-only {
+  display: none !important;
+}
+/* topdoc
   name: Clearfix
   family: cf-core
   patterns:
@@ -2930,7 +2959,7 @@ select[multiple].focus {
       markup: |
         <div class="u-clearfix">
             <div style="float:left; width:100%; height:60px; background:black;"></div>
-        </h1>
+        </div>
       codenotes:
         - .u-clearfix;
       notes:
@@ -4477,6 +4506,35 @@ select[multiple].focus {
    Utilities
    ========================================================================== */
 /* topdoc
+  name: JS-only
+  family: cf-core
+  patterns:
+    - name: Setup
+      codenotes:
+        - <html class="no-js">
+        - |
+            <script>
+                // Confirm availability of JS and remove no-js class from html
+                var docElement = document.documentElement;
+                docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+            </script>
+      notes:
+        - "First add the .no-js class to the HTML element."
+        - "Then add the script to your HEAD which removes the .no-js class when
+           JS is available."
+    - name: Utility class
+      codenotes:
+        - .u-js-only;
+      notes:
+        - "Hide stuff when JavaScript isn't available. Depends on having a small
+           script in the HEAD of your HTML document that removes a .no-js class."
+  tags:
+    - cf-core
+*/
+.no-js .u-js-only {
+  display: none !important;
+}
+/* topdoc
   name: Clearfix
   family: cf-core
   patterns:
@@ -4484,7 +4542,7 @@ select[multiple].focus {
       markup: |
         <div class="u-clearfix">
             <div style="float:left; width:100%; height:60px; background:black;"></div>
-        </h1>
+        </div>
       codenotes:
         - .u-clearfix;
       notes:
