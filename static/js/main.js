@@ -12279,6 +12279,15 @@ String.prototype.score = function(word, fuzziness) {
   return finalScore;
 };
 
+/**
+ * jquery.type-and-filter.js
+ *
+ * Filters a list as you type using fuzzy or strict search for matching.
+ * Fuzzy search depends on git://github.com/joshaven/string_score#0.1.20
+ *
+ * A public domain work of the Consumer Financial Protection Bureau
+ */
+
 (function ($) {
 
     $.fn.typeAndFilter = function( userSettings ) {
