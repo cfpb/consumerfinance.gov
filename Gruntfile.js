@@ -82,7 +82,9 @@ module.exports = function(grunt) {
           'static/js/jquery.custom-input.js',
           'static/js/jquery.custom-select.js',
           'static/js/jquery.cf_input-split.js',
+          'static/js/jquery.type-and-filter.js',
           // 'static/js/jquery.cf_pagination.js',
+          'vendor/string_score/string_score.js',
           'static/js/app.js'
         ],
         dest: 'static/js/main.js'
