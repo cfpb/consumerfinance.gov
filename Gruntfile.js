@@ -2,8 +2,9 @@ module.exports = function(grunt) {
 
   'use strict';
 
-  var path = require('path');
+  require('time-grunt')(grunt);
 
+  var path = require('path');
   var config = {
 
     /**
