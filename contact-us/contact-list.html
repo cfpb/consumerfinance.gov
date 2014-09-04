@@ -1,105 +1,106 @@
 
 <div class="expandable-group type-and-filter" data-accordion="true">
 
-    <p class="h2">
-        Looking for something more specific?
-    </p>
-    <p class="short-desc">
-        Type in the office, product, blah lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta cumque perspiciatis delectus ipsa illo praesentium quos omnis nemo quia itaque reprehenderit consequatur totam velit quisquam eos expedita ea sit vel.
-    </p>
-    <input class="js-type-and-filter_input" type="text" placeholder="Filter contacts by keyword">
+    <div class="js-type-and-filter_controls">
+        <p class="h2">
+            Looking for something more specific?
+        </p>
+        <p class="short-desc">
+            Type in the office, product, blah lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta cumque perspiciatis delectus ipsa illo praesentium quos omnis nemo quia itaque reprehenderit consequatur totam velit quisquam eos expedita ea sit vel.
+        </p>
+        <input class="js-type-and-filter_input" type="text" placeholder="Filter contacts by keyword">
+    </div>
 
     <div class="content_block">
-            <div class="expandable-group_header">
-                Office name
-            </div>
-
-        {%- for contact in contacts|sort(attribute='title') %}
-            <article class="js-type-and-filter_item expandable expandable__padded">
-                <button class="expandable_header expandable_target">
-                    <span class="expandable_header-left h4">
-                        {{ contact.title }}
+        <div class="expandable-group_header">
+            Office name
+        </div>
+    {%- for contact in contacts|sort(attribute='title') %}
+        <article class="js-type-and-filter_item expandable expandable__padded">
+            <button class="expandable_header expandable_target">
+                <span class="expandable_header-left h4">
+                    {{ contact.title }}
+                </span>
+                <span class="expandable_header-right expandable_link">
+                    <span class="expandable_cue-open">
+                        Show
+                        <span class="cf-icon cf-icon-plus-round"></span>
                     </span>
-                    <span class="expandable_header-right expandable_link">
-                        <span class="expandable_cue-open">
-                            Show
-                            <span class="cf-icon cf-icon-plus-round"></span>
-                        </span>
-                        <span class="expandable_cue-close">
-                            Hide
-                            <span class="cf-icon cf-icon-minus-round"></span>
-                        </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                        <span class="cf-icon cf-icon-minus-round"></span>
                     </span>
-                </button>
-                <div class="expandable_content">
-                    <div class="content-l">
-                        <div class="content-l_col content-l_col-5-8">
-                            {{ contact.content|safe }}
-                        {%- if contact.web != 'None' %}
-                            <a class="jump-link" href="{{ contact.web }}">
-                                {{ contact.web_desc if contact.web_desc != 'None' else contact.web }}
-                            </a>
+                </span>
+            </button>
+            <div class="expandable_content">
+                <div class="content-l">
+                    <div class="content-l_col content-l_col-5-8">
+                        {{ contact.content|safe }}
+                    {%- if contact.web != 'None' %}
+                        <a class="jump-link" href="{{ contact.web }}">
+                            {{ contact.web_desc if contact.web_desc != 'None' else contact.web }}
+                        </a>
+                    {%- endif %}
+                    </div>
+                    <div class="content-l_col content-l_col-3-8">
+                    {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}
+                        <ul class="list list__icons">
+                        {%- if contact.email != 'None' %}
+                            <li class="list_item u-break-word">
+                                <span class="cf-icon cf-icon-email list_icon"></span>
+                                <a class="list_link" href="mailto:{{ contact.email }}">
+                                    {{ contact.email }}
+                                </a>
+                            </li>
                         {%- endif %}
-                        </div>
-                        <div class="content-l_col content-l_col-3-8">
-                        {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}
-                            <ul class="list list__icons">
-                            {%- if contact.email != 'None' %}
-                                <li class="list_item u-break-word">
-                                    <span class="cf-icon cf-icon-email list_icon"></span>
-                                    <a class="list_link" href="mailto:{{ contact.email }}">
-                                        {{ contact.email }}
-                                    </a>
-                                </li>
-                            {%- endif %}
-                            {%- if contact.email_2 != 'None' %}
-                                <li class="list_item u-break-word">
-                                    <span class="cf-icon cf-icon-email list_icon"></span>
-                                    <a class="list_link" href="mailto:{{ contact.email_2 }}">
-                                        {{ contact.email_2 }}
-                                    </a>
-                                </li>
-                            {%- endif %}
-                            {%- if contact.phone != 'None' %}
-                                <li class="list_item">
-                                    <span class="cf-icon cf-icon-phone list_icon"></span>
-                                    <span class="short-desc">
-                                        {{ macros.format_phone(contact.phone) }}
-                                    </span>
-                                </li>
-                            {%- endif %}
-                            {%- if contact.phone_2 != 'None' %}
-                                <li class="list_item">
-                                    <span class="cf-icon cf-icon-phone list_icon"></span>
-                                    <span class="short-desc">
-                                        {{ macros.format_phone(contact.phone_2) }}
-                                    </span>
-                                </li>
-                            {%- endif %}
-                            {%- if contact.fax != 'None' %}
-                                <li class="list_item">
-                                    <span class="cf-icon cf-icon-fax list_icon"></span>
-                                    <span class="short-desc">
-                                        {{ macros.format_phone(contact.fax) }}
-                                    </span>
-                                </li>
-                            {%- endif %}
-                            </ul>
+                        {%- if contact.email_2 != 'None' %}
+                            <li class="list_item u-break-word">
+                                <span class="cf-icon cf-icon-email list_icon"></span>
+                                <a class="list_link" href="mailto:{{ contact.email_2 }}">
+                                    {{ contact.email_2 }}
+                                </a>
+                            </li>
                         {%- endif %}
-                        {%- if contact.street != 'None' %}
-                            <p class="short-desc">
-                                {{ contact.street if contact.street != 'None' }}<br>
-                                {{ contact.street_2 + '<br>'|safe if contact.street_2 != 'None' }}
-                                {{ contact.city + ',' if contact.city != 'None' }}
-                                {{ contact.state if contact.state != 'None' }}
-                                {{ contact.zip_code if contact.zip_code != 'None' }}
-                            </p>
+                        {%- if contact.phone != 'None' %}
+                            <li class="list_item">
+                                <span class="cf-icon cf-icon-phone list_icon"></span>
+                                <span class="short-desc">
+                                    {{ macros.format_phone(contact.phone) }}
+                                </span>
+                            </li>
                         {%- endif %}
-                        </div>
-                    </div><!-- END .content-l -->
-                </div><!-- END .expandable_content -->
-            </article>
-        {%- endfor %}
+                        {%- if contact.phone_2 != 'None' %}
+                            <li class="list_item">
+                                <span class="cf-icon cf-icon-phone list_icon"></span>
+                                <span class="short-desc">
+                                    {{ macros.format_phone(contact.phone_2) }}
+                                </span>
+                            </li>
+                        {%- endif %}
+                        {%- if contact.fax != 'None' %}
+                            <li class="list_item">
+                                <span class="cf-icon cf-icon-fax list_icon"></span>
+                                <span class="short-desc">
+                                    {{ macros.format_phone(contact.fax) }}
+                                </span>
+                            </li>
+                        {%- endif %}
+                        </ul>
+                    {%- endif %}
+                    {%- if contact.street != 'None' %}
+                        <p class="short-desc">
+                            {{ contact.street if contact.street != 'None' }}<br>
+                            {{ contact.street_2 + '<br>'|safe if contact.street_2 != 'None' }}
+                            {{ contact.city + ',' if contact.city != 'None' }}
+                            {{ contact.state if contact.state != 'None' }}
+                            {{ contact.zip_code if contact.zip_code != 'None' }}
+                        </p>
+                    {%- endif %}
+                    </div>
+                </div><!-- END .content-l -->
+            </div><!-- END .expandable_content -->
+        </article><!-- END .expandable -->
+    {%- endfor %}
     </div><!-- END .content_block -->
 
 </div>
