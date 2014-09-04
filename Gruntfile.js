@@ -2,8 +2,10 @@ module.exports = function(grunt) {
 
   'use strict';
 
-  var path = require('path');
+  require('load-grunt-tasks')(grunt);
+  require('time-grunt')(grunt);
 
+  var path = require('path');
   var config = {
 
     /**
@@ -310,21 +312,12 @@ module.exports = function(grunt) {
         files: ['static/css/*.less'],
         tasks: ['cssdev', 'topdoc']
       }
-    }
-  };
+    },
 
-  /*
-   * Creates a dynamic topdoc options object.
-   * To add more subtasks add an item to the subtasks array.
-   * For example if you created a new component with the family name of
-   * "my-component" then you could add a new item to the subtasks array called
-   * "my-component" and this function would automatically add a new topdoc
-   * subtask to the topdoc task. You could then run `grunt topdoc:my-component`
-   * to build it out separately or just `grunt topdoc` to run all topdoc tasks.
-   */
-  function dynamicTopdocTasks() {
-    var topdoc = {};
-    var subtasks = [
+    /**
+     * See note below about creating a dynamic Topdoc options object.
+     */
+    topdoc_families: [
       'blog-docs',
       'cf-enhancements',
       'layout',
@@ -334,9 +327,23 @@ module.exports = function(grunt) {
       'nav-secondary',
       'post',
       'summary'
-    ];
-    for (var i = 0; i < subtasks.length; i++) {
-      var key = subtasks[i];
+    ]
+  };
+
+  /**
+   * Creates a dynamic Topdoc options object.
+   * To add more subtasks add an item to the config.topdoc_families array.
+   * For example if you created a new component with the family name of
+   * "my-component" then you could add a new item to the config.topdoc_families
+   * array called "my-component" and this function would automatically add a new
+   * Topdoc subtask to the Topdoc task. You could then run `grunt topdoc:my-component`
+   * to build it out separately or just `grunt topdoc` to run all topdoc tasks.
+   */
+  function dynamicTopdocTasks() {
+    var topdoc = {},
+        families = config.topdoc_families;
+    for (var i = 0; i < families.length; i++) {
+      var key = families[i];
       topdoc[key] = {
         options: {
           source: 'static/css/',
@@ -356,32 +363,37 @@ module.exports = function(grunt) {
 
   config.topdoc = dynamicTopdocTasks();
 
+  /**
+   * Create an array of all of the Topdoc subtasks.
+   * This is useful for the concurrent task which needs to know all of the
+   * tasks you want to run concurrently. Since these Topdics are dynamically
+   * created we need a way to also dynamically update the concurrent task options.
+   */
+  function getTopdocSubtasks() {
+    var families = config.topdoc_families,
+        subtasks = [];
+    for (var i = 0; i < families.length; i++) {
+      subtasks.push( 'topdoc:' + families[i] );
+    }
+    return subtasks;
+  }
+
+  config.concurrent = {
+    topdoc: getTopdocSubtasks()
+  };
+
+  /**
+   * Initialize a configuration object for the current project.
+   */
   grunt.initConfig(config);
 
   /**
-   * The above tasks are loaded here.
-   */
-  grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-banner');
-  grunt.loadNpmTasks('grunt-bower-task');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-legacssy');
-  grunt.loadNpmTasks('grunt-string-replace');
-  grunt.loadNpmTasks('grunt-topdoc');
-
-  /**
-   * Create custom task aliases and combinations
+   * Create custom task aliases and combinations.
    */
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin', 'usebanner:css']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
-  grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'topdoc']);
+  grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['jshint']);
 
 };
