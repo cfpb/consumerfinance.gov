@@ -1,5 +1,16 @@
+
+<div class="type-and-filter">
+
+    <p class="h2">
+        Looking for something more specific?
+    </p>
+    <p class="short-desc">
+        Type in the office, product, blah lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta cumque perspiciatis delectus ipsa illo praesentium quos omnis nemo quia itaque reprehenderit consequatur totam velit quisquam eos expedita ea sit vel.
+    </p>
+    <input class="js-type-and-filter_input" type="text" placeholder="Filter contacts by keyword">
+
 {%- for contact in contacts|sort(attribute='title') %}
-    <article class="content_block{{ ' content_block__flush-top' if loop.first }}">
+    <article class="js-type-and-filter_item content_block">
         <h1 class="h4">
             {{ contact.title }}
         </h1>
@@ -70,3 +81,5 @@
         </div>
     </article>
 {%- endfor %}
+
+</div>
