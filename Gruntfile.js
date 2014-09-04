@@ -361,7 +361,7 @@ module.exports = function(grunt) {
     return topdoc;
   }
 
-  // config.topdoc = dynamicTopdocTasks();
+  config.topdoc = dynamicTopdocTasks();
 
   /**
    * Create an array of all of the Topdoc subtasks.
