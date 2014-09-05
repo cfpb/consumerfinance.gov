@@ -18,9 +18,9 @@
 {%- for contact in contacts|sort(attribute='title') %}
         <article class="js-type-and-filter_item expandable expandable__padded">
             <button class="expandable_header expandable_target">
-                <h1 class="expandable_header-left h4">
+                <span class="expandable_header-left h4">
                     {{ contact.title }}
-                </h1>
+                </span>
                 <span class="expandable_header-right expandable_link">
                     <span class="expandable_cue-open">
                         Show
