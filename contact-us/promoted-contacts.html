@@ -13,9 +13,9 @@
             {{ accessibility_feedback.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if accessibility_feedback.web != 'None' %}
+    {%- if accessibility_feedback.web %}
         <a class="jump-link" href="{{ accessibility_feedback.web }}">
-            {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc != 'None' else accessibility_feedback.web }}
+            {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc else accessibility_feedback.web }}
         </a>
     {%- endif %}
     </section>
@@ -29,9 +29,9 @@
             {{ whistleblowers.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if whistleblowers.email != 'None' or whistleblowers.phone != 'None' %}
+    {%- if whistleblowers.email or whistleblowers.phone %}
         <ul class="list list__icons">
-        {%- if whistleblowers.email != 'None' %}
+        {%- if whistleblowers.email %}
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
                 <a class="list_link" href="mailto:{{ whistleblowers.email }}">
@@ -39,7 +39,7 @@
                 </a>
             </li>
         {%- endif %}
-        {%- if whistleblowers.phone != 'None' %}
+        {%- if whistleblowers.phone %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="short-desc">
@@ -60,7 +60,7 @@
             {{ tribal_consultation.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if tribal_consultation.email != 'None' %}
+    {%- if tribal_consultation.email %}
         <ul class="list list__icons">
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>

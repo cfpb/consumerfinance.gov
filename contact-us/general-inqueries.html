@@ -7,7 +7,7 @@
     {{ general_inqueries.sitewide_desc }}
 </p>
 <ul class="list list__icons">
-{%- if general_inqueries.email != 'None' %}
+{%- if general_inqueries.email %}
     <li class="list_item u-break-word">
         <span class="cf-icon cf-icon-email list_icon"></span>
         <a class="list_link" href="mailto:{{ general_inqueries.email }}">
@@ -15,7 +15,7 @@
         </a>
     </li>
 {%- endif %}
-{%- if general_inqueries.phone != 'None' %}
+{%- if general_inqueries.phone %}
     <li class="list_item">
         <span class="cf-icon cf-icon-phone list_icon"></span>
         <span class="short-desc">
@@ -23,7 +23,7 @@
         </span>
     </li>
 {%- endif %}
-{%- if general_inqueries.fax != 'None' %}
+{%- if general_inqueries.fax %}
     <li class="list_item">
         <span class="cf-icon cf-icon-fax list_icon"></span>
         <span class="short-desc">
