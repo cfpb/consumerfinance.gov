@@ -9,11 +9,22 @@
                 <label class="form-label-header">
                     Categories
                 </label>
+        {% if path == '/newsroom/' -%}
+            {% for category in query.possible_values_for('category', doc_type='newsroom')|sort(attribute='term') -%}
+                <label class="form-group_item form-label">
+                    {{ post_macros.filter_checkbox('category', category.term)|safe }}
+                </label>
+            {% endfor %}
+                <label class="form-group_item form-label">
+                    {{ post_macros.filter_checkbox('type', 'post', 'Blog')|safe }}
+                </label>
+        {%- else -%}
             {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
                 <label class="form-group_item form-label">
                     {{ post_macros.filter_checkbox('category', category.term)|safe }}
                 </label>
             {% endfor %}
+        {%- endif %}
             </div>
         </div>
 
