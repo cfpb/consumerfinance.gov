@@ -20,8 +20,8 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "cf-buttons": "git://github.com/cfpb/cf-buttons.git#1.1.0",
-    "cf-core": "git://github.com/cfpb/cf-core.git#0.3.2",
+    "cf-buttons": "git://github.com/cfpb/cf-buttons.git#1.2.0",
+    "cf-core": "git://github.com/cfpb/cf-core.git#0.4.0",
     "cf-expandables": "git://github.com/cfpb/cf-expandables.git#0.5.0",
     "cf-forms": "git://github.com/cfpb/cf-forms.git#1.0.1",
     "cf-grid": "git://github.com/cfpb/cf-grid.git#0.9.0",
@@ -31,7 +31,8 @@
     "history.js": "~1.8.0",
     "html5shiv": "latest",
     "jquery": "~1.11.0",
-    "jquery.easing": "~1.3.0"
+    "jquery.easing": "~1.3.0",
+    "string_score": "git://github.com/joshaven/string_score#0.1.20"
   },
   "exportsOverride": {
     "cf-*": {
@@ -53,6 +54,9 @@
     },
     "jquery.easing": {
       "js": "js/jquery.easing.js"
+    },
+    "string_score": {
+        "js": "string_score.js"
     }
   }
 }
