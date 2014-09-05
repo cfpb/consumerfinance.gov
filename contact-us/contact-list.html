@@ -6,16 +6,16 @@
         <div class="content-l">
             <div class="content-l_col content-l_col-5-8">
                 {{ contact.content|safe }}
-            {%- if contact.web != 'None' %}
+            {%- if contact.web %}
                 <a class="jump-link" href="{{ contact.web }}">
-                    {{ contact.web_desc if contact.web_desc != 'None' else contact.web }}
+                    {{ contact.web_desc if contact.web_desc else contact.web }}
                 </a>
             {%- endif %}
             </div>
             <div class="content-l_col content-l_col-3-8">
-            {%- if contact.email != 'None' or contact.phone != 'None' or contact.fax != 'None' %}
+            {%- if contact.email or contact.phone or contact.fax %}
                 <ul class="list list__icons">
-                {%- if contact.email != 'None' %}
+                {%- if contact.email %}
                     <li class="list_item u-break-word">
                         <span class="cf-icon cf-icon-email list_icon"></span>
                         <a class="list_link" href="mailto:{{ contact.email }}">
@@ -23,7 +23,7 @@
                         </a>
                     </li>
                 {%- endif %}
-                {%- if contact.email_2 != 'None' %}
+                {%- if contact.email_2 %}
                     <li class="list_item u-break-word">
                         <span class="cf-icon cf-icon-email list_icon"></span>
                         <a class="list_link" href="mailto:{{ contact.email_2 }}">
@@ -31,7 +31,7 @@
                         </a>
                     </li>
                 {%- endif %}
-                {%- if contact.phone != 'None' %}
+                {%- if contact.phone %}
                     <li class="list_item">
                         <span class="cf-icon cf-icon-phone list_icon"></span>
                         <span class="short-desc">
@@ -39,7 +39,7 @@
                         </span>
                     </li>
                 {%- endif %}
-                {%- if contact.phone_2 != 'None' %}
+                {%- if contact.phone_2 %}
                     <li class="list_item">
                         <span class="cf-icon cf-icon-phone list_icon"></span>
                         <span class="short-desc">
@@ -47,7 +47,7 @@
                         </span>
                     </li>
                 {%- endif %}
-                {%- if contact.fax != 'None' %}
+                {%- if contact.fax %}
                     <li class="list_item">
                         <span class="cf-icon cf-icon-fax list_icon"></span>
                         <span class="short-desc">
@@ -57,13 +57,13 @@
                 {%- endif %}
                 </ul>
             {%- endif %}
-            {%- if contact.street != 'None' %}
+            {%- if contact.street %}
                 <p class="short-desc">
-                    {{ contact.street if contact.street != 'None' }}<br>
-                    {{ contact.street_2 + '<br>'|safe if contact.street_2 != 'None' }}
-                    {{ contact.city + ',' if contact.city != 'None' }}
-                    {{ contact.state if contact.state != 'None' }}
-                    {{ contact.zip_code if contact.zip_code != 'None' }}
+                    {{ contact.street if contact.street }}<br>
+                    {{ contact.street_2 + '<br>'|safe if contact.street_2 }}
+                    {{ contact.city + ',' if contact.city }}
+                    {{ contact.state if contact.state }}
+                    {{ contact.zip_code if contact.zip_code }}
                 </p>
             {%- endif %}
             </div>

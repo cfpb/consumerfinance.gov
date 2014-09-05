@@ -1,22 +1,23 @@
 {
   "contact": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=contact",
-    "processor":  "wordpress_contact_processor"
+    "processor":  "wordpress_contact_processor",
+    "mappings":   "_settings/contact_mappings.json"
   },
   "posts": {
     "url":        "$WORDPRESS/api/get_posts/",
     "processor":  "wordpress_post_processor",
-    "mappings":   "_defaults/posts_mappings.json"
+    "mappings":   "_settings/posts_mappings.json"
   },
   "newsroom": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
     "processor":  "wordpress_post_processor",
-    "mappings":   "_defaults/posts_mappings.json"
+    "mappings":   "_settings/posts_mappings.json"
   },
   "watchroom": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=watchroom",
     "processor":  "wordpress_post_processor",
-    "mappings":   "_defaults/posts_mappings.json"
+    "mappings":   "_settings/posts_mappings.json"
   },
   "views": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=view",
