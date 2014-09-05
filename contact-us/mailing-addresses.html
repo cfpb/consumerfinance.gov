@@ -9,10 +9,10 @@
 
     {# Google Image Maps API Docs:
        https://developers.google.com/maps/documentation/staticmaps/index #}
-    {% if administrative_offices.street_2 != 'None' and
-          administrative_offices.city != 'None' and
-          administrative_offices.state != 'None' and
-          administrative_offices.zip != 'None' %}
+    {% if administrative_offices.street_2 and
+          administrative_offices.city and
+          administrative_offices.state and
+          administrative_offices.zip %}
         {% set administrative_offices_map = administrative_offices.street_2 + ',+' +
            administrative_offices.city + '+' +
            administrative_offices.state + '+' +
