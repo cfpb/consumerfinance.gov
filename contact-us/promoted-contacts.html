@@ -13,9 +13,9 @@
             {{ accessibility_feedback.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if accessibility_feedback.web != 'None' %}
-        <a class="jump-link" href="{{ accessibility_feedback.web }}">
-            {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc != 'None' else accessibility_feedback.web }}
+    {%- if accessibility_feedback.web_addr %}
+        <a class="jump-link" href="{{ accessibility_feedback.web_addr }}">
+            {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc else accessibility_feedback.web_addr }}
         </a>
     {%- endif %}
     </section>
@@ -29,21 +29,21 @@
             {{ whistleblowers.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if whistleblowers.email != 'None' or whistleblowers.phone != 'None' %}
+    {%- if whistleblowers.email_addr or whistleblowers.phone_num %}
         <ul class="list list__icons">
-        {%- if whistleblowers.email != 'None' %}
+        {%- if whistleblowers.email_addr %}
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:{{ whistleblowers.email }}">
-                    {{ whistleblowers.email }}
+                <a class="list_link" href="mailto:{{ whistleblowers.email_addr }}">
+                    {{ whistleblowers.email_addr }}
                 </a>
             </li>
         {%- endif %}
-        {%- if whistleblowers.phone != 'None' %}
+        {%- if whistleblowers.phone_num %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="short-desc">
-                    {{ macros.format_phone(whistleblowers.phone) }}
+                    {{ macros.format_phone(whistleblowers.phone_num) }}
                 </span>
             </li>
         {%- endif %}
@@ -60,12 +60,12 @@
             {{ tribal_consultation.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if tribal_consultation.email != 'None' %}
+    {%- if tribal_consultation.email_addr %}
         <ul class="list list__icons">
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:{{ tribal_consultation.email }}">
-                    {{ tribal_consultation.email }}
+                <a class="list_link" href="mailto:{{ tribal_consultation.email_addr }}">
+                    {{ tribal_consultation.email_addr }}
                 </a>
             </li>
         </ul>

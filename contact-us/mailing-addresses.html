@@ -9,14 +9,14 @@
 
     {# Google Image Maps API Docs:
        https://developers.google.com/maps/documentation/staticmaps/index #}
-    {% if administrative_offices.street_2 != 'None' and
-          administrative_offices.city != 'None' and
-          administrative_offices.state != 'None' and
-          administrative_offices.zip != 'None' %}
-        {% set administrative_offices_map = administrative_offices.street_2 + ',+' +
-           administrative_offices.city + '+' +
-           administrative_offices.state + '+' +
-           administrative_offices.zip_code %}
+    {% if administrative_offices.street and
+          administrative_offices.city and
+          administrative_offices.state and
+          administrative_offices.zip_code %}
+        {% set administrative_offices_map = (administrative_offices.street + ', ' +
+           administrative_offices.city + ' ' +
+           administrative_offices.state + ' ' +
+           administrative_offices.zip_code)|urlencode %}
     <figure class="content-l_col content-l_col__stack-on-cols content-l_col-1-2 figure__bordered contact-us-map">
         <a href="https://www.google.com/maps/place/{{ administrative_offices_map }}">
             <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ administrative_offices_map }}&scale=2" alt="">

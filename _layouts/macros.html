@@ -38,9 +38,9 @@
    ```
    when given a contact post type #}
 {% macro format_address(contact) %}
-    {{ contact.street if contact.street != 'None' }}<br>
-    {{ contact.street_2 + '<br>'|safe if contact.street_2 != 'None' }}
-    {{ contact.city + ',' if contact.city != 'None' }}
-    {{ contact.state if contact.state != 'None' }}
-    {{ contact.zip_code if contact.zip_code != 'None' }}
+    {{ contact.street if contact.street }}<br>
+    {{ contact.street_2 + '<br>'|safe if contact.street_2 }}
+    {{ contact.city + ',' if contact.city }}
+    {{ contact.state if contact.state }}
+    {{ contact.zip_code if contact.zip_code }}
 {% endmacro %}
