@@ -1,5 +1,5 @@
 
-{% macro filter_checkbox(field, value, classes, hidden) %}
+{% macro filter_checkbox(field, value, label) %}
     <input class="custom-input"
            type="checkbox"
            name="filter_{{ field }}"
@@ -8,7 +8,7 @@
            checked
            {%- endif -%}
            >
-        {{ value }}
+        {{ label if label else value }}
 {% endmacro %}
 
 {% macro filter_option(field, value) %}
