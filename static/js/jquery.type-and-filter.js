@@ -22,8 +22,9 @@
                     $input: $(),
                     $items: $(),
                     $messages: $(),
-                    allMessage: 'Showing all {{ count }}',
-                    filteredMessage: 'Showing {{ count }} filtered results for {{ term }}',
+                    allMessage: 'Showing all {{ count }}.',
+                    filteredMessageSingular: 'There is 1 result for "{{ term }}".',
+                    filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
                     minTermMessage: '<em>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</em>',
                     'clickCallback': function(e){}
                 }, userSettings ),
@@ -96,7 +97,14 @@
                 })
                 // Display an error message specific to the minimum search term.
                 .on( 'searchResults', function () {
-                    var html = settings.filteredMessage.replace(/{{[\s]*term[\s]*}}/, searchTerm);
+                    var html,
+                        template;
+                    if ( resultsCount === 1 ) {
+                        template = settings.filteredMessageSingular;
+                    } else {
+                        template = settings.filteredMessageMultiple;
+                    }
+                    html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
                     html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
                     $messages.html( html );
                 })
