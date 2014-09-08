@@ -8180,6 +8180,28 @@ figure {
   border: 1px solid #babbbd;
 }
 /* topdoc
+  name: Super input
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .input__super
+      markup: |
+        <input class="input__super" type="text" value="Super input"></input>
+        <button class="btn btn__super">Super</button>
+      notes:
+        - "An input that matches the height of a super button."
+  tags:
+    - cfgov-cf-enhancements
+*/
+.input__super[type="text"],
+.input__super[type="search"],
+.input__super[type="email"],
+.input__super[type="url"],
+.input__super[type="tel"],
+.input__super[type="number"] {
+  padding: 0.55555556em;
+  font-size: 1.125em;
+}
+/* topdoc
   name: Expandables
   family: cfgov-cf-enhancements
   patterns:
