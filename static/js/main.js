@@ -12303,8 +12303,9 @@ String.prototype.score = function(word, fuzziness) {
                     $input: $(),
                     $items: $(),
                     $messages: $(),
-                    allMessage: 'Showing all {{ count }}',
-                    filteredMessage: 'Showing {{ count }} filtered results for {{ term }}',
+                    allMessage: 'Showing all {{ count }}.',
+                    filteredMessageSingular: 'There is 1 result for "{{ term }}".',
+                    filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
                     minTermMessage: '<em>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</em>',
                     'clickCallback': function(e){}
                 }, userSettings ),
@@ -12377,7 +12378,14 @@ String.prototype.score = function(word, fuzziness) {
                 })
                 // Display an error message specific to the minimum search term.
                 .on( 'searchResults', function () {
-                    var html = settings.filteredMessage.replace(/{{[\s]*term[\s]*}}/, searchTerm);
+                    var html,
+                        template;
+                    if ( resultsCount === 1 ) {
+                        template = settings.filteredMessageSingular;
+                    } else {
+                        template = settings.filteredMessageMultiple;
+                    }
+                    html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
                     html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
                     $messages.html( html );
                 })
@@ -12517,7 +12525,8 @@ $('.type-and-filter').typeAndFilter({
    $clear: $('.js-type-and-filter_clear'),
    $messages: $('.js-type-and-filter_message'),
    allMessage: 'Showing all {{ count }} contacts.',
-   filteredMessage: 'There are {{ count }} contact results for "{{ term }}"'
+   filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
+   filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
 
 // Example of triggering a search via query string

@@ -52,7 +52,8 @@ $('.type-and-filter').typeAndFilter({
    $clear: $('.js-type-and-filter_clear'),
    $messages: $('.js-type-and-filter_message'),
    allMessage: 'Showing all {{ count }} contacts.',
-   filteredMessage: 'There are {{ count }} contact results for "{{ term }}"'
+   filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
+   filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
 
 // Example of triggering a search via query string
