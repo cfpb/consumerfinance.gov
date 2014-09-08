@@ -47,7 +47,9 @@ $('.reveal-on-focus')
 
 $('.type-and-filter').typeAndFilter({
    $input: $('.js-type-and-filter_input'),
-   $items: $('.js-type-and-filter_item')
+   $items: $('.js-type-and-filter_item'),
+   $button: $('.js-type-and-filter_button'),
+   $clear: $('.js-type-and-filter_clear')
 });
 
 

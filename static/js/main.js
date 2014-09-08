@@ -12301,12 +12301,22 @@ String.prototype.score = function(word, fuzziness) {
                 }, userSettings ),
                 $this = $( this ),
                 $input,
+                $button,
+                $clear,
                 $items;
             // Set the search input.
             if ( settings.$input ) {
                 $input = settings.$input;
             } else {
                 $input = $this.find('input').first();
+            }
+            // Set the clear button.
+            if ( settings.$clear ) {
+                $clear = settings.$clear;
+            }
+            // Set the search button.
+            if ( settings.$button ) {
+                $button = settings.$button;
             }
             // Set the DOM items to search through.
             if ( settings.$items ) {
@@ -12319,6 +12329,17 @@ String.prototype.score = function(word, fuzziness) {
             if ( $input.length === 0 && $items.length < 2 ) {
                 return;
             }
+            // Check to see if we should perform the filter on button click or as you type.
+            if ( $button && $button.length > 0 ) {
+                $button.on( 'click', function () {
+                    $input.trigger('search');
+                })
+            } else {
+                $input.on( 'keyup', function() {
+                    $( this ).trigger('search');
+                });
+            }
+            
             // Search on keyup if the user typed 3 or more characters.
             // If the input is less than 3 then show all items.
             $input.on( 'search', function() {
@@ -12328,9 +12349,16 @@ String.prototype.score = function(word, fuzziness) {
                 } else {
                     $items.show();
                 }
-            })
-            .on( 'keyup', function() {
-                $( this ).trigger('search');
+            });
+            
+            // Clear the field if an element was set.
+            if ( typeof( $clear ) === 'undefined' || $clear.length === 0) {
+                return;
+            }
+            
+            $clear.on( 'click', function () {
+                $input.val('');
+                $items.show();
             });
         });
     };
@@ -12458,7 +12486,9 @@ $('.reveal-on-focus')
 
 $('.type-and-filter').typeAndFilter({
    $input: $('.js-type-and-filter_input'),
-   $items: $('.js-type-and-filter_item')
+   $items: $('.js-type-and-filter_item'),
+   $button: $('.js-type-and-filter_button'),
+   $clear: $('.js-type-and-filter_clear')
 });
 
 
