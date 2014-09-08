@@ -12297,13 +12297,19 @@ String.prototype.score = function(word, fuzziness) {
                     minLength: 3,
                     fuzzy: true,
                     fuzziness: 0.5,
-                    threshold: 0.35
+                    threshold: 0.35,
+                    allMessage: 'Showing all {{ count }}',
+                    filteredMessage: 'Showing {{ count }} filtered results for {{ term }}',
+                    'clickCallback': function(e){}
                 }, userSettings ),
                 $this = $( this ),
                 $input,
                 $button,
                 $clear,
-                $items;
+                $items,
+                $messages,
+                searchTerm,
+                resultsCount;
             // Set the search input.
             if ( settings.$input ) {
                 $input = settings.$input;
@@ -12324,6 +12330,11 @@ String.prototype.score = function(word, fuzziness) {
             } else {
                 $items = $this.children().not($input);
             }
+            // Set where to place filter count messages
+            if ( settings.$messages && settings.$messages.length > 0 ) {
+                // Set where to place filter count messages
+                $messages = settings.$messages;
+            }
             // Only proceed if we have both the search input and enough items
             // to filter.
             if ( $input.length === 0 && $items.length < 2 ) {
@@ -12333,33 +12344,34 @@ String.prototype.score = function(word, fuzziness) {
             if ( $button && $button.length > 0 ) {
                 $button.on( 'click', function () {
                     $input.trigger('search');
-                })
+                });
             } else {
                 $input.on( 'keyup', function() {
                     $( this ).trigger('search');
                 });
             }
-            
             // Search on keyup if the user typed 3 or more characters.
             // If the input is less than 3 then show all items.
             $input.on( 'search', function() {
-                var searchTerm = $.fn.typeAndFilter.scrubText( $( this ).val() );
+                searchTerm = $.fn.typeAndFilter.scrubText( $( this ).val() );
                 if ( searchTerm.length >= 3 ) {
                     $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
                 } else {
                     $items.show();
                 }
+                resultsCount = $items.filter(':visible').length;
+                $.fn.typeAndFilter.showFilteredMessage( $messages, settings.filteredMessage, resultsCount, searchTerm );
             });
-            
-            // Clear the field if an element was set.
-            if ( typeof( $clear ) === 'undefined' || $clear.length === 0) {
-                return;
+            // Initiate the clear button if one was specified.
+            if ( typeof( $clear ) !== 'undefined' && $clear.length > 0 ) {
+              $clear.on( 'click', function () {
+                  searchTerm = '';
+                  $input.val('');
+                  $items.show();
+                  resultsCount = $items.filter(':visible').length;
+                  $.fn.typeAndFilter.showDefaultMessage( $messages, settings.allMessage, resultsCount );
+              });
             }
-            
-            $clear.on( 'click', function () {
-                $input.val('');
-                $items.show();
-            });
         });
     };
 
@@ -12406,7 +12418,7 @@ String.prototype.score = function(word, fuzziness) {
         // Loop through each word
         $.each( words, function( index, value ) {
             var matchScore = value.score( searchTerm, settings.fuzziness );
-            console.log( 'searchTerm:', searchTerm, ' | word:', value, ' | score:', matchScore );
+            // console.log( 'searchTerm:', searchTerm, ' | word:', value, ' | score:', matchScore );
             if ( matchScore >= settings.threshold ) {
                 match = true;
                 // Return false to break out of the $.each loop.
@@ -12433,6 +12445,17 @@ String.prototype.score = function(word, fuzziness) {
             // visible and false for hidden.
             $this.toggle( match );
         });
+    };
+
+    $.fn.typeAndFilter.showFilteredMessage = function( $container, template, resultsCount, searchTerm ) {
+        var html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
+            html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+        $container.html( html );
+    };
+
+    $.fn.typeAndFilter.showDefaultMessage = function( $container, template, resultsCount ) {
+        var html = template.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+        $container.html( html );
     };
 
 }( jQuery ));
@@ -12488,7 +12511,10 @@ $('.type-and-filter').typeAndFilter({
    $input: $('.js-type-and-filter_input'),
    $items: $('.js-type-and-filter_item'),
    $button: $('.js-type-and-filter_button'),
-   $clear: $('.js-type-and-filter_clear')
+   $clear: $('.js-type-and-filter_clear'),
+   $messages: $('.js-type-and-filter_message'),
+   allMessage: '<p class="h3">Showing all {{ count }} contacts.</p>',
+   filteredMessage: '<p class="h3">There are {{ count }} contact results for "{{ term }}"</div>'
 });
 
 

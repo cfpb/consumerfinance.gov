@@ -49,7 +49,10 @@ $('.type-and-filter').typeAndFilter({
    $input: $('.js-type-and-filter_input'),
    $items: $('.js-type-and-filter_item'),
    $button: $('.js-type-and-filter_button'),
-   $clear: $('.js-type-and-filter_clear')
+   $clear: $('.js-type-and-filter_clear'),
+   $messages: $('.js-type-and-filter_message'),
+   allMessage: '<p class="h3">Showing all {{ count }} contacts.</p>',
+   filteredMessage: '<p class="h3">There are {{ count }} contact results for "{{ term }}"</div>'
 });
 
 
