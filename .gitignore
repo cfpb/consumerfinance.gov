@@ -53,3 +53,7 @@ bower_components/
 *.swp
 *.pyc
 .env
+
+# Floobits stuff #
+##################
+.floo*
