@@ -12566,31 +12566,30 @@ a.category-slug.active {
   name: Input with button
   family: cfgov-misc
   patterns:
-    - name: Default pattern
+    - name: Default input and button
       markup: |
         <div class="input-with-btn">
             <div class="input-with-btn_input">
-                <input class="" type="text">
+                <input type="text">
             </div>
             <div class="input-with-btn_btn">
                 <button class="btn">Search</button>
             </div>
         </div>
+    - name: Super input and button
+      markup: |
+        <div class="input-with-btn">
+            <div class="input-with-btn_input">
+                <input class="input__super" type="text">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn btn__super">Search</button>
+            </div>
+        </div>
   tags:
     - cfgov-misc
 */
-.input-with-btn input,
-.input-with-btn .btn {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-.input-with-btn .btn__super {
-  padding-left: 0.83333333em;
-  padding-right: 0.83333333em;
-}
-@media only all and (min-width: 26.25em) {
+@media only all and (min-width: 30em) {
   .input-with-btn {
     display: block;
     position: relative;
@@ -12598,7 +12597,7 @@ a.category-slug.active {
     margin-right: -15px;
   }
 }
-@media only all and (min-width: 26.25em) {
+@media only all and (min-width: 30em) {
   .input-with-btn {
     display: block;
     position: relative;
@@ -12609,7 +12608,7 @@ a.category-slug.active {
 .input-with-btn_input {
   margin-bottom: 0.9375em;
 }
-@media only all and (min-width: 26.25em) {
+@media only all and (min-width: 30em) {
   .input-with-btn_input {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -12619,7 +12618,7 @@ a.category-slug.active {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 66.66666667%;
+    width: 75%;
     border-right-width: 0;
   }
   .ie .input-with-btn_input {
@@ -12632,7 +12631,7 @@ a.category-slug.active {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-@media only all and (min-width: 26.25em) {
+@media only all and (min-width: 30em) {
   .input-with-btn_input {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -12642,7 +12641,7 @@ a.category-slug.active {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 66.66666667%;
+    width: 75%;
     border-right-width: 0;
   }
   .ie .input-with-btn_input {
@@ -12655,7 +12654,59 @@ a.category-slug.active {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-@media only all and (min-width: 26.25em) {
+@media only all and (min-width: 60em) {
+  .input-with-btn_input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 83.33333333%;
+    border-right-width: 0;
+  }
+  .ie .input-with-btn_input {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_input {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 83.33333333%;
+    border-right-width: 0;
+  }
+  .ie .input-with-btn_input {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_input {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+.input-with-btn_input input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media only all and (min-width: 30em) {
   .input-with-btn_btn {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -12665,7 +12716,7 @@ a.category-slug.active {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 33.33333333%;
+    width: 25%;
   }
   .ie .input-with-btn_btn {
     margin-right: -0.26em;
@@ -12677,7 +12728,7 @@ a.category-slug.active {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
-@media only all and (min-width: 26.25em) {
+@media only all and (min-width: 30em) {
   .input-with-btn_btn {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -12687,7 +12738,7 @@ a.category-slug.active {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 33.33333333%;
+    width: 25%;
   }
   .ie .input-with-btn_btn {
     margin-right: -0.26em;
@@ -12698,6 +12749,110 @@ a.category-slug.active {
     zoom: 1;
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_btn {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 16.66666667%;
+  }
+  .ie .input-with-btn_btn {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_btn {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_btn {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 16.66666667%;
+  }
+  .ie .input-with-btn_btn {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_btn {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+.input-with-btn_btn .btn {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+.input-with-btn_btn .btn__super {
+  padding-left: 0.83333333em;
+  padding-right: 0.83333333em;
+}
+/* topdoc
+  name: Button inside input
+  family: cfgov-misc
+  patterns:
+    - name: Default button inside of an default input
+      markup: |
+        <div class="btn-inside-input">
+            <input type="text"
+                   value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            <button class="btn btn__link btn__secondary">
+                Clear
+                <span class="cf-icon cf-icon-delete"></span>
+            </button>
+        </div>
+    - name: Super button inside of a super input
+      markup: |
+        <div class="btn-inside-input">
+            <input class="input__super"
+                   type="text"
+                   value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            <button class="btn btn__super btn__link btn__secondary">
+                Clear
+                <span class="cf-icon cf-icon-delete"></span>
+            </button>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+.btn-inside-input {
+  position: relative;
+}
+.btn-inside-input input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 4.64285714em;
+}
+.btn-inside-input .input__super {
+  padding-right: 5em;
+}
+.btn-inside-input .btn {
+  border-bottom-width: 0 !important;
+  position: absolute;
+  right: 1.07142857em;
+  top: 0;
+}
+.btn-inside-input .btn__super {
+  right: 0.83333333em;
 }
 /* topdoc
   name: Form actions
