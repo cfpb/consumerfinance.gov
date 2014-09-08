@@ -12323,7 +12323,8 @@ String.prototype.score = function(word, fuzziness) {
             if ( $input.length === 0 && $items.length < 2 ) {
                 return;
             }
-            // Check to see if we should perform the filter on button click or as you type.
+            // Check to see if we should perform the filter on button click or
+            // as you type.
             if ( $button.length > 0 ) {
                 $button.on( 'click', function () {
                     $this.trigger('attemptSearch');
@@ -12337,34 +12338,54 @@ String.prototype.score = function(word, fuzziness) {
             $clear.on( 'click', function () {
                 $this.trigger('clear');
             });
-            // Search on keyup if the user typed 3 or more characters.
-            // If the input is less than 3 then show all items.
-            $this.on( 'attemptSearch', function() {
-                searchTerm = $.fn.typeAndFilter.scrubText( $input.val() );
-                if ( searchTerm.length >= 3 ) {
-                    $this.trigger('search');
-                } else {
-                    $this.trigger('minTermError');
-                }
-            });
-            // 
-            $this.on( 'search', function () {
-                $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
-                resultsCount = $items.filter(':visible').length;
-                $.fn.typeAndFilter.showFilteredMessage( $messages, settings.filteredMessage, resultsCount, searchTerm );
-            });
-            // 
-            $this.on( 'clear', function () {
-                searchTerm = '';
-                $input.val('');
-                $items.show();
-                resultsCount = $items.filter(':visible').length;
-                $.fn.typeAndFilter.showDefaultMessage( $messages, settings.allMessage, resultsCount );
-            });
-            // 
-            $this.on( 'minTermError', function () {
-                $.fn.typeAndFilter.showMinTermMessage( $messages, settings.minTermMessage, $input.val() );
-            });
+            // Set plugin-specific events
+            $this
+                // Logic to decide if a search will be performed.
+                // Searches require a minimum search term length of 3 characters.
+                .on( 'attemptSearch', function() {
+                    searchTerm = $.fn.typeAndFilter.scrubText( $input.val() );
+                    if ( searchTerm.length >= 3 ) {
+                        $this.trigger('search');
+                    } else {
+                        $messages.trigger('minTerm');
+                        $input.addClass('error');
+                    }
+                })
+                // Perform the search.
+                .on( 'search', function () {
+                    $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
+                    resultsCount = $items.filter(':visible').length;
+                    $messages.trigger('searchResults');
+                })
+                // Reset/clear the plugin.
+                .on( 'clear', function () {
+                    searchTerm = '';
+                    $input.val('');
+                    $items.show();
+                    resultsCount = $items.filter(':visible').length;
+                    $messages.trigger('allItems');
+                })
+                // Remove the validation class during these two events.
+                .on( 'search clear', function () {
+                    $input.removeClass('error');
+                });
+            $messages
+                // Display an error message specific to the minimum search term.
+                .on( 'minTerm', function () {
+                    var html = settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() );
+                    $messages.html( html );
+                })
+                // Display an error message specific to the minimum search term.
+                .on( 'searchResults', function () {
+                    var html = settings.filteredMessage.replace(/{{[\s]*term[\s]*}}/, searchTerm);
+                    html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+                    $messages.html( html );
+                })
+                // Display an error message specific to the minimum search term.
+                .on( 'allItems', function () {
+                    var html = settings.allMessage.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+                    $messages.html( html );
+                });
         });
     };
 
@@ -12440,22 +12461,6 @@ String.prototype.score = function(word, fuzziness) {
         });
     };
 
-    $.fn.typeAndFilter.showMinTermMessage = function( $messagesContainer, template, searchTerm ) {
-        var html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
-        $messagesContainer.html( html );
-    };
-
-    $.fn.typeAndFilter.showFilteredMessage = function( $messagesContainer, template, resultsCount, searchTerm ) {
-        var html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
-            html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
-        $messagesContainer.html( html );
-    };
-
-    $.fn.typeAndFilter.showDefaultMessage = function( $messagesContainer, template, resultsCount ) {
-        var html = template.replace(/{{[\s]*count[\s]*}}/, resultsCount);
-        $messagesContainer.html( html );
-    };
-
 }( jQuery ));
 
 /* ==========================================================================
@@ -12517,14 +12522,7 @@ $('.type-and-filter').typeAndFilter({
 
 // Example of triggering a search via query string
 // $('.js-type-and-filter_input').val(getQueryVariable('contact-search'));
-// $('.type-and-filter').trigger('search');
-
-$('.type-and-filter').on( 'search clear', function(){
-    $('.js-type-and-filter_input').removeClass('error');
-})
-$('.type-and-filter').on( 'minTermError', function(){
-    $('.js-type-and-filter_input').addClass('error');
-});
+// $('.type-and-filter').trigger('attemptSearch');
 
 
 /* ==========================================================================

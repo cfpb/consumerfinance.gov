@@ -57,14 +57,7 @@ $('.type-and-filter').typeAndFilter({
 
 // Example of triggering a search via query string
 // $('.js-type-and-filter_input').val(getQueryVariable('contact-search'));
-// $('.type-and-filter').trigger('search');
-
-$('.type-and-filter').on( 'search clear', function(){
-    $('.js-type-and-filter_input').removeClass('error');
-})
-$('.type-and-filter').on( 'minTermError', function(){
-    $('.js-type-and-filter_input').addClass('error');
-});
+// $('.type-and-filter').trigger('attemptSearch');
 
 
 /* ==========================================================================
