@@ -597,6 +597,59 @@
 
 
 /* topdoc
+  name: Input with button
+  family: cfgov-misc
+  patterns:
+    - name: Default pattern
+      markup: |
+        <div class="input-with-btn">
+            <div class="input-with-btn_input">
+                <input class="" type="text">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+.input-with-btn {
+
+    input,
+    .btn {
+        box-sizing: border-box;
+        width: 100%;
+    }
+    
+    .btn__super {
+        padding-left: unit(15px / @super-btn-font-size, em);
+        padding-right: unit(15px / @super-btn-font-size, em);
+    }
+    
+    .respond-to-min(420px, {
+        .grid_nested-col-group();
+    });
+
+    &_input {
+        margin-bottom: unit(15px / @base-font-size-px, em);
+        
+        .respond-to-min(420px, {
+            .grid_column(8);
+            border-right-width: 0;
+        });
+    }
+
+    &_btn {
+        .respond-to-min(420px, {
+            .grid_column(4);
+        });
+    }
+
+}
+
+
+/* topdoc
   name: Form actions
   family: cfgov-misc
   patterns:

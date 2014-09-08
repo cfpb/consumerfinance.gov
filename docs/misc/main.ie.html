@@ -994,6 +994,99 @@ label
 </code></pre>
       </div>
     </div>
+    <div id="input-with-button" class="docs-component">
+      <h2 class="docs-component_header"><span>Input with button</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default pattern</h3>
+          <section class="docs-pattern_pattern">
+<div class="input-with-btn">
+    <div class="input-with-btn_input">
+        <input class="" type="text">
+    </div>
+    <div class="input-with-btn_btn">
+        <button class="btn">Search</button>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;input-with-btn&quot;&gt;
+    &lt;div class=&quot;input-with-btn_input&quot;&gt;
+        &lt;input class=&quot;&quot; type=&quot;text&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;input-with-btn_btn&quot;&gt;
+        &lt;button class=&quot;btn&quot;&gt;Search&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.input-with-btn {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.input-with-btn_input {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 75%;
+}
+
+.ie .input-with-btn_input {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_input {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_btn {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .input-with-btn_btn {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_btn {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn input,
+.input-with-btn button {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="form-actions" class="docs-component">
       <h2 class="docs-component_header"><span>Form actions</span></h2>
       <div class="docs-patterns">
