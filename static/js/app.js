@@ -51,8 +51,19 @@ $('.type-and-filter').typeAndFilter({
    $button: $('.js-type-and-filter_button'),
    $clear: $('.js-type-and-filter_clear'),
    $messages: $('.js-type-and-filter_message'),
-   allMessage: '<p class="h3">Showing all {{ count }} contacts.</p>',
-   filteredMessage: '<p class="h3">There are {{ count }} contact results for "{{ term }}"</div>'
+   allMessage: 'Showing all {{ count }} contacts.',
+   filteredMessage: 'There are {{ count }} contact results for "{{ term }}"'
+});
+
+// Example of triggering a search via query string
+// $('.js-type-and-filter_input').val(getQueryVariable('contact-search'));
+// $('.type-and-filter').trigger('search');
+
+$('.type-and-filter').on( 'search clear', function(){
+    $('.js-type-and-filter_input').removeClass('error');
+})
+$('.type-and-filter').on( 'minTermError', function(){
+    $('.js-type-and-filter_input').addClass('error');
 });
 
 

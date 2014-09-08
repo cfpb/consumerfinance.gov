@@ -17,80 +17,73 @@
                     fuzzy: true,
                     fuzziness: 0.5,
                     threshold: 0.35,
+                    $button: $(),
+                    $clear: $(),
+                    $input: $(),
+                    $items: $(),
+                    $messages: $(),
                     allMessage: 'Showing all {{ count }}',
                     filteredMessage: 'Showing {{ count }} filtered results for {{ term }}',
+                    minTermMessage: '<em>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</em>',
                     'clickCallback': function(e){}
                 }, userSettings ),
                 $this = $( this ),
-                $input,
-                $button,
-                $clear,
-                $items,
-                $messages,
+                $button = settings.$button,
+                $messages = settings.$messages,
+                $input = settings.$input,
+                $items = settings.$items,
+                $clear = settings.$clear,
                 searchTerm,
                 resultsCount;
-            // Set the search input.
-            if ( settings.$input ) {
-                $input = settings.$input;
-            } else {
-                $input = $this.find('input').first();
-            }
-            // Set the clear button.
-            if ( settings.$clear ) {
-                $clear = settings.$clear;
-            }
-            // Set the search button.
-            if ( settings.$button ) {
-                $button = settings.$button;
-            }
-            // Set the DOM items to search through.
-            if ( settings.$items ) {
-                $items = settings.$items;
-            } else {
-                $items = $this.children().not($input);
-            }
-            // Set where to place filter count messages
-            if ( settings.$messages && settings.$messages.length > 0 ) {
-                // Set where to place filter count messages
-                $messages = settings.$messages;
-            }
+            // Set aria attributes
+            $messages.attr( 'aria-live', 'polite' ).attr( 'role', 'region' );
             // Only proceed if we have both the search input and enough items
             // to filter.
             if ( $input.length === 0 && $items.length < 2 ) {
                 return;
             }
             // Check to see if we should perform the filter on button click or as you type.
-            if ( $button && $button.length > 0 ) {
+            if ( $button.length > 0 ) {
                 $button.on( 'click', function () {
-                    $input.trigger('search');
+                    $this.trigger('attemptSearch');
                 });
             } else {
                 $input.on( 'keyup', function() {
-                    $( this ).trigger('search');
+                    $this.trigger('attemptSearch');
                 });
             }
+            // Reset everything when the clear button is pressed
+            $clear.on( 'click', function () {
+                $this.trigger('clear');
+            });
             // Search on keyup if the user typed 3 or more characters.
             // If the input is less than 3 then show all items.
-            $input.on( 'search', function() {
-                searchTerm = $.fn.typeAndFilter.scrubText( $( this ).val() );
+            $this.on( 'attemptSearch', function() {
+                searchTerm = $.fn.typeAndFilter.scrubText( $input.val() );
                 if ( searchTerm.length >= 3 ) {
-                    $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
+                    $this.trigger('search');
                 } else {
-                    $items.show();
+                    $this.trigger('minTermError');
                 }
+            });
+            // 
+            $this.on( 'search', function () {
+                $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
                 resultsCount = $items.filter(':visible').length;
                 $.fn.typeAndFilter.showFilteredMessage( $messages, settings.filteredMessage, resultsCount, searchTerm );
             });
-            // Initiate the clear button if one was specified.
-            if ( typeof( $clear ) !== 'undefined' && $clear.length > 0 ) {
-              $clear.on( 'click', function () {
-                  searchTerm = '';
-                  $input.val('');
-                  $items.show();
-                  resultsCount = $items.filter(':visible').length;
-                  $.fn.typeAndFilter.showDefaultMessage( $messages, settings.allMessage, resultsCount );
-              });
-            }
+            // 
+            $this.on( 'clear', function () {
+                searchTerm = '';
+                $input.val('');
+                $items.show();
+                resultsCount = $items.filter(':visible').length;
+                $.fn.typeAndFilter.showDefaultMessage( $messages, settings.allMessage, resultsCount );
+            });
+            // 
+            $this.on( 'minTermError', function () {
+                $.fn.typeAndFilter.showMinTermMessage( $messages, settings.minTermMessage, $input.val() );
+            });
         });
     };
 
@@ -166,15 +159,20 @@
         });
     };
 
-    $.fn.typeAndFilter.showFilteredMessage = function( $container, template, resultsCount, searchTerm ) {
+    $.fn.typeAndFilter.showMinTermMessage = function( $messagesContainer, template, searchTerm ) {
         var html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
-            html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
-        $container.html( html );
+        $messagesContainer.html( html );
     };
 
-    $.fn.typeAndFilter.showDefaultMessage = function( $container, template, resultsCount ) {
+    $.fn.typeAndFilter.showFilteredMessage = function( $messagesContainer, template, resultsCount, searchTerm ) {
+        var html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
+            html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+        $messagesContainer.html( html );
+    };
+
+    $.fn.typeAndFilter.showDefaultMessage = function( $messagesContainer, template, resultsCount ) {
         var html = template.replace(/{{[\s]*count[\s]*}}/, resultsCount);
-        $container.html( html );
+        $messagesContainer.html( html );
     };
 
 }( jQuery ));
