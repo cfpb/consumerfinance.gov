@@ -955,6 +955,358 @@ label
 }</code></pre>
       </div>
     </div>
+    <div id="input-with-button" class="docs-component">
+      <h2 class="docs-component_header"><span>Input with button</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default input and button</h3>
+          <section class="docs-pattern_pattern">
+<div class="input-with-btn">
+    <div class="input-with-btn_input">
+        <input type="text">
+    </div>
+    <div class="input-with-btn_btn">
+        <button class="btn">Search</button>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;input-with-btn&quot;&gt;
+    &lt;div class=&quot;input-with-btn_input&quot;&gt;
+        &lt;input type=&quot;text&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;input-with-btn_btn&quot;&gt;
+        &lt;button class=&quot;btn&quot;&gt;Search&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Super input and button</h3>
+          <section class="docs-pattern_pattern">
+<div class="input-with-btn">
+    <div class="input-with-btn_input">
+        <input class="input__super" type="text">
+    </div>
+    <div class="input-with-btn_btn">
+        <button class="btn btn__super">Search</button>
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;input-with-btn&quot;&gt;
+    &lt;div class=&quot;input-with-btn_input&quot;&gt;
+        &lt;input class=&quot;input__super&quot; type=&quot;text&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;input-with-btn_btn&quot;&gt;
+        &lt;button class=&quot;btn btn__super&quot;&gt;Search&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">@media only all and (min-width: 30em) {
+  .input-with-btn {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+@media only all and (min-width: 30em) {
+  .input-with-btn {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+.input-with-btn_input {
+  margin-bottom: 0.9375em;
+}
+@media only all and (min-width: 30em) {
+  .input-with-btn_input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 75%;
+    border-right-width: 0;
+  }
+  .ie .input-with-btn_input {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_input {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 30em) {
+  .input-with-btn_input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 75%;
+    border-right-width: 0;
+  }
+  .ie .input-with-btn_input {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_input {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 83.33333333%;
+    border-right-width: 0;
+  }
+  .ie .input-with-btn_input {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_input {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 83.33333333%;
+    border-right-width: 0;
+  }
+  .ie .input-with-btn_input {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_input {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+.input-with-btn_input input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+.input-with-btn_btn {
+  margin-bottom: 0.9375em;
+}
+@media only all and (min-width: 30em) {
+  .input-with-btn_btn {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 25%;
+  }
+  .ie .input-with-btn_btn {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_btn {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 30em) {
+  .input-with-btn_btn {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 25%;
+  }
+  .ie .input-with-btn_btn {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_btn {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_btn {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 16.66666667%;
+  }
+  .ie .input-with-btn_btn {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_btn {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 60em) {
+  .input-with-btn_btn {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 16.66666667%;
+  }
+  .ie .input-with-btn_btn {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .input-with-btn_btn {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+.input-with-btn_btn .btn {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+.input-with-btn_btn .btn__super {
+  padding-left: 0.83333333em;
+  padding-right: 0.83333333em;
+}</code></pre>
+      </div>
+    </div>
+    <div id="button-inside-input" class="docs-component">
+      <h2 class="docs-component_header"><span>Button inside input</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default button inside of an default input</h3>
+          <section class="docs-pattern_pattern">
+<div class="btn-inside-input">
+    <input type="text"
+           value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+    <button class="btn btn__link btn__secondary">
+        Clear
+        <span class="cf-icon cf-icon-delete"></span>
+    </button>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;btn-inside-input&quot;&gt;
+    &lt;input type=&quot;text&quot;
+           value=&quot;This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.&quot;&gt;
+    &lt;button class=&quot;btn btn__link btn__secondary&quot;&gt;
+        Clear
+        &lt;span class=&quot;cf-icon cf-icon-delete&quot;&gt;&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Super button inside of a super input</h3>
+          <section class="docs-pattern_pattern">
+<div class="btn-inside-input">
+    <input class="input__super"
+           type="text"
+           value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+    <button class="btn btn__super btn__link btn__secondary">
+        Clear
+        <span class="cf-icon cf-icon-delete"></span>
+    </button>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;btn-inside-input&quot;&gt;
+    &lt;input class=&quot;input__super&quot;
+           type=&quot;text&quot;
+           value=&quot;This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.&quot;&gt;
+    &lt;button class=&quot;btn btn__super btn__link btn__secondary&quot;&gt;
+        Clear
+        &lt;span class=&quot;cf-icon cf-icon-delete&quot;&gt;&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.btn-inside-input {
+  position: relative;
+}
+.btn-inside-input input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 4.64285714em;
+}
+.btn-inside-input .input__super {
+  padding-right: 5em;
+}
+.btn-inside-input .btn {
+  border-bottom-width: 0 !important;
+  position: absolute;
+  right: 1.07142857em;
+  top: 0;
+}
+.btn-inside-input .btn__super {
+  right: 0.83333333em;
+}</code></pre>
+      </div>
+    </div>
     <div id="form-actions" class="docs-component">
       <h2 class="docs-component_header"><span>Form actions</span></h2>
       <div class="docs-patterns">

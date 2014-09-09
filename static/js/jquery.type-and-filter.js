@@ -4,6 +4,15 @@
  * Filters a list as you type using fuzzy or strict search for matching.
  * Fuzzy search depends on git://github.com/joshaven/string_score#0.1.20
  *
+ * Bonus material:
+ * Example of triggering a search via query string
+ * if ( getQueryVariable('filterby') ) {
+ *   // Set the input value equal to the query from the url.
+ *   $('input').val(getQueryVariable('filterby'));
+ *   // Trigger the attemptSearch event in the plugin.
+ *   $('.type-and-filter').trigger('attemptSearch');
+ * }
+ *
  * A public domain work of the Consumer Financial Protection Bureau
  */
 
@@ -16,41 +25,119 @@
                     minLength: 3,
                     fuzzy: true,
                     fuzziness: 0.5,
-                    threshold: 0.35
+                    threshold: 0.35,
+                    $button: $(),
+                    $clear: $(),
+                    $input: $(),
+                    $items: $(),
+                    $messages: $(),
+                    allMessage: 'Showing all {{ count }}.',
+                    filteredMessageSingular: 'There is 1 result for "{{ term }}".',
+                    filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
+                    minTermMessage: '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
+                    'clickCallback': function( e ){}
                 }, userSettings ),
                 $this = $( this ),
-                $input,
-                $items;
-            // Set the search input.
-            if ( settings.$input ) {
-                $input = settings.$input;
-            } else {
-                $input = $this.find('input').first();
-            }
-            // Set the DOM items to search through.
-            if ( settings.$items ) {
-                $items = settings.$items;
-            } else {
-                $items = $this.children().not($input);
-            }
+                $button = settings.$button,
+                $messages = settings.$messages,
+                $input = settings.$input,
+                $items = settings.$items,
+                $clear = settings.$clear,
+                searchTerm,
+                resultsCount;
             // Only proceed if we have both the search input and enough items
             // to filter.
             if ( $input.length === 0 && $items.length < 2 ) {
                 return;
             }
-            // Search on keyup if the user typed 3 or more characters.
-            // If the input is less than 3 then show all items.
-            $input.on( 'search', function() {
-                var searchTerm = $.fn.typeAndFilter.scrubText( $( this ).val() );
-                if ( searchTerm.length >= 3 ) {
-                    $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
-                } else {
-                    $items.show();
-                }
-            })
-            .on( 'keyup', function() {
-                $( this ).trigger('search');
+
+            //
+            // Set event handlers
+            //
+
+            // Check to see if we should perform the filter on button click or
+            // as you type.
+            if ( $button.length > 0 ) {
+                $button.on( 'click', function () {
+                    $this.trigger('attemptSearch');
+                });
+            } else {
+                $input.on( 'keyup', function() {
+                    $this.trigger('attemptSearch');
+                });
+            }
+            // Reset everything when the clear button is pressed
+            $clear.on( 'click', function () {
+                $this.trigger('clear');
             });
+            // Set plugin-specific events
+            $this
+                // Logic to decide if a search will be performed.
+                // Searches require a minimum search term length of 3 characters.
+                .on( 'attemptSearch', function() {
+                    searchTerm = $.fn.typeAndFilter.scrubText( $input.val() );
+                    if ( searchTerm.length >= 3 ) {
+                        $this.trigger('search');
+                    } else {
+                        $messages.trigger('minTerm');
+                        $input.addClass('error');
+                    }
+                })
+                // Perform the search.
+                .on( 'search', function () {
+                    $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
+                    resultsCount = $items.filter(':visible').length;
+                    $messages.trigger('searchResults');
+                })
+                // Reset/clear the plugin.
+                .on( 'clear', function () {
+                    searchTerm = '';
+                    $input.val('');
+                    $items.show();
+                    resultsCount = $items.filter(':visible').length;
+                    $messages.trigger('allItems');
+                })
+                // Remove the validation class during these two events.
+                .on( 'search clear', function () {
+                    $input.removeClass('error');
+                });
+            $messages
+                // Display an error message specific to the minimum search term.
+                .on( 'minTerm', function () {
+                    var html = settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() );
+                    $messages.html( html );
+                })
+                // Display a message containing the search term and its number
+                // of results. Also determines which template to use, singular
+                // vs multiple.
+                .on( 'searchResults', function () {
+                    var html,
+                        template;
+                    if ( resultsCount === 1 ) {
+                        template = settings.filteredMessageSingular;
+                    } else {
+                        template = settings.filteredMessageMultiple;
+                    }
+                    html = template.replace( /{{[\s]*term[\s]*}}/, searchTerm );
+                    html = html.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+                    $messages.html( html );
+                })
+                // Display a message letting the user know that all of the results
+                // are visible.
+                .on( 'allItems', function () {
+                    var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+                    $messages.html( html );
+                });
+
+            //
+            // Initial dom manipulation setup.
+            //
+
+            resultsCount = $items.length;
+            // Set aria attributes
+            $messages.attr( 'aria-live', 'polite' );
+            // All items are visible by default so show the appropriate message.
+            $messages.trigger('allItems');
         });
     };
 
@@ -97,7 +184,7 @@
         // Loop through each word
         $.each( words, function( index, value ) {
             var matchScore = value.score( searchTerm, settings.fuzziness );
-            console.log( 'searchTerm:', searchTerm, ' | word:', value, ' | score:', matchScore );
+            // console.log( 'searchTerm:', searchTerm, ' | word:', value, ' | score:', matchScore );
             if ( matchScore >= settings.threshold ) {
                 match = true;
                 // Return false to break out of the $.each loop.
@@ -108,22 +195,39 @@
     };
 
     $.fn.typeAndFilter.filterItems = function( $items, searchTerm, fuzzy, options ) {
+        // TO-DO: If query is a multi-word phrase, search for exact phrase first
+        // if ( searchTerm.split(' ').length > 1 ) {
+        //     var match = $.fn.typeAndFilter.strictSearch( searchTerm, value );
+        //     ...
+        // }
+        
         // Loop through each item, if it contains matching text then show it,
         // if it doesn't then hide it.
-        $.each( $items, function() {
-            var $this = $( this ),
-                itemText = $.fn.typeAndFilter.scrubText( $this.text() ),
-                match;
-            // Choose which search to use.
-            if ( fuzzy ) {
-                match = $.fn.typeAndFilter.fuzzySearch( itemText, searchTerm, options );
-            } else {
-                match = $.fn.typeAndFilter.strictSearch( itemText, searchTerm );
+        var terms = searchTerm.split(' '),
+            itemsLength = $items.length,
+            termsLength = terms.length;
+        for ( var i = 0; i < itemsLength; i++ ) {
+            for ( var j = 0; j < termsLength; j++ ) {
+                var match,
+                    $this = $items.eq( i ),
+                    itemText = $.fn.typeAndFilter.scrubText( $this.text() );
+                // Choose which search to use.
+                if ( fuzzy ) {
+                    match = $.fn.typeAndFilter.fuzzySearch( itemText, terms[j], options );
+                } else {
+                    match = $.fn.typeAndFilter.strictSearch( itemText, terms[j] );
+                }
+                // The match variable is used to set the visiblity, true for
+                // visible and false for hidden.
+                $this.toggle( match );
+
+                // If we find a match then break out of the loop so we don't
+                // unmatch this during subsequent comparisons.
+                if ( match ) {
+                  break;
+                }
             }
-            // The match variable is used to set the visiblity, true for
-            // visible and false for hidden.
-            $this.toggle( match );
-        });
+        }
     };
 
 }( jQuery ));
