@@ -182,22 +182,39 @@
     };
 
     $.fn.typeAndFilter.filterItems = function( $items, searchTerm, fuzzy, options ) {
+        // TO-DO: If query is a multi-word phrase, search for exact phrase first
+        // if ( searchTerm.split(' ').length > 1 ) {
+        //     var match = $.fn.typeAndFilter.strictSearch( searchTerm, value );
+        //     ...
+        // }
+        
         // Loop through each item, if it contains matching text then show it,
         // if it doesn't then hide it.
-        $.each( $items, function() {
-            var $this = $( this ),
-                itemText = $.fn.typeAndFilter.scrubText( $this.text() ),
-                match;
-            // Choose which search to use.
-            if ( fuzzy ) {
-                match = $.fn.typeAndFilter.fuzzySearch( itemText, searchTerm, options );
-            } else {
-                match = $.fn.typeAndFilter.strictSearch( itemText, searchTerm );
+        var terms = searchTerm.split(' '),
+            itemsLength = $items.length,
+            termsLength = terms.length;
+        for ( var i = 0; i < itemsLength; i++ ) {
+            for ( var j = 0; j < termsLength; j++ ) {
+                var match,
+                    $this = $items.eq( i ),
+                    itemText = $.fn.typeAndFilter.scrubText( $this.text() );
+                // Choose which search to use.
+                if ( fuzzy ) {
+                    match = $.fn.typeAndFilter.fuzzySearch( itemText, terms[j], options );
+                } else {
+                    match = $.fn.typeAndFilter.strictSearch( itemText, terms[j] );
+                }
+                // The match variable is used to set the visiblity, true for
+                // visible and false for hidden.
+                $this.toggle( match );
+
+                // If we find a match then break out of the loop so we don't
+                // unmatch this during subsequent comparisons.
+                if ( match ) {
+                  break;
+                }
             }
-            // The match variable is used to set the visiblity, true for
-            // visible and false for hidden.
-            $this.toggle( match );
-        });
+        }
     };
 
 }( jQuery ));

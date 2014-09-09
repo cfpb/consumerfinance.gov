@@ -12463,22 +12463,39 @@ String.prototype.score = function(word, fuzziness) {
     };
 
     $.fn.typeAndFilter.filterItems = function( $items, searchTerm, fuzzy, options ) {
+        // TO-DO: If query is a multi-word phrase, search for exact phrase first
+        // if ( searchTerm.split(' ').length > 1 ) {
+        //     var match = $.fn.typeAndFilter.strictSearch( searchTerm, value );
+        //     ...
+        // }
+        
         // Loop through each item, if it contains matching text then show it,
         // if it doesn't then hide it.
-        $.each( $items, function() {
-            var $this = $( this ),
-                itemText = $.fn.typeAndFilter.scrubText( $this.text() ),
-                match;
-            // Choose which search to use.
-            if ( fuzzy ) {
-                match = $.fn.typeAndFilter.fuzzySearch( itemText, searchTerm, options );
-            } else {
-                match = $.fn.typeAndFilter.strictSearch( itemText, searchTerm );
+        var terms = searchTerm.split(' '),
+            itemsLength = $items.length,
+            termsLength = terms.length;
+        for ( var i = 0; i < itemsLength; i++ ) {
+            for ( var j = 0; j < termsLength; j++ ) {
+                var match,
+                    $this = $items.eq( i ),
+                    itemText = $.fn.typeAndFilter.scrubText( $this.text() );
+                // Choose which search to use.
+                if ( fuzzy ) {
+                    match = $.fn.typeAndFilter.fuzzySearch( itemText, terms[j], options );
+                } else {
+                    match = $.fn.typeAndFilter.strictSearch( itemText, terms[j] );
+                }
+                // The match variable is used to set the visiblity, true for
+                // visible and false for hidden.
+                $this.toggle( match );
+
+                // If we find a match then break out of the loop so we don't
+                // unmatch this during subsequent comparisons.
+                if ( match ) {
+                  break;
+                }
             }
-            // The match variable is used to set the visiblity, true for
-            // visible and false for hidden.
-            $this.toggle( match );
-        });
+        }
     };
 
 }( jQuery ));
@@ -12539,6 +12556,18 @@ $('.type-and-filter').typeAndFilter({
    allMessage: 'Showing all {{ count }} contacts.',
    filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
+});
+
+// Helpful filter terms
+$('.js-helpful-term').on( 'click', function () {
+    $('.js-type-and-filter_input').val( $( this ).text() );
+    $('.type-and-filter').trigger('attemptSearch');
+});
+
+// On small screens provide a button to expand the contact list, which is hidden by default.
+$('#contact-list_btn').click(function () {
+   $(this).hide();
+   $('#contact-list').slideDown();
 });
 
 

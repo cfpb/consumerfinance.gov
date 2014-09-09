@@ -3,9 +3,31 @@
    Contact us
    ========================================================================== */
 
+#contact-list {
+    display: none;
+    .respond-to-min(801px, {
+        display: block;
+    });
+
+    .no-js & {
+        display: block;
+    }
+}
+
+#contact-list_btn {
+    width: 100%;
+    .respond-to-min(801px, {
+        display: none;
+    });
+}
+
 .contact-us-map {
     max-width: 330px;
     .respond-to-range(600px, 801px, {
         float: right;            
     });
+}
+
+.helpful-terms h5 {
+    display: inline;
 }
