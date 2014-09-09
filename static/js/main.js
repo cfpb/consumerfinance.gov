@@ -12306,7 +12306,7 @@ String.prototype.score = function(word, fuzziness) {
                     allMessage: 'Showing all {{ count }}.',
                     filteredMessageSingular: 'There is 1 result for "{{ term }}".',
                     filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
-                    minTermMessage: '<em>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</em>',
+                    minTermMessage: '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
                     'clickCallback': function(e){}
                 }, userSettings ),
                 $this = $( this ),
