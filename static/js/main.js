@@ -12571,21 +12571,35 @@ $('.type-and-filter').typeAndFilter({
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
 
+// Hide the contact list header of there are zero results.
 $('.type-and-filter').on( 'attemptSearch', function() {
-    var zeroResults = $('.js-type-and-filter_item').filter(':visible').length > 0;
-    $('#contact-list_header').toggle( zeroResults );
+    var resultsCount;
+    if ( $('#contact-list').is(':hidden') ) {
+        $('#contact-list').show();
+        $('.type-and-filter').trigger('attemptSearch');
+    } else {
+        // Hide the show all contacts button if a search has been performed.
+        $('#contact-list_btn').hide();
+        // Show the message because on small screens it is hidden until needed.
+        $('.js-type-and-filter_message').show();
+        // Hide the contact list header of there are zero results.
+        resultsCount = $('.js-type-and-filter_item').filter(':visible').length;
+        $('#contact-list_header').toggle( (resultsCount > 0) );
+    }
 });
 
-// Helpful filter terms
+// Clicking on a helpful term should trigger a filter.
 $('.js-helpful-term').on( 'click', function () {
     $('.js-type-and-filter_input').val( $( this ).text() );
     $('.type-and-filter').trigger('attemptSearch');
 });
 
-// On small screens provide a button to expand the contact list, which is hidden by default.
-$('#contact-list_btn').click(function () {
-   $(this).hide();
-   $('#contact-list').slideDown();
+// Provide a button to expand the contact list
+// The contact list is hidden by default on small screens.
+$('#contact-list_btn').on( 'click', function () {
+    $( this ).hide();
+    $('#contact-list').slideDown();
+    $('.js-type-and-filter_message').slideDown();
 });
 
 
