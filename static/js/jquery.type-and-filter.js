@@ -26,7 +26,7 @@
                     filteredMessageSingular: 'There is 1 result for "{{ term }}".',
                     filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
                     minTermMessage: '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
-                    'clickCallback': function(e){}
+                    'clickCallback': function( e ){}
                 }, userSettings ),
                 $this = $( this ),
                 $button = settings.$button,
@@ -37,7 +37,7 @@
                 searchTerm,
                 resultsCount;
             // Set aria attributes
-            $messages.attr( 'aria-live', 'polite' ).attr( 'role', 'region' );
+            $messages.attr( 'aria-live', 'polite' );
             // Only proceed if we have both the search input and enough items
             // to filter.
             if ( $input.length === 0 && $items.length < 2 ) {
