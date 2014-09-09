@@ -12285,6 +12285,15 @@ String.prototype.score = function(word, fuzziness) {
  * Filters a list as you type using fuzzy or strict search for matching.
  * Fuzzy search depends on git://github.com/joshaven/string_score#0.1.20
  *
+ * Bonus material:
+ * Example of triggering a search via query string
+ * if ( getQueryVariable('filterby') ) {
+ *   // Set the input value equal to the query from the url.
+ *   $('input').val(getQueryVariable('filterby'));
+ *   // Trigger the attemptSearch event in the plugin.
+ *   $('.type-and-filter').trigger('attemptSearch');
+ * }
+ *
  * A public domain work of the Consumer Financial Protection Bureau
  */
 
@@ -12376,7 +12385,9 @@ String.prototype.score = function(word, fuzziness) {
                     var html = settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() );
                     $messages.html( html );
                 })
-                // Display an error message specific to the minimum search term.
+                // Display a message containing the search term and its number
+                // of results. Also determines which template to use, singular
+                // vs multiple.
                 .on( 'searchResults', function () {
                     var html,
                         template;
@@ -12385,13 +12396,14 @@ String.prototype.score = function(word, fuzziness) {
                     } else {
                         template = settings.filteredMessageMultiple;
                     }
-                    html = template.replace(/{{[\s]*term[\s]*}}/, searchTerm);
-                    html = html.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+                    html = template.replace( /{{[\s]*term[\s]*}}/, searchTerm );
+                    html = html.replace( /{{[\s]*count[\s]*}}/, resultsCount );
                     $messages.html( html );
                 })
-                // Display an error message specific to the minimum search term.
+                // Display a message letting the user know that all of the results
+                // are visible.
                 .on( 'allItems', function () {
-                    var html = settings.allMessage.replace(/{{[\s]*count[\s]*}}/, resultsCount);
+                    var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
                     $messages.html( html );
                 });
         });
@@ -12528,10 +12540,6 @@ $('.type-and-filter').typeAndFilter({
    filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
-
-// Example of triggering a search via query string
-// $('.js-type-and-filter_input').val(getQueryVariable('contact-search'));
-// $('.type-and-filter').trigger('attemptSearch');
 
 
 /* ==========================================================================
