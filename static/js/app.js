@@ -56,6 +56,11 @@ $('.type-and-filter').typeAndFilter({
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
 
+$('.type-and-filter').on( 'attemptSearch', function() {
+    var zeroResults = $('.js-type-and-filter_item').filter(':visible').length > 0;
+    $('#contact-list_header').toggle( zeroResults );
+});
+
 // Helpful filter terms
 $('.js-helpful-term').on( 'click', function () {
     $('.js-type-and-filter_input').val( $( this ).text() );
