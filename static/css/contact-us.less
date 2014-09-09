@@ -3,7 +3,22 @@
    Contact us
    ========================================================================== */
 
-#contact-list {
+.helpful-terms_header {
+    .h5();
+    margin-right: unit(6px / @font-size, em);
+    vertical-align: middle;
+}
+
+.type-and-filter_message {
+    .h3();
+    // 47px = 60px when facotring margins and line-height from elements above it.
+    // 26px = 30px when facotring line-height.
+    margin: unit(47px / @font-size, em)
+            0
+            unit(26px / @font-size, em);
+}
+
+.contact-list {
     display: none;
     .respond-to-min(801px, {
         display: block;
@@ -14,7 +29,7 @@
     }
 }
 
-#contact-list_btn {
+.contact-list_btn {
     width: 100%;
     .respond-to-min(801px, {
         display: none;
@@ -26,8 +41,4 @@
     .respond-to-range(600px, 801px, {
         float: right;            
     });
-}
-
-.helpful-terms h5 {
-    display: inline;
 }
