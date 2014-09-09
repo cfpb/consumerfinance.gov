@@ -18381,6 +18381,35 @@ a.focus .summary_header {
    cfgov-refresh
    Contact us
    ========================================================================== */
+#contact-list {
+  display: none;
+}
+@media only all and (min-width: 50.0625em) {
+  #contact-list {
+    display: block;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  #contact-list {
+    display: block;
+  }
+}
+.no-js #contact-list {
+  display: block;
+}
+#contact-list_btn {
+  width: 100%;
+}
+@media only all and (min-width: 50.0625em) {
+  #contact-list_btn {
+    display: none;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  #contact-list_btn {
+    display: none;
+  }
+}
 .contact-us-map {
   max-width: 330px;
 }
@@ -18393,4 +18422,7 @@ a.focus .summary_header {
   .contact-us-map {
     float: right;
   }
+}
+.helpful-terms h5 {
+  display: inline;
 }

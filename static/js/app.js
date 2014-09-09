@@ -56,6 +56,18 @@ $('.type-and-filter').typeAndFilter({
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
 
+// Helpful filter terms
+$('.js-helpful-term').on( 'click', function () {
+    $('.js-type-and-filter_input').val( $( this ).text() );
+    $('.type-and-filter').trigger('attemptSearch');
+});
+
+// On small screens provide a button to expand the contact list, which is hidden by default.
+$('#contact-list_btn').click(function () {
+   $(this).hide();
+   $('#contact-list').slideDown();
+});
+
 
 /* ==========================================================================
    Initialize Chosen.js
