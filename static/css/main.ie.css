@@ -13793,6 +13793,10 @@ a.category-slug.active {
 }
 
 .input-with-btn_btn {
+  margin-bottom: 0.9375em;
+}
+
+.input-with-btn_btn {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -19653,6 +19657,7 @@ a.focus .summary_header {
 }
 
 .type-and-filter_message {
+  display: none;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -19660,7 +19665,7 @@ a.focus .summary_header {
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
-  margin: 2.13636364em 0 1.18181818em;
+  margin: 0.72727273em 0 1.18181818em;
 }
 
 .type-and-filter_message em,
@@ -19797,6 +19802,16 @@ a.focus .summary_header {
 .lt-ie9 .type-and-filter_message strong,
 .lt-ie9 .type-and-filter_message b {
   font-weight: normal !important;
+}
+
+.type-and-filter_message {
+  display: block;
+  margin-top: 2.13636364em;
+}
+
+.type-and-filter_message {
+  display: block;
+  margin-top: 2.13636364em;
 }
 
 .contact-list {
@@ -19817,6 +19832,7 @@ a.focus .summary_header {
 
 .contact-list_btn {
   width: 100%;
+  margin: 1.66666667em 0;
 }
 
 .contact-list_btn {

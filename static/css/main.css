@@ -12706,6 +12706,9 @@ a.category-slug.active {
   box-sizing: border-box;
   width: 100%;
 }
+.input-with-btn_btn {
+  margin-bottom: 0.9375em;
+}
 @media only all and (min-width: 30em) {
   .input-with-btn_btn {
     display: inline-block;
@@ -18407,6 +18410,7 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 .type-and-filter_message {
+  display: none;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -18414,7 +18418,7 @@ a.focus .summary_header {
   margin-bottom: 0.22727273em;
   font-size: 1.375em;
   line-height: 1.27272727;
-  margin: 2.13636364em 0 1.18181818em;
+  margin: 0.72727273em 0 1.18181818em;
 }
 .type-and-filter_message em,
 .type-and-filter_message i {
@@ -18527,6 +18531,18 @@ a.focus .summary_header {
 .lt-ie9 .type-and-filter_message strong,
 .lt-ie9 .type-and-filter_message b {
   font-weight: normal !important;
+}
+@media only all and (min-width: 50.0625em) {
+  .type-and-filter_message {
+    display: block;
+    margin-top: 2.13636364em;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .type-and-filter_message {
+    display: block;
+    margin-top: 2.13636364em;
+  }
 }
 .contact-list {
   display: none;
@@ -18546,6 +18562,7 @@ a.focus .summary_header {
 }
 .contact-list_btn {
   width: 100%;
+  margin: 1.66666667em 0;
 }
 @media only all and (min-width: 50.0625em) {
   .contact-list_btn {
