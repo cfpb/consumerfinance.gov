@@ -12326,13 +12326,16 @@ String.prototype.score = function(word, fuzziness) {
                 $clear = settings.$clear,
                 searchTerm,
                 resultsCount;
-            // Set aria attributes
-            $messages.attr( 'aria-live', 'polite' );
             // Only proceed if we have both the search input and enough items
             // to filter.
             if ( $input.length === 0 && $items.length < 2 ) {
                 return;
             }
+
+            //
+            // Set event handlers
+            //
+
             // Check to see if we should perform the filter on button click or
             // as you type.
             if ( $button.length > 0 ) {
@@ -12406,6 +12409,16 @@ String.prototype.score = function(word, fuzziness) {
                     var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
                     $messages.html( html );
                 });
+
+            //
+            // Initial dom manipulation setup.
+            //
+
+            resultsCount = $items.length;
+            // Set aria attributes
+            $messages.attr( 'aria-live', 'polite' );
+            // All items are visible by default so show the appropriate message.
+            $messages.trigger('allItems');
         });
     };
 
@@ -12556,6 +12569,11 @@ $('.type-and-filter').typeAndFilter({
    allMessage: 'Showing all {{ count }} contacts.',
    filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
+});
+
+$('.type-and-filter').on( 'attemptSearch', function() {
+    var zeroResults = $('.js-type-and-filter_item').filter(':visible').length > 0;
+    $('#contact-list_header').toggle( zeroResults );
 });
 
 // Helpful filter terms

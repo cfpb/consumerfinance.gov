@@ -41,7 +41,8 @@
     <div class="content_block content_block__flush-top expandable-group contact-list"
          data-accordion="true"
          id ="contact-list">
-        <div class="expandable-group_header">
+        <div class="expandable-group_header"
+             id ="contact-list_header">
             Office name
         </div>
 {%- for contact in contacts|sort(attribute='title') %}

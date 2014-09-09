@@ -45,13 +45,16 @@
                 $clear = settings.$clear,
                 searchTerm,
                 resultsCount;
-            // Set aria attributes
-            $messages.attr( 'aria-live', 'polite' );
             // Only proceed if we have both the search input and enough items
             // to filter.
             if ( $input.length === 0 && $items.length < 2 ) {
                 return;
             }
+
+            //
+            // Set event handlers
+            //
+
             // Check to see if we should perform the filter on button click or
             // as you type.
             if ( $button.length > 0 ) {
@@ -125,6 +128,16 @@
                     var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
                     $messages.html( html );
                 });
+
+            //
+            // Initial dom manipulation setup.
+            //
+
+            resultsCount = $items.length;
+            // Set aria attributes
+            $messages.attr( 'aria-live', 'polite' );
+            // All items are visible by default so show the appropriate message.
+            $messages.trigger('allItems');
         });
     };
 
