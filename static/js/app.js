@@ -56,10 +56,6 @@ $('.type-and-filter').typeAndFilter({
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
 
-// Example of triggering a search via query string
-// $('.js-type-and-filter_input').val(getQueryVariable('contact-search'));
-// $('.type-and-filter').trigger('attemptSearch');
-
 
 /* ==========================================================================
    Initialize Chosen.js
