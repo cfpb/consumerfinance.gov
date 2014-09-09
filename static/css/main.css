@@ -18381,32 +18381,179 @@ a.focus .summary_header {
    cfgov-refresh
    Contact us
    ========================================================================== */
-#contact-list {
+.helpful-terms_header {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  margin-right: 0.42857143em;
+  vertical-align: middle;
+}
+.lt-ie9 .helpful-terms_header {
+  font-weight: normal !important;
+}
+.lt-ie9 .helpful-terms_header {
+  font-weight: normal !important;
+}
+.lt-ie9 .helpful-terms_header {
+  font-weight: normal !important;
+}
+.lt-ie9 .helpful-terms_header {
+  font-weight: normal !important;
+}
+.type-and-filter_message {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin: 2.13636364em 0 1.18181818em;
+}
+.type-and-filter_message em,
+.type-and-filter_message i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.type-and-filter_message strong,
+.type-and-filter_message b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.type-and-filter_message em,
+.type-and-filter_message i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.type-and-filter_message strong,
+.type-and-filter_message b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.type-and-filter_message em,
+.type-and-filter_message i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.type-and-filter_message strong,
+.type-and-filter_message b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.type-and-filter_message em,
+.type-and-filter_message i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.lt-ie9 .type-and-filter_message em,
+.lt-ie9 .type-and-filter_message i {
+  font-style: normal !important;
+}
+.type-and-filter_message strong,
+.type-and-filter_message b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.lt-ie9 .type-and-filter_message strong,
+.lt-ie9 .type-and-filter_message b {
+  font-weight: normal !important;
+}
+.contact-list {
   display: none;
 }
 @media only all and (min-width: 50.0625em) {
-  #contact-list {
+  .contact-list {
     display: block;
   }
 }
 @media only all and (min-width: 50.0625em) {
-  #contact-list {
+  .contact-list {
     display: block;
   }
 }
-.no-js #contact-list {
+.no-js .contact-list {
   display: block;
 }
-#contact-list_btn {
+.contact-list_btn {
   width: 100%;
 }
 @media only all and (min-width: 50.0625em) {
-  #contact-list_btn {
+  .contact-list_btn {
     display: none;
   }
 }
 @media only all and (min-width: 50.0625em) {
-  #contact-list_btn {
+  .contact-list_btn {
     display: none;
   }
 }
@@ -18422,7 +18569,4 @@ a.focus .summary_header {
   .contact-us-map {
     float: right;
   }
-}
-.helpful-terms h5 {
-  display: inline;
 }
