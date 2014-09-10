@@ -66,6 +66,14 @@
                     $this.trigger('attemptSearch');
                 });
             }
+            // Show the clear button only when there is text in the input.
+            $input.on( 'keyup', function() {
+                if ( $input.val().length > 0 ) {
+                    $clear.show();
+                } else {
+                    $clear.hide();
+                }
+            });
             // Reset everything when the clear button is pressed
             $clear.on( 'click', function () {
                 $this.trigger('clear');
@@ -93,6 +101,8 @@
                 .on( 'clear', function () {
                     searchTerm = '';
                     $input.val('');
+                    $input.focus();
+                    $clear.hide();
                     $items.show();
                     resultsCount = $items.filter(':visible').length;
                     $messages.trigger('allItems');
@@ -134,6 +144,8 @@
             //
 
             resultsCount = $items.length;
+            // Hide the clear button unless there is text in the input.
+            $clear.hide();
             // Set aria attributes
             $messages.attr( 'aria-live', 'polite' );
             // All items are visible by default so show the appropriate message.
