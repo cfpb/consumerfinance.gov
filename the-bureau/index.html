@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block demo_title -%}
+    The Bureau
+{%- endblock %}
+
+{% block title -%}
+    The Bureau
+{%- endblock %}
+
+{% block desc -%}
+    Information on the leadership, structure, and history of the CFPB
+{%- endblock %}
+
+{% block content %}
+
+    {# Variables #}
+
+    {% set path = '/the-bureau/' %}
+
+    {# Macros #}
+
+    {% import "post-macros.html" as post_macros with context %}
+
+
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <aside class="content_sidebar content__flush-all-on-small">
+                {% include "nav.html" %}
+            </aside>
+
+            <div class="content_main content__flush-bottom content__flush-top-on-small">
+                <section>
+                    The bureau content
+                </section>
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+{% endblock content %}
