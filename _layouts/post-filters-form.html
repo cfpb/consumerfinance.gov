@@ -11,16 +11,16 @@
                 </label>
         {% if path == '/newsroom/' -%}
             {% for category in query.possible_values_for('category', doc_type='newsroom')|sort(attribute='term') -%}
-                <label class="form-group_item form-label">
+                <label class="form-group_item">
                     {{ post_macros.filter_checkbox('category', category.term)|safe }}
                 </label>
             {% endfor %}
-                <label class="form-group_item form-label">
+                <label class="form-group_item">
                     {{ post_macros.filter_checkbox('type', 'post', 'Blog')|safe }}
                 </label>
         {%- else -%}
             {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
-                <label class="form-group_item form-label">
+                <label class="form-group_item">
                     {{ post_macros.filter_checkbox('category', category.term)|safe }}
                 </label>
             {% endfor %}
@@ -81,8 +81,7 @@
         {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
         <div class="form-l_col-1-3"
              id="filter_range_date_gte-container">
-             <label class="form-label"
-                    for="filter_range_date_gte">
+             <label for="filter_range_date_gte">
                  From:
              </label>
             <input id="filter_range_date_gte"
@@ -95,8 +94,7 @@
         <div class="form-l_col-1-3 input-group"
              id="filter_range_date_gte-replacement"
              style="display:none;">
-            <label class="form-label"
-                   for="filter_from_month">
+            <label for="filter_from_month">
                 From:
             </label>
             <div class="input-group_item custom-select">
@@ -140,8 +138,7 @@
         {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
         <div class="form-l_col-1-3"
              id="filter_range_date_lte-container">
-             <label class="form-label"
-                    for="filter_range_date_lte">
+             <label for="filter_range_date_lte">
                  To:
              </label>
             <input id="filter_range_date_lte"
@@ -154,8 +151,7 @@
         <div class="form-l_col-1-3 input-group"
              id="filter_range_date_lte-replacement"
              style="display:none;">
-            <label class="form-label"
-                   for="filter_to_month">
+            <label for="filter_to_month">
                 To:
             </label>
             <div class="custom-select input-group_item">
