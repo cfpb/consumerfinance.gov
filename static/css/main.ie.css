@@ -1864,7 +1864,7 @@ input.btn::-moz-focus-inner {
 .btn__link.focus {
   border-bottom-style: solid;
   background-color: transparent;
-  outline: thin dotted;
+  outline: thin dotted #0072ce;
 }
 
 .btn__link:active,
@@ -1877,6 +1877,62 @@ input.btn::-moz-focus-inner {
 .lt-ie8 button.btn__link,
 .lt-ie8 input.btn__link {
   padding: 0;
+}
+
+/* topdoc
+    name: Secondary button link
+    family: cf-buttons
+    notes:
+      - "Note that the .visited, .hover, .focus, .active classes are for
+         demonstration purposes only and should not be used in production."
+    patterns:
+    - name: Default state
+      markup: |
+        <a href="#" class="btn btn__link btn__secondary">Anchor Tag</a>
+        <button class="btn btn__link btn__secondary">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn__link btn__secondary">
+    - name: Hovered state
+      markup: |
+        <a href="#" class="btn btn__link btn__secondary hover">Anchor Tag</a>
+        <button class="btn btn__link btn__secondary hover">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn__link btn__secondary hover">
+    - name: Focused state
+      markup: |
+        <a href="#" class="btn btn__link btn__secondary focus">Anchor Tag</a>
+        <button class="btn btn__link btn__secondary focus">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn__link btn__secondary focus">
+    - name: Active state
+      markup: |
+        <a href="#" class="btn btn__link btn__secondary active">Anchor Tag</a>
+        <button class="btn btn__link btn__secondary active">Button Tag</button>
+        <input type="button" value="Input Tag" class="btn btn__link btn__secondary active">
+    tags:
+    - cf-buttons
+*/
+
+.btn__link.btn__secondary,
+.btn__link.btn__secondary:link,
+.btn__link.btn__secondary:visited {
+  border-bottom-color: #75787b;
+  background-color: transparent;
+  color: #75787b;
+}
+
+.btn__link.btn__secondary:hover,
+.btn__link.btn__secondary.hover {
+  border-bottom-color: #43484e;
+  color: #43484e;
+}
+
+.btn__link.btn__secondary:focus,
+.btn__link.btn__secondary.focus {
+  outline-color: #75787b;
+}
+
+.btn__link.btn__secondary:active,
+.btn__link.btn__secondary.active {
+  border-bottom-color: #101820;
+  color: #101820;
 }
 
 /* topdoc
@@ -1926,8 +1982,7 @@ input.btn::-moz-focus-inner {
 
 .btn__link.btn__warning:focus,
 .btn__link.btn__warning.focus {
-  border-bottom-color: #da6750;
-  outline: thin dotted;
+  outline-color: #d12124;
 }
 
 .btn__link.btn__warning:active,
@@ -3165,12 +3220,99 @@ blockquote {
     - name: Default label
       markup: |
         <label>Form label</label>
+    - name: Label wrapping a radio or checkbox
+      markup: |
+        <label>
+            <input type="radio">
+            Radio label
+        </label>
+        <label>
+            <input type="checkbox">
+            Checkbox label
+        </label>
     tags:
     - cf-core
 */
 
 label {
   display: block;
+  margin-bottom: 0.3125em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+label em,
+label i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+label strong,
+label b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+label em,
+label i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+label strong,
+label b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+label input[type="radio"],
+label input[type="checkbox"] {
+  margin-right: 0.375em;
 }
 
 /* topdoc
@@ -4944,12 +5086,99 @@ blockquote {
     - name: Default label
       markup: |
         <label>Form label</label>
+    - name: Label wrapping a radio or checkbox
+      markup: |
+        <label>
+            <input type="radio">
+            Radio label
+        </label>
+        <label>
+            <input type="checkbox">
+            Checkbox label
+        </label>
     tags:
     - cf-core
 */
 
 label {
   display: block;
+  margin-bottom: 0.3125em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+label em,
+label i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+label strong,
+label b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+label em,
+label i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+.lt-ie9 label em,
+.lt-ie9 label i {
+  font-style: normal !important;
+}
+
+label strong,
+label b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 label strong,
+.lt-ie9 label b {
+  font-weight: normal !important;
+}
+
+label input[type="radio"],
+label input[type="checkbox"] {
+  margin-right: 0.375em;
 }
 
 /* topdoc
@@ -6274,6 +6503,30 @@ button.expandable_header {
 }
 
 /* topdoc
+  name: Super input
+  family: cf-forms
+  patterns:
+    - name: .input__super
+      markup: |
+        <input class="input__super" type="text" value="Super input"></input>
+        <button class="btn btn__super">Super</button>
+      notes:
+        - "An input that matches the height of a super button."
+  tags:
+    - cf-forms
+*/
+
+.input__super[type="text"],
+.input__super[type="search"],
+.input__super[type="email"],
+.input__super[type="url"],
+.input__super[type="tel"],
+.input__super[type="number"] {
+  padding: 0.55555556em;
+  font-size: 1.125em;
+}
+
+/* topdoc
     name: Input states
     family: cf-forms
     patterns:
@@ -6458,6 +6711,329 @@ textarea.success {
 
 .form-group_item + .form-group_item {
   margin-top: 0.9375em;
+}
+
+/* topdoc
+  name: Input with button
+  family: cf-forms
+  patterns:
+    - name: Default input and button
+      markup: |
+        <div class="input-with-btn">
+            <div class="input-with-btn_input">
+                <input type="text">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+    - name: Super input and button
+      markup: |
+        <div class="input-with-btn">
+            <div class="input-with-btn_input">
+                <input class="input__super" type="text">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn btn__super">Search</button>
+            </div>
+        </div>
+  tags:
+    - cf-forms
+*/
+
+.input-with-btn {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.input-with-btn {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.input-with-btn_input {
+  margin-bottom: 0.9375em;
+}
+
+.input-with-btn_input {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 75%;
+  border-right-width: 0;
+}
+
+.ie .input-with-btn_input {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_input {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_input {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 75%;
+  border-right-width: 0;
+}
+
+.ie .input-with-btn_input {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_input {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_input {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 83.33333333%;
+  border-right-width: 0;
+}
+
+.ie .input-with-btn_input {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_input {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_input {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 83.33333333%;
+  border-right-width: 0;
+}
+
+.ie .input-with-btn_input {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_input {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_input input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.input-with-btn_btn {
+  margin-bottom: 0.9375em;
+}
+
+.input-with-btn_btn {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .input-with-btn_btn {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_btn {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_btn {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .input-with-btn_btn {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_btn {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_btn {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 16.66666667%;
+}
+
+.ie .input-with-btn_btn {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_btn {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_btn {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 16.66666667%;
+}
+
+.ie .input-with-btn_btn {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .input-with-btn_btn {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.input-with-btn_btn .btn {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.input-with-btn_btn .btn__super {
+  padding-left: 0.83333333em;
+  padding-right: 0.83333333em;
+}
+
+/* topdoc
+  name: Button inside input
+  family: cf-forms
+  patterns:
+    - name: Default button inside of an default input
+      markup: |
+        <div class="btn-inside-input">
+            <input type="text"
+                   value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            <button class="btn btn__link btn__secondary">
+                Clear
+                <span class="cf-icon cf-icon-delete"></span>
+            </button>
+        </div>
+    - name: Super button inside of a super input
+      markup: |
+        <div class="btn-inside-input">
+            <input class="input__super"
+                   type="text"
+                   value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            <button class="btn btn__super btn__link btn__secondary">
+                Clear
+                <span class="cf-icon cf-icon-delete"></span>
+            </button>
+        </div>
+  tags:
+    - cf-forms
+*/
+
+.btn-inside-input {
+  position: relative;
+}
+
+.btn-inside-input input[type="text"],
+.btn-inside-input input[type="search"],
+.btn-inside-input input[type="email"],
+.btn-inside-input input[type="url"],
+.btn-inside-input input[type="tel"],
+.btn-inside-input input[type="number"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 4.64285714em;
+}
+
+.btn-inside-input input[type="text"].input__super,
+.btn-inside-input input[type="search"].input__super,
+.btn-inside-input input[type="email"].input__super,
+.btn-inside-input input[type="url"].input__super,
+.btn-inside-input input[type="tel"].input__super,
+.btn-inside-input input[type="number"].input__super {
+  padding-right: 5em;
+}
+
+.btn-inside-input .btn {
+  border-bottom-width: 0 !important;
+  position: absolute;
+  right: 1.07142857em;
+  top: 0;
+}
+
+.btn-inside-input .btn__super {
+  right: 0.83333333em;
 }
 
 /* topdoc
@@ -9320,30 +9896,6 @@ figure {
 
 .figure__bordered img {
   border: 1px solid #babbbd;
-}
-
-/* topdoc
-  name: Super input
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: .input__super
-      markup: |
-        <input class="input__super" type="text" value="Super input"></input>
-        <button class="btn btn__super">Super</button>
-      notes:
-        - "An input that matches the height of a super button."
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-.input__super[type="text"],
-.input__super[type="search"],
-.input__super[type="email"],
-.input__super[type="url"],
-.input__super[type="tel"],
-.input__super[type="number"] {
-  padding: 0.55555556em;
-  font-size: 1.125em;
 }
 
 /* topdoc
@@ -13302,8 +13854,7 @@ a.category-slug.active {
   patterns:
     - name: Custom checkbox demo with initialization markup
       markup: |
-        <label class="form-label"
-               for="custom-input_checkbox-lorem">
+        <label for="custom-input_checkbox-lorem">
             <input class="custom-input"
                    id="custom-input_checkbox-lorem"
                    type="checkbox"
@@ -13312,8 +13863,7 @@ a.category-slug.active {
             Lorem
         </label>
         <br>
-        <label class="form-label"
-               for="custom-input_checkbox-ipsum">
+        <label for="custom-input_checkbox-ipsum">
             <input class="custom-input"
                    id="custom-input_checkbox-ipsum"
                    type="checkbox"
@@ -13322,8 +13872,7 @@ a.category-slug.active {
             Ipsum
         </label>
         <br>
-        <label class="form-label"
-               for="custom-input_checkbox-dolor">
+        <label for="custom-input_checkbox-dolor">
             <input class="custom-input"
                    id="custom-input_checkbox-dolor"
                    type="checkbox"
@@ -13341,8 +13890,7 @@ a.category-slug.active {
         - "Use the markup structure above to add .custom-input elements."
     - name: Custom radio button demo with initialization markup
       markup: |
-        <label class="form-label"
-               for="custom-input_radio-lorem">
+        <label for="custom-input_radio-lorem">
             <input class="custom-input"
                    id="custom-input_radio-lorem"
                    type="radio"
@@ -13351,8 +13899,7 @@ a.category-slug.active {
             Lorem
         </label>
         <br>
-        <label class="form-label"
-               for="custom-input_radio-ipsum">
+        <label for="custom-input_radio-ipsum">
             <input class="custom-input"
                    id="custom-input_radio-ipsum"
                    type="radio"
@@ -13361,8 +13908,7 @@ a.category-slug.active {
             Ipsum
         </label>
         <br>
-        <label class="form-label"
-               for="custom-input_radio-dolor">
+        <label for="custom-input_radio-dolor">
             <input class="custom-input"
                    id="custom-input_radio-dolor"
                    type="radio"
@@ -13490,107 +14036,6 @@ a.category-slug.active {
 }
 
 /* topdoc
-  name: Form labels
-  family: cfgov-misc
-  patterns:
-    - name: Normal label
-      markup: |
-        <label class="form-label">
-            Form label
-        </label>
-    - name: Form element nested within a label
-      markup: |
-        <label class="form-label">
-            <input type="checkbox">
-            Form label
-        </label>
-      notes:
-        - "When nesting a form input the input will receive a right margin to
-          space it from the label text."
-  tags:
-    - cfgov-misc
-*/
-
-.form-label {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-bottom: 0.3125em;
-}
-
-.form-label em,
-.form-label i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .form-label em,
-.lt-ie9 .form-label i {
-  font-style: normal !important;
-}
-
-.lt-ie9 .form-label em,
-.lt-ie9 .form-label i {
-  font-style: normal !important;
-}
-
-.form-label strong,
-.form-label b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .form-label strong,
-.lt-ie9 .form-label b {
-  font-weight: normal !important;
-}
-
-.lt-ie9 .form-label strong,
-.lt-ie9 .form-label b {
-  font-weight: normal !important;
-}
-
-.form-label em,
-.form-label i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .form-label em,
-.lt-ie9 .form-label i {
-  font-style: normal !important;
-}
-
-.lt-ie9 .form-label em,
-.lt-ie9 .form-label i {
-  font-style: normal !important;
-}
-
-.form-label strong,
-.form-label b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .form-label strong,
-.lt-ie9 .form-label b {
-  font-weight: normal !important;
-}
-
-.lt-ie9 .form-label strong,
-.lt-ie9 .form-label b {
-  font-weight: normal !important;
-}
-
-.form-label input {
-  margin-right: 0.375em;
-}
-
-/* topdoc
   name: Form inputs
   family: cfgov-misc
   patterns:
@@ -13616,6 +14061,10 @@ a.category-slug.active {
                 <option value="option4">Option 4</option>
             </select>
         </div>
+      notes:
+        - "BEFORE moving to Capital Framework please review the work done in
+           the Owning a Home project to make sure this pattern will be useful for
+           both projects."
   tags:
     - cfgov-misc
 */
@@ -13641,319 +14090,6 @@ a.category-slug.active {
 .input-group_item:focus,
 .input-group_item[type="text"]:focus {
   z-index: 2;
-}
-
-/* topdoc
-  name: Input with button
-  family: cfgov-misc
-  patterns:
-    - name: Default input and button
-      markup: |
-        <div class="input-with-btn">
-            <div class="input-with-btn_input">
-                <input type="text">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="btn">Search</button>
-            </div>
-        </div>
-    - name: Super input and button
-      markup: |
-        <div class="input-with-btn">
-            <div class="input-with-btn_input">
-                <input class="input__super" type="text">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="btn btn__super">Search</button>
-            </div>
-        </div>
-  tags:
-    - cfgov-misc
-*/
-
-.input-with-btn {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.input-with-btn {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.input-with-btn_input {
-  margin-bottom: 0.9375em;
-}
-
-.input-with-btn_input {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 75%;
-  border-right-width: 0;
-}
-
-.ie .input-with-btn_input {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_input {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_input {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 75%;
-  border-right-width: 0;
-}
-
-.ie .input-with-btn_input {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_input {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_input {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 83.33333333%;
-  border-right-width: 0;
-}
-
-.ie .input-with-btn_input {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_input {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_input {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 83.33333333%;
-  border-right-width: 0;
-}
-
-.ie .input-with-btn_input {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_input {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_input input {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.input-with-btn_btn {
-  margin-bottom: 0.9375em;
-}
-
-.input-with-btn_btn {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-}
-
-.ie .input-with-btn_btn {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_btn {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_btn {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-}
-
-.ie .input-with-btn_btn {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_btn {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_btn {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 16.66666667%;
-}
-
-.ie .input-with-btn_btn {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_btn {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_btn {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 16.66666667%;
-}
-
-.ie .input-with-btn_btn {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .input-with-btn_btn {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.input-with-btn_btn .btn {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.input-with-btn_btn .btn__super {
-  padding-left: 0.83333333em;
-  padding-right: 0.83333333em;
-}
-
-/* topdoc
-  name: Button inside input
-  family: cfgov-misc
-  patterns:
-    - name: Default button inside of an default input
-      markup: |
-        <div class="btn-inside-input">
-            <input type="text"
-                   value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
-            <button class="btn btn__link btn__secondary">
-                Clear
-                <span class="cf-icon cf-icon-delete"></span>
-            </button>
-        </div>
-    - name: Super button inside of a super input
-      markup: |
-        <div class="btn-inside-input">
-            <input class="input__super"
-                   type="text"
-                   value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
-            <button class="btn btn__super btn__link btn__secondary">
-                Clear
-                <span class="cf-icon cf-icon-delete"></span>
-            </button>
-        </div>
-  tags:
-    - cfgov-misc
-*/
-
-.btn-inside-input {
-  position: relative;
-}
-
-.btn-inside-input input {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-  padding-right: 4.64285714em;
-}
-
-.btn-inside-input .input__super {
-  padding-right: 5em;
-}
-
-.btn-inside-input .btn {
-  border-bottom-width: 0 !important;
-  position: absolute;
-  right: 1.07142857em;
-  top: 0;
-}
-
-.btn-inside-input .btn__super {
-  right: 0.83333333em;
 }
 
 /* topdoc
@@ -18265,19 +18401,19 @@ a.focus .summary_header {
                                 <label class="form-label-header">
                                     Categories
                                 </label>
-                                <label class="form-group_item form-label">
+                                <label class="form-group_item">
                                     <input type="checkbox" name="filter_category" value="consumer">
                                     Announcements &amp; updates
                                 </label>
-                                <label class="form-group_item form-label">
+                                <label class="form-group_item">
                                     <input type="checkbox" name="filter_category" value="regulation & compliance">
                                     Consumer information
                                 </label>
-                                <label class="form-group_item form-label">
+                                <label class="form-group_item">
                                     <input type="checkbox" name="filter_category" value="innovation">
                                     Engagement
                                 </label>
-                                <label class="form-group_item form-label">
+                                <label class="form-group_item">
                                     <input type="checkbox" name="filter_category" value="announcements">
                                     Innovation &amp; data
                                 </label>
@@ -18335,15 +18471,15 @@ a.focus .summary_header {
                   .form-l_col.form-l_col-1-3
                     .form-group
                       .form-label-header
-                      .form-group_item.form-label
+                      .form-group_item
                   .form-l_col.form-l_col-1-3
                     .form-group
                       .form-label-header
-                      .form-group_item.form-label
+                      .form-group_item
                   .form-l_col.form-l_col-1-3
                     .form-group
                       .form-label-header
-                      .form-group_item.form-label
+                      .form-group_item
                 .form-actions.form-actions__right-on-med
   tags:
     - cfgov-blog-docs
