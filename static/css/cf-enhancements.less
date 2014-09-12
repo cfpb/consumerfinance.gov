@@ -41,33 +41,6 @@ figure {
 
 
 /* topdoc
-  name: Super input
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: .input__super
-      markup: |
-        <input class="input__super" type="text" value="Super input"></input>
-        <button class="btn btn__super">Super</button>
-      notes:
-        - "An input that matches the height of a super button."
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-.input__super {
-    &[type="text"],
-    &[type="search"],
-    &[type="email"],
-    &[type="url"],
-    &[type="tel"],
-    &[type="number"] {
-        padding: unit( 10px / @super-btn-font-size, em );
-        font-size: unit( @super-btn-font-size / @base-font-size-px, em );
-    }
-}
-
-
-/* topdoc
   name: Expandables
   family: cfgov-cf-enhancements
   patterns:
