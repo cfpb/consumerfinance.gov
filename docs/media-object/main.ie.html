@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +15,11 @@
     <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
     <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
   </head>
   <body>
     <div class="docs-masthead">
@@ -50,6 +61,10 @@
         &lt;/p&gt;
     &lt;/div&gt;
 &lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;media-object\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;media-object_image-container\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;media-object_image\&amp;quot; src=\&amp;quot;http://placekitten.com/276/155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;media-object_text-container\&amp;quot;&gt;\n        &lt;p&gt;\n            Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n            Dolorum non sapiente nobis molestias delectus optio ipsam\n            voluptas esse blanditiis ipsa debitis consequuntur excepturi\n            accusantium doloribus dicta fugiat itaque ab porro.\n        &lt;/p&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural sheat sheet:

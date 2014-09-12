@@ -9575,9 +9575,9 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     - name: Logo
       markup: |
         <a href="/">
-            <img class="logo logo__js"
+            <img class="logo u-js-only"
                  src="../../static/img/logo.svg"
-                 onerror="this.src='/static/img/logo.png';"
+                 onerror="this.onerror=null;this.src='/static/img/logo.png';"
                  alt="Consumer Financial Protection Bureau"
                  width="262"
                  height="66">
@@ -9591,8 +9591,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
         </a>
       notes:
         - "CSS provides margin around the logo."
-        - "Markup allows for the usage of an SVG logo for browsers that support
-           SVG, with a fallback to PNG for browsers that don't."
+        - "The `onerror` attribute allows for the usage of an SVG logo for
+           browsers that support SVG, with a fallback to PNG for browsers that
+           don't."
+        - "The `noscript` element displays the PNG fallback in the event that
+           JavaScript is not available."
         - "The path in the `src` attribute has been adjusted for these docs."
   tags:
     - cfgov-layout
@@ -9601,6 +9604,22 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .logo {
   display: block;
   margin: 0.9375em;
+}
+
+.logo__js {
+  display: block;
+}
+
+.logo__no-js {
+  display: none;
+}
+
+.no-js .logo__js {
+  display: none;
+}
+
+.no-js .logo__no-js {
+  display: block;
 }
 
 /* topdoc
