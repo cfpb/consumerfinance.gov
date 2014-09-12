@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +15,11 @@
     <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
     <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
   </head>
   <body>
     <div class="docs-masthead">
@@ -30,6 +41,10 @@
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure&gt;
     &lt;img src=&quot;http://placekitten.com/300/300&quot;&gt;
 &lt;/figure&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure&gt;\n    &lt;img src=\&amp;quot;http://placekitten.com/300/300\&amp;quot;&gt;\n&lt;/figure&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
           </footer>
         </div>
       </div>
@@ -57,6 +72,10 @@ figure {
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure class=&quot;figure__bordered&quot;&gt;
     &lt;img src=&quot;http://placekitten.com/300/300&quot;&gt;
 &lt;/figure&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure class=\&amp;quot;figure__bordered\&amp;quot;&gt;\n    &lt;img src=\&amp;quot;http://placekitten.com/300/300\&amp;quot;&gt;\n&lt;/figure&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
           </footer>
         </div>
       </div>
@@ -81,6 +100,10 @@ figure {
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;input class=&quot;input__super&quot; type=&quot;text&quot; value=&quot;Super input&quot;&gt;&lt;/input&gt;
 &lt;button class=&quot;btn btn__super&quot;&gt;Super&lt;/button&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;input class=\&amp;quot;input__super\&amp;quot; type=\&amp;quot;text\&amp;quot; value=\&amp;quot;Super input\&amp;quot;&gt;&lt;/input&gt;\n&lt;button class=\&amp;quot;btn btn__super\&amp;quot;&gt;Super&lt;/button&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
             <ul class="docs-notes">
               <li>An input that matches the height of a super button.</li>
             </ul>
