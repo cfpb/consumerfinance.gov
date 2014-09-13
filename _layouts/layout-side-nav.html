@@ -1,0 +1,29 @@
+{% extends "layout-base.html" %}
+
+{# docs/layout-side-nav.html #}
+
+{# Set the vars needed for the side navigation #}
+{% if section_vars and section_vars.nav_items %}
+    {% set nav_items = section_vars.nav_items %}
+{% else %}
+    {% set nav_items = [("/_layouts/layout-side-nav.html", "", "Please review the instructions in _layouts/layout-side-nav.html for setting up the side nav.")] %}
+{% endif %}
+{% set active_nav_id = active_nav_id|default("index") -%}
+
+{# Set the modifier classes needed to trigger this layout. #}
+{% set content_modifiers = "content__1-3" %}
+
+{% block body_content %}
+    <div class="wrapper content_wrapper">
+        <aside class="content_sidebar{{ content_sidebar_modifiers }}">
+            {% block content_sidebar -%}
+                {{ macros.side_nav(nav_items, active_nav_id) }}
+            {%- endblock %}
+        </aside>
+        <div class="content_main{{ content_main_modifiers }}">
+            <section>
+                {% block content_main -%}{%- endblock %}
+            </section>
+        </div>
+    </div>
+{% endblock %}

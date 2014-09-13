@@ -1,24 +1,25 @@
-{% extends "bio.html" %}
+{% extends "layout-side-nav.html" %}
+
+{% import "section-vars.html" as section_vars %}
 
 {# Variables #}
-
-{% set active_item_id = 'about-rich-cordray' -%}
-{% set bio_name = 'Richard Cordray' %}
+{% set active_nav_id = "about-rich-cordray" -%}
+{% set content_main_modifiers = "content__flush-top-on-small" %}
+{% set content_sidebar_modifiers = "content__flush-all-on-small" %}
 
 {# Block overrides #}
-
 {% block demo_title -%}
-    About {{ bio_name }}
+    About Rich Cordray
 {%- endblock %}
 
 {% block title -%}
-    About {{ bio_name }}
+    About Rich Cordray
 {%- endblock %}
 
 {% block desc -%}
-    Information about {{ bio_name }}
+    Information about Rich Cordray
 {%- endblock %}
 
-{% block bio %}
-    <h1>{{ bio_name }}</h1>
+{% block content_main %}
+    <h1>Director Richard Cordray</h1>
 {% endblock %}

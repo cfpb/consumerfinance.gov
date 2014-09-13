@@ -3,7 +3,6 @@
 {% macro side_nav(items, active_item_id) %}
     <nav class="nav-secondary expandable">
         <h1 class="u-visually-hidden">
-            poop
     {%- for href, id, caption in items %}
         {% if id == 'index' %}
             {{ caption|e }} navigation

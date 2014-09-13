@@ -1,0 +1,34 @@
+{% extends "layout-side-nav.html" %}
+{% import "section-vars.html" as section_vars %}
+
+{# Variables #}
+{% set content_main_modifiers = "content__flush-bottom" %}
+{% set active_nav_id = "main-content-footer" -%}
+
+{# Block overrides #}
+{% block demo_title -%}
+    Main content footer
+{%- endblock %}
+
+{% block title -%}
+    Main content footer
+{%- endblock %}
+
+{% block desc -%}
+    An example of adding a footer to the content_main block
+{%- endblock %}
+
+{% block content_main %}
+    <h1>Main content footer</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quaerat minus dignissimos vero eaque sapiente quo quidem commodi repellat eum pariatur sint sunt odit rem id velit nisi delectus excepturi!</p>
+    <aside class="content_block">
+        <p>Simple footer using <code>aside.content_block</code>. All this does is add some space above and below.</p>
+    </aside>
+    <aside class="content_block
+                  content_block__flush-bottom
+                  content_block__flush-sides
+                  content_block__bg">
+        <p>Footer with a bg using <code>aside.content_block.content_block__flush-sides.content_block__flush-bottom.content_block__bg</code>.</p>
+        <p>To make this flush with the bottom of the page you'll need to set: <code>content_main_modifiers = "content__flush-bottom"</code> in your template.</p>
+    </aside>
+{% endblock %}
