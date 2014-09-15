@@ -1,17 +1,10 @@
 {% extends "base.html" %}
 
-{# docs/layout-side-nav.html #}
-
-{# Class modifiers for content blocks #}
-{% set content_modifiers = " " + content_modifiers if content_modifiers %}
-{% set content_main_modifiers = " " + content_main_modifiers if content_main_modifiers %}
-{% set content_sidebar_modifiers = " " + content_sidebar_modifiers if content_sidebar_modifiers %}
-
 {# Macros #}
 {% import "macros.html" as macros with context %}
 
 {% block content scoped %}
-    <main class="content{{ content_modifiers }}" id="main" role="main">
+    <main class="content {% block content_modifiers -%}{%- endblock %}" id="main" role="main">
         {% block hero -%}{%- endblock %}
         <div class="content_bar"></div>
         {% block pre_content -%}{%- endblock %}

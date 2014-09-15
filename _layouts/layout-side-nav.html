@@ -1,8 +1,14 @@
-{% extends "layout-base.html" %}
+{% extends "layout-1-3.html" %}
 
-{# docs/layout-side-nav.html #}
+{#
+    docs/layout-side-nav.html
 
-{# Set the vars needed for the side navigation #}
+    Since layout-side-nav.html extends from layout-1-3.html all we need to do
+    is set some side nav variables and override the `content_sidebar` block to
+    add the nav macro.
+#}
+
+{# Side nav vars #}
 {% if section_vars and section_vars.nav_items %}
     {% set nav_items = section_vars.nav_items %}
 {% else %}
@@ -10,20 +16,7 @@
 {% endif %}
 {% set active_nav_id = active_nav_id|default("index") -%}
 
-{# Set the modifier classes needed to trigger this layout. #}
-{% set content_modifiers = "content__1-3" %}
-
-{% block body_content %}
-    <div class="wrapper content_wrapper">
-        <aside class="content_sidebar{{ content_sidebar_modifiers }}">
-            {% block content_sidebar -%}
-                {{ macros.side_nav(nav_items, active_nav_id) }}
-            {%- endblock %}
-        </aside>
-        <div class="content_main{{ content_main_modifiers }}">
-            <section>
-                {% block content_main -%}{%- endblock %}
-            </section>
-        </div>
-    </div>
-{% endblock %}
+{# Adding the side nav macro #}
+{% block content_sidebar -%}
+    {{ macros.side_nav(nav_items, active_nav_id) }}
+{%- endblock %}

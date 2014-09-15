@@ -1,4 +1,4 @@
-{% extends "layout-bleedbar.html" %}
+{% extends "layout-2-1-bleedbar.html" %}
 {% import "section-vars.html" as section_vars %}
 
 {% block demo_title -%}
@@ -23,10 +23,13 @@
     <code>block: pre_content</code>
 {% endblock %}
 
+{% block body_content %}
+    <code>block: body_content</code>
+    {{ super() }}
+{% endblock %}
+
 {% block content_main %}
-    <p><code>block: content_main</code></p>
-    <p class="short-desc">These are the content blocks that you can override in your templates. Note that the sidebar placement depends on which layout you use. Also if you're using the Sidebar layout there is no need to override the <code>content_sidebar</code> block.</p>
-    <a href="{{ section_vars.path }}" class="jump-link">Layouts landing page</a>
+    <code>block: content_main</code>
 {% endblock %}
 
 {% block content_sidebar %}

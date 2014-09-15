@@ -1,0 +1,14 @@
+{% extends "layout-base.html" %}
+
+{% block body_content -%}
+<div class="wrapper content_wrapper">
+    <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
+        {% block content_sidebar -%}{%- endblock %}
+    </aside>
+    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
+        <section>
+            {% block content_main -%}{%- endblock %}
+        </section>
+    </div>
+</div>
+{%- endblock %}
