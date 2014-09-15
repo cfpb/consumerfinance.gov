@@ -75,22 +75,12 @@
     margin: unit(15px / @base-font-size-px, em);
 }
 
-.logo__js {
-    display: block;
-}
-
 .logo__no-js {
     display: none;
 }
 
-.no-js {
-    .logo__js {
-        display: none;
-    }
-
-    .logo__no-js {
-        display: block;
-    }
+.no-js .logo__no-js {
+    display: block;
 }
 
 
