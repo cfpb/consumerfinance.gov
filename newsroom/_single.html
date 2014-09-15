@@ -1,6 +1,11 @@
 {% extends "layout-2-1-bleedbar.html" %}
-{% import "_section_newsroom.html" as section with context %}
+{% import "_press-information.html" as press_information %}
+{% import "_section-newsroom.html" as section with context %}
+{% import "article.html" as article %}
+{% import "email-subscribe-form.html" as email_subscribe_form %}
 {% import "post-macros.html" as post_macros with context %}
+{% import "related-posts.html" as related_posts %}
+{% import "rss.html" as rss %}
 
 {# Block overrides #}
 
@@ -11,6 +16,7 @@
 {% block title -%}
     {{ newsroom.title }}
 {%- endblock %}
+
 {% block desc -%}
     {{ newsroom.excerpt|striptags }}
 {%- endblock %}
@@ -28,17 +34,13 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% import "article.html" as article %}
     {{ article.render(newsroom, post_macros, query, share_twitter_url) }}
+    {{ press_information.render() }}
 {% endblock %}
 
 {% block content_sidebar %}
     <section class="content_block content_block__flush-top">
-        {% import "related-posts.html" as related_posts %}
         {{ related_posts.render(newsroom, more_like_this) }}
-    </section>
-    <section class="content_block related-news">
-        <h1 class="demo-placeholder">Related news placeholder</h1>
     </section>
     <section class="content_block stay-informed">
         <div class="content_block__sub">
@@ -50,11 +52,9 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new newsroom updates.
             </p>
-            {% import "email-subscribe-form.html" as email_subscribe_form %}
             {{ email_subscribe_form.render(section.query) }}
         </div>
         <div class="content_block__sub">
-            {% import "rss.html" as rss %}
             {{ rss.render(section.rss_path) }}
         </div>
     </section>

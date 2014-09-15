@@ -17,6 +17,6 @@
 {% set active_nav_id = active_nav_id|default("index") -%}
 
 {# Adding the side nav macro #}
-{% block content_sidebar -%}
+{% block content_sidebar %}
     {{ macros.side_nav(section.nav_items, active_nav_id) }}
-{%- endblock %}
+{% endblock %}

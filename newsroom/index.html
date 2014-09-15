@@ -1,6 +1,13 @@
 {% extends "layout-side-nav.html" %}
-{% import "_section_newsroom.html" as section with context %}
+{% import "_section-newsroom.html" as section with context %}
+{% import "_watchroom.html" as _watchroom %}
+{% import "email-subscribe-form.html" as email_subscribe_form %}
+{% import "post-filters.html" as post_filters %}
 {% import "post-macros.html" as post_macros with context %}
+{% import "posts-paginated.html" as posts_paginated %}
+{% import "related-links.html" as related_links %}
+{% import "rss.html" as rss %}
+{% import "upcoming-events.html" as upcoming_events %}
 
 {# Variables #}
 
@@ -30,15 +37,13 @@
     Press releases, speeches, op-eds, testimony, and blog posts produced by our Office of Communications
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
-
-    {% import "post-filters.html" as post_filters %}
     {{ post_filters.render(section.newsrooms, active_filters, active_filters_total, active_date_filters, section.query, post_macros, selected_filters_for_field, current_date, section.path) }}
-
-    {% import "watchroom.html" as watchroom %}
-    {{ watchroom.render(queries.watchroom.search_with_url_arguments(size=1)) }}
-
-    {% import "posts-paginated.html" as posts_paginated %}
+    {{ _watchroom.render(queries.watchroom.search_with_url_arguments(size=1)) }}
     {{ posts_paginated.render(section.newsrooms, post_macros) }}
 
     <aside>
@@ -53,11 +58,9 @@
                     <p class="short-desc">
                         Subscribe to our email newsletter. We will update you on new newsroom updates.
                     </p>
-                    {% import "email-subscribe-form.html" as email_subscribe_form %}
                     {{ email_subscribe_form.render(section.query) }}
                 </div>
                 <div class="content_block__sub content-l_col content-l_col-1-2">
-                    {% import "rss.html" as rss %}
                     {{ rss.render(section.rss_path) }}
                 </div>
             </div>
@@ -65,11 +68,10 @@
         <div class="content_block content_block__flush-bottom content_block__flush-sides content_block__bg">
             <div class="content-l">
                 <section class="content_block content_block__flush-top content-l_col content-l_col-1-2">
-                    {% import "related-links.html" as related_links %}
                     {{ related_links.render(view.related_links) }}
                 </section>
                 <section class="content_block content-l_col content-l_col-1-2">
-                    {% include "upcoming-events.html" %}
+                    {{ upcoming_events.render() }}
                 </section>
             </div>
         </div>

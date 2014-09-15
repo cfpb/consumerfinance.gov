@@ -48,6 +48,7 @@
   - rename base layout .html files so visually it appears there are only a few layouts to choose
   - rename section_vars to section
   - look into relative imports: http://stackoverflow.com/questions/8512677/how-to-include-a-template-with-relative-path-in-jinja2
+  - remove scoped fro layout blocks?
 
 - jQuery plugins with methods:
   - http://viget.com/inspire/jquery-plugin-patterns
