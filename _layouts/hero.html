@@ -1,66 +1,56 @@
 
-{% import "post-macros.html" as post_macros with context %}
+{% macro render(hero, post_macros) %}
 
-{% if hero %}
-
-<section class="content_hero hero"
-         style="background-color:{{ hero.custom_fields.background_color[0] }}">
-    <div class="hero_wrapper">
-        <a class="hero_card"
-           href="{{ hero.custom_fields.link[0] }}">
-            <div class="hero_card-bg">
-                <div class="hero_card-padding">
-                    <span class="category-slug">
-                        {{ post_macros.category_icon(hero.related_post.category.0, 'category-slug_icon') }}
-                        <span class="u-visually-hidden">Category:</span>
-                        {{ hero.related_post.category.0 }}
-                    </span>
-                    <div class="summary">
-                        <h1 class="summary_header">
-                            {{ hero.title }}
-                        </h1>
-                        <p class="summary_text">
-                        {% if hero.content %}
-                            {{ hero.content|striptags }}
-                        {% else %}
-                            {% if hero.related_post.dek %}
-                                {{ hero.related_post.dek|striptags }}
+    <section class="content_hero hero"
+             style="background-color:{{ hero.custom_fields.background_color[0] }}">
+        <div class="hero_wrapper">
+            <a class="hero_card"
+               href="{{ hero.custom_fields.link[0] }}">
+                <div class="hero_card-bg">
+                    <div class="hero_card-padding">
+                        <span class="category-slug">
+                            {{ post_macros.category_icon(hero.related_post.category.0, 'category-slug_icon') }}
+                            <span class="u-visually-hidden">Category:</span>
+                            {{ hero.related_post.category.0 }}
+                        </span>
+                        <div class="summary">
+                            <h1 class="summary_header">
+                                {{ hero.title }}
+                            </h1>
+                            <p class="summary_text">
+                            {% if hero.content %}
+                                {{ hero.content|striptags }}
                             {% else %}
-                                {{ hero.related_post.excerpt|striptags }}
+                                {% if hero.related_post.dek %}
+                                    {{ hero.related_post.dek|striptags }}
+                                {% else %}
+                                    {{ hero.related_post.excerpt|striptags }}
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                        </p>
-                        {% if hero.related_post.author.0 %}
-                        <p class="summary_byline">
-                            By {{ hero.related_post.author.0 }}
-                        {% if hero.related_post.author.1 %}
-                            and {{ hero.related_post.author.1 }}
-                        {% endif %}
-                        </p>
-                        {% endif %}
+                            </p>
+                            {% if hero.related_post.author.0 %}
+                            <p class="summary_byline">
+                                By {{ hero.related_post.author.0 }}
+                            {% if hero.related_post.author.1 %}
+                                and {{ hero.related_post.author.1 }}
+                            {% endif %}
+                            </p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
+            </a>
+        </div>
+        <div class="hero_img-container hero_img-container__small">
+            <div class="hero_img"
+                 style="background-image:url({{ hero.custom_fields.mobile_image[0] }});">
             </div>
-        </a>
-    </div>
-    <div class="hero_img-container hero_img-container__small">
-        <div class="hero_img"
-             style="background-image:url({{ hero.custom_fields.mobile_image[0] }});">
         </div>
-    </div>
-    <div class="hero_img-container hero_img-container__large">
-        <div class="hero_img"
-             style="background-image:url({{ hero.custom_fields.desktop_image[0] }});">
+        <div class="hero_img-container hero_img-container__large">
+            <div class="hero_img"
+                 style="background-image:url({{ hero.custom_fields.desktop_image[0] }});">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-{% else %}
-
-    <div class="wrapper">
-        <p class="short-desc">
-            Something went wrong with your hero, please review the <a href="/docs/hero.md">hero docs</a>.
-        </p>
-    </div>
-
-{% endif %}
+{% endmacro %}

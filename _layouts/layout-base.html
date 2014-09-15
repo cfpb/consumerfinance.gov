@@ -7,8 +7,8 @@
     <main class="content {% block content_modifiers -%}{%- endblock %}" id="main" role="main">
         {% block hero -%}{%- endblock %}
         <div class="content_bar"></div>
-        {% block pre_content -%}{%- endblock %}
-        {% block body_content -%}{%- endblock %}
-        {% block post_content -%}{%- endblock %}
+        {% block pre_content scoped -%}{%- endblock %}
+        {% block body_content scoped -%}{%- endblock %}
+        {% block post_content scoped -%}{%- endblock %}
     </main>
 {% endblock content %}

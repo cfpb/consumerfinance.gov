@@ -1,4 +1,6 @@
 
+{% macro render(posts, active_filters, active_filters_total, active_date_filters, query, post_macros, selected_filters_for_field, current_date) %}
+
 <div class="expandable">
     <div class="expandable_header expandable_header__spaced">
         <div class="expandable_header-right expandable_header-right__float-on-medium">
@@ -52,3 +54,5 @@
         </div>
     </div>
 </div><!-- END .expandable -->
+
+{% endmacro %}

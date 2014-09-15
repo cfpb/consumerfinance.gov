@@ -1,4 +1,6 @@
 
+{% macro render(posts, post_macros) %}
+
 <div id="pagination_content">
 
 {% for post in posts %}
@@ -113,3 +115,5 @@
 {% endif %}
 
 </div>
+
+{% endmacro %}
