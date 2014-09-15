@@ -1,4 +1,6 @@
 
+{% macro render(post, post_macros, query, share_twitter_url) %}
+
 <article class="post">
     <header>
         {% if post.category.0 %}
@@ -91,3 +93,5 @@
     </footer>
 {% endif %}
 </article>
+
+{% endmacro %}

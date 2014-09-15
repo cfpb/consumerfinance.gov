@@ -1,4 +1,6 @@
 
+{% macro render(slugs, get_document) %}
+
 <div class="popular-stories">
     <h1 class="header-slug">
         <span class="header-slug_inner">
@@ -6,7 +8,7 @@
         </span>
     </h1>
     <ul class="list list__unstyled list__spaced">
-    {% for slug in view.popular_posts %}
+    {% for slug in slugs %}
         {% set pop_post = get_document('posts', slug) %}
         <li class="list_item">
             <a class="list_link"
@@ -17,3 +19,5 @@
     {% endfor %}
     </ul>
 </div>
+
+{% endmacro %}

@@ -51,8 +51,9 @@
 {% endblock %}
 
 {% block content_sidebar scoped %}
-    {#<section class="content_block content_block__flush-top">
-        {% include "popular-stories.html" %}
+    <section class="content_block content_block__flush-top">
+        {% import "popular-posts.html" as popular_posts_view %}
+        {{ popular_posts_view.render(view.popular_posts, get_document) }}
     </section>
     <section class="content_block">
         <h1 class="header-slug">
@@ -64,10 +65,12 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
-            {% include "email-subscribe-form.html" %}
+            {% import "email-subscribe-form.html" as email_subscribe_form_view %}
+            {{ email_subscribe_form_view.render(query) }}
         </div>
         <div class="content_block content_block__sub">
-            {% include "rss.html" %}
+            {% import "rss.html" as rss_view %}
+            {{ rss_view.render('/feed/posts/') }}
         </div>
-    </section>#}
+    </section>
 {% endblock %}

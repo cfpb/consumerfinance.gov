@@ -1,4 +1,5 @@
-{% set rss_path = rss_path|default('') %}
+
+{% macro render(rss_path) %}
 
 <p class="short-desc">
     Subscribe to our RSS feed to get the latest content in your reader.
@@ -7,3 +8,5 @@
     <span class="btn_icon__left cf-icon cf-icon-rss"></span>
     Subscribe to RSS
 </a>
+
+{% endmacro %}
