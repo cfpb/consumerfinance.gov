@@ -59,20 +59,25 @@
             </noscript>
         </a>
       notes:
-        - "CSS provides margin around the logo."
         - "The `onerror` attribute allows for the usage of an SVG logo for
            browsers that support SVG, with a fallback to PNG for browsers that
            don't."
         - "The `noscript` element displays the PNG fallback in the event that
            JavaScript is not available."
         - "The path in the `src` attribute has been adjusted for these docs."
+    - name: Miscellaneous stuff (top right)
+      markup: |
+        <div class="header_misc">
+            Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
+            <a class="header_misc_es">Español</a>
+        </div>
   tags:
     - cfgov-layout
 */
 
 .logo {
-    display: block;
-    margin: unit(15px / @base-font-size-px, em);
+    margin: @grid_gutter-width (@grid_gutter-width / 2) (@grid_gutter-width / 2);
+    vertical-align: middle; // removes typical inline vertical whitespace
 }
 
 .logo__no-js {
@@ -81,6 +86,28 @@
 
 .no-js .logo__no-js {
     display: block;
+}
+
+.header_misc {
+    margin: @grid_gutter-width (@grid_gutter-width / 2) (@grid_gutter-width / 2);
+    position: absolute;
+    top: 0;
+    right: @grid_gutter-width / 2;
+    color: @gray;
+    .webfont-regular();
+
+    &_tel {
+        padding-right: @grid_gutter-width / 2;
+        border-right: 1px solid @gray-50;
+        margin-right: unit(@grid_gutter-width / 2 / @base-font-size-px, em) - 0.25em;
+            // subtracting typical inline horizonal whitespace above
+        .u-link__colors(@darkgray);
+    }
+
+    &_es {
+        .h5();
+        .u-link__border();
+    }
 }
 
 

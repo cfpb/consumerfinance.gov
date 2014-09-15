@@ -8403,25 +8403,215 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
             </noscript>
         </a>
       notes:
-        - "CSS provides margin around the logo."
         - "The `onerror` attribute allows for the usage of an SVG logo for
            browsers that support SVG, with a fallback to PNG for browsers that
            don't."
         - "The `noscript` element displays the PNG fallback in the event that
            JavaScript is not available."
         - "The path in the `src` attribute has been adjusted for these docs."
+    - name: Miscellaneous stuff (top right)
+      markup: |
+        <div class="header_misc">
+            Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
+            <a class="header_misc_es">Español</a>
+        </div>
   tags:
     - cfgov-layout
 */
 .logo {
-  display: block;
-  margin: 0.9375em;
+  margin: 30px 15px 15px;
+  vertical-align: middle;
 }
 .logo__no-js {
   display: none;
 }
 .no-js .logo__no-js {
   display: block;
+}
+.header_misc {
+  margin: 30px 15px 15px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  color: #75787b;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.header_misc em,
+.header_misc i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .header_misc em,
+.lt-ie9 .header_misc i {
+  font-style: normal !important;
+}
+.lt-ie9 .header_misc em,
+.lt-ie9 .header_misc i {
+  font-style: normal !important;
+}
+.header_misc strong,
+.header_misc b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .header_misc strong,
+.lt-ie9 .header_misc b {
+  font-weight: normal !important;
+}
+.lt-ie9 .header_misc strong,
+.lt-ie9 .header_misc b {
+  font-weight: normal !important;
+}
+.header_misc em,
+.header_misc i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .header_misc em,
+.lt-ie9 .header_misc i {
+  font-style: normal !important;
+}
+.lt-ie9 .header_misc em,
+.lt-ie9 .header_misc i {
+  font-style: normal !important;
+}
+.header_misc strong,
+.header_misc b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .header_misc strong,
+.lt-ie9 .header_misc b {
+  font-weight: normal !important;
+}
+.lt-ie9 .header_misc strong,
+.lt-ie9 .header_misc b {
+  font-weight: normal !important;
+}
+.header_misc_tel {
+  padding-right: 15px;
+  border-right: 1px solid #babbbd;
+  margin-right: 0.6875em;
+  color: #43484e;
+  border-color: #43484e;
+}
+.header_misc_tel:visited,
+.header_misc_tel.visited {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:hover,
+.header_misc_tel.hover {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:focus,
+.header_misc_tel.focus {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:active,
+.header_misc_tel.active {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:visited,
+.header_misc_tel.visited {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:hover,
+.header_misc_tel.hover {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:focus,
+.header_misc_tel.focus {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:active,
+.header_misc_tel.active {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:visited,
+.header_misc_tel.visited {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:hover,
+.header_misc_tel.hover {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:focus,
+.header_misc_tel.focus {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:active,
+.header_misc_tel.active {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:visited,
+.header_misc_tel.visited {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:hover,
+.header_misc_tel.hover {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:focus,
+.header_misc_tel.focus {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_tel:active,
+.header_misc_tel.active {
+  border-color: #43484e;
+  color: #43484e;
+}
+.header_misc_es {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  border-bottom-width: 1px;
+}
+.lt-ie9 .header_misc_es {
+  font-weight: normal !important;
+}
+.lt-ie9 .header_misc_es {
+  font-weight: normal !important;
+}
+.lt-ie9 .header_misc_es {
+  font-weight: normal !important;
+}
+.lt-ie9 .header_misc_es {
+  font-weight: normal !important;
+}
+.header_misc_es:hover,
+.header_misc_es.hover {
+  border-bottom-width: 1px;
+}
+.header_misc_es:hover,
+.header_misc_es.hover {
+  border-bottom-width: 1px;
 }
 /* topdoc
   name: Content layouts
