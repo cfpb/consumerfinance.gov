@@ -9582,15 +9582,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin: 0.9375em;
 }
 
-.logo__js {
-  display: block;
-}
-
 .logo__no-js {
-  display: none;
-}
-
-.no-js .logo__js {
   display: none;
 }
 
