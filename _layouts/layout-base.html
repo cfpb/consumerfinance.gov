@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {# Macros #}
-{% import "macros.html" as macros with context %}
+{% import "macros.html" as macros %}
 
 {% block content scoped %}
     <main class="content {% block content_modifiers -%}{%- endblock %}" id="main" role="main">
@@ -11,4 +11,4 @@
         {% block body_content scoped -%}{%- endblock %}
         {% block post_content scoped -%}{%- endblock %}
     </main>
-{% endblock content %}
+{% endblock %}

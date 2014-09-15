@@ -1,4 +1,8 @@
 {% extends "layout-2-1-bleedbar.html" %}
+{% import "_section_blog.html" as section with context %}
+{% import "post-macros.html" as post_macros with context %}
+
+{# Block overrides #}
 
 {% block demo_title -%}
     Blog post
@@ -7,6 +11,7 @@
 {% block title -%}
     {{ post.title }}
 {%- endblock %}
+
 {% block desc -%}
     {{ post.excerpt|striptags }}
 {%- endblock %}
@@ -14,29 +19,25 @@
 {% block og_type -%}
     article
 {%- endblock %}
+
 {% block og_article_prefix -%}
     article: http://ogp.me/ns/article#
 {%- endblock %}
+
 {% block og_article_author -%}
     <meta property="article:author" content="https://www.facebook.com/CFPB">
 {%- endblock %}
 
-{# Set a few variables needed for sharing of includes between Blog and Newsroom #}
-{% set query = queries.posts %}
-{% set path = '/blog/' %}
-
-{% import "post-macros.html" as post_macros with context %}
-
 {% block content_main %}
-    {% import "article.html" as article_view %}
-    {{ article_view.render(post, post_macros, query, share_twitter_url) }}
+    {% import "article.html" as article %}
+    {{ article.render(post, post_macros, section.query, share_twitter_url) }}
     {% include "comments.html" %}
-{% endblock %}#}
+{% endblock %}
 
 {% block content_sidebar %}
     <section class="content_sidebar-item">
-        {% import "related-posts.html" as related_posts_view %}
-        {{ related_posts_view.render(post, more_like_this) }}
+        {% import "related-posts.html" as related_posts %}
+        {{ related_posts.render(post, more_like_this) }}
     </section>
     <section class="content_sidebar-item related-news">
         <h1 class="demo-placeholder">Related news placeholder</h1>
@@ -51,12 +52,12 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
-            {% import "email-subscribe-form.html" as email_subscribe_form_view %}
-            {{ email_subscribe_form_view.render(query) }}
+            {% import "email-subscribe-form.html" as email_subscribe_form %}
+            {{ email_subscribe_form.render(section.query) }}
         </div>
         <div class="content_block content_block__sub">
-            {% import "rss.html" as rss_view %}
-            {{ rss_view.render('/feed/posts/') }}
+            {% import "rss.html" as rss %}
+            {{ rss.render(section.rss_path) }}
         </div>
     </section>
 {% endblock %}

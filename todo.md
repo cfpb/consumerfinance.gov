@@ -41,6 +41,14 @@
   - Jira, stories VS tasks?
   - No cf updates
 
+- Templating refactoring todos
+  - document layout chain better in the layouts section
+  - move layouts section to docs, probably rename to avoid conflict with Less layout docs
+  - rename content_block to just block?
+  - rename base layout .html files so visually it appears there are only a few layouts to choose
+  - rename section_vars to section
+  - look into relative imports: http://stackoverflow.com/questions/8512677/how-to-include-a-template-with-relative-path-in-jinja2
+
 - jQuery plugins with methods:
   - http://viget.com/inspire/jquery-plugin-patterns
   - http://stackoverflow.com/questions/1117086/how-to-create-a-jquery-plugin-with-methods
