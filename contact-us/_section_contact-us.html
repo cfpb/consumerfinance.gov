@@ -1,0 +1,5 @@
+
+{% set path = '/contact-us/' %}
+
+{% set query = queries.contact %}
+{% set contacts = query.search_with_url_arguments(size=10) %}

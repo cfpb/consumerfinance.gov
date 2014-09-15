@@ -1,0 +1,51 @@
+
+{% macro render(contact, macros) %}
+
+<h1 class="h4">
+    {{ contact.title }}
+</h1>
+<p class="short-desc">
+    {{ contact.sitewide_desc }}
+</p>
+<div class="content-l">
+    <div class="content-l_col content-l_col-1-2">
+        <ul class="list list__unstyled">
+        {%- if contact.phone_num %}
+            <li class="list_item short-desc">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                {{ macros.format_phone(contact.phone_num) }}
+            {%- if contact.phone_desc %}
+                <span class="micro-copy micro-copy__large">
+                    {{ contact.phone_desc }}
+                </span>
+            {%- endif %}
+            </li>
+        {%- endif %}
+        {%- if contact.phone_2_num %}
+            <li class="list_item short-desc">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                {{ macros.format_phone(contact.phone_2_num) }}
+            {%- if contact.phone_2_desc %}
+                <span class="micro-copy micro-copy__large">
+                    {{ contact.phone_2_desc }}
+                </span>
+            {%- endif %}
+            </li>
+        {%- endif %}
+        </ul>
+    </div>
+    <div class="content-l_col content-l_col-1-2">
+    {%- if contact.addr_desc %}
+        <p class="micro-copy">
+            {{ contact.addr_desc }}
+        </p>
+    {%- endif %}
+    </div>
+</div>
+{%- if contact.web_addr %}
+<a class="jump-link" href="{{ contact.web_addr }}">
+    {{ contact.web_desc if contact.web_desc else contact.web_addr }}
+</a>
+{%- endif %}
+
+{% endmacro %}
