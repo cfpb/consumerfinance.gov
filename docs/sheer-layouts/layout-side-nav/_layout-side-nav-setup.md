@@ -4,13 +4,13 @@
 1. In your section's directory create a _section-NAME.html file with the
    following variables:
 
-        {% raw %}
+        {% raw -%}
         {% set path = "/MY-NEW-SECTION/" %}
         {% set nav_items = [
             (path, "index", "My new section"),
             (path + "some-other-page/", "some-other-page", "Some other page")
         ] %}
-        {% endraw %}
+        {%- endraw %}
 
    Each object in the `nav_items` array should follow this structure:
    HREF, ID, CAPTION. Edit and add to this array to list all of the pages
@@ -18,10 +18,10 @@
 
 2. Create a new template with the following two lines at the top of the file:
 
-        {% raw %}
+        {% raw -%}
         {% extends "layout-side-nav.html" %}
         {% import "_section-NAME.html" as section %}
-        {% endraw %}
+        {%- endraw %}
 
    It's important that you import _section-NAME.html as `section`.
 
@@ -39,6 +39,6 @@
   active. Using the example above we can make Press resources the active page by
   setting the following in the Press resources HTML file:
 
-        {% raw %}
+        {% raw -%}
         {% set active_nav_id = "press-resources" %}
-        {% endraw %}
+        {%- endraw %}

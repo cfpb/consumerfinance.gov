@@ -4,7 +4,7 @@
 
 {# Variables #}
 
-{% set active_nav_id = "layout-side-nav" -%}
+{% set active_nav_id = "hero" -%}
 {% set view = get_document("views", "blog") %}
 
 {# Block overrides #}
@@ -29,6 +29,6 @@
 {% block content_main %}
     <h1>Hero</h1>
     <pre>
-        {%- include "_setup.md" -%}
+        {%- include "_hero-setup.md" -%}
     </pre>
 {% endblock %}
