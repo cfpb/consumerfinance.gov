@@ -25,7 +25,6 @@
 
 {% block content_main %}
     <h1>Content blocks</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quaerat minus dignissimos vero eaque sapiente quo quidem commodi repellat eum pariatur sint sunt odit rem id velit nisi delectus excepturi!</p>
     <div class="content_block">
         Simple content sectioning using <code>.content_block</code>. All this does is add some space above and below.
     </div>
@@ -49,18 +48,18 @@
                   content_block__flush-bottom
                   content_block__flush-sides
                   content_block__bg">
-        {% raw %}
         To make this flush with the bottom of the <code>content_main</code> block:
-        <pre><code>
-{% block content_main_modifiers %}
-{{ super }} content__flush-bottom
-{% endblock %}
+{% raw %}
+<pre>
+{% block content_main_modifiers -%}
+    {{ super }} content__flush-bottom
+{%- endblock %}
 
-{% block content_sidebar_modifiers %}
-{{ super() }} content__flush-bottom
-{% endblock %}
-        </code></pre>
-        {% endraw %}
+{% block content_sidebar_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+</pre>
+{% endraw %}
     </div>
 {% endblock %}
 
