@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout-2-1.html" %}
 
 {% block demo_title -%}
     Subscription error
@@ -7,31 +7,19 @@
 {% block title -%}
     Subscription error
 {%- endblock %}
+
 {% block desc -%}
     Your subscription was not successfuly received.
 {%- endblock %}
 
-{% block content %}
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper">
-            <section class="content_intro">
-                <h1><span class="cf-icon cf-icon-error-round"></span> Please try again.</h1>
-                <p class="short-desc">
-                    Your subscription was not successfuly received.<br>
-                    Please go back and check the following:
-                </p>
-                <ol class="short-desc">
-                    <li>Please include a valid email address</li>
-                    <li>Please choose at least one category in the list of checkboxes</li>
-                </ol>
-            </section>
-        </div>
-
-    </main>
-
-{% endblock content %}
+{% block content_main %}
+    <h1><span class="cf-icon cf-icon-error-round"></span> Please try again.</h1>
+    <p class="short-desc">
+        Your subscription was not successfuly received.<br>
+        Please go back and check the following:
+    </p>
+    <ol class="short-desc">
+        <li>Please include a valid email address</li>
+        <li>Please choose at least one category in the list of checkboxes</li>
+    </ol>
+{% endblock %}

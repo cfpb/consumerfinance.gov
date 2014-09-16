@@ -1,30 +1,18 @@
-{% extends "base.html" %}
+{% extends "layout-2-1.html" %}
 
 {% block demo_title -%}
-    GovDelivery subscription error
+    Subscription error
 {%- endblock %}
 
 {% block title -%}
-    GovDelivery subscription error
+    Subscription error
 {%- endblock %}
+
 {% block desc -%}
-    Your subscription to GovDelivery was not successful because of a server error, please try again later.
+    Your subscription was not successful because of a server error, please try again later.
 {%- endblock %}
 
-{% block content %}
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper">
-            <section class="content_intro">
-                <h1><span class="cf-icon cf-icon-error-round"></span> Please try again later.</h1>
-                <p class="short-desc">Your subscription to GovDelivery was not successful because of a server error, please try again later.</p>
-            </section>
-        </div>
-
-    </main>
-
-{% endblock content %}
+{% block content_main %}
+    <h1><span class="cf-icon cf-icon-error-round"></span> Please try again later.</h1>
+    <p class="short-desc">Your subscription was not successful because of a server error, please try again later.</p>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout-2-1.html" %}
 
 {% block demo_title -%}
     Subscription success
@@ -7,24 +7,12 @@
 {% block title -%}
     Subscription success
 {%- endblock %}
+
 {% block desc -%}
     Your subscription was successfuly received.
 {%- endblock %}
 
-{% block content %}
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper">
-            <section class="content_intro">
-                <h1><span class="cf-icon cf-icon-approved-round"></span> Success!</h1>
-                <p class="short-desc">Your subscription was successfuly received.</p>
-            </section>
-        </div>
-
-    </main>
-
-{% endblock content %}
+{% block content_main %}
+    <h1><span class="cf-icon cf-icon-approved-round"></span> Success!</h1>
+    <p class="short-desc">Your subscription was successfuly received.</p>
+{% endblock %}
