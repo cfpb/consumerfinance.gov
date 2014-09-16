@@ -34,7 +34,7 @@
 {%- endblock %}
 
 {% block content_main %}
-    {{ article.render(newsroom, post_macros, query, share_twitter_url) }}
+    {{ article.render(newsroom, query, macros, post_macros) }}
     {{ press_information.render() }}
 {% endblock %}
 

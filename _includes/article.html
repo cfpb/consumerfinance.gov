@@ -1,5 +1,5 @@
 
-{% macro render(post, post_macros, query, share_twitter_url) %}
+{% macro render(post, query, macros, post_macros) %}
 
 <article class="post">
     <header>
@@ -53,7 +53,7 @@
             </li>
             <li class="list_item">
                 <a class="share-icon"
-                   href="{{ share_twitter_url() }}"
+                   href="{{ macros.share_twitter_url() }}"
                    target="_blank">
                     <span class="cf-icon cf-icon-twitter-square"></span>
                     <span class="u-visually-hidden">Share on Twitter</span>

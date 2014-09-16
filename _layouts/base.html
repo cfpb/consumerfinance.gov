@@ -4,7 +4,8 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
-{% from "macros.html" import share_twitter_url with context %}
+{# Import some commonly used macros. #}
+{% import "macros.html" as macros %}
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 

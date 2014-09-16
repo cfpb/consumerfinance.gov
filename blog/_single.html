@@ -30,7 +30,7 @@
 
 {% block content_main %}
     {% import "article.html" as article %}
-    {{ article.render(post, post_macros, section.query, share_twitter_url) }}
+    {{ article.render(post, section.query, macros, post_macros) }}
     {% include "comments.html" %}
 {% endblock %}
 
