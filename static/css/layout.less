@@ -38,6 +38,53 @@
 
 
 /* topdoc
+  name: Header
+  family: cfgov-layout
+  patterns:
+    - name: Logo
+      markup: |
+        <a href="/">
+            <img class="logo u-js-only"
+                 src="../../static/img/logo.svg"
+                 onerror="this.onerror=null;this.src='/static/img/logo.png';"
+                 alt="Consumer Financial Protection Bureau"
+                 width="262"
+                 height="66">
+            <noscript>
+                <img class="logo logo__no-js"
+                     src="../../static/img/logo.png"
+                     alt="Consumer Financial Protection Bureau"
+                     width="262"
+                     height="66">
+            </noscript>
+        </a>
+      notes:
+        - "CSS provides margin around the logo."
+        - "The `onerror` attribute allows for the usage of an SVG logo for
+           browsers that support SVG, with a fallback to PNG for browsers that
+           don't."
+        - "The `noscript` element displays the PNG fallback in the event that
+           JavaScript is not available."
+        - "The path in the `src` attribute has been adjusted for these docs."
+  tags:
+    - cfgov-layout
+*/
+
+.logo {
+    display: block;
+    margin: unit(15px / @base-font-size-px, em);
+}
+
+.logo__no-js {
+    display: none;
+}
+
+.no-js .logo__no-js {
+    display: block;
+}
+
+
+/* topdoc
   name: Content layouts
   family: cfgov-layout
   patterns:
