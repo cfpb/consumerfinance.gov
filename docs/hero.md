@@ -16,16 +16,17 @@ during the indexing process.
         {% block hero -%}
         {%- endblock %}
 
-2. Within the hero block create a variable called `hero` and set it the `hero`
-   property of the view it is associated with.
+2. In your template `import` the `hero.html` file and set it to the variable
+   name `hero` like this:
 
         {% block hero -%}
-            {% set hero = get_document('views', 'blog').hero %}
+            {% import "hero.html" as hero %}
         {%- endblock %}
 
-3. Include the `hero.html` file.
+3. Call the `hero.render` macro and pass it a `hero` property from a view. Also
+   pass it the `post_macros` variable. That's it!
 
         {% block hero -%}
-            {% set hero = get_document('views', 'blog').hero %}
-            {% include "hero.html" %}
+            {% import "hero.html" as hero %}
+            {{ hero.render(view.hero, post_macros) }}
         {%- endblock %}
