@@ -28,8 +28,8 @@
 3. That's all you need. `layout-side-nav.html` look in the `section` variable
    for the `nav_items` variable and will automatically add the `side_nav` macro
    to the `content_sidebar` Jinja block. If you need to add content to the
-   `content_sidebar` block please make sure to call `{{ '{{' }} super() {{ '}}' }}` so you don't
-   overwrite the nav content.
+   `content_sidebar` block please make sure to call
+   {% raw %}`{{ super() }}`{% endraw %} so you don't overwrite the nav content.
 
 ## The active nav item state
 

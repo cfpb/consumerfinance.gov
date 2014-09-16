@@ -13,16 +13,22 @@ during the indexing process.
 
 1. Import `hero.html` and set it to `hero`.
 
+        {% raw %}
         {% import "hero.html" as hero %}
+        {% endraw %}
 
 2. Import `post_macros.html` and set it to `post_macros`.
 
+        {% raw %}
         {% import "hero.html" as hero %}
         {% import "post-macros.html" as post_macros with context %}
+        {% endraw %}
 
 3. Add the hero block to your template and call the `hero.render()` macro. Pass
    it a `hero` property from a view and the `post_macros` variable.
 
+        {% raw %}
         {% block hero %}
             {{ hero.render(view.hero, post_macros) }}
         {% endblock %}
+        {% endraw %}
