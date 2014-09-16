@@ -1,5 +1,3 @@
-# hero.html
-
 ## CMS setup
 
 The first thing you will need is hero content. Currently heroes are only

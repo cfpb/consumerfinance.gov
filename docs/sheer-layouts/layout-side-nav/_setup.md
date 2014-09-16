@@ -1,5 +1,5 @@
 
-## Setup
+## Template setup
 
 1. In your section's directory create a _section-NAME.html file with the
    following variables:
