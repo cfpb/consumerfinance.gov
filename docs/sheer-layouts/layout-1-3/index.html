@@ -2,9 +2,11 @@
 {% import "_section-layouts.html" as section %}
 
 {# Variables #}
+
 {% set active_nav_id = "layout-1-3" -%}
 
 {# Block overrides #}
+
 {% block demo_title -%}
     1-3 layout
 {%- endblock %}
@@ -20,7 +22,6 @@
 {% block content_main %}
     <h1>1-3 layout</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quaerat minus dignissimos vero eaque sapiente quo quidem commodi repellat eum pariatur sint sunt odit rem id velit nisi delectus excepturi!</p>
-    <a href="{{ section.path }}" class="jump-link">Layouts landing page</a>
 {% endblock %}
 
 {% block content_sidebar %}

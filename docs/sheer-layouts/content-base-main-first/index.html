@@ -1,19 +1,23 @@
-{% extends "layout-base.html" %}
+{% extends "content-base-main-first.html" %}
 {% import "_section-layouts.html" as section %}
 
 {% block demo_title -%}
-    Base layout
+    Content base layout with main content first
 {%- endblock %}
 
 {% block title -%}
-    Base layout
+    Content base layout with main content first
 {%- endblock %}
 
 {% block desc -%}
-    An example of using layout-base.html
+    An example of using content-base-main-first.html
 {%- endblock %}
 
-{% block body_content %}
-    <h1>Base layout</h1>
+{% block content_main %}
+    <h1>Content base layout with main content first</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quaerat minus dignissimos vero eaque sapiente quo quidem commodi repellat eum pariatur sint sunt odit rem id velit nisi delectus excepturi!</p>
+{% endblock %}
+
+{% block content_sidebar %}
+    <h1>Sidebar</h1>
 {% endblock %}
