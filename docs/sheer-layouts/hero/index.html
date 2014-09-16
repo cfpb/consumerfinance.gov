@@ -1,0 +1,35 @@
+{% extends "layout-2-1.html" %}
+{% import "_section-layouts.html" as section %}
+{% import "post-macros.html" as post_macros with context %}
+
+{# Variables #}
+
+{% set view = get_document('views', 'blog') %}
+
+{# Block overrides #}
+
+{% block demo_title -%}
+    Hero
+{%- endblock %}
+
+{% block title -%}
+    Hero
+{%- endblock %}
+
+{% block desc -%}
+    An example of using hero.html
+{%- endblock %}
+
+{% block hero %}
+    {% import "hero.html" as hero %}
+    {{ hero.render(view.hero, post_macros) }}
+{% endblock %}
+
+{% block content_main %}
+    <h1>Hero</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quaerat minus dignissimos vero eaque sapiente quo quidem commodi repellat eum pariatur sint sunt odit rem id velit nisi delectus excepturi!</p>
+{% endblock %}
+
+{% block content_sidebar -%}
+    <p>Sidebar</p>
+{%- endblock %}

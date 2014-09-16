@@ -11,7 +11,7 @@ The following set up is needed to use this template.
         {% set nav_items = [
             (path, "index", "My new section"),
             (path + "some-other-page/", "some-other-page", "Some other page")
-        ] -%}
+        ] %}
 
    Each object in the `nav_items` array should follow this structure:
    HREF, ID, CAPTION. Edit and add to this array to list all of the pages
@@ -38,4 +38,4 @@ The following set up is needed to use this template.
   active. Using the example above we can make Press resources the active page by
   setting the following in the Press resources HTML file:
 
-        {% set active_nav_id = "press-resources" -%}
+        {% set active_nav_id = "press-resources" %}
