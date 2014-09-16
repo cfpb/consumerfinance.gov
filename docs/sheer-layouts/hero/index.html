@@ -1,10 +1,11 @@
-{% extends "layout-2-1.html" %}
+{% extends "layout-side-nav.html" %}
 {% import "_section-layouts.html" as section %}
 {% import "post-macros.html" as post_macros with context %}
 
 {# Variables #}
 
-{% set view = get_document('views', 'blog') %}
+{% set active_nav_id = "layout-side-nav" -%}
+{% set view = get_document("views", "blog") %}
 
 {# Block overrides #}
 
@@ -27,9 +28,7 @@
 
 {% block content_main %}
     <h1>Hero</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quaerat minus dignissimos vero eaque sapiente quo quidem commodi repellat eum pariatur sint sunt odit rem id velit nisi delectus excepturi!</p>
+    <pre>
+        {%- include "_setup.md" -%}
+    </pre>
 {% endblock %}
-
-{% block content_sidebar -%}
-    <p>Sidebar</p>
-{%- endblock %}
