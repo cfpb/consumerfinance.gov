@@ -22,6 +22,20 @@
         </a>
       codenotes:
         - .jump-link__large
+    - name: .jump-link__download (modifier)
+      markup: |
+        <a class="jump-link jump-link__download" href="#">
+            Jump link using the download icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__download
+    - name: .jump-link__external-link (modifier)
+      markup: |
+        <a class="jump-link jump-link__external-link" href="#">
+            Jump link using the external-link icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__external-link
   tags:
     - cfgov-misc
 */
@@ -53,6 +67,13 @@
         &:after {
             // Inserts the cf-icon-download glyph.
             content: "\e406";
+        }
+    }
+
+    &__external-link {
+        &:after {
+            // Inserts the cf-icon-external-link glyph.
+            content: "\e610";
         }
     }
 
@@ -123,17 +144,26 @@
   name: Short description
   family: cfgov-misc
   patterns:
-    - name: Simple styling for short descriptions
+    - name: .short-desc
       markup: |
         <p class="short-desc">I am short description.</p>
       codenotes:
         - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
   tags:
     - cfgov-misc
 */
 
 .short-desc {
     .webfont-regular();
+
+    &__large {
+        font-size: unit(18px / @base-font-size-px, em);
+    }
 }
 
 
@@ -1177,6 +1207,7 @@
     .list__unstyled();
 
     .list_item {
+        display: block;
         margin-bottom: unit(10x / @base-font-size-px, em);
     }
 
