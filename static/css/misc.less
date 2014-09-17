@@ -144,17 +144,26 @@
   name: Short description
   family: cfgov-misc
   patterns:
-    - name: Simple styling for short descriptions
+    - name: .short-desc
       markup: |
         <p class="short-desc">I am short description.</p>
       codenotes:
         - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
   tags:
     - cfgov-misc
 */
 
 .short-desc {
     .webfont-regular();
+
+    &__large {
+        font-size: unit(18px / @base-font-size-px, em);
+    }
 }
 
 

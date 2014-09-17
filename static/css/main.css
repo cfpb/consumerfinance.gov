@@ -12566,11 +12566,16 @@ a.category-slug.active {
   name: Short description
   family: cfgov-misc
   patterns:
-    - name: Simple styling for short descriptions
+    - name: .short-desc
       markup: |
         <p class="short-desc">I am short description.</p>
       codenotes:
         - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
   tags:
     - cfgov-misc
 */
@@ -12634,6 +12639,9 @@ a.category-slug.active {
 .lt-ie9 .short-desc strong,
 .lt-ie9 .short-desc b {
   font-weight: normal !important;
+}
+.short-desc__large {
+  font-size: 1.125em;
 }
 /* topdoc
   name: Link modifiers
