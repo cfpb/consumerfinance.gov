@@ -9864,24 +9864,6 @@ img {
    ========================================================================== */
 
 /* topdoc
-  name: Base styles
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: figure
-      markup: |
-        <figure>
-            <img src="http://placekitten.com/300/300">
-        </figure>
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-figure {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-/* topdoc
   name: Simple base style modifiers
   family: cfgov-cf-enhancements
   patterns:
@@ -13495,6 +13477,20 @@ a.category-slug.active {
         </a>
       codenotes:
         - .jump-link__large
+    - name: .jump-link__download (modifier)
+      markup: |
+        <a class="jump-link jump-link__download" href="#">
+            Jump link using the download icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__download
+    - name: .jump-link__external-link (modifier)
+      markup: |
+        <a class="jump-link jump-link__external-link" href="#">
+            Jump link using the external-link icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__external-link
   tags:
     - cfgov-misc
 */
@@ -13528,6 +13524,10 @@ a.category-slug.active {
 
 .jump-link__download:after {
   content: "\e406";
+}
+
+.jump-link__external-link:after {
+  content: "\e610";
 }
 
 .jump-link:after {
@@ -13654,11 +13654,16 @@ a.category-slug.active {
   name: Short description
   family: cfgov-misc
   patterns:
-    - name: Simple styling for short descriptions
+    - name: .short-desc
       markup: |
         <p class="short-desc">I am short description.</p>
       codenotes:
         - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
   tags:
     - cfgov-misc
 */
@@ -13735,6 +13740,10 @@ a.category-slug.active {
 .lt-ie9 .short-desc strong,
 .lt-ie9 .short-desc b {
   font-weight: normal !important;
+}
+
+.short-desc__large {
+  font-size: 1.125em;
 }
 
 /* topdoc
@@ -14789,6 +14798,7 @@ a.hero_card {
 }
 
 .list__links .list_item {
+  display: block;
   margin-bottom: 0.625em;
 }
 
