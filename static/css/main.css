@@ -12644,47 +12644,6 @@ a.category-slug.active {
   font-size: 1.125em;
 }
 /* topdoc
-  name: Link modifiers
-  family: cfgov-misc
-  patterns:
-    - name: Block link on small screens
-      markup: |
-        <a class="link__block-on-small">
-            On small screens I am a block, on larger screens I am a normal link.
-        </a>
-      codenotes:
-        - .link__block-on-small
-  tags:
-    - cfgov-misc
-*/
-.link__block-on-small {
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-}
-.lt-ie9 .link__block-on-small {
-  font-weight: normal !important;
-}
-.lt-ie9 .link__block-on-small {
-  font-weight: normal !important;
-}
-@media only all and (max-width: 37.4375em) {
-  .link__block-on-small {
-    display: block;
-    padding: 0.5em 0;
-    border-top: 1px dotted #0072ce;
-    border-bottom: 1px dotted #0072ce;
-  }
-}
-@media only all and (max-width: 37.4375em) {
-  .link__block-on-small {
-    display: block;
-    padding: 0.5em 0;
-    border-top: 1px dotted #0072ce;
-    border-bottom: 1px dotted #0072ce;
-  }
-}
-/* topdoc
     name: Custom select menus via jquery.custom-input
     family: cfgov-misc
     patterns:
