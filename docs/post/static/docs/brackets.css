@@ -11,7 +11,11 @@ pre {
 }
 
 pre, code {
-    font-family: source-code-pro, 'Source Code Pro', Courier, monospace;
+    /**
+     * Modified from original font stack of:
+     * source-code-pro, 'Source Code Pro', Courier, monospace
+     */
+    font-family: Consolas, Menlo, Monaco, Courier, monospace !important;
     color: #535353;
 }
 
