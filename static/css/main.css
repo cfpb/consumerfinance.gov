@@ -13927,6 +13927,7 @@ a.category-slug.active {
   margin-left: 0;
 }
 .list__links .list_item {
+  display: block;
   margin-bottom: 0.625em;
 }
 @media only all and (max-width: 47.9375em) {
