@@ -14,9 +14,7 @@
   - CFPB history image
   - Media block with absolute positioned media?
   - Add figure bordered
-  - Need a .short-desc__large modifier
   - Need a modified version of .content-l_col__before-divider that doesn't add a divider on small screens
-  - Make .list__horizontal work with .list__links
 
 - Better README, like OAH
 - Move the cf tweaks from nav-secondary
