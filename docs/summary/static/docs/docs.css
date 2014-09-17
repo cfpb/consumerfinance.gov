@@ -1,4 +1,3 @@
-@import url(//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50);
 /* ==========================================================================
    Capital Framework
    cf-component-demo styling
@@ -32,7 +31,7 @@ pre {
   display: inline-block;
   margin: 0;
   color: #ffffff;
-  font-family: Consolas, Menlo, Monaco, Courier, monospace !important;
+  font-family: source-code-pro, 'Source Code Pro', Courier, monospace;
   font-size: 1.25em;
   font-weight: normal;
 }
@@ -55,7 +54,7 @@ pre {
   padding-bottom: 2px;
   color: #ffffff;
   border-bottom: 1px dotted #ccd5e3;
-  font-family: Consolas, Menlo, Monaco, Courier, monospace !important;
+  font-family: source-code-pro, 'Source Code Pro', Courier, monospace;
   font-size: 0.875em;
   font-weight: normal;
   line-height: 1.42857143;
@@ -145,29 +144,6 @@ pre {
   border-radius: 0;
   background: transparent;
 }
-.docs-pattern_footer-edit {
-  position: relative;
-}
-.docs-pattern_footer-edit + .docs-notes,
-.docs-pattern_footer-edit + .docs-codenotes {
-  margin-top: 1.57142857em;
-}
-.docs-pattern_footer-edit-btn {
-  position: absolute;
-  right: -1.91666667em;
-  bottom: 0;
-  padding: 0.25em 0.5em;
-  border: 1px solid #e3e4e5;
-  border-top-left-radius: 3px;
-  background: #f1f2f2;
-  color: #75787b;
-  font-family: Consolas, Menlo, Monaco, Courier, monospace !important;
-  font-size: 12px;
-}
-.docs-pattern_footer-edit-btn:focus {
-  outline: 1px dotted #101820;
-  outline-offset: 1px;
-}
 /* Notes and code
    ========================================================================== */
 .docs-code {
@@ -175,7 +151,6 @@ pre {
   background: #f8f8f8;
   border: 1px solid #e3e4e5;
   border-radius: 3px;
-  font-family: Consolas, Menlo, Monaco, Courier, monospace !important;
   font-size: 13px;
 }
 .docs-notes {
@@ -204,7 +179,6 @@ pre {
 .docs-codenotes {
   padding-left: 0;
   margin: 0;
-  font-family: Consolas, Menlo, Monaco, Courier, monospace !important;
   list-style-type: none;
 }
 .docs-codenotes li + li {
