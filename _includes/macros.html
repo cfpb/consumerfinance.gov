@@ -1,0 +1,91 @@
+{# Create a side nav
+   when given ... #}
+{% macro side_nav(items, active_item_id) %}
+    <nav class="nav-secondary expandable">
+        <h1 class="u-visually-hidden">
+    {%- for href, id, caption in items %}
+        {% if id == 'index' %}
+            {{ caption|e }} navigation
+        {% endif %}
+    {%- endfor %}
+        </h1>
+        <div class="expandable_header">
+            <button class="expandable_target nav-secondary_link nav-secondary_link__button">
+                <span class="expandable_header-left">
+            {%- for href, id, caption in items %}
+                {% if id == active_item_id %}
+                    {{ caption|e }}
+                {% endif %}
+            {%- endfor %}
+                </span>
+                <span class="expandable_header-right">
+                    <span class="expandable_cue-open">
+                        <span class="cf-icon cf-icon-down cf-icon__green"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="cf-icon cf-icon-up cf-icon__green"></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+        <div class="expandable_content">
+            <ul class="nav-secondary_list">
+            {%- for href, id, caption in items %}
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_item_id }}"
+                       href="{{ href|e }}">
+                       {{ caption|e }}
+                   </a>
+                </li>
+            {%- endfor %}
+            </ul>
+        </div>
+    </nav>
+{% endmacro %}
+
+{# Build a Twitter share URL #}
+{% macro share_twitter_url() %}
+    {% set share_twitter_url = "http://twitter.com/intent/tweet" %}
+    {% set share_twitter_url = share_twitter_url + "?url=" + request.url|urlencode %}
+    {% set share_twitter_url = share_twitter_url + "&amp;via=CFPB" %}
+    {% if post %}
+        {# If this is a post object, check for custom fields having been set #}
+        {% if post.custom_fields.twtr_text %}
+            {% set share_twitter_url = share_twitter_url + "&amp;text=" + post.custom_fields.twtr_text.0|urlencode + "%20--" %}
+        {% endif %}
+        {% if post.custom_fields.twtr_rel %}
+            {% set share_twitter_url = share_twitter_url + "&amp;related=" + post.custom_fields.twtr_rel.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_lang %}
+            {% set share_twitter_url = share_twitter_url + "&amp;lang=" + post.custom_fields.twtr_lang.0 %}
+        {% endif %}
+        {% if post.custom_fields.twtr_hash %}
+            {% set share_twitter_url = share_twitter_url + "&amp;hashtags=" + post.custom_fields.twtr_hash.0 %}
+        {% endif %}
+    {% endif %}
+    {{ share_twitter_url }}
+{% endmacro %}
+
+{# Format a phone number to `(XXX) XXX-XXXX` when given `XXXXXXXXXX` #}
+{% macro format_phone(number) %}
+    {%- for char in number -%}
+        {{- '(' if loop.index == 1 -}}
+        {{ char }}
+        {{- ') ' if loop.index == 3 -}}
+        {{- '-' if loop.index == 6 -}}
+    {%- endfor %}
+{% endmacro %}
+
+{# Format address to:
+   ```
+   Line 1
+   Line 2 City, State Zip
+   ```
+   when given a contact post type #}
+{% macro format_address(contact) %}
+    {{ contact.street if contact.street }}<br>
+    {{ contact.street_2 + '<br>'|safe if contact.street_2 }}
+    {{ contact.city + ',' if contact.city }}
+    {{ contact.state if contact.state }}
+    {{ contact.zip_code if contact.zip_code }}
+{% endmacro %}

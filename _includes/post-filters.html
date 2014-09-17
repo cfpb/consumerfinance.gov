@@ -1,0 +1,58 @@
+
+{% macro render(posts, active_filters, active_filters_total, active_date_filters, query, post_macros, selected_filters_for_field, current_date, path) %}
+
+<div class="expandable">
+    <div class="expandable_header expandable_header__spaced">
+        <div class="expandable_header-right expandable_header-right__float-on-medium">
+            <button class="expandable_target expandable_target__btn__secondary">
+                Filter posts
+                <span class="expandable_cue-open">
+                    <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                </span>
+            </button>
+        </div>
+    {% if active_filters_total > 0 %}
+        <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">
+                {%- if posts|list|length > 0 -%}
+                    {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
+                {%- else -%}
+                    No results for
+                {%- endif -%}
+                </span>
+            </dt>
+        {% for filter in active_filters %}
+            <dd class="list_item">
+                <span class="filtered-by_filter">
+                    {{ filter }}
+                {%- if not loop.last -%}
+                    ,
+                {%- elif active_date_filters|length > 0 -%}
+                    ,
+                {%- endif -%}
+                </span>
+            </dd>
+        {% endfor %}
+        {% for filter in active_date_filters %}
+            <dd class="list_item">
+                <span class="filtered-by_filter">
+                    {{ filter|date("%B %Y") }}
+                    {{ '&nbsp;&ndash;'|safe if not loop.last }}
+                </span>
+            </dd>
+        {% endfor %}
+        </dl>
+    {% endif %}
+    </div>
+    <div class="expandable_content padded-container">
+        <div class="padded-container_body">
+            {% include "post-filters-form.html" %}
+        </div>
+    </div>
+</div><!-- END .expandable -->
+
+{% endmacro %}

@@ -1,0 +1,41 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_section-sheer-layouts.html" as section %}
+
+{% block demo_title -%}
+    Content blocks
+{%- endblock %}
+
+{% block title -%}
+    Content blocks
+{%- endblock %}
+
+{% block desc -%}
+    Map of all of the content blocks that can be overriden.
+{%- endblock %}
+
+{% block hero -%}
+    <div class="wrapper">
+        <code>block: hero</code>
+    </div>
+{%- endblock %}
+
+{% block pre_content %}
+    <code>block: pre_content</code>
+{% endblock %}
+
+{% block body_content %}
+    <code>block: body_content</code>
+    {{ super() }}
+{% endblock %}
+
+{% block content_main %}
+    <code>block: content_main</code>
+{% endblock %}
+
+{% block content_sidebar %}
+    <code>block: content_sidebar</code>
+{% endblock %}
+
+{% block post_content %}
+    <code>block: post_content</code>
+{% endblock %}

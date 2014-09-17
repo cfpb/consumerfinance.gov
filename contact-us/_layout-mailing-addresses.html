@@ -1,0 +1,44 @@
+
+{% macro render(contact1, contact2, macros) %}
+
+<section class="content_block content_block__flush-top content-l">
+
+    <h1 class="h3 content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        Mailing addresses
+    </h1>
+
+    {# Google Image Maps API Docs:
+       https://developers.google.com/maps/documentation/staticmaps/index #}
+    {% if contact1.street and
+          contact1.city and
+          contact1.state and
+          contact1.zip_code %}
+        {% set contact1_map = (contact1.street + ', ' +
+           contact1.city + ' ' +
+           contact1.state + ' ' +
+           contact1.zip_code)|urlencode %}
+    <figure class="content-l_col content-l_col__stack-on-cols content-l_col-1-2 figure__bordered contact-us-map">
+        <a href="https://www.google.com/maps/place/{{ contact1_map }}">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ contact1_map }}&scale=2" alt="">
+        </a>
+    </figure>
+    {% endif %}
+
+    <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h2 class="h5">
+            {{ contact1.title }}
+        </h2>
+        <p class="short-desc">
+            {{- macros.format_address(contact1) -}}
+        </p>
+        <h2 class="h5">
+            {{ contact2.title }}
+        </h2>
+        <p class="short-desc">
+            {{- macros.format_address(contact2) -}}
+        </p>
+    </div>
+    
+</section>
+
+{% endmacro %}

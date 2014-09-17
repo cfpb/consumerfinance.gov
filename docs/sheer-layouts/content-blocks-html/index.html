@@ -1,0 +1,68 @@
+{% extends "layout-side-nav.html" %}
+{% import "_section-sheer-layouts.html" as section %}
+
+{# Variables #}
+
+{% set active_nav_id = "content-blocks-html" -%}
+
+{# Block overrides #}
+
+{% block demo_title -%}
+    Content blocks
+{%- endblock %}
+
+{% block title -%}
+    Content blocks
+{%- endblock %}
+
+{% block desc -%}
+    Examples of content blocks
+{%- endblock %}
+
+{% block content_main_modifiers %}
+{{ super }} content__flush-bottom
+{% endblock %}
+
+{% block content_main %}
+    <h1>Content blocks</h1>
+    <div class="content_block">
+        Simple content sectioning using <code>.content_block</code>. All this does is add some space above and below.
+    </div>
+    <div class="content_block content_block__flush-sides">
+        Now adding the <code>.content_block__flush-sides</code> modifier.
+    </div>
+    <div class="content_block content_block__flush-bottom">
+        Now adding the <code>.content_block__flush-bottom</code> modifier. You can tell because <code>.content_line</code> is directly after this block and there is no space between the two.
+    </div>
+    <div class="content_line"></div>
+    <div class="content_block content_block__bg">
+        Now adding the <code>.content_block__bg</code> modifier.
+    </div>
+    <div class="content_block
+                  content_block__flush-bottom
+                  content_block__flush-sides
+                  content_block__bg">
+        Combining all of the above.
+    </div>
+    <div class="content_block
+                  content_block__flush-bottom
+                  content_block__flush-sides
+                  content_block__bg">
+        To make this flush with the bottom of the <code>content_main</code> block:
+{% raw %}
+<pre>
+{% block content_main_modifiers -%}
+    {{ super }} content__flush-bottom
+{%- endblock %}
+
+{% block content_sidebar_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+</pre>
+{% endraw %}
+    </div>
+{% endblock %}
+
+{% block content_sidebar_modifiers %}
+{{ super() }} content__flush-bottom
+{% endblock %}

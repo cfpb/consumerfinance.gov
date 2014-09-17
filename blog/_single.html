@@ -1,4 +1,8 @@
-{% extends "base.html" %}
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_section-blog.html" as section with context %}
+{% import "post-macros.html" as post_macros with context %}
+
+{# Block overrides #}
 
 {% block demo_title -%}
     Blog post
@@ -7,6 +11,7 @@
 {% block title -%}
     {{ post.title }}
 {%- endblock %}
+
 {% block desc -%}
     {{ post.excerpt|striptags }}
 {%- endblock %}
@@ -14,62 +19,45 @@
 {% block og_type -%}
     article
 {%- endblock %}
+
 {% block og_article_prefix -%}
     article: http://ogp.me/ns/article#
 {%- endblock %}
+
 {% block og_article_author -%}
     <meta property="article:author" content="https://www.facebook.com/CFPB">
 {%- endblock %}
 
-{% block content %}
+{% block content_main %}
+    {% import "article.html" as article %}
+    {{ article.render(post, section.query, macros, post_macros) }}
+    {% include "comments.html" %}
+{% endblock %}
 
-    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
-    {% set query = queries.posts %}
-    {% set path = '/blog/' %}
-    {% set rss_path = '/feed/posts/' %}
-
-    {% import "post-macros.html" as post_macros with context %}
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-        
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper content_wrapper">
-            <div class="content_main content_main__narrow">
-                <section>
-                    {% include "article.html" %}
-                    {% include "comments.html" %}
-                </section>
-            </div>
-
-            <aside class="content_sidebar">
-                <section class="content_sidebar-item">
-                    {% include "related-posts.html" %}
-                </section>
-                <section class="content_sidebar-item related-news">
-                    <h1 class="demo-placeholder">Related news placeholder</h1>
-                </section>
-                <section class="content_sidebar-item stay-informed">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Stay informed
-                        </span>
-                    </h1>
-                    <div class="content_block content_block__sub content_block__flush-top">
-                        <p class="short-desc">
-                            Subscribe to our email newsletter. We will update you on new blogs.
-                        </p>
-                        {% include "email-subscribe-form.html" %}
-                    </div>
-                    <div class="content_block content_block__sub">
-                        {% include "rss.html" %}
-                    </div>
-                </section>
-            </aside><!-- END .content_sidebar -->
-            
-        </div><!-- END .content_wrapper -->
-        
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% block content_sidebar %}
+    <section class="content_sidebar-item">
+        {% import "related-posts.html" as related_posts %}
+        {{ related_posts.render(post, more_like_this) }}
+    </section>
+    <section class="content_sidebar-item related-news">
+        <h1 class="demo-placeholder">Related news placeholder</h1>
+    </section>
+    <section class="content_sidebar-item stay-informed">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Stay informed
+            </span>
+        </h1>
+        <div class="content_block content_block__sub content_block__flush-top">
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new blogs.
+            </p>
+            {% import "email-subscribe-form.html" as email_subscribe_form %}
+            {{ email_subscribe_form.render(section.query) }}
+        </div>
+        <div class="content_block content_block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(section.rss_path) }}
+        </div>
+    </section>
+{% endblock %}

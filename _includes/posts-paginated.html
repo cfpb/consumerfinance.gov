@@ -1,0 +1,119 @@
+
+{% macro render(posts, post_macros) %}
+
+<div id="pagination_content">
+
+{% for post in posts %}
+
+    {% if path == '/newsroom/' and post.custom_fields.display_in_newsroom %}
+        {% set category = 'Blog' %}
+        {% set category_filter_url = '?filter_type=post' %}
+    {% elif post.category.0 %}
+        {% set category = post.category.0 %}
+        {% set category_filter_url = '?filter_category=' + category|urlencode|replace('%20', '+') %}
+    {% endif %}
+
+    <article class="post-preview">
+        <div class="meta-header">
+            <span class="date meta-header_right">
+                {{ post.date|date("%b %d, %Y") }}
+            </span>
+        {% if category %}
+            <a class="category-slug meta-header_left" href="{{ category_filter_url }}">
+                {{ post_macros.category_icon(category, 'category-slug_icon')|safe }}
+                <span class="u-visually-hidden">Category:</span>
+                {{ category }}
+            </a>
+        {% else %}
+            &nbsp;
+        {% endif %}
+        </div>
+    {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
+        <a class="media-object" href="{{ post.permalink }}">
+            <div class="media-object_image-container">
+                <img class="media-object_image"
+                     src="{{ post.thumbnail.images.fj_thumbnail.url }}"
+                     alt="{{ post.thumbnail.alt_text }}">
+            </div>
+            <div class="media-object_text-container summary">
+                {{ post_macros.post_summary(post) }}
+            </div>
+        </a>
+    {% else %}
+        <a class="summary" href="{{ post.permalink }}">
+            {{ post_macros.post_summary(post) }}
+        </a>
+    {% endif %}
+    </article>
+
+{% endfor %}
+
+
+{# Only show pagination if there is more than one page. #}
+{% if posts.pages > 1 %}
+    <nav class="post-pagination pagination"
+         role="navigation"
+         aria-label="Pagination"
+         data-ajax-action="posts-paginated.html">
+    {% if posts.current_page > 1 %}
+        <a class="btn pagination_prev"
+           href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
+    {% else %}
+        <a class="btn btn__disabled pagination_prev">
+    {% endif %}
+            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+            Newer
+        </a>
+    {% if posts.current_page < posts.pages %}
+        <a class="btn pagination_next"
+           href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
+    {% else %}
+        <a class="btn btn__disabled pagination_next">
+    {% endif %}
+            Older
+            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+        </a>
+        <form class="pagination_form" action="#pagination_content">
+            <label class="pagination_label" for="pagination_current-page">
+                Page
+                <span class="u-visually-hidden">
+                    number out of {{ posts.pages }} total pages
+                </span>
+            </label>
+            <input class="pagination_current-page"
+                   id="pagination_current-page"
+                   name="page"
+                   type="number"
+                   min="1"
+                   max="{{ posts.pages }}"
+                   value="{{ posts.current_page }}">
+
+            {#- Include any current filters when submitting this form to allow
+                for paginating through a filtered set of results.
+                Without this the form would change the url to `?page=X` and we
+                would lose any currently applied filters that are in the URL. -#}
+
+            {{ post_macros.print_hidden_filters([
+                'category',
+                'tags',
+                'author',
+                'range_date_gte',
+                'range_date_lte'
+                ])|safe
+            }}
+
+            <label class="pagination_label">
+                <span aria-hidden="true">
+                    of {{ posts.pages }}
+                </span>
+            </label>
+            <button class="btn btn__link pagination_submit" id="pagination_submit" type="submit">
+                Go
+            </button>
+        </form>
+    </nav>
+{% endif %}
+
+</div>
+
+{% endmacro %}

@@ -1,0 +1,34 @@
+{% extends "layout-side-nav.html" %}
+{% import "_section-sheer-layouts.html" as section %}
+{% import "post-macros.html" as post_macros with context %}
+
+{# Variables #}
+
+{% set active_nav_id = "hero" -%}
+{% set view = get_document("views", "blog") %}
+
+{# Block overrides #}
+
+{% block demo_title -%}
+    Hero
+{%- endblock %}
+
+{% block title -%}
+    Hero
+{%- endblock %}
+
+{% block desc -%}
+    An example of using hero.html
+{%- endblock %}
+
+{% block hero %}
+    {% import "hero.html" as hero %}
+    {{ hero.render(view.hero, post_macros) }}
+{% endblock %}
+
+{% block content_main %}
+    <h1>Hero</h1>
+    <pre>
+        {%- include "_hero-setup.md" -%}
+    </pre>
+{% endblock %}

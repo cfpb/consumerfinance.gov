@@ -1,0 +1,27 @@
+{% extends "layout-side-nav.html" %}
+{% import "_section-sheer-layouts.html" as section %}
+
+{# Variables #}
+
+{% set active_nav_id = "layout-side-nav" -%}
+
+{# Block overrides #}
+
+{% block demo_title -%}
+    Side nav layout
+{%- endblock %}
+
+{% block title -%}
+    Side nav layout
+{%- endblock %}
+
+{% block desc -%}
+    An example of using layout-side-nav.html
+{%- endblock %}
+
+{% block content_main %}
+    <h1>Side nav layout</h1>
+    <pre>
+        {%- include "_layout-side-nav-setup.md" -%}
+    </pre>
+{% endblock %}

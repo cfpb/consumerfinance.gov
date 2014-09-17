@@ -1,48 +1,25 @@
-{% extends "base.html" %}
+{% extends "layout-side-nav.html" %}
 
+{% import "section-vars.html" as section_vars %}
+
+{# Variables #}
+{% set active_nav_id = "about-rich-cordray" -%}
+{% set content_main_modifiers = "content__flush-top-on-small" %}
+{% set content_sidebar_modifiers = "content__flush-all-on-small" %}
+
+{# Block overrides #}
 {% block demo_title -%}
-    About Richard Cordray
+    About Rich Cordray
 {%- endblock %}
 
 {% block title -%}
-    About Richard Cordray
+    About Rich Cordray
 {%- endblock %}
 
 {% block desc -%}
-    Information about Richard Cordray
+    Information about Rich Cordray
 {%- endblock %}
 
-{% block content %}
-
-    {# Variables #}
-
-    {% set path = '/the-bureau/' %}
-    {% set active_page = 'about-rich-cordray' %}
-
-    {# Macros #}
-
-    {% import "post-macros.html" as post_macros with context %}
-
-
-    <main class="content content__1-3" id="main" role="main">
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper content_wrapper">
-
-            <aside class="content_sidebar content__flush-all-on-small">
-                {% include "nav.html" %}
-            </aside>
-
-            <div class="content_main content__flush-bottom content__flush-top-on-small">
-                <section>
-                    About Rich
-                </section>
-            </div><!-- END .content_main -->
-
-        </div><!-- END .content_wrapper -->
-
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% block content_main %}
+    <h1>Director Richard Cordray</h1>
+{% endblock %}

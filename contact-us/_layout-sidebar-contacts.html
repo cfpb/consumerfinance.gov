@@ -1,0 +1,76 @@
+
+{% macro render(contact1, contact2, contact3, macros) %}
+
+<div class="content_block content_block__flush-bottom content-l">
+    
+    <section class="content_block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h1 class="h5">
+            {{ contact1.title }}
+        </h1>
+    {%- if contact1.sitewide_desc != 'none' %}
+        <p>
+            {{ contact1.sitewide_desc }}
+        </p>
+    {%- endif %}
+    {%- if contact1.web_addr %}
+        <a class="jump-link" href="{{ contact1.web_addr }}">
+            {{ contact1.web_desc if contact1.web_desc else contact1.web_addr }}
+        </a>
+    {%- endif %}
+    </section>
+
+    <section class="content_block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h1 class="h5">
+            {{ contact2.title }}
+        </h1>
+    {%- if contact2.sitewide_desc != 'none' %}
+        <p>
+            {{ contact2.sitewide_desc }}
+        </p>
+    {%- endif %}
+    {%- if contact2.email_addr or contact2.phone_num %}
+        <ul class="list list__icons">
+        {%- if contact2.email_addr %}
+            <li class="list_item u-break-word">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:{{ contact2.email_addr }}">
+                    {{ contact2.email_addr }}
+                </a>
+            </li>
+        {%- endif %}
+        {%- if contact2.phone_num %}
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                <span class="short-desc">
+                    {{ macros.format_phone(contact2.phone_num) }}
+                </span>
+            </li>
+        {%- endif %}
+        </ul>
+    {%- endif %}
+    </section>
+
+    <section class="content_block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+        <h1 class="h5">
+            {{ contact3.title }}
+        </h1>
+    {%- if contact3.sitewide_desc != 'none' %}
+        <p>
+            {{ contact3.sitewide_desc }}
+        </p>
+    {%- endif %}
+    {%- if contact3.email_addr %}
+        <ul class="list list__icons">
+            <li class="list_item u-break-word">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:{{ contact3.email_addr }}">
+                    {{ contact3.email_addr }}
+                </a>
+            </li>
+        </ul>
+    {%- endif %}
+    </section>
+
+</div>
+
+{% endmacro %}

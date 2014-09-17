@@ -1,4 +1,22 @@
-{% extends "base.html" %}
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_section-blog.html" as section with context %}
+{% import "post-macros.html" as post_macros with context %}
+
+{# Variables #}
+
+{% set active_filters =
+   selected_filters_for_field('category') +
+   selected_filters_for_field('tags') +
+   selected_filters_for_field('author')
+%}
+{% set active_date_filters =
+   selected_filters_for_field('range_date_gte') + 
+   selected_filters_for_field('range_date_lte')
+%}
+{% set active_filters_total = active_filters|length + active_date_filters|length %}
+{% set view = get_document('views', 'blog') %}
+
+{# Block overrides #}
 
 {% block demo_title -%}
     Blog listing
@@ -7,79 +25,50 @@
 {% block title -%}
     Blog
 {%- endblock %}
+
 {% block desc -%}
     The official blog of the Consumer Financial Protection Bureau
 {%- endblock %}
 
-{% block content %}
+{% block hero scoped %}
+    {# Only show the hero when:
+       1. No filters have been applied
+       2. We are on the first page of paginated results
+    #}
+    {% if active_filters_total == 0 and section.posts.current_page == 1 %}
+        {% import "hero.html" as hero %}
+        {{ hero.render(view.hero, post_macros) }}
+    {% endif %}
+{% endblock %}
 
+{% block content_main scoped %}
+    {% import "post-filters.html" as post_filters %}
+    {{ post_filters.render(section.posts, active_filters, active_filters_total, active_date_filters, section.query, post_macros, selected_filters_for_field, current_date, section.path) }}
+    {% import "posts-paginated.html" as posts_paginated %}
+    {{ posts_paginated.render(section.posts, post_macros) }}
+{% endblock %}
 
-    {# Variables #}
-
-    {% set active_filters =
-       selected_filters_for_field('category') +
-       selected_filters_for_field('tags') +
-       selected_filters_for_field('author')
-    %}
-
-    {% set active_date_filters =
-       selected_filters_for_field('range_date_gte') + 
-       selected_filters_for_field('range_date_lte')
-    %}
-
-    {% set active_filters_total = active_filters|length + active_date_filters|length %}
-
-    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
-    {% set query = queries.posts %}
-    {% set posts = query.search_with_url_arguments(size=10) %}
-    {% set view = get_document('views', 'blog') %}
-
-    {% set rss_path = '/feed/posts/' %}
-
-    {# Macros #}
-
-    {% import "post-macros.html" as post_macros with context %}
-
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-
-        {% include "hero.html" %}
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper content_wrapper">
-
-            <div class="content_main">
-                <section>
-                    {% include "post-filters.html" %}
-                    {% include "posts-paginated.html" %}
-                </section>
-            </div>
-
-            <aside class="content_sidebar">
-                <section class="content_block content_block__flush-top">
-                    {% include "popular-stories.html" %}
-                </section>
-                <section class="content_block">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Stay informed
-                        </span>
-                    </h1>
-                    <div class="content_block content_block__sub content_block__flush-top">
-                        <p class="short-desc">
-                            Subscribe to our email newsletter. We will update you on new blogs.
-                        </p>
-                        {% include "email-subscribe-form.html" %}
-                    </div>
-                    <div class="content_block content_block__sub">
-                        {% include "rss.html" %}
-                    </div>
-                </section>
-            </aside>
-
+{% block content_sidebar scoped %}
+    <section class="content_block content_block__flush-top">
+        {% import "popular-posts.html" as popular_posts %}
+        {{ popular_posts.render(view.popular_posts, get_document) }}
+    </section>
+    <section class="content_block">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Stay informed
+            </span>
+        </h1>
+        <div class="content_block content_block__sub content_block__flush-top">
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new blogs.
+            </p>
+            {% import "email-subscribe-form.html" as email_subscribe_form %}
+            {{ email_subscribe_form.render(section.query) }}
         </div>
-    </main>
-
-{% endblock content %}
+        <div class="content_block content_block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(section.rss_path) }}
+        </div>
+    </section>
+{% endblock %}
