@@ -15,6 +15,7 @@
   - Media block with absolute positioned media?
   - Add figure bordered
   - Need a .short-desc__large modifier
+  - Need a modified version of .content-l_col__before-divider that doesn't add a divider on small screens
 
 
 - Better README, like OAH
