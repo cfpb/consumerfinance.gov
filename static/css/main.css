@@ -13935,7 +13935,6 @@ a.category-slug.active {
   margin-left: 0;
 }
 .list__links .list_item {
-  display: block;
   margin-bottom: 0.625em;
 }
 @media only all and (max-width: 47.9375em) {
@@ -13943,6 +13942,7 @@ a.category-slug.active {
     border-top: 1px dotted #0072ce;
   }
   .list__links .list_item {
+    display: block;
     margin-bottom: 0;
   }
   .list__links .list_link {
@@ -13955,6 +13955,7 @@ a.category-slug.active {
     border-top: 1px dotted #0072ce;
   }
   .list__links .list_item {
+    display: block;
     margin-bottom: 0;
   }
   .list__links .list_link {
