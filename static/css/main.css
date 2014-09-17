@@ -12384,6 +12384,20 @@ a.category-slug.active {
         </a>
       codenotes:
         - .jump-link__large
+    - name: .jump-link__download (modifier)
+      markup: |
+        <a class="jump-link jump-link__download" href="#">
+            Jump link using the download icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__download
+    - name: .jump-link__external-link (modifier)
+      markup: |
+        <a class="jump-link jump-link__external-link" href="#">
+            Jump link using the external-link icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__external-link
   tags:
     - cfgov-misc
 */
@@ -12411,6 +12425,9 @@ a.category-slug.active {
 }
 .jump-link__download:after {
   content: "\e406";
+}
+.jump-link__external-link:after {
+  content: "\e610";
 }
 .jump-link:after {
   font-family: 'CFPB Minicons';
