@@ -168,33 +168,6 @@
 
 
 /* topdoc
-  name: Link modifiers
-  family: cfgov-misc
-  patterns:
-    - name: Block link on small screens
-      markup: |
-        <a class="link__block-on-small">
-            On small screens I am a block, on larger screens I am a normal link.
-        </a>
-      codenotes:
-        - .link__block-on-small
-  tags:
-    - cfgov-misc
-*/
-
-.link__block-on-small {
-    .webfont-medium();
-
-    .respond-to-max(599px, {
-        display: block;
-        padding: 0.5em 0;
-        border-top: 1px dotted @pacific;
-        border-bottom: 1px dotted @pacific;
-    });
-}
-
-
-/* topdoc
     name: Custom select menus via jquery.custom-input
     family: cfgov-misc
     patterns:
