@@ -8674,22 +8674,6 @@ img {
    capital framework enhancements
    ========================================================================== */
 /* topdoc
-  name: Base styles
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: figure
-      markup: |
-        <figure>
-            <img src="http://placekitten.com/300/300">
-        </figure>
-  tags:
-    - cfgov-cf-enhancements
-*/
-figure {
-  margin-left: 0;
-  margin-right: 0;
-}
-/* topdoc
   name: Simple base style modifiers
   family: cfgov-cf-enhancements
   patterns:
