@@ -20,14 +20,7 @@
 
 
 - Better README, like OAH
-- No "number of results" message on smaller screens
-- BB wordwrap issue
-- Green bar under header needs bg image
-- Update CF components with patterns
-  - Make utilities a component
-  - Update cf-forms with the form patterns
-  - Update cf-typography with some of the meta patterns and the summary
-  - Move the cf tweaks from nav-secondary
+- Move the cf tweaks from nav-secondary
 
 - Post stuff
   - Posts with annoying deks
@@ -54,11 +47,6 @@
   - Styled lists
     - http://codepen.io/anon/pen/tqJBp
     - http://codepen.io/anon/pen/bryAo
-
-- Scrum stuff
-  - Hard to know what's ready for front end
-  - Jira, stories VS tasks?
-  - No cf updates
 
 - jQuery plugins with methods:
   - http://viget.com/inspire/jquery-plugin-patterns
