@@ -75,6 +75,52 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.jump-link__download (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="jump-link jump-link__download" href="#">
+    Jump link using the download icon from cf-icons
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__download&quot; href=&quot;#&quot;&gt;
+    Jump link using the download icon from cf-icons
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__download\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Jump link using the download icon from cf-icons\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.jump-link__download</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.jump-link__external-link (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="jump-link jump-link__external-link" href="#">
+    Jump link using the external-link icon from cf-icons
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__external-link&quot; href=&quot;#&quot;&gt;
+    Jump link using the external-link icon from cf-icons
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__external-link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Jump link using the external-link icon from cf-icons\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.jump-link__external-link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.jump-link {
@@ -101,6 +147,9 @@
 }
 .jump-link__download:after {
   content: &quot;\e406&quot;;
+}
+.jump-link__external-link:after {
+  content: &quot;\e610&quot;;
 }
 .jump-link:after {
   font-family: 'CFPB Minicons';
@@ -273,7 +322,7 @@
       <h2 class="docs-component_header"><span>Short description</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Simple styling for short descriptions</h3>
+          <h3 class="docs-pattern_header">.short-desc</h3>
           <section class="docs-pattern_pattern">
 <p class="short-desc">I am short description.</p>
 
@@ -287,6 +336,25 @@
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>.short-desc</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.short-desc__large (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<p class="short-desc short-desc__large">I am large short description.</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p class=&quot;short-desc short-desc__large&quot;&gt;I am large short description.&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p class=\&amp;quot;short-desc short-desc__large\&amp;quot;&gt;I am large short description.&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.short-desc__large</code></pre>
               </li>
             </ul>
           </footer>
@@ -353,6 +421,9 @@
 .lt-ie9 .short-desc strong,
 .lt-ie9 .short-desc b {
   font-weight: normal !important;
+}
+.short-desc__large {
+  font-size: 1.125em;
 }</code></pre>
       </div>
     </div>
@@ -2188,6 +2259,7 @@ label
   margin-left: 0;
 }
 .list__links .list_item {
+  display: block;
   margin-bottom: 0.625em;
 }
 @media only all and (max-width: 47.9375em) {
