@@ -128,14 +128,24 @@
   display: block;
 }
 
-.media:before,
 .media:after {
-  content: &quot; &quot;;
+  content: &quot;&quot;;
   display: table;
+  clear: both;
+}
+
+.lt-ie8 .media {
+  zoom: 1;
 }
 
 .media:after {
+  content: &quot;&quot;;
+  display: table;
   clear: both;
+}
+
+.lt-ie8 .media {
+  zoom: 1;
 }
 
 .media_image-container {
@@ -180,17 +190,8 @@
   width: 10000px;
 }
 
-.lt-ie8 .media,
 .lt-ie8 .media_body {
   zoom: 1;
-}
-
-.lt-ie8 .media,
-.lt-ie8 .media_body {
-  zoom: 1;
-}
-
-.lt-ie8 .media_body {
   display: block;
   width: auto;
 }</code></pre>

@@ -126,34 +126,42 @@
         <pre class="docs-code"><code data-language="css">.media {
   display: block;
 }
-.media:before,
 .media:after {
-  content: &quot; &quot;;
+  content: &quot;&quot;;
   display: table;
-}
-.media:after {
   clear: both;
 }
-@media only all and (min-width: 37.4375em) {
+.lt-ie8 .media {
+  zoom: 1;
+}
+.media:after {
+  content: &quot;&quot;;
+  display: table;
+  clear: both;
+}
+.lt-ie8 .media {
+  zoom: 1;
+}
+@media only all and (min-width: 37.5em) {
   .media_image-container {
     float: left;
     margin-right: 15px;
   }
 }
-@media only all and (min-width: 37.4375em) {
+@media only all and (min-width: 37.5em) {
   .media_image-container {
     float: left;
     margin-right: 15px;
   }
 }
-@media only all and (min-width: 37.4375em) {
+@media only all and (min-width: 37.5em) {
   .media_image-container__right {
     float: right;
     margin-left: 15px;
     margin-right: 0;
   }
 }
-@media only all and (min-width: 37.4375em) {
+@media only all and (min-width: 37.5em) {
   .media_image-container__right {
     float: right;
     margin-left: 15px;
@@ -166,43 +174,32 @@
 .media_image {
   display: block;
 }
-@media only all and (min-width: 37.4375em) {
+@media only all and (max-width: 37.4375em) {
+  .media_body {
+    margin-top: 15px;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media_body {
+    margin-top: 15px;
+  }
+}
+@media only all and (min-width: 37.5em) {
   .media_body {
     display: table-cell;
     vertical-align: top;
     width: 10000px;
   }
 }
-@media only all and (min-width: 37.4375em) {
+@media only all and (min-width: 37.5em) {
   .media_body {
     display: table-cell;
     vertical-align: top;
     width: 10000px;
-  }
-}
-@media only all and (max-width: 37.375em) {
-  .media_body {
-    margin-top: 15px;
-  }
-}
-@media only all and (max-width: 37.375em) {
-  .media_body {
-    margin-top: 15px;
-  }
-}
-@media only all and (min-width: 30.0625em) {
-  .lt-ie8 .media,
-  .lt-ie8 .media_body {
-    zoom: 1;
-  }
-}
-@media only all and (min-width: 30.0625em) {
-  .lt-ie8 .media,
-  .lt-ie8 .media_body {
-    zoom: 1;
   }
 }
 .lt-ie8 .media_body {
+  zoom: 1;
   display: block;
   width: auto;
 }
