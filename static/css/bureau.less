@@ -1,41 +1,48 @@
 .u-hide-on-mobile {
-    .respond-to-max(598px {
+    .respond-to-max(599px {
         display: none;
     });
 }
 
 .u-show-on-mobile {
     display: none;
-    .respond-to-max(598px {
+    .respond-to-max(599px {
         display: block;
     });
 }
 
 .u-mb0 {
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
 }
 
 .content {
     &_title {
         &__extra-large {
             .h1();
-            margin-bottom: unit(14px / @base-font-size-px, em) !important;
+            // h1 font-size is 34px
+            margin-bottom: unit(29px / @font-size, em) !important;
             .respond-to-max(600px, {
                 .h2();
+                // h2 font-size is 26px
+                margin-bottom: unit(22px / @font-size, em) !important;
             });
         }
 
         &__large {
             .h2();
-            margin-bottom: unit(14px / @base-font-size-px, em) !important;
+            // h2 font-size is 26px
+            margin-bottom: unit(22px / @font-size, em) !important;
             .respond-to-max(600px, {
+                // h3 font-size is 22
                 .h3();
+                margin-bottom: unit(19px / @font-size, em) !important;
             });
         }
 
         &__medium {
             .h3();
-            margin-bottom: unit(14px / @base-font-size-px, em); 
+            // h3 font-size is 22
+            margin-bottom: unit(19px / @font-size, em) !important; 
         }
 
         &__extra-small{
@@ -57,9 +64,12 @@
 
         &__large {
             .h4();
-            margin-bottom: unit(14px / @base-font-size-px, em) !important;
+            // h4 font-size is 18px
+            margin-bottom: unit(15px / @font-size, em) !important;
             .respond-to-min(600px, {
                 .h3();
+                // h3 font-size is 22
+                margin-bottom: unit(19px / @font-size, em) !important;
             });
         }
     }
@@ -89,22 +99,25 @@
 */
 
 .list__branded {
-    color: @green;
-    font-size: 1.25em;
     .webfont-regular();
     
-    .list_item {
+    li {
+        position: relative;
+        list-style-type: none;
         padding-bottom: 12px;
-        line-height: @base-line-height-px;
+        
+        &:before {
+            content: "\25AA";
+            position: absolute;
+            left: -19px;
+            color: @green;
+            font-size: unit(22px / @base-font-size-px, em);
+            line-height: 1;
+        }
     }
     
-    .list_span {
-        color: black;
-        font-size: @base-font-size-px;
-        position: relative;
-        top: -1px;
-    }
 }
+
 
 /* Bureau page specific */
 
@@ -132,10 +145,10 @@
     
     &_image {
         width: 250px;
-        .respond-to-max(598 {
+        .respond-to-max(599 {
             width: 290px;
         });
-        .respond-to-range(599px, 768px, {
+        .respond-to-range(600px, 768px, {
             width: 215px;
         });
     }
