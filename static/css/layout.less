@@ -771,7 +771,39 @@
       codenotes:
         - .content_block.content_block__flush-sides
       notes:
-        - "Removes the side margin from .content_block."
+        - "Removes the side margin from .content_block."    
+    - name: Border-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-top">
+            Content block with top border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-top
+      notes:
+        - "Adds top border to .content_block."
+    - name: Border-bottom modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-bottom">
+            Content block with bottom border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-bottom
+      notes:
+        - "Adds bottom border to .content_block."
+    - name: Padded-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__padded-top content_block__border-top">
+            Content block with reduced top margin & added top padding
+            and border.
+        </div>
+      codenotes:
+        - .content_block.content_block__padded-top
+      notes:
+        - "Breaks top margin into margin & padding. Useful in combination with
+           content_block__border-top to add padding between block contents & border."
     - name: Background modifier
       markup: |
         Main content...
@@ -859,6 +891,14 @@
 .content_block {
     margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
     margin-bottom: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+    
+    &__border-top {
+        border-top: 1px solid @gray-50;
+    }
+    
+    &__border-bottom {
+        border-bottom: 1px solid @gray-50;
+    }
 
     &__flush-top {
         margin-top: 0 !important;
@@ -885,6 +925,12 @@
             padding: unit(45 / @base-font-size-px, em)
                      unit(@grid_gutter-width / @base-font-size-px, em);
         });
+    }
+    
+    &__padded-top {
+        padding-top: unit(30px / @base-font-size-px, em);
+        margin-top: unit(30px / @base-font-size-px, em);
+        margin-bottom: unit(30px / @base-font-size-px, em);
     }
 
     &__sub {
