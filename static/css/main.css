@@ -10433,7 +10433,39 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
       codenotes:
         - .content_block.content_block__flush-sides
       notes:
-        - "Removes the side margin from .content_block."
+        - "Removes the side margin from .content_block."    
+    - name: Border-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-top">
+            Content block with top border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-top
+      notes:
+        - "Adds top border to .content_block."
+    - name: Border-bottom modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-bottom">
+            Content block with bottom border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-bottom
+      notes:
+        - "Adds bottom border to .content_block."
+    - name: Padded-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__padded-top content_block__border-top">
+            Content block with reduced top margin & added top padding
+            and border.
+        </div>
+      codenotes:
+        - .content_block.content_block__padded-top
+      notes:
+        - "Breaks top margin into margin & padding. Useful in combination with
+           content_block__border-top to add padding between block contents & border."
     - name: Background modifier
       markup: |
         Main content...
@@ -10521,6 +10553,12 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-top: 3.75em;
   margin-bottom: 3.75em;
 }
+.content_block__border-top {
+  border-top: 1px solid #babbbd;
+}
+.content_block__border-bottom {
+  border-bottom: 1px solid #babbbd;
+}
 .content_block__flush-top {
   margin-top: 0 !important;
 }
@@ -10556,6 +10594,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .content_block__bg {
     padding: 2.8125em 1.875em;
   }
+}
+.content_block__padded-top {
+  padding-top: 1.875em;
+  margin-top: 1.875em;
+  margin-bottom: 1.875em;
 }
 .content_block__sub {
   margin-top: 1.875em;
@@ -18718,4 +18761,140 @@ a.focus .summary_header {
   .contact-us-map {
     float: right;
   }
+}
+/* ==========================================================================
+   cfgov-refresh
+   media
+   ========================================================================== */
+/* topdoc
+  name: Media 
+  family: cfgov-media
+  patterns:
+    - name: Media object (OOCSS)
+      markup: |
+        <article class="media">
+            <div class="media_image-container">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .media
+            .media_image-container
+              .media_image
+            .media_body
+      notes:
+        - "Based on Object-oriented CSS' media object."
+    - name: Image container right modifier
+      markup: |
+        <article class="media">
+            <div class="media_image-container media_image-container__right">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Image is positioned to right instead of left of content."
+  tags:
+    - cfgov-media
+*/
+.media {
+  display: block;
+}
+.media:before,
+.media:after {
+  content: " ";
+  display: table;
+}
+.media:after {
+  clear: both;
+}
+@media only all and (min-width: 37.4375em) {
+  .media_image-container {
+    float: left;
+    margin-right: 15px;
+  }
+}
+@media only all and (min-width: 37.4375em) {
+  .media_image-container {
+    float: left;
+    margin-right: 15px;
+  }
+}
+@media only all and (min-width: 37.4375em) {
+  .media_image-container__right {
+    float: right;
+    margin-left: 15px;
+    margin-right: 0;
+  }
+}
+@media only all and (min-width: 37.4375em) {
+  .media_image-container__right {
+    float: right;
+    margin-left: 15px;
+    margin-right: 0;
+  }
+}
+.media_image-container__wide-margin {
+  margin-right: 30px;
+}
+.media_image {
+  display: block;
+}
+@media only all and (min-width: 37.4375em) {
+  .media_body {
+    display: table-cell;
+    vertical-align: top;
+    width: 10000px;
+  }
+}
+@media only all and (min-width: 37.4375em) {
+  .media_body {
+    display: table-cell;
+    vertical-align: top;
+    width: 10000px;
+  }
+}
+@media only all and (max-width: 37.375em) {
+  .media_body {
+    margin-top: 15px;
+  }
+}
+@media only all and (max-width: 37.375em) {
+  .media_body {
+    margin-top: 15px;
+  }
+}
+@media only all and (min-width: 30.0625em) {
+  .lt-ie8 .media,
+  .lt-ie8 .media_body {
+    zoom: 1;
+  }
+}
+@media only all and (min-width: 30.0625em) {
+  .lt-ie8 .media,
+  .lt-ie8 .media_body {
+    zoom: 1;
+  }
+}
+.lt-ie8 .media_body {
+  display: block;
+  width: auto;
 }

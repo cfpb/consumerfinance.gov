@@ -2093,6 +2093,92 @@ Main content...
           </footer>
         </div>
         <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Border-top modifier</h3>
+          <section class="docs-pattern_pattern">
+Main content...
+<div class="content_block content_block__border-top">
+    Content block with top border.
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">Main content...
+&lt;div class=&quot;content_block content_block__border-top&quot;&gt;
+    Content block with top border.
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\nMain content...\n&lt;div class=\&amp;quot;content_block content_block__border-top\&amp;quot;&gt;\n    Content block with top border.\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content_block.content_block__border-top</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Adds top border to .content_block.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Border-bottom modifier</h3>
+          <section class="docs-pattern_pattern">
+Main content...
+<div class="content_block content_block__border-bottom">
+    Content block with bottom border.
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">Main content...
+&lt;div class=&quot;content_block content_block__border-bottom&quot;&gt;
+    Content block with bottom border.
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\nMain content...\n&lt;div class=\&amp;quot;content_block content_block__border-bottom\&amp;quot;&gt;\n    Content block with bottom border.\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content_block.content_block__border-bottom</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Adds bottom border to .content_block.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Padded-top modifier</h3>
+          <section class="docs-pattern_pattern">
+Main content...
+<div class="content_block content_block__padded-top content_block__border-top">
+    Content block with reduced top margin & added top padding
+    and border.
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">Main content...
+&lt;div class=&quot;content_block content_block__padded-top content_block__border-top&quot;&gt;
+    Content block with reduced top margin &amp; added top padding
+    and border.
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\nMain content...\n&lt;div class=\&amp;quot;content_block content_block__padded-top content_block__border-top\&amp;quot;&gt;\n    Content block with reduced top margin &amp; added top padding\n    and border.\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content_block.content_block__padded-top</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Breaks top margin into margin &amp; padding. Useful in combination with content_block__border-top to add padding between block contents &amp; border.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
           <h3 class="docs-pattern_header">Background modifier</h3>
           <section class="docs-pattern_pattern">
 Main content...
@@ -2276,6 +2362,12 @@ Main content...
   margin-top: 3.75em;
   margin-bottom: 3.75em;
 }
+.content_block__border-top {
+  border-top: 1px solid #babbbd;
+}
+.content_block__border-bottom {
+  border-bottom: 1px solid #babbbd;
+}
 .content_block__flush-top {
   margin-top: 0 !important;
 }
@@ -2311,6 +2403,11 @@ Main content...
   .content_block__bg {
     padding: 2.8125em 1.875em;
   }
+}
+.content_block__padded-top {
+  padding-top: 1.875em;
+  margin-top: 1.875em;
+  margin-bottom: 1.875em;
 }
 .content_block__sub {
   margin-top: 1.875em;
