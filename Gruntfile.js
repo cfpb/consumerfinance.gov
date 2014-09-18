@@ -312,7 +312,11 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['static/css/*.less'],
-        tasks: ['cssdev', 'topdoc']
+        tasks: ['cssdev']
+      },
+      cssjs: {
+        files: ['static/css/*.less', 'static/js/app.js'],
+        tasks: ['cssdev', 'jsdev']
       }
     },
 

@@ -76,8 +76,17 @@
 */
 
 .logo {
-    margin: @grid_gutter-width (@grid_gutter-width / 2) (@grid_gutter-width / 2);
+    margin: @grid_gutter-width
+            (@grid_gutter-width / 2)
+            unit(20px / @base-font-size-px, em)
+            (@grid_gutter-width / 2);
     vertical-align: middle; // removes typical inline vertical whitespace
+
+    .respond-to-max(800px, {
+        width: 160px;
+        height: 40px;
+        margin: 10px;
+    });
 }
 
 .logo__no-js {
@@ -89,26 +98,352 @@
 }
 
 .header_misc {
-    margin: @grid_gutter-width (@grid_gutter-width / 2) (@grid_gutter-width / 2);
-    position: absolute;
-    top: 0;
-    right: @grid_gutter-width / 2;
-    color: @gray;
+    display: none;
+
+    .respond-to-min(801px, {
+        display: block;
+        margin: @grid_gutter-width
+                (@grid_gutter-width / 2)
+                (@grid_gutter-width / 2);
+        position: absolute;
+        top: 0;
+        right: @grid_gutter-width / 2;
+        color: @gray;
+        .webfont-regular();
+
+        &_tel {
+            padding-right: @grid_gutter-width / 2;
+            border-right: 1px solid @gray-50;
+            margin-right: unit(@grid_gutter-width / 2 / @base-font-size-px, em) - 0.25em;
+                // subtracting typical inline horizonal whitespace above
+            .u-link__colors(@darkgray);
+        }
+
+        &_es {
+            .h5();
+            .u-link__border();
+        }
+    });
+}
+
+
+/* topdoc
+  name: Primary navigation
+  family: cfgov-layout
+  patterns:
+    - name: Desktop mega menu
+      markup: |
+        
+      notes:
+        - 
+  tags:
+    - cfgov-layout
+*/
+
+.primary-nav_top-level-list > .list_item > .list_link {
+    .u-link__colors(@black, @green);
     .webfont-regular();
 
-    &_tel {
-        padding-right: @grid_gutter-width / 2;
-        border-right: 1px solid @gray-50;
-        margin-right: unit(@grid_gutter-width / 2 / @base-font-size-px, em) - 0.25em;
-            // subtracting typical inline horizonal whitespace above
-        .u-link__colors(@darkgray);
-    }
-
-    &_es {
-        .h5();
-        .u-link__border();
+    &__disabled {
+        color: @gray-50 !important;
+        border: none !important;
     }
 }
+
+// ============================================================ SLIDING NAV TEST
+
+.respond-to-max(800px, {
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    .primary-nav_top-level-list.list-expanding {
+        // Nested list borders
+        // Negative bottom margin to remove duplicate bottom border
+        & .list-expanding {
+            margin: 0 0 -1px;
+        }
+     
+        & .list_item {
+            display: block;
+            border-bottom: 1px solid @darkgray;
+            &:first-child {
+                border-top: 1px solid @darkgray;
+            }
+        }
+
+        & .list_item__plain {
+            border-bottom: 0;
+            &:first-child {
+                border-top: 0;
+            }
+        }
+
+        & .list_item > a,
+        & .list_item > span {
+            display: block;
+            padding: (@grid_gutter-width / 2)
+                     @grid_gutter-width
+                     (@grid_gutter-width / 2)
+                     (@grid_gutter-width / 2);
+            background: @white;
+            // .m-link-medium();
+            // .m-link-unstyled();
+            // font-size: unit( 18 / @base-font-size-px, em );
+        }
+        // & > .list_item > a:hover {
+        //     background-color: @base-btn-color-hover;
+        //     color: @white;
+        //     &:after {
+        //         color: @white;
+        //     }
+        // }
+
+        // Two levels deep
+        & .list-expanding .list-expanding_list-item > a,
+        & .list-expanding .list-expanding_list-item > span {
+            padding-left: @grid_gutter-width;
+        }
+
+        // Three levels deep
+        & .list-expanding .list-expanding .list-expanding_list-item > a,
+        & .list-expanding .list-expanding .list-expanding_list-item > span {
+            padding-left: @grid_gutter-width * 1.5;
+        }
+
+        // Give the expanding trigger an icon
+        .list-expanding_trigger[aria-pressed="false"] {
+            // #icon > .bulletRight( @u-plus-disc );
+            &:after {
+                right: @grid_gutter-width / 2;
+                font-size: 18px;
+                color: @pacific;
+            }
+        }
+        .list-expanding_trigger[aria-pressed="true"] {
+            // #icon > .bulletRight( @u-minus-disc );
+            &:after {
+                right: @grid_gutter-width / 2;
+                font-size: 18px;
+                color: @pacific;
+            }
+        }
+
+        // Hide a child list if the trigger is not pressed
+        .list-expanding_trigger[aria-pressed="false"] .list-expanding_child-list {
+            display: none;
+        }
+    }
+
+    .sliding-nav {
+        .u-clearfix();
+        // Putting the navigation background here instead of on .sliding-nav_nav
+        // is a trick to get the bg of the nav to match the height of .sliding-nav_page
+        background: @gray;
+    }
+    .sliding-nav.is-open {
+        overflow: hidden;
+    }
+
+    .sliding-nav_page {
+        float: left;
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+        width: 100%;
+        background: @white;
+        -webkit-transition: .2s margin-right ease-in, .2s box-shadow ease-in;
+    }
+    .is-open .sliding-nav_page {
+        margin-right: -80%;
+        box-shadow: 0 0 20px @darkgray;
+    }
+
+    // This overlays the main content and when clicked closes the menu
+    .sliding-nav_page-overlay {
+        position: relative;
+    }
+    .sliding-nav_page-overlay:before {
+        position: absolute;
+        z-index: 999;
+        // background: @black;
+        opacity: 0;
+        -webkit-transition: .2s opacity ease-in;
+    }
+    .is-open .sliding-nav_page-overlay:before {
+        content: "";
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        // opacity: 0.7;
+    }
+
+    .sliding-nav_page.is-scroll-disabled {
+        position: fixed;
+        right: 0;
+        -webkit-transition: .2s right ease-in;
+    }
+    .is-open .sliding-nav_page.is-scroll-disabled {
+        position: fixed;
+        right: -80%;
+        margin-right: 0;
+        -webkit-transition: none;
+    }
+
+    .sliding-nav_nav {
+        float: left;
+        width: 80%;
+        height: 101%;
+        margin-left: -100%;
+        -webkit-transition: .2s margin-left ease-in;
+    }
+    .is-open .sliding-nav_nav {
+        margin-left: 0;
+    }
+
+    .sliding-nav_nav .list-expanding {
+        margin: 0;
+    }
+
+    .sliding-nav_trigger {
+        display: block;
+        width: 60px;
+        padding: 10px;
+        border: none;
+        border-right: 1px solid @gray-50;
+        float: left;
+        background: @white;
+        color: @gray;
+        font-size: 1.5em;
+        line-height: 40px;
+    }
+
+});
+
+// ======================================================= DESKTOP MENU TEST
+
+.respond-to-min(801px, {
+
+    .sliding-nav_trigger {
+        display: none;
+    }
+
+    .primary-nav {
+        position: relative;
+        top: 116px; // magic number - dependent on height of logo and its vertical padding
+    }
+    [role="banner"] {
+        position: relative;
+        top: -54px; // magic number - dependent on height of horizontal navbar
+    }
+
+    // .desktop-menu.l-wrapper-outer {
+    //     position: relative;
+    //     overflow: visible;
+    //     color: @black;
+    // }
+
+    .desktop-menu .l-wrapper-inner {
+        position: static;
+        overflow: visible;
+        padding-left: @grid_gutter-width / 2;
+    }
+
+    .primary-nav_top-level-list {
+        margin-bottom: 0;
+    }
+
+    .primary-nav_top-level-list.list__horizontal > .list_item {
+        display: inline-block;
+        vertical-align: top;
+
+        &:hover > .list_link,
+        &:focus > .list_link {
+            padding-bottom: @grid_gutter-width - 6px;
+            border-bottom: 6px solid @green;
+            color: @green;
+            // transition: 0.1s padding-bottom linear,
+            //             0.1s border-bottom linear;
+        }
+    }
+
+    .primary-nav_top-level-list > .list_item > .list_link {
+        display: block;
+        padding-bottom: @grid_gutter-width;
+        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+        font-size: unit(18px / @base-font-size-px, em);
+    }
+
+    // Hide only when js is available
+    // .js .desktop-menu_full-wrapper {}
+    .desktop-menu_full-wrapper {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        z-index: 100;
+        -webkit-transform: translate3d(0,0,0); // Maybe this will kick on the gpu?
+    }
+
+    // Expand the menu by looking for aria attributes.
+    // This will help us to keep our eye on a11y.
+    .desktop-menu_full-wrapper[aria-expanded="true"] {
+        z-index: 200;
+        //min-height: 21em;
+        max-height: 15em;
+        -webkit-transform: translate3d(0,0,0); // Maybe this will kick on the gpu?
+    }
+
+    // Only use transitions when allowed, js controls the transition toggling logic
+    // Transition off
+    .has-transition .desktop-menu_full-wrapper {
+        transition: 0.25s max-height linear;
+    }
+    // Transition on
+    .has-transition .desktop-menu_full-wrapper[aria-expanded="true"] {
+        transition: 0.275s max-height ease-out;
+    }
+
+    .desktop-menu_full-wrapper_decoration {
+        padding: @grid_gutter-width 0;
+        background: @gray-5;
+        border-top: 1px solid @gray-50;
+        border-bottom: 4px solid @gray-50;
+    }
+
+    .desktop-menu_full-wrapper > ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .desktop-menu_vertical-list a,
+    .desktop-menu_horizontal-list a,
+    .desktop-menu_horizontal-list-small a {
+        display: inline-block;
+        .webfont-regular();
+    }
+
+    // Horizontal list
+    .desktop-menu_horizontal-list {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .desktop-menu_horizontal-list.list__horizontal > .list_item {
+        margin: 0 @grid_gutter-width / 2;
+    }
+
+    .desktop-menu_horizontal-list .list_link {
+        // override standard visited link color
+        .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
+    }
+
+});
+
 
 
 /* topdoc
