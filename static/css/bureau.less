@@ -1,3 +1,70 @@
+.u-hide-on-mobile {
+    .respond-to-max(598px {
+        display: none;
+    });
+}
+
+.u-show-on-mobile {
+    display: none;
+    .respond-to-max(598px {
+        display: block;
+    });
+}
+
+.u-mb0 {
+    margin-bottom: 0px;
+}
+
+.content {
+    &_title {
+        &__extra-large {
+            .h1();
+            margin-bottom: unit(14px / @base-font-size-px, em) !important;
+            .respond-to-max(600px, {
+                .h2();
+            });
+        }
+
+        &__large {
+            .h2();
+            margin-bottom: unit(14px / @base-font-size-px, em) !important;
+            .respond-to-max(600px, {
+                .h3();
+            });
+        }
+
+        &__medium {
+            .h3();
+            margin-bottom: unit(14px / @base-font-size-px, em); 
+        }
+
+        &__extra-small{
+            .h6();
+            margin-bottom: 0;
+        }
+    }
+    
+    &_desc {
+        .webfont-regular();
+        margin-bottom: 1em;
+
+        &__medium {
+            .respond-to-min(600px, {
+                .h4();
+                margin-bottom: 1em;
+            });
+        }
+
+        &__large {
+            .h4();
+            margin-bottom: unit(14px / @base-font-size-px, em) !important;
+            .respond-to-min(600px, {
+                .h3();
+            });
+        }
+    }
+}
+
 /* topdoc
   name: Branded list modifier
   family: cfgov-bureau
