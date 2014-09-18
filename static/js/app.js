@@ -1,3 +1,192 @@
+/*
+ * ======================================================================
+ * Aria Button
+ * ======================================================================
+ */
+
+$.fn.cfpbAriaButton = function( userSettings ) {
+
+    return this.each(function() {
+
+        var $this = $( this );
+
+        // Add aria attributes
+        $this.attr( 'role', 'button' );
+        $this.attr( 'aria-pressed', 'false' );
+        $this.attr( 'tabindex', '0' );
+
+        // Toggle the aria-pressed attribue
+        $this.click(function() {
+            togglePressedVal( $this );
+        });
+        $this.keyup(function(event){
+            if ( event.which === 32 ) { // Space key
+                event.preventDefault();
+                togglePressedVal( $this );
+            }
+        });
+        // Prevent the spacebar from scrolling the page
+        $this.keydown(function(event){
+            if ( event.which === 32 ) { // Space key
+                event.preventDefault();
+            }
+        });
+    });
+
+    function togglePressedVal( jqueryObject ) {
+        var toggledPressedVal = toggleBoolean( jqueryObject.attr( 'aria-pressed' ) );
+        jqueryObject.attr( 'aria-pressed', toggledPressedVal );
+    }
+
+};
+
+function toggleBoolean( userBoolean ) {
+    var typedBoolean;
+    if ( typeof( userBoolean ) === 'boolean' ) {
+        typedBoolean = userBoolean;
+    } else if ( typeof( userBoolean ) === 'string' ) {
+        typedBoolean = ( userBoolean === 'true' ) ? true : false;
+    }
+    return !typedBoolean;
+}
+
+
+/* ==========================================================================
+   Sliding/Pushing Menu
+   ========================================================================== */
+
+$(function() {
+
+    var $body = $('body'),
+        $slidingNav = $('.sliding-nav'),
+        $slidingNavTrigger = $('.sliding-nav_trigger'),
+        $slidingNavNav = $('.sliding-nav_nav'),
+        $slidingNavPage = $('.sliding-nav_page'),
+        $slidingNavPageOverlay = $('.sliding-nav_page-overlay');
+
+    $slidingNavTrigger.click(function( e ){
+        e.preventDefault();
+
+        // First deal with the filters button if it exists
+        if ( $('.l-sidenav').hasClass('is-open') ) {
+            $('.l-sidenav-btn').trigger('click');
+        }
+
+        if ( $slidingNav.hasClass('is-open') ) {
+            window.setTimeout( function(){
+                $slidingNavPage.removeClass('is-scroll-disabled');
+            }, 200 );
+            $slidingNav.removeClass('is-open');
+            $slidingNavPageOverlay.off('click');
+        } else {
+            $slidingNav.addClass('is-open');
+            $(window).scroll( slidingNavStopScroll );
+            $slidingNavPageOverlay.click(function( e ){
+                e.preventDefault();
+                $( $slidingNavTrigger[0] ).trigger('click');
+            });
+        }
+        $body.scrollTop( 0 );
+    });
+
+    function slidingNavStopScroll () {
+        if ( parseInt($slidingNavPage.css('margin-right'), 10) < 0 ) {
+            $slidingNavPage.addClass('is-scroll-disabled');
+            $slidingNavNav.css( 'min-height', $(window).height() );
+            $(window).off('scroll', slidingNavStopScroll);
+        }
+    }
+
+
+
+    // Expanding list
+    // Set the dt as the clickable element
+    $('.list-expanding_trigger').cfpbAriaButton();
+    $('.list-expanding_trigger').click(function( e ){
+        e.preventDefault();
+        $(this).next().find('.list-expanding_child-list').slideToggle(100);
+    });
+    $('.list-expanding_trigger').keyup(function( e ){
+        if ( e.which === 32 ) { // Space key
+            e.preventDefault();
+            $(this).next().find('.list-expanding_child-list').slideToggle(100);
+        }
+    });
+    // Hide the dd's initially
+    $('.list-expanding_child-list').hide();
+
+});
+
+/* ==========================================================================
+   Desktop Menu Transitions
+   Do not apply a transition when hovering from one menu to the next
+   ========================================================================== */
+
+$(function() {
+
+    var $desktopMenu = $('.desktop-menu'),
+        $desktopMenuTrigger = $('.primary-nav_top-level-list > li'),
+        $desktopMenuChild = $('.desktop-menu_full-wrapper'),
+        mouseIsInsideMenu = false,
+        mouseIsInsideMenuItem = false,
+        aMenuItemWasOpened = false;
+
+    // Add aria-expanded
+    $desktopMenuChild.attr( 'aria-expanded', 'false' );
+
+    $desktopMenu.mouseleave(function( e ){
+
+        // Update the mouse and menu state
+        aMenuItemWasOpened = false;
+        mouseIsInsideMenu = false;
+
+        // Always use a transition when the mouse leaves the entire menu
+        $desktopMenu.addClass('has-transition');
+
+    });
+
+    $desktopMenuTrigger.mouseenter(function( e ){
+
+        // Update aria-expanded
+        $(this).find('.desktop-menu_full-wrapper').attr( 'aria-expanded', 'true' );
+
+        // Show the child list, previously hidden by default for the mobile menu.
+        $('.list-expanding_child-list').show();
+
+        if ( aMenuItemWasOpened === false ) {
+            $desktopMenu.addClass('has-transition');
+        } else {
+            $desktopMenu.removeClass('has-transition');
+        }
+
+        // Update the mouse and menu state
+        mouseIsInsideMenu = true;
+        mouseIsInsideMenuItem = true;
+        aMenuItemWasOpened = true;
+
+    });
+
+    $desktopMenuTrigger.mouseleave(function( e ){
+
+        // Update the menu item state
+        mouseIsInsideMenuItem = false;
+
+        // Use a delay to check if the mouse is inside of the menu but not in a
+        // list item.
+        window.setTimeout( function updateAMenuItemWasOpened() {
+            if ( mouseIsInsideMenuItem === false && mouseIsInsideMenu ) {
+                aMenuItemWasOpened = false;
+            }
+        }, 100 );
+
+        // Update aria-expanded
+        $desktopMenuChild.attr( 'aria-expanded', 'false' );
+
+    });
+
+});
+
+
 /* ==========================================================================
    Nav-secondary
    ========================================================================== */
