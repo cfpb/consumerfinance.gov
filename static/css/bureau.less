@@ -1,0 +1,75 @@
+/* topdoc
+  name: Branded list modifier
+  family: cfgov-bureau
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list__branded">
+            <li>
+                <span class="list_span">First item</span>
+            </li>
+            <li>
+                <span class="list_span">Second item</span>
+            </li>
+            <li>
+                <span class="list_item">Third item</span>
+            </li>
+        </ul>
+      codenotes:
+        - "List with CFBP font and brand-color bullets"
+  tags:
+    - cfgov-bureau
+*/
+
+.list__branded {
+    color: @green;
+    font-size: 1.25em;
+    .webfont-regular();
+    
+    .list_item {
+        padding-bottom: 12px;
+        line-height: @base-line-height-px;
+    }
+    
+    .list_span {
+        color: black;
+        font-size: @base-font-size-px;
+        position: relative;
+        top: -1px;
+    }
+}
+
+/* Bureau page specific */
+
+.content__max-width {
+    max-width: 620px;
+}
+
+.bureau-history {
+    position: relative;
+    
+    &_header {
+        .respond-to-min(1024px {
+            position: absolute;
+            left: 277px;
+            top: 25px;
+        });
+    }
+
+    &_text {
+        .respond-to-min(1024px {
+            position: relative;
+            top: 48px;
+        });
+    }
+    
+    &_image {
+        width: 250px;
+        .respond-to-max(598 {
+            width: 290px;
+        });
+        .respond-to-range(599px, 768px, {
+            width: 215px;
+        });
+    }
+}
