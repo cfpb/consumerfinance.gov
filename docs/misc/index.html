@@ -322,60 +322,6 @@
             </ul>
           </footer>
         </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">An example using the figure element</h3>
-          <section class="docs-pattern_pattern">
-<p>
-    <figure class="figure__bordered float-media">
-        <img src="http://placekitten.com/200/230" alt="">
-    </figure>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-    aliquip ex ea commodo consequat. Duis aute irure dolor in
-    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-    culpa qui officia deserunt mollit anim id est laborum.
-</p>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-    aliquip ex ea commodo consequat. Duis aute irure dolor in
-    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-    culpa qui officia deserunt mollit anim id est laborum.
-</p>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
-    &lt;figure class=&quot;figure__bordered float-media&quot;&gt;
-        &lt;img src=&quot;http://placekitten.com/200/230&quot; alt=&quot;&quot;&gt;
-    &lt;/figure&gt;
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-    aliquip ex ea commodo consequat. Duis aute irure dolor in
-    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-    culpa qui officia deserunt mollit anim id est laborum.
-&lt;/p&gt;
-&lt;p&gt;
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-    aliquip ex ea commodo consequat. Duis aute irure dolor in
-    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-    culpa qui officia deserunt mollit anim id est laborum.
-&lt;/p&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    &lt;figure class=\&amp;quot;figure__bordered float-media\&amp;quot;&gt;\n        &lt;img src=\&amp;quot;http://placekitten.com/200/230\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/figure&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&lt;p&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-          </footer>
-        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.float-media {
@@ -406,6 +352,133 @@
     float: right;
     margin-right: 0;
     margin-left: 30px;
+  }
+}</code></pre>
+      </div>
+    </div>
+    <div id="responsive-cropping" class="docs-component">
+      <h2 class="docs-component_header"><span>Responsive cropping</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>A simple cropping pattern. We may need more advanced ones in the future.</li>
+          <li>How it works: At smaller screens .rwd-crop is cropped to 75% of its original height and flexibily scales 100% of its parents width. At larger screens it is no longer flexible and uses its default width. For images the default width can be set using the width attribute.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.rwd-crop</h3>
+          <section class="docs-pattern_pattern">
+<figure class="rwd-crop">
+    <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
+</figure>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure class=&quot;rwd-crop&quot;&gt;
+    &lt;img class=&quot;rwd-crop_item&quot; src=&quot;http://placekitten.com/480/544&quot; width=&quot;155&quot; alt=&quot;&quot;&gt;
+&lt;/figure&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure class=\&amp;quot;rwd-crop\&amp;quot;&gt;\n    &lt;img class=\&amp;quot;rwd-crop_item\&amp;quot; src=\&amp;quot;http://placekitten.com/480/544\&amp;quot; width=\&amp;quot;155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n&lt;/figure&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.rwd-crop
+  .rwd-crop_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice how the image has a default width of 155 which is set using the width attribute.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.float-media example</h3>
+          <section class="docs-pattern_pattern">
+<p>
+    <figure class="float-media rwd-crop">
+        <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
+    </figure>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
+    &lt;figure class=&quot;float-media rwd-crop&quot;&gt;
+        &lt;img class=&quot;rwd-crop_item&quot; src=&quot;http://placekitten.com/480/480&quot; width=&quot;200&quot; alt=&quot;&quot;&gt;
+    &lt;/figure&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;
+&lt;p&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    &lt;figure class=\&amp;quot;float-media rwd-crop\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;rwd-crop_item\&amp;quot; src=\&amp;quot;http://placekitten.com/480/480\&amp;quot; width=\&amp;quot;200\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/figure&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&lt;p&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>An example of using .rwd-crop in combination with .float-media.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">@media only all and (max-width: 37.4375em) {
+  .rwd-crop {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    overflow: hidden;
+  }
+  .rwd-crop_item {
+    position: absolute;
+    width: 100%;
+    max-width: none;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .rwd-crop {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    overflow: hidden;
+  }
+  .rwd-crop_item {
+    position: absolute;
+    width: 100%;
+    max-width: none;
   }
 }</code></pre>
       </div>
