@@ -8842,6 +8842,39 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   background-color: #babbbd;
   margin-left: -45px;
 }
+/* topdoc
+  name: Width-specific display
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Show on mobile (below 600px)
+      markup: |
+        <section>
+            <p>The the text in the box below is visible only at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-show-on-mobile">Visible on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-show-on-mobile"
+      notes:
+        - "Displays an element only at widths less than 600px."
+        - "Uses display: block to show the element on mobile. Would need to 
+           be extended for other display types."
+    - name: Hide on mobile (below 600px)
+      markup: |
+        <section>
+            <p>The text in the box below is hidden at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-hide-on-mobile">Hidden on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-hide-on-mobile"
+      notes:
+        - "Hides an element at widths of less than 600px"
+  tags:
+    - cfgov-cf-enhancements
+*/
 @media only all and (max-width: 37.4375em) {
   .u-hide-on-mobile {
     display: none;
@@ -8865,6 +8898,27 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     display: block;
   }
 }
+/* topdoc
+  name: Margin overrides
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Margin-bottom 0
+      markup: |
+        <section>
+            <h1>H1 with default bottom margin</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </section>
+        <section>
+            <h1 class="u-mb0">H1 with class u-mb0 applied</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </section>
+      codenotes:
+        - ".u-mb0"
+      notes:
+        - "Sets any element's margin-bottom value to 0."
+  tags:
+    - cfgov-cf-enhancements
+*/
 .u-mb0 {
   margin-bottom: 0px !important;
 }
@@ -8872,21 +8926,17 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   name: Branded list modifier
   family: cfgov-cf-enhancements
   patterns:
-    - name: Default example
+    - name: Branded list
       markup: |
         <ul class="list__branded">
-            <li>
-                <span class="list_span">First item</span>
-            </li>
-            <li>
-                <span class="list_span">Second item</span>
-            </li>
-            <li>
-                <span class="list_item">Third item</span>
-            </li>
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
         </ul>
       codenotes:
-        - "List with CFBP font and brand-color bullets"
+        - ".list__branded"
+      notes:
+        - "List that uses CFPB font and brand-color bullets"
   tags:
     - cfgov-cf-enhancements
 */
@@ -10738,6 +10788,119 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     margin-top: 0;
   }
 }
+/* topdoc
+  name: Standard title & description hierarchy for content areas
+  family: cfgov-layout
+  patterns:
+    - name: Extra large title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-large">Extra large title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__extra-large
+      notes:
+        - "This is the largest title size. It displays as an h1 at screen sizes
+           at 600px and above, and an h2 below 600px (mobile screens)."
+    - name: Large title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__large">Large title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__large
+      notes:
+        - "This is the large title size. It displays as h2 at screen sizes
+           at and above 600px, and h3 below 600px (mobile screens)."
+    - name: Medium title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__medium">Medium title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__medium
+      notes:
+        - "This is the medium title size. It displays as h3 at all screen sizes."
+    - name: Extra small title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-small">Extra small title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__extra-small
+      notes:
+        - "This is the extra small title size. It displays as h6 at all screen sizes."
+    - name: Large description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-large">Extra large title with large      
+                description</h1>
+                <p class="content_desc__large">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc__large
+      notes:
+        - "This is the large description size. It displays as h3 at and above 600px
+           and h4 below 600px."
+        - "Can be paired with the extra large title"
+    - name: Medium description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__large">Large title with medium description</h1>
+                <p class="content_desc__medium">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc__medium
+      notes:
+        - "This is the medium description. It displays as h4 below 600px,
+           and as the default webfont at and above 600px."
+    - name: Regular description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__medium">Medium title with regular description</h1>
+                <p class="content_desc">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc
+      notes:
+        - "This is the regular description. It displays as the default webfont."
+  tags:
+    - cfgov-layout
+*/
 .content_title__extra-large {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -10860,7 +11023,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .lt-ie9 .content_title__extra-large b {
   font-weight: normal !important;
 }
-@media only all and (max-width: 37.5em) {
+@media only all and (max-width: 37.4375em) {
   .content_title__extra-large {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -10984,7 +11147,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     font-weight: normal !important;
   }
 }
-@media only all and (max-width: 37.5em) {
+@media only all and (max-width: 37.4375em) {
   .content_title__extra-large {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -11230,7 +11393,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .lt-ie9 .content_title__large b {
   font-weight: normal !important;
 }
-@media only all and (max-width: 37.5em) {
+@media only all and (max-width: 37.4375em) {
   .content_title__large {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -11354,7 +11517,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     font-weight: normal !important;
   }
 }
-@media only all and (max-width: 37.5em) {
+@media only all and (max-width: 37.4375em) {
   .content_title__large {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -11684,6 +11847,68 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 .lt-ie9 .content_desc strong,
 .lt-ie9 .content_desc b {
+  font-weight: normal !important;
+}
+.content_desc__medium {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 1em;
+}
+.content_desc__medium em,
+.content_desc__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+.content_desc__medium strong,
+.content_desc__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+.content_desc__medium em,
+.content_desc__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+.content_desc__medium strong,
+.content_desc__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
   font-weight: normal !important;
 }
 @media only all and (min-width: 37.5em) {
@@ -20149,10 +20374,6 @@ a.focus .summary_header {
   .contact-us-map {
     float: right;
   }
-}
-/* Bureau page specific */
-.content__max-width {
-  max-width: 620px;
 }
 .bureau-history {
   position: relative;
