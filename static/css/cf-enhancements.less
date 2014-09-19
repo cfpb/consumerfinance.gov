@@ -110,6 +110,66 @@
     }
 }
 
+.u-hide-on-mobile {
+    .respond-to-max(599px {
+        display: none;
+    });
+}
+
+.u-show-on-mobile {
+    display: none;
+    .respond-to-max(599px {
+        display: block;
+    });
+}
+
+.u-mb0 {
+    margin-bottom: 0px !important;
+}
+
+/* topdoc
+  name: Branded list modifier
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list__branded">
+            <li>
+                <span class="list_span">First item</span>
+            </li>
+            <li>
+                <span class="list_span">Second item</span>
+            </li>
+            <li>
+                <span class="list_item">Third item</span>
+            </li>
+        </ul>
+      codenotes:
+        - "List with CFBP font and brand-color bullets"
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.list__branded {
+    .webfont-regular();
+    
+    li {
+        position: relative;
+        list-style-type: none;
+        padding-bottom: 12px;
+        
+        &:before {
+            content: "\25AA";
+            position: absolute;
+            left: -19px;
+            color: @green;
+            font-size: unit(22px / @base-font-size-px, em);
+            line-height: 1;
+        }
+    }
+    
+}
+
 
 /* topdoc
     name: EOF

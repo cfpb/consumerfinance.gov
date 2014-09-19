@@ -76,7 +76,7 @@
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Based on Object-oriented CSS' media object.</li>
+              <li>Based on Object-oriented CSS' media object. In mobile sizes (less than 600px), image container stacks on top of media_body.</li>
             </ul>
           </footer>
         </div>
@@ -156,6 +156,10 @@
 .media_image-container {
   float: left;
   margin-right: 15px;
+}
+
+.media_image-container__right {
+  display: block;
 }
 
 .media_image-container__right {
