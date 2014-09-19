@@ -32,7 +32,8 @@
               .media_image
             .media_body
       notes:
-        - "Based on Object-oriented CSS' media object."
+        - "Based on Object-oriented CSS' media object. In mobile sizes
+           (less than 600px), image container stacks on top of media_body."
     - name: Image container right modifier
       markup: |
         <article class="media">
@@ -65,6 +66,8 @@
     }
 
     &_image-container__right {
+        display: block;
+        
         .respond-to-min(600px {
             float: right;
             margin-left: unit(@grid_gutter-width / 2, px);
@@ -84,16 +87,17 @@
         .respond-to-max(599px {
             margin-top: unit(@grid_gutter-width / 2, px);
         });
+        
         .respond-to-min(600px {
-            display:table-cell; 
+            display:table-cell;
             vertical-align:top;
             width:10000px;
         });
     }
-}
-
-.lt-ie8 .media_body {
-    zoom: 1;
-    display: block;
-    width: auto;
+    
+    .lt-ie8 &_body {
+        zoom: 1;
+        display: block;
+        width: auto;
+    }
 }
