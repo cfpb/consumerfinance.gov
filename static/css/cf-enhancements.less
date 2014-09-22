@@ -221,6 +221,26 @@
     
 }
 
+.expandable__mobile-only {
+    
+    .expandable_target {
+        display: none;
+        
+        .respond-to-max(599, {
+            display: block;
+            padding: unit(10px / @base-font-size-px, em) 0;
+            border: dotted @pacific;
+            border-width: 1px 0;
+
+            .expandable_label {
+                color: @pacific;
+            }
+            
+        });
+    }
+    
+}
+
 
 /* topdoc
     name: EOF

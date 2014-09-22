@@ -476,6 +476,31 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   color: #2cb34a;
   font-size: 1.375em;
   line-height: 1;
+}
+.expandable__mobile-only .expandable_target {
+  display: none;
+}
+@media only all and (max-width: 37.4375em) {
+  .expandable__mobile-only .expandable_target {
+    display: block;
+    padding: 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+  }
+  .expandable__mobile-only .expandable_target .expandable_label {
+    color: #0072ce;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .expandable__mobile-only .expandable_target {
+    display: block;
+    padding: 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+  }
+  .expandable__mobile-only .expandable_target .expandable_label {
+    color: #0072ce;
+  }
 }</code></pre>
       </div>
     </div>
