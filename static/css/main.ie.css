@@ -10223,6 +10223,10 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   line-height: 1;
 }
 
+.expandable__mobile-only .expandable_target {
+  display: none;
+}
+
 /* topdoc
     name: EOF
     eof: true
@@ -21557,6 +21561,11 @@ a.focus .summary_header {
 
 .lt-ie9 .bureau-bio_name {
   font-weight: normal !important;
+}
+
+.content__max-width {
+  width: 100%;
+  max-width: 620px;
 }
 
 /* ==========================================================================

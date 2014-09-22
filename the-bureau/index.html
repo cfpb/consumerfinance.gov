@@ -84,24 +84,41 @@
                                 content_block__border-bottom">
                     <h1 class="content_title content_title__large">Our core functions</h1>
                     <p class="content__max-width">We work to give consumers the information they need to understand the terms of their agreements with financial companies. We are working to make regulations and guidance as clear and streamlined as possible so providers of consumer financial products and services can follow the rules on their own.</p>
-                    <div class="content_block__padded-top
-                                content_block__border-top 
-                                content_block__flush-bottom 
-                                content_block__flush-top">
-                        <p class="content_desc content_desc__medium content__max-width">Congress established the CFPB to protect consumers by carrying out federal consumer financial laws. Among other things, we:</p>
-                        <ul class="list list__branded bureau-functions_list u-mb0">
-                            <li>Write rules, supervise companies, and enforce federal consumer financial protection laws.</li>
-                            <li>Restrict unfair, deceptive, or abusive acts or practices.</li>
-                            <li>Take consumer complaints</li>
-                            <li>Promote financial education</li>
-                        </ul>
-                    
-                        <ul class="list list__branded bureau-functions_list">
-                            <li>Research consumer behavior</li>
-                            <li>Monitor financial markets for new risks to consumers</li>
-                            <li>Enforce laws that outlaw discrimination and other unfair treatment in consumer finance</li>
-                        </ul>
-                        
+                    <div class="expandable expandable__expanded expandable__mobile-only u-mb0 bureau-functions">
+                        <button class="expandable_header expandable_target">
+                            <span class="expandable_header-left expandable_label">
+                                Expand to see what we do
+                            </span>
+                            <span class="expandable_header-right expandable_link">
+                                <span class="expandable_cue-open">
+                                    <span class="cf-icon cf-icon-plus-round"></span>
+                                </span>
+                                <span class="expandable_cue-close">
+                                    <span class="cf-icon cf-icon-minus-round"></span>
+                                </span>
+                            </span>
+                        </button>
+                        <div class="expandable_content">
+                            <div class="content_line u-hide-on-mobile"></div>
+                            <div class="content_block__padded-top
+                                        content_block__flush-bottom 
+                                        content_block__flush-top">
+                                <p class="content_desc content_desc__medium content__max-width">Congress established the CFPB to protect consumers by carrying out federal consumer financial laws. Among other things, we:</p>
+                                <ul class="list list__branded bureau-functions_list u-mb0">
+                                    <li>Write rules, supervise companies, and enforce federal consumer financial protection laws.</li>
+                                    <li>Restrict unfair, deceptive, or abusive acts or practices.</li>
+                                    <li>Take consumer complaints</li>
+                                    <li>Promote financial education</li>
+                                </ul>
+
+                                <ul class="list list__branded bureau-functions_list">
+                                    <li>Research consumer behavior</li>
+                                    <li>Monitor financial markets for new risks to consumers</li>
+                                    <li>Enforce laws that outlaw discrimination and other unfair treatment in consumer finance</li>
+                                </ul>
+
+                            </div>
+                        </div>
                     </div>
                 </section>
                 
@@ -167,7 +184,6 @@
                         </li>
                     </ul>                    
                 </section>
-                
                 <section class="content_block content_block__padded-top content_block__border-top bureau-history">
                     <h1 class="content_title content_title__large bureau-history_header">CFPB history</h1>
                     <div class="media">
@@ -192,3 +208,56 @@
     </main><!-- END .content -->
 
 {% endblock content %}
+
+{% block javascript %}
+    <script>
+        function getViewportDimensions() {
+            var e = window, a = 'inner';
+            if (!('innerWidth' in window )) {
+                a = 'client';
+                e = document.documentElement || document.body;
+            }
+            return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+        }
+        
+        function MobileOnlyExpandable(elem, breakpoint) {
+            this.breakpoint = breakpoint || 600;
+            this.expandable = elem;
+            this.expandableTarget = this.expandable.children('.expandable_target');
+            // Make sure we have necessary elements before proceeding.
+            if (this.expandable instanceof jQuery && this.expandableTarget instanceof jQuery) {
+                this.init();
+            }
+        }
+        
+        MobileOnlyExpandable.prototype.checkViewportSize = function () {
+            var isMobile = getViewportDimensions().width < this.breakpoint;
+            if (isMobile !== this.isMobile) {
+                this.toggleExpandableDisplay(isMobile);
+            }
+            this.isMobile = isMobile;
+        }
+        
+        MobileOnlyExpandable.prototype.toggleExpandableDisplay = function (isMobile) {
+            var isExpanded = this.expandable.hasClass('expandable__expanded');
+            if (isMobile && isExpanded || !isMobile && !isExpanded) {
+                this.expandableTarget.click();
+            }
+        }
+        
+        MobileOnlyExpandable.prototype.init = function () {
+            var self = this;
+            this.checkViewportSize();
+            $( window ).resize(function() {
+                self.checkViewportSize();
+            });
+        }
+        
+        $('document').ready(function () {
+            $('.expandable__mobile-only').each(function (i) {
+                new MobileOnlyExpandable($(this));
+            });
+        });
+        
+    </script>
+{% endblock javascript %}
