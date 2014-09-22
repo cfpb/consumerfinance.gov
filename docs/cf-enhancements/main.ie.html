@@ -246,6 +246,258 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 </code></pre>
       </div>
     </div>
+    <div id="width-specific-display" class="docs-component">
+      <h2 class="docs-component_header"><span>Width-specific display</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Show on mobile (below 600px)</h3>
+          <section class="docs-pattern_pattern">
+<section>
+    <p>The the text in the box below is visible only at widths less than 600px</p>
+    <div style="border: 1px solid black; height: 22px; padding: 5px;">
+        <p class="u-show-on-mobile">Visible on mobile</p>
+    </div>
+</section>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section&gt;
+    &lt;p&gt;The the text in the box below is visible only at widths less than 600px&lt;/p&gt;
+    &lt;div style=&quot;border: 1px solid black; height: 22px; padding: 5px;&quot;&gt;
+        &lt;p class=&quot;u-show-on-mobile&quot;&gt;Visible on mobile&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section&gt;\n    &lt;p&gt;The the text in the box below is visible only at widths less than 600px&lt;/p&gt;\n    &lt;div style=\&amp;quot;border: 1px solid black; height: 22px; padding: 5px;\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;u-show-on-mobile\&amp;quot;&gt;Visible on mobile&lt;/p&gt;\n    &lt;/div&gt;\n&lt;/section&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-show-on-mobile</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Displays an element only at widths less than 600px.</li>
+              <li>Uses display: block to show the element on mobile. Would need to  be extended for other display types.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Hide on mobile (below 600px)</h3>
+          <section class="docs-pattern_pattern">
+<section>
+    <p>The text in the box below is hidden at widths less than 600px</p>
+    <div style="border: 1px solid black; height: 22px; padding: 5px;">
+        <p class="u-hide-on-mobile">Hidden on mobile</p>
+    </div>
+</section>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section&gt;
+    &lt;p&gt;The text in the box below is hidden at widths less than 600px&lt;/p&gt;
+    &lt;div style=&quot;border: 1px solid black; height: 22px; padding: 5px;&quot;&gt;
+        &lt;p class=&quot;u-hide-on-mobile&quot;&gt;Hidden on mobile&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section&gt;\n    &lt;p&gt;The text in the box below is hidden at widths less than 600px&lt;/p&gt;\n    &lt;div style=\&amp;quot;border: 1px solid black; height: 22px; padding: 5px;\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;u-hide-on-mobile\&amp;quot;&gt;Hidden on mobile&lt;/p&gt;\n    &lt;/div&gt;\n&lt;/section&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-hide-on-mobile</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Hides an element at widths of less than 600px</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-show-on-mobile {
+  display: none;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="margin-overrides" class="docs-component">
+      <h2 class="docs-component_header"><span>Margin overrides</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Margin-bottom 0</h3>
+          <section class="docs-pattern_pattern">
+<section>
+    <h1>H1 with default bottom margin</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+</section>
+<section>
+    <h1 class="u-mb0">H1 with class u-mb0 applied</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+</section>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section&gt;
+    &lt;h1&gt;H1 with default bottom margin&lt;/h1&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section&gt;
+    &lt;h1 class=&quot;u-mb0&quot;&gt;H1 with class u-mb0 applied&lt;/h1&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section&gt;\n    &lt;h1&gt;H1 with default bottom margin&lt;/h1&gt;\n    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&lt;/p&gt;\n&lt;/section&gt;\n&lt;section&gt;\n    &lt;h1 class=\&amp;quot;u-mb0\&amp;quot;&gt;H1 with class u-mb0 applied&lt;/h1&gt;\n    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&lt;/p&gt;\n&lt;/section&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-mb0</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Sets any element's margin-bottom value to 0.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-mb0 {
+  margin-bottom: 0px !important;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="branded-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Branded list modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Branded list</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list__branded">
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list__branded&quot;&gt;
+    &lt;li&gt;First item&lt;/li&gt;
+    &lt;li&gt;Second item&lt;/li&gt;
+    &lt;li&gt;Third item&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list__branded\&amp;quot;&gt;\n    &lt;li&gt;First item&lt;/li&gt;\n    &lt;li&gt;Second item&lt;/li&gt;\n    &lt;li&gt;Third item&lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list__branded</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>List that uses CFPB font and brand-color bullets</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__branded {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.list__branded em,
+.list__branded i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.list__branded strong,
+.list__branded b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.list__branded em,
+.list__branded i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.list__branded strong,
+.list__branded b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.list__branded li {
+  position: relative;
+  list-style-type: none;
+  padding-bottom: 12px;
+}
+
+.list__branded li:before {
+  content: &quot;\25AA&quot;;
+  position: absolute;
+  left: -19px;
+  color: #2cb34a;
+  font-size: 1.375em;
+  line-height: 1;
+}
+</code></pre>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>
