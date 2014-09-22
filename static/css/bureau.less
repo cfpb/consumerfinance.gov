@@ -1,0 +1,30 @@
+.bureau-history {
+    position: relative;
+    
+    &_header {
+        .respond-to-min(1024px {
+            position: absolute;
+            left: 277px;
+            top: 25px;
+        });
+    }
+
+    &_text {
+        .respond-to-min(1024px {
+            position: relative;
+            top: 48px;
+        });
+    }
+    
+    &_image {
+        width: 250px;
+        
+        .respond-to-max(599 {
+            width: 290px;
+        });
+        
+        .respond-to-range(600px, 768px, {
+            width: 215px;
+        });
+    }
+}

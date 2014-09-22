@@ -110,6 +110,117 @@
     }
 }
 
+/* topdoc
+  name: Width-specific display
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Show on mobile (below 600px)
+      markup: |
+        <section>
+            <p>The the text in the box below is visible only at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-show-on-mobile">Visible on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-show-on-mobile"
+      notes:
+        - "Displays an element only at widths less than 600px."
+        - "Uses display: block to show the element on mobile. Would need to 
+           be extended for other display types."
+    - name: Hide on mobile (below 600px)
+      markup: |
+        <section>
+            <p>The text in the box below is hidden at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-hide-on-mobile">Hidden on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-hide-on-mobile"
+      notes:
+        - "Hides an element at widths of less than 600px"
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u-hide-on-mobile {
+    .respond-to-max(599px {
+        display: none;
+    });
+}
+
+.u-show-on-mobile {
+    display: none;
+    .respond-to-max(599px {
+        display: block;
+    });
+}
+
+/* topdoc
+  name: Margin overrides
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Margin-bottom 0
+      markup: |
+        <section>
+            <h1>H1 with default bottom margin</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </section>
+        <section>
+            <h1 class="u-mb0">H1 with class u-mb0 applied</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </section>
+      codenotes:
+        - ".u-mb0"
+      notes:
+        - "Sets any element's margin-bottom value to 0."
+  tags:
+    - cfgov-cf-enhancements
+*/
+.u-mb0 {
+    margin-bottom: 0px !important;
+}
+
+/* topdoc
+  name: Branded list modifier
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Branded list
+      markup: |
+        <ul class="list__branded">
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+        </ul>
+      codenotes:
+        - ".list__branded"
+      notes:
+        - "List that uses CFPB font and brand-color bullets"
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.list__branded {
+    .webfont-regular();
+    
+    li {
+        position: relative;
+        list-style-type: none;
+        padding-bottom: 12px;
+        
+        &:before {
+            content: "\25AA";
+            position: absolute;
+            left: -19px;
+            color: @green;
+            font-size: unit(22px / @base-font-size-px, em);
+            line-height: 1;
+        }
+    }
+    
+}
+
 
 /* topdoc
     name: EOF
