@@ -20427,6 +20427,234 @@ a.focus .summary_header {
     width: 215px;
   }
 }
+@media only all and (min-width: 64em) {
+  .bureau-functions_list {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .bureau-functions_list {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .bureau-functions_list {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 64em) {
+  .bureau-functions_list {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .bureau-functions_list {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .bureau-functions_list {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+.bureau-mission_media .image-container {
+  margin-left: 10px;
+}
+.bureau-bio .media_image {
+  width: 125px;
+}
+@media only all and (max-width: 64em) {
+  .bureau-bio .media_image {
+    width: 80px;
+  }
+}
+@media only all and (max-width: 64em) {
+  .bureau-bio .media_image {
+    width: 80px;
+  }
+}
+.bureau-bio_name {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: .85em !important;
+}
+.bureau-bio_name em,
+.bureau-bio_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.bureau-bio_name strong,
+.bureau-bio_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.bureau-bio_name em,
+.bureau-bio_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.bureau-bio_name strong,
+.bureau-bio_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.bureau-bio_name em,
+.bureau-bio_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.bureau-bio_name strong,
+.bureau-bio_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.bureau-bio_name em,
+.bureau-bio_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+.bureau-bio_name strong,
+.bureau-bio_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 64em) {
+  .bureau-bio_name {
+    margin-top: 0;
+    margin-bottom: 0.27777778em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 64em) {
+  .bureau-bio_name {
+    margin-top: 0;
+    margin-bottom: 0.27777778em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+}
 /* ==========================================================================
    cfgov-refresh
    media
