@@ -28,3 +28,34 @@
         });
     }
 }
+
+.bureau-functions_list {
+    .respond-to-min(1024px, {
+        .grid_column(6);
+    });
+}
+
+.bureau-mission_media {
+    .image-container {
+        margin-left: 10px;
+    }
+}
+
+.bureau-bio {
+    
+    .media_image {
+        width: 125px;
+        .respond-to-max(1024px, {
+            width: 80px;
+        });
+    }
+    
+    &_name {
+        .h3();
+        .respond-to-max(1024px, {
+            .h4();
+        });
+        margin-bottom: .85em !important;
+    }
+    
+}
