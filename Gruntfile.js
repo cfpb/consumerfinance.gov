@@ -323,6 +323,7 @@ module.exports = function(grunt) {
       'blog-docs',
       'cf-enhancements',
       'layout',
+      'media',
       'media-object',
       'meta',
       'misc',

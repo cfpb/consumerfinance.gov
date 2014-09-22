@@ -771,7 +771,39 @@
       codenotes:
         - .content_block.content_block__flush-sides
       notes:
-        - "Removes the side margin from .content_block."
+        - "Removes the side margin from .content_block."    
+    - name: Border-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-top">
+            Content block with top border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-top
+      notes:
+        - "Adds top border to .content_block."
+    - name: Border-bottom modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-bottom">
+            Content block with bottom border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-bottom
+      notes:
+        - "Adds bottom border to .content_block."
+    - name: Padded-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__padded-top content_block__border-top">
+            Content block with reduced top margin & added top padding
+            and border.
+        </div>
+      codenotes:
+        - .content_block.content_block__padded-top
+      notes:
+        - "Breaks top margin into margin & padding. Useful in combination with
+           content_block__border-top to add padding between block contents & border."
     - name: Background modifier
       markup: |
         Main content...
@@ -859,6 +891,14 @@
 .content_block {
     margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
     margin-bottom: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+    
+    &__border-top {
+        border-top: 1px solid @gray-50;
+    }
+    
+    &__border-bottom {
+        border-bottom: 1px solid @gray-50;
+    }
 
     &__flush-top {
         margin-top: 0 !important;
@@ -886,6 +926,12 @@
                      unit(@grid_gutter-width / @base-font-size-px, em);
         });
     }
+    
+    &__padded-top {
+        padding-top: unit(30px / @base-font-size-px, em);
+        margin-top: unit(30px / @base-font-size-px, em);
+        margin-bottom: unit(30px / @base-font-size-px, em);
+    }
 
     &__sub {
         margin-top: unit(30px / @base-font-size-px, em);
@@ -901,6 +947,174 @@
     }
 }
 
+/* topdoc
+  name: Standard title & description hierarchy for content areas
+  family: cfgov-layout
+  patterns:
+    - name: Extra large title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-large">Extra large title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__extra-large
+      notes:
+        - "This is the largest title size. It displays as an h1 at screen sizes
+           at 600px and above, and an h2 below 600px (mobile screens)."
+    - name: Large title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__large">Large title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__large
+      notes:
+        - "This is the large title size. It displays as h2 at screen sizes
+           at and above 600px, and h3 below 600px (mobile screens)."
+    - name: Medium title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__medium">Medium title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__medium
+      notes:
+        - "This is the medium title size. It displays as h3 at all screen sizes."
+    - name: Extra small title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-small">Extra small title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__extra-small
+      notes:
+        - "This is the extra small title size. It displays as h6 at all screen sizes."
+    - name: Large description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-large">Extra large title with large      
+                description</h1>
+                <p class="content_desc__large">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc__large
+      notes:
+        - "This is the large description size. It displays as h3 at and above 600px
+           and h4 below 600px."
+        - "Can be paired with the extra large title"
+    - name: Medium description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__large">Large title with medium description</h1>
+                <p class="content_desc__medium">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc__medium
+      notes:
+        - "This is the medium description. It displays as h4 below 600px,
+           and as the default webfont at and above 600px."
+    - name: Regular description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__medium">Medium title with regular description</h1>
+                <p class="content_desc">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc
+      notes:
+        - "This is the regular description. It displays as the default webfont."
+  tags:
+    - cfgov-layout
+*/
+.content {
+    &_title {
+        &__extra-large {
+            .h1();
+            margin-bottom: unit(29px / @font-size, em);
+            .respond-to-max(599px, {
+                .h2();
+                margin-bottom: unit(22px / @font-size, em);
+            });
+        }
+
+        &__large {
+            .h2();
+            margin-bottom: unit(22px / @font-size, em);
+            .respond-to-max(599px, {
+                .h3();
+                margin-bottom: unit(19px / @font-size, em);
+            });
+        }
+
+        &__medium {
+            .h3();
+            margin-bottom: unit(19px / @font-size, em); 
+        }
+
+        &__extra-small{
+            .h6();
+            margin-bottom: 0;
+        }
+    }
+    
+    &_desc {
+        .webfont-regular();
+        margin-bottom: 1em;
+
+        &__medium {
+            .webfont-regular();
+            margin-bottom: 1em;
+            
+            .respond-to-min(600px, {
+                .h4();
+                margin-bottom: 1em;
+            });
+        }
+
+        &__large {
+            .h4();
+            margin-bottom: unit(15px / @font-size, em);
+            .respond-to-min(600px, {
+                .h3();
+                margin-bottom: unit(19px / @font-size, em);
+            });
+        }
+    }
+}
 
 /* topdoc
   name: Sidebar items
