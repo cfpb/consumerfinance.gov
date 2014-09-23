@@ -3,7 +3,6 @@
    misc
    ========================================================================== */
 
-
 /* topdoc
   name: Styled link
   family: cfgov-misc
@@ -919,6 +918,65 @@
     .respond-to-min(1060px, {
         .grid_column(12);
     });
+}
+
+
+/* topdoc
+  name: Video poster
+  family: cfgov-misc
+  patterns:
+    - name: .video-poster
+      markup: |
+        <figure>
+            <a class="video-poster" href="#link-to-video">
+                <img src="http://placekitten.com/600/338" alt="">
+            </a>
+        </figure>
+      codenotes:
+        - .video-poster
+  tags:
+    - cfgov-misc
+*/
+
+.video-poster {
+    @font-size: 26px;
+
+    position: relative;
+    display: inline-block;
+
+    &:after {
+        .cf-icon();
+        // cf-icon-play
+        content: "\e640";
+        position: absolute;
+        right: @grid_gutter-width / 2;
+        bottom: @grid_gutter-width / 2;
+        display: block;
+        width: 1em;
+        height: 1em;
+        padding: unit(10px / @font-size, em)
+                 unit(8px / @font-size, em)
+                 unit(10px / @font-size, em)
+                 unit(12px / @font-size, em);
+        background: @black;
+        background: fade(@black, 75%);
+        color: @white;
+        font-size: unit(@font-size / @base-font-size-px, em);
+        text-align: center;
+        border-radius: 100%;
+        transition: background 200ms;
+    }
+
+    &:hover {
+        &:after {
+            background: @green;
+            background: fade(@green, 75%);
+        }        
+    }
+
+    & img {
+        vertical-align: middle;
+    }
 }
 
 

@@ -10967,6 +10967,62 @@ a.category-slug.active {
 }
 
 /* topdoc
+  name: Video poster
+  family: cfgov-misc
+  patterns:
+    - name: .video-poster
+      markup: |
+        <figure>
+            <a class="video-poster" href="#link-to-video">
+                <img src="http://placekitten.com/600/338" alt="">
+            </a>
+        </figure>
+      codenotes:
+        - .video-poster
+  tags:
+    - cfgov-misc
+*/
+
+.video-poster {
+  position: relative;
+  display: inline-block;
+}
+
+.video-poster:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e640";
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  display: block;
+  width: 1em;
+  height: 1em;
+  padding: 0.38461538em 0.30769231em 0.38461538em 0.46153846em;
+  background: #101820;
+  background: rgba(16, 24, 32, 0.75);
+  color: #ffffff;
+  font-size: 1.625em;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+
+.video-poster:hover:after {
+  background: #2cb34a;
+  background: rgba(44, 179, 74, 0.75);
+}
+
+.video-poster img {
+  vertical-align: middle;
+}
+
+/* topdoc
   name: Hero
   family: cfgov-misc
   patterns:
