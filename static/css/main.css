@@ -6327,6 +6327,9 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   tags:
     - cfgov-cf-enhancements
 */
+.grid_column__top-divider {
+  margin-top: 3.75em;
+}
 .grid_column__top-divider:before {
   content: "";
   display: block;
@@ -7073,6 +7076,9 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     - cfgov-layout
 */
 @media only all and (max-width: 37.4375em) {
+  .content-l_col__before-divider.content-l_col-1-2 {
+    margin-top: 3.75em;
+  }
   .content-l_col__before-divider.content-l_col-1-2:before {
     content: "";
     display: block;
@@ -7097,6 +7103,9 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   }
 }
 @media only all and (max-width: 47.9375em) {
+  .content-l_col__before-divider.content-l_col-1-3 {
+    margin-top: 3.75em;
+  }
   .content-l_col__before-divider.content-l_col-1-3:before {
     content: "";
     display: block;
