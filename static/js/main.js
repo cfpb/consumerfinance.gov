@@ -12627,7 +12627,7 @@ $(function() {
 
 
     // Expanding list
-    // Set the dt as the clickable element
+    // TODO: Determine if we should actually use the cfpbAriaButton plugin.
     $('.list-expanding_trigger').cfpbAriaButton();
     $('.list-expanding_trigger').click(function( e ){
         e.preventDefault();
@@ -12639,7 +12639,7 @@ $(function() {
             $(this).next().find('.list-expanding_child-list').slideToggle(100);
         }
     });
-    // Hide the dd's initially
+    // Hide the child lists initially
     $('.list-expanding_child-list').hide();
 
 });

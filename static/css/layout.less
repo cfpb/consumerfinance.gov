@@ -67,10 +67,16 @@
         - "The path in the `src` attribute has been adjusted for these docs."
     - name: Miscellaneous stuff (top right)
       markup: |
-        <div class="header_misc">
-            Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
-            <a class="header_misc_es">Español</a>
+        <div style="position: relative;">
+            <div class="header_misc">
+                Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
+                <a class="header_misc_es">Español</a>
+            </div>
         </div>
+      notes:
+        - "The outer div with the inline `position: relative;` style is only for
+           demonstration purposes in these docs, because the `.header_misc` div
+           is positioned absolutely."
   tags:
     - cfgov-layout
 */
