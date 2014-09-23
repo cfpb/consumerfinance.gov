@@ -3,6 +3,29 @@
    misc
    ========================================================================== */
 
+/* topdoc
+  name: Styled link
+  family: cfgov-misc
+  patterns:
+    - name: .styled-link
+      markup: |
+        <a class="styled-link" href="#">
+            Default styled link
+        </a>
+      codenotes:
+        - .styled-link
+  tags:
+    - cfgov-misc
+*/
+
+.styled-link {
+    @font-size: 16px;
+
+    border-bottom-width: 1px;
+    .webfont-medium();
+    font-size: unit(@font-size / @base-font-size-px, em);
+}
+
 
 /* topdoc
   name: Jump link
@@ -22,6 +45,20 @@
         </a>
       codenotes:
         - .jump-link__large
+    - name: .jump-link__download (modifier)
+      markup: |
+        <a class="jump-link jump-link__download" href="#">
+            Jump link using the download icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__download
+    - name: .jump-link__external-link (modifier)
+      markup: |
+        <a class="jump-link jump-link__external-link" href="#">
+            Jump link using the external-link icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__external-link
   tags:
     - cfgov-misc
 */
@@ -56,6 +93,13 @@
         }
     }
 
+    &__external-link {
+        &:after {
+            // Inserts the cf-icon-external-link glyph.
+            content: "\e610";
+        }
+    }
+
     &:after {
         .cf-icon();
         position: absolute;
@@ -81,6 +125,159 @@
             right: 0;
             bottom: 50%;
             text-align: right;
+        }
+    });
+}
+
+
+/* topdoc
+  name: Floating media
+  family: cfgov-misc
+  patterns:
+    - name: .float-media
+      markup: |
+        <p>
+            <img class="float-media"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media
+      notes:
+        - "Float some media left with margins."
+    - name: .float-media__right (modifier)
+      markup: |
+        <p>
+            <img class="float-media float-media__right"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media.float-media__right
+      notes:
+        - "Float some media right with margins."
+  tags:
+    - cfgov-misc
+*/
+
+.float-media {
+    @gutter: @grid_gutter-width;
+
+    display: block;
+    margin: 0 0 @gutter;
+
+    .respond-to-min(600px, {
+        float: left;
+        margin-right: @gutter;
+    });
+
+    &__right {
+        .respond-to-min(600px, {
+            float: right;
+            margin-right: 0;
+            margin-left: @gutter;
+        });
+    }
+}
+
+
+/* topdoc
+  name: Responsive cropping
+  family: cfgov-misc
+  notes:
+    - "A simple cropping pattern. We may need more advanced ones in the future."
+    - "How it works: At smaller screens .rwd-crop is cropped to 75% of its
+       original height and flexibily scales 100% of its parents width. At larger
+       screens it is no longer flexible and uses its default width. For images
+       the default width can be set using the width attribute."
+  patterns:
+    - name: .rwd-crop
+      markup: |
+        <figure class="rwd-crop">
+            <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
+        </figure>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .rwd-crop
+            .rwd-crop_item
+      notes:
+        - "The default .rwd-crop pattern only supports square or portrait-style
+           images. We'll need to create a modifier to support landscape images."
+        - "Notice how the image has a default width of 155 which is set using
+           the width attribute."
+    - name: .float-media example
+      markup: |
+        <p>
+            <figure class="float-media rwd-crop">
+                <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
+            </figure>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      notes:
+        - "An example of using .rwd-crop in combination with .float-media."
+  tags:
+    - cfgov-misc
+*/
+
+.rwd-crop {
+    .respond-to-max(599px, {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%;
+        overflow: hidden;
+
+        &_item {
+            position: absolute;
+            width: 100%;
+            max-width: none;
         }
     });
 }
@@ -123,44 +320,26 @@
   name: Short description
   family: cfgov-misc
   patterns:
-    - name: Simple styling for short descriptions
+    - name: .short-desc
       markup: |
         <p class="short-desc">I am short description.</p>
       codenotes:
         - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
   tags:
     - cfgov-misc
 */
 
 .short-desc {
     .webfont-regular();
-}
 
-
-/* topdoc
-  name: Link modifiers
-  family: cfgov-misc
-  patterns:
-    - name: Block link on small screens
-      markup: |
-        <a class="link__block-on-small">
-            On small screens I am a block, on larger screens I am a normal link.
-        </a>
-      codenotes:
-        - .link__block-on-small
-  tags:
-    - cfgov-misc
-*/
-
-.link__block-on-small {
-    .webfont-medium();
-
-    .respond-to-max(599px, {
-        display: block;
-        padding: 0.5em 0;
-        border-top: 1px dotted @pacific;
-        border-bottom: 1px dotted @pacific;
-    });
+    &__large {
+        font-size: unit(18px / @base-font-size-px, em);
+    }
 }
 
 
@@ -743,6 +922,65 @@
 
 
 /* topdoc
+  name: Video poster
+  family: cfgov-misc
+  patterns:
+    - name: .video-poster
+      markup: |
+        <figure>
+            <a class="video-poster" href="#link-to-video">
+                <img src="http://placekitten.com/600/338" alt="">
+            </a>
+        </figure>
+      codenotes:
+        - .video-poster
+  tags:
+    - cfgov-misc
+*/
+
+.video-poster {
+    @font-size: 26px;
+
+    position: relative;
+    display: inline-block;
+
+    &:after {
+        .cf-icon();
+        // cf-icon-play
+        content: "\e640";
+        position: absolute;
+        right: @grid_gutter-width / 2;
+        bottom: @grid_gutter-width / 2;
+        display: block;
+        width: 1em;
+        height: 1em;
+        padding: unit(10px / @font-size, em)
+                 unit(8px / @font-size, em)
+                 unit(10px / @font-size, em)
+                 unit(12px / @font-size, em);
+        background: @black;
+        background: fade(@black, 75%);
+        color: @white;
+        font-size: unit(@font-size / @base-font-size-px, em);
+        text-align: center;
+        border-radius: 100%;
+        transition: background 200ms;
+    }
+
+    &:hover {
+        &:after {
+            background: @green;
+            background: fade(@green, 75%);
+        }        
+    }
+
+    & img {
+        vertical-align: middle;
+    }
+}
+
+
+/* topdoc
   name: Hero
   family: cfgov-misc
   patterns:
@@ -1184,6 +1422,7 @@
         border-top: 1px dotted @pacific;
 
         .list_item {
+            display: block;
             margin-bottom: 0;
         }
 

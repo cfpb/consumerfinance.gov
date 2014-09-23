@@ -70,7 +70,10 @@ module.exports = function(grunt) {
     concat: {
       'cf-less': {
         src: [
-          'vendor/cf-*/*.less'
+          'vendor/cf-*/*.less',
+          '!vendor/cf-core/*.less',
+          'vendor/cf-core/cf-core.less',
+          '!vendor/cf-concat/cf.less'
         ],
         dest: 'vendor/cf-concat/cf.less',
       },
@@ -120,10 +123,10 @@ module.exports = function(grunt) {
         diff: false,
         map: false
       },
-      multiple_files: {
-        // Prefix all CSS files found in `static/css` and overwrite.
+      main: {
+        // Prefix `static/css/main.css` and overwrite.
         expand: true,
-        src: ['static/css/*.css', '!static/css/*.min.css']
+        src: ['static/css/main.css']
       },
     },
 
@@ -327,6 +330,7 @@ module.exports = function(grunt) {
       'blog-docs',
       'cf-enhancements',
       'layout',
+      'media',
       'media-object',
       'meta',
       'misc',

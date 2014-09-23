@@ -9288,24 +9288,6 @@ img {
    ========================================================================== */
 
 /* topdoc
-  name: Base styles
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: figure
-      markup: |
-        <figure>
-            <img src="http://placekitten.com/300/300">
-        </figure>
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-figure {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-/* topdoc
   name: Simple base style modifiers
   family: cfgov-cf-enhancements
   patterns:
@@ -9479,7 +9461,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 
 .grid_column__left-divider {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .grid_column__left-divider:before {
@@ -9490,7 +9472,179 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
+}
+
+/* topdoc
+  name: Width-specific display
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Show on mobile (below 600px)
+      markup: |
+        <section>
+            <p>The the text in the box below is visible only at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-show-on-mobile">Visible on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-show-on-mobile"
+      notes:
+        - "Displays an element only at widths less than 600px."
+        - "Uses display: block to show the element on mobile. Would need to 
+           be extended for other display types."
+    - name: Hide on mobile (below 600px)
+      markup: |
+        <section>
+            <p>The text in the box below is hidden at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-hide-on-mobile">Hidden on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-hide-on-mobile"
+      notes:
+        - "Hides an element at widths of less than 600px"
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u-show-on-mobile {
+  display: none;
+}
+
+/* topdoc
+  name: Margin overrides
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Margin-bottom 0
+      markup: |
+        <section>
+            <h1>H1 with default bottom margin</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </section>
+        <section>
+            <h1 class="u-mb0">H1 with class u-mb0 applied</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </section>
+      codenotes:
+        - ".u-mb0"
+      notes:
+        - "Sets any element's margin-bottom value to 0."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u-mb0 {
+  margin-bottom: 0px !important;
+}
+
+/* topdoc
+  name: Branded list modifier
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Branded list
+      markup: |
+        <ul class="list__branded">
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+        </ul>
+      codenotes:
+        - ".list__branded"
+      notes:
+        - "List that uses CFPB font and brand-color bullets"
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.list__branded {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.list__branded em,
+.list__branded i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.list__branded strong,
+.list__branded b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.list__branded em,
+.list__branded i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .list__branded em,
+.lt-ie9 .list__branded i {
+  font-style: normal !important;
+}
+
+.list__branded strong,
+.list__branded b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .list__branded strong,
+.lt-ie9 .list__branded b {
+  font-weight: normal !important;
+}
+
+.list__branded li {
+  position: relative;
+  list-style-type: none;
+  padding-bottom: 12px;
+}
+
+.list__branded li:before {
+  content: "\25AA";
+  position: absolute;
+  left: -19px;
+  color: #2cb34a;
+  font-size: 1.375em;
+  line-height: 1;
 }
 
 /* topdoc
@@ -10777,6 +10931,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
                     Full-width column (spans 12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -10793,6 +10949,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
                     Half-width column (spans 6/12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-1-3">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -10817,6 +10975,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
                     Third-width column (spans 4/12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-2-3">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -10871,6 +11031,76 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
            modifier converts it back into a full-width container (801px).
            .content-l_col-1-3 on the other hand would have a much smaller range,
            768 to 801px."
+    - name: Large gutters modifier
+      markup: |
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Full-width column (spans 12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-2-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;">
+                    Two thirds-width column (spans 8/12 columns)
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - .content-l.content-l__large-gutters
+      notes:
+        - "Adds 30px gutters to all columns by simply adding the
+           .content-l__large-gutters modifier."
   tags:
     - cfgov-layout
 */
@@ -10891,6 +11121,26 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
+}
+
+.content-l__large-gutters {
+  margin-left: -30px;
+  margin-right: -30px;
+}
+
+.content-l__large-gutters .content-l_col {
+  border-left-width: 30px;
+  border-right-width: 30px;
+}
+
+.content-l__large-gutters {
+  margin-left: -30px;
+  margin-right: -30px;
+}
+
+.content-l__large-gutters .content-l_col {
+  border-left-width: 30px;
+  border-right-width: 30px;
 }
 
 .content-l_col + .content-l_col {
@@ -11444,11 +11694,15 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   patterns:
     - name: .content-l_col__before-divider (modifier)
       markup: |
-        <div class="content-l">
+        <div class="content-l content-l__large-gutters">
             <div class="content-l_col content-l_col-1-2">
+                <img src="http://placekitten.com/600/320" alt="">
+                <br>
                 Half-width column (spans 6/12 columns)
             </div>
             <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <img src="http://placekitten.com/600/320" alt="">
+                <br>
                 Half-width column (spans 6/12 columns)
             </div>
         </div>
@@ -11456,7 +11710,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
         <!-- Starting a new .content-l so that the dividers from
              .content-l_col.content-l_col-1-2.content-l_col__before-divider
              won't overlap the .content-l_col-1-3 columns. -->
-        <div class="content-l">
+        <div class="content-l content-l__large-gutters">
             <div class="content-l_col content-l_col-1-3">
                 Third-width column (spans 4/12 columns)
             </div>
@@ -11474,7 +11728,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 */
 
 .content-l_col__before-divider.content-l_col-1-2 {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-2:before {
@@ -11485,11 +11739,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-2 {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-2:before {
@@ -11500,11 +11754,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-3 {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-3:before {
@@ -11515,11 +11769,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-3 {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-3:before {
@@ -11530,7 +11784,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 /* topdoc
@@ -12206,7 +12460,39 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
       codenotes:
         - .content_block.content_block__flush-sides
       notes:
-        - "Removes the side margin from .content_block."
+        - "Removes the side margin from .content_block."    
+    - name: Border-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-top">
+            Content block with top border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-top
+      notes:
+        - "Adds top border to .content_block."
+    - name: Border-bottom modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__border-bottom">
+            Content block with bottom border.
+        </div>
+      codenotes:
+        - .content_block.content_block__border-bottom
+      notes:
+        - "Adds bottom border to .content_block."
+    - name: Padded-top modifier
+      markup: |
+        Main content...
+        <div class="content_block content_block__padded-top content_block__border-top">
+            Content block with reduced top margin & added top padding
+            and border.
+        </div>
+      codenotes:
+        - .content_block.content_block__padded-top
+      notes:
+        - "Breaks top margin into margin & padding. Useful in combination with
+           content_block__border-top to add padding between block contents & border."
     - name: Background modifier
       markup: |
         Main content...
@@ -12296,6 +12582,14 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-bottom: 3.75em;
 }
 
+.content_block__border-top {
+  border-top: 1px solid #babbbd;
+}
+
+.content_block__border-bottom {
+  border-bottom: 1px solid #babbbd;
+}
+
 .content_block__flush-top {
   margin-top: 0 !important;
 }
@@ -12332,6 +12626,12 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   padding: 2.8125em 1.875em;
 }
 
+.content_block__padded-top {
+  padding-top: 1.875em;
+  margin-top: 1.875em;
+  margin-bottom: 1.875em;
+}
+
 .content_block__sub {
   margin-top: 1.875em;
   margin-bottom: 1.875em;
@@ -12345,6 +12645,1115 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .content-l_col.content_block,
 .content-l_col.content_block__sub {
   margin-top: 0;
+}
+
+/* topdoc
+  name: Standard title & description hierarchy for content areas
+  family: cfgov-layout
+  patterns:
+    - name: Extra large title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-large">Extra large title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__extra-large
+      notes:
+        - "This is the largest title size. It displays as an h1 at screen sizes
+           at 600px and above, and an h2 below 600px (mobile screens)."
+    - name: Large title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__large">Large title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__large
+      notes:
+        - "This is the large title size. It displays as h2 at screen sizes
+           at and above 600px, and h3 below 600px (mobile screens)."
+    - name: Medium title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__medium">Medium title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__medium
+      notes:
+        - "This is the medium title size. It displays as h3 at all screen sizes."
+    - name: Extra small title
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-small">Extra small title</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_title__extra-small
+      notes:
+        - "This is the extra small title size. It displays as h6 at all screen sizes."
+    - name: Large description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__extra-large">Extra large title with large      
+                description</h1>
+                <p class="content_desc__large">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc__large
+      notes:
+        - "This is the large description size. It displays as h3 at and above 600px
+           and h4 below 600px."
+        - "Can be paired with the extra large title"
+    - name: Medium description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__large">Large title with medium description</h1>
+                <p class="content_desc__medium">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc__medium
+      notes:
+        - "This is the medium description. It displays as h4 below 600px,
+           and as the default webfont at and above 600px."
+    - name: Regular description
+      markup: |
+        <main class="content" id="main" role="main">
+            <section>
+                <h1 class="content_title__medium">Medium title with regular description</h1>
+                <p class="content_desc">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolorum non sapiente nobis molestias delectus optio ipsam
+                voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                accusantium doloribus dicta fugiat itaque ab porro.</p>
+            </section>
+        </main>
+      codenotes:
+        - .content_desc
+      notes:
+        - "This is the regular description. It displays as the default webfont."
+  tags:
+    - cfgov-layout
+*/
+
+.content_title__extra-large {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.47058824em;
+  font-size: 2.125em;
+  line-height: 1.29411765;
+  margin-bottom: 0.85294118em;
+}
+
+.content_title__extra-large em,
+.content_title__extra-large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.content_title__extra-large strong,
+.content_title__extra-large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.content_title__extra-large em,
+.content_title__extra-large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.content_title__extra-large strong,
+.content_title__extra-large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.content_title__extra-large em,
+.content_title__extra-large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.content_title__extra-large strong,
+.content_title__extra-large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.content_title__extra-large em,
+.content_title__extra-large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large em,
+.lt-ie9 .content_title__extra-large i {
+  font-style: normal !important;
+}
+
+.content_title__extra-large strong,
+.content_title__extra-large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-large strong,
+.lt-ie9 .content_title__extra-large b {
+  font-weight: normal !important;
+}
+
+.content_title__large {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.84615385em;
+}
+
+.content_title__large em,
+.content_title__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.content_title__large strong,
+.content_title__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.content_title__large em,
+.content_title__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.content_title__large strong,
+.content_title__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.content_title__large em,
+.content_title__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.content_title__large strong,
+.content_title__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.content_title__large em,
+.content_title__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__large em,
+.lt-ie9 .content_title__large i {
+  font-style: normal !important;
+}
+
+.content_title__large strong,
+.content_title__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__large strong,
+.lt-ie9 .content_title__large b {
+  font-weight: normal !important;
+}
+
+.content_title__medium {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.86363636em;
+}
+
+.content_title__medium em,
+.content_title__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.content_title__medium strong,
+.content_title__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.content_title__medium em,
+.content_title__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.content_title__medium strong,
+.content_title__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.content_title__medium em,
+.content_title__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.content_title__medium strong,
+.content_title__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.content_title__medium em,
+.content_title__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_title__medium em,
+.lt-ie9 .content_title__medium i {
+  font-style: normal !important;
+}
+
+.content_title__medium strong,
+.content_title__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__medium strong,
+.lt-ie9 .content_title__medium b {
+  font-weight: normal !important;
+}
+
+.content_title__extra-small {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+  margin-bottom: 0;
+}
+
+.lt-ie9 .content_title__extra-small {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-small {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-small {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_title__extra-small {
+  font-weight: normal !important;
+}
+
+.content_desc {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 1em;
+}
+
+.content_desc em,
+.content_desc i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc em,
+.lt-ie9 .content_desc i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc em,
+.lt-ie9 .content_desc i {
+  font-style: normal !important;
+}
+
+.content_desc strong,
+.content_desc b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc strong,
+.lt-ie9 .content_desc b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc strong,
+.lt-ie9 .content_desc b {
+  font-weight: normal !important;
+}
+
+.content_desc em,
+.content_desc i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc em,
+.lt-ie9 .content_desc i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc em,
+.lt-ie9 .content_desc i {
+  font-style: normal !important;
+}
+
+.content_desc strong,
+.content_desc b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc strong,
+.lt-ie9 .content_desc b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc strong,
+.lt-ie9 .content_desc b {
+  font-weight: normal !important;
+}
+
+.content_desc__medium {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 1em;
+}
+
+.content_desc__medium em,
+.content_desc__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+
+.content_desc__medium strong,
+.content_desc__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+
+.content_desc__medium em,
+.content_desc__medium i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__medium em,
+.lt-ie9 .content_desc__medium i {
+  font-style: normal !important;
+}
+
+.content_desc__medium strong,
+.content_desc__medium b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium strong,
+.lt-ie9 .content_desc__medium b {
+  font-weight: normal !important;
+}
+
+.content_desc__medium {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 1em;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.content_desc__medium {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 1em;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__medium {
+  font-weight: normal !important;
+}
+
+.content_desc__large {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 0.83333333em;
+}
+
+.lt-ie9 .content_desc__large {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large {
+  font-weight: normal !important;
+}
+
+.content_desc__large {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.86363636em;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.86363636em;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.content_desc__large em,
+.content_desc__large i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.lt-ie9 .content_desc__large em,
+.lt-ie9 .content_desc__large i {
+  font-style: normal !important;
+}
+
+.content_desc__large strong,
+.content_desc__large b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .content_desc__large strong,
+.lt-ie9 .content_desc__large b {
+  font-weight: normal !important;
 }
 
 /* topdoc
@@ -14074,6 +15483,37 @@ a.category-slug.active {
    ========================================================================== */
 
 /* topdoc
+  name: Styled link
+  family: cfgov-misc
+  patterns:
+    - name: .styled-link
+      markup: |
+        <a class="styled-link" href="#">
+            Default styled link
+        </a>
+      codenotes:
+        - .styled-link
+  tags:
+    - cfgov-misc
+*/
+
+.styled-link {
+  border-bottom-width: 1px;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}
+
+/* topdoc
   name: Jump link
   family: cfgov-misc
   patterns:
@@ -14091,6 +15531,20 @@ a.category-slug.active {
         </a>
       codenotes:
         - .jump-link__large
+    - name: .jump-link__download (modifier)
+      markup: |
+        <a class="jump-link jump-link__download" href="#">
+            Jump link using the download icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__download
+    - name: .jump-link__external-link (modifier)
+      markup: |
+        <a class="jump-link jump-link__external-link" href="#">
+            Jump link using the external-link icon from cf-icons
+        </a>
+      codenotes:
+        - .jump-link__external-link
   tags:
     - cfgov-misc
 */
@@ -14126,6 +15580,10 @@ a.category-slug.active {
   content: "\e406";
 }
 
+.jump-link__external-link:after {
+  content: "\e610";
+}
+
 .jump-link:after {
   font-family: 'CFPB Minicons';
   display: inline-block;
@@ -14143,6 +15601,148 @@ a.category-slug.active {
 .list__links .jump-link {
   margin-top: -1px;
 }
+
+/* topdoc
+  name: Floating media
+  family: cfgov-misc
+  patterns:
+    - name: .float-media
+      markup: |
+        <p>
+            <img class="float-media"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media
+      notes:
+        - "Float some media left with margins."
+    - name: .float-media__right (modifier)
+      markup: |
+        <p>
+            <img class="float-media float-media__right"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media.float-media__right
+      notes:
+        - "Float some media right with margins."
+  tags:
+    - cfgov-misc
+*/
+
+.float-media {
+  display: block;
+  margin: 0 0 30px;
+}
+
+.float-media {
+  float: left;
+  margin-right: 30px;
+}
+
+.float-media {
+  float: left;
+  margin-right: 30px;
+}
+
+.float-media__right {
+  float: right;
+  margin-right: 0;
+  margin-left: 30px;
+}
+
+.float-media__right {
+  float: right;
+  margin-right: 0;
+  margin-left: 30px;
+}
+
+/* topdoc
+  name: Responsive cropping
+  family: cfgov-misc
+  notes:
+    - "A simple cropping pattern. We may need more advanced ones in the future."
+    - "How it works: At smaller screens .rwd-crop is cropped to 75% of its
+       original height and flexibily scales 100% of its parents width. At larger
+       screens it is no longer flexible and uses its default width. For images
+       the default width can be set using the width attribute."
+  patterns:
+    - name: .rwd-crop
+      markup: |
+        <figure class="rwd-crop">
+            <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
+        </figure>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .rwd-crop
+            .rwd-crop_item
+      notes:
+        - "The default .rwd-crop pattern only supports square or portrait-style
+           images. We'll need to create a modifier to support landscape images."
+        - "Notice how the image has a default width of 155 which is set using
+           the width attribute."
+    - name: .float-media example
+      markup: |
+        <p>
+            <figure class="float-media rwd-crop">
+                <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
+            </figure>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      notes:
+        - "An example of using .rwd-crop in combination with .float-media."
+  tags:
+    - cfgov-misc
+*/
 
 /* topdoc
   name: Micro copy
@@ -14250,11 +15850,16 @@ a.category-slug.active {
   name: Short description
   family: cfgov-misc
   patterns:
-    - name: Simple styling for short descriptions
+    - name: .short-desc
       markup: |
         <p class="short-desc">I am short description.</p>
       codenotes:
         - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
   tags:
     - cfgov-misc
 */
@@ -14333,33 +15938,8 @@ a.category-slug.active {
   font-weight: normal !important;
 }
 
-/* topdoc
-  name: Link modifiers
-  family: cfgov-misc
-  patterns:
-    - name: Block link on small screens
-      markup: |
-        <a class="link__block-on-small">
-            On small screens I am a block, on larger screens I am a normal link.
-        </a>
-      codenotes:
-        - .link__block-on-small
-  tags:
-    - cfgov-misc
-*/
-
-.link__block-on-small {
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-}
-
-.lt-ie9 .link__block-on-small {
-  font-weight: normal !important;
-}
-
-.lt-ie9 .link__block-on-small {
-  font-weight: normal !important;
+.short-desc__large {
+  font-size: 1.125em;
 }
 
 /* topdoc
@@ -14870,6 +16450,62 @@ a.category-slug.active {
 
 .form-l_col {
   margin-bottom: 1.875em;
+}
+
+/* topdoc
+  name: Video poster
+  family: cfgov-misc
+  patterns:
+    - name: .video-poster
+      markup: |
+        <figure>
+            <a class="video-poster" href="#link-to-video">
+                <img src="http://placekitten.com/600/338" alt="">
+            </a>
+        </figure>
+      codenotes:
+        - .video-poster
+  tags:
+    - cfgov-misc
+*/
+
+.video-poster {
+  position: relative;
+  display: inline-block;
+}
+
+.video-poster:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e640";
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  display: block;
+  width: 1em;
+  height: 1em;
+  padding: 0.38461538em 0.30769231em 0.38461538em 0.46153846em;
+  background: #101820;
+  background: rgba(16, 24, 32, 0.75);
+  color: #ffffff;
+  font-size: 1.625em;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+
+.video-poster:hover:after {
+  background: #2cb34a;
+  background: rgba(44, 179, 74, 0.75);
+}
+
+.video-poster img {
+  vertical-align: middle;
 }
 
 /* topdoc
@@ -20623,4 +22259,144 @@ a.focus .summary_header {
 
 .contact-us-map {
   max-width: 330px;
+}
+
+.bureau-history {
+  position: relative;
+}
+
+.bureau-history_image {
+  width: 250px;
+}
+
+/* ==========================================================================
+   cfgov-refresh
+   media
+   ========================================================================== */
+
+/* topdoc
+  name: Media 
+  family: cfgov-media
+  patterns:
+    - name: Media object (OOCSS)
+      markup: |
+        <article class="media">
+            <div class="media_image-container">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .media
+            .media_image-container
+              .media_image
+            .media_body
+      notes:
+        - "Based on Object-oriented CSS' media object. In mobile sizes
+           (less than 600px), image container stacks on top of media_body."
+    - name: Image container right modifier
+      markup: |
+        <article class="media">
+            <div class="media_image-container media_image-container__right">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Image is positioned to right instead of left of content."
+  tags:
+    - cfgov-media
+*/
+
+.media {
+  display: block;
+}
+
+.media:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lt-ie8 .media {
+  zoom: 1;
+}
+
+.media:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lt-ie8 .media {
+  zoom: 1;
+}
+
+.media_image-container {
+  float: left;
+  margin-right: 15px;
+}
+
+.media_image-container {
+  float: left;
+  margin-right: 15px;
+}
+
+.media_image-container__right {
+  display: block;
+}
+
+.media_image-container__right {
+  float: right;
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+.media_image-container__right {
+  float: right;
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+.media_image-container__wide-margin {
+  margin-right: 30px;
+}
+
+.media_image {
+  display: block;
+}
+
+.media_body {
+  display: table-cell;
+  width: 10000px;
+  vertical-align: top;
+}
+
+.media_body {
+  display: table-cell;
+  width: 10000px;
+  vertical-align: top;
+}
+
+.lt-ie8 .media_body {
+  zoom: 1;
+  display: block;
+  width: auto;
 }
