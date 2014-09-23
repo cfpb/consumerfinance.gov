@@ -9121,6 +9121,30 @@ a.category-slug.active {
    misc
    ========================================================================== */
 /* topdoc
+  name: Styled link
+  family: cfgov-misc
+  patterns:
+    - name: .styled-link
+      markup: |
+        <a class="styled-link" href="#">
+            Default styled link
+        </a>
+      codenotes:
+        - .styled-link
+  tags:
+    - cfgov-misc
+*/
+.styled-link {
+  border-bottom-width: 1px;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+}
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}
+/* topdoc
   name: Jump link
   family: cfgov-misc
   patterns:

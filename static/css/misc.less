@@ -5,6 +5,30 @@
 
 
 /* topdoc
+  name: Styled link
+  family: cfgov-misc
+  patterns:
+    - name: .styled-link
+      markup: |
+        <a class="styled-link" href="#">
+            Default styled link
+        </a>
+      codenotes:
+        - .styled-link
+  tags:
+    - cfgov-misc
+*/
+
+.styled-link {
+    @font-size: 16px;
+
+    border-bottom-width: 1px;
+    .webfont-medium();
+    font-size: unit(@font-size / @base-font-size-px, em);
+}
+
+
+/* topdoc
   name: Jump link
   family: cfgov-misc
   patterns:
