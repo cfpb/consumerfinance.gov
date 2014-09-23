@@ -7252,7 +7252,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 
 .grid_column__left-divider {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .grid_column__left-divider:before {
@@ -7263,7 +7263,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 /* topdoc
@@ -7498,6 +7498,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
                     Full-width column (spans 12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -7514,6 +7516,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
                     Half-width column (spans 6/12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-1-3">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -7538,6 +7542,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
                     Third-width column (spans 4/12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-2-3">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -7592,6 +7598,76 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
            modifier converts it back into a full-width container (801px).
            .content-l_col-1-3 on the other hand would have a much smaller range,
            768 to 801px."
+    - name: Large gutters modifier
+      markup: |
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Full-width column (spans 12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-2-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;">
+                    Two thirds-width column (spans 8/12 columns)
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - .content-l.content-l__large-gutters
+      notes:
+        - "Adds 30px gutters to all columns by simply adding the
+           .content-l__large-gutters modifier."
   tags:
     - cfgov-layout
 */
@@ -7605,6 +7681,16 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
+}
+
+.content-l__large-gutters {
+  margin-left: -30px;
+  margin-right: -30px;
+}
+
+.content-l__large-gutters .content-l_col {
+  border-left-width: 30px;
+  border-right-width: 30px;
 }
 
 .content-l_col + .content-l_col {
@@ -7894,11 +7980,15 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   patterns:
     - name: .content-l_col__before-divider (modifier)
       markup: |
-        <div class="content-l">
+        <div class="content-l content-l__large-gutters">
             <div class="content-l_col content-l_col-1-2">
+                <img src="http://placekitten.com/600/320" alt="">
+                <br>
                 Half-width column (spans 6/12 columns)
             </div>
             <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <img src="http://placekitten.com/600/320" alt="">
+                <br>
                 Half-width column (spans 6/12 columns)
             </div>
         </div>
@@ -7906,7 +7996,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
         <!-- Starting a new .content-l so that the dividers from
              .content-l_col.content-l_col-1-2.content-l_col__before-divider
              won't overlap the .content-l_col-1-3 columns. -->
-        <div class="content-l">
+        <div class="content-l content-l__large-gutters">
             <div class="content-l_col content-l_col-1-3">
                 Third-width column (spans 4/12 columns)
             </div>
@@ -7924,7 +8014,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 */
 
 .content-l_col__before-divider.content-l_col-1-2 {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-2:before {
@@ -7935,11 +8025,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-3 {
-  padding-left: 30px;
+  border-left-width: 30px;
 }
 
 .content-l_col__before-divider.content-l_col-1-3:before {
@@ -7950,7 +8040,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 1px;
   display: block;
   background-color: #babbbd;
-  margin-left: -45px;
+  margin-left: -30px;
 }
 
 /* topdoc
@@ -10022,6 +10112,33 @@ a.category-slug.active {
    ========================================================================== */
 
 /* topdoc
+  name: Styled link
+  family: cfgov-misc
+  patterns:
+    - name: .styled-link
+      markup: |
+        <a class="styled-link" href="#">
+            Default styled link
+        </a>
+      codenotes:
+        - .styled-link
+  tags:
+    - cfgov-misc
+*/
+
+.styled-link {
+  border-bottom-width: 1px;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}
+
+/* topdoc
   name: Jump link
   family: cfgov-misc
   patterns:
@@ -10847,6 +10964,62 @@ a.category-slug.active {
 
 .form-l_col {
   margin-bottom: 1.875em;
+}
+
+/* topdoc
+  name: Video poster
+  family: cfgov-misc
+  patterns:
+    - name: .video-poster
+      markup: |
+        <figure>
+            <a class="video-poster" href="#link-to-video">
+                <img src="http://placekitten.com/600/338" alt="">
+            </a>
+        </figure>
+      codenotes:
+        - .video-poster
+  tags:
+    - cfgov-misc
+*/
+
+.video-poster {
+  position: relative;
+  display: inline-block;
+}
+
+.video-poster:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e640";
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  display: block;
+  width: 1em;
+  height: 1em;
+  padding: 0.38461538em 0.30769231em 0.38461538em 0.46153846em;
+  background: #101820;
+  background: rgba(16, 24, 32, 0.75);
+  color: #ffffff;
+  font-size: 1.625em;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+
+.video-poster:hover:after {
+  background: #2cb34a;
+  background: rgba(44, 179, 74, 0.75);
+}
+
+.video-poster img {
+  vertical-align: middle;
 }
 
 /* topdoc
@@ -13785,8 +13958,8 @@ a.focus .summary_header {
 
 .media_body {
   display: table-cell;
-  vertical-align: top;
   width: 10000px;
+  vertical-align: top;
 }
 
 .lt-ie8 .media_body {
