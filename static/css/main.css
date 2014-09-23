@@ -13041,8 +13041,8 @@ a.focus .summary_header {
 @media only all and (min-width: 37.5em) {
   .media_body {
     display: table-cell;
-    vertical-align: top;
     width: 10000px;
+    vertical-align: top;
   }
 }
 .lt-ie8 .media_body {
