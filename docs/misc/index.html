@@ -26,6 +26,49 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="styled-link" class="docs-component">
+      <h2 class="docs-component_header"><span>Styled link</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.styled-link</h3>
+          <section class="docs-pattern_pattern">
+<a class="styled-link" href="#">
+    Default styled link
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;styled-link&quot; href=&quot;#&quot;&gt;
+    Default styled link
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;styled-link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Default styled link\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.styled-link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.styled-link {
+  border-bottom-width: 1px;
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+}
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}</code></pre>
+      </div>
+    </div>
     <div id="jump-link" class="docs-component">
       <h2 class="docs-component_header"><span>Jump link</span></h2>
       <div class="docs-patterns">
@@ -75,6 +118,52 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.jump-link__download (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="jump-link jump-link__download" href="#">
+    Jump link using the download icon from cf-icons
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__download&quot; href=&quot;#&quot;&gt;
+    Jump link using the download icon from cf-icons
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__download\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Jump link using the download icon from cf-icons\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.jump-link__download</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.jump-link__external-link (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="jump-link jump-link__external-link" href="#">
+    Jump link using the external-link icon from cf-icons
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__external-link&quot; href=&quot;#&quot;&gt;
+    Jump link using the external-link icon from cf-icons
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__external-link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Jump link using the external-link icon from cf-icons\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.jump-link__external-link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.jump-link {
@@ -101,6 +190,9 @@
 }
 .jump-link__download:after {
   content: &quot;\e406&quot;;
+}
+.jump-link__external-link:after {
+  content: &quot;\e610&quot;;
 }
 .jump-link:after {
   font-family: 'CFPB Minicons';
@@ -146,6 +238,291 @@
     right: 0;
     bottom: 50%;
     text-align: right;
+  }
+}</code></pre>
+      </div>
+    </div>
+    <div id="floating-media" class="docs-component">
+      <h2 class="docs-component_header"><span>Floating media</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.float-media</h3>
+          <section class="docs-pattern_pattern">
+<p>
+    <img class="float-media"
+         src="http://placekitten.com/200/230" alt="">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
+    &lt;img class=&quot;float-media&quot;
+         src=&quot;http://placekitten.com/200/230&quot; alt=&quot;&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;
+&lt;p&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    &lt;img class=\&amp;quot;float-media\&amp;quot;\n         src=\&amp;quot;http://placekitten.com/200/230\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&lt;p&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.float-media</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Float some media left with margins.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.float-media__right (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<p>
+    <img class="float-media float-media__right"
+         src="http://placekitten.com/200/230" alt="">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
+    &lt;img class=&quot;float-media float-media__right&quot;
+         src=&quot;http://placekitten.com/200/230&quot; alt=&quot;&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;
+&lt;p&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    &lt;img class=\&amp;quot;float-media float-media__right\&amp;quot;\n         src=\&amp;quot;http://placekitten.com/200/230\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&lt;p&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.float-media.float-media__right</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Float some media right with margins.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.float-media {
+  display: block;
+  margin: 0 0 30px;
+}
+@media only all and (min-width: 37.5em) {
+  .float-media {
+    float: left;
+    margin-right: 30px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .float-media {
+    float: left;
+    margin-right: 30px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .float-media__right {
+    float: right;
+    margin-right: 0;
+    margin-left: 30px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .float-media__right {
+    float: right;
+    margin-right: 0;
+    margin-left: 30px;
+  }
+}</code></pre>
+      </div>
+    </div>
+    <div id="responsive-cropping" class="docs-component">
+      <h2 class="docs-component_header"><span>Responsive cropping</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>A simple cropping pattern. We may need more advanced ones in the future.</li>
+          <li>How it works: At smaller screens .rwd-crop is cropped to 75% of its original height and flexibily scales 100% of its parents width. At larger screens it is no longer flexible and uses its default width. For images the default width can be set using the width attribute.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.rwd-crop</h3>
+          <section class="docs-pattern_pattern">
+<figure class="rwd-crop">
+    <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
+</figure>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure class=&quot;rwd-crop&quot;&gt;
+    &lt;img class=&quot;rwd-crop_item&quot; src=&quot;http://placekitten.com/480/544&quot; width=&quot;155&quot; alt=&quot;&quot;&gt;
+&lt;/figure&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure class=\&amp;quot;rwd-crop\&amp;quot;&gt;\n    &lt;img class=\&amp;quot;rwd-crop_item\&amp;quot; src=\&amp;quot;http://placekitten.com/480/544\&amp;quot; width=\&amp;quot;155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n&lt;/figure&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.rwd-crop
+  .rwd-crop_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The default .rwd-crop pattern only supports square or portrait-style images. We'll need to create a modifier to support landscape images.</li>
+              <li>Notice how the image has a default width of 155 which is set using the width attribute.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.float-media example</h3>
+          <section class="docs-pattern_pattern">
+<p>
+    <figure class="float-media rwd-crop">
+        <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
+    </figure>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
+    &lt;figure class=&quot;float-media rwd-crop&quot;&gt;
+        &lt;img class=&quot;rwd-crop_item&quot; src=&quot;http://placekitten.com/480/480&quot; width=&quot;200&quot; alt=&quot;&quot;&gt;
+    &lt;/figure&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;
+&lt;p&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    &lt;figure class=\&amp;quot;float-media rwd-crop\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;rwd-crop_item\&amp;quot; src=\&amp;quot;http://placekitten.com/480/480\&amp;quot; width=\&amp;quot;200\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/figure&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&lt;p&gt;\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do\n    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim\n    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n    aliquip ex ea commodo consequat. Duis aute irure dolor in\n    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in\n    culpa qui officia deserunt mollit anim id est laborum.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>An example of using .rwd-crop in combination with .float-media.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">@media only all and (max-width: 37.4375em) {
+  .rwd-crop {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    overflow: hidden;
+  }
+  .rwd-crop_item {
+    position: absolute;
+    width: 100%;
+    max-width: none;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .rwd-crop {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    overflow: hidden;
+  }
+  .rwd-crop_item {
+    position: absolute;
+    width: 100%;
+    max-width: none;
   }
 }</code></pre>
       </div>
@@ -273,7 +650,7 @@
       <h2 class="docs-component_header"><span>Short description</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Simple styling for short descriptions</h3>
+          <h3 class="docs-pattern_header">.short-desc</h3>
           <section class="docs-pattern_pattern">
 <p class="short-desc">I am short description.</p>
 
@@ -287,6 +664,25 @@
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>.short-desc</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.short-desc__large (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<p class="short-desc short-desc__large">I am large short description.</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p class=&quot;short-desc short-desc__large&quot;&gt;I am large short description.&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p class=\&amp;quot;short-desc short-desc__large\&amp;quot;&gt;I am large short description.&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.short-desc__large</code></pre>
               </li>
             </ul>
           </footer>
@@ -353,63 +749,9 @@
 .lt-ie9 .short-desc strong,
 .lt-ie9 .short-desc b {
   font-weight: normal !important;
-}</code></pre>
-      </div>
-    </div>
-    <div id="link-modifiers" class="docs-component">
-      <h2 class="docs-component_header"><span>Link modifiers</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Block link on small screens</h3>
-          <section class="docs-pattern_pattern">
-<a class="link__block-on-small">
-    On small screens I am a block, on larger screens I am a normal link.
-</a>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;link__block-on-small&quot;&gt;
-    On small screens I am a block, on larger screens I am a normal link.
-&lt;/a&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;link__block-on-small\&amp;quot;&gt;\n    On small screens I am a block, on larger screens I am a normal link.\n&lt;/a&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.link__block-on-small</code></pre>
-              </li>
-            </ul>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.link__block-on-small {
-  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
 }
-.lt-ie9 .link__block-on-small {
-  font-weight: normal !important;
-}
-.lt-ie9 .link__block-on-small {
-  font-weight: normal !important;
-}
-@media only all and (max-width: 37.4375em) {
-  .link__block-on-small {
-    display: block;
-    padding: 0.5em 0;
-    border-top: 1px dotted #0072ce;
-    border-bottom: 1px dotted #0072ce;
-  }
-}
-@media only all and (max-width: 37.4375em) {
-  .link__block-on-small {
-    display: block;
-    padding: 0.5em 0;
-    border-top: 1px dotted #0072ce;
-    border-bottom: 1px dotted #0072ce;
-  }
+.short-desc__large {
+  font-size: 1.125em;
 }</code></pre>
       </div>
     </div>
@@ -1374,6 +1716,75 @@ label
 }</code></pre>
       </div>
     </div>
+    <div id="video-poster" class="docs-component">
+      <h2 class="docs-component_header"><span>Video poster</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.video-poster</h3>
+          <section class="docs-pattern_pattern">
+<figure>
+    <a class="video-poster" href="#link-to-video">
+        <img src="http://placekitten.com/600/338" alt="">
+    </a>
+</figure>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure&gt;
+    &lt;a class=&quot;video-poster&quot; href=&quot;#link-to-video&quot;&gt;
+        &lt;img src=&quot;http://placekitten.com/600/338&quot; alt=&quot;&quot;&gt;
+    &lt;/a&gt;
+&lt;/figure&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure&gt;\n    &lt;a class=\&amp;quot;video-poster\&amp;quot; href=\&amp;quot;#link-to-video\&amp;quot;&gt;\n        &lt;img src=\&amp;quot;http://placekitten.com/600/338\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/a&gt;\n&lt;/figure&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.video-poster</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.video-poster {
+  position: relative;
+  display: inline-block;
+}
+.video-poster:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: &quot;\e640&quot;;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  display: block;
+  width: 1em;
+  height: 1em;
+  padding: 0.38461538em 0.30769231em 0.38461538em 0.46153846em;
+  background: #101820;
+  background: rgba(16, 24, 32, 0.75);
+  color: #ffffff;
+  font-size: 1.625em;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+.video-poster:hover:after {
+  background: #2cb34a;
+  background: rgba(44, 179, 74, 0.75);
+}
+.video-poster img {
+  vertical-align: middle;
+}</code></pre>
+      </div>
+    </div>
     <div id="hero" class="docs-component">
       <h2 class="docs-component_header"><span>Hero</span></h2>
       <div class="docs-patterns">
@@ -2195,6 +2606,7 @@ label
     border-top: 1px dotted #0072ce;
   }
   .list__links .list_item {
+    display: block;
     margin-bottom: 0;
   }
   .list__links .list_link {
@@ -2207,6 +2619,7 @@ label
     border-top: 1px dotted #0072ce;
   }
   .list__links .list_item {
+    display: block;
     margin-bottom: 0;
   }
   .list__links .list_link {
