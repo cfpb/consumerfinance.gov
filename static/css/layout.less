@@ -99,6 +99,8 @@
                     Full-width column (spans 12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -115,6 +117,8 @@
                     Half-width column (spans 6/12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-1-3">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -139,6 +143,8 @@
                     Third-width column (spans 4/12 columns)
                 </div>
             </div>
+        </div>
+        <div class="content-l">
             <div class="content-l_col content-l_col-2-3">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -193,6 +199,76 @@
            modifier converts it back into a full-width container (801px).
            .content-l_col-1-3 on the other hand would have a much smaller range,
            768 to 801px."
+    - name: Large gutters modifier
+      markup: |
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Full-width column (spans 12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Half-width column (spans 6/12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;
+                            margin-bottom: 4px;">
+                    Third-width column (spans 4/12 columns)
+                </div>
+            </div>
+        </div>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-2-3">
+                <div style="background: #F1F2F2;
+                            text-align: center;
+                            padding: 8px;">
+                    Two thirds-width column (spans 8/12 columns)
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - .content-l.content-l__large-gutters
+      notes:
+        - "Adds 30px gutters to all columns by simply adding the
+           .content-l__large-gutters modifier."
   tags:
     - cfgov-layout
 */
@@ -204,6 +280,18 @@
     .respond-to-min(600px, {
         .grid_nested-col-group();
     });
+
+    &__large-gutters {
+        .respond-to-min(600px, {
+            margin-left: -@grid_gutter-width;
+            margin-right: -@grid_gutter-width;
+
+            & .content-l_col {
+                border-left-width: @grid_gutter-width;
+                border-right-width: @grid_gutter-width;
+            }
+        });
+    }
 }
 
 .content-l_col {
@@ -299,11 +387,15 @@
   patterns:
     - name: .content-l_col__before-divider (modifier)
       markup: |
-        <div class="content-l">
+        <div class="content-l content-l__large-gutters">
             <div class="content-l_col content-l_col-1-2">
+                <img src="http://placekitten.com/600/320" alt="">
+                <br>
                 Half-width column (spans 6/12 columns)
             </div>
             <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <img src="http://placekitten.com/600/320" alt="">
+                <br>
                 Half-width column (spans 6/12 columns)
             </div>
         </div>
@@ -311,7 +403,7 @@
         <!-- Starting a new .content-l so that the dividers from
              .content-l_col.content-l_col-1-2.content-l_col__before-divider
              won't overlap the .content-l_col-1-3 columns. -->
-        <div class="content-l">
+        <div class="content-l content-l__large-gutters">
             <div class="content-l_col content-l_col-1-3">
                 Third-width column (spans 4/12 columns)
             </div>
