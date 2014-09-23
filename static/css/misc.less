@@ -108,6 +108,159 @@
 
 
 /* topdoc
+  name: Floating media
+  family: cfgov-misc
+  patterns:
+    - name: .float-media
+      markup: |
+        <p>
+            <img class="float-media"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media
+      notes:
+        - "Float some media left with margins."
+    - name: .float-media__right (modifier)
+      markup: |
+        <p>
+            <img class="float-media float-media__right"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media.float-media__right
+      notes:
+        - "Float some media right with margins."
+  tags:
+    - cfgov-misc
+*/
+
+.float-media {
+    @gutter: @grid_gutter-width;
+
+    display: block;
+    margin: 0 0 @gutter;
+
+    .respond-to-min(600px, {
+        float: left;
+        margin-right: @gutter;
+    });
+
+    &__right {
+        .respond-to-min(600px, {
+            float: right;
+            margin-right: 0;
+            margin-left: @gutter;
+        });
+    }
+}
+
+
+/* topdoc
+  name: Responsive cropping
+  family: cfgov-misc
+  notes:
+    - "A simple cropping pattern. We may need more advanced ones in the future."
+    - "How it works: At smaller screens .rwd-crop is cropped to 75% of its
+       original height and flexibily scales 100% of its parents width. At larger
+       screens it is no longer flexible and uses its default width. For images
+       the default width can be set using the width attribute."
+  patterns:
+    - name: .rwd-crop
+      markup: |
+        <figure class="rwd-crop">
+            <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
+        </figure>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .rwd-crop
+            .rwd-crop_item
+      notes:
+        - "The default .rwd-crop pattern only supports square or portrait-style
+           images. We'll need to create a modifier to support landscape images."
+        - "Notice how the image has a default width of 155 which is set using
+           the width attribute."
+    - name: .float-media example
+      markup: |
+        <p>
+            <figure class="float-media rwd-crop">
+                <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
+            </figure>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      notes:
+        - "An example of using .rwd-crop in combination with .float-media."
+  tags:
+    - cfgov-misc
+*/
+
+.rwd-crop {
+    .respond-to-max(599px, {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%;
+        overflow: hidden;
+
+        &_item {
+            position: absolute;
+            width: 100%;
+            max-width: none;
+        }
+    });
+}
+
+
+/* topdoc
   name: Micro copy
   family: cfgov-misc
   patterns:
