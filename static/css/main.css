@@ -9309,6 +9309,8 @@ a.category-slug.active {
           .rwd-crop
             .rwd-crop_item
       notes:
+        - "The default .rwd-crop pattern only supports square or portrait-style
+           images. We'll need to create a modifier to support landscape images."
         - "Notice how the image has a default width of 155 which is set using
            the width attribute."
     - name: .float-media example
