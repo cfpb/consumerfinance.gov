@@ -150,6 +150,11 @@
     }
 }
 
+.desktop-menu_horizontal-list .list_link {
+    // override standard visited link color
+    .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
+}
+
 // ============================================================ SLIDING NAV TEST
 
 .respond-to-max(800px, {
@@ -168,9 +173,11 @@
      
         & .list_item {
             display: block;
-            border-bottom: 1px solid @darkgray;
+            border-bottom: 1px solid @gray-50;
+            margin-right: 0; // overriding .list-horizontal .list_item
+
             &:first-child {
-                border-top: 1px solid @darkgray;
+                border-top: 1px solid @gray-50;
             }
         }
 
@@ -188,47 +195,55 @@
                      @grid_gutter-width
                      (@grid_gutter-width / 2)
                      (@grid_gutter-width / 2);
-            background: @white;
-            // .m-link-medium();
-            // .m-link-unstyled();
-            // font-size: unit( 18 / @base-font-size-px, em );
+            position: relative;
+            background: @gray-20;
+            font-size: unit(18px / @base-font-size-px, em);
         }
-        // & > .list_item > a:hover {
-        //     background-color: @base-btn-color-hover;
-        //     color: @white;
-        //     &:after {
-        //         color: @white;
-        //     }
-        // }
+        & > .list_item > a:hover {
+            background: @white;
+            color: @darkgray;
+        }
+        & > .list_item > a:focus {
+            background: @white;
+            color: @darkgray;
+        }
+        & > .list_item > a:active {
+            background: @gray-10;
+            color: @darkgray;
+        }
+        & > .list_item > .list_link__disabled {
+            background: @gray-20 !important;
+        }
 
         // Two levels deep
         & .list-expanding .list-expanding_list-item > a,
         & .list-expanding .list-expanding_list-item > span {
             padding-left: @grid_gutter-width;
+            background: @gray-10;
+            font-size: 1em;
         }
 
         // Three levels deep
         & .list-expanding .list-expanding .list-expanding_list-item > a,
         & .list-expanding .list-expanding .list-expanding_list-item > span {
             padding-left: @grid_gutter-width * 1.5;
+            background: @gray-5;
         }
 
         // Give the expanding trigger an icon
-        .list-expanding_trigger[aria-pressed="false"] {
-            // #icon > .bulletRight( @u-plus-disc );
-            &:after {
-                right: @grid_gutter-width / 2;
-                font-size: 18px;
-                color: @pacific;
-            }
+        .list-expanding_trigger:after {
+            position: absolute;
+            right: @grid_gutter-width / 2;
+            font-family: 'CFPB Minicons';
+            font-style: normal;
+            font-weight: normal;
+            -webkit-font-smoothing: antialiased;
         }
-        .list-expanding_trigger[aria-pressed="true"] {
-            // #icon > .bulletRight( @u-minus-disc );
-            &:after {
-                right: @grid_gutter-width / 2;
-                font-size: 18px;
-                color: @pacific;
-            }
+        .list-expanding_trigger[aria-pressed="false"]:after {
+            content: "\e002";
+        }
+        .list-expanding_trigger[aria-pressed="true"]:after {
+            content: "\e006";
         }
 
         // Hide a child list if the trigger is not pressed
@@ -257,8 +272,10 @@
         -webkit-transition: .2s margin-right ease-in, .2s box-shadow ease-in;
     }
     .is-open .sliding-nav_page {
+        border-left: 1px solid @gray-80;
         margin-right: -80%;
-        box-shadow: 0 0 20px @darkgray;
+        position: relative;
+        box-shadow: -6px 0 0 rgba(16, 24, 32, 0.2);
     }
 
     // This overlays the main content and when clicked closes the menu
@@ -319,6 +336,14 @@
         color: @gray;
         font-size: 1.5em;
         line-height: 40px;
+
+        &:focus {
+            outline: 1px dotted @black;
+        }
+        &:active {
+            background: @gray-10;
+            color: @black;
+        }
     }
 
 });
@@ -435,11 +460,6 @@
 
     .desktop-menu_horizontal-list.list__horizontal > .list_item {
         margin: 0 @grid_gutter-width / 2;
-    }
-
-    .desktop-menu_horizontal-list .list_link {
-        // override standard visited link color
-        .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
     }
 
 });
