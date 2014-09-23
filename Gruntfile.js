@@ -70,7 +70,10 @@ module.exports = function(grunt) {
     concat: {
       'cf-less': {
         src: [
-          'vendor/cf-*/*.less'
+          'vendor/cf-*/*.less',
+          '!vendor/cf-core/*.less',
+          'vendor/cf-core/cf-core.less',
+          '!vendor/cf-concat/cf.less'
         ],
         dest: 'vendor/cf-concat/cf.less',
       },
