@@ -96,7 +96,7 @@
 }
 
 .grid_column__left-divider {
-    padding-left: @grid_gutter-width;
+    border-left-width: @grid_gutter-width;
 
     &:before {
         content: "";
@@ -106,7 +106,7 @@
         width: 1px;
         display: block;
         background-color: @gray-50;
-        margin-left: -(@grid_gutter-width * 1.5);
+        margin-left: -@grid_gutter-width;
     }
 }
 
