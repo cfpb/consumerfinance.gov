@@ -8825,7 +8825,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   name: Primary navigation
   family: cfgov-layout
   patterns:
-    - name: Desktop mega menu
+    - name: TBD
       markup: |
         
       notes:
@@ -9129,10 +9129,10 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     -webkit-font-smoothing: antialiased;
   }
   .primary-nav_top-level-list.list-expanding .list-expanding_trigger[aria-pressed="false"]:after {
-    content: "\e002";
+    content: "\e006";
   }
   .primary-nav_top-level-list.list-expanding .list-expanding_trigger[aria-pressed="true"]:after {
-    content: "\e006";
+    content: "\e004";
   }
   .primary-nav_top-level-list.list-expanding .list-expanding_trigger[aria-pressed="false"] .list-expanding_child-list {
     display: none;
@@ -9300,10 +9300,10 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     -webkit-font-smoothing: antialiased;
   }
   .primary-nav_top-level-list.list-expanding .list-expanding_trigger[aria-pressed="false"]:after {
-    content: "\e002";
+    content: "\e006";
   }
   .primary-nav_top-level-list.list-expanding .list-expanding_trigger[aria-pressed="true"]:after {
-    content: "\e006";
+    content: "\e004";
   }
   .primary-nav_top-level-list.list-expanding .list-expanding_trigger[aria-pressed="false"] .list-expanding_child-list {
     display: none;
@@ -9418,13 +9418,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     position: relative;
     top: -54px;
   }
-  .desktop-menu .l-wrapper-inner {
+  .primary-nav .primary-nav_top-level-list {
+    padding-left: 15px;
+    margin-bottom: 0;
     position: static;
     overflow: visible;
-    padding-left: 15px;
-  }
-  .primary-nav_top-level-list {
-    margin-bottom: 0;
   }
   .primary-nav_top-level-list.list__horizontal > .list_item {
     display: inline-block;
@@ -9586,7 +9584,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .lt-ie9 .desktop-menu_horizontal-list-small a b {
     font-weight: normal !important;
   }
-  .desktop-menu_horizontal-list {
+  .desktop-menu_full-wrapper .desktop-menu_horizontal-list {
+    padding-left: 15px;
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -9606,13 +9605,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     position: relative;
     top: -54px;
   }
-  .desktop-menu .l-wrapper-inner {
+  .primary-nav .primary-nav_top-level-list {
+    padding-left: 15px;
+    margin-bottom: 0;
     position: static;
     overflow: visible;
-    padding-left: 15px;
-  }
-  .primary-nav_top-level-list {
-    margin-bottom: 0;
   }
   .primary-nav_top-level-list.list__horizontal > .list_item {
     display: inline-block;
@@ -9774,7 +9771,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .lt-ie9 .desktop-menu_horizontal-list-small a b {
     font-weight: normal !important;
   }
-  .desktop-menu_horizontal-list {
+  .desktop-menu_full-wrapper .desktop-menu_horizontal-list {
+    padding-left: 15px;
     margin-top: 0;
     margin-bottom: 0;
   }

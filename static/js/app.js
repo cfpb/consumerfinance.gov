@@ -124,7 +124,7 @@ $(function() {
 
 $(function() {
 
-    var $desktopMenu = $('.desktop-menu'),
+    var $desktopMenu = $('.primary-nav'),
         $desktopMenuTrigger = $('.primary-nav_top-level-list > li'),
         $desktopMenuChild = $('.desktop-menu_full-wrapper'),
         mouseIsInsideMenu = false,

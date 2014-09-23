@@ -131,7 +131,7 @@
   name: Primary navigation
   family: cfgov-layout
   patterns:
-    - name: Desktop mega menu
+    - name: TBD
       markup: |
         
       notes:
@@ -240,10 +240,10 @@
             -webkit-font-smoothing: antialiased;
         }
         .list-expanding_trigger[aria-pressed="false"]:after {
-            content: "\e002";
+            content: "\e006";
         }
         .list-expanding_trigger[aria-pressed="true"]:after {
-            content: "\e006";
+            content: "\e004";
         }
 
         // Hide a child list if the trigger is not pressed
@@ -348,7 +348,7 @@
 
 });
 
-// ======================================================= DESKTOP MENU TEST
+// =========================================================== DESKTOP MENU TEST
 
 .respond-to-min(801px, {
 
@@ -365,21 +365,13 @@
         top: -54px; // magic number - dependent on height of horizontal navbar
     }
 
-    // .desktop-menu.l-wrapper-outer {
-    //     position: relative;
-    //     overflow: visible;
-    //     color: @black;
-    // }
-
-    .desktop-menu .l-wrapper-inner {
+    .primary-nav .primary-nav_top-level-list {
+        padding-left: @grid_gutter-width / 2;
+        margin-bottom: 0;
         position: static;
         overflow: visible;
-        padding-left: @grid_gutter-width / 2;
     }
 
-    .primary-nav_top-level-list {
-        margin-bottom: 0;
-    }
 
     .primary-nav_top-level-list.list__horizontal > .list_item {
         display: inline-block;
@@ -453,7 +445,8 @@
     }
 
     // Horizontal list
-    .desktop-menu_horizontal-list {
+    .desktop-menu_full-wrapper .desktop-menu_horizontal-list {
+        padding-left: @grid_gutter-width / 2;
         margin-top: 0;
         margin-bottom: 0;
     }
