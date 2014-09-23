@@ -10049,7 +10049,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   name: Primary navigation
   family: cfgov-layout
   patterns:
-    - name: Desktop mega menu
+    - name: TBD
       markup: |
         
       notes:
@@ -10350,14 +10350,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   top: -54px;
 }
 
-.desktop-menu .l-wrapper-inner {
+.primary-nav .primary-nav_top-level-list {
+  padding-left: 15px;
+  margin-bottom: 0;
   position: static;
   overflow: visible;
-  padding-left: 15px;
-}
-
-.primary-nav_top-level-list {
-  margin-bottom: 0;
 }
 
 .primary-nav_top-level-list.list__horizontal > .list_item {
@@ -10542,7 +10539,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   font-weight: normal !important;
 }
 
-.desktop-menu_horizontal-list {
+.desktop-menu_full-wrapper .desktop-menu_horizontal-list {
+  padding-left: 15px;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -10565,14 +10563,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   top: -54px;
 }
 
-.desktop-menu .l-wrapper-inner {
+.primary-nav .primary-nav_top-level-list {
+  padding-left: 15px;
+  margin-bottom: 0;
   position: static;
   overflow: visible;
-  padding-left: 15px;
-}
-
-.primary-nav_top-level-list {
-  margin-bottom: 0;
 }
 
 .primary-nav_top-level-list.list__horizontal > .list_item {
@@ -10757,7 +10752,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   font-weight: normal !important;
 }
 
-.desktop-menu_horizontal-list {
+.desktop-menu_full-wrapper .desktop-menu_horizontal-list {
+  padding-left: 15px;
   margin-top: 0;
   margin-bottom: 0;
 }
