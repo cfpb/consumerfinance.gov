@@ -26,6 +26,49 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="styled-link" class="docs-component">
+      <h2 class="docs-component_header"><span>Styled link</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.styled-link</h3>
+          <section class="docs-pattern_pattern">
+<a class="styled-link" href="#">
+    Default styled link
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;styled-link&quot; href=&quot;#&quot;&gt;
+    Default styled link
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;styled-link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Default styled link\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.styled-link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.styled-link {
+  border-bottom-width: 1px;
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.lt-ie9 .styled-link {
+  font-weight: normal !important;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="jump-link" class="docs-component">
       <h2 class="docs-component_header"><span>Jump link</span></h2>
       <div class="docs-patterns">
@@ -1332,6 +1375,80 @@ label
         <pre class="docs-code"><code data-language="css">
 .form-l_col {
   margin-bottom: 1.875em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="video-poster" class="docs-component">
+      <h2 class="docs-component_header"><span>Video poster</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.video-poster</h3>
+          <section class="docs-pattern_pattern">
+<figure>
+    <a class="video-poster" href="#link-to-video">
+        <img src="http://placekitten.com/600/338" alt="">
+    </a>
+</figure>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure&gt;
+    &lt;a class=&quot;video-poster&quot; href=&quot;#link-to-video&quot;&gt;
+        &lt;img src=&quot;http://placekitten.com/600/338&quot; alt=&quot;&quot;&gt;
+    &lt;/a&gt;
+&lt;/figure&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure&gt;\n    &lt;a class=\&amp;quot;video-poster\&amp;quot; href=\&amp;quot;#link-to-video\&amp;quot;&gt;\n        &lt;img src=\&amp;quot;http://placekitten.com/600/338\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/a&gt;\n&lt;/figure&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.video-poster</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.video-poster {
+  position: relative;
+  display: inline-block;
+}
+
+.video-poster:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: &quot;\e640&quot;;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  display: block;
+  width: 1em;
+  height: 1em;
+  padding: 0.38461538em 0.30769231em 0.38461538em 0.46153846em;
+  background: #101820;
+  background: rgba(16, 24, 32, 0.75);
+  color: #ffffff;
+  font-size: 1.625em;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+
+.video-poster:hover:after {
+  background: #2cb34a;
+  background: rgba(44, 179, 74, 0.75);
+}
+
+.video-poster img {
+  vertical-align: middle;
 }
 </code></pre>
       </div>
