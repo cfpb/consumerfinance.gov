@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros.html" as macros %}
 
 {% block demo_title -%}
     About Richard Cordray
@@ -22,7 +23,6 @@
     {# Macros #}
 
     {% import "post-macros.html" as post_macros with context %}
-
 
     <main class="content content__1-3" id="main" role="main">
 
@@ -63,9 +63,7 @@
                         <p>
                             Mr. Cordray lives in Grove City, Ohio with his wife Peggy – a Professor at Capital University Law School in Columbus – and twin children Danny and Holly.
                         </p>
-                        <div class="demo-placeholder">
-                            Share
-                        </div>
+                        {{ macros.share(self.title(), true) }}
                     </div>
                     
                     <section class="content_block content_block__border-top content_block__border-bottom u-hide-on-mobile">
