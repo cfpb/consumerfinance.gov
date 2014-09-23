@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block demo_title -%}
+    About Steve Antonakes
+{%- endblock %}
+
+{% block title -%}
+    About Steve Antonakes
+{%- endblock %}
+
+{% block desc -%}
+    About Steve Antonakes
+{%- endblock %}
+
+{% block content %}
+
+    {# Variables #}
+
+    {% set path = '/the-bureau/' %}
+    {% set active_page = 'about-steve-antonakes' %}
+
+    {# Macros #}
+
+    {% import "post-macros.html" as post_macros with context %}
+
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <aside class="content_sidebar content__flush-all-on-small">
+                {% include "nav.html" %}
+            </aside>
+
+            <div class="content_main content__flush-top-on-small">
+                <section>
+
+                    <div class="content_block content_block__flush-top">
+                        <h1 class="content_title__extra-large">
+                            Deputy Director Steven Antonakes
+                        </h1>
+                        <p class="content_desc__large">
+                            Steven L. Antonakes currently serves as the Deputy Director as well as the Associate Director for Supervision, Enforcement, and Fair Lending at the Consumer Financial Protection Bureau (CFPB).
+                        </p>
+                        <p>
+                            <figure class="float-media rwd-crop">
+                                <img class="rwd-crop_item"
+                                     src="/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_lo-res.jpg"
+                                     width="155"
+                                     alt="">
+                            </figure>
+                            He is responsible for the supervision of all banks and non-banks under the CFPB’s jurisdiction and the enforcement of federal consumer protection and fair lending laws. Mr. Antonakes previously served as the CFPB’s Assistant Director of Large Bank Supervision and was charged with establishing the consumer protection supervision program for the largest financial institutions in the country which collectively account for over 75 percent of the nation’s banking assets.
+                        </p>
+                        <p>
+                            Mr. Antonakes began his professional career as an entry level bank examiner with the Commonwealth of Massachusetts Division of Banks in 1990. He later served in numerous managerial capacities before being appointed by successive Governors to serve as the Commissioner of Banks from December 2003 until November 2010, becoming only the second career bank examiner to ever serve in that capacity.
+                        </p>
+                        <p>
+                            Earlier in his career, Mr. Cordray was an adjunct professor at the Ohio State University College of Law, served as a State Representative for the 33rd Ohio House District, was the first Solicitor General in Ohio’s history, and was a sole practitioner and Of Counsel to Kirkland & Ellis. Mr. Cordray has argued seven cases before the United States Supreme Court, including by special appointment of both the Clinton and Bush Justice Departments. He is a graduate of Michigan State University, Oxford University, and the University of Chicago Law School. Mr. Cordray was Editor-in-Chief of the University of Chicago Law Review and later clerked for U.S. Supreme Court Justices Byron White and Anthony Kennedy.
+                        </p>
+                        <p>
+                            Mr. Antonakes also previously served as the first state voting member of the Federal Financial Institutions Examination Council (FFIEC), as the Vice Chairman of the Conference of State Bank Supervisors (CSBS), and as a founding member of the governing board of the Nationwide Mortgage Licensing System (NMLS). In March 2007, Mr. Antonakes received NeighborWorks America’s Government Service Award for his work in combatting foreclosures.
+                        </p>
+                        <p>
+                            Mr. Antonakes received a Bachelor of Arts degree from Penn State University, a Masters of Business Administration from Salem State University, and a Doctorate of Philosophy in Law and Public Policy from Northeastern University.
+                        </p>
+                        {{ macros.share(self.title(), true) }}
+                    </div>
+                    
+                    <section class="content_block content_block__padded-top content_block__padded-bottom content_block__border-top u-hide-on-mobile">
+                        <div class="content-l">
+                            <div class="content-l_col content-l_col-1-2">
+                                <div class="media">
+                                    <div class="media_image-container">
+                                        <img src="cordray_round_90.jpg" alt="" width="60">
+                                    </div>
+                                    <div class="media_body">
+                                        <h1 class="h4">Downloads</h1>
+                                            <a href="/newsroom/press-resources/201402_cfpb_photo_richard-cordray_high-res.jpg" class="jump-link jump-link__download">High-res photo</a>
+                                            <a href="#" class="jump-link jump-link__download">Biography</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                                <h1 class="h4">Request speaking info</h1>
+                                <span class="cf-icon cf-icon-email"></span>
+                                <a href="mailto:externalaffairs@cfpb.gov">
+                                    externalaffairs@cfpb.gov
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <aside>
+
+                        <section class="content_block content_block__padded-top content_block__border-top">
+                            <h1 class="content_title__large">
+                                More information about Richard Cordray
+                            </h1>
+                            <div class="content-l">
+                                <div class="content-l_col content-l_col-1-3">
+                                    <h2 class="h5">
+                                        <span class="cf-icon cf-icon-newspaper"></span>
+                                        Newsroom
+                                    </h2>
+                                    <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.</p>
+                                    <a href="/newsroom/?filter_author=Richard+Cordray" class="jump-link">
+                                        Read news about the director
+                                    </a>
+                                </div>
+                                <div class="content-l_col content-l_col-1-3">
+                                    <h2 class="h5">
+                                        <span class="cf-icon cf-icon-newspaper"></span>
+                                        Blogs
+                                    </h2>
+                                    <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.</p>
+                                    <a href="/blog/?filter_author=Richard+Cordray" class="jump-link">
+                                        Blogs with the director
+                                    </a>
+                                </div>
+                                <div class="content-l_col content-l_col-1-3">
+                                    <h2 class="h5">
+                                        <span class="cf-icon cf-icon-newspaper"></span>
+                                        Calendar
+                                    </h2>
+                                    <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.</p>
+                                    <a href="{{ path + 'leadership-calendar/' }}" class="jump-link">
+                                        View Director Cordray's calendar
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="content_block content_block__padded-top content_block__border-top">
+                            <div class="content-l">
+                                <section class="content-l_col content-l_col-1-2">
+                                    <h1 class="content_title__large">
+                                        Cordray’s Corner
+                                    </h1>
+                                    <figure class="figure__bordered">
+                                        <img src="cordrays_corner.jpg" alt="">
+                                    </figure>
+                                    <p class="short-desc short-desc__large">
+                                        View videos on Director Richard Cordray discussing various relevant fiancial topics and how the bureau is involved.
+                                    </p>
+                                    <a href="https://www.youtube.com/user/cfpbvideo/search?query=Cordray%27s+Corner" class="jump-link jump-link__external-link">
+                                        View Cordray’s Corner videos on YouTube
+                                    </a>
+                                </section>
+                                <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                                    <h1 class="content_title__large">
+                                        CFPB history
+                                    </h1>
+                                    <figure class="figure__bordered">
+                                        <img src="../obama_cordray.jpg" alt="">
+                                    </figure>
+                                    <p class="short-desc short-desc__large">
+                                        In January of 2012, President Barack Obama appointed Rich Cordray to be the first Director of the CFPB.
+                                    </p>
+                                    <a href="{{ path + 'history/' }}" class="jump-link jump-link__external-link">
+                                        Learn more about our history
+                                    </a>
+                                </section>
+                            </div>
+                        </div>
+
+                        <section class="content_block content_block__padded-top content_block__border-top content_block__flush-bottom">
+                            <h1 class="content_title__large">
+                                CFPB leadership
+                            </h1>
+                            <div class="content-l">
+                                <div class="content-l_col content-l_col-1-2">
+                                    <p class="u-mb0 short-desc">
+                                        In January of 2012, President Barack Obama appointed Rich Cordray to be the first Director of the CFPB. In January of 2012, President Barack Obama appointed Rich Cordray to be the first Director  of the CFPB.
+                                    </p>
+                                </div>
+                                <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                                    <ul class="u-mb0 list list__unstyled list__links">
+                                        <li class="list_item">
+                                            <a href="{{ path + 'about-steve-antonakes/' }}" class="list_link jump-link">
+                                                Learn more about deputy director Steven Antonkes
+                                            </a>
+                                        </li>
+                                        <li class="list_item">
+                                            <a href="{{ path + 'leadership-calendar/' }}" class="list_link jump-link">
+                                                View our leadership calendar
+                                            </a>
+                                        </li>
+                                        <li class="list_item">
+                                            <a href="{{ path + 'bureau-structure/' }}" class="list_link jump-link">
+                                                Bureau organizational structure
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+
+                    </aside>
+
+                </section>
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+
+    </main><!-- END .content -->
+
+{% endblock content %}
