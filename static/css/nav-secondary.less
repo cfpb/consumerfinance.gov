@@ -172,12 +172,12 @@
 
         .respond-to-min(801px, {
             display: inline-block;
-            padding: unit(10px / @font-size-large, em);
+            padding: unit(4px / @font-size-large, em)
+                     unit(10px / @font-size-large, em);
             border-left-style: solid;
             border-left-width: 5px;
             .webfont-medium();
             font-size: unit(@font-size-large / @base-font-size-px, em);
-            line-height: 1;
             .u-link__colors(@pacific, @pacific, @black, @black, @black,
                             transparent, transparent, @green, @green, @green);
         });
