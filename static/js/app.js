@@ -129,7 +129,13 @@ $(function() {
         $desktopMenuChild = $('.desktop-menu_full-wrapper'),
         mouseIsInsideMenu = false,
         mouseIsInsideMenuItem = false,
-        aMenuItemWasOpened = false;
+        aMenuItemWasOpened = false,
+        isSmall = $('.sliding-nav_trigger').is(':visible');
+
+    // On window resize, set the isSmall variable again.
+    $(window).resize(function() {
+        isSmall = $('.sliding-nav_trigger').is(':visible');
+    });
 
     // Add aria-expanded
     $desktopMenuChild.attr( 'aria-expanded', 'false' );
@@ -147,40 +153,44 @@ $(function() {
 
     $desktopMenuTrigger.mouseenter(function( e ){
 
-        // Update aria-expanded
-        $(this).find('.desktop-menu_full-wrapper').attr( 'aria-expanded', 'true' );
+        if (!isSmall) {
+            // Update aria-expanded
+            $(this).find('.desktop-menu_full-wrapper').attr( 'aria-expanded', 'true' );
 
-        // Show the child list, previously hidden by default for the mobile menu.
-        $('.list-expanding_child-list').show();
+            // Show the child list, previously hidden by default for the mobile menu.
+            $('.list-expanding_child-list').show();
 
-        if ( aMenuItemWasOpened === false ) {
-            $desktopMenu.addClass('has-transition');
-        } else {
-            $desktopMenu.removeClass('has-transition');
+            if ( aMenuItemWasOpened === false ) {
+                $desktopMenu.addClass('has-transition');
+            } else {
+                $desktopMenu.removeClass('has-transition');
+            }
+
+            // Update the mouse and menu state
+            mouseIsInsideMenu = true;
+            mouseIsInsideMenuItem = true;
+            aMenuItemWasOpened = true;
         }
-
-        // Update the mouse and menu state
-        mouseIsInsideMenu = true;
-        mouseIsInsideMenuItem = true;
-        aMenuItemWasOpened = true;
 
     });
 
     $desktopMenuTrigger.mouseleave(function( e ){
 
-        // Update the menu item state
-        mouseIsInsideMenuItem = false;
+        if (!isSmall) {
+            // Update the menu item state
+            mouseIsInsideMenuItem = false;
 
-        // Use a delay to check if the mouse is inside of the menu but not in a
-        // list item.
-        window.setTimeout( function updateAMenuItemWasOpened() {
-            if ( mouseIsInsideMenuItem === false && mouseIsInsideMenu ) {
-                aMenuItemWasOpened = false;
-            }
-        }, 100 );
+            // Use a delay to check if the mouse is inside of the menu but not in a
+            // list item.
+            window.setTimeout( function updateAMenuItemWasOpened() {
+                if ( mouseIsInsideMenuItem === false && mouseIsInsideMenu ) {
+                    aMenuItemWasOpened = false;
+                }
+            }, 100 );
 
-        // Update aria-expanded
-        $desktopMenuChild.attr( 'aria-expanded', 'false' );
+            // Update aria-expanded
+            $desktopMenuChild.attr( 'aria-expanded', 'false' );
+        }
 
     });
 
