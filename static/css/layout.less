@@ -82,10 +82,7 @@
 */
 
 .header_logo {
-    margin: @grid_gutter-width
-            (@grid_gutter-width / 2)
-            unit(20px / @base-font-size-px, em)
-            (@grid_gutter-width / 2);
+    margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
     vertical-align: middle; // removes typical inline vertical whitespace
 
     .respond-to-max(800px, {
@@ -367,6 +364,8 @@
         top: 116px; // magic number - dependent on height of logo and its vertical padding
     }
     [role="banner"] {
+        max-width: 1140px; // reduced to take into account lack of grid column gutters
+        padding: 0 @grid_gutter-width;
         position: relative;
         top: -54px; // magic number - dependent on height of horizontal navbar
     }

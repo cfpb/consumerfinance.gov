@@ -7482,7 +7482,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 */
 
 .header_logo {
-  margin: 30px 15px 1.25em 15px;
+  margin: 30px 0 1.25em 0;
   vertical-align: middle;
 }
 
@@ -7707,6 +7707,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 
 [role="banner"] {
+  max-width: 1140px;
+  padding: 0 30px;
   position: relative;
   top: -54px;
 }
