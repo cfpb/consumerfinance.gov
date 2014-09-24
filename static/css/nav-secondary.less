@@ -140,7 +140,7 @@
 
         .respond-to-min(801px, {
             & + & {
-                margin-top: 1px;
+                margin-top: 10px;
             }
         });
     }
@@ -172,12 +172,12 @@
 
         .respond-to-min(801px, {
             display: inline-block;
-            padding: unit(10px / @font-size-large, em);
+            padding: unit(5px / @font-size-large, em)
+                     unit(15px / @font-size-large, em);
             border-left-style: solid;
             border-left-width: 5px;
             .webfont-medium();
             font-size: unit(@font-size-large / @base-font-size-px, em);
-            line-height: 1;
             .u-link__colors(@pacific, @pacific, @black, @black, @black,
                             transparent, transparent, @green, @green, @green);
         });
