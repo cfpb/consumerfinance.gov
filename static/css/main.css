@@ -6556,7 +6556,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     - cfgov-layout
 */
 .header_logo {
-  margin: 30px 15px 1.25em 15px;
+  margin: 30px 0 1.25em 0;
   vertical-align: middle;
 }
 @media only all and (max-width: 50em) {
@@ -6915,6 +6915,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     top: 116px;
   }
   [role="banner"] {
+    max-width: 1140px;
+    padding: 0 30px;
     position: relative;
     top: -54px;
   }
