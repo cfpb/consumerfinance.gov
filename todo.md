@@ -1,20 +1,7 @@
 # To do
 
 - The bureau
-  - Responsive h1 and h3
   - Macro for leadership bio photos (in the bio content and in the downloads section, also across the site)
-  - Floating rwd headshot
-  - Better share macro
-  - Hide on small
-  - Small padded and divided content_block
-  - Better link styles
-  - Consistent link with prefix icon styles
-  - Video poster
-  - Cordray's corner image
-  - CFPB history image
-  - Media block with absolute positioned media?
-  - Add figure bordered
-  - Need a modified version of .content-l_col__before-divider that doesn't add a divider on small screens
 
 - Better README, like OAH
 - Move the cf tweaks from nav-secondary
