@@ -44,3 +44,37 @@
     {{ contact.state if contact.state }}
     {{ contact.zip_code if contact.zip_code }}
 {% endmacro %}
+
+{# Make share icons when given a title for the share by email link.
+   You can turn on the heading by passing a boolena for the second parameter. #}
+{% macro share(title, show_header=false) %}
+    <aside>
+    {% if show_header %}
+        <h1 class="h5">Share this page</h1>
+    {% endif %}
+        <ul class="post_share list__horizontal">
+            <li class="list_item">
+                <a class="share-icon"
+                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ title }}&amp;pubid=ra-4da354ee346886d2">
+                    <span class="cf-icon cf-icon-email-social-square"></span>
+                    <span class="u-visually-hidden">Share by email</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="share-icon"
+                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}">
+                    <span class="cf-icon cf-icon-facebook-square"></span>
+                    <span class="u-visually-hidden">Share on Facebook</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="share-icon"
+                   href="{{ share_twitter_url() }}"
+                   target="_blank">
+                    <span class="cf-icon cf-icon-twitter-square"></span>
+                    <span class="u-visually-hidden">Share on Twitter</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+{% endmacro %}
