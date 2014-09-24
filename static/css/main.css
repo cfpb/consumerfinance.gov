@@ -6519,14 +6519,14 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     - name: Logo
       markup: |
         <a href="/">
-            <img class="logo u-js-only"
+            <img class="header_logo u-js-only"
                  src="../../static/img/logo.svg"
                  onerror="this.onerror=null;this.src='/static/img/logo.png';"
                  alt="Consumer Financial Protection Bureau"
                  width="262"
                  height="66">
             <noscript>
-                <img class="logo logo__no-js"
+                <img class="header_logo logo__no-js"
                      src="../../static/img/logo.png"
                      alt="Consumer Financial Protection Bureau"
                      width="262"
@@ -6542,34 +6542,34 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
         - "The path in the `src` attribute has been adjusted for these docs."
     - name: Miscellaneous stuff (top right)
       markup: |
-        <div style="position: relative;">
+        <div style="position: relative; min-height: 80px;">
             <div class="header_misc">
                 Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
                 <a class="header_misc_es">Español</a>
             </div>
         </div>
       notes:
-        - "The outer div with the inline `position: relative;` style is only for
-           demonstration purposes in these docs, because the `.header_misc` div
-           is positioned absolutely."
+        - "The outer div with the inline style is only for demonstration
+           purposes in these docs, because the `.header_misc` div is positioned
+           absolutely."
   tags:
     - cfgov-layout
 */
-.logo {
+.header_logo {
   margin: 30px 15px 1.25em 15px;
   vertical-align: middle;
 }
 @media only all and (max-width: 50em) {
-  .logo {
+  .header_logo {
     width: 160px;
     height: 40px;
     margin: 10px;
   }
 }
-.logo__no-js {
+.header_logo__no-js {
   display: none;
 }
-.no-js .logo__no-js {
+.no-js .header_logo__no-js {
   display: block;
 }
 .header_misc {
@@ -6741,6 +6741,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   border-color: #002d72;
   color: #002d72;
 }
+/* Sliding nav for portrait tablets and smaller
+   ========================================================================== */
 @media only all and (max-width: 50em) {
   html,
   body {
@@ -6763,8 +6765,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .primary-nav_top-level-list.list-expanding .list_item__plain:first-child {
     border-top: 0;
   }
-  .primary-nav_top-level-list.list-expanding .list_item > a,
-  .primary-nav_top-level-list.list-expanding .list_item > span {
+  .primary-nav_top-level-list.list-expanding .list_item a {
     display: block;
     padding: 15px 30px 15px 15px;
     position: relative;
@@ -6783,17 +6784,15 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     background: #f1f2f2;
     color: #43484e;
   }
-  .primary-nav_top-level-list.list-expanding > .list_item > .list_link__disabled {
+  .primary-nav_top-level-list.list-expanding .list_item .list_link__disabled {
     background: #e3e4e5 !important;
   }
-  .primary-nav_top-level-list.list-expanding .list-expanding .list-expanding_list-item > a,
-  .primary-nav_top-level-list.list-expanding .list-expanding .list-expanding_list-item > span {
+  .primary-nav_top-level-list.list-expanding .list-expanding .list-expanding_list-item a {
     padding-left: 30px;
     background: #f1f2f2;
     font-size: 1em;
   }
-  .primary-nav_top-level-list.list-expanding .list-expanding .list-expanding .list-expanding_list-item > a,
-  .primary-nav_top-level-list.list-expanding .list-expanding .list-expanding .list-expanding_list-item > span {
+  .primary-nav_top-level-list.list-expanding .list-expanding .list-expanding .list-expanding_list-item a {
     padding-left: 45px;
     background: #f8f8f8;
   }
@@ -6829,13 +6828,14 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     overflow: hidden;
   }
   .sliding-nav_page {
-    float: left;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
+    float: left;
     background: #ffffff;
     -webkit-transition: 0.2s margin-right ease-in, 0.2s -webkit-box-shadow ease-in;
+    transition: 0.2s margin-right ease-in, 0.2s box-shadow ease-in;
   }
   .is-open .sliding-nav_page {
     border-left: 1px solid #919395;
@@ -6904,6 +6904,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     color: #101820;
   }
 }
+/* Horizontal mega menu for landscape tablets and larger
+   ========================================================================== */
 @media only all and (min-width: 50.0625em) {
   .sliding-nav_trigger {
     display: none;
@@ -6947,7 +6949,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     z-index: 100;
     -webkit-transform: translate3d(0, 0, 0);
   }
-  .desktop-menu_full-wrapper[aria-expanded="true"] {
+  .desktop-menu_full-wrapper[aria-expanded="true"],
+  .no-js .list_item:hover .desktop-menu_full-wrapper {
     z-index: 200;
     max-height: 15em;
     -webkit-transform: translate3d(0, 0, 0);
@@ -6965,10 +6968,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     background: #f8f8f8;
     border-top: 1px solid #babbbd;
     border-bottom: 4px solid #babbbd;
-  }
-  .desktop-menu_full-wrapper > ul {
-    margin-top: 0;
-    margin-bottom: 0;
   }
   .desktop-menu_vertical-list a,
   .desktop-menu_horizontal-list a,
