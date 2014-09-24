@@ -123,10 +123,10 @@ module.exports = function(grunt) {
         diff: false,
         map: false
       },
-      multiple_files: {
-        // Prefix all CSS files found in `static/css` and overwrite.
+      main: {
+        // Prefix `static/css/main.css` and overwrite.
         expand: true,
-        src: ['static/css/*.css', '!static/css/*.min.css']
+        src: ['static/css/main.css']
       },
     },
 
@@ -315,7 +315,11 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['static/css/*.less'],
-        tasks: ['cssdev', 'topdoc']
+        tasks: ['cssdev']
+      },
+      cssjs: {
+        files: ['static/css/*.less', 'static/js/app.js'],
+        tasks: ['cssdev', 'jsdev']
       }
     },
 
