@@ -1,8 +1,5 @@
 # To do
 
-- The bureau
-  - Macro for leadership bio photos (in the bio content and in the downloads section, also across the site)
-
 - Better README, like OAH
 - Move the cf tweaks from nav-secondary
 
