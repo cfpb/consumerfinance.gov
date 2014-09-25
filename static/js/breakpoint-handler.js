@@ -43,7 +43,7 @@ BreakpointHandler.prototype.watchWindowResize = function () {
     });
 };
 
-BreakpointHandler.prototype.handleViewportChange = function (width) {
+BreakpointHandler.prototype.handleViewportChange = function () {
     var width = viewportEl[widthProp],
         match = this.testBreakpoint(width);
     if (match !== this.match) {
@@ -77,9 +77,9 @@ BreakpointHandler.prototype.testBreakpoint = function (width) {
  *
  * @description Hides content in an expandable for mobile screens.
  * When viewport size drops below specified max-width breakpoint, 
- * expandable trigger is displayed & visible expandable content is hidden.
- * When breakpoint is exceeded, expandable content is shown
- * and trigger is hidden.
+ * visible expandable content is hidden.
+ * When breakpoint is exceeded, expandable content is shown.
+ * (Expandable trigger is currently hidden/shown via media query.)
  *
  * @params {object} elem jQuery `expandable` element
  * @params {number} breakpoint mobile max-width value

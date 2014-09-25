@@ -45,10 +45,11 @@
     
     &_name {
         .h3();
+        margin-bottom: unit(19px / @font-size, em); 
         .respond-to-max(1024px, {
             .h4();
+            margin-bottom: unit(15px / @font-size, em);
         });
-        margin-bottom: .85em !important;
     }
     
 }
@@ -97,15 +98,13 @@
 
             button {
                 &:before {
-                    // gray-40
-                    color: #C7C9CA;
+                    color: @gray-50;
                     font-size: 40px;
-                    font-family: Georgia;
                     opacity: 1;
                 }
                 
                 &:hover:before {
-                    color: @gray-20;
+                    color: @gray;
                 }
             }
     
@@ -123,6 +122,7 @@
         left: 10%;
 
         &:before {
+            // cf-icon-left
             content: "\e000";
         }
     }
@@ -131,11 +131,13 @@
         right: 10%;
 
         &:before {
+            // cf-icon-right
             content: "\e002";
         }
     }
 
-    .slick-prev, .slick-next {
+    .slick-prev,
+    .slick-next {
         height: 30px;
         width: 30px;
         top: 75px;
@@ -149,7 +151,7 @@
             color: @gray-20;
             opacity: 1;
             font-size: 30px;
-            font-family: 'CFPB Minicons';
+            .cf-icon();
         }
     }
     
