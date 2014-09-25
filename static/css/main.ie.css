@@ -10223,9 +10223,46 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   line-height: 1;
 }
 
-.expandable__mobile-only .expandable_target {
-  display: none;
-}
+/* topdoc
+    name: Expandable header modifier
+    family: cfgov-cf-enhancements
+    
+    patterns:
+    - name: expandable_header__jump-link (modifier)
+      markup: |
+        <div class="expandable">
+            <button class="expandable_header expandable_header__jump-link expandable_target">
+                <span class="expandable_header-left expandable_label">
+                    Expandable Header
+                </span>
+                <span class="expandable_header-right expandable_link">
+                    <span class="expandable_cue-open">
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </button>
+            <div class="expandable_content" style="margin-top:20px;">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          expandable_header__jump-link
+      notes:
+        - "This modifier styles the expandable header as a jump link
+           on mobile screens. Can be used for mobile-only expandables."
+    tags:
+    - cfgov-cf-enhancements
+*/
 
 /* topdoc
     name: EOF
@@ -11937,7 +11974,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .content_block__padded-top {
   padding-top: 1.875em;
   margin-top: 1.875em;
-  margin-bottom: 1.875em;
 }
 
 .content_block__sub {
@@ -21340,16 +21376,34 @@ a.focus .summary_header {
   max-width: 330px;
 }
 
-.bureau-history {
-  position: relative;
-}
-
-.bureau-history_image {
-  width: 250px;
+.bureau-mission {
+  margin-bottom: 2.8125em;
 }
 
 .bureau-mission_media .image-container {
   margin-left: 10px;
+}
+
+.bureau-mission_section {
+  margin-top: 1.875em;
+}
+
+.bureau-mission_section + .bureau-mission_section {
+  border-top: 1px solid #babbbd;
+  padding-top: 1.875em;
+}
+
+.bureau-mission_section + .bureau-mission_section {
+  border-top: 1px solid #babbbd;
+  padding-top: 1.875em;
+}
+
+.bureau-functions {
+  border-top: 1px solid #babbbd;
+}
+
+.bureau-functions {
+  border-top: 1px solid #babbbd;
 }
 
 .bureau-bio .media_image {
@@ -21563,9 +21617,78 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
-.content__max-width {
-  width: 100%;
-  max-width: 620px;
+.bureau-history {
+  position: relative;
+}
+
+.bureau-history_image {
+  width: 250px;
+}
+
+.slick-slider {
+  margin-top: 45px;
+}
+
+.slick-slider .slick-dots {
+  bottom: 0;
+  top: -25px;
+}
+
+.slick-slider .slick-dots li {
+  margin: 0px;
+}
+
+.slick-slider .slick-dots li button:before {
+  color: #C7C9CA;
+  font-size: 40px;
+  font-family: Georgia;
+  opacity: 1;
+}
+
+.slick-slider .slick-dots li button:hover:before {
+  color: #e3e4e5;
+}
+
+.slick-slider .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #75787b;
+}
+
+.slick-slider .slick-prev {
+  left: 10%;
+}
+
+.slick-slider .slick-prev:before {
+  content: "\e000";
+}
+
+.slick-slider .slick-next {
+  right: 10%;
+}
+
+.slick-slider .slick-next:before {
+  content: "\e002";
+}
+
+.slick-slider .slick-prev,
+.slick-slider .slick-next {
+  height: 30px;
+  width: 30px;
+  top: 75px;
+  z-index: 1000;
+}
+
+.slick-slider .slick-prev:hover:before,
+.slick-slider .slick-next:hover:before {
+  color: #babbbd;
+}
+
+.slick-slider .slick-prev:before,
+.slick-slider .slick-next:before {
+  color: #e3e4e5;
+  opacity: 1;
+  font-size: 30px;
+  font-family: 'CFPB Minicons';
 }
 
 /* ==========================================================================

@@ -100,4 +100,24 @@
         display: block;
         width: auto;
     }
+    
+    &__centered {
+        .respond-to-max(599px {
+            text-align: center;
+        });
+        
+        .media_image-container {
+            .respond-to-max(599px {
+                margin-right: 0 !important;
+                margin-left: 0 !important;
+            });    
+        }
+        
+        .media_image {
+            .respond-to-max(599px {
+                margin-left: auto;
+                margin-right: auto;
+            });
+        }
+    }
 }
