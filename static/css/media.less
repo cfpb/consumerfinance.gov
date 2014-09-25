@@ -115,12 +115,17 @@
         });
         
         .respond-to-max(599px {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
+            margin-left: 0;
+            margin-right: 0;
         });
         
         &.media_image-container__wide-margin {
             margin-right: unit(@grid_gutter-width, px);
+            
+            .respond-to-max(599px {
+                margin-left: 0;
+                margin-right: 0;
+            });
         }
         
     }
@@ -137,6 +142,10 @@
         &.media_image-container__wide-margin {
             margin-left: unit(@grid_gutter-width, px);
             margin-right: 0;
+            
+            .respond-to-max(599px {
+                margin-left: 0;
+            });
         }
         
     }
