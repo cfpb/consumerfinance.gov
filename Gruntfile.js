@@ -86,6 +86,7 @@ module.exports = function(grunt) {
           'static/js/jquery.cf_input-split.js',
           'vendor/string_score/string_score.js',
           'static/js/jquery.type-and-filter.js',
+          'static/js/breakpoint-handler.js',
           // 'static/js/jquery.cf_pagination.js',
           'static/js/app.js'
         ],
@@ -254,7 +255,9 @@ module.exports = function(grunt) {
             src: [
               // Only include vendor files that we use independently
               'vendor/html5shiv/html5shiv-printshiv.min.js',
-              'vendor/box-sizing-polyfill/boxsizing.htc'
+              'vendor/box-sizing-polyfill/boxsizing.htc',
+              'vendor/slick-carousel/slick.min.js',
+              'vendor/slick-carousel/slick.css'
             ],
             dest: 'static'
           }

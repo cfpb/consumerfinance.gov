@@ -9014,29 +9014,126 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   font-size: 1.375em;
   line-height: 1;
 }
-.expandable__mobile-only .expandable_target {
-  display: none;
-}
+/* topdoc
+    name: Expandable header modifier
+    family: cfgov-cf-enhancements
+    
+    patterns:
+    - name: expandable_header__jump-link (modifier)
+      markup: |
+        <div class="expandable">
+            <button class="expandable_header expandable_header__jump-link expandable_target">
+                <span class="expandable_header-left expandable_label">
+                    Expandable Header
+                </span>
+                <span class="expandable_header-right expandable_link">
+                    <span class="expandable_cue-open">
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </button>
+            <div class="expandable_content" style="margin-top:20px;">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          expandable_header__jump-link
+      notes:
+        - "This modifier styles the expandable header as a jump link
+           on mobile screens. Can be used for mobile-only expandables."
+    tags:
+    - cfgov-cf-enhancements
+*/
 @media only all and (max-width: 37.4375em) {
-  .expandable__mobile-only .expandable_target {
+  .expandable_header__jump-link {
     display: block;
+    width: 100%;
     padding: 0.625em 0;
     border: dotted #0072ce;
     border-width: 1px 0;
   }
-  .expandable__mobile-only .expandable_target .expandable_label {
+  .expandable_header__jump-link .expandable_label,
+  .expandable_header__jump-link .expandable_link {
     color: #0072ce;
+    font-size: 16px;
+  }
+  .expandable_header__jump-link:hover,
+  .expandable_header__jump-link.hover {
+    border-style: solid;
+    border-color: #7fb8e6;
+  }
+  .expandable_header__jump-link:hover .expandable_label,
+  .expandable_header__jump-link.hover .expandable_label,
+  .expandable_header__jump-link:hover .expandable_link,
+  .expandable_header__jump-link.hover .expandable_link {
+    color: #7fb8e6;
+  }
+  .expandable_header__jump-link:focus,
+  .expandable_header__jump-link.focus {
+    border-style: solid;
+    outline: thin dotted;
+  }
+  .expandable_header__jump-link:active,
+  .expandable_header__jump-link.active {
+    border-style: solid;
+    border-color: #002d72;
+  }
+  .expandable_header__jump-link:active .expandable_label,
+  .expandable_header__jump-link.active .expandable_label,
+  .expandable_header__jump-link:active .expandable_link,
+  .expandable_header__jump-link.active .expandable_link {
+    color: #002d72;
   }
 }
 @media only all and (max-width: 37.4375em) {
-  .expandable__mobile-only .expandable_target {
+  .expandable_header__jump-link {
     display: block;
+    width: 100%;
     padding: 0.625em 0;
     border: dotted #0072ce;
     border-width: 1px 0;
   }
-  .expandable__mobile-only .expandable_target .expandable_label {
+  .expandable_header__jump-link .expandable_label,
+  .expandable_header__jump-link .expandable_link {
     color: #0072ce;
+    font-size: 16px;
+  }
+  .expandable_header__jump-link:hover,
+  .expandable_header__jump-link.hover {
+    border-style: solid;
+    border-color: #7fb8e6;
+  }
+  .expandable_header__jump-link:hover .expandable_label,
+  .expandable_header__jump-link.hover .expandable_label,
+  .expandable_header__jump-link:hover .expandable_link,
+  .expandable_header__jump-link.hover .expandable_link {
+    color: #7fb8e6;
+  }
+  .expandable_header__jump-link:focus,
+  .expandable_header__jump-link.focus {
+    border-style: solid;
+    outline: thin dotted;
+  }
+  .expandable_header__jump-link:active,
+  .expandable_header__jump-link.active {
+    border-style: solid;
+    border-color: #002d72;
+  }
+  .expandable_header__jump-link:active .expandable_label,
+  .expandable_header__jump-link.active .expandable_label,
+  .expandable_header__jump-link:active .expandable_link,
+  .expandable_header__jump-link.active .expandable_link {
+    color: #002d72;
   }
 }
 /* topdoc
@@ -10795,7 +10892,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .content_block__padded-top {
   padding-top: 1.875em;
   margin-top: 1.875em;
-  margin-bottom: 1.875em;
 }
 .content_block__sub {
   margin-top: 1.875em;
@@ -20400,104 +20496,90 @@ a.focus .summary_header {
     float: right;
   }
 }
-.bureau-history {
-  position: relative;
+.bureau-mission {
+  margin-bottom: 2.8125em;
 }
 @media only all and (min-width: 64em) {
-  .bureau-history_header {
-    position: absolute;
-    left: 277px;
-    top: 25px;
+  .bureau-mission {
+    margin-top: 3.75em;
   }
 }
 @media only all and (min-width: 64em) {
-  .bureau-history_header {
-    position: absolute;
-    left: 277px;
-    top: 25px;
-  }
-}
-@media only all and (min-width: 64em) {
-  .bureau-history_text {
-    position: relative;
-    top: 48px;
-  }
-}
-@media only all and (min-width: 64em) {
-  .bureau-history_text {
-    position: relative;
-    top: 48px;
-  }
-}
-.bureau-history_image {
-  width: 250px;
-}
-@media only all and (max-width: 37.4375em) {
-  .bureau-history_image {
-    width: 290px;
-  }
-}
-@media only all and (max-width: 37.4375em) {
-  .bureau-history_image {
-    width: 290px;
-  }
-}
-@media only all and (min-width: 37.5em) and (max-width: 48em) {
-  .bureau-history_image {
-    width: 215px;
-  }
-}
-@media only all and (min-width: 37.5em) and (max-width: 48em) {
-  .bureau-history_image {
-    width: 215px;
-  }
-}
-@media only all and (min-width: 64em) {
-  .bureau-functions_list {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 50%;
-  }
-  .ie .bureau-functions_list {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .bureau-functions_list {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 64em) {
-  .bureau-functions_list {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 50%;
-  }
-  .ie .bureau-functions_list {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .bureau-functions_list {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  .bureau-mission {
+    margin-top: 3.75em;
   }
 }
 .bureau-mission_media .image-container {
   margin-left: 10px;
+}
+.bureau-mission_section {
+  margin-top: 1.875em;
+}
+@media only all and (min-width: 37.5em) {
+  .bureau-mission_section + .bureau-mission_section {
+    border-top: 1px solid #babbbd;
+    padding-top: 1.875em;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .bureau-mission_section + .bureau-mission_section {
+    border-top: 1px solid #babbbd;
+    padding-top: 1.875em;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .bureau-functions {
+    border-top: 1px solid #babbbd;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .bureau-functions {
+    border-top: 1px solid #babbbd;
+  }
+}
+@media only all and (min-width: 64em) {
+  .bureau-functions_list {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .bureau-functions_list {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .bureau-functions_list {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 64em) {
+  .bureau-functions_list {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .bureau-functions_list {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .bureau-functions_list {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
 }
 .bureau-bio .media_image {
   width: 125px;
@@ -20680,9 +20762,110 @@ a.focus .summary_header {
     font-weight: normal !important;
   }
 }
-.content__max-width {
-  width: 100%;
-  max-width: 620px;
+.bureau-history {
+  position: relative;
+}
+@media only all and (min-width: 64em) {
+  .bureau-history_header {
+    position: absolute;
+    left: 277px;
+    top: 25px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .bureau-history_header {
+    position: absolute;
+    left: 277px;
+    top: 25px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .bureau-history_text {
+    position: relative;
+    top: 48px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .bureau-history_text {
+    position: relative;
+    top: 48px;
+  }
+}
+.bureau-history_image {
+  width: 250px;
+}
+@media only all and (max-width: 37.4375em) {
+  .bureau-history_image {
+    width: 290px;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .bureau-history_image {
+    width: 290px;
+  }
+}
+@media only all and (min-width: 37.5em) and (max-width: 48em) {
+  .bureau-history_image {
+    width: 215px;
+  }
+}
+@media only all and (min-width: 37.5em) and (max-width: 48em) {
+  .bureau-history_image {
+    width: 215px;
+  }
+}
+.slick-slider {
+  margin-top: 45px;
+}
+.slick-slider .slick-dots {
+  bottom: 0;
+  top: -25px;
+}
+.slick-slider .slick-dots li {
+  margin: 0px;
+}
+.slick-slider .slick-dots li button:before {
+  color: #C7C9CA;
+  font-size: 40px;
+  font-family: Georgia;
+  opacity: 1;
+}
+.slick-slider .slick-dots li button:hover:before {
+  color: #e3e4e5;
+}
+.slick-slider .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #75787b;
+}
+.slick-slider .slick-prev {
+  left: 10%;
+}
+.slick-slider .slick-prev:before {
+  content: "\e000";
+}
+.slick-slider .slick-next {
+  right: 10%;
+}
+.slick-slider .slick-next:before {
+  content: "\e002";
+}
+.slick-slider .slick-prev,
+.slick-slider .slick-next {
+  height: 30px;
+  width: 30px;
+  top: 75px;
+  z-index: 1000;
+}
+.slick-slider .slick-prev:hover:before,
+.slick-slider .slick-next:hover:before {
+  color: #babbbd;
+}
+.slick-slider .slick-prev:before,
+.slick-slider .slick-next:before {
+  color: #e3e4e5;
+  opacity: 1;
+  font-size: 30px;
+  font-family: 'CFPB Minicons';
 }
 /* ==========================================================================
    cfgov-refresh
@@ -20820,4 +21003,38 @@ a.focus .summary_header {
   zoom: 1;
   display: block;
   width: auto;
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered {
+    text-align: center;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered {
+    text-align: center;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image-container {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image-container {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
