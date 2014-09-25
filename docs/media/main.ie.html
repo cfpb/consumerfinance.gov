@@ -138,6 +138,21 @@
   zoom: 1;
 }
 
+.media:after {
+  content: &quot;&quot;;
+  display: table;
+  clear: both;
+}
+
+.lt-ie8 .media {
+  zoom: 1;
+}
+
+.media_image-container {
+  float: left;
+  margin-right: 15px;
+}
+
 .media_image-container {
   float: left;
   margin-right: 15px;
@@ -153,12 +168,24 @@
   margin-right: 0;
 }
 
+.media_image-container__right {
+  float: right;
+  margin-left: 15px;
+  margin-right: 0;
+}
+
 .media_image-container__wide-margin {
   margin-right: 30px;
 }
 
 .media_image {
   display: block;
+}
+
+.media_body {
+  display: table-cell;
+  width: 10000px;
+  vertical-align: top;
 }
 
 .media_body {

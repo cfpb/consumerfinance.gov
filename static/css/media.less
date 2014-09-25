@@ -63,6 +63,11 @@
             float: left;
             margin-right: unit(@grid_gutter-width / 2, px);
         });
+        
+        .respond-to-max(599px {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        });
     }
 
     &_image-container__right {
@@ -100,6 +105,27 @@
         display: block;
         width: auto;
     }
+    
+    &__centered {
+           .respond-to-max(599px {
+               text-align: center;
+           });
+
+           .media_image-container {
+               .respond-to-max(599px {
+                   margin-right: 0 !important;
+                   margin-left: 0 !important;
+               });    
+           }
+
+           .media_image {
+               .respond-to-max(599px {
+                   margin-left: auto;
+                   margin-right: auto;
+               });
+           }
+       }
+
 }
 
 
@@ -107,3 +133,4 @@
     name: EOF
     eof: true
 */
+
