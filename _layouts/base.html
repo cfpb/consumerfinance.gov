@@ -56,7 +56,9 @@
 
 <!--[if lt IE 9]>      <link rel="stylesheet" href="/static/css/main.ie.min.css"> <![endif]-->
 <!--[if gt IE 8]><!--> <link rel="stylesheet" href="/static/css/main.min.css"> <!--<![endif]-->
-
+    
+    {% block css %}
+    {% endblock css %}
 <!--
     ============
     HEAD SCRIPTS
@@ -147,6 +149,9 @@
 -->
 
 <script src="/static/js/main.min.js"></script>
+
+{% block javascript %}
+{% endblock javascript %}
 
 </body>
 

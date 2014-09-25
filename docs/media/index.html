@@ -134,14 +134,47 @@
 .lt-ie8 .media {
   zoom: 1;
 }
+.media:after {
+  content: &quot;&quot;;
+  display: table;
+  clear: both;
+}
+.lt-ie8 .media {
+  zoom: 1;
+}
 @media only all and (min-width: 37.5em) {
   .media_image-container {
     float: left;
     margin-right: 15px;
   }
 }
+@media only all and (min-width: 37.5em) {
+  .media_image-container {
+    float: left;
+    margin-right: 15px;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media_image-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media_image-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
 .media_image-container__right {
   display: block;
+}
+@media only all and (min-width: 37.5em) {
+  .media_image-container__right {
+    float: right;
+    margin-left: 15px;
+    margin-right: 0;
+  }
 }
 @media only all and (min-width: 37.5em) {
   .media_image-container__right {
@@ -161,6 +194,18 @@
     margin-top: 15px;
   }
 }
+@media only all and (max-width: 37.4375em) {
+  .media_body {
+    margin-top: 15px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .media_body {
+    display: table-cell;
+    width: 10000px;
+    vertical-align: top;
+  }
+}
 @media only all and (min-width: 37.5em) {
   .media_body {
     display: table-cell;
@@ -172,6 +217,40 @@
   zoom: 1;
   display: block;
   width: auto;
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered {
+    text-align: center;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered {
+    text-align: center;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image-container {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image-container {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media__centered .media_image {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }</code></pre>
       </div>
     </div>
