@@ -7399,6 +7399,46 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 
 /* topdoc
+    name: Expandable header modifier
+    family: cfgov-cf-enhancements
+    patterns:
+    - name: expandable_header__jump-link (modifier)
+      markup: |
+        <div class="expandable">
+            <button class="expandable_header expandable_header__jump-link expandable_target">
+                <span class="expandable_header-left expandable_label">
+                    Expandable Header
+                </span>
+                <span class="expandable_header-right expandable_link">
+                    <span class="expandable_cue-open">
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </button>
+            <div class="expandable_content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          expandable_header__jump-link
+      notes:
+        - "This modifier styles the expandable header as a jump link
+           on mobile screens. Can be used for mobile-only expandables."
+    tags:
+    - cfgov-cf-enhancements
+*/
+
+/* topdoc
     name: EOF
     eof: true
 */
@@ -9062,7 +9102,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .content_block__padded-top {
   padding-top: 1.875em;
   margin-top: 1.875em;
-  margin-bottom: 1.875em;
 }
 
 .content_block__sub {
@@ -14207,12 +14246,161 @@ a.focus .summary_header {
   max-width: 330px;
 }
 
+.bureau-mission {
+  margin-bottom: 2.8125em;
+}
+
+.bureau-mission_media .image-container {
+  margin-left: 10px;
+}
+
+.bureau-mission_section {
+  margin-top: 1.875em;
+}
+
+.bureau-mission_section + .bureau-mission_section {
+  border-top: 1px solid #babbbd;
+  padding-top: 1.875em;
+}
+
+.bureau-functions {
+  border-top: 1px solid #babbbd;
+}
+
+.bureau-bio .media_image {
+  width: 125px;
+}
+
+.bureau-bio .media_image {
+  width: 80px;
+}
+
+.bureau-bio_name {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.86363636em;
+}
+
+.bureau-bio_name em,
+.bureau-bio_name i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .bureau-bio_name em,
+.lt-ie9 .bureau-bio_name i {
+  font-style: normal !important;
+}
+
+.bureau-bio_name strong,
+.bureau-bio_name b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .bureau-bio_name strong,
+.lt-ie9 .bureau-bio_name b {
+  font-weight: normal !important;
+}
+
+.bureau-bio_name {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 0.83333333em;
+}
+
+.lt-ie9 .bureau-bio_name {
+  font-weight: normal !important;
+}
+
 .bureau-history {
   position: relative;
 }
 
 .bureau-history_image {
   width: 250px;
+}
+
+.slick-slider {
+  margin-top: 45px;
+}
+
+.slick-slider .slick-dots {
+  bottom: 0;
+  top: -25px;
+}
+
+.slick-slider .slick-dots li {
+  margin: 0px;
+}
+
+.slick-slider .slick-dots li button:before {
+  color: #babbbd;
+  font-size: 40px;
+  opacity: 1;
+}
+
+.slick-slider .slick-dots li button:hover:before {
+  color: #75787b;
+}
+
+.slick-slider .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #75787b;
+}
+
+.slick-slider .slick-prev {
+  left: 10%;
+}
+
+.slick-slider .slick-prev:before {
+  content: "\e000";
+}
+
+.slick-slider .slick-next {
+  right: 10%;
+}
+
+.slick-slider .slick-next:before {
+  content: "\e002";
+}
+
+.slick-slider .slick-prev,
+.slick-slider .slick-next {
+  height: 30px;
+  width: 30px;
+  top: 75px;
+  z-index: 1000;
+}
+
+.slick-slider .slick-prev:hover:before,
+.slick-slider .slick-next:hover:before {
+  color: #babbbd;
+}
+
+.slick-slider .slick-prev:before,
+.slick-slider .slick-next:before {
+  color: #e3e4e5;
+  opacity: 1;
+  font-size: 30px;
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
@@ -14250,7 +14438,7 @@ a.focus .summary_header {
       notes:
         - "Based on Object-oriented CSS' media object. In mobile sizes
            (less than 600px), image container stacks on top of media_body."
-    - name: Image container right modifier
+    - name: .media_image-container__right modifier
       markup: |
         <article class="media">
             <div class="media_image-container media_image-container__right">
@@ -14267,6 +14455,56 @@ a.focus .summary_header {
         </article>
       notes:
         - "Image is positioned to right instead of left of content."
+        
+    - name: .media_image-container__wide-margin modifier
+      markup: |
+        <article class="media">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+        <article class="media">
+            <div class="media_image-container media_image-container__wide-margin media_image-container__right">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Increased right (or left, when used with .media_image-container__right modifier),
+           margin on .media_image-container."
+            
+    - name: .media__centered modifier
+      markup: |
+        <article class="media media__centered">
+            <div class="media_image-container">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Content is centered at mobile screen size (less than 600px)."
   tags:
     - cfgov-media
 */
@@ -14290,6 +14528,10 @@ a.focus .summary_header {
   margin-right: 15px;
 }
 
+.media_image-container.media_image-container__wide-margin {
+  margin-right: 30px;
+}
+
 .media_image-container__right {
   display: block;
 }
@@ -14300,8 +14542,9 @@ a.focus .summary_header {
   margin-right: 0;
 }
 
-.media_image-container__wide-margin {
-  margin-right: 30px;
+.media_image-container__right.media_image-container__wide-margin {
+  margin-left: 30px;
+  margin-right: 0;
 }
 
 .media_image {

@@ -32,7 +32,8 @@
     "html5shiv": "latest",
     "jquery": "~1.11.0",
     "jquery.easing": "~1.3.0",
-    "string_score": "git://github.com/joshaven/string_score#0.1.20"
+    "string_score": "git://github.com/joshaven/string_score#0.1.20",
+    "slick-carousel": "~1.3.7"
   },
   "exportsOverride": {
     "cf-*": {
@@ -56,7 +57,7 @@
       "js": "js/jquery.easing.js"
     },
     "string_score": {
-        "js": "string_score.js"
+      "js": "string_score.js"
     }
   }
 }
