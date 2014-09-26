@@ -33,7 +33,7 @@
       notes:
         - "Based on Object-oriented CSS' media object. In mobile sizes
            (less than 600px), image container stacks on top of media_body."
-    - name: Image container right modifier
+    - name: .media_image-container__right modifier
       markup: |
         <article class="media">
             <div class="media_image-container media_image-container__right">
@@ -50,6 +50,56 @@
         </article>
       notes:
         - "Image is positioned to right instead of left of content."
+        
+    - name: .media_image-container__wide-margin modifier
+      markup: |
+        <article class="media">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+        <article class="media">
+            <div class="media_image-container media_image-container__wide-margin media_image-container__right">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Increased right (or left, when used with .media_image-container__right modifier),
+           margin on .media_image-container."
+            
+    - name: .media__centered modifier
+      markup: |
+        <article class="media media__centered">
+            <div class="media_image-container">
+                <img class="media_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Content is centered at mobile screen size (less than 600px)."
   tags:
     - cfgov-media
 */
@@ -63,6 +113,21 @@
             float: left;
             margin-right: unit(@grid_gutter-width / 2, px);
         });
+        
+        .respond-to-max(599px {
+            margin-left: 0;
+            margin-right: 0;
+        });
+        
+        &.media_image-container__wide-margin {
+            margin-right: unit(@grid_gutter-width, px);
+            
+            .respond-to-max(599px {
+                margin-left: 0;
+                margin-right: 0;
+            });
+        }
+        
     }
 
     &_image-container__right {
@@ -73,10 +138,16 @@
             margin-left: unit(@grid_gutter-width / 2, px);
             margin-right: 0;
         });
-    }
-    
-    &_image-container__wide-margin {
-        margin-right: unit(@grid_gutter-width, px);
+        
+        &.media_image-container__wide-margin {
+            margin-left: unit(@grid_gutter-width, px);
+            margin-right: 0;
+            
+            .respond-to-max(599px {
+                margin-left: 0;
+            });
+        }
+        
     }
 
     &_image {
@@ -100,6 +171,20 @@
         display: block;
         width: auto;
     }
+    
+    &__centered {
+           .respond-to-max(599px {
+               text-align: center;
+           });
+
+           .media_image {
+               .respond-to-max(599px {
+                   margin-left: auto;
+                   margin-right: auto;
+               });
+           }
+       }
+
 }
 
 
@@ -107,3 +192,4 @@
     name: EOF
     eof: true
 */
+
