@@ -7443,7 +7443,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   name: Base layout
   family: cfgov-layout
   patterns:
-    - name: Wrapper class
+    - name: .wrapper (base)
       markup: |
         <div class="wrapper">
             Wrapper
@@ -7452,6 +7452,23 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
         - "Turns an element into a cf-grid wrapper at 801px and above."
         - "Includes some explicit declarations for IE8 due to the fact that it
            doesn't support media queries."
+    - name: .wrapper__match-content (modifier)
+      markup: |
+        <div class="wrapper wrapper__match-content">
+            <code>.wrapper.wrapper__match-content</code>
+            <img src="http://placekitten.com/800/40" alt="">
+        </div>
+        <br>
+        <main class="content" id="main" role="main">
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <code>.wrapper.wrapper_content .content_main</code>
+                    <img src="http://placekitten.com/800/40" alt="">
+                </section>
+            </div>
+        </main>
+      notes:
+        - "..."
   tags:
     - cfgov-layout
 */
@@ -7462,6 +7479,16 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin: 0 auto;
   position: relative;
   clear: both;
+}
+
+.wrapper__match-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.wrapper__match-content {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .lt-ie9 .wrapper {
@@ -9603,7 +9630,8 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 */
 
 .footer {
-  padding: 1.5em 0;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
 }
@@ -11507,6 +11535,16 @@ a.category-slug.active {
   margin: 0 auto;
   position: relative;
   clear: both;
+}
+
+.hero_wrapper__match-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.hero_wrapper__match-content {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .hero_img-container {
