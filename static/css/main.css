@@ -6482,36 +6482,27 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     patterns:
     - name: expandable_header__jump-link (modifier)
       markup: |
-        <div class="expandable">
-            <button class="expandable_header expandable_header__jump-link expandable_target">
-                <span class="expandable_header-left expandable_label">
-                    Expandable Header
+        <button class="expandable_header expandable_header__jump-link expandable_target">
+            <span class="expandable_header-left expandable_label">
+                Expandable Header
+            </span>
+            <span class="expandable_header-right expandable_link">
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-plus-round"></span>
                 </span>
-                <span class="expandable_header-right expandable_link">
-                    <span class="expandable_cue-open">
-                        <span class="cf-icon cf-icon-plus-round"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        <span class="cf-icon cf-icon-minus-round"></span>
-                    </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-minus-round"></span>
                 </span>
-            </button>
-            <div class="expandable_content">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
-                    temporibus magnam debitis quidem. Ducimus ratione
-                    corporis nesciunt earum vel est quaerat blanditiis
-                    dolore ipsa?
-                </p>
-            </div>
-        </div>
+            </span>
+        </button>
       codenotes:
         - |
-          expandable_header__jump-link
+          .expandable_header__jump-link
       notes:
-        - "This modifier styles the expandable header as a jump link
-           on mobile screens. Can be used for mobile-only expandables."
+        - "This modifier styles the expandable header as a jump link on mobile
+           screens. Can be used for mobile-only expandables."
+        - "Use the `button` element with `.expandable_header`. to make the whole
+           header clickable."
     tags:
     - cfgov-cf-enhancements
 */
@@ -6526,7 +6517,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .expandable_header__jump-link .expandable_label,
   .expandable_header__jump-link .expandable_link {
     color: #0072ce;
-    font-size: 16px;
   }
   .expandable_header__jump-link:hover,
   .expandable_header__jump-link.hover {
