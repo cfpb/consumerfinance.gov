@@ -30,7 +30,7 @@
       <h2 class="docs-component_header"><span>Base layout</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Wrapper class</h3>
+          <h3 class="docs-pattern_header">.wrapper (base)</h3>
           <section class="docs-pattern_pattern">
 <div class="wrapper">
     Wrapper
@@ -51,6 +51,47 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.wrapper__match-content (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<div class="wrapper wrapper__match-content">
+    <code>.wrapper.wrapper__match-content</code>
+    <img src="http://placekitten.com/800/40" alt="">
+</div>
+<br>
+<main class="content" id="main" role="main">
+    <div class="wrapper content_wrapper">
+        <section class="content_main">
+            <code>.wrapper.wrapper_content .content_main</code>
+            <img src="http://placekitten.com/800/40" alt="">
+        </section>
+    </div>
+</main>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;wrapper wrapper__match-content&quot;&gt;
+    &lt;code&gt;.wrapper.wrapper__match-content&lt;/code&gt;
+    &lt;img src=&quot;http://placekitten.com/800/40&quot; alt=&quot;&quot;&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;main class=&quot;content&quot; id=&quot;main&quot; role=&quot;main&quot;&gt;
+    &lt;div class=&quot;wrapper content_wrapper&quot;&gt;
+        &lt;section class=&quot;content_main&quot;&gt;
+            &lt;code&gt;.wrapper.wrapper_content .content_main&lt;/code&gt;
+            &lt;img src=&quot;http://placekitten.com/800/40&quot; alt=&quot;&quot;&gt;
+        &lt;/section&gt;
+    &lt;/div&gt;
+&lt;/main&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;wrapper wrapper__match-content\&amp;quot;&gt;\n    &lt;code&gt;.wrapper.wrapper__match-content&lt;/code&gt;\n    &lt;img src=\&amp;quot;http://placekitten.com/800/40\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n&lt;/div&gt;\n&lt;br&gt;\n&lt;main class=\&amp;quot;content\&amp;quot; id=\&amp;quot;main\&amp;quot; role=\&amp;quot;main\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;wrapper content_wrapper\&amp;quot;&gt;\n        &lt;section class=\&amp;quot;content_main\&amp;quot;&gt;\n            &lt;code&gt;.wrapper.wrapper_content .content_main&lt;/code&gt;\n            &lt;img src=\&amp;quot;http://placekitten.com/800/40\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n        &lt;/section&gt;\n    &lt;/div&gt;\n&lt;/main&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>...</li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">@media only all and (min-width: 50.0625em) {
@@ -60,6 +101,16 @@
     margin: 0 auto;
     position: relative;
     clear: both;
+  }
+}
+.wrapper__match-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media only all and (min-width: 37.5em) {
+  .wrapper__match-content {
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 .lt-ie9 .wrapper {
@@ -3313,7 +3364,8 @@ Main content...
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.footer {
-  padding: 1.5em 0;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
 }</code></pre>
