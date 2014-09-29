@@ -2338,6 +2338,36 @@ Main content...
           </footer>
         </div>
         <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Padded-bottom modifier</h3>
+          <section class="docs-pattern_pattern">
+<div class="content_block content_block__padded-bottom content_block__border-bottom">
+    Content block with reduced bottom margin & added bottom padding
+    and border.
+</div>
+Content...
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;content_block content_block__padded-bottom content_block__border-bottom&quot;&gt;
+    Content block with reduced bottom margin &amp; added bottom padding
+    and border.
+&lt;/div&gt;
+Content...</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;content_block content_block__padded-bottom content_block__border-bottom\&amp;quot;&gt;\n    Content block with reduced bottom margin &amp; added bottom padding\n    and border.\n&lt;/div&gt;\nContent...\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.content_block.content_block__padded-bottom</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Breaks bottom margin into margin &amp; padding. Useful in combination with content_block__border-bottom to add padding between block contents &amp; border.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
           <h3 class="docs-pattern_header">Background modifier</h3>
           <section class="docs-pattern_pattern">
 Main content...
@@ -2555,6 +2585,10 @@ Main content...
 .content_block__padded-top {
   padding-top: 1.875em;
   margin-top: 1.875em;
+}
+.content_block__padded-bottom {
+  padding-bottom: 1.875em;
+  margin-bottom: 1.875em;
 }
 .content_block__sub {
   margin-top: 1.875em;

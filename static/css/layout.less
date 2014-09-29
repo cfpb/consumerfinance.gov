@@ -1269,6 +1269,18 @@
       notes:
         - "Breaks top margin into margin & padding. Useful in combination with
            content_block__border-top to add padding between block contents & border."
+    - name: Padded-bottom modifier
+      markup: |
+        <div class="content_block content_block__padded-bottom content_block__border-bottom">
+            Content block with reduced bottom margin & added bottom padding
+            and border.
+        </div>
+        Content...
+      codenotes:
+        - .content_block.content_block__padded-bottom
+      notes:
+        - "Breaks bottom margin into margin & padding. Useful in combination with
+           content_block__border-bottom to add padding between block contents & border."
     - name: Background modifier
       markup: |
         Main content...
@@ -1395,6 +1407,11 @@
     &__padded-top {
         padding-top: unit(30px / @base-font-size-px, em);
         margin-top: unit(30px / @base-font-size-px, em);
+    }
+
+    &__padded-bottom {
+        padding-bottom: unit(30px / @base-font-size-px, em);
+        margin-bottom: unit(30px / @base-font-size-px, em);
     }
 
     &__sub {
