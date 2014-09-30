@@ -3207,7 +3207,7 @@ Main content...
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
 .footer {
-  padding-top: 2.8125em;
+  padding-top: 3.125em;
   padding-bottom: 2.8125em;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
@@ -3221,18 +3221,14 @@ Main content...
   margin-bottom: 0;
 }
 
-.footer_nav-list {
-  font-size: 1.125em;
-}
-
 .footer_nav-list.list__links {
   border-top-color: #101820;
 }
 
 .footer_nav-list .list_link {
+  font-size: 1.125em;
   color: #101820;
   border-color: #101820;
-  border-bottom-width: 1px;
 }
 
 .footer_nav-list .list_link:visited,
@@ -3259,45 +3255,78 @@ Main content...
   color: #101820;
 }
 
+.footer_nav-list .list_link {
+  margin-right: 1.36363636em;
+  font-size: 1.375em;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  border-bottom-width: 0 !important;
+}
+
+.footer_nav-list .list_link em,
+.footer_nav-list .list_link i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .footer_nav-list .list_link em,
+.lt-ie9 .footer_nav-list .list_link i {
+  font-style: normal !important;
+}
+
+.footer_nav-list .list_link strong,
+.footer_nav-list .list_link b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer_nav-list .list_link strong,
+.lt-ie9 .footer_nav-list .list_link b {
+  font-weight: normal !important;
+}
+
 .footer_nav-list .list_link:hover,
-.footer_nav-list .list_link.hover {
-  border-bottom-width: 1px;
+.footer_nav-list .list_link.hover,
+.footer_nav-list .list_link:focus,
+.footer_nav-list .list_link.focus {
+  border-bottom-width: 1px !important;
 }
 
-.footer_nav-list .list_link__disabled {
+.footer_nav-list .list_link.list_link__disabled {
   color: #babbbd;
   border-color: #babbbd;
-  border-bottom-width: 1px;
-  border-bottom-style: dotted;
+  border-bottom: 1px dotted;
 }
 
-.footer_nav-list .list_link__disabled:visited,
-.footer_nav-list .list_link__disabled.visited {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_nav-list .list_link__disabled:hover,
-.footer_nav-list .list_link__disabled.hover {
+.footer_nav-list .list_link.list_link__disabled:visited,
+.footer_nav-list .list_link.list_link__disabled.visited {
   border-color: #babbbd;
   color: #babbbd;
 }
 
-.footer_nav-list .list_link__disabled:focus,
-.footer_nav-list .list_link__disabled.focus {
+.footer_nav-list .list_link.list_link__disabled:hover,
+.footer_nav-list .list_link.list_link__disabled.hover {
   border-color: #babbbd;
   color: #babbbd;
 }
 
-.footer_nav-list .list_link__disabled:active,
-.footer_nav-list .list_link__disabled.active {
+.footer_nav-list .list_link.list_link__disabled:focus,
+.footer_nav-list .list_link.list_link__disabled.focus {
   border-color: #babbbd;
   color: #babbbd;
 }
 
-.footer_nav-list .list_link__disabled:hover,
-.footer_nav-list .list_link__disabled.hover {
-  border-bottom-width: 1px;
+.footer_nav-list .list_link.list_link__disabled:active,
+.footer_nav-list .list_link.list_link__disabled.active {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_nav-list .list_link.list_link__disabled {
+  border-bottom-width: 0 !important;
 }
 
 .footer_logo {
@@ -3472,6 +3501,7 @@ Main content...
 
 .footer-pre .footer_share-icon-list {
   position: absolute;
+  top: -9px;
   right: 0;
 }
 

@@ -1760,7 +1760,9 @@
 */
 
 .footer {
-    padding-top: unit(45px / @base-font-size-px, em);
+    // Adding an extra 5px to the top to account for the absolute positioned
+    // social media icons.
+    padding-top: unit(50px / @base-font-size-px, em);
     padding-bottom: unit(45px / @base-font-size-px, em);
     border-top: 3px solid @green;
     background: @gray-10;
@@ -1773,18 +1775,25 @@
     }
 
     &_nav-list {
-        font-size: unit(18px / @base-font-size-px, em);
         &.list__links {
             border-top-color: @black;
         }
         .list_link {
+            font-size: unit(18px / @base-font-size-px, em);
             .u-link__colors(@black);
-            .u-link__border();
+            .respond-to-min(768px, {
+                margin-right: unit(30px / 22px, em);
+                font-size: unit(22px / @base-font-size-px, em);
+                .webfont-regular();
+                .u-link__hover-border();
+            });
         }
-        .list_link__disabled {
+        .list_link.list_link__disabled {
             .u-link__colors(@gray-50);
-            .u-link__border();
-            border-bottom-style: dotted;
+            border-bottom: 1px dotted;
+            .respond-to-min(768px, {
+                .u-link__no-border();
+            });
         }
     }
 
@@ -1841,6 +1850,8 @@
         & .footer_share-icon-list {
             .respond-to-min(768px, {
                 position: absolute;
+                // Aligns with the baseline of .footer_nav-list text.
+                top: -9px;
                 right: 0;
             });
         }
