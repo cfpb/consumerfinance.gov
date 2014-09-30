@@ -9753,8 +9753,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 
 .footer_logo {
-  width: 218px;
   margin-bottom: 0.625em;
+}
+
+.footer_logo .logo {
+  width: 218px;
 }
 
 .footer_address {
@@ -9842,6 +9845,10 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   color: #43484e;
 }
 
+.footer_general-inqueries {
+  font-size: 0.75em;
+}
+
 .footer_list {
   margin-bottom: 0;
 }
@@ -9910,13 +9917,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   border-bottom-width: 1px !important;
 }
 
-.footer-l {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
 .footer-pre {
   position: relative;
   margin-bottom: 2.8125em;
@@ -9953,6 +9953,13 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-bottom: 2.8125em;
 }
 
+.footer-left .footer_nested-col-group {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
 .footer-left .footer_logo {
   display: inline-block;
   -webkit-box-sizing: border-box;
@@ -9963,7 +9970,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-right: -0.25em;
   vertical-align: top;
   width: 50%;
-  border-left: 0;
 }
 
 .ie .footer-left .footer_logo {
@@ -10010,7 +10016,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-right: -0.25em;
   vertical-align: top;
   width: 25%;
-  border-right: 0;
 }
 
 .ie .footer-left .footer_general-inqueries {
@@ -10024,7 +10029,14 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.footer-right .footer-l_col {
+.footer-right .footer_nested-col-group {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.footer-right .footer_col {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -10036,11 +10048,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   width: 25%;
 }
 
-.ie .footer-right .footer-l_col {
+.ie .footer-right .footer_col {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .footer-right .footer-l_col {
+.lt-ie8 .footer-right .footer_col {
   display: inline;
   margin-right: 0;
   zoom: 1;
