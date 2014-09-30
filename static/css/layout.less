@@ -1765,6 +1765,10 @@
     border-top: 3px solid @green;
     background: @gray-10;
 
+    &-l {
+        .grid_nested-col-group();
+    }
+
     &-left {
         .respond-to-min(1024px, {
             .grid_column(4);
@@ -1780,8 +1784,7 @@
             .grid_push(4);
             border-right: 0;
         });
-        .grid_nested-col-group();
-        &_item {
+        & .footer-l_col {
             .grid_column(3);
         }
     }
