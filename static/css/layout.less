@@ -1764,6 +1764,27 @@
     padding-bottom: 1.5em;
     border-top: 3px solid @green;
     background: @gray-10;
+
+    &-left {
+        .respond-to-min(1024px, {
+            .grid_column(4);
+            .grid_pull(8);
+            border-left: 0;
+        });
+    }
+
+    &-right {
+        .u-hide-on-mobile();
+        .respond-to-min(1024px, {
+            .grid_column(8);
+            .grid_push(4);
+            border-right: 0;
+        });
+        .grid_nested-col-group();
+        &_item {
+            .grid_column(3);
+        }
+    }
 }
 
 
