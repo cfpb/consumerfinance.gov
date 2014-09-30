@@ -1771,18 +1771,24 @@
 
     &_share-icon-list {
         margin-bottom: unit(30px / @base-font-size-px, em);
+        .list__horizontal();
+
         .respond-to-min(768px, {
             margin-bottom: 0;
         });
     }
 
     &_nav-list {
-        &.list__links {
+        .list__links();
+
+        .respond-to-max(767px, {
             border-top-color: @black;
-        }
+        });
+
         .list_link {
             font-size: unit(18px / @base-font-size-px, em);
             .u-link__colors(@black);
+
             .respond-to-min(768px, {
                 margin-right: unit(30px / 22px, em);
                 font-size: unit(22px / @base-font-size-px, em);
@@ -1790,9 +1796,11 @@
                 .u-link__hover-border();
             });
         }
+
         .list_link.list_link__disabled {
             .u-link__colors(@gray-50);
             border-bottom: 1px dotted;
+
             .respond-to-min(768px, {
                 .u-link__no-border();
             });
@@ -1813,6 +1821,7 @@
 
     &_address {
         .webfont-regular();
+
         .respond-to-min(768px, {
             margin-bottom: 0;
             font-size: unit(12px / @base-font-size-px, em);
@@ -1866,6 +1875,8 @@
     }
 
     &_list {
+        .list__links();
+
         .list_link {
             .u-link__colors(@darkgray);
         }
