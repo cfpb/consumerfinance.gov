@@ -9636,6 +9636,36 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   background: #f1f2f2;
 }
 
+.footer-right {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.footer-right_item {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .footer-right_item {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .footer-right_item {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
 /* topdoc
     name: EOF
     eof: true
