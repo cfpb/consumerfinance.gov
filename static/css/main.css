@@ -8982,8 +8982,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 .footer_logo {
   width: 218px;
-  height: 46px;
-  margin-bottom: 1em;
+  margin-bottom: 0.625em;
 }
 .footer_address {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -9059,6 +9058,9 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   border-color: #43484e;
   color: #43484e;
 }
+.footer_list {
+  margin-bottom: 0;
+}
 .footer_list .list_link {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -9121,6 +9123,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 .footer-pre {
   position: relative;
+  margin-bottom: 2.8125em;
 }
 @media only all and (min-width: 48em) {
   .footer-pre .footer_share-icon-list {
@@ -9145,6 +9148,9 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     margin-right: 0.25em;
     margin-left: 0;
   }
+}
+.footer-left {
+  margin-bottom: 2.8125em;
 }
 @media only all and (min-width: 75em) {
   .footer-left {
