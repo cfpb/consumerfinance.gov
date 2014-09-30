@@ -2466,7 +2466,7 @@ a.hero_card {
       <h2 class="docs-component_header"><span>Share icon</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Default example</h3>
+          <h3 class="docs-pattern_header">.share-icon (base)</h3>
           <section class="docs-pattern_pattern">
 <a class="share-icon" href="#">
     <span class="cf-icon cf-icon-email-social-square"></span>
@@ -2498,6 +2498,35 @@ a.hero_card {
             </ul>
             <ul class="docs-notes">
               <li>Text for screenreaders is added with the .u-visually-hidden element.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.share-icon__large (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="share-icon share-icon__large" href="#">
+    <span class="cf-icon cf-icon-email-social-square"></span>
+    <span class="u-visually-hidden">
+        Share by email
+    </span>
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;share-icon share-icon__large&quot; href=&quot;#&quot;&gt;
+    &lt;span class=&quot;cf-icon cf-icon-email-social-square&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;u-visually-hidden&quot;&gt;
+        Share by email
+    &lt;/span&gt;
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;share-icon share-icon__large\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    &lt;span class=\&amp;quot;cf-icon cf-icon-email-social-square\&amp;quot;&gt;&lt;/span&gt;\n    &lt;span class=\&amp;quot;u-visually-hidden\&amp;quot;&gt;\n        Share by email\n    &lt;/span&gt;\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.share-icon__large</code></pre>
+              </li>
             </ul>
           </footer>
         </div>
@@ -2536,8 +2565,8 @@ a.hero_card {
   color: #43484e;
 }
 
-.share-icon + .share-icon {
-  margin-left: 0.07692308em;
+.share-icon__large {
+  font-size: 2.1875em;
 }
 </code></pre>
       </div>
