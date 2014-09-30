@@ -1760,10 +1760,17 @@
 */
 
 .footer {
-    padding-top: 1.5em;
-    padding-bottom: 1.5em;
+    padding-top: unit(45px / @base-font-size-px, em);
+    padding-bottom: unit(45px / @base-font-size-px, em);
     border-top: 3px solid @green;
     background: @gray-10;
+
+    &_share-icon-list {
+        margin-bottom: unit(30px / @base-font-size-px, em);
+        .respond-to-min(768px, {
+            margin-bottom: 0;
+        });
+    }
 
     &-l {
         .grid_nested-col-group();
@@ -1772,8 +1779,7 @@
     &-pre {
         position: relative;
 
-        & .footer_icon-list {
-            margin-bottom: 0;
+        & .footer_share-icon-list {
             .respond-to-min(768px, {
                 position: absolute;
                 right: 0;

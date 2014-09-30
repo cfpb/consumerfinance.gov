@@ -3364,10 +3364,18 @@ Main content...
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">.footer {
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  padding-top: 2.8125em;
+  padding-bottom: 2.8125em;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
+}
+.footer_share-icon-list {
+  margin-bottom: 1.875em;
+}
+@media only all and (min-width: 48em) {
+  .footer_share-icon-list {
+    margin-bottom: 0;
+  }
 }
 .footer-l {
   display: block;
@@ -3378,11 +3386,8 @@ Main content...
 .footer-pre {
   position: relative;
 }
-.footer-pre .footer_icon-list {
-  margin-bottom: 0;
-}
 @media only all and (min-width: 48em) {
-  .footer-pre .footer_icon-list {
+  .footer-pre .footer_share-icon-list {
     position: absolute;
     right: 0;
   }

@@ -9630,10 +9630,18 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 */
 
 .footer {
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  padding-top: 2.8125em;
+  padding-bottom: 2.8125em;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
+}
+
+.footer_share-icon-list {
+  margin-bottom: 1.875em;
+}
+
+.footer_share-icon-list {
+  margin-bottom: 0;
 }
 
 .footer-l {
@@ -9647,11 +9655,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   position: relative;
 }
 
-.footer-pre .footer_icon-list {
-  margin-bottom: 0;
-}
-
-.footer-pre .footer_icon-list {
+.footer-pre .footer_share-icon-list {
   position: absolute;
   right: 0;
 }
@@ -12239,7 +12243,7 @@ a.hero_card {
   name: Share icon
   family: cfgov-misc
   patterns:
-    - name: Default example
+    - name: .share-icon (base)
       markup: |
         <a class="share-icon" href="#">
             <span class="cf-icon cf-icon-email-social-square"></span>
@@ -12256,6 +12260,16 @@ a.hero_card {
           .share-icon
             .cf-icon.cf-icon-name
             .u-visually-hidden
+    - name: .share-icon__large (modifier)
+      markup: |
+        <a class="share-icon share-icon__large" href="#">
+            <span class="cf-icon cf-icon-email-social-square"></span>
+            <span class="u-visually-hidden">
+                Share by email
+            </span>
+        </a>
+      codenotes:
+        - .share-icon__large
   tags:
     - cfgov-misc
 */
@@ -12292,8 +12306,8 @@ a.hero_card {
   color: #43484e;
 }
 
-.share-icon + .share-icon {
-  margin-left: 0.07692308em;
+.share-icon__large {
+  font-size: 2.1875em;
 }
 
 /* topdoc
