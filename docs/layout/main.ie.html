@@ -3208,7 +3208,7 @@ Main content...
         <pre class="docs-code"><code data-language="css">
 .footer {
   padding-top: 3.125em;
-  padding-bottom: 2.8125em;
+  padding-bottom: 3.125em;
   border-top: 3px solid #2cb34a;
   background: #f1f2f2;
 }
@@ -3333,6 +3333,10 @@ Main content...
   margin-bottom: 0.625em;
 }
 
+.footer_logo {
+  margin-bottom: 0;
+}
+
 .footer_logo .logo {
   width: 218px;
 }
@@ -3368,6 +3372,7 @@ Main content...
 }
 
 .footer_address {
+  margin-bottom: 0;
   font-size: 0.75em;
 }
 
@@ -3375,7 +3380,11 @@ Main content...
   display: block;
 }
 
-.footer_general-inqueries b {
+.footer_general-inqueries {
+  font-size: 0.75em;
+}
+
+.footer_general-inqueries-label {
   display: block;
   margin-bottom: 0.5em;
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
@@ -3383,8 +3392,13 @@ Main content...
   font-weight: bold;
 }
 
-.lt-ie9 .footer_general-inqueries b {
+.lt-ie9 .footer_general-inqueries-label {
   font-weight: normal !important;
+}
+
+.footer_general-inqueries-label {
+  display: block;
+  margin-bottom: 0.5em;
 }
 
 .footer_general-inqueries .list__links {
@@ -3393,37 +3407,94 @@ Main content...
   border-top-color: #43484e;
 }
 
-.footer_general-inqueries .list__links .list_link {
+.footer_general-inqueries .list_link {
   color: #43484e;
   border-color: #43484e;
 }
 
-.footer_general-inqueries .list__links .list_link:visited,
-.footer_general-inqueries .list__links .list_link.visited {
+.footer_general-inqueries .list_link:visited,
+.footer_general-inqueries .list_link.visited {
   border-color: #43484e;
   color: #43484e;
 }
 
-.footer_general-inqueries .list__links .list_link:hover,
-.footer_general-inqueries .list__links .list_link.hover {
+.footer_general-inqueries .list_link:hover,
+.footer_general-inqueries .list_link.hover {
   border-color: #43484e;
   color: #43484e;
 }
 
-.footer_general-inqueries .list__links .list_link:focus,
-.footer_general-inqueries .list__links .list_link.focus {
+.footer_general-inqueries .list_link:focus,
+.footer_general-inqueries .list_link.focus {
   border-color: #43484e;
   color: #43484e;
 }
 
-.footer_general-inqueries .list__links .list_link:active,
-.footer_general-inqueries .list__links .list_link.active {
+.footer_general-inqueries .list_link:active,
+.footer_general-inqueries .list_link.active {
   border-color: #43484e;
   color: #43484e;
 }
 
-.footer_general-inqueries {
-  font-size: 0.75em;
+.footer_general-inqueries .list_link {
+  color: #0072ce;
+  border-color: #0072ce;
+}
+
+.footer_general-inqueries .list_link:visited,
+.footer_general-inqueries .list_link.visited {
+  border-color: #005e5d;
+  color: #005e5d;
+}
+
+.footer_general-inqueries .list_link:hover,
+.footer_general-inqueries .list_link.hover {
+  border-color: #7fb8e6;
+  color: #7fb8e6;
+}
+
+.footer_general-inqueries .list_link:focus,
+.footer_general-inqueries .list_link.focus {
+  border-color: #0072ce;
+  color: #0072ce;
+}
+
+.footer_general-inqueries .list_link:active,
+.footer_general-inqueries .list_link.active {
+  border-color: #002d72;
+  color: #002d72;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone {
+  color: #101820;
+  border-color: #101820;
+  border-bottom-width: 0 !important;
+  display: block;
+  margin-bottom: 0.33333333em;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:visited,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.visited {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:hover,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.hover {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:focus,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.focus {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:active,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.active {
+  border-color: #101820;
+  color: #101820;
 }
 
 .footer_list {
@@ -3499,6 +3570,12 @@ Main content...
   margin-bottom: 2.8125em;
 }
 
+.footer-pre {
+  padding-bottom: 1.875em;
+  margin-bottom: 1.875em;
+  border-bottom: 1px solid #babbbd;
+}
+
 .footer-pre .footer_share-icon-list {
   position: absolute;
   top: -9px;
@@ -3524,6 +3601,10 @@ Main content...
 .footer-pre .footer_nav-list .list_item {
   margin-right: 0.25em;
   margin-left: 0;
+}
+
+.footer-pre .footer_nav-list .list_item {
+  margin-bottom: 0;
 }
 
 .footer-left {
@@ -3606,6 +3687,12 @@ Main content...
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.footer-right {
+  padding-bottom: 1.875em;
+  margin-bottom: 1.875em;
+  border-bottom: 1px solid #babbbd;
+}
+
 .footer-right .footer_nested-col-group {
   display: block;
   position: relative;
@@ -3636,7 +3723,22 @@ Main content...
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.footer-right .list {
+  margin-bottom: 0;
+}
+
+.footer-post {
+  padding-top: 1.875em;
+  margin-top: 1.875em;
+  border-top: 1px solid #babbbd;
+}
+
 .footer-post .footer_list {
+  margin-bottom: 0.625em;
+}
+
+.footer-post .footer_list {
+  margin-bottom: 0;
   padding-left: 0;
 }
 
@@ -3651,6 +3753,15 @@ Main content...
 .footer-post .footer_list .list_item {
   margin-right: 0.25em;
   margin-left: 0;
+}
+
+.footer-post .footer_list .list_item {
+  margin-right: 30px;
+  margin-bottom: 0.625em;
+}
+
+.footer-post .footer_list .list_item + .list_item {
+  margin-top: 0;
 }
 </code></pre>
       </div>
