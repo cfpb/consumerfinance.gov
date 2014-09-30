@@ -3375,6 +3375,30 @@ Main content...
   margin-left: -15px;
   margin-right: -15px;
 }
+.footer-pre {
+  position: relative;
+}
+@media only all and (min-width: 48em) {
+  .footer-pre .footer_icon-list {
+    position: absolute;
+    right: 0;
+  }
+}
+@media only all and (min-width: 48em) {
+  .footer-pre .footer_nav-list {
+    padding-left: 0;
+  }
+  .footer-pre .footer_nav-list .list_item {
+    display: inline-block;
+  }
+  .lt-ie8 .footer-pre .footer_nav-list .list_item {
+    display: inline;
+  }
+  .footer-pre .footer_nav-list .list_item {
+    margin-right: 0.25em;
+    margin-left: 0;
+  }
+}
 @media only all and (min-width: 64em) {
   .footer-left {
     display: inline-block;

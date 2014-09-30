@@ -1769,6 +1769,21 @@
         .grid_nested-col-group();
     }
 
+    &-pre {
+        position: relative;
+        & .footer_icon-list {
+            .respond-to-min(768px, {
+                position: absolute;
+                right: 0;
+            });
+        }
+        & .footer_nav-list {
+            .respond-to-min(768px, {
+                .list__horizontal();
+            });
+        }
+    }
+
     &-left {
         .respond-to-min(1024px, {
             .grid_column(4);
