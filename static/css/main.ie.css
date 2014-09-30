@@ -9771,6 +9771,23 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.footer-post .footer_list {
+  padding-left: 0;
+}
+
+.footer-post .footer_list .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .footer-post .footer_list .list_item {
+  display: inline;
+}
+
+.footer-post .footer_list .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
 /* topdoc
     name: EOF
     eof: true
