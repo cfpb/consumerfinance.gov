@@ -9643,6 +9643,32 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-right: -15px;
 }
 
+.footer-pre {
+  position: relative;
+}
+
+.footer-pre .footer_icon-list {
+  position: absolute;
+  right: 0;
+}
+
+.footer-pre .footer_nav-list {
+  padding-left: 0;
+}
+
+.footer-pre .footer_nav-list .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .footer-pre .footer_nav-list .list_item {
+  display: inline;
+}
+
+.footer-pre .footer_nav-list .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
 .footer-right .footer-l_col {
   display: inline-block;
   -webkit-box-sizing: border-box;
