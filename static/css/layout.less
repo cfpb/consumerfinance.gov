@@ -1773,10 +1773,60 @@
     }
 
     &_nav-list {
+        font-size: unit(18px / @base-font-size-px, em);
+        &.list__links {
+            border-top-color: @black;
+        }
+        .list_link {
+            .u-link__colors(@black);
+            .u-link__border();
+        }
         .list_link__disabled {
             .u-link__colors(@gray-50);
             .u-link__border();
             border-bottom-style: dotted;
+        }
+    }
+
+    &_logo {
+        width: 218px;
+        height: 46px;
+        margin-bottom: unit(16px / @base-font-size-px, em);
+    }
+
+    &_address {
+        .webfont-regular();
+        .respond-to-min(600px, {
+            font-size: unit(12px / @base-font-size-px, em);
+        });
+        &-word-break {
+            .respond-to-min(600px, {
+                display: block;
+            });
+        }
+    }
+
+    &_general-inqueries {
+        b {
+            display: block;
+            margin-bottom: unit(8px / @base-font-size-px, em);
+            .webfont-demi();
+        }
+        .list__links {
+            margin-bottom: 0;
+            font-size: unit(18px / @base-font-size-px, em);
+            border-top-color: @darkgray;
+            .list_link {
+                .u-link__colors(@darkgray);
+            }
+        }
+    }
+
+    &_list {
+        .list_link {
+            .webfont-regular();
+            .u-link__colors(@black);
+            .u-link__hover-border();
         }
     }
 
