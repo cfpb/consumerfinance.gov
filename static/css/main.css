@@ -8916,11 +8916,17 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .footer-pre {
   position: relative;
 }
+.footer-pre .footer_icon-list {
+  margin-bottom: 0;
+}
 @media only all and (min-width: 48em) {
   .footer-pre .footer_icon-list {
     position: absolute;
     right: 0;
   }
+}
+.footer-pre .footer_nav-list {
+  margin-bottom: 0;
 }
 @media only all and (min-width: 48em) {
   .footer-pre .footer_nav-list {
@@ -8937,7 +8943,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     margin-left: 0;
   }
 }
-@media only all and (min-width: 64em) {
+@media only all and (min-width: 75em) {
   .footer-left {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -8962,12 +8968,126 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
+@media only all and (min-width: 48em) and (max-width: 74.9375em) {
+  .footer-left .footer_logo {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+    border-left: 0;
+  }
+  .ie .footer-left .footer_logo {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .footer-left .footer_logo {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 48em) and (max-width: 74.9375em) {
+  .footer-left .footer_address {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 25%;
+  }
+  .ie .footer-left .footer_address {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .footer-left .footer_address {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 75em) {
+  .footer-left .footer_address {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+    border-left: 0;
+  }
+  .ie .footer-left .footer_address {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .footer-left .footer_address {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 48em) and (max-width: 74.9375em) {
+  .footer-left .footer_general-inqueries {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 25%;
+    border-right: 0;
+  }
+  .ie .footer-left .footer_general-inqueries {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .footer-left .footer_general-inqueries {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 75em) {
+  .footer-left .footer_general-inqueries {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+    border-right: 0;
+  }
+  .ie .footer-left .footer_general-inqueries {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .footer-left .footer_general-inqueries {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
 @media only all and (max-width: 37.4375em) {
   .footer-right {
     display: none;
   }
 }
-@media only all and (min-width: 64em) {
+@media only all and (min-width: 75em) {
   .footer-right {
     display: inline-block;
     -webkit-box-sizing: border-box;
