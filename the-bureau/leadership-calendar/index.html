@@ -436,6 +436,44 @@
 
                     </div><!-- END calendar -->
 
+                    <nav class="pagination"
+                         role="navigation"
+                         aria-label="Pagination">
+                        <a class="btn btn__disabled pagination_prev">
+                            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+                            Newer
+                        </a>
+                        <a class="btn pagination_next" href="#">
+                            Older
+                            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+                        </a>
+                        <form class="pagination_form" action="">
+                            <label class="pagination_label" for="pagination_current-page">
+                                Page
+                                <span class="u-visually-hidden">
+                                    number out of 48 total pages
+                                </span>
+                            </label>
+                            <input class="pagination_current-page"
+                                   id="pagination_current-page"
+                                   name="page"
+                                   type="number"
+                                   min="1"
+                                   max="48"
+                                   value="1">
+                            <label class="pagination_label">
+                                <span aria-hidden="true">
+                                    of 48
+                                </span>
+                            </label>
+                            <button class="btn btn__link pagination_submit"
+                                    id="pagination_submit"
+                                    type="submit">
+                                Go
+                            </button>
+                        </form>
+                    </nav>
+
                     <!-- <section class="content_block
                                 content_block__padded-top
                                 content_block__border-top">
