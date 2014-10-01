@@ -6526,7 +6526,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .expandable_header__jump-link .expandable_label,
   .expandable_header__jump-link .expandable_link {
     color: #0072ce;
-    font-size: 16px;
   }
   .expandable_header__jump-link:hover,
   .expandable_header__jump-link.hover {
@@ -9864,6 +9863,22 @@ a.category-slug.active {
   padding-left: 0.25em;
   border-bottom: none;
 }
+.jump-link__back:after {
+  content: '';
+}
+.jump-link__back:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e000";
+  position: absolute;
+  left: 0;
+  padding-right: 0.25em;
+  border-bottom: none;
+}
 .list__links .jump-link {
   margin-top: -1px;
 }
@@ -9880,6 +9895,26 @@ a.category-slug.active {
     right: 0;
     bottom: 50%;
     text-align: right;
+  }
+  .jump-link__bg {
+    background: #f1f2f2;
+    border: solid #e3e4e5;
+    border-width: 1px 0;
+    padding: 0.625em 1.25em 0.625em 1em;
+  }
+  .jump-link__bg:after {
+    right: 1em;
+  }
+  .jump-link__back {
+    padding: 0.625em 0 0.625em 1.25em;
+  }
+  .jump-link__back:after {
+    content: '';
+  }
+  .jump-link__back:before {
+    margin-bottom: -0.625em;
+    left: 0;
+    bottom: 50%;
   }
 }
 /* topdoc
@@ -13572,6 +13607,9 @@ a.focus .summary_header {
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
 }
+.bureau-functions .expandable {
+  background-color: inherit;
+}
 .bureau-bio .media_image {
   width: 125px;
 }
@@ -13711,6 +13749,215 @@ a.focus .summary_header {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
+}
+.org-chart {
+  position: relative;
+  overflow: hidden;
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart {
+    width: 530px;
+    margin: 0 auto;
+  }
+}
+@media only all and (min-width: 64.0625em) {
+  .org-chart {
+    width: 660px;
+  }
+}
+.org-chart_root {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.org-chart_branches,
+.org-chart_nodes {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_branches,
+  .org-chart_nodes {
+    position: relative;
+  }
+  .org-chart_branches li,
+  .org-chart_nodes li {
+    position: relative;
+  }
+}
+.org-chart_branches {
+  padding-top: 30px;
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_branches {
+    position: relative;
+  }
+  .org-chart_branches:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 1px solid #babbbd;
+    width: 0;
+    height: 30px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_branch {
+    padding-top: 45px;
+    float: left;
+    border-left: 0;
+    border-right: 0;
+  }
+  .org-chart_branch:before,
+  .org-chart_branch:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 1px solid #babbbd;
+    width: 50%;
+    height: 30px;
+  }
+  .org-chart_branch:after {
+    right: auto;
+    left: 50%;
+    border-left: 1px solid #babbbd;
+  }
+  .org-chart_branch:first-child {
+    padding-right: 15px;
+  }
+  .org-chart_branch:first-child:before {
+    border: none;
+  }
+  .org-chart_branch.last-child {
+    padding-left: 15px;
+  }
+  .org-chart_branch.last-child:before {
+    border-right: 1px solid #babbbd;
+  }
+  .org-chart_branch.last-child:after {
+    border: none;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_branch_wrapper {
+    width: 250px;
+  }
+}
+@media only all and (min-width: 64.0625em) {
+  .org-chart_branch_wrapper {
+    width: 315px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_branch_name {
+    margin-top: 0;
+    margin-bottom: 0.27777778em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+    margin-bottom: 0.83333333em;
+    text-align: center;
+  }
+  .lt-ie9 .org-chart_branch_name {
+    font-weight: normal !important;
+  }
+}
+.org-chart_role {
+  padding: 15px;
+  background: #f1f2f2;
+  border-top: 1px solid #e3e4e5;
+  position: relative;
+}
+.org-chart_role_office {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+}
+.lt-ie9 .org-chart_role_office {
+  font-weight: normal !important;
+}
+.org-chart_role_name {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+.lt-ie9 .org-chart_role_name {
+  font-weight: normal !important;
+}
+.org-chart_role_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.org-chart_role_title em,
+.org-chart_role_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .org-chart_role_title em,
+.lt-ie9 .org-chart_role_title i {
+  font-style: normal !important;
+}
+.org-chart_role_title strong,
+.org-chart_role_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .org-chart_role_title strong,
+.lt-ie9 .org-chart_role_title b {
+  font-weight: normal !important;
+}
+.org-chart_node {
+  margin-bottom: 15px;
+  width: 100%;
+}
+@media only all and (max-width: 37.4375em) {
+  .org-chart_node {
+    display: none;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_node {
+    position: relative;
+  }
+}
+.org-chart_node_expander {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+}
+.org-chart_node_expander .expandable_link {
+  font-size: 16px;
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_node .org-chart_nodes {
+    border-top: 5px solid #7fb8e6;
+  }
+}
+.org-chart_node .org-chart_nodes .org-chart_node {
+  margin-bottom: 1px;
+}
+.org-chart_node .org-chart_nodes .org-chart_node .org-chart_role {
+  background: #cce3f5;
+  border-top: none;
+  padding-right: 15px;
+}
+.org-chart .jump-link__bg {
+  margin-top: -1px;
 }
 /* ==========================================================================
    cfgov-refresh

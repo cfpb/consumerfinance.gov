@@ -108,6 +108,22 @@
         padding-left: 0.25em;
         border-bottom: none;
     }
+    
+    &__back {
+        &:after {
+            content: ''
+        }
+        
+        &:before {
+            .cf-icon();
+            // Inserts the cf-icon-left (arrow) glyph.
+            content: "\e000";
+            position: absolute;
+            left: 0;
+            padding-right: 0.25em;
+            border-bottom: none;
+        }
+    }
 
     .list__links & {
         margin-top: -1px;
@@ -125,6 +141,29 @@
             right: 0;
             bottom: 50%;
             text-align: right;
+        }
+        
+        &__bg {
+            background: @gray-10;
+            border: solid @gray-20;
+            border-width: 1px 0;
+            padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
+            &:after {
+                right: 1em;
+            }
+        }
+        
+        &__back {
+            padding: unit(10px / @base-font-size-px, em) 0 unit(10px / @base-font-size-px, em) 1.25em;
+            &:after {
+                content: ''
+            }
+
+            &:before {
+                margin-bottom: -0.625em;
+                left: 0;
+                bottom: 50%;
+            }
         }
     });
 }
