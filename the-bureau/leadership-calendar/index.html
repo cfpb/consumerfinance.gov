@@ -35,7 +35,9 @@
                 {% include "nav.html" %}
             </aside>
 
-            <div class="content_main content__flush-top-on-small">
+            <div class="content_main
+                        content__flush-top-on-small
+                        content__flush-bottom">
                 <section>
 
                     <div class="content_block content_block__flush-top">
@@ -459,6 +461,38 @@
                             pellentesque nec. Nulla placerat ipsum ac purus dapibus, a viverra elit tempor.
                         </p>
                     </section> -->
+
+                    <aside class="content_block
+                                  content_block__flush-bottom
+                                  content_block__flush-sides
+                                  content_block__bg">
+                        <div class="content-l">
+                            <div class="content-l_col content-l_col-1-2">
+                                <h1 class="header-slug">
+                                    <span class="header-slug_inner">
+                                        Related links
+                                    </span>
+                                </h1>
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a href="http://www.consumerfinance.gov/foia/" class="list_link">
+                                            Read more about FOIA
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a href="#" class="list_link">
+                                            Open government
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a href="{{ path }}history/" class="list_link">
+                                            About our history
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </aside>
 
                 </section>
             </div><!-- END .content_main -->
