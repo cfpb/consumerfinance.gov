@@ -7468,7 +7468,10 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
             </div>
         </main>
       notes:
-        - "..."
+        - "The .content area has a visual gutter twice the size of a normal
+           wrapper because the gutters from the sidebar and main content divs
+           add to the gutters of the wrapper. This modifier gives you a wrapper
+           with wider gutters to match the visual gutters of the .content area."
   tags:
     - cfgov-layout
 */
