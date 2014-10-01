@@ -1574,7 +1574,7 @@
   name: Share icon
   family: cfgov-misc
   patterns:
-    - name: Default example
+    - name: .share-icon (base)
       markup: |
         <a class="share-icon" href="#">
             <span class="cf-icon cf-icon-email-social-square"></span>
@@ -1591,6 +1591,16 @@
           .share-icon
             .cf-icon.cf-icon-name
             .u-visually-hidden
+    - name: .share-icon__large (modifier)
+      markup: |
+        <a class="share-icon share-icon__large" href="#">
+            <span class="cf-icon cf-icon-email-social-square"></span>
+            <span class="u-visually-hidden">
+                Share by email
+            </span>
+        </a>
+      codenotes:
+        - .share-icon__large
   tags:
     - cfgov-misc
 */
@@ -1602,8 +1612,9 @@
     .u-link__colors(@darkgray, @pacific-80);
     .u-link__no-border();
 
-    & + & {
-        margin-left: unit(2px / 26px, em);
+    &__large {
+        // 35px creates a 30px square icon.
+        font-size: unit(35px / @base-font-size-px, em);
     }
 }
 
