@@ -14997,6 +14997,36 @@ a.focus .summary_header {
   color: #43484e;
 }
 
+.footer_list .list_link.list_link__disabled {
+  color: #babbbd;
+  border-color: #babbbd;
+  border-bottom: 1px dotted;
+}
+
+.footer_list .list_link.list_link__disabled:visited,
+.footer_list .list_link.list_link__disabled.visited {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_list .list_link.list_link__disabled:hover,
+.footer_list .list_link.list_link__disabled.hover {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_list .list_link.list_link__disabled:focus,
+.footer_list .list_link.list_link__disabled.focus {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_list .list_link.list_link__disabled:active,
+.footer_list .list_link.list_link__disabled.active {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
 .footer_long-list {
   padding-left: 0;
   list-style-type: none;
@@ -15248,6 +15278,10 @@ a.focus .summary_header {
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.footer-right .h6 {
+  color: #babbbd;
 }
 
 .footer-right .list {
