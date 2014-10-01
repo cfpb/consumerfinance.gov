@@ -9,60 +9,46 @@
   patterns:
     - name: Percent-based
       markup: |
-        <div class="u-w100pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w100pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w100pct</code>
         </div>
-        <div class="u-w90pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w90pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w90pct</code>
         </div>
-        <div class="u-w80pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w80pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w80pct</code>
         </div>
-        <div class="u-w70pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w70pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w70pct</code>
         </div>
-        <div class="u-w60pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w60pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w60pct</code>
         </div>
-        <div class="u-w50pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w50pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w50pct</code>
         </div>
-        <div class="u-w40pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w40pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w40pct</code>
         </div>
-        <div class="u-w30pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w30pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w30pct</code>
         </div>
-        <div class="u-w20pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w20pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w20pct</code>
         </div>
-        <div class="u-w10pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w10pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w10pct</code>
         </div>
-        <div class="u-w75pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w75pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w75pct</code>
         </div>
-        <div class="u-w25pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w25pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w25pct</code>
         </div>
-        <div class="u-w66pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w66pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w66pct</code>
         </div>
-        <div class="u-w33pct"
-             style="background: #DBEDD4; margin-bottom: 1px;">
+        <div class="u-w33pct" style="background: #DBEDD4; margin-bottom: 1px;">
             <code>.u-w33pct</code>
         </div>
       notes:
@@ -137,62 +123,39 @@
   notes:
     - "Updated table styling that needs to get ported to cf-core pending Design
        Manual approval."
+    - "At screens smaller than 960px wide the table cells stack."
   patterns:
     - name: Default table
       markup: |
         <table>
             <thead>
                 <tr>
-                    <th>
-                        Column 1
-                    </th>
-                    <th>
-                        Column 2
-                    </th>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
-                    <td>
-                        Lorem ipsum dolor.
-                    </td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
                 </tr>
             </tbody>
         </table>
   tags:
     - cfgov-cf-enhancements
 */
-
-tr {
-    border-bottom: 1px solid @gray-50;
-}
 
 th,
 td {
@@ -206,13 +169,42 @@ td {
     }
 }
 
-tbody th {
-    .webfont-medium();
-}
-
 thead th {
     .padded-header();
 }
+
+tbody {
+    th {
+        .webfont-medium();
+    }
+
+    tr {
+        border-bottom: 1px solid @gray-50;
+    }
+}
+
+.respond-to-max(959px {
+    table {
+        width: 100%;
+    }
+
+    thead {
+        th {
+            display: block;
+        }
+    }
+
+    tbody {
+        th,
+        td {
+            display: block;
+        }
+        th + th,
+        td + td {
+            padding-top: 0;
+        }
+    }
+});
 
 
 /* topdoc
