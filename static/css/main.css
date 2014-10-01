@@ -6187,6 +6187,213 @@ img {
    capital framework enhancements
    ========================================================================== */
 /* topdoc
+  name: Width utilities
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Percent-based
+      markup: |
+        <div class="u-100"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-100</code>
+        </div>
+        <div class="u-90"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-90</code>
+        </div>
+        <div class="u-80"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-80</code>
+        </div>
+        <div class="u-70"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-70</code>
+        </div>
+        <div class="u-60"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-60</code>
+        </div>
+        <div class="u-50"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-50</code>
+        </div>
+        <div class="u-40"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-40</code>
+        </div>
+        <div class="u-30"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-30</code>
+        </div>
+        <div class="u-20"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-20</code>
+        </div>
+        <div class="u-10"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-10</code>
+        </div>
+        <div class="u-75"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-75</code>
+        </div>
+        <div class="u-25"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-25</code>
+        </div>
+        <div class="u-66"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-66</code>
+        </div>
+        <div class="u-33"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-33</code>
+        </div>
+      notes:
+        - "Inline styles are for demonstration purposes only, please don't use
+           them."
+  tags:
+    - cfgov-cf-enhancements
+*/
+.u-100 {
+  width: 100%;
+}
+.u-90 {
+  width: 90%;
+}
+.u-80 {
+  width: 80%;
+}
+.u-70 {
+  width: 70%;
+}
+.u-60 {
+  width: 60%;
+}
+.u-50 {
+  width: 50%;
+}
+.u-40 {
+  width: 40%;
+}
+.u-30 {
+  width: 30%;
+}
+.u-20 {
+  width: 20%;
+}
+.u-10 {
+  width: 10%;
+}
+.u-75 {
+  width: 75%;
+}
+.u-25 {
+  width: 25%;
+}
+.u-66 {
+  width: 66.66666667%;
+}
+.u-33 {
+  width: 33.33333333%;
+}
+/* topdoc
+  name: Tables
+  family: cfgov-cf-enhancements
+  notes:
+    - "Updated table styling that needs to get ported to cf-core pending Design
+       Manual approval."
+  patterns:
+    - name: Default table
+      markup: |
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Column 1
+                    </th>
+                    <th>
+                        Column 2
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+  tags:
+    - cfgov-cf-enhancements
+*/
+tr {
+  border-bottom: 1px solid #babbbd;
+}
+th,
+td {
+  padding: 0.625em 0.625em;
+  background: #ffffff;
+}
+tbody > tr:nth-child(odd) > th,
+tbody > tr:nth-child(odd) > td {
+  background: inherit;
+}
+tbody th {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+.lt-ie9 tbody th {
+  font-weight: normal !important;
+}
+thead th {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  padding: 0.57142857em 0.71428571em;
+  margin-bottom: 0;
+  border-bottom: 1px solid #babbbd;
+  background: #f1f2f2;
+  color: #75787b;
+}
+.lt-ie9 thead th {
+  font-weight: normal !important;
+}
+/* topdoc
   name: Simple base style modifiers
   family: cfgov-cf-enhancements
   patterns:
@@ -9580,6 +9787,39 @@ a.category-slug.active {
   padding-top: 0.28571429em;
   margin-top: -3px;
   border-top: 5px solid #2cb34a;
+}
+/* topdoc
+  name: Padded header
+  family: cfgov-meta
+  patterns:
+    - name: Default padded header
+      markup: |
+        <h2 class="padded-header">
+            Header
+        </h2>
+      codenotes:
+        - .padded-header
+  tags:
+    - cfgov-meta
+*/
+.padded-header {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  padding: 0.57142857em 0.71428571em;
+  margin-bottom: 0;
+  border-bottom: 1px solid #babbbd;
+  background: #f1f2f2;
+  color: #75787b;
+}
+.lt-ie9 .padded-header {
+  font-weight: normal !important;
 }
 /* topdoc
   name: Fancy slug
