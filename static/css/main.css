@@ -10410,6 +10410,46 @@ a.category-slug.active {
           .custom-select by detecting :hover and :focus on .custom-select."
         - "The jQuery plugin will auto intitiate all select elements that are
           wrapped in a parent with the class of custom-select."
+    - name: .custom-select__month (modifier)
+      markup: |
+        <div class="custom-select custom-select__month">
+            <select>
+                <option value="">Month</option>
+                <option value="01">Jan</option>
+                <option value="02">Feb</option>
+                <option value="03">Mar</option>
+                <option value="04">Apr</option>
+                <option value="05">May</option>
+                <option value="06">Jun</option>
+                <option value="07">Jul</option>
+                <option value="08">Aug</option>
+                <option value="09">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - .custom-select__month
+      notes:
+        - "Simply sets a max-width appropriate for a month input."
+    - name: .custom-select__year (modifier)
+      markup: |
+        <div class="custom-select custom-select__year">
+            <select>
+                <option value="">Year</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - .custom-select__year
+      notes:
+        - "Simply sets a max-width appropriate for a year input."
     - name: JavaScript setup
       markup: |
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -10483,6 +10523,12 @@ a.category-slug.active {
 .is-hovered .custom-select_select,
 .is-focused .custom-select_select {
   outline: none;
+}
+.custom-select__month {
+  max-width: 6em;
+}
+.custom-select__year {
+  max-width: 5.375em;
 }
 /* topdoc
   name: Custom checkboxes and radio buttons via jquery.custom-input
@@ -10669,7 +10715,7 @@ a.category-slug.active {
   outline: 2px solid #0072ce;
 }
 /* topdoc
-  name: Form inputs
+  name: Grouped inputs
   family: cfgov-misc
   patterns:
     - name: Horizontal inputs
