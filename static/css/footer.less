@@ -134,6 +134,11 @@
         .list_link {
             .u-link__colors(@darkgray);
         }
+
+        .list_link.list_link__disabled {
+            .u-link__colors(@gray-50);
+            border-bottom: 1px dotted;
+        }
     }
 
     &_long-list {
@@ -287,6 +292,10 @@
 
         .footer_col {
             .grid_column(3);
+        }
+
+        .h6 {
+            color: @gray-50;
         }
 
         .list {
