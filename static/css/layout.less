@@ -7,7 +7,7 @@
   name: Base layout
   family: cfgov-layout
   patterns:
-    - name: Wrapper class
+    - name: .wrapper (base)
       markup: |
         <div class="wrapper">
             Wrapper
@@ -16,6 +16,26 @@
         - "Turns an element into a cf-grid wrapper at 801px and above."
         - "Includes some explicit declarations for IE8 due to the fact that it
            doesn't support media queries."
+    - name: .wrapper__match-content (modifier)
+      markup: |
+        <div class="wrapper wrapper__match-content">
+            <code>.wrapper.wrapper__match-content</code>
+            <img src="http://placekitten.com/800/40" alt="">
+        </div>
+        <br>
+        <main class="content" id="main" role="main">
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <code>.wrapper.wrapper_content .content_main</code>
+                    <img src="http://placekitten.com/800/40" alt="">
+                </section>
+            </div>
+        </main>
+      notes:
+        - "The .content area has a visual gutter twice the size of a normal
+           wrapper because the gutters from the sidebar and main content divs
+           add to the gutters of the wrapper. This modifier gives you a wrapper
+           with wider gutters to match the visual gutters of the .content area."
   tags:
     - cfgov-layout
 */
@@ -24,6 +44,16 @@
     .respond-to-min(801px, {
         .grid_wrapper();
     });
+
+    &__match-content {
+        padding-left: @grid_gutter-width / 2;
+        padding-right: @grid_gutter-width / 2;
+
+        .respond-to-min(600px, {
+            padding-left: @grid_gutter-width;
+            padding-right: @grid_gutter-width;
+        });
+    }
 }
 
 .lt-ie9 {
@@ -1714,28 +1744,6 @@
         }
 
     });
-}
-
-
-/* topdoc
-  name: Footer
-  family: cfgov-layout
-  patterns:
-    - name: Standard footer styling
-      markup: |
-        <footer class="footer" role="contentinfo">
-            <div class="wrapper">
-                Footer
-            </div>
-        </footer>
-  tags:
-    - cfgov-layout
-*/
-
-.footer {
-    padding: 1.5em 0;
-    border-top: 3px solid @green;
-    background: @gray-10;
 }
 
 
