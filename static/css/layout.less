@@ -1564,6 +1564,10 @@
         &__medium {
             .h3();
             margin-bottom: unit(19px / @font-size, em); 
+            .respond-to-max(599px, {
+                .h4();
+                margin-bottom: unit(21px / @font-size, em);
+            });
         }
 
         &__extra-small{

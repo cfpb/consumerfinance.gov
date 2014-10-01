@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block demo_title -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block title -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block desc -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block content %}
+
+    {# Variables #}
+
+    {% set path = '/the-bureau/' %}
+    {% set active_page = 'leadership-calendar' %}
+
+    {# Macros #}
+
+    {% import "post-macros.html" as post_macros %}
+
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <aside class="content_sidebar content__flush-all-on-small">
+                {% include "nav.html" %}
+            </aside>
+
+            <div class="content_main content__flush-top-on-small">
+                <section>
+
+                    <div class="content_block content_block__flush-top">
+                        <h1 class="content_title__medium">
+                            At the Consumer Financial Protection Bureau, we are committed to letting you
+                            know how we’re working for you every day by, among other things, providing you
+                            with a view into the workday of the CFPB’s senior leadership.
+                        </h1>
+                        <p>
+                            Richard Cordray is the Director of the CFPB. We post his calendar online,
+                            typically on a monthly basis, after reviewing it to determine whether any
+                            information contained therein must or should be withheld from public disclosure
+                            in accordance with the Freedom of Information Act. We update the calendar
+                            retrospectively; we do not post current or future calendars. Due to the
+                            time-intensive preparation process, each month’s calendar will appear on this
+                            page a few weeks after that month has concluded. We will begin updating
+                            Mr. Cordray’s calendar with his January appointments.
+                        </p>
+                        {{ macros.share(self.title(), false) }}
+                    </div>
+
+                    <div class="content_block
+                                content_block__padded-top
+                                content_block__border-top">
+                        <form class="form-l form-l__flush" method="get">
+                            <div class="form-l_col form-l_col-1-2">
+                                <h2 class="form-label-header" for="">
+                                    Calendar
+                                </h2>
+                                <div class="form-l form-l__flush">
+                                    <label class="form-l_col form-l_col-1-2">
+                                        <input class="custom-input"
+                                               type="checkbox"
+                                               name="..."
+                                               value="..."
+                                               checked
+                                               >
+                                        Richard Cordray
+                                    </label>
+                                    <label class="form-l_col form-l_col-1-2">
+                                        <input class="custom-input"
+                                               type="checkbox"
+                                               name="..."
+                                               value="..."
+                                               checked
+                                               >
+                                        Steven Antonakes
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-l_col form-l_col-1-2">
+                                <div id="calendar_date_range-container">
+                                    <label for="calendar_date_range">
+                                        <h2 class="form-label-header" for="">
+                                            Date range
+                                        </h2>
+                                    </label>
+                                    <input id="calendar_date_range"
+                                           name="calendar_date_range"
+                                           type="text"
+                                           value=""
+                                           placeholder="YYYY-MM">
+                                </div>
+                                <div id="calendar_date_range-replacement" style="display:none;">
+                                     <label for="calendar_date_range">
+                                         <h2 class="form-label-header" for="">
+                                             Date range
+                                         </h2>
+                                     </label>
+                                    <div class="input-group">
+                                        <div class="input-group_item custom-select">
+                                            <select class="form-input-month"
+                                                    id="claendar_date_range_month">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                        <div class="input-group_item custom-select">
+                                            <select class="form-input_year"
+                                                    id="claendar_date_range_year">
+                                                <option value="">Year</option>
+                                            {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
+                                                <option value="{{ year }}">{{ year }}</option>
+                                            {%- endfor -%}
+                                            </select>
+                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- END calendar -->
+
+                    <!-- <section class="content_block
+                                content_block__padded-top
+                                content_block__border-top">
+                        <h1 class="content_title__large">
+                            Download a copy
+                        </h1>
+                        <p>
+                            Quisque consequat quam sem, a condimentum augue consequat nec. Aenean tristique
+                            faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
+                            dapibus, a viverra elit tempor.
+                        </p>
+                        <p class="demo-placeholder">
+                            Form
+                        </p>
+                        <p class="short-desc">
+                            * Disclaimer abotu Raj Date and Elizabeth Warren. Quisque consequat quam sem, a
+                            condimentum augue consequat nec.
+                        </p>
+                        <p class="short-desc">
+                            ** Disclaimer about old PDF’s tristique faucibus nisi, a posuere sapien
+                            pellentesque nec. Nulla placerat ipsum ac purus dapibus, a viverra elit tempor.
+                        </p>
+                    </section> -->
+
+                </section>
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+
+    </main><!-- END .content -->
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    /* ==========================================================================
+       Init jquery.cf_inputSplit
+       ========================================================================== */
+
+    if ($('#calendar_date_range-container').length > 0) {
+        $('#calendar_date_range-container').cf_inputSplit({
+            newHTML: '#calendar_date_range-replacement',
+            newInputsOrder: ['#calendar_date_range_year', '#calendar_date_range_month'],
+            initialValues: $('#calendar_date_range').val().split('-'),
+            delimiter: '-'
+        });
+    }
+
+    $('#calendar_date_range_month, #calendar_date_range_year')
+    .trigger('updateState');
+</script>
+{% endblock %}
