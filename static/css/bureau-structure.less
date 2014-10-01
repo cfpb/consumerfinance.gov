@@ -1,0 +1,189 @@
+.org-chart {
+    position: relative;
+    overflow: hidden;
+    
+    .respond-to-min(600, {
+        width: 530px;
+        margin: 0 auto;
+    });
+    
+    .respond-to-min(1025, {
+        width: 660px;
+    });
+    
+    &_root {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    
+    &_branches,
+    &_nodes {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        
+        .respond-to-min(600, {
+            position: relative;
+            
+            li {
+                position: relative;
+            }
+        });
+    }
+
+    &_branches {
+        padding-top: unit(@grid_gutter-width, px);
+
+        .respond-to-min(600px, {
+            position: relative;
+
+            &:before{
+                content: '';
+                position: absolute; 
+                top: 0; 
+                left: 50%;
+                border-left: 1px solid @gray-50;
+                width: 0; 
+                height: unit(@grid_gutter-width, px);
+            }
+        });
+    }
+    
+    &_branch {
+
+        .respond-to-min(600px, {
+               padding-top: 45px;
+               float: left;
+               border-left: 0;
+               border-right: 0;
+
+               &:before, &:after{
+                   content: '';
+                   position: absolute; 
+                   top: 0; 
+                   right: 50%;
+                   border-top: 1px solid @gray-50;
+                   width: 50%; 
+                   height: unit(@grid_gutter-width, px);
+               }
+
+               &:after{
+                   right: auto; 
+                   left: 50%;
+                   border-left: 1px solid @gray-50;
+               }
+
+               &:first-child {
+                   padding-right: unit(@grid_gutter-width / 2, px);
+
+                   &:before {
+                       border: none;
+                   }
+               }
+
+               &.last-child {
+                   padding-left: unit(@grid_gutter-width / 2, px);
+
+                   &:before{
+                       border-right: 1px solid @gray-50;
+                   }
+
+                   &:after{
+                       border: none;
+                   }
+               }
+
+        });
+        
+        &_wrapper {
+            .respond-to-min(600px, {
+                width: 250px;
+            });
+
+            .respond-to-min(1025, {
+                width: 315px;
+            });
+
+        }
+
+        &_name {
+            .respond-to-min(600, {
+                .h4();
+                margin-bottom: unit(15px / @font-size, em);
+                text-align: center;
+            });
+        }
+    }
+    
+    &_nodes {
+        
+    }
+    
+    &_role {
+        padding: unit(@grid_gutter-width / 2, px);
+        background: @gray-10;
+        border-top: 1px solid @gray-20;
+        position: relative;
+        
+        &_office {
+            .h6();
+        }
+
+        &_name {
+            .webfont-medium();
+        }
+
+        &_title {
+             .webfont-regular();
+        }
+    }
+    
+    &_node {
+        margin-bottom: unit(@grid_gutter-width / 2, px);
+        width: 100%;
+        
+        .respond-to-max(599px, {
+            display: none;
+        });
+        
+        .respond-to-min(600px, {
+            position: relative;
+        });
+        
+        &_expander {
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            z-index: 10;
+            
+            .expandable_link {
+                font-size: @base-font-size-px;
+            }
+        }
+        
+        .org-chart_nodes {
+            
+            .respond-to-min(600px, {
+                border-top: 5px solid @pacific-50;
+            });
+            
+            .org-chart_node {
+                margin-bottom: 1px;
+
+                .org-chart_role {
+                    background: @pacific-20;
+                    border-top: none;
+                    padding-right: unit(@grid_gutter-width / 2, px);
+                }
+
+            }
+        }
+                 
+    }
+    
+    .jump-link__bg {
+        margin-top: -1px;
+    }
+    
+}
