@@ -6192,61 +6192,61 @@ img {
   patterns:
     - name: Percent-based
       markup: |
-        <div class="u-100"
+        <div class="u-w100pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-100</code>
+            <code>.u-w100pct</code>
         </div>
-        <div class="u-90"
+        <div class="u-w90pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-90</code>
+            <code>.u-w90pct</code>
         </div>
-        <div class="u-80"
+        <div class="u-w80pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-80</code>
+            <code>.u-w80pct</code>
         </div>
-        <div class="u-70"
+        <div class="u-w70pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-70</code>
+            <code>.u-w70pct</code>
         </div>
-        <div class="u-60"
+        <div class="u-w60pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-60</code>
+            <code>.u-w60pct</code>
         </div>
-        <div class="u-50"
+        <div class="u-w50pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-50</code>
+            <code>.u-w50pct</code>
         </div>
-        <div class="u-40"
+        <div class="u-w40pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-40</code>
+            <code>.u-w40pct</code>
         </div>
-        <div class="u-30"
+        <div class="u-w30pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-30</code>
+            <code>.u-w30pct</code>
         </div>
-        <div class="u-20"
+        <div class="u-w20pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-20</code>
+            <code>.u-w20pct</code>
         </div>
-        <div class="u-10"
+        <div class="u-w10pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-10</code>
+            <code>.u-w10pct</code>
         </div>
-        <div class="u-75"
+        <div class="u-w75pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-75</code>
+            <code>.u-w75pct</code>
         </div>
-        <div class="u-25"
+        <div class="u-w25pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-25</code>
+            <code>.u-w25pct</code>
         </div>
-        <div class="u-66"
+        <div class="u-w66pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-66</code>
+            <code>.u-w66pct</code>
         </div>
-        <div class="u-33"
+        <div class="u-w33pct"
              style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-33</code>
+            <code>.u-w33pct</code>
         </div>
       notes:
         - "Inline styles are for demonstration purposes only, please don't use
@@ -6254,46 +6254,46 @@ img {
   tags:
     - cfgov-cf-enhancements
 */
-.u-100 {
+.u-w100pct {
   width: 100%;
 }
-.u-90 {
+.u-w90pct {
   width: 90%;
 }
-.u-80 {
+.u-w80pct {
   width: 80%;
 }
-.u-70 {
+.u-w70pct {
   width: 70%;
 }
-.u-60 {
+.u-w60pct {
   width: 60%;
 }
-.u-50 {
+.u-w50pct {
   width: 50%;
 }
-.u-40 {
+.u-w40pct {
   width: 40%;
 }
-.u-30 {
+.u-w30pct {
   width: 30%;
 }
-.u-20 {
+.u-w20pct {
   width: 20%;
 }
-.u-10 {
+.u-w10pct {
   width: 10%;
 }
-.u-75 {
+.u-w75pct {
   width: 75%;
 }
-.u-25 {
+.u-w25pct {
   width: 25%;
 }
-.u-66 {
+.u-w66pct {
   width: 66.66666667%;
 }
-.u-33 {
+.u-w33pct {
   width: 33.33333333%;
 }
 /* topdoc
