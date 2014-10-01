@@ -4,6 +4,218 @@
    ========================================================================== */
 
 /* topdoc
+  name: Width utilities
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Percent-based
+      markup: |
+        <div class="u-100"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-100</code>
+        </div>
+        <div class="u-90"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-90</code>
+        </div>
+        <div class="u-80"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-80</code>
+        </div>
+        <div class="u-70"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-70</code>
+        </div>
+        <div class="u-60"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-60</code>
+        </div>
+        <div class="u-50"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-50</code>
+        </div>
+        <div class="u-40"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-40</code>
+        </div>
+        <div class="u-30"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-30</code>
+        </div>
+        <div class="u-20"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-20</code>
+        </div>
+        <div class="u-10"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-10</code>
+        </div>
+        <div class="u-75"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-75</code>
+        </div>
+        <div class="u-25"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-25</code>
+        </div>
+        <div class="u-66"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-66</code>
+        </div>
+        <div class="u-33"
+             style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-33</code>
+        </div>
+      notes:
+        - "Inline styles are for demonstration purposes only, please don't use
+           them."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u {
+    &-100 {
+        width: 100%;
+    }
+
+    &-90 {
+        width: 90%;
+    }
+
+    &-80 {
+        width: 80%;
+    }
+
+    &-70 {
+        width: 70%;
+    }
+
+    &-60 {
+        width: 60%;
+    }
+
+    &-50 {
+        width: 50%;
+    }
+
+    &-40 {
+        width: 40%;
+    }
+
+    &-30 {
+        width: 30%;
+    }
+
+    &-20 {
+        width: 20%;
+    }
+
+    &-10 {
+        width: 10%;
+    }
+
+    &-75 {
+        width: 75%;
+    }
+
+    &-25 {
+        width: 25%;
+    }
+
+    &-66 {
+        width: unit((2 / 3) * 100, %);
+    }
+
+    &-33 {
+        width: unit((1 / 3) * 100, %);
+    }
+}
+
+
+/* topdoc
+  name: Tables
+  family: cfgov-cf-enhancements
+  notes:
+    - "Updated table styling that needs to get ported to cf-core pending Design
+       Manual approval."
+  patterns:
+    - name: Default table
+      markup: |
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Column 1
+                    </th>
+                    <th>
+                        Column 2
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+tr {
+    border-bottom: 1px solid @gray-50;
+}
+
+th,
+td {
+    padding: unit(10px / @base-font-size-px, em)
+             unit(10px / @base-font-size-px, em);
+    background: @white;
+
+    // Needed to override styles from cf-core.
+    tbody > tr:nth-child(odd) > & {
+        background: inherit;
+    }
+}
+
+tbody th {
+    .webfont-medium();
+}
+
+thead th {
+    .padded-header();
+}
+
+
+/* topdoc
   name: Simple base style modifiers
   family: cfgov-cf-enhancements
   patterns:
