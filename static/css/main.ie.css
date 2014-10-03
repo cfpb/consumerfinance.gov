@@ -2129,11 +2129,11 @@ input.btn::-moz-focus-inner {
   display: none;
 }
 
-.expandable__expanded .expandable_cue-open {
+.expandable__expanded > .expandable_target .expandable_cue-open {
   display: none;
 }
 
-.expandable__expanded .expandable_cue-close {
+.expandable__expanded > .expandable_target .expandable_cue-close {
   display: inline;
 }
 
@@ -14567,3 +14567,126 @@ a.focus .summary_header {
     name: EOF
     eof: true
 */
+
+/* ==========================================================================
+   cfgov-refresh
+   History (The Bureau)
+   ========================================================================== */
+
+.history-expandable.expandable__expanded {
+  padding-top: 30px;
+}
+
+.history-expandable > .expandable_content {
+  margin-right: 30px;
+  margin-left: 30px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#101820), to(transparent));
+  background-image: -webkit-linear-gradient(top, #101820 1px, transparent 1px);
+  background-image: linear-gradient(to bottom, #101820 1px, transparent 1px);
+  background-position: 10px 0;
+  background-repeat: repeat-y;
+  -webkit-background-size: 5px 2px;
+  background-size: 5px 2px;
+}
+
+.history_year {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  padding: 0.45454545em 0.68181818em;
+  border-radius: 0.18181818em;
+  margin: 0 0 0.68181818em;
+  background: #101820;
+  color: #ffffff;
+  text-align: center;
+}
+
+.history_year em,
+.history_year i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .history_year em,
+.lt-ie9 .history_year i {
+  font-style: normal !important;
+}
+
+.history_year strong,
+.history_year b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .history_year strong,
+.lt-ie9 .history_year b {
+  font-weight: normal !important;
+}
+
+.history_year {
+  width: 3em;
+}
+
+.history_list {
+  list-style: none;
+  padding: 0;
+}
+
+.expandable.history_item {
+  background: white;
+}
+
+.expandable.history_item {
+  margin-left: 49px;
+  position: relative;
+}
+
+.expandable.history_item:before {
+  content: '';
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 5px solid #101820;
+  border-radius: 100%;
+  position: absolute;
+  top: 19px;
+  left: -47px;
+  background: #2cb34a;
+}
+
+.expandable.history_item:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 15px 15px 0;
+  border-color: transparent #ffffff transparent transparent;
+  position: absolute;
+  top: 15px;
+  left: -15px;
+}
+
+.history_item_date {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+  display: block;
+  color: #43484e;
+}
+
+.lt-ie9 .history_item_date {
+  font-weight: normal !important;
+}
