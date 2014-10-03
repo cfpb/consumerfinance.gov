@@ -1,4 +1,5 @@
 # cfgov-refresh
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/cfpb/cfgov-refresh?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 cfgov-refresh is based off of [cf-demo](https://github.com/cfpb/cf-demo),
 the recommended workflow for using Capital Framework components.
