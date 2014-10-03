@@ -7404,36 +7404,27 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     patterns:
     - name: expandable_header__jump-link (modifier)
       markup: |
-        <div class="expandable">
-            <button class="expandable_header expandable_header__jump-link expandable_target">
-                <span class="expandable_header-left expandable_label">
-                    Expandable Header
+        <button class="expandable_header expandable_header__jump-link expandable_target">
+            <span class="expandable_header-left expandable_label">
+                Expandable Header
+            </span>
+            <span class="expandable_header-right expandable_link">
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-plus-round"></span>
                 </span>
-                <span class="expandable_header-right expandable_link">
-                    <span class="expandable_cue-open">
-                        <span class="cf-icon cf-icon-plus-round"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        <span class="cf-icon cf-icon-minus-round"></span>
-                    </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-minus-round"></span>
                 </span>
-            </button>
-            <div class="expandable_content">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
-                    temporibus magnam debitis quidem. Ducimus ratione
-                    corporis nesciunt earum vel est quaerat blanditiis
-                    dolore ipsa?
-                </p>
-            </div>
-        </div>
+            </span>
+        </button>
       codenotes:
         - |
-          expandable_header__jump-link
+          .expandable_header__jump-link
       notes:
-        - "This modifier styles the expandable header as a jump link
-           on mobile screens. Can be used for mobile-only expandables."
+        - "This modifier styles the expandable header as a jump link on mobile
+           screens. Can be used for mobile-only expandables."
+        - "Use the `button` element with `.expandable_header`. to make the whole
+           header clickable."
     tags:
     - cfgov-cf-enhancements
 */
@@ -7452,7 +7443,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   name: Base layout
   family: cfgov-layout
   patterns:
-    - name: Wrapper class
+    - name: .wrapper (base)
       markup: |
         <div class="wrapper">
             Wrapper
@@ -7461,6 +7452,26 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
         - "Turns an element into a cf-grid wrapper at 801px and above."
         - "Includes some explicit declarations for IE8 due to the fact that it
            doesn't support media queries."
+    - name: .wrapper__match-content (modifier)
+      markup: |
+        <div class="wrapper wrapper__match-content">
+            <code>.wrapper.wrapper__match-content</code>
+            <img src="http://placekitten.com/800/40" alt="">
+        </div>
+        <br>
+        <main class="content" id="main" role="main">
+            <div class="wrapper content_wrapper">
+                <section class="content_main">
+                    <code>.wrapper.wrapper_content .content_main</code>
+                    <img src="http://placekitten.com/800/40" alt="">
+                </section>
+            </div>
+        </main>
+      notes:
+        - "The .content area has a visual gutter twice the size of a normal
+           wrapper because the gutters from the sidebar and main content divs
+           add to the gutters of the wrapper. This modifier gives you a wrapper
+           with wider gutters to match the visual gutters of the .content area."
   tags:
     - cfgov-layout
 */
@@ -7471,6 +7482,16 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin: 0 auto;
   position: relative;
   clear: both;
+}
+
+.wrapper__match-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.wrapper__match-content {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .lt-ie9 .wrapper {
@@ -8975,6 +8996,18 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
       notes:
         - "Breaks top margin into margin & padding. Useful in combination with
            content_block__border-top to add padding between block contents & border."
+    - name: Padded-bottom modifier
+      markup: |
+        <div class="content_block content_block__padded-bottom content_block__border-bottom">
+            Content block with reduced bottom margin & added bottom padding
+            and border.
+        </div>
+        Content...
+      codenotes:
+        - .content_block.content_block__padded-bottom
+      notes:
+        - "Breaks bottom margin into margin & padding. Useful in combination with
+           content_block__border-bottom to add padding between block contents & border."
     - name: Background modifier
       markup: |
         Main content...
@@ -9102,6 +9135,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .content_block__padded-top {
   padding-top: 1.875em;
   margin-top: 1.875em;
+}
+
+.content_block__padded-bottom {
+  padding-bottom: 1.875em;
+  margin-bottom: 1.875em;
 }
 
 .content_block__sub {
@@ -9577,27 +9615,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 
 .content__bleedbar.content__3-1 .content_wrapper:after {
   left: 75%;
-}
-
-/* topdoc
-  name: Footer
-  family: cfgov-layout
-  patterns:
-    - name: Standard footer styling
-      markup: |
-        <footer class="footer" role="contentinfo">
-            <div class="wrapper">
-                Footer
-            </div>
-        </footer>
-  tags:
-    - cfgov-layout
-*/
-
-.footer {
-  padding: 1.5em 0;
-  border-top: 3px solid #2cb34a;
-  background: #f1f2f2;
 }
 
 /* topdoc
@@ -11501,6 +11518,16 @@ a.category-slug.active {
   clear: both;
 }
 
+.hero_wrapper__match-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.hero_wrapper__match-content {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .hero_img-container {
   display: none;
   line-height: 1;
@@ -12041,7 +12068,7 @@ a.hero_card {
   name: Share icon
   family: cfgov-misc
   patterns:
-    - name: Default example
+    - name: .share-icon (base)
       markup: |
         <a class="share-icon" href="#">
             <span class="cf-icon cf-icon-email-social-square"></span>
@@ -12058,6 +12085,16 @@ a.hero_card {
           .share-icon
             .cf-icon.cf-icon-name
             .u-visually-hidden
+    - name: .share-icon__large (modifier)
+      markup: |
+        <a class="share-icon share-icon__large" href="#">
+            <span class="cf-icon cf-icon-email-social-square"></span>
+            <span class="u-visually-hidden">
+                Share by email
+            </span>
+        </a>
+      codenotes:
+        - .share-icon__large
   tags:
     - cfgov-misc
 */
@@ -12094,8 +12131,8 @@ a.hero_card {
   color: #43484e;
 }
 
-.share-icon + .share-icon {
-  margin-left: 0.07692308em;
+.share-icon__large {
+  font-size: 2.1875em;
 }
 
 /* topdoc
@@ -14748,3 +14785,700 @@ a.focus .summary_header {
 .lt-ie9 .history_item_date {
   font-weight: normal !important;
 }
+
+/* ==========================================================================
+   cfgov-refresh
+   footer
+   ========================================================================== */
+
+/* topdoc
+  name: CF.gov site-wide footer
+  family: cfgov-footer
+  patterns:
+    - notes:
+        - "For the markup please see _layouts/footer.html."
+  tags:
+    - cfgov-footer
+*/
+
+.footer {
+  padding-top: 3.125em;
+  padding-bottom: 3.125em;
+  border-top: 3px solid #2cb34a;
+  background: #f1f2f2;
+}
+
+.footer_share-icon-list {
+  margin-bottom: 1.875em;
+  padding-left: 0;
+}
+
+.footer_share-icon-list .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .footer_share-icon-list .list_item {
+  display: inline;
+}
+
+.footer_share-icon-list .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
+.footer_share-icon-list {
+  margin-bottom: 0;
+}
+
+.footer_nav-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.footer_nav-list .list_item {
+  margin-left: 0;
+}
+
+.footer_nav-list .list_item {
+  margin-bottom: 0.625em;
+}
+
+.footer_nav-list.list__icons .list_link {
+  margin-bottom: 0.9375em;
+  margin-left: 1.5em;
+  position: relative;
+}
+
+.footer_nav-list.list__icons .list_icon {
+  position: absolute;
+  top: 0.0625em;
+  left: -1.625em;
+}
+
+.footer_nav-list .list_link {
+  font-size: 1.125em;
+  color: #101820;
+  border-color: #101820;
+}
+
+.footer_nav-list .list_link:visited,
+.footer_nav-list .list_link.visited {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_nav-list .list_link:hover,
+.footer_nav-list .list_link.hover {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_nav-list .list_link:focus,
+.footer_nav-list .list_link.focus {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_nav-list .list_link:active,
+.footer_nav-list .list_link.active {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_nav-list .list_link {
+  margin-right: 1.36363636em;
+  font-size: 1.375em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  border-bottom-width: 0 !important;
+}
+
+.footer_nav-list .list_link em,
+.footer_nav-list .list_link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .footer_nav-list .list_link em,
+.lt-ie9 .footer_nav-list .list_link i {
+  font-style: normal !important;
+}
+
+.footer_nav-list .list_link strong,
+.footer_nav-list .list_link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer_nav-list .list_link strong,
+.lt-ie9 .footer_nav-list .list_link b {
+  font-weight: normal !important;
+}
+
+.footer_nav-list .list_link:hover,
+.footer_nav-list .list_link.hover,
+.footer_nav-list .list_link:focus,
+.footer_nav-list .list_link.focus {
+  border-bottom-width: 1px !important;
+}
+
+.footer_nav-list .list_link.list_link__disabled {
+  color: #babbbd;
+  border-color: #babbbd;
+  border-bottom: 1px dotted;
+}
+
+.footer_nav-list .list_link.list_link__disabled:visited,
+.footer_nav-list .list_link.list_link__disabled.visited {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_nav-list .list_link.list_link__disabled:hover,
+.footer_nav-list .list_link.list_link__disabled.hover {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_nav-list .list_link.list_link__disabled:focus,
+.footer_nav-list .list_link.list_link__disabled.focus {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_nav-list .list_link.list_link__disabled:active,
+.footer_nav-list .list_link.list_link__disabled.active {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_nav-list .list_link.list_link__disabled {
+  border-bottom-width: 0 !important;
+}
+
+.footer_logo {
+  margin-bottom: 0.625em;
+}
+
+.footer_logo {
+  margin-bottom: 0;
+}
+
+.footer_logo .logo {
+  width: 218px;
+}
+
+.footer_address {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.footer_address em,
+.footer_address i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .footer_address em,
+.lt-ie9 .footer_address i {
+  font-style: normal !important;
+}
+
+.footer_address strong,
+.footer_address b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer_address strong,
+.lt-ie9 .footer_address b {
+  font-weight: normal !important;
+}
+
+.footer_address {
+  margin-bottom: 0;
+  font-size: 0.75em;
+}
+
+.footer_address-word-break {
+  display: block;
+}
+
+.footer_general-inqueries {
+  font-size: 0.75em;
+}
+
+.footer_general-inqueries-label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer_general-inqueries-label {
+  font-weight: normal !important;
+}
+
+.footer_general-inqueries-label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.footer_general-inqueries .list__links {
+  margin-bottom: 0;
+  font-size: 1.125em;
+  border-top-color: #43484e;
+}
+
+.footer_general-inqueries .list_link {
+  color: #43484e;
+  border-color: #43484e;
+}
+
+.footer_general-inqueries .list_link:visited,
+.footer_general-inqueries .list_link.visited {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_general-inqueries .list_link:hover,
+.footer_general-inqueries .list_link.hover {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_general-inqueries .list_link:focus,
+.footer_general-inqueries .list_link.focus {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_general-inqueries .list_link:active,
+.footer_general-inqueries .list_link.active {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_general-inqueries .list_link {
+  color: #0072ce;
+  border-color: #0072ce;
+}
+
+.footer_general-inqueries .list_link:visited,
+.footer_general-inqueries .list_link.visited {
+  border-color: #005e5d;
+  color: #005e5d;
+}
+
+.footer_general-inqueries .list_link:hover,
+.footer_general-inqueries .list_link.hover {
+  border-color: #7fb8e6;
+  color: #7fb8e6;
+}
+
+.footer_general-inqueries .list_link:focus,
+.footer_general-inqueries .list_link.focus {
+  border-color: #0072ce;
+  color: #0072ce;
+}
+
+.footer_general-inqueries .list_link:active,
+.footer_general-inqueries .list_link.active {
+  border-color: #002d72;
+  color: #002d72;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone {
+  color: #101820;
+  border-color: #101820;
+  border-bottom-width: 0 !important;
+  display: block;
+  margin-bottom: 0.33333333em;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:visited,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.visited {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:hover,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.hover {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:focus,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.focus {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_general-inqueries .list_link.footer_general-inqueries-phone:active,
+.footer_general-inqueries .list_link.footer_general-inqueries-phone.active {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.footer_list .list_item {
+  margin-left: 0;
+}
+
+.footer_list .list_item {
+  margin-bottom: 0.625em;
+}
+
+.footer_list.list__icons .list_link {
+  margin-bottom: 0.9375em;
+  margin-left: 1.5em;
+  position: relative;
+}
+
+.footer_list.list__icons .list_icon {
+  position: absolute;
+  top: 0.0625em;
+  left: -1.625em;
+}
+
+.footer_list .list_link {
+  color: #43484e;
+  border-color: #43484e;
+}
+
+.footer_list .list_link:visited,
+.footer_list .list_link.visited {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_list .list_link:hover,
+.footer_list .list_link.hover {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_list .list_link:focus,
+.footer_list .list_link.focus {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_list .list_link:active,
+.footer_list .list_link.active {
+  border-color: #43484e;
+  color: #43484e;
+}
+
+.footer_list .list_link.list_link__disabled {
+  color: #babbbd;
+  border-color: #babbbd;
+  border-bottom: 1px dotted;
+}
+
+.footer_list .list_link.list_link__disabled:visited,
+.footer_list .list_link.list_link__disabled.visited {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_list .list_link.list_link__disabled:hover,
+.footer_list .list_link.list_link__disabled.hover {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_list .list_link.list_link__disabled:focus,
+.footer_list .list_link.list_link__disabled.focus {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_list .list_link.list_link__disabled:active,
+.footer_list .list_link.list_link__disabled.active {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer_long-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.footer_long-list .list_item {
+  margin-left: 0;
+}
+
+.footer_long-list {
+  padding-left: 0;
+}
+
+.footer_long-list .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .footer_long-list .list_item {
+  display: inline;
+}
+
+.footer_long-list .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
+.footer_long-list .list_item {
+  margin-right: 26px;
+  margin-bottom: 0.625em;
+}
+
+.footer_long-list .list_link {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #101820;
+  border-color: #101820;
+  border-bottom-width: 0 !important;
+}
+
+.footer_long-list .list_link em,
+.footer_long-list .list_link i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .footer_long-list .list_link em,
+.lt-ie9 .footer_long-list .list_link i {
+  font-style: normal !important;
+}
+
+.footer_long-list .list_link strong,
+.footer_long-list .list_link b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer_long-list .list_link strong,
+.lt-ie9 .footer_long-list .list_link b {
+  font-weight: normal !important;
+}
+
+.footer_long-list .list_link:visited,
+.footer_long-list .list_link.visited {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_long-list .list_link:hover,
+.footer_long-list .list_link.hover {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_long-list .list_link:focus,
+.footer_long-list .list_link.focus {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_long-list .list_link:active,
+.footer_long-list .list_link.active {
+  border-color: #101820;
+  color: #101820;
+}
+
+.footer_long-list .list_link:hover,
+.footer_long-list .list_link.hover,
+.footer_long-list .list_link:focus,
+.footer_long-list .list_link.focus {
+  border-bottom-width: 1px !important;
+}
+
+.footer-pre {
+  position: relative;
+  margin-bottom: 2.8125em;
+}
+
+.footer-pre {
+  padding-bottom: 1.875em;
+  margin-bottom: 1.875em;
+  border-bottom: 1px solid #babbbd;
+}
+
+.footer-pre .footer_share-icon-list {
+  position: absolute;
+  top: -9px;
+  right: 0;
+}
+
+.footer-pre .footer_nav-list {
+  margin-bottom: 0;
+}
+
+.footer-pre .footer_nav-list {
+  padding-left: 0;
+}
+
+.footer-pre .footer_nav-list .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .footer-pre .footer_nav-list .list_item {
+  display: inline;
+}
+
+.footer-pre .footer_nav-list .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+
+.footer-pre .footer_nav-list .list_item {
+  margin-bottom: 0;
+}
+
+.footer-left {
+  margin-bottom: 2.8125em;
+}
+
+.footer-left .footer_nested-col-group {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.footer-left .footer_logo {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .footer-left .footer_logo {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .footer-left .footer_logo {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.footer-left .footer_address {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .footer-left .footer_address {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .footer-left .footer_address {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.footer-left .footer_general-inqueries {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .footer-left .footer_general-inqueries {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .footer-left .footer_general-inqueries {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.footer-right {
+  padding-bottom: 1.875em;
+  margin-bottom: 1.875em;
+  border-bottom: 1px solid #babbbd;
+}
+
+.footer-right .footer_nested-col-group {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.footer-right .footer_col {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 25%;
+}
+
+.ie .footer-right .footer_col {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .footer-right .footer_col {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.footer-right .h6 {
+  color: #babbbd;
+}
+
+.footer-right .list {
+  margin-bottom: 0;
+}
+
+.footer-post {
+  padding-top: 1.875em;
+  margin-top: 1.875em;
+  border-top: 1px solid #babbbd;
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
