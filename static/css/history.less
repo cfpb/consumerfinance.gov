@@ -1,0 +1,110 @@
+/* ==========================================================================
+   cfgov-refresh
+   History (The Bureau)
+   ========================================================================== */
+
+.history-expandable.expandable__expanded {
+    padding-top: 30px;
+}
+
+
+.history-expandable > .expandable_content {
+    .respond-to-min(801px, {
+        & {
+            margin-right: @grid_gutter-width;
+            margin-left: @grid_gutter-width;
+            background-image: linear-gradient(to bottom, @black 1px, transparent 1px);
+            background-position: 10px 0;
+            background-repeat: repeat-y;
+            background-size: 5px 2px;
+        }
+    });
+
+    // .respond-to-min(1025px, {
+    //     & {
+    //         background-position: 50% 0;
+    //     }
+    // });
+}
+
+
+
+
+
+// absolutely position show/hide link to allow proper wrapping of title
+
+
+
+
+
+.history_year {
+    .h3(); 
+    padding: unit(10px / @font-size, em) unit(15px / @font-size, em);
+    border-radius: unit(4px / @font-size, em);
+    margin: 0 0 unit(15px / @font-size, em);
+    background: @black;
+    color: @white;
+    text-align: center;
+
+    .respond-to-min(801px, {
+        & {
+            width: 3em; // enough width for four characters
+        }
+    });
+
+    // .respond-to-min(1025px, {
+    //     & {
+
+    //         margin-right: auto;
+    //         margin-left: auto;
+    //     }
+    // });
+}
+
+.history_list {
+    list-style: none;
+    padding: 0;
+}
+
+.expandable.history_item {
+    background: white;
+
+    .respond-to-min(801px, {
+        & {
+            margin-left: 49px;
+            position: relative;
+
+            &:before {
+                content: '';
+                display: block;
+                width: 11px;
+                height: 11px;
+                border: 5px solid @black;
+                border-radius: 100%;
+                position: absolute;
+                top: 19px;
+                left: -47px;
+                background: @green;
+            }
+
+            &:after {
+                content: '';
+                display: block;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 15px 15px 15px 0;
+                border-color: transparent #ffffff transparent transparent;
+                position: absolute;
+                top: 15px;
+                left: -15px;
+            }
+        }
+    });
+}
+
+.history_item_date {
+    .h6();
+    display: block;
+    color: @darkgray;
+}
