@@ -81,7 +81,8 @@
                             <div class="expandable_content">
 
                     {# Run a query for the first item in this section to get the starting year. #}
-                    {% set first = query.search_with_url_arguments(q="parent:{}".format(section.id), size=1) %}
+                    {% set first = query.search_with_url_arguments(q="parent:{}".format(section.id),
+                                                                   size=1) %}
                     {# Using this vars dictionary instead of a simple variable lets us share the value
                        between the different scopes created by the foor loops.
                        See: http://stackoverflow.com/a/16746185/279566 #}

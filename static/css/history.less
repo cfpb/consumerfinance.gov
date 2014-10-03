@@ -3,39 +3,39 @@
    History (The Bureau)
    ========================================================================== */
 
-.history-expandable.expandable__expanded {
-    padding-top: 30px;
+// Give appropriate spacing above the expandable_content, given the reversal of
+// it and the expandable_target in the markup.
+// The negative margin and overriding of that prevents it from going away during
+// the close animation.
+.history-expandable {
+    padding-top: @grid_gutter-width;
+
+    > .expandable_header {
+        margin-top: -@grid_gutter-width;
+        background: @gray-10;
+    }
+}
+.expandable__expanded > .expandable_header {
+    margin-top: 0;
 }
 
+.history-expandable .expandable_content {
+    margin-bottom: 0;
+}
 
 .history-expandable > .expandable_content {
     .respond-to-min(801px, {
-        & {
-            margin-right: @grid_gutter-width;
-            margin-left: @grid_gutter-width;
-            background-image: linear-gradient(to bottom, @black 1px, transparent 1px);
-            background-position: 10px 0;
-            background-repeat: repeat-y;
-            background-size: 5px 2px;
-        }
+        margin: 0 @grid_gutter-width @grid_gutter-width;
+        background-image: linear-gradient(to bottom, @black 1px, transparent 1px);
+        background-position: 10px 0;
+        background-repeat: repeat-y;
+        background-size: 5px 2px;
     });
 
-    // .respond-to-min(1025px, {
-    //     & {
-    //         background-position: 50% 0;
-    //     }
-    // });
+    .respond-to-min(1200px, {
+        background-position: 50% 0;
+    });
 }
-
-
-
-
-
-// absolutely position show/hide link to allow proper wrapping of title
-
-
-
-
 
 .history_year {
     .h3(); 
@@ -47,18 +47,14 @@
     text-align: center;
 
     .respond-to-min(801px, {
-        & {
-            width: 3em; // enough width for four characters
-        }
+        width: 3em; // enough width for four characters
     });
 
-    // .respond-to-min(1025px, {
-    //     & {
-
-    //         margin-right: auto;
-    //         margin-left: auto;
-    //     }
-    // });
+    .respond-to-min(1200px, {
+        clear: both;
+        margin-right: auto;
+        margin-left: auto;
+    });
 }
 
 .history_list {
@@ -66,39 +62,85 @@
     padding: 0;
 }
 
+.history_item .expandable_link {
+    position: absolute;
+    right: unit(10px / @btn-font-size, em);
+}
+
+.history_item__right {
+    clear: right;
+    
+    &:before {
+        top: 19px;
+        left: -47px;
+    }
+    &:after {
+        border-width: 15px 15px 15px 0;
+        border-color: transparent @white transparent transparent;
+        top: 15px;
+        left: -15px;
+    }
+}
+.history_item__left {
+    clear: left;
+    
+    &:before {
+        top: 19px;
+        right: -47px;
+        left: initial;
+    }
+    &:after {
+        border-width: 15px 0 15px 15px;
+        border-color: transparent transparent transparent @white;
+        top: 15px;
+        right: -15px;
+        left: initial;
+    }
+}
+
 .expandable.history_item {
+    position: relative;
     background: white;
 
     .respond-to-min(801px, {
-        & {
-            margin-left: 49px;
-            position: relative;
+        margin-left: 49px;
+        .history_item__right();
 
-            &:before {
-                content: '';
-                display: block;
-                width: 11px;
-                height: 11px;
-                border: 5px solid @black;
-                border-radius: 100%;
-                position: absolute;
-                top: 19px;
-                left: -47px;
-                background: @green;
-            }
+        // Green dot with black border
+        &:before {
+            content: '';
+            display: block;
+            width: 11px;
+            height: 11px;
+            border: 5px solid @black;
+            border-radius: 100%;
+            position: absolute;
+            background: @green;
+        }
 
-            &:after {
-                content: '';
-                display: block;
-                width: 0;
-                height: 0;
-                border-style: solid;
-                border-width: 15px 15px 15px 0;
-                border-color: transparent #ffffff transparent transparent;
-                position: absolute;
-                top: 15px;
-                left: -15px;
-            }
+        // White triangle
+        &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            position: absolute;
+        }
+    });
+
+    .respond-to-min(1200px, {
+        width: 387px;
+        float: right;
+        margin-top: 3em;
+        margin-bottom: 0;
+        margin-left: 0;
+
+        &:nth-child(odd) {
+            .history_item__left();
+            float: left;
+            margin-top: 0;
+            margin-bottom: @grid_gutter-width;
         }
     });
 }

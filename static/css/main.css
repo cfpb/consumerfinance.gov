@@ -13906,13 +13906,22 @@ a.focus .summary_header {
    cfgov-refresh
    History (The Bureau)
    ========================================================================== */
-.history-expandable.expandable__expanded {
+.history-expandable {
   padding-top: 30px;
+}
+.history-expandable > .expandable_header {
+  margin-top: -30px;
+  background: #f1f2f2;
+}
+.expandable__expanded > .expandable_header {
+  margin-top: 0;
+}
+.history-expandable .expandable_content {
+  margin-bottom: 0;
 }
 @media only all and (min-width: 50.0625em) {
   .history-expandable > .expandable_content {
-    margin-right: 30px;
-    margin-left: 30px;
+    margin: 0 30px 30px;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#101820), to(transparent));
     background-image: -webkit-linear-gradient(top, #101820 1px, transparent 1px);
     background-image: linear-gradient(to bottom, #101820 1px, transparent 1px);
@@ -13920,6 +13929,11 @@ a.focus .summary_header {
     background-repeat: repeat-y;
     -webkit-background-size: 5px 2px;
     background-size: 5px 2px;
+  }
+}
+@media only all and (min-width: 75em) {
+  .history-expandable > .expandable_content {
+    background-position: 50% 0;
   }
 }
 .history_year {
@@ -13962,17 +13976,67 @@ a.focus .summary_header {
     width: 3em;
   }
 }
+@media only all and (min-width: 75em) {
+  .history_year {
+    clear: both;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
 .history_list {
   list-style: none;
   padding: 0;
 }
+.history_item .expandable_link {
+  position: absolute;
+  right: 0.71428571em;
+}
+.history_item__right {
+  clear: right;
+}
+.history_item__right:before {
+  top: 19px;
+  left: -47px;
+}
+.history_item__right:after {
+  border-width: 15px 15px 15px 0;
+  border-color: transparent #ffffff transparent transparent;
+  top: 15px;
+  left: -15px;
+}
+.history_item__left {
+  clear: left;
+}
+.history_item__left:before {
+  top: 19px;
+  right: -47px;
+  left: initial;
+}
+.history_item__left:after {
+  border-width: 15px 0 15px 15px;
+  border-color: transparent transparent transparent #ffffff;
+  top: 15px;
+  right: -15px;
+  left: initial;
+}
 .expandable.history_item {
+  position: relative;
   background: white;
 }
 @media only all and (min-width: 50.0625em) {
   .expandable.history_item {
     margin-left: 49px;
-    position: relative;
+    clear: right;
+  }
+  .expandable.history_item:before {
+    top: 19px;
+    left: -47px;
+  }
+  .expandable.history_item:after {
+    border-width: 15px 15px 15px 0;
+    border-color: transparent #ffffff transparent transparent;
+    top: 15px;
+    left: -15px;
   }
   .expandable.history_item:before {
     content: '';
@@ -13982,8 +14046,6 @@ a.focus .summary_header {
     border: 5px solid #101820;
     border-radius: 100%;
     position: absolute;
-    top: 19px;
-    left: -47px;
     background: #2cb34a;
   }
   .expandable.history_item:after {
@@ -13992,11 +14054,34 @@ a.focus .summary_header {
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 15px 15px 15px 0;
-    border-color: transparent #ffffff transparent transparent;
     position: absolute;
+  }
+}
+@media only all and (min-width: 75em) {
+  .expandable.history_item {
+    width: 387px;
+    float: right;
+    margin-top: 3em;
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+  .expandable.history_item:nth-child(odd) {
+    clear: left;
+    float: left;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+  .expandable.history_item:nth-child(odd):before {
+    top: 19px;
+    right: -47px;
+    left: initial;
+  }
+  .expandable.history_item:nth-child(odd):after {
+    border-width: 15px 0 15px 15px;
+    border-color: transparent transparent transparent #ffffff;
     top: 15px;
-    left: -15px;
+    right: -15px;
+    left: initial;
   }
 }
 .history_item_date {
