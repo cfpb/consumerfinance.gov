@@ -3,6 +3,6 @@
   "query": {
     "doc_type": "history",
     "size": 500,
-    "sort": "order:asc"
+    "sort": "order:asc,date:desc"
   }
 }
