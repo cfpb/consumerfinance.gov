@@ -7,9 +7,138 @@
 {% block title -%}
     Docs
 {%- endblock %}
+
 {% block desc -%}
     Code documentation for the consumerfinance.gov refresh
 {%- endblock %}
+
+{% macro render_doc_link_list(doc_object) %}
+    <h1 class="h2">
+        {{ doc_object.title }}
+    </h1>
+    <div class="padded-container">
+        <div class="padded-container_body">
+            <ul class="list list__unstyled">
+            {%- for link in doc_object.links %}
+                <li class="list_item">
+                    <a class="list_link" href="{{ link.url }}">{{ link.text }}</a>
+                </li>
+            {%- endfor %}
+            </ul>
+        </div>
+    </div><!-- END {{ doc_object.title }} templates -->
+{% endmacro %}
+
+{% macro render_doc_template_list(doc_template_object) %}
+    <div class="padded-container">
+        <div class="padded-container_body">
+            <ul class="list list__unstyled">
+            {%- for link in doc_template_object.links %}
+                <li>
+                    <span class="demo-file-name">
+                        <b>{{ doc_template_object.title }}/</b>{{ link.text }}
+                    </span>
+                    <a class="demo-sheer-link"
+                       href="{{ link.url }}">
+                        view in Sheer
+                        <span class="cf-icon cf-icon-external-link"></span>
+                    </a>
+                </li>
+            {%- endfor %}
+            </ul>
+            {%- if doc_template_object.short_desc %}
+                <p class="short-desc">{{ doc_template_object.short_desc }}</p>
+            {% endif -%}
+        </div>
+    </div><!-- END {{ doc_template_object.title }} docs -->
+{% endmacro %}
+
+{% set docs = {
+    "getting_started": {
+        "title": "Getting started",
+        "links": [
+            { "url": "https://github.com/cfpb/cfgov-refresh",
+              "text": "GitHub repository" },
+            { "url": "https://github.com/cfpb/cfgov-refresh/README.md",
+              "text": "README.md" }
+        ]
+    },
+    "pattern_library": {
+        "title": "Pattern library",
+        "links": [
+            { "url": "/docs/blog-docs/",
+              "text": "Blog docs" },
+            { "url": "/docs/cf-enhancements/",
+              "text": "CF enhancements" },
+            { "url": "/docs/layout/",
+              "text": "Layout" },
+            { "url": "/docs/nav-secondary/",
+              "text": "Nav-secondary" },
+            { "url": "/docs/media-object/",
+              "text": "Media object" },
+            { "url": "/docs/media/",
+              "text": "Media" },
+            { "url": "/docs/meta/",
+              "text": "Meta" },
+            { "url": "/docs/misc/",
+              "text": "Misc" },
+            { "url": "/docs/post/",
+              "text": "Post" },
+            { "url": "/docs/summary/",
+              "text": "Summary" },
+        ]
+    },
+    "templates_blog": {
+        "title": "blog",
+        "links": [
+           { "text": "index.html",
+             "url": "/blog/" },
+           { "text": "_post.html",
+             "url": "/blog/spring-2014-rulemaking-agenda" }
+        ]
+    },
+    "templates_newsroom": {
+        "title": "newsroom",
+        "links": [
+           { "text": "index.html",
+             "url": "/newsroom/" },
+           { "text": "_post.html",
+             "url": "/newsroom/cfpb-takes-action-against-realtysouth-for-mortgage-disclosure-violations" },
+           { "text": "press-resources/index.html",
+             "url": "/newsroom/press-resources/" }
+        ]
+    },
+    "templates_contact_us": {
+        "title": "contact-us",
+        "links": [
+           { "text": "index.html",
+             "url": "/contact-us/" }
+        ]
+    },
+    "templates_the_bureau": {
+        "title": "the-bureau",
+        "links": [
+           { "text": "index.html",
+             "url": "/the-bureau/" },
+           { "text": "about-rich-cordray/",
+             "url": "/the-bureau/about-rich-cordray/" },
+           { "text": "about-steve-antonakes/",
+             "url": "/the-bureau/about-steve-antonakes/" }
+        ]
+    },
+    "templates_govdelivery_subscribe": {
+        "title": "govdelivery-subscribe",
+        "short_desc": "Status pages for GovDelivery subscriptions",
+        "links": [
+           { "text": "success",
+             "url": "/govdelivery-subscribe/success/" },
+           { "text": "error",
+             "url": "/govdelivery-subscribe/error/" },
+           { "text": "server-error",
+             "url": "/govdelivery-subscribe/server-error/" }
+        ]
+    }
+}%}
 
 {% block content %}
 
@@ -21,233 +150,20 @@
         <div class="wrapper">
             <section class="content_intro">
                 <div class="content-l">
-                    
                     <div class="content-l_col content-l_col-1-2">
-
-                        <h1 class="h2">
-                            Getting started
-                        </h1>
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <a class="list_link" href="https://github.com/cfpb/cfgov-refresh">GitHub repository</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="https://github.com/cfpb/cfgov-refresh/README.md">README.md</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!-- END Getting started section -->
-
-                        <h1 class="h2">
-                            Pattern library
-                        </h1>
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <a class="list_link" href="/docs/blog-docs/">Blog docs</a>
-                                    </li>
-                                    <li class="list_item list_item__spaced">
-                                        <a class="list_link" href="/docs/cf-enhancements/">CF enhancements</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/layout/">Layout</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/nav-secondary/">Nav-secondary</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/media-object/">Media object</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/media/">Media</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/meta/">Meta</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/misc/">Misc</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/post/">Post</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="/docs/summary/">Summary</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!-- END Pattern library section -->
-
-                    </div><!-- END Getting started / Pattern library section -->
-
+                        {{ render_doc_link_list(docs.getting_started) }}
+                        {{ render_doc_link_list(docs.pattern_library) }}
+                    </div>
                     <div class="content-l_col content-l_col-1-2">
-
                         <h1 class="h2">
                             Section templates
                         </h1>
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>blog/</b>index.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/blog/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>blog/</b>_post.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/blog/spring-2014-rulemaking-agenda">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!-- END .padded-container -->
-
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>newsroom/</b>index.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/newsroom/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>newsroom/</b>_post.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/newsroom/cfpb-takes-action-against-realtysouth-for-mortgage-disclosure-violations">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>newsroom/</b>press-resources/index.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/newsroom/press-resources/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div><!-- END .padded-container -->
-
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>contact-us/</b>index.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/contact-us/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!-- END .padded-container -->
-
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>the-bureau/</b>index.html
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/the-bureau/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>the-bureau/</b>about-rich-cordray/
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/the-bureau/about-rich-cordray/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>the-bureau/</b>about-steve-antonakes/
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/the-bureau/about-steve-antonakes/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!-- END .padded-container -->
-
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>govdelivery-subscribe/</b>success
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/govdelivery-subscribe/success/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>govdelivery-subscribe/</b>error
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/govdelivery-subscribe/error/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <span class="demo-file-name">
-                                            <b>govdelivery-subscribe/</b>server-error
-                                        </span>
-                                        <a class="demo-sheer-link"
-                                           href="/govdelivery-subscribe/server-error/">
-                                            view in Sheer
-                                            <span class="cf-icon cf-icon-external-link"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <p class="short-desc">
-                                    Status pages for GovDelivery subscriptions
-                                </p>
-                            </div>
-                        </div><!-- END .padded-container -->
-
-                    </section><!-- END Templates section -->
-
+                        {{ render_doc_template_list(docs.templates_blog) }}
+                        {{ render_doc_template_list(docs.templates_newsroom) }}
+                        {{ render_doc_template_list(docs.templates_contact_us) }}
+                        {{ render_doc_template_list(docs.templates_the_bureau) }}
+                        {{ render_doc_template_list(docs.templates_govdelivery_subscribe) }}
+                    </div>
                 </div><!-- END .content-l -->
             </section><!-- END .content_intro -->
         </div><!-- END .wrapper -->
