@@ -3,20 +3,33 @@
    History (The Bureau)
    ========================================================================== */
 
-// Give appropriate spacing above the expandable_content, given the reversal of
-// it and the expandable_target in the markup.
-// The negative margin and overriding of that prevents it from going away during
-// the close animation.
 .history-expandable {
-    padding-top: @grid_gutter-width;
+    transition: 0.5s all;
 
     > .expandable_header {
-        margin-top: -@grid_gutter-width;
         background: @gray-10;
+
+        .respond-to-min(600px, {
+            padding-right: @grid_gutter-width;
+            padding-left: @grid_gutter-width;
+        });
     }
 }
-.expandable__expanded > .expandable_header {
-    margin-top: 0;
+
+.history-expandable.expandable__expanded {
+    padding: 0 (@grid_gutter-width / 2) @grid_gutter-width;
+    margin-right: -(@grid_gutter-width / 2);
+    margin-left: -(@grid_gutter-width / 2);
+
+    > .expandable_header {
+        margin-top: 0;
+    }
+    
+    .respond-to-min(600px, {
+        margin-right: -@grid_gutter-width;
+        padding: 0 @grid_gutter-width @grid_gutter-width;
+        margin-left: -@grid_gutter-width;
+    });
 }
 
 .history-expandable .expandable_content {
@@ -24,8 +37,29 @@
 }
 
 .history-expandable > .expandable_content {
+    margin: 0;
+    overflow: hidden;
+
+    &:before {
+        display: none;
+    }
+
     .respond-to-min(801px, {
-        margin: 0 @grid_gutter-width @grid_gutter-width;
+        padding-bottom: @grid_gutter-width;
+    });
+}
+
+.history_timeline {
+    margin: @grid_gutter-width @grid_gutter-width 0;
+    overflow: auto;
+    transition: 0.5s all;
+
+    .expandable__expanded & {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .respond-to-min(801px, {
         background-image: linear-gradient(to bottom, @black 1px, transparent 1px);
         background-position: 10px 0;
         background-repeat: repeat-y;
@@ -41,7 +75,7 @@
     .h3(); 
     padding: unit(10px / @font-size, em) unit(15px / @font-size, em);
     border-radius: unit(4px / @font-size, em);
-    margin: 0 0 unit(15px / @font-size, em);
+    margin: 0 0 @grid_gutter-width;
     background: @black;
     color: @white;
     text-align: center;
@@ -65,35 +99,45 @@
 .history_item .expandable_link {
     position: absolute;
     right: unit(10px / @btn-font-size, em);
+
+    .respond-to-min(801px, {
+        right: unit(25px / @btn-font-size, em);
+    });
 }
 
 .history_item__right {
     clear: right;
     
+    // Green dot with black border positioning
     &:before {
-        top: 19px;
+        top: 17px;
         left: -47px;
     }
+
+    // White triangle positioning
     &:after {
-        border-width: 15px 15px 15px 0;
+        border-width: 12px 12px 12px 0;
         border-color: transparent @white transparent transparent;
         top: 15px;
-        left: -15px;
+        left: -12px;
     }
 }
 .history_item__left {
     clear: left;
     
+    // Green dot with black border positioning
     &:before {
-        top: 19px;
+        top: 17px;
         right: -47px;
         left: initial;
     }
+
+    // White triangle positioning
     &:after {
-        border-width: 15px 0 15px 15px;
+        border-width: 12px 0 12px 12px;
         border-color: transparent transparent transparent @white;
         top: 15px;
-        right: -15px;
+        right: -12px;
         left: initial;
     }
 }
@@ -101,6 +145,7 @@
 .expandable.history_item {
     position: relative;
     background: white;
+    .webfont-regular();
 
     .respond-to-min(801px, {
         margin-left: 49px;
@@ -126,6 +171,14 @@
             height: 0;
             border-style: solid;
             position: absolute;
+        }
+
+        .expandable_header {
+            padding: unit(25px / @base-font-size-px, em) @grid_gutter-width;
+        }
+
+        .expandable_content {
+            margin: 0 @grid_gutter-width;
         }
     });
 
