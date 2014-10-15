@@ -257,6 +257,33 @@
 
 
 /* topdoc
+  name: Padded header
+  family: cfgov-meta
+  patterns:
+    - name: Default padded header
+      markup: |
+        <h2 class="padded-header">
+            Header
+        </h2>
+      codenotes:
+        - .padded-header
+  tags:
+    - cfgov-meta
+*/
+
+.padded-header {
+    .h5();
+    // 8px top padding to account for line-height.
+    padding: unit(8px / @font-size, em)
+             unit(10px / @font-size, em);
+    margin-bottom: 0;
+    border-bottom: 1px solid @gray-50;
+    background: @gray-10;
+    color: @darkgray;
+}
+
+
+/* topdoc
   name: Fancy slug
   family: cfgov-meta
   patterns:
