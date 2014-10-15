@@ -6345,7 +6345,7 @@ thead th {
   margin-bottom: 0;
   border-bottom: 1px solid #babbbd;
   background: #f1f2f2;
-  color: #75787b;
+  color: #43484e;
 }
 .lt-ie9 thead th {
   font-weight: normal !important;
@@ -9820,7 +9820,7 @@ a.category-slug.active {
   margin-bottom: 0;
   border-bottom: 1px solid #babbbd;
   background: #f1f2f2;
-  color: #75787b;
+  color: #43484e;
 }
 .lt-ie9 .padded-header {
   font-weight: normal !important;
