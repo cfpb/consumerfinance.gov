@@ -7241,6 +7241,7 @@ th,
 td {
   padding: 0.625em 0.625em;
   background: #ffffff;
+  vertical-align: top;
 }
 
 tbody > tr:nth-child(odd) > th,
