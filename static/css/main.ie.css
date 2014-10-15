@@ -5,7 +5,7 @@
    Master Less File
    ========================================================================== */
 
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
 /**
  * 1. Set default font family to sans-serif.
@@ -35,7 +35,8 @@ body {
 
 /**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
  * Correct `block` display not defined for `main` in IE 11.
  */
 
@@ -48,6 +49,7 @@ footer,
 header,
 hgroup,
 main,
+menu,
 nav,
 section,
 summary {
@@ -97,7 +99,7 @@ template {
  */
 
 a {
-  background: transparent;
+  background-color: transparent;
 }
 
 /**
@@ -2125,6 +2127,11 @@ input.btn::-moz-focus-inner {
   cursor: pointer;
 }
 
+.expandable_target:focus {
+  outline: 1px dotted #101820;
+  outline-offset: 1px;
+}
+
 .expandable_cue-close {
   display: none;
 }
@@ -2326,6 +2333,14 @@ button.expandable_header {
 
 .expandable__padded .expandable_content {
   margin: 0 1em 1.375em;
+}
+
+.expandable__padded .expandable_content:before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-bottom: 1em;
+  background: #babbbd;
 }
 
 /* topdoc
@@ -5189,11 +5204,11 @@ textarea.success {
         <!-- Paginated content here -->
 
         <nav class="pagination">
-            <a class="btn pagination_prev" href="#pagination_content">
+            <a class="btn btn__super pagination_prev" href="#pagination_content">
                 <span class="btn_icon__left cf-icon cf-icon-left"></span>
                 Previous
             </a>
-            <a class="btn pagination_next" href="#pagination_content">
+            <a class="btn btn__super pagination_next" href="#pagination_content">
                 Next
                 <span class="btn_icon__right cf-icon cf-icon-right"></span>
             </a>
@@ -5201,11 +5216,9 @@ textarea.success {
                 <label class="pagination_label"
                        for="pagination_current-page">
                     Page
-                    <!-- When we have access to the u-visually-hidden class
-                         we should use it to add more context to the input. -->
-                    <!-- <span class="u-visually-hidden">
+                    <span class="u-visually-hidden">
                         number out of 149 total pages
-                    </span> -->
+                    </span>
                 </label>
                 <input
                     class="pagination_current-page"
@@ -5214,12 +5227,9 @@ textarea.success {
                     type="number" min="1" max="149"
                     value="149">
                 <span class="pagination_label">
-                    <!-- When we have access to the u-visually-hidden class
-                         we can hide this text from screen readers since it
-                         will be read within the label. -->
-                    <!-- <span aria-hidden="true"> -->
+                    <span aria-hidden="true">
                         of 149
-                    <!-- </span> -->
+                    </span>
                 </span>
                 <button class="btn btn__link pagination_submit"
                         id="pagination_submit"
@@ -5235,13 +5245,8 @@ textarea.success {
 
 .pagination {
   display: block;
-  margin: 0;
-  padding: 0;
-  /* Positions .pagination_next relative to this container */
   position: relative;
 }
-
-/* On small screens position .pagination_next to the right edge of .pagination */
 
 .pagination_next {
   position: absolute;
@@ -5251,67 +5256,49 @@ textarea.success {
 
 .pagination_form {
   display: block;
-  padding: 0.1875em 1.875em;
+  padding: 0.3125em;
   margin: 1em 0 0 0;
   background: #e3e4e5;
   color: #75787b;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
   text-align: center;
-}
-
-.pagination_form em,
-.pagination_form i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .pagination_form em,
-.lt-ie9 .pagination_form i {
-  font-style: normal !important;
-}
-
-.pagination_form strong,
-.pagination_form b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .pagination_form strong,
-.lt-ie9 .pagination_form b {
-  font-weight: normal !important;
 }
 
 .pagination_label {
   display: inline-block;
+  margin: 0;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
   vertical-align: middle;
-  font-size: 0.875em;
 }
 
 .lt-ie8 .pagination_label {
-  zoom: 1;
   display: inline;
+}
+
+.lt-ie9 .pagination_label {
+  font-weight: normal !important;
 }
 
 .pagination_current-page,
 input[type="number"].pagination_current-page,
 input[type="text"].pagination_current-page {
   display: inline-block;
-  vertical-align: middle;
-  /* We need enough room for three digits and the number spinners for type="number" inputs */
-  width: 3em;
-  /* Resets the padding back to 4px now that the font-size is 14px */
-  padding: 0.28571429em;
-  margin: 0 0.28571429em;
-  /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
-  font-size: 0.875em;
+  width: 2.625em;
+  margin: 0 0.25em;
+  font-size: 1em;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   text-align: right;
+  vertical-align: middle;
+}
+
+.lt-ie8 .pagination_current-page,
+.lt-ie8 input[type="number"].pagination_current-page,
+.lt-ie8 input[type="text"].pagination_current-page {
+  display: inline;
 }
 
 .lt-ie9 .pagination_current-page,
@@ -5323,29 +5310,30 @@ input[type="text"].pagination_current-page {
 .lt-ie8 .pagination_current-page,
 .lt-ie8 input[type="number"].pagination_current-page,
 .lt-ie8 input[type="text"].pagination_current-page {
-  zoom: 1;
-  display: inline;
   margin: 0 4px;
 }
 
 .pagination_submit.btn {
   display: inline-block;
+  margin: 0 0 0 0.875em;
+  font-size: 1em;
   vertical-align: middle;
-  margin: 0 0 0 1em;
 }
 
 .lt-ie8 .pagination_submit.btn {
-  zoom: 1;
   display: inline;
-  border: none;
-  padding-left: 1em;
+}
+
+.lt-ie8 .pagination_submit.btn {
+  padding-left: 0.875em;
   margin: 0;
+  border: none;
   text-decoration: underline;
 }
 
 .pagination_form {
-  border-radius: 0.28571429em;
   margin: 0;
+  border-radius: 0.25em;
 }
 
 .pagination_prev {
@@ -5354,16 +5342,16 @@ input[type="text"].pagination_current-page {
   left: 0;
 }
 
-.pagination_prev.btn,
-.pagination_prev.btn:link,
-.pagination_prev.btn:visited {
+.pagination_prev,
+.pagination_prev:link,
+.pagination_prev:visited {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.pagination_next.btn,
-.pagination_next.btn:link,
-.pagination_next.btn:visited {
+.pagination_next,
+.pagination_next:link,
+.pagination_next:visited {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -14611,16 +14599,33 @@ a.focus .summary_header {
    ========================================================================== */
 
 .history-expandable {
-  padding-top: 30px;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
 }
 
 .history-expandable > .expandable_header {
-  margin-top: -30px;
   background: #f1f2f2;
 }
 
-.expandable__expanded > .expandable_header {
+.history-expandable > .expandable_header {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.history-expandable.expandable__expanded {
+  padding: 0 15px 30px;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.history-expandable.expandable__expanded > .expandable_header {
   margin-top: 0;
+}
+
+.history-expandable.expandable__expanded {
+  margin-right: -30px;
+  padding: 0 30px 30px;
+  margin-left: -30px;
 }
 
 .history-expandable .expandable_content {
@@ -14628,7 +14633,31 @@ a.focus .summary_header {
 }
 
 .history-expandable > .expandable_content {
-  margin: 0 30px 30px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.history-expandable > .expandable_content:before {
+  display: none;
+}
+
+.history-expandable > .expandable_content {
+  padding-bottom: 30px;
+}
+
+.history_timeline {
+  margin: 30px 30px 0;
+  overflow: auto;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+}
+
+.expandable__expanded .history_timeline {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.history_timeline {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#101820), to(transparent));
   background-image: -webkit-linear-gradient(top, #101820 1px, transparent 1px);
   background-image: linear-gradient(to bottom, #101820 1px, transparent 1px);
@@ -14648,7 +14677,7 @@ a.focus .summary_header {
   line-height: 1.27272727;
   padding: 0.45454545em 0.68181818em;
   border-radius: 0.18181818em;
-  margin: 0 0 0.68181818em;
+  margin: 0 0 30px;
   background: #101820;
   color: #ffffff;
   text-align: center;
@@ -14692,20 +14721,24 @@ a.focus .summary_header {
   right: 0.71428571em;
 }
 
+.history_item .expandable_link {
+  right: 1.78571429em;
+}
+
 .history_item__right {
   clear: right;
 }
 
 .history_item__right:before {
-  top: 19px;
+  top: 17px;
   left: -47px;
 }
 
 .history_item__right:after {
-  border-width: 15px 15px 15px 0;
+  border-width: 12px 12px 12px 0;
   border-color: transparent #ffffff transparent transparent;
   top: 15px;
-  left: -15px;
+  left: -12px;
 }
 
 .history_item__left {
@@ -14713,22 +14746,49 @@ a.focus .summary_header {
 }
 
 .history_item__left:before {
-  top: 19px;
+  top: 17px;
   right: -47px;
   left: initial;
 }
 
 .history_item__left:after {
-  border-width: 15px 0 15px 15px;
+  border-width: 12px 0 12px 12px;
   border-color: transparent transparent transparent #ffffff;
   top: 15px;
-  right: -15px;
+  right: -12px;
   left: initial;
 }
 
 .expandable.history_item {
   position: relative;
   background: white;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.expandable.history_item em,
+.expandable.history_item i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .expandable.history_item em,
+.lt-ie9 .expandable.history_item i {
+  font-style: normal !important;
+}
+
+.expandable.history_item strong,
+.expandable.history_item b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .expandable.history_item strong,
+.lt-ie9 .expandable.history_item b {
+  font-weight: normal !important;
 }
 
 .expandable.history_item {
@@ -14737,15 +14797,15 @@ a.focus .summary_header {
 }
 
 .expandable.history_item:before {
-  top: 19px;
+  top: 17px;
   left: -47px;
 }
 
 .expandable.history_item:after {
-  border-width: 15px 15px 15px 0;
+  border-width: 12px 12px 12px 0;
   border-color: transparent #ffffff transparent transparent;
   top: 15px;
-  left: -15px;
+  left: -12px;
 }
 
 .expandable.history_item:before {
@@ -14766,6 +14826,14 @@ a.focus .summary_header {
   height: 0;
   border-style: solid;
   position: absolute;
+}
+
+.expandable.history_item .expandable_header {
+  padding: 1.5625em 30px;
+}
+
+.expandable.history_item .expandable_content {
+  margin: 0 30px;
 }
 
 .history_item_date {
