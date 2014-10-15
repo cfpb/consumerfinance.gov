@@ -7087,6 +7087,204 @@ img {
    ========================================================================== */
 
 /* topdoc
+  name: Width utilities
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Percent-based
+      markup: |
+        <div class="u-w100pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w100pct</code>
+        </div>
+        <div class="u-w90pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w90pct</code>
+        </div>
+        <div class="u-w80pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w80pct</code>
+        </div>
+        <div class="u-w70pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w70pct</code>
+        </div>
+        <div class="u-w60pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w60pct</code>
+        </div>
+        <div class="u-w50pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w50pct</code>
+        </div>
+        <div class="u-w40pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w40pct</code>
+        </div>
+        <div class="u-w30pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w30pct</code>
+        </div>
+        <div class="u-w20pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w20pct</code>
+        </div>
+        <div class="u-w10pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w10pct</code>
+        </div>
+        <div class="u-w75pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w75pct</code>
+        </div>
+        <div class="u-w25pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w25pct</code>
+        </div>
+        <div class="u-w66pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w66pct</code>
+        </div>
+        <div class="u-w33pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w33pct</code>
+        </div>
+      notes:
+        - "Inline styles are for demonstration purposes only, please don't use
+           them."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u-w100pct {
+  width: 100%;
+}
+
+.u-w90pct {
+  width: 90%;
+}
+
+.u-w80pct {
+  width: 80%;
+}
+
+.u-w70pct {
+  width: 70%;
+}
+
+.u-w60pct {
+  width: 60%;
+}
+
+.u-w50pct {
+  width: 50%;
+}
+
+.u-w40pct {
+  width: 40%;
+}
+
+.u-w30pct {
+  width: 30%;
+}
+
+.u-w20pct {
+  width: 20%;
+}
+
+.u-w10pct {
+  width: 10%;
+}
+
+.u-w75pct {
+  width: 75%;
+}
+
+.u-w25pct {
+  width: 25%;
+}
+
+.u-w66pct {
+  width: 66.66666667%;
+}
+
+.u-w33pct {
+  width: 33.33333333%;
+}
+
+/* topdoc
+  name: Tables
+  family: cfgov-cf-enhancements
+  notes:
+    - "Updated table styling that needs to get ported to cf-core pending Design
+       Manual approval."
+    - "At screens smaller than 960px wide the table cells stack."
+  patterns:
+    - name: Default table
+      markup: |
+        <table>
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+th,
+td {
+  padding: 0.625em 0.625em;
+  background: #ffffff;
+  vertical-align: top;
+}
+
+tbody > tr:nth-child(odd) > th,
+tbody > tr:nth-child(odd) > td {
+  background: inherit;
+}
+
+thead th {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  padding: 0.57142857em 0.71428571em;
+  margin-bottom: 0;
+  border-bottom: 1px solid #babbbd;
+  background: #f1f2f2;
+  color: #43484e;
+}
+
+.lt-ie9 thead th {
+  font-weight: normal !important;
+}
+
+tbody th {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 tbody th {
+  font-weight: normal !important;
+}
+
+tbody tr {
+  border-bottom: 1px solid #babbbd;
+}
+
+/* topdoc
   name: Simple base style modifiers
   family: cfgov-cf-enhancements
   patterns:
@@ -10304,6 +10502,42 @@ a.category-slug.active {
 }
 
 /* topdoc
+  name: Padded header
+  family: cfgov-meta
+  patterns:
+    - name: Default padded header
+      markup: |
+        <h2 class="padded-header">
+            Header
+        </h2>
+      codenotes:
+        - .padded-header
+  tags:
+    - cfgov-meta
+*/
+
+.padded-header {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  padding: 0.57142857em 0.71428571em;
+  margin-bottom: 0;
+  border-bottom: 1px solid #babbbd;
+  background: #f1f2f2;
+  color: #43484e;
+}
+
+.lt-ie9 .padded-header {
+  font-weight: normal !important;
+}
+
+/* topdoc
   name: Fancy slug
   family: cfgov-meta
   patterns:
@@ -10914,6 +11148,46 @@ a.category-slug.active {
           .custom-select by detecting :hover and :focus on .custom-select."
         - "The jQuery plugin will auto intitiate all select elements that are
           wrapped in a parent with the class of custom-select."
+    - name: .custom-select__month (modifier)
+      markup: |
+        <div class="custom-select custom-select__month">
+            <select>
+                <option value="">Month</option>
+                <option value="01">Jan</option>
+                <option value="02">Feb</option>
+                <option value="03">Mar</option>
+                <option value="04">Apr</option>
+                <option value="05">May</option>
+                <option value="06">Jun</option>
+                <option value="07">Jul</option>
+                <option value="08">Aug</option>
+                <option value="09">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - .custom-select__month
+      notes:
+        - "Simply sets a max-width appropriate for a month input."
+    - name: .custom-select__year (modifier)
+      markup: |
+        <div class="custom-select custom-select__year">
+            <select>
+                <option value="">Year</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - .custom-select__year
+      notes:
+        - "Simply sets a max-width appropriate for a year input."
     - name: JavaScript setup
       markup: |
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -10995,6 +11269,14 @@ a.category-slug.active {
 .is-hovered .custom-select_select,
 .is-focused .custom-select_select {
   outline: none;
+}
+
+.custom-select__month {
+  max-width: 6em;
+}
+
+.custom-select__year {
+  max-width: 5.375em;
 }
 
 /* topdoc
@@ -11197,7 +11479,7 @@ a.category-slug.active {
 }
 
 /* topdoc
-  name: Form inputs
+  name: Grouped inputs
   family: cfgov-misc
   patterns:
     - name: Horizontal inputs
