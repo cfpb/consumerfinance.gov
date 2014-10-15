@@ -7016,12 +7016,15 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 /* Horizontal mega menu for landscape tablets and larger
    ========================================================================== */
 @media only all and (min-width: 50.0625em) {
+  .sliding-nav {
+    position: relative;
+  }
   .sliding-nav_trigger {
     display: none;
   }
   .primary-nav {
     position: absolute;
-    top: 154px;
+    top: 116px;
     right: 0;
     left: 0;
     z-index: 100;
