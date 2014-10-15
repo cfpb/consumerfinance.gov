@@ -6848,6 +6848,12 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   tags:
     - cfgov-layout
 */
+@media only all and (min-width: 50.0625em) {
+  [role="banner"] {
+    max-width: 1140px;
+    padding: 0 30px;
+  }
+}
 .header_logo {
   margin: 30px 0 1.25em 0;
   vertical-align: middle;
@@ -7200,18 +7206,21 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 /* Horizontal mega menu for landscape tablets and larger
    ========================================================================== */
 @media only all and (min-width: 50.0625em) {
+  .sliding-nav {
+    position: relative;
+  }
   .sliding-nav_trigger {
     display: none;
   }
   .primary-nav {
-    position: relative;
+    position: absolute;
     top: 116px;
+    right: 0;
+    left: 0;
+    z-index: 100;
   }
-  [role="banner"] {
-    max-width: 1140px;
-    padding: 0 30px;
-    position: relative;
-    top: -54px;
+  .primary-nav_header-space {
+    padding-bottom: 54px;
   }
   .primary-nav .primary-nav_top-level-list {
     padding-left: 15px;
