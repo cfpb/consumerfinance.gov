@@ -15285,33 +15285,7 @@ a.focus .summary_header {
 }
 
 .footer_nav-list .list_link.list_link__disabled {
-  color: #babbbd;
-  border-color: #babbbd;
   border-bottom: 1px dotted;
-}
-
-.footer_nav-list .list_link.list_link__disabled:visited,
-.footer_nav-list .list_link.list_link__disabled.visited {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_nav-list .list_link.list_link__disabled:hover,
-.footer_nav-list .list_link.list_link__disabled.hover {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_nav-list .list_link.list_link__disabled:focus,
-.footer_nav-list .list_link.list_link__disabled.focus {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_nav-list .list_link.list_link__disabled:active,
-.footer_nav-list .list_link.list_link__disabled.active {
-  border-color: #babbbd;
-  color: #babbbd;
 }
 
 .footer_nav-list .list_link.list_link__disabled {
@@ -15541,33 +15515,7 @@ a.focus .summary_header {
 }
 
 .footer_list .list_link.list_link__disabled {
-  color: #babbbd;
-  border-color: #babbbd;
   border-bottom: 1px dotted;
-}
-
-.footer_list .list_link.list_link__disabled:visited,
-.footer_list .list_link.list_link__disabled.visited {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_list .list_link.list_link__disabled:hover,
-.footer_list .list_link.list_link__disabled.hover {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_list .list_link.list_link__disabled:focus,
-.footer_list .list_link.list_link__disabled.focus {
-  border-color: #babbbd;
-  color: #babbbd;
-}
-
-.footer_list .list_link.list_link__disabled:active,
-.footer_list .list_link.list_link__disabled.active {
-  border-color: #babbbd;
-  color: #babbbd;
 }
 
 .footer_long-list {
@@ -15663,6 +15611,10 @@ a.focus .summary_header {
 .footer_long-list .list_link:focus,
 .footer_long-list .list_link.focus {
   border-bottom-width: 1px !important;
+}
+
+.footer_long-list .list_link.list_link__disabled:hover {
+  border-bottom-width: 0 !important;
 }
 
 .footer-pre {
@@ -15835,6 +15787,35 @@ a.focus .summary_header {
   padding-top: 1.875em;
   margin-top: 1.875em;
   border-top: 1px solid #babbbd;
+}
+
+.footer .list_link__disabled {
+  color: #babbbd;
+  border-color: #babbbd;
+}
+
+.footer .list_link__disabled:visited,
+.footer .list_link__disabled.visited {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer .list_link__disabled:hover,
+.footer .list_link__disabled.hover {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer .list_link__disabled:focus,
+.footer .list_link__disabled.focus {
+  border-color: #babbbd;
+  color: #babbbd;
+}
+
+.footer .list_link__disabled:active,
+.footer .list_link__disabled.active {
+  border-color: #babbbd;
+  color: #babbbd;
 }
 
 /* topdoc
