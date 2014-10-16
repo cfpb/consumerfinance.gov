@@ -14898,6 +14898,267 @@ a.focus .summary_header {
 
 /* ==========================================================================
    cfgov-refresh
+   History (The Bureau)
+   ========================================================================== */
+
+.history-section-expandable {
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+}
+
+.history-section-expandable_header {
+  background: #f1f2f2;
+}
+
+.history-section-expandable_header {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.history-section-expandable.expandable__expanded {
+  padding: 0 15px 30px;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.history-section-expandable.expandable__expanded .history-section-expandable_header {
+  margin-top: 0;
+}
+
+.history-section-expandable.expandable__expanded {
+  margin-right: -30px;
+  padding: 0 30px 30px;
+  margin-left: -30px;
+}
+
+.history-section-expandable .expandable_content {
+  margin-bottom: 0;
+}
+
+.history-section-expandable .history-section-expandable_content {
+  margin: 0;
+  overflow: hidden;
+}
+
+.history-section-expandable .history-section-expandable_content:before {
+  display: none;
+}
+
+.history-section-expandable .history-section-expandable_content {
+  padding-bottom: 30px;
+}
+
+.history-timeline {
+  margin: 30px 30px 0;
+  overflow: auto;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+}
+
+.expandable__expanded .history-timeline {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.history-timeline {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#101820), to(transparent));
+  background-image: -webkit-linear-gradient(top, #101820 1px, transparent 1px);
+  background-image: linear-gradient(to bottom, #101820 1px, transparent 1px);
+  background-position: 10px 0;
+  background-repeat: repeat-y;
+  -webkit-background-size: 5px 2px;
+  background-size: 5px 2px;
+}
+
+.history-year {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  padding: 0.45454545em 0.68181818em;
+  border-radius: 0.18181818em;
+  margin: 0 0 30px;
+  background: #101820;
+  color: #ffffff;
+  text-align: center;
+}
+
+.history-year em,
+.history-year i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .history-year em,
+.lt-ie9 .history-year i {
+  font-style: normal !important;
+}
+
+.history-year strong,
+.history-year b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .history-year strong,
+.lt-ie9 .history-year b {
+  font-weight: normal !important;
+}
+
+.history-year {
+  width: 3em;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+}
+
+.history-item .expandable_link {
+  position: absolute;
+  right: 0.71428571em;
+}
+
+.history-item .expandable_link {
+  right: 1.78571429em;
+}
+
+.history-item__right {
+  clear: right;
+}
+
+.history-item__right:before {
+  top: 17px;
+  left: -47px;
+}
+
+.history-item__right:after {
+  border-width: 12px 12px 12px 0;
+  border-color: transparent #ffffff transparent transparent;
+  top: 15px;
+  left: -12px;
+}
+
+.history-item__left {
+  clear: left;
+}
+
+.history-item__left:before {
+  top: 17px;
+  right: -47px;
+  left: initial;
+}
+
+.history-item__left:after {
+  border-width: 12px 0 12px 12px;
+  border-color: transparent transparent transparent #ffffff;
+  top: 15px;
+  right: -12px;
+  left: initial;
+}
+
+.expandable.history-item {
+  position: relative;
+  background: white;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.expandable.history-item em,
+.expandable.history-item i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .expandable.history-item em,
+.lt-ie9 .expandable.history-item i {
+  font-style: normal !important;
+}
+
+.expandable.history-item strong,
+.expandable.history-item b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .expandable.history-item strong,
+.lt-ie9 .expandable.history-item b {
+  font-weight: normal !important;
+}
+
+.expandable.history-item {
+  margin-left: 49px;
+  clear: right;
+}
+
+.expandable.history-item:before {
+  top: 17px;
+  left: -47px;
+}
+
+.expandable.history-item:after {
+  border-width: 12px 12px 12px 0;
+  border-color: transparent #ffffff transparent transparent;
+  top: 15px;
+  left: -12px;
+}
+
+.expandable.history-item:before {
+  content: '';
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 5px solid #101820;
+  border-radius: 100%;
+  position: absolute;
+  background: #2cb34a;
+}
+
+.expandable.history-item:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+}
+
+.expandable.history-item .expandable_header {
+  padding: 1.5625em 30px;
+}
+
+.expandable.history-item .expandable_content {
+  margin: 0 30px;
+}
+
+.history-item_date {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+  display: block;
+  color: #43484e;
+}
+
+.lt-ie9 .history-item_date {
+  font-weight: normal !important;
+}
+
+/* ==========================================================================
+   cfgov-refresh
    footer
    ========================================================================== */
 

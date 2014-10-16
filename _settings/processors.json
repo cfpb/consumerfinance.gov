@@ -19,6 +19,11 @@
     "processor":  "wordpress_post_processor",
     "mappings":   "_settings/posts_mappings.json"
   },
+  "history": {
+    "url":        "$WORDPRESS/api/get_posts/?post_type=history",
+    "processor":  "wordpress_history_processor",
+    "mappings":   "_settings/history_mappings.json"
+  },
   "views": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=view",
     "processor":  "wordpress_view_processor"
