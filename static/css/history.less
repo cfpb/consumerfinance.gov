@@ -49,7 +49,7 @@
     });
 }
 
-.history_timeline {
+.history-timeline {
     margin: @grid_gutter-width @grid_gutter-width 0;
     overflow: auto;
     transition: 0.5s all;
@@ -71,7 +71,7 @@
     });
 }
 
-.history_year {
+.history-year {
     .h3(); 
     padding: unit(10px / @font-size, em) unit(15px / @font-size, em);
     border-radius: unit(4px / @font-size, em);
@@ -91,12 +91,12 @@
     });
 }
 
-.history_list {
+.history-list {
     list-style: none;
     padding: 0;
 }
 
-.history_item .expandable_link {
+.history-item .expandable_link {
     position: absolute;
     right: unit(10px / @btn-font-size, em);
 
@@ -105,7 +105,7 @@
     });
 }
 
-.history_item__right {
+.history-item__right {
     clear: right;
     
     // Green dot with black border positioning
@@ -122,7 +122,7 @@
         left: -12px;
     }
 }
-.history_item__left {
+.history-item__left {
     clear: left;
     
     // Green dot with black border positioning
@@ -142,14 +142,14 @@
     }
 }
 
-.expandable.history_item {
+.expandable.history-item {
     position: relative;
     background: white;
     .webfont-regular();
 
     .respond-to-min(801px, {
         margin-left: 49px;
-        .history_item__right();
+        .history-item__right();
 
         // Green dot with black border
         &:before {
@@ -190,7 +190,7 @@
         margin-left: 0;
 
         &:nth-child(odd) {
-            .history_item__left();
+            .history-item__left();
             float: left;
             margin-top: 0;
             margin-bottom: @grid_gutter-width;
@@ -198,7 +198,7 @@
     });
 }
 
-.history_item_date {
+.history-item_date {
     .h6();
     display: block;
     color: @darkgray;

@@ -79,7 +79,7 @@
                                     history-section-expandable">
 
                             <div class="expandable_content history-section-expandable_content">
-                                <div class="history_timeline">
+                                <div class="history-timeline">
 
                     {# Run a query for the first item in this section to get the starting year. #}
                     {% set first = query.search_with_url_arguments(q="parent:{}".format(section.id),
@@ -92,9 +92,9 @@
                         {% if vars.update({'current_year': history.date|date("%Y")|int}) %} {% endif %}
                     {% endfor %}
                     
-                                    <h2 class="history_year">{{ vars.current_year }}</h2>
+                                    <h2 class="history-year">{{ vars.current_year }}</h2>
 
-                                    <ol class="history_list">
+                                    <ol class="history-list">
 
                     {% set histories = query.search_with_url_arguments(q="parent:{}".format(section.id)) %}
                     {% for history in histories %}
@@ -102,11 +102,11 @@
                             {% if vars.update({'current_year': history.date|date("%Y")|int}) %} {% endif %}
                                     </ol>
 
-                                    <h2 class="history_year">{{ vars.current_year }}</h2>
+                                    <h2 class="history-year">{{ vars.current_year }}</h2>
 
-                                    <ol class="history_list">
+                                    <ol class="history-list">
                         {% endif %}
-                                        <li class="history_item expandable expandable__padded">
+                                        <li class="history-item expandable expandable__padded">
                                             <button class="expandable_header expandable_target">
                                                 <span class="expandable_header-right expandable_link">
                                                     <span class="expandable_cue-open">
@@ -119,8 +119,8 @@
                                                     </span>
                                                 </span>
                                                 <h3 class="expandable_header-left
-                                                             history_item_title">
-                                                    <span class="history_item_date">
+                                                             history-item_title">
+                                                    <span class="history-item_date">
                                                         {{ history.item_date if history.item_date
                                                            else history.date|date("%b %d, %Y") }}
                                                     </span>
@@ -139,9 +139,9 @@
                                             </div>
                                         </li>
                     {% endfor %}
-                                    </ol><!-- END .history_list -->
+                                    </ol><!-- END .history-list -->
 
-                                </div><!-- END .history_timeline -->
+                                </div><!-- END .history-timeline -->
                             </div><!-- END .history-section-expandable .expandable_content -->
 
                             <button class="expandable_header
