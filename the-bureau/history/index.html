@@ -76,9 +76,9 @@
 
                         <div class="expandable
                                     expandable__padded
-                                    history-expandable">
+                                    history-section-expandable">
 
-                            <div class="expandable_content">
+                            <div class="expandable_content history-section-expandable_content">
                                 <div class="history_timeline">
 
                     {# Run a query for the first item in this section to get the starting year. #}
@@ -142,9 +142,11 @@
                                     </ol><!-- END .history_list -->
 
                                 </div><!-- END .history_timeline -->
-                            </div><!-- END .history-expandable .expandable_content -->
+                            </div><!-- END .history-section-expandable .expandable_content -->
 
-                            <button class="expandable_header expandable_target">
+                            <button class="expandable_header
+                                           expandable_target
+                                           history-section-expandable_header">
                                 <span class="expandable_header-left expandable_label">
                                     Timeline of our current history
                                 </span>
@@ -159,7 +161,7 @@
                                     </span>
                                 </span>
                             </button>
-                        </div><!-- END .history-expandable -->
+                        </div><!-- END .history-section-expandable -->
                     </section><!-- END .content_block -->
 
                 {% endfor %}

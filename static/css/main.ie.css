@@ -14598,50 +14598,50 @@ a.focus .summary_header {
    History (The Bureau)
    ========================================================================== */
 
-.history-expandable {
+.history-section-expandable {
   -webkit-transition: 0.5s all;
   transition: 0.5s all;
 }
 
-.history-expandable > .expandable_header {
+.history-section-expandable_header {
   background: #f1f2f2;
 }
 
-.history-expandable > .expandable_header {
+.history-section-expandable_header {
   padding-right: 30px;
   padding-left: 30px;
 }
 
-.history-expandable.expandable__expanded {
+.history-section-expandable.expandable__expanded {
   padding: 0 15px 30px;
   margin-right: -15px;
   margin-left: -15px;
 }
 
-.history-expandable.expandable__expanded > .expandable_header {
+.history-section-expandable.expandable__expanded .history-section-expandable_header {
   margin-top: 0;
 }
 
-.history-expandable.expandable__expanded {
+.history-section-expandable.expandable__expanded {
   margin-right: -30px;
   padding: 0 30px 30px;
   margin-left: -30px;
 }
 
-.history-expandable .expandable_content {
+.history-section-expandable .expandable_content {
   margin-bottom: 0;
 }
 
-.history-expandable > .expandable_content {
+.history-section-expandable .history-section-expandable_content {
   margin: 0;
   overflow: hidden;
 }
 
-.history-expandable > .expandable_content:before {
+.history-section-expandable .history-section-expandable_content:before {
   display: none;
 }
 
-.history-expandable > .expandable_content {
+.history-section-expandable .history-section-expandable_content {
   padding-bottom: 30px;
 }
 

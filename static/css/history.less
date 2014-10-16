@@ -3,25 +3,25 @@
    History (The Bureau)
    ========================================================================== */
 
-.history-expandable {
+.history-section-expandable {
     transition: 0.5s all;
-
-    > .expandable_header {
-        background: @gray-10;
-
-        .respond-to-min(600px, {
-            padding-right: @grid_gutter-width;
-            padding-left: @grid_gutter-width;
-        });
-    }
 }
 
-.history-expandable.expandable__expanded {
+.history-section-expandable_header {
+    background: @gray-10;
+
+    .respond-to-min(600px, {
+        padding-right: @grid_gutter-width;
+        padding-left: @grid_gutter-width;
+    });
+}
+
+.history-section-expandable.expandable__expanded {
     padding: 0 (@grid_gutter-width / 2) @grid_gutter-width;
     margin-right: -(@grid_gutter-width / 2);
     margin-left: -(@grid_gutter-width / 2);
 
-    > .expandable_header {
+    .history-section-expandable_header {
         margin-top: 0;
     }
     
@@ -32,11 +32,11 @@
     });
 }
 
-.history-expandable .expandable_content {
+.history-section-expandable .expandable_content {
     margin-bottom: 0;
 }
 
-.history-expandable > .expandable_content {
+.history-section-expandable .history-section-expandable_content {
     margin: 0;
     overflow: hidden;
 
