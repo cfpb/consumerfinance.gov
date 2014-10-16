@@ -15613,6 +15613,10 @@ a.focus .summary_header {
   border-bottom-width: 1px !important;
 }
 
+.footer_long-list .list_link.list_link__disabled:hover {
+  border-bottom-width: 0 !important;
+}
+
 .footer-pre {
   position: relative;
   margin-bottom: 2.8125em;
