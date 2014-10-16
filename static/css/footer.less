@@ -52,7 +52,6 @@
         }
 
         .list_link.list_link__disabled {
-            .u-link__colors(@gray-50);
             border-bottom: 1px dotted;
 
             .respond-to-min(768px, {
@@ -136,7 +135,6 @@
         }
 
         .list_link.list_link__disabled {
-            .u-link__colors(@gray-50);
             border-bottom: 1px dotted;
         }
     }
@@ -311,6 +309,10 @@
             margin-top: unit(30px / @base-font-size-px, em);
             border-top: 1px solid @gray-50;
         });
+    }
+
+    .list_link__disabled {
+        .u-link__colors(@gray-50);
     }
 
 }
