@@ -3,7 +3,7 @@
    cfgov-refresh
    Master Less File
    ========================================================================== */
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
  * 2. Prevent iOS text size adjust after orientation change, without disabling
@@ -27,7 +27,8 @@ body {
    ========================================================================== */
 /**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
  * Correct `block` display not defined for `main` in IE 11.
  */
 article,
@@ -39,6 +40,7 @@ footer,
 header,
 hgroup,
 main,
+menu,
 nav,
 section,
 summary {
@@ -79,7 +81,7 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 a {
-  background: transparent;
+  background-color: transparent;
 }
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
@@ -1825,13 +1827,17 @@ input.btn::-moz-focus-inner {
   background-color: transparent;
   cursor: pointer;
 }
+.expandable_target:focus {
+  outline: 1px dotted #101820;
+  outline-offset: 1px;
+}
 .expandable_cue-close {
   display: none;
 }
-.expandable__expanded .expandable_cue-open {
+.expandable__expanded > .expandable_target .expandable_cue-open {
   display: none;
 }
-.expandable__expanded .expandable_cue-close {
+.expandable__expanded > .expandable_target .expandable_cue-close {
   display: inline;
 }
 .expandable_content:after {
@@ -2001,6 +2007,13 @@ button.expandable_header {
 }
 .expandable__padded .expandable_content {
   margin: 0 1em 1.375em;
+}
+.expandable__padded .expandable_content:before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-bottom: 1em;
+  background: #babbbd;
 }
 /* topdoc
     name: Expandable groups
@@ -4440,11 +4453,11 @@ textarea.success {
         <!-- Paginated content here -->
 
         <nav class="pagination">
-            <a class="btn pagination_prev" href="#pagination_content">
+            <a class="btn btn__super pagination_prev" href="#pagination_content">
                 <span class="btn_icon__left cf-icon cf-icon-left"></span>
                 Previous
             </a>
-            <a class="btn pagination_next" href="#pagination_content">
+            <a class="btn btn__super pagination_next" href="#pagination_content">
                 Next
                 <span class="btn_icon__right cf-icon cf-icon-right"></span>
             </a>
@@ -4452,11 +4465,9 @@ textarea.success {
                 <label class="pagination_label"
                        for="pagination_current-page">
                     Page
-                    <!-- When we have access to the u-visually-hidden class
-                         we should use it to add more context to the input. -->
-                    <!-- <span class="u-visually-hidden">
+                    <span class="u-visually-hidden">
                         number out of 149 total pages
-                    </span> -->
+                    </span>
                 </label>
                 <input
                     class="pagination_current-page"
@@ -4465,12 +4476,9 @@ textarea.success {
                     type="number" min="1" max="149"
                     value="149">
                 <span class="pagination_label">
-                    <!-- When we have access to the u-visually-hidden class
-                         we can hide this text from screen readers since it
-                         will be read within the label. -->
-                    <!-- <span aria-hidden="true"> -->
+                    <span aria-hidden="true">
                         of 149
-                    <!-- </span> -->
+                    </span>
                 </span>
                 <button class="btn btn__link pagination_submit"
                         id="pagination_submit"
@@ -4485,73 +4493,72 @@ textarea.success {
 */
 .pagination {
   display: block;
-  margin: 0;
-  padding: 0;
-  /* Positions .pagination_next relative to this container */
   position: relative;
 }
-/* On small screens position .pagination_next to the right edge of .pagination */
-.pagination_next {
-  position: absolute;
-  top: 0;
-  right: 0;
+@media only all and (max-width: 19.9375em) {
+  .pagination_prev.btn,
+  .pagination_next.btn {
+    display: block;
+    text-align: center;
+  }
+  .pagination_prev.btn + .pagination_next.btn {
+    margin: 1em 0 0;
+  }
+}
+@media only all and (min-width: 20em) {
+  .pagination_next {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+@media only all and (max-width: 23.0625em) {
+  .pagination_prev.btn,
+  .pagination_next.btn {
+    padding-left: 1.11111111em;
+    padding-right: 1.11111111em;
+  }
 }
 .pagination_form {
   display: block;
-  padding: 0.1875em 1.875em;
+  padding: 0.3125em;
   margin: 1em 0 0 0;
   background: #e3e4e5;
   color: #75787b;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
   text-align: center;
-}
-.pagination_form em,
-.pagination_form i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-.lt-ie9 .pagination_form em,
-.lt-ie9 .pagination_form i {
-  font-style: normal !important;
-}
-.pagination_form strong,
-.pagination_form b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .pagination_form strong,
-.lt-ie9 .pagination_form b {
-  font-weight: normal !important;
 }
 .pagination_label {
   display: inline-block;
+  margin: 0;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
   vertical-align: middle;
-  font-size: 0.875em;
 }
 .lt-ie8 .pagination_label {
-  zoom: 1;
   display: inline;
+}
+.lt-ie9 .pagination_label {
+  font-weight: normal !important;
 }
 .pagination_current-page,
 input[type="number"].pagination_current-page,
 input[type="text"].pagination_current-page {
   display: inline-block;
-  vertical-align: middle;
-  /* We need enough room for three digits and the number spinners for type="number" inputs */
-  width: 3em;
-  /* Resets the padding back to 4px now that the font-size is 14px */
-  padding: 0.28571429em;
-  margin: 0 0.28571429em;
-  /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
-  font-size: 0.875em;
+  width: 2.625em;
+  margin: 0 0.25em;
+  font-size: 1em;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   text-align: right;
+  vertical-align: middle;
+}
+.lt-ie8 .pagination_current-page,
+.lt-ie8 input[type="number"].pagination_current-page,
+.lt-ie8 input[type="text"].pagination_current-page {
+  display: inline;
 }
 .lt-ie9 .pagination_current-page,
 .lt-ie9 input[type="number"].pagination_current-page,
@@ -4561,42 +4568,42 @@ input[type="text"].pagination_current-page {
 .lt-ie8 .pagination_current-page,
 .lt-ie8 input[type="number"].pagination_current-page,
 .lt-ie8 input[type="text"].pagination_current-page {
-  zoom: 1;
-  display: inline;
   margin: 0 4px;
 }
 .pagination_submit.btn {
   display: inline-block;
+  margin: 0 0 0 0.875em;
+  font-size: 1em;
   vertical-align: middle;
-  margin: 0 0 0 1em;
 }
 .lt-ie8 .pagination_submit.btn {
-  zoom: 1;
   display: inline;
-  border: none;
-  padding-left: 1em;
+}
+.lt-ie8 .pagination_submit.btn {
+  padding-left: 0.875em;
   margin: 0;
+  border: none;
   text-decoration: underline;
 }
-@media only screen and (min-width: 30em) {
+@media only all and (min-width: 40em) {
   .pagination_form {
-    border-radius: 0.28571429em;
     margin: 0;
+    border-radius: 0.25em;
   }
   .pagination_prev {
     position: absolute;
     top: 0;
     left: 0;
   }
-  .pagination_prev.btn,
-  .pagination_prev.btn:link,
-  .pagination_prev.btn:visited {
+  .pagination_prev,
+  .pagination_prev:link,
+  .pagination_prev:visited {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .pagination_next.btn,
-  .pagination_next.btn:link,
-  .pagination_next.btn:visited {
+  .pagination_next,
+  .pagination_next:link,
+  .pagination_next:visited {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -14233,6 +14240,277 @@ a.focus .summary_header {
     name: EOF
     eof: true
 */
+/* ==========================================================================
+   cfgov-refresh
+   History (The Bureau)
+   ========================================================================== */
+.history-section-expandable {
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+}
+.history-section-expandable_header {
+  background: #f1f2f2;
+}
+@media only all and (min-width: 37.5em) {
+  .history-section-expandable_header {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+.history-section-expandable.expandable__expanded {
+  padding: 0 15px 30px;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.history-section-expandable.expandable__expanded .history-section-expandable_header {
+  margin-top: 0;
+}
+@media only all and (min-width: 37.5em) {
+  .history-section-expandable.expandable__expanded {
+    margin-right: -30px;
+    padding: 0 30px 30px;
+    margin-left: -30px;
+  }
+}
+.history-section-expandable .expandable_content {
+  margin-bottom: 0;
+}
+.history-section-expandable .history-section-expandable_content {
+  margin: 0;
+  overflow: hidden;
+}
+.history-section-expandable .history-section-expandable_content:before {
+  display: none;
+}
+@media only all and (min-width: 50.0625em) {
+  .history-section-expandable .history-section-expandable_content {
+    padding-bottom: 30px;
+  }
+}
+.history-timeline {
+  margin: 30px 30px 0;
+  overflow: auto;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+}
+.expandable__expanded .history-timeline {
+  margin-right: 0;
+  margin-left: 0;
+}
+@media only all and (min-width: 50.0625em) {
+  .history-timeline {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#101820), to(transparent));
+    background-image: -webkit-linear-gradient(top, #101820 1px, transparent 1px);
+    background-image: linear-gradient(to bottom, #101820 1px, transparent 1px);
+    background-position: 10px 0;
+    background-repeat: repeat-y;
+    -webkit-background-size: 5px 2px;
+    background-size: 5px 2px;
+  }
+}
+@media only all and (min-width: 75em) {
+  .history-timeline {
+    background-position: 50% 0;
+  }
+}
+.history-year {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.22727273em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  padding: 0.45454545em 0.68181818em;
+  border-radius: 0.18181818em;
+  margin: 0 0 30px;
+  background: #101820;
+  color: #ffffff;
+  text-align: center;
+}
+.history-year em,
+.history-year i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .history-year em,
+.lt-ie9 .history-year i {
+  font-style: normal !important;
+}
+.history-year strong,
+.history-year b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .history-year strong,
+.lt-ie9 .history-year b {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 50.0625em) {
+  .history-year {
+    width: 3em;
+  }
+}
+@media only all and (min-width: 75em) {
+  .history-year {
+    clear: both;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+.history-list {
+  list-style: none;
+  padding: 0;
+}
+.history-item .expandable_link {
+  position: absolute;
+  right: 0.71428571em;
+}
+@media only all and (min-width: 50.0625em) {
+  .history-item .expandable_link {
+    right: 1.78571429em;
+  }
+}
+.history-item__right {
+  clear: right;
+}
+.history-item__right:before {
+  top: 17px;
+  left: -47px;
+}
+.history-item__right:after {
+  border-width: 12px 12px 12px 0;
+  border-color: transparent #ffffff transparent transparent;
+  top: 15px;
+  left: -12px;
+}
+.history-item__left {
+  clear: left;
+}
+.history-item__left:before {
+  top: 17px;
+  right: -47px;
+  left: initial;
+}
+.history-item__left:after {
+  border-width: 12px 0 12px 12px;
+  border-color: transparent transparent transparent #ffffff;
+  top: 15px;
+  right: -12px;
+  left: initial;
+}
+.expandable.history-item {
+  position: relative;
+  background: white;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.expandable.history-item em,
+.expandable.history-item i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .expandable.history-item em,
+.lt-ie9 .expandable.history-item i {
+  font-style: normal !important;
+}
+.expandable.history-item strong,
+.expandable.history-item b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .expandable.history-item strong,
+.lt-ie9 .expandable.history-item b {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 50.0625em) {
+  .expandable.history-item {
+    margin-left: 49px;
+    clear: right;
+  }
+  .expandable.history-item:before {
+    top: 17px;
+    left: -47px;
+  }
+  .expandable.history-item:after {
+    border-width: 12px 12px 12px 0;
+    border-color: transparent #ffffff transparent transparent;
+    top: 15px;
+    left: -12px;
+  }
+  .expandable.history-item:before {
+    content: '';
+    display: block;
+    width: 11px;
+    height: 11px;
+    border: 5px solid #101820;
+    border-radius: 100%;
+    position: absolute;
+    background: #2cb34a;
+  }
+  .expandable.history-item:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+  }
+  .expandable.history-item .expandable_header {
+    padding: 1.5625em 30px;
+  }
+  .expandable.history-item .expandable_content {
+    margin: 0 30px;
+  }
+}
+@media only all and (min-width: 75em) {
+  .expandable.history-item {
+    width: 387px;
+    float: right;
+    margin-top: 3em;
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+  .expandable.history-item:nth-child(odd) {
+    clear: left;
+    float: left;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+  .expandable.history-item:nth-child(odd):before {
+    top: 17px;
+    right: -47px;
+    left: initial;
+  }
+  .expandable.history-item:nth-child(odd):after {
+    border-width: 12px 0 12px 12px;
+    border-color: transparent transparent transparent #ffffff;
+    top: 15px;
+    right: -12px;
+    left: initial;
+  }
+}
+.history-item_date {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+  display: block;
+  color: #43484e;
+}
+.lt-ie9 .history-item_date {
+  font-weight: normal !important;
+}
 /* ==========================================================================
    cfgov-refresh
    footer
