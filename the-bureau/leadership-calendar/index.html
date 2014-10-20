@@ -72,87 +72,15 @@
                                 content_block__padded-top
                                 content_block__border-top">
 
-                        <form class="form-l form-l__flush" method="get">
-                            <div class="form-l_col form-l_col-1-3 form-group">
-                                <h2 class="form-label-header" for="">
-                                    Calendar
-                                </h2>
-                                <!-- <div class="form-l form-l__flush"> -->
-                                    <label class="form-group_item">
-                                        <input class="custom-input"
-                                               type="checkbox"
-                                               name="..."
-                                               value="..."
-                                               checked
-                                               >
-                                        Richard Cordray
-                                    </label>
-                                    <label class="form-group_item">
-                                        <input class="custom-input"
-                                               type="checkbox"
-                                               name="..."
-                                               value="..."
-                                               checked
-                                               >
-                                        Steven Antonakes
-                                    </label>
-                                <!-- </div> -->
-                            </div>
-                            <div class="form-l_col form-l_col-1-3">
-                                <div id="calendar_date_range-container">
-                                    <label for="calendar_date_range">
-                                        <h2 class="form-label-header" for="">
-                                            Date range
-                                        </h2>
-                                    </label>
-                                    <input id="calendar_date_range"
-                                           name="calendar_date_range"
-                                           type="text"
-                                           value=""
-                                           placeholder="YYYY-MM">
-                                </div>
-                                <div id="calendar_date_range-replacement" style="display:none;">
-                                     <label for="calendar_date_range">
-                                         <h2 class="form-label-header" for="">
-                                             Date range
-                                         </h2>
-                                     </label>
-                                    <div class="input-group">
-                                        <div class="input-group_item custom-select custom-select__month">
-                                            <select id="claendar_date_range_month">
-                                                <option value="">Month</option>
-                                                <option value="01">Jan</option>
-                                                <option value="02">Feb</option>
-                                                <option value="03">Mar</option>
-                                                <option value="04">Apr</option>
-                                                <option value="05">May</option>
-                                                <option value="06">Jun</option>
-                                                <option value="07">Jul</option>
-                                                <option value="08">Aug</option>
-                                                <option value="09">Sep</option>
-                                                <option value="10">Oct</option>
-                                                <option value="11">Nov</option>
-                                                <option value="12">Dec</option>
-                                            </select>
-                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                                        </div>
-                                        <div class="input-group_item custom-select custom-select__year">
-                                            <select id="claendar_date_range_year">
-                                                <option value="">Year</option>
-                                            {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
-                                                <option value="{{ year }}">{{ year }}</option>
-                                            {%- endfor -%}
-                                            </select>
-                                            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
 
-                    {% set events_all = queries.calendar_event.search_with_url_arguments(size=100) %}
+                    {% set query = queries.calendar_event %}
+                    {% set events_all = query.search_with_url_arguments(size=100) %}
 
-                    {% for dates in events_all|groupby('dtstart.day')|reverse %}
+                    {% include "calendar-event-filters.html" %}
+
+                    {% for years in events_all|groupby('dtstart.year')|reverse %}
+                    {% for months in years.list|groupby('dtstart.month')|reverse %}
+                    {% for days in months.list|groupby('dtstart.day')|reverse %}
                         <table class="u-w100pct content_block content_block__flush-top">
                             <colgroup>
                                 <col class="u-w25pct">
@@ -162,12 +90,16 @@
                             <thead>
                                 <tr>
                                     <th colspan="3">
-                                        {{ dates.grouper|string|date('%b %d, %Y') }}
+                                    {% for event in days.list|sort(attribute='dtstart') %}
+                                    {% if loop.first %}
+                                        {{ event.dtstart|date('%b %d, %Y') }}
+                                    {% endif %}
+                                    {% endfor %}
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for event in dates.list|sort(attribute='dtstart') %}
+                            {% for event in days.list|sort(attribute='dtstart') %}
                                 <tr>
                                     <td>
                                     {%- if event.all_day %}
@@ -190,6 +122,8 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                    {% endfor %}
+                    {% endfor %}
                     {% endfor %}
 
                     </div><!-- END calendar -->
