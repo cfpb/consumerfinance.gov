@@ -47,12 +47,7 @@
 
 {# Format time to: `XX:XX a.m. &ndash; XX:XX p.m.` when given a date object #}
 {% macro format_time(datetime) %}
-    {{ datetime|date('%I:%M&nbsp;%p')|replace('PM', 'p.m.')|replace('AM', 'a.m.')|safe }}
-{% endmacro %}
-
-{# Format time to: `XX:XX a.m. &ndash; XX:XX p.m.` when given a date object #}
-{% macro is_all_day(datetime_start, datetime_end) %}
-    {{- ((datetime_end - datetime_start).total_seconds() == (60 * 60 * 24)) -}}
+    {{- datetime|date('%I:%M&nbsp;%p')|replace('PM', 'p.m.')|replace('AM', 'a.m.')|safe -}}
 {% endmacro %}
 
 {# Make share icons when given a title for the share by email link.

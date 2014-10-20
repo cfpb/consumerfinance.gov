@@ -150,7 +150,7 @@
                             </div>
                         </form>
 
-                        {% set events_all = queries.calendar_event.search_with_url_arguments(size=100) %}
+                    {% set events_all = queries.calendar_event.search_with_url_arguments(size=100) %}
 
                     {% for dates in events_all|groupby('dtstart.day')|reverse %}
                         <table class="u-w100pct content_block content_block__flush-top">
@@ -170,13 +170,13 @@
                             {% for event in dates.list|sort(attribute='dtstart') %}
                                 <tr>
                                     <td>
-                                        {% if (macros.is_all_day(event.dtstart, event.dtend) == 'True') %}
+                                    {%- if event.all_day %}
                                         All day
-                                        {% else %}
+                                    {%- else %}
                                         {{ macros.format_time(event.dtstart) }}
                                         &ndash;
                                         {{ macros.format_time(event.dtend) }}
-                                        {% endif %}
+                                    {%- endif %}
                                     </td>
                                     <td>
                                         <span class="h4">
