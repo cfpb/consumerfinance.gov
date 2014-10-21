@@ -3,6 +3,9 @@ import json
 import os.path
 import requests
 
+import dateutil.parser
+import datetime
+
 def posts_at_url(url):
     
     current_page = 1
@@ -26,5 +29,7 @@ def documents(name, url, **kwargs):
 
 def process_event(event):
     event['_id'] = event['id']
+    dt = dateutil.parser.parse(event['dtstart'])
+    event['day'] = datetime.date(dt.year, dt.month, dt.day)
     event['urlcal'] = event['calendar'].replace(' ', '').lower()
     return event
