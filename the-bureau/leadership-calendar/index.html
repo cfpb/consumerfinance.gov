@@ -75,7 +75,7 @@
                                 content_block__border-top">
 
 
-                    {% set active_filters = selected_filters_for_field('urlcal') %}
+                    {% set active_filters = selected_filters_for_field('person') %}
 
                     {% set active_date_filters =
                        selected_filters_for_field('range_dtstart_gte') + 
@@ -131,7 +131,7 @@
 
                     </div><!-- END calendar -->
 
-                    {{ post_macros.pagination(events_all, ['calendar']) }}
+                    {{ post_macros.pagination(events_all, ['person']) }}
 
                     <!-- <section class="content_block
                                 content_block__padded-top
