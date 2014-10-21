@@ -83,13 +83,11 @@
                     {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
                     {% set query = queries.calendar_event %}
-                    {% set events_all = query.search_with_url_arguments(size=20) %}
+                    {% set events_all = query.search_with_url_arguments(size=100) %}
 
                     {% include "calendar-event-filters.html" %}
 
-                    {% for years in events_all|groupby('dtstart.year')|reverse %}
-                    {% for months in years.list|groupby('dtstart.month')|reverse %}
-                    {% for days in months.list|groupby('dtstart.day')|reverse %}
+                    {% for days in events_all|groupby('day')|reverse %}
                         <table class="u-w100pct content_block content_block__flush-top">
                             <colgroup>
                                 <col class="u-w25pct">
@@ -99,11 +97,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="3">
-                                    {% for event in days.list|sort(attribute='dtstart') %}
-                                    {% if loop.first %}
-                                        {{ event.dtstart|date('%b %d, %Y') }}
-                                    {% endif %}
-                                    {% endfor %}
+                                        {{ days.grouper|date('%b %d, %Y') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -131,8 +125,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                    {% endfor %}
-                    {% endfor %}
                     {% endfor %}
 
                     </div><!-- END calendar -->
