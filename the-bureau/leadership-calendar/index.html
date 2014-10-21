@@ -68,6 +68,8 @@
                         {{ macros.share(self.title(), false) }}
                     </div>
 
+                    <div id="pagination_content"></div>
+
                     <div class="content_block
                                 content_block__padded-top
                                 content_block__border-top">
@@ -85,7 +87,7 @@
                     {% set query = queries.calendar_event %}
                     {% set events_all = query.search_with_url_arguments(size=20) %}
 
-                    {% include "calendar-event-filters.html" %}
+                        {% include "calendar-event-filters.html" %}
 
                     {% for days in events_all|groupby('day')|reverse %}
                         <table class="u-w100pct content_block content_block__flush-top">
