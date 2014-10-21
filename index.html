@@ -1,381 +1,42 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+{% extends "base.html" %}
 
-<head>
+{% block demo_title -%}
+    Consumer Financial Protection Bureau
+{%- endblock %}
 
-<!--
-    ===========
-    GLOBAL META
-    ===========
--->
+{% block title -%}
+    Consumer Financial Protection Bureau
+{%- endblock %}
+{% block desc -%}
+    Our vision is a consumer finance market place that works for American consumers, responsible providers, and the economy as a whole.
+{%- endblock %}
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
 
-<!--
-    ==================
-    PAGE-SPECIFIC META
-    ==================
--->
+    <main class="content content__2-1 content__bleedbar" id="main" role="main">
 
-    <title>cfgov-refresh demos and docs</title>
-    <meta name="description" content="Demos and docs for the consumerfinance.gov refresh">
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
 
-<!--
-    ======
-    STYLES
-    ======
-    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
-    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
--->
+        <div class="wrapper">
+            <section class="content_intro">
+                <div class="demo-placeholder">
+                    Homepage placer
+                </div>
+            </section><!-- END .content_intro -->
+        </div><!-- END .wrapper -->
 
-<!--[if lt IE 9]>      <link rel="stylesheet" href="static/css/main.ie.min.css"> <![endif]-->
-<!--[if gt IE 8]><!--> <link rel="stylesheet" href="static/css/main.min.css"> <!--<![endif]-->
+    </main>
 
-<!--
-    ============
-    HEAD SCRIPTS
-    ============
-    The following scripts must be included in the head. DO NOT ADD ANY MORE.
-    All other scripts should go before the closing body tag.
-    If you come across a script that makes a convincing case to be included in
-    the head, then file an issue or PR to discuss including it.
--->
+{% endblock content %}
 
-<!--[if lt IE 9]>
-    <script src="static/vendor/html5shiv/html5shiv-printshiv.min.js"></script>
-<![endif]-->
-
-    <script>
-        // Confirm availability of JS and remove no-js class from html
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
-    </script>
-
-</head>
-
-<body>
-
-<!--
-    =========
-    Analytics
-    =========
-    We are double tagging with classic analytics and tag manager so that we can
-    test any differences between the two.
--->
-
-    <!-- CLASSIC ANALYTICS -->
-    <script>
-        var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script> 
-
-    <!-- GOOGLE TAG MANAGER -->
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KSMF3R"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KSMF3R');</script>
-    <!-- /GOOGLE TAG MANAGER -->
-
-<!--
-    =================
-    Begin page source
-    =================
--->
-
-<header class="header" role="banner">
-    <div class="wrapper">
-        <h1 class="demo-col-12 demo-logo">cfgov-refresh</h1>
-    </div>
-</header>
-
-<main class="content" id="main" role="main">
-
-    <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-    <div class="content_bar"></div>
-
-    <div class="wrapper content_wrapper">
-        <div class="content_main">
-            <div class="demo-cols">
-
-                <div class="demo-spaced demo-col-6">
-
-                    <section>
-                        <div class="demo-spaced">
-                            <h1 class="h2">
-                                Getting started
-                            </h1>
-                        </div>
-
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <a class="list_link" href="https://github.com/cfpb/cfgov-refresh">GitHub repository</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="README.md">README.md</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section>
-                        <div class="demo-spaced">
-                            <h1 class="h2">
-                                Pattern library
-                            </h1>
-                        </div>
-
-                        <div class="padded-container">
-                            <div class="padded-container_body">
-                                <ul class="list list__unstyled">
-                                    <li>
-                                        <a class="list_link" href="docs/blog-docs/">Blog docs</a>
-                                    </li>
-                                    <li class="list_item list_item__spaced">
-                                        <a class="list_link" href="docs/cf-enhancements/">CF enhancements</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/layout/">Layout</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/nav-secondary/">Nav-secondary</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/media-object/">Media object</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/media/">Media</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/meta/">Meta</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/misc/">Misc</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/post/">Post</a>
-                                    </li>
-                                    <li>
-                                        <a class="list_link" href="docs/summary/">Summary</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </section><!-- END Pattern library section -->
-
-                </div><!-- END Getting started / Pattern library section -->
-
-                <section class="demo-spaced demo-col-6">
-
-                    <div class="demo-spaced">
-                        <h1 class="h2">
-                            Section templates
-                        </h1>
-                    </div>
-
-                    <div class="padded-container">
-                        <div class="padded-container_body">
-                            <ul class="list list__unstyled">
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>blog/</b>index.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="blog/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>blog/</b>_post.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="blog/spring-2014-rulemaking-agenda">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div><!-- END .padded-container -->
-
-                    <div class="padded-container">
-                        <div class="padded-container_body">
-                            <ul class="list list__unstyled">
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>newsroom/</b>index.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="newsroom/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>newsroom/</b>_post.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="newsroom/cfpb-takes-action-against-realtysouth-for-mortgage-disclosure-violations">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>newsroom/</b>press-resources/index.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="newsroom/press-resources/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div><!-- END .padded-container -->
-
-                    <div class="padded-container">
-                        <div class="padded-container_body">
-                            <ul class="list list__unstyled">
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>contact-us/</b>index.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="contact-us/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div><!-- END .padded-container -->
-
-                    <div class="padded-container">
-                        <div class="padded-container_body">
-                            <ul class="list list__unstyled">
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>the-bureau/</b>index.html
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="the-bureau/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>the-bureau/</b>about-rich-cordray/
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="the-bureau/about-rich-cordray/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>the-bureau/</b>about-steve-antonakes/
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="the-bureau/about-steve-antonakes/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>the-bureau/</b>bureau-structure/
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="the-bureau/bureau-structure/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div><!-- END .padded-container -->
-
-                    <div class="padded-container">
-                        <div class="padded-container_body">
-                            <ul class="list list__unstyled">
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>govdelivery-subscribe/</b>success
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="govdelivery-subscribe/success/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>govdelivery-subscribe/</b>error
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="govdelivery-subscribe/error/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="demo-file-name">
-                                        <b>govdelivery-subscribe/</b>server-error
-                                    </span>
-                                    <a class="demo-sheer-link"
-                                       href="govdelivery-subscribe/server-error/">
-                                        view in Sheer
-                                        <span class="cf-icon cf-icon-external-link"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <p class="short-desc">
-                                Status pages for GovDelivery subscriptions
-                            </p>
-                        </div>
-                    </div><!-- END .padded-container -->
-
-                </section><!-- END Templates section -->
-
-            </div><!-- END .demo-cols -->
-        </div><!-- END .content_main -->
-    </div><!-- END .content_wrapper -->
-
-</main><!-- END .content -->
-
-<footer class="footer" role="contentinfo">
-</footer>
-
-<script src="static/js/main.min.js"></script>
+{% block javascript %}
 <script>
-$(document).ready(function() {
-    // Hide Sheer links if this is being viewed on GitHub pages.
-    if ( window.location.host.indexOf('.github.io') >= 0 ) {
-        $('.demo-sheer-link').hide();
-    }
-});
+    $(document).ready(function() {
+        // Hide Sheer links if this is being viewed on GitHub pages.
+        if ( window.location.host.indexOf('.github.io') >= 0 ) {
+            $('.demo-sheer-link').hide();
+        }
+    });
 </script>
-
-</body>
-
-</html>
+{% endblock %}
