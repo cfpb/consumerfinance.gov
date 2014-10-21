@@ -26,4 +26,5 @@ def documents(name, url, **kwargs):
 
 def process_event(event):
     event['_id'] = event['id']
+    event['urlcal'] = event['calendar'].replace(' ', '').lower()
     return event
