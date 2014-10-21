@@ -14701,11 +14701,6 @@ a.focus .summary_header {
   width: 250px;
 }
 
-.org-chart_role.expandable_target:focus {
-  outline: 1px dotted #101820;
-  outline-offset: 1px;
-}
-
 .slick-slider {
   margin-top: 45px;
 }
