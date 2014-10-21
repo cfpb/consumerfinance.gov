@@ -1,0 +1,149 @@
+<form method="get">
+
+    <!-- Pull the columns out with .form-l__flush so their gutters won't double
+         the padding from .padded-container -->
+    <div class="form-l form-l__float form-l__flush">
+
+        <div class="form-l_col form-l_col-1-3">
+            <div class="form-group">
+                <label class="form-label-header">
+                    Calendars
+                </label>
+            {% for calendar in query.possible_values_for('urlcal')|sort(attribute='term') -%}
+                <label class="form-group_item">
+                    {{ post_macros.filter_checkbox('urlcal', calendar.term)|safe }}
+                </label>
+            {% endfor %}
+            </div>
+        </div>
+
+        <label class="form-l_col-2-3 form-label-header">
+            Date range
+        </label>
+
+        <!--
+            =================
+            "From" date input
+            =================
+        -->
+        <!-- No-JS date input -->
+        {% set from_date = selected_filters_for_field('range_dtstart_gte')[0] %}
+        <div class="form-l_col-1-3"
+             id="filter_range_date_gte-container">
+            <label for="filter_range_dtstart_gte">
+                From:
+            </label>
+            <input id="filter_range_date_gte"
+                   name="filter_range_dtstart_gte"
+                   type="text"
+                   value="{{ from_date if from_date }}"
+                   placeholder="YYYY-MM">
+        </div>
+        <!-- JS date input -->
+        <div class="form-l_col-1-3 input-group"
+             id="filter_range_date_gte-replacement"
+             style="display:none;">
+            <label for="filter_from_month">
+                From:
+            </label>
+            <div class="input-group_item custom-select">
+                <select class="form-input-month"
+                        id="filter_from_month">
+                    <option value="">Month</option>
+                    <option value="01">Jan</option>
+                    <option value="02">Feb</option>
+                    <option value="03">Mar</option>
+                    <option value="04">Apr</option>
+                    <option value="05">May</option>
+                    <option value="06">Jun</option>
+                    <option value="07">Jul</option>
+                    <option value="08">Aug</option>
+                    <option value="09">Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+            <div class="input-group_item custom-select">
+                <select class="form-input_year"
+                        id="filter_from_year">
+                    <option value="">Year</option>
+                {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
+                    <option value="{{ year }}">{{ year }}</option>
+                {%- endfor -%}
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+        </div> <!-- END js date input -->
+        <!-- END "From" date input -->
+
+        <!--
+            ===============
+            "To" date input
+            ===============
+        -->
+        <!-- No-JS date input -->
+        {% set to_date = selected_filters_for_field('range_dtend_lte')[0] %}
+        <div class="form-l_col-1-3"
+             id="filter_range_date_lte-container">
+            <label for="filter_range_dtend_lte">
+                To:
+            </label>
+            <input id="filter_range_date_lte"
+                   name="filter_range_dtend_lte"
+                   type="text"
+                   value="{{ to_date if to_date }}"
+                   placeholder="YYYY-MM">
+        </div>
+        <!-- JS date input -->
+        <div class="form-l_col-1-3 input-group"
+             id="filter_range_date_lte-replacement"
+             style="display:none;">
+            <label for="filter_to_month">
+                To:
+            </label>
+            <div class="custom-select input-group_item">
+                <select class="form-input-month"
+                        id="filter_to_month">
+                    <option value="">Month</option>
+                    <option value="01">Jan</option>
+                    <option value="02">Feb</option>
+                    <option value="03">Mar</option>
+                    <option value="04">Apr</option>
+                    <option value="05">May</option>
+                    <option value="06">Jun</option>
+                    <option value="07">Jul</option>
+                    <option value="08">Aug</option>
+                    <option value="09">Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+            <div class="custom-select input-group_item">
+                <select class="form-input_year"
+                        id="filter_to_year">
+                    <option value="">Year</option>
+                {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {%- endfor %}
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+        </div> <!-- END JS date input -->
+        <!-- END "To" date input -->
+
+    </div> <!-- END .form-l__flush -->
+
+    <div class="form-actions form-actions__right-on-med">
+        <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+               type="button"
+               value="Clear filters">
+        <input class="btn form-actions_item"
+               type="submit"
+               value="Apply filters">
+    </div>
+
+</form>
