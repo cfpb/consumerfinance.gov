@@ -31,5 +31,5 @@ def process_event(event):
     event['_id'] = event['id']
     dt = dateutil.parser.parse(event['dtstart'])
     event['day'] = datetime.date(dt.year, dt.month, dt.day)
-    event['urlcal'] = event['calendar'].replace(' ', '').lower()
+    event['person'] = event['calendar'].replace(' ', '').lower()
     return event
