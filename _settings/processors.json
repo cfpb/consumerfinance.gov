@@ -4,6 +4,11 @@
     "processor":  "wordpress_contact_processor",
     "mappings":   "_settings/contact_mappings.json"
   },
+  "orgmember": {
+    "url": "$WORDPRESS/api/get_posts/?post_type=orgmember",
+    "processor": "wordpress_orgmember_processor",
+    "mappings": "_settings/orgmember_mappings.json"
+  },
   "posts": {
     "url":        "$WORDPRESS/api/get_posts/",
     "processor":  "wordpress_post_processor",

@@ -13,6 +13,10 @@
     Bureau Structure
 {%- endblock %}
 
+{% block css -%}
+    <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
+{%- endblock %}
+
 {% block content %}
 
     {# Variables #}
@@ -23,6 +27,8 @@
     {# Macros #}
 
     {% import "post-macros.html" as post_macros %}
+    {% import "role-macro.html" as role_macro with context %}
+    
 
     <main class="content content__1-3" id="main" role="main">
 
@@ -36,186 +42,110 @@
             </aside>
 
             <div class="content_main content__flush-top-on-small">
-                <div class="org-chart">
-                    <div class="org-chart_root">
-                        <img src="../../static/img/cordray_round_360.jpg" width=150>
-                        <h1 class="h2 u-mb0">Richard Cordray</h1>
-                        <h2 class="h4">Director</h2>
+                <section>
+                    
+                    <div class="org-chart">
+                        
+                        <div class="org-chart_root">
+                            <img src="../../static/img/cordray_round_360.jpg" width=150>
+                            <h1 class="h2 u-mb0">Richard Cordray</h1>
+                            <h2 class="h4">Director</h2>
+                        </div>
+                        
+                        <div id="content-slider-container">
+                            <div id="content-slider">
+                                    <div>
+                                        <ul class="list__links">
+                                            {% for category in ['Divisions', 'Office of the Director'] %}
+                                            	<li>
+                                                    <button class="link-text jump-link jump-link__bg content-show" data-content=".nodes{{loop.index}}">
+                                                        {{category}}
+                                                    </button>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                            </div>
+                        </div>
+                        
+                        <ul class="org-chart_branches">
+                            {% for category in ['Divisions', 'Office of the Director'] %}
+                                {% set category_loop = loop %}
+                                <li class="org-chart_branch {% if loop.last %} last-child {% endif %}">
+                                    <h3 class="org-chart_branch_name">{{category}}</h3>
+                                    <ul class="org-chart_nodes content-panel nodes{{category_loop.index}}">
+                                         <li>
+                                            <button class="content-hide link-text jump-link jump-link__back">
+                                                {{category}}
+                                            </button>
+                                        </li>
+                                        {% set parents = queries.orgmember.search_with_url_arguments(
+                                            q="has_parent:false AND category:{}".format(category)) %}
+                                        
+                                        {% for parent in parents %}
+                                            {% set parent_loop = loop %}
+                                            
+                                            <li class="org-chart_node expandable">
+                                                {% set children = queries.orgmember.search_with_url_arguments(
+                                                    q="parent:{}".format(parent.id)) %}
+                                                    
+                                                {% if children|list|length %}
+                                                
+                                                    <button class="org-chart_role expandable_target expandable_header content-show" data-content=".nodes{{category_loop.index}}_{{parent_loop.index}}">
+                                                    
+                                                        <div class="org-chart_node_expander">
+                                                            <span class="expandable_link u-hide-on-mobile">
+                                                                <span class="expandable_cue-open">
+                                                                    <span class="cf-icon cf-icon-down"></span>
+                                                                </span>
+                                                                <span class="expandable_cue-close">
+                                                                    <span class="cf-icon cf-icon-up"></span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="expandable_link u-show-on-mobile">
+                                                                <span class="cf-icon cf-icon-right"></span>
+                                                            </span>
+                                                        </div>
+                                                        
+                                                        {{ role_macro.display_role(parent) }}
+                                                        
+                                                    </button>
+                                                    
+                                                    <ul class="org-chart_nodes expandable_content content-panel nodes{{category_loop.index}}_{{parent_loop.index}}">
+                                                        <li>
+                                                            <button class="jump-link jump-link__back content-hide" href="#">
+                                                            {{ role_macro.display_role(parent) }}
+                                                            </button>
+                                                        </li>
+                                                    
+                                                        {% for child in children %}
+                                                            <li class="org-chart_node">
+                                                                <div class="org-chart_role">
+                                                                    {{ role_macro.display_role(child) }}
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                        
+                                                    </ul>
+                                                    
+                                                {% else %}
+                                                
+                                                    <div class="org-chart_role">
+                                                        {{ role_macro.display_role(parent) }}
+                                                    </div>
+                                                    
+                                                {% endif %}   
+                                            </li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        
                     </div>
-                    <ul class="org-chart_branches">
-                        <li class="org-chart_branch">
-                            <div class="org-chart_branch_wrapper">
-                                <h3 class="org-chart_branch_name">Divisions</h3>
-                                <ul class="org-chart_nodes">
-                                    <li class="org-chart_node expandable">
-                                        <div class="org-chart_role">
-                                            <div class="org-chart_role_office u-mb0">
-                                                Operations
-                                            </div>
-                                            <div class="org-chart_role_name">
-                                                Sartaj Alag
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Chief Operating Officer (COO)
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Associate Director
-                                            </div>
-                                        </div>
-                                        <div class="org-chart_node_expander">
-                                            <button class="expandable_target u-hide-on-mobile">
-                                                <span class="expandable_link">
-                                                    <span class="expandable_cue-open">
-                                                        <span class="cf-icon cf-icon-down"></span>
-                                                    </span>
-                                                    <span class="expandable_cue-close">
-                                                        <span class="cf-icon cf-icon-up"></span>
-                                                    </span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <ul class="org-chart_nodes expandable_content">
-                                            <li class="org-chart_node">
-                                                <div class="org-chart_role">
-                                                    <div class="org-chart_role_office u-mb0">
-                                                        Administrative Operations
-                                                    </div>
-                                                    <div class="org-chart_role_name">
-                                                        Suzanne Tosini
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        Chief Administrative Officer (CAO)
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        CAO Director
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="org-chart_node">
-                                                <div class="org-chart_role">
-                                                    <div class="org-chart_role_office u-mb0">
-                                                        Administrative Operations
-                                                    </div>
-                                                    <div class="org-chart_role_name">
-                                                        Suzanne Tosini
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        Chief Administrative Officer (CAO)
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        CAO Director
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="org-chart_node expandable">
-                                        <div class="org-chart_role">
-                                            <div class="org-chart_role_office u-mb0">
-                                                Operations
-                                            </div>
-                                            <div class="org-chart_role_name">
-                                                Sartaj Alag
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Chief Operating Officer (COO)
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Associate Director
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul> 
-                            </div>
-                        </li>
-                        <li class="org-chart_branch last-child">
-                            <div class="org-chart_branch_wrapper">
-                                <h3 class="org-chart_branch_name">Office of the director</h3>
-                                
-                                <ul class="org-chart_nodes">
-                                    <li class="org-chart_node expandable">
-                                        <div class="org-chart_role">
-                                            <div class="org-chart_role_office u-mb0">
-                                                Operations
-                                            </div>
-                                            <div class="org-chart_role_name">
-                                                Sartaj Alag
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Chief Operating Officer (COO)
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Associate Director
-                                            </div>
-                                        </div>
-                                        <div class="org-chart_node_expander">
-                                            <button class="expandable_target u-hide-on-mobile">
-                                                <span class="expandable_link">
-                                                    <span class="expandable_cue-open">
-                                                        <span class="cf-icon cf-icon-down"></span>
-                                                    </span>
-                                                    <span class="expandable_cue-close">
-                                                        <span class="cf-icon cf-icon-up"></span>
-                                                    </span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <ul class="org-chart_nodes expandable_content">
-                                            <li class="org-chart_node">
-                                                <div class="org-chart_role">
-                                                    <div class="org-chart_role_office u-mb0">
-                                                        Administrative Operations
-                                                    </div>
-                                                    <div class="org-chart_role_name">
-                                                        Suzanne Tosini
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        Chief Administrative Officer (CAO)
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        CAO Director
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="org-chart_node">
-                                                <div class="org-chart_role">
-                                                    <div class="org-chart_role_office u-mb0">
-                                                        Administrative Operations
-                                                    </div>
-                                                    <div class="org-chart_role_name">
-                                                        Suzanne Tosini
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        Chief Administrative Officer (CAO)
-                                                    </div>
-                                                    <div class="org-chart_role_title">
-                                                        CAO Director
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="org-chart_node expandable">
-                                        <div class="org-chart_role">
-                                            <div class="org-chart_role_office u-mb0">
-                                                Operations
-                                            </div>
-                                            <div class="org-chart_role_name">
-                                                Sartaj Alag
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Chief Operating Officer (COO)
-                                            </div>
-                                            <div class="org-chart_role_title">
-                                                Associate Director
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                    
+                </section>
                 <section class="content_block
                                 content_block__padded-top
                                 content_block__padded-bottom
@@ -238,7 +168,6 @@
                             <a class="list_link" href="mailto:externalaffairs@cfpb.gov">
                                 externalaffairs@cfpb.gov
                             </a>
-                                
                         </div>
                     </div>
                 </section>
@@ -252,7 +181,125 @@
 
 
 {% block javascript %}
+<script src="/static/vendor/slick-carousel/slick.min.js"></script>
+
 <script>
+    
+    $('document').ready(function () {
+        var slider, handler;
+        
+        /**
+         * @name contentSlider
+         *
+         * @description Slides content in and out of a container div.
+         *
+         * When an element inside container with class `content-show` 
+         * is clicked, the element matching its `data-content` value
+         * will be cloned, inserted in a slide, and rotated into view in the
+         * container, whose height will be recalculated to match new contents. 
+         * When elements with class `content-hide` are clicked,
+         * the slide containing the element will be rotated out of view
+         * and then removed from the DOM.
+         *
+         * @params {string} elem container element
+         * @params {number} slideCount number of permanent slides in the container
+         * 
+         */
+         
+        function contentSlider(elem, slideCount) {
+            var self = this;
+            this.$container = $(elem);
+            this.speed = 300;
+            this.slideCount = slideCount;
+            // init slick carousel
+            this.$container.slick({
+                 dots: false,
+                 infinite: false,
+                 swipe: false,
+                 speed: this.speed,
+                 adaptiveHeight: true,
+                 arrows: false,
+                 onBeforeChange: function (slider, currInd, targetInd) {
+                     // when slide is changed, animate height of container to accommodate
+                     // new slide's height.
+                     var slide = slider.$slides[targetInd];
+                     slider.$slider.animate({height: $(slide).height() + 'px'}, self.speed);
+                 }
+             });
+             this.slickObj = this.$container.getSlick();
+             this.init();
+        };
+
+        contentSlider.prototype.init = function () {
+            var self = this;
+            this.$container.height($(this.slickObj.$slides[0]).height());
+            this.$container.on('click.slider', '.content-show', $.proxy(this.slideInContent, this));
+            this.$container.on('click.slider', '.content-hide', $.proxy(this.slideOutContent, this));
+        };
+
+        contentSlider.prototype.slideInContent = function (e) {
+            e.preventDefault();
+            var contents,
+                self = this,
+                $div = $('<div>'), 
+                $node = $($(e.currentTarget).data('content'));
+            if ($node.length) {
+                // TODO: move content instead of cloning; use ids instead of classes
+                contents = $node.first().clone().show().appendTo($div);
+                this.$container.slickAdd($div);
+                this.$container.slickNext();
+            }
+        };
+
+        contentSlider.prototype.slideOutContent = function (e) {
+            var self = this;
+            e.preventDefault();
+            this.$container.slickPrev();
+            setTimeout(function () {
+                self.$container.slickRemove(self.slickObj.$slides.length - 1);
+            }, this.speed);
+        };
+        
+        contentSlider.prototype.destroy = function () {
+            // remove all but first slide
+            while (this.slickObj.$slides.length > this.slideCount) {
+                this.$container.slickRemove(this.slickObj.$slides.length - 1);
+            }
+            // remove listeners on container
+            this.$container.off('click.slider');
+            this.$container.unslick();
+        };
+        
+        if (!$('html').hasClass('lt-ie9')) {     
+                   
+            handler = new BreakpointHandler({
+                breakpoint: 599,
+                type: "max",
+                enter: function () {
+                    // close any open expandables
+                    $('.org-chart').find('.expandable__expanded .expandable_target').click();
+                    // hide org chart branches
+                    $('.org-chart_branches').hide();
+                    // show content slider & mobile nav links
+                    $('#content-slider, .content-hide').show();
+                    // init slider
+                    slider = new contentSlider('#content-slider', 1);
+                },
+                leave: function () {
+                    // destroy slider
+                    slider && slider.destroy();
+                    slider = null;
+                    // hide content slider & mobile nav links
+                    $('#content-slider, .content-hide').hide();
+                    // show org chart branches
+                    $('.org-chart_branches').show();
+                }
+            });
+            
+        }
+        
+    });
+    
     
 </script>
 {% endblock javascript %}

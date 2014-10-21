@@ -1,0 +1,15 @@
+{% macro display_role(role) -%}
+    <div class="role">
+        <div class="role_office u-mb0">
+            {{role.title|safe}}
+        </div>
+        <div class="role_name">
+            {{role.name}}
+        </div>
+        {% for title in role.titles %}
+            <div class="role_title">
+                {{title}}
+            </div>
+        {% endfor %}
+    </div>
+{%- endmacro %}

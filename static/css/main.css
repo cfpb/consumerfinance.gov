@@ -9822,6 +9822,20 @@ a.category-slug.active {
         </a>
       codenotes:
         - .jump-link__external-link
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            Jump link with grey background and solid borders on small screens
+        </a>
+      codenotes:
+        - .jump-link__bg
+    - name: .jump-link__back (modifier)
+      markup: |
+        <a class="jump-link jump-link__back" href="#">
+            Jump link with back arrow
+        </a>
+      codenotes:
+        - .jump-link__back
   tags:
     - cfgov-misc
 */
@@ -9860,8 +9874,10 @@ a.category-slug.active {
   position: absolute;
   bottom: 0;
   right: -1em;
-  padding-left: 0.25em;
   border-bottom: none;
+}
+.jump-link__back {
+  margin-left: 1.25em;
 }
 .jump-link__back:after {
   content: '';
@@ -9875,8 +9891,9 @@ a.category-slug.active {
   -webkit-font-smoothing: antialiased;
   content: "\e000";
   position: absolute;
-  left: 0;
-  padding-right: 0.25em;
+  left: -1.25em;
+  top: .2em;
+  padding-right: .25em;
   border-bottom: none;
 }
 .list__links .jump-link {
@@ -9907,14 +9924,15 @@ a.category-slug.active {
   }
   .jump-link__back {
     padding: 0.625em 0 0.625em 1.25em;
+    margin-left: 0;
   }
   .jump-link__back:after {
     content: '';
   }
   .jump-link__back:before {
-    margin-bottom: -0.625em;
+    margin-top: -0.5em;
     left: 0;
-    bottom: 50%;
+    top: 50%;
   }
 }
 /* topdoc
@@ -13693,6 +13711,10 @@ a.focus .summary_header {
     width: 215px;
   }
 }
+.org-chart_role.expandable_target:focus {
+  outline: 1px dotted #101820;
+  outline-offset: 1px;
+}
 .slick-slider {
   margin-top: 45px;
 }
@@ -13750,17 +13772,13 @@ a.focus .summary_header {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
 }
-.org-chart {
-  position: relative;
-  overflow: hidden;
-}
 @media only all and (min-width: 37.5em) {
   .org-chart {
     width: 530px;
     margin: 0 auto;
   }
 }
-@media only all and (min-width: 64.0625em) {
+@media only all and (min-width: 64em) {
   .org-chart {
     width: 660px;
   }
@@ -13775,16 +13793,6 @@ a.focus .summary_header {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-@media only all and (min-width: 37.5em) {
-  .org-chart_branches,
-  .org-chart_nodes {
-    position: relative;
-  }
-  .org-chart_branches li,
-  .org-chart_nodes li {
-    position: relative;
-  }
 }
 .org-chart_branches {
   padding-top: 30px;
@@ -13805,10 +13813,27 @@ a.focus .summary_header {
 }
 @media only all and (min-width: 37.5em) {
   .org-chart_branch {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+    position: relative;
     padding-top: 45px;
-    float: left;
-    border-left: 0;
-    border-right: 0;
+    border-width: 0;
+  }
+  .ie .org-chart_branch {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .org-chart_branch {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
   }
   .org-chart_branch:before,
   .org-chart_branch:after {
@@ -13842,16 +13867,6 @@ a.focus .summary_header {
   }
 }
 @media only all and (min-width: 37.5em) {
-  .org-chart_branch_wrapper {
-    width: 250px;
-  }
-}
-@media only all and (min-width: 64.0625em) {
-  .org-chart_branch_wrapper {
-    width: 315px;
-  }
-}
-@media only all and (min-width: 37.5em) {
   .org-chart_branch_name {
     margin-top: 0;
     margin-bottom: 0.27777778em;
@@ -13869,11 +13884,88 @@ a.focus .summary_header {
 }
 .org-chart_role {
   padding: 15px;
-  background: #f1f2f2;
-  border-top: 1px solid #e3e4e5;
+  padding-right: 30px;
   position: relative;
+  background: #f1f2f2;
+  border-color: #e3e4e5;
+  border-style: solid;
+  border-width: 1px 0 0 0;
 }
-.org-chart_role_office {
+@media only all and (max-width: 37.4375em) {
+  .org-chart_role {
+    border-width: 1px 0 1px 0;
+  }
+}
+.org-chart_node {
+  width: 100%;
+  /* nested .org-chart_node blocks have different background color & borders */
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_node {
+    position: relative;
+    margin-bottom: 15px;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .org-chart_node {
+    margin-bottom: -1px;
+  }
+}
+.org-chart_node_expander {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+}
+@media only all and (max-width: 37.4375em) {
+  .org-chart_node_expander {
+    height: 30px;
+    top: 50%;
+    margin-top: -8px;
+  }
+}
+.org-chart_node_expander .expandable_link {
+  font-size: 16px;
+}
+.org-chart_node .org-chart_nodes {
+  border-top: 5px solid #7fb8e6;
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_node .org-chart_nodes .org-chart_node {
+    margin-bottom: 0px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_node .org-chart_nodes .org-chart_role {
+    background: #cce3f5;
+    border-color: #E5F1FA;
+    border-width: 0 0 1px 0;
+  }
+}
+@media only all and (max-width: 37.5em) {
+  .org-chart_node .org-chart_nodes .org-chart_role {
+    border-width: 1px 0 1px 0;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .org-chart_node .org-chart_nodes .org-chart_role ~ .org-chart_node .org-chart_role {
+    border-width: 1px 0 0 0;
+  }
+}
+.org-chart #content-slider-container {
+  position: relative;
+  margin-left: -10px;
+}
+.org-chart #content-slider-container #content-slider {
+  display: none;
+}
+.org-chart #content-slider-container .slick-slide {
+  margin-left: 10px;
+}
+.org-chart #content-slider-container .slick-slider {
+  margin-bottom: 0;
+}
+.role_office {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -13884,80 +13976,99 @@ a.focus .summary_header {
   font-size: 0.75em;
   line-height: 1.83333333;
 }
-.lt-ie9 .org-chart_role_office {
+.lt-ie9 .role_office {
   font-weight: normal !important;
 }
-.org-chart_role_name {
+.role_name {
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
 }
-.lt-ie9 .org-chart_role_name {
+.lt-ie9 .role_name {
   font-weight: normal !important;
 }
-.org-chart_role_title {
+.role_title {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
-.org-chart_role_title em,
-.org-chart_role_title i {
+.role_title em,
+.role_title i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .org-chart_role_title em,
-.lt-ie9 .org-chart_role_title i {
+.lt-ie9 .role_title em,
+.lt-ie9 .role_title i {
   font-style: normal !important;
 }
-.org-chart_role_title strong,
-.org-chart_role_title b {
+.role_title strong,
+.role_title b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .org-chart_role_title strong,
-.lt-ie9 .org-chart_role_title b {
+.lt-ie9 .role_title strong,
+.lt-ie9 .role_title b {
   font-weight: normal !important;
 }
-.org-chart_node {
-  margin-bottom: 15px;
+.content-hide {
+  display: none;
+  background-color: inherit;
+  margin-bottom: 20px;
+}
+.content-show,
+.content-hide {
   width: 100%;
+  text-align: left;
 }
 @media only all and (max-width: 37.4375em) {
-  .org-chart_node {
-    display: none;
+  .content-show .cf-icon,
+  .content-hide .cf-icon,
+  .content-show:before,
+  .content-hide:before,
+  .content-show:after,
+  .content-hide:after {
+    color: #0072ce;
+  }
+  .content-show:focus,
+  .content-hide:focus {
+    outline: thin dotted;
+  }
+  .content-show:hover,
+  .content-hide:hover {
+    border-color: #7fb8e6;
+    z-index: 2;
+  }
+  .content-show:hover .cf-icon,
+  .content-hide:hover .cf-icon,
+  .content-show:hover:before,
+  .content-hide:hover:before,
+  .content-show:hover:after,
+  .content-hide:hover:after {
+    color: #7fb8e6;
+  }
+  .content-show:active,
+  .content-hide:active {
+    border-color: #002d72;
+  }
+  .content-show:active .cf-icon,
+  .content-hide:active .cf-icon,
+  .content-show:active:before,
+  .content-hide:active:before,
+  .content-show:active:after,
+  .content-hide:active:after {
+    color: #002d72;
   }
 }
-@media only all and (min-width: 37.5em) {
-  .org-chart_node {
-    position: relative;
-  }
+.link-text {
+  color: #0072ce;
 }
-.org-chart_node_expander {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  z-index: 10;
+.link-text:hover {
+  color: #7fb8e6;
 }
-.org-chart_node_expander .expandable_link {
-  font-size: 16px;
-}
-@media only all and (min-width: 37.5em) {
-  .org-chart_node .org-chart_nodes {
-    border-top: 5px solid #7fb8e6;
-  }
-}
-.org-chart_node .org-chart_nodes .org-chart_node {
-  margin-bottom: 1px;
-}
-.org-chart_node .org-chart_nodes .org-chart_node .org-chart_role {
-  background: #cce3f5;
-  border-top: none;
-  padding-right: 15px;
-}
-.org-chart .jump-link__bg {
-  margin-top: -1px;
+.link-text:active {
+  color: #002d72;
 }
 /* ==========================================================================
    cfgov-refresh
