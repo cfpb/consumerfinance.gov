@@ -6,7 +6,7 @@
         </span>
     </h1>
     <ul class="list list__unstyled list__spaced">
-    {% for similar in more_like_this(post, search_size=5) %}
+    {% for similar in more_like_this(post, search_types="posts,newsroom", search_size=5) %}
         <li class="list_item">
             <a class="list_link"
                href="{{ similar.permalink }}">
