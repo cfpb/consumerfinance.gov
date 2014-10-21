@@ -10561,6 +10561,20 @@ a.category-slug.active {
         </a>
       codenotes:
         - .jump-link__external-link
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            Jump link with grey background and solid borders on small screens
+        </a>
+      codenotes:
+        - .jump-link__bg
+    - name: .jump-link__back (modifier)
+      markup: |
+        <a class="jump-link jump-link__back" href="#">
+            Jump link with back arrow
+        </a>
+      codenotes:
+        - .jump-link__back
   tags:
     - cfgov-misc
 */
@@ -10606,8 +10620,11 @@ a.category-slug.active {
   position: absolute;
   bottom: 0;
   right: -1em;
-  padding-left: 0.25em;
   border-bottom: none;
+}
+
+.jump-link__back {
+  margin-left: 1.25em;
 }
 
 .jump-link__back:after {
@@ -10623,8 +10640,9 @@ a.category-slug.active {
   -webkit-font-smoothing: antialiased;
   content: "\e000";
   position: absolute;
-  left: 0;
-  padding-right: 0.25em;
+  left: -1.25em;
+  top: .2em;
+  padding-right: .25em;
   border-bottom: none;
 }
 
@@ -14355,6 +14373,11 @@ a.focus .summary_header {
   width: 250px;
 }
 
+.org-chart_role.expandable_target:focus {
+  outline: 1px dotted #101820;
+  outline-offset: 1px;
+}
+
 .slick-slider {
   margin-top: 45px;
 }
@@ -14426,11 +14449,6 @@ a.focus .summary_header {
 }
 
 .org-chart {
-  position: relative;
-  overflow: hidden;
-}
-
-.org-chart {
   width: 530px;
   margin: 0 auto;
 }
@@ -14446,16 +14464,6 @@ a.focus .summary_header {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-.org-chart_branches,
-.org-chart_nodes {
-  position: relative;
-}
-
-.org-chart_branches li,
-.org-chart_nodes li {
-  position: relative;
 }
 
 .org-chart_branches {
@@ -14477,10 +14485,29 @@ a.focus .summary_header {
 }
 
 .org-chart_branch {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+  position: relative;
   padding-top: 45px;
-  float: left;
-  border-left: 0;
-  border-right: 0;
+  border-width: 0;
+}
+
+.ie .org-chart_branch {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .org-chart_branch {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .org-chart_branch:before,
@@ -14520,10 +14547,6 @@ a.focus .summary_header {
   border: none;
 }
 
-.org-chart_branch_wrapper {
-  width: 250px;
-}
-
 .org-chart_branch_name {
   margin-top: 0;
   margin-bottom: 0.27777778em;
@@ -14542,74 +14565,22 @@ a.focus .summary_header {
 
 .org-chart_role {
   padding: 15px;
+  padding-right: 30px;
+  position: relative;
   background: #f1f2f2;
-  border-top: 1px solid #e3e4e5;
-  position: relative;
-}
-
-.org-chart_role_office {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-top: 0;
-  margin-bottom: 0.41666667em;
-  font-size: 0.75em;
-  line-height: 1.83333333;
-}
-
-.lt-ie9 .org-chart_role_office {
-  font-weight: normal !important;
-}
-
-.org-chart_role_name {
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-}
-
-.lt-ie9 .org-chart_role_name {
-  font-weight: normal !important;
-}
-
-.org-chart_role_title {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.org-chart_role_title em,
-.org-chart_role_title i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .org-chart_role_title em,
-.lt-ie9 .org-chart_role_title i {
-  font-style: normal !important;
-}
-
-.org-chart_role_title strong,
-.org-chart_role_title b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .org-chart_role_title strong,
-.lt-ie9 .org-chart_role_title b {
-  font-weight: normal !important;
+  border-color: #e3e4e5;
+  border-style: solid;
+  border-width: 1px 0 0 0;
 }
 
 .org-chart_node {
-  margin-bottom: 15px;
   width: 100%;
+  /* nested .org-chart_node blocks have different background color & borders */
 }
 
 .org-chart_node {
   position: relative;
+  margin-bottom: 15px;
 }
 
 .org-chart_node_expander {
@@ -14628,17 +14599,114 @@ a.focus .summary_header {
 }
 
 .org-chart_node .org-chart_nodes .org-chart_node {
-  margin-bottom: 1px;
+  margin-bottom: 0px;
 }
 
-.org-chart_node .org-chart_nodes .org-chart_node .org-chart_role {
+.org-chart_node .org-chart_nodes .org-chart_role {
   background: #cce3f5;
-  border-top: none;
-  padding-right: 15px;
+  border-color: #E5F1FA;
+  border-width: 0 0 1px 0;
 }
 
-.org-chart .jump-link__bg {
-  margin-top: -1px;
+.org-chart_node .org-chart_nodes .org-chart_role ~ .org-chart_node .org-chart_role {
+  border-width: 1px 0 0 0;
+}
+
+.org-chart #content-slider-container {
+  position: relative;
+  margin-left: -10px;
+}
+
+.org-chart #content-slider-container #content-slider {
+  display: none;
+}
+
+.org-chart #content-slider-container .slick-slide {
+  margin-left: 10px;
+}
+
+.org-chart #content-slider-container .slick-slider {
+  margin-bottom: 0;
+}
+
+.role_office {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+}
+
+.lt-ie9 .role_office {
+  font-weight: normal !important;
+}
+
+.role_name {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .role_name {
+  font-weight: normal !important;
+}
+
+.role_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.role_title em,
+.role_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .role_title em,
+.lt-ie9 .role_title i {
+  font-style: normal !important;
+}
+
+.role_title strong,
+.role_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .role_title strong,
+.lt-ie9 .role_title b {
+  font-weight: normal !important;
+}
+
+.content-hide {
+  display: none;
+  background-color: inherit;
+  margin-bottom: 20px;
+}
+
+.content-show,
+.content-hide {
+  width: 100%;
+  text-align: left;
+}
+
+.link-text {
+  color: #0072ce;
+}
+
+.link-text:hover {
+  color: #7fb8e6;
+}
+
+.link-text:active {
+  color: #002d72;
 }
 
 /* ==========================================================================

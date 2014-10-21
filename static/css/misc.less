@@ -59,6 +59,20 @@
         </a>
       codenotes:
         - .jump-link__external-link
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            Jump link with grey background and solid borders on small screens
+        </a>
+      codenotes:
+        - .jump-link__bg
+    - name: .jump-link__back (modifier)
+      markup: |
+        <a class="jump-link jump-link__back" href="#">
+            Jump link with back arrow
+        </a>
+      codenotes:
+        - .jump-link__back
   tags:
     - cfgov-misc
 */
@@ -105,11 +119,12 @@
         position: absolute;
         bottom: 0;
         right: -1em;
-        padding-left: 0.25em;
         border-bottom: none;
     }
     
     &__back {
+        margin-left: 1.25em;
+        
         &:after {
             content: ''
         }
@@ -119,8 +134,9 @@
             // Inserts the cf-icon-left (arrow) glyph.
             content: "\e000";
             position: absolute;
-            left: 0;
-            padding-right: 0.25em;
+            left: -1.25em;
+            top: .2em;
+            padding-right: .25em;
             border-bottom: none;
         }
     }
@@ -155,14 +171,15 @@
         
         &__back {
             padding: unit(10px / @base-font-size-px, em) 0 unit(10px / @base-font-size-px, em) 1.25em;
+            margin-left: 0;
             &:after {
                 content: ''
             }
 
             &:before {
-                margin-bottom: -0.625em;
+                margin-top: -0.5em;
                 left: 0;
-                bottom: 50%;
+                top: 50%;
             }
         }
     });
