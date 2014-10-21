@@ -122,6 +122,10 @@
                                     </td>
                                     <td>
                                         {{ event.summary }}
+                                    {% if event.description %}
+                                        <br>
+                                        <small><i>{{ event.description }}</i></small>
+                                    {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
