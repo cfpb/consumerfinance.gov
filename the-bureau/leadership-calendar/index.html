@@ -80,12 +80,12 @@
                        selected_filters_for_field('range_dtend_lte')
                     %}
 
-                    {#{% set active_filters_total = active_filters|length + active_date_filters|length %}#}
+                    {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
                     {% set query = queries.calendar_event %}
                     {% set events_all = query.search_with_url_arguments(size=20) %}
 
-                    {% include "calendar-event-filters-form.html" %}
+                    {% include "calendar-event-filters.html" %}
 
                     {% for years in events_all|groupby('dtstart.year')|reverse %}
                     {% for months in years.list|groupby('dtstart.month')|reverse %}
