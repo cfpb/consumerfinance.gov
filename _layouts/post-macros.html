@@ -121,7 +121,7 @@
                     Without this the form would change the url to `?page=X` and we
                     would lose any currently applied filters that are in the URL. -#}
 
-                {{ print_hidden_filters(filters) }}
+                {{ print_hidden_filters(filters)|safe }}
 
                 {#{{ post_macros.print_hidden_filters([
                     'category',
