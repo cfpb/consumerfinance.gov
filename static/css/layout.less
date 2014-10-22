@@ -435,7 +435,7 @@
     .primary-nav_top-level-list > .list_item > .list_link {
         display: block;
         padding-bottom: @grid_gutter-width;
-        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+        margin: 0 0 0 (@grid_gutter-width / 2); // margin on link for larger hit area
         font-size: unit(18px / @base-font-size-px, em);
     }
 
@@ -495,6 +495,12 @@
         margin: 0 @grid_gutter-width / 2;
     }
 
+});
+
+.respond-to-min(1024px, {
+    .primary-nav_top-level-list > .list_item > .list_link {
+        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+    }
 });
 
 

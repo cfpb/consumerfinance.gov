@@ -1,0 +1,60 @@
+/* ==========================================================================
+   cfgov-refresh
+   Beta splash page and banner
+   ========================================================================== */
+
+.beta-hero {
+    min-height: 420px;
+    // top padding reduced from 30px to compensate for line-height on title
+    padding: unit(25px / @base-font-size-px, em) (@grid_gutter-width / 2);
+    background: @teal-20;
+    background-image: url('/static/img/beta-illustration.svg');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 1176px;
+    text-align: center;
+
+    .respond-to-min(601px, {
+        min-height: 520px;
+        padding: @grid_gutter-width;
+        // background-image: url('/static/img/beta-illustration_lg.png');
+        background-size: 1470px;
+    });
+
+    .respond-to-min(1024px, {
+        min-height: 540px;
+        background-size: auto;
+    });
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+        /* Retina-specific stuff here */
+        // background-image: url('/static/img/beta-illustration_sm@2x.png');
+
+        @media (min-width: 601px) {
+            // background-image: url('/static/img/beta-illustration_lg@2x.png');
+        }
+    }
+}
+
+.beta-hero_title {
+    .h2();
+
+    .respond-to-min(601px, {
+        .superheader();
+        line-height: 1.25; // Update in cf-core .superheader?
+    });
+}
+
+.beta-hero_desc {
+    .h4();
+    margin: 0 auto 1em;
+
+    .respond-to-min(601px, {
+        .h2();
+        margin-bottom: 1em; // override the property set in .h2()
+    });
+
+    .respond-to-min(1024px, {
+        width: 32em;
+    });
+}
