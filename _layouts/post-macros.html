@@ -142,12 +142,16 @@
 
    label:       The label you want on the expandable button
    query:       The post type query object like `queries.posts`.
+                Needed so we can utilize `query.possible_values_for()` to get
+                access to the values of each filter.
    posts:       The query object search results.
-                Used for getting the list of currently applied filters.
+                Used to show how many filtered items resulted.
    doc_type:    The type of document that posts contains.
                 Mainly used for conditionals needed to support newsroom filters.
-   filters:     An array of the filters that you want to show the results of.
+   filters:     An array of the filters that you want.
                 Possible values: author, calendar, category, date_range, tags.
+                You can add more in filters_form() by adding to the if statement,
+                for example: `{% elif filter == 'NEW_FILTER' %}`.
    ========================================================================== #}
 
 {% macro filters(label, query, posts, doc_type, filters) %}
