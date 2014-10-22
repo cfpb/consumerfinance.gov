@@ -1,0 +1,5 @@
+{
+  "properties" : {
+    "calendar": {"type":"string", "index": "not_analyzed"}
+  }
+}
