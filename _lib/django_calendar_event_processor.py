@@ -31,7 +31,6 @@ def process_event(event):
     event['_id'] = event['id']
     dt = dateutil.parser.parse(event['dtstart'])
     event['day'] = datetime.date(dt.year, dt.month, dt.day)
-    event['person'] = event['calendar'].replace(' ', '').lower()
     if event['description']:
         if event['description'].strip() == '':
             del event['description']

@@ -9,9 +9,9 @@
                 <label class="form-label-header">
                     Calendars
                 </label>
-            {% for calendar in query.possible_values_for('person')|sort(attribute='term') -%}
+            {% for calendar in query.possible_values_for('calendar')|sort(attribute='term') -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('person', calendar.term)|safe }}
+                    {{ filter_checkbox('calendar', calendar.term)|safe }}
                 </label>
             {% endfor %}
             </div>
