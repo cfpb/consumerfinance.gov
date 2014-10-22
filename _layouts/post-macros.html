@@ -76,7 +76,6 @@
 {% endmacro %}
 
 {% macro pagination(query_obj, filters) %}
-
 {# Only show pagination if there is more than one page. #}
 {% if query_obj.pages > 1 %}
     <nav class="post-pagination pagination"
@@ -133,21 +132,49 @@
         </form>
     </nav>
 {% endif %}
-
 {% endmacro %}
 
-
-{% macro filtered_items(active_filters, active_date_filters) %}
-{% for filter in active_filters %}
-    <dd class="list_item">
-        <span class="filtered-by_filter">
-            {{ filter }}
-        {%- if not loop.last -%}
-            ,
-        {%- elif active_date_filters|length > 0 -%}
-            ,
-        {%- endif -%}
-        </span>
-    </dd>
+{% macro show_active_filters(posts, filters) %}
+{% set active_filters = [] %}
+{% for filter in filters %}
+    {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
 {% endfor %}
+{% set active_date_filters =
+   selected_filters_for_field('range_date_gte') + 
+   selected_filters_for_field('range_date_lte')
+%}
+{% set active_filters_total = active_filters|length + active_date_filters|length %}
+{% if active_filters_total > 0 %}
+    <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+        <dt class="list_item">
+            <span class="filtered-by_header">
+            {%- if posts|list|length > 0 -%}
+                {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
+            {%- else -%}
+                No results for
+            {%- endif -%}
+            </span>
+        </dt>
+    {% for filter in active_filters %}
+        <dd class="list_item">
+            <span class="filtered-by_filter">
+                {{ filter }}
+            {%- if not loop.last -%}
+                ,
+            {%- elif active_date_filters|length > 0 -%}
+                ,
+            {%- endif -%}
+            </span>
+        </dd>
+    {% endfor %}
+    {% for filter in active_date_filters %}
+        <dd class="list_item">
+            <span class="filtered-by_filter">
+                {{ filter|date("%B %Y") }}
+                {{ '&nbsp;&ndash;'|safe if not loop.last }}
+            </span>
+        </dd>
+    {% endfor %}
+    </dl>
+{% endif %}
 {% endmacro %}
