@@ -1,30 +1,95 @@
 {% extends "base.html" %}
 
 {% block demo_title -%}
-    Consumer Financial Protection Bureau
+    beta.consumerfinance.gov
 {%- endblock %}
 
 {% block title -%}
     Consumer Financial Protection Bureau
 {%- endblock %}
 {% block desc -%}
-    Our vision is a consumer finance market place that works for American consumers, responsible providers, and the economy as a whole.
+    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
 {%- endblock %}
 
 {% block content %}
 
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
+    <main class="content" id="main" role="main">
+
+        <section class="content_hero hero beta-hero">
+            <h1 class="beta-hero_title">Welcome to beta.<wbr>consumerfinance.gov!</h1>
+            <p class="beta-hero_desc">
+                We&rsquo;re redesigning consumerfinance.gov to make it easier to use.
+                Follow our work here as we build in the open.
+            </p>
+            <a class="btn btn__super" href="beta/">Learn more about beta</a>
+        </section>
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
         <div class="content_bar"></div>
 
-        <div class="wrapper">
-            <section class="content_intro">
-                <div class="demo-placeholder">
-                    Homepage placer
-                </div>
-            </section><!-- END .content_intro -->
-        </div><!-- END .wrapper -->
+        <div class="wrapper content_wrapper">
+            <section class="content_main">
+                <h2 class="content_title__extra-large">What we&rsquo;re working on</h2>
+                <p>
+                    You deserve a website that works for you.
+                    We&rsquo;re redesigning and reorganizing, section by section,
+                    so you can find the information you need quickly and easily, on any device.
+                    These bars tell you how much of each section we've published in the new format.
+                </p>
+                <div class="content_block
+                            content_block__padded-top
+                            content_block__border-top
+                            content_block__flush-bottom">
+                    <div class="content-l content-l__large-gutters">
+                        <section class="content-l_col content-l_col-1-2">
+                            <h3 class="content_title__medium">Why are we redesigning in&nbsp;beta?</h3>
+                            <p>
+                                A beta release gives both users and developers a sense of
+                                new features and capabilities.
+                                It helps us identify what's working and what's not.
+                                But the content here is not necessarily accurate or up to date.
+                                If you need reliable information from us right now, visit the current site.
+                            </p>
+                            <ul class="list__links">
+                                <li class="list_item">
+                                    <a class="list_link jump-link" href="https://www.consumerfinance.gov/">
+                                        Go to consumerfinance.gov
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a class="list_link jump-link" href="beta/">
+                                        Learn more about the beta project
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                        <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                            <h3 class="content_title__medium">Open government, open code</h3>
+                            <p>
+                                The new consumerfinance.gov is an open source project,
+                                but it's not our only one.
+                                All the software we build is open source by default.
+                                We release as much as possible.
+                            </p>
+                            <ul class="list__links">
+                                <li class="list_item">
+                                    <a class="list_link jump-link jump-link__external-link"
+                                       href="https://cfpb.github.io/">
+                                        Learn about out projects at CFPB Open Tech
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a class="list_link jump-link jump-link__external-link"
+                                       href="https://github.com/cfpb/cfgov-refresh">
+                                        See the code for this redesign on GitHub
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    </div><!-- END .content-l -->
+                </div><!-- END .content_block -->
+            </section><!-- END .content_main -->
+        </div><!-- END .content_wrapper -->
 
     </main>
 
