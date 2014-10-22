@@ -42,6 +42,7 @@
 
                     <div class="content_block
                                 content_block__flush-top
+                                content_block__padded-bottom
                                 content_block__border-bottom">
                         <h1 class="content_title__medium">
                             At the Consumer Financial Protection Bureau, we are committed to letting you
@@ -63,7 +64,7 @@
 
                     <div id="pagination_content"></div>
 
-                    <div class="content_block">
+                    <div class="content_block content_block__flush-top">
 
                     {% set query = queries.calendar_event %}
                     {% set events_all = query.search_with_url_arguments(size=20) %}
