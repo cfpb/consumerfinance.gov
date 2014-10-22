@@ -1,39 +1,4 @@
 
-{% macro filter_checkbox(field, value, label, checked=false) %}
-    <input class="custom-input"
-           type="checkbox"
-           name="filter_{{ field }}"
-           value="{{ value }}"
-           {%- if is_filter_selected(field, value) or checked %}
-           checked
-           {%- endif -%}
-           >
-        {{ label if label else value }}
-{% endmacro %}
-
-{% macro filter_option(field, value) %}
-    <option value="{{ value }}"
-        {%- if is_filter_selected(field, value) %}
-            selected
-        {%- endif -%}
-            >
-        {{ value }}
-    </option>
-{% endmacro %}
-
-{% macro print_hidden_filters(filter_fields) %}
-    {%- for field in filter_fields -%}
-        {# Note that in order to gain access to selected_filters_for_field you
-           will need to import this macros file with context. #}
-        {% set selected_filters = selected_filters_for_field(field) %}
-        {%- for value in selected_filters -%}
-            {%- if value %}
-            <input type="hidden" name="filter_{{ field }}" value="{{ value }}">
-            {%- endif -%}
-        {%- endfor -%}
-    {%- endfor -%}
-{% endmacro %}
-
 {% macro category_icon(category, additional_classes) %}
     {%- if category|lower == 'announcements & updates' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
@@ -56,6 +21,7 @@
     {%- endif -%}
 {% endmacro %}
 
+
 {% macro post_summary(post) %}
     <h1 class="summary_header">{{ post.title|safe }}</h1>
     <p class="summary_text summary_text__max">
@@ -75,8 +41,23 @@
     {% endif %}
 {% endmacro %}
 
+
+{# ==========================================================================
+   pagination()
+
+   Create a pagination component when given:
+
+   query:       The post type query object like `queries.posts`.
+                This gives us access to necessary pagination info like the
+                current page and the total number of pages.
+   filters:     An array of the filters that you want pagination to support.
+                Possible values: author, calendar, category, range_date_gte,
+                range_date_lte, tags.
+   ========================================================================== #}
+
 {% macro pagination(query_obj, filters) %}
-{# Only show pagination if there is more than one page. #}
+
+{# Pagination is only displayed if there is more than one page. #}
 {% if query_obj.pages > 1 %}
     <nav class="post-pagination pagination"
          role="navigation"
@@ -118,7 +99,16 @@
                 for paginating through a filtered set of results.
                 Without this the form would change the url to `?page=X` and we
                 would lose any currently applied filters that are in the URL. -#}
-            {{ print_hidden_filters(filters)|safe }}
+    {%- for filter in filters -%}
+        {# Note that in order to gain access to selected_filters_for_field you
+           will need to import this macros file with context. #}
+        {% set selected_filters = selected_filters_for_field(filter) %}
+        {%- for value in selected_filters -%}
+            {%- if value %}
+            <input type="hidden" name="filter_{{ filter }}" value="{{ value }}">
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endfor -%}
             <label class="pagination_label">
                 <span aria-hidden="true">
                     of {{ query_obj.pages }}
@@ -152,6 +142,8 @@
                 Possible values: author, calendar, category, date_range, tags.
                 You can add more in filters_form() by adding to the if statement,
                 for example: `{% elif filter == 'NEW_FILTER' %}`.
+                Note that 'range_date_gte' and 'range_date_lte' have been
+                condensed into 'date_range' for this macro only.
    ========================================================================== #}
 
 {% macro filters(label, query, posts, doc_type, filters) %}
@@ -469,4 +461,30 @@
     </div>
 
 </form>
+{% endmacro %}
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro filter_checkbox(field, value, label, checked=false) %}
+    <input class="custom-input"
+           type="checkbox"
+           name="filter_{{ field }}"
+           value="{{ value }}"
+           {%- if is_filter_selected(field, value) or checked %}
+           checked
+           {%- endif -%}
+           >
+        {{ label if label else value }}
+{% endmacro %}
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro filter_option(field, value) %}
+    <option value="{{ value }}"
+        {%- if is_filter_selected(field, value) %}
+            selected
+        {%- endif -%}
+            >
+        {{ value }}
+    </option>
 {% endmacro %}
