@@ -67,12 +67,12 @@
                     <div class="content_block content_block__flush-top">
 
                     {% set query = queries.calendar_event %}
-                    {% set events_all = query.search_with_url_arguments(size=20) %}
-                    {% set filters = ['calendar', 'range_date_gte', 'range_date_lte'] %}
+                    {% set posts = query.search_with_url_arguments(size=20) %}
 
-                        {{ post_macros.filters('Filter calendar', query, events_all, filters, 'calendar-event-filters-form.html') }}
+                        {{ post_macros.filters('Filter calendar', query, posts, 'calendar_event',
+                           ['calendar', 'range_date']) }}
 
-                    {% for days in events_all|groupby('day')|reverse %}
+                    {% for days in posts|groupby('day')|reverse %}
                         <table class="u-w100pct content_block content_block__flush-top">
                             <colgroup>
                                 <col class="u-w25pct">
@@ -122,7 +122,7 @@
 
                     </div><!-- END calendar -->
 
-                    {{ post_macros.pagination(events_all, filters) }}
+                    {{ post_macros.pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
 
                     <!-- <section class="content_block
                                 content_block__padded-top
