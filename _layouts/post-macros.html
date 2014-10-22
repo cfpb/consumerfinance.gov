@@ -173,13 +173,14 @@
 {# A helper macro for filters() #}
 {% macro active_filters(posts, filters) %}
 {% set active_filters = [] %}
+{% set active_date_filters = [] %}
 {% for filter in filters %}
-    {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
+    {% if filter == 'range_date_gte' or filter == 'range_date_lte' %}
+        {% set _ignore = active_date_filters.extend(selected_filters_for_field(filter)) %}
+    {% else %}
+        {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
+    {% endif %}
 {% endfor %}
-{% set active_date_filters =
-   selected_filters_for_field('range_date_gte') + 
-   selected_filters_for_field('range_date_lte')
-%}
 {% set active_filters_total = active_filters|length + active_date_filters|length %}
 {% if active_filters_total > 0 %}
     <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">

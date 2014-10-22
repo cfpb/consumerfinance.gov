@@ -67,7 +67,7 @@
 
                     {% set query = queries.calendar_event %}
                     {% set events_all = query.search_with_url_arguments(size=20) %}
-                    {% set filters = ['calendar'] %}
+                    {% set filters = ['calendar', 'range_date_gte', 'range_date_lte'] %}
 
                         {{ post_macros.filters('Filter calendar', query, events_all, filters, 'calendar-event-filters-form.html') }}
 
