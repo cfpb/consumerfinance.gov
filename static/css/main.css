@@ -7249,7 +7249,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .primary-nav_top-level-list > .list_item > .list_link {
     display: block;
     padding-bottom: 30px;
-    margin: 0 15px;
+    margin: 0 0 0 15px;
     font-size: 1.125em;
   }
   .desktop-menu_full-wrapper {
@@ -7331,6 +7331,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     margin-bottom: 0;
   }
   .desktop-menu_horizontal-list.list__horizontal > .list_item {
+    margin: 0 15px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .primary-nav_top-level-list > .list_item > .list_link {
     margin: 0 15px;
   }
 }
@@ -11530,7 +11535,7 @@ a.category-slug.active {
 .list__links .list_item {
   margin-bottom: 0.625em;
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .list__links {
     border-top: 1px dotted #0072ce;
   }
@@ -11540,10 +11545,11 @@ a.category-slug.active {
   }
   .list__links .list_link {
     display: block;
-    padding: 0.625em 0;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .list__links.list__icons .list_link {
     margin-bottom: 0.9375em;
     margin-left: 1.5em;
@@ -14559,7 +14565,7 @@ a.focus .summary_header {
 .footer_nav-list .list_item {
   margin-bottom: 0.625em;
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .footer_nav-list {
     border-top: 1px dotted #0072ce;
   }
@@ -14569,10 +14575,11 @@ a.focus .summary_header {
   }
   .footer_nav-list .list_link {
     display: block;
-    padding: 0.625em 0;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .footer_nav-list.list__icons .list_link {
     margin-bottom: 0.9375em;
     margin-left: 1.5em;
@@ -14820,7 +14827,7 @@ a.focus .summary_header {
 .footer_list .list_item {
   margin-bottom: 0.625em;
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .footer_list {
     border-top: 1px dotted #0072ce;
   }
@@ -14830,10 +14837,11 @@ a.focus .summary_header {
   }
   .footer_list .list_link {
     display: block;
-    padding: 0.625em 0;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .footer_list.list__icons .list_link {
     margin-bottom: 0.9375em;
     margin-left: 1.5em;
@@ -15304,3 +15312,131 @@ a.focus .summary_header {
     name: EOF
     eof: true
 */
+/* ==========================================================================
+   cfgov-refresh
+   Beta splash page and banner
+   ========================================================================== */
+.beta-hero {
+  min-height: 420px;
+  padding: 1.5625em 15px;
+  background: #ccdfdf;
+  background-image: url('/static/img/beta-illustration.svg');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  -webkit-background-size: 1176px;
+  background-size: 1176px;
+  text-align: center;
+}
+@media only all and (min-width: 37.5625em) {
+  .beta-hero {
+    min-height: 520px;
+    padding: 30px;
+    -webkit-background-size: 1470px;
+    background-size: 1470px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .beta-hero {
+    min-height: 540px;
+    -webkit-background-size: auto;
+    background-size: auto;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .beta-hero {
+    /* Retina-specific stuff here */
+  }
+}
+.beta-hero_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+.beta-hero_title em,
+.beta-hero_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .beta-hero_title em,
+.lt-ie9 .beta-hero_title i {
+  font-style: normal !important;
+}
+.beta-hero_title strong,
+.beta-hero_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .beta-hero_title strong,
+.lt-ie9 .beta-hero_title b {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 37.5625em) {
+  .beta-hero_title {
+    margin-bottom: 0.1875em;
+    font-size: 3em;
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.375;
+    line-height: 1.25;
+  }
+  .lt-ie9 .beta-hero_title {
+    font-weight: normal !important;
+  }
+}
+.beta-hero_desc {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin: 0 auto 1em;
+}
+.lt-ie9 .beta-hero_desc {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 37.5625em) {
+  .beta-hero_desc {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.30769231em;
+    font-size: 1.625em;
+    line-height: 1.26923077;
+    margin-bottom: 1em;
+  }
+  .beta-hero_desc em,
+  .beta-hero_desc i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .beta-hero_desc em,
+  .lt-ie9 .beta-hero_desc i {
+    font-style: normal !important;
+  }
+  .beta-hero_desc strong,
+  .beta-hero_desc b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .beta-hero_desc strong,
+  .lt-ie9 .beta-hero_desc b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 64em) {
+  .beta-hero_desc {
+    width: 32em;
+  }
+}
