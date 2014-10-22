@@ -12,28 +12,7 @@
                 </span>
             </button>
         </div>
-    {% if active_filters_total > 0 %}
-        <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
-            <dt class="list_item">
-                <span class="filtered-by_header">
-                {%- if posts|list|length > 0 -%}
-                    {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
-                {%- else -%}
-                    No results for
-                {%- endif -%}
-                </span>
-            </dt>
-            {{ post_macros.filtered_items(active_filters, active_date_filters) }}
-        {% for filter in active_date_filters %}
-            <dd class="list_item">
-                <span class="filtered-by_filter">
-                    {{ filter|date("%B %Y") }}
-                    {{ '&nbsp;&ndash;'|safe if not loop.last }}
-                </span>
-            </dd>
-        {% endfor %}
-        </dl>
-    {% endif %}
+        {{ post_macros.show_active_filters(posts, ['category', 'tags']) }}
     </div>
     <div class="expandable_content padded-container">
         <div class="padded-container_body">
