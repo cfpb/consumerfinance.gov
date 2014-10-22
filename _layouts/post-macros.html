@@ -135,3 +135,19 @@
 {% endif %}
 
 {% endmacro %}
+
+
+{% macro filtered_items(active_filters, active_date_filters) %}
+{% for filter in active_filters %}
+    <dd class="list_item">
+        <span class="filtered-by_filter">
+            {{ filter }}
+        {%- if not loop.last -%}
+            ,
+        {%- elif active_date_filters|length > 0 -%}
+            ,
+        {%- endif -%}
+        </span>
+    </dd>
+{% endfor %}
+{% endmacro %}
