@@ -65,16 +65,6 @@
                                 content_block__padded-top
                                 content_block__border-top">
 
-
-                    {% set active_filters = selected_filters_for_field('person') %}
-
-                    {% set active_date_filters =
-                       selected_filters_for_field('range_dtstart_gte') + 
-                       selected_filters_for_field('range_dtend_lte')
-                    %}
-
-                    {% set active_filters_total = active_filters|length + active_date_filters|length %}
-
                     {% set query = queries.calendar_event %}
                     {% set events_all = query.search_with_url_arguments(size=20) %}
 
