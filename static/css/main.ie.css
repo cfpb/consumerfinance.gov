@@ -7995,7 +7995,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 .primary-nav_top-level-list > .list_item > .list_link {
   display: block;
   padding-bottom: 30px;
-  margin: 0 15px;
+  margin: 0 0 0 15px;
   font-size: 1.125em;
 }
 
@@ -15822,3 +15822,129 @@ a.focus .summary_header {
     name: EOF
     eof: true
 */
+
+/* ==========================================================================
+   cfgov-refresh
+   Beta splash page and banner
+   ========================================================================== */
+
+.beta-hero {
+  min-height: 420px;
+  padding: 1.5625em 15px;
+  background: #ccdfdf;
+  background-image: url('/static/img/beta-illustration.svg');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  -webkit-background-size: 1176px;
+  background-size: 1176px;
+  text-align: center;
+}
+
+.beta-hero {
+  min-height: 520px;
+  padding: 30px;
+  -webkit-background-size: 1470px;
+  background-size: 1470px;
+}
+
+.beta-hero {
+  /* Retina-specific stuff here */
+}
+
+.beta-hero_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.beta-hero_title em,
+.beta-hero_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .beta-hero_title em,
+.lt-ie9 .beta-hero_title i {
+  font-style: normal !important;
+}
+
+.beta-hero_title strong,
+.beta-hero_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .beta-hero_title strong,
+.lt-ie9 .beta-hero_title b {
+  font-weight: normal !important;
+}
+
+.beta-hero_title {
+  margin-bottom: 0.1875em;
+  font-size: 3em;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 1.375;
+  line-height: 1.25;
+}
+
+.lt-ie9 .beta-hero_title {
+  font-weight: normal !important;
+}
+
+.beta-hero_desc {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin: 0 auto 1em;
+}
+
+.lt-ie9 .beta-hero_desc {
+  font-weight: normal !important;
+}
+
+.beta-hero_desc {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 1em;
+}
+
+.beta-hero_desc em,
+.beta-hero_desc i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .beta-hero_desc em,
+.lt-ie9 .beta-hero_desc i {
+  font-style: normal !important;
+}
+
+.beta-hero_desc strong,
+.beta-hero_desc b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .beta-hero_desc strong,
+.lt-ie9 .beta-hero_desc b {
+  font-weight: normal !important;
+}
