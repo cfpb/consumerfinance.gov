@@ -16,19 +16,6 @@
 
     {# Variables #}
 
-    {% set active_filters =
-       selected_filters_for_field('category') +
-       selected_filters_for_field('tags') +
-       selected_filters_for_field('author')
-    %}
-
-    {% set active_date_filters =
-       selected_filters_for_field('range_date_gte') + 
-       selected_filters_for_field('range_date_lte')
-    %}
-
-    {% set active_filters_total = active_filters|length + active_date_filters|length %}
-
     {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
     {% set query = queries.posts %}
     {% set posts = query.search_with_url_arguments(size=10) %}
@@ -52,7 +39,11 @@
 
             <div class="content_main">
                 <section>
-                    {% include "post-filters.html" %}
+                    {{ post_macros.filters('Filter posts', query, posts,
+                        [ 'category',
+                          'tags',
+                          'author' ],
+                        'post-filters-form.html') }}
                     {% include "posts-paginated.html" %}
                 </section>
             </div>
