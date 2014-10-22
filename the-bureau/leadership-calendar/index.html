@@ -187,23 +187,3 @@
     </main><!-- END .content -->
 
 {% endblock content %}
-
-{% block javascript %}
-<script>
-    /* ==========================================================================
-       Init jquery.cf_inputSplit
-       ========================================================================== */
-
-    if ($('#calendar_date_range-container').length > 0) {
-        $('#calendar_date_range-container').cf_inputSplit({
-            newHTML: '#calendar_date_range-replacement',
-            newInputsOrder: ['#calendar_date_range_year', '#calendar_date_range_month'],
-            initialValues: $('#calendar_date_range').val().split('-'),
-            delimiter: '-'
-        });
-    }
-
-    $('#calendar_date_range_month, #calendar_date_range_year')
-    .trigger('updateState');
-</script>
-{% endblock %}
