@@ -40,7 +40,9 @@
                         content__flush-bottom">
                 <section>
 
-                    <div class="content_block content_block__flush-top">
+                    <div class="content_block
+                                content_block__flush-top
+                                content_block__border-bottom">
                         <h1 class="content_title__medium">
                             At the Consumer Financial Protection Bureau, we are committed to letting you
                             know how we’re working for you every day by, among other things, providing you
@@ -61,9 +63,7 @@
 
                     <div id="pagination_content"></div>
 
-                    <div class="content_block
-                                content_block__padded-top
-                                content_block__border-top">
+                    <div class="content_block">
 
                     {% set query = queries.calendar_event %}
                     {% set events_all = query.search_with_url_arguments(size=20) %}
