@@ -40,15 +40,6 @@
                         content__flush-bottom">
                 <section>
 
-                    {# Example code from sheer_blog #}
-                    {% set events_steve = queries.calendar_event.search_with_url_arguments(q="calendar:Steve Antonakes") %}
-                    {% set events_rich = queries.calendar_event.search_with_url_arguments(q="calendar:Richard Cordray") %}
-                    {% set events_jan2014 = queries.calendar_event.search_with_url_arguments(q="dtstart:[2014-01-01 TO 2014-01-31]") %}
-
-                    <!-- For ranges, use [] for inclusive and {} for exclusive of each of the bounds.  See below for how they can be combined to get all of 2014-01-30 (a date with no time implies midnight) -->
-
-                    {% set events_jan152014 = queries.calendar_event.search_with_url_arguments(q="dtstart:[2014-01-30 TO 2014-01-31}") %}
-
                     <div class="content_block content_block__flush-top">
                         <h1 class="content_title__medium">
                             At the Consumer Financial Protection Bureau, we are committed to letting you
