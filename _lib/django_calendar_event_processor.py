@@ -29,6 +29,7 @@ def documents(name, url, **kwargs):
 
 def process_event(event):
     event['_id'] = event['id']
+    event['date'] = event['dtstart']
     dt = dateutil.parser.parse(event['dtstart'])
     event['day'] = datetime.date(dt.year, dt.month, dt.day)
     if event['description']:

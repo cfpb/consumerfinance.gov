@@ -50,9 +50,7 @@
             <div class="content_main content__flush-bottom content__flush-top-on-small">
                 <section>
                     {{ post_macros.filters('Filter posts', query, posts,
-                        [ 'category',
-                          'tags',
-                          'author' ],
+                        ['category', 'tags', 'author', 'range_date_gte', 'range_date_lte'],
                         'post-filters-form.html') }}
                     {% include "watchroom.html" %}
                     {% include "posts-paginated.html" %}
