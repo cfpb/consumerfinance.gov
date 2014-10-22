@@ -11,7 +11,7 @@
                 </label>
             {% for calendar in query.possible_values_for('person')|sort(attribute='term') -%}
                 <label class="form-group_item">
-                    {{ post_macros.filter_checkbox('person', calendar.term)|safe }}
+                    {{ filter_checkbox('person', calendar.term)|safe }}
                 </label>
             {% endfor %}
             </div>

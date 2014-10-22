@@ -12,16 +12,16 @@
         {% if path == '/newsroom/' -%}
             {% for category in query.possible_values_for('category', doc_type='newsroom')|sort(attribute='term') -%}
                 <label class="form-group_item">
-                    {{ post_macros.filter_checkbox('category', category.term)|safe }}
+                    {{ filter_checkbox('category', category.term)|safe }}
                 </label>
             {% endfor %}
                 <label class="form-group_item">
-                    {{ post_macros.filter_checkbox('type', 'post', 'Blog')|safe }}
+                    {{ filter_checkbox('type', 'post', 'Blog')|safe }}
                 </label>
         {%- else -%}
             {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
                 <label class="form-group_item">
-                    {{ post_macros.filter_checkbox('category', category.term)|safe }}
+                    {{ filter_checkbox('category', category.term)|safe }}
                 </label>
             {% endfor %}
         {%- endif %}
@@ -41,13 +41,13 @@
             {% set possible_tags = query.possible_values_for('tags') %}
             {%- for tags in possible_tags -%}
                 {%- if loop.index < 4 -%}
-                    {{ post_macros.filter_option('tags', tags.term)|safe }}
+                    {{ filter_option('tags', tags.term)|safe }}
                 {%- endif -%}
             {%- endfor -%}
                 </optgroup>
                 <optgroup label="All other topics">
             {%- for tags in possible_tags[3:]|sort(attribute='term') -%}
-                    {{ post_macros.filter_option('tags', tags.term)|safe }}
+                    {{ filter_option('tags', tags.term)|safe }}
             {%- endfor -%}
                 </optgroup>
             </select>
@@ -63,7 +63,7 @@
                     multiple
                     data-placeholder="Search for authors">
                 {% for author in query.possible_values_for('author')|sort(attribute='term') %}
-                    {{ post_macros.filter_option('author', author.term)|safe }}
+                    {{ filter_option('author', author.term)|safe }}
                 {% endfor %}
             </select>
         </div>
