@@ -52,6 +52,7 @@
         .respond-to-min(600px, {
             padding-left: @grid_gutter-width;
             padding-right: @grid_gutter-width;
+            max-width: 1140px;
         });
     }
 }
@@ -142,7 +143,8 @@
 
     .respond-to-min(801px, {
         display: block;
-        margin: @grid_gutter-width
+        // magic number for top margin aligns text baseline with logo baseline
+        margin: 52px
                 (@grid_gutter-width / 2)
                 (@grid_gutter-width / 2);
         position: absolute;
@@ -402,7 +404,7 @@
 
     .primary-nav {
         position: absolute;
-        top: 116px; // magic number - dependent on height of logo and its vertical padding
+        top: 100px; // magic number - dependent on height of logo and its vertical padding
         right: 0;
         left: 0;
         z-index: 100;
