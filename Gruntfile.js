@@ -90,6 +90,7 @@ module.exports = function(grunt) {
           'vendor/string_score/string_score.js',
           'static/js/jquery.type-and-filter.js',
           'static/js/breakpoint-handler.js',
+          'static/js/content-slider.js',
           // 'static/js/jquery.cf_pagination.js',
           'static/js/app.js'
         ],
