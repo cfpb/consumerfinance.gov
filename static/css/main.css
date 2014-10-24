@@ -3,7 +3,7 @@
    cfgov-refresh
    Master Less File
    ========================================================================== */
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
  * 2. Prevent iOS text size adjust after orientation change, without disabling
@@ -27,7 +27,8 @@ body {
    ========================================================================== */
 /**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
  * Correct `block` display not defined for `main` in IE 11.
  */
 article,
@@ -39,6 +40,7 @@ footer,
 header,
 hgroup,
 main,
+menu,
 nav,
 section,
 summary {
@@ -79,7 +81,7 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 a {
-  background: transparent;
+  background-color: transparent;
 }
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
@@ -1825,13 +1827,17 @@ input.btn::-moz-focus-inner {
   background-color: transparent;
   cursor: pointer;
 }
+.expandable_target:focus {
+  outline: 1px dotted #101820;
+  outline-offset: 1px;
+}
 .expandable_cue-close {
   display: none;
 }
-.expandable__expanded .expandable_cue-open {
+.expandable__expanded > .expandable_target .expandable_cue-open {
   display: none;
 }
-.expandable__expanded .expandable_cue-close {
+.expandable__expanded > .expandable_target .expandable_cue-close {
   display: inline;
 }
 .expandable_content:after {
@@ -2001,6 +2007,13 @@ button.expandable_header {
 }
 .expandable__padded .expandable_content {
   margin: 0 1em 1.375em;
+}
+.expandable__padded .expandable_content:before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-bottom: 1em;
+  background: #babbbd;
 }
 /* topdoc
     name: Expandable groups
@@ -4440,11 +4453,11 @@ textarea.success {
         <!-- Paginated content here -->
 
         <nav class="pagination">
-            <a class="btn pagination_prev" href="#pagination_content">
+            <a class="btn btn__super pagination_prev" href="#pagination_content">
                 <span class="btn_icon__left cf-icon cf-icon-left"></span>
                 Previous
             </a>
-            <a class="btn pagination_next" href="#pagination_content">
+            <a class="btn btn__super pagination_next" href="#pagination_content">
                 Next
                 <span class="btn_icon__right cf-icon cf-icon-right"></span>
             </a>
@@ -4452,11 +4465,9 @@ textarea.success {
                 <label class="pagination_label"
                        for="pagination_current-page">
                     Page
-                    <!-- When we have access to the u-visually-hidden class
-                         we should use it to add more context to the input. -->
-                    <!-- <span class="u-visually-hidden">
+                    <span class="u-visually-hidden">
                         number out of 149 total pages
-                    </span> -->
+                    </span>
                 </label>
                 <input
                     class="pagination_current-page"
@@ -4465,12 +4476,9 @@ textarea.success {
                     type="number" min="1" max="149"
                     value="149">
                 <span class="pagination_label">
-                    <!-- When we have access to the u-visually-hidden class
-                         we can hide this text from screen readers since it
-                         will be read within the label. -->
-                    <!-- <span aria-hidden="true"> -->
+                    <span aria-hidden="true">
                         of 149
-                    <!-- </span> -->
+                    </span>
                 </span>
                 <button class="btn btn__link pagination_submit"
                         id="pagination_submit"
@@ -4485,73 +4493,72 @@ textarea.success {
 */
 .pagination {
   display: block;
-  margin: 0;
-  padding: 0;
-  /* Positions .pagination_next relative to this container */
   position: relative;
 }
-/* On small screens position .pagination_next to the right edge of .pagination */
-.pagination_next {
-  position: absolute;
-  top: 0;
-  right: 0;
+@media only all and (max-width: 19.9375em) {
+  .pagination_prev.btn,
+  .pagination_next.btn {
+    display: block;
+    text-align: center;
+  }
+  .pagination_prev.btn + .pagination_next.btn {
+    margin: 1em 0 0;
+  }
+}
+@media only all and (min-width: 20em) {
+  .pagination_next {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+@media only all and (max-width: 23.0625em) {
+  .pagination_prev.btn,
+  .pagination_next.btn {
+    padding-left: 1.11111111em;
+    padding-right: 1.11111111em;
+  }
 }
 .pagination_form {
   display: block;
-  padding: 0.1875em 1.875em;
+  padding: 0.3125em;
   margin: 1em 0 0 0;
   background: #e3e4e5;
   color: #75787b;
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
   text-align: center;
-}
-.pagination_form em,
-.pagination_form i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-.lt-ie9 .pagination_form em,
-.lt-ie9 .pagination_form i {
-  font-style: normal !important;
-}
-.pagination_form strong,
-.pagination_form b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .pagination_form strong,
-.lt-ie9 .pagination_form b {
-  font-weight: normal !important;
 }
 .pagination_label {
   display: inline-block;
+  margin: 0;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
   vertical-align: middle;
-  font-size: 0.875em;
 }
 .lt-ie8 .pagination_label {
-  zoom: 1;
   display: inline;
+}
+.lt-ie9 .pagination_label {
+  font-weight: normal !important;
 }
 .pagination_current-page,
 input[type="number"].pagination_current-page,
 input[type="text"].pagination_current-page {
   display: inline-block;
-  vertical-align: middle;
-  /* We need enough room for three digits and the number spinners for type="number" inputs */
-  width: 3em;
-  /* Resets the padding back to 4px now that the font-size is 14px */
-  padding: 0.28571429em;
-  margin: 0 0.28571429em;
-  /* Keep in mind that text inputs are 16px by default but 14px in .pagination to match the rest of the tex */
-  font-size: 0.875em;
+  width: 2.625em;
+  margin: 0 0.25em;
+  font-size: 1em;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   text-align: right;
+  vertical-align: middle;
+}
+.lt-ie8 .pagination_current-page,
+.lt-ie8 input[type="number"].pagination_current-page,
+.lt-ie8 input[type="text"].pagination_current-page {
+  display: inline;
 }
 .lt-ie9 .pagination_current-page,
 .lt-ie9 input[type="number"].pagination_current-page,
@@ -4561,42 +4568,42 @@ input[type="text"].pagination_current-page {
 .lt-ie8 .pagination_current-page,
 .lt-ie8 input[type="number"].pagination_current-page,
 .lt-ie8 input[type="text"].pagination_current-page {
-  zoom: 1;
-  display: inline;
   margin: 0 4px;
 }
 .pagination_submit.btn {
   display: inline-block;
+  margin: 0 0 0 0.875em;
+  font-size: 1em;
   vertical-align: middle;
-  margin: 0 0 0 1em;
 }
 .lt-ie8 .pagination_submit.btn {
-  zoom: 1;
   display: inline;
-  border: none;
-  padding-left: 1em;
+}
+.lt-ie8 .pagination_submit.btn {
+  padding-left: 0.875em;
   margin: 0;
+  border: none;
   text-decoration: underline;
 }
-@media only screen and (min-width: 30em) {
+@media only all and (min-width: 40em) {
   .pagination_form {
-    border-radius: 0.28571429em;
     margin: 0;
+    border-radius: 0.25em;
   }
   .pagination_prev {
     position: absolute;
     top: 0;
     left: 0;
   }
-  .pagination_prev.btn,
-  .pagination_prev.btn:link,
-  .pagination_prev.btn:visited {
+  .pagination_prev,
+  .pagination_prev:link,
+  .pagination_prev:visited {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .pagination_next.btn,
-  .pagination_next.btn:link,
-  .pagination_next.btn:visited {
+  .pagination_next,
+  .pagination_next:link,
+  .pagination_next:visited {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -10172,6 +10179,8 @@ a.category-slug.active {
     border: dotted #0072ce;
     border-width: 1px 0;
     margin-right: 0;
+    width: 100%;
+    text-align: left;
   }
   .jump-link:after {
     margin-bottom: -0.625em;
@@ -14100,6 +14109,11 @@ a.focus .summary_header {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
 }
+.org-chart {
+  /* On larger screen sizes, the lines of the org chart are drawn with before & after 
+       pseudo elements applied to .org-chart_branches & .org-chart_branch.
+     */
+}
 @media only all and (min-width: 37.5em) {
   .org-chart {
     width: 530px;
@@ -14124,6 +14138,8 @@ a.focus .summary_header {
 }
 .org-chart_branches {
   padding-top: 30px;
+  /* :before pseudo element's left border draws a centered vertical line
+           down from .org-chart_root to .org-chart_branches.*/
 }
 @media only all and (min-width: 37.5em) {
   .org-chart_branches {
@@ -14138,6 +14154,10 @@ a.focus .summary_header {
     width: 0;
     height: 30px;
   }
+}
+.org-chart_branch {
+  /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
+           draw lines connecting the branch headers to the line from .org-chart_root. */
 }
 @media only all and (min-width: 37.5em) {
   .org-chart_branch {
@@ -14168,30 +14188,25 @@ a.focus .summary_header {
     content: '';
     position: absolute;
     top: 0;
-    right: 50%;
-    border-top: 1px solid #babbbd;
     width: 50%;
     height: 30px;
-  }
-  .org-chart_branch:after {
-    right: auto;
-    left: 50%;
-    border-left: 1px solid #babbbd;
+    border-color: #babbbd;
+    border-style: solid;
+    border-width: 0;
   }
   .org-chart_branch:first-child {
     padding-right: 15px;
   }
-  .org-chart_branch:first-child:before {
-    border: none;
+  .org-chart_branch:first-child:after {
+    left: 50%;
+    border-width: 1px 0 0 1px;
   }
   .org-chart_branch.last-child {
     padding-left: 15px;
   }
   .org-chart_branch.last-child:before {
-    border-right: 1px solid #babbbd;
-  }
-  .org-chart_branch.last-child:after {
-    border: none;
+    right: 50%;
+    border-width: 1px 1px 0 0;
   }
 }
 @media only all and (min-width: 37.5em) {
@@ -14239,22 +14254,6 @@ a.focus .summary_header {
     margin-bottom: -1px;
   }
 }
-.org-chart_node_expander {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  z-index: 10;
-}
-@media only all and (max-width: 37.4375em) {
-  .org-chart_node_expander {
-    height: 30px;
-    top: 50%;
-    margin-top: -8px;
-  }
-}
-.org-chart_node_expander .expandable_link {
-  font-size: 16px;
-}
 .org-chart_node .org-chart_nodes {
   border-top: 5px solid #7fb8e6;
 }
@@ -14270,15 +14269,26 @@ a.focus .summary_header {
     border-width: 0 0 1px 0;
   }
 }
-@media only all and (max-width: 37.5em) {
+@media only all and (max-width: 37.4375em) {
   .org-chart_node .org-chart_nodes .org-chart_role {
     border-width: 1px 0 1px 0;
   }
 }
-@media only all and (min-width: 37.5em) {
-  .org-chart_node .org-chart_nodes .org-chart_role ~ .org-chart_node .org-chart_role {
-    border-width: 1px 0 0 0;
+.org-chart .node_expander {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+}
+@media only all and (max-width: 37.4375em) {
+  .org-chart .node_expander {
+    height: 30px;
+    top: 50%;
+    margin-top: -8px;
   }
+}
+.org-chart .node_expander .expandable_link {
+  font-size: 16px;
 }
 .org-chart #content-slider-container {
   position: relative;
@@ -14293,7 +14303,11 @@ a.focus .summary_header {
 .org-chart #content-slider-container .slick-slider {
   margin-bottom: 0;
 }
+.role {
+  display: block;
+}
 .role_office {
+  display: block;
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -14308,6 +14322,7 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 .role_name {
+  display: block;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -14316,6 +14331,7 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 .role_title {
+  display: block;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -14344,11 +14360,6 @@ a.focus .summary_header {
   display: none;
   background-color: inherit;
   margin-bottom: 20px;
-}
-.content-show,
-.content-hide {
-  width: 100%;
-  text-align: left;
 }
 @media only all and (max-width: 37.4375em) {
   .content-show .cf-icon,

@@ -21,10 +21,15 @@
         margin: 0;
         padding: 0;
     }
-
+    
+    /* On larger screen sizes, the lines of the org chart are drawn with before & after 
+       pseudo elements applied to .org-chart_branches & .org-chart_branch.
+     */
     &_branches {
         padding-top: unit(@grid_gutter-width, px);
         
+        /* :before pseudo element's left border draws a centered vertical line
+           down from .org-chart_root to .org-chart_branches.*/
         .respond-to-min(600px, {
             position: relative;
             
@@ -41,7 +46,8 @@
     }
     
     &_branch {        
-        
+        /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
+           draw lines connecting the branch headers to the line from .org-chart_root. */
         .respond-to-min(600px, {
             .grid_column(6);
             position: relative;
@@ -53,23 +59,19 @@
                 content: '';
                 position: absolute; 
                 top: 0; 
-                right: 50%;
-                border-top: 1px solid @gray-50;
                 width: 50%; 
                 height: unit(@grid_gutter-width, px);
+                border-color: @gray-50;
+                border-style: solid;
+                border-width: 0;
             }
-
-            &:after {
-                right: auto; 
-                left: 50%;
-                border-left: 1px solid @gray-50;
-            }
-
+            
             &:first-child {
                 padding-right: unit(@grid_gutter-width / 2, px);
 
-                &:before {
-                    border: none;
+                &:after {
+                    left: 50%;
+                    border-width: 1px 0 0 1px;
                 }
             }
 
@@ -77,11 +79,8 @@
                 padding-left: unit(@grid_gutter-width / 2, px);
 
                 &:before{
-                    border-right: 1px solid @gray-50;
-                }
-
-                &:after{
-                    border: none;
+                    right: 50%;
+                    border-width: 1px 1px 0 0;
                 }
             }
 
@@ -122,23 +121,6 @@
             margin-bottom: -1px;
         });
         
-        &_expander {
-            position: absolute;
-            right: 10px;
-            top: 20px;
-            z-index: 10;
-            
-            .respond-to-max(599px, {
-                height: 30px;
-                top: 50%;
-                margin-top: -@base-font-size-px/2;
-            });
-            
-            .expandable_link {
-                font-size: @base-font-size-px;
-            }
-        }
-        
         /* nested .org-chart_node blocks have different background color & borders */
         .org-chart_nodes {
             border-top: 5px solid @pacific-50;
@@ -156,17 +138,27 @@
                     border-width: 0 0 1px 0;
                 });
                 
-                .respond-to-max(600px, {
+                .respond-to-max(599px, {
                     border-width: 1px 0 1px 0;
-                });
-                
-                & ~ .org-chart_node .org-chart_role {
-                    .respond-to-min(600px, {
-                        // @pacific-10
-                        border-width: 1px 0 0 0;
-                    });
-                }
+                }); 
             }
+        }
+    }
+    
+    .node_expander {
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        z-index: 10;
+        
+        .respond-to-max(599px, {
+            height: 30px;
+            top: 50%;
+            margin-top: -@base-font-size-px/2;
+        });
+        
+        .expandable_link {
+            font-size: @base-font-size-px;
         }
     }
     
@@ -189,16 +181,21 @@
 }
 
 .role {
+    display: block;
+    
     &_office {
+        display: block;
         .h6();
     }
 
     &_name {
+        display: block;
         .webfont-medium();
     }
 
     &_title {
-         .webfont-regular();
+        display: block;
+        .webfont-regular();
     }
 }
 
@@ -210,8 +207,6 @@
 
 .content-show, 
 .content-hide {
-    width: 100%;
-    text-align: left;
     
     .respond-to-max(599px, {
         .cf-icon,
