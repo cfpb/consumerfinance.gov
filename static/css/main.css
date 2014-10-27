@@ -14303,6 +14303,50 @@ a.focus .summary_header {
 .org-chart #content-slider-container .slick-slider {
   margin-bottom: 0;
 }
+.org-chart .content-hide {
+  display: none;
+  background-color: inherit;
+  margin-bottom: 20px;
+}
+@media only all and (max-width: 37.4375em) {
+  .org-chart .content-show .cf-icon,
+  .org-chart .content-hide .cf-icon,
+  .org-chart .content-show:before,
+  .org-chart .content-hide:before,
+  .org-chart .content-show:after,
+  .org-chart .content-hide:after {
+    color: #0072ce;
+  }
+  .org-chart .content-show:focus,
+  .org-chart .content-hide:focus {
+    outline: thin dotted;
+  }
+  .org-chart .content-show:hover,
+  .org-chart .content-hide:hover {
+    border-color: #7fb8e6;
+    z-index: 2;
+  }
+  .org-chart .content-show:hover .cf-icon,
+  .org-chart .content-hide:hover .cf-icon,
+  .org-chart .content-show:hover:before,
+  .org-chart .content-hide:hover:before,
+  .org-chart .content-show:hover:after,
+  .org-chart .content-hide:hover:after {
+    color: #7fb8e6;
+  }
+  .org-chart .content-show:active,
+  .org-chart .content-hide:active {
+    border-color: #002d72;
+  }
+  .org-chart .content-show:active .cf-icon,
+  .org-chart .content-hide:active .cf-icon,
+  .org-chart .content-show:active:before,
+  .org-chart .content-hide:active:before,
+  .org-chart .content-show:active:after,
+  .org-chart .content-hide:active:after {
+    color: #002d72;
+  }
+}
 .role {
   display: block;
 }
@@ -14355,50 +14399,6 @@ a.focus .summary_header {
 .lt-ie9 .role_title strong,
 .lt-ie9 .role_title b {
   font-weight: normal !important;
-}
-.content-hide {
-  display: none;
-  background-color: inherit;
-  margin-bottom: 20px;
-}
-@media only all and (max-width: 37.4375em) {
-  .content-show .cf-icon,
-  .content-hide .cf-icon,
-  .content-show:before,
-  .content-hide:before,
-  .content-show:after,
-  .content-hide:after {
-    color: #0072ce;
-  }
-  .content-show:focus,
-  .content-hide:focus {
-    outline: thin dotted;
-  }
-  .content-show:hover,
-  .content-hide:hover {
-    border-color: #7fb8e6;
-    z-index: 2;
-  }
-  .content-show:hover .cf-icon,
-  .content-hide:hover .cf-icon,
-  .content-show:hover:before,
-  .content-hide:hover:before,
-  .content-show:hover:after,
-  .content-hide:hover:after {
-    color: #7fb8e6;
-  }
-  .content-show:active,
-  .content-hide:active {
-    border-color: #002d72;
-  }
-  .content-show:active .cf-icon,
-  .content-hide:active .cf-icon,
-  .content-show:active:before,
-  .content-hide:active:before,
-  .content-show:active:after,
-  .content-hide:active:after {
-    color: #002d72;
-  }
 }
 .link-text {
   color: #0072ce;
