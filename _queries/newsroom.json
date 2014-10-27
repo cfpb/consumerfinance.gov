@@ -2,7 +2,8 @@
   "name": "CFPB Newsroom",
   "query": {
     "size": 10,
-    "sort": "date:desc"
+    "sort": "date:desc",
+    "doc_type": "newsroom"
   },
   "filters": [
     {
