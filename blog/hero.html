@@ -6,7 +6,21 @@
 
 {% if active_filters_total == 0 and posts.current_page == 1 %}
 
-{% set hero = view.hero %}
+{# {% set hero = view.hero %} #}
+{% set hero = {
+    'title': 'Summer jobs are a perfect time to build financial skills for young people',
+    'custom_fields': {
+        'background_color': [ 'rgb(51,126,125)' ],
+        'mobile_image': [ '/static/img/hero-small.png' ],
+        'desktop_image': [ '/static/img/hero-large.png' ],
+        'link': [ '/blog/summer-jobs-are-a-perfect-time-to-build-financial-skills-for-young-people' ]
+    },
+    'related_post': {
+        'category': [ 'Innovation & data' ],
+        'dek': 'For young people who may be entering the workforce for the first time, developing good money management skills is critical.',
+        'author': [ 'Desmond Brown ' ]
+    }
+} %}
 
 <section class="content_hero hero"
          style="background-color:{{ hero.custom_fields.background_color[0] }}">
