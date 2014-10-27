@@ -6,7 +6,14 @@
         </span>
     </h1>
     <ul class="list list__unstyled list__spaced">
-    {% for slug in view.popular_posts %}
+    {# {% for slug in view.popular_posts %} #}
+    {% set popular_posts = [
+        'spring-2014-rulemaking-agenda',
+        'our-board-and-council-meetings-are-changing',
+        'save-the-date-join-us-for-a-consumer-advisory-board-meeting-in-reno-nevada',
+        'demystifying-the-government-contracting-process'
+    ] %}
+    {% for slug in popular_posts %}
         {% set pop_post = get_document('posts', slug) %}
         <li class="list_item">
             <a class="list_link"
