@@ -14942,6 +14942,12 @@ a.focus .summary_header {
   margin-bottom: 0;
 }
 
+.org-chart .content-hide {
+  display: none;
+  background-color: inherit;
+  margin-bottom: 20px;
+}
+
 .role {
   display: block;
 }
@@ -15003,12 +15009,6 @@ a.focus .summary_header {
 .lt-ie9 .role_title strong,
 .lt-ie9 .role_title b {
   font-weight: normal !important;
-}
-
-.content-hide {
-  display: none;
-  background-color: inherit;
-  margin-bottom: 20px;
 }
 
 .link-text {

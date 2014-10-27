@@ -178,6 +178,49 @@
             margin-bottom: 0;
         }
     }
+    
+    .content-hide {
+        display: none;
+        background-color: inherit;
+        margin-bottom: 20px;
+    }
+
+    .content-show, 
+    .content-hide {
+
+        .respond-to-max(599px, {
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @pacific;
+            }
+
+            &:focus {
+                outline: thin dotted;
+            }    
+
+            &:hover {
+                border-color: @pacific-50;
+                z-index: 2;
+
+                .cf-icon,
+                &:before,
+                &:after {
+                    color: @pacific-50;
+                }
+            }
+
+            &:active {
+                border-color: @navy;
+
+                .cf-icon,
+                &:before,
+                &:after {
+                    color: @navy;
+                }
+            }
+        });
+    }
 }
 
 .role {
@@ -197,49 +240,6 @@
         display: block;
         .webfont-regular();
     }
-}
-
-.content-hide {
-    display: none;
-    background-color: inherit;
-    margin-bottom: 20px;
-}
-
-.content-show, 
-.content-hide {
-    
-    .respond-to-max(599px, {
-        .cf-icon,
-        &:before,
-        &:after {
-            color: @pacific;
-        }
-    
-        &:focus {
-            outline: thin dotted;
-        }    
-
-        &:hover {
-            border-color: @pacific-50;
-            z-index: 2;
-        
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @pacific-50;
-            }
-        }
-
-        &:active {
-            border-color: @navy;
-        
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @navy;
-            }
-        }
-    });
 }
 
 .link-text {
