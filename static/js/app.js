@@ -514,12 +514,21 @@ function getQuery() {
    Collapsing Beta banner
    ========================================================================== */
 
-$('#beta-banner_close-btn').click( function() {
-    if ( localStorage.getItem('betaBannerIsCollapsed') ) {
+$('#beta-banner_btn').click( function() {
+    if ( localStorage.getItem('betaBannerIsCollapsed') === 'true' ) {
         localStorage.setItem('betaBannerIsCollapsed', false);
-    } else {
+    } else if (localStorage.getItem('betaBannerIsCollapsed') === 'false' ) {
         localStorage.setItem('betaBannerIsCollapsed', true);
+    } else { // first load, item == null
+        localStorage.setItem('betaBannerIsCollapsed', false);
     }
-    $(this).parent().toggleClass('is-collapsed');
     return false;
+});
+
+$(document).ready(function() {
+    if ( localStorage.getItem('betaBannerIsCollapsed') == null ) {
+        // If this is the first load and the item has never been set, click to
+        // expand the banner and set the item initially to 'false'.
+        $('#beta-banner_btn').click();
+    }
 });
