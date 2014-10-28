@@ -11,24 +11,39 @@
     Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
 {%- endblock %}
 
-{% block css -%}
+{# Set the percentage complete for each section HERE.
+   These values will propagate everywhere they are needed on the page.
+   When completing a section, uncomment the `background: #2CB34A;` line in the CSS below. #}
+{% set pct = {
+    'consumer_guides': '0%',
+    'submit_a_complaint': '0%',
+    'data_and_research': '0%',
+    'for_industry': '0%',
+    'about': '35%',
+} %}
+
+{% block css scoped -%}
 <style>
-    /* These heights control the height of the "bar charts" in the non-SVG fallback */
-    #consumer-guides {
-        height: 100%;
-        background: #2CB34A;
+    /* These heights control the height of the "bar charts" in the non-SVG fallback. */
+    #consumer-guides .bar-chart {
+        height: {{ pct.consumer_guides }};
+        /* background: #2CB34A; */
     }
-    #submit-a-complaint {
-        height: 20%;
+    #submit-a-complaint .bar-chart {
+        height: {{ pct.submit_a_complaint }};
+        /* background: #2CB34A; */
     }
-    #data-and-research {
-        height: 90%;
+    #data-and-research .bar-chart {
+        height: {{ pct.data_and_research }};
+        /* background: #2CB34A; */
     }
-    #for-industry {
-        height: 65%;
+    #for-industry .bar-chart {
+        height: {{ pct.for_industry }};
+        /* background: #2CB34A; */
     }
-    #about {
-        height: 10%;
+    #about .bar-chart {
+        height: {{ pct.about }};
+        /* background: #2CB34A; */
     }
 </style>
 {%- endblock %}
@@ -60,46 +75,50 @@
                 </p>
 
                 <div class="progress-charts">
-                    <div class="progress-charts_container">
+                    <div class="progress-charts_container" id="consumer-guides">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
-                                <div id="consumer-guides" class="chart-pct">100%</div>
+                                <div class="bar-chart"></div>
                             </div>
                         </canvas>
                         <h3 class="chart-name">Consumer Guides</h3>
-                        
+                        <div class="chart-value u-visually-hidden">{{ pct.consumer_guides }}</div>
                     </div>
-                    <div class="progress-charts_container">
+                    <div class="progress-charts_container" id="submit-a-complaint">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
-                                <div id="submit-a-complaint" class="chart-pct">20%</div>
+                                <div class="bar-chart"></div>
                             </div>
                         </canvas>
                         <h3 class="chart-name">Submit a Complaint</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.submit_a_complaint }}</div>
                     </div>
-                    <div class="progress-charts_container">
+                    <div class="progress-charts_container" id="data-and-research">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
-                                <div id="data-and-research" class="chart-pct">90%</div>
+                                <div class="bar-chart"></div>
                             </div>
                         </canvas>
                         <h3 class="chart-name">Data & Research</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.data_and_research }}</div>
                     </div>
-                    <div class="progress-charts_container">
+                    <div class="progress-charts_container" id="for-industry">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
-                                <div id="for-industry" class="chart-pct">65%</div>
+                                <div class="bar-chart"></div>
                             </div>
                         </canvas>
                         <h3 class="chart-name">For Industry</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.for_industry }}</div>
                     </div>
-                    <div class="progress-charts_container">
+                    <div class="progress-charts_container" id="about">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
-                                <div id="about" class="chart-pct">10%</div>
+                                <div class="bar-chart"></div>
                             </div>
                         </canvas>
                         <h3 class="chart-name">About</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.about }}</div>
                     </div>
                 </div>
 
@@ -187,27 +206,27 @@
     var charts = [
       {
         name: "consumer guides",
-        done: parseInt( $("#consumer-guides").text() ) / 100,
+        done: parseInt( $("#consumer-guides .chart-value").text() ) / 100,
         value: 0
       },
       {
         name: "submit a complaint",
-        done: parseInt( $("#submit-a-complaint").text() ) / 100,
+        done: parseInt( $("#submit-a-complaint .chart-value").text() ) / 100,
         value: 0
       },
       {
         name: "data and research",
-        done: parseInt( $("#data-and-research").text() ) / 100,
+        done: parseInt( $("#data-and-research .chart-value").text() ) / 100,
         value: 0
       },
       {
         name: "for industry",
-        done: parseInt( $("#for-industry").text() ) / 100,
+        done: parseInt( $("#for-industry .chart-value").text() ) / 100,
         value: 0
       },
       {
         name: "about",
-        done: parseInt( $("#about").text() ) / 100,
+        done: parseInt( $("#about .chart-value").text() ) / 100,
         value: 0
       }
     ];
@@ -217,8 +236,6 @@
       var ctx = $(this)[0].getContext('2d');
       ctx.canvas.width = $(".progress-charts_container").width() * multiplier;
       ctx.canvas.height = ctx.canvas.width;
-      ctx.canvas.style.width = "100px";
-      ctx.canvas.style.height = "100px";
     });
 
     // Run everything on load (or switch to when in view).
