@@ -61,45 +61,45 @@
 
                 <div class="progress-charts">
                     <div class="progress-charts_container">
-                        <canvas class="progress-charts_chart" id="canvas0">
+                        <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div id="consumer-guides" class="chart-pct">100%</div>
                             </div>
                         </canvas>
-                        <h5 class="chart-name">Consumer Guides</h5>
+                        <h3 class="chart-name">Consumer Guides</h3>
                         
                     </div>
                     <div class="progress-charts_container">
-                        <canvas class="progress-charts_chart" id="canvas1">
+                        <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div id="submit-a-complaint" class="chart-pct">20%</div>
                             </div>
                         </canvas>
-                        <h5 class="chart-name">Submit a Complaint</h5>
+                        <h3 class="chart-name">Submit a Complaint</h3>
                     </div>
                     <div class="progress-charts_container">
-                        <canvas class="progress-charts_chart" id="canvas2">
+                        <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div id="data-and-research" class="chart-pct">90%</div>
                             </div>
                         </canvas>
-                        <h5 class="chart-name">Data & Research</h5>
+                        <h3 class="chart-name">Data & Research</h3>
                     </div>
                     <div class="progress-charts_container">
-                        <canvas class="progress-charts_chart" id="canvas3">
+                        <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div id="for-industry" class="chart-pct">65%</div>
                             </div>
                         </canvas>
-                        <h5 class="chart-name">For Industry</h5>
+                        <h3 class="chart-name">For Industry</h3>
                     </div>
                     <div class="progress-charts_container">
-                        <canvas class="progress-charts_chart" id="canvas4">
+                        <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div id="about" class="chart-pct">10%</div>
                             </div>
                         </canvas>
-                        <h5 class="chart-name">About</h5>
+                        <h3 class="chart-name">About</h3>
                     </div>
                 </div>
 
@@ -211,13 +211,12 @@
       }
     ];
     /* setup each canvas element */
-    $( "canvas" ).each(function( i ) {
-        var canvas =  document.querySelector('#canvas' + i),
-                      ctx = canvas.getContext('2d');
-                      ctx.canvas.width  = $(".progress-charts_container").width() * multiplier;
-                      ctx.canvas.height = ctx.canvas.width;
-                      ctx.canvas.style.width  = "100px";
-                      ctx.canvas.style.height = "100px";
+    $( ".progress-charts_chart" ).each(function() {
+      var ctx = $(this)[0].getContext('2d');
+      ctx.canvas.width = $(".progress-charts_container").width() * multiplier;
+      ctx.canvas.height = ctx.canvas.width;
+      ctx.canvas.style.width = "100px";
+      ctx.canvas.style.height = "100px";
     });
 
     //Run everything on load (or switch to when in view)
@@ -230,9 +229,9 @@
     function animate() {
       /* variqable to keep track of when all charts are finished animating */
       var completeCount = 0;
-      $( "canvas" ).each(function( i ) {
+      $( ".progress-charts_chart" ).each(function(i) {
         //snag the context
-        var ctx = $("#canvas" + i)[0].getContext('2d');
+        var ctx = $(this)[0].getContext('2d');
         if (charts[i].value < charts[i].done) {
           // ease the value (90 being how long it should take)
           // we're animating at 60fps so 90 is 1.5 seconds
@@ -319,15 +318,15 @@
     $( window ).resize(function() {
 
       //reset after resize (just in case)
-      waitForFinalEvent(function(){
+      waitForFinalEvent(function() {
 
       });
+    
     });
 
 
-
     // ------------------------------------------------
-    // utilitits
+    // utilities
     // ------------------------------------------------
 
     function getRadians(degrees) {

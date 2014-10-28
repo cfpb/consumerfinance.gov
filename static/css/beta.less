@@ -3,6 +3,69 @@
    Beta splash page and banner
    ========================================================================== */
 
+.beta-banner {
+    padding: (@grid_gutter-width / 2) 0;
+    background: @gold-20;
+    .webfont-regular();
+    transition: padding 0.2s ease-out;
+
+    &.expandable__expanded {
+        padding: @grid_gutter-width 0;
+    }
+
+    .respond-to-max(599px, {
+        font-size: 0.875em;
+    });
+}
+
+.beta-banner_head {
+    .h4();
+    margin-bottom: 0;
+
+    .expandable__expanded & {
+        margin-bottom: unit(5px / @base-font-size-px, em);
+    }
+}
+
+.beta-banner_icon {
+    color: @gold;
+}
+
+.beta-banner_desc {
+    margin-bottom: 0;
+}
+
+.beta-banner_btn {
+    .btn__secondary();
+    width: 100%;
+    margin-top: @grid_gutter-width / 2;
+
+    .respond-to-max(480px, {
+        .cf-icon-delete {
+            display: none;
+        }
+    });
+
+    .respond-to-min(481px, {
+        .btn__link();
+        width: auto;
+        padding: 15px;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        .u-link__colors(@black, @darkgray);
+        .u-link__no-border();
+        text-transform: lowercase;
+    });
+
+    .respond-to-min(801px, {
+        // At this width, the wrapper gains position: relative, so the button
+        // position has to be adjusted accordingly.
+        top: -11px;
+    });
+}
+
 .beta-hero {
     min-height: 420px;
     // top padding reduced from 30px to compensate for line-height on title
@@ -43,21 +106,18 @@
 
     .respond-to-min(601px, {
         .superheader();
-        line-height: 1.25; // Update in cf-core .superheader?
+        // line-height: 1.25; // Update in cf-core .superheader?
     });
 }
 
 .beta-hero_desc {
     .h4();
+    max-width: 32em;
     margin: 0 auto 1em;
 
     .respond-to-min(601px, {
         .h2();
         margin-bottom: 1em; // override the property set in .h2()
-    });
-
-    .respond-to-min(1024px, {
-        width: 32em;
     });
 }
 
@@ -73,7 +133,7 @@
     .u-clearfix();
 
     .respond-to-min(480px, {
-        width: 33.333333333%;
+        .u-w33pct();
         height: 150px;
         padding: 0 1em;
         float: left;
@@ -81,7 +141,7 @@
     });
 
     .respond-to-min(768px, {
-        width: 20%;
+        .u-w20pct();
     });
 }
 
@@ -89,13 +149,12 @@
     .respond-to-max(479px, {
         margin-right: 1em;
         float: left;
-        //clear: left;
     });
 }
 
 .chart-bg {
     position: relative;
-    background: #E3E4E5;
+    background: @gray-20;
     width: 100%;
     height: 100%;
 }
@@ -103,7 +162,7 @@
 .chart-pct {
     position: absolute;
     bottom: 0;
-    background: #FF931B;
+    background: @gold;
     width: 100%;
 }
 
