@@ -4,6 +4,38 @@
    ========================================================================== */
 
 /* topdoc
+  name: Proposed Superheader line-height tweak
+  family: cfgov-cf-enhancements
+  notes:
+    - "The current superheader line-height is a little tall.
+       This proposes reducing it."
+  patterns:
+    - name: .superheader
+      markup: |
+        <h1 class="superheader">
+            Here's a long header that will hopefully break
+            break onto two lines.
+        </h1>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.superheader {
+    // For when you want a heading that's bigger than a normal H1
+
+    @font-size: 48px;
+    @line-height: 60px;
+
+    // Spacing in the design manual is based off of the baseline so this margin
+    // number has been eyeballed to be 30px.
+    margin-bottom: unit( 9px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    .webfont-demi();
+    line-height: unit( @line-height / @font-size );
+}
+
+
+/* topdoc
   name: Width utilities
   family: cfgov-cf-enhancements
   patterns:
@@ -58,22 +90,20 @@
     - cfgov-cf-enhancements
 */
 
-.u-w {
-    &100pct { width: 100%; }
-    &90pct  { width: 90%; }
-    &80pct  { width: 80%; }
-    &70pct  { width: 70%; }
-    &60pct  { width: 60%; }
-    &50pct  { width: 50%; }
-    &40pct  { width: 40%; }
-    &30pct  { width: 30%; }
-    &20pct  { width: 20%; }
-    &10pct  { width: 10%; }
-    &75pct  { width: 75%; }
-    &25pct  { width: 25%; }
-    &66pct  { width: unit((2 / 3) * 100, %); }
-    &33pct  { width: unit((1 / 3) * 100, %); }
-}
+.u-w100pct { width: 100%; }
+.u-w90pct  { width: 90%; }
+.u-w80pct  { width: 80%; }
+.u-w70pct  { width: 70%; }
+.u-w60pct  { width: 60%; }
+.u-w50pct  { width: 50%; }
+.u-w40pct  { width: 40%; }
+.u-w30pct  { width: 30%; }
+.u-w20pct  { width: 20%; }
+.u-w10pct  { width: 10%; }
+.u-w75pct  { width: 75%; }
+.u-w25pct  { width: 25%; }
+.u-w66pct  { width: unit((2 / 3) * 100, %); }
+.u-w33pct  { width: unit((1 / 3) * 100, %); }
 
 
 /* topdoc

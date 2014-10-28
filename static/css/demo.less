@@ -4,9 +4,10 @@
    ========================================================================== */
 
 
-.beta-banner {
-    padding: @grid_gutter-width 0;
-    background: @gold-20;
+.demo-banner {
+    padding: 0.5em 1em;
+    background: @darkgray;
+    color: @white;
     .webfont-regular();
 
     .respond-to-max(599px, {
@@ -14,46 +15,33 @@
     });
 }
 
-.beta-banner_head {
-    .h4();
-}
+.demo-banner_back-link {
+    padding: 0.25em 0;
+    margin-right: 1em;
 
-.beta-banner_icon {
-    color: @gold;
-}
+    &:link,
+    &:visited {
+        color: @pacific-50;
+    }
+    &:hover,
+    &:focus {
+        color: @pacific-80;
+    }
+    &:active {
+        color: @gray-50;
+    }
 
-.beta-banner_desc {
-    margin-bottom: 0;
-}
-
-.beta-banner_close-btn {
-    .btn__secondary();
-    width: 100%;
-    margin-top: @grid_gutter-width / 2;
-
-    .respond-to-max(480px, {
-        .cf-icon-delete {
-            display: none;
-        }
+    .respond-to-min(600px, {
+        padding: 0;
+        float: left;
     });
+}
 
-    .respond-to-min(481px, {
-        .btn__link();
-        width: auto;
-        padding: 15px;
-        margin: 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        .u-link__colors(@black, @darkgray);
-        .u-link__no-border();
-        text-transform: lowercase;
-    });
+.demo-banner b {
+    .webfont-medium();
 
-    .respond-to-min(801px, {
-        // At this width, the wrapper gains position: relative, so the button
-        // position has to be adjusted accordingly.
-        top: -30px;
+    .respond-to-max(599px, {
+        display: block;
     });
 }
 

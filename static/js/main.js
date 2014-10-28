@@ -12993,8 +12993,8 @@ $('.js-form_clear').on('click', function() {
    ========================================================================== */
 
 $('.history-section-expandable').find('.expandable_target')
-                        .not( $('.history-section-expandable').find('.expandable .expandable_target') )
-                        .on('click', function() {
+    .not( $('.history-section-expandable').find('.expandable .expandable_target') )
+    .on('click', function() {
     if ( $(this).attr('aria-pressed') === 'false' ) {
         $('html, body').animate({
             scrollTop: $(this).parent().offset().top - 15
@@ -13161,3 +13161,17 @@ function getQuery() {
         return window.location.search;
     }
 }
+
+/* ==========================================================================
+   Collapsing Beta banner
+   ========================================================================== */
+
+$('#beta-banner_close-btn').click( function() {
+    if ( localStorage.getItem('betaBannerIsCollapsed') ) {
+        localStorage.setItem('betaBannerIsCollapsed', false);
+    } else {
+        localStorage.setItem('betaBannerIsCollapsed', true);
+    }
+    $(this).parent().toggleClass('is-collapsed');
+    return false;
+});
