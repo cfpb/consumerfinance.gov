@@ -7300,14 +7300,14 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .sliding-nav_trigger {
     display: block;
     width: 60px;
-    padding: 10px;
+    height: 60px;
+    padding: 19px 10px 17px;
     border: none;
     border-right: 1px solid #babbbd;
     float: left;
     background: #ffffff;
     color: #75787b;
     font-size: 1.5em;
-    line-height: 40px;
   }
   .sliding-nav_trigger:focus {
     outline: 1px dotted #101820;
@@ -15485,6 +15485,7 @@ a.focus .summary_header {
 }
 .beta-banner_btn {
   width: 100%;
+  padding: 0.57142857em 1em;
   margin-top: 15px;
 }
 .beta-banner_btn,
@@ -15583,7 +15584,6 @@ a.focus .summary_header {
   padding: 1.5625em 15px;
   background: #ccdfdf;
   background-image: url('/static/img/beta-illustration_sm.png');
-  background-image: url('/static/img/beta-illustration.svg'), none;
   background-repeat: no-repeat;
   background-position: center bottom;
   -webkit-background-size: 1176px;
@@ -15595,7 +15595,6 @@ a.focus .summary_header {
     min-height: 520px;
     padding: 30px;
     background-image: url('/static/img/beta-illustration_lg.png');
-    background-image: url('/static/img/beta-illustration.svg'), none;
     -webkit-background-size: 1470px;
     background-size: 1470px;
   }
@@ -15610,6 +15609,12 @@ a.focus .summary_header {
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .beta-hero {
     /* Retina-specific stuff here */
+    background-image: url('/static/img/beta-illustration_sm@2x.png');
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2) and (min-width: 601px), (min-resolution: 192dpi) and (min-width: 601px) {
+  .beta-hero {
+    background-image: url('/static/img/beta-illustration_lg@2x.png');
   }
 }
 .beta-hero_title {
