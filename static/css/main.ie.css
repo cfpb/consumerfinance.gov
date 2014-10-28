@@ -15950,6 +15950,7 @@ a.focus .summary_header {
 
 .beta-banner {
   padding: 15px 0;
+  margin-bottom: 0;
   background: #ffecd1;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
