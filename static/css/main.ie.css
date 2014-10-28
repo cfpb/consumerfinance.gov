@@ -16016,6 +16016,7 @@ a.focus .summary_header {
 
 .beta-banner_btn {
   width: 100%;
+  padding: 0.57142857em 1em;
   margin-top: 15px;
 }
 
@@ -16120,7 +16121,6 @@ a.focus .summary_header {
   padding: 1.5625em 15px;
   background: #ccdfdf;
   background-image: url('/static/img/beta-illustration_sm.png');
-  background-image: url('/static/img/beta-illustration.svg'), none;
   background-repeat: no-repeat;
   background-position: center bottom;
   -webkit-background-size: 1176px;
@@ -16132,13 +16132,13 @@ a.focus .summary_header {
   min-height: 520px;
   padding: 30px;
   background-image: url('/static/img/beta-illustration_lg.png');
-  background-image: url('/static/img/beta-illustration.svg'), none;
   -webkit-background-size: 1470px;
   background-size: 1470px;
 }
 
 .beta-hero {
   /* Retina-specific stuff here */
+  background-image: url('/static/img/beta-illustration_sm@2x.png');
 }
 
 .beta-hero_title {

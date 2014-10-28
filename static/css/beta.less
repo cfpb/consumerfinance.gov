@@ -39,6 +39,10 @@
 .beta-banner_btn {
     .btn__secondary();
     width: 100%;
+    // restore standard btn padding, which is removed by .expandable_target
+    padding:
+        unit( @btn-v-padding / @btn-font-size, em )
+        unit( 14px / @btn-font-size, em );
     margin-top: @grid_gutter-width / 2;
 
     .respond-to-max(480px, {
@@ -73,7 +77,6 @@
     padding: unit(25px / @base-font-size-px, em) (@grid_gutter-width / 2);
     background: @teal-20;
     background-image: url('/static/img/beta-illustration_sm.png');
-    background-image: url('/static/img/beta-illustration.svg'), none;
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: 1176px;
@@ -83,7 +86,6 @@
         min-height: 520px;
         padding: @grid_gutter-width;
         background-image: url('/static/img/beta-illustration_lg.png');
-        background-image: url('/static/img/beta-illustration.svg'), none;
         background-size: 1470px;
     });
 
@@ -94,10 +96,10 @@
 
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
         /* Retina-specific stuff here */
-        // background-image: url('/static/img/beta-illustration_sm@2x.png');
+        background-image: url('/static/img/beta-illustration_sm@2x.png');
 
         @media (min-width: 601px) {
-            // background-image: url('/static/img/beta-illustration_lg@2x.png');
+            background-image: url('/static/img/beta-illustration_lg@2x.png');
         }
     }
 }
