@@ -16286,6 +16286,11 @@ a.focus .summary_header {
   width: 20%;
 }
 
+.progress-charts_chart {
+  width: 100px;
+  height: 100px;
+}
+
 .chart-bg {
   position: relative;
   background: #e3e4e5;
@@ -16293,7 +16298,7 @@ a.focus .summary_header {
   height: 100%;
 }
 
-.chart-pct {
+.bar-chart {
   position: absolute;
   bottom: 0;
   background: #ff9e1b;

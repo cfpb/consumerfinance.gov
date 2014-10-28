@@ -15743,6 +15743,10 @@ a.focus .summary_header {
     width: 20%;
   }
 }
+.progress-charts_chart {
+  width: 100px;
+  height: 100px;
+}
 @media only all and (max-width: 29.9375em) {
   .progress-charts_chart {
     margin-right: 1em;
@@ -15755,7 +15759,7 @@ a.focus .summary_header {
   width: 100%;
   height: 100%;
 }
-.chart-pct {
+.bar-chart {
   position: absolute;
   bottom: 0;
   background: #ff9e1b;
