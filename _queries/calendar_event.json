@@ -1,0 +1,8 @@
+{
+  "name": "Calendar Events",
+  "query": {
+    "doc_type": "calendar_event",
+    "size": 20,
+    "sort": "dtstart:desc"
+  }
+}
