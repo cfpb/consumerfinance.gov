@@ -7551,7 +7551,7 @@ tbody tr {
 }
 
 /* topdoc
-  name: Simple base style modifiers
+  name: Figure updates
   family: cfgov-cf-enhancements
   patterns:
     - name: figure.figure__bordered
@@ -7562,6 +7562,10 @@ tbody tr {
   tags:
     - cfgov-cf-enhancements
 */
+
+figure img {
+  vertical-align: middle;
+}
 
 .figure__bordered img {
   border: 1px solid #babbbd;
