@@ -7,6 +7,14 @@
 
 {% set hero = view.hero %}
 
+{% set active_filters_total =
+   selected_filters_for_field('category')|length +
+   selected_filters_for_field('tags')|length +
+   selected_filters_for_field('author')|length +
+   selected_filters_for_field('range_date_gte')|length + 
+   selected_filters_for_field('range_date_lte')|length
+%}
+
 {% if active_filters_total == 0 and posts.current_page == 1 and hero %}
 
     {% if hero['related_post'] %}

@@ -164,6 +164,52 @@
             </ul>
           </footer>
         </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.jump-link__bg (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="jump-link jump-link__bg" href="#">
+    Jump link with grey background and solid borders on small screens
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__bg&quot; href=&quot;#&quot;&gt;
+    Jump link with grey background and solid borders on small screens
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__bg\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Jump link with grey background and solid borders on small screens\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.jump-link__bg</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.jump-link__back (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="jump-link jump-link__back" href="#">
+    Jump link with back arrow
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__back&quot; href=&quot;#&quot;&gt;
+    Jump link with back arrow
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__back\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Jump link with back arrow\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.jump-link__back</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
@@ -208,7 +254,29 @@
   position: absolute;
   bottom: 0;
   right: -1em;
-  padding-left: 0.25em;
+  border-bottom: none;
+}
+
+.jump-link__back {
+  margin-left: 1.25em;
+}
+
+.jump-link__back:after {
+  content: '';
+}
+
+.jump-link__back:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: &quot;\e000&quot;;
+  position: absolute;
+  left: -1.25em;
+  top: .2em;
+  padding-right: .25em;
   border-bottom: none;
 }
 
