@@ -1759,6 +1759,51 @@ input.btn::-moz-focus-inner {
     - cf-expandables
 */
 /* topdoc
+    name: JS functions
+    family: cf-expandables
+    notes:
+      - "There are a number of available functions that you can call on
+         .expandable elements."
+    patterns:
+    - name: .toggle()
+      codenotes:
+        - "Toggles the expandable."
+    - name: .expand( duration )
+      codenotes:
+        - "Expands the expandable."
+        - |
+          duration
+          Type: number
+          The animation duration.
+          Not required.
+          Defaults to `$.fn.expandable.calculateExpandDuration` or
+          `$.fn.expandable.calculateCollapseDuration` if excluded.
+    - name: .collapse( duration )
+      codenotes:
+        - "Collapses the expandable."
+        - |
+          duration
+          Type: number
+          The animation duration.
+          Not required.
+          Defaults to `$.fn.expandable.calculateExpandDuration` or
+          `$.fn.expandable.calculateCollapseDuration` if excluded.
+    - name: Example usage
+      codenotes:
+        - |
+          // HTML
+          <div class="expandable" id="my-expandable">...</div>
+
+          // JS
+          // (use .get(0) to get the HTML element, that's what the functions
+          // are bound to)
+          $('#my-expandable').get(0).expand(); // Opens the expandable
+          $('#my-expandable').get(0).collapse(); // Closes the expandable
+          $('#my-expandable').get(0).toggle(); // Toggles the expandable
+    tags:
+    - cf-expandables
+*/
+/* topdoc
     name: Barebones expandable
     family: cf-expandables
     notes:
@@ -1831,15 +1876,6 @@ input.btn::-moz-focus-inner {
   outline: 1px dotted #101820;
   outline-offset: 1px;
 }
-.expandable_cue-close {
-  display: none;
-}
-.expandable__expanded > .expandable_target .expandable_cue-open {
-  display: none;
-}
-.expandable__expanded > .expandable_target .expandable_cue-close {
-  display: inline;
-}
 .expandable_content:after {
   content: "";
   display: table;
@@ -1911,6 +1947,77 @@ input.btn::-moz-focus-inner {
 .lt-ie9 .expandable_link strong,
 .lt-ie9 .expandable_link b {
   font-weight: normal !important;
+}
+/* topdoc
+    name: Animated cues
+    family: cf-expandables
+    patterns:
+    - name: .expandable_cue-open/close__animated (modifier)
+      codenotes:
+        - |
+          .expandable_cue-open__animated
+          .expandable_cue-close__animated
+      markup: |
+        <div class="expandable">
+            <button class="expandable_target">
+                <span class="expandable_cue-open expandable_cue-open__animated">
+                    <span class="cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close expandable_cue-close__animated">
+                    <span class="cf-icon cf-icon-up"></span>
+                </span>
+            </button>
+            <div class="expandable_content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+        <div class="expandable expandable__expanded">
+            <button class="expandable_target">
+                <span class="expandable_cue-open expandable_cue-open__animated">
+                    <span class="cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close expandable_cue-close__animated">
+                    <span class="cf-icon cf-icon-up"></span>
+                </span>
+            </button>
+            <div class="expandable_content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
+                    temporibus magnam debitis quidem. Ducimus ratione
+                    corporis nesciunt earum vel est quaerat blanditiis
+                    dolore ipsa?
+                </p>
+            </div>
+        </div>
+    tags:
+    - cf-expandables
+*/
+.expandable_cue-open__animated,
+.expandable_cue-close__animated {
+  -webkit-transition: 0.25s -webkit-transform;
+  transition: 0.25s transform;
+}
+.expandable_cue-close__animated {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.expandable__expanded .expandable_cue-close__animated {
+  -webkit-transform: rotate(0);
+  -ms-transform: rotate(0);
+  transform: rotate(0);
+}
+.expandable__expanded .expandable_cue-open__animated {
+  -webkit-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  transform: rotate(-180deg);
 }
 /* topdoc
     name: Expandable header elements
@@ -5963,71 +6070,149 @@ select[multiple].focus {
    cfgov-refresh
    demo
    ========================================================================== */
-.demo-banner {
-  padding: 0.5em 1em;
-  background: #43484e;
-  color: #ffffff;
+.beta-banner {
+  padding: 30px 0;
+  background: #ffecd1;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
-.demo-banner em,
-.demo-banner i {
+.beta-banner em,
+.beta-banner i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .demo-banner em,
-.lt-ie9 .demo-banner i {
+.lt-ie9 .beta-banner em,
+.lt-ie9 .beta-banner i {
   font-style: normal !important;
 }
-.demo-banner strong,
-.demo-banner b {
+.beta-banner strong,
+.beta-banner b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .demo-banner strong,
-.lt-ie9 .demo-banner b {
+.lt-ie9 .beta-banner strong,
+.lt-ie9 .beta-banner b {
   font-weight: normal !important;
 }
 @media only all and (max-width: 37.4375em) {
-  .demo-banner {
+  .beta-banner {
     font-size: 0.875em;
   }
 }
-.demo-banner_back-link {
-  padding: 0.25em 0;
-  margin-right: 1em;
-}
-.demo-banner_back-link:link,
-.demo-banner_back-link:visited {
-  color: #7fb8e6;
-}
-.demo-banner_back-link:hover,
-.demo-banner_back-link:focus {
-  color: #328ed8;
-}
-.demo-banner_back-link:active {
-  color: #babbbd;
-}
-@media only all and (min-width: 37.5em) {
-  .demo-banner_back-link {
-    padding: 0;
-    float: left;
-  }
-}
-.demo-banner b {
+.beta-banner_head {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
+  line-height: 1.22222222;
 }
-.lt-ie9 .demo-banner b {
+.lt-ie9 .beta-banner_head {
   font-weight: normal !important;
 }
-@media only all and (max-width: 37.4375em) {
-  .demo-banner b {
-    display: block;
+.beta-banner_icon {
+  color: #ff9e1b;
+}
+.beta-banner_desc {
+  margin-bottom: 0;
+}
+.beta-banner_close-btn {
+  width: 100%;
+  margin-top: 15px;
+}
+.beta-banner_close-btn,
+.beta-banner_close-btn:link,
+.beta-banner_close-btn:visited {
+  background-color: #75787b;
+  color: #ffffff;
+}
+.beta-banner_close-btn:hover,
+.beta-banner_close-btn.hover {
+  background-color: #919395;
+}
+.beta-banner_close-btn:focus,
+.beta-banner_close-btn.focus {
+  background-color: #919395;
+  outline-color: #75787b;
+}
+.beta-banner_close-btn:active,
+.beta-banner_close-btn.active {
+  background-color: #43484e;
+}
+@media only all and (max-width: 30em) {
+  .beta-banner_close-btn .cf-icon-delete {
+    display: none;
+  }
+}
+@media only all and (min-width: 30.0625em) {
+  .beta-banner_close-btn {
+    padding: 0;
+    border-bottom: 1px dotted #0072ce;
+    border-radius: 0;
+    margin: 0.57142857em 0;
+    width: auto;
+    padding: 15px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #101820;
+    border-color: #101820;
+    border-bottom-width: 0 !important;
+    text-transform: lowercase;
+  }
+  .beta-banner_close-btn,
+  .beta-banner_close-btn:link,
+  .beta-banner_close-btn:visited {
+    background-color: transparent;
+    color: #0072ce;
+  }
+  .beta-banner_close-btn:hover,
+  .beta-banner_close-btn.hover {
+    border-bottom: 1px solid #7fb8e6;
+    background-color: transparent;
+    color: #7fb8e6;
+  }
+  .beta-banner_close-btn:focus,
+  .beta-banner_close-btn.focus {
+    border-bottom-style: solid;
+    background-color: transparent;
+    outline: thin dotted #0072ce;
+  }
+  .beta-banner_close-btn:active,
+  .beta-banner_close-btn.active {
+    border-bottom: 1px solid #002d72;
+    background-color: transparent;
+    color: #002d72;
+  }
+  .beta-banner_close-btn:visited,
+  .beta-banner_close-btn.visited {
+    border-color: #101820;
+    color: #101820;
+  }
+  .beta-banner_close-btn:hover,
+  .beta-banner_close-btn.hover {
+    border-color: #43484e;
+    color: #43484e;
+  }
+  .beta-banner_close-btn:focus,
+  .beta-banner_close-btn.focus {
+    border-color: #43484e;
+    color: #43484e;
+  }
+  .beta-banner_close-btn:active,
+  .beta-banner_close-btn.active {
+    border-color: #101820;
+    color: #101820;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .beta-banner_close-btn {
+    top: -30px;
   }
 }
 .demo-placeholder {
@@ -6193,6 +6378,33 @@ img {
    cfgov-refresh
    capital framework enhancements
    ========================================================================== */
+/* topdoc
+  name: Proposed Superheader line-height tweak
+  family: cfgov-cf-enhancements
+  notes:
+    - "The current superheader line-height is a little tall.
+       This proposes reducing it."
+  patterns:
+    - name: .superheader
+      markup: |
+        <h1 class="superheader">
+            Here's a long header that will hopefully break
+            break onto two lines.
+        </h1>
+  tags:
+    - cfgov-cf-enhancements
+*/
+.superheader {
+  margin-bottom: 0.1875em;
+  font-size: 3em;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 1.25;
+}
+.lt-ie9 .superheader {
+  font-weight: normal !important;
+}
 /* topdoc
   name: Small text utility
   family: cfgov-cf-enhancements
@@ -6852,6 +7064,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .wrapper__match-content {
     padding-left: 30px;
     padding-right: 30px;
+    max-width: 1140px;
   }
 }
 .lt-ie9 .wrapper {
@@ -6915,7 +7128,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 @media only all and (max-width: 50em) {
   .header_logo {
-    width: 160px;
+    width: 190px;
     height: 40px;
     margin: 10px;
   }
@@ -6932,7 +7145,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 @media only all and (min-width: 50.0625em) {
   .header_misc {
     display: block;
-    margin: 30px 15px 15px;
+    margin: 52px 15px 15px;
     position: absolute;
     top: 0;
     right: 15px;
@@ -7241,14 +7454,14 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .sliding-nav_trigger {
     display: block;
     width: 60px;
-    padding: 10px;
+    height: 60px;
+    padding: 19px 10px 17px;
     border: none;
     border-right: 1px solid #babbbd;
     float: left;
     background: #ffffff;
     color: #75787b;
     font-size: 1.5em;
-    line-height: 40px;
   }
   .sliding-nav_trigger:focus {
     outline: 1px dotted #101820;
@@ -7269,7 +7482,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   }
   .primary-nav {
     position: absolute;
-    top: 116px;
+    top: 100px;
     right: 0;
     left: 0;
     z-index: 100;
@@ -7296,7 +7509,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   .primary-nav_top-level-list > .list_item > .list_link {
     display: block;
     padding-bottom: 30px;
-    margin: 0 15px;
+    margin: 0 0 0 15px;
     font-size: 1.125em;
   }
   .desktop-menu_full-wrapper {
@@ -7378,6 +7591,11 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
     margin-bottom: 0;
   }
   .desktop-menu_horizontal-list.list__horizontal > .list_item {
+    margin: 0 15px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .primary-nav_top-level-list > .list_item > .list_link {
     margin: 0 15px;
   }
 }
@@ -11212,6 +11430,7 @@ a.category-slug.active {
   .hero_wrapper__match-content {
     padding-left: 30px;
     padding-right: 30px;
+    max-width: 1140px;
   }
 }
 .hero_img-container {
@@ -11577,7 +11796,7 @@ a.category-slug.active {
 .list__links .list_item {
   margin-bottom: 0.625em;
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .list__links {
     border-top: 1px dotted #0072ce;
   }
@@ -11587,10 +11806,11 @@ a.category-slug.active {
   }
   .list__links .list_link {
     display: block;
-    padding: 0.625em 0;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .list__links.list__icons .list_link {
     margin-bottom: 0.9375em;
     margin-left: 1.5em;
@@ -14606,7 +14826,7 @@ a.focus .summary_header {
 .footer_nav-list .list_item {
   margin-bottom: 0.625em;
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .footer_nav-list {
     border-top: 1px dotted #0072ce;
   }
@@ -14616,10 +14836,11 @@ a.focus .summary_header {
   }
   .footer_nav-list .list_link {
     display: block;
-    padding: 0.625em 0;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .footer_nav-list.list__icons .list_link {
     margin-bottom: 0.9375em;
     margin-left: 1.5em;
@@ -14867,7 +15088,7 @@ a.focus .summary_header {
 .footer_list .list_item {
   margin-bottom: 0.625em;
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .footer_list {
     border-top: 1px dotted #0072ce;
   }
@@ -14877,10 +15098,11 @@ a.focus .summary_header {
   }
   .footer_list .list_link {
     display: block;
-    padding: 0.625em 0;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .footer_list.list__icons .list_link {
     margin-bottom: 0.9375em;
     margin-left: 1.5em;
@@ -15351,3 +15573,374 @@ a.focus .summary_header {
     name: EOF
     eof: true
 */
+/* ==========================================================================
+   cfgov-refresh
+   Beta splash page and banner
+   ========================================================================== */
+.beta-banner {
+  padding: 15px 0;
+  margin-bottom: 0;
+  background: #ffecd1;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-transition: padding 0.2s ease-out;
+  transition: padding 0.2s ease-out;
+}
+.beta-banner em,
+.beta-banner i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .beta-banner em,
+.lt-ie9 .beta-banner i {
+  font-style: normal !important;
+}
+.beta-banner strong,
+.beta-banner b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .beta-banner strong,
+.lt-ie9 .beta-banner b {
+  font-weight: normal !important;
+}
+.beta-banner.expandable__expanded {
+  padding: 30px 0;
+}
+@media only all and (max-width: 37.4375em) {
+  .beta-banner {
+    font-size: 0.875em;
+  }
+}
+.beta-banner_head {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 0;
+}
+.lt-ie9 .beta-banner_head {
+  font-weight: normal !important;
+}
+.expandable__expanded .beta-banner_head {
+  margin-bottom: 0.3125em;
+}
+.beta-banner_icon {
+  color: #ff9e1b;
+}
+.beta-banner_desc {
+  margin-bottom: 0;
+}
+.beta-banner_btn {
+  width: 100%;
+  padding: 0.57142857em 1em;
+  margin-top: 15px;
+}
+.beta-banner_btn,
+.beta-banner_btn:link,
+.beta-banner_btn:visited {
+  background-color: #75787b;
+  color: #ffffff;
+}
+.beta-banner_btn:hover,
+.beta-banner_btn.hover {
+  background-color: #919395;
+}
+.beta-banner_btn:focus,
+.beta-banner_btn.focus {
+  background-color: #919395;
+  outline-color: #75787b;
+}
+.beta-banner_btn:active,
+.beta-banner_btn.active {
+  background-color: #43484e;
+}
+@media only all and (max-width: 30em) {
+  .beta-banner_btn .cf-icon-delete {
+    display: none;
+  }
+}
+@media only all and (min-width: 30.0625em) {
+  .beta-banner_btn {
+    padding: 0;
+    border-bottom: 1px dotted #0072ce;
+    border-radius: 0;
+    margin: 0.57142857em 0;
+    width: auto;
+    padding: 15px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #101820;
+    border-color: #101820;
+    border-bottom-width: 0 !important;
+    text-transform: lowercase;
+  }
+  .beta-banner_btn,
+  .beta-banner_btn:link,
+  .beta-banner_btn:visited {
+    background-color: transparent;
+    color: #0072ce;
+  }
+  .beta-banner_btn:hover,
+  .beta-banner_btn.hover {
+    border-bottom: 1px solid #7fb8e6;
+    background-color: transparent;
+    color: #7fb8e6;
+  }
+  .beta-banner_btn:focus,
+  .beta-banner_btn.focus {
+    border-bottom-style: solid;
+    background-color: transparent;
+    outline: thin dotted #0072ce;
+  }
+  .beta-banner_btn:active,
+  .beta-banner_btn.active {
+    border-bottom: 1px solid #002d72;
+    background-color: transparent;
+    color: #002d72;
+  }
+  .beta-banner_btn:visited,
+  .beta-banner_btn.visited {
+    border-color: #101820;
+    color: #101820;
+  }
+  .beta-banner_btn:hover,
+  .beta-banner_btn.hover {
+    border-color: #43484e;
+    color: #43484e;
+  }
+  .beta-banner_btn:focus,
+  .beta-banner_btn.focus {
+    border-color: #43484e;
+    color: #43484e;
+  }
+  .beta-banner_btn:active,
+  .beta-banner_btn.active {
+    border-color: #101820;
+    color: #101820;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .beta-banner_btn {
+    top: -11px;
+  }
+}
+.beta-hero {
+  min-height: 420px;
+  padding: 1.5625em 15px;
+  background: #ccdfdf;
+  background-image: url('/static/img/beta-illustration_sm.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  -webkit-background-size: 1176px;
+  background-size: 1176px;
+  text-align: center;
+}
+@media only all and (min-width: 37.5625em) {
+  .beta-hero {
+    min-height: 520px;
+    padding: 30px;
+    background-image: url('/static/img/beta-illustration_lg.png');
+    -webkit-background-size: 1470px;
+    background-size: 1470px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .beta-hero {
+    min-height: 540px;
+    -webkit-background-size: 1838px;
+    background-size: 1838px;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .beta-hero {
+    /* Retina-specific stuff here */
+    background-image: url('/static/img/beta-illustration_sm@2x.png');
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2) and (min-width: 601px), (min-resolution: 192dpi) and (min-width: 601px) {
+  .beta-hero {
+    background-image: url('/static/img/beta-illustration_lg@2x.png');
+  }
+}
+.beta-hero_title {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.30769231em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+.beta-hero_title em,
+.beta-hero_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .beta-hero_title em,
+.lt-ie9 .beta-hero_title i {
+  font-style: normal !important;
+}
+.beta-hero_title strong,
+.beta-hero_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .beta-hero_title strong,
+.lt-ie9 .beta-hero_title b {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 37.5625em) {
+  .beta-hero_title {
+    line-height: 1.375;
+    margin-bottom: 0.1875em;
+    font-size: 3em;
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.25;
+  }
+  .lt-ie9 .beta-hero_title {
+    font-weight: normal !important;
+  }
+  .lt-ie9 .beta-hero_title {
+    font-weight: normal !important;
+  }
+}
+.beta-hero_desc {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  max-width: 32em;
+  margin: 0 auto 1em;
+}
+.lt-ie9 .beta-hero_desc {
+  font-weight: normal !important;
+}
+@media only all and (min-width: 37.5625em) {
+  .beta-hero_desc {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.30769231em;
+    font-size: 1.625em;
+    line-height: 1.26923077;
+    margin-bottom: 1em;
+  }
+  .beta-hero_desc em,
+  .beta-hero_desc i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .beta-hero_desc em,
+  .lt-ie9 .beta-hero_desc i {
+    font-style: normal !important;
+  }
+  .beta-hero_desc strong,
+  .beta-hero_desc b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .beta-hero_desc strong,
+  .lt-ie9 .beta-hero_desc b {
+    font-weight: normal !important;
+  }
+}
+.progress-charts:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.lt-ie8 .progress-charts {
+  zoom: 1;
+}
+.progress-charts_container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  position: relative;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.progress-charts_container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.lt-ie8 .progress-charts_container {
+  zoom: 1;
+}
+@media only all and (min-width: 30em) {
+  .progress-charts_container {
+    width: 33.33333333%;
+    height: 150px;
+    padding: 0 1em;
+    float: left;
+    text-align: center;
+  }
+}
+@media only all and (min-width: 48em) {
+  .progress-charts_container {
+    width: 20%;
+  }
+}
+.progress-charts_chart {
+  width: 100px;
+  height: 100px;
+}
+@media only all and (max-width: 29.9375em) {
+  .progress-charts_chart {
+    margin-right: 1em;
+    float: left;
+  }
+}
+.chart-bg {
+  position: relative;
+  background: #e3e4e5;
+  width: 100%;
+  height: 100%;
+}
+.bar-chart {
+  position: absolute;
+  bottom: 0;
+  background: #ff9e1b;
+  width: 100%;
+}
+.chart-name {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+}
+.lt-ie9 .chart-name {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 29.9375em) {
+  .chart-name {
+    position: relative;
+    top: 39px;
+  }
+}
