@@ -54,19 +54,19 @@
          aria-label="Pagination"
          data-ajax-action="posts-paginated.html">
     {% if posts.current_page > 1 %}
-        <a class="btn pagination_prev"
+        <a class="btn btn__super pagination_prev"
            href="{{ posts.url_for_page(posts.current_page - 1) }}#pagination_content">
     {% else %}
-        <a class="btn btn__disabled pagination_prev">
+        <a class="btn btn__super btn__disabled pagination_prev">
     {% endif %}
             <span class="btn_icon__left cf-icon cf-icon-left"></span>
             Newer
         </a>
     {% if posts.current_page < posts.pages %}
-        <a class="btn pagination_next"
+        <a class="btn btn__super pagination_next"
            href="{{ posts.url_for_page(posts.current_page + 1) }}#pagination_content">
     {% else %}
-        <a class="btn btn__disabled pagination_next">
+        <a class="btn btn__super btn__disabled pagination_next">
     {% endif %}
             Older
             <span class="btn_icon__right cf-icon cf-icon-right"></span>
