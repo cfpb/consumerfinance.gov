@@ -13198,9 +13198,9 @@ $('#beta-banner_btn').click( function() {
 });
 
 $(document).ready(function() {
-    if ( localStorage.getItem('betaBannerIsCollapsed') == null ) {
+    if ( localStorage.getItem('betaBannerIsCollapsed') !== 'true' ) {
         // If this is the first load and the item has never been set, click to
         // expand the banner and set the item initially to 'false'.
-        $('#beta-banner_btn').click();
+        $('#beta-banner').get(0).expand();
     }
 });
