@@ -1,6 +1,10 @@
 var modernBrowser = 'innerWidth' in window,
     viewportEl = modernBrowser ? window : (document.documentElement || document.body),
-    widthProp = modernBrowser ? 'innerWidth' : 'clientWidth';
+    propPrefix = modernBrowser ? 'inner' : 'client';
+    
+function getViewportDimensions() {
+    return {width: viewportEl[propPrefix + 'Width'], height: viewportEl[propPrefix + 'Height']};
+}
 
 
 /**
@@ -44,7 +48,7 @@ BreakpointHandler.prototype.watchWindowResize = function () {
 };
 
 BreakpointHandler.prototype.handleViewportChange = function () {
-    var width = viewportEl[widthProp],
+    var width = viewportEl[propPrefix + 'Width'],
         match = this.testBreakpoint(width);
     if (match !== this.match) {
         if (match) {
@@ -102,7 +106,7 @@ MobileOnlyExpandable.prototype.init = function () {
             type: "max",
             enter: $.proxy(this.closeExpandable, this),
             leave: $.proxy(this.openExpandable, this)
-        })
+        });
     }
 };
 

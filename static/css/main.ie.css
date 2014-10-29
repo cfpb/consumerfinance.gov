@@ -2056,52 +2056,6 @@ input.btn::-moz-focus-inner {
 */
 
 /* topdoc
-    name: JS functions
-    family: cf-expandables
-    notes:
-      - "There are a number of available functions that you can call on
-         .expandable elements."
-    patterns:
-    - name: .toggle()
-      codenotes:
-        - "Toggles the expandable."
-    - name: .expand( duration )
-      codenotes:
-        - "Expands the expandable."
-        - |
-          duration
-          Type: number
-          The animation duration.
-          Not required.
-          Defaults to `$.fn.expandable.calculateExpandDuration` or
-          `$.fn.expandable.calculateCollapseDuration` if excluded.
-    - name: .collapse( duration )
-      codenotes:
-        - "Collapses the expandable."
-        - |
-          duration
-          Type: number
-          The animation duration.
-          Not required.
-          Defaults to `$.fn.expandable.calculateExpandDuration` or
-          `$.fn.expandable.calculateCollapseDuration` if excluded.
-    - name: Example usage
-      codenotes:
-        - |
-          // HTML
-          <div class="expandable" id="my-expandable">...</div>
-
-          // JS
-          // (use .get(0) to get the HTML element, that's what the functions
-          // are bound to)
-          $('#my-expandable').get(0).expand(); // Opens the expandable
-          $('#my-expandable').get(0).collapse(); // Closes the expandable
-          $('#my-expandable').get(0).toggle(); // Toggles the expandable
-    tags:
-    - cf-expandables
-*/
-
-/* topdoc
     name: Barebones expandable
     family: cf-expandables
     notes:
@@ -2176,6 +2130,18 @@ input.btn::-moz-focus-inner {
 .expandable_target:focus {
   outline: 1px dotted #101820;
   outline-offset: 1px;
+}
+
+.expandable_cue-close {
+  display: none;
+}
+
+.expandable__expanded > .expandable_target .expandable_cue-open {
+  display: none;
+}
+
+.expandable__expanded > .expandable_target .expandable_cue-close {
+  display: inline;
 }
 
 .expandable_content:after {
@@ -2258,82 +2224,6 @@ input.btn::-moz-focus-inner {
 .lt-ie9 .expandable_link strong,
 .lt-ie9 .expandable_link b {
   font-weight: normal !important;
-}
-
-/* topdoc
-    name: Animated cues
-    family: cf-expandables
-    patterns:
-    - name: .expandable_cue-open/close__animated (modifier)
-      codenotes:
-        - |
-          .expandable_cue-open__animated
-          .expandable_cue-close__animated
-      markup: |
-        <div class="expandable">
-            <button class="expandable_target">
-                <span class="expandable_cue-open expandable_cue-open__animated">
-                    <span class="cf-icon cf-icon-down"></span>
-                </span>
-                <span class="expandable_cue-close expandable_cue-close__animated">
-                    <span class="cf-icon cf-icon-up"></span>
-                </span>
-            </button>
-            <div class="expandable_content">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
-                    temporibus magnam debitis quidem. Ducimus ratione
-                    corporis nesciunt earum vel est quaerat blanditiis
-                    dolore ipsa?
-                </p>
-            </div>
-        </div>
-        <div class="expandable expandable__expanded">
-            <button class="expandable_target">
-                <span class="expandable_cue-open expandable_cue-open__animated">
-                    <span class="cf-icon cf-icon-down"></span>
-                </span>
-                <span class="expandable_cue-close expandable_cue-close__animated">
-                    <span class="cf-icon cf-icon-up"></span>
-                </span>
-            </button>
-            <div class="expandable_content">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit. Neque ipsa voluptatibus soluta nobis unde quisquam
-                    temporibus magnam debitis quidem. Ducimus ratione
-                    corporis nesciunt earum vel est quaerat blanditiis
-                    dolore ipsa?
-                </p>
-            </div>
-        </div>
-    tags:
-    - cf-expandables
-*/
-
-.expandable_cue-open__animated,
-.expandable_cue-close__animated {
-  -webkit-transition: 0.25s -webkit-transform;
-  transition: 0.25s transform;
-}
-
-.expandable_cue-close__animated {
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.expandable__expanded .expandable_cue-close__animated {
-  -webkit-transform: rotate(0);
-  -ms-transform: rotate(0);
-  transform: rotate(0);
-}
-
-.expandable__expanded .expandable_cue-open__animated {
-  -webkit-transform: rotate(-180deg);
-  -ms-transform: rotate(-180deg);
-  transform: rotate(-180deg);
 }
 
 /* topdoc
@@ -11088,6 +10978,20 @@ a.category-slug.active {
         </a>
       codenotes:
         - .jump-link__external-link
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            Jump link with grey background and solid borders on small screens
+        </a>
+      codenotes:
+        - .jump-link__bg
+    - name: .jump-link__back (modifier)
+      markup: |
+        <a class="jump-link jump-link__back" href="#">
+            Jump link with back arrow
+        </a>
+      codenotes:
+        - .jump-link__back
   tags:
     - cfgov-misc
 */
@@ -11133,7 +11037,29 @@ a.category-slug.active {
   position: absolute;
   bottom: 0;
   right: -1em;
-  padding-left: 0.25em;
+  border-bottom: none;
+}
+
+.jump-link__back {
+  margin-left: 1.25em;
+}
+
+.jump-link__back:after {
+  content: '';
+}
+
+.jump-link__back:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e000";
+  position: absolute;
+  left: -1.25em;
+  top: .2em;
+  padding-right: .25em;
   border-bottom: none;
 }
 
@@ -14863,6 +14789,10 @@ a.focus .summary_header {
   border-top: 1px solid #babbbd;
 }
 
+.bureau-functions .expandable {
+  background-color: inherit;
+}
+
 .bureau-bio .media_image {
   width: 125px;
 }
@@ -14997,6 +14927,270 @@ a.focus .summary_header {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
+}
+
+.org-chart {
+  /* On larger screen sizes, the lines of the org chart are drawn with before & after 
+       pseudo elements applied to .org-chart_branches & .org-chart_branch.
+     */
+}
+
+.org-chart {
+  width: 530px;
+  margin: 0 auto;
+}
+
+.org-chart_root {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.org-chart_branches,
+.org-chart_nodes {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.org-chart_branches {
+  padding-top: 30px;
+  /* :before pseudo element's left border draws a centered vertical line
+           down from .org-chart_root to .org-chart_branches.*/
+}
+
+.org-chart_branches {
+  position: relative;
+}
+
+.org-chart_branches:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 1px solid #babbbd;
+  width: 0;
+  height: 30px;
+}
+
+.org-chart_branch {
+  /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
+           draw lines connecting the branch headers to the line from .org-chart_root. */
+}
+
+.org-chart_branch {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+  position: relative;
+  padding-top: 45px;
+  border-width: 0;
+}
+
+.ie .org-chart_branch {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .org-chart_branch {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.org-chart_branch:before,
+.org-chart_branch:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 30px;
+  border-color: #babbbd;
+  border-style: solid;
+  border-width: 0;
+}
+
+.org-chart_branch:first-child {
+  padding-right: 15px;
+}
+
+.org-chart_branch:first-child:after {
+  left: 50%;
+  border-width: 1px 0 0 1px;
+}
+
+.org-chart_branch.last-child {
+  padding-left: 15px;
+}
+
+.org-chart_branch.last-child:before {
+  right: 50%;
+  border-width: 1px 1px 0 0;
+}
+
+.org-chart_branch_name {
+  margin-top: 0;
+  margin-bottom: 0.27777778em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin-bottom: 0.83333333em;
+  text-align: center;
+}
+
+.lt-ie9 .org-chart_branch_name {
+  font-weight: normal !important;
+}
+
+.org-chart_role {
+  padding: 15px;
+  padding-right: 30px;
+  position: relative;
+  background: #f1f2f2;
+  border-color: #e3e4e5;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+}
+
+.org-chart_node {
+  width: 100%;
+  /* nested .org-chart_node blocks have different background color & borders */
+}
+
+.org-chart_node {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.org-chart_node .org-chart_nodes {
+  border-top: 5px solid #7fb8e6;
+}
+
+.org-chart_node .org-chart_nodes .org-chart_node {
+  margin-bottom: 0px;
+}
+
+.org-chart_node .org-chart_nodes .org-chart_role {
+  background: #cce3f5;
+  border-color: #E5F1FA;
+  border-width: 0 0 1px 0;
+}
+
+.org-chart .node_expander {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+}
+
+.org-chart .node_expander .expandable_link {
+  font-size: 16px;
+}
+
+.org-chart #content-slider-container {
+  position: relative;
+  margin-left: -10px;
+}
+
+.org-chart #content-slider-container #content-slider {
+  display: none;
+}
+
+.org-chart #content-slider-container .slick-slide {
+  margin-left: 10px;
+}
+
+.org-chart #content-slider-container .slick-slider {
+  margin-bottom: 0;
+}
+
+.org-chart .content-hide {
+  display: none;
+  background-color: inherit;
+  margin-bottom: 20px;
+}
+
+.role {
+  display: block;
+}
+
+.role_office {
+  display: block;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
+}
+
+.lt-ie9 .role_office {
+  font-weight: normal !important;
+}
+
+.role_name {
+  display: block;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .role_name {
+  font-weight: normal !important;
+}
+
+.role_title {
+  display: block;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.role_title em,
+.role_title i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .role_title em,
+.lt-ie9 .role_title i {
+  font-style: normal !important;
+}
+
+.role_title strong,
+.role_title b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .role_title strong,
+.lt-ie9 .role_title b {
+  font-weight: normal !important;
+}
+
+.link-text {
+  color: #0072ce;
+}
+
+.link-text:hover {
+  color: #7fb8e6;
+}
+
+.link-text:active {
+  color: #002d72;
 }
 
 /* ==========================================================================
