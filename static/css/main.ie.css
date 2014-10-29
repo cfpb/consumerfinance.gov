@@ -16212,7 +16212,7 @@ a.focus .summary_header {
   padding: 15px;
   margin: 0;
   position: absolute;
-  top: 0;
+  top: 1px;
   right: 0;
   color: #101820;
   border-color: #101820;
@@ -16273,7 +16273,11 @@ a.focus .summary_header {
 }
 
 .beta-banner_btn {
-  top: -11px;
+  right: 15px;
+}
+
+.beta-banner_btn {
+  top: -12px;
 }
 
 .beta-hero {
