@@ -13080,8 +13080,8 @@ $('.js-form_clear').on('click', function() {
    ========================================================================== */
 
 $('.history-section-expandable').find('.expandable_target')
-                        .not( $('.history-section-expandable').find('.expandable .expandable_target') )
-                        .on('click', function() {
+    .not( $('.history-section-expandable').find('.expandable .expandable_target') )
+    .on('click', function() {
     if ( $(this).attr('aria-pressed') === 'false' ) {
         $('html, body').animate({
             scrollTop: $(this).parent().offset().top - 15
@@ -13248,3 +13248,26 @@ function getQuery() {
         return window.location.search;
     }
 }
+
+/* ==========================================================================
+   Collapsing Beta banner
+   ========================================================================== */
+
+$('#beta-banner_btn').click( function() {
+    if ( localStorage.getItem('betaBannerIsCollapsed') === 'true' ) {
+        localStorage.setItem('betaBannerIsCollapsed', false);
+    } else if (localStorage.getItem('betaBannerIsCollapsed') === 'false' ) {
+        localStorage.setItem('betaBannerIsCollapsed', true);
+    } else { // first load, item == null
+        localStorage.setItem('betaBannerIsCollapsed', false);
+    }
+    return false;
+});
+
+$(document).ready(function() {
+    if ( localStorage.getItem('betaBannerIsCollapsed') !== 'true' ) {
+        // If this is the first load and the item has never been set, click to
+        // expand the banner and set the item initially to 'false'.
+        $('#beta-banner').get(0).expand();
+    }
+});

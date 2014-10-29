@@ -1524,7 +1524,7 @@
         margin-bottom: unit(10x / @base-font-size-px, em);
     }
 
-    .respond-to-max(767px, {
+    .respond-to-max(599px, {
         border-top: 1px dotted @pacific;
 
         .list_item {
@@ -1534,11 +1534,12 @@
 
         .list_link {
             display: block;
-            padding: unit(10px / @base-font-size-px, em) 0;
+            padding-top: unit(10px / @base-font-size-px, em);
+            padding-bottom: unit(10px / @base-font-size-px, em);
         }
     });
 
-    .respond-to-min(768px, {
+    .respond-to-min(600px, {
         &.list__icons {
             .list_link {
                 margin-bottom: unit(15px / @base-font-size-px, em);
