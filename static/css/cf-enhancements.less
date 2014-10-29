@@ -22,16 +22,71 @@
 
 .superheader {
     // For when you want a heading that's bigger than a normal H1
-
+  
     @font-size: 48px;
     @line-height: 60px;
-
+  
     // Spacing in the design manual is based off of the baseline so this margin
     // number has been eyeballed to be 30px.
     margin-bottom: unit( 9px / @font-size, em );
     font-size: unit( @font-size / @base-font-size-px, em );
     .webfont-demi();
     line-height: unit( @line-height / @font-size );
+}
+
+
+/* topdoc
+  name: Small text utility
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .u-small-text (utility class)
+      markup: |
+        Lorem ipsum<br>
+        <span class="u-small-text">dolor sit amet</span>
+      codenotes:
+        - ".u-small-text"
+      notes:
+        - "14px text."
+        - "The utility class should only be used when the default text size is
+           16px. For example you wouldn't want to use the class inside of an
+           `h1` because the `font-size` in the `h1` will make `.u-small-text`
+           bigger than it should be. See the docs for the `.u-small-text()`
+           mixin."
+    - name: .u-small-text() (Less mixin)
+      codenotes:
+        - ".u-small-text(@context)"
+        - |
+          // Mixin usage:
+          .example {
+            font-size: unit(20px / @base-font-size-px, em);
+            small {
+              .u-small-text(20px);
+            }
+          }
+          // Compiles to:
+          .example {
+            font-size: 1.25em;
+          }
+          .example small {
+            font-size: 0.7em;
+          }
+      notes:
+        - "This mixin enables you to easily create consistent small text by
+           passing the context `font-size`."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u-small-text(@context: @base-font-size-px) {
+  font-size: unit(14px / @context, em);
+}
+
+.u-small-text {
+  .u-small-text();
+}
+
+small {
+  .u-small-text();
 }
 
 
