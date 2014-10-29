@@ -137,11 +137,12 @@
    posts:       The query object search results.
                 Used to show how many filtered items resulted.
    doc_type:    The type of document that posts contains.
-                Mainly used for conditionals needed to support newsroom filters.
+                Mainly used for conditionals needed to support newsroom
+                filters.
    filters:     An array of the filters that you want.
-                Possible values: author, calendar, category, date_range, tags.
-                You can add more in filters_form() by adding to the if statement,
-                for example: `{% elif filter == 'NEW_FILTER' %}`.
+                Possible values: author, calendar, category, date_range,
+                tags. You can add more in filters_form() by adding to the if
+                statement, for example: `{% elif filter == 'NEW_FILTER' %}`.
                 Note that 'range_date_gte' and 'range_date_lte' have been
                 condensed into 'date_range' for this macro only.
    ========================================================================== #}
