@@ -253,7 +253,7 @@ tbody {
 
 
 /* topdoc
-  name: Simple base style modifiers
+  name: Figure updates
   family: cfgov-cf-enhancements
   patterns:
     - name: figure.figure__bordered
@@ -264,6 +264,11 @@ tbody {
   tags:
     - cfgov-cf-enhancements
 */
+
+figure img {
+    // Removes weird vertical spacing below images.
+    vertical-align: middle;
+}
 
 .figure__bordered img {
     border: 1px solid @gray-50;
