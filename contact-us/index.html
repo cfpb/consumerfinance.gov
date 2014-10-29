@@ -15,7 +15,7 @@
 
     {# Variables #}
     {% set query = queries.contact %}
-    {% set contacts = query.search_with_url_arguments(size=10) %}
+    {% set contacts = query.search_with_url_arguments(size=100) %}
 
     {# Macros #}
     {% import "macros.html" as macros with context %}
