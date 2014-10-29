@@ -59,6 +59,20 @@
         </a>
       codenotes:
         - .jump-link__external-link
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            Jump link with grey background and solid borders on small screens
+        </a>
+      codenotes:
+        - .jump-link__bg
+    - name: .jump-link__back (modifier)
+      markup: |
+        <a class="jump-link jump-link__back" href="#">
+            Jump link with back arrow
+        </a>
+      codenotes:
+        - .jump-link__back
   tags:
     - cfgov-misc
 */
@@ -105,8 +119,26 @@
         position: absolute;
         bottom: 0;
         right: -1em;
-        padding-left: 0.25em;
         border-bottom: none;
+    }
+    
+    &__back {
+        margin-left: 1.25em;
+        
+        &:after {
+            content: ''
+        }
+        
+        &:before {
+            .cf-icon();
+            // Inserts the cf-icon-left (arrow) glyph.
+            content: "\e000";
+            position: absolute;
+            left: -1.25em;
+            top: .2em;
+            padding-right: .25em;
+            border-bottom: none;
+        }
     }
 
     .list__links & {
@@ -119,12 +151,38 @@
         border: dotted @pacific;
         border-width: 1px 0;
         margin-right: 0;
+        width: 100%;
+        text-align: left;
 
         &:after {
             margin-bottom: -0.625em;
             right: 0;
             bottom: 50%;
             text-align: right;
+        }
+        
+        &__bg {
+            background: @gray-10;
+            border: solid @gray-20;
+            border-width: 1px 0;
+            padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
+            &:after {
+                right: 1em;
+            }
+        }
+        
+        &__back {
+            padding: unit(10px / @base-font-size-px, em) 0 unit(10px / @base-font-size-px, em) 1.25em;
+            margin-left: 0;
+            &:after {
+                content: ''
+            }
+
+            &:before {
+                margin-top: -0.5em;
+                left: 0;
+                top: 50%;
+            }
         }
     });
 }
