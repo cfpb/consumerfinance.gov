@@ -26,6 +26,122 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / cf-enhancements docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="proposed-superheader-line-height-tweak" class="docs-component">
+      <h2 class="docs-component_header"><span>Proposed Superheader line-height tweak</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>The current superheader line-height is a little tall. This proposes reducing it.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.superheader</h3>
+          <section class="docs-pattern_pattern">
+<h1 class="superheader">
+    Here's a long header that will hopefully break
+    break onto two lines.
+</h1>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1 class=&quot;superheader&quot;&gt;
+    Here's a long header that will hopefully break
+    break onto two lines.
+&lt;/h1&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;h1 class=\&amp;quot;superheader\&amp;quot;&gt;\n    Here&amp;apos;s a long header that will hopefully break\n    break onto two lines.\n&lt;/h1&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.superheader {
+  margin-bottom: 0.1875em;
+  font-size: 3em;
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.lt-ie9 .superheader {
+  font-weight: normal !important;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="small-text-utility" class="docs-component">
+      <h2 class="docs-component_header"><span>Small text utility</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.u-small-text (utility class)</h3>
+          <section class="docs-pattern_pattern">
+Lorem ipsum<br>
+<span class="u-small-text">dolor sit amet</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">Lorem ipsum&lt;br&gt;
+&lt;span class=&quot;u-small-text&quot;&gt;dolor sit amet&lt;/span&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\nLorem ipsum&lt;br&gt;\n&lt;span class=\&amp;quot;u-small-text\&amp;quot;&gt;dolor sit amet&lt;/span&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-small-text</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>14px text.</li>
+              <li>The utility class should only be used when the default text size is 16px. For example you wouldn't want to use the class inside of an `h1` because the `font-size` in the `h1` will make `.u-small-text` bigger than it should be. See the docs for the `.u-small-text()` mixin.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.u-small-text() (Less mixin)</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.u-small-text(@context)</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>// Mixin usage:
+.example {
+  font-size: unit(20px / @base-font-size-px, em);
+  small {
+    .u-small-text(20px);
+  }
+}
+// Compiles to:
+.example {
+  font-size: 1.25em;
+}
+.example small {
+  font-size: 0.7em;
+}</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>This mixin enables you to easily create consistent small text by passing the context `font-size`.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-small-text {
+  font-size: 0.875em;
+}
+
+small {
+  font-size: 0.875em;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="width-utilities" class="docs-component">
       <h2 class="docs-component_header"><span>Width utilities</span></h2>
       <div class="docs-patterns">

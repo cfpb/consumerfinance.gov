@@ -45,6 +45,11 @@
     {{ contact.zip_code if contact.zip_code }}
 {% endmacro %}
 
+{# Format time to: `XX:XX a.m. &ndash; XX:XX p.m.` when given a date object #}
+{% macro format_time(datetime) %}
+    {{- datetime|date('%I:%M&nbsp;%p')|replace('PM', 'p.m.')|replace('AM', 'a.m.')|safe -}}
+{% endmacro %}
+
 {# Make share icons when given a title for the share by email link.
    You can turn on the heading by passing a boolena for the second parameter. #}
 {% macro share(title, show_header=false) %}

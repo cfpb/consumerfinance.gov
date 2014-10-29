@@ -134,11 +134,26 @@
     =================
 -->
 
-<div class="demo-banner">
-    cfgov-refresh demo: <b>{% block demo_title %}MISSING DEMO TITLE{% endblock demo_title %}</b>
-    <a class="demo-banner_back-link" href="/">
-        <span class="cf-icon cf-icon-left"></span> Back to demo home
-    </a>
+<div class="beta-banner expandable" id="beta-banner">
+    <div class="wrapper wrapper__match-content">
+        <div class="beta-banner_head">
+            <span class="cf-icon cf-icon-error-round beta-banner_icon"></span>
+            This beta site is a work in progress.
+        </div>
+        <p class="beta-banner_desc expandable_content">
+            We're prototyping new designs. Expect some errors and inaccuracies.
+            Accurate information continues at
+            <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
+        </p>
+        <button class="btn beta-banner_btn expandable_target" id="beta-banner_btn">
+            <span class="expandable_cue-close">
+                Collapse <span class="cf-icon cf-icon-up"></span>
+            </span>
+            <span class="expandable_cue-open">
+                More info <span class="cf-icon cf-icon-down"></span>
+            </span>
+        </button>
+    </div>
 </div>
 
 <div class="sliding-nav">
