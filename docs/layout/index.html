@@ -111,6 +111,7 @@
   .wrapper__match-content {
     padding-left: 30px;
     padding-right: 30px;
+    max-width: 1140px;
   }
 }
 .lt-ie9 .wrapper {
@@ -212,7 +213,7 @@
 }
 @media only all and (max-width: 50em) {
   .header_logo {
-    width: 160px;
+    width: 190px;
     height: 40px;
     margin: 10px;
   }
@@ -229,7 +230,7 @@
 @media only all and (min-width: 50.0625em) {
   .header_misc {
     display: block;
-    margin: 30px 15px 15px;
+    margin: 52px 15px 15px;
     position: absolute;
     top: 0;
     right: 15px;
@@ -541,14 +542,14 @@
   .sliding-nav_trigger {
     display: block;
     width: 60px;
-    padding: 10px;
+    height: 60px;
+    padding: 19px 10px 17px;
     border: none;
     border-right: 1px solid #babbbd;
     float: left;
     background: #ffffff;
     color: #75787b;
     font-size: 1.5em;
-    line-height: 40px;
   }
   .sliding-nav_trigger:focus {
     outline: 1px dotted #101820;
@@ -569,7 +570,7 @@
   }
   .primary-nav {
     position: absolute;
-    top: 116px;
+    top: 100px;
     right: 0;
     left: 0;
     z-index: 100;
@@ -596,7 +597,7 @@
   .primary-nav_top-level-list &gt; .list_item &gt; .list_link {
     display: block;
     padding-bottom: 30px;
-    margin: 0 15px;
+    margin: 0 0 0 15px;
     font-size: 1.125em;
   }
   .desktop-menu_full-wrapper {
@@ -678,6 +679,11 @@
     margin-bottom: 0;
   }
   .desktop-menu_horizontal-list.list__horizontal &gt; .list_item {
+    margin: 0 15px;
+  }
+}
+@media only all and (min-width: 64em) {
+  .primary-nav_top-level-list &gt; .list_item &gt; .list_link {
     margin: 0 15px;
   }
 }</code></pre>

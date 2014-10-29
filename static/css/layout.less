@@ -52,6 +52,7 @@
         .respond-to-min(600px, {
             padding-left: @grid_gutter-width;
             padding-right: @grid_gutter-width;
+            max-width: 1140px;
         });
     }
 }
@@ -123,7 +124,7 @@
     vertical-align: middle; // removes typical inline vertical whitespace
 
     .respond-to-max(800px, {
-        width: 160px;
+        width: 190px;
         height: 40px;
         margin: 10px;
     });
@@ -142,7 +143,8 @@
 
     .respond-to-min(801px, {
         display: block;
-        margin: @grid_gutter-width
+        // magic number for top margin aligns text baseline with logo baseline
+        margin: 52px
                 (@grid_gutter-width / 2)
                 (@grid_gutter-width / 2);
         position: absolute;
@@ -366,14 +368,14 @@
     .sliding-nav_trigger {
         display: block;
         width: 60px;
-        padding: 10px;
+        height: 60px;
+        padding: 19px 10px 17px;
         border: none;
         border-right: 1px solid @gray-50;
         float: left;
         background: @white;
         color: @gray;
         font-size: 1.5em;
-        line-height: 40px;
 
         &:focus {
             outline: 1px dotted @black;
@@ -402,7 +404,7 @@
 
     .primary-nav {
         position: absolute;
-        top: 116px; // magic number - dependent on height of logo and its vertical padding
+        top: 100px; // magic number - dependent on height of logo and its vertical padding
         right: 0;
         left: 0;
         z-index: 100;
@@ -435,7 +437,7 @@
     .primary-nav_top-level-list > .list_item > .list_link {
         display: block;
         padding-bottom: @grid_gutter-width;
-        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+        margin: 0 0 0 (@grid_gutter-width / 2); // margin on link for larger hit area
         font-size: unit(18px / @base-font-size-px, em);
     }
 
@@ -495,6 +497,12 @@
         margin: 0 @grid_gutter-width / 2;
     }
 
+});
+
+.respond-to-min(1024px, {
+    .primary-nav_top-level-list > .list_item > .list_link {
+        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+    }
 });
 
 
