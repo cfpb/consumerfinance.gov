@@ -10,7 +10,7 @@
   "authors": [
     {
       "name": "Consumer Financial Protection Bureau",
-      "url": "http://cfpb.github.io/"
+      "url": "https://cfpb.github.io/"
     }
   ],
   "homepage": "https://github.com/cfpb/cfgov-refresh",
@@ -22,7 +22,7 @@
   "dependencies": {
     "cf-buttons": "git://github.com/cfpb/cf-buttons.git#1.3.0",
     "cf-core": "git://github.com/cfpb/cf-core.git#0.5.0",
-    "cf-expandables": "git://github.com/cfpb/cf-expandables.git#0.5.2",
+    "cf-expandables": "git://github.com/cfpb/cf-expandables.git#0.6.1",
     "cf-forms": "git://github.com/cfpb/cf-forms.git#1.1.0",
     "cf-grid": "git://github.com/cfpb/cf-grid.git#0.9.0",
     "cf-icons": "git://github.com/cfpb/cf-icons.git#0.4.0",
