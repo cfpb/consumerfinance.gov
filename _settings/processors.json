@@ -1,4 +1,9 @@
 {
+  "calendar_event": {
+    "url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
+    "processor": "django_calendar_event_processor",
+    "mappings":   "_settings/calendar_event_mappings.json"
+  },
   "contact": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=contact",
     "processor":  "wordpress_contact_processor",
