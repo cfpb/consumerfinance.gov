@@ -13323,10 +13323,10 @@ a.focus .summary_header {
   name: Post previews
   family: cfgov-blog-docs
   patterns:
-    - name: Top Stories
+    - name: Featured Topic
       markup: |
-        <article class="top-stories summary">
-            <h1 class="summary_header summary_header__large">Top Stories header</h1>
+        <article class="featured-topic summary">
+            <h1 class="summary_header summary_header__large">Featured Topic header</h1>
             <div class="summary_cols">
                 <div class="summary_col">
                     <p class="summary_text summary_text__dark">
@@ -13372,7 +13372,7 @@ a.focus .summary_header {
         </article>
       codenotes:
         - |
-          .top-stories.summary
+          .featured-topic.summary
             .summary__header.summary_header__large
             .summary_cols
               .summary_col
@@ -13474,7 +13474,7 @@ a.focus .summary_header {
   tags:
     - cfgov-blog-docs
 */
-.top-stories {
+.featured-topic {
   margin-bottom: 3.75em;
 }
 .post-preview + .post-preview {
