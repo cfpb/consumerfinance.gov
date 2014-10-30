@@ -6644,7 +6644,7 @@ tbody tr {
   }
 }
 /* topdoc
-  name: Simple base style modifiers
+  name: Figure updates
   family: cfgov-cf-enhancements
   patterns:
     - name: figure.figure__bordered
@@ -6655,6 +6655,9 @@ tbody tr {
   tags:
     - cfgov-cf-enhancements
 */
+figure img {
+  vertical-align: middle;
+}
 .figure__bordered img {
   border: 1px solid #babbbd;
 }
@@ -10439,6 +10442,9 @@ a.category-slug.active {
 }
 @media only all and (max-width: 37.4375em) {
   .jump-link {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
     padding: 0.625em 1.25em 0.625em 0;
     border: dotted #0072ce;
@@ -13317,10 +13323,10 @@ a.focus .summary_header {
   name: Post previews
   family: cfgov-blog-docs
   patterns:
-    - name: Watchroom
+    - name: Top Stories
       markup: |
-        <article class="watchroom summary">
-            <h1 class="summary_header summary_header__large">Watchroom header</h1>
+        <article class="top-stories summary">
+            <h1 class="summary_header summary_header__large">Top Stories header</h1>
             <div class="summary_cols">
                 <div class="summary_col">
                     <p class="summary_text summary_text__dark">
@@ -13366,7 +13372,7 @@ a.focus .summary_header {
         </article>
       codenotes:
         - |
-          .watchroom.summary
+          .top-stories.summary
             .summary__header.summary_header__large
             .summary_cols
               .summary_col
@@ -13468,7 +13474,7 @@ a.focus .summary_header {
   tags:
     - cfgov-blog-docs
 */
-.watchroom {
+.top-stories {
   margin-bottom: 3.75em;
 }
 .post-preview + .post-preview {
@@ -16035,7 +16041,7 @@ a.focus .summary_header {
     padding: 15px;
     margin: 0;
     position: absolute;
-    top: 0;
+    top: 1px;
     right: 0;
     color: #101820;
     border-color: #101820;
@@ -16087,9 +16093,19 @@ a.focus .summary_header {
     color: #101820;
   }
 }
+@media only all and (max-width: 37.4375em) {
+  .beta-banner_btn {
+    font-size: 1em;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .beta-banner_btn {
+    right: 15px;
+  }
+}
 @media only all and (min-width: 50.0625em) {
   .beta-banner_btn {
-    top: -11px;
+    top: -12px;
   }
 }
 .beta-hero {
