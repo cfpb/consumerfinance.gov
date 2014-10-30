@@ -7551,7 +7551,7 @@ tbody tr {
 }
 
 /* topdoc
-  name: Simple base style modifiers
+  name: Figure updates
   family: cfgov-cf-enhancements
   patterns:
     - name: figure.figure__bordered
@@ -7562,6 +7562,10 @@ tbody tr {
   tags:
     - cfgov-cf-enhancements
 */
+
+figure img {
+  vertical-align: middle;
+}
 
 .figure__bordered img {
   border: 1px solid #babbbd;
@@ -13996,10 +14000,10 @@ a.focus .summary_header {
   name: Post previews
   family: cfgov-blog-docs
   patterns:
-    - name: Watchroom
+    - name: Top Stories
       markup: |
-        <article class="watchroom summary">
-            <h1 class="summary_header summary_header__large">Watchroom header</h1>
+        <article class="top-stories summary">
+            <h1 class="summary_header summary_header__large">Top Stories header</h1>
             <div class="summary_cols">
                 <div class="summary_col">
                     <p class="summary_text summary_text__dark">
@@ -14045,7 +14049,7 @@ a.focus .summary_header {
         </article>
       codenotes:
         - |
-          .watchroom.summary
+          .top-stories.summary
             .summary__header.summary_header__large
             .summary_cols
               .summary_col
@@ -14148,7 +14152,7 @@ a.focus .summary_header {
     - cfgov-blog-docs
 */
 
-.watchroom {
+.top-stories {
   margin-bottom: 3.75em;
 }
 
@@ -16516,7 +16520,7 @@ a.focus .summary_header {
   padding: 15px;
   margin: 0;
   position: absolute;
-  top: 0;
+  top: 1px;
   right: 0;
   color: #101820;
   border-color: #101820;
@@ -16577,7 +16581,11 @@ a.focus .summary_header {
 }
 
 .beta-banner_btn {
-  top: -11px;
+  right: 15px;
+}
+
+.beta-banner_btn {
+  top: -12px;
 }
 
 .beta-hero {
