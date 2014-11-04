@@ -2343,7 +2343,7 @@ button.expandable_header {
 }
 .expandable-group .expandable_label {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -4740,6 +4740,8 @@ input[type="text"].pagination_current-page {
         - "@base-font-size-px: 16px;"
         - "@base-line-height-px: 22px;"
         - "@base-line-height: unit(@base-line-height-px / @base-font-size-px);"
+        - "@mobile-max: 599px;"
+        - "@tablet-min: 600px;"
   tags:
     - cf-core
 */
@@ -5169,6 +5171,68 @@ input[type="text"].pagination_current-page {
     - cf-core
 */
 /* topdoc
+  name: Margin utilities
+  family: cf-core
+  patterns:
+    - name: Utility classes
+      codenotes:
+        - .u-m<p><#>;
+      notes:
+        - "Replace <p> with the first letter of the position ('t' for top or 'b'
+           for bottom) and <#> with the pixel value of the margin you want."
+        - "Available values: 0, 5, 10, 15, 20, 30, 45, 60."
+  tags:
+    - cf-core
+*/
+.u-mt0 {
+  margin-top: 0 !important;
+}
+.u-mb0 {
+  margin-bottom: 0 !important;
+}
+.u-mt5 {
+  margin-top: 5px !important;
+}
+.u-mb5 {
+  margin-bottom: 5px !important;
+}
+.u-mt10 {
+  margin-top: 10px !important;
+}
+.u-mb10 {
+  margin-bottom: 10px !important;
+}
+.u-mt15 {
+  margin-top: 15px !important;
+}
+.u-mb15 {
+  margin-bottom: 15px !important;
+}
+.u-mt20 {
+  margin-top: 20px !important;
+}
+.u-mb20 {
+  margin-bottom: 20px !important;
+}
+.u-mt30 {
+  margin-top: 30px !important;
+}
+.u-mb30 {
+  margin-bottom: 30px !important;
+}
+.u-mt45 {
+  margin-top: 45px !important;
+}
+.u-mb45 {
+  margin-bottom: 45px !important;
+}
+.u-mt60 {
+  margin-top: 60px !important;
+}
+.u-mb60 {
+  margin-bottom: 60px !important;
+}
+/* topdoc
     name: EOF
     eof: true
 */
@@ -5279,14 +5343,20 @@ input[type="text"].pagination_current-page {
       markup: |
         <h1>Example heading element</h1>
         <p class="h1">A non-heading element</p>
+      notes:
+        - Responsive header. At mobile sizes, displays as h2.
     - name: Heading level 2
       markup: |
         <h2>Example heading element</h2>
         <p class="h2">A non-heading element</p>
+      notes:
+        - Responsive header. At mobile sizes, displays as h3.
     - name: Heading level 3
       markup: |
         <h3>Example heading element</h3>
         <p class="h3">A non-heading element</p>
+      notes:
+        - Responsive header. At mobile sizes, displays as h4.
     - name: Heading level 4
       markup: |
         <h4>Example heading element</h4>
@@ -5389,24 +5459,192 @@ h1,
   font-size: 2.125em;
   line-height: 1.29411765;
 }
+@media only all and (max-width: 37.4375em) {
+  h1,
+  .h1 {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.73076923em;
+    font-size: 1.625em;
+    line-height: 1.26923077;
+  }
+  h1 em,
+  .h1 em,
+  h1 i,
+  .h1 i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 h1 em,
+  .lt-ie9 .h1 em,
+  .lt-ie9 h1 i,
+  .lt-ie9 .h1 i {
+    font-style: normal !important;
+  }
+  h1 strong,
+  .h1 strong,
+  h1 b,
+  .h1 b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 h1 strong,
+  .lt-ie9 .h1 strong,
+  .lt-ie9 h1 b,
+  .lt-ie9 .h1 b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  h1,
+  .h1 {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  h1 em,
+  .h1 em,
+  h1 i,
+  .h1 i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 h1 em,
+  .lt-ie9 .h1 em,
+  .lt-ie9 h1 i,
+  .lt-ie9 .h1 i {
+    font-style: normal !important;
+  }
+  h1 strong,
+  .h1 strong,
+  h1 b,
+  .h1 b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 h1 strong,
+  .lt-ie9 .h1 strong,
+  .lt-ie9 h1 b,
+  .lt-ie9 .h1 b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  h1,
+  .h1 {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 h1,
+  .lt-ie9 .h1 {
+    font-weight: normal !important;
+  }
+}
 h2,
 .h2 {
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
+}
+@media only all and (max-width: 37.4375em) {
+  h2,
+  .h2 {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  h2 em,
+  .h2 em,
+  h2 i,
+  .h2 i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 h2 em,
+  .lt-ie9 .h2 em,
+  .lt-ie9 h2 i,
+  .lt-ie9 .h2 i {
+    font-style: normal !important;
+  }
+  h2 strong,
+  .h2 strong,
+  h2 b,
+  .h2 b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 h2 strong,
+  .lt-ie9 .h2 strong,
+  .lt-ie9 h2 b,
+  .lt-ie9 .h2 b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  h2,
+  .h2 {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 h2,
+  .lt-ie9 .h2 {
+    font-weight: normal !important;
+  }
 }
 h3,
 .h3 {
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
+}
+@media only all and (max-width: 37.4375em) {
+  h3,
+  .h3 {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 h3,
+  .lt-ie9 .h3 {
+    font-weight: normal !important;
+  }
 }
 h4,
 .h4 {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -5823,7 +6061,7 @@ blockquote {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.54545455em;
@@ -5849,6 +6087,20 @@ blockquote {
 .lt-ie9 .pull-quote_body b {
   font-weight: normal !important;
 }
+@media only all and (max-width: 37.4375em) {
+  .pull-quote_body {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .pull-quote_body {
+    font-weight: normal !important;
+  }
+}
 .pull-quote_citation {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
@@ -5869,7 +6121,7 @@ blockquote {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.69230769em;
@@ -5893,6 +6145,51 @@ blockquote {
 .lt-ie9 .pull-quote__large .pull-quote_body strong,
 .lt-ie9 .pull-quote__large .pull-quote_body b {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .pull-quote__large .pull-quote_body {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .pull-quote__large .pull-quote_body em,
+  .pull-quote__large .pull-quote_body i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .pull-quote__large .pull-quote_body em,
+  .lt-ie9 .pull-quote__large .pull-quote_body i {
+    font-style: normal !important;
+  }
+  .pull-quote__large .pull-quote_body strong,
+  .pull-quote__large .pull-quote_body b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .pull-quote__large .pull-quote_body strong,
+  .lt-ie9 .pull-quote__large .pull-quote_body b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .pull-quote__large .pull-quote_body {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .pull-quote__large .pull-quote_body {
+    font-weight: normal !important;
+  }
 }
 /* topdoc
     name: Form labels
@@ -6061,6 +6358,21 @@ select[multiple].focus {
   color: #75787b;
 }
 /* topdoc
+  name: Images
+  family: cf-core
+  patterns:
+    - name: max-width
+      markup: |
+            <img src="http://placekitten.com/800/40" alt="">
+      notes:
+        - "Gives all images a default max-width of 100% of their container."
+  tags:
+    - cf-core
+*/
+img {
+  max-width: 100%;
+}
+/* topdoc
   name: EOF
   eof: true
 */
@@ -6104,7 +6416,7 @@ select[multiple].focus {
 }
 .beta-banner_head {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -9391,7 +9703,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 .tags_header {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -9552,7 +9864,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 */
 .category-slug {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12163,7 +12475,7 @@ a.category-slug.active {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.5em;
@@ -12187,6 +12499,51 @@ a.category-slug.active {
 .lt-ie9 .post_header strong,
 .lt-ie9 .post_header b {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .post_header {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .post_header em,
+  .post_header i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .post_header em,
+  .lt-ie9 .post_header i {
+    font-style: normal !important;
+  }
+  .post_header strong,
+  .post_header b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .post_header strong,
+  .lt-ie9 .post_header b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .post_header {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .post_header {
+    font-weight: normal !important;
+  }
 }
 @media only all and (min-width: 37.5em) {
   .post_header {
@@ -12220,9 +12577,85 @@ a.category-slug.active {
     font-weight: normal !important;
   }
 }
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
+  .post_header {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.73076923em;
+    font-size: 1.625em;
+    line-height: 1.26923077;
+  }
+  .post_header em,
+  .post_header i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .post_header em,
+  .lt-ie9 .post_header i {
+    font-style: normal !important;
+  }
+  .post_header strong,
+  .post_header b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .post_header strong,
+  .lt-ie9 .post_header b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .post_header {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .post_header em,
+  .post_header i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .post_header em,
+  .lt-ie9 .post_header i {
+    font-style: normal !important;
+  }
+  .post_header strong,
+  .post_header b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .post_header strong,
+  .lt-ie9 .post_header b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .post_header {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .post_header {
+    font-weight: normal !important;
+  }
+}
 .post_dek {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12238,7 +12671,7 @@ a.category-slug.active {
 }
 .post_byline {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12315,7 +12748,7 @@ a.category-slug.active {
 .popular-stories .list_link,
 .related-posts .list_link {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12364,7 +12797,7 @@ a.category-slug.active {
     font-style: normal;
     font-weight: normal;
     margin-top: 0;
-    margin-bottom: 0.22727273em;
+    margin-bottom: 0.95454545em;
     font-size: 1.375em;
     line-height: 1.27272727;
   }
@@ -12394,6 +12827,22 @@ a.category-slug.active {
   .lt-ie9 .related-posts .list_link strong,
   .lt-ie9 .popular-stories .list_link b,
   .lt-ie9 .related-posts .list_link b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
+  .popular-stories .list_link,
+  .related-posts .list_link {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .popular-stories .list_link,
+  .lt-ie9 .related-posts .list_link {
     font-weight: normal !important;
   }
 }
@@ -12502,7 +12951,7 @@ a.category-slug.active {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.45454545em;
@@ -12533,13 +12982,27 @@ a.focus .summary_header {
 .lt-ie9 .summary_header b {
   font-weight: normal !important;
 }
+@media only all and (max-width: 37.4375em) {
+  .summary_header {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .summary_header {
+    font-weight: normal !important;
+  }
+}
 @media only all and (min-width: 37.5em) {
   .summary_header {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
     margin-top: 0;
-    margin-bottom: 0.30769231em;
+    margin-bottom: 0.73076923em;
     font-size: 1.625em;
     line-height: 1.26923077;
     margin-bottom: 0.34615385em;
@@ -12562,6 +13025,51 @@ a.focus .summary_header {
   }
   .lt-ie9 .summary_header strong,
   .lt-ie9 .summary_header b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
+  .summary_header {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .summary_header em,
+  .summary_header i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .summary_header em,
+  .lt-ie9 .summary_header i {
+    font-style: normal !important;
+  }
+  .summary_header strong,
+  .summary_header b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .summary_header strong,
+  .lt-ie9 .summary_header b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .summary_header {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .summary_header {
     font-weight: normal !important;
   }
 }
@@ -12732,7 +13240,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.61538462em;
@@ -12756,6 +13264,51 @@ a.focus .summary_header {
 .lt-ie9 .summary_header__large strong,
 .lt-ie9 .summary_header__large b {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .summary_header__large {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .summary_header__large em,
+  .summary_header__large i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .summary_header__large em,
+  .lt-ie9 .summary_header__large i {
+    font-style: normal !important;
+  }
+  .summary_header__large strong,
+  .summary_header__large b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .summary_header__large strong,
+  .lt-ie9 .summary_header__large b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .summary_header__large {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .summary_header__large {
+    font-weight: normal !important;
+  }
 }
 @media only all and (min-width: 37.5em) {
   .summary_header__large {
@@ -12786,6 +13339,82 @@ a.focus .summary_header {
   }
   .lt-ie9 .summary_header__large strong,
   .lt-ie9 .summary_header__large b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
+  .summary_header__large {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.73076923em;
+    font-size: 1.625em;
+    line-height: 1.26923077;
+  }
+  .summary_header__large em,
+  .summary_header__large i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .summary_header__large em,
+  .lt-ie9 .summary_header__large i {
+    font-style: normal !important;
+  }
+  .summary_header__large strong,
+  .summary_header__large b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .summary_header__large strong,
+  .lt-ie9 .summary_header__large b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .summary_header__large {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .summary_header__large em,
+  .summary_header__large i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .summary_header__large em,
+  .lt-ie9 .summary_header__large i {
+    font-style: normal !important;
+  }
+  .summary_header__large strong,
+  .summary_header__large b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .summary_header__large strong,
+  .lt-ie9 .summary_header__large b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .summary_header__large {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .summary_header__large {
     font-weight: normal !important;
   }
 }
@@ -13399,7 +14028,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
 }
@@ -13422,6 +14051,20 @@ a.focus .summary_header {
 .lt-ie9 .press-section_title strong,
 .lt-ie9 .press-section_title b {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .press-section_title {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .press-section_title {
+    font-weight: normal !important;
+  }
 }
 .press-contacts_people {
   margin-top: 1.75em;
@@ -13459,7 +14102,7 @@ a.focus .summary_header {
 }
 .contact-person_name {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -13493,7 +14136,7 @@ a.focus .summary_header {
 }
 .contact-person__director .contact-person_name {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -13513,7 +14156,7 @@ a.focus .summary_header {
     font-style: normal;
     font-weight: normal;
     margin-top: 0;
-    margin-bottom: 0.30769231em;
+    margin-bottom: 0.73076923em;
     font-size: 1.625em;
     line-height: 1.26923077;
     margin-bottom: 1.15384615em;
@@ -13587,7 +14230,7 @@ a.focus .summary_header {
     font-style: normal;
     font-weight: normal;
     margin-top: 0;
-    margin-bottom: 0.22727273em;
+    margin-bottom: 0.95454545em;
     font-size: 1.375em;
     line-height: 1.27272727;
     margin-bottom: 0.68181818em;
@@ -13633,6 +14276,65 @@ a.focus .summary_header {
     margin-right: 0;
     zoom: 1;
     behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 48em) and only all and (max-width: 37.4375em) {
+  .press-section_title {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .press-section_title em,
+  .press-section_title i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .press-section_title em,
+  .lt-ie9 .press-section_title i {
+    font-style: normal !important;
+  }
+  .press-section_title strong,
+  .press-section_title b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .press-section_title strong,
+  .lt-ie9 .press-section_title b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 48em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .press-section_title {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .press-section_title {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 48em) and only all and (max-width: 37.4375em) {
+  .contact-person__director .contact-person_name {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .contact-person__director .contact-person_name {
+    font-weight: normal !important;
   }
 }
 @media only all and (min-width: 64em) {
@@ -13700,7 +14402,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin: 0.72727273em 0 1.18181818em;
@@ -13724,6 +14426,20 @@ a.focus .summary_header {
 .lt-ie9 .type-and-filter_message strong,
 .lt-ie9 .type-and-filter_message b {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .type-and-filter_message {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .type-and-filter_message {
+    font-weight: normal !important;
+  }
 }
 @media only all and (min-width: 50.0625em) {
   .type-and-filter_message {
@@ -13822,7 +14538,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.86363636em;
@@ -13847,10 +14563,24 @@ a.focus .summary_header {
 .lt-ie9 .bureau-bio_name b {
   font-weight: normal !important;
 }
+@media only all and (max-width: 37.4375em) {
+  .bureau-bio_name {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .bureau-bio_name {
+    font-weight: normal !important;
+  }
+}
 @media only all and (max-width: 64em) {
   .bureau-bio_name {
     margin-top: 0;
-    margin-bottom: 0.27777778em;
+    margin-bottom: 1.16666667em;
     font-size: 1.125em;
     font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
     font-style: normal;
@@ -14052,7 +14782,7 @@ a.focus .summary_header {
 @media only all and (min-width: 37.5em) {
   .org-chart_branch_name {
     margin-top: 0;
-    margin-bottom: 0.27777778em;
+    margin-bottom: 1.16666667em;
     font-size: 1.125em;
     font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
     font-style: normal;
@@ -14517,7 +15247,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   padding: 0.45454545em 0.68181818em;
@@ -14546,6 +15276,20 @@ a.focus .summary_header {
 .lt-ie9 .history-year strong,
 .lt-ie9 .history-year b {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .history-year {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .history-year {
+    font-weight: normal !important;
+  }
 }
 @media only all and (min-width: 50.0625em) {
   .history-year {
@@ -15549,7 +16293,7 @@ a.focus .summary_header {
 }
 .beta-banner_head {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -15718,7 +16462,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
 }
@@ -15742,6 +16486,51 @@ a.focus .summary_header {
 .lt-ie9 .beta-hero_title b {
   font-weight: normal !important;
 }
+@media only all and (max-width: 37.4375em) {
+  .beta-hero_title {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .beta-hero_title em,
+  .beta-hero_title i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .beta-hero_title em,
+  .lt-ie9 .beta-hero_title i {
+    font-style: normal !important;
+  }
+  .beta-hero_title strong,
+  .beta-hero_title b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .beta-hero_title strong,
+  .lt-ie9 .beta-hero_title b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .beta-hero_title {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .beta-hero_title {
+    font-weight: normal !important;
+  }
+}
 @media only all and (min-width: 37.5625em) {
   .beta-hero_title {
     line-height: 1.375;
@@ -15761,7 +16550,7 @@ a.focus .summary_header {
 }
 .beta-hero_desc {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -15779,7 +16568,7 @@ a.focus .summary_header {
     font-style: normal;
     font-weight: normal;
     margin-top: 0;
-    margin-bottom: 0.30769231em;
+    margin-bottom: 0.73076923em;
     font-size: 1.625em;
     line-height: 1.26923077;
     margin-bottom: 1em;
@@ -15802,6 +16591,51 @@ a.focus .summary_header {
   }
   .lt-ie9 .beta-hero_desc strong,
   .lt-ie9 .beta-hero_desc b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5625em) and only all and (max-width: 37.4375em) {
+  .beta-hero_desc {
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0.95454545em;
+    font-size: 1.375em;
+    line-height: 1.27272727;
+  }
+  .beta-hero_desc em,
+  .beta-hero_desc i {
+    font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+  .lt-ie9 .beta-hero_desc em,
+  .lt-ie9 .beta-hero_desc i {
+    font-style: normal !important;
+  }
+  .beta-hero_desc strong,
+  .beta-hero_desc b {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .lt-ie9 .beta-hero_desc strong,
+  .lt-ie9 .beta-hero_desc b {
+    font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5625em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+  .beta-hero_desc {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .beta-hero_desc {
     font-weight: normal !important;
   }
 }
