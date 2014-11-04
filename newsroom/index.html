@@ -28,8 +28,8 @@
     {% set path = '/newsroom/' %}
     {% set rss_path = '/feed/newsroom/' %}
 
-    {# Get the latest Top Story. #}
-    {% set top_stories = queries.watchroom.search_with_url_arguments(size=1) %}
+    {# Get the latest Featured Topic #}
+    {% set featured_topic = queries.watchroom.search_with_url_arguments(size=1) %}
 
     {# Macros #}
 
@@ -51,7 +51,7 @@
                 <section>
                     {{ post_macros.filters('Filter posts', query, posts, 'newsroom',
                        ['category', 'tags', 'author', 'range_date']) }}
-                    {% include "top-stories.html" %}
+                    {% include "featured-topic.html" %}
                     {% include "posts-paginated.html" %}
                 </section>
                 <aside>
