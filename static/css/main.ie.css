@@ -2679,7 +2679,7 @@ button.expandable_header {
 
 .expandable-group .expandable_label {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -5495,6 +5495,8 @@ input[type="text"].pagination_current-page {
         - "@base-font-size-px: 16px;"
         - "@base-line-height-px: 22px;"
         - "@base-line-height: unit(@base-line-height-px / @base-font-size-px);"
+        - "@mobile-max: 599px;"
+        - "@tablet-min: 600px;"
   tags:
     - cf-core
 */
@@ -5950,6 +5952,85 @@ input[type="text"].pagination_current-page {
 */
 
 /* topdoc
+  name: Margin utilities
+  family: cf-core
+  patterns:
+    - name: Utility classes
+      codenotes:
+        - .u-m<p><#>;
+      notes:
+        - "Replace <p> with the first letter of the position ('t' for top or 'b'
+           for bottom) and <#> with the pixel value of the margin you want."
+        - "Available values: 0, 5, 10, 15, 20, 30, 45, 60."
+  tags:
+    - cf-core
+*/
+
+.u-mt0 {
+  margin-top: 0 !important;
+}
+
+.u-mb0 {
+  margin-bottom: 0 !important;
+}
+
+.u-mt5 {
+  margin-top: 5px !important;
+}
+
+.u-mb5 {
+  margin-bottom: 5px !important;
+}
+
+.u-mt10 {
+  margin-top: 10px !important;
+}
+
+.u-mb10 {
+  margin-bottom: 10px !important;
+}
+
+.u-mt15 {
+  margin-top: 15px !important;
+}
+
+.u-mb15 {
+  margin-bottom: 15px !important;
+}
+
+.u-mt20 {
+  margin-top: 20px !important;
+}
+
+.u-mb20 {
+  margin-bottom: 20px !important;
+}
+
+.u-mt30 {
+  margin-top: 30px !important;
+}
+
+.u-mb30 {
+  margin-bottom: 30px !important;
+}
+
+.u-mt45 {
+  margin-top: 45px !important;
+}
+
+.u-mb45 {
+  margin-bottom: 45px !important;
+}
+
+.u-mt60 {
+  margin-top: 60px !important;
+}
+
+.u-mb60 {
+  margin-bottom: 60px !important;
+}
+
+/* topdoc
     name: EOF
     eof: true
 */
@@ -6072,14 +6153,20 @@ input[type="text"].pagination_current-page {
       markup: |
         <h1>Example heading element</h1>
         <p class="h1">A non-heading element</p>
+      notes:
+        - Responsive header. At mobile sizes, displays as h2.
     - name: Heading level 2
       markup: |
         <h2>Example heading element</h2>
         <p class="h2">A non-heading element</p>
+      notes:
+        - Responsive header. At mobile sizes, displays as h3.
     - name: Heading level 3
       markup: |
         <h3>Example heading element</h3>
         <p class="h3">A non-heading element</p>
+      notes:
+        - Responsive header. At mobile sizes, displays as h4.
     - name: Heading level 4
       markup: |
         <h4>Example heading element</h4>
@@ -6193,7 +6280,7 @@ h1,
 h2,
 .h2 {
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
 }
@@ -6201,7 +6288,7 @@ h2,
 h3,
 .h3 {
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
 }
@@ -6209,7 +6296,7 @@ h3,
 h4,
 .h4 {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -6662,7 +6749,7 @@ blockquote {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.54545455em;
@@ -6715,7 +6802,7 @@ blockquote {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.69230769em;
@@ -6926,6 +7013,23 @@ select[multiple].focus {
 }
 
 /* topdoc
+  name: Images
+  family: cf-core
+  patterns:
+    - name: max-width
+      markup: |
+            <img src="http://placekitten.com/800/40" alt="">
+      notes:
+        - "Gives all images a default max-width of 100% of their container."
+  tags:
+    - cf-core
+*/
+
+img {
+  max-width: 100%;
+}
+
+/* topdoc
   name: EOF
   eof: true
 */
@@ -6972,7 +7076,7 @@ select[multiple].focus {
 
 .beta-banner_head {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -10120,7 +10224,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 
 .tags_header {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -10289,7 +10393,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 
 .category-slug {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12855,7 +12959,7 @@ a.hero_card {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.5em;
@@ -12922,7 +13026,7 @@ a.hero_card {
 
 .post_dek {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12941,7 +13045,7 @@ a.hero_card {
 
 .post_byline {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -12981,7 +13085,7 @@ a.hero_card {
 .popular-stories .list_link,
 .related-posts .list_link {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -13035,7 +13139,7 @@ a.hero_card {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
 }
@@ -13184,7 +13288,7 @@ a.hero_card {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.45454545em;
@@ -13226,7 +13330,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.34615385em;
@@ -13439,7 +13543,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 0.61538462em;
@@ -14131,7 +14235,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
 }
@@ -14201,7 +14305,7 @@ a.focus .summary_header {
 
 .contact-person_name {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -14241,7 +14345,7 @@ a.focus .summary_header {
 
 .contact-person__director .contact-person_name {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -14263,7 +14367,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 1.15384615em;
@@ -14349,7 +14453,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.68181818em;
@@ -14433,7 +14537,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin: 0.72727273em 0 1.18181818em;
@@ -14531,7 +14635,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   margin-bottom: 0.86363636em;
@@ -14563,7 +14667,7 @@ a.focus .summary_header {
 
 .bureau-bio_name {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -14761,7 +14865,7 @@ a.focus .summary_header {
 
 .org-chart_branch_name {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -15162,7 +15266,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.22727273em;
+  margin-bottom: 0.95454545em;
   font-size: 1.375em;
   line-height: 1.27272727;
   padding: 0.45454545em 0.68181818em;
@@ -16068,7 +16172,7 @@ a.focus .summary_header {
 
 .beta-banner_head {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -16229,7 +16333,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
 }
@@ -16278,7 +16382,7 @@ a.focus .summary_header {
 
 .beta-hero_desc {
   margin-top: 0;
-  margin-bottom: 0.27777778em;
+  margin-bottom: 1.16666667em;
   font-size: 1.125em;
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -16297,7 +16401,7 @@ a.focus .summary_header {
   font-style: normal;
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 0.30769231em;
+  margin-bottom: 0.73076923em;
   font-size: 1.625em;
   line-height: 1.26923077;
   margin-bottom: 1em;
