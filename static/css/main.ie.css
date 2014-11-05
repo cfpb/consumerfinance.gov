@@ -9366,32 +9366,6 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 }
 
 /* topdoc
-  name: Margin overrides
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Margin-bottom 0
-      markup: |
-        <section>
-            <h1>H1 with default bottom margin</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </section>
-        <section>
-            <h1 class="u-mb0">H1 with class u-mb0 applied</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </section>
-      codenotes:
-        - ".u-mb0"
-      notes:
-        - "Sets any element's margin-bottom value to 0."
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-.u-mb0 {
-  margin-bottom: 0px !important;
-}
-
-/* topdoc
   name: Branded list modifier
   family: cfgov-cf-enhancements
   patterns:

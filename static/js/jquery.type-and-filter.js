@@ -62,17 +62,13 @@
                     $this.trigger('attemptSearch');
                 });
             } else {
-                $input.on( 'keyup', function() {
+                $input.on( 'keyup paste', function() {
                     $this.trigger('attemptSearch');
                 });
             }
             // Show the clear button only when there is text in the input.
-            $input.on( 'keyup', function() {
-                if ( $input.val().length > 0 ) {
-                    $clear.show();
-                } else {
-                    $clear.hide();
-                }
+            $input.on( 'keyup paste', function() {
+                $input.trigger('valChange');
             });
             // Reset everything when the clear button is pressed
             $clear.on( 'click', function () {
@@ -100,9 +96,10 @@
                 // Reset/clear the plugin.
                 .on( 'clear', function () {
                     searchTerm = '';
-                    $input.val('');
-                    $input.focus();
-                    $clear.hide();
+                    $input
+                      .val('')
+                      .trigger('valChange')
+                      .focus();
                     $items.show();
                     resultsCount = $items.filter(':visible').length;
                     $messages.trigger('allItems');
@@ -138,6 +135,15 @@
                     var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
                     $messages.html( html );
                 });
+            $input
+                // Show clear button if the input contains text; hide if empty.
+                .on( 'valChange', function () {
+                    if ( $input.val().length > 0 ) {
+                        $clear.show();
+                    } else {
+                        $clear.hide();
+                    }
+                });
 
             //
             // Initial dom manipulation setup.
@@ -145,7 +151,7 @@
 
             resultsCount = $items.length;
             // Hide the clear button unless there is text in the input.
-            $clear.hide();
+            $input.trigger('valChange');
             // Set aria attributes
             $messages.attr( 'aria-live', 'polite' );
             // All items are visible by default so show the appropriate message.
