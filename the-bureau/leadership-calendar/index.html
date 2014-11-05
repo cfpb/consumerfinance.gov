@@ -40,10 +40,10 @@
                         content__flush-bottom">
                 <section>
 
-                    <div class="content_block
-                                content_block__flush-top
-                                content_block__padded-bottom
-                                content_block__border-bottom">
+                    <div class="block
+                                block__flush-top
+                                block__padded-bottom
+                                block__border-bottom">
                         <h1 class="content_title__medium">
                             At the Consumer Financial Protection Bureau, we are committed to letting you
                             know how we’re working for you every day by, among other things, providing you
@@ -64,7 +64,7 @@
 
                     <div id="pagination_content"></div>
 
-                    <div class="content_block content_block__flush-top">
+                    <div class="block block__flush-top">
 
                     {% set query = queries.calendar_event %}
                     {% set posts = query.search_with_url_arguments(size=20) %}
@@ -73,7 +73,7 @@
                            ['calendar', 'range_date']) }}
 
                     {% for days in posts|groupby('day')|reverse %}
-                        <table class="u-w100pct content_block content_block__flush-top">
+                        <table class="u-w100pct block block__flush-top">
                             <colgroup>
                                 <col class="u-w25pct">
                                 <col class="u-w25pct">
@@ -124,9 +124,9 @@
 
                     {{ post_macros.pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
 
-                    <!-- <section class="content_block
-                                content_block__padded-top
-                                content_block__border-top">
+                    <!-- <section class="block
+                                block__padded-top
+                                block__border-top">
                         <h1 class="content_title__large">
                             Download a copy
                         </h1>
@@ -148,10 +148,10 @@
                         </p>
                     </section> -->
 
-                    <aside class="content_block
-                                  content_block__flush-bottom
-                                  content_block__flush-sides
-                                  content_block__bg">
+                    <aside class="block
+                                  block__flush-bottom
+                                  block__flush-sides
+                                  block__bg">
                         <div class="content-l">
                             <div class="content-l_col content-l_col-1-2">
                                 <h1 class="header-slug">
