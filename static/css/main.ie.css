@@ -9493,12 +9493,12 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 
 /* ==========================================================================
    cfgov-refresh
-   layout
+   header
    ========================================================================== */
 
 /* topdoc
   name: Header
-  family: cfgov-layout
+  family: cfgov-header
   patterns:
     - name: Logo
       markup: |
@@ -9537,7 +9537,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
            purposes in these docs, because the `.header_misc` div is positioned
            absolutely."
   tags:
-    - cfgov-layout
+    - cfgov-header
 */
 
 .header_logo {
@@ -9649,7 +9649,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 
 /* topdoc
   name: Primary navigation
-  family: cfgov-layout
+  family: cfgov-header
   patterns:
     - name: TBD
       markup: |
@@ -9657,7 +9657,7 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
       notes:
         - 
   tags:
-    - cfgov-layout
+    - cfgov-header
 */
 
 .primary-nav_top-level-list > .list_item > .list_link {
