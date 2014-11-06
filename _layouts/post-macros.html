@@ -196,7 +196,7 @@
 {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
 {% if active_filters_total > 0 %}
-    <dl class="filtered-by filtered-by__show-on-medium filtered-by__align-with-btn list list__horizontal">
+    <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
         <dt class="list_item">
             <span class="filtered-by_header">
             {%- if posts|list|length > 0 -%}
