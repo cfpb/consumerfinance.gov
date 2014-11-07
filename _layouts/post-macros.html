@@ -126,34 +126,70 @@
 
 
 {# ==========================================================================
+
    filters()
 
    Create an expandable of post filters when given:
 
-   label:       The label you want on the expandable button
-   query:       The post type query object like `queries.posts`.
-                Needed so we can utilize `query.possible_values_for()` to get
-                access to the values of each filter.
-   posts:       The query object search results.
-                Used to show how many filtered items resulted.
-   doc_type:    The type of document that posts contains.
-                Mainly used for conditionals needed to support newsroom
-                filters.
-   filters:     An array of the filters that you want.
-                Possible values: author, calendar, category, date_range,
-                tags. You can add more in filters_form() by adding to the if
-                statement, for example: `{% elif filter == 'NEW_FILTER' %}`.
-                Note that 'range_date_gte' and 'range_date_lte' have been
-                condensed into 'date_range' for this macro only.
+   filters:
+
+        An array of the filters that you want.
+        Possible values: author, calendar, category, date_range, tags.
+
+        You can add more in filters_form() by adding to the if statement, for
+        example: `{% elif filter == 'NEW_FILTER' %}`. Note that 'range_date_gte'
+        and 'range_date_lte' have been condensed into 'date_range' for this
+        macro only.
+
+   query:
+
+        The post type query object like `queries.posts`.
+        Needed so we can utilize `query.possible_values_for()` to get access to
+        the values of each filter.
+
+   posts:
+
+        The query object search results.
+        Used to show how many filtered items resulted.
+
+   doc_type:
+
+        The type of document that posts contains.
+        Mainly used for conditionals needed to support newsroom filters.
+
+   user_options:
+
+        An object of non-required options that can be overriden.
+
+   user_options.expand_label:
+
+        The label you want on the expandable button.
+
+   user_options.submit_label:
+
+        The label you want on the submit button.
+
    ========================================================================== #}
 
-{% macro filters(label, query, posts, doc_type, filters) %}
+{% macro filters(filters, query, posts, doc_type, user_options) %}
+
+{% set options = {
+    'action': '/',
+    'expand_label': 'Filter',
+    'submit_label': 'Apply filters',
+    'show_current_filters': true
+} %}
+{% set _ignore = options.update(user_options) %}
 
 <div class="expandable">
     <div class="expandable_header expandable_header__spaced">
+    {% if options.show_current_filters == true %}
         <div class="expandable_header-right expandable_header-right__float-on-medium">
+    {% else %}
+        <div>
+    {% endif %}
             <button class="expandable_target expandable_target__btn__secondary">
-                {{ label }}
+                {{ options.expand_label }}
                 <span class="expandable_cue-open">
                     <span class="btn_icon__right cf-icon cf-icon-down"></span>
                 </span>
@@ -162,11 +198,13 @@
                 </span>
             </button>
         </div>
+    {% if options.show_current_filters == true %}
         {{ active_filters(posts, filters) }}
+    {% endif %}
     </div>
     <div class="expandable_content padded-container">
         <div class="padded-container_body">
-            {{ filters_form(filters, query, doc_type) }}
+            {{ filters_form(filters, query, doc_type, options) }}
         </div>
     </div>
 </div><!-- END .expandable -->
@@ -234,9 +272,13 @@
 
 {# A helper macro for filters()
    ========================================================================== #}
-{% macro filters_form(filters, query, doc_type) %}
-
+{% macro filters_form(filters, query, doc_type, options) %}
+{{options.action}}
+{% if options.action != '/' %}
+<form id="post-filters-form" method="get" action="{{ options.action }}">
+{% else %}
 <form id="post-filters-form" method="get">
+{% endif %}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
@@ -463,7 +505,7 @@
                value="Clear filters">
         <input class="btn form-actions_item"
                type="submit"
-               value="Apply filters">
+               value="{{ options.submit_label }}">
     </div>
 
 </form>
