@@ -10808,6 +10808,136 @@ a.category-slug.active {
    ========================================================================== */
 
 /* topdoc
+  name: Links with icons
+  family: cfgov-misc
+  notes:
+    - "Styles to enable adding an icon to a link and preventing the link's
+       underline from extending under the icon."
+    - "For the underlined icon prevention to work, you must wrap the link text
+       with a `span.icon-link_text`. There can be no whitespace between the text
+       and the opening and closing span tags."
+  patterns:
+    - name: Default link with icon
+      markup: |
+        <p>
+            For more information, email
+            <a class="icon-link icon-link__mail" href="#">
+                <span class="icon-link_text">john.smith@cfpb.gov</span>
+            </a>.
+            Alternatively, you can
+            <a class="icon-link icon-link__download" href="#">
+                <span class="icon-link_text">download the info sheet</span>
+            </a>.
+            Oh, you might also want to visit this
+            <a class="icon-link icon-link__external-link" href="#">
+                <span class="icon-link_text">other organization's website</span>
+            </a> for further details.
+        </p>
+        <a class="icon-link icon-link__right" href="#">
+            Visit another section of our site
+        </a>
+      notes:
+        - "The modifier names match the cf-icon names of commonly-used icons."
+        - "Icons appear to the right of a link, by default."
+    - name: Links with icons on the left (modifier)
+      markup: |
+        <a class="icon-link icon-link__mail icon-link__before" href="#">
+            john.smith@cfpb.gov
+        </a><br>
+        <a class="icon-link icon-link__phone icon-link__before" href="#">
+            (123) 456-7890
+        </a>
+      notes:
+        - "Simply add the `.icon-link__before` modifier to place the icon before
+           the link text."
+        - "You can omit the `span.icon-link_text` wrapper if you do not need
+           an underline on a particular link."
+    - name: Non-wrapping icon links
+      markup: |
+        <p>
+            For more information, email
+            <a class="icon-link icon-link__mail icon-link__no-wrap" href="#">
+                <span class="icon-link_text">john.smith@cfpb.gov</span>
+            </a>.
+        </p>
+      notes:
+        - "Warning: Icons added to inline links can sometimes break onto the
+           next line. If you want to prevent this, you can add the `__no-wrap`
+           modifier to `.icon-link`."
+  tags:
+    - cfgov-misc
+*/
+
+.icon-link {
+  border-bottom-width: 0;
+}
+
+.icon-link_text {
+  border-bottom-width: 1px;
+  border-bottom-style: inherit;
+}
+
+.icon-link:before,
+.icon-link:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+
+.icon-link__before:after {
+  content: '' !important;
+}
+
+.icon-link__download:after,
+.icon-link__download.icon-link__before:before {
+  content: "\e406";
+}
+
+.icon-link__email:after,
+.icon-link__email.icon-link__before:before {
+  content: "\e302";
+}
+
+.icon-link__external-link:after,
+.icon-link__external-link.icon-link__before:before {
+  content: "\e610";
+}
+
+.icon-link__fax:after,
+.icon-link__fax.icon-link__before:before {
+  content: "\e310";
+}
+
+.icon-link__left:after,
+.icon-link__left.icon-link__before:before {
+  content: "\e000";
+}
+
+.icon-link__mail:after,
+.icon-link__mail.icon-link__before:before {
+  content: "\e304";
+}
+
+.icon-link__phone:after,
+.icon-link__phone.icon-link__before:before {
+  content: "\e306";
+}
+
+.icon-link__right:after,
+.icon-link__right.icon-link__before:before {
+  content: "\e002";
+}
+
+.icon-link__no-wrap {
+  white-space: nowrap;
+}
+
+/* topdoc
   name: Styled link
   family: cfgov-misc
   patterns:
@@ -10905,14 +11035,6 @@ a.category-slug.active {
 .jump-link__large {
   margin-right: 1.5em;
   font-size: 1.125em;
-}
-
-.jump-link__download:after {
-  content: "\e406";
-}
-
-.jump-link__external-link:after {
-  content: "\e610";
 }
 
 .jump-link:after {

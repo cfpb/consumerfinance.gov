@@ -26,6 +26,180 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / misc docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="links-with-icons" class="docs-component">
+      <h2 class="docs-component_header"><span>Links with icons</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Styles to enable adding an icon to a link and preventing the link's underline from extending under the icon.</li>
+          <li>For the underlined icon prevention to work, you must wrap the link text with a `span.icon-link_text`. There can be no whitespace between the text and the opening and closing span tags.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default link with icon</h3>
+          <section class="docs-pattern_pattern">
+<p>
+    For more information, email
+    <a class="icon-link icon-link__mail" href="#">
+        <span class="icon-link_text">john.smith@cfpb.gov</span>
+    </a>.
+    Alternatively, you can
+    <a class="icon-link icon-link__download" href="#">
+        <span class="icon-link_text">download the info sheet</span>
+    </a>.
+    Oh, you might also want to visit this
+    <a class="icon-link icon-link__external-link" href="#">
+        <span class="icon-link_text">other organization's website</span>
+    </a> for further details.
+</p>
+<a class="icon-link icon-link__right" href="#">
+    Visit another section of our site
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
+    For more information, email
+    &lt;a class=&quot;icon-link icon-link__mail&quot; href=&quot;#&quot;&gt;
+        &lt;span class=&quot;icon-link_text&quot;&gt;john.smith@cfpb.gov&lt;/span&gt;
+    &lt;/a&gt;.
+    Alternatively, you can
+    &lt;a class=&quot;icon-link icon-link__download&quot; href=&quot;#&quot;&gt;
+        &lt;span class=&quot;icon-link_text&quot;&gt;download the info sheet&lt;/span&gt;
+    &lt;/a&gt;.
+    Oh, you might also want to visit this
+    &lt;a class=&quot;icon-link icon-link__external-link&quot; href=&quot;#&quot;&gt;
+        &lt;span class=&quot;icon-link_text&quot;&gt;other organization's website&lt;/span&gt;
+    &lt;/a&gt; for further details.
+&lt;/p&gt;
+&lt;a class=&quot;icon-link icon-link__right&quot; href=&quot;#&quot;&gt;
+    Visit another section of our site
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    For more information, email\n    &lt;a class=\&amp;quot;icon-link icon-link__mail\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;john.smith@cfpb.gov&lt;/span&gt;\n    &lt;/a&gt;.\n    Alternatively, you can\n    &lt;a class=\&amp;quot;icon-link icon-link__download\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;download the info sheet&lt;/span&gt;\n    &lt;/a&gt;.\n    Oh, you might also want to visit this\n    &lt;a class=\&amp;quot;icon-link icon-link__external-link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;other organization&amp;apos;s website&lt;/span&gt;\n    &lt;/a&gt; for further details.\n&lt;/p&gt;\n&lt;a class=\&amp;quot;icon-link icon-link__right\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Visit another section of our site\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>The modifier names match the cf-icon names of commonly-used icons.</li>
+              <li>Icons appear to the right of a link, by default.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Links with icons on the left (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<a class="icon-link icon-link__mail icon-link__before" href="#">
+    john.smith@cfpb.gov
+</a><br>
+<a class="icon-link icon-link__phone icon-link__before" href="#">
+    (123) 456-7890
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;icon-link icon-link__mail icon-link__before&quot; href=&quot;#&quot;&gt;
+    john.smith@cfpb.gov
+&lt;/a&gt;&lt;br&gt;
+&lt;a class=&quot;icon-link icon-link__phone icon-link__before&quot; href=&quot;#&quot;&gt;
+    (123) 456-7890
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;icon-link icon-link__mail icon-link__before\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    john.smith@cfpb.gov\n&lt;/a&gt;&lt;br&gt;\n&lt;a class=\&amp;quot;icon-link icon-link__phone icon-link__before\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    (123) 456-7890\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Simply add the `.icon-link__before` modifier to place the icon before the link text.</li>
+              <li>You can omit the `span.icon-link_text` wrapper if you do not need an underline on a particular link.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Non-wrapping icon links</h3>
+          <section class="docs-pattern_pattern">
+<p>
+    For more information, email
+    <a class="icon-link icon-link__mail icon-link__no-wrap" href="#">
+        <span class="icon-link_text">john.smith@cfpb.gov</span>
+    </a>.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p&gt;
+    For more information, email
+    &lt;a class=&quot;icon-link icon-link__mail icon-link__no-wrap&quot; href=&quot;#&quot;&gt;
+        &lt;span class=&quot;icon-link_text&quot;&gt;john.smith@cfpb.gov&lt;/span&gt;
+    &lt;/a&gt;.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p&gt;\n    For more information, email\n    &lt;a class=\&amp;quot;icon-link icon-link__mail icon-link__no-wrap\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;john.smith@cfpb.gov&lt;/span&gt;\n    &lt;/a&gt;.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Warning: Icons added to inline links can sometimes break onto the next line. If you want to prevent this, you can add the `__no-wrap` modifier to `.icon-link`.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.icon-link {
+  border-bottom-width: 0;
+}
+.icon-link_text {
+  border-bottom-width: 1px;
+  border-bottom-style: inherit;
+}
+.icon-link:before,
+.icon-link:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+.icon-link__before:after {
+  content: '' !important;
+}
+.icon-link__download:after,
+.icon-link__download.icon-link__before:before {
+  content: &quot;\e406&quot;;
+}
+.icon-link__email:after,
+.icon-link__email.icon-link__before:before {
+  content: &quot;\e302&quot;;
+}
+.icon-link__external-link:after,
+.icon-link__external-link.icon-link__before:before {
+  content: &quot;\e610&quot;;
+}
+.icon-link__fax:after,
+.icon-link__fax.icon-link__before:before {
+  content: &quot;\e310&quot;;
+}
+.icon-link__left:after,
+.icon-link__left.icon-link__before:before {
+  content: &quot;\e000&quot;;
+}
+.icon-link__mail:after,
+.icon-link__mail.icon-link__before:before {
+  content: &quot;\e304&quot;;
+}
+.icon-link__phone:after,
+.icon-link__phone.icon-link__before:before {
+  content: &quot;\e306&quot;;
+}
+.icon-link__right:after,
+.icon-link__right.icon-link__before:before {
+  content: &quot;\e002&quot;;
+}
+.icon-link__no-wrap {
+  white-space: nowrap;
+}</code></pre>
+      </div>
+    </div>
     <div id="styled-link" class="docs-component">
       <h2 class="docs-component_header"><span>Styled link</span></h2>
       <div class="docs-patterns">
@@ -227,12 +401,6 @@
 .jump-link__large {
   margin-right: 1.5em;
   font-size: 1.125em;
-}
-.jump-link__download:after {
-  content: &quot;\e406&quot;;
-}
-.jump-link__external-link:after {
-  content: &quot;\e610&quot;;
 }
 .jump-link:after {
   font-family: 'CFPB Minicons';
