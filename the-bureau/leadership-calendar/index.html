@@ -41,7 +41,7 @@
                 <section>
 
                     <div class="block
-                                block__flush-top
+                                u-mt0
                                 block__padded-bottom
                                 block__border-bottom">
                         <h1 class="h3">
@@ -64,7 +64,7 @@
 
                     <div id="pagination_content"></div>
 
-                    <div class="block block__flush-top">
+                    <div class="block u-mt0">
 
                     {% set query = queries.calendar_event %}
                     {% set posts = query.search_with_url_arguments(size=20) %}
@@ -73,7 +73,7 @@
                            ['calendar', 'range_date']) }}
 
                     {% for days in posts|groupby('day')|reverse %}
-                        <table class="u-w100pct block block__flush-top">
+                        <table class="u-w100pct block u-mt0">
                             <colgroup>
                                 <col class="u-w25pct">
                                 <col class="u-w25pct">
@@ -149,7 +149,7 @@
                     </section> -->
 
                     <aside class="block
-                                  block__flush-bottom
+                                  u-mb0
                                   block__flush-sides
                                   block__bg">
                         <div class="content-l">
