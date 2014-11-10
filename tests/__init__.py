@@ -3,10 +3,9 @@ import json
 
 from elasticsearch import Elasticsearch
 
-from sheer.wsgi import app_with_config
-
 index_name = "cfgov_test"
 root = os.getcwd()
+
 
 def setup_package():
     es = Elasticsearch()
@@ -45,16 +44,6 @@ def setup_package():
                   doc_type="newsroom",
                   id=document['_id'],
                   body=document)
-
-    # Setup server
-    config = {'debug': False, 
-              'index': index_name, 
-              'elasticsearch': [{'host': 'localhost', 'port': 9200}], 
-              'location': root}
-    print "Starting server"
-    application = app_with_config(config)
-    application.run(host='0.0.0.0', port=7000, threaded=True)
-
 
 
 def teardown_package():
