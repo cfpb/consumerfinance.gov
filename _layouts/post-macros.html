@@ -169,17 +169,45 @@
 
         The label you want on the submit button.
 
+   user_options.id_prefix:
+
+        ID's are automatically added to certain elements that need them, but if
+        you need more than one filters form on a page you'll want to give it a
+        unique prefix.
+
    ========================================================================== #}
 
 {% macro filters(filters, query, posts, doc_type, user_options) %}
 
 {% set options = {
-    'action': '/',
-    'expand_label': 'Filter',
-    'submit_label': 'Apply filters',
-    'show_current_filters': true
+    'action':               '/',
+    'expand_label':         'Filter',
+    'submit_label':         'Apply filters',
+    'show_current_filters': true,
+    'id_prefix':            '',
+    'id_tags':              'filter_tags',
+    'id_author':            'filter_author',
+    'id_range_date_gte':    'filter_range-date-gte',
+    'id_range_date_lte':    'filter_range-date-lte',
+    'id_from_month':        'filter_from-month',
+    'id_from_year':         'filter_from-year',
+    'id_to_month':          'filter_to-month',
+    'id_to_year':           'filter_to-year'
 } %}
 {% set _ignore = options.update(user_options) %}
+
+{%- if options.id_prefix != '' %}
+{% set _ignore = options.update({
+    'id_tags':              options.id_prefix + '-filter_tags',
+    'id_author':            options.id_prefix + '-filter_author',
+    'id_range_date_gte':    options.id_prefix + '-filter_range-date-gte',
+    'id_range_date_lte':    options.id_prefix + '-filter_range-date-lte',
+    'id_from_month':        options.id_prefix + '-filter_from-month',
+    'id_from_year':         options.id_prefix + '-filter_from-year',
+    'id_to_month':          options.id_prefix + '-filter_to-month',
+    'id_to_year':           options.id_prefix + '-filter_to-year'
+}) %}
+{%- endif -%}
 
 <div class="expandable">
     <div class="expandable_header expandable_header__spaced">
@@ -274,11 +302,14 @@
    ========================================================================== #}
 {% macro filters_form(filters, query, doc_type, options) %}
 
-{% if options.action != '/' %}
-<form id="post-filters-form" method="get" action="{{ options.action }}">
-{% else %}
-<form id="post-filters-form" method="get">
+<form class="js-validate-filters"
+      method="get"
+{%- if options.action != '/' %}
+      action="{{ options.action }}">
+{%- else -%}
+      >
 {% endif %}
+
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
@@ -325,12 +356,12 @@
     {# Tag filters #}
     {% elif filter == 'tags' %}
         <div class="form-l_col form-l_col-1-3">
-            <label class="form-label-header" for="filter_tags">
+            <label class="form-label-header" for="{{ options.id_tags }}">
                 Topics
             </label>
             <select class="chosen-select"
-                    id="filter_tags"
-                    name="filter_tags"
+                    id="{{ options.id_tags }}"
+                    name="{{ options.id_tags }}"
                     multiple
                     data-placeholder="Search for topics">
                 <optgroup label="Most frequent">
@@ -358,12 +389,12 @@
     {# Author filters #}
     {% elif filter == 'author' %}
         <div class="form-l_col form-l_col-1-3">
-            <label class="form-label-header" for="filter_author">
+            <label class="form-label-header" for="{{ options.id_author }}">
                 Author
             </label>
             <select class="chosen-select"
-                    id="filter_author"
-                    name="filter_author"
+                    id="{{ options.id_author }}"
+                    name="{{ options.id_author }}"
                     multiple
                     data-placeholder="Search for authors">
             {% if doc_type == 'newsroom' -%}
@@ -389,27 +420,26 @@
         -->
         <!-- No-JS date input -->
         {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
-        <div class="form-l_col-1-3"
-             id="filter_range_date_gte-container">
-             <label for="filter_range_date_gte">
-                 From:
-             </label>
-            <input id="filter_range_date_gte"
+        <div class="form-l_col-1-3 js-filter_range-date-wrapper">
+            <label for="{{ options.id_range_date_gte }}">
+                From:
+            </label>
+            <input class="js-filter_range-date"
+                   id="{{ options.id_range_date_gte }}"
                    name="filter_range_date_gte"
                    type="text"
                    value="{{ from_date if from_date }}"
                    placeholder="YYYY-MM">
         </div>
         <!-- JS date input -->
-        <div class="form-l_col-1-3 input-group"
-             id="filter_range_date_gte-replacement"
+        <div class="form-l_col-1-3 input-group js-filter_range-date-replacement"
              style="display:none;">
-            <label for="filter_from_month">
+            <label for="{{ options.id_from_month }}">
                 From:
             </label>
             <div class="input-group_item custom-select">
-                <select class="form-input-month"
-                        id="filter_from_month">
+                <select class="form-input-month js-filter_month"
+                        id="{{ options.id_from_month }}">
                     <option value="">Month</option>
                     <option value="01">Jan</option>
                     <option value="02">Feb</option>
@@ -427,8 +457,8 @@
                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
             </div>
             <div class="input-group_item custom-select">
-                <select class="form-input_year"
-                        id="filter_from_year">
+                <select class="form-input_year js-filter_year"
+                        id="{{ options.id_from_year }}">
                     <option value="">Year</option>
                 {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
                     <option value="{{ year }}">{{ year }}</option>
@@ -445,27 +475,26 @@
         -->
         <!-- No-JS date input -->
         {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
-        <div class="form-l_col-1-3"
-             id="filter_range_date_lte-container">
-             <label for="filter_range_date_lte">
-                 To:
-             </label>
-            <input id="filter_range_date_lte"
+        <div class="form-l_col-1-3 js-filter_range-date-wrapper">
+            <label for="{{ options.id_range_date_lte }}">
+                To:
+            </label>
+            <input class="js-filter_range-date"
+                   id="{{ options.id_range_date_lte }}"
                    name="filter_range_date_lte"
                    type="text"
                    value="{{ to_date if to_date }}"
                    placeholder="YYYY-MM">
         </div>
         <!-- JS date input -->
-        <div class="form-l_col-1-3 input-group"
-             id="filter_range_date_lte-replacement"
+        <div class="form-l_col-1-3 input-group js-filter_range-date-replacement"
              style="display:none;">
-            <label for="filter_to_month">
+            <label for="{{ options.id_to_month }}">
                 To:
             </label>
             <div class="custom-select input-group_item">
-                <select class="form-input-month"
-                        id="filter_to_month">
+                <select class="form-input-month js-filter_month"
+                        id="{{ options.id_to_month }}">
                     <option value="">Month</option>
                     <option value="01">Jan</option>
                     <option value="02">Feb</option>
@@ -483,8 +512,8 @@
                 <span class="custom-select_icon cf-icon cf-icon-down"></span>
             </div>
             <div class="custom-select input-group_item">
-                <select class="form-input_year"
-                        id="filter_to_year">
+                <select class="form-input_year js-filter_year"
+                        id="{{ options.id_to_year }}">
                     <option value="">Year</option>
                 {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
                     <option value="{{ year }}">{{ year }}</option>
