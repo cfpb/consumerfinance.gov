@@ -273,7 +273,7 @@
 {# A helper macro for filters()
    ========================================================================== #}
 {% macro filters_form(filters, query, doc_type, options) %}
-{{options.action}}
+
 {% if options.action != '/' %}
 <form id="post-filters-form" method="get" action="{{ options.action }}">
 {% else %}
