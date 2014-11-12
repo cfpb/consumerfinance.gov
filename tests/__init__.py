@@ -2,6 +2,7 @@ import os
 import json
 
 from elasticsearch import Elasticsearch
+from elasticsearch.client import IndicesClient
 
 index_name = "cfgov_test"
 root = os.getcwd()
@@ -38,6 +39,9 @@ def setup_package():
     newsroom_json = open(os.path.join(root, 'fixtures/newsroom.json'))
     newsroom = json.load(newsroom_json)
 
+    view_json = open(os.path.join(root, 'fixtures/views.json'))
+    view = json.load(view_json)
+
     # Index the documents
     for document in newsroom:
         es.create(index=index_name,
@@ -45,7 +49,16 @@ def setup_package():
                   id=document['_id'],
                   body=document)
 
+    for document in view:
+        es.create(index=index_name,
+                  doc_type="views",
+                  id=document['_id'],
+                  body=document)
+
+    print "outer mapping here", IndicesClient(es).get_mapping(index='cfgov_test')
+
 
 def teardown_package():
-    es = Elasticsearch()
-    es.indices.delete(index_name)
+    pass
+    # es = Elasticsearch()
+    # es.indices.delete(index_name)
