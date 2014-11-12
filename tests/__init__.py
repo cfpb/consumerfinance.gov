@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 
 from elasticsearch import Elasticsearch
 from elasticsearch.client import IndicesClient
@@ -9,6 +10,12 @@ root = os.getcwd()
 
 
 def setup_package():
+    logging.basicConfig()
+    logger = logging.getLogger("")
+    logger.setLevel(logging.DEBUG)
+    tracer = logging.getLogger('elasticsearch.trace')
+    tracer.setLevel(logging.DEBUG)
+    tracer.addHandler(logging.FileHandler('elasticsearch-py.txt'))
     es = Elasticsearch()
     if es.indices.exists(index_name):
         es.indices.delete(index_name)
