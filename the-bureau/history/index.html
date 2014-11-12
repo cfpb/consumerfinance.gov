@@ -39,11 +39,11 @@
             <div class="content_main content__flush-top-on-small">
                 <section>
 
-                    <div class="content_block content_block__flush-top">
-                        <h1 class="content_title__extra-large">
+                    <div class="block u-mt0">
+                        <h1>
                             The history of the Consumer Financial Protection Bureau
                         </h1>
-                        <p class="content_desc__large">
+                        <p class="h3">
                             Richard Cordray serves as the first Director of the
                             Consumer Financial Protection Bureau.
                             He previously led the Bureau’s Enforcement Division.
@@ -55,10 +55,10 @@
 
                 {% for section in sections %}
 
-                    <section class="content_block content_block__padded-top content_block__border-top">
+                    <section class="block block__padded-top block__border-top">
                         <div class="content-l">
                             <div class="content-l_col content-l_col-2-3">
-                                <h1 class="content_title__large">{{ section.title|safe }}</h1>
+                                <h1 class="h2">{{ section.title|safe }}</h1>
                                 <p class="short-desc">
                                     {{ section.section_date_from }} &ndash; {{ section.section_date_to }}
                                 </p>
@@ -162,7 +162,7 @@
                                 </span>
                             </button>
                         </div><!-- END .history-section-expandable -->
-                    </section><!-- END .content_block -->
+                    </section><!-- END .block -->
 
                 {% endfor %}
 

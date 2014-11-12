@@ -274,7 +274,7 @@ $('.type-and-filter').on( 'attemptSearch', function() {
 
 // Clicking on a helpful term should trigger a filter.
 $('.js-helpful-term').on( 'click', function () {
-    $('.js-type-and-filter_input').val( $( this ).text() );
+    $('.js-type-and-filter_input').val( $( this ).text() ).trigger('valChange');
     $('.type-and-filter').trigger('attemptSearch');
 });
 

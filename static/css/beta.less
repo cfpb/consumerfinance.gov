@@ -54,20 +54,29 @@
     .respond-to-min(481px, {
         .btn__link();
         width: auto;
-        padding: 15px;
+        padding: @grid_gutter-width / 2;
         margin: 0;
         position: absolute;
-        top: 0;
+        top: 1px;
         right: 0;
         .u-link__colors(@black, @darkgray);
         .u-link__no-border();
         text-transform: lowercase;
     });
 
+    .respond-to-max(599px, {
+        font-size: 1em; // prevent double-shrinkage
+    });
+
+    .respond-to-min(600px, {
+        // Adjust to match increasing side margins
+        right: @grid_gutter-width / 2;
+    });
+
     .respond-to-min(801px, {
         // At this width, the wrapper gains position: relative, so the button
         // position has to be adjusted accordingly.
-        top: -11px;
+        top: -12px;
     });
 }
 
@@ -179,3 +188,4 @@
         top: 39px; // Half height of graph (50px) - half of line-height (11px)
     });
 }
+
