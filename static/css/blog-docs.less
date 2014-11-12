@@ -95,10 +95,10 @@
   name: Post previews
   family: cfgov-blog-docs
   patterns:
-    - name: Watchroom
+    - name: Featured Topic
       markup: |
-        <article class="watchroom summary">
-            <h1 class="summary_header summary_header__large">Watchroom header</h1>
+        <article class="featured-topic summary">
+            <h1 class="summary_header summary_header__large">Featured Topic header</h1>
             <div class="summary_cols">
                 <div class="summary_col">
                     <p class="summary_text summary_text__dark">
@@ -144,7 +144,7 @@
         </article>
       codenotes:
         - |
-          .watchroom.summary
+          .featured-topic.summary
             .summary__header.summary_header__large
             .summary_cols
               .summary_col
@@ -247,7 +247,7 @@
     - cfgov-blog-docs
 */
 
-.watchroom {
+.featured-topic {
     margin-bottom: unit(60px / @base-font-size-px, em);
 }
 
