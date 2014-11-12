@@ -152,15 +152,17 @@
 <div class="expandable">
     <div class="expandable_header expandable_header__spaced">
         <div class="expandable_header-right expandable_header-right__float-on-medium">
-            <button class="expandable_target expandable_target__btn__secondary">
-                {{ label }}
-                <span class="expandable_cue-open">
-                    <span class="btn_icon__right cf-icon cf-icon-down"></span>
-                </span>
-                <span class="expandable_cue-close">
-                    <span class="btn_icon__right cf-icon cf-icon-up"></span>
-                </span>
-            </button>
+            <span class="expandable_target">
+                <button class="btn btn__secondary">
+                    {{ label }}
+                    <span class="expandable_cue-open">
+                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                    </span>
+                </button>
+            </span>
         </div>
         {{ active_filters(posts, filters) }}
     </div>
