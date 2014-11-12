@@ -236,15 +236,17 @@
     {% else %}
         <div>
     {% endif %}
-            <button class="expandable_target expandable_target__btn__secondary">
-                {{ options.expand_label }}
-                <span class="expandable_cue-open">
-                    <span class="btn_icon__right cf-icon cf-icon-down"></span>
-                </span>
-                <span class="expandable_cue-close">
-                    <span class="btn_icon__right cf-icon cf-icon-up"></span>
-                </span>
-            </button>
+            <span class="expandable_target">
+                <button class="btn btn__secondary">
+                    {{ options.expand_label }}
+                    <span class="expandable_cue-open">
+                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                    </span>
+                </button>
+            </span>
         </div>
     {% if options.show_current_filters == true %}
         {{ active_filters(posts, filters) }}
