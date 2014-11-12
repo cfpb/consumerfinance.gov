@@ -39,8 +39,8 @@
 
             <div class="content_main">
                 <section>
-                    {{ post_macros.filters('Filter posts', query, posts, 'posts',
-                       ['category', 'tags', 'author', 'range_date']) }}
+                    {{ post_macros.filters(['category', 'tags', 'author', 'range_date'],
+                        query, posts, 'posts', { 'expand_label': 'Filter posts' }) }}
                     {% include "posts-paginated.html" %}
                 </section>
             </div>
