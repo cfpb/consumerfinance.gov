@@ -69,8 +69,10 @@
                     {% set query = queries.calendar_event %}
                     {% set posts = query.search_with_url_arguments(size=20) %}
 
-                        {{ post_macros.filters('Filter calendar', query, posts, 'calendar_event',
-                           ['calendar', 'range_date']) }}
+                        {{ post_macros.filters(
+                             ['calendar', 'range_date'], query, posts, 'calendar_event',
+                             { 'expand_label': 'Filter calendars' }
+                        ) }}
 
                     {% for days in posts|groupby('day')|reverse %}
                         <table class="u-w100pct block u-mt0">
@@ -124,9 +126,7 @@
 
                     {{ post_macros.pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
 
-                    <!-- <section class="block
-                                block__padded-top
-                                block__border-top">
+                    <section class="block block__padded-top block__border-top">
                         <h1 class="h2">
                             Download a copy
                         </h1>
@@ -135,18 +135,17 @@
                             faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
                             dapibus, a viverra elit tempor.
                         </p>
-                        <p class="demo-placeholder">
-                            Form
-                        </p>
-                        <p class="short-desc">
-                            * Disclaimer abotu Raj Date and Elizabeth Warren. Quisque consequat quam sem, a
-                            condimentum augue consequat nec.
-                        </p>
-                        <p class="short-desc">
-                            ** Disclaimer about old PDF’s tristique faucibus nisi, a posuere sapien
-                            pellentesque nec. Nulla placerat ipsum ac purus dapibus, a viverra elit tempor.
-                        </p>
-                    </section> -->
+                        {{ post_macros.filters(
+                             ['calendar', 'range_date'], query, posts, 'calendar_event',
+                             {
+                               'id_prefix': 'download',
+                               'expand_label': 'Download options',
+                               'show_current_filters': false,
+                               'action': 'pdf/',
+                               'submit_label': 'Download PDF'
+                             }
+                        ) }}
+                    </section>
 
                     <aside class="block
                                   u-mb0
