@@ -422,7 +422,7 @@ function validDateRange(date1, date2) {
    return date2.getTime() > date1.getTime();
 }
 
-$('js-validate-filters').on('submit', function(e) {
+$('.js-validate-filters').on('submit', function(e) {
     // Check the date range values.
     // If the from (gte) date is larger than the to (lte) date then swap them.
     var validDate = validDateRange(
