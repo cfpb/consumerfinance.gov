@@ -49,8 +49,8 @@
 
             <div class="content_main content__flush-bottom content__flush-top-on-small">
                 <section>
-                    {{ post_macros.filters('Filter posts', query, posts, 'newsroom',
-                       ['category', 'tags', 'author', 'range_date']) }}
+                    {{ post_macros.filters(['category', 'tags', 'author', 'range_date'],
+                        query, posts, 'newsroom', {'expand_label': 'Filter posts'}) }}
                     {% include "watchroom.html" %}
                     {% include "posts-paginated.html" %}
                 </section>
