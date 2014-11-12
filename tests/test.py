@@ -28,11 +28,6 @@ class NewsroomTestCase(LiveServerTestCase):
                   'elasticsearch': [{'host': 'localhost', 'port': 9200}], 
                   'location': os.path.join(os.getcwd(), '..')}
         application = app_with_config(config)
-        # app = Flask(__name__)
-        # app.config['debug'] = True
-        # app.config['index'] = 'cfgov_test'
-        # app.config['elasticsearch'] = [{'host': 'localhost', 'port': 9200}]
-        # app.config['location'] = os.getcwd()
         application.config['TESTING'] = True
         application.config['LIVESERVER_PORT'] = 7000
         return application
