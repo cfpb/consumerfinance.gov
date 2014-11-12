@@ -5233,6 +5233,195 @@ input[type="text"].pagination_current-page {
   margin-bottom: 60px !important;
 }
 /* topdoc
+  name: Width utilities
+  family: cf-core
+  patterns:
+    - name: Percent-based
+      markup: |
+        <div class="u-w100pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w100pct</code>
+        </div>
+        <div class="u-w90pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w90pct</code>
+        </div>
+        <div class="u-w80pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w80pct</code>
+        </div>
+        <div class="u-w70pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w70pct</code>
+        </div>
+        <div class="u-w60pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w60pct</code>
+        </div>
+        <div class="u-w50pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w50pct</code>
+        </div>
+        <div class="u-w40pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w40pct</code>
+        </div>
+        <div class="u-w30pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w30pct</code>
+        </div>
+        <div class="u-w20pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w20pct</code>
+        </div>
+        <div class="u-w10pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w10pct</code>
+        </div>
+        <div class="u-w75pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w75pct</code>
+        </div>
+        <div class="u-w25pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w25pct</code>
+        </div>
+        <div class="u-w66pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w66pct</code>
+        </div>
+        <div class="u-w33pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w33pct</code>
+        </div>
+      notes:
+        - "Inline styles are for demonstration purposes only, please don't use
+           them."
+  tags:
+    - cf-core
+*/
+.u-w100pct {
+  width: 100%;
+}
+.u-w90pct {
+  width: 90%;
+}
+.u-w80pct {
+  width: 80%;
+}
+.u-w70pct {
+  width: 70%;
+}
+.u-w60pct {
+  width: 60%;
+}
+.u-w50pct {
+  width: 50%;
+}
+.u-w40pct {
+  width: 40%;
+}
+.u-w30pct {
+  width: 30%;
+}
+.u-w20pct {
+  width: 20%;
+}
+.u-w10pct {
+  width: 10%;
+}
+.u-w75pct {
+  width: 75%;
+}
+.u-w25pct {
+  width: 25%;
+}
+.u-w66pct {
+  width: 66.66666667%;
+}
+.u-w33pct {
+  width: 33.33333333%;
+}
+/* topdoc
+  name: Width-specific display
+  family: cf-core
+  patterns:
+    - name: Show on mobile
+      markup: |
+        <section>
+            <p>The the text in the box below is visible only at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-show-on-mobile">Visible on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-show-on-mobile"
+        - "Uses 'display:block' to toggle display. Would need to be extended
+          for inline use cases."
+      notes:
+        - "Displays an element only at mobile widths."
+    - name: Hide on mobile
+      markup: |
+        <section>
+            <p>The text in the box below is hidden at widths less than 600px</p>
+            <div style="border: 1px solid black; height: 22px; padding: 5px;">
+                <p class="u-hide-on-mobile">Hidden on mobile</p>
+            </div>
+        </section>
+      codenotes:
+        - ".u-hide-on-mobile"
+      notes:
+        - "Hides an element at mobile widths"
+  tags:
+    - cf-core
+*/
+@media only all and (max-width: 37.4375em) {
+  .u-hide-on-mobile {
+    display: none;
+  }
+}
+.u-show-on-mobile {
+  display: none;
+}
+@media only all and (max-width: 37.4375em) {
+  .u-show-on-mobile {
+    display: block;
+  }
+}
+/* topdoc
+  name: Small text utility
+  family: cf-core
+  patterns:
+    - name: .u-small-text (utility class)
+      markup: |
+        Lorem ipsum<br>
+        <span class="u-small-text">dolor sit amet</span>
+      codenotes:
+        - ".u-small-text"
+      notes:
+        - "14px text."
+        - "The utility class should only be used when the default text size is
+           16px. For example you wouldn't want to use the class inside of an
+           `h1` because the `font-size` in the `h1` will make `.u-small-text`
+           bigger than it should be. See the docs for the `.u-small-text()`
+           mixin."
+    - name: .u-small-text() (Less mixin)
+      codenotes:
+        - ".u-small-text(@context)"
+        - |
+          // Mixin usage:
+          .example {
+            font-size: unit(20px / @base-font-size-px, em);
+            small {
+              .u-small-text(20px);
+            }
+          }
+          // Compiles to:
+          .example {
+            font-size: 1.25em;
+          }
+          .example small {
+            font-size: 0.7em;
+          }
+      notes:
+        - "This mixin enables you to easily create consistent small text by
+           passing the context `font-size`."
+  tags:
+    - cf-core
+*/
+.u-small-text {
+  font-size: 0.875em;
+}
+small {
+  font-size: 0.875em;
+}
+/* topdoc
     name: EOF
     eof: true
 */
@@ -5691,7 +5880,7 @@ h6,
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
-  line-height: 1.375;
+  line-height: 1.25;
 }
 .lt-ie9 .superheader {
   font-weight: normal !important;
@@ -5717,10 +5906,6 @@ table,
 figure {
   margin-top: 0;
   margin-bottom: 1.25em;
-}
-figure {
-  margin-left: 0;
-  margin-right: 0;
 }
 /* topdoc
   name: Default link
@@ -6373,6 +6558,59 @@ img {
   max-width: 100%;
 }
 /* topdoc
+  name: Figure
+  family: cf-core
+  patterns:
+    - name: figure.figure__bordered
+      markup: |
+        <figure class="figure__bordered">
+            <img src="http://placekitten.com/300/300">
+        </figure>
+  tags:
+    - cf-core
+*/
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+figure img {
+  vertical-align: middle;
+}
+.figure__bordered img {
+  border: 1px solid #babbbd;
+}
+/* topdoc
+  name: Branded list modifier
+  family: cf-core
+  patterns:
+    - name: Branded list
+      markup: |
+        <ul class="list__branded">
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+        </ul>
+      codenotes:
+        - ".list__branded"
+      notes:
+        - "List that uses brand-color bullets"
+  tags:
+    - cf-core
+*/
+.list__branded li {
+  position: relative;
+  list-style-type: none;
+  padding-bottom: 0.75em;
+}
+.list__branded li:before {
+  content: "\25AA";
+  position: absolute;
+  color: #2cb34a;
+  font-size: 1.375em;
+  line-height: 1;
+  left: -0.86363636em;
+}
+/* topdoc
   name: EOF
   eof: true
 */
@@ -6691,176 +6929,6 @@ img {
    capital framework enhancements
    ========================================================================== */
 /* topdoc
-  name: Proposed Superheader line-height tweak
-  family: cfgov-cf-enhancements
-  notes:
-    - "The current superheader line-height is a little tall.
-       This proposes reducing it."
-  patterns:
-    - name: .superheader
-      markup: |
-        <h1 class="superheader">
-            Here's a long header that will hopefully break
-            break onto two lines.
-        </h1>
-  tags:
-    - cfgov-cf-enhancements
-*/
-.superheader {
-  margin-bottom: 0.1875em;
-  font-size: 3em;
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  line-height: 1.25;
-}
-.lt-ie9 .superheader {
-  font-weight: normal !important;
-}
-/* topdoc
-  name: Small text utility
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: .u-small-text (utility class)
-      markup: |
-        Lorem ipsum<br>
-        <span class="u-small-text">dolor sit amet</span>
-      codenotes:
-        - ".u-small-text"
-      notes:
-        - "14px text."
-        - "The utility class should only be used when the default text size is
-           16px. For example you wouldn't want to use the class inside of an
-           `h1` because the `font-size` in the `h1` will make `.u-small-text`
-           bigger than it should be. See the docs for the `.u-small-text()`
-           mixin."
-    - name: .u-small-text() (Less mixin)
-      codenotes:
-        - ".u-small-text(@context)"
-        - |
-          // Mixin usage:
-          .example {
-            font-size: unit(20px / @base-font-size-px, em);
-            small {
-              .u-small-text(20px);
-            }
-          }
-          // Compiles to:
-          .example {
-            font-size: 1.25em;
-          }
-          .example small {
-            font-size: 0.7em;
-          }
-      notes:
-        - "This mixin enables you to easily create consistent small text by
-           passing the context `font-size`."
-  tags:
-    - cfgov-cf-enhancements
-*/
-.u-small-text {
-  font-size: 0.875em;
-}
-small {
-  font-size: 0.875em;
-}
-/* topdoc
-  name: Width utilities
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Percent-based
-      markup: |
-        <div class="u-w100pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w100pct</code>
-        </div>
-        <div class="u-w90pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w90pct</code>
-        </div>
-        <div class="u-w80pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w80pct</code>
-        </div>
-        <div class="u-w70pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w70pct</code>
-        </div>
-        <div class="u-w60pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w60pct</code>
-        </div>
-        <div class="u-w50pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w50pct</code>
-        </div>
-        <div class="u-w40pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w40pct</code>
-        </div>
-        <div class="u-w30pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w30pct</code>
-        </div>
-        <div class="u-w20pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w20pct</code>
-        </div>
-        <div class="u-w10pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w10pct</code>
-        </div>
-        <div class="u-w75pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w75pct</code>
-        </div>
-        <div class="u-w25pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w25pct</code>
-        </div>
-        <div class="u-w66pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w66pct</code>
-        </div>
-        <div class="u-w33pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w33pct</code>
-        </div>
-      notes:
-        - "Inline styles are for demonstration purposes only, please don't use
-           them."
-  tags:
-    - cfgov-cf-enhancements
-*/
-.u-w100pct {
-  width: 100%;
-}
-.u-w90pct {
-  width: 90%;
-}
-.u-w80pct {
-  width: 80%;
-}
-.u-w70pct {
-  width: 70%;
-}
-.u-w60pct {
-  width: 60%;
-}
-.u-w50pct {
-  width: 50%;
-}
-.u-w40pct {
-  width: 40%;
-}
-.u-w30pct {
-  width: 30%;
-}
-.u-w20pct {
-  width: 20%;
-}
-.u-w10pct {
-  width: 10%;
-}
-.u-w75pct {
-  width: 75%;
-}
-.u-w25pct {
-  width: 25%;
-}
-.u-w66pct {
-  width: 66.66666667%;
-}
-.u-w33pct {
-  width: 33.33333333%;
-}
-/* topdoc
   name: Tables
   family: cfgov-cf-enhancements
   notes:
@@ -6956,112 +7024,6 @@ tbody tr {
   }
 }
 /* topdoc
-  name: Figure updates
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: figure.figure__bordered
-      markup: |
-        <figure class="figure__bordered">
-            <img src="http://placekitten.com/300/300">
-        </figure>
-  tags:
-    - cfgov-cf-enhancements
-*/
-figure img {
-  vertical-align: middle;
-}
-.figure__bordered img {
-  border: 1px solid #babbbd;
-}
-/* topdoc
-  name: Expandables
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Header right float on medium modifier
-      codenotes:
-        - .expandable_header-right__float-on-medium
-  tags:
-    - cfgov-cf-enhancements
-*/
-.expandable_target__btn__secondary {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0.57142857em 1em;
-  border: 0;
-  border-radius: 0.28571429em;
-  margin: 0;
-  vertical-align: middle;
-  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.875em;
-  line-height: normal;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-transition: .1s;
-  transition: .1s;
-  -webkit-appearance: none;
-}
-.lt-ie9 .expandable_target__btn__secondary {
-  font-weight: normal !important;
-}
-.expandable_target__btn__secondary,
-.expandable_target__btn__secondary:link,
-.expandable_target__btn__secondary:visited {
-  background-color: #0072ce;
-  color: #ffffff;
-}
-.expandable_target__btn__secondary:hover,
-.expandable_target__btn__secondary.hover {
-  background-color: #328ed8;
-}
-.expandable_target__btn__secondary:focus,
-.expandable_target__btn__secondary.focus {
-  background-color: #328ed8;
-  outline: 1px dotted #0072ce;
-  outline-offset: 1px;
-}
-.expandable_target__btn__secondary:active,
-.expandable_target__btn__secondary.active {
-  background-color: #33578e;
-}
-button.expandable_target__btn__secondary::-moz-focus-inner,
-input.expandable_target__btn__secondary::-moz-focus-inner {
-  border: 0;
-}
-.expandable_target__btn__secondary + .expandable_target__btn__secondary {
-  margin-left: 0.42857143em;
-}
-.expandable_target__btn__secondary,
-.expandable_target__btn__secondary:link,
-.expandable_target__btn__secondary:visited {
-  background-color: #75787b;
-  color: #ffffff;
-}
-.expandable_target__btn__secondary:hover,
-.expandable_target__btn__secondary.hover {
-  background-color: #919395;
-}
-.expandable_target__btn__secondary:focus,
-.expandable_target__btn__secondary.focus {
-  background-color: #919395;
-  outline-color: #75787b;
-}
-.expandable_target__btn__secondary:active,
-.expandable_target__btn__secondary.active {
-  background-color: #43484e;
-}
-.expandable_header-right__float-on-medium {
-  float: none;
-}
-@media only all and (min-width: 37.5em) {
-  .expandable_header-right__float-on-medium {
-    float: right;
-  }
-}
-/* topdoc
   name: cf-grid column dividers
   family: cfgov-cf-enhancements
   notes:
@@ -7123,106 +7085,22 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
   margin-left: -30px;
 }
 /* topdoc
-  name: Width-specific display
+  name: Expandables
   family: cfgov-cf-enhancements
   patterns:
-    - name: Show on mobile (below 600px)
-      markup: |
-        <section>
-            <p>The the text in the box below is visible only at widths less than 600px</p>
-            <div style="border: 1px solid black; height: 22px; padding: 5px;">
-                <p class="u-show-on-mobile">Visible on mobile</p>
-            </div>
-        </section>
+    - name: Header right float on medium modifier
       codenotes:
-        - ".u-show-on-mobile"
-      notes:
-        - "Displays an element only at widths less than 600px."
-        - "Uses display: block to show the element on mobile. Would need to 
-           be extended for other display types."
-    - name: Hide on mobile (below 600px)
-      markup: |
-        <section>
-            <p>The text in the box below is hidden at widths less than 600px</p>
-            <div style="border: 1px solid black; height: 22px; padding: 5px;">
-                <p class="u-hide-on-mobile">Hidden on mobile</p>
-            </div>
-        </section>
-      codenotes:
-        - ".u-hide-on-mobile"
-      notes:
-        - "Hides an element at widths of less than 600px"
+        - .expandable_header-right__float-on-medium
   tags:
     - cfgov-cf-enhancements
 */
-@media only all and (max-width: 37.4375em) {
-  .u-hide-on-mobile {
-    display: none;
+.expandable_header-right__float-on-medium {
+  float: none;
+}
+@media only all and (min-width: 37.5em) {
+  .expandable_header-right__float-on-medium {
+    float: right;
   }
-}
-.u-show-on-mobile {
-  display: none;
-}
-@media only all and (max-width: 37.4375em) {
-  .u-show-on-mobile {
-    display: block;
-  }
-}
-/* topdoc
-  name: Branded list modifier
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Branded list
-      markup: |
-        <ul class="list__branded">
-            <li>First item</li>
-            <li>Second item</li>
-            <li>Third item</li>
-        </ul>
-      codenotes:
-        - ".list__branded"
-      notes:
-        - "List that uses CFPB font and brand-color bullets"
-  tags:
-    - cfgov-cf-enhancements
-*/
-.list__branded {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-.list__branded em,
-.list__branded i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-.lt-ie9 .list__branded em,
-.lt-ie9 .list__branded i {
-  font-style: normal !important;
-}
-.list__branded strong,
-.list__branded b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .list__branded strong,
-.lt-ie9 .list__branded b {
-  font-weight: normal !important;
-}
-.list__branded li {
-  position: relative;
-  list-style-type: none;
-  padding-bottom: 12px;
-}
-.list__branded li:before {
-  content: "\25AA";
-  position: absolute;
-  left: -19px;
-  color: #2cb34a;
-  font-size: 1.375em;
-  line-height: 1;
 }
 /* topdoc
     name: Expandable header modifier
@@ -14500,6 +14378,31 @@ a.focus .summary_header {
     border-top: 1px solid #babbbd;
   }
 }
+.bureau-functions_list {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.bureau-functions_list em,
+.bureau-functions_list i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .bureau-functions_list em,
+.lt-ie9 .bureau-functions_list i {
+  font-style: normal !important;
+}
+.bureau-functions_list strong,
+.bureau-functions_list b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .bureau-functions_list strong,
+.lt-ie9 .bureau-functions_list b {
+  font-weight: normal !important;
+}
 @media only all and (min-width: 64em) {
   .bureau-functions_list {
     display: inline-block;
@@ -16533,16 +16436,12 @@ a.focus .summary_header {
 }
 @media only all and (min-width: 37.5625em) {
   .beta-hero_title {
-    line-height: 1.375;
     margin-bottom: 0.1875em;
     font-size: 3em;
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
     line-height: 1.25;
-  }
-  .lt-ie9 .beta-hero_title {
-    font-weight: normal !important;
   }
   .lt-ie9 .beta-hero_title {
     font-weight: normal !important;
