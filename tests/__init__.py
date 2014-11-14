@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+import dateutil.parser
 
 from elasticsearch import Elasticsearch
 from elasticsearch.client import IndicesClient
@@ -21,7 +22,7 @@ def setup_package():
         es.indices.delete(index_name)
     es.indices.create(index=index_name)
 
-    newsroom_mapping = { "properties" :
+    posts_mapping = { "properties" :
           {
             "title" : {"type" : "string", "store" : "yes"},
             "text" : {"type" : "string", "store" : "yes"},
@@ -41,13 +42,17 @@ def setup_package():
     # Create the mappings
     es.indices.put_mapping(index=index_name,
                            doc_type="newsroom",
-                           body={"newsroom": newsroom_mapping})
+                           body={"newsroom": posts_mapping,
+                                 "watchroom": posts_mapping})
 
-    newsroom_json = open(os.path.join(root, 'fixtures/newsroom.json'))
+    newsroom_json = open(os.path.join(root, 'tests/fixtures/newsroom.json'))
     newsroom = json.load(newsroom_json)
 
-    view_json = open(os.path.join(root, 'fixtures/views.json'))
+    view_json = open(os.path.join(root, 'tests/fixtures/views.json'))
     view = json.load(view_json)
+
+    watchroom_json = open(os.path.join(root, 'tests/fixtures/watchroom.json'))
+    watchroom = json.load(watchroom_json)
 
     # Index the documents
     for document in newsroom:
@@ -62,10 +67,14 @@ def setup_package():
                   id=document['_id'],
                   body=document)
 
-    print "outer mapping here", IndicesClient(es).get_mapping(index='cfgov_test')
+    for document in watchroom:
+        es.create(index=index_name,
+                  doc_type="newsroom",
+                  id=document['_id'],
+                  body=document)
+
 
 
 def teardown_package():
-    pass
-    # es = Elasticsearch()
-    # es.indices.delete(index_name)
+    es = Elasticsearch()
+    es.indices.delete(index_name)
