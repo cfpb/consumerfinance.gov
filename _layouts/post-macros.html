@@ -203,6 +203,7 @@
     'action':               '/',
     'expand_label':         'Filter',
     'submit_label':         'Apply filters',
+    'show_unfiltered_count': false,
     'show_current_filters': true,
     'id_prefix':            '',
     'id_tags':              'filter_tags',
@@ -249,7 +250,7 @@
             </span>
         </div>
     {% if options.show_current_filters == true %}
-        {{ active_filters(posts, filters) }}
+        {{ active_filters(posts, filters, options.show_unfiltered_count) }}
     {% endif %}
     </div>
     <div class="expandable_content padded-container">
@@ -264,7 +265,7 @@
 
 {# A helper macro for filters()
    ========================================================================== #}
-{% macro active_filters(posts, filters) %}
+{% macro active_filters(posts, filters, show_unfiltered_count) %}
 
 {% set active_filters = [] %}
 {% set active_date_filters = [] %}
@@ -284,37 +285,43 @@
 {% set active_filters_total = active_filters|length + active_date_filters|length %}
 
 {% if active_filters_total > 0 %}
+    <ul class="filtered-by filtered-by__align-with-btn list list__horizontal">
+        <li class="list_item filtered-by_header">
+        {%- if posts|list|length > 0 -%}
+            {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
+        {%- else -%}
+            No results for
+        {%- endif -%}
+        </li>
+    {% for filter in active_filters %}
+        <li class="list_item filtered-by_filter">
+            {{ filter }}
+        {%- if not loop.last -%}
+            ,
+        {%- elif active_date_filters|length > 0 -%}
+            ,
+        {%- endif -%}
+        </li>
+    {% endfor %}
+    {%- if active_date_filters|length > 0 -%}
+        <li class="list_item filtered-by_filter">
+        {%- for filter in active_date_filters %}
+            {{ filter|date("%B %Y") }}
+            {{ '&ndash;'|safe if not loop.last }}
+        {%- endfor -%}
+        </li>
+    {%- endif %}
+    </ul>
+{% else %}
+    {% if show_unfiltered_count %}
     <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
         <dt class="list_item">
             <span class="filtered-by_header">
-            {%- if posts|list|length > 0 -%}
-                {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
-            {%- else -%}
-                No results for
-            {%- endif -%}
+                {{ posts.total }} results
             </span>
         </dt>
-    {% for filter in active_filters %}
-        <dd class="list_item">
-            <span class="filtered-by_filter">
-                {{ filter }}
-            {%- if not loop.last -%}
-                ,
-            {%- elif active_date_filters|length > 0 -%}
-                ,
-            {%- endif -%}
-            </span>
-        </dd>
-    {% endfor %}
-    {% for filter in active_date_filters %}
-        <dd class="list_item">
-            <span class="filtered-by_filter">
-                {{ filter|date("%B %Y") }}
-                {{ '&nbsp;&ndash;'|safe if not loop.last }}
-            </span>
-        </dd>
-    {% endfor %}
     </dl>
+    {% endif %}
 {% endif %}
 
 {% endmacro %}
