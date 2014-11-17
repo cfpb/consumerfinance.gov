@@ -14,6 +14,7 @@
 {%- endblock %}
 
 {% block css -%}
+    {{ super() }}
     <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
 {%- endblock %}
 
@@ -211,44 +212,41 @@
 
 
 {% block javascript %}
-<script src="/static/vendor/slick-carousel/slick.min.js"></script>
-
-<script>
-    
-    $('document').ready(function () {
-        var slider, handler;
-        
-        if (!$('html').hasClass('lt-ie9')) {     
-                   
-            handler = new BreakpointHandler({
-                breakpoint: 599,
-                type: "max",
-                enter: function () {
-                    // close any open expandables
-                    $('.org-chart').find('.expandable__expanded .expandable_target').click();
-                    // hide org chart branches
-                    $('.org-chart_branches').hide();
-                    // show content slider & mobile nav links
-                    $('#content-slider, .content-hide').show();
-                    // init slider
-                    slider = new contentSlider('#content-slider', 1);
-                },
-                leave: function () {
-                    // destroy slider
-                    slider && slider.destroy();
-                    slider = null;
-                    // hide content slider & mobile nav links
-                    $('#content-slider, .content-hide').hide();
-                    // show org chart branches
-                    $('.org-chart_branches').show();
-                }
-            });
+    {{ super() }}
+    <script src="/static/vendor/slick-carousel/slick.min.js"></script>
+    <script>
+        $('document').ready(function () {
+            var slider, handler;
             
-        }
-        
-    });
-    
-    
-</script>
+            if (!$('html').hasClass('lt-ie9')) {     
+                       
+                handler = new BreakpointHandler({
+                    breakpoint: 599,
+                    type: "max",
+                    enter: function () {
+                        // close any open expandables
+                        $('.org-chart').find('.expandable__expanded .expandable_target').click();
+                        // hide org chart branches
+                        $('.org-chart_branches').hide();
+                        // show content slider & mobile nav links
+                        $('#content-slider, .content-hide').show();
+                        // init slider
+                        slider = new contentSlider('#content-slider', 1);
+                    },
+                    leave: function () {
+                        // destroy slider
+                        slider && slider.destroy();
+                        slider = null;
+                        // hide content slider & mobile nav links
+                        $('#content-slider, .content-hide').hide();
+                        // show org chart branches
+                        $('.org-chart_branches').show();
+                    }
+                });
+                
+            }
+            
+        });
+    </script>
 {% endblock javascript %}
 
