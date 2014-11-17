@@ -23,33 +23,36 @@ class NewsroomTestCase(LiveServerTestCase):
 
     def create_app(self):
         # Setup server
-        config = {'debug': True, 
+        config = {'debug': False, 
                   'index': 'cfgov_test', 
                   'elasticsearch': [{'host': 'localhost', 'port': 9200}], 
                   'location': os.getcwd()}
         application = app_with_config(config)
-        application.config['TESTING'] = True
-        application.config['LIVESERVER_PORT'] = 7000
+        application.config['LIVESERVER_PORT'] = 31337
         return application
 
     def setUp(self):
-        es = Elasticsearch()
         self.driver = webdriver.Chrome()
-        self.driver.get('http://localhost:7000/newsroom/')
+        self.driver.set_window_size(1400, 850)
+        self.driver.get('http://localhost:31337/newsroom/')
         self.filter_dropdown_button = self.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]')
         click_filter_posts(self)
 
     def test_filter_display_button(self):
-        filter_options = self.driver.find_element_by_class_name('padded-container')
+        filter_posts_display_button = self.driver.find_element_by_xpath(
+            '//button[contains(text(), "Filter posts")]'
+        )
+        assert filter_posts_display_button.is_displayed()
 
 
     @attr('checkbox')
     def test_filter_checkboxes(self):
-        categoryList = ["Op-Ed", "Press Release", "Speech", "Testimony", "Blog"]
-        for cat in categoryList:
+        category_list = ["Op-Ed", "Press Release"]
+        for cat in category_list:
+            print cat
             # use this after view changes value of checkbox input to 'Blog'
             # checkbox = self.driver.find_element_by_xpath('//label/input[@value=\"'+ cat +'\"]/..')
-            checkbox = self.driver.find_element_by_xpath('//label/span[contains(text(), \"'+ cat +'\")]/..')
+            checkbox = self.driver.find_element_by_xpath('//label/span[contains(text(), "{0}")]/..'.format(cat))
             checkbox.click()
             assert "is-checked" in checkbox.get_attribute('class')
             checkbox.click()
@@ -58,12 +61,12 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('category')
     def test_filter_category_search(self):
-        categoryList = ["Op-Ed", "Press Release", "Speech", "Testimony"] # No Blog posts yet so add in when data is there
-        for cat in categoryList:
+        category_list = ["Op-Ed", "Press Release"]
+        for cat in category_list:
             click_filter_posts(self)
             # checkbox = self.driver.find_element_by_xpath('//label/span[contains(text(), \"'+ cat +'\")]/..')
             checkbox = WebDriverWait(self.driver, 10).until(
-                ec.visibility_of_element_located((By.XPATH, '//label/span[contains(text(), \"'+ cat +'\")]/..'))
+                ec.visibility_of_element_located((By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)))
             )
             checkbox.click()
             filter_results_button = WebDriverWait(self.driver, 10).until(
@@ -72,14 +75,14 @@ class NewsroomTestCase(LiveServerTestCase):
             filter_results_button.click()
             cat = coerce_category_for_dom(cat)
             cat_type_elem = WebDriverWait(self.driver, 10).until(
-                ec.visibility_of_element_located((By.XPATH, '//a[@href="?filter_category='+ cat +'"]'))
+                ec.visibility_of_element_located((By.XPATH, '//a[@href="?filter_category={0}"]'.format(cat)))
             )
             assert cat_type_elem
             click_filter_posts(self)
             cat = coerce_category_for_dom(cat)
             # checkbox = self.driver.find_element_by_xpath('//label/span[contains(text(), \"'+ cat +'\")]/..')
             checkbox = WebDriverWait(self.driver, 10).until(
-                ec.visibility_of_element_located((By.XPATH, '//label/span[contains(text(), \"'+ cat +'\")]/..'))
+                ec.visibility_of_element_located((By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)))
             )
             checkbox.click()
 
