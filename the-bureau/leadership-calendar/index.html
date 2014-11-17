@@ -74,53 +74,8 @@
                              { 'expand_label': 'Filter calendars' }
                         ) }}
 
-                    {% for days in posts|groupby('day')|reverse %}
-                        <table class="u-w100pct block u-mt0">
-                            <colgroup>
-                                <col class="u-w25pct">
-                                <col class="u-w25pct">
-                                <col class="u-w50pct">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="3">
-                                        {{ days.grouper|date('%b %d, %Y') }}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for event in days.list|sort(attribute='dtstart') %}
-                                <tr>
-                                    <td>
-                                    {%- if event.all_day %}
-                                        All day
-                                    {%- else %}
-                                        {{ macros.format_time(event.dtstart) }}
-                                        &ndash;
-                                        {{ macros.format_time(event.dtend) }}
-                                    {%- endif %}
-                                    </td>
-                                    <td>
-                                        <span class="h4">
-                                            {{ event.calendar }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {{ event.summary }}
-                                    {% if event.location %}
-                                        <br>
-                                        <span class="u-small-text">{{ event.location }}</span>
-                                    {% endif %}
-                                    {% if event.description %}
-                                        <br>
-                                        <small><i>{{ event.description }}</i></small>
-                                    {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    {% endfor %}
+                    {% import "leadership-calendar-table.html" as calendar %}
+                    {{ calendar.render(posts) }}
 
                     </div><!-- END calendar -->
 
