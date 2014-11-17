@@ -8,12 +8,12 @@
     Leadership calendar
 {%- endblock %}
 
-{# make this one block and use the super function #}
-{% block javascript_global %}
+{% block css %}
+    {{ super() }}
+    {% include "print-footer.html" %}
 {% endblock %}
 
-{% block css %}
-    {% include "print-footer.html" %}
+{% block javascript %}
 {% endblock %}
 
 {% block body %}
