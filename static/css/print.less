@@ -1,0 +1,51 @@
+/* ==========================================================================
+   cfgov-refresh
+   Print
+   ========================================================================== */
+
+
+/* topdoc
+  name: Print pages
+  family: cfgov-print
+  notes:
+    - "Print pages are barebones printer friendly pages which are also sometimes
+       used as the source to generate PDF's through PDF creation software."
+    - "The `.print` class acts a styling hook. When using the
+       `.respond-to-print()` mixin, all stlyes will be nested under both
+       `@media print` and `.print`."
+  patterns:
+    - name: Usage
+      markup: |
+        <div class="print">
+            <h1 class="superheader">
+                I am a green superheader
+            </h1>
+        </div>
+      notes:
+        - "To trigger a print page simply add the `.print` class to a containing
+           element."
+  tags:
+    - cfgov-print
+*/
+
+
+/* topdoc
+  name: Print bar
+  notes:
+    - "A simple black bar."
+  family: cfgov-print
+  patterns:
+    - name: .print-bar
+      markup: |
+        <div class="print-bar"></div>
+  tags:
+    - cfgov-print
+*/
+
+.print-bar {
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: @black;
+}
+

@@ -174,6 +174,18 @@
 
         The label you want on the submit button.
 
+   user_options.show_current_filters:
+
+        Allows you to disable showing the currently applied filters.
+
+   user_options.show_unfiltered_count:
+
+        Allows you to enable the count label when no filters are applied.
+
+   user_options.show_filters_label:
+
+        Allows you to disable showing the count label.
+
    user_options.id_prefix:
 
         ID's are automatically added to certain elements that need them, but if
@@ -199,12 +211,13 @@
 
 {% macro filters(filters, query, posts, doc_type, user_options) %}
 
-{% set options = {
+{%- set options = {
     'action':               '/',
     'expand_label':         'Filter',
     'submit_label':         'Apply filters',
-    'show_unfiltered_count': false,
     'show_current_filters': true,
+    'show_unfiltered_count':false,
+    'show_filters_label':   true,
     'id_prefix':            '',
     'id_tags':              'filter_tags',
     'id_author':            'filter_author',
@@ -214,11 +227,12 @@
     'id_from_year':         'filter_from-year',
     'id_to_month':          'filter_to-month',
     'id_to_year':           'filter_to-year'
-} %}
-{% set _ignore = options.update(user_options) %}
+} -%}
+{%- set _ignore = options.update(user_options) -%}
 
+{#- Create ID's for all of the form inputs and containers using `id_prefix`. -#}
 {%- if options.id_prefix != '' %}
-{% set _ignore = options.update({
+{%- set _ignore = options.update({
     'id_tags':              options.id_prefix + '-filter_tags',
     'id_author':            options.id_prefix + '-filter_author',
     'id_range_date_gte':    options.id_prefix + '-filter_range-date-gte',
@@ -227,7 +241,7 @@
     'id_from_year':         options.id_prefix + '-filter_from-year',
     'id_to_month':          options.id_prefix + '-filter_to-month',
     'id_to_year':           options.id_prefix + '-filter_to-year'
-}) %}
+}) -%}
 {%- endif -%}
 
 <div class="expandable">
@@ -249,8 +263,8 @@
                 </button>
             </span>
         </div>
-    {% if options.show_current_filters == true %}
-        {{ active_filters(posts, filters, options.show_unfiltered_count) }}
+    {% if options.show_current_filters %}
+        {{ active_filters(posts, filters, options) }}
     {% endif %}
     </div>
     <div class="expandable_content padded-container">
@@ -265,27 +279,28 @@
 
 {# A helper macro for filters()
    ========================================================================== #}
-{% macro active_filters(posts, filters, show_unfiltered_count) %}
+{% macro active_filters(posts, filters, options) %}
 
-{% set active_filters = [] %}
-{% set active_date_filters = [] %}
+{%- set active_filters = [] -%}
+{%- set active_date_filters = [] -%}
 
 {# This is a hack. `_ignore` is a variable we will never use but we can use
    its var expression as a means to write the expression needed to update
    `active_date_filters`. #}
-{% for filter in filters %}
-    {% if filter == 'range_date' %}
+{%- for filter in filters %}
+    {%- if filter == 'range_date' -%}
         {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_gte')) %}
         {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
-    {% else %}
+    {%- else -%}
         {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
-    {% endif %}
-{% endfor %}
+    {%- endif -%}
+{% endfor -%}
 
-{% set active_filters_total = active_filters|length + active_date_filters|length %}
+{%- set active_filters_total = active_filters|length + active_date_filters|length -%}
 
-{% if active_filters_total > 0 %}
-    <ul class="filtered-by filtered-by__align-with-btn list list__horizontal">
+{%- if active_filters_total > 0 -%}
+    <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+        {%- if options.show_filters_label -%}
         <li class="list_item filtered-by_header">
         {%- if posts|list|length > 0 -%}
             {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
@@ -293,14 +308,15 @@
             No results for
         {%- endif -%}
         </li>
-    {% for filter in active_filters %}
+        {%- endif %}
+    {%- for filter in active_filters %}
         <li class="list_item filtered-by_filter">
             {{ filter }}
         {%- if not loop.last -%}
             ,
         {%- elif active_date_filters|length > 0 -%}
             ,
-        {%- endif -%}
+        {%- endif %}
         </li>
     {% endfor %}
     {%- if active_date_filters|length > 0 -%}
@@ -312,17 +328,17 @@
         </li>
     {%- endif %}
     </ul>
-{% else %}
-    {% if show_unfiltered_count %}
-    <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
-        <dt class="list_item">
+{%- else -%}
+    {% if options.show_unfiltered_count and options.show_filters_label %}
+    <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+        <li class="list_item">
             <span class="filtered-by_header">
                 {{ posts.total }} results
             </span>
-        </dt>
-    </dl>
+        </li>
+    </ul>
     {% endif %}
-{% endif %}
+{%- endif -%}
 
 {% endmacro %}
 

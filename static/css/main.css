@@ -8434,6 +8434,62 @@ figure img {
    capital framework enhancements
    ========================================================================== */
 /* topdoc
+  name: respond-to-print() (mixin)
+  notes:
+    - "This mixin allows us to easily write styles that target both
+       `@media print` and `.print`."
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Usage
+      codenotes:
+        - |
+          // Example Less
+          .example {
+              color: @gray;
+
+              .respond-to-print({
+                  color: @black;
+              });
+          }
+
+          // Exports to
+          .example {
+              color: #75787B;
+          }
+          @media print {
+              .example {
+                  color: #101820;
+              }
+          }
+          .print .example {
+              color: #101820;
+          }
+  tags:
+    - cfgov-cf-enhancements
+*/
+/* topdoc
+  name: Superheader print styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .superheader
+      markup: |
+        <div class="print">
+            <h1 class="superheader">
+                A big green header
+            </h1>
+        </div>
+  tags:
+    - cfgov-cf-enhancements
+*/
+@media print {
+  .superheader {
+    color: #2cb34a;
+  }
+}
+.print .superheader {
+  color: #2cb34a;
+}
+/* topdoc
   name: Tables
   family: cfgov-cf-enhancements
   notes:
@@ -11803,14 +11859,6 @@ a.category-slug.active {
 .filtered-by {
   margin: 0;
 }
-.filtered-by__show-on-medium {
-  display: none;
-}
-@media only all and (min-width: 37.5em) {
-  .filtered-by__show-on-medium {
-    display: block;
-  }
-}
 .filtered-by_header {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
@@ -11856,6 +11904,26 @@ a.category-slug.active {
 }
 .lt-ie9 .filtered-by_filter strong,
 .lt-ie9 .filtered-by_filter b {
+  font-weight: normal !important;
+}
+@media print {
+  .filtered-by_filter {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: #101820;
+  }
+  .lt-ie9 .filtered-by_filter {
+    font-weight: normal !important;
+  }
+}
+.print .filtered-by_filter {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  color: #101820;
+}
+.lt-ie9 .print .filtered-by_filter {
   font-weight: normal !important;
 }
 /* topdoc
@@ -16514,6 +16582,14 @@ a.focus .summary_header {
   .lt-ie9 .beta-hero_title {
     font-weight: normal !important;
   }
+  .print .beta-hero_title {
+    color: #2cb34a;
+  }
+}
+@media only all and (min-width: 37.5625em) and print {
+  .beta-hero_title {
+    color: #2cb34a;
+  }
 }
 .beta-hero_desc {
   margin-top: 0;
@@ -16686,4 +16762,49 @@ a.focus .summary_header {
     position: relative;
     top: 39px;
   }
+}
+/* ==========================================================================
+   cfgov-refresh
+   Print
+   ========================================================================== */
+/* topdoc
+  name: Print pages
+  family: cfgov-print
+  notes:
+    - "Print pages are barebones printer friendly pages which are also sometimes
+       used as the source to generate PDF's through PDF creation software."
+    - "The `.print` class acts a styling hook. When using the
+       `.respond-to-print()` mixin, all stlyes will be nested under both
+       `@media print` and `.print`."
+  patterns:
+    - name: Usage
+      markup: |
+        <div class="print">
+            <h1 class="superheader">
+                I am a green superheader
+            </h1>
+        </div>
+      notes:
+        - "To trigger a print page simply add the `.print` class to a containing
+           element."
+  tags:
+    - cfgov-print
+*/
+/* topdoc
+  name: Print bar
+  notes:
+    - "A simple black bar."
+  family: cfgov-print
+  patterns:
+    - name: .print-bar
+      markup: |
+        <div class="print-bar"></div>
+  tags:
+    - cfgov-print
+*/
+.print-bar {
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: #101820;
 }
