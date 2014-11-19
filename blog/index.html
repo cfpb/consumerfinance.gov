@@ -39,14 +39,14 @@
 
             <div class="content_main">
                 <section>
-                    {{ post_macros.filters('Filter posts', query, posts, 'posts',
-                       ['category', 'tags', 'author', 'range_date']) }}
+                    {{ post_macros.filters(['category', 'tags', 'author', 'range_date'],
+                        query, posts, 'posts', { 'expand_label': 'Filter posts' }) }}
                     {% include "posts-paginated.html" %}
                 </section>
             </div>
 
             <aside class="content_sidebar">
-                <section class="block block__flush-top">
+                <section class="block u-mt0">
                     {% include "popular-stories.html" %}
                 </section>
                 <section class="block">
@@ -55,7 +55,7 @@
                             Stay informed
                         </span>
                     </h1>
-                    <div class="block block__sub block__flush-top">
+                    <div class="block block__sub u-mt0">
                         <p class="short-desc">
                             Subscribe to our email newsletter. We will update you on new blogs.
                         </p>

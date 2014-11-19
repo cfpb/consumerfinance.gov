@@ -53,7 +53,7 @@
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
         <meta property="og:image"
-              content="http://beta.consumerfinance.gov/static/img/logo_sm-exec.png">
+              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
         <!--   Optional -->
         <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
         <meta property="og:site_name" content="Consumer Financial Protection Bureau">
@@ -73,11 +73,11 @@
     specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
 -->
 
+{% block css %}
 <!--[if lt IE 9]>      <link rel="stylesheet" href="/static/css/main.ie.min.css"> <![endif]-->
 <!--[if gt IE 8]><!--> <link rel="stylesheet" href="/static/css/main.min.css"> <!--<![endif]-->
+{% endblock css %}
     
-    {% block css %}
-    {% endblock css %}
 <!--
     ============
     HEAD SCRIPTS
@@ -134,6 +134,8 @@
     =================
 -->
 
+{% block body %}
+
 <div class="beta-banner expandable" id="beta-banner">
     <div class="wrapper wrapper__match-content">
         <div class="beta-banner_head">
@@ -161,18 +163,18 @@
 
     {% include "header.html" %}
 
-
     <!-- PRIMARY CONTENT -->
     {% block content scoped %}
         This will be replaced in templates that extend this template and override "content".
     {% endblock content %}
     <!-- /PRIMARY CONTENT -->
 
-
     {% include "footer.html" %}
 
   </div><!-- END .sliding-nav_page -->
 </div><!-- END .sliding-nav -->
+
+{% endblock body %}
 
 <!--
     ============
@@ -181,13 +183,10 @@
     The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
     specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
 -->
-
-<script src="/static/js/main.min.js"></script>
-
 {% block javascript %}
+<script src="/static/js/main.min.js"></script>
 {% endblock javascript %}
 
 </body>
 
 </html>
-

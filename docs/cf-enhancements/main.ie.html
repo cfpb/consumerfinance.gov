@@ -26,281 +26,82 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / cf-enhancements docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
-    <div id="proposed-superheader-line-height-tweak" class="docs-component">
-      <h2 class="docs-component_header"><span>Proposed Superheader line-height tweak</span></h2>
+    <div id="respond-to-print-(mixin)" class="docs-component">
+      <h2 class="docs-component_header"><span>respond-to-print() (mixin)</span></h2>
       <div class="docs-component_intro">
         <ul class="docs-notes">
-          <li>The current superheader line-height is a little tall. This proposes reducing it.</li>
+          <li>This mixin allows us to easily write styles that target both `@media print` and `.print`.</li>
         </ul>
       </div>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">.superheader</h3>
-          <section class="docs-pattern_pattern">
-<h1 class="superheader">
-    Here's a long header that will hopefully break
-    break onto two lines.
-</h1>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1 class=&quot;superheader&quot;&gt;
-    Here's a long header that will hopefully break
-    break onto two lines.
-&lt;/h1&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;h1 class=\&amp;quot;superheader\&amp;quot;&gt;\n    Here&amp;apos;s a long header that will hopefully break\n    break onto two lines.\n&lt;/h1&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.superheader {
-  margin-bottom: 0.1875em;
-  font-size: 3em;
-  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  line-height: 1.25;
-}
-
-.lt-ie9 .superheader {
-  font-weight: normal !important;
-}
-</code></pre>
-      </div>
-    </div>
-    <div id="small-text-utility" class="docs-component">
-      <h2 class="docs-component_header"><span>Small text utility</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">.u-small-text (utility class)</h3>
-          <section class="docs-pattern_pattern">
-Lorem ipsum<br>
-<span class="u-small-text">dolor sit amet</span>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">Lorem ipsum&lt;br&gt;
-&lt;span class=&quot;u-small-text&quot;&gt;dolor sit amet&lt;/span&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\nLorem ipsum&lt;br&gt;\n&lt;span class=\&amp;quot;u-small-text\&amp;quot;&gt;dolor sit amet&lt;/span&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.u-small-text</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>14px text.</li>
-              <li>The utility class should only be used when the default text size is 16px. For example you wouldn't want to use the class inside of an `h1` because the `font-size` in the `h1` will make `.u-small-text` bigger than it should be. See the docs for the `.u-small-text()` mixin.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">.u-small-text() (Less mixin)</h3>
+          <h3 class="docs-pattern_header">Usage</h3>
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-small-text(@context)</code></pre>
-              </li>
-              <li>
-                <pre class="docs-code"><code>// Mixin usage:
+                <pre class="docs-code"><code>// Example Less
 .example {
-  font-size: unit(20px / @base-font-size-px, em);
-  small {
-    .u-small-text(20px);
-  }
+    color: @gray;
+
+    .respond-to-print({
+        color: @black;
+    });
 }
-// Compiles to:
+
+// Exports to
 .example {
-  font-size: 1.25em;
+    color: #75787B;
 }
-.example small {
-  font-size: 0.7em;
+@media print {
+    .example {
+        color: #101820;
+    }
+}
+.print .example {
+    color: #101820;
 }</code></pre>
               </li>
             </ul>
-            <ul class="docs-notes">
-              <li>This mixin enables you to easily create consistent small text by passing the context `font-size`.</li>
-            </ul>
           </footer>
         </div>
       </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.u-small-text {
-  font-size: 0.875em;
-}
-
-small {
-  font-size: 0.875em;
-}
-</code></pre>
-      </div>
     </div>
-    <div id="width-utilities" class="docs-component">
-      <h2 class="docs-component_header"><span>Width utilities</span></h2>
+    <div id="superheader-print-styles" class="docs-component">
+      <h2 class="docs-component_header"><span>Superheader print styles</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Percent-based</h3>
+          <h3 class="docs-pattern_header">.superheader</h3>
           <section class="docs-pattern_pattern">
-<div class="u-w100pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w100pct</code>
-</div>
-<div class="u-w90pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w90pct</code>
-</div>
-<div class="u-w80pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w80pct</code>
-</div>
-<div class="u-w70pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w70pct</code>
-</div>
-<div class="u-w60pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w60pct</code>
-</div>
-<div class="u-w50pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w50pct</code>
-</div>
-<div class="u-w40pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w40pct</code>
-</div>
-<div class="u-w30pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w30pct</code>
-</div>
-<div class="u-w20pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w20pct</code>
-</div>
-<div class="u-w10pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w10pct</code>
-</div>
-<div class="u-w75pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w75pct</code>
-</div>
-<div class="u-w25pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w25pct</code>
-</div>
-<div class="u-w66pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w66pct</code>
-</div>
-<div class="u-w33pct" style="background: #DBEDD4; margin-bottom: 1px;">
-    <code>.u-w33pct</code>
+<div class="print">
+    <h1 class="superheader">
+        A big green header
+    </h1>
 </div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-w100pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w100pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w90pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w90pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w80pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w80pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w70pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w70pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w60pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w60pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w50pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w50pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w40pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w40pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w30pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w30pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w20pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w20pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w10pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w10pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w75pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w75pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w25pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w25pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w66pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w66pct&lt;/code&gt;
-&lt;/div&gt;
-&lt;div class=&quot;u-w33pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
-    &lt;code&gt;.u-w33pct&lt;/code&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print&quot;&gt;
+    &lt;h1 class=&quot;superheader&quot;&gt;
+        A big green header
+    &lt;/h1&gt;
 &lt;/div&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;u-w100pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w100pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w90pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w90pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w80pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w80pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w70pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w70pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w60pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w60pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w50pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w50pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w40pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w40pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w30pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w30pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w20pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w20pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w10pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w10pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w75pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w75pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w25pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w25pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w66pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w66pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w33pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w33pct&lt;/code&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print\&amp;quot;&gt;\n    &lt;h1 class=\&amp;quot;superheader\&amp;quot;&gt;\n        A big green header\n    &lt;/h1&gt;\n&lt;/div&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
-            <ul class="docs-notes">
-              <li>Inline styles are for demonstration purposes only, please don't use them.</li>
-            </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.u-w100pct {
-  width: 100%;
+@media print {
+  .superheader {
+    color: #2cb34a;
+  }
 }
 
-.u-w90pct {
-  width: 90%;
-}
-
-.u-w80pct {
-  width: 80%;
-}
-
-.u-w70pct {
-  width: 70%;
-}
-
-.u-w60pct {
-  width: 60%;
-}
-
-.u-w50pct {
-  width: 50%;
-}
-
-.u-w40pct {
-  width: 40%;
-}
-
-.u-w30pct {
-  width: 30%;
-}
-
-.u-w20pct {
-  width: 20%;
-}
-
-.u-w10pct {
-  width: 10%;
-}
-
-.u-w75pct {
-  width: 75%;
-}
-
-.u-w25pct {
-  width: 25%;
-}
-
-.u-w66pct {
-  width: 66.66666667%;
-}
-
-.u-w33pct {
-  width: 33.33333333%;
+.print .superheader {
+  color: #2cb34a;
 }
 </code></pre>
       </div>
@@ -430,148 +231,6 @@ tbody tr {
 </code></pre>
       </div>
     </div>
-    <div id="figure-updates" class="docs-component">
-      <h2 class="docs-component_header"><span>Figure updates</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">figure.figure__bordered</h3>
-          <section class="docs-pattern_pattern">
-<figure class="figure__bordered">
-    <img src="http://placekitten.com/300/300">
-</figure>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;figure class=&quot;figure__bordered&quot;&gt;
-    &lt;img src=&quot;http://placekitten.com/300/300&quot;&gt;
-&lt;/figure&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;figure class=\&amp;quot;figure__bordered\&amp;quot;&gt;\n    &lt;img src=\&amp;quot;http://placekitten.com/300/300\&amp;quot;&gt;\n&lt;/figure&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-figure img {
-  vertical-align: middle;
-}
-
-.figure__bordered img {
-  border: 1px solid #babbbd;
-}
-</code></pre>
-      </div>
-    </div>
-    <div id="expandables" class="docs-component">
-      <h2 class="docs-component_header"><span>Expandables</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Header right float on medium modifier</h3>
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.expandable_header-right__float-on-medium</code></pre>
-              </li>
-            </ul>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.expandable_target__btn__secondary {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0.57142857em 1em;
-  border: 0;
-  border-radius: 0.28571429em;
-  margin: 0;
-  vertical-align: middle;
-  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.875em;
-  line-height: normal;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-transition: .1s;
-  transition: .1s;
-  -webkit-appearance: none;
-}
-
-.lt-ie9 .expandable_target__btn__secondary {
-  font-weight: normal !important;
-}
-
-.expandable_target__btn__secondary,
-.expandable_target__btn__secondary:link,
-.expandable_target__btn__secondary:visited {
-  background-color: #0072ce;
-  color: #ffffff;
-}
-
-.expandable_target__btn__secondary:hover,
-.expandable_target__btn__secondary.hover {
-  background-color: #328ed8;
-}
-
-.expandable_target__btn__secondary:focus,
-.expandable_target__btn__secondary.focus {
-  background-color: #328ed8;
-  outline: 1px dotted #0072ce;
-  outline-offset: 1px;
-}
-
-.expandable_target__btn__secondary:active,
-.expandable_target__btn__secondary.active {
-  background-color: #33578e;
-}
-
-button.expandable_target__btn__secondary::-moz-focus-inner,
-input.expandable_target__btn__secondary::-moz-focus-inner {
-  border: 0;
-}
-
-.expandable_target__btn__secondary + .expandable_target__btn__secondary {
-  margin-left: 0.42857143em;
-}
-
-.expandable_target__btn__secondary,
-.expandable_target__btn__secondary:link,
-.expandable_target__btn__secondary:visited {
-  background-color: #75787b;
-  color: #ffffff;
-}
-
-.expandable_target__btn__secondary:hover,
-.expandable_target__btn__secondary.hover {
-  background-color: #919395;
-}
-
-.expandable_target__btn__secondary:focus,
-.expandable_target__btn__secondary.focus {
-  background-color: #919395;
-  outline-color: #75787b;
-}
-
-.expandable_target__btn__secondary:active,
-.expandable_target__btn__secondary.active {
-  background-color: #43484e;
-}
-
-.expandable_header-right__float-on-medium {
-  float: none;
-}
-
-.expandable_header-right__float-on-medium {
-  float: right;
-}
-</code></pre>
-      </div>
-    </div>
     <div id="cf-grid-column-dividers" class="docs-component">
       <h2 class="docs-component_header"><span>cf-grid column dividers</span></h2>
       <div class="docs-component_intro">
@@ -650,162 +309,28 @@ input.expandable_target__btn__secondary::-moz-focus-inner {
 </code></pre>
       </div>
     </div>
-    <div id="width-specific-display" class="docs-component">
-      <h2 class="docs-component_header"><span>Width-specific display</span></h2>
+    <div id="expandables" class="docs-component">
+      <h2 class="docs-component_header"><span>Expandables</span></h2>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Show on mobile (below 600px)</h3>
-          <section class="docs-pattern_pattern">
-<section>
-    <p>The the text in the box below is visible only at widths less than 600px</p>
-    <div style="border: 1px solid black; height: 22px; padding: 5px;">
-        <p class="u-show-on-mobile">Visible on mobile</p>
-    </div>
-</section>
-
-          </section>
+          <h3 class="docs-pattern_header">Header right float on medium modifier</h3>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section&gt;
-    &lt;p&gt;The the text in the box below is visible only at widths less than 600px&lt;/p&gt;
-    &lt;div style=&quot;border: 1px solid black; height: 22px; padding: 5px;&quot;&gt;
-        &lt;p class=&quot;u-show-on-mobile&quot;&gt;Visible on mobile&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/section&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section&gt;\n    &lt;p&gt;The the text in the box below is visible only at widths less than 600px&lt;/p&gt;\n    &lt;div style=\&amp;quot;border: 1px solid black; height: 22px; padding: 5px;\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;u-show-on-mobile\&amp;quot;&gt;Visible on mobile&lt;/p&gt;\n    &lt;/div&gt;\n&lt;/section&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.u-show-on-mobile</code></pre>
+                <pre class="docs-code"><code>.expandable_header-right__float-on-medium</code></pre>
               </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>Displays an element only at widths less than 600px.</li>
-              <li>Uses display: block to show the element on mobile. Would need to  be extended for other display types.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Hide on mobile (below 600px)</h3>
-          <section class="docs-pattern_pattern">
-<section>
-    <p>The text in the box below is hidden at widths less than 600px</p>
-    <div style="border: 1px solid black; height: 22px; padding: 5px;">
-        <p class="u-hide-on-mobile">Hidden on mobile</p>
-    </div>
-</section>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section&gt;
-    &lt;p&gt;The text in the box below is hidden at widths less than 600px&lt;/p&gt;
-    &lt;div style=&quot;border: 1px solid black; height: 22px; padding: 5px;&quot;&gt;
-        &lt;p class=&quot;u-hide-on-mobile&quot;&gt;Hidden on mobile&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/section&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section&gt;\n    &lt;p&gt;The text in the box below is hidden at widths less than 600px&lt;/p&gt;\n    &lt;div style=\&amp;quot;border: 1px solid black; height: 22px; padding: 5px;\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;u-hide-on-mobile\&amp;quot;&gt;Hidden on mobile&lt;/p&gt;\n    &lt;/div&gt;\n&lt;/section&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.u-hide-on-mobile</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>Hides an element at widths of less than 600px</li>
             </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.u-show-on-mobile {
-  display: none;
-}
-</code></pre>
-      </div>
-    </div>
-    <div id="branded-list-modifier" class="docs-component">
-      <h2 class="docs-component_header"><span>Branded list modifier</span></h2>
-      <div class="docs-patterns">
-        <div class="docs-pattern">
-          <h3 class="docs-pattern_header">Branded list</h3>
-          <section class="docs-pattern_pattern">
-<ul class="list__branded">
-    <li>First item</li>
-    <li>Second item</li>
-    <li>Third item</li>
-</ul>
-
-          </section>
-          <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list__branded&quot;&gt;
-    &lt;li&gt;First item&lt;/li&gt;
-    &lt;li&gt;Second item&lt;/li&gt;
-    &lt;li&gt;Third item&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list__branded\&amp;quot;&gt;\n    &lt;li&gt;First item&lt;/li&gt;\n    &lt;li&gt;Second item&lt;/li&gt;\n    &lt;li&gt;Third item&lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
-              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
-            </form>
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.list__branded</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>List that uses CFPB font and brand-color bullets</li>
-            </ul>
-          </footer>
-        </div>
-      </div>
-      <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">
-.list__branded {
-  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
+.expandable_header-right__float-on-medium {
+  float: none;
 }
 
-.list__branded em,
-.list__branded i {
-  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .list__branded em,
-.lt-ie9 .list__branded i {
-  font-style: normal !important;
-}
-
-.list__branded strong,
-.list__branded b {
-  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .list__branded strong,
-.lt-ie9 .list__branded b {
-  font-weight: normal !important;
-}
-
-.list__branded li {
-  position: relative;
-  list-style-type: none;
-  padding-bottom: 12px;
-}
-
-.list__branded li:before {
-  content: &quot;\25AA&quot;;
-  position: absolute;
-  left: -19px;
-  color: #2cb34a;
-  font-size: 1.375em;
-  line-height: 1;
+.expandable_header-right__float-on-medium {
+  float: right;
 }
 </code></pre>
       </div>

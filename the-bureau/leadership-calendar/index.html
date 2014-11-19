@@ -41,7 +41,7 @@
                 <section>
 
                     <div class="block
-                                block__flush-top
+                                u-mt0
                                 block__padded-bottom
                                 block__border-bottom">
                         <h1 class="h3">
@@ -64,69 +64,24 @@
 
                     <div id="pagination_content"></div>
 
-                    <div class="block block__flush-top">
+                    <div class="block u-mt0">
 
                     {% set query = queries.calendar_event %}
                     {% set posts = query.search_with_url_arguments(size=20) %}
 
-                        {{ post_macros.filters('Filter calendar', query, posts, 'calendar_event',
-                           ['calendar', 'range_date']) }}
+                        {{ post_macros.filters(
+                             ['calendar', 'range_date'], query, posts, 'calendar_event',
+                             { 'expand_label': 'Filter calendars' }
+                        ) }}
 
-                    {% for days in posts|groupby('day')|reverse %}
-                        <table class="u-w100pct block block__flush-top">
-                            <colgroup>
-                                <col class="u-w25pct">
-                                <col class="u-w25pct">
-                                <col class="u-w50pct">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="3">
-                                        {{ days.grouper|date('%b %d, %Y') }}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for event in days.list|sort(attribute='dtstart') %}
-                                <tr>
-                                    <td>
-                                    {%- if event.all_day %}
-                                        All day
-                                    {%- else %}
-                                        {{ macros.format_time(event.dtstart) }}
-                                        &ndash;
-                                        {{ macros.format_time(event.dtend) }}
-                                    {%- endif %}
-                                    </td>
-                                    <td>
-                                        <span class="h4">
-                                            {{ event.calendar }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {{ event.summary }}
-                                    {% if event.location %}
-                                        <br>
-                                        <span class="u-small-text">{{ event.location }}</span>
-                                    {% endif %}
-                                    {% if event.description %}
-                                        <br>
-                                        <small><i>{{ event.description }}</i></small>
-                                    {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    {% endfor %}
+                    {% import "leadership-calendar-table.html" as calendar %}
+                    {{ calendar.render(posts) }}
 
                     </div><!-- END calendar -->
 
                     {{ post_macros.pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
 
-                    <!-- <section class="block
-                                block__padded-top
-                                block__border-top">
+                    <section class="block block__padded-top block__border-top">
                         <h1 class="h2">
                             Download a copy
                         </h1>
@@ -135,21 +90,20 @@
                             faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
                             dapibus, a viverra elit tempor.
                         </p>
-                        <p class="demo-placeholder">
-                            Form
-                        </p>
-                        <p class="short-desc">
-                            * Disclaimer abotu Raj Date and Elizabeth Warren. Quisque consequat quam sem, a
-                            condimentum augue consequat nec.
-                        </p>
-                        <p class="short-desc">
-                            ** Disclaimer about old PDF’s tristique faucibus nisi, a posuere sapien
-                            pellentesque nec. Nulla placerat ipsum ac purus dapibus, a viverra elit tempor.
-                        </p>
-                    </section> -->
+                        {{ post_macros.filters(
+                             ['calendar', 'range_date'], query, posts, 'calendar_event',
+                             {
+                               'id_prefix': 'download',
+                               'expand_label': 'Download options',
+                               'show_current_filters': false,
+                               'action': 'pdf/',
+                               'submit_label': 'Download PDF'
+                             }
+                        ) }}
+                    </section>
 
                     <aside class="block
-                                  block__flush-bottom
+                                  u-mb0
                                   block__flush-sides
                                   block__bg">
                         <div class="content-l">
