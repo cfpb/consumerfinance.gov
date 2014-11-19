@@ -45,7 +45,13 @@
 .print-bar {
     display: block;
     width: 100%;
-    height: 5px;
-    background: @black;
+    height: 0;
+    border-top: 5px solid @black;
 }
+
+.respond-to-print({
+    .print-bar {
+        .print-bar;
+    }
+});
 
