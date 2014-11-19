@@ -13,6 +13,7 @@
 {%- endblock %}
 
 {% block css -%}
+    {{ super() }}
     <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
 {%- endblock %}
 
@@ -232,8 +233,8 @@
 {% endblock content %}
 
 {% block javascript %}
+    {{ super() }}
     <script src="/static/vendor/slick-carousel/slick.min.js"></script>
-    
     <script>
         var carouselHandler;
         

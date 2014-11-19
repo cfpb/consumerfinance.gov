@@ -340,6 +340,7 @@ module.exports = function(grunt) {
       'misc',
       'nav-secondary',
       'post',
+      'print',
       'summary'
     ]
   };

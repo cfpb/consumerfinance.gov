@@ -4,6 +4,72 @@
    ========================================================================== */
 
 
+/* topdoc
+  name: respond-to-print() (mixin)
+  notes:
+    - "This mixin allows us to easily write styles that target both
+       `@media print` and `.print`."
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Usage
+      codenotes:
+        - |
+          // Example Less
+          .example {
+              color: @gray;
+
+              .respond-to-print({
+                  color: @black;
+              });
+          }
+
+          // Exports to
+          .example {
+              color: #75787B;
+          }
+          @media print {
+              .example {
+                  color: #101820;
+              }
+          }
+          .print .example {
+              color: #101820;
+          }
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-print(@rules) {
+    @media print {
+        @rules();
+    }
+    .print & {
+        @rules();
+    }
+}
+
+
+/* topdoc
+  name: Superheader print styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .superheader
+      markup: |
+        <div class="print">
+            <h1 class="superheader">
+                A big green header
+            </h1>
+        </div>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.superheader {
+    .respond-to-print({
+        color: @green;
+    });
+}
+
 
 /* topdoc
   name: Tables

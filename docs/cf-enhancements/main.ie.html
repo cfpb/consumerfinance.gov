@@ -26,6 +26,86 @@
       <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / cf-enhancements docs
       </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
     </div>
+    <div id="respond-to-print-(mixin)" class="docs-component">
+      <h2 class="docs-component_header"><span>respond-to-print() (mixin)</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>This mixin allows us to easily write styles that target both `@media print` and `.print`.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>// Example Less
+.example {
+    color: @gray;
+
+    .respond-to-print({
+        color: @black;
+    });
+}
+
+// Exports to
+.example {
+    color: #75787B;
+}
+@media print {
+    .example {
+        color: #101820;
+    }
+}
+.print .example {
+    color: #101820;
+}</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="superheader-print-styles" class="docs-component">
+      <h2 class="docs-component_header"><span>Superheader print styles</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.superheader</h3>
+          <section class="docs-pattern_pattern">
+<div class="print">
+    <h1 class="superheader">
+        A big green header
+    </h1>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print&quot;&gt;
+    &lt;h1 class=&quot;superheader&quot;&gt;
+        A big green header
+    &lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print\&amp;quot;&gt;\n    &lt;h1 class=\&amp;quot;superheader\&amp;quot;&gt;\n        A big green header\n    &lt;/h1&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+@media print {
+  .superheader {
+    color: #2cb34a;
+  }
+}
+
+.print .superheader {
+  color: #2cb34a;
+}
+</code></pre>
+      </div>
+    </div>
     <div id="tables" class="docs-component">
       <h2 class="docs-component_header"><span>Tables</span></h2>
       <div class="docs-component_intro">
