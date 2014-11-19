@@ -73,11 +73,11 @@
     specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
 -->
 
+{% block css %}
 <!--[if lt IE 9]>      <link rel="stylesheet" href="/static/css/main.ie.min.css"> <![endif]-->
 <!--[if gt IE 8]><!--> <link rel="stylesheet" href="/static/css/main.min.css"> <!--<![endif]-->
+{% endblock css %}
     
-    {% block css %}
-    {% endblock css %}
 <!--
     ============
     HEAD SCRIPTS
@@ -183,10 +183,8 @@
     The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
     specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
 -->
-
-<script src="/static/js/main.min.js"></script>
-
 {% block javascript %}
+<script src="/static/js/main.min.js"></script>
 {% endblock javascript %}
 
 </body>

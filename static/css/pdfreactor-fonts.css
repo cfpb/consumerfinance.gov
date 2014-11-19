@@ -1,0 +1,35 @@
+/* For some reason PDFreactor can't access our fonts.com fonts so we need to
+   overwrite the `@font-face` rules with our own hosted fonts. */
+
+@font-face {
+    font-family: "AvenirNextLTW01-Regular";
+    src: url("/static/fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "AvenirNextLTW01-Italic";
+    src: url("/static/fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf");
+    font-style: italic;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "AvenirNextLTW01-Regular";
+    src: url("/static/fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf");
+}
+
+@font-face{
+    font-family: "AvenirNextLTW01-Medium";
+    src: url("/static/fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf");
+    font-style: normal;
+    font-weight: 500;
+}
+
+@font-face{
+    font-family: "AvenirNextLTW01-Demi";
+    src: url("/static/fonts/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf");
+    font-style: normal;
+    font-weight: 700;
+}
