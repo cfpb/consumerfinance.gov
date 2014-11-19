@@ -80,12 +80,6 @@
         margin-left: 1px;
     }
 
-    &__before {
-        &:after {
-            content: '' !important;
-        }
-    }
-
     &__download {
         &:after,
         &.icon-link__before:before {
@@ -147,6 +141,12 @@
         &.icon-link__before:before {
             // Inserts the cf-icon-right glyph.
             content: "\e002";
+        }
+    }
+
+    &__before {
+        &:after {
+            content: '';
         }
     }
 
