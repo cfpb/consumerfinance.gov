@@ -10808,10 +10808,6 @@ a.category-slug.active {
   margin-left: 1px;
 }
 
-.icon-link__before:after {
-  content: '' !important;
-}
-
 .icon-link__download:after,
 .icon-link__download.icon-link__before:before {
   content: "\e406";
@@ -10850,6 +10846,10 @@ a.category-slug.active {
 .icon-link__right:after,
 .icon-link__right.icon-link__before:before {
   content: "\e002";
+}
+
+.icon-link__before:after {
+  content: '';
 }
 
 .icon-link__no-wrap {
@@ -10965,10 +10965,6 @@ a.category-slug.active {
   margin-left: 1px;
 }
 
-.jump-link__before:after {
-  content: '' !important;
-}
-
 .jump-link__download:after,
 .jump-link__download.icon-link__before:before {
   content: "\e406";
@@ -11007,6 +11003,10 @@ a.category-slug.active {
 .jump-link__right:after,
 .jump-link__right.icon-link__before:before {
   content: "\e002";
+}
+
+.jump-link__before:after {
+  content: '';
 }
 
 .jump-link__no-wrap {
