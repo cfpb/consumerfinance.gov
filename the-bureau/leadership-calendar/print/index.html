@@ -10,7 +10,8 @@
 
 {% block css %}
     {{ super() }}
-    {% include "print-footer.html" %}
+    {% import "pdfreactor-footer.html" as pdfreactor_footer %}
+    {{ pdfreactor_footer.render('consumerfinance.gov/the-bureau/leadership-calendar') }}
 {% endblock %}
 
 {% block javascript %}
@@ -21,14 +22,16 @@
     {% import "post-macros.html" as post_macros with context %}
     {% import "leadership-calendar-table.html" as calendar %}
 
-    <main class="content" id="main" role="main">
+    <main class="content print" id="main" role="main">
         <div class="content_wrapper">
             <div class="content_main">
-                {% set query = queries.calendar_event %}
-                {% set posts = query.search_with_url_arguments(size=11000) %}
-                <h1>Leadership calendar</h1>
-                {{ post_macros.active_filters(posts, ['calendar', 'range_date'], true) }}
-                <br>
+                {% set query = queries.calendar_event -%}
+                {%- set posts = query.search_with_url_arguments(size=40) -%}
+                <h1 class="superheader">Leadership Calendar</h1>
+                {{ post_macros.active_filters(posts, ['calendar', 'range_date'], {
+                    'show_filters_label': false, 'show_unfiltered_count': true
+                }) }}
+                <div class="print-bar u-mt30 u-mb30"></div>
                 {{ calendar.render(posts, {
                     'time_col_classes': 'u-w30pct',
                     'name_col_classes': 'u-w30pct',

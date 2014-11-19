@@ -2677,14 +2677,6 @@ label
         <pre class="docs-code"><code data-language="css">.filtered-by {
   margin: 0;
 }
-.filtered-by__show-on-medium {
-  display: none;
-}
-@media only all and (min-width: 37.5em) {
-  .filtered-by__show-on-medium {
-    display: block;
-  }
-}
 .filtered-by_header {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
@@ -2730,6 +2722,26 @@ label
 }
 .lt-ie9 .filtered-by_filter strong,
 .lt-ie9 .filtered-by_filter b {
+  font-weight: normal !important;
+}
+@media print {
+  .filtered-by_filter {
+    font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: #101820;
+  }
+  .lt-ie9 .filtered-by_filter {
+    font-weight: normal !important;
+  }
+}
+.print .filtered-by_filter {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  color: #101820;
+}
+.lt-ie9 .print .filtered-by_filter {
   font-weight: normal !important;
 }</code></pre>
       </div>
