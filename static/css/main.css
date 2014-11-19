@@ -10513,9 +10513,6 @@ a.category-slug.active {
 .jump-link__large {
   font-size: 1.125em;
 }
-.list__links .jump-link {
-  margin-top: -1px;
-}
 @media only all and (max-width: 37.4375em) {
   .jump-link {
     -webkit-box-sizing: border-box;
@@ -10549,38 +10546,36 @@ a.category-slug.active {
     right: 1em;
   }
 }
-@media only all and (max-width: 37.4375em) {
-  .u-block-on-mobile {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    display: block;
-    padding: 0.625em 1.25em 0.625em 0;
-    border: dotted #0072ce;
-    border-width: 1px 0;
-    margin-right: 0;
-    width: 100%;
-    text-align: left;
-  }
-  .u-block-on-mobile:after {
-    position: absolute;
-    margin-bottom: -0.625em;
-    right: 0;
-    bottom: 50%;
-    text-align: right;
-  }
-  .u-block-on-mobile_text {
-    border-bottom-width: 0;
-  }
-  .u-block-on-mobile__bg {
-    background: #f1f2f2;
-    border: solid #e3e4e5;
-    border-width: 1px 0;
-    padding: 0.625em 1.25em 0.625em 1em;
-  }
-  .u-block-on-mobile__bg:after {
-    right: 1em;
-  }
+/* topdoc
+  name: Block link
+  family: cfgov-misc
+  patterns:
+    - name: .block-link
+      markup: |
+        <a class="block-link" href="#">
+            Default block link
+        </a>
+      codenotes:
+        - .block-link
+      notes:
+        - "Convert a standard inline link to a block-level element with padding,
+           background, and borders."
+        - "Primarily used within a max-width 599px media query (see .jump-link
+           and .list__links)."
+  tags:
+    - cfgov-misc
+*/
+.block-link {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  padding: 0.625em 1.25em 0.625em 0;
+  border: dotted #0072ce;
+  border-width: 1px 0;
+  margin-right: 0;
+  width: 100%;
+  text-align: left;
 }
 /* topdoc
   name: Floating media
@@ -12166,8 +12161,7 @@ a.category-slug.active {
   }
 }
 @media only all and (max-width: 37.4375em) {
-  .list__links .list_link,
-  .list__links .icon-link {
+  .list__links .list_link {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -12179,28 +12173,15 @@ a.category-slug.active {
     width: 100%;
     text-align: left;
   }
-  .list__links .list_link:after,
-  .list__links .icon-link:after {
+  .list__links .list_link.icon-link:after {
     position: absolute;
     margin-bottom: -0.625em;
     right: 0;
     bottom: 50%;
     text-align: right;
   }
-  .list__links .list_link_text,
-  .list__links .icon-link_text {
+  .list__links .list_link .icon-link_text {
     border-bottom-width: 0;
-  }
-  .list__links .list_link__bg,
-  .list__links .icon-link__bg {
-    background: #f1f2f2;
-    border: solid #e3e4e5;
-    border-width: 1px 0;
-    padding: 0.625em 1.25em 0.625em 1em;
-  }
-  .list__links .list_link__bg:after,
-  .list__links .icon-link__bg:after {
-    right: 1em;
   }
 }
 .list__links.list__icons .list_link {
@@ -15772,8 +15753,7 @@ a.focus .summary_header {
   }
 }
 @media only all and (max-width: 37.4375em) {
-  .footer_nav-list .list_link,
-  .footer_nav-list .icon-link {
+  .footer_nav-list .list_link {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -15785,28 +15765,15 @@ a.focus .summary_header {
     width: 100%;
     text-align: left;
   }
-  .footer_nav-list .list_link:after,
-  .footer_nav-list .icon-link:after {
+  .footer_nav-list .list_link.icon-link:after {
     position: absolute;
     margin-bottom: -0.625em;
     right: 0;
     bottom: 50%;
     text-align: right;
   }
-  .footer_nav-list .list_link_text,
-  .footer_nav-list .icon-link_text {
+  .footer_nav-list .list_link .icon-link_text {
     border-bottom-width: 0;
-  }
-  .footer_nav-list .list_link__bg,
-  .footer_nav-list .icon-link__bg {
-    background: #f1f2f2;
-    border: solid #e3e4e5;
-    border-width: 1px 0;
-    padding: 0.625em 1.25em 0.625em 1em;
-  }
-  .footer_nav-list .list_link__bg:after,
-  .footer_nav-list .icon-link__bg:after {
-    right: 1em;
   }
 }
 .footer_nav-list.list__icons .list_link {
@@ -16060,8 +16027,7 @@ a.focus .summary_header {
   }
 }
 @media only all and (max-width: 37.4375em) {
-  .footer_list .list_link,
-  .footer_list .icon-link {
+  .footer_list .list_link {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -16073,28 +16039,15 @@ a.focus .summary_header {
     width: 100%;
     text-align: left;
   }
-  .footer_list .list_link:after,
-  .footer_list .icon-link:after {
+  .footer_list .list_link.icon-link:after {
     position: absolute;
     margin-bottom: -0.625em;
     right: 0;
     bottom: 50%;
     text-align: right;
   }
-  .footer_list .list_link_text,
-  .footer_list .icon-link_text {
+  .footer_list .list_link .icon-link_text {
     border-bottom-width: 0;
-  }
-  .footer_list .list_link__bg,
-  .footer_list .icon-link__bg {
-    background: #f1f2f2;
-    border: solid #e3e4e5;
-    border-width: 1px 0;
-    padding: 0.625em 1.25em 0.625em 1em;
-  }
-  .footer_list .list_link__bg:after,
-  .footer_list .icon-link__bg:after {
-    right: 1em;
   }
 }
 .footer_list.list__icons .list_link {
