@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / forms docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / forms docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="custom-select-menus-via-jquerycustom-input" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom select menus via jquery.custom-input</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Custom select menu demo with initialization markup</h3>
+          <section class="docs-pattern_pattern">
+<div class="custom-select">
+    <select>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select&quot;&gt;
+    &lt;select&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;custom-select\&amp;quot;&gt;\n    &lt;select&gt;\n        &lt;option value=\&amp;quot;option1\&amp;quot;&gt;Option 1&lt;/option&gt;\n        &lt;option value=\&amp;quot;option2\&amp;quot;&gt;Option 2&lt;/option&gt;\n        &lt;option value=\&amp;quot;option3\&amp;quot;&gt;Option 3&lt;/option&gt;\n        &lt;option value=\&amp;quot;option4\&amp;quot;&gt;Option 4&lt;/option&gt;\n    &lt;/select&gt;\n    &lt;span class=\&amp;quot;custom-select_icon cf-icon cf-icon-down\&amp;quot;&gt;&lt;/span&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.custom-select
+  select
+    option
+  .custom-select-icon</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-select elements. It is meant to allow for cases where JavaScript is unavailable. The jQuery plugin transforms this initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default select behavior.</li>
+              <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-select by detecting :hover and :focus on .custom-select.</li>
+              <li>The jQuery plugin will auto intitiate all select elements that are wrapped in a parent with the class of custom-select.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.custom-select__month (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<div class="custom-select custom-select__month">
+    <select>
+        <option value="">Month</option>
+        <option value="01">Jan</option>
+        <option value="02">Feb</option>
+        <option value="03">Mar</option>
+        <option value="04">Apr</option>
+        <option value="05">May</option>
+        <option value="06">Jun</option>
+        <option value="07">Jul</option>
+        <option value="08">Aug</option>
+        <option value="09">Sep</option>
+        <option value="10">Oct</option>
+        <option value="11">Nov</option>
+        <option value="12">Dec</option>
+    </select>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select custom-select__month&quot;&gt;
+    &lt;select&gt;
+        &lt;option value=&quot;&quot;&gt;Month&lt;/option&gt;
+        &lt;option value=&quot;01&quot;&gt;Jan&lt;/option&gt;
+        &lt;option value=&quot;02&quot;&gt;Feb&lt;/option&gt;
+        &lt;option value=&quot;03&quot;&gt;Mar&lt;/option&gt;
+        &lt;option value=&quot;04&quot;&gt;Apr&lt;/option&gt;
+        &lt;option value=&quot;05&quot;&gt;May&lt;/option&gt;
+        &lt;option value=&quot;06&quot;&gt;Jun&lt;/option&gt;
+        &lt;option value=&quot;07&quot;&gt;Jul&lt;/option&gt;
+        &lt;option value=&quot;08&quot;&gt;Aug&lt;/option&gt;
+        &lt;option value=&quot;09&quot;&gt;Sep&lt;/option&gt;
+        &lt;option value=&quot;10&quot;&gt;Oct&lt;/option&gt;
+        &lt;option value=&quot;11&quot;&gt;Nov&lt;/option&gt;
+        &lt;option value=&quot;12&quot;&gt;Dec&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;custom-select custom-select__month\&amp;quot;&gt;\n    &lt;select&gt;\n        &lt;option value=\&amp;quot;\&amp;quot;&gt;Month&lt;/option&gt;\n        &lt;option value=\&amp;quot;01\&amp;quot;&gt;Jan&lt;/option&gt;\n        &lt;option value=\&amp;quot;02\&amp;quot;&gt;Feb&lt;/option&gt;\n        &lt;option value=\&amp;quot;03\&amp;quot;&gt;Mar&lt;/option&gt;\n        &lt;option value=\&amp;quot;04\&amp;quot;&gt;Apr&lt;/option&gt;\n        &lt;option value=\&amp;quot;05\&amp;quot;&gt;May&lt;/option&gt;\n        &lt;option value=\&amp;quot;06\&amp;quot;&gt;Jun&lt;/option&gt;\n        &lt;option value=\&amp;quot;07\&amp;quot;&gt;Jul&lt;/option&gt;\n        &lt;option value=\&amp;quot;08\&amp;quot;&gt;Aug&lt;/option&gt;\n        &lt;option value=\&amp;quot;09\&amp;quot;&gt;Sep&lt;/option&gt;\n        &lt;option value=\&amp;quot;10\&amp;quot;&gt;Oct&lt;/option&gt;\n        &lt;option value=\&amp;quot;11\&amp;quot;&gt;Nov&lt;/option&gt;\n        &lt;option value=\&amp;quot;12\&amp;quot;&gt;Dec&lt;/option&gt;\n    &lt;/select&gt;\n    &lt;span class=\&amp;quot;custom-select_icon cf-icon cf-icon-down\&amp;quot;&gt;&lt;/span&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.custom-select__month</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Simply sets a max-width appropriate for a month input.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.custom-select__year (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<div class="custom-select custom-select__year">
+    <select>
+        <option value="">Year</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+        <option value="2011">2011</option>
+    </select>
+    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;custom-select custom-select__year&quot;&gt;
+    &lt;select&gt;
+        &lt;option value=&quot;&quot;&gt;Year&lt;/option&gt;
+        &lt;option value=&quot;2014&quot;&gt;2014&lt;/option&gt;
+        &lt;option value=&quot;2013&quot;&gt;2013&lt;/option&gt;
+        &lt;option value=&quot;2012&quot;&gt;2012&lt;/option&gt;
+        &lt;option value=&quot;2011&quot;&gt;2011&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class=&quot;custom-select_icon cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;custom-select custom-select__year\&amp;quot;&gt;\n    &lt;select&gt;\n        &lt;option value=\&amp;quot;\&amp;quot;&gt;Year&lt;/option&gt;\n        &lt;option value=\&amp;quot;2014\&amp;quot;&gt;2014&lt;/option&gt;\n        &lt;option value=\&amp;quot;2013\&amp;quot;&gt;2013&lt;/option&gt;\n        &lt;option value=\&amp;quot;2012\&amp;quot;&gt;2012&lt;/option&gt;\n        &lt;option value=\&amp;quot;2011\&amp;quot;&gt;2011&lt;/option&gt;\n    &lt;/select&gt;\n    &lt;span class=\&amp;quot;custom-select_icon cf-icon cf-icon-down\&amp;quot;&gt;&lt;/span&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.custom-select__year</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Simply sets a max-width appropriate for a year input.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <section class="docs-pattern_pattern">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../../static/js/jquery.custom-select.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;//code.jquery.com/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../../static/js/jquery.custom-select.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;script src=\&amp;quot;//code.jquery.com/jquery-1.11.0.min.js\&amp;quot;&gt;&lt;/script&gt;\n&lt;script src=\&amp;quot;../../static/js/jquery.custom-select.js\&amp;quot;&gt;&lt;/script&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>The jQuery plugin will auto intitiate all select elements with the class of .custom-select and append the the .is-enabled class which activates the styling.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.is-enabled.custom-select {
+  overflow: hidden;
+  position: relative;
+  min-height: 1.875em;
+  z-index: 1;
+  border: solid 1px #919395;
+  background: #ffffff;
+}
+.custom-select.is-hovered,
+.custom-select.is-focused {
+  z-index: 2;
+  border-color: #0072ce;
+  outline: 1px solid #0072ce;
+}
+.custom-select_icon {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  min-width: 1em;
+  padding: 0.25em 0.375em;
+  border-left: 4px solid #ffffff;
+  background: #f1f2f2;
+  color: #babbbd;
+  line-height: 1.375;
+  text-align: center;
+}
+.is-enabled .custom-select_icon {
+  display: inline-block;
+}
+.custom-select_text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25em 0.625em;
+  z-index: 1;
+  font-family: Arial, sans-serif;
+  line-height: 1.375;
+  color: #101820;
+}
+.custom-select_placeholder {
+  color: #75787b;
+}
+.custom-select_select {
+  position: relative;
+  width: 100%;
+  max-height: 1.875em;
+  padding: 0.25em;
+  z-index: 3;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+  color: #101820;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.is-hovered .custom-select_select,
+.is-focused .custom-select_select {
+  outline: none;
+}
+.custom-select__month {
+  max-width: 6em;
+}
+.custom-select__year {
+  max-width: 5.375em;
+}</code></pre>
+      </div>
+    </div>
+    <div id="custom-checkboxes-and-radio-buttons-via-jquerycustom-input" class="docs-component">
+      <h2 class="docs-component_header"><span>Custom checkboxes and radio buttons via jquery.custom-input</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>This plugin auto-initiates and will transform your initial HTML by adding more markup and classes. If JavaScript is unavailable the new elements and classes won't be added and won't interfere with default input behavior.</li>
+          <li>You MUST wrap your input.custom-input in a label.</li>
+          <li>Remember to use 'for' and 'id' attributes. This will allow IE less than 8 to trigger the input on label click.</li>
+          <li>JavaScript is used to add .is-hovered and .is-focused classes to .custom-input by detecting :hover and :focus on .custom-input.</li>
+          <li>JavaScript is used to detect change events to the input. By clicking the label element you change the checked property and the plugin will add the .is-checked class.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Custom checkbox demo with initialization markup</h3>
+          <section class="docs-pattern_pattern">
+<label for="custom-input_checkbox-lorem">
+    <input class="custom-input"
+           id="custom-input_checkbox-lorem"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="lorem">
+    Lorem
+</label>
+<br>
+<label for="custom-input_checkbox-ipsum">
+    <input class="custom-input"
+           id="custom-input_checkbox-ipsum"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="ipsum">
+    Ipsum
+</label>
+<br>
+<label for="custom-input_checkbox-dolor">
+    <input class="custom-input"
+           id="custom-input_checkbox-dolor"
+           type="checkbox"
+           name="checkboxes-styled"
+           value="dolor">
+    Dolor
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label for=&quot;custom-input_checkbox-lorem&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_checkbox-lorem&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    Lorem
+&lt;/label&gt;
+&lt;br&gt;
+&lt;label for=&quot;custom-input_checkbox-ipsum&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_checkbox-ipsum&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;ipsum&quot;&gt;
+    Ipsum
+&lt;/label&gt;
+&lt;br&gt;
+&lt;label for=&quot;custom-input_checkbox-dolor&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_checkbox-dolor&quot;
+           type=&quot;checkbox&quot;
+           name=&quot;checkboxes-styled&quot;
+           value=&quot;dolor&quot;&gt;
+    Dolor
+&lt;/label&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;label for=\&amp;quot;custom-input_checkbox-lorem\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;custom-input\&amp;quot;\n           id=\&amp;quot;custom-input_checkbox-lorem\&amp;quot;\n           type=\&amp;quot;checkbox\&amp;quot;\n           name=\&amp;quot;checkboxes-styled\&amp;quot;\n           value=\&amp;quot;lorem\&amp;quot;&gt;\n    Lorem\n&lt;/label&gt;\n&lt;br&gt;\n&lt;label for=\&amp;quot;custom-input_checkbox-ipsum\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;custom-input\&amp;quot;\n           id=\&amp;quot;custom-input_checkbox-ipsum\&amp;quot;\n           type=\&amp;quot;checkbox\&amp;quot;\n           name=\&amp;quot;checkboxes-styled\&amp;quot;\n           value=\&amp;quot;ipsum\&amp;quot;&gt;\n    Ipsum\n&lt;/label&gt;\n&lt;br&gt;\n&lt;label for=\&amp;quot;custom-input_checkbox-dolor\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;custom-input\&amp;quot;\n           id=\&amp;quot;custom-input_checkbox-dolor\&amp;quot;\n           type=\&amp;quot;checkbox\&amp;quot;\n           name=\&amp;quot;checkboxes-styled\&amp;quot;\n           value=\&amp;quot;dolor\&amp;quot;&gt;\n    Dolor\n&lt;/label&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+label
+  input[type=checkbox].custom-input</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-input elements.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Custom radio button demo with initialization markup</h3>
+          <section class="docs-pattern_pattern">
+<label for="custom-input_radio-lorem">
+    <input class="custom-input"
+           id="custom-input_radio-lorem"
+           type="radio"
+           name="radios-styled"
+           value="lorem">
+    Lorem
+</label>
+<br>
+<label for="custom-input_radio-ipsum">
+    <input class="custom-input"
+           id="custom-input_radio-ipsum"
+           type="radio"
+           name="radios-styled"
+           value="ipsum">
+    Ipsum
+</label>
+<br>
+<label for="custom-input_radio-dolor">
+    <input class="custom-input"
+           id="custom-input_radio-dolor"
+           type="radio"
+           name="radios-styled"
+           value="dolor">
+    Dolor
+</label>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;label for=&quot;custom-input_radio-lorem&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_radio-lorem&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;lorem&quot;&gt;
+    Lorem
+&lt;/label&gt;
+&lt;br&gt;
+&lt;label for=&quot;custom-input_radio-ipsum&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_radio-ipsum&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;ipsum&quot;&gt;
+    Ipsum
+&lt;/label&gt;
+&lt;br&gt;
+&lt;label for=&quot;custom-input_radio-dolor&quot;&gt;
+    &lt;input class=&quot;custom-input&quot;
+           id=&quot;custom-input_radio-dolor&quot;
+           type=&quot;radio&quot;
+           name=&quot;radios-styled&quot;
+           value=&quot;dolor&quot;&gt;
+    Dolor
+&lt;/label&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;label for=\&amp;quot;custom-input_radio-lorem\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;custom-input\&amp;quot;\n           id=\&amp;quot;custom-input_radio-lorem\&amp;quot;\n           type=\&amp;quot;radio\&amp;quot;\n           name=\&amp;quot;radios-styled\&amp;quot;\n           value=\&amp;quot;lorem\&amp;quot;&gt;\n    Lorem\n&lt;/label&gt;\n&lt;br&gt;\n&lt;label for=\&amp;quot;custom-input_radio-ipsum\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;custom-input\&amp;quot;\n           id=\&amp;quot;custom-input_radio-ipsum\&amp;quot;\n           type=\&amp;quot;radio\&amp;quot;\n           name=\&amp;quot;radios-styled\&amp;quot;\n           value=\&amp;quot;ipsum\&amp;quot;&gt;\n    Ipsum\n&lt;/label&gt;\n&lt;br&gt;\n&lt;label for=\&amp;quot;custom-input_radio-dolor\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;custom-input\&amp;quot;\n           id=\&amp;quot;custom-input_radio-dolor\&amp;quot;\n           type=\&amp;quot;radio\&amp;quot;\n           name=\&amp;quot;radios-styled\&amp;quot;\n           value=\&amp;quot;dolor\&amp;quot;&gt;\n    Dolor\n&lt;/label&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+label
+  input[type=radio].custom-input</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Use the markup structure above to add .custom-input elements.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">JavaScript setup</h3>
+          <section class="docs-pattern_pattern">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../../static/js/jquery.custom-input.js"></script>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;script src=&quot;//code.jquery.com/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../../static/js/jquery.custom-input.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;script src=\&amp;quot;//code.jquery.com/jquery-1.11.0.min.js\&amp;quot;&gt;&lt;/script&gt;\n&lt;script src=\&amp;quot;../../static/js/jquery.custom-input.js\&amp;quot;&gt;&lt;/script&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.custom-input_input {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.custom-input_checkbox,
+.custom-input_radio {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  z-index: 1;
+  width: 1.25em;
+  height: 1.25em;
+  background: #ffffff;
+  outline: 1px solid #919395;
+}
+.custom-input_radio {
+  border-radius: 100%;
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 1px #919395;
+  box-shadow: 0px 0px 0px 1px #919395;
+}
+.lt-ie9 .custom-input_radio {
+  outline: 1px solid #919395;
+}
+.custom-input_label {
+  position: relative;
+  z-index: 2;
+  padding-left: 1.375em;
+  margin-right: 0.375em;
+  line-height: 1;
+}
+.custom-input_text {
+  display: inline-block;
+  padding-left: 0.5em;
+  line-height: 1.375;
+}
+.is-hovered .custom-input_checkbox,
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_checkbox,
+.is-focused .custom-input_radio {
+  border-color: #ffffff;
+  outline: 2px solid #0072ce;
+}
+.is-checked .custom-input_checkbox,
+.is-checked .custom-input_radio {
+  background-color: #0072ce;
+  border: 3px solid #ffffff;
+  outline: 1px solid #0072ce;
+}
+.is-checked.is-hovered .custom-input_checkbox,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_checkbox,
+.is-checked.is-focused .custom-input_radio {
+  outline: 2px solid #0072ce;
+}
+.is-active .custom-input_checkbox,
+.is-active .custom-input_radio {
+  background-color: #7fb8e6;
+  border: 3px solid #ffffff;
+}
+.is-checked .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 1px #0072ce;
+  box-shadow: 0px 0px 0px 1px #0072ce;
+}
+.lt-ie9 .is-checked .custom-input_radio {
+  outline: 1px solid #0072ce;
+}
+.is-hovered .custom-input_radio,
+.is-focused .custom-input_radio,
+.is-checked.is-hovered .custom-input_radio,
+.is-checked.is-focused .custom-input_radio {
+  outline: none;
+  -webkit-box-shadow: 0px 0px 0px 2px #0072ce;
+  box-shadow: 0px 0px 0px 2px #0072ce;
+}
+.lt-ie9 .is-hovered .custom-input_radio,
+.lt-ie9 .is-focused .custom-input_radio,
+.lt-ie9 .is-checked.is-hovered .custom-input_radio,
+.lt-ie9 .is-checked.is-focused .custom-input_radio {
+  outline: 2px solid #0072ce;
+}</code></pre>
+      </div>
+    </div>
+    <div id="grouped-inputs" class="docs-component">
+      <h2 class="docs-component_header"><span>Grouped inputs</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Horizontal inputs</h3>
+          <section class="docs-pattern_pattern">
+<div class="input-group">
+    <input class="input-group_item" type="text">
+    <input class="input-group_item" type="text">
+</div>
+<br>
+<br>
+<div class="input-group">
+    <select class="input-group_item">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+    <select class="input-group_item">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+    </select>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;input-group&quot;&gt;
+    &lt;input class=&quot;input-group_item&quot; type=&quot;text&quot;&gt;
+    &lt;input class=&quot;input-group_item&quot; type=&quot;text&quot;&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;div class=&quot;input-group&quot;&gt;
+    &lt;select class=&quot;input-group_item&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;select class=&quot;input-group_item&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;input-group\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;input-group_item\&amp;quot; type=\&amp;quot;text\&amp;quot;&gt;\n    &lt;input class=\&amp;quot;input-group_item\&amp;quot; type=\&amp;quot;text\&amp;quot;&gt;\n&lt;/div&gt;\n&lt;br&gt;\n&lt;br&gt;\n&lt;div class=\&amp;quot;input-group\&amp;quot;&gt;\n    &lt;select class=\&amp;quot;input-group_item\&amp;quot;&gt;\n        &lt;option value=\&amp;quot;option1\&amp;quot;&gt;Option 1&lt;/option&gt;\n        &lt;option value=\&amp;quot;option2\&amp;quot;&gt;Option 2&lt;/option&gt;\n        &lt;option value=\&amp;quot;option3\&amp;quot;&gt;Option 3&lt;/option&gt;\n        &lt;option value=\&amp;quot;option4\&amp;quot;&gt;Option 4&lt;/option&gt;\n    &lt;/select&gt;\n    &lt;select class=\&amp;quot;input-group_item\&amp;quot;&gt;\n        &lt;option value=\&amp;quot;option1\&amp;quot;&gt;Option 1&lt;/option&gt;\n        &lt;option value=\&amp;quot;option2\&amp;quot;&gt;Option 2&lt;/option&gt;\n        &lt;option value=\&amp;quot;option3\&amp;quot;&gt;Option 3&lt;/option&gt;\n        &lt;option value=\&amp;quot;option4\&amp;quot;&gt;Option 4&lt;/option&gt;\n    &lt;/select&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>BEFORE moving to Capital Framework please review the work done in the Owning a Home project to make sure this pattern will be useful for both projects.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.input-group_item,
+.input-group_item[type=&quot;text&quot;] {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 50%;
+  position: relative;
+  z-index: 1;
+}
+.input-group_item + .input-group_item,
+.input-group_item + .input-group_item[type=&quot;text&quot;],
+.input-group_item[type=&quot;text&quot;] + .input-group_item,
+.input-group_item[type=&quot;text&quot;] + .input-group_item[type=&quot;text&quot;] {
+  margin-left: -0.3125em;
+}
+.input-group_item:focus,
+.input-group_item[type=&quot;text&quot;]:focus {
+  z-index: 2;
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-actions" class="docs-component">
+      <h2 class="docs-component_header"><span>Form actions</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions">
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+    <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn__warning btn__link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;form-actions\&amp;quot;&gt;\n    &lt;input type=\&amp;quot;submit\&amp;quot; value=\&amp;quot;Apply filters\&amp;quot; class=\&amp;quot;btn form-actions_item\&amp;quot;&gt;\n    &lt;a href=\&amp;quot;/blog/\&amp;quot; class=\&amp;quot;btn btn__warning btn__link form-actions_item\&amp;quot;&gt;Reset filters&lt;/a&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.form-actions adds a top margin to set it apart from form groups.</li>
+              <li>.form-actions_item adds margins between each other.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions modifier: right align</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions form-actions__right">
+    <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions form-actions__right&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn__warning btn__link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;form-actions form-actions__right\&amp;quot;&gt;\n    &lt;a href=\&amp;quot;/blog/\&amp;quot; class=\&amp;quot;btn btn__warning btn__link form-actions_item\&amp;quot;&gt;Reset filters&lt;/a&gt;\n    &lt;input type=\&amp;quot;submit\&amp;quot; value=\&amp;quot;Apply filters\&amp;quot; class=\&amp;quot;btn form-actions_item\&amp;quot;&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions.form-actions__right
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Align text to the right.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form actions modifier: right align on medium screens or larger</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-actions form-actions__right-on-med">
+    <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
+    <input type="submit" value="Apply filters" class="btn form-actions_item">
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-actions form-actions__right-on-med&quot;&gt;
+    &lt;a href=&quot;/blog/&quot; class=&quot;btn btn__warning btn__link form-actions_item&quot;&gt;Reset filters&lt;/a&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Apply filters&quot; class=&quot;btn form-actions_item&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;form-actions form-actions__right-on-med\&amp;quot;&gt;\n    &lt;a href=\&amp;quot;/blog/\&amp;quot; class=\&amp;quot;btn btn__warning btn__link form-actions_item\&amp;quot;&gt;Reset filters&lt;/a&gt;\n    &lt;input type=\&amp;quot;submit\&amp;quot; value=\&amp;quot;Apply filters\&amp;quot; class=\&amp;quot;btn form-actions_item\&amp;quot;&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-actions.form-actions__right-on-med
+  .form-actions_item</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Align text to the right at 600px or larger.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.form-actions {
+  margin-top: 1.875em;
+}
+@media only all and (min-width: 37.5em) {
+  .form-l + .form-actions {
+    margin-top: 0.9375em;
+  }
+}
+.form-actions__right {
+  text-align: right;
+}
+@media only all and (min-width: 37.5em) {
+  .form-actions__right-on-med {
+    text-align: right;
+  }
+}
+.form-actions_item + .form-actions_item {
+  margin-left: 1.875em;
+}</code></pre>
+      </div>
+    </div>
+    <div id="form-layouts" class="docs-component">
+      <h2 class="docs-component_header"><span>Form layouts</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form columns</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-l">
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 1
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 2
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 3
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 1
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 2
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 3
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;form-l\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n        Form layout column 1\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n        Form layout column 2\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n        Form layout column 3\n    &lt;/div&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.form-l
+  .form-l_col.form-l_col-1-3</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form layout modifier: flush</h3>
+          <section class="docs-pattern_pattern">
+<div class="form-l form-l__flush">
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 1
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 2
+    </div>
+    <div class="form-l_col form-l_col-1-3">
+        Form layout column 3
+    </div>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;form-l form-l__flush&quot;&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 1
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 2
+    &lt;/div&gt;
+    &lt;div class=&quot;form-l_col form-l_col-1-3&quot;&gt;
+        Form layout column 3
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;form-l form-l__flush\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n        Form layout column 1\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n        Form layout column 2\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n        Form layout column 3\n    &lt;/div&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.form-l.form-l__flush</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Form layout columns have left and right gutters. If you want the first and last column in each row to site flush left/right respectively then use the .form-l__flush modifier.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Form layout columns</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.form-l_col</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.form-l_col-1-3</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>.form-l_col-1-3 elements are stacked for small screens. When the viewport reaches 600px they transform into columns with one half the width of the container. When the viewport reaches 768px their width updates to one third of the container.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">@media only all and (min-width: 66.25em) {
+  .form-l__flush {
+    display: block;
+    position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+@media only all and (min-width: 66.25em) {
+  .form-l__float:after {
+    content: &quot;&quot;;
+    display: table;
+    clear: both;
+  }
+  .lt-ie8 .form-l__float {
+    zoom: 1;
+  }
+  .form-l__float .form-l_col {
+    float: left;
+  }
+}
+.form-l_col {
+  margin-bottom: 1.875em;
+}
+@media only all and (min-width: 66.25em) {
+  .form-l_col-1-2 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+  }
+  .ie .form-l_col-1-2 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-1-2 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 66.25em) {
+  .form-l_col-1-3 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+  }
+  .ie .form-l_col-1-3 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-1-3 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 66.25em) {
+  .form-l_col-2-3 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+  }
+  .ie .form-l_col-2-3 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-2-3 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}
+@media only all and (min-width: 66.25em) {
+  .form-l_col-1 {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+  }
+  .ie .form-l_col-1 {
+    margin-right: -0.26em;
+  }
+  .lt-ie8 .form-l_col-1 {
+    display: inline;
+    margin-right: 0;
+    zoom: 1;
+    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+  }
+}</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>
