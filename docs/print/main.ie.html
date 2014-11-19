@@ -62,24 +62,28 @@
         </div>
       </div>
     </div>
-    <div id="print-bar" class="docs-component">
-      <h2 class="docs-component_header"><span>Print bar</span></h2>
+    <div id="print-header" class="docs-component">
+      <h2 class="docs-component_header"><span>Print header</span></h2>
       <div class="docs-component_intro">
         <ul class="docs-notes">
-          <li>A simple black bar.</li>
+          <li>Separates print header stuff from the rest of the page content.</li>
         </ul>
       </div>
       <div class="docs-patterns">
         <div class="docs-pattern">
-          <h3 class="docs-pattern_header">.print-bar</h3>
+          <h3 class="docs-pattern_header">.print-header</h3>
           <section class="docs-pattern_pattern">
-<div class="print-bar"></div>
+<div class="print-header">
+    There should be a line underneath me =D
+</div>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print-bar&quot;&gt;&lt;/div&gt;</code></pre>
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print-header&quot;&gt;
+    There should be a line underneath me =D
+&lt;/div&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print-bar\&amp;quot;&gt;&lt;/div&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print-header\&amp;quot;&gt;\n    There should be a line underneath me =D\n&lt;/div&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
           </footer>
@@ -87,12 +91,10 @@
       </div>
       <div class="docs-css">
         <pre class="docs-code"><code data-language="css">
-.print-bar {
-  display: block;
-  width: 100%;
-  height: 0;
-  margin: 1.875em 0;
-  border-top: 5px solid #101820;
+.print-header {
+  margin-bottom: 1.875em;
+  padding-bottom: 1.875em;
+  border-bottom: 5px solid #101820;
 }</code></pre>
       </div>
     </div>
