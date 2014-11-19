@@ -80,69 +80,55 @@
         margin-left: 1px;
     }
 
-    &__download {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-download glyph.
-            content: "\e406";
-        }
+    &__download:after,
+    &__download&__before:before {
+        // Inserts the cf-icon-download glyph.
+        content: "\e406";
     }
 
-    &__email {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-email glyph.
-            content: "\e302";
-        }
+    &__email:after,
+    &__email&__before:before {
+        // Inserts the cf-icon-email glyph.
+        content: "\e302";
     }
 
-    &__external-link {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-external-link glyph.
-            content: "\e610";
-        }
+    &__external-link:after,
+    &__external-link&__before:before {
+        // Inserts the cf-icon-external-link glyph.
+        content: "\e610";
     }
 
-    &__fax {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-fax glyph.
-            content: "\e310";
-        }
+    &__fax:after,
+    &__fax&__before:before {
+        // Inserts the cf-icon-fax glyph.
+        content: "\e310";
     }
 
-    &__left {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-left glyph.
-            content: "\e000";
-        }
+    &__left:after,
+    &__left&__before:before {
+          // Inserts the cf-icon-left glyph.
+          content: "\e000";
+      }
+
+    &__mail:after,
+    &__mail&__before:before {
+        // Inserts the cf-icon-mail glyph.
+        content: "\e304";
     }
 
-    &__mail {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-mail glyph.
-            content: "\e304";
-        }
+    &__phone:after,
+    &__phone&__before:before {
+        // Inserts the cf-icon-phone glyph.
+        content: "\e306";
     }
 
-    &__phone {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-phone glyph.
-            content: "\e306";
-        }
+    &__right:after,
+    &__right&__before:before {
+        // Inserts the cf-icon-right glyph.
+        content: "\e002";
     }
 
-    &__right {
-        &:after,
-        &.icon-link__before:before {
-            // Inserts the cf-icon-right glyph.
-            content: "\e002";
-        }
-    }
+    // New icon modifiers must be added ABOVE this line.
 
     &__before {
         &:after {
@@ -212,19 +198,18 @@
            to a jump link is to add a modifier with the icon's name."
     - name: .jump-link__before (modifier)
       markup: |
-        <a class="jump-link jump-link__left icon-link__before" href="#">
+        <a class="jump-link jump-link__left jump-link__before" href="#">
             <span class="jump-link_text">Jump link with icon on left</span>
         </a>
       codenotes:
-        - .jump-link__<icon>.icon-link__before
+        - .jump-link__<icon>.jump-link__before
       notes:
-        - "Jump links can also have icons before the text, like icon links.
-           Just make sure you add the .icon-link__before class, not
-           .jump-link__before."
+        - "Jump links can also have icons before the text, like icon links."
     - name: .jump-link__bg (modifier)
       markup: |
         <a class="jump-link jump-link__bg" href="#">
-            <span class="jump-link_text">Jump link with grey background and solid borders on small screens</span>
+            <span class="jump-link_text">Jump link with grey background and
+                solid borders on small screens</span>
         </a>
       codenotes:
         - .jump-link__bg
