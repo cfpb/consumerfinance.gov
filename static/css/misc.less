@@ -233,36 +233,17 @@
 */
 
 .jump-link {
-    @font-size: 16px;
-    
     .webfont-medium();
-    font-size: unit(@font-size / @base-font-size-px, em);
+    font-size: unit(16px / @base-font-size-px, em);
 
     .icon-link();
 
     &__large {
-        @font-size: 18px;
-        font-size: unit(@font-size / @base-font-size-px, em);
+        font-size: unit(18px / @base-font-size-px, em);
     }
 
-    .list__links & {
-        margin-top: -1px;
-    }
-
-    .u-block-on-mobile();
-}
-
-.u-block-on-mobile {
     .respond-to-max(599px, {
-        box-sizing: border-box;
-        display: block;
-        padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
-        border: dotted @pacific;
-        border-width: 1px 0;
-        margin-right: 0;
-        // 100% width is needed when .jump-link is applied to a <button>.
-        width: 100%;
-        text-align: left;
+        .block-link();
 
         &:after {
             position: absolute;
@@ -275,7 +256,7 @@
         &_text {
             border-bottom-width: 0;
         }
-        
+
         &__bg {
             background: @gray-10;
             border: solid @gray-20;
@@ -287,6 +268,40 @@
         }
     });
 }
+
+
+/* topdoc
+  name: Block link
+  family: cfgov-misc
+  patterns:
+    - name: .block-link
+      markup: |
+        <a class="block-link" href="#">
+            Default block link
+        </a>
+      codenotes:
+        - .block-link
+      notes:
+        - "Convert a standard inline link to a block-level element with padding,
+           background, and borders."
+        - "Primarily used within a max-width 599px media query (see .jump-link
+           and .list__links)."
+  tags:
+    - cfgov-misc
+*/
+
+.block-link {
+    box-sizing: border-box;
+    display: block;
+    padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
+    border: dotted @pacific;
+    border-width: 1px 0;
+    margin-right: 0;
+    // 100% width is needed when .jump-link is applied to a <button>.
+    width: 100%;
+    text-align: left;
+}
+
 
 /* topdoc
   name: Floating media

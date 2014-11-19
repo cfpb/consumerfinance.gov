@@ -469,9 +469,53 @@
 .jump-link__large {
   font-size: 1.125em;
 }
+</code></pre>
+      </div>
+    </div>
+    <div id="block-link" class="docs-component">
+      <h2 class="docs-component_header"><span>Block link</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.block-link</h3>
+          <section class="docs-pattern_pattern">
+<a class="block-link" href="#">
+    Default block link
+</a>
 
-.list__links .jump-link {
-  margin-top: -1px;
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;block-link&quot; href=&quot;#&quot;&gt;
+    Default block link
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;block-link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    Default block link\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.block-link</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Convert a standard inline link to a block-level element with padding, background, and borders.</li>
+              <li>Primarily used within a max-width 599px media query (see .jump-link and .list__links).</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.block-link {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  padding: 0.625em 1.25em 0.625em 0;
+  border: dotted #0072ce;
+  border-width: 1px 0;
+  margin-right: 0;
+  width: 100%;
+  text-align: left;
 }
 </code></pre>
       </div>

@@ -278,11 +278,22 @@
         });
     }
 
-    .list_link,
-    .icon-link {
-        // .icon-link in the selector is needed to use .u-block-on-mobile's
-        // style that removes the underline from .icon-link_text.
-        .u-block-on-mobile();
+    .list_link {
+        .respond-to-max(599px, {
+            .block-link();
+
+            &.icon-link:after {
+                position: absolute;
+                margin-bottom: -0.625em;
+                right: 0;
+                bottom: 50%;
+                text-align: right;
+            }
+
+            .icon-link_text {
+                border-bottom-width: 0;
+            }
+        });
     }
 
     &.list__icons {

@@ -11099,8 +11099,37 @@ a.category-slug.active {
   font-size: 1.125em;
 }
 
-.list__links .jump-link {
-  margin-top: -1px;
+/* topdoc
+  name: Block link
+  family: cfgov-misc
+  patterns:
+    - name: .block-link
+      markup: |
+        <a class="block-link" href="#">
+            Default block link
+        </a>
+      codenotes:
+        - .block-link
+      notes:
+        - "Convert a standard inline link to a block-level element with padding,
+           background, and borders."
+        - "Primarily used within a max-width 599px media query (see .jump-link
+           and .list__links)."
+  tags:
+    - cfgov-misc
+*/
+
+.block-link {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  padding: 0.625em 1.25em 0.625em 0;
+  border: dotted #0072ce;
+  border-width: 1px 0;
+  margin-right: 0;
+  width: 100%;
+  text-align: left;
 }
 
 /* topdoc
