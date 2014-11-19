@@ -26,7 +26,7 @@
         <div class="content_wrapper">
             <div class="content_main">
                 {% set query = queries.calendar_event -%}
-                {%- set posts = query.search_with_url_arguments(size=40) -%}
+                {%- set posts = query.search_with_url_arguments(size=20000) -%}
                 <h1 class="superheader">Leadership Calendar</h1>
                 {{ post_macros.active_filters(posts, ['calendar', 'range_date'], {
                     'show_filters_label': false, 'show_unfiltered_count': true
