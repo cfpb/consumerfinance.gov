@@ -13120,26 +13120,21 @@ $('.history-section-expandable').find('.expandable_target')
    Init jquery.cf_inputSplit
    ========================================================================== */
 
-if ($('#filter_range_date_gte-container').length > 0) {
-    $('#filter_range_date_gte-container').cf_inputSplit({
-        newHTML: '#filter_range_date_gte-replacement',
-        newInputsOrder: ['#filter_from_year', '#filter_from_month'],
-        initialValues: $('#filter_range_date_gte').val().split('-'),
-        delimiter: '-'
-    });
-}
-
-if ($('#filter_range_date_lte-container').length > 0) {
-    $('#filter_range_date_lte-container').cf_inputSplit({
-        newHTML: '#filter_range_date_lte-replacement',
-        newInputsOrder: ['#filter_to_year', '#filter_to_month'],
-        initialValues: $('#filter_range_date_lte').val().split('-'),
-        delimiter: '-'
-    });
-}
-
-$('#filter_from_year, #filter_from_month, #filter_to_year, #filter_to_month')
-.trigger('updateState');
+$('.js-filter_range-date-wrapper').each(function( index ) {
+  var $this = $( this );
+  var $newThis = $this.next('.js-filter_range-date-replacement');
+  var options = {
+      newHTML: $newThis,
+      newInputsOrder: [
+        '#' + $newThis.find('.js-filter_year').attr('id'),
+        '#' + $newThis.find('.js-filter_month').attr('id')
+      ],
+      initialValues: $this.find('.js-filter_range-date').val().split('-'),
+      delimiter: '-'
+  };
+  $this.cf_inputSplit( options );
+  $( options.newInputsOrder ).trigger('updateState');
+});
 
 
 /* ==========================================================================
@@ -13186,26 +13181,33 @@ $('body').cf_pagination({
 
 /* ==========================================================================
    #post-filters-form validation
+
+   Checks the date range values.
+   If the from (gte) date is larger than the to (lte) date, swap them.
    ========================================================================== */
 
-function validDateRange(date1, date2) {
-   return date2.getTime() > date1.getTime();
-}
+$('.js-validate-filters').each(function() {
+  var $this = $( this ),
+      $gte = $this.find('.js-filter_range-date__gte'),
+      $lte = $this.find('.js-filter_range-date__lte');
 
-$('#post-filters-form').on('submit', function(e) {
-    // Check the date range values.
-    // If the from (gte) date is larger than the to (lte) date then swap them.
+  function validDateRange(date1, date2) {
+     return date2.getTime() > date1.getTime();
+  }
+
+  $( this ).on('submit', function( e ) {
     var validDate = validDateRange(
-        new Date(Date.parse($('#filter_range_date_gte').val())),
-        new Date(Date.parse($('#filter_range_date_lte').val()))
+        new Date( Date.parse($gte.val()) ),
+        new Date( Date.parse($lte.val()) )
     );
-    if (!validDate) {
+    if ( !validDate ) {
         // Swap the values
-        var gteVal = $('#filter_range_date_gte').val();
-        var lteVal = $('#filter_range_date_lte').val();
-        $('#filter_range_date_gte').val(lteVal);
-        $('#filter_range_date_lte').val(gteVal);
+        var gteVal = $gte.val();
+        var lteVal = $lte.val();
+        $gte.val( lteVal );
+        $lte.val( gteVal );
     }
+  });
 });
 
 

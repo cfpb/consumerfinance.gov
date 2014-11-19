@@ -1,0 +1,55 @@
+{% macro render(posts, user_options) %}
+
+{% import "macros.html" as macros %}
+
+{% set options = {
+    'time_col_classes': 'u-w25pct',
+    'name_col_classes': 'u-w25pct',
+    'desc_col_classes': 'u-w50pct'
+} %}
+{% set _ignore = options.update(user_options) %}
+
+{% for days in posts|groupby('day')|reverse %}
+<table class="u-w100pct block u-mt0">
+    <thead>
+        <tr>
+            <th colspan="3">
+                {{ days.grouper|date('%b %d, %Y') }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for event in days.list|sort(attribute='dtstart') %}
+        <tr>
+            <td class="{{ options.time_col_classes }}">
+            {%- if event.all_day %}
+                All day
+            {%- else %}
+                {{ macros.format_time(event.dtstart) }}
+                &ndash;
+                {{ macros.format_time(event.dtend) }}
+            {%- endif %}
+            </td>
+            <td class="{{ options.name_col_classes }}">
+                <span class="h4">
+                    {{ event.calendar }}
+                </span>
+            </td>
+            <td class="{{ options.desc_col_classes }}">
+                {{ event.summary }}
+            {% if event.location %}
+                <br>
+                <span class="u-small-text">{{ event.location }}</span>
+            {% endif %}
+            {% if event.description %}
+                <br>
+                <small><i>{{ event.description }}</i></small>
+            {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+
+{% endmacro %}

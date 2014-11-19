@@ -14,6 +14,7 @@
 {%- endblock %}
 
 {% block css -%}
+    {{ super() }}
     <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
 {%- endblock %}
 
@@ -180,8 +181,9 @@
                     <div class="content-l">
                         <div class="content-l_col content-l_col-1-2">
                             <h2 class="h3">Download a copy</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+                            <p>
+                                Download a printable, PDF copy of this organizational chart. This version
+                                is expanded to show all offices.</p>
                             <a class="btn btn__secondary" href="#">
                                 <span class="btn_icon__left cf-icon cf-icon-save"></span>
                                 Download PDF
@@ -189,11 +191,13 @@
                         </div>
                         <div class="content-l_col content-l_col-1-2">
                             <h2 class="h3">Request speaking info</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Dolorum non sapiente nobis molestias delectus optio ipsam</p>
+                            <p>
+                                Ask a CFPB employee to be involved in a forum, publication, discussion, or
+                                other event; or to inquire about any CFPB events.
+                            </p>
                             <span class="cf-icon cf-icon-email list_icon"></span>
-                            <a class="list_link" href="mailto:externalaffairs@cfpb.gov">
-                                externalaffairs@cfpb.gov
+                            <a class="list_link" href="mailto:cfpb.events@cfpb.gov">
+                                cfpb.events@cfpb.gov
                             </a>
                         </div>
                     </div>
@@ -208,44 +212,41 @@
 
 
 {% block javascript %}
-<script src="/static/vendor/slick-carousel/slick.min.js"></script>
-
-<script>
-    
-    $('document').ready(function () {
-        var slider, handler;
-        
-        if (!$('html').hasClass('lt-ie9')) {     
-                   
-            handler = new BreakpointHandler({
-                breakpoint: 599,
-                type: "max",
-                enter: function () {
-                    // close any open expandables
-                    $('.org-chart').find('.expandable__expanded .expandable_target').click();
-                    // hide org chart branches
-                    $('.org-chart_branches').hide();
-                    // show content slider & mobile nav links
-                    $('#content-slider, .content-hide').show();
-                    // init slider
-                    slider = new contentSlider('#content-slider', 1);
-                },
-                leave: function () {
-                    // destroy slider
-                    slider && slider.destroy();
-                    slider = null;
-                    // hide content slider & mobile nav links
-                    $('#content-slider, .content-hide').hide();
-                    // show org chart branches
-                    $('.org-chart_branches').show();
-                }
-            });
+    {{ super() }}
+    <script src="/static/vendor/slick-carousel/slick.min.js"></script>
+    <script>
+        $('document').ready(function () {
+            var slider, handler;
             
-        }
-        
-    });
-    
-    
-</script>
+            if (!$('html').hasClass('lt-ie9')) {     
+                       
+                handler = new BreakpointHandler({
+                    breakpoint: 599,
+                    type: "max",
+                    enter: function () {
+                        // close any open expandables
+                        $('.org-chart').find('.expandable__expanded .expandable_target').click();
+                        // hide org chart branches
+                        $('.org-chart_branches').hide();
+                        // show content slider & mobile nav links
+                        $('#content-slider, .content-hide').show();
+                        // init slider
+                        slider = new contentSlider('#content-slider', 1);
+                    },
+                    leave: function () {
+                        // destroy slider
+                        slider && slider.destroy();
+                        slider = null;
+                        // hide content slider & mobile nav links
+                        $('#content-slider, .content-hide').hide();
+                        // show org chart branches
+                        $('.org-chart_branches').show();
+                    }
+                });
+                
+            }
+            
+        });
+    </script>
 {% endblock javascript %}
 
