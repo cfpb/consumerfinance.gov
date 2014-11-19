@@ -1,0 +1,635 @@
+/* ==========================================================================
+   cfgov-refresh
+   forms
+   ========================================================================== */
+
+/* topdoc
+    name: Custom select menus via jquery.custom-input
+    family: cfgov-forms
+    patterns:
+    - name: Custom select menu demo with initialization markup
+      markup: |
+        <div class="custom-select">
+            <select>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .custom-select
+            select
+              option
+            .custom-select-icon
+      notes:
+        - "Use the markup structure above to add .custom-select elements.
+          It is meant to allow for cases where JavaScript is unavailable.
+          The jQuery plugin transforms this initial HTML by adding more markup
+          and classes. If JavaScript is unavailable the new elements and classes
+          won't be added and won't interfere with default select behavior."
+        - "JavaScript is used to add .is-hovered and .is-focused classes to
+          .custom-select by detecting :hover and :focus on .custom-select."
+        - "The jQuery plugin will auto intitiate all select elements that are
+          wrapped in a parent with the class of custom-select."
+    - name: .custom-select__month (modifier)
+      markup: |
+        <div class="custom-select custom-select__month">
+            <select>
+                <option value="">Month</option>
+                <option value="01">Jan</option>
+                <option value="02">Feb</option>
+                <option value="03">Mar</option>
+                <option value="04">Apr</option>
+                <option value="05">May</option>
+                <option value="06">Jun</option>
+                <option value="07">Jul</option>
+                <option value="08">Aug</option>
+                <option value="09">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - .custom-select__month
+      notes:
+        - "Simply sets a max-width appropriate for a month input."
+    - name: .custom-select__year (modifier)
+      markup: |
+        <div class="custom-select custom-select__year">
+            <select>
+                <option value="">Year</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+            </select>
+            <span class="custom-select_icon cf-icon cf-icon-down"></span>
+        </div>
+      codenotes:
+        - .custom-select__year
+      notes:
+        - "Simply sets a max-width appropriate for a year input."
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-select.js"></script>
+      notes:
+        - "The jQuery plugin will auto intitiate all select elements with the
+          class of .custom-select and append the the .is-enabled class which
+          activates the styling."
+    tags:
+    - cfgov-forms
+*/
+
+.custom-select {
+
+    & {
+        .is-enabled& {
+            overflow: hidden;
+            position: relative;
+            min-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
+            // Since an input-group_item can overlap another we need to use z-index
+            // is needed to allow the focused input to pop over unfocused inputs.
+            z-index: 1;
+            border: solid 1px @gray-80;
+            background: @white;
+        }
+    }
+
+    &.is-hovered,
+    &.is-focused {
+        z-index: 2;
+        border-color: @pacific;
+        outline: 1px solid @pacific;
+    }
+
+    &_icon {
+        // This element does not get added dynamically so it should be hidden
+        // until JavaScript is enabled.
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        min-width: 1em;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 6px / @base-font-size-px, em );
+        // This will overlay .custom-select_text and make it appear as if any
+        // long words get cut off before they touch the icon.
+        border-left: 4px solid @white;
+        background: @gray-10;
+        color: @gray-50;
+        line-height: @base-line-height;
+        text-align: center;
+        .is-enabled & {
+            display: inline-block;
+        }
+    }
+
+    &_text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 10px / @base-font-size-px, em );
+        z-index: 1;
+        font-family: Arial, sans-serif;
+        line-height: @base-line-height;
+        color: @black;
+    }
+
+    &_placeholder {
+        color: @gray;
+    }
+
+    &_select {
+        position: relative;
+        // Push the native select arrow out of view
+        width: 100%;
+        max-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
+        padding: unit( 4px / @base-font-size-px, em );
+        z-index: 3;
+        // Customize the colors
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+        background-image: none;
+        color: @black;
+        -webkit-appearance: none;
+        box-shadow: none;
+
+        .is-hovered &,
+        .is-focused & {
+            outline: none;
+        }
+    }
+
+    &__month {
+        max-width: unit(96px / @base-font-size-px, em);
+    }
+
+    &__year {
+        max-width: unit(86px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Custom checkboxes and radio buttons via jquery.custom-input
+  family: cfgov-forms
+  notes:
+    - "This plugin auto-initiates and will transform your initial HTML by adding
+      more markup and classes. If JavaScript is unavailable the new elements and
+      classes won't be added and won't interfere with default input behavior."
+    - "You MUST wrap your input.custom-input in a label."
+    - "Remember to use 'for' and 'id' attributes. This will allow IE less
+      than 8 to trigger the input on label click."
+    - "JavaScript is used to add .is-hovered and .is-focused classes to
+      .custom-input by detecting :hover and :focus on .custom-input."
+    - "JavaScript is used to detect change events to the input. By clicking
+      the label element you change the checked property and the plugin will
+      add the .is-checked class."
+  patterns:
+    - name: Custom checkbox demo with initialization markup
+      markup: |
+        <label for="custom-input_checkbox-lorem">
+            <input class="custom-input"
+                   id="custom-input_checkbox-lorem"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="lorem">
+            Lorem
+        </label>
+        <br>
+        <label for="custom-input_checkbox-ipsum">
+            <input class="custom-input"
+                   id="custom-input_checkbox-ipsum"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="ipsum">
+            Ipsum
+        </label>
+        <br>
+        <label for="custom-input_checkbox-dolor">
+            <input class="custom-input"
+                   id="custom-input_checkbox-dolor"
+                   type="checkbox"
+                   name="checkboxes-styled"
+                   value="dolor">
+            Dolor
+        </label>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          label
+            input[type=checkbox].custom-input
+      notes:
+        - "Use the markup structure above to add .custom-input elements."
+    - name: Custom radio button demo with initialization markup
+      markup: |
+        <label for="custom-input_radio-lorem">
+            <input class="custom-input"
+                   id="custom-input_radio-lorem"
+                   type="radio"
+                   name="radios-styled"
+                   value="lorem">
+            Lorem
+        </label>
+        <br>
+        <label for="custom-input_radio-ipsum">
+            <input class="custom-input"
+                   id="custom-input_radio-ipsum"
+                   type="radio"
+                   name="radios-styled"
+                   value="ipsum">
+            Ipsum
+        </label>
+        <br>
+        <label for="custom-input_radio-dolor">
+            <input class="custom-input"
+                   id="custom-input_radio-dolor"
+                   type="radio"
+                   name="radios-styled"
+                   value="dolor">
+            Dolor
+        </label>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          label
+            input[type=radio].custom-input
+      notes:
+        - "Use the markup structure above to add .custom-input elements."
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../../static/js/jquery.custom-input.js"></script>
+  tags:
+    - cfgov-forms
+*/
+
+.custom-input {
+
+    @input-width-px: 20px;
+    @input-width: unit(@input-width-px / @base-font-size-px, em);
+
+    // Hide the real input by using absolute positioning to layer a styled div
+    // over it.
+    &_input {
+        position: absolute;
+            top: 4px;
+            left: 4px;
+        z-index: 0;
+        // Use this to try and make the input as small as possible so that it
+        // doesn't stick out from underneath .input_checkbox or .input_radio.
+           -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+
+    // Hide the real input by using absolute positioning to layer a styled div
+    // over it.
+    &_checkbox,
+    &_radio {
+        box-sizing: border-box;
+        position: absolute;
+            top: 1px;
+            left: 1px;
+        z-index: 1;
+        width: @input-width;
+        height: @input-width;
+        background: @white;
+        outline: 1px solid @gray-80;
+    }
+    &_radio {
+        // IE older than 9 does not support border-radius so checkboxes and
+        // radio buttons will look the same.
+        border-radius: 100%;
+        // box-shadow is being used instead of outline because outline
+        // does not respect border-radius.
+        outline: none;
+        box-shadow: 0px 0px 0px 1px @gray-80;
+        // Older IE does not support border-radius or box-shadow it's ok to
+        // use outline here.
+        .lt-ie9 & {
+            outline: 1px solid @gray-80;
+        }
+    }
+
+
+    &_label {
+        position: relative;
+        z-index: 2;
+        padding-left: unit((@input-width-px + 2px) / @base-font-size-px, em);
+        margin-right: unit(6 / @base-font-size-px, em);
+        line-height: 1;
+    }
+    &_text {
+        display: inline-block;
+        // Eyeballed to 10px between the checkbox and the label text.
+        padding-left: unit(8 / @base-font-size-px, em);
+        line-height: unit((@input-width-px + 2px) / @base-font-size-px);
+    }
+
+    &_checkbox,
+    &_radio {
+        .is-hovered &,
+        .is-focused & {
+            border-color: @white;
+            outline: 2px solid @pacific;
+        }
+        .is-checked & {
+            background-color: @pacific;
+            border: 3px solid @white;
+            outline: 1px solid @pacific;
+        }
+        .is-checked.is-hovered &,
+        .is-checked.is-focused & {
+            outline: 2px solid @pacific;
+        }
+        .is-active & {
+            background-color: @pacific-50;
+            border: 3px solid @white;
+        }
+    }
+    &_radio {
+        .is-checked & {
+            // box-shadow is being used instead of outline because outline
+            // does not respect border-radius.
+            outline: none;
+            box-shadow: 0px 0px 0px 1px @pacific;
+            // Older IE does not support border-radius or box-shadow it's ok to
+            // use outline here.
+            .lt-ie9 & {
+                outline: 1px solid @pacific;
+            }
+        }
+        .is-hovered &,
+        .is-focused &,
+        .is-checked.is-hovered &,
+        .is-checked.is-focused & {
+            // box-shadow is being used instead of outline because outline
+            // does not respect border-radius.
+            outline: none;
+            box-shadow: 0px 0px 0px 2px @pacific;
+            // Older IE does not support border-radius or box-shadow it's ok to
+            // use outline here.
+            .lt-ie9 & {
+                outline: 2px solid @pacific;
+            }
+        }
+    }
+}
+
+
+/* topdoc
+  name: Grouped inputs
+  family: cfgov-forms
+  patterns:
+    - name: Horizontal inputs
+      markup: |
+        <div class="input-group">
+            <input class="input-group_item" type="text">
+            <input class="input-group_item" type="text">
+        </div>
+        <br>
+        <br>
+        <div class="input-group">
+            <select class="input-group_item">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+            <select class="input-group_item">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select>
+        </div>
+      notes:
+        - "BEFORE moving to Capital Framework please review the work done in
+           the Owning a Home project to make sure this pattern will be useful for
+           both projects."
+  tags:
+    - cfgov-forms
+*/
+
+.input-group {
+
+    &_item,
+    &_item[type="text"] {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 50%;
+        position: relative;
+        // Since an input-group_item can overlap another we need to use z-index
+        // is needed to allow the focused input to pop over unfocused inputs.
+        z-index: 1;
+
+        & + & {
+            margin-left: unit(-5px / @base-font-size-px, em);
+        }
+
+        &:focus {
+            z-index: 2;
+        }
+    }
+
+}
+
+
+/* topdoc
+  name: Form actions
+  family: cfgov-forms
+  patterns:
+    - name: Form actions
+      markup: |
+        <div class="form-actions">
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions
+            .form-actions_item
+      notes:
+        - ".form-actions adds a top margin to set it apart from form groups."
+        - ".form-actions_item adds margins between each other."
+    - name: "Form actions modifier: right align"
+      markup: |
+        <div class="form-actions form-actions__right">
+            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions.form-actions__right
+            .form-actions_item
+      notes:
+        - "Align text to the right."
+    - name: "Form actions modifier: right align on medium screens or larger"
+      markup: |
+        <div class="form-actions form-actions__right-on-med">
+            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
+            <input type="submit" value="Apply filters" class="btn form-actions_item">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-actions.form-actions__right-on-med
+            .form-actions_item
+      notes:
+        - "Align text to the right at 600px or larger."
+  tags:
+    - cfgov-forms
+*/
+
+.form-actions {
+    margin-top: unit(30px / @base-font-size-px, em);
+
+    // Once the form layouts start using columns their margins won't collapse
+    // so we'll need to update the top margin from .form-actions to avoid
+    // double margins.
+    .form-l + & {
+        .respond-to-min(600px, {
+            margin-top: unit(15px / @base-font-size-px, em);
+        });
+    }
+}
+
+.form-actions__right {
+    text-align: right;
+}    
+
+.form-actions__right-on-med {
+    .respond-to-min(600px, {
+        text-align: right;
+    });
+}    
+
+.form-actions_item + .form-actions_item {
+    // Eyeballed to 30px considering ~4px of space between inline-block items.
+    margin-left: unit(30px / @base-font-size-px, em);
+}
+
+
+/* topdoc
+  name: Form layouts
+  family: cfgov-forms
+  patterns:
+    - name: Form columns
+      markup: |
+        <div class="form-l">
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 1
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 2
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 3
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .form-l
+            .form-l_col.form-l_col-1-3
+    - name: "Form layout modifier: flush"
+      markup: |
+        <div class="form-l form-l__flush">
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 1
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 2
+            </div>
+            <div class="form-l_col form-l_col-1-3">
+                Form layout column 3
+            </div>
+        </div>
+      codenotes:
+        - .form-l.form-l__flush
+      notes:
+        - "Form layout columns have left and right gutters. If you want the
+          first and last column in each row to site flush left/right
+          respectively then use the .form-l__flush modifier."
+    - name: Form layout columns
+      codenotes:
+        - .form-l_col
+        - .form-l_col-1-3
+      notes:
+        - ".form-l_col-1-3 elements are stacked for small screens. When the
+          viewport reaches 600px they transform into columns with one half the
+          width of the container. When the viewport reaches 768px their width
+          updates to one third of the container."
+  tags:
+    - cfgov-forms
+*/
+
+.form-l {
+    &__flush {
+        .respond-to-min(1060px, {
+            .grid_nested-col-group();
+        });
+    }
+    &__float {
+        .respond-to-min(1060px, {
+            .u-clearfix();
+            & .form-l_col {
+                float: left;
+            }
+        });
+    }
+}
+
+.form-l_col {
+    // Eyeballed to 30px considering line-height.
+    margin-bottom: unit(30px / @base-font-size-px, em);
+}
+
+.form-l_col-1-2 {
+    .respond-to-min(1060px, {
+        .grid_column(6);
+    });
+}
+
+.form-l_col-1-3 {
+    .respond-to-min(1060px, {
+        .grid_column(4);
+    });
+}
+
+.form-l_col-2-3 {
+    .respond-to-min(1060px, {
+        .grid_column(8);
+    });
+}
+
+.form-l_col-1 {
+    .respond-to-min(1060px, {
+        .grid_column(12);
+    });
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

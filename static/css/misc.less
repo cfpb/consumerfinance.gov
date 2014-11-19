@@ -4,6 +4,145 @@
    ========================================================================== */
 
 /* topdoc
+  name: Links with icons
+  family: cfgov-misc
+  notes:
+    - "Styles to enable adding an icon to a link and preventing the link's
+       underline from extending under the icon."
+    - "For the underlined icon prevention to work, you must wrap the link text
+       with a `span.icon-link_text`. There can be no whitespace between the text
+       and the opening and closing span tags."
+  patterns:
+    - name: Default link with icon
+      markup: |
+        <p>
+            For more information, email
+            <a class="icon-link icon-link__mail" href="#">
+                <span class="icon-link_text">john.smith@cfpb.gov</span>
+            </a>.
+            Alternatively, you can
+            <a class="icon-link icon-link__download" href="#">
+                <span class="icon-link_text">download the info sheet</span>
+            </a>.
+            Oh, you might also want to visit this
+            <a class="icon-link icon-link__external-link" href="#">
+                <span class="icon-link_text">other organization's website</span>
+            </a> for further details.
+        </p>
+        <a class="icon-link icon-link__right" href="#">
+            Visit another section of our site
+        </a>
+      notes:
+        - "The modifier names match the cf-icon names of commonly-used icons."
+        - "Icons appear to the right of a link, by default."
+    - name: Links with icons on the left (modifier)
+      markup: |
+        <a class="icon-link icon-link__mail icon-link__before" href="#">
+            <span class="icon-link_text">john.smith@cfpb.gov</span>
+        </a><br>
+        <a class="icon-link icon-link__phone icon-link__before" href="#">
+            (123) 456-7890
+        </a>
+      notes:
+        - "Simply add the `.icon-link__before` modifier to place the icon before
+           the link text."
+        - "You can omit the `span.icon-link_text` wrapper if you do not need
+           an underline on a particular link."
+    - name: Non-wrapping icon links
+      markup: |
+        <p>
+            For more information, email
+            <a class="icon-link icon-link__mail icon-link__no-wrap" href="#">
+                <span class="icon-link_text">john.smith@cfpb.gov</span>
+            </a>.
+        </p>
+      notes:
+        - "Warning: Icons added to inline links can sometimes break onto the
+           next line. If you want to prevent this, you can add the `__no-wrap`
+           modifier to `.icon-link`."
+  tags:
+    - cfgov-misc
+*/
+
+.icon-link {
+    border-bottom-width: 0;
+    position: relative;
+
+    &_text {
+        border-bottom-width: 1px;
+        border-bottom-style: inherit;
+    }
+
+    &:before,
+    &:after {
+        .cf-icon();
+        margin-right: 1px;
+        margin-left: 1px;
+    }
+
+    &__download:after,
+    &__download&__before:before {
+        // Inserts the cf-icon-download glyph.
+        content: "\e406";
+    }
+
+    &__email:after,
+    &__email&__before:before {
+        // Inserts the cf-icon-email glyph.
+        content: "\e302";
+    }
+
+    &__external-link:after,
+    &__external-link&__before:before {
+        // Inserts the cf-icon-external-link glyph.
+        content: "\e610";
+    }
+
+    &__fax:after,
+    &__fax&__before:before {
+        // Inserts the cf-icon-fax glyph.
+        content: "\e310";
+    }
+
+    &__left:after,
+    &__left&__before:before {
+          // Inserts the cf-icon-left glyph.
+          content: "\e000";
+      }
+
+    &__mail:after,
+    &__mail&__before:before {
+        // Inserts the cf-icon-mail glyph.
+        content: "\e304";
+    }
+
+    &__phone:after,
+    &__phone&__before:before {
+        // Inserts the cf-icon-phone glyph.
+        content: "\e306";
+    }
+
+    &__right:after,
+    &__right&__before:before {
+        // Inserts the cf-icon-right glyph.
+        content: "\e002";
+    }
+
+    // New icon modifiers must be added ABOVE this line.
+
+    &__before {
+        &:after {
+            content: '';
+        }
+    }
+
+    &__no-wrap {
+        white-space: nowrap;
+    }
+}
+
+
+/* topdoc
   name: Styled link
   family: cfgov-misc
   patterns:
@@ -34,135 +173,75 @@
     - name: .jump-link
       markup: |
         <a class="jump-link" href="#">
-            Default jump link
+            <span class="jump-link_text">Default jump link</span>
         </a>
       codenotes:
         - .jump-link
     - name: .jump-link__large (modifier)
       markup: |
         <a class="jump-link jump-link__large" href="#">
-            Large jump link
+            <span class="jump-link_text">Large jump link</span>
         </a>
       codenotes:
         - .jump-link__large
-    - name: .jump-link__download (modifier)
+      notes:
+        - "18px font-size, compared to the default of 16px"
+    - name: .jump-link__<icon> (modifier)
       markup: |
-        <a class="jump-link jump-link__download" href="#">
-            Jump link using the download icon from cf-icons
+        <a class="jump-link jump-link__right" href="#">
+            <span class="jump-link_text">Jump link using the right icon from cf-icons</span>
         </a>
       codenotes:
-        - .jump-link__download
-    - name: .jump-link__external-link (modifier)
+        - .jump-link__<icon>
+      notes:
+        - ".jump-link extends .icon-link, so all that is needed to add an icon
+           to a jump link is to add a modifier with the icon's name."
+    - name: .jump-link__before (modifier)
       markup: |
-        <a class="jump-link jump-link__external-link" href="#">
-            Jump link using the external-link icon from cf-icons
+        <a class="jump-link jump-link__left jump-link__before" href="#">
+            <span class="jump-link_text">Jump link with icon on left</span>
         </a>
       codenotes:
-        - .jump-link__external-link
+        - .jump-link__<icon>.jump-link__before
+      notes:
+        - "Jump links can also have icons before the text, like icon links."
     - name: .jump-link__bg (modifier)
       markup: |
         <a class="jump-link jump-link__bg" href="#">
-            Jump link with grey background and solid borders on small screens
+            <span class="jump-link_text">Jump link with grey background and
+                solid borders on small screens</span>
         </a>
       codenotes:
         - .jump-link__bg
-    - name: .jump-link__back (modifier)
-      markup: |
-        <a class="jump-link jump-link__back" href="#">
-            Jump link with back arrow
-        </a>
-      codenotes:
-        - .jump-link__back
   tags:
     - cfgov-misc
 */
 
 .jump-link {
-    @font-size: 16px;
-
-    position: relative;
-    // Right margin gives the absolutely positioned icon somewhere to go without
-    // inheriting the bottom border.
-    margin-right: 1.5em;
-    border-bottom-width: 1px;
     .webfont-medium();
-    font-size: unit(@font-size / @base-font-size-px, em);
-    &:after {
-        // Inserts the cf-icon-right (arrow) glyph.
-        content: "\e002";
-    }
+    font-size: unit(16px / @base-font-size-px, em);
+
+    .icon-link();
 
     &__large {
-        @font-size: 18px;
-        // Right margin gives the absolutely positioned icon somewhere to go without
-        // inheriting the bottom border.
-        margin-right: 1.5em;
-        font-size: unit(@font-size / @base-font-size-px, em);
-    }
-
-    &__download {
-        &:after {
-            // Inserts the cf-icon-download glyph.
-            content: "\e406";
-        }
-    }
-
-    &__external-link {
-        &:after {
-            // Inserts the cf-icon-external-link glyph.
-            content: "\e610";
-        }
-    }
-
-    &:after {
-        .cf-icon();
-        position: absolute;
-        bottom: 0;
-        right: -1em;
-        border-bottom: none;
-    }
-    
-    &__back {
-        margin-left: 1.25em;
-        
-        &:after {
-            content: ''
-        }
-        
-        &:before {
-            .cf-icon();
-            // Inserts the cf-icon-left (arrow) glyph.
-            content: "\e000";
-            position: absolute;
-            left: -1.25em;
-            top: .2em;
-            padding-right: .25em;
-            border-bottom: none;
-        }
-    }
-
-    .list__links & {
-        margin-top: -1px;
+        font-size: unit(18px / @base-font-size-px, em);
     }
 
     .respond-to-max(599px, {
-        box-sizing: border-box;
-        display: block;
-        padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
-        border: dotted @pacific;
-        border-width: 1px 0;
-        margin-right: 0;
-        // 100% width is needed when .jump-link is applied to a <button>.
-        width: 100%;
-        text-align: left;
+        .block-link();
 
         &:after {
+            position: absolute;
             margin-bottom: -0.625em;
             right: 0;
             bottom: 50%;
             text-align: right;
         }
-        
+
+        &_text {
+            border-bottom-width: 0;
+        }
+
         &__bg {
             background: @gray-10;
             border: solid @gray-20;
@@ -172,21 +251,40 @@
                 right: 1em;
             }
         }
-        
-        &__back {
-            padding: unit(10px / @base-font-size-px, em) 0 unit(10px / @base-font-size-px, em) 1.25em;
-            margin-left: 0;
-            &:after {
-                content: ''
-            }
-
-            &:before {
-                margin-top: -0.5em;
-                left: 0;
-                top: 50%;
-            }
-        }
     });
+}
+
+
+/* topdoc
+  name: Block link
+  family: cfgov-misc
+  patterns:
+    - name: .block-link
+      markup: |
+        <a class="block-link" href="#">
+            Default block link
+        </a>
+      codenotes:
+        - .block-link
+      notes:
+        - "Convert a standard inline link to a block-level element with padding,
+           background, and borders."
+        - "Primarily used within a max-width 599px media query (see .jump-link
+           and .list__links)."
+  tags:
+    - cfgov-misc
+*/
+
+.block-link {
+    box-sizing: border-box;
+    display: block;
+    padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
+    border: dotted @pacific;
+    border-width: 1px 0;
+    margin-right: 0;
+    // 100% width is needed when .jump-link is applied to a <button>.
+    width: 100%;
+    text-align: left;
 }
 
 
@@ -400,632 +498,6 @@
     &__large {
         font-size: unit(18px / @base-font-size-px, em);
     }
-}
-
-
-/* topdoc
-    name: Custom select menus via jquery.custom-input
-    family: cfgov-misc
-    patterns:
-    - name: Custom select menu demo with initialization markup
-      markup: |
-        <div class="custom-select">
-            <select>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-            </select>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .custom-select
-            select
-              option
-            .custom-select-icon
-      notes:
-        - "Use the markup structure above to add .custom-select elements.
-          It is meant to allow for cases where JavaScript is unavailable.
-          The jQuery plugin transforms this initial HTML by adding more markup
-          and classes. If JavaScript is unavailable the new elements and classes
-          won't be added and won't interfere with default select behavior."
-        - "JavaScript is used to add .is-hovered and .is-focused classes to
-          .custom-select by detecting :hover and :focus on .custom-select."
-        - "The jQuery plugin will auto intitiate all select elements that are
-          wrapped in a parent with the class of custom-select."
-    - name: .custom-select__month (modifier)
-      markup: |
-        <div class="custom-select custom-select__month">
-            <select>
-                <option value="">Month</option>
-                <option value="01">Jan</option>
-                <option value="02">Feb</option>
-                <option value="03">Mar</option>
-                <option value="04">Apr</option>
-                <option value="05">May</option>
-                <option value="06">Jun</option>
-                <option value="07">Jul</option>
-                <option value="08">Aug</option>
-                <option value="09">Sep</option>
-                <option value="10">Oct</option>
-                <option value="11">Nov</option>
-                <option value="12">Dec</option>
-            </select>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - .custom-select__month
-      notes:
-        - "Simply sets a max-width appropriate for a month input."
-    - name: .custom-select__year (modifier)
-      markup: |
-        <div class="custom-select custom-select__year">
-            <select>
-                <option value="">Year</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-            </select>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - .custom-select__year
-      notes:
-        - "Simply sets a max-width appropriate for a year input."
-    - name: JavaScript setup
-      markup: |
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="../../static/js/jquery.custom-select.js"></script>
-      notes:
-        - "The jQuery plugin will auto intitiate all select elements with the
-          class of .custom-select and append the the .is-enabled class which
-          activates the styling."
-    tags:
-    - cfgov-misc
-*/
-
-.custom-select {
-
-    & {
-        .is-enabled& {
-            overflow: hidden;
-            position: relative;
-            min-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
-            // Since an input-group_item can overlap another we need to use z-index
-            // is needed to allow the focused input to pop over unfocused inputs.
-            z-index: 1;
-            border: solid 1px @gray-80;
-            background: @white;
-        }
-    }
-
-    &.is-hovered,
-    &.is-focused {
-        z-index: 2;
-        border-color: @pacific;
-        outline: 1px solid @pacific;
-    }
-
-    &_icon {
-        // This element does not get added dynamically so it should be hidden
-        // until JavaScript is enabled.
-        display: none;
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 2;
-        min-width: 1em;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 6px / @base-font-size-px, em );
-        // This will overlay .custom-select_text and make it appear as if any
-        // long words get cut off before they touch the icon.
-        border-left: 4px solid @white;
-        background: @gray-10;
-        color: @gray-50;
-        line-height: @base-line-height;
-        text-align: center;
-        .is-enabled & {
-            display: inline-block;
-        }
-    }
-
-    &_text {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 10px / @base-font-size-px, em );
-        z-index: 1;
-        font-family: Arial, sans-serif;
-        line-height: @base-line-height;
-        color: @black;
-    }
-
-    &_placeholder {
-        color: @gray;
-    }
-
-    &_select {
-        position: relative;
-        // Push the native select arrow out of view
-        width: 100%;
-        max-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
-        padding: unit( 4px / @base-font-size-px, em );
-        z-index: 3;
-        // Customize the colors
-        border: 0;
-        border-radius: 0;
-        background-color: transparent;
-        background-image: none;
-        color: @black;
-        -webkit-appearance: none;
-        box-shadow: none;
-
-        .is-hovered &,
-        .is-focused & {
-            outline: none;
-        }
-    }
-
-    &__month {
-        max-width: unit(96px / @base-font-size-px, em);
-    }
-
-    &__year {
-        max-width: unit(86px / @base-font-size-px, em);
-    }
-}
-
-
-/* topdoc
-  name: Custom checkboxes and radio buttons via jquery.custom-input
-  family: cfgov-misc
-  notes:
-    - "This plugin auto-initiates and will transform your initial HTML by adding
-      more markup and classes. If JavaScript is unavailable the new elements and
-      classes won't be added and won't interfere with default input behavior."
-    - "You MUST wrap your input.custom-input in a label."
-    - "Remember to use 'for' and 'id' attributes. This will allow IE less
-      than 8 to trigger the input on label click."
-    - "JavaScript is used to add .is-hovered and .is-focused classes to
-      .custom-input by detecting :hover and :focus on .custom-input."
-    - "JavaScript is used to detect change events to the input. By clicking
-      the label element you change the checked property and the plugin will
-      add the .is-checked class."
-  patterns:
-    - name: Custom checkbox demo with initialization markup
-      markup: |
-        <label for="custom-input_checkbox-lorem">
-            <input class="custom-input"
-                   id="custom-input_checkbox-lorem"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="lorem">
-            Lorem
-        </label>
-        <br>
-        <label for="custom-input_checkbox-ipsum">
-            <input class="custom-input"
-                   id="custom-input_checkbox-ipsum"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="ipsum">
-            Ipsum
-        </label>
-        <br>
-        <label for="custom-input_checkbox-dolor">
-            <input class="custom-input"
-                   id="custom-input_checkbox-dolor"
-                   type="checkbox"
-                   name="checkboxes-styled"
-                   value="dolor">
-            Dolor
-        </label>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          label
-            input[type=checkbox].custom-input
-      notes:
-        - "Use the markup structure above to add .custom-input elements."
-    - name: Custom radio button demo with initialization markup
-      markup: |
-        <label for="custom-input_radio-lorem">
-            <input class="custom-input"
-                   id="custom-input_radio-lorem"
-                   type="radio"
-                   name="radios-styled"
-                   value="lorem">
-            Lorem
-        </label>
-        <br>
-        <label for="custom-input_radio-ipsum">
-            <input class="custom-input"
-                   id="custom-input_radio-ipsum"
-                   type="radio"
-                   name="radios-styled"
-                   value="ipsum">
-            Ipsum
-        </label>
-        <br>
-        <label for="custom-input_radio-dolor">
-            <input class="custom-input"
-                   id="custom-input_radio-dolor"
-                   type="radio"
-                   name="radios-styled"
-                   value="dolor">
-            Dolor
-        </label>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          label
-            input[type=radio].custom-input
-      notes:
-        - "Use the markup structure above to add .custom-input elements."
-    - name: JavaScript setup
-      markup: |
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="../../static/js/jquery.custom-input.js"></script>
-  tags:
-    - cfgov-misc
-*/
-
-.custom-input {
-
-    @input-width-px: 20px;
-    @input-width: unit(@input-width-px / @base-font-size-px, em);
-
-    // Hide the real input by using absolute positioning to layer a styled div
-    // over it.
-    &_input {
-        position: absolute;
-            top: 4px;
-            left: 4px;
-        z-index: 0;
-        // Use this to try and make the input as small as possible so that it
-        // doesn't stick out from underneath .input_checkbox or .input_radio.
-           -moz-appearance: none;
-        -webkit-appearance: none;
-    }
-
-    // Hide the real input by using absolute positioning to layer a styled div
-    // over it.
-    &_checkbox,
-    &_radio {
-        box-sizing: border-box;
-        position: absolute;
-            top: 1px;
-            left: 1px;
-        z-index: 1;
-        width: @input-width;
-        height: @input-width;
-        background: @white;
-        outline: 1px solid @gray-80;
-    }
-    &_radio {
-        // IE older than 9 does not support border-radius so checkboxes and
-        // radio buttons will look the same.
-        border-radius: 100%;
-        // box-shadow is being used instead of outline because outline
-        // does not respect border-radius.
-        outline: none;
-        box-shadow: 0px 0px 0px 1px @gray-80;
-        // Older IE does not support border-radius or box-shadow it's ok to
-        // use outline here.
-        .lt-ie9 & {
-            outline: 1px solid @gray-80;
-        }
-    }
-
-
-    &_label {
-        position: relative;
-        z-index: 2;
-        padding-left: unit((@input-width-px + 2px) / @base-font-size-px, em);
-        margin-right: unit(6 / @base-font-size-px, em);
-        line-height: 1;
-    }
-    &_text {
-        display: inline-block;
-        // Eyeballed to 10px between the checkbox and the label text.
-        padding-left: unit(8 / @base-font-size-px, em);
-        line-height: unit((@input-width-px + 2px) / @base-font-size-px);
-    }
-
-    &_checkbox,
-    &_radio {
-        .is-hovered &,
-        .is-focused & {
-            border-color: @white;
-            outline: 2px solid @pacific;
-        }
-        .is-checked & {
-            background-color: @pacific;
-            border: 3px solid @white;
-            outline: 1px solid @pacific;
-        }
-        .is-checked.is-hovered &,
-        .is-checked.is-focused & {
-            outline: 2px solid @pacific;
-        }
-        .is-active & {
-            background-color: @pacific-50;
-            border: 3px solid @white;
-        }
-    }
-    &_radio {
-        .is-checked & {
-            // box-shadow is being used instead of outline because outline
-            // does not respect border-radius.
-            outline: none;
-            box-shadow: 0px 0px 0px 1px @pacific;
-            // Older IE does not support border-radius or box-shadow it's ok to
-            // use outline here.
-            .lt-ie9 & {
-                outline: 1px solid @pacific;
-            }
-        }
-        .is-hovered &,
-        .is-focused &,
-        .is-checked.is-hovered &,
-        .is-checked.is-focused & {
-            // box-shadow is being used instead of outline because outline
-            // does not respect border-radius.
-            outline: none;
-            box-shadow: 0px 0px 0px 2px @pacific;
-            // Older IE does not support border-radius or box-shadow it's ok to
-            // use outline here.
-            .lt-ie9 & {
-                outline: 2px solid @pacific;
-            }
-        }
-    }
-}
-
-
-/* topdoc
-  name: Grouped inputs
-  family: cfgov-misc
-  patterns:
-    - name: Horizontal inputs
-      markup: |
-        <div class="input-group">
-            <input class="input-group_item" type="text">
-            <input class="input-group_item" type="text">
-        </div>
-        <br>
-        <br>
-        <div class="input-group">
-            <select class="input-group_item">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-            </select>
-            <select class="input-group_item">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-            </select>
-        </div>
-      notes:
-        - "BEFORE moving to Capital Framework please review the work done in
-           the Owning a Home project to make sure this pattern will be useful for
-           both projects."
-  tags:
-    - cfgov-misc
-*/
-
-.input-group {
-
-    &_item,
-    &_item[type="text"] {
-        display: inline-block;
-        box-sizing: border-box;
-        width: 50%;
-        position: relative;
-        // Since an input-group_item can overlap another we need to use z-index
-        // is needed to allow the focused input to pop over unfocused inputs.
-        z-index: 1;
-
-        & + & {
-            margin-left: unit(-5px / @base-font-size-px, em);
-        }
-
-        &:focus {
-            z-index: 2;
-        }
-    }
-
-}
-
-
-/* topdoc
-  name: Form actions
-  family: cfgov-misc
-  patterns:
-    - name: Form actions
-      markup: |
-        <div class="form-actions">
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-actions
-            .form-actions_item
-      notes:
-        - ".form-actions adds a top margin to set it apart from form groups."
-        - ".form-actions_item adds margins between each other."
-    - name: "Form actions modifier: right align"
-      markup: |
-        <div class="form-actions form-actions__right">
-            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-actions.form-actions__right
-            .form-actions_item
-      notes:
-        - "Align text to the right."
-    - name: "Form actions modifier: right align on medium screens or larger"
-      markup: |
-        <div class="form-actions form-actions__right-on-med">
-            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-actions.form-actions__right-on-med
-            .form-actions_item
-      notes:
-        - "Align text to the right at 600px or larger."
-  tags:
-    - cfgov-misc
-*/
-
-.form-actions {
-    margin-top: unit(30px / @base-font-size-px, em);
-
-    // Once the form layouts start using columns their margins won't collapse
-    // so we'll need to update the top margin from .form-actions to avoid
-    // double margins.
-    .form-l + & {
-        .respond-to-min(600px, {
-            margin-top: unit(15px / @base-font-size-px, em);
-        });
-    }
-}
-
-.form-actions__right {
-    text-align: right;
-}    
-
-.form-actions__right-on-med {
-    .respond-to-min(600px, {
-        text-align: right;
-    });
-}    
-
-.form-actions_item + .form-actions_item {
-    // Eyeballed to 30px considering ~4px of space between inline-block items.
-    margin-left: unit(30px / @base-font-size-px, em);
-}
-
-
-/* topdoc
-  name: Form layouts
-  family: cfgov-misc
-  patterns:
-    - name: Form columns
-      markup: |
-        <div class="form-l">
-            <div class="form-l_col form-l_col-1-3">
-                Form layout column 1
-            </div>
-            <div class="form-l_col form-l_col-1-3">
-                Form layout column 2
-            </div>
-            <div class="form-l_col form-l_col-1-3">
-                Form layout column 3
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-l
-            .form-l_col.form-l_col-1-3
-    - name: "Form layout modifier: flush"
-      markup: |
-        <div class="form-l form-l__flush">
-            <div class="form-l_col form-l_col-1-3">
-                Form layout column 1
-            </div>
-            <div class="form-l_col form-l_col-1-3">
-                Form layout column 2
-            </div>
-            <div class="form-l_col form-l_col-1-3">
-                Form layout column 3
-            </div>
-        </div>
-      codenotes:
-        - .form-l.form-l__flush
-      notes:
-        - "Form layout columns have left and right gutters. If you want the
-          first and last column in each row to site flush left/right
-          respectively then use the .form-l__flush modifier."
-    - name: Form layout columns
-      codenotes:
-        - .form-l_col
-        - .form-l_col-1-3
-      notes:
-        - ".form-l_col-1-3 elements are stacked for small screens. When the
-          viewport reaches 600px they transform into columns with one half the
-          width of the container. When the viewport reaches 768px their width
-          updates to one third of the container."
-  tags:
-    - cfgov-misc
-*/
-
-.form-l {
-    &__flush {
-        .respond-to-min(1060px, {
-            .grid_nested-col-group();
-        });
-    }
-    &__float {
-        .respond-to-min(1060px, {
-            .u-clearfix();
-            & .form-l_col {
-                float: left;
-            }
-        });
-    }
-}
-
-.form-l_col {
-    // Eyeballed to 30px considering line-height.
-    margin-bottom: unit(30px / @base-font-size-px, em);
-}
-
-.form-l_col-1-2 {
-    .respond-to-min(1060px, {
-        .grid_column(6);
-    });
-}
-
-.form-l_col-1-3 {
-    .respond-to-min(1060px, {
-        .grid_column(4);
-    });
-}
-
-.form-l_col-2-3 {
-    .respond-to-min(1060px, {
-        .grid_column(8);
-    });
-}
-
-.form-l_col-1 {
-    .respond-to-min(1060px, {
-        .grid_column(12);
-    });
 }
 
 
@@ -1252,428 +724,6 @@
             .grid_push(8);
         }
     });
-}
-
-
-/* topdoc
-  name: Lists
-  family: cfgov-misc
-  notes:
-    - "Note that modifiers are the most common use cases for this block, hence
-      the reason there are no direct styles associated with .list or .list_item."
-  patterns:
-    - name: Basic structure
-      markup: |
-        <ul class="list">
-            <li class="list_item">
-                <a class="list_link" href="#">List item 1</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link" href="#">List item 2</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link" href="#">List item 3</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link" href="#">List item 4</a>
-            </li>
-        </ul>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .list
-            .list_item
-              .list_link
-    - name: List link
-      markup: |
-        <a class="list_link" href="#">List link</a>,&nbsp;
-        <span class="list_link">List link</span>
-      codenotes:
-        - .list_link
-      notes:
-        - "Notice that you can use any element for .list_link."
-  tags:
-    - cfgov-misc
-*/
-
-.list_link {
-    .webfont-medium();
-}
-
-
-/* topdoc
-  name: Unstyled list modifier
-  family: cfgov-misc
-  patterns:
-    - name: Default example
-      markup: |
-        <ul class="list list__unstyled">
-            <li class="list_item">
-                <a class="list_link">List item 1</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 2</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 3</a>
-            </li>
-        </ul>
-      codenotes:
-        - .list.list__unstyled
-  tags:
-    - cfgov-misc
-*/
-
-.list__unstyled {
-    padding-left: 0;
-    list-style-type: none;
-
-    // This is needed for dd elements.
-    .list_item {
-        margin-left: 0;
-    }
-}
-
-
-/* topdoc
-  name: Spaced list modifier
-  family: cfgov-misc
-  patterns:
-    - name: Default example
-      markup: |
-        <ul class="list list__spaced">
-            <li class="list_item">
-                <a class="list_link">List item 1</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 2</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 3</a>
-            </li>
-        </ul>
-      codenotes:
-        - .list.list__spaced
-  tags:
-    - cfgov-misc
-*/
-
-.list__spaced {
-    .list_item + .list_item {
-        margin-top: unit(24px / @base-font-size-px, em);
-    }
-}
-
-
-/* topdoc
-  name: Spaced list item modifier
-  family: cfgov-misc
-  patterns:
-    - name: Default example
-      markup: |
-        <ul class="list">
-            <li class="list_item">
-                <a class="list_link">List item 1</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 2</a>
-            </li>
-            <li class="list_item list_item__spaced">
-                <a class="list_link">List item 3</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 4</a>
-            </li>
-        </ul>
-  tags:
-    - cfgov-misc
-*/
-
-.list_item__spaced {
-    margin-top: unit(24px / @base-font-size-px, em);
-}
-
-
-/* topdoc
-  name: Horizontal list modifier
-  family: cfgov-misc
-  patterns:
-    - name: Default example
-      markup: |
-        <ul class="list list__horizontal">
-            <li class="list_item">
-                <a class="list_link">List item 1</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 2</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 3</a>
-            </li>
-        </ul>
-  tags:
-    - cfgov-misc
-*/
-
-
-.list__horizontal {
-    padding-left: 0;
-
-    .list_item {
-        .u-inline-block();
-    }
-
-    .list_item {
-        // Assuming a natural space of 4px between inline block items
-        // then the space between would be 8px (4px natural + 4px added).
-        margin-right: unit(4px / @base-font-size-px, em);
-        margin-left: 0;
-    }
-}
-
-
-/* topdoc
-  name: Icon list modifier
-  family: cfgov-misc
-  notes:
-    - "Set up a list with icons on the left, in place of bullets."
-    - "Will need some more work to allow lines to wrap."
-  patterns:
-    - name: Default example
-      markup: |
-        <ul class="list list__icons">
-            <li class="list_item">
-                <span class="cf-icon cf-icon-email list_icon"></span>
-                List item 1
-            </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                List item 1
-            </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-fax list_icon"></span>
-                List item 1
-            </li>
-        </ul>
-  tags:
-    - cfgov-misc
-*/
-
-
-.list__icons {
-    .list__unstyled();
-
-    .list_icon {
-        width: 1.5em;
-        text-align: center;
-    }
-}
-
-
-/* topdoc
-  name: Link list modifier
-  family: cfgov-misc
-  notes:
-    - "The link list modifier is intended to be used for lists where each item
-      is a link. It converts to a finger-friendly link with a large tap area
-      on smaller screens."
-  patterns:
-    - name: Default example
-      markup: |
-        <ul class="list list__links">
-            <li class="list_item">
-                <a class="list_link">List item 1</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 2</a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">List item 3</a>
-            </li>
-        </ul>
-    - name: Link list with icons
-      markup: |
-        <ul class="list list__links list__icons">
-            <li class="list_item">
-                <a class="list_link">
-                    <span class="cf-icon cf-icon-email list_icon"></span>
-                    List item 1
-                </a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">
-                    <span class="cf-icon cf-icon-phone list_icon"></span>
-                    List item 2
-                </a>
-            </li>
-            <li class="list_item">
-                <a class="list_link">
-                    <span class="cf-icon cf-icon-fax list_icon"></span>
-                    List item 3
-                </a>
-            </li>
-        </ul>
-  tags:
-    - cfgov-misc
-*/
-
-
-.list__links {
-    .list__unstyled();
-
-    .list_item {
-        margin-bottom: unit(10x / @base-font-size-px, em);
-    }
-
-    .respond-to-max(599px, {
-        border-top: 1px dotted @pacific;
-
-        .list_item {
-            display: block;
-            margin-bottom: 0;
-        }
-
-        .list_link {
-            display: block;
-            padding-top: unit(10px / @base-font-size-px, em);
-            padding-bottom: unit(10px / @base-font-size-px, em);
-        }
-    });
-
-    .respond-to-min(600px, {
-        &.list__icons {
-            .list_link {
-                margin-bottom: unit(15px / @base-font-size-px, em);
-                margin-left: 1.5em; // magic number representing approximate width of an icon glyph
-                position: relative;
-            }
-
-            .list_icon {
-                position: absolute;
-                top: unit(1px / @base-font-size-px, em);
-                left: -1.625em; // pulling back slightly more than width of icon for optical alignment
-            }
-        }
-    });
-}
-
-
-/* topdoc
-  name: Filtered-by list
-  family: cfgov-misc
-  notes:
-    - "A list of applied filters."
-    - "This pattern is subject to change. This initial style simply highlights
-      the filters that have been applied. In the future this pattern will evolve
-      so that each applied filter can be removed by clicking/tapping it."
-  patterns:
-    - name: Default example
-      markup: |
-        <dl class="filtered-by list list__horizontal">
-            <dt class="list_item">
-                <span class="filtered-by_header">Filtered by</span>
-            </dt>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Lorem,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Ipsum,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Dolor,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Sit,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Amet,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Lorem,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Ipsum,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Dolor,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Sit,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Amet,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Lorem,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Ipsum,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Dolor,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Sit,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Amet</span>
-            </dd>
-        </dl>
-    - name: Filters aligned with a button
-      markup: |
-        <a class="btn btn__secondary"
-           style="float:right;"
-           href="#">
-            Filter
-        </a>
-        <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
-            <dt class="list_item">
-                <span class="filtered-by_header">Filtered by</span>
-            </dt>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Lorem,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Ipsum,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Dolor,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Sit,</span>
-            </dd>
-            <dd class="list_item">
-                <span class="filtered-by_filter">Amet,</span>
-            </dd>
-        </dl>
-  tags:
-    - cfgov-misc
-*/
-
-
-.filtered-by {
-    margin: 0;
-
-    &_header {
-        .h5();
-        margin: 0;
-        color: @black;
-
-        .filtered-by__align-with-btn & {
-            .u-align-with-btn(@font-size);
-        }
-    }
-
-    &_filter {
-        .webfont-regular();
-        color: @gray;
-
-        .respond-to-print({
-            .webfont-demi();
-            color: @black;
-        });
-    }
 }
 
 
