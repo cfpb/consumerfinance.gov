@@ -322,26 +322,26 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">.jump-link__before (modifier)</h3>
           <section class="docs-pattern_pattern">
-<a class="jump-link jump-link__left icon-link__before" href="#">
+<a class="jump-link jump-link__left jump-link__before" href="#">
     <span class="jump-link_text">Jump link with icon on left</span>
 </a>
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__left icon-link__before&quot; href=&quot;#&quot;&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__left jump-link__before&quot; href=&quot;#&quot;&gt;
     &lt;span class=&quot;jump-link_text&quot;&gt;Jump link with icon on left&lt;/span&gt;
 &lt;/a&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__left icon-link__before\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    &lt;span class=\&amp;quot;jump-link_text\&amp;quot;&gt;Jump link with icon on left&lt;/span&gt;\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__left jump-link__before\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    &lt;span class=\&amp;quot;jump-link_text\&amp;quot;&gt;Jump link with icon on left&lt;/span&gt;\n&lt;/a&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.jump-link__&lt;icon&gt;.icon-link__before</code></pre>
+                <pre class="docs-code"><code>.jump-link__&lt;icon&gt;.jump-link__before</code></pre>
               </li>
             </ul>
             <ul class="docs-notes">
-              <li>Jump links can also have icons before the text, like icon links. Just make sure you add the .icon-link__before class, not .jump-link__before.</li>
+              <li>Jump links can also have icons before the text, like icon links.</li>
             </ul>
           </footer>
         </div>
@@ -349,16 +349,18 @@
           <h3 class="docs-pattern_header">.jump-link__bg (modifier)</h3>
           <section class="docs-pattern_pattern">
 <a class="jump-link jump-link__bg" href="#">
-    <span class="jump-link_text">Jump link with grey background and solid borders on small screens</span>
+    <span class="jump-link_text">Jump link with grey background and
+        solid borders on small screens</span>
 </a>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;jump-link jump-link__bg&quot; href=&quot;#&quot;&gt;
-    &lt;span class=&quot;jump-link_text&quot;&gt;Jump link with grey background and solid borders on small screens&lt;/span&gt;
+    &lt;span class=&quot;jump-link_text&quot;&gt;Jump link with grey background and
+        solid borders on small screens&lt;/span&gt;
 &lt;/a&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__bg\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    &lt;span class=\&amp;quot;jump-link_text\&amp;quot;&gt;Jump link with grey background and solid borders on small screens&lt;/span&gt;\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;jump-link jump-link__bg\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n    &lt;span class=\&amp;quot;jump-link_text\&amp;quot;&gt;Jump link with grey background and\n        solid borders on small screens&lt;/span&gt;\n&lt;/a&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
             <ul class="docs-codenotes">
@@ -397,35 +399,35 @@
   margin-left: 1px;
 }
 .jump-link__download:after,
-.jump-link__download.icon-link__before:before {
+.jump-link__download.jump-link__before:before {
   content: &quot;\e406&quot;;
 }
 .jump-link__email:after,
-.jump-link__email.icon-link__before:before {
+.jump-link__email.jump-link__before:before {
   content: &quot;\e302&quot;;
 }
 .jump-link__external-link:after,
-.jump-link__external-link.icon-link__before:before {
+.jump-link__external-link.jump-link__before:before {
   content: &quot;\e610&quot;;
 }
 .jump-link__fax:after,
-.jump-link__fax.icon-link__before:before {
+.jump-link__fax.jump-link__before:before {
   content: &quot;\e310&quot;;
 }
 .jump-link__left:after,
-.jump-link__left.icon-link__before:before {
+.jump-link__left.jump-link__before:before {
   content: &quot;\e000&quot;;
 }
 .jump-link__mail:after,
-.jump-link__mail.icon-link__before:before {
+.jump-link__mail.jump-link__before:before {
   content: &quot;\e304&quot;;
 }
 .jump-link__phone:after,
-.jump-link__phone.icon-link__before:before {
+.jump-link__phone.jump-link__before:before {
   content: &quot;\e306&quot;;
 }
 .jump-link__right:after,
-.jump-link__right.icon-link__before:before {
+.jump-link__right.jump-link__before:before {
   content: &quot;\e002&quot;;
 }
 .jump-link__before:after {
