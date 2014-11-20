@@ -115,7 +115,8 @@
         <ul class="list list__unstyled list__spaced">
         {% for item in feed %}
             <li class="list_item">
-                <a href="{{ item.permalink }}" class="list_link">
+                <a class="list_link"
+                   href="{{ item.permalink }}">
                     {{ item.title|safe }}
                 </a>
             </li>
