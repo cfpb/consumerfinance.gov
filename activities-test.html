@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block demo_title -%}
+    Activities test
+{%- endblock %}
+
+{% block title -%}
+    Activities test
+{%- endblock %}
+
+{% block desc -%}
+    Activities test
+{%- endblock %}
+
+{% block content %}
+
+    <main class="content" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <div class="content_main">
+                <section>
+
+                    {% import "post-macros.html" as post_macros with context %}
+                    {{ post_macros.doctype_activity('posts', 'tags:Students', 2) }}
+                    {{ post_macros.doctype_activity('op-ed', 'category:Op-Ed AND tags:Students', 2) }}
+                    {{ post_macros.doctype_activity('press release', 'category:"Press Release" AND tags:Students', 2) }}
+                    {{ post_macros.doctype_activity('speech', 'category:Speech AND tags:Students', 2) }}
+                    {{ post_macros.doctype_activity('testimony', 'category:Testimony AND tags:Students', 2) }}
+
+                </section>
+
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+
+    </main><!-- END .content -->
+
+{% endblock content %}
