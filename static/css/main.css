@@ -14408,6 +14408,11 @@ a.focus .summary_header {
     display: block;
   }
 }
+@media only all and (min-width: 37.5em) {
+  .footer_general-inqueries .list__links .list_item {
+    margin-bottom: 0;
+  }
+}
 @media only all and (min-width: 48em) {
   .footer_general-inqueries {
     font-size: 0.75em;

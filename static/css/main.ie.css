@@ -14562,6 +14562,10 @@ a.focus .summary_header {
   display: block;
 }
 
+.footer_general-inqueries .list__links .list_item {
+  margin-bottom: 0;
+}
+
 .footer_general-inqueries {
   font-size: 0.75em;
 }
