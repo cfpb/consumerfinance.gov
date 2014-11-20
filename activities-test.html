@@ -25,11 +25,11 @@
                 <section>
 
                     {% import "post-macros.html" as post_macros with context %}
-                    {{ post_macros.doctype_activity('posts', 'tags:Students', 2) }}
-                    {{ post_macros.doctype_activity('op-ed', 'category:Op-Ed AND tags:Students', 2) }}
-                    {{ post_macros.doctype_activity('press release', 'category:"Press Release" AND tags:Students', 2) }}
-                    {{ post_macros.doctype_activity('speech', 'category:Speech AND tags:Students', 2) }}
-                    {{ post_macros.doctype_activity('testimony', 'category:Testimony AND tags:Students', 2) }}
+                    {{ post_macros.activity('posts', 'tags:Students', 2) }}
+                    {{ post_macros.activity('op-ed', 'category:Op-Ed AND tags:Students', 2) }}
+                    {{ post_macros.activity('press release', 'category:"Press Release" AND tags:Students', 2) }}
+                    {{ post_macros.activity('speech', 'category:Speech AND tags:Students', 2) }}
+                    {{ post_macros.activity('testimony', 'category:Testimony AND tags:Students', 2) }}
 
                 </section>
 

@@ -612,8 +612,25 @@
 {% endmacro %}
 
 
-{# Get latest activities for a given tag of a document type. #}
-{% macro doctype_activity(doctype, querystring, quantity) %}
+{# ==========================================================================
+
+   activity()
+
+   Lists titles of recent document type posts when given:
+
+   doctype:     The document type you wish to display.
+                Note that newsroom is not a supported document tpye in this
+                macro. Use newsroom categories instead.
+
+   querystring: The elastic search query you'd like to make.
+                Example: 'category:"Press Release" AND tags:Students'.
+                Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+
+   quantity:    The number of results you want to display.
+
+   ========================================================================== #}
+
+{% macro activity(doctype, querystring, quantity) %}
     {% if doctype|lower == 'posts' %}
         {% set true_doctype = doctype %}
         {% set icon = category_icon('blog') %}
