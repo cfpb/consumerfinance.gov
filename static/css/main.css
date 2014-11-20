@@ -13906,6 +13906,10 @@ a.focus .summary_header {
   body {
     height: 100%;
   }
+  .primary-nav_header-space.wrapper__match-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .primary-nav_top-level-list.list-expanding .list-expanding {
     margin: 0 0 -1px;
   }
