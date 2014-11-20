@@ -613,22 +613,35 @@
 
 
 {# Get latest activities for a given tag of a document type. #}
-{% macro tag_activity(doc_type, tag, quantity) %}
-    {% set q = 'tags:' + tag %}
-    {% set query = queries[doc_type] %}
-    {% set feed = query.search_with_url_arguments(size=quantity,q=q) %}
-    {% if doc_type == 'posts' %}
+{% macro doctype_activity(doctype, querystring, quantity) %}
+    {% if doctype|lower == 'posts' %}
+        {% set true_doctype = doctype %}
+        {% set icon = category_icon('blog') %}
         {% set header = 'Blog' %}
-        {% set icon = 'speech-bubble' %}
-    {% elif doc_type == 'newsroom' %}
-        {% set header = 'News' %}
-        {% set icon = 'speech-bubble' %}
+    {% elif doctype|lower == 'op-ed' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Op-Ed' %}
+    {% elif doctype|lower == 'press release' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Press Release' %}
+    {% elif doctype|lower == 'speech' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Speech' %}
+    {% elif doctype|lower == 'testimony' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Testimony' %}
     {% else %}
+        {% set true_doctype = 'posts' %}
         {% set header = 'Feed' %}
-        {% set icon = 'speech-bubble' %}
+        {% set icon = category_icon('blog') %}
     {% endif %}
+    {% set feed = queries[true_doctype].search_with_url_arguments(size=quantity,q=querystring) %}
     <aside class="block block__sub">
-        <h1 class="h4"><span class="cf-icon cf-icon-{{ icon }}"></span> {{ header }}</h1>
+        <h1 class="h4">{{ icon }} {{ header }}</h1>
         <ul class="list list__unstyled list__spaced">
         {% for item in feed %}
             <li class="list_item">
