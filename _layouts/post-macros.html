@@ -110,12 +110,12 @@
         {% set icon = category_icon('blog') %}
     {% endif %}
     {% set feed = queries[true_doctype].search_with_url_arguments(size=quantity,q=querystring) %}
-    <aside class="block block__sub">
+    <aside class="activity">
         <h1 class="h4">{{ icon }} {{ header }}</h1>
-        <ul class="list list__unstyled list__spaced">
+        <ul class="list list__unstyled list__spaced list__links">
         {% for item in feed %}
             <li class="list_item">
-                <a class="list_link"
+                <a class="list_link jump-link jump-link__right"
                    href="{{ item.permalink }}">
                     {{ item.title|safe }}
                 </a>
