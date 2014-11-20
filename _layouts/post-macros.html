@@ -610,3 +610,33 @@
         {{ value }}
     </option>
 {% endmacro %}
+
+
+{# Get latest activities for a given tag of a document type. #}
+{% macro tag_activity(doc_type, tag, quantity) %}
+    {% set q = 'tags:' + tag %}
+    {% set query = queries[doc_type] %}
+    {% set feed = query.search_with_url_arguments(size=quantity,q=q) %}
+    {% if doc_type == 'posts' %}
+        {% set header = 'Blog' %}
+        {% set icon = 'speech-bubble' %}
+    {% elif doc_type == 'newsroom' %}
+        {% set header = 'News' %}
+        {% set icon = 'speech-bubble' %}
+    {% else %}
+        {% set header = 'Feed' %}
+        {% set icon = 'speech-bubble' %}
+    {% endif %}
+    <aside class="block block__sub">
+        <h1 class="h4"><span class="cf-icon cf-icon-{{ icon }}"></span> {{ header }}</h1>
+        <ul class="list list__unstyled list__spaced">
+        {% for item in feed %}
+            <li class="list_item">
+                <a href="{{ item.permalink }}" class="list_link">
+                    {{ item.title|safe }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </aside>
+{% endmacro %}
