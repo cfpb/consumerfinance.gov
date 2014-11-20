@@ -12659,6 +12659,10 @@ a.hero_card {
   margin-bottom: 0.625em;
 }
 
+.list__links.list__spaced .list_item + .list_item {
+  margin-top: 0;
+}
+
 .list__links.list__icons .list_link {
   position: relative;
   left: -0.125em;
@@ -15786,6 +15790,10 @@ a.focus .summary_header {
   margin-bottom: 0.625em;
 }
 
+.footer_nav-list.list__spaced .list_item + .list_item {
+  margin-top: 0;
+}
+
 .footer_nav-list.list__icons .list_link {
   position: relative;
   left: -0.125em;
@@ -16054,6 +16062,10 @@ a.focus .summary_header {
 
 .footer_list .list_item {
   margin-bottom: 0.625em;
+}
+
+.footer_list.list__spaced .list_item + .list_item {
+  margin-top: 0;
 }
 
 .footer_list.list__icons .list_link {
