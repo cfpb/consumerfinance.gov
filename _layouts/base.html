@@ -23,8 +23,6 @@
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
-{% from "macros.html" import share_twitter_url with context %}
-
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
 <!--
@@ -164,7 +162,7 @@
     {% include "header.html" %}
 
     <!-- PRIMARY CONTENT -->
-    {% block content scoped %}
+    {% block content %}
         This will be replaced in templates that extend this template and override "content".
     {% endblock content %}
     <!-- /PRIMARY CONTENT -->
