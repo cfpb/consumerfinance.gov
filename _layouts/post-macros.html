@@ -1,4 +1,17 @@
 
+{# ==========================================================================
+
+   category_icon()
+
+   Create an HTML icon when given:
+
+   category:           A document type category.
+
+   additional_classes: Extra classes you wish to add to the icon, space
+                       separated.
+
+   ========================================================================== #}
+
 {% macro category_icon(category, additional_classes) %}
     {%- if category|lower == 'announcements & updates' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
@@ -22,6 +35,16 @@
 {% endmacro %}
 
 
+{# ==========================================================================
+
+   post_summary()
+
+   Create an post summary when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
 {% macro post_summary(post) %}
     <h1 class="summary_header">{{ post.title|safe }}</h1>
     <p class="summary_text summary_text__max">
@@ -43,6 +66,7 @@
 
 
 {# ==========================================================================
+
    pagination()
 
    Create a pagination component when given:
@@ -53,6 +77,7 @@
    filters:     An array of the filters that you want pagination to support.
                 Possible values: author, calendar, category, range_date_gte,
                 range_date_lte, tags.
+
    ========================================================================== #}
 
 {% macro pagination(query_obj, filters) %}
@@ -616,7 +641,7 @@
 
    activity()
 
-   Lists titles of recent document type posts when given:
+   List titles of recent document type posts when given:
 
    doctype:     The document type you wish to display.
                 Note that newsroom is not a supported document tpye in this
