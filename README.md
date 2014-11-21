@@ -63,8 +63,8 @@ _More specific cfgov-refresh docs are coming soon._
 
 To run browser tests, you'll need to perform the following steps:
 1. Install chromedriver: 
-* Mac: `brew install chromedriver`
-* Manual (Linux/Mac): Download the latest [Chromedriver](http://chromedriver.storage.googleapis.com/index.html) binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
+  * Mac: `brew install chromedriver`
+  * Manual (Linux/Mac): Download the latest [Chromedriver](http://chromedriver.storage.googleapis.com/index.html) binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
 2. `pip install -r _tests/requirements.txt`
 3. `nosetests -v _tests`
 
