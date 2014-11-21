@@ -20,21 +20,12 @@
         <div class="content_bar"></div>
 
         <div class="wrapper content_wrapper">
-
             <div class="content_main">
                 <section>
-
-                    {% import "post-macros.html" as post_macros with context %}
-                    {{ post_macros.activity('posts', 'tags:Students', 2) }}
-                    {{ post_macros.activity('op-ed', 'category:Op-Ed AND tags:Students', 2) }}
-                    {{ post_macros.activity('press release', 'category:"Press Release" AND tags:Students', 2) }}
-                    {{ post_macros.activity('speech', 'category:Speech AND tags:Students', 2) }}
-                    {{ post_macros.activity('testimony', 'category:Testimony AND tags:Students', 2) }}
-
+                    {% from "post-macros.html" import activity_snippets as activity with context %}
+                    {{ activity('Students') }}
                 </section>
-
             </div><!-- END .content_main -->
-
         </div><!-- END .content_wrapper -->
 
     </main><!-- END .content -->
