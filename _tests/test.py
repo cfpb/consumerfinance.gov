@@ -48,8 +48,13 @@ class NewsroomTestCase(LiveServerTestCase):
     def test_filter_checkboxes(self):
         category_list = ["Op-Ed", "Press Release"]
         for cat in category_list:
-            checkbox = self.driver.find_element_by_xpath(
-                '//label/span[contains(text(), "{0}")]/..'.format(cat))
+            checkbox = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((
+                    By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)
+                ))
+            )
+            # checkbox = self.driver.find_element_by_xpath(
+            #     '//label/span[contains(text(), "{0}")]/..'.format(cat))
             checkbox.click()
             assert "is-checked" in checkbox.get_attribute('class')
             checkbox.click()
@@ -166,7 +171,7 @@ class NewsroomTestCase(LiveServerTestCase):
         ).click() 
         # click 'from year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_year"]/option[@value="2013"]'
+            '//select[@id="filter_from_year"]/option[@value="2011"]'
         ).click()
         
         # click 'to month'
@@ -175,7 +180,7 @@ class NewsroomTestCase(LiveServerTestCase):
         ).click()
         # click 'to year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_year"]/option[@value="2013"]'
+            '//select[@id="filter_to_year"]/option[@value="2011"]'
         ).click()
 
         # Search
