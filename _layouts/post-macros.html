@@ -67,7 +67,63 @@
 
 {# ==========================================================================
 
-   activity()
+   activity_snippets()
+
+   List a bunch of activity snippets when given a tag.
+
+   ========================================================================== #}
+
+{% macro activity_snippets(tag) %}
+    {% from 'macros.html' import string_length as string_length %}
+    {% from 'post-macros.html' import activity_snippet as snippet with context %}
+    {% set
+       blog =
+       snippet('posts', 'tags:' + '"'+tag+'"', 2) %}
+    {% set
+       pressrelease =
+       snippet('press release', 'category:"Press Release" AND tags:' + '"'+tag+'"', 2) %}
+    {% set
+       speech =
+       snippet('speech', 'category:Speech AND tags:' + '"'+tag+'"', 2) %}
+    {% set
+       testimony =
+       snippet('testimony', 'category:Testimony AND tags:' + '"'+tag+'"', 2) %}
+    {% set
+       oped =
+       snippet('op-ed', 'category:Op-Ed AND tags:' + '"'+tag+'"', 2) %}
+   <div class="content-l content-l__large-gutters">
+    {% if string_length(blog)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ blog }}
+        </div>
+    {% endif %}
+    {% if string_length(pressrelease)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ pressrelease }}
+        </div>
+    {% endif %}
+    {% if string_length(speech)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ speech }}
+        </div>
+    {% endif %}
+    {% if string_length(testimony)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ testimony }}
+        </div>
+    {% endif %}
+    {% if string_length(oped)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ oped }}
+        </div>
+    {% endif %}
+   </div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   activity_snippet()
 
    List titles of recent document type posts when given:
 
@@ -83,7 +139,7 @@
 
    ========================================================================== #}
 
-{% macro activity(doctype, querystring, quantity) %}
+{% macro activity_snippet(doctype, querystring, quantity) %}
     {% if doctype|lower == 'posts' %}
         {% set true_doctype = doctype %}
         {% set icon = category_icon('blog') %}
@@ -110,6 +166,7 @@
         {% set icon = category_icon('blog') %}
     {% endif %}
     {% set feed = queries[true_doctype].search_with_url_arguments(size=quantity,q=querystring) %}
+    {% if feed.total > 0 %}
     <aside class="activity">
         <h1 class="h4">{{ icon }} {{ header }}</h1>
         <ul class="list list__unstyled list__spaced list__links">
@@ -123,6 +180,7 @@
         {% endfor %}
         </ul>
     </aside>
+    {% endif %}
 {% endmacro %}
 
 
