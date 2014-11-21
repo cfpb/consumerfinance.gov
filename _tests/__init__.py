@@ -17,9 +17,9 @@ def setup_package():
     create_mapping('watchroom', '_settings/posts_mappings.json')
 
     # Index the documents
-    index_documents('newsroom', 'tests/fixtures/newsroom.json')
-    index_documents('views', 'tests/fixtures/views.json')
-    index_documents('watchroom', 'tests/fixtures/watchroom.json')
+    index_documents('newsroom', '_tests/fixtures/newsroom.json')
+    index_documents('views', '_tests/fixtures/views.json')
+    index_documents('watchroom', '_tests/fixtures/watchroom.json')
 
 def teardown_package():
     es = Elasticsearch()
