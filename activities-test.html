@@ -22,7 +22,15 @@
         <div class="wrapper content_wrapper">
             <div class="content_main">
                 <section>
+
+                    {# Real world example: #}
                     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+                    <div class="block u-mt0">
+                        <h1>Testing activities for 'Students'</h1>
+                        {{ activity_snippets('Students') }}
+                    </div>
+
+                    {# An example for demonstration purposes only: #}
                     {% set activities = selected_filters_for_field('activity') %}
                     {% for activity in activities %}
                     <div class="block u-mt0">
@@ -30,6 +38,7 @@
                         {{ activity_snippets(activity) }}
                     </div>
                     {% endfor %}
+
                 </section>
             </div><!-- END .content_main -->
         </div><!-- END .content_wrapper -->
