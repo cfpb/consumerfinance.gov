@@ -186,10 +186,6 @@
 
         Allows you to disable showing the count label.
 
-   user_options.calendar_filter_order:
-
-        An array of values used in ordering the calendar filters.
-
    user_options.id_prefix:
 
         ID's are automatically added to certain elements that need them, but if
@@ -222,7 +218,6 @@
     'show_current_filters':     true,
     'show_unfiltered_count':    false,
     'show_filters_label':       true,
-    'calendar_filter_order':    [],
     'id_prefix':                '',
     'id_tags':                  'filter_tags',
     'id_author':                'filter_author',
@@ -395,23 +390,18 @@
                 <label class="form-label-header">
                     Calendars
                 </label>
-            {% set calendars = query.possible_values_for('calendar')|sort(attribute='term') -%}
-            {% set ordered_calendars = [] -%}
-            {% set non_ordered_calendars = [] -%}
-            {% for id in options.calendar_filter_order -%}
-                {% for calendar in calendars -%}
-                    {% if calendar.term == id -%}
-                        {% set _ignore = ordered_calendars.append(calendar) %}
-                        {% set _ignore = calendars.pop(loop.index0) %}
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-            {%- set _ignore = ordered_calendars.extend(calendars) -%}
-            {% for calendar in ordered_calendars -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('calendar', calendar.term)|safe }}
+                    {{ filter_checkbox('calendar', 'Richard Cordray')|safe }}
                 </label>
-            {% endfor %}
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Steve Antonakes')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Raj Date')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Elizabeth Warren')|safe }}
+                </label>
             </div>
         </div>
 
