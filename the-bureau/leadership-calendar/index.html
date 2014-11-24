@@ -71,15 +71,7 @@
 
                         {{ post_macros.filters(
                             ['calendar', 'range_date'], query, posts, 'calendar_event',
-                            {
-                                'expand_label': 'Filter calendars',
-                                'calendar_filter_order': [
-                                    'Richard Cordray',
-                                    'Steve Antonakes',
-                                    'Raj Date',
-                                    'Elizabeth Warren'
-                                ]
-                            }
+                            { 'expand_label': 'Filter calendars' }
                         ) }}
 
                     {% import "leadership-calendar-table.html" as calendar %}
@@ -104,12 +96,6 @@
                                 'id_prefix': 'download',
                                 'expand_label': 'Download options',
                                 'show_current_filters': false,
-                                'calendar_filter_order': [
-                                    'Richard Cordray',
-                                    'Steve Antonakes',
-                                    'Raj Date',
-                                    'Elizabeth Warren'
-                                ],
                                 'action': 'pdf/',
                                 'submit_label': 'Download PDF'
                             }
