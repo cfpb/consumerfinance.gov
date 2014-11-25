@@ -37,6 +37,7 @@ class NewsroomTestCase(LiveServerTestCase):
         self.filter_dropdown_button = self.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]')
         click_filter_posts(self)
 
+    @attr('test')
     def test_filter_display_button(self):
         filter_posts_display_button = self.driver.find_element_by_xpath(
             '//button[contains(text(), "Filter posts")]'
@@ -48,7 +49,7 @@ class NewsroomTestCase(LiveServerTestCase):
     def test_filter_checkboxes(self):
         category_list = ["Op-Ed", "Press Release"]
         for cat in category_list:
-            checkbox = WebDriverWait(self.driver, 20).until(
+            checkbox = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)
                 ))
@@ -66,25 +67,25 @@ class NewsroomTestCase(LiveServerTestCase):
         category_list = ["Op-Ed", "Press Release"]
         for cat in category_list:
             click_filter_posts(self)
-            checkbox = WebDriverWait(self.driver, 20).until(
+            checkbox = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)))
             )
             checkbox.click()
-            filter_results_button = WebDriverWait(self.driver, 20).until(
+            filter_results_button = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//input[@value="Apply filters"]'))
             )
             filter_results_button.click()
             cat = coerce_category_for_dom(cat)
-            cat_type_elem = WebDriverWait(self.driver, 20).until(
+            cat_type_elem = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//a[@href="?filter_category={0}"]'.format(cat)))
             )
             assert cat_type_elem
             click_filter_posts(self)
             cat = coerce_category_for_dom(cat)
-            checkbox = WebDriverWait(self.driver, 20).until(
+            checkbox = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)))
             )
@@ -93,7 +94,7 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('topics')
     def test_filter_topic_search(self):
-        topic_input = WebDriverWait(self.driver, 20).until(
+        topic_input = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Search for topics"]'
             ))
@@ -104,7 +105,7 @@ class NewsroomTestCase(LiveServerTestCase):
             '//div[@id="filter_tags_chosen"]/div/ul[@class="chosen-results"]'
         )
         assert topic_choice_results.is_displayed()
-        choice = WebDriverWait(self.driver, 20).until(
+        choice = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
                 '//div[@id="filter_tags_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"For")]/..'
@@ -119,7 +120,7 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('authors')
     def test_filter_author_search(self):
-        author_input = WebDriverWait(self.driver, 20).until(
+        author_input = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Search for authors"]'
             ))
@@ -130,7 +131,7 @@ class NewsroomTestCase(LiveServerTestCase):
             '//div[@id="filter_author_chosen"]/div/ul[@class="chosen-results"]'
         )
         assert author_choice_results.is_displayed()
-        choice = WebDriverWait(self.driver, 20).until(
+        choice = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
                 '//div[@id="filter_author_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"Bat")]/..'
@@ -141,13 +142,13 @@ class NewsroomTestCase(LiveServerTestCase):
             '//div[@id="filter_author_chosen"]/ul/li/span[contains(text(), "Batman")]'
         )
         assert author_elem
-        filter_results_button = WebDriverWait(self.driver, 20).until(
+        filter_results_button = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Apply filters"]'
             ))
         )
         filter_results_button.click()
-        author = WebDriverWait(self.driver, 20).until(
+        author = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//p[@class="summary_byline"][contains(text(), "Bat")]'
             ))
@@ -157,40 +158,45 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('date')
     def test_filter_date_search(self):
-        # scroll(self.driver)
-        WebDriverWait(self.driver, 20).until(
+        scroll_to_element(self.driver, WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
-                '//div[@id="filter_range_date_gte-replacement"]/div[1]'
+                '//span[@class="header-slug_inner"][contains(text(), "Stay informed")]'
+            ))
+        ))
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((
+                By.XPATH, 
+                '//div[@class="input-group_item custom-select is-enabled"]'
             ))
         )
         
         # click 'from month'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_month"]/option[@value="01"]'
+            '//select[@id="filter_from-month"]/option[@value="01"]'
         ).click() 
         # click 'from year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_year"]/option[@value="2011"]'
+            '//select[@id="filter_from-year"]/option[@value="2011"]'
         ).click()
         
         # click 'to month'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_month"]/option[@value="02"]'
+            '//select[@id="filter_to-month"]/option[@value="02"]'
         ).click()
         # click 'to year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_year"]/option[@value="2011"]'
+            '//select[@id="filter_to-year"]/option[@value="2011"]'
         ).click()
 
         # Search
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Apply filters"]'
             ))
         ).click()
 
-        filtered_article_date = WebDriverWait(self.driver, 20).until(
+        filtered_article_date = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH,
                 '//div[@id="pagination_content"]/article[1]/div[1]/span[1]'
