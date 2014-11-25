@@ -1,8 +1,0 @@
-{
-  "name": "Students Initiative",
-  "query": {
-    "doc_type": "students_initiative",
-    "size": 10,
-    "sort": "date:desc"
-  }
-}
