@@ -2,8 +2,8 @@
 
 {% block content %}
 
-    {% set path = '/contact-us/' %}
-    {% set active_page = contact.slug -%}
+    {% set path = '/offices/students/' %}
+    {% set active_page = students_initiative.slug -%}
 
     <main class="content content__1-3" id="main" role="main">
 
@@ -13,13 +13,13 @@
         <div class="wrapper content_wrapper">
 
             <aside class="content_sidebar content__flush-all-on-small">
-                {% include "_contact-us-nav.html" %}
+                {% include "_offices-students-nav.html" %}
             </aside>
 
             <div class="content_main content__flush-bottom content__flush-top-on-small">
                 <section>
-                    <h1>{{ contact.title }}</h1>
-                    <div class="short-desc">{{ contact.content|safe }}</div>
+                    <h1>{{ students_initiative.title }}</h1>
+                    <div class="short-desc">{{ students_initiative.content|safe }}</div>
                 </section>
             </div><!-- END .content_main -->
 
