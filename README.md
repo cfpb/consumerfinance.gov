@@ -59,6 +59,15 @@ Since cfgov-refresh is based off of cf-demo we encourage you to start with the
 [cf-demo docs](http://cfpb.github.io/capital-framework/cf-demo/).
 _More specific cfgov-refresh docs are coming soon._
 
+### Tests
+
+To run browser tests, you'll need to perform the following steps:
+
+1. Install chromedriver: 
+  * Mac: `brew install chromedriver`
+  * Manual (Linux/Mac): Download the latest [Chromedriver](http://chromedriver.storage.googleapis.com/index.html) binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
+2. `pip install -r _tests/requirements.txt`
+3. `nosetests -v _tests`
 
 ## How this repo is versioned
 
