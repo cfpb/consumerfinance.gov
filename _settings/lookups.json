@@ -4,14 +4,19 @@
     "type" : "contact",
     "permalink" : true
   },
-  "post":{
-    "url" : "/blog/<id>/",
-    "type" : "posts",
+  "students_initiative":{
+    "url" : "/offices/students/<id>/",
+    "type" : "students_initiative",
     "permalink" : true
   },
   "newsroom":{
     "url" : "/newsroom/<id>/",
     "type" : "newsroom",
+    "permalink" : true
+  },
+  "post":{
+    "url" : "/blog/<id>/",
+    "type" : "posts",
     "permalink" : true
   },
   "watchroom":{
