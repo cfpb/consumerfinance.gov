@@ -1,5 +1,5 @@
 def click_filter_posts(test):
-    test.filter_dropdown_button = test.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]')
+    test.filter_dropdown_button = test.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]/..')
     if test.filter_dropdown_button.get_attribute('aria-pressed') == 'false':
         test.filter_dropdown_button.click()
 
@@ -10,3 +10,8 @@ def coerce_category_for_dom(category):
         category = category.replace('+', ' ')
 
     return category
+
+def scroll_to_element(driver, element):
+    driver.execute_script(
+        "window.scrollTo(" + str(element.location['x']) + ", " + str(element.location['y']) + ");"
+    )
