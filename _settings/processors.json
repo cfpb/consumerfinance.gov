@@ -1,5 +1,5 @@
 {
-  "students_initiative": {
+  "initiative": {
     "url":        "$WORDPRESS/api/get_posts/?post_type=initiative",
     "processor":  "wordpress_initiative_processor"
   }

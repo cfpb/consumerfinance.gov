@@ -6,7 +6,12 @@
   },
   "students_initiative":{
     "url" : "/offices/students/<id>/",
-    "type" : "students_initiative",
+    "type" : "initiative",
+    "permalink" : true
+  },
+  "mikes_initiative":{
+    "url" : "/offices/mikes-office/<id>/",
+    "type" : "initiative",
     "permalink" : true
   },
   "newsroom":{
