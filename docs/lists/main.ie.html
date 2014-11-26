@@ -725,14 +725,6 @@
   margin: 0;
 }
 
-.filtered-by__show-on-medium {
-  display: none;
-}
-
-.filtered-by__show-on-medium {
-  display: block;
-}
-
 .filtered-by_header {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
@@ -785,6 +777,30 @@
 
 .lt-ie9 .filtered-by_filter strong,
 .lt-ie9 .filtered-by_filter b {
+  font-weight: normal !important;
+}
+
+@media print {
+  .filtered-by_filter {
+    font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    color: #101820;
+  }
+
+  .lt-ie9 .filtered-by_filter {
+    font-weight: normal !important;
+  }
+}
+
+.print .filtered-by_filter {
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  color: #101820;
+}
+
+.lt-ie9 .print .filtered-by_filter {
   font-weight: normal !important;
 }
 </code></pre>

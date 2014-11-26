@@ -356,21 +356,21 @@
 {% macro filters(filters, query, posts, doc_type, user_options) %}
 
 {%- set options = {
-    'action':               '/',
-    'expand_label':         'Filter',
-    'submit_label':         'Apply filters',
-    'show_current_filters': true,
-    'show_unfiltered_count':false,
-    'show_filters_label':   true,
-    'id_prefix':            '',
-    'id_tags':              'filter_tags',
-    'id_author':            'filter_author',
-    'id_range_date_gte':    'filter_range-date-gte',
-    'id_range_date_lte':    'filter_range-date-lte',
-    'id_from_month':        'filter_from-month',
-    'id_from_year':         'filter_from-year',
-    'id_to_month':          'filter_to-month',
-    'id_to_year':           'filter_to-year'
+    'action':                   '/',
+    'expand_label':             'Filter',
+    'submit_label':             'Apply filters',
+    'show_current_filters':     true,
+    'show_unfiltered_count':    false,
+    'show_filters_label':       true,
+    'id_prefix':                '',
+    'id_tags':                  'filter_tags',
+    'id_author':                'filter_author',
+    'id_range_date_gte':        'filter_range-date-gte',
+    'id_range_date_lte':        'filter_range-date-lte',
+    'id_from_month':            'filter_from-month',
+    'id_from_year':             'filter_from-year',
+    'id_to_month':              'filter_to-month',
+    'id_to_year':               'filter_to-year'
 } -%}
 {%- set _ignore = options.update(user_options) -%}
 
@@ -534,11 +534,18 @@
                 <label class="form-label-header">
                     Calendars
                 </label>
-            {% for calendar in query.possible_values_for('calendar')|sort(attribute='term') -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('calendar', calendar.term)|safe }}
+                    {{ filter_checkbox('calendar', 'Richard Cordray')|safe }}
                 </label>
-            {% endfor %}
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Steve Antonakes')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Raj Date')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Elizabeth Warren')|safe }}
+                </label>
             </div>
         </div>
 
