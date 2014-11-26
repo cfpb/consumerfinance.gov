@@ -1,0 +1,12 @@
+{% extends "nav-secondary.html" %}
+
+{% set query = queries.initiative %}
+{% set filter = 'related_office:' + office_slug %}
+{% set contacts = query.search_with_url_arguments(size=100,q=filter) %}
+
+{% set navigation_bar = [(path, 'index', office_name)] -%}
+{% for contact in contacts %}
+    {%- set _ignore = navigation_bar.append((path + contact.slug+'/', contact.slug, contact.title|safe)) -%}
+{% endfor %}
+
+{% set active_page = active_page|default('index') -%}

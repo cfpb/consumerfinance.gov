@@ -411,13 +411,6 @@
 .filtered-by {
     margin: 0;
 
-    &__show-on-medium {
-        display: none;
-        .respond-to-min(600px, {
-            display: block;
-        });
-    }
-
     &_header {
         .h5();
         margin: 0;
@@ -431,6 +424,13 @@
     &_filter {
         .webfont-regular();
         color: @gray;
+
+        .respond-to-print({
+            & {
+                .webfont-medium();
+                color: @black;
+            }            
+        });
     }
 }
 
