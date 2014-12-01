@@ -57,6 +57,7 @@ class NewsroomTestCase(LiveServerTestCase):
         self.filter_dropdown_button = self.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]')
         click_filter_posts(self)
 
+    @attr('test')
     def test_filter_display_button(self):
         filter_posts_display_button = self.driver.find_element_by_xpath(
             '//button[contains(text(), "Filter posts")]'
@@ -177,30 +178,35 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('date')
     def test_filter_date_search(self):
-        # scroll(self.driver)
+        scroll_to_element(self.driver, WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((
+                By.XPATH, 
+                '//span[@class="header-slug_inner"][contains(text(), "Stay informed")]'
+            ))
+        ))
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
-                '//div[@id="filter_range_date_gte-replacement"]/div[1]'
+                '//div[@class="input-group_item custom-select is-enabled"]'
             ))
         )
         
         # click 'from month'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_month"]/option[@value="01"]'
+            '//select[@id="filter_from-month"]/option[@value="01"]'
         ).click() 
         # click 'from year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_year"]/option[@value="2011"]'
+            '//select[@id="filter_from-year"]/option[@value="2011"]'
         ).click()
         
         # click 'to month'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_month"]/option[@value="02"]'
+            '//select[@id="filter_to-month"]/option[@value="02"]'
         ).click()
         # click 'to year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_year"]/option[@value="2011"]'
+            '//select[@id="filter_to-year"]/option[@value="2011"]'
         ).click()
 
         # Search
