@@ -1,0 +1,10 @@
+{% extends "_offices-index.html" %}
+
+{% set test_prop = 'Students Office' -%}
+
+{% block office_nav %}
+    {% set path = '/offices/students/' %}
+    {% set office_name = 'Students Office' %}
+    {% set office_slug = 'students' %}
+    {% include "_offices-nav.html" %}
+{% endblock %}

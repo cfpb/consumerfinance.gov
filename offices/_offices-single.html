@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% set active_page = initiative.slug -%}
+
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <aside class="content_sidebar content__flush-all-on-small">
+                {% block office_nav %}{% endblock %}
+            </aside>
+
+            <div class="content_main content__flush-bottom content__flush-top-on-small">
+                <section>
+                    <h1>{{ initiative.title|safe }}</h1>
+                    <h2>Parent: {{ initiative.related_office }}</h2>
+                    <div class="short-desc">{{ initiative.content|safe }}</div>
+                </section>
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+{% endblock content %}
