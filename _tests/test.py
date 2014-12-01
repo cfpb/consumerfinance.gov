@@ -1,22 +1,20 @@
 import nose
 import os
+import datetime
 from nose.plugins.attrib import attr
-from flask import Flask
-
 from selenium import webdriver
-from elasticsearch import Elasticsearch
-from elasticsearch.client import IndicesClient
-
-
 from flask.ext.testing import LiveServerTestCase
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from .test_helpers import *
 
 from sheer.wsgi import app_with_config
+
+SAUCE_TESTING = os.environ.get('SAUCE_TESTING')
+SAUCE_USERNAME = os.environ.get('SAUCE_USERNAME')
+SAUCE_ACCESS_KEY = os.environ.get('SAUCE_ACCESS_KEY')
 
 class NewsroomTestCase(LiveServerTestCase):
 
@@ -31,7 +29,29 @@ class NewsroomTestCase(LiveServerTestCase):
         return application
 
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        if SAUCE_TESTING:
+            desired_capabilities = {
+                'name': os.getenv('SELENIUM_NAME',
+                                  'cfgov-refresh browser tests ') + str(datetime.datetime.now()),
+                'platform': os.getenv('SELENIUM_PLATFORM', 'WINDOWS 7'),
+                'browserName': os.getenv('SELENIUM_BROWSER', 'chrome'),
+                'version': int(os.getenv('SELENIUM_VERSION', 33)),
+                'max-duration': 7200,
+                'record-video': os.getenv('SELENIUM_VIDEO', True),
+                'video-upload-on-pass': os.getenv('SELENIUM_VIDEO_UPLOAD_ON_PASS',
+                                                              True),
+                'record-screenshots': os.getenv('SELENIUM_SCREENSHOTS', False),
+                'command-timeout': int(os.getenv('SELENIUM_CMD_TIMEOUT', 30)),
+                'idle-timeout': int(os.getenv('SELENIUM_IDLE_TIMEOUT', 10)),
+                'tunnel-identifier': os.getenv('SELENIUM_TUNNEL'),
+                }
+            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(SAUCE_USERNAME,
+                                                                                 SAUCE_ACCESS_KEY)
+            self.driver = webdriver.Remote(
+                desired_capabilities=desired_capabilities,
+                command_executor=sauce_url)
+        else:
+            self.driver = webdriver.Chrome()
         self.driver.set_window_size(1400, 850)
         self.driver.get('http://localhost:31337/newsroom/')
         self.filter_dropdown_button = self.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]')
