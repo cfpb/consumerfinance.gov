@@ -1,22 +1,20 @@
 import nose
 import os
+import datetime
 from nose.plugins.attrib import attr
-from flask import Flask
-
 from selenium import webdriver
-from elasticsearch import Elasticsearch
-from elasticsearch.client import IndicesClient
-
-
 from flask.ext.testing import LiveServerTestCase
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from .test_helpers import *
 
 from sheer.wsgi import app_with_config
+
+SAUCE_TESTING = os.environ.get('SAUCE_TESTING')
+SAUCE_USERNAME = os.environ.get('SAUCE_USERNAME')
+SAUCE_ACCESS_KEY = os.environ.get('SAUCE_ACCESS_KEY')
 
 class NewsroomTestCase(LiveServerTestCase):
 
@@ -31,12 +29,35 @@ class NewsroomTestCase(LiveServerTestCase):
         return application
 
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        if SAUCE_TESTING:
+            desired_capabilities = {
+                'name': os.getenv('SELENIUM_NAME',
+                                  'cfgov-refresh browser tests ') + str(datetime.datetime.now()),
+                'platform': os.getenv('SELENIUM_PLATFORM', 'WINDOWS 7'),
+                'browserName': os.getenv('SELENIUM_BROWSER', 'chrome'),
+                'version': int(os.getenv('SELENIUM_VERSION', 33)),
+                'max-duration': 7200,
+                'record-video': os.getenv('SELENIUM_VIDEO', True),
+                'video-upload-on-pass': os.getenv('SELENIUM_VIDEO_UPLOAD_ON_PASS',
+                                                              True),
+                'record-screenshots': os.getenv('SELENIUM_SCREENSHOTS', False),
+                'command-timeout': int(os.getenv('SELENIUM_CMD_TIMEOUT', 30)),
+                'idle-timeout': int(os.getenv('SELENIUM_IDLE_TIMEOUT', 10)),
+                'tunnel-identifier': os.getenv('SELENIUM_TUNNEL'),
+                }
+            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(SAUCE_USERNAME,
+                                                                                 SAUCE_ACCESS_KEY)
+            self.driver = webdriver.Remote(
+                desired_capabilities=desired_capabilities,
+                command_executor=sauce_url)
+        else:
+            self.driver = webdriver.Chrome()
         self.driver.set_window_size(1400, 850)
         self.driver.get('http://localhost:31337/newsroom/')
         self.filter_dropdown_button = self.driver.find_element_by_xpath('//button[contains(text(), "Filter posts")]')
         click_filter_posts(self)
 
+    @attr('test')
     def test_filter_display_button(self):
         filter_posts_display_button = self.driver.find_element_by_xpath(
             '//button[contains(text(), "Filter posts")]'
@@ -48,7 +69,7 @@ class NewsroomTestCase(LiveServerTestCase):
     def test_filter_checkboxes(self):
         category_list = ["Op-Ed", "Press Release"]
         for cat in category_list:
-            checkbox = WebDriverWait(self.driver, 20).until(
+            checkbox = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)
                 ))
@@ -66,25 +87,25 @@ class NewsroomTestCase(LiveServerTestCase):
         category_list = ["Op-Ed", "Press Release"]
         for cat in category_list:
             click_filter_posts(self)
-            checkbox = WebDriverWait(self.driver, 20).until(
+            checkbox = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)))
             )
             checkbox.click()
-            filter_results_button = WebDriverWait(self.driver, 20).until(
+            filter_results_button = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//input[@value="Apply filters"]'))
             )
             filter_results_button.click()
             cat = coerce_category_for_dom(cat)
-            cat_type_elem = WebDriverWait(self.driver, 20).until(
+            cat_type_elem = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//a[@href="?filter_category={0}"]'.format(cat)))
             )
             assert cat_type_elem
             click_filter_posts(self)
             cat = coerce_category_for_dom(cat)
-            checkbox = WebDriverWait(self.driver, 20).until(
+            checkbox = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((
                     By.XPATH, '//label/span[contains(text(), "{0}")]/..'.format(cat)))
             )
@@ -93,7 +114,7 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('topics')
     def test_filter_topic_search(self):
-        topic_input = WebDriverWait(self.driver, 20).until(
+        topic_input = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Search for topics"]'
             ))
@@ -104,7 +125,7 @@ class NewsroomTestCase(LiveServerTestCase):
             '//div[@id="filter_tags_chosen"]/div/ul[@class="chosen-results"]'
         )
         assert topic_choice_results.is_displayed()
-        choice = WebDriverWait(self.driver, 20).until(
+        choice = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
                 '//div[@id="filter_tags_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"For")]/..'
@@ -119,7 +140,7 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('authors')
     def test_filter_author_search(self):
-        author_input = WebDriverWait(self.driver, 20).until(
+        author_input = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Search for authors"]'
             ))
@@ -130,7 +151,7 @@ class NewsroomTestCase(LiveServerTestCase):
             '//div[@id="filter_author_chosen"]/div/ul[@class="chosen-results"]'
         )
         assert author_choice_results.is_displayed()
-        choice = WebDriverWait(self.driver, 20).until(
+        choice = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
                 '//div[@id="filter_author_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"Bat")]/..'
@@ -141,13 +162,13 @@ class NewsroomTestCase(LiveServerTestCase):
             '//div[@id="filter_author_chosen"]/ul/li/span[contains(text(), "Batman")]'
         )
         assert author_elem
-        filter_results_button = WebDriverWait(self.driver, 20).until(
+        filter_results_button = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Apply filters"]'
             ))
         )
         filter_results_button.click()
-        author = WebDriverWait(self.driver, 20).until(
+        author = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//p[@class="summary_byline"][contains(text(), "Bat")]'
             ))
@@ -157,40 +178,45 @@ class NewsroomTestCase(LiveServerTestCase):
     @attr('search')
     @attr('date')
     def test_filter_date_search(self):
-        # scroll(self.driver)
-        WebDriverWait(self.driver, 20).until(
+        scroll_to_element(self.driver, WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, 
-                '//div[@id="filter_range_date_gte-replacement"]/div[1]'
+                '//span[@class="header-slug_inner"][contains(text(), "Stay informed")]'
+            ))
+        ))
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((
+                By.XPATH, 
+                '//div[@class="input-group_item custom-select is-enabled"]'
             ))
         )
         
         # click 'from month'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_month"]/option[@value="01"]'
+            '//select[@id="filter_from-month"]/option[@value="01"]'
         ).click() 
         # click 'from year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_from_year"]/option[@value="2011"]'
+            '//select[@id="filter_from-year"]/option[@value="2011"]'
         ).click()
         
         # click 'to month'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_month"]/option[@value="02"]'
+            '//select[@id="filter_to-month"]/option[@value="02"]'
         ).click()
         # click 'to year'
         self.driver.find_element_by_xpath(
-            '//select[@id="filter_to_year"]/option[@value="2011"]'
+            '//select[@id="filter_to-year"]/option[@value="2011"]'
         ).click()
 
         # Search
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH, '//input[@value="Apply filters"]'
             ))
         ).click()
 
-        filtered_article_date = WebDriverWait(self.driver, 20).until(
+        filtered_article_date = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((
                 By.XPATH,
                 '//div[@id="pagination_content"]/article[1]/div[1]/span[1]'
