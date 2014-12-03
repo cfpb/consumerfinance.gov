@@ -6,11 +6,11 @@
 {%- endblock %}
 
 {% block title -%}
-    {{office.title}}
+    {{office.title | safe}}
 {%- endblock %}
 
 {% block desc -%}
-    {{office.desc}}
+    {{office.desc | safe}}
 {%- endblock %}
 
 
@@ -41,7 +41,7 @@
             <div class="content_main 
                         content__flush-bottom 
                         content__flush-top-on-small">
-                <h1>{{office.title}}</h1>
+                <h1>{{office.title | safe}}</h1>
                 <div class="{% if office.contact %} 
                                 content-l
                                 content-l__large-gutters
@@ -51,7 +51,7 @@
                                         content-l_col 
                                         content-l_col-1-2
                                     {% endif %}">
-                        <p class="h3">{{office.intro_text}}</p>
+                        <p class="h3">{{office.intro_text | safe}}</p>
                     </section>
                     
                     {% if office.contact %}
@@ -76,12 +76,12 @@
                                 block__padded-top 
                                 block__sub
                                 block__border-top">
-                    <h1 class="h3">{{office.top_story_head}}</h1>
+                    <h1 class="h3">{{office.top_story_head | safe}}</h1>
                     <div class="content-l
                                 content-l__large-gutters">
                         <div class="content-l_col
                                     content-l_col-1-2">
-                            <p class="short-desc">{{office.top_story_desc if office.top_story_desc}}</p>
+                            <p class="short-desc">{{office.top_story_desc | safe if office.top_story_desc}}</p>
                         </div>
                         <div class="content-l_col 
                                     content-l_col-1-2
@@ -132,7 +132,7 @@
                                                      u-show-on-mobile">
                                           <span class="expandable_header-left 
                                                        expandable_label">
-                                              {{resource.head}}
+                                              {{resource.head | safe}}
                                           </span>
                                           <span class="expandable_header-right 
                                                        expandable_link">
@@ -151,10 +151,10 @@
                                       <div class="expandable_content">
                                           <h2 class="h4
                                                      u-hide-on-mobile">
-                                              {{resource.head}}
+                                              {{resource.head | safe}}
                                           </h2>
                                           <p class="short-desc">
-                                              {{resource.desc}}
+                                              {{resource.desc | safe}}
                                           </p>
                                           <a class="jump-link jump-link__right"
                                              href="{{resource.link[0] if resource.link}}">

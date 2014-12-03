@@ -1,4 +1,17 @@
 
+{# ==========================================================================
+
+   category_icon()
+
+   Create an HTML icon when given:
+
+   category:           A document type category.
+
+   additional_classes: Extra classes you wish to add to the icon, space
+                       separated.
+
+   ========================================================================== #}
+
 {% macro category_icon(category, additional_classes) %}
     {%- if category|lower == 'announcements & updates' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
@@ -22,6 +35,16 @@
 {% endmacro %}
 
 
+{# ==========================================================================
+
+   post_summary()
+
+   Create an post summary when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
 {% macro post_summary(post) %}
     <h1 class="summary_header">{{ post.title|safe }}</h1>
     <p class="summary_text summary_text__max">
@@ -43,6 +66,126 @@
 
 
 {# ==========================================================================
+
+   activity_snippets()
+
+   List a bunch of activity snippets when given a tag.
+
+   ========================================================================== #}
+
+{% macro activity_snippets(tag) %}
+    {% from 'macros.html' import string_length as string_length %}
+    {% from 'post-macros.html' import activity_snippet as snippet with context %}
+    {% set
+       blog =
+       snippet('posts', 'tags:' + '"'+tag+'"', 2) %}
+    {% set
+       pressrelease =
+       snippet('press release', 'category:"Press Release" AND tags:' + '"'+tag+'"', 2) %}
+    {% set
+       speech =
+       snippet('speech', 'category:Speech AND tags:' + '"'+tag+'"', 2) %}
+    {% set
+       testimony =
+       snippet('testimony', 'category:Testimony AND tags:' + '"'+tag+'"', 2) %}
+    {% set
+       oped =
+       snippet('op-ed', 'category:Op-Ed AND tags:' + '"'+tag+'"', 2) %}
+   <div class="content-l content-l__large-gutters">
+    {% if string_length(blog)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ blog }}
+        </div>
+    {% endif %}
+    {% if string_length(pressrelease)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ pressrelease }}
+        </div>
+    {% endif %}
+    {% if string_length(speech)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ speech }}
+        </div>
+    {% endif %}
+    {% if string_length(testimony)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ testimony }}
+        </div>
+    {% endif %}
+    {% if string_length(oped)|int > 0 %}
+        <div class="content-l_col content-l_col-1-2">
+            {{ oped }}
+        </div>
+    {% endif %}
+   </div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   activity_snippet()
+
+   List titles of recent document type posts when given:
+
+   doctype:     The document type you wish to display.
+                Note that newsroom is not a supported document tpye in this
+                macro. Use newsroom categories instead.
+
+   querystring: The elastic search query you'd like to make.
+                Example: 'category:"Press Release" AND tags:Students'.
+                Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+
+   quantity:    The number of results you want to display.
+
+   ========================================================================== #}
+
+{% macro activity_snippet(doctype, querystring, quantity) %}
+    {% if doctype|lower == 'posts' %}
+        {% set true_doctype = doctype %}
+        {% set icon = category_icon('blog') %}
+        {% set header = 'Blog' %}
+    {% elif doctype|lower == 'op-ed' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Op-Ed' %}
+    {% elif doctype|lower == 'press release' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Press Release' %}
+    {% elif doctype|lower == 'speech' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Speech' %}
+    {% elif doctype|lower == 'testimony' %}
+        {% set true_doctype = 'newsroom' %}
+        {% set icon = category_icon(doctype) %}
+        {% set header = 'Testimony' %}
+    {% else %}
+        {% set true_doctype = 'posts' %}
+        {% set header = 'Feed' %}
+        {% set icon = category_icon('blog') %}
+    {% endif %}
+    {% set feed = queries[true_doctype].search_with_url_arguments(size=quantity,q=querystring) %}
+    {% if feed.total > 0 %}
+    <aside class="activity">
+        <h1 class="h4">{{ icon }} {{ header }}</h1>
+        <ul class="list list__unstyled list__spaced list__links">
+        {% for item in feed %}
+            <li class="list_item">
+                <a class="list_link jump-link jump-link__right"
+                   href="{{ item.permalink }}">
+                    {{ item.title|safe }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </aside>
+    {% endif %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
    pagination()
 
    Create a pagination component when given:
@@ -53,6 +196,7 @@
    filters:     An array of the filters that you want pagination to support.
                 Possible values: author, calendar, category, range_date_gte,
                 range_date_lte, tags.
+
    ========================================================================== #}
 
 {% macro pagination(query_obj, filters) %}
