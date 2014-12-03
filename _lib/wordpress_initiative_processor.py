@@ -30,9 +30,34 @@ def process_initiative(item):
 
     del item['comments']
     item['_id'] = item['slug']
+    custom_fields = item['custom_fields']
 
-    if item['custom_fields'].get('related_office'):
+    if custom_fields.get('related_office'):
         item['related_office'] = \
-            item['custom_fields']['related_office'][0]
+            custom_fields['related_office'][0]
+            
+    # create list of initiative subinitiative dicts
+    item['subinitiatives'] = []
+    
+    for x in xrange(0,6):
+        subinitiative = {}
+        fields = ['header', 'desc']
+        subinitiative_links = []
+        
+        for field in fields:
+            field_name = 'subinitiative_%s_%s' % (field, str(x))
+            if field_name in custom_fields and custom_fields[field_name][0] != '':
+                subinitiative[field] = custom_fields[field_name][0]
+                
+        for y in xrange(0,5):
+            link_name = 'subinitiative_links_%s_%s' % (str(x), str(y))
+            if link_name in custom_fields:
+                subinitiative_links.append(custom_fields[link_name])
 
+        if subinitiative_links:
+            subinitiative['links'] = subinitiative_links
+
+        if subinitiative:
+            item['subinitiatives'].append(subinitiative)      
+    
     return item
