@@ -96,8 +96,41 @@
                 </section>
                 {% endif %}
                 
-                
                 {% if office.resources %}
+                    <section class="office_resources
+                                    block 
+                                    block__padded-top 
+                                    block__border-top">
+                        <h1 class="h2">
+                            {{resource_title}}
+                        </h1>
+                        <div>
+                                {% for resource in office.resources %}
+                                	<section class="media office_resource block__sub">
+                                        <div class="media_image-container 
+                                                    media_image-container__wide-margin">
+                                            <img class="media_image
+                                                        u-centered-on-mobile" 
+                                                 width="150"
+                                                 src="{{resource.icon}}">
+                                        </div>
+                                        <div class="media_body">
+                                            <h2 class="h3">{{resource.head | safe}}</h2>
+                                            <p class="short-desc">{{resource.desc | safe}}</p>
+                                            <a class="jump-link 
+                                                        jump-link__right"
+                                                 href="{{resource.link[0] if resource.link}}">
+                                                  {{resource.link[1] if resource.link}}
+                                            </a>
+                                        </div>
+                                    </section>
+                                {% endfor %}
+                            </div>
+                    </section>
+                {% endif %}
+                
+                
+                {% if initiatives %}
                     <section class="office_initiatives
                                     block__sub
                                     block 
@@ -110,58 +143,60 @@
                                     content-l__large-gutters
                                     expandables-group">
                             
-                            {% for resource in office.resources %}
-                                <!-- TODO: link header styles -->
-                                <div class="office_initiative
-                                            expandable 
-                                            expandable__expanded 
-                                            expandable__mobile-only
-                                            content-l_col
-                                            {% if office.resources|length > 1 -%}
-                                                content-l_col-1-2
-                                            {% else -%}
-                                                content-l_col-1
-                                            {%- endif %}">
-                                      <button class="expandable_header
-                                                     expandable_target
-                                                     u-show-on-mobile">
-                                          <span class="expandable_header-left 
-                                                       expandable_label">
-                                              {{resource.head | safe}}
-                                          </span>
-                                          <span class="expandable_header-right 
-                                                       expandable_link">
-                                              <span class="expandable_cue-open">
-                                                  <span class="cf-icon 
-                                                               cf-icon-plus-round">
-                                                  </span>
-                                              </span>
-                                              <span class="expandable_cue-close">
-                                                  <span class="cf-icon 
-                                                               cf-icon-minus-round">
-                                                  </span>
+                            {% for initiative in initiatives %}
+                            <div class="office_initiative
+                                        expandable 
+                                        expandable__expanded 
+                                        expandable__mobile-only
+                                        content-l_col
+                                        {% if initiatives|list|length > 1 -%}
+                                            content-l_col-1-2
+                                        {% else -%}
+                                            content-l_col-1
+                                        {%- endif %}">
+                                <button class="expandable_header
+                                                 expandable_target
+                                                 u-show-on-mobile">
+                                      <span class="expandable_header-left 
+                                                   expandable_label">
+                                          {{initiative.title | safe}}
+                                      </span>
+                                      <span class="expandable_header-right 
+                                                   expandable_link">
+                                          <span class="expandable_cue-open">
+                                              <span class="cf-icon 
+                                                           cf-icon-plus-round">
                                               </span>
                                           </span>
-                                      </button>
-                                      <div class="expandable_content">
-                                          <h2 class="h4
-                                                     u-hide-on-mobile">
-                                              {{resource.head | safe}}
-                                          </h2>
-                                          <p class="short-desc">
-                                              {{resource.desc | safe}}
-                                          </p>
-                                          <a class="jump-link 
-                                                    jump-link__right"
-                                             href="{{resource.link[0] if resource.link}}">
-                                              {{resource.link[1] if resource.link}}
-                                          </a>
-                                      </div><!-- END .expandable -->
-                                </div>
+                                          <span class="expandable_cue-close">
+                                              <span class="cf-icon 
+                                                           cf-icon-minus-round">
+                                              </span>
+                                          </span>
+                                      </span>
+                                  </button>
+                                  <div class="expandable_content">
+                                        <h2 class="h4
+                                                   u-hide-on-mobile">
+                                            {{initiative.title | safe}}
+                                        </h2>
+                                        <p class="short-desc">
+                                            {{initiative.content | safe}}
+                                        </p>
+                                        <a class="jump-link 
+                                                  jump-link__right"
+                                            href="{{path}}">
+                                            Read more
+                                        </a>
+                                    </div>
+                            </div><!-- END .expandable -->
                             {% endfor %}
                         </div>
                     </section>
                 {% endif %}
+                
+                
+                
                 
                 <div class="block
                             block__flush-sides
