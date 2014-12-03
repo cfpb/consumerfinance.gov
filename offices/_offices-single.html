@@ -6,11 +6,11 @@
 {%- endblock %}
 
 {% block title -%}
-    {{initiative.title}}
+    {{initiative.title | safe}}
 {%- endblock %}
 
 {% block desc -%}
-    {{initiative.content}}
+    {{initiative.content | safe}}
 {%- endblock %}
 
 
@@ -21,7 +21,7 @@
     {% set path = '/offices/' ~ office.slug ~ '/' %}
     {% set office_name = office.title %}
     {% set office_slug = office.slug %}
-    {% set active_page = students_initiative.slug %}
+    {% set active_page = initiative.slug %}
     
     {# Macros #}
 
@@ -41,7 +41,7 @@
 
             <div class="content_main content__flush-bottom content__flush-top-on-small">
                 
-                <h1>{{initiative.title}}</h1>
+                <h1>{{initiative.title | safe}}</h1>
                 
                 <section class="initiative_description">
                     {{initiative.content | safe if initiative.content}}
@@ -65,10 +65,10 @@
                                                 content-l_col-1
                                             {% endif %}">
                                       <h2 class="h3">
-                                          {{subinitiative.header}}
+                                          {{subinitiative.header | safe}}
                                       </h2>
                                       <p class="short-desc">
-                                          {{subinitiative.desc}}
+                                          {{subinitiative.desc | safe}}
                                       </p>
                                       <ul class="list__links">
                                           {% for link in subinitiative.links %}
