@@ -14,8 +14,6 @@
     {# Variables #}
     
     {% set path = '/offices/' ~ office.slug ~ '/' %}
-    {% set office_name = office.title %}
-    {% set office_slug = office.slug %}
 
     {# Macros #}
 
@@ -37,19 +35,20 @@
                         content__flush-bottom 
                         content__flush-top-on-small">
                 <h1>{{office.title | safe}}</h1>
-                <div class="{% if office.contact %} 
+                
+                <div class="{% if office.intro_subscribe_form -%} 
                                 content-l
                                 content-l__large-gutters
-                            {% endif %}">
+                            {%- endif %}">
                     <section class="office_intro 
-                                    {% if office.contact %}
+                                    {% if office.intro_subscribe_form -%}
                                         content-l_col 
                                         content-l_col-1-2
-                                    {% endif %}">
-                        <p class="h3">{{office.intro_text | safe}}</p>
+                                    {%- endif %}">
+                        <p class="h3">{{office.intro_text | safe if office.intro_text}}</p>
                     </section>
                     
-                    {% if office.contact %}
+                    {% if office.intro_subscribe_form %}
                     <section class="office_contact 
                                     content-l_col 
                                     content-l_col-1-2
@@ -64,7 +63,6 @@
                     
                 </div>
                 
-                
                 {% if office.top_story_head %}
                 <section class="office_featured
                                 block 
@@ -76,7 +74,7 @@
                                 content-l__large-gutters">
                         <div class="content-l_col
                                     content-l_col-1-2">
-                            <p class="short-desc">{{office.top_story_desc | safe if office.top_story_desc}}</p>
+                            <p class="short-desc">{{office.top_story_desc | safe}}</p>
                         </div>
                         <div class="content-l_col 
                                     content-l_col-1-2
@@ -119,11 +117,11 @@
                                             expandable__expanded 
                                             expandable__mobile-only
                                             content-l_col
-                                            {% if office.resources|length > 1 %}
+                                            {% if office.resources|length > 1 -%}
                                                 content-l_col-1-2
-                                            {% else %}
+                                            {% else -%}
                                                 content-l_col-1
-                                            {% endif %}">
+                                            {%- endif %}">
                                       <button class="expandable_header
                                                      expandable_target
                                                      u-show-on-mobile">
