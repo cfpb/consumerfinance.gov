@@ -89,7 +89,9 @@
                             <ul class="list__links">
                                 {% for link in office.top_story_links %}
                                 	<li class="list_item">
-                                        <a class="jump-link jump-link__right list_link"
+                                        <a class="jump-link 
+                                                  jump-link__right 
+                                                  list_link"
                                            href="{{link[0]}}">
                                             {{link[1]}}
                                         </a>
@@ -156,7 +158,8 @@
                                           <p class="short-desc">
                                               {{resource.desc | safe}}
                                           </p>
-                                          <a class="jump-link jump-link__right"
+                                          <a class="jump-link 
+                                                    jump-link__right"
                                              href="{{resource.link[0] if resource.link}}">
                                               {{resource.link[1] if resource.link}}
                                           </a>
@@ -183,7 +186,8 @@
                         <div class="content-l">    
                             <!-- link to activities page? -->
                             <div class="content-l_col-1">
-                                <a class="jump-link jump-link__right">
+                                <a class="jump-link 
+                                          jump-link__right">
                                     View all of our activity
                                 </a>
                             </div>
