@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Activities archive
+{%- endblock %}
+
+{% block desc -%}
+    Activities archive
+{%- endblock %}
+
+{% block content %}
+
+    <main class="content" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+            <div class="content_main">
+                <section>
+
+                    {% macro activity_snippets(tag) %}
+                        {% from 'macros.html' import string_length as string_length %}
+                        {% from 'post-macros.html' import activity_snippet as snippet with context %}
+                        {% set
+                           blog =
+                           snippet('posts', 'tags:' + '"'+tag+'"', 2) %}
+                        {% set
+                           pressrelease =
+                           snippet('press release', 'category:"Press Release" AND tags:' + '"'+tag+'"', 2) %}
+                        {% set
+                           speech =
+                           snippet('speech', 'category:Speech AND tags:' + '"'+tag+'"', 2) %}
+                        {% set
+                           testimony =
+                           snippet('testimony', 'category:Testimony AND tags:' + '"'+tag+'"', 2) %}
+                        {% set
+                           oped =
+                           snippet('op-ed', 'category:Op-Ed AND tags:' + '"'+tag+'"', 2) %}
+                    {% endmacro %}
+
+                    <h1>Activities Archive</h1>
+                    <p class="h3">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nisi amet fugiat nihil quidem vero ea distinctio voluptatem delectus similique sint reiciendis explicabo vitae doloremque saepe ut est provident magnam.
+                    </p>
+                    {# Real world example: #}
+                    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+
+                    {# An example for demonstration purposes only: #}
+                    {% set activities = selected_filters_for_field('activity') %}
+                    {% for activity in activities %}
+                    <div class="block u-mt0">
+                        <h1>Testing activities for '{{ activity }}'</h1>
+                        {{ activity_snippets(activity) }}
+                    </div>
+                    {% endfor %}
+
+                </section>
+            </div><!-- END .content_main -->
+        </div><!-- END .content_wrapper -->
+
+    </main><!-- END .content -->
+
+{% endblock content %}
