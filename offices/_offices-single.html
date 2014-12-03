@@ -14,8 +14,6 @@
     {# Variables #}
 
     {% set path = '/offices/' ~ office.slug ~ '/' %}
-    {% set office_name = office.title %}
-    {% set office_slug = office.slug %}
     {% set active_page = initiative.slug %}
     
     {# Macros #}
@@ -39,7 +37,7 @@
                 <h1>{{initiative.title | safe}}</h1>
                 
                 <section class="initiative_description">
-                    {{initiative.content | safe if initiative.content}}
+                    {{initiative.content | safe}}
                 </section>                    
                 
                 {% if initiative.subinitiatives %}
@@ -54,29 +52,29 @@
                                 <div class="initiative_topic
                                             block__sub
                                             block__flush-top
-                                            {% if initiative.subinitiatives|length > 1 %}
+                                            {% if initiative.subinitiatives|length > 1 -%}
                                                 office_col
-                                            {% else %}
+                                            {% else -%}
                                                 content-l_col-1
-                                            {% endif %}">
-                                      <h2 class="h3">
-                                          {{subinitiative.header | safe}}
-                                      </h2>
-                                      <p class="short-desc">
-                                          {{subinitiative.desc | safe}}
-                                      </p>
-                                      <ul class="list__links">
-                                          {% for link in subinitiative.links %}
-                                              <li class="list_item">
-                                                  <a class="jump-link 
-                                                            jump-link__right 
-                                                            list_link"
-                                                     href="{{link[0] if link[0]}}">
-                                                      {{link[1] if link[1]}}
-                                                  </a>
-                                              </li>
-                                          {% endfor %}
-                                      </ul>
+                                            {%- endif %}">
+                                    <h2 class="h3">
+                                        {{subinitiative.header | safe}}
+                                    </h2>
+                                    <p class="short-desc">
+                                        {{subinitiative.desc | safe}}
+                                    </p>
+                                    <ul class="list__links">
+                                        {% for link in subinitiative.links %}
+                                            <li class="list_item">
+                                                <a class="jump-link 
+                                                    jump-link__right 
+                                                    list_link"
+                                                    href="{{link[0] if link[0]}}">
+                                                    {{link[1] if link[1]}}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
                                 </div>
                             {% endfor %}
                         </div>
