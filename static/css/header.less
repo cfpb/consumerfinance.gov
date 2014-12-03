@@ -47,6 +47,10 @@
     - cfgov-header
 */
 
+.header {
+
+}
+
 .header_logo {
     margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
     vertical-align: middle; // removes typical inline vertical whitespace
@@ -134,6 +138,13 @@
     html,
     body {
         height: 100%;
+    }
+
+    // Remove extra padding added by .wrapper__match-content so the nav button
+    // is flush left with the screen.
+    .primary-nav_header-space.wrapper__match-content {
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .primary-nav_top-level-list.list-expanding {
