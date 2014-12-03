@@ -1,0 +1,71 @@
+/* ==========================================================================
+   cfgov-refresh
+   activity
+   ========================================================================== */
+
+/* topdoc
+  name: Activity
+  family: cfgov-activity
+  notes:
+    - "A list of recent document type post titles with a document type header."
+  patterns:
+    - name: Activity
+      markup: |
+        <aside class="activity">
+            <h1 class="h4">
+                <span class="cf-icon cf-icon-speech-bubble"></span>
+                Blog
+            </h1>
+            <ul class="list list__unstyled list__spaced">
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        Consumer advisory: Co-signers can cause surprise defaults
+                        on your private student loans
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link" href="#">
+                        Explainer: Federal student loan interest rates to jump
+                    </a>
+                </li>
+            </ul>
+        </aside>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          aside.activity
+            h1.h4
+              .cf-icon
+            ul.list.list__unstyled.list__spaced
+              li.list_item
+                a.list_link
+  tags:
+    - cfgov-activity
+*/
+
+.activity {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+
+    .list_link {
+        .u-link__colors(@black, @pacific-80);
+    }
+
+    .respond-to-min(600px, {
+        .list_link {
+            &:after {
+                content: '';
+            }
+        }
+        .list_link {
+            .u-link__colors(@black, @pacific-80);
+            .u-link__no-border();
+        }
+    });
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

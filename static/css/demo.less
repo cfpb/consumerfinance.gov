@@ -3,60 +3,6 @@
    demo
    ========================================================================== */
 
-
-.beta-banner {
-    padding: @grid_gutter-width 0;
-    background: @gold-20;
-    .webfont-regular();
-
-    .respond-to-max(599px, {
-        font-size: 0.875em;
-    });
-}
-
-.beta-banner_head {
-    .h4();
-}
-
-.beta-banner_icon {
-    color: @gold;
-}
-
-.beta-banner_desc {
-    margin-bottom: 0;
-}
-
-.beta-banner_close-btn {
-    .btn__secondary();
-    width: 100%;
-    margin-top: @grid_gutter-width / 2;
-
-    .respond-to-max(480px, {
-        .cf-icon-delete {
-            display: none;
-        }
-    });
-
-    .respond-to-min(481px, {
-        .btn__link();
-        width: auto;
-        padding: 15px;
-        margin: 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        .u-link__colors(@black, @darkgray);
-        .u-link__no-border();
-        text-transform: lowercase;
-    });
-
-    .respond-to-min(801px, {
-        // At this width, the wrapper gains position: relative, so the button
-        // position has to be adjusted accordingly.
-        top: -30px;
-    });
-}
-
 .demo-placeholder {
     @font-size: 14px;
     display: inline-block;

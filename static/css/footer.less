@@ -88,6 +88,12 @@
     }
 
     &_general-inqueries {
+        .respond-to-min(600px, {
+            .list__links .list_item {
+                margin-bottom: 0;
+            }
+        });
+
         .respond-to-min(768px, {
             font-size: unit(12px / @base-font-size-px, em);
         });
