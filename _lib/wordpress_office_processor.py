@@ -57,5 +57,5 @@ def process_office(item):
                             
         if resource:
             item['resources'].append(resource)
-    
+
     return item
