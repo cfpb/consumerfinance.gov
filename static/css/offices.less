@@ -1,32 +1,10 @@
 .office {
-        
-    .content-l_col-1-2 {
-        .respond-to-range(600px, 1023px, {
-            .grid_column(12);
-        });
-
-        .respond-to-min(1024px, {
-            .grid_column(6);
-        });
-    }
 
     .content-l_col__before-divider.content-l_col-1-2 {
         .respond-to-max(599px {
             margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
             &:before {
                 display: none;
-            }
-        });
-    }
-    
-    .content-l__large-gutters {
-        .respond-to-min(600px, {
-            margin-left: -@grid_gutter-width;
-            margin-right: -@grid_gutter-width;
-
-            & .content-l_col {
-                border-left-width: @grid_gutter-width;
-                border-right-width: @grid_gutter-width;
             }
         });
     }
