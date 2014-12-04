@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block title -%}
-    {{office.title | safe}}
+    {{office.title | safe if office.title}}
 {%- endblock %}
 
 {% block desc -%}
-    {{office.desc | safe}}
+    {{office.desc | safe if office.desc}}
 {%- endblock %}
 
 
@@ -18,7 +18,9 @@
     {# Macros #}
 
     {% import "post-macros.html" as post_macros with context %}
+    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
     
+    {% set activities_feed = activity_snippets(activity_type) %}
     
     <main class="content content__1-3" id="main" role="main">
 
@@ -34,12 +36,16 @@
             <div class="content_main 
                         content__flush-bottom 
                         content__flush-top-on-small">
-                <h1>{{office.title | safe}}</h1>
-                
-                <div class="{% if office.intro_subscribe_form -%} 
-                                content-l
-                                content-l__large-gutters
-                            {%- endif %}">
+                {% if office.title %}
+                    <h1>{{office.title | safe}}</h1>
+                {% endif %}
+                <section class="block
+                                block__flush-top
+                                {% if office.intro_subscribe_form -%} 
+                                    content-l
+                                    content-l__large-gutters
+                                {%- endif %}">
+                    {% if office.intro_text %}
                     <section class="office_intro 
                                     {% if office.intro_subscribe_form -%}
                                         content-l_col 
@@ -47,7 +53,7 @@
                                     {%- endif %}">
                         <p class="h3">{{office.intro_text | safe if office.intro_text}}</p>
                     </section>
-                    
+                    {% endif %}
                     {% if office.intro_subscribe_form %}
                     <section class="office_contact 
                                     content-l_col 
@@ -61,26 +67,31 @@
                     </section>
                     {% endif %}
                     
-                </div>
+                </section>
                 
-                {% if office.top_story_head %}
+                {% if office.top_story %}
+                {% set top_story = office.top_story %}
                 <section class="office_featured
                                 block 
                                 block__padded-top 
-                                block__sub
                                 block__border-top">
-                    <h1 class="h3">{{office.top_story_head | safe}}</h1>
+                    {% if top_story.top_story_head %}
+                    <h1 class="h3">{{top_story.top_story_head | safe}}</h1>
+                    {% endif %}
                     <div class="content-l
                                 content-l__large-gutters">
+                        {% if top_story.top_story_desc %}
                         <div class="content-l_col
                                     content-l_col-1-2">
-                            <p class="short-desc">{{office.top_story_desc | safe}}</p>
+                            <p class="short-desc">{{top_story.top_story_desc | safe}}</p>
                         </div>
+                        {% endif %}
+                        {% if top_story.top_story_links %}
                         <div class="content-l_col 
                                     content-l_col-1-2
                                     content-l_col__before-divider">
                             <ul class="list__links">
-                                {% for link in office.top_story_links %}
+                                {% for link in top_story.top_story_links %}
                                 	<li class="list_item">
                                         <a class="jump-link 
                                                   jump-link__right 
@@ -92,6 +103,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        {% endif %}
                     </div>
                 </section>
                 {% endif %}
@@ -112,16 +124,24 @@
                                             <img class="media_image
                                                         u-centered-on-mobile" 
                                                  width="150"
-                                                 src="{{resource.icon}}">
+                                                 src="{{resource.icon if resource.icon}}">
                                         </div>
                                         <div class="media_body">
+                                            {% if resource.head %}
                                             <h2 class="h3">{{resource.head | safe}}</h2>
+                                            {% endif %}
+                                            
+                                            {% if resource.desc %}
                                             <p class="short-desc">{{resource.desc | safe}}</p>
+                                            {% endif %}
+                                            
+                                            {% if resource.link %}
                                             <a class="jump-link 
                                                         jump-link__right"
                                                  href="{{resource.link[0] if resource.link}}">
                                                   {{resource.link[1] if resource.link}}
                                             </a>
+                                            {% endif %}
                                         </div>
                                     </section>
                                 {% endfor %}
@@ -144,24 +164,26 @@
                                     expandables-group">
                             
                             {% for initiative in initiatives %}
-                            <div class="office_initiative
-                                        expandable 
-                                        expandable__expanded 
-                                        expandable__mobile-only
-                                        content-l_col
-                                        {% if initiatives|list|length > 1 -%}
-                                            content-l_col-1-2
-                                        {% else -%}
-                                            content-l_col-1
-                                        {%- endif %}">
-                                <button class="expandable_header
-                                                 expandable_target
-                                                 u-show-on-mobile">
-                                      <span class="expandable_header-left 
-                                                   expandable_label">
-                                          {{initiative.title | safe}}
-                                      </span>
-                                      <span class="expandable_header-right 
+                                <div class="office_initiative
+                                            expandable 
+                                            expandable__expanded 
+                                            expandable__mobile-only
+                                            content-l_col
+                                            {% if initiatives|list|length > 1 -%}
+                                                content-l_col-1-2
+                                            {% else -%}
+                                                content-l_col-1
+                                            {%- endif %}">
+                                    <button class="expandable_header
+                                                   expandable_target
+                                                   u-show-on-mobile">
+                                        {% if initiative.title %}
+                                            <span class="expandable_header-left 
+                                                       expandable_label">
+                                              {{initiative.title | safe}}
+                                            </span>
+                                        {% endif %}
+                                        <span class="expandable_header-right 
                                                    expandable_link">
                                           <span class="expandable_cue-open">
                                               <span class="cf-icon 
@@ -173,54 +195,59 @@
                                                            cf-icon-minus-round">
                                               </span>
                                           </span>
-                                      </span>
-                                  </button>
-                                  <div class="expandable_content">
-                                        <h2 class="h4
-                                                   u-hide-on-mobile">
-                                            {{initiative.title | safe}}
-                                        </h2>
-                                        <p class="short-desc">
-                                            {{initiative.content | safe}}
-                                        </p>
+                                        </span>
+                                    </button>
+                                    <div class="expandable_content">
+                                        {% if initiative.title %}
+                                            <h2 class="h4
+                                                       u-hide-on-mobile">
+                                                {{initiative.title | safe}}
+                                            </h2>
+                                        {% endif %}
+                                        {% if initiative.content %}
+                                            <p class="short-desc">
+                                                {{initiative.content | safe}}
+                                            </p>
+                                        {% endif %} 
+                                        {% if initiative.slug %}
                                         <a class="jump-link 
                                                   jump-link__right"
                                             href="{{path ~ initiative.slug}}">
                                             Read more
                                         </a>
+                                        {% endif %} 
                                     </div>
-                            </div><!-- END .expandable -->
+                                </div><!-- END .expandable -->
                             {% endfor %}
                         </div>
                     </section>
                 {% endif %}
-                
-                
-                
-                
+
                 <div class="block
                             block__flush-sides
                             block__bg
-                            u-mb0
-                            u-mt0">    
-                    <section class="office_activities">
-                        <h1 class="header-slug">
-                            <span class="header-slug_inner">
-                                Latest Office Activities
-                            </span>
-                        </h1>
-                        {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
-                        {{ activity_snippets(activity_type) }}
-                        <div class="content-l">    
-                            <!-- link to activities page? -->
-                            <div class="content-l_col-1">
-                                <a class="jump-link 
-                                          jump-link__right">
-                                    View all of our activity
-                                </a>
+                            u-mb0"> 
+               
+                    {% if activities_feed %}
+                        <section class="office_activities">
+                            <h1 class="header-slug">
+                                <span class="header-slug_inner">
+                                    Latest Office Activities
+                                </span>
+                            </h1>
+                            {{ activities_feed }}
+                            <div class="content-l">    
+                                <!-- link to activities page? -->
+                                <div class="content-l_col-1">
+                                    <a class="jump-link 
+                                              jump-link__right">
+                                        View all of our activity
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    {% endif %}
+    
                     <section class="office_content 
                                     block
                                     u-mb0">
@@ -236,11 +263,10 @@
                         <a class="list_link" href="mailto:">
                             email address
                         </a>
-                            
                     </section>
+    
                 </div>
-                
-                
+
             </div><!-- END .content_main -->
 
         </div><!-- END .content_wrapper -->

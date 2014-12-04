@@ -29,18 +29,29 @@ def process_office(item):
     item['_id'] = item['slug']
     custom_fields = item['custom_fields']
     
-    # get top story & intro text from custom fields
-    for attr in ['intro_text', 'intro_subscribe_form', 'top_story_head', 'top_story_desc']:
+    # get intro text & subscribe form data from custom fields
+    for attr in ['intro_text', 'intro_subscribe_form']:
         if attr in custom_fields:
             item[attr] = custom_fields[attr][0]
     
+    # build top story dict
+    top_story = {}
+    for attr in ['top_story_head', 'top_story_desc']:
+        if attr in custom_fields:
+            top_story[attr] = custom_fields[attr][0]
+    
     # convert top story links into a proper list
-    story_links = []
+    top_story_links = []
     for x in xrange(0,5):
       key = 'top_story_links_%s' % x
       if key in custom_fields:
-          story_links.append(custom_fields[key])
-    item['top_story_links'] = story_links
+          top_story_links.append(custom_fields[key])
+          
+    if top_story_links:     
+        top_story['top_story_links'] = top_story_links
+        
+    if top_story:
+        item['top_story'] = top_story
     
     # create list of office resource dicts
     item['resources'] = []
@@ -57,5 +68,5 @@ def process_office(item):
                             
         if resource:
             item['resources'].append(resource)
-
+    print item
     return item
