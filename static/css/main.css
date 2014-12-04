@@ -16885,6 +16885,13 @@ button.focus .summary_header {
     font-weight: normal !important;
   }
 }
+@media only all and (max-width: 37.4375em) {
+  .u-centered-on-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 /* Demo-specific styles
    ========================================================================== */
 /* ==========================================================================
