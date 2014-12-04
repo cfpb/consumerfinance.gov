@@ -23,7 +23,9 @@
                     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
                     <div class="block u-mt0">
                         <h1>Testing activities for 'Students'</h1>
-                        {{ activity_snippets('Students') }}
+                        {{ activity_snippets('Students', [
+                           'posts', 'op-ed', 'press release', 'speech', 'testimony'
+                        ]) }}
                     </div>
 
                     {# An example for demonstration purposes only: #}
@@ -31,7 +33,9 @@
                     {% for activity in activities %}
                     <div class="block u-mt0">
                         <h1>Testing activities for '{{ activity }}'</h1>
-                        {{ activity_snippets(activity) }}
+                        {{ activity_snippets(activity, [
+                           'posts', 'op-ed', 'press release', 'speech', 'testimony'
+                        ]) }}
                     </div>
                     {% endfor %}
 
