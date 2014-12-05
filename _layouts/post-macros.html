@@ -179,28 +179,27 @@
    ========================================================================== #}
 
 {% macro pagination(query_obj, filters) %}
-
-{# Pagination is only displayed if there is more than one page. #}
-{% if query_obj.pages > 1 %}
+{#- Pagination is only displayed if there is more than one page. -#}
+{%- if query_obj.pages > 1 %}
     <nav class="post-pagination pagination"
          role="navigation"
          aria-label="Pagination"
          data-ajax-action="posts-paginated.html">
-    {% if query_obj.current_page > 1 %}
+    {%- if query_obj.current_page > 1 %}
         <a class="btn btn__super pagination_prev"
            href="{{ query_obj.url_for_page(query_obj.current_page - 1) }}#pagination_content">
-    {% else %}
+    {%- else %}
         <a class="btn btn__super btn__disabled pagination_prev">
     {% endif %}
             <span class="btn_icon__left cf-icon cf-icon-left"></span>
             Newer
         </a>
-    {% if query_obj.current_page < query_obj.pages %}
+    {%- if query_obj.current_page < query_obj.pages %}
         <a class="btn btn__super pagination_next"
            href="{{ query_obj.url_for_page(query_obj.current_page + 1) }}#pagination_content">
-    {% else %}
+    {%- else %}
         <a class="btn btn__super btn__disabled pagination_next">
-    {% endif %}
+    {% endif -%}
             Older
             <span class="btn_icon__right cf-icon cf-icon-right"></span>
         </a>
@@ -244,7 +243,7 @@
             </button>
         </form>
     </nav>
-{% endif %}
+{%- endif -%}
 {% endmacro %}
 
 
