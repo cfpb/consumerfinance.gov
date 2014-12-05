@@ -78,7 +78,7 @@
 
    ========================================================================== #}
 
-{% macro activity_snippets(tag, activity_types) %}
+{% macro activity_snippets(tag, activity_types=['posts', 'op-ed', 'press release', 'speech', 'testimony']) %}
     {% from 'macros.html' import string_length as string_length %}
     {% from 'post-macros.html' import activity_snippet as snippet with context %}
     <div class="content-l content-l__large-gutters">

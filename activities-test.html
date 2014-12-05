@@ -22,20 +22,20 @@
                     {# Real world example: #}
                     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
                     <div class="block u-mt0">
-                        <h1>Testing activities for 'Students'</h1>
-                        {{ activity_snippets('Students', [
-                           'posts', 'op-ed', 'press release', 'speech', 'testimony'
-                        ]) }}
+                        <h1>Testing post activities for 'Students'</h1>
+                        {{ activity_snippets('Students', ['posts']) }}
+                    </div>
+                    <div class="block u-mt0">
+                        <h1>Testing all activities for 'Students'</h1>
+                        {{ activity_snippets('Students') }}
                     </div>
 
                     {# An example for demonstration purposes only: #}
                     {% set activities = selected_filters_for_field('activity') %}
                     {% for activity in activities %}
                     <div class="block u-mt0">
-                        <h1>Testing activities for '{{ activity }}'</h1>
-                        {{ activity_snippets(activity, [
-                           'posts', 'op-ed', 'press release', 'speech', 'testimony'
-                        ]) }}
+                        <h1>Testing all activities for '{{ activity }}'</h1>
+                        {{ activity_snippets(activity) }}
                     </div>
                     {% endfor %}
 
