@@ -2,10 +2,8 @@
 
 {% set initiative = mikes_initiative %}
 
-{% block office_nav %}
-    {% set path = '/offices/mikes-office/' %}
-    {% set office_name = 'Mikes Office' %}
-    {% set office_slug = 'mikes-office' %}
-    {% set active_page = mikes_initiative.slug %}
-    {% include "_offices-nav.html" %}
-{% endblock %}
+{% set activity_type = "Students" %}
+
+{% set results = queries.office.search_with_url_arguments(q="_id:mikes-office",size=1) %}
+{% set office = results | first %}
+
