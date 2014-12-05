@@ -414,6 +414,9 @@
     {%- if filter == 'range_date' -%}
         {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_gte')) %}
         {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
+    {%- elif filter == 'activity_category' -%}
+        {% set _ignore = active_filters.extend(selected_filters_for_field('type')) %}
+        {% set _ignore = active_filters.extend(selected_filters_for_field('category')) %}
     {%- else -%}
         {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
     {%- endif -%}
@@ -434,7 +437,7 @@
         {%- endif %}
     {%- for filter in active_filters %}
         <li class="list_item filtered-by_filter">
-            {{ filter }}
+            {{ 'Blog' if filter == 'post' else filter }}
         {%- if not loop.last -%}
             ,
         {%- elif active_date_filters|length > 0 -%}
