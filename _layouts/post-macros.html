@@ -367,12 +367,12 @@
 }) -%}
 {%- endif -%}
 
-<div class="expandable">
+<div class="expandable expandable__filters">
     <div class="expandable_header expandable_header__spaced">
     {% if options.show_current_filters == true %}
-        <div class="expandable_header-right expandable_header-right__float-on-medium">
+        <div class="expandable_header-right u-hide-on-mobile">
     {% else %}
-        <div>
+        <div class="u-hide-on-mobile">
     {% endif %}
             <span class="expandable_target">
                 <button class="btn btn__secondary">
@@ -389,6 +389,23 @@
     {% if options.show_current_filters %}
         {{ active_filters(posts, filters, options) }}
     {% endif %}
+    {% if options.show_current_filters == true %}
+        <div class="expandable_header-right u-show-on-mobile">
+    {% else %}
+        <div class="u-show-on-mobile">
+    {% endif %}
+            <span class="expandable_target">
+                <button class="btn btn__secondary">
+                    {{ options.expand_label }}
+                    <span class="expandable_cue-open">
+                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                    </span>
+                </button>
+            </span>
+        </div>
     </div>
     <div class="expandable_content padded-container">
         <div class="padded-container_body">

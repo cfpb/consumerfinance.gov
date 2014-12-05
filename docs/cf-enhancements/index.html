@@ -422,19 +422,27 @@ tbody tr {
           <footer class="docs-pattern_footer">
             <ul class="docs-codenotes">
               <li>
-                <pre class="docs-code"><code>.expandable_header-right__float-on-medium</code></pre>
+                <pre class="docs-code"><code>...</code></pre>
               </li>
             </ul>
           </footer>
         </div>
       </div>
       <div class="docs-css">
-        <pre class="docs-code"><code data-language="css">.expandable_header-right__float-on-medium {
-  float: none;
+        <pre class="docs-code"><code data-language="css">.expandable__filters {
+  margin-bottom: 0.9375em;
 }
-@media only all and (min-width: 37.5em) {
-  .expandable_header-right__float-on-medium {
-    float: right;
+.expandable__filters.expandable__expanded {
+  margin-bottom: 1.875em;
+}
+@media only all and (max-width: 37.4375em) {
+  .expandable__filters .expandable_header-right {
+    float: none;
+    margin-top: 0.625em;
+  }
+  .expandable__filters .expandable_header-right .btn {
+    display: block;
+    width: 100%;
   }
 }</code></pre>
       </div>
