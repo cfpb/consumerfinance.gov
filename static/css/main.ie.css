@@ -9081,17 +9081,17 @@ tbody tr {
   patterns:
     - name: Header right float on medium modifier
       codenotes:
-        - .expandable_header-right__float-on-medium
+        - ...
   tags:
     - cfgov-cf-enhancements
 */
 
-.expandable_header-right__float-on-medium {
-  float: none;
+.expandable__filters {
+  margin-bottom: 0.9375em;
 }
 
-.expandable_header-right__float-on-medium {
-  float: right;
+.expandable__filters.expandable__expanded {
+  margin-bottom: 1.875em;
 }
 
 /* topdoc
@@ -12826,19 +12826,22 @@ a.focus .summary_header {
   patterns:
     - name: Post filters
       markup: |
-        <div class="expandable expandable__expanded">
+        <div class="expandable expandable__filters expandable__expanded">
             <div class="expandable_header expandable_header__spaced">
-                <div class="expandable_header-right expandable_header-right__float-on-medium">
-                    <a class="expandable_target btn btn__secondary"
-                       href="#post-filters-form">
-                        Filter posts&nbsp;&nbsp;
-                        <span class="expandable_cue-open">
-                            <span class="cf-icon cf-icon-down"></span>
+                <div class="expandable_header-right">
+                    <div class="expandable_header-right u-hide-on-mobile">
+                        <span class="expandable_target">
+                            <button class="btn btn__secondary">
+                                Filter posts
+                                <span class="expandable_cue-open">
+                                    <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                                </span>
+                                <span class="expandable_cue-close">
+                                    <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                                </span>
+                            </button>
                         </span>
-                        <span class="expandable_cue-close">
-                            <span class="cf-icon cf-icon-up"></span>
-                        </span>
-                    </a>
+                    </div>
                 </div>
                 <dl class="filtered-by
                            filtered-by__show-on-medium
@@ -12928,14 +12931,15 @@ a.focus .summary_header {
         - |
           Structural cheat sheet:
           -----------------------
-          .expandable
+          .expandable.expandable__filters
             .expandable_header__spaced
-              .expandable_header-right.expandable_header-right__float-on-medium
-                .expandable_target.btn.btn__secondary
-                  .expandable_cue-open
-                    .cf-icon.cf-icon-down
-                  .expandable_cue-close
-                    .cf-icon.cf-icon-up
+              .expandable_header-right
+                .expandable_target
+                  .btn.btn__secondary
+                    .expandable_cue-open
+                      .cf-icon.cf-icon-down
+                    .expandable_cue-close
+                      .cf-icon.cf-icon-up
               .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
             .expandable_content.padded-container
               .padded-container_body
