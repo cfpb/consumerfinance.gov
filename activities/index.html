@@ -20,7 +20,7 @@
                 <section>
 
                     {% set query = queries.archive %}
-                    {% set archives = query.search_with_url_arguments(size=10) %}
+                    {% set archives = query.search_with_url_arguments(size=30) %}
                     {% import "post-macros.html" as post_macros with context %}
 
                     <h1>Activities Archive</h1>
@@ -32,12 +32,12 @@
 
                     <div class="block u-mt30">
                         
+                        <div id="pagination_content"></div>
+
                         {{ post_macros.filters(
                                 ['activity_category', 'tags', 'range_date'], query, archives, 'calendar_event',
                                 { 'expand_label': 'Filter activities' }
                             ) }}
-
-                        <div id="pagination_content"></div>
 
                         <table class="u-w100pct">
                             <tbody>
