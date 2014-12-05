@@ -15,21 +15,21 @@
 {% macro category_icon(category, additional_classes) %}
     {%- if category|lower == 'announcements & updates' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
-    {% elif category|lower == 'consumer information' -%}
+    {%- elif category|lower == 'consumer information' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
-    {% elif category|lower == 'engagement' -%}
+    {%- elif category|lower == 'engagement' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
-    {% elif category|lower == 'innovation & data' -%}
+    {%- elif category|lower == 'innovation & data' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
-    {% elif category|lower == 'speech' -%}
+    {%- elif category|lower == 'speech' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-microphone"></span>
-    {% elif category|lower == 'press release' -%}
+    {%- elif category|lower == 'press release' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
-    {% elif category|lower == 'op-ed' -%}
+    {%- elif category|lower == 'op-ed' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-contract"></span>
-    {% elif category|lower == 'testimony' -%}
+    {%- elif category|lower == 'testimony' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-double-quote"></span>
-    {% elif category|lower == 'blog' -%}
+    {%- elif category|lower == 'blog' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-speech-bubble"></span>
     {%- endif -%}
 {% endmacro %}

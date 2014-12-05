@@ -35,16 +35,16 @@
 
                     <table class="u-w100pct block">
                         <tbody>
-                        {% for item in archives %}
+                        {%- for item in archives %}
                             <tr>
                                 <td class="u-w20pct">
-                                    {% if item.type == 'newsroom' %}
-                                        {% if item.category.0 %}
-                                            {% set activity_type = item.category.0 %}
-                                        {% endif %}
-                                    {% elif item.type == 'posts' %}
+                                    {%- if item.type == 'newsroom' -%}
+                                        {%- if item.category.0 %}
+                                            {%- set activity_type = item.category.0 %}
+                                        {%- endif -%}
+                                    {%- elif item.type == 'posts' -%}
                                         {% set activity_type = 'blog' %}
-                                    {% endif %}
+                                    {%- endif %}
                                     <span class="category-slug u-mb0">
                                         {{ category_icon(activity_type)|safe }}
                                         <span class="u-visually-hidden">Activity type:</span>
@@ -62,7 +62,7 @@
                                     {{ item.date|date("%b %d, %Y") }}
                                 </td>
                             </tr>
-                        {% endfor %}
+                        {%- endfor %}
                         </tbody>
                     </table>
 
