@@ -21,8 +21,7 @@
 
                     {% set query = queries.archive %}
                     {% set archives = query.search_with_url_arguments(size=10) %}
-                    {% from "post-macros.html" import category_icon as category_icon %}
-                    {% from "post-macros.html" import pagination as pagination %}
+                    {% import "post-macros.html" as post_macros with context %}
 
                     <h1>Activities Archive</h1>
                     <h3>
@@ -31,42 +30,51 @@
                         molestias non optio enim dignissimos amet consequatur.
                     </h3>
 
-                    <div id="pagination_content"></div>
+                    <div class="block">
+                        
+                        {{ post_macros.filters(
+                                ['category', 'tags', 'range_date'], query, archives, 'calendar_event',
+                                { 'expand_label': 'Filter activities' }
+                            ) }}
 
-                    <table class="u-w100pct block">
-                        <tbody>
-                        {%- for item in archives %}
-                            <tr>
-                                <td class="u-w20pct">
-                                    {%- if item.type == 'newsroom' -%}
-                                        {%- if item.category.0 %}
-                                            {%- set activity_type = item.category.0 %}
-                                        {%- endif -%}
-                                    {%- elif item.type == 'posts' -%}
-                                        {% set activity_type = 'blog' %}
-                                    {%- endif %}
-                                    <span class="category-slug u-mb0">
-                                        {{ category_icon(activity_type)|safe }}
-                                        <span class="u-visually-hidden">Activity type:</span>
-                                        {{ activity_type }}
-                                    </span>
-                                </td>
-                                <td class="u-w65pct">
-                                    <a href="{{ item.permalink }}">
-                                        <h4 class="u-mb0">
-                                            {{ item.title }}
-                                        </h4>
-                                    </a>
-                                </td>
-                                <td class="u-w15pct">
-                                    {{ item.date|date("%b %d, %Y") }}
-                                </td>
-                            </tr>
-                        {%- endfor %}
-                        </tbody>
-                    </table>
+                        <div id="pagination_content"></div>
 
-                    {{- pagination(archives, []) }}
+                        <table class="u-w100pct">
+                            <tbody>
+                            {%- for item in archives %}
+                                <tr>
+                                    <td class="u-w20pct">
+                                        {%- if item.type == 'newsroom' -%}
+                                            {%- if item.category.0 %}
+                                                {%- set activity_type = item.category.0 %}
+                                            {%- endif -%}
+                                        {%- elif item.type == 'posts' -%}
+                                            {% set activity_type = 'blog' %}
+                                        {%- endif %}
+                                        <span class="category-slug u-mb0">
+                                            {{ post_macros.category_icon(activity_type)|safe }}
+                                            <span class="u-visually-hidden">Activity type:</span>
+                                            {{ activity_type }}
+                                        </span>
+                                    </td>
+                                    <td class="u-w65pct">
+                                        <a href="{{ item.permalink }}">
+                                            <h4 class="u-mb0">
+                                                {{ item.title }}
+                                            </h4>
+                                        </a>
+                                    </td>
+                                    <td class="u-w15pct">
+                                        {{ item.date|date("%b %d, %Y") }}
+                                    </td>
+                                </tr>
+                            {%- endfor %}
+                            </tbody>
+                        </table>
+
+                        {{- post_macros.pagination(archives, ['category', 'tags', 'range_date']) }}
+
+                    </div>
 
                 </section>
             </div><!-- END .content_main -->
