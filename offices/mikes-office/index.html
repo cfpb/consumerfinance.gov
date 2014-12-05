@@ -1,10 +1,7 @@
-{% extends "_offices-index.html" %}
+{% set activity_type = "Students" %}
 
-{% set test_prop = 'Mikes Office' -%}
+{% set query = queries.office %}
+{% set results = query.search_with_url_arguments(q="_id:mikes-office",size=1) %}
+{% set office = results | first %}
 
-{% block office_nav %}
-    {% set path = '/offices/mikes-office/' %}
-    {% set office_name = 'Mikes Office' %}
-    {% set office_slug = 'mikes-office' %}
-    {% include "_offices-nav.html" %}
-{% endblock %}
+{% include "_offices-index.html" %}

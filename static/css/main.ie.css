@@ -16674,6 +16674,44 @@ a.focus .summary_header {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
+.office_initiatives .expandable.content-l_col {
+  margin-bottom: 1.875em;
+}
+
+.initiative_description p:first-child {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.95454545em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.initiative_description p:first-child em,
+.initiative_description p:first-child i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .initiative_description p:first-child em,
+.lt-ie9 .initiative_description p:first-child i {
+  font-style: normal !important;
+}
+
+.initiative_description p:first-child strong,
+.initiative_description p:first-child b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .initiative_description p:first-child strong,
+.lt-ie9 .initiative_description p:first-child b {
+  font-weight: normal !important;
+}
+
 /* Demo-specific styles
    ========================================================================== */
 

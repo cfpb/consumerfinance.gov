@@ -16925,6 +16925,95 @@ a.focus .summary_header {
     margin-right: 1.875em;
   }
 }
+@media only all and (max-width: 37.4375em) {
+  .office .content-l_col__before-divider.content-l_col-1-2 {
+    margin-top: 1.875em;
+  }
+  .office .content-l_col__before-divider.content-l_col-1-2:before {
+    display: none;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .office_initiatives .expandables-group {
+    border-top: 1px solid #e3e4e5;
+  }
+}
+.office_initiatives .expandable.content-l_col {
+  margin-bottom: 1.875em;
+}
+@media only all and (max-width: 37.4375em) {
+  .office_initiatives .expandable.content-l_col {
+    margin-bottom: 1.875em;
+    background: #f1f2f2;
+    margin-bottom: 0;
+    margin-top: 0;
+    border-bottom: 1px solid #e3e4e5;
+  }
+  .office_initiatives .expandable.content-l_col:hover,
+  .office_initiatives .expandable.content-l_col.expandable__expanded {
+    background: #e3e4e5;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_header {
+    padding: 0.625em 1em;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_content {
+    margin: 0 1em 1.375em;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_content:before {
+    content: '';
+    display: block;
+    height: 1px;
+    margin-bottom: 1em;
+    background: #babbbd;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_content {
+    padding-bottom: 1.875em;
+    margin-bottom: 0;
+  }
+}
+.initiative_description p:first-child {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.95454545em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+.initiative_description p:first-child em,
+.initiative_description p:first-child i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .initiative_description p:first-child em,
+.lt-ie9 .initiative_description p:first-child i {
+  font-style: normal !important;
+}
+.initiative_description p:first-child strong,
+.initiative_description p:first-child b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .initiative_description p:first-child strong,
+.lt-ie9 .initiative_description p:first-child b {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .initiative_description p:first-child {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .initiative_description p:first-child {
+    font-weight: normal !important;
+  }
+}
 /* Demo-specific styles
    ========================================================================== */
 /* ==========================================================================
