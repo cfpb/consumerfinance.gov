@@ -173,8 +173,8 @@
                 This gives us access to necessary pagination info like the
                 current page and the total number of pages.
    filters:     An array of the filters that you want pagination to support.
-                Possible values: author, calendar, category, range_date_gte,
-                range_date_lte, tags.
+                Possible values: activity_category, author, calendar, category,
+                range_date_gte, range_date_lte, tags.
 
    ========================================================================== #}
 
@@ -502,6 +502,37 @@
                     {{ filter_checkbox('type', 'post', 'Blog')|safe }}
                 </label>
             {%- endif %}
+            </div>
+        </div>
+
+    {# Activity category filters #}
+    {% elif filter == 'activity_category' %}
+        <div class="form-l_col form-l_col-1-3">
+            <div class="form-group">
+                <label class="form-label-header">
+                    Category type
+                </label>
+            {% set categories = query.possible_values_for('type')|sort(attribute='term') -%}
+            {% for category in categories -%}
+                {% if category.term != 'cfpb_newsroom' %}
+                    {% if category.term == 'post' %}
+                        <label class="form-group_item">
+                            {{ filter_checkbox('type', category.term, 'Blog')|safe }}
+                        </label>
+                    {% else %}
+                        <label class="form-group_item">
+                            {{ filter_checkbox('type', category.term)|safe }}
+                        </label>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% set newsroom_categories =
+               query.possible_values_for('category', doc_type='newsroom')|sort(attribute='term') %}
+            {% for category in newsroom_categories -%}
+                <label class="form-group_item">
+                    {{ filter_checkbox('category', category.term)|safe }}
+                </label>
+            {% endfor %}
             </div>
         </div>
 

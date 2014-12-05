@@ -24,16 +24,16 @@
                     {% import "post-macros.html" as post_macros with context %}
 
                     <h1>Activities Archive</h1>
-                    <h3>
+                    <p class="h3">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
                         voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
                         molestias non optio enim dignissimos amet consequatur.
-                    </h3>
+                    </p>
 
                     <div class="block">
                         
                         {{ post_macros.filters(
-                                ['category', 'tags', 'range_date'], query, archives, 'calendar_event',
+                                ['activity_category', 'tags', 'range_date'], query, archives, 'calendar_event',
                                 { 'expand_label': 'Filter activities' }
                             ) }}
 
@@ -72,7 +72,7 @@
                             </tbody>
                         </table>
 
-                        {{- post_macros.pagination(archives, ['category', 'tags', 'range_date']) }}
+                        {{- post_macros.pagination(archives, ['activity_category', 'tags', 'range_date']) }}
 
                     </div>
 
