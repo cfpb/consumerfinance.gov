@@ -52,7 +52,7 @@
                                             {% set activity_type = 'blog' %}
                                         {%- endif %}
                                         <span class="category-slug u-mb0">
-                                            {{ post_macros.category_icon(activity_type)|safe }}
+                                            {{ post_macros.category_icon(activity_type, 'category-slug_icon')|safe }}
                                             <span class="u-visually-hidden">Activity type:</span>
                                             {{ activity_type }}
                                         </span>
