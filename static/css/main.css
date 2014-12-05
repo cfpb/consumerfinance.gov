@@ -8334,11 +8334,17 @@ tbody tr {
     width: 100%;
   }
   thead th {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
     width: 100% !important;
   }
   tbody th,
   tbody td {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
     width: 100% !important;
   }
