@@ -9076,25 +9076,6 @@ tbody tr {
 }
 
 /* topdoc
-  name: Expandables
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Header right float on medium modifier
-      codenotes:
-        - ...
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-.expandable__filters {
-  margin-bottom: 0.9375em;
-}
-
-.expandable__filters.expandable__expanded {
-  margin-bottom: 1.875em;
-}
-
-/* topdoc
     name: Expandable header modifier
     family: cfgov-cf-enhancements
     patterns:
@@ -11014,6 +10995,75 @@ a.category-slug.active {
    cfgov-refresh
    misc
    ========================================================================== */
+
+/* topdoc
+  name: Expandable customizations
+  family: cfgov-misc
+  patterns:
+    - name: Expandable filters
+      markup: |
+        <div class="expandable expandable__filters">
+            <div class="expandable_header expandable_header__spaced">
+                <div class="expandable_header-right u-hide-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+                    <li class="list_item filtered-by_header">80 filtered results for</li>
+                    <li class="list_item filtered-by_filter">
+                        Blog,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        Press Release,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        January 2014&ndash;September 2014
+                    </li>
+                </ul>
+                <div class="expandable_header-right u-show-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="expandable_content padded-container">
+                <div class="padded-container_body">
+                    Filters body
+                </div>
+            </div>
+        </div>
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//cfpb.github.io/cf-expandables/docs/static/js/component.min.js"></script>
+  tags:
+    - cfgov-misc
+*/
+
+.expandable__filters {
+  margin-bottom: 0.9375em;
+}
+
+.expandable__filters.expandable__expanded {
+  margin-bottom: 1.875em;
+}
 
 /* topdoc
   name: Links with icons

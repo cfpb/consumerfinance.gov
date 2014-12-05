@@ -282,38 +282,6 @@ tbody {
     }
 }
 
-/* topdoc
-  name: Expandables
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Header right float on medium modifier
-      codenotes:
-        - ...
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-.expandable__filters {
-    margin-bottom: unit(15px / @base-font-size-px, em);
-
-    &.expandable__expanded {
-        margin-bottom: unit(30px / @base-font-size-px, em);
-    }
-
-    .respond-to-max(@mobile-max, {
-        .expandable_header-right {
-            float: none;
-            // Eyeballed to 15px
-            margin-top: unit(10px / @base-font-size-px, em);
-
-            .btn {
-                display: block;
-                width: 100%;
-            }
-        }
-    });
-}
-
 
 /* topdoc
     name: Expandable header modifier
