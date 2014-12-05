@@ -1,0 +1,11 @@
+{% set activity_type = "Students" %}
+
+{% set query = queries.office %}
+{% set results = query.search_with_url_arguments(q="_id:students-2",size=1) %}
+{% set office = results | first %}
+{% set resource_title = "Student resources" %}
+
+{% set initiatives = queries.initiative.search_with_url_arguments(q="related_office:students-2") %}
+
+
+{% include "_offices-index.html" %}

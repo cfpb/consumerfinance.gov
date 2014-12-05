@@ -3,6 +3,10 @@
     "url":        "$WORDPRESS/api/get_posts/?post_type=initiative",
     "processor":  "wordpress_initiative_processor"
   },
+  "office": {
+    "url":        "$WORDPRESS/api/get_posts/?post_type=office",
+    "processor":  "wordpress_office_processor"
+  },
   "calendar_event": {
     "url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
     "processor": "django_calendar_event_processor",
