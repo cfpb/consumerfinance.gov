@@ -19,41 +19,54 @@
             <div class="content_main">
                 <section>
 
-                    {% macro activity_snippets(tag) %}
-                        {% from 'macros.html' import string_length as string_length %}
-                        {% from 'post-macros.html' import activity_snippet as snippet with context %}
-                        {% set
-                           blog =
-                           snippet('posts', 'tags:' + '"'+tag+'"', 2) %}
-                        {% set
-                           pressrelease =
-                           snippet('press release', 'category:"Press Release" AND tags:' + '"'+tag+'"', 2) %}
-                        {% set
-                           speech =
-                           snippet('speech', 'category:Speech AND tags:' + '"'+tag+'"', 2) %}
-                        {% set
-                           testimony =
-                           snippet('testimony', 'category:Testimony AND tags:' + '"'+tag+'"', 2) %}
-                        {% set
-                           oped =
-                           snippet('op-ed', 'category:Op-Ed AND tags:' + '"'+tag+'"', 2) %}
-                    {% endmacro %}
+                    {% set query = queries.archive %}
+                    {% set archives = query.search_with_url_arguments(size=10) %}
+                    {% from "post-macros.html" import category_icon as category_icon %}
+                    {% from "post-macros.html" import pagination as pagination %}
 
                     <h1>Activities Archive</h1>
-                    <p class="h3">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nisi amet fugiat nihil quidem vero ea distinctio voluptatem delectus similique sint reiciendis explicabo vitae doloremque saepe ut est provident magnam.
-                    </p>
-                    {# Real world example: #}
-                    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+                    <h3>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
+                        voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
+                        molestias non optio enim dignissimos amet consequatur.
+                    </h3>
 
-                    {# An example for demonstration purposes only: #}
-                    {% set activities = selected_filters_for_field('activity') %}
-                    {% for activity in activities %}
-                    <div class="block u-mt0">
-                        <h1>Testing activities for '{{ activity }}'</h1>
-                        {{ activity_snippets(activity) }}
-                    </div>
-                    {% endfor %}
+                    <div id="pagination_content"></div>
+
+                    <table class="u-w100pct block">
+                        <tbody>
+                        {% for item in archives %}
+                            <tr>
+                                <td class="u-w20pct">
+                                    {% if item.type == 'newsroom' %}
+                                        {% if item.category.0 %}
+                                            {% set activity_type = item.category.0 %}
+                                        {% endif %}
+                                    {% elif item.type == 'posts' %}
+                                        {% set activity_type = 'blog' %}
+                                    {% endif %}
+                                    <span class="category-slug u-mb0">
+                                        {{ category_icon(activity_type)|safe }}
+                                        <span class="u-visually-hidden">Activity type:</span>
+                                        {{ activity_type }}
+                                    </span>
+                                </td>
+                                <td class="u-w65pct">
+                                    <a href="{{ item.permalink }}">
+                                        <h4 class="u-mb0">
+                                            {{ item.title }}
+                                        </h4>
+                                    </a>
+                                </td>
+                                <td class="u-w15pct">
+                                    {{ item.date|date("%b %d, %Y") }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {{ pagination(archives, []) }}
 
                 </section>
             </div><!-- END .content_main -->
