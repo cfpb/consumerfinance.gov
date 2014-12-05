@@ -5,7 +5,7 @@
     "permalink" : true
   },
   "students_initiative":{
-    "url" : "/offices/students/<id>/",
+    "url" : "/offices/students-2/<id>/",
     "type" : "initiative",
     "permalink" : true
   },

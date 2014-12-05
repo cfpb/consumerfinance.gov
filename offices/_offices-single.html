@@ -1,26 +1,120 @@
 {% extends "base.html" %}
 
+{% block title -%}
+    {{initiative.title | safe if initiative.title}}
+{%- endblock %}
+
+{% block desc -%}
+    {{initiative.content | safe if initiative.content}}
+{%- endblock %}
+
+
 {% block content %}
 
-    {% set active_page = initiative.slug -%}
+    {# Variables #}
 
+    {% set path = '/offices/' ~ office.slug ~ '/' %}
+    {% set active_page = initiative.slug %}
+    
+    {# Macros #}
+
+    {% import "post-macros.html" as post_macros with context %}
+    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+    
+    {% set activities_feed = activity_snippets(activity_type) %}
+    
     <main class="content content__1-3" id="main" role="main">
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
         <div class="content_bar"></div>
 
-        <div class="wrapper content_wrapper">
+        <div class="wrapper content_wrapper office">
 
             <aside class="content_sidebar content__flush-all-on-small">
-                {% block office_nav %}{% endblock %}
+                {% include "_offices-nav.html" %}
             </aside>
 
             <div class="content_main content__flush-bottom content__flush-top-on-small">
-                <section>
-                    <h1>{{ initiative.title|safe }}</h1>
-                    <h2>Parent: {{ initiative.related_office }}</h2>
-                    <div class="short-desc">{{ initiative.content|safe }}</div>
-                </section>
+                
+                {% if initiative.title %}
+                    <h1>{{initiative.title | safe}}</h1>
+                {% endif %}
+                
+                {% if initiative.content %}
+                    <section class="initiative_description
+                                    block
+                                    block__flush-top">
+                        {{initiative.content | safe}}
+                    </section>                   
+                {% endif %}
+                
+                {% if initiative.subinitiatives %}
+                    <section class="block 
+                                    block__padded-top 
+                                    block__border-top
+                                    block__flush-bottom">
+                        <div class="content-l">
+                            
+                            {% for subinitiative in initiative.subinitiatives %}
+                                <!-- TODO: link header styles -->
+                                <div class="initiative_topic
+                                            block__sub
+                                            block__flush-top
+                                            {% if initiative.subinitiatives|length > 1 -%}
+                                                office_col
+                                            {% else -%}
+                                                content-l_col-1
+                                            {%- endif %}">
+                                    {% if subinitiative.header %}        
+                                        <h2 class="h3">
+                                            {{subinitiative.header | safe}}
+                                        </h2>
+                                    {% endif %}
+                                    
+                                    {% if subinitiative.desc %}        
+                                        <p class="short-desc">
+                                            {{subinitiative.desc | safe}}
+                                        </p>
+                                    {% endif %}
+                                    
+                                    {% if subinitiative.links %}        
+                                        <ul class="list__links">
+                                            {% for link in subinitiative.links %}
+                                                <li class="list_item">
+                                                    <a class="jump-link 
+                                                        jump-link__right 
+                                                        list_link"
+                                                        href="{{link[0] if link[0]}}">
+                                                        {{link[1] if link[1]}}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+                
+                {% if activities_feed %}
+                    <div class="block
+                                block__flush-sides
+                                block__bg
+                                u-mb0
+                                u-mt0">    
+                        <section class="office_activities">
+                            <h1 class="header-slug">
+                                <span class="header-slug_inner">
+                                    Activities
+                                </span>
+                            </h1>     
+                            {{activities_feed}}
+                        </section>
+                    </div>  
+                {% endif %}
+                
             </div><!-- END .content_main -->
 
         </div><!-- END .content_wrapper -->

@@ -1,0 +1,8 @@
+{
+  "name": "Office",
+  "query": {
+    "doc_type": "office",
+    "size": 10,
+    "sort": "date:desc"
+  }
+}
