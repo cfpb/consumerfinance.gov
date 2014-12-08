@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Consumer Financial Protection Bureau Strategic Plan FY 2013 - FY 2017
+{%- endblock %}
+
+{% block desc -%}
+    Consumer Financial Protection Bureau Strategic Plan FY 2013 - FY 2017
+{%- endblock %}
+
+{% block css %}
+    <link rel='stylesheet' id='nemo-avenir-font-woff-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/woff.css?ver=all' type='text/css' media='all' />
+    <!--[if gt IE 8]>
+    <link rel='stylesheet' id='nemo-avenir-ie-font-woff-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/woff.css?ver=all' type='text/css' media='all' />
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <link rel='stylesheet' id='nemo-avenir-font-eot-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/eot.css?ver=all' type='text/css' media='all' />
+    <![endif]-->
+    <link rel='stylesheet' id='nemo_style_css-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/styles.css?ver=all' type='text/css' media='all' />
+{% endblock %}
+
+{% set page = get_document('pages', '22193') %}
+
+{% block body %}
+    <!-- #maincontent and .page are the wrappers needed to center the content
+         with a white background. -->
+    <main id="maincontent">
+        <div class="page">
+            <script type='text/javascript' src='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/js/jquery-1.9.1.min.js'></script>
+            {{ page.content }}
+        </div>
+        <!-- #footer is needed for the sticky nav calculations -->
+        <div id="footer"></div>
+    </main>
+{% endblock %}
+
+{% block javascript %}
+    <script type='text/javascript' src='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/js/functions.js'></script>
+{% endblock %}
