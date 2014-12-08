@@ -369,7 +369,7 @@
 
 <div class="expandable expandable__filters">
     <div class="expandable_header expandable_header__spaced">
-    {% if options.show_current_filters == true %}
+    {% if options.show_current_filters %}
         <div class="expandable_header-right u-hide-on-mobile">
     {% else %}
         <div class="u-hide-on-mobile">
@@ -388,8 +388,6 @@
         </div>
     {% if options.show_current_filters %}
         {{ active_filters(posts, filters, options) }}
-    {% endif %}
-    {% if options.show_current_filters == true %}
         <div class="expandable_header-right u-show-on-mobile">
     {% else %}
         <div class="u-show-on-mobile">
