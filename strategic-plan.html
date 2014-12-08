@@ -1,39 +1,42 @@
 {% extends "base.html" %}
 
+{% set page = get_document('pages', '22193') %}
+
 {% block title -%}
-    Consumer Financial Protection Bureau Strategic Plan FY 2013 - FY 2017
+    {{ page.title|safe }}
 {%- endblock %}
 
 {% block desc -%}
-    Consumer Financial Protection Bureau Strategic Plan FY 2013 - FY 2017
+    {{ page.title|safe }}
 {%- endblock %}
 
 {% block css %}
-    <link rel='stylesheet' id='nemo-avenir-font-woff-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/woff.css?ver=all' type='text/css' media='all' />
-    <!--[if gt IE 8]>
-    <link rel='stylesheet' id='nemo-avenir-ie-font-woff-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/woff.css?ver=all' type='text/css' media='all' />
-    <![endif]-->
-    <!--[if lt IE 9]>
-    <link rel='stylesheet' id='nemo-avenir-font-eot-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/eot.css?ver=all' type='text/css' media='all' />
-    <![endif]-->
-    <link rel='stylesheet' id='nemo_style_css-css'  href='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/c/styles.css?ver=all' type='text/css' media='all' />
+    <link rel="stylesheet" href="/static-legacy/css/woff.css">
+    <!--[if lt IE 9]>      <link rel="stylesheet" href="/static-legacy/css/eot.css"> <![endif]-->
+    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="/static-legacy/css/woff.css"> <!--<![endif]-->
+    <link rel="stylesheet" href="/static-legacy/css/styles.css">
 {% endblock %}
 
-{% set page = get_document('pages', '22193') %}
-
 {% block body %}
-    <!-- #maincontent and .page are the wrappers needed to center the content
-         with a white background. -->
+<!--
+    ===================
+    PAGE-SPECIFIC NOTES
+    ===================
+    - #maincontent and .page are the wrappers needed to center the content with
+      a white background.
+    - page.content contains JS that references jQuery, hence the reason for
+      including jQuery here instead of at the bottom of <body>.
+    - #footer is needed for the sticky nav calculations.
+-->
     <main id="maincontent">
         <div class="page">
-            <script type='text/javascript' src='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/js/jquery-1.9.1.min.js'></script>
+            <script src="/static-legacy/js/jquery-1.9.1.min.js"></script>
             {{ page.content }}
         </div>
-        <!-- #footer is needed for the sticky nav calculations -->
         <div id="footer"></div>
     </main>
 {% endblock %}
 
 {% block javascript %}
-    <script type='text/javascript' src='http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/js/functions.js'></script>
+    <script src="/static-legacy/js/functions.js"></script>
 {% endblock %}
