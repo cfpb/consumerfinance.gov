@@ -48,17 +48,17 @@ module.exports = function(grunt) {
       chosen: {
         files: {
           'vendor/chosen/': 'vendor/chosen/chosen.css'
-        }
-      },
-      options: {
-        replacements: [{
-          pattern: /url\('chosen-sprite.png'\)/ig,
-          replacement: 'url("../img/chosen-sprite.png")'
         },
-        {
-          pattern: /url\('chosen-sprite@2x.png'\)/ig,
-          replacement: 'url("../img/chosen-sprite@2x.png")'
-        }]
+        options: {
+          replacements: [{
+            pattern: /url\('chosen-sprite.png'\)/ig,
+            replacement: 'url("../img/chosen-sprite.png")'
+          },
+          {
+            pattern: /url\('chosen-sprite@2x.png'\)/ig,
+            replacement: 'url("../img/chosen-sprite@2x.png")'
+          }]
+        }
       }
     },
 
@@ -258,6 +258,7 @@ module.exports = function(grunt) {
             cwd: '',
             src: [
               // Only include vendor files that we use independently
+              'vendor/cf-core/licensed-fonts.css',
               'vendor/html5shiv/html5shiv-printshiv.min.js',
               'vendor/box-sizing-polyfill/boxsizing.htc',
               'vendor/slick-carousel/slick.min.js',
