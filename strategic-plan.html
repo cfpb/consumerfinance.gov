@@ -10,6 +10,9 @@
     {{ page.title|safe }}
 {%- endblock %}
 
+{# This page is not responsive so let's leave out the viewport attribute. #}
+{% block meta_viewport %}{% endblock meta_viewport %}
+
 {% block css %}
     <link rel="stylesheet" href="/static-legacy/css/woff.css">
     <!--[if lt IE 9]>      <link rel="stylesheet" href="/static-legacy/css/eot.css"> <![endif]-->
