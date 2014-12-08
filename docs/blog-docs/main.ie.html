@@ -543,19 +543,22 @@
         <div class="docs-pattern">
           <h3 class="docs-pattern_header">Post filters</h3>
           <section class="docs-pattern_pattern">
-<div class="expandable expandable__expanded">
+<div class="expandable expandable__filters expandable__expanded">
     <div class="expandable_header expandable_header__spaced">
-        <div class="expandable_header-right expandable_header-right__float-on-medium">
-            <a class="expandable_target btn btn__secondary"
-               href="#post-filters-form">
-                Filter posts&nbsp;&nbsp;
-                <span class="expandable_cue-open">
-                    <span class="cf-icon cf-icon-down"></span>
+        <div class="expandable_header-right">
+            <div class="expandable_header-right u-hide-on-mobile">
+                <span class="expandable_target">
+                    <button class="btn btn__secondary">
+                        Filter posts
+                        <span class="expandable_cue-open">
+                            <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                        </span>
+                    </button>
                 </span>
-                <span class="expandable_cue-close">
-                    <span class="cf-icon cf-icon-up"></span>
-                </span>
-            </a>
+            </div>
         </div>
         <dl class="filtered-by
                    filtered-by__show-on-medium
@@ -644,19 +647,22 @@
 
           </section>
           <footer class="docs-pattern_footer">
-            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;expandable expandable__expanded&quot;&gt;
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;expandable expandable__filters expandable__expanded&quot;&gt;
     &lt;div class=&quot;expandable_header expandable_header__spaced&quot;&gt;
-        &lt;div class=&quot;expandable_header-right expandable_header-right__float-on-medium&quot;&gt;
-            &lt;a class=&quot;expandable_target btn btn__secondary&quot;
-               href=&quot;#post-filters-form&quot;&gt;
-                Filter posts&amp;nbsp;&amp;nbsp;
-                &lt;span class=&quot;expandable_cue-open&quot;&gt;
-                    &lt;span class=&quot;cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+        &lt;div class=&quot;expandable_header-right&quot;&gt;
+            &lt;div class=&quot;expandable_header-right u-hide-on-mobile&quot;&gt;
+                &lt;span class=&quot;expandable_target&quot;&gt;
+                    &lt;button class=&quot;btn btn__secondary&quot;&gt;
+                        Filter posts
+                        &lt;span class=&quot;expandable_cue-open&quot;&gt;
+                            &lt;span class=&quot;btn_icon__right cf-icon cf-icon-down&quot;&gt;&lt;/span&gt;
+                        &lt;/span&gt;
+                        &lt;span class=&quot;expandable_cue-close&quot;&gt;
+                            &lt;span class=&quot;btn_icon__right cf-icon cf-icon-up&quot;&gt;&lt;/span&gt;
+                        &lt;/span&gt;
+                    &lt;/button&gt;
                 &lt;/span&gt;
-                &lt;span class=&quot;expandable_cue-close&quot;&gt;
-                    &lt;span class=&quot;cf-icon cf-icon-up&quot;&gt;&lt;/span&gt;
-                &lt;/span&gt;
-            &lt;/a&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
         &lt;dl class=&quot;filtered-by
                    filtered-by__show-on-medium
@@ -743,21 +749,22 @@
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;expandable expandable__expanded\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;expandable_header expandable_header__spaced\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;expandable_header-right expandable_header-right__float-on-medium\&amp;quot;&gt;\n            &lt;a class=\&amp;quot;expandable_target btn btn__secondary\&amp;quot;\n               href=\&amp;quot;#post-filters-form\&amp;quot;&gt;\n                Filter posts&amp;nbsp;&amp;nbsp;\n                &lt;span class=\&amp;quot;expandable_cue-open\&amp;quot;&gt;\n                    &lt;span class=\&amp;quot;cf-icon cf-icon-down\&amp;quot;&gt;&lt;/span&gt;\n                &lt;/span&gt;\n                &lt;span class=\&amp;quot;expandable_cue-close\&amp;quot;&gt;\n                    &lt;span class=\&amp;quot;cf-icon cf-icon-up\&amp;quot;&gt;&lt;/span&gt;\n                &lt;/span&gt;\n            &lt;/a&gt;\n        &lt;/div&gt;\n        &lt;dl class=\&amp;quot;filtered-by\n                   filtered-by__show-on-medium\n                   filtered-by__align-with-btn\n                   list\n                   list__horizontal\&amp;quot;&gt;\n            &lt;dt class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_header\&amp;quot;&gt;Filtered by&lt;/span&gt;\n            &lt;/dt&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Lorem,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Ipsum,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Dolor,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Sit,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Amet,&lt;/span&gt;\n            &lt;/dd&gt;\n        &lt;/dl&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;expandable_content padded-container\&amp;quot;&gt;\n        &lt;form class=\&amp;quot;padded-container_body\&amp;quot; id=\&amp;quot;post-filters-form\&amp;quot; method=\&amp;quot;get\&amp;quot;&gt;\n            &lt;div class=\&amp;quot;form-l form-l__flush\&amp;quot;&gt;\n                &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Categories\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;consumer\&amp;quot;&gt;\n                            Announcements &amp;amp; updates\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;regulation &amp; compliance\&amp;quot;&gt;\n                            Consumer information\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;innovation\&amp;quot;&gt;\n                            Engagement\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;announcements\&amp;quot;&gt;\n                            Innovation &amp;amp; data\n                        &lt;/label&gt;\n                    &lt;/div&gt;\n                &lt;/div&gt;\n                &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Topics\n                        &lt;/label&gt;\n                        &lt;input type=\&amp;quot;text\&amp;quot; name=\&amp;quot;filter_tags\&amp;quot; value=\&amp;quot;\&amp;quot;&gt;\n                    &lt;/div&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Author\n                        &lt;/label&gt;\n                        &lt;input type=\&amp;quot;text\&amp;quot; name=\&amp;quot;filter_author\&amp;quot; value=\&amp;quot;\&amp;quot;&gt;\n                    &lt;/div&gt;\n                &lt;/div&gt;\n                &lt;!-- &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Date range\n                        &lt;/label&gt;\n                    &lt;/div&gt;\n                &lt;/div&gt; --&gt;\n            &lt;/div&gt;\n            &lt;div class=\&amp;quot;form-actions form-actions__right-on-med\&amp;quot;&gt;\n                &lt;input class=\&amp;quot;btn btn__warning btn__link form-actions_item js-form_clear\&amp;quot;\n                       type=\&amp;quot;button\&amp;quot;\n                       value=\&amp;quot;Clear filters\&amp;quot;&gt;\n                &lt;input class=\&amp;quot;btn form-actions_item\&amp;quot;\n                       type=\&amp;quot;submit\&amp;quot;\n                       value=\&amp;quot;Apply filters\&amp;quot;&gt;\n            &lt;/div&gt;\n        &lt;/form&gt;\n    &lt;/div&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;expandable expandable__filters expandable__expanded\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;expandable_header expandable_header__spaced\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;expandable_header-right\&amp;quot;&gt;\n            &lt;div class=\&amp;quot;expandable_header-right u-hide-on-mobile\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;expandable_target\&amp;quot;&gt;\n                    &lt;button class=\&amp;quot;btn btn__secondary\&amp;quot;&gt;\n                        Filter posts\n                        &lt;span class=\&amp;quot;expandable_cue-open\&amp;quot;&gt;\n                            &lt;span class=\&amp;quot;btn_icon__right cf-icon cf-icon-down\&amp;quot;&gt;&lt;/span&gt;\n                        &lt;/span&gt;\n                        &lt;span class=\&amp;quot;expandable_cue-close\&amp;quot;&gt;\n                            &lt;span class=\&amp;quot;btn_icon__right cf-icon cf-icon-up\&amp;quot;&gt;&lt;/span&gt;\n                        &lt;/span&gt;\n                    &lt;/button&gt;\n                &lt;/span&gt;\n            &lt;/div&gt;\n        &lt;/div&gt;\n        &lt;dl class=\&amp;quot;filtered-by\n                   filtered-by__show-on-medium\n                   filtered-by__align-with-btn\n                   list\n                   list__horizontal\&amp;quot;&gt;\n            &lt;dt class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_header\&amp;quot;&gt;Filtered by&lt;/span&gt;\n            &lt;/dt&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Lorem,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Ipsum,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Dolor,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Sit,&lt;/span&gt;\n            &lt;/dd&gt;\n            &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Amet,&lt;/span&gt;\n            &lt;/dd&gt;\n        &lt;/dl&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;expandable_content padded-container\&amp;quot;&gt;\n        &lt;form class=\&amp;quot;padded-container_body\&amp;quot; id=\&amp;quot;post-filters-form\&amp;quot; method=\&amp;quot;get\&amp;quot;&gt;\n            &lt;div class=\&amp;quot;form-l form-l__flush\&amp;quot;&gt;\n                &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Categories\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;consumer\&amp;quot;&gt;\n                            Announcements &amp;amp; updates\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;regulation &amp; compliance\&amp;quot;&gt;\n                            Consumer information\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;innovation\&amp;quot;&gt;\n                            Engagement\n                        &lt;/label&gt;\n                        &lt;label class=\&amp;quot;form-group_item\&amp;quot;&gt;\n                            &lt;input type=\&amp;quot;checkbox\&amp;quot; name=\&amp;quot;filter_category\&amp;quot; value=\&amp;quot;announcements\&amp;quot;&gt;\n                            Innovation &amp;amp; data\n                        &lt;/label&gt;\n                    &lt;/div&gt;\n                &lt;/div&gt;\n                &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Topics\n                        &lt;/label&gt;\n                        &lt;input type=\&amp;quot;text\&amp;quot; name=\&amp;quot;filter_tags\&amp;quot; value=\&amp;quot;\&amp;quot;&gt;\n                    &lt;/div&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Author\n                        &lt;/label&gt;\n                        &lt;input type=\&amp;quot;text\&amp;quot; name=\&amp;quot;filter_author\&amp;quot; value=\&amp;quot;\&amp;quot;&gt;\n                    &lt;/div&gt;\n                &lt;/div&gt;\n                &lt;!-- &lt;div class=\&amp;quot;form-l_col form-l_col-1-3\&amp;quot;&gt;\n                    &lt;div class=\&amp;quot;form-group\&amp;quot;&gt;\n                        &lt;label class=\&amp;quot;form-label-header\&amp;quot;&gt;\n                            Date range\n                        &lt;/label&gt;\n                    &lt;/div&gt;\n                &lt;/div&gt; --&gt;\n            &lt;/div&gt;\n            &lt;div class=\&amp;quot;form-actions form-actions__right-on-med\&amp;quot;&gt;\n                &lt;input class=\&amp;quot;btn btn__warning btn__link form-actions_item js-form_clear\&amp;quot;\n                       type=\&amp;quot;button\&amp;quot;\n                       value=\&amp;quot;Clear filters\&amp;quot;&gt;\n                &lt;input class=\&amp;quot;btn form-actions_item\&amp;quot;\n                       type=\&amp;quot;submit\&amp;quot;\n                       value=\&amp;quot;Apply filters\&amp;quot;&gt;\n            &lt;/div&gt;\n        &lt;/form&gt;\n    &lt;/div&gt;\n&lt;/div&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
             <ul class="docs-codenotes">
               <li>
                 <pre class="docs-code"><code>Structural cheat sheet:
 -----------------------
-.expandable
+.expandable.expandable__filters
   .expandable_header__spaced
-    .expandable_header-right.expandable_header-right__float-on-medium
-      .expandable_target.btn.btn__secondary
-        .expandable_cue-open
-          .cf-icon.cf-icon-down
-        .expandable_cue-close
-          .cf-icon.cf-icon-up
+    .expandable_header-right
+      .expandable_target
+        .btn.btn__secondary
+          .expandable_cue-open
+            .cf-icon.cf-icon-down
+          .expandable_cue-close
+            .cf-icon.cf-icon-up
     .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
   .expandable_content.padded-container
     .padded-container_body
