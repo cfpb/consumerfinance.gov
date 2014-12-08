@@ -15457,6 +15457,59 @@ button.focus .summary_header {
   font-weight: normal !important;
 }
 
+.budget_page-content ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.budget_page-content ul .list_item {
+  margin-left: 0;
+}
+
+.budget_page-content ul .list_item {
+  margin-left: 0;
+}
+
+.budget_page-content ul .list_item {
+  margin-bottom: 0.625em;
+}
+
+.budget_page-content ul.list__spaced .list_item + .list_item {
+  margin-top: 0;
+}
+
+.budget_page-content ul.list__icons .list_link {
+  position: relative;
+  left: -0.125em;
+}
+
+.budget_page-content ul.list__icons .icon-link:before,
+.budget_page-content ul.list__icons .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+
+.budget_page-content ul .list_link {
+  position: relative;
+  left: -0.125em;
+}
+
+.budget_page-content ul .icon-link:before,
+.budget_page-content ul .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+
+.budget_page-content ul li {
+  margin-left: 0;
+  margin-bottom: 0.625em;
+}
+
+.budget_page-content ul li a {
+  position: relative;
+  left: -0.125em;
+}
+
 .bureau-mission {
   margin-bottom: 2.8125em;
 }
@@ -16262,6 +16315,44 @@ button.focus .summary_header {
   font-weight: normal !important;
 }
 
+.office_initiatives .expandable.content-l_col {
+  margin-bottom: 1.875em;
+}
+
+.initiative_description p:first-child {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.95454545em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.initiative_description p:first-child em,
+.initiative_description p:first-child i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .initiative_description p:first-child em,
+.lt-ie9 .initiative_description p:first-child i {
+  font-style: normal !important;
+}
+
+.initiative_description p:first-child strong,
+.initiative_description p:first-child b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .initiative_description p:first-child strong,
+.lt-ie9 .initiative_description p:first-child b {
+  font-weight: normal !important;
+}
+
 /* ==========================================================================
    cfgov-refresh
    Press resources (Newsroom)
@@ -16549,44 +16640,6 @@ button.focus .summary_header {
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.office_initiatives .expandable.content-l_col {
-  margin-bottom: 1.875em;
-}
-
-.initiative_description p:first-child {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.95454545em;
-  font-size: 1.375em;
-  line-height: 1.27272727;
-}
-
-.initiative_description p:first-child em,
-.initiative_description p:first-child i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .initiative_description p:first-child em,
-.lt-ie9 .initiative_description p:first-child i {
-  font-style: normal !important;
-}
-
-.initiative_description p:first-child strong,
-.initiative_description p:first-child b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .initiative_description p:first-child strong,
-.lt-ie9 .initiative_description p:first-child b {
-  font-weight: normal !important;
 }
 
 /* Demo-specific styles
