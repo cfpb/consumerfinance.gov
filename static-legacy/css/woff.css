@@ -1,0 +1,118 @@
+/* ==========================================================================
+   http://coding.smashingmagazine.com/2013/02/14/setting-weights-and-styles-at-font-face-declaration/
+   EOTs for internet explorer are served seprately in eot.css.
+   ==========================================================================
+   This CSS resource incorporates links to font software which is the valuable
+   copyrighted property of Monotype Imaging and/or its suppliers. You may not
+   attempt to copy, install, redistribute, convert, modify or reverse engineer
+   this font software. Please contact Monotype Imaging with any questions
+   regarding Web Fonts:  http://webfonts.fonts.com
+   ========================================================================== */
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),
+         url("/static-legacy/fonts/6de0ce4d-9278-467b-b96f-c1f5f0a4c375.ttf") format("truetype"),
+         url("/static-legacy/fonts/9fd4ea0c-b19a-4b21-9fdf-37045707dd78.svg#9fd4ea0c-b19a-4b21-9fdf-37045707dd78") format("svg");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/8344e877-560d-44d4-82eb-9822766676f9.woff") format("woff"),
+         url("/static-legacy/fonts/3a561c83-40d4-4868-8255-e8455eb009c4.ttf") format("truetype"),
+         url("/static-legacy/fonts/3966f856-9dcf-48e7-88e7-7400f1b7d619.svg#3966f856-9dcf-48e7-88e7-7400f1b7d619") format("svg");
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"),
+         url("/static-legacy/fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype"),
+         url("/static-legacy/fonts/52a192b1-bea5-4b48-879f-107f009b666f.svg#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff") format("woff"),
+         url("/static-legacy/fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf") format("truetype"),
+         url("/static-legacy/fonts/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg#1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585") format("svg");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),
+         url("/static-legacy/fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf") format("truetype"),
+         url("/static-legacy/fonts/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/8344e877-560d-44d4-82eb-9822766676f9.woff") format("woff"),
+         url("/static-legacy/fonts/b28b01d9-78c5-46c6-a30d-9a62c8f407c5.ttf") format("truetype"),
+         url("/static-legacy/fonts/ed4d3c45-af64-4992-974b-c37cd12a9570.svg#ed4d3c45-af64-4992-974b-c37cd12a9570") format("svg");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff") format("woff"),
+         url("/static-legacy/fonts/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf") format("truetype"),
+         url("/static-legacy/fonts/99affa9a-a5e9-4559-bd07-20cf0071852d.svg#99affa9a-a5e9-4559-bd07-20cf0071852d") format("svg");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/bc350df4-3100-4ce1-84ce-4a5363dbccfa.woff") format("woff"),
+         url("/static-legacy/fonts/bc13ae80-cd05-42b4-b2a9-c123259cb166.ttf") format("truetype"),
+         url("/static-legacy/fonts/4862b373-2643-46b1-b0b5-88537c52d15c.svg#4862b373-2643-46b1-b0b5-88537c52d15c") format("svg");
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"),
+         url("/static-legacy/fonts/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf") format("truetype"),
+         url("/static-legacy/fonts/ed104d8c-7f39-4e8b-90a9-4076be06b857.svg#ed104d8c-7f39-4e8b-90a9-4076be06b857") format("svg");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/25e83bf5-47e3-4da7-98b1-755efffb0089.woff") format("woff"),
+         url("/static-legacy/fonts/4112ec87-6ded-438b-83cf-aaff98f7e987.ttf") format("truetype"),
+         url("/static-legacy/fonts/ab1835cb-df6f-4d8d-b8ee-3075f5ba758d.svg#ab1835cb-df6f-4d8d-b8ee-3075f5ba758d") format("svg");
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"),
+         url("/static-legacy/fonts/045d1654-97f2-4ff0-9d24-21ba9dfee219.ttf") format("truetype"),
+         url("/static-legacy/fonts/3c111f4f-c9f7-45d4-b35f-4f4ed018842f.svg#3c111f4f-c9f7-45d4-b35f-4f4ed018842f") format("svg");
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("/static-legacy/fonts/25e83bf5-47e3-4da7-98b1-755efffb0089.woff") format("woff"),
+         url("/static-legacy/fonts/2b4885a7-fc02-4aa0-b998-5b008a589c80.ttf") format("truetype"),
+         url("/static-legacy/fonts/9b40a6ef-0ef5-49c0-aa8d-5ba7e8e7d9b7.svg#9b40a6ef-0ef5-49c0-aa8d-5ba7e8e7d9b7") format("svg");
+    font-weight: 800;
+    font-style: italic;
+}
