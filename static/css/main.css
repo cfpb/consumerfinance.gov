@@ -11365,6 +11365,327 @@ a.category-slug.active {
   margin: 1.4375em 1.8125em 1.4375em;
 }
 /* topdoc
+  name: Character icons
+  family: cfgov-misc
+  notes:
+    - "A way to create icons that feature a single character on a circular 
+       background. Useful because cf-icons does not have any of this type of
+       icon in its library. Typical use case would be to identify steps in a
+       process."
+  patterns:
+    - name: Default usage
+      markup: |
+        <h2 class="char-icon char-icon__1">This is the first thing</h2>
+    - name: Step slug pattern, embedded in a heading
+      markup: |
+        <h2>
+            <span class="step-slug step-slug__1">Step one</span>
+            Description of the step
+        </h2>
+      notes:
+        - "Useful when you want to include the slug text in the heading for the
+           purposes of visibility in the document outline."
+    - name: Step slug pattern, standalone
+      markup: |
+        <h2 class="step-slug step-slug__1">Step one</h2>
+        <p>Description of the step</p>
+      notes:
+        - "Useful when the 'Step number' text itself serves as a heading."
+        - "Equivalent to the .char-icon default usage pattern, but with specific
+           styling for the text that follows."
+  tags:
+    - cfgov-misc
+*/
+.char-icon:before,
+.step-slug:before {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.25em 0;
+  border-radius: 100%;
+  margin-right: 0.375em;
+  position: relative;
+  top: -0.07692308em;
+  background: #2cb34a;
+  color: #ffffff;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 92.85714286%;
+  line-height: 1;
+  text-align: center;
+}
+.lt-ie9 .char-icon:before,
+.lt-ie9 .step-slug:before {
+  font-weight: normal !important;
+}
+.char-icon__1:before,
+.step-slug__1:before {
+  content: '1';
+}
+.char-icon__2:before,
+.step-slug__2:before {
+  content: '2';
+}
+.char-icon__3:before,
+.step-slug__3:before {
+  content: '3';
+}
+.char-icon__4:before,
+.step-slug__4:before {
+  content: '4';
+}
+.char-icon__5:before,
+.step-slug__5:before {
+  content: '5';
+}
+.char-icon__6:before,
+.step-slug__6:before {
+  content: '6';
+}
+.char-icon__7:before,
+.step-slug__7:before {
+  content: '7';
+}
+.char-icon__8:before,
+.step-slug__8:before {
+  content: '8';
+}
+.char-icon__9:before,
+.step-slug__9:before {
+  content: '9';
+}
+.char-icon__0:before,
+.step-slug__0:before {
+  content: '9';
+}
+.char-icon__A:before,
+.step-slug__A:before {
+  content: 'A';
+}
+.char-icon__B:before,
+.step-slug__B:before {
+  content: 'B';
+}
+.char-icon__C:before,
+.step-slug__C:before {
+  content: 'C';
+}
+.char-icon__D:before,
+.step-slug__D:before {
+  content: 'D';
+}
+.char-icon__E:before,
+.step-slug__E:before {
+  content: 'E';
+}
+.char-icon__F:before,
+.step-slug__F:before {
+  content: 'F';
+}
+.char-icon__G:before,
+.step-slug__G:before {
+  content: 'G';
+}
+.char-icon__H:before,
+.step-slug__H:before {
+  content: 'H';
+}
+.char-icon__I:before,
+.step-slug__I:before {
+  content: 'I';
+}
+.char-icon__J:before,
+.step-slug__J:before {
+  content: 'J';
+}
+.char-icon__K:before,
+.step-slug__K:before {
+  content: 'K';
+}
+.char-icon__L:before,
+.step-slug__L:before {
+  content: 'L';
+}
+.char-icon__M:before,
+.step-slug__M:before {
+  content: 'M';
+}
+.char-icon__N:before,
+.step-slug__N:before {
+  content: 'N';
+}
+.char-icon__O:before,
+.step-slug__O:before {
+  content: 'O';
+}
+.char-icon__P:before,
+.step-slug__P:before {
+  content: 'P';
+}
+.char-icon__Q:before,
+.step-slug__Q:before {
+  content: 'Q';
+}
+.char-icon__R:before,
+.step-slug__R:before {
+  content: 'R';
+}
+.char-icon__S:before,
+.step-slug__S:before {
+  content: 'S';
+}
+.char-icon__T:before,
+.step-slug__T:before {
+  content: 'T';
+}
+.char-icon__U:before,
+.step-slug__U:before {
+  content: 'U';
+}
+.char-icon__V:before,
+.step-slug__V:before {
+  content: 'V';
+}
+.char-icon__W:before,
+.step-slug__W:before {
+  content: 'W';
+}
+.char-icon__X:before,
+.step-slug__X:before {
+  content: 'X';
+}
+.char-icon__Y:before,
+.step-slug__Y:before {
+  content: 'Y';
+}
+.char-icon__Z:before,
+.step-slug__Z:before {
+  content: 'Z';
+}
+.char-icon__a:before,
+.step-slug__a:before {
+  content: 'a';
+}
+.char-icon__b:before,
+.step-slug__b:before {
+  content: 'b';
+}
+.char-icon__c:before,
+.step-slug__c:before {
+  content: 'c';
+}
+.char-icon__d:before,
+.step-slug__d:before {
+  content: 'd';
+}
+.char-icon__e:before,
+.step-slug__e:before {
+  content: 'e';
+}
+.char-icon__f:before,
+.step-slug__f:before {
+  content: 'f';
+}
+.char-icon__g:before,
+.step-slug__g:before {
+  content: 'g';
+}
+.char-icon__h:before,
+.step-slug__h:before {
+  content: 'h';
+}
+.char-icon__i:before,
+.step-slug__i:before {
+  content: 'i';
+}
+.char-icon__j:before,
+.step-slug__j:before {
+  content: 'j';
+}
+.char-icon__k:before,
+.step-slug__k:before {
+  content: 'k';
+}
+.char-icon__l:before,
+.step-slug__l:before {
+  content: 'l';
+}
+.char-icon__m:before,
+.step-slug__m:before {
+  content: 'm';
+}
+.char-icon__n:before,
+.step-slug__n:before {
+  content: 'n';
+}
+.char-icon__o:before,
+.step-slug__o:before {
+  content: 'o';
+}
+.char-icon__p:before,
+.step-slug__p:before {
+  content: 'p';
+}
+.char-icon__q:before,
+.step-slug__q:before {
+  content: 'q';
+}
+.char-icon__r:before,
+.step-slug__r:before {
+  content: 'r';
+}
+.char-icon__s:before,
+.step-slug__s:before {
+  content: 's';
+}
+.char-icon__t:before,
+.step-slug__t:before {
+  content: 't';
+}
+.char-icon__u:before,
+.step-slug__u:before {
+  content: 'u';
+}
+.char-icon__v:before,
+.step-slug__v:before {
+  content: 'v';
+}
+.char-icon__w:before,
+.step-slug__w:before {
+  content: 'w';
+}
+.char-icon__x:before,
+.step-slug__x:before {
+  content: 'x';
+}
+.char-icon__y:before,
+.step-slug__y:before {
+  content: 'y';
+}
+.char-icon__z:before,
+.step-slug__z:before {
+  content: 'z';
+}
+.step-slug {
+  display: block;
+  margin-bottom: 1.07142857em;
+  color: #43484e;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.lt-ie9 .step-slug {
+  font-weight: normal !important;
+}
+/* topdoc
   name: EOF
   eof: true
 */
@@ -11420,11 +11741,7 @@ a.category-slug.active {
 a:hover .summary_header,
 a.hover .summary_header,
 a:focus .summary_header,
-a.focus .summary_header,
-button:hover .summary_header,
-button.hover .summary_header,
-button:focus .summary_header,
-button.focus .summary_header {
+a.focus .summary_header {
   color: #328ed8;
 }
 .summary_header em,
