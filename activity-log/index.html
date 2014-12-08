@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block title -%}
-    Activities archive
+    Activity Log
 {%- endblock %}
 
 {% block desc -%}
-    Activities archive
+    Activity Log
 {%- endblock %}
 
 {% block content %}
@@ -23,7 +23,7 @@
                     {% set archives = query.search_with_url_arguments(size=30) %}
                     {% import "post-macros.html" as post_macros with context %}
 
-                    <h1>Activities Archive</h1>
+                    <h1>Activity Log</h1>
                     <p class="h3">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
                         voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
