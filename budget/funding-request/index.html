@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Budget and Strategy
+{%- endblock %}
+
+{% block desc -%}
+    
+{%- endblock %}
+
+
+{% block content %}
+
+    {# Variables #}
+
+    {% set path = '/budget/' %}
+    {% set active_page = 'funding-request' %}
+
+    {# Macros #}
+
+    {% import "post-macros.html" as post_macros with context %}
+
+
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+
+            <aside class="content_sidebar content__flush-all-on-small">
+                {% include "_budget-nav.html" %}
+            </aside>
+
+            <div class="content_main content__flush-bottom content__flush-top-on-small">
+                <section class="block
+                                block__flush-top
+                                block__sub">
+                    <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
+                </section>
+                <section class="block
+                                block__flush-top">
+                    <div class="budget_page-content">
+                        {% set page = get_document('pages', '63181') %}
+                        {{page.content | safe}}
+                    </div>
+                </section>
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+{% endblock content %}
+
