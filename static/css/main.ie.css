@@ -11188,6 +11188,11 @@ a.category-slug.active {
   content: "\e002";
 }
 
+.icon-link__chart:after,
+.icon-link__chart.icon-link__before:before {
+  content: "\e638";
+}
+
 .icon-link__before:after {
   content: '';
 }
@@ -11342,6 +11347,11 @@ a.category-slug.active {
 .jump-link__right:after,
 .jump-link__right.jump-link__before:before {
   content: "\e002";
+}
+
+.jump-link__chart:after,
+.jump-link__chart.jump-link__before:before {
+  content: "\e638";
 }
 
 .jump-link__before:after {
@@ -12133,11 +12143,7 @@ a.hero_card {
 a:hover .summary_header,
 a.hover .summary_header,
 a:focus .summary_header,
-a.focus .summary_header,
-button:hover .summary_header,
-button.hover .summary_header,
-button:focus .summary_header,
-button.focus .summary_header {
+a.focus .summary_header {
   color: #328ed8;
 }
 
