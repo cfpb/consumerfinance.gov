@@ -1,0 +1,12 @@
+{% extends "nav-secondary.html" %}
+
+{% set navigation_bar = [
+    (path, 'index', 'Budget and Strategy'),
+    (path + 'strategic-plan/', 'strategic-plan', 'Strategic Plan'),
+    (path + 'performance-plan-report/', 'performance-plan-report', 'Performance Plan Report'),
+    (path + 'financial-report/', 'financial-report', 'Financial Report & Update'),
+    (path + 'funding-request/', 'funding-request', 'Funding Request'),
+] -%}
+
+{% set active_page = active_page|default('index') -%}
+
