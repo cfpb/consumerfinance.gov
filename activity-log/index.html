@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Activity Log
+{%- endblock %}
+
+{% block desc -%}
+    Activity Log
+{%- endblock %}
+
+{% block content %}
+
+    <main class="content" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+            <div class="content_main">
+                <section>
+
+                    {% set query = queries.archive %}
+                    {% set archives = query.search_with_url_arguments(size=30) %}
+                    {% import "post-macros.html" as post_macros with context %}
+
+                    <h1>Activity Log</h1>
+                    <p class="h3">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
+                        voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
+                        molestias non optio enim dignissimos amet consequatur.
+                    </p>
+
+                    <div class="block u-mt30">
+                        
+                        <div id="pagination_content"></div>
+
+                        {{ post_macros.filters(
+                                ['activity_category', 'tags', 'range_date'], query, archives, 'calendar_event',
+                                { 'expand_label': 'Filter activities' }
+                            ) }}
+
+                        <table class="u-w100pct">
+                            <tbody>
+                            {%- for item in archives %}
+                                <tr>
+                                    <td class="u-w20pct">
+                                        {%- if item.type == 'newsroom' -%}
+                                            {%- if item.category.0 %}
+                                                {%- set activity_type = item.category.0 %}
+                                            {%- endif -%}
+                                        {%- elif item.type == 'posts' -%}
+                                            {% set activity_type = 'blog' %}
+                                        {%- endif %}
+                                        <span class="category-slug u-mb0">
+                                            {{ post_macros.category_icon(activity_type, 'category-slug_icon')|safe }}
+                                            <span class="u-visually-hidden">Activity type:</span>
+                                            {{ activity_type }}
+                                        </span>
+                                    </td>
+                                    <td class="u-w65pct">
+                                        <a href="{{ item.permalink }}">
+                                            <h4 class="u-mb0">
+                                                {{ item.title }}
+                                            </h4>
+                                        </a>
+                                    </td>
+                                    <td class="u-w15pct">
+                                        {{ item.date|date("%b %d, %Y") }}
+                                    </td>
+                                </tr>
+                            {%- endfor %}
+                            </tbody>
+                        </table>
+
+                        {{- post_macros.pagination(archives, ['activity_category', 'tags', 'range_date']) }}
+
+                    </div>
+
+                </section>
+            </div><!-- END .content_main -->
+        </div><!-- END .content_wrapper -->
+
+    </main><!-- END .content -->
+
+{% endblock content %}
