@@ -11188,6 +11188,11 @@ a.category-slug.active {
   content: "\e002";
 }
 
+.icon-link__pdf:after,
+.icon-link__pdf.icon-link__before:before {
+  content: "\e402";
+}
+
 .icon-link__chart:after,
 .icon-link__chart.icon-link__before:before {
   content: "\e638";
@@ -11347,6 +11352,11 @@ a.category-slug.active {
 .jump-link__right:after,
 .jump-link__right.jump-link__before:before {
   content: "\e002";
+}
+
+.jump-link__pdf:after,
+.jump-link__pdf.jump-link__before:before {
+  content: "\e402";
 }
 
 .jump-link__chart:after,
