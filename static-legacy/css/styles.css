@@ -179,51 +179,51 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 }
 
 .lt-ie9 h1, .lt-ie9 h2, .lt-ie9 h3, .lt-ie9 h4, .lt-ie9 h5, .lt-ie9 h6 {
-	font-family: "Avenir Next Demi", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 }
 
 .lt-ie9 h1 em, .lt-ie9 h1 i, .lt-ie9 h2 em, .lt-ie9 h2 i, .lt-ie9 h3 em, .lt-ie9 h3 i, .lt-ie9 h4 em, .lt-ie9 h4 i, .lt-ie9 h5 em, .lt-ie9 h5 i, .lt-ie9 h6 em, .lt-ie9 h6 i {
-	font-family: "Avenir Next Demi Italic", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 }
 
 h1 {
 	font-size: 2em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	line-height: 1.375;
 }
 
 h2 {
 	font-size: 1.25em;
 	text-transform: uppercase;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	letter-spacing: 0.08em;
 }
 
 h3 {
 	font-size: 1.25em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	line-height: 1.2em;
 }
 
 h4 {
 	font-size: 1.0em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 }
 
 h5 {
 	font-size: 1em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 
 h6 {
 	font-size: 1em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 
 a {
@@ -236,7 +236,7 @@ a {
 blockquote { 
 	background-color: #e5dfd6;
 	padding: 1em 3.0em 0.5em;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	margin-bottom: 1em;
 	border-left: 5px solid #beb099;
 }
@@ -266,7 +266,7 @@ textarea {
 button {
 	color: #fff;
 	background-color: #50a748;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	border-radius: 0.35em;
@@ -300,8 +300,8 @@ legend {
 }
 
 dt {
-	font-family: "Avenir Next", Verdana, sans-serif;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	margin-bottom: 0;
 	padding-bottom: 0;
 }
@@ -316,30 +316,30 @@ dd {
 	}
 
 .lt-ie9 dt {
-	font-family: "Avenir Next Demi", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 }
 
 table {
 	margin: 1em 0;
 	border: 1px solid #afafb3;
 	border-right: none;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 }
 
 table caption {
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	margin: 1em 0 0 0;
 	text-align: left;
 }
 
 .lt-ie9 table caption {
-	font-family: "Avenir Next Demi", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 }
 
 thead th {
 	background-color: #50a748;
 	color: #fff;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	text-align: center;
 	border-right: 1px solid #afafb3;
 	border-bottom: 1px solid #afafb3;
@@ -351,7 +351,7 @@ tbody th {
 	text-align: right;
 	border-right: 1px solid #afafb3;
 	padding: .1875em .3125em;
-	font-weight: 500;
+	font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
 }
 
 td {
@@ -420,8 +420,8 @@ tr.alt {
 }
 
 #header nav ul li {
-	font-family: "Avenir Next", Verdana, sans-serif;
-	font-weight: 500;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
 	text-transform: uppercase;
 	font-size: 1em;
 	display: table-cell;
@@ -437,7 +437,7 @@ tr.alt {
 }
 
 .lt-ie9 #header nav ul li {
-	font-family: "Avenir Next Demi", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 }
 
 #header nav ul li a {
@@ -584,13 +584,13 @@ article header {
 			border-bottom: none;
 			padding: 0;
 			margin-top: 0.5em;
-			font-family: "Avenir Next", Verdana, sans-serif;
+			font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 			word-wrap: normal;
 		}
 		
 		#subnav .close {
 			font-size: 0.625em;
-			font-family: "Avenir Next", Verdana, sans-serif;
+			font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 			display: block;
 			text-align: right;
 			padding-bottom: 1em;
@@ -739,7 +739,7 @@ font-size: 1em;
 #rnlogin {
 color: white;
 background-color: #50A748;
-font-family: "Avenir Next", Verdana, sans-serif;
+font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 text-transform: uppercase;
 letter-spacing: 0.1em;
 border-radius: 0.35em;
@@ -774,7 +774,7 @@ margin-right: 20px;
 .link-button:focus {
 	color: #fff;
 	background-color: #50a748;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	border-radius: 0.35em;
@@ -789,7 +789,7 @@ margin-right: 20px;
 }
 
 .meta {
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	color: #626263;
@@ -891,7 +891,7 @@ header .meta a {
 	margin: 0 0 1em;
 	padding: 0;
 	font-size: 0.833333em;
-	font-weight: 400;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   letter-spacing: 1px;
 }
 
@@ -959,7 +959,7 @@ ul.children:before { content: ' > '; }
 		z-index: 10;
 		background-color: #fff;
 		color: #444;
-		font-family: "Avenir Next", Verdana, sans-serif;
+		font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	}
 	
 	.inf > input {
@@ -979,7 +979,7 @@ ul.children:before { content: ' > '; }
 
 .lang {
 	color: #626263;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size: 0.8333333em;
 	position: absolute;
 	top: 0.5em;
@@ -989,7 +989,7 @@ ul.children:before { content: ' > '; }
 
 .govt {
 	color: #626263;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size: 0.83333333em;
 	position: absolute;
 	top: 0px;
@@ -1242,7 +1242,7 @@ a.print {
 
 #listing h3 a {
 	font-size: 1em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 .cfpb_pressrelease #listing h3 a, .cfpb_speech #listing h3 a, .cfpb_oped #listing h3 a, .cfpb_testimony #listing h3 a {
 color: #4D819A;
@@ -1366,7 +1366,7 @@ div.newsroomTypes
 }
 section.newsroom h2{
 	font-size: 1em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	text-transform: none;
 }
 section.newsroom h3{
@@ -1459,7 +1459,7 @@ section.newsroom {
 	list-style: none;
 	text-transform: uppercase;
 	font-size: 0.875em;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	line-height: 1.7em;
 	clear:both;
 }
@@ -1485,7 +1485,7 @@ section.newsroom {
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 }
 
 .newsroomtopic nav ul li{
@@ -1523,7 +1523,7 @@ section.newsroom {
     color:#fff;
 }
 
-.newsroomtopic a{font-family: "Avenir Next", Verdana, sans-serif; font-size: 14px; }
+.newsroomtopic a{font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif; font-size: 14px; }
 
 .tagtopic label {
     float:left;
@@ -1533,7 +1533,7 @@ section.newsroom {
     font-size: 0.875em;
     color: #202020;
     background-color:#DBE6EB;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	text-transform: none;
 }
 
@@ -1594,7 +1594,7 @@ section.newsroom {
 
 /* Newsroom Pagination     */
 .page-numbers{
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	border: 0;
 	color: #000;
 	font-size: .875em;
@@ -1634,7 +1634,7 @@ section.newsroom {
 
 .wp-caption-text,
 .caption {
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	margin-top: 0;
 	padding-left: 0.5em;
 	font-size: 0.875em;
@@ -1930,9 +1930,9 @@ aside#reginfo .reg_meta_item {
 .report .show-hide a.show-hide-link {
 	display: block;
 	zoom: 1;
-	font-family: "Avenir Next", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size: 0.9em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	line-height: 0.9em;
 	color: #212121;
 	border-bottom: none;
@@ -1941,7 +1941,7 @@ aside#reginfo .reg_meta_item {
 	padding: 0.75em 1.5em 0.75em 2.5em;
 }
 .lt-ie9 .report .show-hide a.show-hide-link {
-	font-family: "Avenir Next Demi", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 	font-weight: normal;
 }
 .report .show-hide.alt a.show-hide-link {
@@ -2000,16 +2000,16 @@ aside#reginfo .reg_meta_item {
 		background-color: #C5E4BF;
 
 		color: #212121;
-		font-family: "Avenir Next", Verdana, sans-serif;
+		font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 		font-size: 15px;
-		font-weight: 600;
+		font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 		line-height: 15px;
 		text-decoration: none;
 		/* over-ride bottom borders from CFPB global styles.css */
 		border-bottom: none;
 	}
 	.lt-ie9 .report .tabs li a {
-		font-family: "Avenir Next Demi", Verdana, sans-serif;
+		font-family: "AvenirNextLTW01-Demi", Verdana, sans-serif;
 		font-weight: normal;
 	}
 
@@ -2053,22 +2053,22 @@ aside#reginfo .reg_meta_item {
 
 /* Headings */
 .report h1,.report h3,.report h4,.report h6 {
-	font-family:"Avenir Next", Verdana, sans-serif;
-	font-weight:600;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 
 .lt-ie9 .report h1,.lt-ie9 .report h3,.lt-ie9 .report h4,.lt-ie9 .report h6 {
-	font-family:"Avenir Next Demi", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Demi", Verdana, sans-serif;
 	font-weight: normal;
 }
 
 .report h2,.report h5 {
-	font-family:"Avenir Next", Verdana, sans-serif;
-	font-weight:500;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
 }
 
 .lt-ie9 .report h2,.lt-ie9 .report h5 {
-	font-family:"Avenir Next Medium", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Medium", Verdana, sans-serif;
 }
 
 .report h1 {
@@ -2134,13 +2134,13 @@ aside#reginfo .reg_meta_item {
 }
 
 .report .figcaption {
-	font-family:"Avenir Next", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size:1.1em;
-	font-weight:500;
+	font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
 }
 
 .lt-ie9 .report .figcaption {
-	font-family:"Avenir Next Medium", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Medium", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2155,22 +2155,22 @@ aside#reginfo .reg_meta_item {
 .report header h2 {
 	color:#50B948;
 	font-size:3em;
-	font-weight:500;
+	font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
 	letter-spacing:0;
 	text-transform:none;
 }
 
 .report header p {
-	font-family:"Avenir Next", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size:1.75em;
-	font-weight:400;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	line-height:1.25em;
 	margin-bottom:.5em;
 	margin-top:0;
 }
 
 .lt-ie9 .report header p {
-	font-family:"Avenir Next Regular", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2224,13 +2224,13 @@ aside#reginfo .reg_meta_item {
 .report nav a {
 	border:none;
 	color:#afafb3;
-	font:100%/1 "Avenir Next", Verdana, sans-serif;
-	font-weight:600;
+	font:100%/1 "AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	text-transform:uppercase;
 }
 
 .lt-ie9 .report nav a {
-	font:100%/1 "Avenir Next Demi", Verdana, sans-serif;
+	font:100%/1 "AvenirNextLTW01-Demi", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2252,14 +2252,14 @@ aside#reginfo .reg_meta_item {
 }
 
 .report nav li > ul a {
-	font:90%/1.2 "Avenir Next", Verdana, sans-serif;
-	font-weight:600;
+	font:90%/1.2 "AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	margin-left:5%;
 	text-transform:none;
 }
 /* tables */
 .lt-ie9 .report nav li > ul a {
-	font:90%/1.2 "Avenir Next Demi", Verdana, sans-serif;
+	font:90%/1.2 "AvenirNextLTW01-Demi", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2269,13 +2269,13 @@ aside#reginfo .reg_meta_item {
 
 .report table {
 	border:none;
-	font-family:"Avenir Next", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	margin:1em 0;
 	width:100%;
 }
 
 .lt-ie9 .report table {
-	font-family:"Avenir Next Regular", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2316,7 +2316,7 @@ aside#reginfo .reg_meta_item {
 	background:#fff;
 	border:none;
 	color:#212121;
-	font-weight:600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	padding:.5em .9375em;
 	text-align:right;
 	vertical-align:top;
@@ -2344,11 +2344,11 @@ aside#reginfo .reg_meta_item {
 
 .report tbody th {
 	border:none;
-	font-weight:600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 
 .report tfoot th {
-	font-weight:600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 
 .lt-ie9 .report td,.lt-ie9 .report th {
@@ -2360,7 +2360,7 @@ aside#reginfo .reg_meta_item {
 }
 
 .lt-ie9 .report thead th, .lt-ie9 .report tfoot th, .lt-ie9 .report tbody th  {
-	font-family:"Avenir Next Demi", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Demi", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2375,23 +2375,23 @@ aside#reginfo .reg_meta_item {
 }
 
 .report .outcome .figcaption {
-	font-family:"Avenir Next", Verdana, sans-serif;
-	font-weight:600;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	margin-top:1em;
 	text-transform:uppercase;
 }
 
 .lt-ie9 .report .outcome .figcaption {
-	font-family:"Avenir Next Demi", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Demi", Verdana, sans-serif;
 	font-weight: normal;
 }
 
 .report h3.outcome {
 	border-top:none;
 	color:#212121;
-	font-family:"Avenir Next", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size:1.5em;
-	font-weight:400;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	letter-spacing:0;
 	line-height:1.25em;
 	margin-top:0;
@@ -2400,7 +2400,7 @@ aside#reginfo .reg_meta_item {
 }
 
 .lt-ie9 .report h3.outcome {
-	font-family:"Avenir Next Regular", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2438,13 +2438,13 @@ aside#reginfo .reg_meta_item {
 }
 
 .report .strat_invest h5 {
-	font-family:"Avenir Next", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size:1.2em;
-	font-weight:500;
+	font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
 }
 
 .lt-ie9 .report .strat_invest h5 {
-	font-family:"Avenir Next Medium", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Medium", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2461,16 +2461,16 @@ aside#reginfo .reg_meta_item {
 }
 
 .report .goal {
-	font-family:"Avenir Next", Verdana, sans-serif;
+	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-size:1.75em;
-	font-weight:400;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	letter-spacing:0;
 	line-height:1.25em;
 	text-transform:none;
 }
 
 .lt-ie9 .report .goal {
-	font-family: "Avenir Next Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	font-weight: normal;
 }
 
@@ -2527,8 +2527,8 @@ aside#reginfo .reg_meta_item {
 .hud_hca_api_form label {
 	cursor: default;
 	display: block;
-	font-family: "Avenir Next", Verdana, sans-serif;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	margin-bottom: 2.5em;
 }
 
@@ -2625,12 +2625,12 @@ aside#reginfo .reg_meta_item {
 
 #hud_hca_api_message {
 	font-size: 1.25em;
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	margin: 1em 0;
 }
 
 .hud_hca_api_results {
-	font-family: "Avenir Next", Arial, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 }
 
 .hud_hca_api_results_total {
@@ -2647,7 +2647,7 @@ aside#reginfo .reg_meta_item {
 }
 
 .hud_hca_api_results_total p {
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 	line-height: 1.85;
 	padding: 0 1em;
 }
@@ -2699,7 +2699,7 @@ aside#reginfo .reg_meta_item {
 
 .hud_hca_api_counselor,
 .hud_hca_api_results_listing_title {
-	font-weight: 600;
+	font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
 }
 
 .hud_hca_api_adr,
@@ -2924,7 +2924,7 @@ body.page-template-page-mortgage-php {
 	border: none;
 	color: #2cb34a;
 	display: block;
-	font-family: "Avenir Next", Arial, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	font-size: 1.1em;
 	text-decoration: none;
 }
@@ -3000,7 +3000,7 @@ body.page-template-page-mortgage-php {
 .mortgages_post_date {
 	color: #919395;
 	display: block;
-	font-family: "Avenir Next", Arial, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	text-transform: uppercase;
 }
 
@@ -3126,7 +3126,7 @@ div.callout {
 	background-color: #e5dfd6;
 	border: 1px solid #afafb3;
 	color: #333;
-	font-family: "Avenir Next", Arial, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	font-size: 1.25em;
 	padding: 0.5em 2%;
 }
@@ -3172,8 +3172,8 @@ div.callout {
 
 
 .wrapper-banner, .wrapper-header {
-	font-family: "Avenir Next", Arial, sans-serif;
-	font-weight: 400;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+	font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
 	color: #101820;
 	font-size: 75%;
 
