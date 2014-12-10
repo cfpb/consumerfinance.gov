@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Doing Business with Us: Past Awards
+{%- endblock %}
+
+{% block desc -%}
+    Information about the history of procurements by the CFPB.
+{%- endblock %}
+
+
+{% block content %}
+
+    {# Variables #}
+    
+    {% set path = '/doing-business-with-us/' %}
+    {%- set active_page = 'past-awards' -%}
+    
+    <main class="content content__1-3" id="main" role="main">
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper office">
+
+            <aside class="content_sidebar content__flush-all-on-small">
+                {% include "_doing-business-with-us-nav.html" %}
+            </aside>
+
+            <div class="content_main 
+                        content__flush-bottom 
+                        content__flush-top-on-small">
+
+                <h1>Procurement History</h1>
+                <p class="h3">
+                    Each year, we publish information about our contracts and
+                    awards from the preceding fiscal year.
+                    This can be helpful in understanding the kinds of products
+                    and services we procure and how that may change over time.
+                    In recent years, we have published three procurement
+                    review documents: a summary worksheet of our largest awards,
+                    an inventory of all of our service contracts, and a memo
+                    to the Office of Management and Budget that describes
+                    any planned analysis.
+                    For other types of financial information,
+                    <a href="/budget/">see our budget and strategy</a>.
+                </p>
+
+                {% set page = get_document('pages', '63219') %}
+                {{ page.content | safe }}
+
+                {% include "_process-smbiz-footer.html" %}
+
+            </div><!-- END .content_main -->
+
+        </div><!-- END .content_wrapper -->
+    </main><!-- END .content -->
+
+{% endblock content %}
