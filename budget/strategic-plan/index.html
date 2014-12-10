@@ -28,26 +28,36 @@
 
         <div class="wrapper content_wrapper">
 
-            <aside class="content_sidebar content__flush-all-on-small">
+            <aside class="content_sidebar content__flush-bottom content__flush-all-on-small">
                 {% include "_budget-nav.html" %}
             </aside>
 
-            <div class="content_main content__flush-bottom content__flush-top-on-small">
-                <section class="block
-                                block__flush-top
-                                block__sub">
-                    <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
-                </section>
-                <section class="block
-                                block__flush-top">
-                    <h1 class="h4">
-                        CFPB Strategic Plan, Budget, and Performance Plan and Report
+            <div class="content_main content__flush-top-on-small">
+                <section>
+                    <h1>
+                        Strategic Plan
                     </h1>
-                
-                    <a class="jump-link jump-link__pdf"
-                       href="">
-                        PDF
-                    </a>
+                    <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
+                    <div class="block block__sub">
+                        <h2 class="h4">
+                            CFPB Strategic Plan, Budget, and Performance Plan and Report
+                        </h2>
+                        <ul class="list list__horizontal">
+                            <li class="list_item">
+                                <a class="list_link icon-link icon-link__right"
+                                   href="interactive/"
+                                   target="_blank">
+                                    <span class="icon-link_text">Interactive</span>
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link icon-link icon-link__pdf"
+                                   href="http://files.consumerfinance.gov/f/strategic-plan.pdf">
+                                    <span class="icon-link_text">PDF</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </section>
             </div><!-- END .content_main -->
 
@@ -55,4 +65,3 @@
     </main><!-- END .content -->
 
 {% endblock content %}
-
