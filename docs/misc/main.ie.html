@@ -338,6 +338,11 @@
   content: &quot;\e402&quot;;
 }
 
+.icon-link__pdf:after,
+.icon-link__pdf.icon-link__before:before {
+  content: &quot;\e402&quot;;
+}
+
 .icon-link__phone:after,
 .icon-link__phone.icon-link__before:before {
   content: &quot;\e306&quot;;
@@ -601,6 +606,11 @@
 .jump-link__mail:after,
 .jump-link__mail.jump-link__before:before {
   content: &quot;\e304&quot;;
+}
+
+.jump-link__pdf:after,
+.jump-link__pdf.jump-link__before:before {
+  content: &quot;\e402&quot;;
 }
 
 .jump-link__pdf:after,
@@ -1750,6 +1760,380 @@ a.hero_card {
 
 .padded-container_body {
   margin: 1.4375em 1.8125em 1.4375em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="character-icons" class="docs-component">
+      <h2 class="docs-component_header"><span>Character icons</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>A way to create icons that feature a single character on a circular  background. Useful because cf-icons does not have any of this type of icon in its library. Typical use case would be to identify steps in a process.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default usage</h3>
+          <section class="docs-pattern_pattern">
+<h2 class="char-icon char-icon__1">This is the first thing</h2>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h2 class=&quot;char-icon char-icon__1&quot;&gt;This is the first thing&lt;/h2&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;h2 class=\&amp;quot;char-icon char-icon__1\&amp;quot;&gt;This is the first thing&lt;/h2&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.char-icon:before {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.25em 0;
+  border-radius: 100%;
+  margin-right: 0.375em;
+  position: relative;
+  top: -0.07692308em;
+  background: #2cb34a;
+  color: #ffffff;
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 92.85714286%;
+  line-height: 1;
+  text-align: center;
+}
+
+.lt-ie9 .char-icon:before {
+  font-weight: normal !important;
+}
+
+.char-icon__1:before {
+  content: '1';
+}
+
+.char-icon__2:before {
+  content: '2';
+}
+
+.char-icon__3:before {
+  content: '3';
+}
+
+.char-icon__4:before {
+  content: '4';
+}
+
+.char-icon__5:before {
+  content: '5';
+}
+
+.char-icon__6:before {
+  content: '6';
+}
+
+.char-icon__7:before {
+  content: '7';
+}
+
+.char-icon__8:before {
+  content: '8';
+}
+
+.char-icon__9:before {
+  content: '9';
+}
+
+.char-icon__0:before {
+  content: '0';
+}
+
+.char-icon__A:before {
+  content: 'A';
+}
+
+.char-icon__B:before {
+  content: 'B';
+}
+
+.char-icon__C:before {
+  content: 'C';
+}
+
+.char-icon__D:before {
+  content: 'D';
+}
+
+.char-icon__E:before {
+  content: 'E';
+}
+
+.char-icon__F:before {
+  content: 'F';
+}
+
+.char-icon__G:before {
+  content: 'G';
+}
+
+.char-icon__H:before {
+  content: 'H';
+}
+
+.char-icon__I:before {
+  content: 'I';
+}
+
+.char-icon__J:before {
+  content: 'J';
+}
+
+.char-icon__K:before {
+  content: 'K';
+}
+
+.char-icon__L:before {
+  content: 'L';
+}
+
+.char-icon__M:before {
+  content: 'M';
+}
+
+.char-icon__N:before {
+  content: 'N';
+}
+
+.char-icon__O:before {
+  content: 'O';
+}
+
+.char-icon__P:before {
+  content: 'P';
+}
+
+.char-icon__Q:before {
+  content: 'Q';
+}
+
+.char-icon__R:before {
+  content: 'R';
+}
+
+.char-icon__S:before {
+  content: 'S';
+}
+
+.char-icon__T:before {
+  content: 'T';
+}
+
+.char-icon__U:before {
+  content: 'U';
+}
+
+.char-icon__V:before {
+  content: 'V';
+}
+
+.char-icon__W:before {
+  content: 'W';
+}
+
+.char-icon__X:before {
+  content: 'X';
+}
+
+.char-icon__Y:before {
+  content: 'Y';
+}
+
+.char-icon__Z:before {
+  content: 'Z';
+}
+
+.char-icon__a:before {
+  content: 'a';
+}
+
+.char-icon__b:before {
+  content: 'b';
+}
+
+.char-icon__c:before {
+  content: 'c';
+}
+
+.char-icon__d:before {
+  content: 'd';
+}
+
+.char-icon__e:before {
+  content: 'e';
+}
+
+.char-icon__f:before {
+  content: 'f';
+}
+
+.char-icon__g:before {
+  content: 'g';
+}
+
+.char-icon__h:before {
+  content: 'h';
+}
+
+.char-icon__i:before {
+  content: 'i';
+}
+
+.char-icon__j:before {
+  content: 'j';
+}
+
+.char-icon__k:before {
+  content: 'k';
+}
+
+.char-icon__l:before {
+  content: 'l';
+}
+
+.char-icon__m:before {
+  content: 'm';
+}
+
+.char-icon__n:before {
+  content: 'n';
+}
+
+.char-icon__o:before {
+  content: 'o';
+}
+
+.char-icon__p:before {
+  content: 'p';
+}
+
+.char-icon__q:before {
+  content: 'q';
+}
+
+.char-icon__r:before {
+  content: 'r';
+}
+
+.char-icon__s:before {
+  content: 's';
+}
+
+.char-icon__t:before {
+  content: 't';
+}
+
+.char-icon__u:before {
+  content: 'u';
+}
+
+.char-icon__v:before {
+  content: 'v';
+}
+
+.char-icon__w:before {
+  content: 'w';
+}
+
+.char-icon__x:before {
+  content: 'x';
+}
+
+.char-icon__y:before {
+  content: 'y';
+}
+
+.char-icon__z:before {
+  content: 'z';
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="step-slugs" class="docs-component">
+      <h2 class="docs-component_header"><span>Step slugs</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Styling for a slug that indicates a step in a process.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Embedded in a heading</h3>
+          <section class="docs-pattern_pattern">
+<h2>
+    <span class="step-slug char-icon char-icon__1">Step one</span>
+    Description of the step
+</h2>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h2&gt;
+    &lt;span class=&quot;step-slug char-icon char-icon__1&quot;&gt;Step one&lt;/span&gt;
+    Description of the step
+&lt;/h2&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;h2&gt;\n    &lt;span class=\&amp;quot;step-slug char-icon char-icon__1\&amp;quot;&gt;Step one&lt;/span&gt;\n    Description of the step\n&lt;/h2&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Useful when you want to include the slug text in the heading for the purposes of visibility in the document outline.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Standalone</h3>
+          <section class="docs-pattern_pattern">
+<h2 class="step-slug char-icon char-icon__1">Step one</h2>
+<p>Description of the step</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h2 class=&quot;step-slug char-icon char-icon__1&quot;&gt;Step one&lt;/h2&gt;
+&lt;p&gt;Description of the step&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;h2 class=\&amp;quot;step-slug char-icon char-icon__1\&amp;quot;&gt;Step one&lt;/h2&gt;\n&lt;p&gt;Description of the step&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Useful when the 'Step number' text itself serves as a heading.</li>
+              <li>Equivalent to the .char-icon default usage pattern, but with specific styling for the text that follows.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.step-slug {
+  display: block;
+  margin-bottom: 1.07142857em;
+  color: #43484e;
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.lt-ie9 .step-slug {
+  font-weight: normal !important;
 }
 </code></pre>
       </div>
