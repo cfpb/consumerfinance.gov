@@ -10592,6 +10592,10 @@ a.category-slug.active {
 .icon-link__mail.icon-link__before:before {
   content: "\e304";
 }
+.icon-link__pdf:after,
+.icon-link__pdf.icon-link__before:before {
+  content: "\e402";
+}
 .icon-link__phone:after,
 .icon-link__phone.icon-link__before:before {
   content: "\e306";
@@ -10729,6 +10733,10 @@ a.category-slug.active {
 .jump-link__mail:after,
 .jump-link__mail.jump-link__before:before {
   content: "\e304";
+}
+.jump-link__pdf:after,
+.jump-link__pdf.jump-link__before:before {
+  content: "\e402";
 }
 .jump-link__phone:after,
 .jump-link__phone.jump-link__before:before {
@@ -11589,7 +11597,7 @@ a.category-slug.active {
 }
 .char-icon__0:before,
 .step-slug__0:before {
-  content: '9';
+  content: '0';
 }
 .char-icon__A:before,
 .step-slug__A:before {
