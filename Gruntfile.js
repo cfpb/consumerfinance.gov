@@ -385,7 +385,6 @@ module.exports = function(grunt) {
      * See note below about creating a dynamic Topdoc options object.
      */
     topdoc_families: [
-      'activity',
       'blog-docs',
       'cf-enhancements',
       'forms',
