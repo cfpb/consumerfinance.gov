@@ -11183,6 +11183,11 @@ a.category-slug.active {
   content: "\e402";
 }
 
+.icon-link__pdf:after,
+.icon-link__pdf.icon-link__before:before {
+  content: "\e402";
+}
+
 .icon-link__phone:after,
 .icon-link__phone.icon-link__before:before {
   content: "\e306";
@@ -11337,6 +11342,11 @@ a.category-slug.active {
 .jump-link__mail:after,
 .jump-link__mail.jump-link__before:before {
   content: "\e304";
+}
+
+.jump-link__pdf:after,
+.jump-link__pdf.jump-link__before:before {
+  content: "\e402";
 }
 
 .jump-link__pdf:after,
@@ -15978,6 +15988,180 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
+.budget_page-content h4 {
+  margin-top: 30px;
+}
+
+.budget_page-content ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.budget_page-content ul .list_item {
+  margin-left: 0;
+}
+
+.budget_page-content ul .list_item {
+  margin-left: 0;
+}
+
+.budget_page-content ul .list_item {
+  margin-bottom: 0.625em;
+}
+
+.budget_page-content ul.list__spaced .list_item + .list_item {
+  margin-top: 0;
+}
+
+.budget_page-content ul.list__icons .list_link {
+  position: relative;
+  left: -0.125em;
+}
+
+.budget_page-content ul.list__icons .icon-link:before,
+.budget_page-content ul.list__icons .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+
+.budget_page-content ul .list_link {
+  position: relative;
+  left: -0.125em;
+}
+
+.budget_page-content ul .icon-link:before,
+.budget_page-content ul .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+
+.budget_page-content ul li {
+  margin-left: 0;
+  margin-bottom: 0.625em;
+}
+
+.budget_page-content ul li a {
+  left: -0.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+  border-bottom-width: 0;
+  position: relative;
+}
+
+.lt-ie9 .budget_page-content ul li a {
+  font-weight: normal !important;
+}
+
+.budget_page-content ul li a_text {
+  border-bottom-width: 1px;
+  border-bottom-style: inherit;
+}
+
+.budget_page-content ul li a:before,
+.budget_page-content ul li a:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+
+.budget_page-content ul li a__download:after,
+.budget_page-content ul li a__download.budget_page-content ul li a__before:before {
+  content: "\e406";
+}
+
+.budget_page-content ul li a__email:after,
+.budget_page-content ul li a__email.budget_page-content ul li a__before:before {
+  content: "\e302";
+}
+
+.budget_page-content ul li a__external-link:after,
+.budget_page-content ul li a__external-link.budget_page-content ul li a__before:before {
+  content: "\e610";
+}
+
+.budget_page-content ul li a__fax:after,
+.budget_page-content ul li a__fax.budget_page-content ul li a__before:before {
+  content: "\e310";
+}
+
+.budget_page-content ul li a__left:after,
+.budget_page-content ul li a__left.budget_page-content ul li a__before:before {
+  content: "\e000";
+}
+
+.budget_page-content ul li a__mail:after,
+.budget_page-content ul li a__mail.budget_page-content ul li a__before:before {
+  content: "\e304";
+}
+
+.budget_page-content ul li a__pdf:after,
+.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
+  content: "\e402";
+}
+
+.budget_page-content ul li a__pdf:after,
+.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
+  content: "\e402";
+}
+
+.budget_page-content ul li a__phone:after,
+.budget_page-content ul li a__phone.budget_page-content ul li a__before:before {
+  content: "\e306";
+}
+
+.budget_page-content ul li a__right:after,
+.budget_page-content ul li a__right.budget_page-content ul li a__before:before {
+  content: "\e002";
+}
+
+.budget_page-content ul li a__before:after {
+  content: '';
+}
+
+.budget_page-content ul li a__no-wrap {
+  white-space: nowrap;
+}
+
+.budget_page-content ul li a__large {
+  font-size: 1.125em;
+}
+
+.budget_page-content.financial-report a:before,
+.budget_page-content.performance-plan a:before,
+.budget_page-content.funding-request a span:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e402";
+  margin-right: .5em;
+  color: #101820;
+}
+
+.budget_page-content.funding-request h4 {
+  margin-top: 2.1875em;
+}
+
+.budget_page-content.funding-request a span {
+  color: #101820;
+  padding-right: .5em;
+}
+
+.budget_page-content.performance-plan sub {
+  display: block;
+  margin-top: -0.625em;
+  margin-bottom: 3.75em;
+}
+
 .bureau-mission {
   margin-bottom: 2.8125em;
 }
@@ -16783,6 +16967,44 @@ a.focus .summary_header {
   font-weight: normal !important;
 }
 
+.office_initiatives .expandable.content-l_col {
+  margin-bottom: 1.875em;
+}
+
+.initiative_description p:first-child {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.95454545em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+
+.initiative_description p:first-child em,
+.initiative_description p:first-child i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .initiative_description p:first-child em,
+.lt-ie9 .initiative_description p:first-child i {
+  font-style: normal !important;
+}
+
+.initiative_description p:first-child strong,
+.initiative_description p:first-child b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .initiative_description p:first-child strong,
+.lt-ie9 .initiative_description p:first-child b {
+  font-weight: normal !important;
+}
+
 /* ==========================================================================
    cfgov-refresh
    Press resources (Newsroom)
@@ -17070,44 +17292,6 @@ a.focus .summary_header {
   margin-right: 0;
   zoom: 1;
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.office_initiatives .expandable.content-l_col {
-  margin-bottom: 1.875em;
-}
-
-.initiative_description p:first-child {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.95454545em;
-  font-size: 1.375em;
-  line-height: 1.27272727;
-}
-
-.initiative_description p:first-child em,
-.initiative_description p:first-child i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .initiative_description p:first-child em,
-.lt-ie9 .initiative_description p:first-child i {
-  font-style: normal !important;
-}
-
-.initiative_description p:first-child strong,
-.initiative_description p:first-child b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .initiative_description p:first-child strong,
-.lt-ie9 .initiative_description p:first-child b {
-  font-weight: normal !important;
 }
 
 /* Demo-specific styles
