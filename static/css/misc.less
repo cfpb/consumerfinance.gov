@@ -1024,23 +1024,6 @@
     - name: Default usage
       markup: |
         <h2 class="char-icon char-icon__1">This is the first thing</h2>
-    - name: Step slug pattern, embedded in a heading
-      markup: |
-        <h2>
-            <span class="step-slug step-slug__1">Step one</span>
-            Description of the step
-        </h2>
-      notes:
-        - "Useful when you want to include the slug text in the heading for the
-           purposes of visibility in the document outline."
-    - name: Step slug pattern, standalone
-      markup: |
-        <h2 class="step-slug step-slug__1">Step one</h2>
-        <p>Description of the step</p>
-      notes:
-        - "Useful when the 'Step number' text itself serves as a heading."
-        - "Equivalent to the .char-icon default usage pattern, but with specific
-           styling for the text that follows."
   tags:
     - cfgov-misc
 */
@@ -1130,6 +1113,34 @@
     &__z:before { content: 'z'; }
 }
 
+
+/* topdoc
+  name: Step slugs
+  family: cfgov-misc
+  notes:
+    - "Styling for a slug that indicates a step in a process."
+  patterns:
+    - name: Embedded in a heading
+      markup: |
+        <h2>
+            <span class="step-slug char-icon char-icon__1">Step one</span>
+            Description of the step
+        </h2>
+      notes:
+        - "Useful when you want to include the slug text in the heading for the
+           purposes of visibility in the document outline."
+    - name: Standalone
+      markup: |
+        <h2 class="step-slug char-icon char-icon__1">Step one</h2>
+        <p>Description of the step</p>
+      notes:
+        - "Useful when the 'Step number' text itself serves as a heading."
+        - "Equivalent to the .char-icon default usage pattern, but with specific
+           styling for the text that follows."
+  tags:
+    - cfgov-misc
+*/
+
 .step-slug {
     display: block;
     margin-bottom: unit(15px / 14px, em);
@@ -1141,8 +1152,6 @@
     font-size: unit(14px / @base-font-size-px, rem);
     letter-spacing: 1px;
     text-transform: uppercase;
-
-    &:extend(.char-icon all);
 }
 
 
