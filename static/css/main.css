@@ -10608,14 +10608,6 @@ a.category-slug.active {
 .icon-link__right.icon-link__before:before {
   content: "\e002";
 }
-.icon-link__pdf:after,
-.icon-link__pdf.icon-link__before:before {
-  content: "\e402";
-}
-.icon-link__chart:after,
-.icon-link__chart.icon-link__before:before {
-  content: "\e638";
-}
 .icon-link__before:after {
   content: '';
 }
@@ -10761,14 +10753,6 @@ a.category-slug.active {
 .jump-link__right:after,
 .jump-link__right.jump-link__before:before {
   content: "\e002";
-}
-.jump-link__pdf:after,
-.jump-link__pdf.jump-link__before:before {
-  content: "\e402";
-}
-.jump-link__chart:after,
-.jump-link__chart.jump-link__before:before {
-  content: "\e638";
 }
 .jump-link__before:after {
   content: '';
@@ -16113,14 +16097,6 @@ a.focus .summary_header {
 .budget_page-content ul li a__right:after,
 .budget_page-content ul li a__right.budget_page-content ul li a__before:before {
   content: "\e002";
-}
-.budget_page-content ul li a__pdf:after,
-.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
-  content: "\e402";
-}
-.budget_page-content ul li a__chart:after,
-.budget_page-content ul li a__chart.budget_page-content ul li a__before:before {
-  content: "\e638";
 }
 .budget_page-content ul li a__before:after {
   content: '';
