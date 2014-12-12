@@ -1,11 +1,14 @@
 
-{% import "macros.html" as macros %}
+{% macro render(post) %}
+
+{% from "post-macros.html" import category_icon as category_icon %}
+{% from "macros.html" import share as share %}
 
 <article class="post">
     <header>
         {% if post.category.0 %}
         <a href="{{ path }}?filter_category={{ post.category.0 }}" class="post_slug category-slug">
-            {{ post_macros.category_icon(post.category.0, 'category-slug_icon')|safe }}
+            {{ category_icon(post.category.0, 'category-slug_icon')|safe }}
             <span class="u-visually-hidden">Category:</span>
             {{ post.category.0 }}
         {% endif %}
@@ -36,7 +39,7 @@
                 {{ post.date|date("%b %d, %Y") }}
             </span>
         </div>
-        {{ macros.share(self.title(), false) }}
+        {{ share(post.title, false) }}
     {% if post.thumbnail.images %}
         <img class="post_featured-img"
              src="{{ post.thumbnail.images.full.url }}"
@@ -64,3 +67,5 @@
     </footer>
 {% endif %}
 </article>
+
+{% endmacro %}

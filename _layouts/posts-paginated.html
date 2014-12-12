@@ -1,4 +1,8 @@
 
+{% macro render(posts) %}
+
+{% import "post-macros.html" as post_macros with context %}
+
 <div id="pagination_content">
 
 {% for post in posts %}
@@ -55,3 +59,5 @@
 ]) }}
 
 </div>
+
+{% endmacro %}
