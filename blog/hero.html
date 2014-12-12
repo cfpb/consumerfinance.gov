@@ -1,25 +1,10 @@
+{% macro render(hero) %}
 
-{# Only show the hero when:
-   1. No filters have been applied
-   2. We are on the first page of paginated results
-   3. A hero exists
-#}
-
-{% set hero = view.hero %}
-
-{% set active_filters_total =
-   selected_filters_for_field('category')|length +
-   selected_filters_for_field('tags')|length +
-   selected_filters_for_field('author')|length +
-   selected_filters_for_field('range_date_gte')|length + 
-   selected_filters_for_field('range_date_lte')|length
-%}
-
-{% if active_filters_total == 0 and posts.current_page == 1 and hero %}
-
-    {% if hero['related_post'] %}
-        {% set related_post = get_document('posts', hero['related_post']) %}
-    {% endif %}
+{% from "post-macros.html" import category_icon as category_icon %}
+    
+{% if hero['related_post'] %}
+    {% set related_post = get_document('posts', hero['related_post']) %}
+{% endif %}
 
 <section class="content_hero hero"
          style="background-color: {{ hero.custom_fields.background_color[0]
@@ -36,7 +21,7 @@
                 <div class="hero_card-padding">
                 {% if related_post %}
                     <span class="category-slug">
-                        {{ post_macros.category_icon(related_post.category.0, 'category-slug_icon') }}
+                        {{ category_icon(related_post.category.0, 'category-slug_icon') }}
                         <span class="u-visually-hidden">Category:</span>
                         {{ related_post.category.0 }}
                     </span>
@@ -83,4 +68,4 @@
     </div>
 </section><!-- END .content_hero -->
 
-{% endif %}
+{% endmacro %}
