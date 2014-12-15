@@ -45,20 +45,61 @@ module.exports = function(grunt) {
      * Replace strings on files by using string or regex patters.
      */
     'string-replace': {
+      'static-legacy': {
+        files: {
+          'static-legacy/css/styles.css': 'static-legacy/css/styles.css'
+        },
+        options: {
+          replacements: [
+            {
+              pattern: /"Avenir Next"/ig,
+              replacement: '"AvenirNextLTW01-Regular"'
+            },
+            {
+              pattern: /"Avenir Next Regular"/ig,
+              replacement: '"AvenirNextLTW01-Regular"'
+            },
+            {
+              pattern: /"Avenir Next Demi"/ig,
+              replacement: '"AvenirNextLTW01-Demi"'
+            },
+            {
+              pattern: /"Avenir Next Demi Italic"/ig,
+              replacement: '"AvenirNextLTW01-Demi"'
+            },
+            {
+              pattern: /"Avenir Next Medium"/ig,
+              replacement: '"AvenirNextLTW01-Medium"'
+            },
+            {
+              pattern: /font-weight:(?:\s)*400;/ig,
+              replacement: 'font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;'
+            },
+            {
+              pattern: /font-weight:(?:\s)*500;/ig,
+              replacement: 'font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;'
+            },
+            {
+              pattern: /font-weight:(?:\s)*600;/ig,
+              replacement: 'font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;'
+            }
+          ]
+        }
+      },
       chosen: {
         files: {
           'vendor/chosen/': 'vendor/chosen/chosen.css'
-        }
-      },
-      options: {
-        replacements: [{
-          pattern: /url\('chosen-sprite.png'\)/ig,
-          replacement: 'url("../img/chosen-sprite.png")'
         },
-        {
-          pattern: /url\('chosen-sprite@2x.png'\)/ig,
-          replacement: 'url("../img/chosen-sprite@2x.png")'
-        }]
+        options: {
+          replacements: [{
+            pattern: /url\('chosen-sprite.png'\)/ig,
+            replacement: 'url("../img/chosen-sprite.png")'
+          },
+          {
+            pattern: /url\('chosen-sprite@2x.png'\)/ig,
+            replacement: 'url("../img/chosen-sprite@2x.png")'
+          }]
+        }
       }
     },
 
@@ -250,6 +291,19 @@ module.exports = function(grunt) {
      * Copy files and folders.
      */
     copy: {
+      'static-legacy': {
+        files:
+        [
+          {
+            expand: true,
+            cwd: 'vendor/cf-core/',
+            src: [
+              'licensed-fonts.css'
+            ],
+            dest: 'static-legacy/css/'
+          }
+        ]
+      },
       vendor: {
         files:
         [
@@ -331,7 +385,6 @@ module.exports = function(grunt) {
      * See note below about creating a dynamic Topdoc options object.
      */
     topdoc_families: [
-      'activity',
       'blog-docs',
       'cf-enhancements',
       'forms',
@@ -408,7 +461,8 @@ module.exports = function(grunt) {
   /**
    * Create custom task aliases and combinations.
    */
-  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'concat:cf-less']);
+  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
+                                'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin', 'usebanner:css']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
