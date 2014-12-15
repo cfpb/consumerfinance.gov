@@ -56,4 +56,12 @@ def process_post(post, newsroom = False):
     dt = dateutil.parser.parse(post['date'])
     dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
     post['date'] = dt_string
+    if 'twtr_text' in post['custom_fields']:
+        post['twtr_text'] = post['custom_fields']['twtr_text'][0]
+    if 'twtr_lang' in post['custom_fields']:
+        post['twtr_lang'] = post['custom_fields']['twtr_lang'][0]
+    if 'twtr_rel' in post['custom_fields']:
+        post['twtr_rel'] = post['custom_fields']['twtr_rel'][0]
+    if 'twtr_hash' in post['custom_fields']:
+        post['twtr_hash'] = post['custom_fields']['twtr_hash'][0]
     return post

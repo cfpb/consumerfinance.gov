@@ -10,6 +10,10 @@
     Leadership calendar
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
 
     {% import "leadership-calendar-table.html" as calendar %}
