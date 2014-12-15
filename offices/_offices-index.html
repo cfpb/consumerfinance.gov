@@ -94,8 +94,7 @@
                                 {% for link in top_story.top_story_links %}
                                 	<li class="list_item">
                                         <a class="jump-link 
-                                                  jump-link__right 
-                                                  list_link"
+                                                  jump-link__right"
                                            href="{{link[0]}}">
                                             {{link[1]}}
                                         </a>
@@ -235,16 +234,13 @@
                                     Latest Office Activities
                                 </span>
                             </h1>
+                            
                             {{ activities_feed }}
-                            <div class="content-l">    
-                                <!-- link to activities page? -->
-                                <div class="content-l_col-1">
-                                    <a class="jump-link 
-                                              jump-link__right">
-                                        View all of our activity
-                                    </a>
-                                </div>
-                            </div>
+                            
+                            <a class="jump-link 
+                                      jump-link__right">
+                                View all of our activity
+                            </a>
                         </section>
                     {% endif %}
     
@@ -259,10 +255,27 @@
                         <p class="short-desc">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                         </p>
-                        <h2 class="h5">General Inquiries</h2>
-                        <a class="list_link" href="mailto:">
-                            email address
-                        </a>
+                        <div class="content-l
+                                    content-l__large-gutters">
+                            
+                            {% set query_string = '_id:"general-inqueries"' %}
+                            {% if office.related_contact %}
+                                {% set query_string = query_string ~ ' OR _id:"' ~ office.related_contact %}
+                            {% endif %}
+                            {% set contacts = queries.contact.search_with_url_arguments(q=query_string ~ '"') %}
+                                
+                            {% if contacts %}
+                                {% for c in contacts %}
+                                    <section class="content-l_col 
+                                                    content-l_col-1-2">
+                                        <h2 class="h5">{{c.title}}</h2>
+                                        <a class="list_link" href="mailto:{{c.email_addr if c.email_addr}}">
+                                            {{c.email_addr}}
+                                        </a>
+                                    </section>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </section>
     
                 </div>
