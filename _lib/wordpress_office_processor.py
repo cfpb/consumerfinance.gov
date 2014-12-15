@@ -30,7 +30,7 @@ def process_office(item):
     custom_fields = item['custom_fields']
     
     # get intro text & subscribe form data from custom fields
-    for attr in ['intro_text', 'intro_subscribe_form']:
+    for attr in ['intro_text', 'intro_subscribe_form', 'related_contact']:
         if attr in custom_fields:
             item[attr] = custom_fields[attr][0]
     
@@ -68,5 +68,5 @@ def process_office(item):
                             
         if resource:
             item['resources'].append(resource)
-
+    print item
     return item
