@@ -1,3 +1,4 @@
+{% from "macros.html" import format_address as format_address %}
 {% set administrative_offices = get_document('contact', 'administrative-offices') %}
 {% set consumer_contact_center = get_document('contact', 'consumer-contact-center') %}
 
@@ -29,13 +30,13 @@
             {{ administrative_offices.title }}
         </h2>
         <p class="short-desc">
-            {{- macros.format_address(administrative_offices) -}}
+            {{- format_address(administrative_offices) -}}
         </p>
         <h2 class="h5">
             {{ consumer_contact_center.title }}
         </h2>
         <p class="short-desc">
-            {{- macros.format_address(consumer_contact_center) -}}
+            {{- format_address(consumer_contact_center) -}}
         </p>
     </div>
     
