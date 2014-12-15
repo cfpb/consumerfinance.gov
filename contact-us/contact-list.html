@@ -1,3 +1,4 @@
+{% from "macros.html" import format_phone as format_phone %}
 
 <div class="type-and-filter">
 
@@ -95,7 +96,7 @@
                             <li class="list_item">
                                 <span class="cf-icon cf-icon-phone list_icon"></span>
                                 <span class="short-desc">
-                                    {{ macros.format_phone(contact.phone_num) }}
+                                    {{ format_phone(contact.phone_num) }}
                                 </span>
                             {%- if contact.phone_desc %}
                                 <span class="micro-copy micro-copy__large">
@@ -108,7 +109,7 @@
                             <li class="list_item">
                                 <span class="cf-icon cf-icon-phone list_icon"></span>
                                 <span class="short-desc">
-                                    {{ macros.format_phone(contact.phone_2_num) }}
+                                    {{ format_phone(contact.phone_2_num) }}
                                 </span>
                             </li>
                         {%- endif %}
@@ -116,7 +117,7 @@
                             <li class="list_item">
                                 <span class="cf-icon cf-icon-fax list_icon"></span>
                                 <span class="short-desc">
-                                    {{ macros.format_phone(contact.fax_num) }}
+                                    {{ format_phone(contact.fax_num) }}
                                 </span>
                             </li>
                         {%- endif %}

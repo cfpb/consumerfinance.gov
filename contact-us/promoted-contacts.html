@@ -1,3 +1,4 @@
+{% from "macros.html" import format_phone as format_phone %}
 {% set accessibility_feedback = get_document('contact', 'accessibility-feedback') %}
 {% set whistleblowers = get_document('contact', 'whistleblowers') %}
 {% set tribal_consultation = get_document('contact', 'tribal-consultation') %}
@@ -43,7 +44,7 @@
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="short-desc">
-                    {{ macros.format_phone(whistleblowers.phone_num) }}
+                    {{ format_phone(whistleblowers.phone_num) }}
                 </span>
             </li>
         {%- endif %}
