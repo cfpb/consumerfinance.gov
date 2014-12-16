@@ -1,7 +1,0 @@
-{% set activity_type = "Students" %}
-
-{% set query = queries.office %}
-{% set results = query.search_with_url_arguments(q="_id:mikes-office",size=1) %}
-{% set office = results | first %}
-
-{% include "_offices-index.html" %}
