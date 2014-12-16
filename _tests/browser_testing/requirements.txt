@@ -1,0 +1,4 @@
+selenium==2.44.0
+Flask-Testing==0.4.2
+pyhamcrest==1.8.1
+behave==1.2.4
