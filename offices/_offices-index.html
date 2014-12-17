@@ -20,7 +20,7 @@
     {% import "post-macros.html" as post_macros with context %}
     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
     {% import "macros.html" as macros with context %}
-    {% import "/contact-us/contact-macro.html" as contact_macro with context %}
+    {% import "contact-macro.html" as contact_macro with context %}
     
     {% set activities_feed = activity_snippets(activity_type) %}
     
@@ -245,40 +245,35 @@
                             </a>
                         </section>
                     {% endif %}
-    
-                    <section class="office_content 
-                                    block
-                                    u-mb0">
-                        <h1 class="header-slug">
-                            <span class="header-slug_inner">
-                                Office Contact Information
-                            </span>
-                        </h1>
-                        <p class="short-desc">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                        </p>
+                    
+                    {% if office.related_contact %}
+                        <section class="office_content 
+                                        block
+                                        u-mb0">
+                            <h1 class="header-slug">
+                                <span class="header-slug_inner">
+                                    Office Contact Information
+                                </span>
+                            </h1>
+                            <p class="short-desc">
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            </p>
                             
-                        {% set query_string = '_id:"general-inqueries"' %}
-                        {% if office.related_contact %}
-                            {% set query_string = query_string ~ ' OR _id:"' ~ office.related_contact %}
-                        {% endif %}
-                        {% set contacts = queries.contact.search_with_url_arguments(q=query_string ~ '"') %}
                             
-                        {% if contacts %}
-                            {%- for contact in contacts|sort(attribute='title') %}
-                                <div class="main-l main-l__large-gutters">
-                                    <div class="content-l_col content-l_col-1">
-                                        <h2 class="h5">{{contact.title}}</h2>
+                            {% set contact = get_document('contact', office.related_contact) %}
+                            {% if contact %}
+                                    <div class="main-l main-l__large-gutters">
+                                        <div class="content-l_col content-l_col-1">
+                                            <h2 class="h5">{{contact.title}}</h2>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="main-l main-l__large-gutters block block__flush-top">
-                                    {{contact_macro.display_contact(contact)}}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+                                    <div class="main-l main-l__large-gutters block block__flush-top">
+                                        {{contact_macro.render(contact)}}
+                                    </div>
+                            {% endif %}
                         
-                    </section>
-    
+                        </section>
+                    {% endif %}
                 </div>
 
             </div><!-- END .content_main -->
