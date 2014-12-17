@@ -19,6 +19,9 @@
 
     {% import "post-macros.html" as post_macros with context %}
     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+    {% import "macros.html" as macros with context %}
+    {% import "contact-macro.html" as contact_macro with context %}
+    
     
     {% set activities_feed = activity_snippets(activity_type) %}
     
@@ -94,8 +97,7 @@
                                 {% for link in top_story.top_story_links %}
                                 	<li class="list_item">
                                         <a class="jump-link 
-                                                  jump-link__right 
-                                                  list_link"
+                                                  jump-link__right"
                                            href="{{link[0]}}">
                                             {{link[1]}}
                                         </a>
@@ -235,35 +237,44 @@
                                     Latest Office Activities
                                 </span>
                             </h1>
+                            
                             {{ activities_feed }}
-                            <div class="content-l">    
-                                <!-- link to activities page? -->
-                                <div class="content-l_col-1">
-                                    <a class="jump-link 
-                                              jump-link__right">
-                                        View all of our activity
-                                    </a>
-                                </div>
-                            </div>
+                            
+                            <a class="jump-link 
+                                      jump-link__right">
+                                View all of our activity
+                            </a>
                         </section>
                     {% endif %}
     
-                    <section class="office_content 
-                                    block
-                                    u-mb0">
-                        <h1 class="header-slug">
-                            <span class="header-slug_inner">
-                                Office Contact Information
-                            </span>
-                        </h1>
-                        <p class="short-desc">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                        </p>
-                        <h2 class="h5">General Inquiries</h2>
-                        <a class="list_link" href="mailto:">
-                            email address
-                        </a>
-                    </section>
+                    {% if office.related_contact %}
+                        <section class="office_content 
+                                        block
+                                        u-mb0">
+                            <h1 class="header-slug">
+                                <span class="header-slug_inner">
+                                    Office Contact Information
+                                </span>
+                            </h1>
+                            <p class="short-desc">
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            </p>
+
+
+                            {% set contact = get_document('contact', office.related_contact) %}
+                            {% if contact %}
+                                    <div class="content-l content-l__large-gutters">
+                                        <div class="content-l_col content-l_col-1">
+                                            <h2 class="h5">{{contact.title}}</h2>
+                                        </div>
+                                    </div>
+                                    <div class="content-l content-l__large-gutters block block__flush-top">
+                                        {{contact_macro.render(contact)}}
+                                    </div>
+                            {% endif %}
+
+                        </section>
+                    {% endif %}
     
                 </div>
 
