@@ -44,8 +44,8 @@
                 <section class="block
                                 block__flush-top
                                 {% if office.intro_subscribe_form -%} 
-                                    content-l
-                                    content-l__large-gutters
+                                    main-l
+                                    main-l__large-gutters
                                 {%- endif %}">
                     {% if office.intro_text %}
                     <section class="office_intro 
@@ -80,8 +80,8 @@
                     {% if top_story.top_story_head %}
                     <h1 class="h3">{{top_story.top_story_head | safe}}</h1>
                     {% endif %}
-                    <div class="content-l
-                                content-l__large-gutters">
+                    <div class="main-l
+                                main-l__large-gutters">
                         {% if top_story.top_story_desc %}
                         <div class="content-l_col
                                     content-l_col-1-2">
@@ -160,8 +160,8 @@
                         <h1 class="h2">
                             Our Work
                         </h1>
-                        <div class="content-l 
-                                    content-l__large-gutters
+                        <div class="main-l 
+                                    main-l__large-gutters
                                     expandables-group">
                             
                             {% for initiative in initiatives %}
@@ -257,27 +257,26 @@
                         <p class="short-desc">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                         </p>
-                        <div class="">
                             
-                            {% set query_string = '_id:"general-inqueries"' %}
-                            {% if office.related_contact %}
-                                {% set query_string = query_string ~ ' OR _id:"' ~ office.related_contact %}
-                            {% endif %}
-                            {% set contacts = queries.contact.search_with_url_arguments(q=query_string ~ '"') %}
-                                
-                            {% if contacts %}
-                                {%- for contact in contacts|sort(attribute='title') %}
-                                    <div class="content-l content-l__large-gutters">
-                                        <div class="content-l_col content-l_col-1">
-                                            <h2 class="h5">{{contact.title}}</h2>
-                                        </div>
+                        {% set query_string = '_id:"general-inqueries"' %}
+                        {% if office.related_contact %}
+                            {% set query_string = query_string ~ ' OR _id:"' ~ office.related_contact %}
+                        {% endif %}
+                        {% set contacts = queries.contact.search_with_url_arguments(q=query_string ~ '"') %}
+                            
+                        {% if contacts %}
+                            {%- for contact in contacts|sort(attribute='title') %}
+                                <div class="main-l main-l__large-gutters">
+                                    <div class="content-l_col content-l_col-1">
+                                        <h2 class="h5">{{contact.title}}</h2>
                                     </div>
-                                    <div class="content-l content-l__large-gutters block block__flush-top">
-                                        {{contact_macro.display_contact(contact)}}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
+                                </div>
+                                <div class="main-l main-l__large-gutters block block__flush-top">
+                                    {{contact_macro.display_contact(contact)}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        
                     </section>
     
                 </div>
