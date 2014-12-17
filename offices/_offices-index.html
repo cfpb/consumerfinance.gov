@@ -19,6 +19,8 @@
 
     {% import "post-macros.html" as post_macros with context %}
     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+    {% import "macros.html" as macros with context %}
+    {% import "/contact-us/contact-macro.html" as contact_macro with context %}
     
     {% set activities_feed = activity_snippets(activity_type) %}
     
@@ -255,8 +257,7 @@
                         <p class="short-desc">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                         </p>
-                        <div class="content-l
-                                    content-l__large-gutters">
+                        <div class="">
                             
                             {% set query_string = '_id:"general-inqueries"' %}
                             {% if office.related_contact %}
@@ -265,14 +266,15 @@
                             {% set contacts = queries.contact.search_with_url_arguments(q=query_string ~ '"') %}
                                 
                             {% if contacts %}
-                                {% for c in contacts %}
-                                    <section class="content-l_col 
-                                                    content-l_col-1-2">
-                                        <h2 class="h5">{{c.title}}</h2>
-                                        <a class="list_link" href="mailto:{{c.email_addr if c.email_addr}}">
-                                            {{c.email_addr}}
-                                        </a>
-                                    </section>
+                                {%- for contact in contacts|sort(attribute='title') %}
+                                    <div class="content-l content-l__large-gutters">
+                                        <div class="content-l_col content-l_col-1">
+                                            <h2 class="h5">{{contact.title}}</h2>
+                                        </div>
+                                    </div>
+                                    <div class="content-l content-l__large-gutters block block__flush-top">
+                                        {{contact_macro.display_contact(contact)}}
+                                    </div>
                                 {% endfor %}
                             {% endif %}
                         </div>
