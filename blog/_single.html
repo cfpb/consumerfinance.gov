@@ -30,7 +30,7 @@
 {% block content_sidebar %}
     <section class="block u-mt0">
         {% import "related-posts.html" as related_posts with context %}
-        {{ related_posts.render(post, 'posts,newsroom', 5) }}
+        {{ related_posts.render(post) }}
     </section>
     <section class="block">
         <h1 class="header-slug">
