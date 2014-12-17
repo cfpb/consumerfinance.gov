@@ -22,6 +22,7 @@
     {% import "macros.html" as macros with context %}
     {% import "contact-macro.html" as contact_macro with context %}
     
+    
     {% set activities_feed = activity_snippets(activity_type) %}
     
     <main class="content content__1-3" id="main" role="main">
@@ -44,8 +45,8 @@
                 <section class="block
                                 block__flush-top
                                 {% if office.intro_subscribe_form -%} 
-                                    main-l
-                                    main-l__large-gutters
+                                    content-l
+                                    content-l__large-gutters
                                 {%- endif %}">
                     {% if office.intro_text %}
                     <section class="office_intro 
@@ -80,8 +81,8 @@
                     {% if top_story.top_story_head %}
                     <h1 class="h3">{{top_story.top_story_head | safe}}</h1>
                     {% endif %}
-                    <div class="main-l
-                                main-l__large-gutters">
+                    <div class="content-l
+                                content-l__large-gutters">
                         {% if top_story.top_story_desc %}
                         <div class="content-l_col
                                     content-l_col-1-2">
@@ -160,8 +161,8 @@
                         <h1 class="h2">
                             Our Work
                         </h1>
-                        <div class="main-l 
-                                    main-l__large-gutters
+                        <div class="content-l 
+                                    content-l__large-gutters
                                     expandables-group">
                             
                             {% for initiative in initiatives %}
@@ -245,7 +246,7 @@
                             </a>
                         </section>
                     {% endif %}
-                    
+    
                     {% if office.related_contact %}
                         <section class="office_content 
                                         block
@@ -258,22 +259,23 @@
                             <p class="short-desc">
                                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                             </p>
-                            
-                            
+
+
                             {% set contact = get_document('contact', office.related_contact) %}
                             {% if contact %}
-                                    <div class="main-l main-l__large-gutters">
+                                    <div class="content-l content-l__large-gutters">
                                         <div class="content-l_col content-l_col-1">
                                             <h2 class="h5">{{contact.title}}</h2>
                                         </div>
                                     </div>
-                                    <div class="main-l main-l__large-gutters block block__flush-top">
+                                    <div class="content-l content-l__large-gutters block block__flush-top">
                                         {{contact_macro.render(contact)}}
                                     </div>
                             {% endif %}
-                        
+
                         </section>
                     {% endif %}
+    
                 </div>
 
             </div><!-- END .content_main -->
