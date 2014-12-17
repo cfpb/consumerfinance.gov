@@ -1,5 +1,5 @@
 {# Display a contact's data in two column format #}
-{% macro display_contact(contact) %}
+{% macro render(contact) %}
     <div class="content-l_col content-l_col-1-2">
         {{ contact.content|safe }}
     {%- if contact.web_addr %}
