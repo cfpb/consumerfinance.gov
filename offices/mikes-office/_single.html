@@ -1,9 +1,0 @@
-{% extends "_offices-single.html" %}
-
-{% set initiative = mikes_initiative %}
-
-{% set activity_type = "Students" %}
-
-{% set results = queries.office.search_with_url_arguments(q="_id:mikes-office",size=1) %}
-{% set office = results | first %}
-

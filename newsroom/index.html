@@ -1,4 +1,6 @@
-{% extends "base.html" %}
+{% extends "layout-side-nav.html" %}
+{% import "_vars-newsroom.html" as vars with context %}
+{% set view = get_document('views', 'newsroom') %}
 
 {% block title -%}
     Newsroom
@@ -8,81 +10,59 @@
     Press releases, speeches, op-eds, testimony, and blog posts produced by our Office of Communications
 {%- endblock %}
 
-{% block content %}
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
 
-
-    {# Variables #}
-
-    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
-    {% set query = queries.newsroom %}
-    {% set newsroom = query.search_with_url_arguments(size=10) %}
-    {% set view = get_document('views', 'newsroom') %}
-
-    {# Set 'posts' to the newsroom query to enable
-       some functions already developed for blog. #}
-    {% set posts = newsroom %}
-    {% set path = '/newsroom/' %}
-    {% set rss_path = '/feed/newsroom/' %}
+{% block content_main %}
 
     {# Get the latest Featured Topic #}
-    {% set featured_topic = queries.watchroom.search_with_url_arguments(size=1) %}
+    {% import "featured-topic.html" as featured_topics %}
+    {{ featured_topics.render(queries.watchroom.search_with_url_arguments(size=1)) }}
 
-    {# Macros #}
+    {# Set the filters #}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% set filter_by = ['category', 'tags', 'author', 'range_date'] %}
+    {{ filters(filter_by, vars.query, vars.newsrooms, 'newsroom',
+       { 'expand_label': 'Filter posts' }) }}
 
-    {% import "post-macros.html" as post_macros with context %}
+    {# Show the posts #}
+    {% import "posts-paginated.html" as posts_paginated with context %}
+    {{ posts_paginated.render(vars.newsrooms) }}
 
-
-    <main class="content content__1-3" id="main" role="main">
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper content_wrapper">
-
-            <aside class="content_sidebar content__flush-all-on-small">
-                {% include "_newsroom-nav.html" %}
-            </aside>
-
-            <div class="content_main content__flush-bottom content__flush-top-on-small">
-                <section>
-                    {{ post_macros.filters(['category', 'tags', 'author', 'range_date'],
-                        query, posts, 'newsroom', {'expand_label': 'Filter posts'}) }}
-                    {% include "featured-topic.html" %}
-                    {% include "posts-paginated.html" %}
+    {# Footer #}
+    <aside>
+        <section class="block">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Stay informed
+                </span>
+            </h1>
+            <div class="content-l">
+                <div class="block__sub content-l_col content-l_col-1-2">
+                    <p class="short-desc">
+                        Subscribe to our email newsletter. We will update you on new newsroom updates.
+                    </p>
+                    {% import "email-subscribe-form.html" as subscribe with context %}
+                    {{ subscribe.render(vars.query) }}
+                </div>
+                <div class="block__sub content-l_col content-l_col-1-2">
+                    {% import "rss.html" as rss %}
+                    {{ rss.render(vars.rss_path) }}
+                </div>
+            </div>
+        </section>
+        <div class="block u-mb0 block__flush-sides block__bg">
+            <div class="content-l">
+                <section class="block u-mt0 content-l_col content-l_col-1-2">
+                    {% import "related-links.html" as related_links %}
+                    {{ related_links.render(view.related_links) }}
                 </section>
-                <aside>
-                    <section class="block">
-                        <h1 class="header-slug">
-                            <span class="header-slug_inner">
-                                Stay informed
-                            </span>
-                        </h1>
-                        <div class="content-l">
-                            <div class="block__sub content-l_col content-l_col-1-2">
-                                <p class="short-desc">
-                                    Subscribe to our email newsletter. We will update you on new newsroom updates.
-                                </p>
-                                {% include "email-subscribe-form.html" %}
-                            </div>
-                            <div class="block__sub content-l_col content-l_col-1-2">
-                                {% include "rss.html" %}
-                            </div>
-                        </div>
-                    </section>
-                    <div class="block u-mb0 block__flush-sides block__bg">
-                        <div class="content-l">
-                            <section class="block u-mt0 content-l_col content-l_col-1-2">
-                                {% include "related-links.html" %}
-                            </section>
-                            <section class="block content-l_col content-l_col-1-2">
-                                {% include "upcoming-events.html" %}
-                            </section>
-                        </div>
-                    </div>
-                </aside>
-            </div><!-- END .content_main -->
+                <section class="block content-l_col content-l_col-1-2">
+                    {% include "upcoming-events.html" %}
+                </section>
+            </div>
+        </div>
+    </aside>
 
-        </div><!-- END .content_wrapper -->
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% endblock %}

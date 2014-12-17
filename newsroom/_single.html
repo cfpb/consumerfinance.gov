@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-newsroom.html" as vars with context %}
 
 {% block title -%}
     {{ newsroom.title }}
@@ -20,53 +21,45 @@
     <meta property="article:author" content="https://www.facebook.com/CFPB">
 {%- endblock %}
 
-{% block content %}
+{% block content_main %}
+    {% import "article.html" as article with context %}
+    {{ article.render(newsroom) }}
+    <aside class="press-information">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Press information
+            </span>
+        </h1>
+        <p class="short-desc">
+            If you want to republish the article or have questions about the content,
+            please contact the press office.
+        </p>
+        <a class="jump-link"
+           href="{{ path }}press-resources/">Go to press resources page</a>
+    </aside>
+{% endblock %}
 
-    {# Set a few variables needed for sharing of includes between Blog and Newsroom #}
-    {% set query = queries.newsroom %}
-    {% set post = newsroom %}
-    {% set path = '/newsroom/' %}
-    {% set rss_path = '/feed/newsroom/' %}
-
-    {% import "post-macros.html" as post_macros with context %}
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-        
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper content_wrapper">
-            <div class="content_main content_main__narrow">
-                <section>
-                    {% include "article.html" %}
-                    {% include "press-information.html" %}
-                </section>
-            </div>
-
-            <aside class="content_sidebar">
-                <section class="block u-mt0">
-                    {% include "related-posts.html" %}
-                </section>
-                <section class="block stay-informed">
-                    <div class="block__sub">
-                        <h1 class="header-slug">
-                            <span class="header-slug_inner">
-                                Stay informed
-                            </span>
-                        </h1>
-                        <p class="short-desc">
-                            Subscribe to our email newsletter. We will update you on new newsroom updates.
-                        </p>
-                        {% include "email-subscribe-form.html" %}
-                    </div>
-                    <div class="block__sub">
-                        {% include "rss.html" %}
-                    </div>
-                </section>
-            </aside><!-- END .content_sidebar -->
-            
-        </div><!-- END .content_wrapper -->
-        
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% block content_sidebar %}
+    <section class="block u-mt0">
+        {% import "related-posts.html" as related_posts with context %}
+        {{ related_posts.render(newsroom, 'posts,newsroom', 5) }}
+    </section>
+    <section class="block stay-informed">
+        <div class="block__sub">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Stay informed
+                </span>
+            </h1>
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new newsroom updates.
+            </p>
+            {% import "email-subscribe-form.html" as subscribe with context %}
+            {{ subscribe.render(vars.query) }}
+        </div>
+        <div class="block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(vars.rss_path) }}
+        </div>
+    </section>
+{% endblock %}

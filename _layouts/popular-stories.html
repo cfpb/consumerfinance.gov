@@ -1,4 +1,6 @@
 
+{% macro render(popular_posts) %}
+
 <div class="popular-stories">
     <h1 class="header-slug">
         <span class="header-slug_inner">
@@ -6,13 +8,6 @@
         </span>
     </h1>
     <ul class="list list__unstyled list__spaced">
-    {# {% for slug in view.popular_posts %} #}
-    {% set popular_posts = [
-        'spring-2014-rulemaking-agenda',
-        'our-board-and-council-meetings-are-changing',
-        'save-the-date-join-us-for-a-consumer-advisory-board-meeting-in-reno-nevada',
-        'demystifying-the-government-contracting-process'
-    ] %}
     {% for slug in popular_posts %}
         {% set pop_post = get_document('posts', slug) %}
         <li class="list_item">
@@ -24,3 +19,5 @@
     {% endfor %}
     </ul>
 </div>
+
+{% endmacro %}

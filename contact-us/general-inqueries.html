@@ -1,3 +1,4 @@
+{% from "macros.html" import format_phone as format_phone %}
 {% set general_inqueries = get_document('contact', 'general-inqueries') %}
 
 <h1 class="h4">
@@ -19,7 +20,7 @@
     <li class="list_item">
         <span class="cf-icon cf-icon-phone list_icon"></span>
         <span class="short-desc">
-            {{ macros.format_phone(general_inqueries.phone_num) }}
+            {{ format_phone(general_inqueries.phone_num) }}
         </span>
     </li>
 {%- endif %}
@@ -27,7 +28,7 @@
     <li class="list_item">
         <span class="cf-icon cf-icon-fax list_icon"></span>
         <span class="short-desc">
-            {{ macros.format_phone(general_inqueries.fax_num) }}
+            {{ format_phone(general_inqueries.fax_num) }}
         </span>
     </li>
 {%- endif %}                            

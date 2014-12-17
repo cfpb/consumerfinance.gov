@@ -1,4 +1,6 @@
-{% extends "base.html" %}
+{% extends "layout-side-nav.html" %}
+{% import "_vars-doing-business-with-us.html" as vars with context %}
+{%- set active_nav_id = 'past-awards' -%}
 
 {% block title -%}
     Doing Business with Us: Past Awards
@@ -8,52 +10,26 @@
     Information about the history of procurements by the CFPB.
 {%- endblock %}
 
+{% block content_main_modifiers %}
+    {{ super() }} content__flush-bottom
+{% endblock %}
 
-{% block content %}
+{% block content_main %}
 
-    {# Variables #}
-    
-    {% set path = '/doing-business-with-us/' %}
-    {%- set active_page = 'past-awards' -%}
-    
-    <main class="content content__1-3" id="main" role="main">
+    <h1>Procurement History</h1>
+    <p class="h3">
+        Each year, we publish information about our contracts and awards from the preceding fiscal year.
+        This can be helpful in understanding the kinds of products and services we procure and how that may
+        change over time. In recent years, we have published three procurement review documents: a summary
+        worksheet of our largest awards, an inventory of all of our service contracts, and a memo to the
+        Office of Management and Budget that describes any planned analysis. For other types of financial
+        information,
+        <a href="/budget/">see our budget and strategy</a>.
+    </p>
 
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
+    {% set page = get_document('pages', '63219') %}
+    {{ page.content | safe }}
 
-        <div class="wrapper content_wrapper office">
+    {% include "_process-smbiz-footer.html" %}
 
-            <aside class="content_sidebar content__flush-all-on-small">
-                {% include "_doing-business-with-us-nav.html" %}
-            </aside>
-
-            <div class="content_main 
-                        content__flush-bottom 
-                        content__flush-top-on-small">
-
-                <h1>Procurement History</h1>
-                <p class="h3">
-                    Each year, we publish information about our contracts and
-                    awards from the preceding fiscal year.
-                    This can be helpful in understanding the kinds of products
-                    and services we procure and how that may change over time.
-                    In recent years, we have published three procurement
-                    review documents: a summary worksheet of our largest awards,
-                    an inventory of all of our service contracts, and a memo
-                    to the Office of Management and Budget that describes
-                    any planned analysis.
-                    For other types of financial information,
-                    <a href="/budget/">see our budget and strategy</a>.
-                </p>
-
-                {% set page = get_document('pages', '63219') %}
-                {{ page.content | safe }}
-
-                {% include "_process-smbiz-footer.html" %}
-
-            </div><!-- END .content_main -->
-
-        </div><!-- END .content_wrapper -->
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% endblock %}

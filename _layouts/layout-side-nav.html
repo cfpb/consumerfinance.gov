@@ -1,0 +1,33 @@
+{% extends "layout-1-3.html" %}
+
+{#
+    docs/layout-side-nav.html
+
+    Since layout-side-nav.html extends from layout-1-3.html all we need to do
+    is set some side nav variables and override the `content_sidebar` block to
+    add the nav macro.
+#}
+
+{# Side nav vars #}
+{% if section_vars and section_vars.nav_items %}
+    {% set nav_items = section_vars.nav_items %}
+{% else %}
+    {% set nav_items = [("/_layouts/layout-side-nav.html", "", "Please review the instructions in _layouts/layout-side-nav.html for setting up the side nav.")] %}
+{% endif %}
+{% set active_nav_id = active_nav_id|default("index") -%}
+
+{# Adding the side nav macro #}
+{% block content_sidebar %}
+    {% import "sidenav.html" as sidenav %}
+    {{ sidenav.render(vars.nav_items, active_nav_id) }}
+{% endblock %}
+
+{# Extra classes needed for .content_sidebar #}
+{% block content_sidebar_modifiers -%}
+    content__flush-all-on-small
+{%- endblock %}
+
+{# Extra classes needed for .content_main #}
+{% block content_main_modifiers -%}
+    content__flush-top-on-small
+{%- endblock %}
