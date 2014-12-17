@@ -1,0 +1,35 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-sheer-layouts.html" as vars with context %}
+
+{% block title -%}
+    2-1 bleedbar layout
+{%- endblock %}
+
+{% block desc -%}
+    An example of using layout-2-1-bleedbar.html
+{%- endblock %}
+
+{% block content_main %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h4">
+            <code>{% raw %}{% block content_main %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+<div class="block__sub" style="text-align:center;">
+    <a class="jump-link jump-link__left jump-link__before" href="{{ vars.path }}">
+        <span class="jump-link_text">Back to Sheer layouts</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block content_sidebar %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h4">
+            <code>{% raw %}{% block content_sidebar %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}
