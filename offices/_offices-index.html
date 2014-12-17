@@ -176,25 +176,25 @@
         {% endif %}
 
         {% if office.related_contact %}
+        {% set contact = get_document('contact', office.related_contact) %}
+        {% if contact %}
         <section class="office_content block u-mb0">
             <h1 class="header-slug">
                 <span class="header-slug_inner">
                     Office Contact Information
                 </span>
             </h1>
-            <p class="short-desc">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-            </p>
-            {% set contact = get_document('contact', office.related_contact) %}
-            {% if contact %}
+            {% if contact.sitewide_desc %}
+            <p class="short-desc">{{ contact.sitewide_desc }}</p>
+            {% endif %}
             <div class="content-l content-l__large-gutters">
                 <div class="content-l_col content-l_col-1">
                     <h2 class="h5">{{ contact.title }}</h2>
                 </div>
             </div>
             {{ contact_macro.render( contact, 'block block__flush-top' ) }}
-            {% endif %}
         </section>
+        {% endif %}
         {% endif %}
 
     </div>
