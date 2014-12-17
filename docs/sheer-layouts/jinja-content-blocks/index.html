@@ -1,0 +1,96 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-sheer-layouts.html" as vars with context %}
+
+{% block demo_title -%}
+    Content blocks
+{%- endblock %}
+
+{% block title -%}
+    Content blocks
+{%- endblock %}
+
+{% block desc -%}
+    Map of all of the content blocks that can be overriden.
+{%- endblock %}
+
+{% block hero -%}
+<div class="block__sub" style="text-align:center;">
+    <a class="jump-link jump-link__left jump-link__before" href="{{ vars.path }}">
+        <span class="jump-link_text">Back to Sheer layouts</span>
+    </a>
+</div>
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h2">
+            <code>{% raw %}{% block hero %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{%- endblock %}
+
+{% block pre_content %}
+<div class="padded-container" style="text-align:center; margin:0 0 1px; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h2">
+            <code>{% raw %}{% block pre_content %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block body_content %}
+<div class="expandable" style="margin:0 0 1px;">
+    <div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+        <div class="padded-container_body">
+            <h1 class="h2">
+                <code>{% raw %}{% block body_content %}{% endraw %}</code>
+            </h1>
+            <button class="btn btn__secondary">
+                <span class="expandable_target">
+                    <span class="expandable_cue-open">
+                        Show child blocks
+                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide child blocks
+                        <span class="cf-icon cf-icon-up"></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="expandable_content">
+        {{ super() }}
+    </div>
+</div>
+{% endblock %}
+
+{% block content_main %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h4">
+            <code>{% raw %}{% block content_main %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content_sidebar %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h4">
+            <code>{% raw %}{% block content_sidebar %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block post_content %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h2">
+            <code>{% raw %}{% block post_content %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}
