@@ -1,10 +1,12 @@
 
-{% macro render(post, doc_types, quantity) %}
+{% macro render(post, doc_types='posts,newsroom', quantity=5, header='Related posts') %}
 
-<div class="related-posts">
+{% from "macros.html" import slugify as slugify %}
+
+<div class="{{ slugify(header) }}">
     <h1 class="header-slug">
         <span class="header-slug_inner">
-            Related posts
+            {{ header }}
         </span>
     </h1>
     <ul class="list list__unstyled list__spaced">
