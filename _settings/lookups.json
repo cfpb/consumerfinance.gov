@@ -9,11 +9,6 @@
     "type" : "initiative",
     "permalink" : true
   },
-  "mikes_initiative":{
-    "url" : "/offices/mikes-office/<id>/",
-    "type" : "initiative",
-    "permalink" : true
-  },
   "newsroom":{
     "url" : "/newsroom/<id>/",
     "type" : "newsroom",

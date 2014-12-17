@@ -1,4 +1,6 @@
-{% extends "base.html" %}
+{% extends "layout-side-nav.html" %}
+{% import "_vars-doing-business-with-us.html" as vars with context %}
+{%- set active_nav_id = 'small-businesses' -%}
 
 {% block title -%}
     Doing Business with Us: Small, women-owned, and minority-owned businesses
@@ -8,95 +10,67 @@
     Information about engaging with the CFPB as a small, woman-owned, or minority-owned business.
 {%- endblock %}
 
+{% block content_main_modifiers %}
+    {{ super() }} content__flush-bottom
+{% endblock %}
 
-{% block content %}
+{% block content_main %}
 
-    {# Variables #}
-    
-    {% set path = '/doing-business-with-us/' %}
-    {%- set active_page = 'small-businesses' -%}
-    
-    <main class="content content__1-3" id="main" role="main">
+    <h1>Small businesses & minorities</h1>
+    <p class="h3">
+        We offer information here to help small, women-owned, and minority-owned businesses particpate in the
+        procurement and award process. We also publish information about existing awards to Small Business
+        Administration-designated business classes. We are dedicated to working with small business
+        owners—particularly women, minorities, and service-disabled veterans—and we welcome feedback about how
+        we're doing.
+        <a href="/budget/">see our budget and strategy</a>.
+    </p>
 
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
+    <div class="block content-l">
 
-        <div class="wrapper content_wrapper office">
+        <div class="content-l_col
+                    content-l_col-1-2">
+            <p class="short-desc">
+                Here's what you should know about working with the CFPB as a small business.
+            </p>
+            <ul class="list__links list__icons">
+                <li class="list_item">
+                    <a class="list_link icon-link icon-link__before icon-link__pdf"
+                       href="http://files.consumerfinance.gov/f/201305_cfpb_Small-business-guide.pdf">
+                        <span class="icon-link_text">Read our small business guidelines</span>
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link icon-link icon-link__before icon-link__pdf"
+                       href="http://files.consumerfinance.gov/f/201310_cfpb_sb-intake-form.pdf">
+                        <span class="icon-link_text">Complete our small business intake form</span>
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a class="list_link icon-link icon-link__before icon-link__pdf" href="#">
+                        <span class="icon-link_text">Info for women- and minority-owned businesses
+                            (LINK NEEDED)</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-            <aside class="content_sidebar content__flush-all-on-small">
-                {% include "_doing-business-with-us-nav.html" %}
-            </aside>
+        <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+            <p class="short-desc">
+                The System of Award Management has tools to help small businesses
+                compete for federal business.
+                Registration is free.
+            </p>
+            <a class="jump-link jump-link__external-link" href="https://www.sam.gov/">
+                <span class="jump-link_text">Register with the System for Award Management at SAM.gov</span>
+            </a>
+        </div>
 
-            <div class="content_main 
-                        content__flush-bottom 
-                        content__flush-top-on-small">
+    </div>
 
-                <h1>Small businesses & minorities</h1>
-                <p class="h3">
-                    We offer information here to help small, women-owned, and
-                    minority-owned businesses particpate in the procurement and award process.
-                    We also publish information about existing awards to
-                    Small Business Administration-designated business classes.
-                    We are dedicated to working with small business owners—particularly women, minorities,
-                    and service-disabled veterans—and we welcome feedback about how we're doing.
-                    <a href="/budget/">see our budget and strategy</a>.
-                </p>
+    {% set page = get_document('pages', '63223') %}
+    {{ page.content | safe }}
 
-                <div class="block content-l">
+    {% include "_process-future-footer.html" %}
 
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        <p class="short-desc">
-                            Here's what you should know about working with the CFPB as a small business.
-                        </p>
-                        <ul class="list__links list__icons">
-                            <li class="list_item">
-                                <a class="list_link icon-link icon-link__before icon-link__pdf"
-                                   href="http://files.consumerfinance.gov/f/201305_cfpb_Small-business-guide.pdf">
-                                    <span class="icon-link_text">Read our small business guidelines</span>
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="list_link icon-link icon-link__before icon-link__pdf"
-                                   href="http://files.consumerfinance.gov/f/201310_cfpb_sb-intake-form.pdf">
-                                    <span class="icon-link_text">Complete our small business
-                                        intake form</span>
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="list_link icon-link icon-link__before icon-link__pdf"
-                                   href="http://files.consumerfinance.gov/f/201305_cfpb_Small-business-guide.pdf">
-                                    <span class="icon-link_text">Info for women- and minority-owned
-                                        businesses (LINK NEEDED)</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="content-l_col
-                                content-l_col-1-2
-                                content-l_col__before-divider">
-                        <p class="short-desc">
-                            The System of Award Management has tools to help small businesses
-                            compete for federal business.
-                            Registration is free.
-                        </p>
-                        <a class="jump-link jump-link__external-link" href="https://www.sam.gov/">
-                            <span class="jump-link_text">Register with the System for Award Management
-                                at SAM.gov</span>
-                        </a>
-                    </div>
-
-                </div>
-
-                {% set page = get_document('pages', '63223') %}
-                {{ page.content | safe }}
-
-                {% include "_process-future-footer.html" %}
-
-            </div><!-- END .content_main -->
-
-        </div><!-- END .content_wrapper -->
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% endblock %}

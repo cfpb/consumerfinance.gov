@@ -1,0 +1,11 @@
+{% extends "content-base.html" %}
+
+{% block body_content scoped %}
+<div class="wrapper content_wrapper">
+    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
+        <section>
+            {% block content_main scoped -%}{%- endblock %}
+        </section>
+    </div>
+</div>
+{% endblock %}

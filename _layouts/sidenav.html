@@ -1,0 +1,45 @@
+
+{% macro render(items, active_item_id) %}
+
+<nav class="nav-secondary expandable">
+    <h1 class="u-visually-hidden">
+{%- for href, id, caption in items %}
+    {% if id == 'index' %}
+        {{ caption|e }} navigation
+    {% endif %}
+{%- endfor %}
+    </h1>
+    <div class="expandable_header">
+        <button class="expandable_target nav-secondary_link nav-secondary_link__button">
+            <span class="expandable_header-left">
+        {%- for href, id, caption in items %}
+            {% if id == active_item_id %}
+                {{ caption|e }}
+            {% endif %}
+        {%- endfor %}
+            </span>
+            <span class="expandable_header-right">
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-down cf-icon__green"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-up cf-icon__green"></span>
+                </span>
+            </span>
+        </button>
+    </div>
+    <div class="expandable_content">
+        <ul class="nav-secondary_list">
+        {%- for href, id, caption in items %}
+            <li class="nav-secondary_item">
+                <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_item_id }}"
+                   href="{{ href|e }}">
+                   {{ caption|e }}
+               </a>
+            </li>
+        {%- endfor %}
+        </ul>
+    </div>
+</nav>
+
+{% endmacro %}

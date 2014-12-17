@@ -1,0 +1,10 @@
+
+{% set path = '/newsroom/' %}
+{% set rss_path = '/feed/newsroom/' %}
+{% set nav_items = [
+    (path, 'index', 'Newsroom'),
+    (path + 'press-resources/', 'press-resources', 'Press Resources')
+] %}
+
+{% set query = queries.newsroom %}
+{% set newsrooms = query.search_with_url_arguments(size=10) %}

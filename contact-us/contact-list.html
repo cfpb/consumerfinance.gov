@@ -1,3 +1,4 @@
+{% import "contact-macro.html" as contact_macro %}
 
 <div class="type-and-filter">
 
@@ -45,7 +46,7 @@
              id ="contact-list_header">
             Office name
         </div>
-{%- for contact in contacts|sort(attribute='title') %}
+    {%- for contact in contacts|sort(attribute='title') %}
         <article class="js-type-and-filter_item expandable expandable__padded">
             <button class="expandable_header expandable_target">
                 <span class="expandable_header-left expandable_label">
@@ -63,9 +64,7 @@
                 </span>
             </button>
             <div class="expandable_content">
-                <div class="content-l">
-                    {{ contact_macro.render(contact) }}
-                </div><!-- END .content-l -->
+                {{ contact_macro.render(contact) }}
             </div><!-- END .expandable_content -->
         </article><!-- END .expandable -->
     {%- endfor %}

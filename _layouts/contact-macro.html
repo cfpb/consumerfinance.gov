@@ -1,5 +1,9 @@
 {# Display a contact's data in two column format #}
-{% macro render(contact) %}
+{% macro render(contact, classes) %}
+
+{% from "macros.html" import format_phone as format_phone %}
+
+<div class="content-l content-l__large-gutters{{ ' ' + classes if classes }}">
     <div class="content-l_col content-l_col-1-2">
         {{ contact.content|safe }}
     {%- if contact.web_addr %}
@@ -31,7 +35,7 @@
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="short-desc">
-                    {{ macros.format_phone(contact.phone_num) }}
+                    {{ format_phone(contact.phone_num) }}
                 </span>
             {%- if contact.phone_desc %}
                 <span class="micro-copy micro-copy__large">
@@ -44,7 +48,7 @@
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="short-desc">
-                    {{ macros.format_phone(contact.phone_2_num) }}
+                    {{ format_phone(contact.phone_2_num) }}
                 </span>
             </li>
         {%- endif %}
@@ -52,7 +56,7 @@
             <li class="list_item">
                 <span class="cf-icon cf-icon-fax list_icon"></span>
                 <span class="short-desc">
-                    {{ macros.format_phone(contact.fax_num) }}
+                    {{ format_phone(contact.fax_num) }}
                 </span>
             </li>
         {%- endif %}
@@ -75,4 +79,6 @@
         </p>
     {%- endif %}
     </div><!-- END .content-l_col -->
+</div><!-- END .content-l -->
+
 {% endmacro %}

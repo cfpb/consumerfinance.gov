@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "layout-full.html" %}
+{% import "_vars-activity-log.html" as vars with context %}
 
 {% block title -%}
     Activity Log
@@ -8,78 +9,64 @@
     Activity Log
 {%- endblock %}
 
-{% block content %}
+{% block content_main %}
 
-    <main class="content" id="main" role="main">
+    {% set archives = vars.query.search_with_url_arguments(size=30) %}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% from "post-macros.html" import category_icon as category_icon %}
+    {% from "post-macros.html" import pagination as pagination with context %}
 
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
+    <h1>Activity Log</h1>
+    <p class="h3">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
+        voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
+        molestias non optio enim dignissimos amet consequatur.
+    </p>
 
-        <div class="wrapper content_wrapper">
-            <div class="content_main">
-                <section>
+    <div class="block__sub u-mb0">
+        
+        <div id="pagination_content"></div>
 
-                    {% set query = queries.archive %}
-                    {% set archives = query.search_with_url_arguments(size=30) %}
-                    {% import "post-macros.html" as post_macros with context %}
+        {{ filters(
+                ['activity_category', 'tags', 'range_date'], vars.query, archives, 'calendar_event',
+                { 'expand_label': 'Filter activities' }
+            ) }}
 
-                    <h1>Activity Log</h1>
-                    <p class="h3">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
-                        voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
-                        molestias non optio enim dignissimos amet consequatur.
-                    </p>
+        <table class="u-w100pct">
+            <tbody>
+            {%- for item in archives %}
+                <tr>
+                    <td class="u-w20pct">
+                        {%- if item.type == 'newsroom' -%}
+                            {%- if item.category.0 %}
+                                {%- set activity_type = item.category.0 %}
+                            {%- endif -%}
+                        {%- elif item.type == 'posts' -%}
+                            {% set activity_type = 'blog' %}
+                        {%- endif %}
+                        <span class="category-slug u-mb0">
+                            {{ category_icon(activity_type, 'category-slug_icon')|safe }}
+                            <span class="u-visually-hidden">Activity type:</span>
+                            {{ activity_type }}
+                        </span>
+                    </td>
+                    <td class="u-w65pct">
+                        <a href="{{ item.permalink }}">
+                            <h4 class="u-mb0">
+                                {{ item.title }}
+                            </h4>
+                        </a>
+                    </td>
+                    <td class="u-w15pct">
+                        {{ item.date|date("%b %d, %Y") }}
+                    </td>
+                </tr>
+            {%- endfor %}
+            </tbody>
+        </table>
 
-                    <div class="block u-mt30">
-                        
-                        <div id="pagination_content"></div>
+        {{- pagination(archives, ['activity_category', 'tags', 'range_date']) }}
 
-                        {{ post_macros.filters(
-                                ['activity_category', 'tags', 'range_date'], query, archives, 'calendar_event',
-                                { 'expand_label': 'Filter activities' }
-                            ) }}
+    </div>
 
-                        <table class="u-w100pct">
-                            <tbody>
-                            {%- for item in archives %}
-                                <tr>
-                                    <td class="u-w20pct">
-                                        {%- if item.type == 'newsroom' -%}
-                                            {%- if item.category.0 %}
-                                                {%- set activity_type = item.category.0 %}
-                                            {%- endif -%}
-                                        {%- elif item.type == 'posts' -%}
-                                            {% set activity_type = 'blog' %}
-                                        {%- endif %}
-                                        <span class="category-slug u-mb0">
-                                            {{ post_macros.category_icon(activity_type, 'category-slug_icon')|safe }}
-                                            <span class="u-visually-hidden">Activity type:</span>
-                                            {{ activity_type }}
-                                        </span>
-                                    </td>
-                                    <td class="u-w65pct">
-                                        <a href="{{ item.permalink }}">
-                                            <h4 class="u-mb0">
-                                                {{ item.title }}
-                                            </h4>
-                                        </a>
-                                    </td>
-                                    <td class="u-w15pct">
-                                        {{ item.date|date("%b %d, %Y") }}
-                                    </td>
-                                </tr>
-                            {%- endfor %}
-                            </tbody>
-                        </table>
-
-                        {{- post_macros.pagination(archives, ['activity_category', 'tags', 'range_date']) }}
-
-                    </div>
-
-                </section>
-            </div><!-- END .content_main -->
-        </div><!-- END .content_wrapper -->
-
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% endblock %}

@@ -1,0 +1,9 @@
+
+{% set query = queries.initiative %}
+{% set filter = 'related_office:' + office.slug %}
+{% set initiatives = query.search_with_url_arguments(size=100,q=filter) %}
+
+{% set nav_items = [(path, 'index', office.title)] -%}
+{% for initiative in initiatives %}
+    {%- set _ignore = nav_items.append((path + initiative.slug+'/', initiative.slug, initiative.title|safe)) -%}
+{% endfor %}
