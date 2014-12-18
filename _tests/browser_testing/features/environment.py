@@ -68,8 +68,8 @@ def before_all(context):
         context.logger.info("Running Sauce with capabilities: %s" %
                             desired_capabilities)
 
-        sauce_config = {"username": os.getenv('SAUCE_USER'),
-                        "access-key": os.getenv("SAUCE_KEY")}
+        sauce_config = {"username": os.getenv('SAUCE_USERNAME'),
+                        "access-key": os.getenv("SAUCE_ACCESS_KEY")}
         context.sauce_config = sauce_config
 
         driver = webdriver.Remote(
