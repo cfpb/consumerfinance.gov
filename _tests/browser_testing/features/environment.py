@@ -168,7 +168,7 @@ def after_all(context):
 
 def setup_logger(context):
     # create logger
-    logger = logging.getLogger('OAH_browser_tests: ')
+    logger = logging.getLogger('cfgov-refresh_browser_tests: ')
     logger.setLevel(context.log_level)
 
     # create console handler and set level to debug
