@@ -71,8 +71,6 @@ def before_all(context):
         sauce_config = {"username": os.getenv('SAUCE_USERNAME'),
                         "access-key": os.getenv("SAUCE_ACCESS_KEY")}
         context.sauce_config = sauce_config
-        context.logger.info("Using command executor http://%s:%s@ondemand.saucelabs.com:80/wd/hub" %
-            (sauce_config['username'], sauce_config['access-key']))
 
         driver = webdriver.Remote(
             desired_capabilities=desired_capabilities,
