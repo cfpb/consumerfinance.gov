@@ -58,9 +58,9 @@ Examples:
 Scenario Outline: Test that clicking Clear filters actually clears filters
   When I click the checkbox for "<category_name>"
     And I enter "<topic_search>" into the topic search box
-    And I click the "<topic_name>" option in the results
+    And I click the "<topic_name>" topic option in the results
     And I enter "<author_search>" into the author search box
-    And I click the "<author_name>" option in the results
+    And I click the "<author_name>" author option in the results
     And I set a date filter of "<from_month>", "<from_year>" to "<to_month>", "<to_year>"
     And I click Clear filters
   Then I should see 0 filters chosen

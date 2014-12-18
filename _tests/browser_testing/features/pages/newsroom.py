@@ -84,7 +84,10 @@ class Newsroom(Base):
         filter_posts_display_button = self.driver.find_element_by_xpath(
             FILTER_POSTS_BUTTON
         )
-        if filter_posts_display_button.get_attribute(FILTER_PRESSED) == 'false':
+        parent_element = self.driver.find_element_by_xpath(
+            '{0}/..'.format(FILTER_POSTS_BUTTON)
+        )
+        if parent_element.get_attribute(FILTER_PRESSED) == 'false':
             filter_posts_display_button.click()
             self.utils.zzz(1)
 
@@ -173,8 +176,8 @@ class Newsroom(Base):
             self.driver.find_element_by_id(PAGINATION_SUBMIT).click()
 
     def get_current_page_number(self):
-        scroll_to_element(
-            self.driver, self.driver.find_element_by_id(PAGINATION_SUBMIT)
+        self.scroll_to_element(
+            self.driver.find_element_by_id(PAGINATION_SUBMIT)
         )
         current_page_input = self.driver.find_element_by_id(CURRENT_PAGE)
         return current_page_input.get_attribute('value')
