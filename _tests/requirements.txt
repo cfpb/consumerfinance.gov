@@ -1,3 +1,0 @@
-selenium==2.44.0
-Flask-Testing==0.4.2
--e git+https://github.com/cfpb/sheer.git#egg=sheer

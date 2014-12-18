@@ -3,17 +3,17 @@ import ConfigParser
 import logging
 import httplib
 import base64
+import multiprocessing
 
 from datetime import datetime
 from selenium import webdriver
+from elasticsearch import Elasticsearch
+from sheer.wsgi import app_with_config
 
 from pages.screenshot import Screenshot
 from pages.base import Base
-from pages.home import Home
-from pages.loan_comparison import LoanComparison
-from pages.loan_options import LoanOptions
 from pages.navigation import Navigation
-from pages.rate_checker import RateChecker
+from pages.newsroom import Newsroom
 from pages.utils import Utils
 
 
@@ -21,6 +21,26 @@ try:
     import json
 except ImportError:
     import simplejson as json
+
+
+index_name = "cfgov_test"
+root = os.path.join(os.getcwd(), '../..')
+
+class LiveServer(object):
+    def __init__(self):
+        config = dict(debug=False,
+                      location=os.path.join(os.getcwd(), '../..'),
+                      elasticsearch=[{'host': 'localhost', 'port': 9200}],
+                      index=index_name)
+        self.app = app_with_config(config)
+        worker = lambda app, port: app.run(port=7000, use_reloader=False)
+        self.process = multiprocessing.Process(
+                    target=worker, args=(self.app, 7000)
+                  )
+        self.process.start()
+
+    def terminate(self):
+        self.process.terminate()
 
 
 def before_all(context):
@@ -63,17 +83,8 @@ def before_all(context):
 
     context.base = Base(context.logger, context.directory,
                         context.base_url, driver, 10, context.delay_secs)
-    context.home = Home(context.logger, context.directory,
+    context.newsroom = Newsroom(context.logger, context.directory,
                         context.base_url, driver, 10, context.delay_secs)
-    context.loan_comparison = LoanComparison(context.logger, context.directory,
-                                             context.base_url, driver, 10,
-                                             context.delay_secs)
-    context.loan_options = LoanOptions(context.logger, context.directory,
-                                       context.base_url, driver, 10,
-                                       context.delay_secs)
-    context.rate_checker = RateChecker(context.logger, context.directory,
-                                       context.base_url,
-                                       driver, 10, context.delay_secs)
     context.navigation = Navigation(context.logger, context.directory,
                                     context.base_url,
                                     driver, 10, context.delay_secs)
@@ -81,7 +92,26 @@ def before_all(context):
 
     context.utils = Utils(context.base)
 
+    context.server = LiveServer()
+
     context.logger.info('TEST ENVIRONMENT = %s' % context.base_url)
+
+    es = Elasticsearch()
+    if es.indices.exists(index_name):
+        es.indices.delete(index_name)
+    es.indices.create(index=index_name)
+
+    # Create the mappings
+    create_mapping('newsroom', os.path.join(root, '_settings/posts_mappings.json'))
+    create_mapping('watchroom', os.path.join(root, '_settings/posts_mappings.json'))
+
+    # Index the documents
+    index_documents('newsroom', os.path.join(root, '_tests/browser_testing/fixtures/newsroom.json'))
+    index_documents('views', os.path.join(root, '_tests/browser_testing/fixtures/views.json'))
+    index_documents('watchroom', os.path.join(root, '_tests/browser_testing/fixtures/watchroom.json'))
+
+    
+    
 
 def before_feature(context, feature):
     context.logger.info('STARTING FEATURE %s' % feature)
@@ -130,6 +160,10 @@ def after_all(context):
         result = connection.getresponse()
         context.logger.info(result.read())
         context.logger.info("Sauce update status: %s" % result.status)
+
+    es = Elasticsearch()
+    es.indices.delete(index_name)
+    context.server.terminate()
 
 
 def setup_logger(context):
@@ -194,3 +228,22 @@ def setup_config(context):
                                                      'take_screenshots')
     else:
         context.take_screenshots = False
+
+def create_mapping(doc_type, mapping_json_path):
+    es = Elasticsearch()
+    mapping_json = open(os.path.join(root, mapping_json_path))
+    mapping = json.load(mapping_json)
+    es.indices.put_mapping(index=index_name,
+                           doc_type=doc_type,
+                           body={doc_type: mapping})
+
+def index_documents(doc_type, json_path):
+    es = Elasticsearch()
+    json_file = open(os.path.join(root, json_path))
+    documents = json.load(json_file)
+
+    for document in documents:
+        es.create(index=index_name,
+                  doc_type=doc_type,
+                  id=document['_id'],
+                  body=document)

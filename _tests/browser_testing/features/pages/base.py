@@ -39,6 +39,7 @@ class Base(object):
 
     def go(self, relative_url=''):
         full_url = self.utils.build_url(self.base_url, relative_url)
+        print full_url
         try:
             self.logger.info("Getting %s" % full_url)
             self.driver.get(full_url)
