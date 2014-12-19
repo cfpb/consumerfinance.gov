@@ -33,7 +33,7 @@ class LiveServer(object):
                       elasticsearch=[{'host': 'localhost', 'port': 9200}],
                       index=index_name)
         self.app = app_with_config(config)
-        worker = lambda app, port: app.run(port=7000, use_reloader=False)
+        worker = lambda app, port: app.run(host='0.0.0.0', port=7000, use_reloader=False)
         self.process = multiprocessing.Process(
                     target=worker, args=(self.app, 7000)
                   )
