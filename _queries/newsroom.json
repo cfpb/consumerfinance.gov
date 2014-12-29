@@ -3,7 +3,7 @@
   "query": {
     "size": 10,
     "sort": "date:desc",
-    "doc_type": "newsroom"
+    "doc_type": "newsroom,posts"
   },
   "filters": [
     {
