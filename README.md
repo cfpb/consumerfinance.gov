@@ -80,10 +80,11 @@ $ npm install -g grunt-cli bower browserify
 ### Developing
 
 Each time you fetch from upstream, install dependencies with npm and
-run `grunt` to build everything:
+`grunt vendor`, then run `grunt` to rebuild everything:
 
 ```bash
 $ npm install
+$ grunt vendor
 $ grunt
 ```
 
