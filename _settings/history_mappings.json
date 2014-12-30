@@ -1,23 +1,23 @@
 {
   "properties": {
     "title": {
-      "type": "string",
+      "type":  "string",
       "store": "yes"
     },
     "parent": {
-      "type": "string",
+      "type":  "string",
       "index": "not_analyzed"
     },
     "id": {
-      "type": "string",
+      "type":  "string",
       "index": "not_analyzed"
     },
     "has_parent": {
-      "type": "string",
+      "type":  "string",
       "index": "not_analyzed"
     },
     "date": {
-      "type": "date",
+      "type":  "date",
       "store": "yes"
     }
   }

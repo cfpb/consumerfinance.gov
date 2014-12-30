@@ -367,8 +367,8 @@ module.exports = function(grunt) {
      * Add files to monitor below.
      */
     watch: {
-      gruntfile: {
-        files: ['Gruntfile.js', 'static/css/*.less', '<%= uglify.bodyScripts.src %>'],
+      all: {
+        files: ['Gruntfile.js', 'static/css/*.less', '<%= concat.bodyScripts.src %>'],
         tasks: ['default']
       },
       css: {
