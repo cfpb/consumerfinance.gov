@@ -13,7 +13,6 @@ unless it is marked as such or appears on www.consumerfinance.gov.
 We welcome your feedback and contributions.
 
 - [Find out about contributing](https://cfpb.github.io/capital-framework/contributing/)
-  _More specific cfgov-refresh contributing guidelines are coming soon._
 - [File a bug](https://github.com/cfpb/cfgov-refresh/issues/new?body=%23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior%0D%0D%0D%23%23%20Steps%20to%20Reproduce%0D%0D%0D%23%23%20Screenshot&labels=bug)
 
 
@@ -110,6 +109,86 @@ To view the site browse to: <http://localhost:7000/>
 
 To view the project layout docs and pattern library,
 go to <http://localhost:7000/docs/>
+
+
+## Working with the templates
+
+### Simple static template setup
+
+By default, Sheer will render pages at their natural paths in the project's file
+structure.
+For example, going to <http://localhost:7000/the-bureau/index.html> renders
+`/the-bureau/index.html` as processed by the
+[Jinja2](http://jinja.pocoo.org/docs/) templating engine.
+Note that this page does not actually show any content indexed by Sheer;
+it simply outputs the static HTML written into the template.
+
+### Outputting indexed content in a Sheer template
+
+Most of our content is indexed from the API output of our WordPress back end.
+(We used to use WordPress to serve the front end of the site,
+but going forward, it will simply be a content editing and storage system.)
+This happens when the `sheer index` command is run.
+
+If your content isn't being indexed yet, see "Setting up a new WordPress post
+type and processing it with Sheer" on the flapjack/Getting-started-with-Flapjack
+wiki (on our GitHub Enterprise server).
+
+There are two ways in which we use indexed content: repeating items
+(e.g., blog posts and press releases), and single pages
+(e.g., the Future Requests page in Doing Business with Us).
+
+For any kind of repeating content, this is the basic process:
+
+1. In the vars file for the section you're in (e.g., `blog/_vars-blog.html`), we
+   set up a variable that holds the results of the default query we want to run.
+   Here's how it looks for the blog:
+
+   ```jinja
+   {% set query = queries.posts %}
+   {% set posts = query.search_with_url_arguments(size=10) %}
+   ```
+2. For the repeating listing of the posts (in the case of the blog, located in
+   `_layouts/posts-paginated.html`), simply set up a `for ... in` loop,
+   then output the different properties of the post within.
+   Here is a simplified example:
+
+   ```jinja
+   {% for post in posts %}
+     <h1>{{ post.title }}</h1>
+     {{ post.content }}
+   {% endfor %}
+   ```
+3. If a `_single.html` template exists and there is a corresponding entry in
+   `_settings/lookups.json`, Sheer will automatically create URLs for every post
+   of that type and render them with the `_single.html` template.
+
+To access a single piece of content, the easiest thing to do is use the
+`get_document()` function.
+Using the example given earlier of the Future Requests page, here's how it's
+done:
+
+```jinja
+{% set page = get_document('pages', '63169') %}
+{{ page.content | safe }}
+```
+
+Note that when accessing a WordPress page (i.e., the build-in "Page" post type
+in WordPress), you must use the numeric ID to identify the Page you want to get,
+because multiple Pages can have the same slug.
+
+If you're using `get_document` to retrive a single item of a different type,
+you can access it with its slug, as in this example from
+`contact-us/promoted-contacts.html`:
+
+```jinja
+{% set whistleblowers = get_document('contact', 'whistleblowers') %}
+```
+
+In practice, many of our templaces are a Frankenstein-type mixture of hand-coded
+static content and calls to indexed content, as we continually try to strike the
+right balance of what content is appropriate to be edited by non-developers in
+WordPress, and what is just too fragile to do any other way than by hand.
 
 
 ## Tests
