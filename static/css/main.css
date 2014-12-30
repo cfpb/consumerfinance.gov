@@ -4623,50 +4623,241 @@ textarea.success {
           Structural cheat sheet:
           -----------------------
           .content-l
-            .content-l_col.content-l_col-(RATIO)
-        - .content-l_col.content-l_col-1
-        - .content-l_col.content-l_col-1-2
-        - .content-l_col.content-l_col-1-3
-        - .content-l_col.content-l_col-2-3
+            .content-l_col
       notes:
-        - "These layout classes have breakpoints that are specific for use
-           within .content_main."
-        - "Since .content-l_col's are nested within .content_main extra
-           margins will occur. The .content-l container uses the
-           grid_nested-col-group mixin to counter this."
+        - "Simplifies use of grid structure inside content containers (like .content-main)."
+        - "Since .content-l_col's are nested within .content_main extra margins will occur. 
+           The .content-l container uses the grid_nested-col-group mixin to counter this."
+        - ".content-l_col-RATIO classes default to stacking on mobile and displaying as columns 
+           above mobile-max width (600px). This may not be the desired breakpoint for
+           all use cases, so mixins are provided to simplify changing column display to
+           stacked."
+        - "Three .content-l modifiers handle the stacking overrides for use cases of
+           .content_main, .content_full, and .content_sidebar containers."
         - "Note that the divs with inline styles are for demonstration purposes
            only and should not be used in production."
-    - name: .content-l_col__stack-on-cols (modifier)
+    - name: .content-l__full modifier
       markup: |
-            <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;">
-                    Half-width column from 600px to 801px
-                </div>
-            </div>
-            <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;">
-                    Half-width column from 600px to 801px
-                </div>
-            </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-1">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Full-width column (spans 12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-2-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;">
+                   Two thirds-width column (spans 8/12 columns)
+               </div>
+           </div>
+        </div>
       codenotes:
-        - .content-l_col__stack-on-cols
+        - .content-l.content-l__full
       notes:
-        - "A modifier that allows you to have columns that behave as normal but
-           stack at the larger multi-column views. For example a
-           .content-l_col-1-2 would stack as normal from 0-599px, at 600px it
-           would convert into a column, and at 801px it would stack again."
-        - "This is really only useful for .content-l_col-1-2 since there is a
-           decent range between when it becomes a column (600px) to when the
-           modifier converts it back into a full-width container (801px).
-           .content-l_col-1-3 on the other hand would have a much smaller range,
-           768 to 801px."
+        - "Designed for use within .content_full containers."
+        - "Displays .content-l_col-1-2 as columns at tablet sizes & above (600px+)"
+        - "Displays other common .content-l_col modifiers (.content-l_col-1-3, 
+           .content-l_col-2-3, .content-l_col-3-8, .content-l_col-5-8) 
+           as columns above 767px."
+    - name: .content-l__main modifier
+      markup: |
+        <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-1">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Full-width column (spans 12 columns)
+                 </div>
+             </div>
+         </div>
+         <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-1-2">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Half-width column (spans 6/12 columns)
+                 </div>
+             </div>
+             <div class="content-l_col content-l_col-1-2">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Half-width column (spans 6/12 columns)
+                 </div>
+             </div>
+         </div>
+         <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-1-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Third-width column (spans 4/12 columns)
+                 </div>
+             </div>
+             <div class="content-l_col content-l_col-1-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Third-width column (spans 4/12 columns)
+                 </div>
+             </div>
+             <div class="content-l_col content-l_col-1-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Third-width column (spans 4/12 columns)
+                 </div>
+             </div>
+         </div>
+         <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-2-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;">
+                     Two thirds-width column (spans 8/12 columns)
+                 </div>
+             </div>
+         </div>
+      codenotes:
+        - .content-l.content-l__main
+      notes:
+        - "Designed for use in .content_main containers, which have reduced (75%) width 
+           above tablet sizes to accommodate adjacent sidebar column."
+        - "Displays .content-l_col-1-2 as columns in the tablet range, 600-800px;
+           stacked from 800-899, the start of sidebar range; and as columns again at 900px+"
+        - "Displays other common .content-l_col modifiers (.content-l_col-1-3, .content-l_col-2-3,    
+           .content-l_col-3-8, .content-l_col-5-8) as columns above 900px."
+    - name: .content-l__sidebar modifier
+      markup: |
+        <div class="content-l content-l__sidebar">
+             <div class="content-l_col content-l_col-1">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Full-width column (spans 12 columns)
+                 </div>
+             </div>
+        </div>
+        <div class="content-l content-l__sidebar">
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__sidebar">
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__sidebar">
+           <div class="content-l_col content-l_col-2-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;">
+                   Two thirds-width column (spans 8/12 columns)
+               </div>
+           </div>
+        </div>
+      codenotes:
+        - .content-l.content-l__sidebar
+      notes:
+        - "For use in sidebar containers, which are full width only 
+           on tablet widths (600-800px)."
+        - "Displays .content-l_col-1-2 as columns in the tablet range, 
+           600-800px, and stacked at all other widths."
     - name: Large gutters modifier
       markup: |
-        <div class="content-l content-l__large-gutters">
+        <div class="content-l content-l__main  content-l__large-gutters">
             <div class="content-l_col content-l_col-1">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -4676,7 +4867,7 @@ textarea.success {
                 </div>
             </div>
         </div>
-        <div class="content-l content-l__large-gutters">
+        <div class="content-l content-l__main  content-l__large-gutters">
             <div class="content-l_col content-l_col-1-2">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -4691,41 +4882,6 @@ textarea.success {
                             padding: 8px;
                             margin-bottom: 4px;">
                     Half-width column (spans 6/12 columns)
-                </div>
-            </div>
-        </div>
-        <div class="content-l content-l__large-gutters">
-            <div class="content-l_col content-l_col-1-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;
-                            margin-bottom: 4px;">
-                    Third-width column (spans 4/12 columns)
-                </div>
-            </div>
-            <div class="content-l_col content-l_col-1-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;
-                            margin-bottom: 4px;">
-                    Third-width column (spans 4/12 columns)
-                </div>
-            </div>
-            <div class="content-l_col content-l_col-1-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;
-                            margin-bottom: 4px;">
-                    Third-width column (spans 4/12 columns)
-                </div>
-            </div>
-        </div>
-        <div class="content-l content-l__large-gutters">
-            <div class="content-l_col content-l_col-2-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;">
-                    Two thirds-width column (spans 8/12 columns)
                 </div>
             </div>
         </div>
@@ -4748,6 +4904,458 @@ textarea.success {
     margin-right: -15px;
   }
 }
+@media only all and (min-width: 37.5em) and (max-width: 47.9375em) {
+  .content-l__full .content-l_col.content-l_col-1-3 {
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3 {
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-2-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-2-3,
+  .content-l__full .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8 {
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8 {
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-5-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+  .content-l__full .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+}
+@media only all and (min-width: 50.0625em) and (max-width: 56.1875em) {
+  .content-l__main .content-l_col.content-l_col-1-2 {
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
+    margin-top: 1.875em;
+  }
+}
+@media only all and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .content-l__main .content-l_col.content-l_col-1-3 {
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3 {
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-2-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-2-3,
+  .content-l__main .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8 {
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8 {
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-5-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+  .content-l__main .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3 {
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3 {
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-2-3 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-2-3,
+.content-l__sidebar .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-1-3 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8 {
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8 {
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-5-8 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+.content-l__sidebar .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
+  margin-top: 1.875em;
+}
+@media only all and (min-width: 50.0625em) {
+  .content-l__sidebar .content-l_col.content-l_col-1-2 {
+    width: 100%;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
+    margin-top: 1.875em;
+  }
+}
 @media only all and (min-width: 37.5em) {
   .content-l__large-gutters {
     margin-left: -30px;
@@ -4762,11 +5370,7 @@ textarea.success {
   margin-top: 1.875em;
 }
 @media only all and (min-width: 37.5em) {
-  .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
-    margin-top: 0;
-  }
-}
-@media only all and (min-width: 48em) {
+  .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2,
   .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3,
   .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8,
   .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
@@ -4828,28 +5432,6 @@ textarea.success {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-1-3 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-1-3 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
-  .content-l_col-1-3 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
     width: 33.33333333%;
   }
   .ie .content-l_col-1-3 {
@@ -4863,28 +5445,6 @@ textarea.success {
   }
 }
 @media only all and (min-width: 37.5em) {
-  .content-l_col-2-3 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-2-3 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-2-3 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
   .content-l_col-2-3 {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -4916,28 +5476,6 @@ textarea.success {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-3-8 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-3-8 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
-  .content-l_col-3-8 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
     width: 37.5%;
   }
   .ie .content-l_col-3-8 {
@@ -4960,56 +5498,12 @@ textarea.success {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-5-8 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-5-8 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
-  .content-l_col-5-8 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
     width: 62.5%;
   }
   .ie .content-l_col-5-8 {
     margin-right: -0.26em;
   }
   .lt-ie8 .content-l_col-5-8 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 50.0625em) {
-  .content-l_col__stack-on-cols {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col__stack-on-cols {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col__stack-on-cols {
     display: inline;
     margin-right: 0;
     zoom: 1;
@@ -5024,7 +5518,7 @@ textarea.success {
     - "Layout dividers work in conjunction with .content-l_col-X-X elements and
        have specific needs depending on which column element variant they are
        attached to. For example .content-l_col-1-2 has different divider needs
-       than .content-l_col-1-3 because they break to single columns at different
+       than .content-l_col-1-3 because they may break to single columns at different
        breakpoints."
     - "Dividers use absolute positioning relative to the .content-l element and
        depends on .content-l using `position: relative;`. This allows vertical
@@ -5069,6 +5563,7 @@ textarea.success {
 */
 @media only all and (max-width: 37.4375em) {
   .content-l_col__before-divider.content-l_col-1-2 {
+    border-left-width: 15px;
     margin-top: 3.75em;
   }
   .content-l_col__before-divider.content-l_col-1-2:before {
@@ -5077,6 +5572,9 @@ textarea.success {
     height: 1px;
     margin-bottom: 1.875em;
     background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
   }
   .content-l_col__before-divider.content-l_col-1-2:before {
     content: "";
@@ -5111,8 +5609,9 @@ textarea.success {
     margin-left: -30px;
   }
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .content-l_col__before-divider.content-l_col-1-3 {
+    border-left-width: 15px;
     margin-top: 3.75em;
   }
   .content-l_col__before-divider.content-l_col-1-3:before {
@@ -5121,6 +5620,9 @@ textarea.success {
     height: 1px;
     margin-bottom: 1.875em;
     background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
   }
   .content-l_col__before-divider.content-l_col-1-3:before {
     content: "";
@@ -5130,7 +5632,7 @@ textarea.success {
     background-color: #babbbd;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .content-l_col__before-divider.content-l_col-1-3 {
     border-left-width: 30px;
   }
@@ -6030,6 +6532,7 @@ textarea.success {
 }
 .grid_column__top-divider {
   margin-top: 3.75em;
+  border-left-width: 15px;
 }
 .grid_column__top-divider:before {
   content: "";
@@ -6037,6 +6540,9 @@ textarea.success {
   height: 1px;
   margin-bottom: 1.875em;
   background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
 }
 .grid_column__left-divider {
   border-left-width: 30px;
