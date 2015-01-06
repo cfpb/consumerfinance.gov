@@ -69,11 +69,10 @@ If you're new to Capital Framework, we encourage you to
 #### Installing dependencies (one time)
 
 1. Install [node.js](http://nodejs.org/) however you'd like.
-2. Install [Grunt](http://gruntjs.com/), [Bower](http://bower.io/),
-   and [Browserify](http://browserify.org/):
+2. Install [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/):
 
 ```
-$ npm install -g grunt-cli bower browserify
+$ npm install -g grunt-cli bower
 ```
 
 ### Developing
