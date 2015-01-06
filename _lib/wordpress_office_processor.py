@@ -55,17 +55,17 @@ def process_office(item):
     
     # create list of office resource dicts
     item['resources'] = []
-    for x in xrange(1,4):
+    for x in xrange(0,4):
         resource = {}
-        fields = ['head', 'desc', 'icon', 'link_0']
+        fields = ['head', 'desc', 'icon', 'link']
         for field in fields:
-            field_name = 'resource%s_%s' % (str(x), field)
+            field_name = 'resource_%s_%s' % (str(x), field)
             if field_name in custom_fields and custom_fields[field_name][0] != '':
-                if field == 'link_0':
-                    resource['link'] = custom_fields[field_name]
+                if field == 'link':
+                    resource[field] = custom_fields[field_name]
                 else:
                     resource[field] = custom_fields[field_name][0]
-                            
+                    
         if resource:
             item['resources'].append(resource)
 
