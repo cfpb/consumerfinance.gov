@@ -201,7 +201,7 @@ the non-hierarchical `contact` post type using its slug (`whistleblowers`):
 {% set whistleblowers = get_document('contact', 'whistleblowers') %}
 ```
 
-In practice, many of our templaces are a Frankenstein-type mixture of hand-coded
+In practice, many of our templates are a Frankenstein-type mixture of hand-coded
 static content and calls to indexed content, as we continually try to strike the
 right balance of what content is appropriate to be edited by non-developers in
 WordPress, and what is just too fragile to do any other way than by hand.
