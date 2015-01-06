@@ -9176,13 +9176,16 @@ figure img {
   patterns:
     - name: .u-centered-on-mobile
       markup: |
-        <div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
-            <code>.u-w95pct</code>
+        <div>
+            <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
+                Block centered on mobile
+            </div>
+            <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
         </div>
       notes:
         - "Sometimes content (parts/all of a media block, for example)
-           should be centered on mobile, but not on larger screen sizes.
-           This implementation conflates inline & block element centering, 
+           should be centered on mobile, but not on larger screen sizes."
+        - "This implementation conflates inline & block element centering, 
            though they could be made into separate classes."
   tags:
     - cfgov-cf-enhancements
