@@ -142,7 +142,7 @@ Sometimes you'll want to create queries in your templates to filter the data.
 
 The two main ways of injecting filters into your data are in the URL's query string and within the template code itself.
 
-We have a handy function search_with_url_arguments that:
+We have a handy function `search_with_url_arguments()` that:
 
 1. Pulls in filters from the URL query string
 2. Allows you to add additional filters by passing them in as arguments to the function
@@ -174,7 +174,7 @@ URL query string filters are convenient for many of the filtered queries you'll 
 
 #### More complex filters
 
-By default, `search_with_url_arguments()` uses the default query parameters defined in the _queries/object-name.json file, then mixes them in with any additional arguments from the URL query string or what is passed into the function itself.
+By default, `search_with_url_arguments()` uses the default query parameters defined in the _queries/object-name.json file, then mixes them in with any additional arguments from the URL query string in addition to what is passed into the function itself.
 
 The list of available arguments are outlined in elasticsearch-py's [search method](http://elasticsearch-py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search)
 
