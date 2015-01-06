@@ -138,23 +138,24 @@ There are two ways in which we use indexed content: repeating items
 (e.g., blog posts and press releases), and single pages
 (e.g., the Future Requests page in Doing Business with Us).
 
+#### Repeating content
+
 For any kind of repeating content, this is the basic process:
 
 1. In the vars file for the section you're in (e.g., `blog/_vars-blog.html`), we
    set up a variable that holds the results of the default query we want to run.
+
    Here's how it looks for the blog:
 
    ```jinja
    {% set query = queries.posts %}
    {% set posts = query.search_with_url_arguments(size=10) %}
    ```
-2. If you want to display each instance of repeating content in a separate page,
-   create a `_single.html` template. If Sheer finds that template and a
-   corresponding entry in `_settings/lookups.json`, it will automatically create
-   URLs for every post of that type and render them with the
-   `_single.html` template.
-3. Or if you want to display repeating content data in a page, simply set up a
-   `for ... in` loop, then output the different properties of the post within.
+2. If you want to display the repeating content within a template, simply set up
+   a `for ... in` loop, then output the different properties of the post within.
+   In the case of the blog, a list of posts is built using this method in
+   `_layouts/posts-paginated.html`.
+
    Here is a simplified example:
 
    ```jinja
@@ -163,19 +164,18 @@ For any kind of repeating content, this is the basic process:
      {{ post.content }}
    {% endfor %}
    ```
+3. If you would like to display each instance of repeating content in a separate
+   page, create a `_single.html` template (in the case of the blog, located at
+   `blog/_single.html`) and a corresponding entry in `_settings/lookups.json`.
+   Sheer will automatically create URLs for every post of that type and render
+   them with the `_single.html` template.
+   This is how separate pages are generated for each blog post.
 
-   You can also see the how this is done for the Blog in
-   `_layouts/posts-paginated.html`.
-
-#### Retrieving single pieces of content
-
-The page post type (i.e., the built-in "Page" entries in WordPress) is used
-when all or most of a page's content can/needs to be edited in WordPress.
+#### Single content
 
 To access a single piece of content, the easiest thing to do is use the
 `get_document()` function.
-With `get_document`, you can display a full 'page', or a single instance of
-another kind of content, in a template.
+
 Using the example given earlier of the Future Requests page, here's how it's
 done:
 
@@ -184,14 +184,18 @@ done:
 {{ page.content | safe }}
 ```
 
-Note that when accessing a WordPress page (i.e., the built-in "Page" post type
-in WordPress), you must use the numeric ID to identify the Page you want to get,
-because multiple Pages can have the same slug.
+This example pulls a WordPress page into a template.
+We use the page post type (i.e., the built-in "Page" entries in WordPress)
+when all or most of a page's content can be edited in WordPress.
+
+Note that when accessing a WordPress page, you must use the numeric ID to
+identify the page you want to get, as multiple pages can have the same slug.
 (This is also true of any custom post type that is hierarchical.)
 
-If you're using `get_document` to retrive a single item of a different type,
-you can access it with its slug, as in this example from
-`contact-us/promoted-contacts.html`:
+The `get_document` method can be used to retrieve a single item of any post type
+for display within a template.
+In this example from `contact-us/promoted-contacts.html`, we get an instance of
+the non-hierarchical `contact` post type using its slug (`whistleblowers`):
 
 ```jinja
 {% set whistleblowers = get_document('contact', 'whistleblowers') %}
