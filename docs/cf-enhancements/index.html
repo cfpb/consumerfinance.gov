@@ -226,6 +226,41 @@
 }</code></pre>
       </div>
     </div>
+    <div id="centered-on-mobile-utility" class="docs-component">
+      <h2 class="docs-component_header"><span>Centered on mobile utility</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.u-centered-on-mobile</h3>
+          <section class="docs-pattern_pattern">
+<div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w95pct</code>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-w95pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w95pct&lt;/code&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;u-w95pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w95pct&lt;/code&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Sometimes content (parts/all of a media block, for example) should be centered on mobile, but not on larger screen sizes. This implementation conflates inline &amp; block element centering,  though they could be made into separate classes.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">@media only all and (max-width: 37.4375em) {
+  .u-centered-on-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}</code></pre>
+      </div>
+    </div>
     <div id="tables" class="docs-component">
       <h2 class="docs-component_header"><span>Tables</span></h2>
       <div class="docs-component_intro">

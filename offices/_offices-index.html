@@ -70,36 +70,36 @@
         </div>
     </section>
     {% endif %}
-    
     {% if office.resources %}
+
     <section class="office_resources block block__padded-top block__border-top">
         <h1 class="h2">
             {{ resource_title }}
         </h1>
-    {% for resource in office.resources %}
-        <div class="media office_resource block__sub">
-            <div class="media_image-container media_image-container__wide-margin">
-                <img class="media_image u-centered-on-mobile" 
-                     width="150"
-                     src="{{resource.icon if resource.icon}}">
-            </div>
-            <div class="media_body">
-                {% if resource.head %}
-                <h2 class="h3">{{ resource.head | safe }}</h2>
-                {% endif %}
+        {% for resource in office.resources %}
+            <div class="media office_resource block__sub">
+                <div class="media_image-container media_image-container__wide-margin">
+                    <img class="media_image u-centered-on-mobile" 
+                         width="150"
+                         src="{{resource.icon if resource.icon}}">
+                </div>
+                <div class="media_body">
+                    {% if resource.head %}
+                    <h2 class="h3">{{ resource.head | safe }}</h2>
+                    {% endif %}
                 
-                {% if resource.desc %}
-                <p class="short-desc">{{ resource.desc | safe }}</p>
-                {% endif %}
+                    {% if resource.desc %}
+                    <p class="short-desc">{{ resource.desc | safe }}</p>
+                    {% endif %}
                 
-                {% if resource.link %}
-                <a class="jump-link jump-link__right" href="{{ resource.link[0] if resource.link }}">
-                      {{ resource.link[1] if resource.link }}
-                </a>
-                {% endif %}
+                    {% if resource.link %}
+                    <a class="jump-link jump-link__right" href="{{ resource.link[0] if resource.link }}">
+                          {{ resource.link[1] if resource.link }}
+                    </a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
     </section>
     {% endif %}
     

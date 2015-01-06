@@ -8772,6 +8772,30 @@ figure img {
   color: #2cb34a;
 }
 /* topdoc
+  name: Centered on mobile utility
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .u-centered-on-mobile
+      markup: |
+        <div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w95pct</code>
+        </div>
+      notes:
+        - "Sometimes content (parts/all of a media block, for example)
+           should be centered on mobile, but not on larger screen sizes.
+           This implementation conflates inline & block element centering, 
+           though they could be made into separate classes."
+  tags:
+    - cfgov-cf-enhancements
+*/
+@media only all and (max-width: 37.4375em) {
+  .u-centered-on-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+/* topdoc
   name: Tables
   family: cfgov-cf-enhancements
   notes:
@@ -10286,17 +10310,6 @@ tbody tr {
   zoom: 1;
   display: block;
   width: auto;
-}
-@media only all and (max-width: 37.4375em) {
-  .media__centered {
-    text-align: center;
-  }
-}
-@media only all and (max-width: 37.4375em) {
-  .media__centered .media_image {
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 /* topdoc
     name: EOF
