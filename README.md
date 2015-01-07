@@ -205,31 +205,6 @@ static content and calls to indexed content, as we continually try to strike the
 right balance of what content is appropriate to be edited by non-developers in
 WordPress, and what is just too fragile to do any other way than by hand.
 
-
-## Tests
-
-To run browser tests, you'll need to perform the following steps:
-
-1. Install chromedriver: 
-  - Mac: `brew install chromedriver`
-  - Manual (Linux/Mac): Download the latest
-    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
-    binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
-2. `pip install -r _tests/requirements.txt`
-3. `nosetests -v _tests`
-
-
-## How this repo is versioned
-
-We use an adaptation of [Semantic Versioning 2.0.0](http://semver.org).
-Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
-
-- The MAJOR number will be incremented for major redesigns that require the user
-  to relearn how to accomplish tasks on the site.
-- The MINOR number will be incremented when new content or features are added.
-- The PATCH number will be incremented for all other changes that do not rise
-  to the level of a MAJOR or MINOR update.
-
 ### Filtering results with queries
 
 Sometimes you'll want to create queries in your templates to filter the data.
@@ -283,3 +258,27 @@ Here is an example of using q:
 ```
 
 This will return a queryset of calendar_event objects which, for the field 'dtstart', have a date in January, 2014.
+
+## Tests
+
+To run browser tests, you'll need to perform the following steps:
+
+1. Install chromedriver: 
+  - Mac: `brew install chromedriver`
+  - Manual (Linux/Mac): Download the latest
+    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
+    binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
+2. `pip install -r _tests/requirements.txt`
+3. `nosetests -v _tests`
+
+
+## How this repo is versioned
+
+We use an adaptation of [Semantic Versioning 2.0.0](http://semver.org).
+Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
+
+- The MAJOR number will be incremented for major redesigns that require the user
+  to relearn how to accomplish tasks on the site.
+- The MINOR number will be incremented when new content or features are added.
+- The PATCH number will be incremented for all other changes that do not rise
+  to the level of a MAJOR or MINOR update.
