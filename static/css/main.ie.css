@@ -5661,6 +5661,7 @@ textarea.success {
 }
 
 .content-l__sidebar .content-l_col.content-l_col-1-3 {
+  display: block;
   width: 100%;
 }
 
@@ -5697,6 +5698,7 @@ textarea.success {
 }
 
 .content-l__sidebar .content-l_col.content-l_col-2-3 {
+  display: block;
   width: 100%;
 }
 
@@ -5738,6 +5740,7 @@ textarea.success {
 }
 
 .content-l__sidebar .content-l_col.content-l_col-3-8 {
+  display: block;
   width: 100%;
 }
 
@@ -5774,6 +5777,7 @@ textarea.success {
 }
 
 .content-l__sidebar .content-l_col.content-l_col-5-8 {
+  display: block;
   width: 100%;
 }
 
@@ -5815,6 +5819,7 @@ textarea.success {
 }
 
 .content-l__sidebar .content-l_col.content-l_col-1-2 {
+  display: block;
   width: 100%;
 }
 
