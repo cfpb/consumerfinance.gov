@@ -205,6 +205,59 @@ static content and calls to indexed content, as we continually try to strike the
 right balance of what content is appropriate to be edited by non-developers in
 WordPress, and what is just too fragile to do any other way than by hand.
 
+### Filtering results with queries
+
+Sometimes you'll want to create queries in your templates to filter the data.
+
+The two main ways of injecting filters into your data are in the URL's query string and within the template code itself.
+
+We have a handy function `search_with_url_arguments()` that:
+
+1. Pulls in filters from the URL query string
+2. Allows you to add additional filters by passing them in as arguments to the function
+
+#### URL query string filters
+
+URL query string filters can be further broken down into two types:
+
+1. Bool - Used when you want to filter by whether a field matches a keyword, is True or False, etc.
+2. Range - Used for when you want to filter something by a range (e.g. dates or numbers)
+
+An example of Bool is:
+
+?filter_category=Op-Ed
+
+`filter_[field]=[value]`
+
+When you go to a URL such as http://localhost:7000/blog/?filter_category=Op-Ed and you use `search_with_url_arguments()`, the queryset returned will only include objects with a category of 'Op-Ed'.
+
+An example of Range is:
+
+?filter_range_date_gte=2014-01
+
+filter_range_[field]_[operator]=[value]
+
+Continuing with the example above, if you go to a URL such as http://localhost:7000/blog/?filter_range_date_gte=2014-01 and you use `search_with_url_arguments()`, you'll get a queryset of objects where the 'date' field is in January, 2014 or later.
+
+URL query string filters are convenient for many of the filtered queries you'll need to run, but often there are cases where you'll need more flexibility.
+
+#### More complex filters
+
+By default, `search_with_url_arguments()` uses the default query parameters defined in the _queries/object-name.json file, then mixes them in with any additional arguments from the URL query string in addition to what is passed into the function itself.
+
+The list of available arguments are outlined in elasticsearch-py's [search method](http://elasticsearch-py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search).
+
+The most common ones we use are size (to change the number of results returned) and q (to query based on specific fields).
+
+When using q, you'll need to use the [Lucene Query Parser Syntax](http://lucene.apache.org/core/2_9_4/queryparsersyntax.html).
+
+Here is an example of using q: 
+
+```
+{% set events_jan2014 = queries.calendar_event.search_with_url_arguments(q="dtstart:[2014-01-01 TO 2014-01-31]") %}
+```
+
+This will return a queryset of calendar_event objects which, for the field 'dtstart', have a date in January, 2014.
 
 ## Tests
 
