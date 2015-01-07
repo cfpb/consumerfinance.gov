@@ -331,6 +331,17 @@
             bottom: 50%;
             text-align: right;
         }
+        
+        &__before {
+            padding-left: 1.25em;
+            
+            &:before {
+                position: absolute;
+                margin-bottom: -0.625em;
+                bottom: 50%;
+                left: 0;
+            }
+        }
 
         &_text {
             border-bottom-width: 0;
@@ -343,6 +354,9 @@
             padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
             &:after {
                 right: 1em;
+            }
+            &:before {
+                left: unit(10px / @base-font-size-px, em);
             }
         }
     });
