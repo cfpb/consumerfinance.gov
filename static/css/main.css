@@ -4906,6 +4906,7 @@ textarea.success {
 }
 @media only all and (min-width: 37.5em) and (max-width: 47.9375em) {
   .content-l__full .content-l_col.content-l_col-1-3 {
+    display: block;
     width: 100%;
   }
   .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider {
@@ -4936,6 +4937,7 @@ textarea.success {
     margin-top: 1.875em;
   }
   .content-l__full .content-l_col.content-l_col-2-3 {
+    display: block;
     width: 100%;
   }
   .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider {
@@ -4970,6 +4972,7 @@ textarea.success {
     margin-top: 1.875em;
   }
   .content-l__full .content-l_col.content-l_col-3-8 {
+    display: block;
     width: 100%;
   }
   .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider {
@@ -5000,6 +5003,7 @@ textarea.success {
     margin-top: 1.875em;
   }
   .content-l__full .content-l_col.content-l_col-5-8 {
+    display: block;
     width: 100%;
   }
   .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider {
@@ -5036,6 +5040,7 @@ textarea.success {
 }
 @media only all and (min-width: 50.0625em) and (max-width: 56.1875em) {
   .content-l__main .content-l_col.content-l_col-1-2 {
+    display: block;
     width: 100%;
   }
   .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider {
@@ -5068,6 +5073,7 @@ textarea.success {
 }
 @media only all and (min-width: 37.5em) and (max-width: 56.1875em) {
   .content-l__main .content-l_col.content-l_col-1-3 {
+    display: block;
     width: 100%;
   }
   .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider {
@@ -5098,6 +5104,7 @@ textarea.success {
     margin-top: 1.875em;
   }
   .content-l__main .content-l_col.content-l_col-2-3 {
+    display: block;
     width: 100%;
   }
   .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider {
@@ -5132,6 +5139,7 @@ textarea.success {
     margin-top: 1.875em;
   }
   .content-l__main .content-l_col.content-l_col-3-8 {
+    display: block;
     width: 100%;
   }
   .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider {
@@ -5162,6 +5170,7 @@ textarea.success {
     margin-top: 1.875em;
   }
   .content-l__main .content-l_col.content-l_col-5-8 {
+    display: block;
     width: 100%;
   }
   .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider {
@@ -5197,6 +5206,7 @@ textarea.success {
   }
 }
 .content-l__sidebar .content-l_col.content-l_col-1-3 {
+  display: block;
   width: 100%;
 }
 .content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider {
@@ -5227,6 +5237,7 @@ textarea.success {
   margin-top: 1.875em;
 }
 .content-l__sidebar .content-l_col.content-l_col-2-3 {
+  display: block;
   width: 100%;
 }
 .content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider {
@@ -5261,6 +5272,7 @@ textarea.success {
   margin-top: 1.875em;
 }
 .content-l__sidebar .content-l_col.content-l_col-3-8 {
+  display: block;
   width: 100%;
 }
 .content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider {
@@ -5291,6 +5303,7 @@ textarea.success {
   margin-top: 1.875em;
 }
 .content-l__sidebar .content-l_col.content-l_col-5-8 {
+  display: block;
   width: 100%;
 }
 .content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider {
@@ -5326,6 +5339,7 @@ textarea.success {
 }
 @media only all and (min-width: 50.0625em) {
   .content-l__sidebar .content-l_col.content-l_col-1-2 {
+    display: block;
     width: 100%;
   }
   .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider {
@@ -8772,6 +8786,33 @@ figure img {
   color: #2cb34a;
 }
 /* topdoc
+  name: Centered on mobile utility
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .u-centered-on-mobile
+      markup: |
+        <div>
+            <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
+                Block centered on mobile
+            </div>
+            <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
+        </div>
+      notes:
+        - "Sometimes content (parts/all of a media block, for example)
+           should be centered on mobile, but not on larger screen sizes."
+        - "This implementation conflates inline & block element centering, 
+           though they could be made into separate classes."
+  tags:
+    - cfgov-cf-enhancements
+*/
+@media only all and (max-width: 37.4375em) {
+  .u-centered-on-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+/* topdoc
   name: Tables
   family: cfgov-cf-enhancements
   notes:
@@ -10195,24 +10236,6 @@ tbody tr {
       notes:
         - "Increased right (or left, when used with .media_image-container__right modifier),
            margin on .media_image-container."
-            
-    - name: .media__centered modifier
-      markup: |
-        <article class="media media__centered">
-            <div class="media_image-container">
-                <img class="media_image" src="http://placekitten.com/276/155" alt="">
-            </div>
-            <div class="media_body">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolorum non sapiente nobis molestias delectus optio ipsam
-                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
-                    accusantium doloribus dicta fugiat itaque ab porro.
-                </p>
-            </div>
-        </article>
-      notes:
-        - "Content is centered at mobile screen size (less than 600px)."
   tags:
     - cfgov-media
 */
@@ -10286,17 +10309,6 @@ tbody tr {
   zoom: 1;
   display: block;
   width: auto;
-}
-@media only all and (max-width: 37.4375em) {
-  .media__centered {
-    text-align: center;
-  }
-}
-@media only all and (max-width: 37.4375em) {
-  .media__centered .media_image {
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 /* topdoc
     name: EOF

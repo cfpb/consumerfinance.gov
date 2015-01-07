@@ -137,6 +137,35 @@
     });
 }
 
+/* topdoc
+  name: Centered on mobile utility
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .u-centered-on-mobile
+      markup: |
+        <div>
+            <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
+                Block centered on mobile
+            </div>
+            <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
+        </div>
+      notes:
+        - "Sometimes content (parts/all of a media block, for example)
+           should be centered on mobile, but not on larger screen sizes."
+        - "This implementation conflates inline & block element centering, 
+           though they could be made into separate classes."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-max(@mobile-max {
+    .u-centered-on-mobile {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+});
+
 
 /* topdoc
   name: Tables
