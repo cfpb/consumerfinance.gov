@@ -245,11 +245,11 @@ URL query string filters are convenient for many of the filtered queries you'll 
 
 By default, `search_with_url_arguments()` uses the default query parameters defined in the _queries/object-name.json file, then mixes them in with any additional arguments from the URL query string in addition to what is passed into the function itself.
 
-The list of available arguments are outlined in elasticsearch-py's [search method](http://elasticsearch-py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search)
+The list of available arguments are outlined in elasticsearch-py's [search method](http://elasticsearch-py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search).
 
 The most common ones we use are size (to change the number of results returned) and q (to query based on specific fields).
 
-When using q, you'll need to use the [Lucene Query Parser Syntax](http://lucene.apache.org/core/2_9_4/queryparsersyntax.html)
+When using q, you'll need to use the [Lucene Query Parser Syntax](http://lucene.apache.org/core/2_9_4/queryparsersyntax.html).
 
 Here is an example of using q: 
 
