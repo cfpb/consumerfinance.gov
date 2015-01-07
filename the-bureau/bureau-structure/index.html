@@ -33,7 +33,7 @@
                     <ul class="list__links">
                     {% for category in ['Divisions', 'Office of the Director'] %}
                         <li>
-                            <button class="link-text jump-link jump-link__bg content-show" 
+                            <button class="link-text jump-link jump-link__right jump-link__bg content-show" 
                                     data-content=".nodes{{ loop.index }}">
                                 {{ category }}
                             </button>
@@ -53,7 +53,7 @@
                            content-panel 
                            nodes{{ cat_loop.index }}">
                     <li>
-                        <button class="content-hide link-text jump-link jump-link__back">
+                        <button class="content-hide link-text jump-link jump-link__before jump-link__left">
                             {{ category }}
                         </button>
                     </li>
@@ -87,7 +87,7 @@
                                    content-panel    
                                    nodes{{ cat_loop.index }}_{{ par_loop.index }}">
                             <li>
-                                <button class="jump-link jump-link__back content-hide">
+                                <button class="jump-link jump-link__before jump-link__left content-hide">
                                     {{ role_macro.display_role(parent) }}
                                 </button>
                             </li>

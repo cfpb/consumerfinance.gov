@@ -11319,6 +11319,15 @@ a.category-slug.active {
     bottom: 50%;
     text-align: right;
   }
+  .jump-link__before {
+    padding-left: 1.25em;
+  }
+  .jump-link__before:before {
+    position: absolute;
+    margin-bottom: -0.625em;
+    bottom: 50%;
+    left: 0;
+  }
   .jump-link_text {
     border-bottom-width: 0;
   }
@@ -11330,6 +11339,9 @@ a.category-slug.active {
   }
   .jump-link__bg:after {
     right: 1em;
+  }
+  .jump-link__bg:before {
+    left: 0.625em;
   }
 }
 /* topdoc
@@ -16663,6 +16675,15 @@ a.focus .summary_header {
     bottom: 50%;
     text-align: right;
   }
+  .budget_page-content ul li a__before {
+    padding-left: 1.25em;
+  }
+  .budget_page-content ul li a__before:before {
+    position: absolute;
+    margin-bottom: -0.625em;
+    bottom: 50%;
+    left: 0;
+  }
   .budget_page-content ul li a_text {
     border-bottom-width: 0;
   }
@@ -16674,6 +16695,9 @@ a.focus .summary_header {
   }
   .budget_page-content ul li a__bg:after {
     right: 1em;
+  }
+  .budget_page-content ul li a__bg:before {
+    left: 0.625em;
   }
 }
 .budget_page-content.financial-report a:before,
