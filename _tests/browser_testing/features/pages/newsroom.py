@@ -122,8 +122,9 @@ class Newsroom(Base):
             to_year.click()
 
     def get_results_number(self):
-        results_num = self.driver.find_element_by_xpath(RESULTS_NUMBER)
-        return results_num.text
+        results = self.driver.find_element_by_xpath(RESULTS_NUMBER)
+        results_num = results.text.split(' ')[0]
+        return results_num
 
     def get_filter_used(self):
         filter_used = self.driver.find_element_by_xpath(FILTER_USED)
@@ -170,7 +171,7 @@ class Newsroom(Base):
         else:
             self.driver.execute_script(
                 "window.document.getElementById('{0}').value = {1};".format(
-                    PAGINATION, button
+                    CURRENT_PAGE, button
                 )
             )
             self.driver.find_element_by_id(PAGINATION_SUBMIT).click()
@@ -192,7 +193,11 @@ class Newsroom(Base):
 
     def select_search_filter(self, filter_type, name):
         if filter_type == 'author':
-            choice = self.driver.find_element_by_xpath(SELECT_AUTHOR)
+            choice = self.driver.find_element_by_xpath(
+                SELECT_AUTHOR.replace('author_name', name)
+                )
         elif filter_type == 'topic':
-            choice = self.driver.find_element_by_xpath(SELECT_TOPIC)
+            choice = self.driver.find_element_by_xpath(
+                SELECT_TOPIC.replace('topic_name', name)
+                )
         choice.click()
