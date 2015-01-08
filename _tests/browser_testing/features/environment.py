@@ -29,7 +29,7 @@ root = os.path.join(os.getcwd(), '../..')
 class LiveServer(object):
     def __init__(self):
         config = dict(debug=False,
-                      location=os.path.join(os.getcwd(), '../..'),
+                      location=root,
                       elasticsearch=[{'host': 'localhost', 'port': 9200}],
                       index=index_name)
         self.app = app_with_config(config)
