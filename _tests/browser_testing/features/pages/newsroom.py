@@ -2,12 +2,6 @@ from pages.base import Base
 
 CATEGORIES = ('Op-Ed', 'Press Release')
 
-# ELEMENT ID'S FOR TEXTBOXES
-
-# ELEMENT ID'S FOR DROP DOWN LISTS
-
-# ELEMENT ID'S FOR LABELS/WARNINGS
-
 # CSS SELECTORS
 FILTER_PRESSED = 'aria-pressed'
 CURRENT_PAGE = 'pagination_current-page'
@@ -44,6 +38,7 @@ FROM_YEAR_SELECTED = '//div[@id="filter_from-year"]/option[@selected="selected"]
 TO_MONTH_SELECTED = '//div[@id="filter_to-month"]/option[@selected="selected"]'
 TO_YEAR_SELECTED = '//div[@id="filter_to-year"]/option[@selected="selected"]'
 
+# TOPIC/AUTHOR SEARCH
 AUTHOR_SEARCH_INPUT = '//input[@value="Search for authors"]'
 TOPIC_SEARCH_INPUT = '//input[@value="Search for topics"]'
 SELECT_AUTHOR = '//div[@id="filter_author_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"author_name")]/..'
