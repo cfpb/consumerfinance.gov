@@ -1,4 +1,7 @@
-{% for post in featured_topic %}
+
+{% macro render(featured_topics) %}
+
+{% for post in featured_topics %}
 
     <article class="featured-topic summary">
         <div class="fancy-slug">
@@ -32,3 +35,5 @@
     </article>
 
 {% endfor %}
+
+{% endmacro %}

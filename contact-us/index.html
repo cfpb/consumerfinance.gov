@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-contact-us.html" as vars with context %}
 
 {% block title -%}
     Contact us
@@ -8,48 +9,30 @@
     Contact information for the Consumer Financial Protection Bureau
 {%- endblock %}
 
-{% block content %}
-
-    {# Variables #}
-    {% set query = queries.contact %}
-    {% set contacts = query.search_with_url_arguments(size=100) %}
-
-    {# Macros #}
-    {% import "macros.html" as macros with context %}
-
-    <main class="content content__2-1 content__bleedbar" id="main" role="main">
-
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
-
-        <div class="wrapper">
-            <section class="content_intro">
-                <h1>Contact us</h1>
-                <div class="content-l">
-                    <section class="content-l_col content-l_col-1-2">
-                        {% include "general-inqueries.html" %}
-                    </section>
-                    <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                        {% include "submit-a-complaint.html" %}
-                    </section>
-                </div>
-            </section>
-        </div>
-
-        <div class="content_line"></div>
-
-        <div class="wrapper content_wrapper">
-            <div class="content_main">
-                <section>
-                    {%- include "contact-list.html" %}
+{% block pre_content %}
+    <div class="wrapper">
+        <section class="content_intro">
+            <h1>Contact us</h1>
+            <div class="content-l content-l__full">
+                <section class="content-l_col content-l_col-1-2">
+                    {% include "general-inqueries.html" %}
+                </section>
+                <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                    {% include "submit-a-complaint.html" %}
                 </section>
             </div>
-            <aside class="content_sidebar">
-                {%- include "mailing-addresses.html" %}
-                <div class="content_line"></div>
-                {%- include "promoted-contacts.html" %}
-            </aside>
-        </div>
-    </main>
+        </section>
+    </div>
+    <div class="content_line"></div>
+{% endblock %}
 
-{% endblock content %}
+{% block content_main %}
+    {% set contacts = vars.query.search_with_url_arguments(size=100) %}
+    {%- include "contact-list.html" %}
+{% endblock %}
+
+{% block content_sidebar %}
+    {%- include "mailing-addresses.html" %}
+    <div class="content_line"></div>
+    {%- include "promoted-contacts.html" %}
+{% endblock %}

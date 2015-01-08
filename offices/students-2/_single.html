@@ -1,0 +1,8 @@
+
+{% set results = queries.office.search_with_url_arguments(q="_id:students-2",size=1) %}
+{% set office = results | first %}
+{% set path = '/offices/' + office.slug + '/' %}
+{% set initiative = students_initiative %}
+{% set activity_type = "Students" %}
+
+{% include "_offices-single.html" %}

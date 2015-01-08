@@ -4,6 +4,89 @@
    ========================================================================== */
 
 /* topdoc
+  name: Expandable customizations
+  family: cfgov-misc
+  patterns:
+    - name: Expandable filters
+      markup: |
+        <div class="expandable expandable__filters">
+            <div class="expandable_header expandable_header__spaced">
+                <div class="expandable_header-right u-hide-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+                    <li class="list_item filtered-by_header">80 filtered results for</li>
+                    <li class="list_item filtered-by_filter">
+                        Blog,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        Press Release,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        January 2014&ndash;September 2014
+                    </li>
+                </ul>
+                <div class="expandable_header-right u-show-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="expandable_content padded-container">
+                <div class="padded-container_body">
+                    Filters body
+                </div>
+            </div>
+        </div>
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//cfpb.github.io/cf-expandables/docs/static/js/component.min.js"></script>
+  tags:
+    - cfgov-misc
+*/
+
+.expandable__filters {
+    margin-bottom: unit(15px / @base-font-size-px, em);
+
+    &.expandable__expanded {
+        margin-bottom: unit(30px / @base-font-size-px, em);
+    }
+
+    .respond-to-max(@mobile-max, {
+        .expandable_header-right {
+            float: none;
+            // Eyeballed to 15px
+            margin-top: unit(10px / @base-font-size-px, em);
+
+            .btn {
+                display: block;
+                width: 100%;
+            }
+        }
+    });
+}
+
+
+/* topdoc
   name: Links with icons
   family: cfgov-misc
   notes:
@@ -115,6 +198,18 @@
         // Inserts the cf-icon-mail glyph.
         content: "\e304";
     }
+    
+    &__pdf:after,
+    &__pdf&__before:before {
+        // Inserts the cf-icon-pdf glyph.
+        content: "\e402";
+    }
+
+    &__pdf:after,
+    &__pdf&__before:before {
+        // Inserts the cf-icon-pdf glyph.
+        content: "\e402";
+    }
 
     &__phone:after,
     &__phone&__before:before {
@@ -140,7 +235,6 @@
         white-space: nowrap;
     }
 }
-
 
 /* topdoc
   name: Styled link
@@ -237,6 +331,17 @@
             bottom: 50%;
             text-align: right;
         }
+        
+        &__before {
+            padding-left: 1.25em;
+            
+            &:before {
+                position: absolute;
+                margin-bottom: -0.625em;
+                bottom: 50%;
+                left: 0;
+            }
+        }
 
         &_text {
             border-bottom-width: 0;
@@ -249,6 +354,9 @@
             padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
             &:after {
                 right: 1em;
+            }
+            &:before {
+                left: unit(10px / @base-font-size-px, em);
             }
         }
     });
@@ -915,6 +1023,149 @@
                 unit(29px / @base-font-size-px, em)
                 unit(23px / @base-font-size-px, em);
     }
+}
+
+
+/* topdoc
+  name: Character icons
+  family: cfgov-misc
+  notes:
+    - "A way to create icons that feature a single character on a circular 
+       background. Useful because cf-icons does not have any of this type of
+       icon in its library. Typical use case would be to identify steps in a
+       process."
+  patterns:
+    - name: Default usage
+      markup: |
+        <h2 class="char-icon char-icon__1">This is the first thing</h2>
+  tags:
+    - cfgov-misc
+*/
+
+.char-icon {
+    &:before {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 1.5em;
+        height: 1.5em;
+        padding: 0.25em 0;
+        border-radius: 100%;
+        margin-right: 0.375em;
+
+        position: relative;
+        top: -( unit(1px / 13px, em) );
+
+        background: @green;
+        color: @white;
+        .webfont-medium();
+        font-size: percentage(13 / 14);
+        line-height: 1;
+        text-align: center;
+    }
+
+    &__1:before { content: '1'; }
+    &__2:before { content: '2'; }
+    &__3:before { content: '3'; }
+    &__4:before { content: '4'; }
+    &__5:before { content: '5'; }
+    &__6:before { content: '6'; }
+    &__7:before { content: '7'; }
+    &__8:before { content: '8'; }
+    &__9:before { content: '9'; }
+    &__0:before { content: '0'; }
+    &__A:before { content: 'A'; }
+    &__B:before { content: 'B'; }
+    &__C:before { content: 'C'; }
+    &__D:before { content: 'D'; }
+    &__E:before { content: 'E'; }
+    &__F:before { content: 'F'; }
+    &__G:before { content: 'G'; }
+    &__H:before { content: 'H'; }
+    &__I:before { content: 'I'; }
+    &__J:before { content: 'J'; }
+    &__K:before { content: 'K'; }
+    &__L:before { content: 'L'; }
+    &__M:before { content: 'M'; }
+    &__N:before { content: 'N'; }
+    &__O:before { content: 'O'; }
+    &__P:before { content: 'P'; }
+    &__Q:before { content: 'Q'; }
+    &__R:before { content: 'R'; }
+    &__S:before { content: 'S'; }
+    &__T:before { content: 'T'; }
+    &__U:before { content: 'U'; }
+    &__V:before { content: 'V'; }
+    &__W:before { content: 'W'; }
+    &__X:before { content: 'X'; }
+    &__Y:before { content: 'Y'; }
+    &__Z:before { content: 'Z'; }
+    &__a:before { content: 'a'; }
+    &__b:before { content: 'b'; }
+    &__c:before { content: 'c'; }
+    &__d:before { content: 'd'; }
+    &__e:before { content: 'e'; }
+    &__f:before { content: 'f'; }
+    &__g:before { content: 'g'; }
+    &__h:before { content: 'h'; }
+    &__i:before { content: 'i'; }
+    &__j:before { content: 'j'; }
+    &__k:before { content: 'k'; }
+    &__l:before { content: 'l'; }
+    &__m:before { content: 'm'; }
+    &__n:before { content: 'n'; }
+    &__o:before { content: 'o'; }
+    &__p:before { content: 'p'; }
+    &__q:before { content: 'q'; }
+    &__r:before { content: 'r'; }
+    &__s:before { content: 's'; }
+    &__t:before { content: 't'; }
+    &__u:before { content: 'u'; }
+    &__v:before { content: 'v'; }
+    &__w:before { content: 'w'; }
+    &__x:before { content: 'x'; }
+    &__y:before { content: 'y'; }
+    &__z:before { content: 'z'; }
+}
+
+
+/* topdoc
+  name: Step slugs
+  family: cfgov-misc
+  notes:
+    - "Styling for a slug that indicates a step in a process."
+  patterns:
+    - name: Embedded in a heading
+      markup: |
+        <h2>
+            <span class="step-slug char-icon char-icon__1">Step one</span>
+            Description of the step
+        </h2>
+      notes:
+        - "Useful when you want to include the slug text in the heading for the
+           purposes of visibility in the document outline."
+    - name: Standalone
+      markup: |
+        <h2 class="step-slug char-icon char-icon__1">Step one</h2>
+        <p>Description of the step</p>
+      notes:
+        - "Useful when the 'Step number' text itself serves as a heading."
+        - "Equivalent to the .char-icon default usage pattern, but with specific
+           styling for the text that follows."
+  tags:
+    - cfgov-misc
+*/
+
+.step-slug {
+    display: block;
+    margin-bottom: unit(15px / 14px, em);
+
+    color: @darkgray;
+    .webfont-demi();
+    font-size: 14px; // fallback for browsers that don't support rem units
+    // rem units needed because the main use case for this is within a heading
+    font-size: unit(14px / @base-font-size-px, rem);
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 
