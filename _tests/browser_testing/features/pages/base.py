@@ -1,26 +1,11 @@
-from pprint import pprint
-from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 from utils import Utils
 
 import sys
-import time
 
 # DEFAULT VALUES
 default_driver_wait = 20
-
-# ELEMENT ID'S FOR TEXTBOXES
-
-# ELEMENT ID'S FOR BUTTONS
-
-# XPATH LOCATORS
 
 
 class Base(object):
