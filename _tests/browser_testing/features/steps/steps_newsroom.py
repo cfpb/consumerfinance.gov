@@ -76,13 +76,18 @@ def step(context):
 
 @then(u'I should see the checkbox next to "{category_name}" unchecked')
 def step(context, category_name):
-    checked = is_category_checked(category_name)
+    checked = context.newsroom.is_category_checked(category_name)
     assert_that(checked, equal_to(False))
 
 @then(u'I should not see pagination displayed')
 def step(context):
     pagination_displayed = context.newsroom.is_pagination_displayed()
     assert_that(pagination_displayed, equal_to(False))
+
+@then(u'I should see Pagination is displayed')
+def step(context):
+    pagination_displayed = context.newsroom.is_pagination_displayed()
+    assert_that(pagination_displayed, equal_to(True))
 
 
 # Pagination
@@ -94,7 +99,7 @@ def step(context):
 def step(context):
     context.newsroom.click_pagination_button('previous')
 
-@when(u'I click the "{page_number}" button')
+@when(u'I click the page "{page_number}" button')
 def step(context, page_number):
     context.newsroom.click_pagination_button(page_number)
 
