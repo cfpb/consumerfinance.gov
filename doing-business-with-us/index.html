@@ -1,0 +1,105 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-doing-business-with-us.html" as vars with context %}
+
+{% block title -%}
+    Doing business with us
+{%- endblock %}
+
+{% block desc -%}
+    Information about existing and future procurements by the CFPB.
+{%- endblock %}
+
+{% block content_main_modifiers %}
+    {{ super() }} content__flush-bottom
+{% endblock %}
+
+{% block content_main %}
+
+    <h1>Doing Business with Us</h1>
+    <p class="h3">
+        We work with vendors who can help us find or develop the right tools, people, strategies,
+        infrastructure, and programs in support of our mission. We do this work in the open.
+        Here you’ll find information about both existing and future procurements. Any questions?
+        <a href="mailto:david.gragan@cfpb.gov">Contact our head of procurement.</a>
+    </p>
+
+    <section class="block block__bg block__border-top block__border-bottom block__flush-sides">
+        <h1 class="h2">Get started</h1>
+        <div class="content-l content-l__main">
+            <div class="content-l_col content-l_col-1-3">
+                <h2 class="h4">
+                    <span class="step-slug char-icon char-icon__1">Step one</span>
+                    Register with System of Award Management
+                </h2>
+                <p class="short-desc">
+                    Processes for procurement and awards across the federal government
+                    are managed in the System of Award Management (SAM).
+                    Anyone interested in federal procurements or awards should
+                    first register with SAM.
+                </p>
+                <a class="jump-link jump-link__external-link" href="https://www.sam.gov/">
+                    <span class="jump-link_text">Register with the System of Award Management at
+                        SAM.gov</span>
+                </a>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <h2 class="h4">
+                    <span class="step-slug char-icon char-icon__2">Step two</span>
+                    Identify a specific contract opportunity
+                </h2>
+                <p class="short-desc">
+                    The scope, requirements, and due dates for all of our open procurement opportunities are
+                    listed at FedBizOpps.
+                </p>
+                <a class="jump-link jump-link__external-link"
+                   href="https://www.fbo.gov/?s=agency&mode=form&tab=notices&id=e4a0c57cfb98ca60165469a7f9a778a0">
+                    <span class="jump-link_text">See our current procurement requests on FBO.gov</span>
+                </a>
+            </div>
+            <div class="content-l_col content-l_col-1-3">
+                <h2 class="h4">
+                    <span class="step-slug char-icon char-icon__3">Step three</span>
+                    Monitor upcoming procurement needs
+                </h2>
+                <p class="short-desc">
+                    We publish a list of any significant vendor services we expect to need in the near future.
+                </p>
+                <a class="jump-link jump-link__right" href="future-requests/">
+                    <span class="jump-link_text">See a timetable of expected future procurement
+                        opportunities</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="block content-l content-l__main">
+
+        <section class="content-l_col content-l_col-1-2">
+            <h1 class="h3">Existing and past service contracts</h1>
+            <p class="short-desc">
+                Each year, we publish worksheets of all our service contracts
+                and the the details of our largest contracts.
+                We also send a memo to the Office of Management and Budget
+                describing budget analysis we are planning to do.
+            </p>
+            <a class="jump-link jump-link__right" href="past-awards/">
+                <span class="jump-link_text">See our yearly service contract information</span>
+            </a>
+        </section>
+
+        <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+            <h1 class="h3">Small, women-owned, and minority-owned businesses</h1>
+            <p class="short-desc">
+                We have specific information about special processes and opportunities for small,
+                women-owned, and minority-owned businesses. You can also see data on existing work we do with
+                these businesses.
+            </p>
+            <a class="jump-link jump-link__right" href="small-businesses/">
+                <span class="jump-link_text">More information for small, women-owned, and minority-owned
+                    businesses</span>
+            </a>
+        </section>
+
+    </div>
+
+{% endblock %}

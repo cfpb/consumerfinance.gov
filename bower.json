@@ -1,6 +1,6 @@
 {
   "name": "cfgov-refresh",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Refreshing consumerfinance.gov.",
   "keywords": [
     "cfpb",
@@ -26,7 +26,7 @@
     "cf-forms": "git://github.com/cfpb/cf-forms.git#1.1.0",
     "cf-grid": "git://github.com/cfpb/cf-grid.git#0.9.0",
     "cf-icons": "git://github.com/cfpb/cf-icons.git#0.4.0",
-    "cf-layout": "git://github.com/cfpb/cf-layout.git#0.1.0",
+    "cf-layout": "git://github.com/cfpb/cf-layout.git#0.2.2",
     "cf-pagination": "git://github.com/cfpb/cf-pagination.git#0.4.1",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "history.js": "~1.8.0",

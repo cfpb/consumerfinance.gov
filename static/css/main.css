@@ -4623,50 +4623,241 @@ textarea.success {
           Structural cheat sheet:
           -----------------------
           .content-l
-            .content-l_col.content-l_col-(RATIO)
-        - .content-l_col.content-l_col-1
-        - .content-l_col.content-l_col-1-2
-        - .content-l_col.content-l_col-1-3
-        - .content-l_col.content-l_col-2-3
+            .content-l_col
       notes:
-        - "These layout classes have breakpoints that are specific for use
-           within .content_main."
-        - "Since .content-l_col's are nested within .content_main extra
-           margins will occur. The .content-l container uses the
-           grid_nested-col-group mixin to counter this."
+        - "Simplifies use of grid structure inside content containers (like .content-main)."
+        - "Since .content-l_col's are nested within .content_main extra margins will occur. 
+           The .content-l container uses the grid_nested-col-group mixin to counter this."
+        - ".content-l_col-RATIO classes default to stacking on mobile and displaying as columns 
+           above mobile-max width (600px). This may not be the desired breakpoint for
+           all use cases, so mixins are provided to simplify changing column display to
+           stacked."
+        - "Three .content-l modifiers handle the stacking overrides for use cases of
+           .content_main, .content_full, and .content_sidebar containers."
         - "Note that the divs with inline styles are for demonstration purposes
            only and should not be used in production."
-    - name: .content-l_col__stack-on-cols (modifier)
+    - name: .content-l__full modifier
       markup: |
-            <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;">
-                    Half-width column from 600px to 801px
-                </div>
-            </div>
-            <div class="content-l_col content-l_col__stack-on-cols content-l_col-1-2">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;">
-                    Half-width column from 600px to 801px
-                </div>
-            </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-1">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Full-width column (spans 12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__full">
+           <div class="content-l_col content-l_col-2-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;">
+                   Two thirds-width column (spans 8/12 columns)
+               </div>
+           </div>
+        </div>
       codenotes:
-        - .content-l_col__stack-on-cols
+        - .content-l.content-l__full
       notes:
-        - "A modifier that allows you to have columns that behave as normal but
-           stack at the larger multi-column views. For example a
-           .content-l_col-1-2 would stack as normal from 0-599px, at 600px it
-           would convert into a column, and at 801px it would stack again."
-        - "This is really only useful for .content-l_col-1-2 since there is a
-           decent range between when it becomes a column (600px) to when the
-           modifier converts it back into a full-width container (801px).
-           .content-l_col-1-3 on the other hand would have a much smaller range,
-           768 to 801px."
+        - "Designed for use within .content_full containers."
+        - "Displays .content-l_col-1-2 as columns at tablet sizes & above (600px+)"
+        - "Displays other common .content-l_col modifiers (.content-l_col-1-3, 
+           .content-l_col-2-3, .content-l_col-3-8, .content-l_col-5-8) 
+           as columns above 767px."
+    - name: .content-l__main modifier
+      markup: |
+        <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-1">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Full-width column (spans 12 columns)
+                 </div>
+             </div>
+         </div>
+         <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-1-2">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Half-width column (spans 6/12 columns)
+                 </div>
+             </div>
+             <div class="content-l_col content-l_col-1-2">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Half-width column (spans 6/12 columns)
+                 </div>
+             </div>
+         </div>
+         <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-1-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Third-width column (spans 4/12 columns)
+                 </div>
+             </div>
+             <div class="content-l_col content-l_col-1-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Third-width column (spans 4/12 columns)
+                 </div>
+             </div>
+             <div class="content-l_col content-l_col-1-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Third-width column (spans 4/12 columns)
+                 </div>
+             </div>
+         </div>
+         <div class="content-l content-l__main">
+             <div class="content-l_col content-l_col-2-3">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;">
+                     Two thirds-width column (spans 8/12 columns)
+                 </div>
+             </div>
+         </div>
+      codenotes:
+        - .content-l.content-l__main
+      notes:
+        - "Designed for use in .content_main containers, which have reduced (75%) width 
+           above tablet sizes to accommodate adjacent sidebar column."
+        - "Displays .content-l_col-1-2 as columns in the tablet range, 600-800px;
+           stacked from 800-899, the start of sidebar range; and as columns again at 900px+"
+        - "Displays other common .content-l_col modifiers (.content-l_col-1-3, .content-l_col-2-3,    
+           .content-l_col-3-8, .content-l_col-5-8) as columns above 900px."
+    - name: .content-l__sidebar modifier
+      markup: |
+        <div class="content-l content-l__sidebar">
+             <div class="content-l_col content-l_col-1">
+                 <div style="background: #F1F2F2;
+                             text-align: center;
+                             padding: 8px;
+                             margin-bottom: 4px;">
+                     Full-width column (spans 12 columns)
+                 </div>
+             </div>
+        </div>
+        <div class="content-l content-l__sidebar">
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-2">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Half-width column (spans 6/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__sidebar">
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+           <div class="content-l_col content-l_col-1-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;
+                           margin-bottom: 4px;">
+                   Third-width column (spans 4/12 columns)
+               </div>
+           </div>
+        </div>
+        <div class="content-l content-l__sidebar">
+           <div class="content-l_col content-l_col-2-3">
+               <div style="background: #F1F2F2;
+                           text-align: center;
+                           padding: 8px;">
+                   Two thirds-width column (spans 8/12 columns)
+               </div>
+           </div>
+        </div>
+      codenotes:
+        - .content-l.content-l__sidebar
+      notes:
+        - "For use in sidebar containers, which are full width only 
+           on tablet widths (600-800px)."
+        - "Displays .content-l_col-1-2 as columns in the tablet range, 
+           600-800px, and stacked at all other widths."
     - name: Large gutters modifier
       markup: |
-        <div class="content-l content-l__large-gutters">
+        <div class="content-l content-l__main  content-l__large-gutters">
             <div class="content-l_col content-l_col-1">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -4676,7 +4867,7 @@ textarea.success {
                 </div>
             </div>
         </div>
-        <div class="content-l content-l__large-gutters">
+        <div class="content-l content-l__main  content-l__large-gutters">
             <div class="content-l_col content-l_col-1-2">
                 <div style="background: #F1F2F2;
                             text-align: center;
@@ -4691,41 +4882,6 @@ textarea.success {
                             padding: 8px;
                             margin-bottom: 4px;">
                     Half-width column (spans 6/12 columns)
-                </div>
-            </div>
-        </div>
-        <div class="content-l content-l__large-gutters">
-            <div class="content-l_col content-l_col-1-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;
-                            margin-bottom: 4px;">
-                    Third-width column (spans 4/12 columns)
-                </div>
-            </div>
-            <div class="content-l_col content-l_col-1-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;
-                            margin-bottom: 4px;">
-                    Third-width column (spans 4/12 columns)
-                </div>
-            </div>
-            <div class="content-l_col content-l_col-1-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;
-                            margin-bottom: 4px;">
-                    Third-width column (spans 4/12 columns)
-                </div>
-            </div>
-        </div>
-        <div class="content-l content-l__large-gutters">
-            <div class="content-l_col content-l_col-2-3">
-                <div style="background: #F1F2F2;
-                            text-align: center;
-                            padding: 8px;">
-                    Two thirds-width column (spans 8/12 columns)
                 </div>
             </div>
         </div>
@@ -4748,6 +4904,472 @@ textarea.success {
     margin-right: -15px;
   }
 }
+@media only all and (min-width: 37.5em) and (max-width: 47.9375em) {
+  .content-l__full .content-l_col.content-l_col-1-3 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-2-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-2-3,
+  .content-l__full .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__full.content-l__large-gutters .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__full .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-5-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__full .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+  .content-l__full .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+}
+@media only all and (min-width: 50.0625em) and (max-width: 56.1875em) {
+  .content-l__main .content-l_col.content-l_col-1-2 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
+    margin-top: 1.875em;
+  }
+}
+@media only all and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .content-l__main .content-l_col.content-l_col-1-3 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-2-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-2-3,
+  .content-l__main .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-1-3 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__main.content-l__large-gutters .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__main .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-5-8 {
+    margin-top: 1.875em;
+  }
+  .content-l__main .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+  .content-l__main .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
+    margin-top: 1.875em;
+  }
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3 {
+  display: block;
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-1-3.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3 {
+  display: block;
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-2-3.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-2-3 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-2-3,
+.content-l__sidebar .content-l_col.content-l_col-2-3 + .content-l_col.content-l_col-1-3 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8 {
+  display: block;
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-3-8.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8 {
+  display: block;
+  width: 100%;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+.content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-5-8.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+.content-l__sidebar .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-5-8 {
+  margin-top: 1.875em;
+}
+.content-l__sidebar .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
+.content-l__sidebar .content-l_col.content-l_col-5-8 + .content-l_col.content-l_col-3-8 {
+  margin-top: 1.875em;
+}
+@media only all and (min-width: 50.0625em) {
+  .content-l__sidebar .content-l_col.content-l_col-1-2 {
+    display: block;
+    width: 100%;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 15px;
+    margin-top: 3.75em;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 1.875em;
+    background-color: #babbbd;
+  }
+  .content-l__sidebar.content-l__large-gutters .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+    border-left-width: 30px;
+  }
+  .content-l__sidebar .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
+    margin-top: 1.875em;
+  }
+}
 @media only all and (min-width: 37.5em) {
   .content-l__large-gutters {
     margin-left: -30px;
@@ -4762,11 +5384,7 @@ textarea.success {
   margin-top: 1.875em;
 }
 @media only all and (min-width: 37.5em) {
-  .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2 {
-    margin-top: 0;
-  }
-}
-@media only all and (min-width: 48em) {
+  .content-l_col.content-l_col-1-2 + .content-l_col.content-l_col-1-2,
   .content-l_col.content-l_col-1-3 + .content-l_col.content-l_col-1-3,
   .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-3-8,
   .content-l_col.content-l_col-3-8 + .content-l_col.content-l_col-5-8,
@@ -4828,28 +5446,6 @@ textarea.success {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-1-3 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-1-3 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
-  .content-l_col-1-3 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
     width: 33.33333333%;
   }
   .ie .content-l_col-1-3 {
@@ -4863,28 +5459,6 @@ textarea.success {
   }
 }
 @media only all and (min-width: 37.5em) {
-  .content-l_col-2-3 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-2-3 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-2-3 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
   .content-l_col-2-3 {
     display: inline-block;
     -webkit-box-sizing: border-box;
@@ -4916,28 +5490,6 @@ textarea.success {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-3-8 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-3-8 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
-  .content-l_col-3-8 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
     width: 37.5%;
   }
   .ie .content-l_col-3-8 {
@@ -4960,56 +5512,12 @@ textarea.success {
     border-width: 0 15px;
     margin-right: -0.25em;
     vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col-5-8 {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col-5-8 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 48em) {
-  .content-l_col-5-8 {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
     width: 62.5%;
   }
   .ie .content-l_col-5-8 {
     margin-right: -0.26em;
   }
   .lt-ie8 .content-l_col-5-8 {
-    display: inline;
-    margin-right: 0;
-    zoom: 1;
-    behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
-  }
-}
-@media only all and (min-width: 50.0625em) {
-  .content-l_col__stack-on-cols {
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0 15px;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 100%;
-  }
-  .ie .content-l_col__stack-on-cols {
-    margin-right: -0.26em;
-  }
-  .lt-ie8 .content-l_col__stack-on-cols {
     display: inline;
     margin-right: 0;
     zoom: 1;
@@ -5024,7 +5532,7 @@ textarea.success {
     - "Layout dividers work in conjunction with .content-l_col-X-X elements and
        have specific needs depending on which column element variant they are
        attached to. For example .content-l_col-1-2 has different divider needs
-       than .content-l_col-1-3 because they break to single columns at different
+       than .content-l_col-1-3 because they may break to single columns at different
        breakpoints."
     - "Dividers use absolute positioning relative to the .content-l element and
        depends on .content-l using `position: relative;`. This allows vertical
@@ -5069,6 +5577,7 @@ textarea.success {
 */
 @media only all and (max-width: 37.4375em) {
   .content-l_col__before-divider.content-l_col-1-2 {
+    border-left-width: 15px;
     margin-top: 3.75em;
   }
   .content-l_col__before-divider.content-l_col-1-2:before {
@@ -5077,6 +5586,9 @@ textarea.success {
     height: 1px;
     margin-bottom: 1.875em;
     background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
   }
   .content-l_col__before-divider.content-l_col-1-2:before {
     content: "";
@@ -5111,8 +5623,9 @@ textarea.success {
     margin-left: -30px;
   }
 }
-@media only all and (max-width: 47.9375em) {
+@media only all and (max-width: 37.4375em) {
   .content-l_col__before-divider.content-l_col-1-3 {
+    border-left-width: 15px;
     margin-top: 3.75em;
   }
   .content-l_col__before-divider.content-l_col-1-3:before {
@@ -5121,6 +5634,9 @@ textarea.success {
     height: 1px;
     margin-bottom: 1.875em;
     background-color: #babbbd;
+    position: static;
+    width: 100%;
+    margin-left: auto !important;
   }
   .content-l_col__before-divider.content-l_col-1-3:before {
     content: "";
@@ -5130,7 +5646,7 @@ textarea.success {
     background-color: #babbbd;
   }
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .content-l_col__before-divider.content-l_col-1-3 {
     border-left-width: 30px;
   }
@@ -6030,6 +6546,7 @@ textarea.success {
 }
 .grid_column__top-divider {
   margin-top: 3.75em;
+  border-left-width: 15px;
 }
 .grid_column__top-divider:before {
   content: "";
@@ -6037,6 +6554,9 @@ textarea.success {
   height: 1px;
   margin-bottom: 1.875em;
   background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
 }
 .grid_column__left-divider {
   border-left-width: 30px;
@@ -8132,6 +8652,84 @@ figure img {
    capital framework enhancements
    ========================================================================== */
 /* topdoc
+  name: Code styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .inline-code
+      markup: |
+        <code class="inline-code">code { color: red; }</code>
+  tags:
+    - cfgov-cf-enhancements
+*/
+.inline-code {
+  display: inline-block;
+  padding: 0.21428571em 0.35714286em;
+  border-radius: 4px;
+  background: #f1f2f2;
+  color: #101820;
+  font-size: 0.875em;
+}
+/* topdoc
+  name: Width utilities
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Percent-based
+      markup: |
+        <div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w95pct</code>
+        </div>
+        <div class="u-w85pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w85pct</code>
+        </div>
+        <div class="u-w65pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w65pct</code>
+        </div>
+        <div class="u-w55pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w55pct</code>
+        </div>
+        <div class="u-w45pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w45pct</code>
+        </div>
+        <div class="u-w35pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w35pct</code>
+        </div>
+        <div class="u-w15pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w15pct</code>
+        </div>
+        <div class="u-w5pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w5pct</code>
+        </div>
+      notes:
+        - "Inline styles are for demonstration purposes only, please don't use
+           them."
+  tags:
+    - cfgov-cf-enhancements
+*/
+.u-w95pct {
+  width: 95%;
+}
+.u-w85pct {
+  width: 85%;
+}
+.u-w65pct {
+  width: 65%;
+}
+.u-w55pct {
+  width: 55%;
+}
+.u-w45pct {
+  width: 45%;
+}
+.u-w35pct {
+  width: 35%;
+}
+.u-w15pct {
+  width: 15%;
+}
+.u-w5pct {
+  width: 5%;
+}
+/* topdoc
   name: respond-to-print() (mixin)
   notes:
     - "This mixin allows us to easily write styles that target both
@@ -8186,6 +8784,33 @@ figure img {
 }
 .print .superheader {
   color: #2cb34a;
+}
+/* topdoc
+  name: Centered on mobile utility
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .u-centered-on-mobile
+      markup: |
+        <div>
+            <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
+                Block centered on mobile
+            </div>
+            <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
+        </div>
+      notes:
+        - "Sometimes content (parts/all of a media block, for example)
+           should be centered on mobile, but not on larger screen sizes."
+        - "This implementation conflates inline & block element centering, 
+           though they could be made into separate classes."
+  tags:
+    - cfgov-cf-enhancements
+*/
+@media only all and (max-width: 37.4375em) {
+  .u-centered-on-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 /* topdoc
   name: Tables
@@ -8255,6 +8880,9 @@ thead th {
 .lt-ie9 thead th {
   font-weight: normal !important;
 }
+tbody {
+  border-top: 1px solid #babbbd;
+}
 tbody th {
   font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
   font-style: normal;
@@ -8271,11 +8899,19 @@ tbody tr {
     width: 100%;
   }
   thead th {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
+    width: 100% !important;
   }
   tbody th,
   tbody td {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
+    width: 100% !important;
   }
   tbody th + th,
   tbody td + td {
@@ -8342,24 +8978,6 @@ tbody tr {
   display: block;
   background-color: #babbbd;
   margin-left: -30px;
-}
-/* topdoc
-  name: Expandables
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Header right float on medium modifier
-      codenotes:
-        - .expandable_header-right__float-on-medium
-  tags:
-    - cfgov-cf-enhancements
-*/
-.expandable_header-right__float-on-medium {
-  float: none;
-}
-@media only all and (min-width: 37.5em) {
-  .expandable_header-right__float-on-medium {
-    float: right;
-  }
 }
 /* topdoc
     name: Expandable header modifier
@@ -9618,24 +10236,6 @@ tbody tr {
       notes:
         - "Increased right (or left, when used with .media_image-container__right modifier),
            margin on .media_image-container."
-            
-    - name: .media__centered modifier
-      markup: |
-        <article class="media media__centered">
-            <div class="media_image-container">
-                <img class="media_image" src="http://placekitten.com/276/155" alt="">
-            </div>
-            <div class="media_body">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolorum non sapiente nobis molestias delectus optio ipsam
-                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
-                    accusantium doloribus dicta fugiat itaque ab porro.
-                </p>
-            </div>
-        </article>
-      notes:
-        - "Content is centered at mobile screen size (less than 600px)."
   tags:
     - cfgov-media
 */
@@ -9709,17 +10309,6 @@ tbody tr {
   zoom: 1;
   display: block;
   width: auto;
-}
-@media only all and (max-width: 37.4375em) {
-  .media__centered {
-    text-align: center;
-  }
-}
-@media only all and (max-width: 37.4375em) {
-  .media__centered .media_image {
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 /* topdoc
     name: EOF
@@ -10361,6 +10950,82 @@ a.category-slug.active {
    misc
    ========================================================================== */
 /* topdoc
+  name: Expandable customizations
+  family: cfgov-misc
+  patterns:
+    - name: Expandable filters
+      markup: |
+        <div class="expandable expandable__filters">
+            <div class="expandable_header expandable_header__spaced">
+                <div class="expandable_header-right u-hide-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+                    <li class="list_item filtered-by_header">80 filtered results for</li>
+                    <li class="list_item filtered-by_filter">
+                        Blog,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        Press Release,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        January 2014&ndash;September 2014
+                    </li>
+                </ul>
+                <div class="expandable_header-right u-show-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="expandable_content padded-container">
+                <div class="padded-container_body">
+                    Filters body
+                </div>
+            </div>
+        </div>
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//cfpb.github.io/cf-expandables/docs/static/js/component.min.js"></script>
+  tags:
+    - cfgov-misc
+*/
+.expandable__filters {
+  margin-bottom: 0.9375em;
+}
+.expandable__filters.expandable__expanded {
+  margin-bottom: 1.875em;
+}
+@media only all and (max-width: 37.4375em) {
+  .expandable__filters .expandable_header-right {
+    float: none;
+    margin-top: 0.625em;
+  }
+  .expandable__filters .expandable_header-right .btn {
+    display: block;
+    width: 100%;
+  }
+}
+/* topdoc
   name: Links with icons
   family: cfgov-misc
   notes:
@@ -10462,6 +11127,14 @@ a.category-slug.active {
 .icon-link__mail:after,
 .icon-link__mail.icon-link__before:before {
   content: "\e304";
+}
+.icon-link__pdf:after,
+.icon-link__pdf.icon-link__before:before {
+  content: "\e402";
+}
+.icon-link__pdf:after,
+.icon-link__pdf.icon-link__before:before {
+  content: "\e402";
 }
 .icon-link__phone:after,
 .icon-link__phone.icon-link__before:before {
@@ -10601,6 +11274,14 @@ a.category-slug.active {
 .jump-link__mail.jump-link__before:before {
   content: "\e304";
 }
+.jump-link__pdf:after,
+.jump-link__pdf.jump-link__before:before {
+  content: "\e402";
+}
+.jump-link__pdf:after,
+.jump-link__pdf.jump-link__before:before {
+  content: "\e402";
+}
 .jump-link__phone:after,
 .jump-link__phone.jump-link__before:before {
   content: "\e306";
@@ -10638,6 +11319,15 @@ a.category-slug.active {
     bottom: 50%;
     text-align: right;
   }
+  .jump-link__before {
+    padding-left: 1.25em;
+  }
+  .jump-link__before:before {
+    position: absolute;
+    margin-bottom: -0.625em;
+    bottom: 50%;
+    left: 0;
+  }
   .jump-link_text {
     border-bottom-width: 0;
   }
@@ -10649,6 +11339,9 @@ a.category-slug.active {
   }
   .jump-link__bg:after {
     right: 1em;
+  }
+  .jump-link__bg:before {
+    left: 0.625em;
   }
 }
 /* topdoc
@@ -11363,6 +12056,272 @@ a.category-slug.active {
 }
 .padded-container_body {
   margin: 1.4375em 1.8125em 1.4375em;
+}
+/* topdoc
+  name: Character icons
+  family: cfgov-misc
+  notes:
+    - "A way to create icons that feature a single character on a circular 
+       background. Useful because cf-icons does not have any of this type of
+       icon in its library. Typical use case would be to identify steps in a
+       process."
+  patterns:
+    - name: Default usage
+      markup: |
+        <h2 class="char-icon char-icon__1">This is the first thing</h2>
+  tags:
+    - cfgov-misc
+*/
+.char-icon:before {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.25em 0;
+  border-radius: 100%;
+  margin-right: 0.375em;
+  position: relative;
+  top: -0.07692308em;
+  background: #2cb34a;
+  color: #ffffff;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 92.85714286%;
+  line-height: 1;
+  text-align: center;
+}
+.lt-ie9 .char-icon:before {
+  font-weight: normal !important;
+}
+.char-icon__1:before {
+  content: '1';
+}
+.char-icon__2:before {
+  content: '2';
+}
+.char-icon__3:before {
+  content: '3';
+}
+.char-icon__4:before {
+  content: '4';
+}
+.char-icon__5:before {
+  content: '5';
+}
+.char-icon__6:before {
+  content: '6';
+}
+.char-icon__7:before {
+  content: '7';
+}
+.char-icon__8:before {
+  content: '8';
+}
+.char-icon__9:before {
+  content: '9';
+}
+.char-icon__0:before {
+  content: '0';
+}
+.char-icon__A:before {
+  content: 'A';
+}
+.char-icon__B:before {
+  content: 'B';
+}
+.char-icon__C:before {
+  content: 'C';
+}
+.char-icon__D:before {
+  content: 'D';
+}
+.char-icon__E:before {
+  content: 'E';
+}
+.char-icon__F:before {
+  content: 'F';
+}
+.char-icon__G:before {
+  content: 'G';
+}
+.char-icon__H:before {
+  content: 'H';
+}
+.char-icon__I:before {
+  content: 'I';
+}
+.char-icon__J:before {
+  content: 'J';
+}
+.char-icon__K:before {
+  content: 'K';
+}
+.char-icon__L:before {
+  content: 'L';
+}
+.char-icon__M:before {
+  content: 'M';
+}
+.char-icon__N:before {
+  content: 'N';
+}
+.char-icon__O:before {
+  content: 'O';
+}
+.char-icon__P:before {
+  content: 'P';
+}
+.char-icon__Q:before {
+  content: 'Q';
+}
+.char-icon__R:before {
+  content: 'R';
+}
+.char-icon__S:before {
+  content: 'S';
+}
+.char-icon__T:before {
+  content: 'T';
+}
+.char-icon__U:before {
+  content: 'U';
+}
+.char-icon__V:before {
+  content: 'V';
+}
+.char-icon__W:before {
+  content: 'W';
+}
+.char-icon__X:before {
+  content: 'X';
+}
+.char-icon__Y:before {
+  content: 'Y';
+}
+.char-icon__Z:before {
+  content: 'Z';
+}
+.char-icon__a:before {
+  content: 'a';
+}
+.char-icon__b:before {
+  content: 'b';
+}
+.char-icon__c:before {
+  content: 'c';
+}
+.char-icon__d:before {
+  content: 'd';
+}
+.char-icon__e:before {
+  content: 'e';
+}
+.char-icon__f:before {
+  content: 'f';
+}
+.char-icon__g:before {
+  content: 'g';
+}
+.char-icon__h:before {
+  content: 'h';
+}
+.char-icon__i:before {
+  content: 'i';
+}
+.char-icon__j:before {
+  content: 'j';
+}
+.char-icon__k:before {
+  content: 'k';
+}
+.char-icon__l:before {
+  content: 'l';
+}
+.char-icon__m:before {
+  content: 'm';
+}
+.char-icon__n:before {
+  content: 'n';
+}
+.char-icon__o:before {
+  content: 'o';
+}
+.char-icon__p:before {
+  content: 'p';
+}
+.char-icon__q:before {
+  content: 'q';
+}
+.char-icon__r:before {
+  content: 'r';
+}
+.char-icon__s:before {
+  content: 's';
+}
+.char-icon__t:before {
+  content: 't';
+}
+.char-icon__u:before {
+  content: 'u';
+}
+.char-icon__v:before {
+  content: 'v';
+}
+.char-icon__w:before {
+  content: 'w';
+}
+.char-icon__x:before {
+  content: 'x';
+}
+.char-icon__y:before {
+  content: 'y';
+}
+.char-icon__z:before {
+  content: 'z';
+}
+/* topdoc
+  name: Step slugs
+  family: cfgov-misc
+  notes:
+    - "Styling for a slug that indicates a step in a process."
+  patterns:
+    - name: Embedded in a heading
+      markup: |
+        <h2>
+            <span class="step-slug char-icon char-icon__1">Step one</span>
+            Description of the step
+        </h2>
+      notes:
+        - "Useful when you want to include the slug text in the heading for the
+           purposes of visibility in the document outline."
+    - name: Standalone
+      markup: |
+        <h2 class="step-slug char-icon char-icon__1">Step one</h2>
+        <p>Description of the step</p>
+      notes:
+        - "Useful when the 'Step number' text itself serves as a heading."
+        - "Equivalent to the .char-icon default usage pattern, but with specific
+           styling for the text that follows."
+  tags:
+    - cfgov-misc
+*/
+.step-slug {
+  display: block;
+  margin-bottom: 1.07142857em;
+  color: #43484e;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.lt-ie9 .step-slug {
+  font-weight: normal !important;
 }
 /* topdoc
   name: EOF
@@ -12285,19 +13244,22 @@ a.focus .summary_header {
   patterns:
     - name: Post filters
       markup: |
-        <div class="expandable expandable__expanded">
+        <div class="expandable expandable__filters expandable__expanded">
             <div class="expandable_header expandable_header__spaced">
-                <div class="expandable_header-right expandable_header-right__float-on-medium">
-                    <a class="expandable_target btn btn__secondary"
-                       href="#post-filters-form">
-                        Filter posts&nbsp;&nbsp;
-                        <span class="expandable_cue-open">
-                            <span class="cf-icon cf-icon-down"></span>
+                <div class="expandable_header-right">
+                    <div class="expandable_header-right u-hide-on-mobile">
+                        <span class="expandable_target">
+                            <button class="btn btn__secondary">
+                                Filter posts
+                                <span class="expandable_cue-open">
+                                    <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                                </span>
+                                <span class="expandable_cue-close">
+                                    <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                                </span>
+                            </button>
                         </span>
-                        <span class="expandable_cue-close">
-                            <span class="cf-icon cf-icon-up"></span>
-                        </span>
-                    </a>
+                    </div>
                 </div>
                 <dl class="filtered-by
                            filtered-by__show-on-medium
@@ -12387,14 +13349,15 @@ a.focus .summary_header {
         - |
           Structural cheat sheet:
           -----------------------
-          .expandable
+          .expandable.expandable__filters
             .expandable_header__spaced
-              .expandable_header-right.expandable_header-right__float-on-medium
-                .expandable_target.btn.btn__secondary
-                  .expandable_cue-open
-                    .cf-icon.cf-icon-down
-                  .expandable_cue-close
-                    .cf-icon.cf-icon-up
+              .expandable_header-right
+                .expandable_target
+                  .btn.btn__secondary
+                    .expandable_cue-open
+                      .cf-icon.cf-icon-down
+                    .expandable_cue-close
+                      .cf-icon.cf-icon-up
               .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
             .expandable_content.padded-container
               .padded-container_body
@@ -15517,6 +16480,257 @@ a.focus .summary_header {
     top: 39px;
   }
 }
+.budget_page-content h4 {
+  margin-top: 30px;
+}
+.budget_page-content ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+.budget_page-content ul .list_item {
+  margin-left: 0;
+}
+.budget_page-content ul .list_item {
+  margin-left: 0;
+}
+.budget_page-content ul .list_item {
+  margin-bottom: 0.625em;
+}
+@media only all and (max-width: 37.4375em) {
+  .budget_page-content ul .list_item {
+    margin-bottom: -1px;
+  }
+}
+.budget_page-content ul.list__spaced .list_item + .list_item {
+  margin-top: 0;
+}
+@media only all and (max-width: 37.4375em) {
+  .budget_page-content ul .list_link {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    padding: 0.625em 1.25em 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+    margin-right: 0;
+    width: 100%;
+    text-align: left;
+  }
+  .budget_page-content ul .list_link.icon-link:after {
+    position: absolute;
+    margin-bottom: -0.625em;
+    right: 0;
+    bottom: 50%;
+    text-align: right;
+  }
+  .budget_page-content ul .list_link .icon-link_text {
+    border-bottom-width: 0;
+  }
+}
+.budget_page-content ul.list__icons .list_link {
+  position: relative;
+  left: -0.125em;
+}
+.budget_page-content ul.list__icons .icon-link:before,
+.budget_page-content ul.list__icons .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+.budget_page-content ul .list_link {
+  position: relative;
+  left: -0.125em;
+}
+.budget_page-content ul .icon-link:before,
+.budget_page-content ul .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+.budget_page-content ul li {
+  margin-left: 0;
+  margin-bottom: 0.625em;
+}
+@media only all and (max-width: 37.4375em) {
+  .budget_page-content ul li {
+    margin-bottom: -1px;
+  }
+}
+.budget_page-content ul li a {
+  left: -0.125em;
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+  border-bottom-width: 0;
+  position: relative;
+}
+@media only all and (max-width: 37.4375em) {
+  .budget_page-content ul li a {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    padding: 0.625em 1.25em 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+    margin-right: 0;
+    width: 100%;
+    text-align: left;
+  }
+  .budget_page-content ul li a.icon-link:after {
+    position: absolute;
+    margin-bottom: -0.625em;
+    right: 0;
+    bottom: 50%;
+    text-align: right;
+  }
+  .budget_page-content ul li a .icon-link_text {
+    border-bottom-width: 0;
+  }
+}
+.lt-ie9 .budget_page-content ul li a {
+  font-weight: normal !important;
+}
+.budget_page-content ul li a_text {
+  border-bottom-width: 1px;
+  border-bottom-style: inherit;
+}
+.budget_page-content ul li a:before,
+.budget_page-content ul li a:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+.budget_page-content ul li a__download:after,
+.budget_page-content ul li a__download.budget_page-content ul li a__before:before {
+  content: "\e406";
+}
+.budget_page-content ul li a__email:after,
+.budget_page-content ul li a__email.budget_page-content ul li a__before:before {
+  content: "\e302";
+}
+.budget_page-content ul li a__external-link:after,
+.budget_page-content ul li a__external-link.budget_page-content ul li a__before:before {
+  content: "\e610";
+}
+.budget_page-content ul li a__fax:after,
+.budget_page-content ul li a__fax.budget_page-content ul li a__before:before {
+  content: "\e310";
+}
+.budget_page-content ul li a__left:after,
+.budget_page-content ul li a__left.budget_page-content ul li a__before:before {
+  content: "\e000";
+}
+.budget_page-content ul li a__mail:after,
+.budget_page-content ul li a__mail.budget_page-content ul li a__before:before {
+  content: "\e304";
+}
+.budget_page-content ul li a__pdf:after,
+.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
+  content: "\e402";
+}
+.budget_page-content ul li a__pdf:after,
+.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
+  content: "\e402";
+}
+.budget_page-content ul li a__phone:after,
+.budget_page-content ul li a__phone.budget_page-content ul li a__before:before {
+  content: "\e306";
+}
+.budget_page-content ul li a__right:after,
+.budget_page-content ul li a__right.budget_page-content ul li a__before:before {
+  content: "\e002";
+}
+.budget_page-content ul li a__before:after {
+  content: '';
+}
+.budget_page-content ul li a__no-wrap {
+  white-space: nowrap;
+}
+.budget_page-content ul li a__large {
+  font-size: 1.125em;
+}
+@media only all and (max-width: 37.4375em) {
+  .budget_page-content ul li a {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    padding: 0.625em 1.25em 0.625em 0;
+    border: dotted #0072ce;
+    border-width: 1px 0;
+    margin-right: 0;
+    width: 100%;
+    text-align: left;
+  }
+  .budget_page-content ul li a:after {
+    position: absolute;
+    margin-bottom: -0.625em;
+    right: 0;
+    bottom: 50%;
+    text-align: right;
+  }
+  .budget_page-content ul li a__before {
+    padding-left: 1.25em;
+  }
+  .budget_page-content ul li a__before:before {
+    position: absolute;
+    margin-bottom: -0.625em;
+    bottom: 50%;
+    left: 0;
+  }
+  .budget_page-content ul li a_text {
+    border-bottom-width: 0;
+  }
+  .budget_page-content ul li a__bg {
+    background: #f1f2f2;
+    border: solid #e3e4e5;
+    border-width: 1px 0;
+    padding: 0.625em 1.25em 0.625em 1em;
+  }
+  .budget_page-content ul li a__bg:after {
+    right: 1em;
+  }
+  .budget_page-content ul li a__bg:before {
+    left: 0.625em;
+  }
+}
+.budget_page-content.financial-report a:before,
+.budget_page-content.performance-plan a:before,
+.budget_page-content.funding-request a span:before {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "\e402";
+  margin-right: .5em;
+  color: #101820;
+}
+.budget_page-content.funding-request h4 {
+  margin-top: 2.1875em;
+}
+.budget_page-content.funding-request a span {
+  color: #101820;
+  padding-right: .5em;
+}
+@media only all and (min-width: 64em) {
+  .budget_page-content.funding-request a span {
+    float: left;
+    width: 12em;
+  }
+}
+.budget_page-content.performance-plan sub {
+  display: block;
+  margin-top: -0.625em;
+  margin-bottom: 3.75em;
+}
 .bureau-mission {
   margin-bottom: 2.8125em;
 }
@@ -16429,6 +17643,95 @@ a.focus .summary_header {
 }
 .lt-ie9 .history-item_date {
   font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .office .content-l_col__before-divider.content-l_col-1-2 {
+    margin-top: 1.875em;
+  }
+  .office .content-l_col__before-divider.content-l_col-1-2:before {
+    display: none;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .office_initiatives .expandables-group {
+    border-top: 1px solid #e3e4e5;
+  }
+}
+.office_initiatives .expandable.content-l_col {
+  margin-bottom: 1.875em;
+}
+@media only all and (max-width: 37.4375em) {
+  .office_initiatives .expandable.content-l_col {
+    margin-bottom: 1.875em;
+    background: #f1f2f2;
+    margin-bottom: 0;
+    margin-top: 0;
+    border-bottom: 1px solid #e3e4e5;
+  }
+  .office_initiatives .expandable.content-l_col:hover,
+  .office_initiatives .expandable.content-l_col.expandable__expanded {
+    background: #e3e4e5;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_header {
+    padding: 0.625em 1em;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_content {
+    margin: 0 1em 1.375em;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_content:before {
+    content: '';
+    display: block;
+    height: 1px;
+    margin-bottom: 1em;
+    background: #babbbd;
+  }
+  .office_initiatives .expandable.content-l_col .expandable_content {
+    padding-bottom: 1.875em;
+    margin-bottom: 0;
+  }
+}
+.initiative_description p:first-child {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.95454545em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+}
+.initiative_description p:first-child em,
+.initiative_description p:first-child i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .initiative_description p:first-child em,
+.lt-ie9 .initiative_description p:first-child i {
+  font-style: normal !important;
+}
+.initiative_description p:first-child strong,
+.initiative_description p:first-child b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .initiative_description p:first-child strong,
+.lt-ie9 .initiative_description p:first-child b {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .initiative_description p:first-child {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+  }
+  .lt-ie9 .initiative_description p:first-child {
+    font-weight: normal !important;
+  }
 }
 /* ==========================================================================
    cfgov-refresh

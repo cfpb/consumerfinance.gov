@@ -1,0 +1,72 @@
+{% extends "layout-full.html" %}
+{% import "_vars-activity-log.html" as vars with context %}
+
+{% block title -%}
+    Activity Log
+{%- endblock %}
+
+{% block desc -%}
+    Activity Log
+{%- endblock %}
+
+{% block content_main %}
+
+    {% set archives = vars.query.search_with_url_arguments(size=30) %}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% from "post-macros.html" import category_icon as category_icon %}
+    {% from "post-macros.html" import pagination as pagination with context %}
+
+    <h1>Activity Log</h1>
+    <p class="h3">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque saepe at ut quo
+        voluptas ratione cumque dolorem autem nemo sequi earum voluptate reprehenderit
+        molestias non optio enim dignissimos amet consequatur.
+    </p>
+
+    <div class="block__sub u-mb0">
+        
+        <div id="pagination_content"></div>
+
+        {{ filters(
+                ['activity_category', 'tags', 'range_date'], vars.query, archives, 'calendar_event',
+                { 'expand_label': 'Filter activities' }
+            ) }}
+
+        <table class="u-w100pct">
+            <tbody>
+            {%- for item in archives %}
+                <tr>
+                    <td class="u-w20pct">
+                        {%- if item.type == 'newsroom' -%}
+                            {%- if item.category.0 %}
+                                {%- set activity_type = item.category.0 %}
+                            {%- endif -%}
+                        {%- elif item.type == 'posts' -%}
+                            {% set activity_type = 'blog' %}
+                        {%- endif %}
+                        <span class="category-slug u-mb0">
+                            {{ category_icon(activity_type, 'category-slug_icon')|safe }}
+                            <span class="u-visually-hidden">Activity type:</span>
+                            {{ activity_type }}
+                        </span>
+                    </td>
+                    <td class="u-w65pct">
+                        <a href="{{ item.permalink }}">
+                            <h4 class="u-mb0">
+                                {{ item.title }}
+                            </h4>
+                        </a>
+                    </td>
+                    <td class="u-w15pct">
+                        {{ item.date|date("%b %d, %Y") }}
+                    </td>
+                </tr>
+            {%- endfor %}
+            </tbody>
+        </table>
+
+        {{- pagination(archives, ['activity_category', 'tags', 'range_date']) }}
+
+    </div>
+
+{% endblock %}

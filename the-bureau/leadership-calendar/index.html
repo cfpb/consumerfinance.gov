@@ -1,5 +1,6 @@
-{% extends "base.html" %}
-{% import "macros.html" as macros %}
+{% extends "layout-side-nav.html" %}
+{% import "_vars-the-bureau.html" as vars with context %}
+{% set active_nav_id = 'leadership-calendar' %}
 
 {% block title -%}
     Leadership calendar
@@ -9,135 +10,105 @@
     Leadership calendar
 {%- endblock %}
 
-{% block content %}
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
 
-    {# Variables #}
+{% block content_main %}
 
-    {% set path = '/the-bureau/' %}
-    {% set active_page = 'leadership-calendar' %}
+    {% import "leadership-calendar-table.html" as calendar %}
+    {% from "macros.html" import share as share %}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% from "post-macros.html" import pagination as pagination with context %}
 
-    {# Macros #}
+    <div class="block u-mt0 block__padded-bottom block__border-bottom">
+        <h1 class="h3">
+            At the Consumer Financial Protection Bureau, we are committed to letting you
+            know how we’re working for you every day by, among other things, providing you
+            with a view into the workday of the CFPB’s senior leadership.
+        </h1>
+        <p>
+            Richard Cordray is the Director of the CFPB. We post his calendar online,
+            typically on a monthly basis, after reviewing it to determine whether any
+            information contained therein must or should be withheld from public disclosure
+            in accordance with the Freedom of Information Act. We update the calendar
+            retrospectively; we do not post current or future calendars. Due to the
+            time-intensive preparation process, each month’s calendar will appear on this
+            page a few weeks after that month has concluded. We will begin updating
+            Mr. Cordray’s calendar with his January appointments.
+        </p>
+        {{ share(self.title(), false) }}
+    </div>
 
-    {% import "post-macros.html" as post_macros with context %}
+    <div id="pagination_content"></div>
 
-    <main class="content content__1-3" id="main" role="main">
+    <div class="block u-mt0">
 
-        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
-        <div class="content_bar"></div>
+    {% set query = queries.calendar_event %}
+    {% set posts = query.search_with_url_arguments(size=20) %}
 
-        <div class="wrapper content_wrapper">
+        {{ filters(
+            ['calendar', 'range_date'], query, posts, 'calendar_event',
+            { 'expand_label': 'Filter calendars' }
+        ) }}
 
-            <aside class="content_sidebar content__flush-all-on-small">
-                {% include "_the-bureau-nav.html" %}
-            </aside>
+    {{ calendar.render(posts) }}
 
-            <div class="content_main
-                        content__flush-top-on-small
-                        content__flush-bottom">
-                <section>
+    </div><!-- END calendar -->
 
-                    <div class="block
-                                u-mt0
-                                block__padded-bottom
-                                block__border-bottom">
-                        <h1 class="h3">
-                            At the Consumer Financial Protection Bureau, we are committed to letting you
-                            know how we’re working for you every day by, among other things, providing you
-                            with a view into the workday of the CFPB’s senior leadership.
-                        </h1>
-                        <p>
-                            Richard Cordray is the Director of the CFPB. We post his calendar online,
-                            typically on a monthly basis, after reviewing it to determine whether any
-                            information contained therein must or should be withheld from public disclosure
-                            in accordance with the Freedom of Information Act. We update the calendar
-                            retrospectively; we do not post current or future calendars. Due to the
-                            time-intensive preparation process, each month’s calendar will appear on this
-                            page a few weeks after that month has concluded. We will begin updating
-                            Mr. Cordray’s calendar with his January appointments.
-                        </p>
-                        {{ macros.share(self.title(), false) }}
-                    </div>
+    {{ pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
 
-                    <div id="pagination_content"></div>
+    <section class="block block__padded-top block__border-top">
+        <h1 class="h2">
+            Download a copy
+        </h1>
+        <p>
+            Quisque consequat quam sem, a condimentum augue consequat nec. Aenean tristique
+            faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
+            dapibus, a viverra elit tempor.
+        </p>
+        {{ filters(
+            ['calendar', 'range_date'], query, posts, 'calendar_event',
+            {
+                'id_prefix': 'download',
+                'expand_label': 'Download options',
+                'show_current_filters': false,
+                'action': 'pdf/',
+                'submit_label': 'Download PDF'
+            }
+        ) }}
+    </section>
 
-                    <div class="block u-mt0">
+    <aside class="block u-mb0 block__flush-sides block__bg">
+        <div class="content-l content-l__main">
+            <div class="content-l_col content-l_col-1-2">
+                <h1 class="header-slug">
+                    <span class="header-slug_inner">
+                        Related links
+                    </span>
+                </h1>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a href="http://www.consumerfinance.gov/foia/"
+                           class="list_link">
+                            Read more about FOIA
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="http://www.consumerfinance.gov/open/"
+                           class="list_link">
+                            Open government
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="{{ vars.path }}history/"
+                           class="list_link">
+                            About our history
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </aside>
 
-                    {% set query = queries.calendar_event %}
-                    {% set posts = query.search_with_url_arguments(size=20) %}
-
-                        {{ post_macros.filters(
-                            ['calendar', 'range_date'], query, posts, 'calendar_event',
-                            { 'expand_label': 'Filter calendars' }
-                        ) }}
-
-                    {% import "leadership-calendar-table.html" as calendar %}
-                    {{ calendar.render(posts) }}
-
-                    </div><!-- END calendar -->
-
-                    {{ post_macros.pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
-
-                    <section class="block block__padded-top block__border-top">
-                        <h1 class="h2">
-                            Download a copy
-                        </h1>
-                        <p>
-                            Quisque consequat quam sem, a condimentum augue consequat nec. Aenean tristique
-                            faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
-                            dapibus, a viverra elit tempor.
-                        </p>
-                        {{ post_macros.filters(
-                            ['calendar', 'range_date'], query, posts, 'calendar_event',
-                            {
-                                'id_prefix': 'download',
-                                'expand_label': 'Download options',
-                                'show_current_filters': false,
-                                'action': 'pdf/',
-                                'submit_label': 'Download PDF'
-                            }
-                        ) }}
-                    </section>
-
-                    <aside class="block
-                                  u-mb0
-                                  block__flush-sides
-                                  block__bg">
-                        <div class="content-l">
-                            <div class="content-l_col content-l_col-1-2">
-                                <h1 class="header-slug">
-                                    <span class="header-slug_inner">
-                                        Related links
-                                    </span>
-                                </h1>
-                                <ul class="list list__links">
-                                    <li class="list_item">
-                                        <a href="http://www.consumerfinance.gov/foia/"
-                                           class="list_link">
-                                            Read more about FOIA
-                                        </a>
-                                    </li>
-                                    <li class="list_item">
-                                        <a href="http://www.consumerfinance.gov/open/"
-                                           class="list_link">
-                                            Open government
-                                        </a>
-                                    </li>
-                                    <li class="list_item">
-                                        <a href="{{ path }}history/"
-                                           class="list_link">
-                                            About our history
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </aside>
-
-                </section>
-            </div><!-- END .content_main -->
-
-        </div><!-- END .content_wrapper -->
-
-    </main><!-- END .content -->
-
-{% endblock content %}
+{% endblock %}

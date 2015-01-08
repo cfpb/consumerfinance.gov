@@ -1,0 +1,84 @@
+{# Display a contact's data in two column format #}
+{% macro render(contact, classes) %}
+
+{% from "macros.html" import format_phone as format_phone %}
+
+<div class="content-l content-l__large-gutters{{ ' ' + classes if classes }}">
+    <div class="content-l_col content-l_col-1-2">
+        {{ contact.content|safe }}
+    {%- if contact.web_addr %}
+        <a class="jump-link" href="{{ contact.web_addr }}">
+            {{ contact.web_desc if contact.web_desc else contact.web_addr }}
+        </a>
+    {%- endif %}
+    </div>
+    <div class="content-l_col content-l_col-1-2">
+    {%- if contact.email_addr or contact.phone_num or contact.fax_num %}
+        <ul class="list list__icons">
+        {%- if contact.email_addr %}
+            <li class="list_item u-break-word">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:{{ contact.email_addr }}">
+                    {{ contact.email_addr }}
+                </a>
+            </li>
+        {%- endif %}
+        {%- if contact.email_2_addr %}
+            <li class="list_item u-break-word">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
+                    {{ contact.email_2_addr }}
+                </a>
+            </li>
+        {%- endif %}
+        {%- if contact.phone_num %}
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                <span class="short-desc">
+                    {{ format_phone(contact.phone_num) }}
+                </span>
+            {%- if contact.phone_desc %}
+                <span class="micro-copy micro-copy__large">
+                    {{ contact.phone_desc }}
+                </span>
+            {%- endif %}
+            </li>
+        {%- endif %}
+        {%- if contact.phone_2_num %}
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                <span class="short-desc">
+                    {{ format_phone(contact.phone_2_num) }}
+                </span>
+            </li>
+        {%- endif %}
+        {%- if contact.fax_num %}
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax list_icon"></span>
+                <span class="short-desc">
+                    {{ format_phone(contact.fax_num) }}
+                </span>
+            </li>
+        {%- endif %}
+        </ul>
+    {%- endif %}
+    {%- if contact.street %}
+        <p class="short-desc">
+            Consumer Financial Protection Bureau<br>
+            {{ contact.attn if contact.attn }}<br>
+            {{ contact.street + '<br>'|safe if contact.street }}
+            {{ contact.city + ',' if contact.city }}
+            {{ contact.state if contact.state }}
+            {{ contact.zip_code if contact.zip_code }}
+        {%- if contact.addr_desc %}
+            <br>
+            <span class="micro-copy">
+                {{ contact.addr_desc }}
+            </span>
+        {%- endif %}
+        </p>
+    {%- endif %}
+    </div><!-- END .content-l_col -->
+</div><!-- END .content-l -->
+
+{% endmacro %}

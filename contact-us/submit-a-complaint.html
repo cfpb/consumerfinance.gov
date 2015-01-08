@@ -1,3 +1,4 @@
+{% from "macros.html" import format_phone as format_phone %}
 {% set submit_a_complaint = get_document('contact', 'submit-a-complaint') %}
 
 <h1 class="h4">
@@ -12,7 +13,7 @@
         {%- if submit_a_complaint.phone_num %}
             <li class="list_item short-desc">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                {{ macros.format_phone(submit_a_complaint.phone_num) }}
+                {{ format_phone(submit_a_complaint.phone_num) }}
             {%- if submit_a_complaint.phone_desc %}
                 <span class="micro-copy micro-copy__large">
                     {{ submit_a_complaint.phone_desc }}
@@ -23,7 +24,7 @@
         {%- if submit_a_complaint.phone_2_num %}
             <li class="list_item short-desc">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                {{ macros.format_phone(submit_a_complaint.phone_2_num) }}
+                {{ format_phone(submit_a_complaint.phone_2_num) }}
             {%- if submit_a_complaint.phone_2_desc %}
                 <span class="micro-copy micro-copy__large">
                     {{ submit_a_complaint.phone_2_desc }}

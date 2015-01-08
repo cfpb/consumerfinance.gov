@@ -1,10 +1,11 @@
+{% from "macros.html" import format_phone as format_phone %}
 {% set accessibility_feedback = get_document('contact', 'accessibility-feedback') %}
 {% set whistleblowers = get_document('contact', 'whistleblowers') %}
 {% set tribal_consultation = get_document('contact', 'tribal-consultation') %}
 
-<div class="block u-mb0 content-l">
+<div class="block u-mb0 content-l content-l__sidebar">
     
-    <section class="block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+    <section class="block content-l_col content-l_col-1-2">
         <h1 class="h5">
             {{ accessibility_feedback.title }}
         </h1>
@@ -20,7 +21,7 @@
     {%- endif %}
     </section>
 
-    <section class="block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+    <section class="block content-l_col content-l_col-1-2">
         <h1 class="h5">
             {{ whistleblowers.title }}
         </h1>
@@ -43,7 +44,7 @@
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="short-desc">
-                    {{ macros.format_phone(whistleblowers.phone_num) }}
+                    {{ format_phone(whistleblowers.phone_num) }}
                 </span>
             </li>
         {%- endif %}
@@ -51,7 +52,7 @@
     {%- endif %}
     </section>
 
-    <section class="block content-l_col content-l_col__stack-on-cols content-l_col-1-2">
+    <section class="block content-l_col content-l_col-1-2">
         <h1 class="h5">
             {{ tribal_consultation.title }}
         </h1>
