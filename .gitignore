@@ -61,3 +61,7 @@ bower_components/
 # Topdoc stuff #
 ##################
 docs/*/pdfreactor-fonts.html
+
+# Testing stuff #
+##################
+_tests/browser_testing/features/environment.cfg
