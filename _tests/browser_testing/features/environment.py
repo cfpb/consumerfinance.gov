@@ -151,8 +151,16 @@ def after_all(context):
 
         body_content = json.dumps({"passed": not context.failed})
         context.logger.info("Updating sauce job with %s" % body_content)
-        connection = httplib.HTTPConnection("saucelabs.com")
-        connection.request('PUT', '/rest/v1/%s/jobs/%s' %
+        # If a proxy is present then use it, otherwise connect directly to saucelabs
+        http_proxy = os.getenv('http_proxy', None)
+        if http_proxy:
+            if http_proxy.startswith("http://"):
+                http_proxy = http_proxy[7:]
+            connection = httplib.HTTPConnection(http_proxy)
+        else:    
+            connection = httplib.HTTPConnection("saucelabs.com")
+
+        connection.request('PUT', 'http://saucelabs.com/rest/v1/%s/jobs/%s' %
                            (context.sauce_config['username'],
                             context.base.driver.session_id),
                            body_content,
