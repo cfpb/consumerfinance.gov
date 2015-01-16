@@ -268,8 +268,10 @@ To run browser tests, you'll need to perform the following steps:
   - Manual (Linux/Mac): Download the latest
     [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
     binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
-2. `pip install -r _tests/requirements.txt`
-3. `nosetests -v _tests`
+2. In _tests/browser_testing/features/, copy example-environment.cfg to environment.cfg and change the `chrome_driver` path to the proper path for your webdriver binary.  If you installed via homebrew, this will be /path/to/homebrew/bin/chromedriver.
+3. `pip install -r _tests/browser_testing/requirements.txt`
+4. `cd _tests/browser_testing/`
+5. Start the tests: `behave`
 
 
 ## How this repo is versioned
