@@ -126,26 +126,14 @@
             </div>
         </section>
 
-        <section class="block">
-            <h1 class="header-slug">
-                <span class="header-slug_inner">
-                    Related links
-                </span>
-            </h1>
-            <ul class="u-mb0 list list__unstyled list__links">
-                <li class="list_item">
-                    <a class="list_link jump-link jump-link__right"
-                       href="{{ vars.path + 'about-rich-cordray/' }}">
-                        Learn about Director Richard Cordray
-                    </a>
-                </li>
-                <li class="list_item">
-                    <a class="list_link jump-link jump-link__right"
-                       href="{{ vars.path + 'bureau-structure/' }}">
-                        Bureau organizational structure
-                    </a>
-                </li>
-            </ul>
+        <section class="block u-mb0">
+            {%- import "related-links.html" as related_links -%}
+            {{- related_links.render([
+                [ vars.path + 'about-rich-cordray/',
+                  'Learn about Director Richard Cordray' ],
+                [ vars.path + 'bureau-structure/',
+                  'Bureau organizational structure' ],
+            ]) -}}
         </section>
 
     </aside>

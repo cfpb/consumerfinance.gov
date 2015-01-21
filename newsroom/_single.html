@@ -23,7 +23,7 @@
 
 {% block content_main %}
     {% import "article.html" as article with context %}
-    {{ article.render(newsroom) }}
+    {{ article.render(newsroom, vars.path) }}
     <aside class="press-information">
         <h1 class="header-slug">
             <span class="header-slug_inner">
