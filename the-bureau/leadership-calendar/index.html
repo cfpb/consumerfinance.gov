@@ -80,35 +80,15 @@
     </section>
 
     <aside class="block u-mb0 block__flush-sides block__bg">
-        <div class="content-l content-l__main">
-            <div class="content-l_col content-l_col-1-2">
-                <h1 class="header-slug">
-                    <span class="header-slug_inner">
-                        Related links
-                    </span>
-                </h1>
-                <ul class="list list__links">
-                    <li class="list_item">
-                        <a href="http://www.consumerfinance.gov/foia/"
-                           class="list_link">
-                            Read more about FOIA
-                        </a>
-                    </li>
-                    <li class="list_item">
-                        <a href="http://www.consumerfinance.gov/open/"
-                           class="list_link">
-                            Open government
-                        </a>
-                    </li>
-                    <li class="list_item">
-                        <a href="{{ vars.path }}history/"
-                           class="list_link">
-                            About our history
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {%- import "related-links.html" as related_links -%}
+        {{- related_links.render([
+            [ 'http://www.consumerfinance.gov/foia/',
+              'Read more about FOIA' ],
+            [ 'http://www.consumerfinance.gov/open/',
+              'Open government' ],
+            [ vars.path + 'history/',
+              'About our history' ]
+        ]) -}}
     </aside>
 
 {% endblock %}

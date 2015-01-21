@@ -87,53 +87,21 @@
         </div>
     </section>
     
-    <section class="block block__flush-sides block__flush-top block__flush-bottom block__bg"> 
-     
-        <h1 class="header-slug">
-            <span class="header-slug_inner">
-                Related Links
-            </span>
-        </h1>
-        
-        <div class="content-l content-l__main content-l__large-gutters">
-            <div class="content-l_col content-l_col-1-2">
-                        
-                <ul class="list list__links u-mb0">
-                    <li class="list_item">
-                        <a class="list_link jump-link" href="/newsroom/">
-                            Newsroom
-                        </a>
-                    </li>
-                    <li class="list_item">
-                        <a class="list_link jump-link" href="/the-bureau/">
-                           About us
-                        </a>
-                    </li>
-                    <li class="list_item">
-                        <a class="list_link jump-link" href="/blog/">
-                            The blog
-                        </a>
-                    </li>
-                </ul>
-                
-            </div>
-            <div class="content-l_col content-l_col-1-2 u-mt0">
-                        
-                <ul class="list list__links">
-                    <li class="list_item">
-                        <a class="list_link jump-link" href="#">
-                            Civil penalty fund
-                        </a>
-                    </li>
-                    <li class="list_item">
-                        <a class="list_link jump-link" href="#">
-                            Working with the CFPB
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+    <section class="block block__flush-sides block__flush-top block__flush-bottom block__bg">
+        {%- import "related-links.html" as related_links -%}
+        {{- related_links.render([
+            [ '/newsroom/',
+              'Newsroom' ],
+            [ '/the-bureau/',
+              'About us' ],
+            [ '/blog/',
+              'The blog' ]
+        ],[
+            [ '#',
+              'Civil penalty fund' ],
+            [ '#',
+              'Working with the CFPB' ]
+        ]) -}}
     </section>
 
 {% endblock %}

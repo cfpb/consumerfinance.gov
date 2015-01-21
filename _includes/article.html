@@ -1,5 +1,29 @@
 
-{% macro render(post) %}
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render an article when given:
+
+   post:               The Sheer document that is available to a _single.html
+                       template. For example in blog/_single.html the variable
+                       `post` is available and represents the post for the
+                       `_single` page. In newsroom/_single.html this variables
+                       is called `newsroom`.
+
+   path:               The path to which post filters are applies. For example,
+                       if the post is a blog post then path should be '/blog/'.
+                       Remember to leverage vars.path instead of using the
+                       literal string '/blog/'. Path is used to create the
+                       filtered URL: {{ path }}?filter_tags={{ tag }}
+
+   ========================================================================== #}
+
+{% macro render(post, path) %}
 
 {% from "post-macros.html" import category_icon as category_icon %}
 {% from "macros.html" import share as share %}
@@ -56,19 +80,8 @@
     </div>
 {% if post.tags|length %}
     <footer>
-        <div class="tags">
-            <h4 class="tags_header">Topics:</h4>
-            <ul class="tags_list">
-            {% for tag in post.tags %}
-                <li class="tags_tag">
-                    <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        {{ tag }}
-                    </a>
-                </li>
-            {% endfor %}
-            </ul>
-        </div> 
+        {%- import "tags.html" as tags %}
+        {{ tags.render(post.tags, path) }}
     </footer>
 {% endif %}
 </article>
