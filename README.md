@@ -3,6 +3,7 @@
 This repository contains the redesign-in-progress of consumerfinance.gov. This includes front-end assets and build tools, and configuration for [Sheer](https://github.com/cfpb/sheer) to load content from Wordpress and Django back-ends to elasticsearch to render the site.
 
 ### This project is a work in progress
+<!-- SCREENSHOT HERE - BETA FRONT PAGE -->
 
 Nothing presented in the issues or in this repo is a final product
 unless it is marked as such or appears on www.consumerfinance.gov.
@@ -115,9 +116,23 @@ To view the site browse to: <http://localhost:7000/>
 To view the project layout docs and pattern library,
 go to <http://localhost:7000/docs/>
 
+## Tests
+
+To run browser tests, you'll need to perform the following steps:
+
+1. Install chromedriver: 
+  - Mac: `brew install chromedriver`
+  - Manual (Linux/Mac): Download the latest
+    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
+    binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
+2. In _tests/browser_testing/features/, copy example-environment.cfg to environment.cfg and change the `chrome_driver` path to the proper path for your webdriver binary.  If you installed via homebrew, this will be /path/to/homebrew/bin/chromedriver.
+3. `pip install -r _tests/browser_testing/requirements.txt`
+4. `cd _tests/browser_testing/`
+5. Start the tests: `behave`
+
 
 ## Working with the templates
-
+<!-- Perhaps we want to split this out into a separate page? -->
 ### Simple static template setup
 
 By default, Sheer will render pages at their natural paths in the project's file
@@ -130,10 +145,9 @@ it simply outputs the static HTML written into the template.
 
 ### Outputting indexed content in a Sheer template
 
-Most of our content is indexed from the API output of our WordPress back end.
-(We used to use WordPress to serve the front end of the site,
-but going forward, it will simply be a content editing and storage system.)
-This happens when the `sheer index` command is run.
+Most of our content is indexed from the API output of our WordPress back end. This happens when the `sheer index` command is run.
+(WordPress was previously used to serve the site front-end,
+but going forward, it will only be used as a content editing and storage system.)
 
 If your content isn't being indexed yet, see "Setting up a new WordPress post
 type and processing it with Sheer" on the flapjack/Getting-started-with-Flapjack
@@ -199,7 +213,7 @@ identify the page you want to get, as multiple pages can have the same slug.
 
 The `get_document` method can be used to retrieve a single item of any post type
 for display within a template.
-In this example from `contact-us/promoted-contacts.html`, we get an instance of
+In the below example from `contact-us/promoted-contacts.html`, we get an instance of
 the non-hierarchical `contact` post type using its slug (`whistleblowers`):
 
 ```jinja
@@ -264,21 +278,6 @@ Here is an example of using q:
 ```
 
 This will return a queryset of calendar_event objects which, for the field 'dtstart', have a date in January, 2014.
-
-## Tests
-
-To run browser tests, you'll need to perform the following steps:
-
-1. Install chromedriver: 
-  - Mac: `brew install chromedriver`
-  - Manual (Linux/Mac): Download the latest
-    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
-    binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
-2. In _tests/browser_testing/features/, copy example-environment.cfg to environment.cfg and change the `chrome_driver` path to the proper path for your webdriver binary.  If you installed via homebrew, this will be /path/to/homebrew/bin/chromedriver.
-3. `pip install -r _tests/browser_testing/requirements.txt`
-4. `cd _tests/browser_testing/`
-5. Start the tests: `behave`
-
 
 ## How this repo is versioned
 
