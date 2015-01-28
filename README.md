@@ -20,11 +20,12 @@ We welcome your feedback and contributions.
 
 ### Requirements
 
+##### Back-end
 - [Sheer](https://github.com/cfpb/sheer)
 - [elasticsearch](http://www.elasticsearch.org/)
-- [Node](http://nodejs.org/)
-- [Grunt](http://gruntjs.com/)
-- [Bower](http://bower.io/)
+
+##### Front-end Build Tools
+- [Node](http://nodejs.org/) and NPM
 
 ### Back end setup
 
@@ -33,7 +34,7 @@ a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
 
 #### Additional setup requirements for this site
 
-Install these dependencies into your virtual environment (we called ours 'Sheer'):
+Install these dependencies into your virtual environment (we called ours 'sheer'):
 
 ```sh
 workon sheer
@@ -46,40 +47,43 @@ _We are working on a way to get these installed automatically._
 
 And ask someone for the values to set the following environment variables:
 
+- `WORDPRESS`(url to WordPress install)
 - `GOVDELIVERY_BASE_URL`
-- `GOVDELIVERY_ACCOUNT_CODE`
-- `GOVDELIVERY_USER`
-- `GOVDELIVERY_PASSWORD`
-- `SUBSCRIPTION_SUCCESS_URL`
-- `WORDPRESS`
+- `GOVDELIVERY_ACCOUNT_CODE` (GovDelivery account variable)
+- `GOVDELIVERY_USER` (GovDelivery account variable)
+- `GOVDELIVERY_PASSWORD` (GovDelivery account variable)
+- `SUBSCRIPTION_SUCCESS_URL` (Forwarding location on Subscription Success)
 
-_You can also add the `export` line to your `.bash_profile`,
+_You can also `export` the above environment variables to your `.bash_profile`,
 or use your favorite alternative method of setting environment variables._
+
+__NOTE__ about GovDelivery: GovDelivery is a third party web service that powers our subscription forms. Users may decide to swap this tool out for another third party service. The application will function but throw an error if the above GovDelivery values are not set. 
 
 ### Front end setup
 
-The cfgov-refresh front end currently uses the following:
+The cfgov-refresh front end currently uses the following frameworks / tools:
 
-- [Less](http://lesscss.org/)
-- [Capital Framework](https://cfpb.github.io/capital-framework/)
 - [Grunt](http://gruntjs.com/)
-- [Bower](http://bower.io/) & [npm](https://www.npmjs.org/) for package management
+- [Bower](http://bower.io/)
+- [Less](http://lesscss.org/)
+- [Capital Framework](http://cfpb.github.io/capital-framework/getting-started/)
+
 
 If you're new to Capital Framework, we encourage you to
-[start here](https://cfpb.github.io/capital-framework/).
+[start here](http://cfpb.github.io/capital-framework/getting-started/).
 
 #### Installing dependencies (one time)
 
 1. Install [node.js](http://nodejs.org/) however you'd like.
 2. Install [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/):
-
+3. 
 ```
 $ npm install -g grunt-cli bower
 ```
 
 ### Developing
 
-Each time you fetch from upstream, install dependencies with npm and
+Each time you fetch from upstream, you should install dependencies with npm and
 `grunt vendor`, then run `grunt` to rebuild everything:
 
 ```bash
@@ -90,7 +94,7 @@ $ grunt
 
 To work on the app you will need sheer running to compile the templates.
 There is also a `grunt watch` command that will recompile Less and JS
-on the fly while you're developing.
+on the fly while you're developing. To do this, run the following:
 
 ```bash
 # use the sheer virtualenv
