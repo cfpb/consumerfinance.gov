@@ -1,6 +1,6 @@
 # cfgov-refresh
 
-Layout and content for the consumerfinance.gov Refresh project.
+This repository contains the redesign-in-progress of consumerfinance.gov. This includes building front-end assets with [Capital Framework](https://cfpb.github.io/capital-framework/), and using [Sheer](https://github.com/cfpb/sheer) to load content from Wordpress and Django back-ends into elasticsearch, and render templates.
 
 ### This project is a work in progress
 
