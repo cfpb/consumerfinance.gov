@@ -3,7 +3,8 @@
 This repository contains the redesign-in-progress of consumerfinance.gov. This includes front-end assets and build tools, and configuration for [Sheer](https://github.com/cfpb/sheer) to load content from Wordpress and Django back-ends to elasticsearch to render the site.
 
 ### This project is a work in progress
-<!-- SCREENSHOT HERE - BETA FRONT PAGE -->
+
+![screen shot 2015-01-28 at 10 47 12 am](https://cloud.githubusercontent.com/assets/235397/5940816/3529246a-a6db-11e4-9bfc-76d5b5220a36.png)
 
 Nothing presented in the issues or in this repo is a final product
 unless it is marked as such or appears on www.consumerfinance.gov.
