@@ -33,9 +33,11 @@ a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
 
 #### Additional setup requirements for this site
 
-Install these dependencies:
+Install these dependencies into your virtual environment (we called ours 'Sheer'):
 
 ```sh
+workon sheer
+
 pip install git+git://github.com/dpford/flask-govdelivery
 pip install git+git://github.com/rosskarchner/govdelivery
 ```
