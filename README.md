@@ -1,8 +1,10 @@
 # cfgov-refresh
 
-Layout and content for the consumerfinance.gov Refresh project.
+This repository contains the redesign-in-progress of consumerfinance.gov. This includes front-end assets and build tools, and configuration for [Sheer](https://github.com/cfpb/sheer) to load content from Wordpress and Django back-ends to elasticsearch to render the site.
 
 ### This project is a work in progress
+
+![screen shot 2015-01-28 at 10 47 12 am](https://cloud.githubusercontent.com/assets/235397/5940816/3529246a-a6db-11e4-9bfc-76d5b5220a36.png)
 
 Nothing presented in the issues or in this repo is a final product
 unless it is marked as such or appears on www.consumerfinance.gov.
@@ -20,11 +22,12 @@ We welcome your feedback and contributions.
 
 ### Requirements
 
+##### Back-end
 - [Sheer](https://github.com/cfpb/sheer)
 - [elasticsearch](http://www.elasticsearch.org/)
-- [Node](http://nodejs.org/)
-- [Grunt](http://gruntjs.com/)
-- [Bower](http://bower.io/)
+
+##### Front-end Build Tools
+- [Node](http://nodejs.org/) and NPM
 
 ### Back end setup
 
@@ -33,9 +36,11 @@ a Jekyll-inspired, elasticsearch-powered, CMS-less publishing tool.
 
 #### Additional setup requirements for this site
 
-Install these dependencies:
+Install these dependencies into your virtual environment (we called ours 'sheer'):
 
 ```sh
+workon sheer
+
 pip install git+git://github.com/dpford/flask-govdelivery
 pip install git+git://github.com/rosskarchner/govdelivery
 ```
@@ -44,40 +49,43 @@ _We are working on a way to get these installed automatically._
 
 And ask someone for the values to set the following environment variables:
 
+- `WORDPRESS`(url to WordPress install)
 - `GOVDELIVERY_BASE_URL`
-- `GOVDELIVERY_ACCOUNT_CODE`
-- `GOVDELIVERY_USER`
-- `GOVDELIVERY_PASSWORD`
-- `SUBSCRIPTION_SUCCESS_URL`
-- `WORDPRESS`
+- `GOVDELIVERY_ACCOUNT_CODE` (GovDelivery account variable)
+- `GOVDELIVERY_USER` (GovDelivery account variable)
+- `GOVDELIVERY_PASSWORD` (GovDelivery account variable)
+- `SUBSCRIPTION_SUCCESS_URL` (Forwarding location on Subscription Success)
 
-_You can also add the `export` line to your `.bash_profile`,
+_You can also `export` the above environment variables to your `.bash_profile`,
 or use your favorite alternative method of setting environment variables._
+
+__NOTE__ about GovDelivery: GovDelivery is a third party web service that powers our subscription forms. Users may decide to swap this tool out for another third party service. The application will function but throw an error if the above GovDelivery values are not set. 
 
 ### Front end setup
 
-The cfgov-refresh front end currently uses the following:
+The cfgov-refresh front end currently uses the following frameworks / tools:
 
-- [Less](http://lesscss.org/)
-- [Capital Framework](https://cfpb.github.io/capital-framework/)
 - [Grunt](http://gruntjs.com/)
-- [Bower](http://bower.io/) & [npm](https://www.npmjs.org/) for package management
+- [Bower](http://bower.io/)
+- [Less](http://lesscss.org/)
+- [Capital Framework](http://cfpb.github.io/capital-framework/getting-started/)
+
 
 If you're new to Capital Framework, we encourage you to
-[start here](https://cfpb.github.io/capital-framework/).
+[start here](http://cfpb.github.io/capital-framework/getting-started/).
 
 #### Installing dependencies (one time)
 
 1. Install [node.js](http://nodejs.org/) however you'd like.
 2. Install [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/):
-
+3. 
 ```
 $ npm install -g grunt-cli bower
 ```
 
 ### Developing
 
-Each time you fetch from upstream, install dependencies with npm and
+Each time you fetch from upstream, you should install dependencies with npm and
 `grunt vendor`, then run `grunt` to rebuild everything:
 
 ```bash
@@ -88,7 +96,7 @@ $ grunt
 
 To work on the app you will need sheer running to compile the templates.
 There is also a `grunt watch` command that will recompile Less and JS
-on the fly while you're developing.
+on the fly while you're developing. To do this, run the following:
 
 ```bash
 # use the sheer virtualenv
@@ -109,9 +117,23 @@ To view the site browse to: <http://localhost:7000/>
 To view the project layout docs and pattern library,
 go to <http://localhost:7000/docs/>
 
+## Tests
+
+To run browser tests, you'll need to perform the following steps:
+
+1. Install chromedriver: 
+  - Mac: `brew install chromedriver`
+  - Manual (Linux/Mac): Download the latest
+    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
+    binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
+2. In _tests/browser_testing/features/, copy example-environment.cfg to environment.cfg and change the `chrome_driver` path to the proper path for your webdriver binary.  If you installed via homebrew, this will be /path/to/homebrew/bin/chromedriver.
+3. `pip install -r _tests/browser_testing/requirements.txt`
+4. `cd _tests/browser_testing/`
+5. Start the tests: `behave`
+
 
 ## Working with the templates
-
+<!-- Perhaps we want to split this out into a separate page? -->
 ### Simple static template setup
 
 By default, Sheer will render pages at their natural paths in the project's file
@@ -124,10 +146,9 @@ it simply outputs the static HTML written into the template.
 
 ### Outputting indexed content in a Sheer template
 
-Most of our content is indexed from the API output of our WordPress back end.
-(We used to use WordPress to serve the front end of the site,
-but going forward, it will simply be a content editing and storage system.)
-This happens when the `sheer index` command is run.
+Most of our content is indexed from the API output of our WordPress back end. This happens when the `sheer index` command is run.
+(WordPress was previously used to serve the site front-end,
+but going forward, it will only be used as a content editing and storage system.)
 
 If your content isn't being indexed yet, see "Setting up a new WordPress post
 type and processing it with Sheer" on the flapjack/Getting-started-with-Flapjack
@@ -193,7 +214,7 @@ identify the page you want to get, as multiple pages can have the same slug.
 
 The `get_document` method can be used to retrieve a single item of any post type
 for display within a template.
-In this example from `contact-us/promoted-contacts.html`, we get an instance of
+In the below example from `contact-us/promoted-contacts.html`, we get an instance of
 the non-hierarchical `contact` post type using its slug (`whistleblowers`):
 
 ```jinja
@@ -258,21 +279,6 @@ Here is an example of using q:
 ```
 
 This will return a queryset of calendar_event objects which, for the field 'dtstart', have a date in January, 2014.
-
-## Tests
-
-To run browser tests, you'll need to perform the following steps:
-
-1. Install chromedriver: 
-  - Mac: `brew install chromedriver`
-  - Manual (Linux/Mac): Download the latest
-    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
-    binary and put it somehwere on your path (e.g. /path/to/your/venv/bin)
-2. In _tests/browser_testing/features/, copy example-environment.cfg to environment.cfg and change the `chrome_driver` path to the proper path for your webdriver binary.  If you installed via homebrew, this will be /path/to/homebrew/bin/chromedriver.
-3. `pip install -r _tests/browser_testing/requirements.txt`
-4. `cd _tests/browser_testing/`
-5. Start the tests: `behave`
-
 
 ## How this repo is versioned
 
