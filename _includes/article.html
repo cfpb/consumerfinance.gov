@@ -25,18 +25,14 @@
 
 {% macro render(post, path) %}
 
-{% from "post-macros.html" import category_icon as category_icon %}
 {% from "macros.html" import share as share %}
 
 <article class="post">
     <header>
         {% if post.category.0 %}
-        <a href="{{ path }}?filter_category={{ post.category.0 }}" class="post_slug category-slug">
-            {{ category_icon(post.category.0, 'category-slug_icon')|safe }}
-            <span class="u-visually-hidden">Category:</span>
-            {{ post.category.0 }}
+            {%- import "category-slug.html" as category_slug %}
+            {{ category_slug.render(post.category.0, path, 'post_slug') }}
         {% endif %}
-        </a>
         <h1 class="post_header">
             {{ post.title|safe }}
         </h1>
