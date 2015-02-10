@@ -114,6 +114,9 @@ $ grunt watch
 
 To view the site browse to: <http://localhost:7000/>
 
+To view the indexed content you can use a tool called
+[elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
+
 To view the project layout docs and pattern library,
 go to <http://localhost:7000/docs/>
 
