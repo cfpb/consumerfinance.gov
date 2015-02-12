@@ -1,0 +1,54 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-events.html" as vars with context %}
+
+{# This sets the related links in the footer
+{% set view = get_document('views', 'newsroom') %}
+#}
+
+{% block title -%}
+    Upcoming Events
+{%- endblock %}
+
+{% block desc -%}
+    Events description...
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    Events content goes here
+
+    {# Footer #}
+    <aside>
+        {#
+        <div class="block u-mb0 block__flush-sides block__bg">
+            <div class="content-l content-l__main">
+                <section class="block u-mto content-l_col content-l_col-1-2">
+                    <h1 class="header-slug">
+                        <span class="header-slug_inner">
+                            Stay informed
+                        </span>
+                    </h1>
+                    <div class="content-l content-l__main">
+                        <div class="block__sub content-l_col content-l_col-1-2">
+                            <p class="short-desc">
+                                Subscribe to our email newsletter. We will update you on new event updates.
+                            </p>
+                            {% import "email-subscribe-form.html" as subscribe with context %}
+                            {{ subscribe.render(vars.query) }}
+                        </div>
+                    </div>
+                </section>
+                <section class="block u-mt0 content-l_col content-l_col-1-2">
+                    {% import "related-links.html" as related_links %}
+                    {{ related_links.render(view.related_links) }}
+                </section>
+            </div>
+        </div>
+        #}
+    </aside>
+
+{% endblock %}
