@@ -12,10 +12,10 @@ module.exports = function(grunt) {
      * Pull in the package.json file so we can read its metadata.
      */
     pkg: grunt.file.readJSON('bower.json'),
-    
+
     /**
      * Bower: https://github.com/yatskevich/grunt-bower-task
-     * 
+     *
      * Install Bower packages and migrate static assets.
      */
     bower: {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 
     /**
      * String replace: https://github.com/erickrdch/grunt-string-replace
-     * 
+     *
      * Replace strings on files by using string or regex patters.
      */
     'string-replace': {
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
 
     /**
      * Concat: https://github.com/gruntjs/grunt-contrib-concat
-     * 
+     *
      * Concatenate cf-* Less files prior to compiling them.
      */
     concat: {
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
 
     /**
      * Autoprefixer: https://github.com/nDmitry/grunt-autoprefixer
-     * 
+     *
      * Parse CSS and add vendor-prefixed CSS properties using the Can I Use database.
      */
     autoprefixer: {
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
 
     /**
      * Uglify: https://github.com/gruntjs/grunt-contrib-uglify
-     * 
+     *
      * Minify JS files.
      * Make sure to add any other JS libraries/files you'll be using.
      * You can exclude files with the ! pattern.
@@ -200,7 +200,7 @@ module.exports = function(grunt) {
      * Here's a banner with some template variables.
      * We'll be inserting it at the top of minified assets.
      */
-    banner: 
+    banner:
       '/*!\n' +
       ' *              ad$$             $$\n' +
       ' *             d$"               $$\n' +
@@ -287,7 +287,7 @@ module.exports = function(grunt) {
 
     /**
      * Copy: https://github.com/gruntjs/grunt-contrib-copy
-     * 
+     *
      * Copy files and folders.
      */
     copy: {
@@ -325,7 +325,7 @@ module.exports = function(grunt) {
 
     /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
-     * 
+     *
      * Validate files with JSHint.
      * Below are options that conform to idiomatic.js standards.
      * Feel free to add/remove your favorites: http://www.jshint.com/docs/#options
@@ -362,7 +362,7 @@ module.exports = function(grunt) {
 
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
-     * 
+     *
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
      * Add files to monitor below.
      */
