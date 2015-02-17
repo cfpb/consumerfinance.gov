@@ -386,6 +386,7 @@ module.exports = function(grunt) {
      */
     topdoc_families: [
       'blog-docs',
+      'calendar-icon',
       'cf-enhancements',
       'forms',
       'header',

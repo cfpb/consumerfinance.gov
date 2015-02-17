@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / calendar-icon docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / calendar-icon docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="calendar-icon" class="docs-component">
+      <h2 class="docs-component_header"><span>Calendar Icon</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>A square-ish calendar icon with a three-letter month name and date.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Calendar Icon</h3>
+          <section class="docs-pattern_pattern">
+<time class="calendar-icon" data-month="Jan" data-day="21" datetime="2015-01-21">
+  <span class="u-visually-hidden">Jan 21, 2015</span>
+</time>
+denotes:
+- |
+  Structural cheat sheet:
+  -----------------------
+  time.calendar-icon
+    span.u-visually-hidden
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;time class=&quot;calendar-icon&quot; data-month=&quot;Jan&quot; data-day=&quot;21&quot; datetime=&quot;2015-01-21&quot;&gt;
+  &lt;span class=&quot;u-visually-hidden&quot;&gt;Jan 21, 2015&lt;/span&gt;
+&lt;/time&gt;
+denotes:
+- |
+  Structural cheat sheet:
+  -----------------------
+  time.calendar-icon
+    span.u-visually-hidden</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;time class=\&amp;quot;calendar-icon\&amp;quot; data-month=\&amp;quot;Jan\&amp;quot; data-day=\&amp;quot;21\&amp;quot; datetime=\&amp;quot;2015-01-21\&amp;quot;&gt;\n  &lt;span class=\&amp;quot;u-visually-hidden\&amp;quot;&gt;Jan 21, 2015&lt;/span&gt;\n&lt;/time&gt;\ndenotes:\n- |\n  Structural cheat sheet:\n  -----------------------\n  time.calendar-icon\n    span.u-visually-hidden\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+/*  Mixin to generate a calendar icon.
+    @month [String] The month (3-letter abbreviation, typically).
+    @date [Number] The day in the month.
+    @background-color [Color] A color value for the icon background (behind the month).
+    @foreground-color [Color] A color value for the color behind the day.
+    @scale [Number] A multiplier for the size of the icon (1 is the default). */
+
+.calendar-icon {
+  /* Display &amp; Box Model */
+  display: inline-block;
+  min-width: 3em;
+  border: 0.25em solid #babbbd;
+  border-radius: 0.375em;
+  /* Background */
+  background-color: #babbbd;
+  /* Foreground */
+  font-family: 'Avenir Next', Helvetica, Arial;
+  line-height: 1;
+  text-align: center;
+}
+
+.calendar-icon:before,
+.calendar-icon:after {
+  /* Display &amp; Box Model */
+  display: block;
+}
+
+.calendar-icon:before {
+  /* Foreground */
+  color: #ffffff;
+  font-size: 1em;
+  text-transform: uppercase;
+  /* Display &amp; Box Model */
+  padding: 0 0 0.15em;
+  /* Miscellaneous, alphabetic */
+  content: attr(data-month);
+}
+
+.calendar-icon:after {
+  /* Display &amp; Box Model */
+  padding: 0.15em 0 0;
+  border-radius: 0 0 0.16em 0.16em;
+  /* Background */
+  background: #ffffff;
+  /* Foreground */
+  color: #babbbd;
+  font-size: 1.5em;
+  /* Miscellaneous, alphabetic */
+  content: attr(data-day);
+}
+</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>
