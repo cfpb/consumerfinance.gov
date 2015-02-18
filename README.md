@@ -16,7 +16,7 @@ content from the WordPress and Django back-ends through Elasticsearch.
 Nothing presented in this repo—whether in the source code, issue tracker,
 or wiki—is a final product unless it is marked as such or appears on consumerfinance.gov.
 
-![Screenshot of cfgov-refresh](https://cloud.githubusercontent.com/assets/235397/5940816/3529246a-a6db-11e4-9bfc-76d5b5220a36.png)
+![Screenshot of cfgov-refresh](scrrenshot.png)
 
 ## Dependencies
 - [Sheer](https://github.com/cfpb/sheer):
@@ -166,6 +166,9 @@ To view the site browse to: <http://localhost:7000>
 To view the project layout docs and pattern library,
 browse to <http://localhost:7000/docs>
 
+To view the indexed content you can use a tool called
+[elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
+
 **Using a different port:** If you want to run Sheer at a different port than 7000,
 serve Sheer with the `--port` argument,
 e.g. to run on port 7001 use `sheer serve --port 7001 --debug`.
@@ -212,14 +215,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
 to follow the development conversation.
 If you find a bug not listed in the issue tracker,
-please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body=%23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior%0D%0D%0D%23%23%20Steps%20to%20Reproduce%0D%0D%0D%23%23%20Screenshot&labels=bug).
+please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body=
+%23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior
+%0D%0D%0D%23%23%20Steps%20to%20Reproduce%0D%0D%0D%23%23%20Screenshot&labels=bug).
 
 ## Getting involved
 
 We welcome your feedback and contributions.
 See the [contribution guidelines](CONTRIBUTING.md) for more details.
 
-Additionally, you may want to consider [contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
+Additionally, you may want to consider
+[contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
 which is the front-end pattern library used in this project.
 
 ## Working with the templates
@@ -338,7 +344,7 @@ URL query string filters can be further broken down into two types:
 
 An example of Bool is:
 
-?filter_category=Op-Ed
+`?filter_category=Op-Ed`
 
 `filter_[field]=[value]`
 
@@ -348,12 +354,12 @@ the queryset returned will only include objects with a category of 'Op-Ed'.
 
 An example of Range is:
 
-?filter_range_date_gte=2014-01
+`?filter_range_date_gte=2014-01`
 
-filter_range_[field]_[operator]=[value]
+`filter_range_[field]_[operator]=[value]`
 
 Continuing with the example above, if you go to a URL such as
-http://localhost:7000/blog/?filter_range_date_gte=2014-01
+`http://localhost:7000/blog/?filter_range_date_gte=2014-01`
 and you use `search_with_url_arguments()`,
 you'll get a queryset of objects where the 'date' field is in January, 2014, or later.
 
@@ -363,19 +369,21 @@ but often there are cases where you'll need more flexibility.
 #### More complex filters
 
 By default, `search_with_url_arguments()` uses the default query parameters
-defined in the _queries/object-name.json file,
+defined in the `_queries/object-name.json` file,
 then mixes them in with any additional arguments
 from the URL query string in addition to what is passed into the function itself.
 
 The list of available arguments are outlined in elasticsearch-py's
-[search method](http://elasticsearch-py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search).
+[search method](http://elasticsearch-
+py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search).
 
-The most common ones we use are size (to change the number of results returned)
-and q (to query based on specific fields).
+The most common ones we use are `size` (to change the number of results returned)
+and `q` (to query based on specific fields).
 
-When using q, you'll need to use the [Lucene Query Parser Syntax](http://lucene.apache.org/core/2_9_4/queryparsersyntax.html).
+When using `q`, you'll need to use the
+[Lucene Query Parser Syntax](http://lucene.apache.org/core/2_9_4/queryparsersyntax.html).
 
-Here is an example of using q:
+Here is an example of using `q`:
 
 ```
 {% set events_jan2014 = queries.calendar_event.search_with_url_arguments(q="dtstart:[2014-01-01 TO 2014-01-31]") %}
