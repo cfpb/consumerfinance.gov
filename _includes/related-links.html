@@ -63,9 +63,9 @@
 {# A helper macro for render()
    ========================================================================== #}
 
-{% macro link_template(link) %}
+{%- macro link_template(link) %}
 <a class="list_link jump-link jump-link__right"
    href="{{ link[0] }}">
     {{ link[1] }}
 </a>
-{% endmacro %}
+{% endmacro -%}
