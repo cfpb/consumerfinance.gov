@@ -1,0 +1,38 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render a tags list when given:
+
+   tags:               An array of tags. "Tags" are simple strings.
+                       Example tag: 'Featured'
+                       Example tags: ['Featured', 'Mortgages']
+
+   path:               The path to which the filter applies. For example, if the
+                       tags are used on a blog article then path should be
+                       '/blog/'. Remember to leverage vars.path instead of
+                       using the literal string '/blog/'. Path is used to
+                       create the filtered URL: {{ path }}?filter_tags={{ tag }}
+
+   ========================================================================== #}
+
+{% macro render(tags, path) %}
+<div class="tags">
+    <h1 class="tags_header">Topics:</h1>
+    <ul class="tags_list">
+    {% for tag in tags %}
+        <li class="tags_tag">
+            <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                {{ tag }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+</div> 
+{% endmacro %}
