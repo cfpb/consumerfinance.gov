@@ -1,0 +1,76 @@
+/* ==========================================================================
+   cfgov-refresh
+   event-meta
+   ========================================================================== */
+
+/* topdoc
+  name: Event Meta
+  family: cfgov-event-meta
+  notes:
+    - "Markup to display event location, date, and time"
+  patterns:
+    - name: Event Meta
+      markup: |
+        <div class="event-meta h-event">
+          <p class="event-meta_address h-adr">
+            <span class="event-meta_city p-locality">San Francisco</span>
+            <span class="event-meta_state p-region">CA</span>
+            <span class="event-meta_venue p-extended-address">Super Dome</span>
+          </p>
+          <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+            <span class="event-meta_date">1/21/2014</span>
+            <span class="event-meta_time">2:30 PM CST</span>
+          </time>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          div.event-meta.h-event
+            p.event-meta_address.h-adr
+              span.event-meta_city.p-locality
+              span.event-meta_region.p-region
+              span.event-meta_venue.p-extended-address
+            time.event-meta_datetime.dt-start
+              div.event-meta_date
+              div.event-meta_time
+      notes:
+      - "Using the h-event microformat(http://microformats.org/wiki/h-event) for div.h-event, p.h-adr, and time.dt-start elements"
+  tags:
+    - cfgov-event-meta
+*/
+
+.event-meta {
+    .h5();
+    text-transform: capitalize;
+}
+
+.event-meta_address{
+    display: inline-block;
+}
+
+// Adding comma after city
+.event-meta_city:after{
+    content: "\2C";
+}
+
+// Adding em dash before date
+.event-meta_date:before{
+    content: "\2014";
+    margin-right: .2em;
+}
+
+.event-meta_datetime{
+    letter-spacing: normal;
+}
+
+// Adding "at" symbol before time
+.event-meta_time:before{
+    content: "\40";
+    margin-right: .2em;
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
