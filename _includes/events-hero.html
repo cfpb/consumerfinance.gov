@@ -1,0 +1,40 @@
+{% macro render(hero) %}
+
+{% from "post-macros.html" import category_icon as category_icon %}
+
+<section class="content_hero hero">
+    <div class="hero_wrapper">
+        <a href="#" class="hero_card hero_card__events">
+            <div class="hero_card-bg">
+                <div class="hero_card-padding">
+                    <span class="category-slug">
+                        {{ category_icon('Announcements & updates', 'category-slug_icon') }}
+                        <span class="u-visually-hidden">Category:</span>
+                        {{ 'Event Category Name' }}
+                    </span>
+                    <div class="summary">
+                        <h1 class="summary_header">
+                            {{ 'Event Title Here' }}
+                        </h1>
+                        <p class="summary_text">
+                            {{ 'Include a short summary to give users a quick overview of the event.' }}
+                        </p>
+                        <span class="summary_event-date">{{ '1/21/2015 @ 2:30 PM CST' }}</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="hero_img-container hero_img-container__small">
+        <div class="hero_img"
+             style="background-image:url({{ 'http://placehold.it/660x300.jpg' }});">
+        </div>
+    </div>
+    <div class="hero_img-container hero_img-container__large">
+        <div class="hero_img"
+             style="background-image:url({{ 'http://placehold.it/1200x300.jpg ' }});">
+        </div>
+    </div>
+</section><!-- END .content_hero -->
+
+{% endmacro %}

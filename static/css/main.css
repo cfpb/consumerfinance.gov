@@ -12350,6 +12350,7 @@ a.category-slug.active {
             <p class="summary_byline">
                 By Patrice Ficklin
             </p>
+            <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
         </article>
       codenotes:
         - |
@@ -12545,6 +12546,37 @@ a.focus .summary_header {
 .lt-ie9 .summary_byline strong,
 .lt-ie9 .summary_byline b {
   font-weight: normal !important;
+}
+.summary_event-date {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.summary_event-date em,
+.summary_event-date i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .summary_event-date em,
+.lt-ie9 .summary_event-date i {
+  font-style: normal !important;
+}
+.summary_event-date strong,
+.summary_event-date b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .summary_event-date strong,
+.lt-ie9 .summary_event-date b {
+  font-weight: normal !important;
+}
+a:hover .summary_event-date,
+a.hover .summary_event-date,
+a:focus .summary_event-date,
+a.focus .summary_event-date {
+  color: #328ed8;
 }
 /* topdoc
   name: Layouts

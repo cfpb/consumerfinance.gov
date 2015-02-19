@@ -13,6 +13,28 @@
     Events description...
 {%- endblock %}
 
+{% block hero %}
+    {# Only show the hero when:
+       1. We are on the first page of paginated results
+       2. A hero exists
+    #}
+
+    {%
+        set current_page = 1
+    %}
+
+    {%
+        set hero = true
+    %}
+
+    {% import "events-hero.html" as hero with context %}
+    {#{% if vars.events.current_page == 1 and view.hero %}#}
+    {% if current_page == 1 and hero %}
+        {{ hero.render(hero) }}
+    {% endif %}
+
+{% endblock %}
+
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
