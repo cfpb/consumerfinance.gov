@@ -41,36 +41,55 @@
 
 {% block content_main %}
 
-    Events content goes here
+    <section class="media block block__flush-top block__sub">
+        <div class="media_body">
+            <h1>Upcoming events</h1>
+            <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
+        </div>
+    </section>
 
     {# Footer #}
     <aside>
-        {#
         <div class="block u-mb0 block__flush-sides block__bg">
             <div class="content-l content-l__main">
-                <section class="block u-mto content-l_col content-l_col-1-2">
-                    <h1 class="header-slug">
-                        <span class="header-slug_inner">
-                            Stay informed
-                        </span>
-                    </h1>
-                    <div class="content-l content-l__main">
-                        <div class="block__sub content-l_col content-l_col-1-2">
-                            <p class="short-desc">
-                                Subscribe to our email newsletter. We will update you on new event updates.
-                            </p>
-                            {% import "email-subscribe-form.html" as subscribe with context %}
-                            {{ subscribe.render(vars.query) }}
-                        </div>
+                <section class="u-mb20 content-l_col content-l_col-1-2">
+                    <div class="u-mb30">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new event updates.
+                        </p>
+                        {% import "email-subscribe-form.html" as subscribe with context %}
+                        {{ subscribe.render(vars.query) }}
+                    </div>
+                    <div>
+                        {% import "rss.html" as rss %}
+                        {{ rss.render(vars.rss_path) }}
                     </div>
                 </section>
-                <section class="block u-mt0 content-l_col content-l_col-1-2">
+                <section class="content-l_col content-l_col-1-2">
                     {% import "related-links.html" as related_links %}
-                    {{ related_links.render(view.related_links) }}
+                    {%- import "related-links.html" as related_links -%}
+                    {{- related_links.render([
+                        [
+                            '/newsroom/',
+                            'Newsroom'
+                        ],
+                        [
+                            '/the-bureau/',
+                            'About us'
+                        ],
+                        [
+                            '/blog/',
+                            'The blog'
+                        ]
+                    ]) -}}
                 </section>
             </div>
         </div>
-        #}
     </aside>
 
 {% endblock %}

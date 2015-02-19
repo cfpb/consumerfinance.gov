@@ -1,21 +1,12 @@
 
 {% set path = '/events/' %}
 {% set rss_path = '/feed/events/' %}
-{% set nav_items = [
-    (path, 'index', 'Upcoming events and field hearings'),
-    (path + 'archive/', 'archive', 'Archive')
-]
-%}
-
-{# SAVED THESE FOR LATER
 
 {% set nav_items = [
     (path, 'index', 'Upcoming events and field hearings'),
     (path + 'archive/', 'archive', 'Archive')
 ] %}
 
-
-{% set query = queries.events %}
+{# Temp using blog query to render the signup form #}
+{% set query = queries.posts %}
 {% set events = query.search_with_url_arguments(size=10) %}
-
-#}
