@@ -388,6 +388,7 @@ module.exports = function(grunt) {
       'blog-docs',
       'calendar-icon',
       'cf-enhancements',
+      'event-meta',
       'forms',
       'header',
       'lists',
