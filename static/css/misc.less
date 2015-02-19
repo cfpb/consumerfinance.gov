@@ -198,7 +198,7 @@
         // Inserts the cf-icon-mail glyph.
         content: "\e304";
     }
-    
+
     &__pdf:after,
     &__pdf&__before:before {
         // Inserts the cf-icon-pdf glyph.
@@ -331,10 +331,10 @@
             bottom: 50%;
             text-align: right;
         }
-        
+
         &__before {
             padding-left: 1.25em;
-            
+
             &:before {
                 position: absolute;
                 margin-bottom: -0.625em;
@@ -659,7 +659,7 @@
         &:after {
             background: @green;
             background: fade(@green, 75%);
-        }        
+        }
     }
 
     & img {
@@ -677,11 +677,11 @@
         <section class="hero" style="background-color:#337E7D;">
             <div class="hero_wrapper">
                 <div class="hero_card">
-                    <div class="hero_card-bg">
-                        <div class="hero_card-padding">
-                            <h1>My hero!</h1>
+                    <article class="hero_preview">
+                        <div class="summary">
+                            Hero Summary
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
             <div class="hero_img-container hero_img-container__small u-flexible-container">
@@ -702,8 +702,7 @@
           .hero
             .hero_wrapper
               .hero_card
-                .hero_card-bg
-                  .hero_card-padding
+                .hero_preview
             .hero_img-container.hero_img-container__small
               .hero_img
             .hero_img-container.hero_img-container__large
@@ -719,10 +718,6 @@
         - .hero_wrapper
       notes:
         - "To center the hero content with a max-width."
-    - codenotes:
-        - .hero_card-padding
-      notes:
-        - "This extra div is used to collapse the margins of child elements."
     - codenotes:
         - .hero_img-container
       notes:
@@ -784,17 +779,10 @@
         }
     });
 
-    &_card-bg {
+    &_preview {
         background: @white;
         background: fade(@white, 90%);
-        // Overflow hidden is used to counteract the margin collapse used in
-        // .hero_card-padding.
-        overflow: hidden;
-    }
-
-    &_card-padding {
-        padding: @grid_gutter-width @grid_gutter-width 0;
-        margin-bottom: @grid_gutter-width + 10px;
+        padding: @grid_gutter-width @grid_gutter-width @grid_gutter-width + 10px;
     }
 
     .respond-to-min(660px, {
@@ -1030,7 +1018,7 @@
   name: Character icons
   family: cfgov-misc
   notes:
-    - "A way to create icons that feature a single character on a circular 
+    - "A way to create icons that feature a single character on a circular
        background. Useful because cf-icons does not have any of this type of
        icon in its library. Typical use case would be to identify steps in a
        process."

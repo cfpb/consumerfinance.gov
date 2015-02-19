@@ -1175,11 +1175,11 @@
 <section class="hero" style="background-color:#337E7D;">
     <div class="hero_wrapper">
         <div class="hero_card">
-            <div class="hero_card-bg">
-                <div class="hero_card-padding">
-                    <h1>My hero!</h1>
+            <article class="hero_preview">
+                <div class="summary">
+                    Hero Summary
                 </div>
-            </div>
+            </article>
         </div>
     </div>
     <div class="hero_img-container hero_img-container__small u-flexible-container">
@@ -1199,11 +1199,11 @@
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section class=&quot;hero&quot; style=&quot;background-color:#337E7D;&quot;&gt;
     &lt;div class=&quot;hero_wrapper&quot;&gt;
         &lt;div class=&quot;hero_card&quot;&gt;
-            &lt;div class=&quot;hero_card-bg&quot;&gt;
-                &lt;div class=&quot;hero_card-padding&quot;&gt;
-                    &lt;h1&gt;My hero!&lt;/h1&gt;
+            &lt;article class=&quot;hero_preview&quot;&gt;
+                &lt;div class=&quot;summary&quot;&gt;
+                    Hero Summary
                 &lt;/div&gt;
-            &lt;/div&gt;
+            &lt;/article&gt;
         &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;hero_img-container hero_img-container__small u-flexible-container&quot;&gt;
@@ -1218,7 +1218,7 @@
     &lt;/div&gt;
 &lt;/section&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section class=\&amp;quot;hero\&amp;quot; style=\&amp;quot;background-color:#337E7D;\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;hero_wrapper\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;hero_card\&amp;quot;&gt;\n            &lt;div class=\&amp;quot;hero_card-bg\&amp;quot;&gt;\n                &lt;div class=\&amp;quot;hero_card-padding\&amp;quot;&gt;\n                    &lt;h1&gt;My hero!&lt;/h1&gt;\n                &lt;/div&gt;\n            &lt;/div&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;hero_img-container hero_img-container__small u-flexible-container\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;hero_img u-flexible-container_inner\&amp;quot;\n             style=\&amp;quot;background-image:url(../static/img/hero-small.png);\&amp;quot;&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;hero_img-container hero_img-container__large\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;hero_img\&amp;quot;\n             style=\&amp;quot;background-image:url(../static/img/hero-large.png);\&amp;quot;&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n&lt;/section&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section class=\&amp;quot;hero\&amp;quot; style=\&amp;quot;background-color:#337E7D;\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;hero_wrapper\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;hero_card\&amp;quot;&gt;\n            &lt;article class=\&amp;quot;hero_preview\&amp;quot;&gt;\n                &lt;div class=\&amp;quot;summary\&amp;quot;&gt;\n                    Hero Summary\n                &lt;/div&gt;\n            &lt;/article&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;hero_img-container hero_img-container__small u-flexible-container\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;hero_img u-flexible-container_inner\&amp;quot;\n             style=\&amp;quot;background-image:url(../static/img/hero-small.png);\&amp;quot;&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;hero_img-container hero_img-container__large\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;hero_img\&amp;quot;\n             style=\&amp;quot;background-image:url(../static/img/hero-large.png);\&amp;quot;&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n&lt;/section&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
             <ul class="docs-codenotes">
@@ -1228,8 +1228,7 @@
 .hero
   .hero_wrapper
     .hero_card
-      .hero_card-bg
-        .hero_card-padding
+      .hero_preview
   .hero_img-container.hero_img-container__small
     .hero_img
   .hero_img-container.hero_img-container__large
@@ -1259,18 +1258,6 @@
             </ul>
             <ul class="docs-notes">
               <li>To center the hero content with a max-width.</li>
-            </ul>
-          </footer>
-        </div>
-        <div class="docs-pattern">
-          <footer class="docs-pattern_footer">
-            <ul class="docs-codenotes">
-              <li>
-                <pre class="docs-code"><code>.hero_card-padding</code></pre>
-              </li>
-            </ul>
-            <ul class="docs-notes">
-              <li>This extra div is used to collapse the margins of child elements.</li>
             </ul>
           </footer>
         </div>
@@ -1355,15 +1342,10 @@
   background-size: cover;
 }
 
-.hero_card-bg {
+.hero_preview {
   background: #ffffff;
   background: rgba(255, 255, 255, 0.9);
-  overflow: hidden;
-}
-
-.hero_card-padding {
-  padding: 30px 30px 0;
-  margin-bottom: 40px;
+  padding: 30px 30px 40px;
 }
 
 .hero {
@@ -1748,7 +1730,7 @@ a.hero_card {
       <h2 class="docs-component_header"><span>Character icons</span></h2>
       <div class="docs-component_intro">
         <ul class="docs-notes">
-          <li>A way to create icons that feature a single character on a circular  background. Useful because cf-icons does not have any of this type of icon in its library. Typical use case would be to identify steps in a process.</li>
+          <li>A way to create icons that feature a single character on a circular background. Useful because cf-icons does not have any of this type of icon in its library. Typical use case would be to identify steps in a process.</li>
         </ul>
       </div>
       <div class="docs-patterns">
