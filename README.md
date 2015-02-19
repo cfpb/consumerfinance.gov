@@ -16,7 +16,7 @@ content from the WordPress and Django back-ends through Elasticsearch.
 Nothing presented in this repo—whether in the source code, issue tracker,
 or wiki—is a final product unless it is marked as such or appears on consumerfinance.gov.
 
-![Screenshot of cfgov-refresh](scrrenshot.png)
+![Screenshot of cfgov-refresh](screenshot.png)
 
 ## Dependencies
 - [Sheer](https://github.com/cfpb/sheer):
