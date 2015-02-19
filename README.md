@@ -267,7 +267,7 @@ For any kind of repeating content, this is the basic process:
   simply set up a `for ... in` loop,
   then output the different properties of the post within.
   In the case of the blog, a list of posts is built using this method in
-  `_layouts/posts-paginated.html`.
+  `_includes/posts-paginated.html`.
 
   Here is a simplified example:
 
