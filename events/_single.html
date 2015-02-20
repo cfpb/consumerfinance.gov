@@ -1,0 +1,54 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-events.html" as vars with context %}
+
+{% block title -%}
+    {{ vars.mock_event.title }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ vars.mock_event.excerpt|striptags }}
+{%- endblock %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    {% import "_event.html" as article with context %}
+    {{ article.render(vars.mock_event, vars.path) }}
+{% endblock %}
+
+{# TEMP disable related posts sidebar till we need it in DF-1473.
+{% block content_sidebar %}
+    <section class="block u-mt0">
+        {% import "related-posts.html" as related_posts with context %}
+        {{ related_posts.render(post) }}
+    </section>
+    <section class="block">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Stay informed
+            </span>
+        </h1>
+        <div class="block block__sub u-mt0">
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new blogs.
+            </p>
+            {% import "email-subscribe-form.html" as subscribe with context %}
+            {{ subscribe.render(vars.query) }}
+        </div>
+        <div class="block block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(vars.rss_path) }}
+        </div>
+    </section>
+{% endblock %}
+#}
