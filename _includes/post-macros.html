@@ -54,7 +54,9 @@
    ========================================================================== #}
 
 {% macro post_summary(post) %}
-    <h1 class="summary_header">{{ post.title|safe }}</h1>
+    <header class="summary_header">
+        <h1 class="summary_heading">{{ post.title|safe }}</h1>
+    </header>
     <p class="summary_text summary_text__max">
     {% if post.dek %}
         {{ post.dek|striptags }}
@@ -63,13 +65,16 @@
     {% endif %}
     </p>
     {% if post.author.0 %}
-    <p class="summary_byline">
-        By {{ post.author.0 }}
-    {% if post.author.1 %}
-        and {{ post.author.1 }}
+    <footer class="summary_footer">
+        <p class="summary_byline">
+            By {{ post.author.0 }}
+        {% if post.author.1 %}
+            and {{ post.author.1 }}
+        {% endif %}
+        </p>
+    </footer>
     {% endif %}
-    </p>
-    {% endif %}
+
 {% endmacro %}
 
 
@@ -354,14 +359,14 @@
    ==========================================================================
 
    Examples:
-   
+
    blog/index.html
    newsroom/index.html
 
         Standard filter usage.
 
    the-bureau/leadership-calendar/index.html
-   
+
         This is an example of using two instances of the filters macro on the
         same page. One of them uses the full set of options including
         `id_prefix` so that there are no ID attribute conflicts.
