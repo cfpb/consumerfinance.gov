@@ -1,0 +1,67 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render an article when given:
+
+   post:               The Sheer document that is available to a _single.html
+                       template. For example in events/_single.html the variable
+                       `event` is available and represents the event for the
+                       `_single` page.
+
+   path:               The path to which post filters are applies. For example,
+                       if the post is an event post then path should be '/events/'.
+                       Remember to leverage vars.path instead of using the
+                       literal string '/events/'. Path is used to create the
+                       filtered URL: {{ path }}?filter_tags={{ tag }}
+
+   ========================================================================== #}
+
+{% macro render(post, path) %}
+
+{% from "macros.html" import share as share %}
+
+<article class="post">
+    <header>
+        <h1 class="post_header">
+            {{ post.title|safe }}
+        </h1>
+    {% if post.dek %}
+        <div class="post_dek">
+            {{ post.dek|safe }}
+        </div>
+    {% endif %}
+        <div class="post_meta">
+            <span class="post_date date">
+                Updated at: {{ post.modified|date("%m/%d/%Y") }}
+            </span>
+        </div>
+        {{ share(post.title, false, {
+           'text':     post.twtr_text,
+           'related':  post.twtr_rel,
+           'language': post.twtr_lang,
+           'hashtags': post.twtr_hash
+        }) }}
+    {% if post.thumbnail.images %}
+        <img class="post_featured-img"
+             src="{{ post.thumbnail.images.full.url }}"
+             alt="{{ post.thumbnail.alt_text }}">
+    {% endif %}
+    </header>
+    <div class="post_body">
+        {{ post.content|safe }}
+    </div>
+{% if post.tags|length %}
+    <footer>
+        {%- import "tags.html" as tags %}
+        {{ tags.render(post.tags, path) }}
+    </footer>
+{% endif %}
+</article>
+
+{% endmacro %}
