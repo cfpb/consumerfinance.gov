@@ -11827,11 +11827,11 @@ a.category-slug.active {
         <section class="hero" style="background-color:#337E7D;">
             <div class="hero_wrapper">
                 <div class="hero_card">
-                    <div class="hero_card-bg">
-                        <div class="hero_card-padding">
-                            <h1>My hero!</h1>
+                    <article class="hero_preview">
+                        <div class="summary">
+                            Hero Summary
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
             <div class="hero_img-container hero_img-container__small u-flexible-container">
@@ -11852,8 +11852,7 @@ a.category-slug.active {
           .hero
             .hero_wrapper
               .hero_card
-                .hero_card-bg
-                  .hero_card-padding
+                .hero_preview
             .hero_img-container.hero_img-container__small
               .hero_img
             .hero_img-container.hero_img-container__large
@@ -11869,10 +11868,6 @@ a.category-slug.active {
         - .hero_wrapper
       notes:
         - "To center the hero content with a max-width."
-    - codenotes:
-        - .hero_card-padding
-      notes:
-        - "This extra div is used to collapse the margins of child elements."
     - codenotes:
         - .hero_img-container
       notes:
@@ -11949,14 +11944,10 @@ a.category-slug.active {
     display: block;
   }
 }
-.hero_card-bg {
+.hero_preview {
   background: #ffffff;
   background: rgba(255, 255, 255, 0.9);
-  overflow: hidden;
-}
-.hero_card-padding {
-  padding: 30px 30px 0;
-  margin-bottom: 40px;
+  padding: 30px 30px 40px;
 }
 @media only all and (min-width: 41.25em) {
   .hero {
@@ -12213,7 +12204,7 @@ a.category-slug.active {
   name: Character icons
   family: cfgov-misc
   notes:
-    - "A way to create icons that feature a single character on a circular 
+    - "A way to create icons that feature a single character on a circular
        background. Useful because cf-icons does not have any of this type of
        icon in its library. Typical use case would be to identify steps in a
        process."
@@ -12490,19 +12481,23 @@ a.category-slug.active {
     - name: Default summary
       markup: |
         <article class="summary">
-            <h1 class="summary_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
+            <header class="summary_header">
+                <h1 class="summary_heading">
+                    Preventing illegal discrimination in auto lending
+                </h1>
+            </header>
             <p class="summary_text">
                 Every year, millions of American families buy a car –
                 and it will be one of the most significant purchases they make.
                 One key priority for us is protecting consumers from the silent
                 pickpocket of discrimination.
             </p>
-            <p class="summary_byline">
-                By Patrice Ficklin
-            </p>
-            <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
+            <footer class="summary_footer">
+                <p class="summary_byline">
+                    By Patrice Ficklin
+                </p>
+                <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
+            </footer>
         </article>
       codenotes:
         - |
@@ -12510,15 +12505,17 @@ a.category-slug.active {
           -----------------------
           .summary
             .summary_header
+                .summary_heading
             .summary_text
-            .summary_byline
+            .summary_footer
+                .summary_byline
   tags:
     - cfgov-summary
 */
 .summary {
   display: block;
 }
-.summary_header {
+.summary_heading {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
@@ -12529,34 +12526,34 @@ a.category-slug.active {
   line-height: 1.27272727;
   margin-bottom: 0.45454545em;
 }
-a:hover .summary_header,
-a.hover .summary_header,
-a:focus .summary_header,
-a.focus .summary_header {
+a:hover .summary_heading,
+a.hover .summary_heading,
+a:focus .summary_heading,
+a.focus .summary_heading {
   color: #328ed8;
 }
-.summary_header em,
-.summary_header i {
+.summary_heading em,
+.summary_heading i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .summary_header em,
-.lt-ie9 .summary_header i {
+.lt-ie9 .summary_heading em,
+.lt-ie9 .summary_heading i {
   font-style: normal !important;
 }
-.summary_header strong,
-.summary_header b {
+.summary_heading strong,
+.summary_heading b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .summary_header strong,
-.lt-ie9 .summary_header b {
+.lt-ie9 .summary_heading strong,
+.lt-ie9 .summary_heading b {
   font-weight: normal !important;
 }
 @media only all and (max-width: 37.4375em) {
-  .summary_header {
+  .summary_heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -12565,12 +12562,12 @@ a.focus .summary_header {
     font-weight: 500;
     line-height: 1.22222222;
   }
-  .lt-ie9 .summary_header {
+  .lt-ie9 .summary_heading {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) {
-  .summary_header {
+  .summary_heading {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -12580,29 +12577,29 @@ a.focus .summary_header {
     line-height: 1.26923077;
     margin-bottom: 0.34615385em;
   }
-  .summary_header em,
-  .summary_header i {
+  .summary_heading em,
+  .summary_heading i {
     font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .summary_header em,
-  .lt-ie9 .summary_header i {
+  .lt-ie9 .summary_heading em,
+  .lt-ie9 .summary_heading i {
     font-style: normal !important;
   }
-  .summary_header strong,
-  .summary_header b {
+  .summary_heading strong,
+  .summary_heading b {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .summary_header strong,
-  .lt-ie9 .summary_header b {
+  .lt-ie9 .summary_heading strong,
+  .lt-ie9 .summary_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
-  .summary_header {
+  .summary_heading {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -12611,29 +12608,29 @@ a.focus .summary_header {
     font-size: 1.375em;
     line-height: 1.27272727;
   }
-  .summary_header em,
-  .summary_header i {
+  .summary_heading em,
+  .summary_heading i {
     font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .summary_header em,
-  .lt-ie9 .summary_header i {
+  .lt-ie9 .summary_heading em,
+  .lt-ie9 .summary_heading i {
     font-style: normal !important;
   }
-  .summary_header strong,
-  .summary_header b {
+  .summary_heading strong,
+  .summary_heading b {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .summary_header strong,
-  .lt-ie9 .summary_header b {
+  .lt-ie9 .summary_heading strong,
+  .lt-ie9 .summary_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
-  .summary_header {
+  .summary_heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -12642,7 +12639,7 @@ a.focus .summary_header {
     font-weight: 500;
     line-height: 1.22222222;
   }
-  .lt-ie9 .summary_header {
+  .lt-ie9 .summary_heading {
     font-weight: normal !important;
   }
 }
@@ -12673,55 +12670,30 @@ a.focus .summary_header {
 .lt-ie9 .summary_text b {
   font-weight: normal !important;
 }
-.summary_byline {
+.summary_footer {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
-.summary_byline em,
-.summary_byline i {
+.summary_footer em,
+.summary_footer i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .summary_byline em,
-.lt-ie9 .summary_byline i {
+.lt-ie9 .summary_footer em,
+.lt-ie9 .summary_footer i {
   font-style: normal !important;
 }
-.summary_byline strong,
-.summary_byline b {
+.summary_footer strong,
+.summary_footer b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .summary_byline strong,
-.lt-ie9 .summary_byline b {
-  font-weight: normal !important;
-}
-.summary_event-date {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-.summary_event-date em,
-.summary_event-date i {
-  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-.lt-ie9 .summary_event-date em,
-.lt-ie9 .summary_event-date i {
-  font-style: normal !important;
-}
-.summary_event-date strong,
-.summary_event-date b {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-.lt-ie9 .summary_event-date strong,
-.lt-ie9 .summary_event-date b {
+.lt-ie9 .summary_footer strong,
+.lt-ie9 .summary_footer b {
   font-weight: normal !important;
 }
 a:hover .summary_event-date,
@@ -12729,6 +12701,12 @@ a.hover .summary_event-date,
 a:focus .summary_event-date,
 a.focus .summary_event-date {
   color: #328ed8;
+}
+.summary > *:last-child {
+  margin-bottom: 0;
+}
+.summary > *:last-child > *:last-child {
+  margin-bottom: 0;
 }
 /* topdoc
   name: Layouts

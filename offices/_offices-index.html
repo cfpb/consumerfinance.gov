@@ -23,22 +23,25 @@
         <h1>{{ office.title | safe }}</h1>
     {% endif %}
 
-    <section class="block block__flush-top
-                    {{- 'content-l content-l__main content-l__large-gutters' if office.intro_subscribe_form -}}">
+    <section class="block block__flush-top content-l content-l__main content-l__large-gutters">
         {% if office.intro_text %}
-        <section class="office_intro 
-                        {{- ' content-l_col content-l_col-1-2' if office.intro_subscribe_form -}}">
+        {% set show_subscription = office.intro_subscribe_form and office.intro_govdelivery_code %}
+        <section class="office_intro content-l_col
+                        {% if show_subscription -%}
+                            content-l_col-1-2
+                        {% else -%}
+                            content-l_col-1
+                        {%- endif %}">
             <p class="h3">{{ office.intro_text | safe if office.intro_text }}</p>
         </section>
         {% endif %}
-        {% if office.intro_subscribe_form %}
-        <section class="office_contact content-l_col content-l_col-1-2 content-l_col__before-divider">
-            <p class="h3 u-show-on-mobile">Stay informed</p>
-            <p class="short-desc">Stay up to date with our email newsletter</p>
-            <!-- TODO: need correct query data for email -->
-            <!-- TODO: the include prob won't work with inline form -->
-            {% include "email-subscribe-form.html" %}
-        </section>
+        {% if show_subscription %}
+            <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <p class="h3 u-show-on-mobile">Stay informed</p>
+                <p class="short-desc">Stay up to date with our email newsletter</p>
+                {% import "email-subscribe-form.html" as subscribe with context %}
+                {{ subscribe.render(null, office.intro_govdelivery_code) }}
+            </section>
         {% endif %}
     </section>
     
