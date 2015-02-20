@@ -23,5 +23,10 @@
     "url":       "/watchroom/<id>/",
     "type":      "watchroom",
     "permalink": true
+  },
+  "event": {
+    "url":       "/events/<id>/",
+    "type":      "posts",
+    "permalink": true
   }
 }
