@@ -1,11 +1,58 @@
 
 {% set path = '/events/' %}
 {% set rss_path = '/feed/events/' %}
-
 {% set nav_items = [
     (path, 'index', 'Upcoming events and field hearings'),
     (path + 'archive/', 'archive', 'Archive')
-] %}
+]
+%}
+
+{# TEMP Mock object for events #}
+{% set mock_event = {'taxonomy_post_format': [],
+'attachments': [],
+'excerpt': 'THIS IS THE EXCERPT Today, we’re posting a semi-annual update of our rulemaking agenda.',
+'taxonomy_author': [],
+'id': 61737.0,
+'custom_fields': {},
+'category': ['Announcements & updates'],
+'author': ['Jane Doe'],
+'taxonomy_post_tag': [],
+'content': 'THIS IS THE CONTENT Our regulatory agenda includes rulemaking actions in the following stages: pre-rule, proposed rule, final rule, long term actions, and completed actions.',
+'comment_count': 0.0,
+'categories': [],
+'type': 'posts',
+'thumbnail': {},
+'status': 'publish',
+'twtr_rel': 'anselmbradford',
+'parent': 0.0,
+'tags': ['Debt collection', 'Mortgages', 'Payday loans', 'Regulations', 'Rulemaking'],
+'taxonomy_fj_category': [],
+'taxonomy_category': [],
+'date': '2014-05-23',
+'twtr_text': 'This is an example tweet',
+'slug': 'spring-2014-rulemaking-agenda',
+'comment_status': 'open',
+'title_plain': 'TITLE PLAIN Spring 2014 rulemaking agenda',
+'url': 'http://consumerfinance.gov/blog/spring-2014-rulemaking-agenda/',
+'title': 'TITLE Spring 2014 rulemaking agenda',
+'modified': '2014-10-20',
+'twtr_hash': 'hashtag',
+'dek': 'THIS IS THE DEK Portions of the Unified Agenda are published in the Federal Register, and the full set of materials is also available.',
+'_id': 'spring-2014-rulemaking-agenda',
+'order': 0.0}
+%}
+
+{# TODO Once the events post type is created,
+the following needs to be added to `_settings/lookups.json`.
+
+  "event": {
+    "url":       "/events/<id>/",
+    "type":      "events",
+    "permalink": true
+  }
+
+#}
+
 
 {# Temp using blog query to render the signup form #}
 {% set query = queries.posts %}
