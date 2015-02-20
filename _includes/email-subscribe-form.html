@@ -1,5 +1,5 @@
 
-{% macro render(query) %}
+{% macro render(query, code) %}
 
 <form class="reveal-on-focus"
       id="email-subscribe-form"
@@ -17,7 +17,7 @@
                name="email"
                placeholder="Your email">
     </div>
-
+    {% if query -%}
     <div class="form-group reveal-on-focus_content u-clearfix">
     {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
     {% set govdelivery_categories = [
@@ -43,8 +43,15 @@
     {% endif %}
     {% endfor %}
     {% endfor %}
-
     </div>
+    {% elif code -%}
+    <div class="form-group">
+        <input type="hidden"
+               name="code"
+               value="{{ code }}">
+    </div>
+    {% endif -%}
+    
     <div class="form-group">
         <input class="btn" type="submit" class="btn" value="Sign up">
     </div>
