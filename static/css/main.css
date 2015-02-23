@@ -13810,18 +13810,16 @@ a.focus .summary_event-date {
                     <span class="u-visually-hidden">Category:</span>
                     Announcements &amp; updates
                 </a>
-                <h1 class="post_header">
+                <h1 class="post_heading">
                     A consumer-centered supervision program
                 </h1>
-                <div class="post_dek">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Quis architecto commodi cupiditate excepturi
-                        consequatur sequi quia consectetur est ea laborum
-                        saepe earum quidem a necessitatibus modi magni error
-                        ab suscipit.
-                    </p>
-                </div>
+                <p class="post_dek">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Quis architecto commodi cupiditate excepturi
+                    consequatur sequi quia consectetur est ea laborum
+                    saepe earum quidem a necessitatibus modi magni error
+                    ab suscipit.
+                </p>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -14139,30 +14137,35 @@ a.focus .summary_event-date {
                             </a>
                         </li>
                     </ul>
-                </div> 
+                </div>
             </footer>
         </article>
       codenotes:
         - |
-          Structural sheat sheet:
+          Structural cheat sheet:
           -----------------------
-          .post
-            .post_slug
-            .post_header
-            .post_dek
-            .post_meta
-              .post_byline
-              .post_date
-            .post_share-icon
-            .post_featured-img
-            .post_body
-            .post_inset
+          article.post
+            header
+                a.post_slug
+                h1.post_heading
+            p.post_dek
+            div.post_meta
+              span.post_byline
+              span.post_date
+            aside
+              ul.post_share
+                li.list_item
+                  a.share-icon
+            img.post_featured-img
+            div.post_body
+              aside.post_inset
+            footer
       notes:
         - ".post_featured-img uses a 16:9 aspect ratio."
   tags:
     - cfgov-post
 */
-.post_header {
+.post_heading {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -14172,28 +14175,28 @@ a.focus .summary_event-date {
   line-height: 1.26923077;
   margin-bottom: 0.5em;
 }
-.post_header em,
-.post_header i {
+.post_heading em,
+.post_heading i {
   font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .post_header em,
-.lt-ie9 .post_header i {
+.lt-ie9 .post_heading em,
+.lt-ie9 .post_heading i {
   font-style: normal !important;
 }
-.post_header strong,
-.post_header b {
+.post_heading strong,
+.post_heading b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .post_header strong,
-.lt-ie9 .post_header b {
+.lt-ie9 .post_heading strong,
+.lt-ie9 .post_heading b {
   font-weight: normal !important;
 }
 @media only all and (max-width: 37.4375em) {
-  .post_header {
+  .post_heading {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -14202,29 +14205,29 @@ a.focus .summary_event-date {
     font-size: 1.375em;
     line-height: 1.27272727;
   }
-  .post_header em,
-  .post_header i {
+  .post_heading em,
+  .post_heading i {
     font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .post_header em,
-  .lt-ie9 .post_header i {
+  .lt-ie9 .post_heading em,
+  .lt-ie9 .post_heading i {
     font-style: normal !important;
   }
-  .post_header strong,
-  .post_header b {
+  .post_heading strong,
+  .post_heading b {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .post_header strong,
-  .lt-ie9 .post_header b {
+  .lt-ie9 .post_heading strong,
+  .lt-ie9 .post_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
-  .post_header {
+  .post_heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -14233,12 +14236,12 @@ a.focus .summary_event-date {
     font-weight: 500;
     line-height: 1.22222222;
   }
-  .lt-ie9 .post_header {
+  .lt-ie9 .post_heading {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) {
-  .post_header {
+  .post_heading {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -14248,29 +14251,29 @@ a.focus .summary_event-date {
     line-height: 1.29411765;
     margin-bottom: 0.29411765em;
   }
-  .post_header em,
-  .post_header i {
+  .post_heading em,
+  .post_heading i {
     font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .post_header em,
-  .lt-ie9 .post_header i {
+  .lt-ie9 .post_heading em,
+  .lt-ie9 .post_heading i {
     font-style: normal !important;
   }
-  .post_header strong,
-  .post_header b {
+  .post_heading strong,
+  .post_heading b {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .post_header strong,
-  .lt-ie9 .post_header b {
+  .lt-ie9 .post_heading strong,
+  .lt-ie9 .post_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
-  .post_header {
+  .post_heading {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -14279,29 +14282,29 @@ a.focus .summary_event-date {
     font-size: 1.625em;
     line-height: 1.26923077;
   }
-  .post_header em,
-  .post_header i {
+  .post_heading em,
+  .post_heading i {
     font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .post_header em,
-  .lt-ie9 .post_header i {
+  .lt-ie9 .post_heading em,
+  .lt-ie9 .post_heading i {
     font-style: normal !important;
   }
-  .post_header strong,
-  .post_header b {
+  .post_heading strong,
+  .post_heading b {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .post_header strong,
-  .lt-ie9 .post_header b {
+  .lt-ie9 .post_heading strong,
+  .lt-ie9 .post_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
-  .post_header {
+  .post_heading {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -14310,29 +14313,29 @@ a.focus .summary_event-date {
     font-size: 1.375em;
     line-height: 1.27272727;
   }
-  .post_header em,
-  .post_header i {
+  .post_heading em,
+  .post_heading i {
     font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .post_header em,
-  .lt-ie9 .post_header i {
+  .lt-ie9 .post_heading em,
+  .lt-ie9 .post_heading i {
     font-style: normal !important;
   }
-  .post_header strong,
-  .post_header b {
+  .post_heading strong,
+  .post_heading b {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .post_header strong,
-  .lt-ie9 .post_header b {
+  .lt-ie9 .post_heading strong,
+  .lt-ie9 .post_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
-  .post_header {
+  .post_heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -14341,7 +14344,7 @@ a.focus .summary_event-date {
     font-weight: 500;
     line-height: 1.22222222;
   }
-  .lt-ie9 .post_header {
+  .lt-ie9 .post_heading {
     font-weight: normal !important;
   }
 }
@@ -14384,6 +14387,14 @@ a.focus .summary_event-date {
 }
 .post_body {
   color: #43484e;
+}
+.post_body:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.lt-ie8 .post_body {
+  zoom: 1;
 }
 .post_inset {
   margin: 1.875em 0;
