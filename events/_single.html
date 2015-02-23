@@ -26,11 +26,10 @@
     {{ article.render(vars.mock_event, vars.path) }}
 {% endblock %}
 
-{# TEMP disable related posts sidebar till we need it in DF-1473.
 {% block content_sidebar %}
     <section class="block u-mt0">
         {% import "related-posts.html" as related_posts with context %}
-        {{ related_posts.render(post) }}
+        {{ related_posts.render(event) }}
     </section>
     <section class="block">
         <h1 class="header-slug">
@@ -50,5 +49,17 @@
             {{ rss.render(vars.rss_path) }}
         </div>
     </section>
+    <section class="block">
+        {%- import "related-links.html" as related_links -%}
+        {{- related_links.render([
+            [
+                '/the-bureau/',
+                'About us'
+            ],
+            [
+                '/contact-us/',
+                'Contact us'
+            ],
+        ]) -}}
+    </section>
 {% endblock %}
-#}
