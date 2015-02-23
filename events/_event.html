@@ -28,13 +28,13 @@
 
 <article class="post">
     <header>
-        <h1 class="post_header">
+        <h1 class="post_heading">
             {{ post.title|safe }}
         </h1>
     {% if post.dek %}
-        <div class="post_dek">
+        <p class="post_dek">
             {{ post.dek|safe }}
-        </div>
+        </p>
     {% endif %}
         <div class="post_meta">
             <span class="post_date date">
