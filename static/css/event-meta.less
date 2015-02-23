@@ -12,6 +12,9 @@
     - name: Event Meta
       markup: |
         <div class="event-meta h-event">
+          <p class="event-meta_description">
+          Event location:
+          </p>
           <p class="event-meta_address h-adr">
             <span class="event-meta_city p-locality">San Francisco</span>
             <span class="event-meta_state p-region">CA</span>
@@ -27,6 +30,7 @@
           Structural cheat sheet:
           -----------------------
           div.event-meta.h-event
+            p.event-meta_description
             p.event-meta_address.h-adr
               span.event-meta_city.p-locality
               span.event-meta_region.p-region
@@ -42,10 +46,14 @@
 
 .event-meta {
     .h5();
-    text-transform: capitalize;
+}
+
+.event-meta_description {
+    text-transform: none;
 }
 
 .event-meta_address {
+    text-transform: capitalize;
     display: inline-block;
 
     // Adding em dash after address

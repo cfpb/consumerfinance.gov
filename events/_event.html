@@ -54,7 +54,31 @@
     {% endif %}
     </header>
     <div class="post_body">
-        {{ post.content|safe }}
+        <aside class="post_inset post_inset__right line-container event-status">
+            <div class="line-container_body">
+                <p>
+                    <strong>This event requires an RSVP.</strong>
+                </p>
+                <p>
+                    <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn"><span class="cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
+                </p>
+                <p>
+                    {# TODO Change to livestream icon when that's added to cf-icons. #}
+                    <span class="cf-icon cf-icon-wifi"></span>
+                    <strong>Available on Live stream.</strong>
+                </p>
+                <p class="event-meta">
+                    <span class="event-meta_description">
+                        Video link available
+                    </span>
+                    <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+                        <span class="event-meta_date">1/21/2014</span>
+                        <span class="event-meta_time">2:30 PM CST</span>
+                    </time>
+                </p>
+            </div>
+      </aside>
+      {{ post.content|safe }}
     </div>
 {% if post.tags|length %}
     <footer>
