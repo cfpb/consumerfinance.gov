@@ -13723,6 +13723,9 @@ a.focus .summary_event-date {
     - name: Event Meta
       markup: |
         <div class="event-meta h-event">
+          <p class="event-meta_description">
+          Event location:
+          </p>
           <p class="event-meta_address h-adr">
             <span class="event-meta_city p-locality">San Francisco</span>
             <span class="event-meta_state p-region">CA</span>
@@ -13738,6 +13741,7 @@ a.focus .summary_event-date {
           Structural cheat sheet:
           -----------------------
           div.event-meta.h-event
+            p.event-meta_description
             p.event-meta_address.h-adr
               span.event-meta_city.p-locality
               span.event-meta_region.p-region
@@ -13760,12 +13764,15 @@ a.focus .summary_event-date {
   margin-bottom: 0.35714286em;
   font-size: 0.875em;
   line-height: 1.57142857;
-  text-transform: capitalize;
 }
 .lt-ie9 .event-meta {
   font-weight: normal !important;
 }
+.event-meta_description {
+  text-transform: none;
+}
 .event-meta_address {
+  text-transform: capitalize;
   display: inline-block;
 }
 .event-meta_address:before {
@@ -17045,6 +17052,63 @@ a.focus .summary_event-date {
   display: block;
   margin-top: -0.625em;
   margin-bottom: 3.75em;
+}
+/* ==========================================================================
+   cfgov-refresh
+   Event post detail page
+   ========================================================================== */
+.event-status {
+  color: #101820;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.event-status em,
+.event-status i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .event-status em,
+.lt-ie9 .event-status i {
+  font-style: normal !important;
+}
+.event-status strong,
+.event-status b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .event-status strong,
+.lt-ie9 .event-status b {
+  font-weight: normal !important;
+}
+.event-status .event-meta {
+  color: #babbbd;
+  font-weight: normal !important;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.event-status .event-meta em,
+.event-status .event-meta i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .event-status .event-meta em,
+.lt-ie9 .event-status .event-meta i {
+  font-style: normal !important;
+}
+.event-status .event-meta strong,
+.event-status .event-meta b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .event-status .event-meta strong,
+.lt-ie9 .event-status .event-meta b {
+  font-weight: normal !important;
 }
 .bureau-mission {
   margin-bottom: 2.8125em;
