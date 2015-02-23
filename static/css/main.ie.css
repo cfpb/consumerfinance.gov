@@ -13029,6 +13029,10 @@ a.focus .summary_heading {
   font-weight: normal !important;
 }
 
+.summary_event-date {
+  color: #0072ce;
+}
+
 a:hover .summary_event-date,
 a.hover .summary_event-date,
 a:focus .summary_event-date,
@@ -14028,13 +14032,13 @@ a.focus .summary_event-date {
   display: inline-block;
 }
 
-.event-meta_city:after {
-  content: "\2C";
-}
-
-.event-meta_date:before {
+.event-meta_address:before {
   content: "\2014";
   margin-right: .2em;
+}
+
+.event-meta_city:after {
+  content: "\2C";
 }
 
 .event-meta_datetime {
