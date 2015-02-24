@@ -17,18 +17,16 @@
                     <span class="u-visually-hidden">Category:</span>
                     Announcements &amp; updates
                 </a>
-                <h1 class="post_header">
+                <h1 class="post_heading">
                     A consumer-centered supervision program
                 </h1>
-                <div class="post_dek">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Quis architecto commodi cupiditate excepturi
-                        consequatur sequi quia consectetur est ea laborum
-                        saepe earum quidem a necessitatibus modi magni error
-                        ab suscipit.
-                    </p>
-                </div>
+                <p class="post_dek">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Quis architecto commodi cupiditate excepturi
+                    consequatur sequi quia consectetur est ea laborum
+                    saepe earum quidem a necessitatibus modi magni error
+                    ab suscipit.
+                </p>
                 <div class="post_meta">
                     <span class="post_byline">
                         By <a href="#">Firstname&nbsp;Lastname</a> &ndash;
@@ -346,31 +344,36 @@
                             </a>
                         </li>
                     </ul>
-                </div> 
+                </div>
             </footer>
         </article>
       codenotes:
         - |
-          Structural sheat sheet:
+          Structural cheat sheet:
           -----------------------
-          .post
-            .post_slug
-            .post_header
-            .post_dek
-            .post_meta
-              .post_byline
-              .post_date
-            .post_share-icon
-            .post_featured-img
-            .post_body
-            .post_inset
+          article.post
+            header
+                a.post_slug
+                h1.post_heading
+            p.post_dek
+            div.post_meta
+              span.post_byline
+              span.post_date
+            aside
+              ul.post_share
+                li.list_item
+                  a.share-icon
+            img.post_featured-img
+            div.post_body
+              aside.post_inset
+            footer
       notes:
         - ".post_featured-img uses a 16:9 aspect ratio."
   tags:
     - cfgov-post
 */
 
-.post_header {
+.post_heading {
     .h2();
     // Eyeballed to 24px.
     margin-bottom: unit(13px / @font-size, em);
@@ -408,6 +411,7 @@
 }
 
 .post_body {
+    .u-clearfix();
     color: @darkgray;
 }
 
