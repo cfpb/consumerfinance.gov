@@ -15,6 +15,10 @@
     "has_parent": {
       "type":  "string",
       "index": "not_analyzed"
+    },
+    "category": {
+      "type": "string",
+      "index": "not_analyzed"
     }
   }
 }

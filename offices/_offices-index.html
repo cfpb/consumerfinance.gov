@@ -17,6 +17,8 @@
 
     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
     {% import "contact-macro.html" as contact_macro %}
+    {{activity_type}}
+    asdfasdfasdf
     {% set activities_feed = activity_snippets(activity_type) %}
     
     {% if office.title %}
