@@ -1,0 +1,52 @@
+{% macro render(post) %}
+
+{% import "macros.html" as macros %}
+
+{% set options = {
+    'time_col_classes': 'u-w25pct',
+    'agenda_col_classes': 'u-w25pct',
+    'location_col_classes': 'u-w25pct',
+    'speaker_col_classes': 'u-w25pct',
+} %}
+<h2>Agenda</h2>
+<table class="u-w100pct block u-mt0">
+    <thead>
+        <tr>
+            <th class="{{ options.time_col_classes }}">Time</th>
+            <th class="{{ options.desc_col_classes }}">Agenda</th>
+            <th class="{{ options.location_col_classes }}">Location</th>
+            <th class="{{ options.speaker_col_classes }}">Speaker</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for block in post.agenda %}
+        <tr>
+            <td class="{{ options.time_col_classes }}">
+                {{ block.dtstart }}
+                &ndash;
+                {{ block.dtend }}
+            </td>
+            <td class="{{ options.desc_col_classes }}">
+                {{ block.summary }}
+            </td>
+            <td class="{{ options.location_col_classes }}">
+                {{ block.location.street }}<br>
+                {{ block.location.city }},
+                {{ block.location.state }}
+                {{ block.location.zip }}
+            </td>
+            <td class='{{ options.speaker_col_classes }}'>
+                {% for speaker in block.speakers %}
+                    {%- if speaker.url -%}
+                        <a href="{{ speaker.url }}">{{ speaker.name }}, {{ speaker.position }}</a>{{ ';' if loop.index < loop.length }}
+                    {% else %}
+                        {{ speaker.name }}, {{ speaker.position }}{{ ';' if loop.index < loop.length }}
+                    {%- endif -%}
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endmacro %}
