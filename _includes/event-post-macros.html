@@ -86,13 +86,9 @@
    ========================================================================== #}
 
 {% macro event_meta(post) %}
-
-    {%- set city = (post.location or 'Washington DC') -%}    
-    {%- set state = (post.state or '') -%}
-    {%- set venue = (post.venue or 'CFPB') -%}
-    
     <div class="event-meta h-event">
-        event_meta_datetime(post.date)
+        {{ event_meta_address(post) }}
+        {{ event_meta_datetime(post.date)  }}
     </div>
 {% endmacro %}
 
@@ -106,13 +102,16 @@
 
    Description:
 
-   Create HTML event meta date/time markup when given:
+   Create HTML event meta address markup when given:
 
    date: A post date from a query result.
 
    ========================================================================== #}
 
-{% macro event_meta_address(date) %}
+{% macro event_meta_address(post) %}
+    {%- set city = (post.location or 'Washington DC') -%}    
+    {%- set state = (post.state or '') -%}
+    {%- set venue = (post.venue or 'CFPB') -%}
     <p class="event-meta_address h-adr">
         <span class="event-meta_city p-locality">{{ city }}</span>
         <span class="event-meta_state p-region">{{ state }}</span>
