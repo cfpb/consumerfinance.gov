@@ -13,3 +13,90 @@
         .webfont-regular();
     }
 }
+
+/* topdoc
+  name: Event Footer
+  family: cfgov-event
+  notes:
+    - "Markup to display event footer, including the banner, download button, and email link"
+  patterns:
+    - name: Event footer demo with initialization markup
+      markup: |
+        <div class="event-footer">
+            <p class="event-footer_banner">
+                <span class="event-footer_banner_message">This event requires an RSVP. Reserve your spot here: </span>
+                <a href="mailto:reserve@cfpb.gov" class="btn"><span class="btn_icon__left cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
+            </p>
+            <div class="content-l">
+                <section class="content-l_col content-l_col-1-2 event-footer_col">
+                    <h3 class="event-footer_heading">Downloads</h3>
+                    <a href="#">Download event PDF <span class="cf-icon cf-icon-pdf"></span></a>
+                </section>
+                <section class="content-l_col content-l_col-1-2 event-footer_col">
+                    <h3 class="event-footer_heading">Do you have event questions?</h3>
+                    <a href="mailto:reserve@cfpb.gov?subject=Event Question&body=Please include your question and fill in your first and last name below and send this email.%0D%0A%0D%0AQuestion:%0D%0AFirst name:%0D%0ALast name:">reserve@cfpb.gov <span class="cf-icon cf-icon-email-social"></span></a>
+                </section>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          div.event-footer
+            p.event-footer_banner
+              span.event-footer_banner-message
+              a.btn
+                span.cf-icon
+            section.event-footer_col
+              h3.event-footer_heading
+              a.event-footer_link
+                span.cf-icon
+      notes:
+  tags:
+    - cfgov-event-footer
+*/
+.event-footer {
+    .webfont-regular();
+
+    .respond-to-max(599px, {
+        a {
+            display: block;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        &_link {
+            padding: .625em 0;
+
+            border-width: 1px 0;
+        }
+    });
+
+    &_banner {
+        padding: 15px 20px;
+
+        background-color: #eee;
+
+        .respond-to-min(600px, {
+            border-bottom: 1px solid #aaa;
+        });
+    }
+
+    &_banner-message {
+        display: inline-block;
+
+        padding-right: 20px;
+        margin-bottom: 10px;
+
+        .respond-to-max(599px, {
+            display: block;
+        });
+    }
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
