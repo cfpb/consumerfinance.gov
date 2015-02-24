@@ -19,7 +19,7 @@
     </div>
     {% if query -%}
     <div class="form-group reveal-on-focus_content u-clearfix">
-    {% for category in query.possible_values_for('category')|sort(attribute='term') -%}
+    {% for category in query.possible_values_for('category')|sort(attribute='key') -%}
     {% set govdelivery_categories = [
         { 'name': 'Announcements & updates', 'code': 'USCFPB_9' },
         { 'name': 'Consumer information', 'code': 'USCFPB_10' },
@@ -32,13 +32,13 @@
         { 'name': 'Testimony', 'code': 'USCFPB_17' }
     ] %}
     {% for allowed_category in govdelivery_categories -%}
-    {% if category.term == allowed_category.name %}
+    {% if category.key == allowed_category.name %}
         <label class="form-group_item">
             <input class="custom-input"
                    type="checkbox"
                    name="code"
                    value="{{ allowed_category.code }}">
-            {{ category.term }}
+            {{ category.key }}
         </label>
     {% endif %}
     {% endfor %}
