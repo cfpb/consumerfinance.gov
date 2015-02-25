@@ -58,9 +58,9 @@
 
     // Adding em dash after address
     &:before{
-      content: "\2014";
-      margin-right: .2em;
-  }
+        content: "\2014";
+        margin-right: .2em;
+    }
 }
 
 // Adding comma after city
@@ -77,6 +77,133 @@
     content: "\40";
     margin-right: .2em;
 }
+
+/* topdoc
+  name: Event Detail Venue
+  family: cfgov-event-meta
+  patterns:
+    - name: Event Detail Venue
+      markup: |
+        <section class="event-venue">
+          <header class="event-venue_header">
+            <h2 class="event-venue_heading">Washington, DC</h2>
+            <div class="content-l">
+              <div class="event-meta content-l_col content-l_col-1-2">
+                <p class="event-meta_address h-adr">
+                  <span class="event-meta_venue p-extended-address">Verizon Center</span>
+                  <span class="event-meta_street p-street-address">1275 First St NE</span>
+                  <span class="event-meta_city p-locality">Washington, DC</span>
+                  <span class="event-meta_zip p-postal-code">20002</span>
+                </p>
+              </div>
+              <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+                  <span class="event-meta_date">April 12, 2014</span>
+                  <span class="event-meta_time">2:30 PM CST</span>
+                </time>
+                <a class="event-calendar_download jump-link jump-link__download" href="#">
+                  <span class="jump_link_text">Download .ics</span>
+                </a>
+              </div>
+            </div>
+          </header>
+          <footer>
+            <figure class="event-media_container">
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center=Washington,DC&zoom=12&scale=2&size=640x320" alt="Google image of Washington, DC">
+            </figure>
+          </footer>
+        </section>
+
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          section.event-venue
+            header.event-venue_header
+              h2.event-venue_heading
+              div.content-l
+                div.content-l.content-l_col-1-2
+                  p.event-meta_address.h-adr
+                    span.event-meta_venue.p-extended-address
+                    span.event-meta_street.p-street-address
+                    span.event-meta_city.p-locality
+                    span.event-meta_zip.p-postal-code
+                div.content-l.content-l_col-1-2.event-calendar_container
+                  time.event-meta_datetime.dt-start
+                    span.event-meta_date
+                    span.event-meta_time
+                  a.event-calendar_download.jump-link.jump-link__download
+                    span.icon-link_text
+            footer
+              figure.event-media_container
+                img        
+  tags:
+    - cfgov-event-meta
+*/
+
+.event-venue {
+    background: @gray-10;
+    border-top: 5px solid @green;
+    
+    .event-media_container  {
+        max-height:  400px;
+        overflow: hidden;
+    }
+}
+
+.event-venue_header {
+    padding: 1.5em 1.5em .5em;
+    .webfont-regular();
+
+    .respond-to-max(@mobile-max {
+        padding: 1.5em;
+    });
+
+    .event-calendar_container {
+        .h5();
+        text-transform: uppercase;
+    }
+
+    .event-calendar_download {
+        display: block;
+        font-weight: bold;
+        padding-top: .2em;
+        text-decoration: none;
+        text-transform: none;
+
+        .respond-to-max(@mobile-max {
+            margin-top: 1em;
+            padding-top: .5em;
+        });
+    }
+
+    .event-meta {
+        .webfont-regular();
+     }
+
+    .event-meta_address {
+        &:before {
+            content : none;
+        }
+
+        .respond-to-max(@mobile-max {
+            margin: 0;
+        });
+    }
+
+    .event-meta_city:after {
+        content : none;
+    }
+
+    .event-meta_venue {
+        display: block;
+    }
+}
+
+.event-venue_heading {
+    display: inline-block;
+}
+
 
 /* topdoc
   name: EOF
