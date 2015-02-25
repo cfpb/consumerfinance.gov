@@ -8919,18 +8919,19 @@ tbody tr {
   }
 }
 /* topdoc
-  name: Collapsable Tables
+  name: Simple Tables
   family: cfgov-cf-enhancements
   notes:
     - Extends the above stacked tables for sm devices
     - Hides the thead
-    - Allows td to be styled as heading
-    - Adds data-label for small td labels above td content
+    - Styles first td as if it were the thead
+    - Allows any other td to be styled as a heading level 4
+    - Adds data-label attr for small td labels above td content
   patterns:
     - name: Collapsable Table
       markup: |
-        <table class="collapsed-table">
-            <thead class="u-hide-on-mobile">
+        <table class="simple-table">
+            <thead>
                 <tr>
                     <th>Column 1</th>
                     <th>Column 2</th>
@@ -8939,19 +8940,19 @@ tbody tr {
             <tbody>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
@@ -8961,25 +8962,36 @@ tbody tr {
     - cfgov-cf-enhancements
 */
 @media only all and (max-width: 59.9375em) {
-  .collapsed-table {
+  .simple-table {
     font-size: 14px;
   }
-  .collapsed-table thead {
+  .simple-table thead {
     display: none;
   }
-  .collapsed-table tbody {
+  .simple-table tbody {
     border-top: none;
   }
-  .collapsed-table td,
-  .collapsed-table th,
-  .collapsed-table tbody tr:nth-child(odd) > td,
-  .collapsed-table tbody > tr:nth-child(odd) > th {
-    background-color: #f8f8f8;
+  .simple-table tr {
+    border-bottom: none;
   }
-  .collapsed-table td[data-label] {
+  .simple-table td:first-child {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+    background-color: #f8f8f8;
+    margin-bottom: 10px;
+  }
+  .lt-ie9 .simple-table td:first-child {
+    font-weight: normal !important;
+  }
+  .simple-table td[data-label] {
     padding-bottom: 20px;
   }
-  .collapsed-table td[data-label]:before {
+  .simple-table td[data-label]:before {
     font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -8992,10 +9004,10 @@ tbody tr {
     display: block;
     content: attr(data-label);
   }
-  .lt-ie9 .collapsed-table td[data-label]:before {
+  .lt-ie9 .simple-table td[data-label]:before {
     font-weight: normal !important;
   }
-  .collapsed-table_row-heading {
+  .simple-table_row-heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -9005,7 +9017,7 @@ tbody tr {
     line-height: 1.22222222;
     margin-bottom: 0;
   }
-  .lt-ie9 .collapsed-table_row-heading {
+  .lt-ie9 .simple-table_row-heading {
     font-weight: normal !important;
   }
 }

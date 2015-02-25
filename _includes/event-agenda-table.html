@@ -9,8 +9,8 @@
     'speaker_col_classes': 'u-w25pct',
 } %}
 <h2>Agenda</h2>
-<table class="u-w100pct block u-mt0 collapsed-table">
-    <thead class="u-hide-on-mobile">
+<table class="u-w100pct block u-mt0 simple-table">
+    <thead>
         <tr>
             <th class="{{ options.time_col_classes }}">Time</th>
             <th class="{{ options.desc_col_classes }}">Agenda</th>
@@ -26,7 +26,7 @@
                 &ndash;
                 {{ block.dtend }}
             </td>
-            <td class="{{ options.agenda_col_classes }} collapsed-table_row-heading">
+            <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                 {{ block.summary }}
             </td>
             <td class="{{ options.location_col_classes }}" data-label="Location">
