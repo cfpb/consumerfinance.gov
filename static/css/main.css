@@ -8800,7 +8800,7 @@ figure img {
       notes:
         - "Sometimes content (parts/all of a media block, for example)
            should be centered on mobile, but not on larger screen sizes."
-        - "This implementation conflates inline & block element centering, 
+        - "This implementation conflates inline & block element centering,
            though they could be made into separate classes."
   tags:
     - cfgov-cf-enhancements
@@ -8916,6 +8916,109 @@ tbody tr {
   tbody th + th,
   tbody td + td {
     padding-top: 0;
+  }
+}
+/* topdoc
+  name: Simple Tables
+  family: cfgov-cf-enhancements
+  notes:
+    - Extends the above stacked tables for sm devices
+    - Hides the thead
+    - Styles first td as if it were the thead
+    - Allows any other td to be styled as a heading level 4
+    - Adds data-label attr for small td labels above td content
+  patterns:
+    - name: Collapsable Table
+      markup: |
+        <table class="simple-table">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+  tags:
+    - cfgov-cf-enhancements
+*/
+@media only all and (max-width: 59.9375em) {
+  .simple-table {
+    font-size: 14px;
+  }
+  .simple-table thead {
+    display: none;
+  }
+  .simple-table tbody {
+    border-top: none;
+  }
+  .simple-table tr {
+    border-bottom: none;
+  }
+  .simple-table td:first-child {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+    background-color: #f8f8f8;
+    margin-bottom: 10px;
+  }
+  .lt-ie9 .simple-table td:first-child {
+    font-weight: normal !important;
+  }
+  .simple-table td[data-label] {
+    padding-bottom: 20px;
+  }
+  .simple-table td[data-label]:before {
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0.41666667em;
+    font-size: 0.75em;
+    line-height: 1.83333333;
+    display: block;
+    content: attr(data-label);
+  }
+  .lt-ie9 .simple-table td[data-label]:before {
+    font-weight: normal !important;
+  }
+  .simple-table_row-heading {
+    margin-top: 0;
+    margin-bottom: 1.16666667em;
+    font-size: 1.125em;
+    font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.22222222;
+    margin-bottom: 0;
+  }
+  .lt-ie9 .simple-table_row-heading {
+    font-weight: normal !important;
   }
 }
 /* topdoc
@@ -17239,11 +17342,11 @@ a.focus .summary_event-date {
 }
 .event-footer_banner {
   padding: 15px 20px;
-  background-color: #eee;
+  background-color: #f8f8f8;
 }
 @media only all and (min-width: 37.5em) {
   .event-footer_banner {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #babbbd;
   }
 }
 .event-footer_banner-message {
