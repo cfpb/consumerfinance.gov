@@ -5,7 +5,7 @@
 
 {% for post in posts%}
 
-    <article class="post-preview event-post-preview">
+    <article class="post-preview post-preview__event">
         <div class="media-object" >
             <a class="media-object_image-container" href="{{ post.permalink }}">
                 {{ event_post_macros.event_location_image(post, {'class': 'media-object_image'}) }}
