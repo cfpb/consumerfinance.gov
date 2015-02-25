@@ -9288,18 +9288,19 @@ tbody tr {
 }
 
 /* topdoc
-  name: Collapsable Tables
+  name: Simple Tables
   family: cfgov-cf-enhancements
   notes:
     - Extends the above stacked tables for sm devices
     - Hides the thead
-    - Allows td to be styled as heading
-    - Adds data-label for small td labels above td content
+    - Styles first td as if it were the thead
+    - Allows any other td to be styled as a heading level 4
+    - Adds data-label attr for small td labels above td content
   patterns:
     - name: Collapsable Table
       markup: |
-        <table class="collapsed-table">
-            <thead class="u-hide-on-mobile">
+        <table class="simple-table">
+            <thead>
                 <tr>
                     <th>Column 1</th>
                     <th>Column 2</th>
@@ -9308,19 +9309,19 @@ tbody tr {
             <tbody>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
