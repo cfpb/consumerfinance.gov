@@ -9190,7 +9190,7 @@ figure img {
       notes:
         - "Sometimes content (parts/all of a media block, for example)
            should be centered on mobile, but not on larger screen sizes."
-        - "This implementation conflates inline & block element centering, 
+        - "This implementation conflates inline & block element centering,
            though they could be made into separate classes."
   tags:
     - cfgov-cf-enhancements
@@ -9286,6 +9286,50 @@ tbody th {
 tbody tr {
   border-bottom: 1px solid #babbbd;
 }
+
+/* topdoc
+  name: Simple Tables
+  family: cfgov-cf-enhancements
+  notes:
+    - Extends the above stacked tables for sm devices
+    - Hides the thead
+    - Styles first td as if it were the thead
+    - Allows any other td to be styled as a heading level 4
+    - Adds data-label attr for small td labels above td content
+  patterns:
+    - name: Collapsable Table
+      markup: |
+        <table class="simple-table">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+  tags:
+    - cfgov-cf-enhancements
+*/
 
 /* topdoc
   name: cf-grid column dividers
@@ -16916,11 +16960,11 @@ a.focus .summary_event-date {
 
 .event-footer_banner {
   padding: 15px 20px;
-  background-color: #eee;
+  background-color: #f8f8f8;
 }
 
 .event-footer_banner {
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid #babbbd;
 }
 
 .event-footer_banner-message {
