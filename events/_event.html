@@ -36,10 +36,11 @@
             {{ post.dek|safe }}
         </p>
     {% endif %}
-        <div class="post_meta">
-            <span class="post_date date">
-                Updated at: {{ post.modified|date("%m/%d/%Y") }}
-            </span>
+        <div class="modification-date date u-right">
+            <span>Updated</span>
+            <time datetime="{{ post.modified|date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
+                {{ post.modified|date("%m/%d/%Y") }}
+            </time>
         </div>
         {{ share(post.title, false, {
            'text':     post.twtr_text,
