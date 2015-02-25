@@ -115,9 +115,16 @@
         color: @black;
     }
 
-    .event-meta_address:before {
-        content: none;
-        margin: 0px;
+    .event-meta_address {
+
+        .respond-to-max(@mobile-max {
+            display: block;
+        });
+
+        &:before {
+            content: none;
+            margin: 0;
+        }
     }
 
     .event-meta_venue:after {
