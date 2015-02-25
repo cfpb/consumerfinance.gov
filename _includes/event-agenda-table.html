@@ -9,13 +9,13 @@
     'speaker_col_classes': 'u-w25pct',
 } %}
 <h2>Agenda</h2>
-<table class="u-w100pct block u-mt0">
-    <thead>
+<table class="u-w100pct block u-mt0 collapsed-table">
+    <thead class="u-hide-on-mobile">
         <tr>
             <th class="{{ options.time_col_classes }}">Time</th>
             <th class="{{ options.desc_col_classes }}">Agenda</th>
             <th class="{{ options.location_col_classes }}">Location</th>
-            <th class="{{ options.speaker_col_classes }}">Speaker</th>
+            <th class="{{ options.speaker_col_classes }}">Speakers</th>
         </tr>
     </thead>
     <tbody>
@@ -26,16 +26,16 @@
                 &ndash;
                 {{ block.dtend }}
             </td>
-            <td class="{{ options.desc_col_classes }}">
+            <td class="{{ options.agenda_col_classes }} collapsed-table_row-heading">
                 {{ block.summary }}
             </td>
-            <td class="{{ options.location_col_classes }}">
+            <td class="{{ options.location_col_classes }}" data-label="Location">
                 {{ block.location.street }}<br>
                 {{ block.location.city }},
                 {{ block.location.state }}
                 {{ block.location.zip }}
             </td>
-            <td class='{{ options.speaker_col_classes }}'>
+            <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
                 {% for speaker in block.speakers %}
                     {%- if speaker.url -%}
                         <a href="{{ speaker.url }}">{{ speaker.name }}, {{ speaker.position }}</a>{{ ';' if loop.index < loop.length }}

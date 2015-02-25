@@ -152,7 +152,7 @@
       notes:
         - "Sometimes content (parts/all of a media block, for example)
            should be centered on mobile, but not on larger screen sizes."
-        - "This implementation conflates inline & block element centering, 
+        - "This implementation conflates inline & block element centering,
            though they could be made into separate classes."
   tags:
     - cfgov-cf-enhancements
@@ -264,6 +264,89 @@ tbody {
 });
 
 
+/* topdoc
+  name: Collapsable Tables
+  family: cfgov-cf-enhancements
+  notes:
+    - Extends the above stacked tables for sm devices
+    - Hides the thead
+    - Allows td to be styled as heading
+    - Adds data-label for small td labels above td content
+  patterns:
+    - name: Collapsable Table
+      markup: |
+        <table class="collapsed-table">
+            <thead class="u-hide-on-mobile">
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="collapsed-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+  tags:
+    - cfgov-cf-enhancements
+*/
+.collapsed-table {
+    .respond-to-max(959px, {
+
+        font-size: 14px;
+
+        thead {
+            display: none;
+        }
+
+        tbody {
+            border-top: none;
+        }
+
+        td,
+        th,
+        tbody  tr:nth-child(odd) > td,
+        tbody > tr:nth-child(odd) >th {
+            background-color: @gray-5;
+        }
+
+        td[data-label] {
+            padding-bottom: 20px;
+
+            &:before {
+                .h6();
+
+                display: block;
+
+                content: attr(data-label);
+            }
+        }
+
+        &_row-heading {
+            .h4();
+
+            margin-bottom: 0;
+        }
+    });
+}
+
+
 
 
 /* topdoc
@@ -364,7 +447,7 @@ tbody {
 */
 
 .expandable_header__jump-link {
-    
+
     .respond-to-max(599px, {
         display: block;
         width: 100%;
@@ -405,7 +488,7 @@ tbody {
             }
         }
     });
-    
+
 }
 
 /* topdoc
