@@ -131,6 +131,216 @@ div.event-meta.h-event
 }</code></pre>
       </div>
     </div>
+    <div id="event-detail-venue" class="docs-component">
+      <h2 class="docs-component_header"><span>Event Detail Venue</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Event Detail Venue</h3>
+          <section class="docs-pattern_pattern">
+<section class="event-venue">
+  <header class="event-venue_header">
+    <h2 class="event-venue_heading">Washington, DC</h2>
+    <div class="content-l">
+      <div class="event-meta content-l_col content-l_col-1-2">
+        <p class="event-meta_address h-adr">
+          <span class="event-meta_venue p-extended-address">Verizon Center</span>
+          <span class="event-meta_street p-street-address">1275 First St NE</span>
+          <span class="event-meta_city p-locality">Washington, DC</span>
+          <span class="event-meta_zip p-postal-code">20002</span>
+        </p>
+      </div>
+      <div class="content-l_col content-l_col-1-2 event-calendar_container">
+        <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+          <span class="event-meta_date">April 12, 2014</span>
+          <span class="event-meta_time">2:30 PM CST</span>
+        </time>
+        <a class="event-calendar_download jump-link jump-link__download" href="#">
+          <span class="jump_link_text">Download .ics</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <footer>
+    <figure class="event-media_container">
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Washington,DC&zoom=12&scale=2&size=640x320" alt="Google image of Washington, DC">
+    </figure>
+  </footer>
+</section>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;section class=&quot;event-venue&quot;&gt;
+  &lt;header class=&quot;event-venue_header&quot;&gt;
+    &lt;h2 class=&quot;event-venue_heading&quot;&gt;Washington, DC&lt;/h2&gt;
+    &lt;div class=&quot;content-l&quot;&gt;
+      &lt;div class=&quot;event-meta content-l_col content-l_col-1-2&quot;&gt;
+        &lt;p class=&quot;event-meta_address h-adr&quot;&gt;
+          &lt;span class=&quot;event-meta_venue p-extended-address&quot;&gt;Verizon Center&lt;/span&gt;
+          &lt;span class=&quot;event-meta_street p-street-address&quot;&gt;1275 First St NE&lt;/span&gt;
+          &lt;span class=&quot;event-meta_city p-locality&quot;&gt;Washington, DC&lt;/span&gt;
+          &lt;span class=&quot;event-meta_zip p-postal-code&quot;&gt;20002&lt;/span&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;content-l_col content-l_col-1-2 event-calendar_container&quot;&gt;
+        &lt;time class=&quot;event-meta_datetime dt-start&quot; datetime=&quot;2014-01-21 2:30 PM CST&quot;&gt;
+          &lt;span class=&quot;event-meta_date&quot;&gt;April 12, 2014&lt;/span&gt;
+          &lt;span class=&quot;event-meta_time&quot;&gt;2:30 PM CST&lt;/span&gt;
+        &lt;/time&gt;
+        &lt;a class=&quot;event-calendar_download jump-link jump-link__download&quot; href=&quot;#&quot;&gt;
+          &lt;span class=&quot;jump_link_text&quot;&gt;Download .ics&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+  &lt;footer&gt;
+    &lt;figure class=&quot;event-media_container&quot;&gt;
+        &lt;img src=&quot;https://maps.googleapis.com/maps/api/staticmap?center=Washington,DC&amp;zoom=12&amp;scale=2&amp;size=640x320&quot; alt=&quot;Google image of Washington, DC&quot;&gt;
+    &lt;/figure&gt;
+  &lt;/footer&gt;
+&lt;/section&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;section class=\&amp;quot;event-venue\&amp;quot;&gt;\n  &lt;header class=\&amp;quot;event-venue_header\&amp;quot;&gt;\n    &lt;h2 class=\&amp;quot;event-venue_heading\&amp;quot;&gt;Washington, DC&lt;/h2&gt;\n    &lt;div class=\&amp;quot;content-l\&amp;quot;&gt;\n      &lt;div class=\&amp;quot;event-meta content-l_col content-l_col-1-2\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;event-meta_address h-adr\&amp;quot;&gt;\n          &lt;span class=\&amp;quot;event-meta_venue p-extended-address\&amp;quot;&gt;Verizon Center&lt;/span&gt;\n          &lt;span class=\&amp;quot;event-meta_street p-street-address\&amp;quot;&gt;1275 First St NE&lt;/span&gt;\n          &lt;span class=\&amp;quot;event-meta_city p-locality\&amp;quot;&gt;Washington, DC&lt;/span&gt;\n          &lt;span class=\&amp;quot;event-meta_zip p-postal-code\&amp;quot;&gt;20002&lt;/span&gt;\n        &lt;/p&gt;\n      &lt;/div&gt;\n      &lt;div class=\&amp;quot;content-l_col content-l_col-1-2 event-calendar_container\&amp;quot;&gt;\n        &lt;time class=\&amp;quot;event-meta_datetime dt-start\&amp;quot; datetime=\&amp;quot;2014-01-21 2:30 PM CST\&amp;quot;&gt;\n          &lt;span class=\&amp;quot;event-meta_date\&amp;quot;&gt;April 12, 2014&lt;/span&gt;\n          &lt;span class=\&amp;quot;event-meta_time\&amp;quot;&gt;2:30 PM CST&lt;/span&gt;\n        &lt;/time&gt;\n        &lt;a class=\&amp;quot;event-calendar_download jump-link jump-link__download\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n          &lt;span class=\&amp;quot;jump_link_text\&amp;quot;&gt;Download .ics&lt;/span&gt;\n        &lt;/a&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;\n  &lt;/header&gt;\n  &lt;footer&gt;\n    &lt;figure class=\&amp;quot;event-media_container\&amp;quot;&gt;\n        &lt;img src=\&amp;quot;https://maps.googleapis.com/maps/api/staticmap?center=Washington,DC&amp;zoom=12&amp;scale=2&amp;size=640x320\&amp;quot; alt=\&amp;quot;Google image of Washington, DC\&amp;quot;&gt;\n    &lt;/figure&gt;\n  &lt;/footer&gt;\n&lt;/section&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+section.event-venue
+  header.event-venue_header
+    h2.event-venue_heading
+    div.content-l
+      div.content-l.content-l_col-1-2
+        p.event-meta_address.h-adr
+          span.event-meta_venue.p-extended-address
+          span.event-meta_street.p-street-address
+          span.event-meta_city.p-locality
+          span.event-meta_zip.p-postal-code
+      div.content-l.content-l_col-1-2.event-calendar_container
+        time.event-meta_datetime.dt-start
+          span.event-meta_date
+          span.event-meta_time
+        a.event-calendar_download.jump-link.jump-link__download
+          span.icon-link_text
+  footer
+    figure.event-media_container
+      img</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.event-venue {
+  background: #f1f2f2;
+  border-top: 5px solid #2cb34a;
+}
+.event-venue .event-media_container {
+  max-height: 400px;
+  overflow: hidden;
+}
+.event-venue_header {
+  padding: 1.5em 1.5em .5em;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.event-venue_header em,
+.event-venue_header i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .event-venue_header em,
+.lt-ie9 .event-venue_header i {
+  font-style: normal !important;
+}
+.event-venue_header strong,
+.event-venue_header b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .event-venue_header strong,
+.lt-ie9 .event-venue_header b {
+  font-weight: normal !important;
+}
+@media only all and (max-width: 37.4375em) {
+  .event-venue_header {
+    padding: 1.5em;
+  }
+}
+.event-venue_header .event-calendar_container {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  text-transform: uppercase;
+}
+.lt-ie9 .event-venue_header .event-calendar_container {
+  font-weight: normal !important;
+}
+.event-venue_header .event-calendar_download {
+  display: block;
+  font-weight: bold;
+  padding-top: .2em;
+  text-decoration: none;
+  text-transform: none;
+}
+@media only all and (max-width: 37.4375em) {
+  .event-venue_header .event-calendar_download {
+    margin-top: 1em;
+    padding-top: .5em;
+  }
+}
+.event-venue_header .event-meta {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.event-venue_header .event-meta em,
+.event-venue_header .event-meta i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .event-venue_header .event-meta em,
+.lt-ie9 .event-venue_header .event-meta i {
+  font-style: normal !important;
+}
+.event-venue_header .event-meta strong,
+.event-venue_header .event-meta b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .event-venue_header .event-meta strong,
+.lt-ie9 .event-venue_header .event-meta b {
+  font-weight: normal !important;
+}
+.event-venue_header .event-meta_address:before {
+  content: none;
+}
+@media only all and (max-width: 37.4375em) {
+  .event-venue_header .event-meta_address {
+    margin: 0;
+  }
+}
+.event-venue_header .event-meta_city:after {
+  content: none;
+}
+.event-venue_header .event-meta_venue {
+  display: block;
+}
+.event-venue_heading {
+  display: inline-block;
+}</code></pre>
+      </div>
+    </div>
     <script src="static/docs/main.min.js"></script>
   </body>
 </html>
