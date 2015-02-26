@@ -12,10 +12,10 @@ module.exports = function(grunt) {
      * Pull in the package.json file so we can read its metadata.
      */
     pkg: grunt.file.readJSON('bower.json'),
-    
+
     /**
      * Bower: https://github.com/yatskevich/grunt-bower-task
-     * 
+     *
      * Install Bower packages and migrate static assets.
      */
     bower: {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 
     /**
      * String replace: https://github.com/erickrdch/grunt-string-replace
-     * 
+     *
      * Replace strings on files by using string or regex patters.
      */
     'string-replace': {
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
 
     /**
      * Concat: https://github.com/gruntjs/grunt-contrib-concat
-     * 
+     *
      * Concatenate cf-* Less files prior to compiling them.
      */
     concat: {
@@ -141,13 +141,16 @@ module.exports = function(grunt) {
 
     /**
      * Less: https://github.com/gruntjs/grunt-contrib-less
-     * 
+     *
      * Compile Less files to CSS.
      */
     less: {
       main: {
         options: {
           paths: grunt.file.expand('vendor/**/'),
+          sourceMap: true,
+          sourceMapFilename: 'static/css/main.css.map', // where file is generated and located
+          sourceMapURL: 'main.css.map', // the complete url and filename put in the compiled css file
         },
         files: {
           'static/css/main.css': ['static/css/main.less']
@@ -157,7 +160,7 @@ module.exports = function(grunt) {
 
     /**
      * Autoprefixer: https://github.com/nDmitry/grunt-autoprefixer
-     * 
+     *
      * Parse CSS and add vendor-prefixed CSS properties using the Can I Use database.
      */
     autoprefixer: {
@@ -175,7 +178,7 @@ module.exports = function(grunt) {
 
     /**
      * Uglify: https://github.com/gruntjs/grunt-contrib-uglify
-     * 
+     *
      * Minify JS files.
      * Make sure to add any other JS libraries/files you'll be using.
      * You can exclude files with the ! pattern.
@@ -200,7 +203,7 @@ module.exports = function(grunt) {
      * Here's a banner with some template variables.
      * We'll be inserting it at the top of minified assets.
      */
-    banner: 
+    banner:
       '/*!\n' +
       ' *              ad$$             $$\n' +
       ' *             d$"               $$\n' +
@@ -243,30 +246,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * CSS Min: https://github.com/gruntjs/grunt-contrib-cssmin
-     *
-     * Compress CSS files.
-     */
-    cssmin: {
-      main: {
-        options: {
-          processImport: false
-        },
-        files: {
-          'static/css/main.min.css': ['static/css/main.css'],
-        }
-      },
-      'ie-alternate': {
-        options: {
-          processImport: false
-        },
-        files: {
-          'static/css/main.ie.min.css': ['static/css/main.ie.css'],
-        }
-      }
-    },
-
-    /**
      * Legacssy: https://github.com/robinpokorny/grunt-legacssy
      *
      * Fix your CSS for legacy browsers.
@@ -287,7 +266,7 @@ module.exports = function(grunt) {
 
     /**
      * Copy: https://github.com/gruntjs/grunt-contrib-copy
-     * 
+     *
      * Copy files and folders.
      */
     copy: {
@@ -325,7 +304,7 @@ module.exports = function(grunt) {
 
     /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
-     * 
+     *
      * Validate files with JSHint.
      * Below are options that conform to idiomatic.js standards.
      * Feel free to add/remove your favorites: http://www.jshint.com/docs/#options
@@ -362,7 +341,7 @@ module.exports = function(grunt) {
 
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
-     * 
+     *
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
      * Add files to monitor below.
      */
@@ -463,7 +442,7 @@ module.exports = function(grunt) {
    */
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
                                 'copy:static-legacy', 'concat:cf-less']);
-  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin', 'usebanner:css']);
+  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['jshint']);
