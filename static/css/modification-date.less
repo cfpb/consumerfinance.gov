@@ -1,0 +1,41 @@
+/* ==========================================================================
+   cfgov-refresh
+   modification-date
+   ========================================================================== */
+
+/* topdoc
+  name: Modification Date
+  family: cfgov-modification-date
+  notes:
+    - "Markup to display the last updated date of post."
+  patterns:
+    - name: Modification date
+      markup: |
+        <div class="modification-date date">
+            <span>Updated</span>
+            <time datetime="2014-10-20T00:00:00.000000">
+                10/20/2014
+            </time>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          div.modification-date.date
+            span
+            time
+  tags:
+    - cfgov-modification-date
+*/
+
+.modification-date {
+    background: @green-tint;
+    display: inline-block;
+    text-align: center;
+    padding: 0 20px 0;
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

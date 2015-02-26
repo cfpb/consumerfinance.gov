@@ -48,6 +48,7 @@
         <p class="summary_byline">
             By Patrice Ficklin
         </p>
+        <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
     </footer>
 </article>
 
@@ -69,10 +70,11 @@
         &lt;p class=&quot;summary_byline&quot;&gt;
             By Patrice Ficklin
         &lt;/p&gt;
+        &lt;span class=&quot;summary_event-date&quot;&gt;1/21/2015 @ 3:20 PM CST&lt;/span&gt;
     &lt;/footer&gt;
 &lt;/article&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;summary\&amp;quot;&gt;\n    &lt;header class=\&amp;quot;summary_header\&amp;quot;&gt;\n        &lt;h1 class=\&amp;quot;summary_heading\&amp;quot;&gt;\n            Preventing illegal discrimination in auto lending\n        &lt;/h1&gt;\n    &lt;/header&gt;\n    &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n        Every year, millions of American families buy a car –\n        and it will be one of the most significant purchases they make.\n        One key priority for us is protecting consumers from the silent\n        pickpocket of discrimination.\n    &lt;/p&gt;\n    &lt;footer class=\&amp;quot;summary_footer\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;summary_byline\&amp;quot;&gt;\n            By Patrice Ficklin\n        &lt;/p&gt;\n    &lt;/footer&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;summary\&amp;quot;&gt;\n    &lt;header class=\&amp;quot;summary_header\&amp;quot;&gt;\n        &lt;h1 class=\&amp;quot;summary_heading\&amp;quot;&gt;\n            Preventing illegal discrimination in auto lending\n        &lt;/h1&gt;\n    &lt;/header&gt;\n    &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n        Every year, millions of American families buy a car –\n        and it will be one of the most significant purchases they make.\n        One key priority for us is protecting consumers from the silent\n        pickpocket of discrimination.\n    &lt;/p&gt;\n    &lt;footer class=\&amp;quot;summary_footer\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;summary_byline\&amp;quot;&gt;\n            By Patrice Ficklin\n        &lt;/p&gt;\n        &lt;span class=\&amp;quot;summary_event-date\&amp;quot;&gt;1/21/2015 @ 3:20 PM CST&lt;/span&gt;\n    &lt;/footer&gt;\n&lt;/article&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
             <ul class="docs-codenotes">
@@ -235,6 +237,17 @@ a.focus .summary_heading {
 .lt-ie9 .summary_footer strong,
 .lt-ie9 .summary_footer b {
   font-weight: normal !important;
+}
+
+.summary_event-date {
+  color: #0072ce;
+}
+
+a:hover .summary_event-date,
+a.hover .summary_event-date,
+a:focus .summary_event-date,
+a.focus .summary_event-date {
+  color: #328ed8;
 }
 
 .summary &gt; *:last-child {

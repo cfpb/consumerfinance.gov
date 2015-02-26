@@ -26,6 +26,7 @@
                 <p class="summary_byline">
                     By Patrice Ficklin
                 </p>
+                <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
             </footer>
         </article>
       codenotes:
@@ -70,6 +71,11 @@
     &_footer {
         color: @black;
         .webfont-regular();
+    }
+
+    &_event-date {
+        color: @pacific;
+        .u-link-child__hover(@pacific-80);
     }
 
     // Remove the bottom margin from the last child block in the summary
