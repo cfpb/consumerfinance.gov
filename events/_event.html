@@ -53,7 +53,7 @@
              src="{{ post.thumbnail.images.full.url }}"
              alt="{{ post.thumbnail.alt_text }}">
     {% endif %}
-    {% from "event-post-macros.html" import event_venue as event_venue %}
+    {% from "_event-post-macros.html" import event_venue as event_venue %}
     {{ event_venue(post) }}
     </header>
     <div class="post_body">
