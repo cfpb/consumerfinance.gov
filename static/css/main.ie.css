@@ -14015,6 +14015,183 @@ a.focus .summary_event-date {
 
 /* ==========================================================================
    cfgov-refresh
+   cfgov-event-docs
+   ========================================================================== */
+
+/* topdoc
+  name: Post previews
+  family: cfgov-event-docs
+  patterns:
+    - name: Post preview (image)
+      codenotes:
+        - |
+          .post-preview.post-preview__event
+            .media-object
+              .media-object_image-container
+                .media-object_image
+              .media-object_text-container.summary
+                a.
+                  .summary_header
+                    .calendar-icon.float-media
+                    .summary-meta_container
+                      .summary_heading
+                      .event-meta.h-event
+                        .event-meta_address.h-adr
+                          .event-meta_city.p-locality
+                          .event-meta_region.p-region
+                          .event-meta_venue.p-extended-address
+                        .event-meta_datetime.dt-start
+                          .event-meta_date
+                          .event-meta_time
+                  .summary_text
+                footer.
+                  .tags tags__hide-header
+                    .tags_header
+                    .tags_list
+                      .tags_tag
+
+      markup: |
+        <article class="post-preview post-preview__event">
+          <div class="media-object" href="#">
+            <a class="media-object_image-container" href="#">
+              <img class="media-object_image" src="https://maps.googleapis.com/maps/api/staticmap?center=San%20Francisco,CA&zoom=12&size=276x155" alt="Google Maps image of San Francisco">
+            </a>
+            <div class="media-object_text-container summary">
+              <a href="#">
+                <header class="summary_header">
+                  <time class="calendar-icon float-media" data-month="Jan" data-day="21" datetime="2015-01-21">
+                    <span class="u-visually-hidden">Jan 21, 2015</span>
+                  </time>
+                  <div class="summary-meta_container">
+                    <h1 class="summary_heading">Mobile Financial Services</h1>
+                    <div class="event-meta h-event">
+                      <p class="event-meta_address h-adr">
+                        <span class="event-meta_city p-locality">San Francisco</span>
+                        <span class="event-meta_state p-region">CA</span>
+                        <span class="event-meta_venue p-extended-address">Super Dome</span>
+                      </p>
+                      <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+                        <span class="event-meta_date">1/21/2014</span>
+                        <span class="event-meta_time">2:30 PM CST</span>
+                      </time>
+                    </div>
+                </header>
+                <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+              </a>
+              <footer>
+                <div class="tags tags__hide-header">
+                  <h4 class="tags_header u-visually-hidden">Topics:</h4>
+                  <ul class="tags_list">
+                    <li class="tags_tag">
+                      <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span> Students
+                      </a>
+                    </li>
+                    <li class="tags_tag">
+                      <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span> Consumers
+                      </a>
+                    </li>
+                    <li class="tags_tag">
+                      <a href="#" class="tags_link">
+                        <span class="tags_bullet" aria-hidden="true">&bull;</span> Consumers
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </footer>
+              </div>
+            </div>
+        </article>
+  tags:
+    - cfgov-event-docs
+*/
+
+.post-preview__event {
+  border-top: 1px solid #babbbd;
+  padding-top: 1em;
+}
+
+.summary .calendar-icon {
+  /* Display & Box Model */
+  display: inline-block;
+  min-width: 3em;
+  border: 0.25em solid #babbbd;
+  border-radius: 0.375em;
+  /* Background */
+  background-color: #babbbd;
+  /* Foreground */
+  font-family: 'Avenir Next', Helvetica, Arial;
+  line-height: 1;
+  text-align: center;
+  float: left;
+  margin: 0 15px 0 0;
+}
+
+.summary .calendar-icon:before,
+.summary .calendar-icon:after {
+  /* Display & Box Model */
+  display: block;
+}
+
+.summary .calendar-icon:before {
+  /* Foreground */
+  color: #ffffff;
+  font-size: 1em;
+  text-transform: uppercase;
+  /* Display & Box Model */
+  padding: 0 0 0.15em;
+  /* Miscellaneous, alphabetic */
+  content: attr(data-month);
+}
+
+.summary .calendar-icon:after {
+  /* Display & Box Model */
+  padding: 0.15em 0 0;
+  border-radius: 0 0 0.16em 0.16em;
+  /* Background */
+  background: #ffffff;
+  /* Foreground */
+  color: #babbbd;
+  font-size: 1.5em;
+  /* Miscellaneous, alphabetic */
+  content: attr(data-day);
+}
+
+.summary .event-meta {
+  color: #101820;
+}
+
+.summary .event-meta_address:before {
+  content: none;
+  margin: 0px;
+}
+
+.summary .event-meta_venue:after {
+  content: "\2014";
+  margin-left: .5em;
+}
+
+.summary_header {
+  margin-bottom: .5em;
+}
+
+.summary_heading,
+.event-meta_address {
+  margin: 0;
+}
+
+.summary-meta_container {
+  overflow: auto;
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
+
+/* ==========================================================================
+   cfgov-refresh
    event-meta
    ========================================================================== */
 
@@ -14100,6 +14277,180 @@ a.focus .summary_event-date {
 .event-meta_time:before {
   content: "\40";
   margin-right: .2em;
+}
+
+/* topdoc
+  name: Event Detail Venue
+  family: cfgov-event-meta
+  patterns:
+    - name: Event Detail Venue
+      markup: |
+        <section class="event-venue">
+          <header class="event-venue_header">
+            <h2 class="event-venue_heading">Washington, DC</h2>
+            <div class="content-l">
+              <div class="event-meta content-l_col content-l_col-1-2">
+                <p class="event-meta_address h-adr">
+                  <span class="event-meta_venue p-extended-address">Verizon Center</span>
+                  <span class="event-meta_street p-street-address">1275 First St NE</span>
+                  <span class="event-meta_city p-locality">Washington, DC</span>
+                  <span class="event-meta_zip p-postal-code">20002</span>
+                </p>
+              </div>
+              <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+                  <span class="event-meta_date">April 12, 2014</span>
+                  <span class="event-meta_time">2:30 PM CST</span>
+                </time>
+                <a class="event-calendar_download jump-link jump-link__download" href="#">
+                  <span class="jump_link_text">Download .ics</span>
+                </a>
+              </div>
+            </div>
+          </header>
+          <footer>
+            <figure class="event-media_container">
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center=Washington,DC&zoom=12&scale=2&size=640x320" alt="Google image of Washington, DC">
+            </figure>
+          </footer>
+        </section>
+
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          section.event-venue
+            header.event-venue_header
+              h2.event-venue_heading
+              div.content-l
+                div.content-l.content-l_col-1-2
+                  p.event-meta_address.h-adr
+                    span.event-meta_venue.p-extended-address
+                    span.event-meta_street.p-street-address
+                    span.event-meta_city.p-locality
+                    span.event-meta_zip.p-postal-code
+                div.content-l.content-l_col-1-2.event-calendar_container
+                  time.event-meta_datetime.dt-start
+                    span.event-meta_date
+                    span.event-meta_time
+                  a.event-calendar_download.jump-link.jump-link__download
+                    span.icon-link_text
+            footer
+              figure.event-media_container
+                img        
+  tags:
+    - cfgov-event-meta
+*/
+
+.event-venue {
+  background: #f1f2f2;
+  border-top: 5px solid #2cb34a;
+}
+
+.event-venue .event-media_container {
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.event-venue_header {
+  padding: 1.5em 1.5em .5em;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-venue_header em,
+.event-venue_header i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-venue_header em,
+.lt-ie9 .event-venue_header i {
+  font-style: normal !important;
+}
+
+.event-venue_header strong,
+.event-venue_header b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-venue_header strong,
+.lt-ie9 .event-venue_header b {
+  font-weight: normal !important;
+}
+
+.event-venue_header .event-calendar_container {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  text-transform: uppercase;
+}
+
+.lt-ie9 .event-venue_header .event-calendar_container {
+  font-weight: normal !important;
+}
+
+.event-venue_header .event-calendar_download {
+  display: block;
+  font-weight: bold;
+  padding-top: .2em;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.event-venue_header .event-meta {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-venue_header .event-meta em,
+.event-venue_header .event-meta i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-venue_header .event-meta em,
+.lt-ie9 .event-venue_header .event-meta i {
+  font-style: normal !important;
+}
+
+.event-venue_header .event-meta strong,
+.event-venue_header .event-meta b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-venue_header .event-meta strong,
+.lt-ie9 .event-venue_header .event-meta b {
+  font-weight: normal !important;
+}
+
+.event-venue_header .event-meta_address:before {
+  content: none;
+}
+
+.event-venue_header .event-meta_city:after {
+  content: none;
+}
+
+.event-venue_header .event-meta_venue {
+  display: block;
+}
+
+.event-venue_heading {
+  display: inline-block;
 }
 
 /* topdoc
@@ -16820,7 +17171,7 @@ a.focus .summary_event-date {
 
 /* ==========================================================================
    cfgov-refresh
-   Event post detail page
+   Page-specific styles for event post detail page.
    ========================================================================== */
 
 .event-status {

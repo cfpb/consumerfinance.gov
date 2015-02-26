@@ -10,7 +10,7 @@
 
    Create an HTML calendar icon when given:
 
-   date:           A valid date.
+   calendar_date:      A valid date.
 
    additional_classes: Extra classes you wish to add to the icon, space
                        separated.
@@ -42,19 +42,19 @@
 
    options.class:    A class name to be applied to the img element.
 
-   options.location: A location as either a comma-separated {latitude,longitude} 
-                     pair (e.g. "40.714728,-73.998672") or a string address 
-                     (e.g. "city hall, new york, ny"). 
+   options.location: A location as either a comma-separated {latitude,longitude}
+                     pair (e.g. "40.714728,-73.998672") or a string address
+                     (e.g. "city hall, new york, ny").
 
-   options.scale:    Affects the number of pixels that are returned.    
-                     Accepted values are 1, 2 and 4.    
+   options.scale:    Affects the number of pixels that are returned.
+                     Accepted values are 1, 2 and 4.
 
-   options.size:     Defines the rectangular dimensions of the map image. 
+   options.size:     Defines the rectangular dimensions of the map image.
                      {horizontal_value}x{vertical_value} (e.g. 500x400)
 
-   options.zoom:     Determines the magnification level of the map. 
+   options.zoom:     Determines the magnification level of the map.
 
-      
+
 
    ========================================================================== #}
 
@@ -65,12 +65,12 @@
     {%- set size = ('&size=' + (options.size or '276x155')) -%}
     {%- set zoom = ('&zoom=' + (options.zoom or '12')) -%}
     {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
-    
+
     <img class="{{ options.class }}" src="{{ url ~ location ~ size ~ zoom ~ scale }}" alt="Google Maps image of {{ location }}">
 {% endmacro %}
 
 
-  
+
 {# ==========================================================================
 
    event_meta()
@@ -104,12 +104,12 @@
 
    Create HTML event meta address markup when given:
 
-   date: A post date from a query result.
+   post: A post date from a query result.
 
    ========================================================================== #}
 
 {% macro event_meta_address(post) %}
-    {%- set city = (post.location or 'Washington DC') -%}    
+    {%- set city = (post.location or 'Washington DC') -%}
     {%- set state = (post.state or '') -%}
     {%- set venue = (post.venue or 'CFPB') -%}
     <p class="event-meta_address h-adr">
@@ -137,8 +137,8 @@
 
 {% macro event_meta_datetime(date) %}
     <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%d %H:%M %p %Z') }}">
-      <span class="event-meta_date">{{ date | date('%b %m, %Y') }}</span>
-      <span class="event-meta_time">{{ date | date('%H:%M %p %Z') }}</span>
+        <span class="event-meta_date">{{ date | date('%b %m, %Y') }}</span>
+        <span class="event-meta_time">{{ date | date('%H:%M %p %Z') }}</span>
     </time>
 {% endmacro %}
 
@@ -167,10 +167,10 @@
     <a href="{{ post.permalink }}">
         <header class="summary_header">
             {{ calendar_icon(post.date) }}
-                <div class="summary-meta_container">
-                    <h1 class="summary_heading">{{ post.title|safe }}</h1>
-                    {{ event_meta(post) }}
-                </div>
+            <div class="summary-meta_container">
+                <h1 class="summary_heading">{{ post.title|safe }}</h1>
+                {{ event_meta(post) }}
+            </div>
         </header>
         <p class="summary_text">
             {% if post.dek %}
@@ -199,13 +199,11 @@
 
    post: A post from a query result.
 
-   path: The path to which post filters are applies.
-
    ========================================================================== #}
 
 
 {% macro event_venue(post) %}
-    {%- set city =  (post.location or 'Washington, DC') -%}    
+    {%- set city =  (post.location or 'Washington, DC') -%}
     {%- set street = (post.street or '1275 First St NE') -%}
     {%- set venue = (post.venue or 'CFPB') -%}
     {%- set zip = (post.zip_code or '20002') -%}
@@ -216,16 +214,16 @@
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
                     <p class="event-meta_address h-adr">
-                      <span class="event-meta_venue p-extended-address">{{ venue }}</span>
-                      <span class="event-meta_street p-street-address">{{ street }}</span>
-                      <span class="event-meta_city p-locality">{{ city }}</span>
-                      <span class="event-meta_zip p-postal-code">{{ zip }}</span>
+                        <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+                        <span class="event-meta_street p-street-address">{{ street }}</span>
+                        <span class="event-meta_city p-locality">{{ city }}</span>
+                        <span class="event-meta_zip p-postal-code">{{ zip }}</span>
                     </p>
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
-                      {{ event_meta_datetime(post.date) }}
-                      <a class="event-calendar_download jump-link jump-link__download" href="#">
-                          <span class="jump_link_text">Download .ics</span>
+                        {{ event_meta_datetime(post.date) }}
+                        <a class="event-calendar_download jump-link jump-link__download" href="#">
+                            <span class="jump_link_text">Download .ics</span>
                       </a>
                 </div>
           </div>
@@ -241,5 +239,3 @@
         </footer>
     </section>
 {% endmacro %}
-
-
