@@ -23,13 +23,11 @@
 
 {% block content_main %}
     {% import "_event.html" as article with context %}
-    {% import "event-agenda-table.html" as calendar %}
 
-    {{ article.render(vars.mock_event, vars.path) }} {# TODO Replace mock data #}
+    {{ article.render(vars.mock_event, vars.path) }}
 
-    <div class="block u-mt0">
-    {{ calendar.render(vars.mock_event) }} {# TODO Replace mock data #}
-    </div>
+    {% from "_event-post-macros.html" import event_agenda as event_agenda %}
+    {{ event_agenda(vars.mock_event) }}
 
     <div class="event-footer">
         <p class="event-footer_banner">

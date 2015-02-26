@@ -61,7 +61,7 @@
 {% macro event_location_image(post, options) %}
 
     {%- set location = (post.location or 'Washington DC') -%}
-    {%- set scale = ('&scale=' + (options.scale or '1')) -%}
+    {%- set scale = ('&scale=' + (options.scale or '2')) -%}
     {%- set size = ('&size=' + (options.size or '276x155')) -%}
     {%- set zoom = ('&zoom=' + (options.zoom or '12')) -%}
     {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
@@ -238,4 +238,74 @@
             </figure>
         </footer>
     </section>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_agenda()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event agenda table when given
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+
+{% macro event_agenda(post) %}
+  {% set options = {
+      'time_col_classes': 'u-w25pct',
+      'agenda_col_classes': 'u-w25pct',
+      'location_col_classes': 'u-w25pct',
+      'speaker_col_classes': 'u-w25pct',
+  } %}
+  <div class="block
+              block__padded-top
+              block__border-top">
+    <h2>Agenda</h2>
+    <table class="u-w100pct block u-mt0 simple-table">
+        <thead>
+            <tr>
+                <th class="{{ options.time_col_classes }}">Time</th>
+                <th class="{{ options.desc_col_classes }}">Agenda</th>
+                <th class="{{ options.location_col_classes }}">Location</th>
+                <th class="{{ options.speaker_col_classes }}">Speakers</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for block in post.agenda %}
+            <tr>
+                <td class="{{ options.time_col_classes }}">
+                    {{ block.dtstart }}
+                    &ndash;
+                    {{ block.dtend }}
+                </td>
+                <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
+                    {{ block.summary }}
+                </td>
+                <td class="{{ options.location_col_classes }}" data-label="Location">
+                    {{ block.location.street }}<br>
+                    {{ block.location.city }},
+                    {{ block.location.state }}
+                    {{ block.location.zip }}
+                </td>
+                <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
+                    {% for speaker in block.speakers %}
+                        {%- if speaker.url -%}
+                            <a href="{{ speaker.url }}">{{ speaker.name }}, {{ speaker.position }}</a>{{ ';' if loop.index < loop.length }}
+                        {% else %}
+                            {{ speaker.name }}, {{ speaker.position }}{{ ';' if loop.index < loop.length }}
+                        {%- endif -%}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
 {% endmacro %}
