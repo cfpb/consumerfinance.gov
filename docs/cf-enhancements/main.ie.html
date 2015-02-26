@@ -267,7 +267,7 @@
             </form>
             <ul class="docs-notes">
               <li>Sometimes content (parts/all of a media block, for example) should be centered on mobile, but not on larger screen sizes.</li>
-              <li>This implementation conflates inline &amp; block element centering,  though they could be made into separate classes.</li>
+              <li>This implementation conflates inline &amp; block element centering, though they could be made into separate classes.</li>
             </ul>
           </footer>
         </div>
@@ -400,6 +400,88 @@ tbody tr {
   border-bottom: 1px solid #babbbd;
 }
 </code></pre>
+      </div>
+    </div>
+    <div id="simple-tables" class="docs-component">
+      <h2 class="docs-component_header"><span>Simple Tables</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Extends the above stacked tables for sm devices</li>
+          <li>Hides the thead</li>
+          <li>Styles first td as if it were the thead</li>
+          <li>Allows any other td to be styled as a heading level 4</li>
+          <li>Adds data-label attr for small td labels above td content</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Collapsable Table</h3>
+          <section class="docs-pattern_pattern">
+<table class="simple-table">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+            <td data-label="Lorem">Lorem ipsum dolor.</td>
+            <td data-label="Ipsum">Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+            <td data-label="Lorem">Lorem ipsum dolor.</td>
+            <td data-label="Ipsum">Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+            <td data-label="Lorem">Lorem ipsum dolor.</td>
+            <td data-label="Ipsum">Lorem ipsum dolor.</td>
+        </tr>
+    </tbody>
+</table>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;table class=&quot;simple-table&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Column 1&lt;/th&gt;
+            &lt;th&gt;Column 2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td class=&quot;simple-table_row-heading&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Lorem&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Ipsum&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td class=&quot;simple-table_row-heading&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Lorem&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Ipsum&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td class=&quot;simple-table_row-heading&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Lorem&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Ipsum&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;table class=\&amp;quot;simple-table\&amp;quot;&gt;\n    &lt;thead&gt;\n        &lt;tr&gt;\n            &lt;th&gt;Column 1&lt;/th&gt;\n            &lt;th&gt;Column 2&lt;/th&gt;\n        &lt;/tr&gt;\n    &lt;/thead&gt;\n    &lt;tbody&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td class=\&amp;quot;simple-table_row-heading\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Lorem\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Ipsum\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td class=\&amp;quot;simple-table_row-heading\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Lorem\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Ipsum\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td class=\&amp;quot;simple-table_row-heading\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Lorem\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Ipsum\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n    &lt;/tbody&gt;\n&lt;/table&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
       </div>
     </div>
     <div id="cf-grid-column-dividers" class="docs-component">

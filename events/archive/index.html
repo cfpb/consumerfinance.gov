@@ -1,0 +1,21 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-events.html" as vars with context %}
+{% set active_nav_id = 'archive' %}
+
+{% block title -%}
+    Past Events
+{%- endblock %}
+
+{% block desc -%}
+    Past Events description...
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    Past Events content goes here
+
+{% endblock %}
