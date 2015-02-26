@@ -27,10 +27,10 @@
         set hero = true
     %}
 
-    {% import "events-hero.html" as hero with context %}
     {#{% if vars.events.current_page == 1 and view.hero %}#}
+    {% from "_event-landing-macros.html" import event_hero as event_hero %}
     {% if current_page == 1 and hero %}
-        {{ hero.render(hero) }}
+        {{ event_hero(hero) }}
     {% endif %}
 
 {% endblock %}
@@ -47,8 +47,11 @@
             {# TODO Replace ipsum with latest upcoming event content. #}
             <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
         </div>
-        {% import "events-posts.html" as events_posts with context %}
-        {{ events_posts.render(vars.events) }}
+
+        {% for post in vars.events %}
+            {% from "_event-landing-macros.html" import event_preview as event_preview %}
+            {{ event_preview(post) }}
+        {% endfor %}
     </section>
 
     {# Footer #}
