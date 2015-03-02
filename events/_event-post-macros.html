@@ -1,5 +1,4 @@
 
-
 {# ==========================================================================
 
    calendar_icon()
@@ -18,11 +17,13 @@
    ========================================================================== #}
 
 {% macro calendar_icon(calendar_date, additional_classes) %}
-    <time class="calendar-icon {{ additional_classes }}" data-month="{{ calendar_date | date('%b') }}" data-day="{{ calendar_date | date('%d') }}" datetime="{{ calendar_date }}">
+    <time class="calendar-icon {{ additional_classes }}" 
+        data-month="{{ calendar_date | date('%b') }}" 
+        data-day="{{ calendar_date | date('%d') }}" 
+        datetime="{{ calendar_date }}">
         <span class="u-visually-hidden">{{ calendar_date | date('%b %d, %Y') }}</span>
     </time>
 {% endmacro %}
-
 
 
 {# ==========================================================================
@@ -37,38 +38,36 @@
 
    post: A post from a query result.
 
-   options (optional): An object to use for customizing a event location image using
-                       Google Maps.
+   options (optional):         An object to use for customizing a event location image using
+                               Google Maps.
 
-   options.class:    A class name to be applied to the img element.
+   options.additional_classes: Extra classes you wish to add to the image, space separated;
 
-   options.location: A location as either a comma-separated {latitude,longitude}
-                     pair (e.g. "40.714728,-73.998672") or a string address
-                     (e.g. "city hall, new york, ny").
+   options.locations:          A location as either a comma-separated {latitude,longitude}
+                               pair (e.g. "40.714728,-73.998672") or a string address
+                               (e.g. "city hall, new york, ny").
 
-   options.scale:    Affects the number of pixels that are returned.
-                     Accepted values are 1, 2 and 4.
+   options.scale:              Affects the number of pixels that are returned.
+                               Accepted values are 1, 2 and 4.
 
-   options.size:     Defines the rectangular dimensions of the map image.
-                     {horizontal_value}x{vertical_value} (e.g. 500x400)
+   options.size:               Defines the rectangular dimensions of the map image.
+                               {horizontal_value}x{vertical_value} (e.g. 500x400)
 
-   options.zoom:     Determines the magnification level of the map.
-
-
+   options.zoom:               Sets pixel density for high-dpi devices.
 
    ========================================================================== #}
 
 {% macro event_location_image(post, options) %}
-
-    {%- set location = (post.location or 'Washington DC') -%}
-    {%- set scale = ('&scale=' + (options.scale or '2')) -%}
-    {%- set size = ('&size=' + (options.size or '276x155')) -%}
-    {%- set zoom = ('&zoom=' + (options.zoom or '12')) -%}
+    {%- set location = post.location | default('Washington DC', true) -%}
+    {%- set scale = '&scale=' + options.scale | default('2') -%}
+    {%- set size =  '&size='  + options.size  | default('276x276') -%}
+    {%- set zoom =  '&zoom='  + options.zoom  | default('12') -%}
     {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
 
-    <img class="{{ options.class }}" src="{{ url ~ location ~ size ~ zoom ~ scale }}" alt="Google Maps image of {{ location }}">
+    <img class="{{ options.additional_classes }}" 
+        src="{{ url ~ location ~ size ~ zoom ~ scale }}" 
+        alt="Google Maps image of {{ location }}">
 {% endmacro %}
-
 
 
 {# ==========================================================================
@@ -81,17 +80,23 @@
 
    Create HTML event meta markup when given:
 
-   post: A post from a query result.
+   post:                        A post from a query result.
+
+   address_format (optional):   A python string format to display to 
+                                address information  
+                                (e.g. '{venue} - {city}, {state}').
+
+   datetime_format (optional):  An object to use for customizing event-meta 
+                                time and date formats.
 
    ========================================================================== #}
 
-{% macro event_meta(post) %}
+{% macro event_meta(post, address_format='{city} {state}', datetime_format={})%}
     <div class="event-meta h-event">
-        {{ event_meta_address(post) }}
-        {{ event_meta_datetime(post.date)  }}
+        {{ event_meta_address(post, address_format) }} 
+        {{ event_meta_datetime(post.date, datetime_format) }}
     </div>
 {% endmacro %}
-
 
 
 {# ==========================================================================
@@ -104,21 +109,53 @@
 
    Create HTML event meta address markup when given:
 
-   post: A post date from a query result.
+   post                     : A post date from a query result.
+
+   address_format (optional): A python string format to display to 
+                              address information  
+                              (e.g. '{venue} - {city}, {state}').
 
    ========================================================================== #}
 
-{% macro event_meta_address(post) %}
-    {%- set city = (post.location or 'Washington DC') -%}
-    {%- set state = (post.state or '') -%}
-    {%- set venue = (post.venue or 'CFPB') -%}
+{% macro event_meta_address(post, address_format='{city} {state}') %}
+    {%- set city  =  post.city   | default('Washington', true) -%}
+    {%- set state =  post.state  | default('DC', true) -%}
+    {%- set street = post.street | default('1275 First St NE', true) -%}
+    {%- set venue  = post.venue  | default('CFPB', true) -%}
+    {%- set zip    = post.zip    | default('20002', true) -%}
+
     <p class="event-meta_address h-adr">
-        <span class="event-meta_city p-locality">{{ city }}</span>
-        <span class="event-meta_state p-region">{{ state }}</span>
-        <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+        {%- macro _city() %}
+            <span class="event-meta_city p-locality">{{ city }}</span>
+        {% endmacro %}
+
+        {%- macro _state() %}
+            <span class="event-meta_state p-state">{{ state }}</span>
+        {% endmacro %}
+
+        {%- macro _street() %}
+            <span class="event-meta_street p-street-address">{{ street }}</span>
+        {% endmacro -%}
+
+        {% macro _venue() %}
+            <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+        {% endmacro %}
+
+        {% macro _zip() %}
+            <span class="event-meta_zip p-postal-code">{{ zip }}</span>
+        {% endmacro %}
+        
+        {{
+            address_format.format(**{
+                'city'   : _city()   | trim,
+                'street' : _street() | trim,
+                'state'  : _state()  | trim,
+                'venue'  : _venue()  | trim,
+                'zip'    : _zip()    | trim
+            }) | safe 
+        }}
     </p>
 {% endmacro %}
-
 
 
 {# ==========================================================================
@@ -131,17 +168,22 @@
 
    Create HTML event meta date/time markup when given:
 
-   date: A post date from a query result.
+   date:                        A post date from a query result.
+
+   datetime_format (optional):  An object to use for customizing event-meta time and
+                                date formats.
 
    ========================================================================== #}
 
-{% macro event_meta_datetime(date) %}
+{% macro event_meta_datetime(date, datetime_format={}) %}
+    {%- set date_format =  datetime_format.date_format | default('%b %m, %Y', true)   -%}
+    {%- set time_format =  datetime_format.time_format | default('%H:%M %p %Z', true) -%} 
+
     <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%d %H:%M %p %Z') }}">
-        <span class="event-meta_date">{{ date | date('%b %m, %Y') }}</span>
-        <span class="event-meta_time">{{ date | date('%H:%M %p %Z') }}</span>
+        <span class="event-meta_date">{{ date | date(date_format) }}</span>
+        <span class="event-meta_time">{{ date | date(time_format) }}</span>
     </time>
 {% endmacro %}
-
 
 
 {# ==========================================================================
@@ -160,7 +202,6 @@
 
    ========================================================================== #}
 
-
 {% macro post_summary(post, path) %}
 
 {%- import "tags.html" as tags %}
@@ -169,7 +210,9 @@
             {{ calendar_icon(post.date) }}
             <div class="summary-meta_container">
                 <h1 class="summary_heading">{{ post.title|safe }}</h1>
-                {{ event_meta(post) }}
+                {{ event_meta(post, datetime_format={
+                    'date_format' : '%m/%d/%y'
+                }) }}
             </div>
         </header>
         <p class="summary_text">
@@ -181,10 +224,9 @@
         </p>
     </a>
     <footer>
-      {{ tags.render(post.tags, path) }}
+      {{ tags.render(post.tags, path, True) }}
     </footer>
 {% endmacro %}
-
 
 
 {# ==========================================================================
@@ -201,30 +243,23 @@
 
    ========================================================================== #}
 
-
-{% macro event_venue(post) %}
-    {%- set city =  (post.location or 'Washington, DC') -%}
-    {%- set street = (post.street or '1275 First St NE') -%}
-    {%- set venue = (post.venue or 'CFPB') -%}
-    {%- set zip = (post.zip_code or '20002') -%}
-
+{% macro event_venue(post) %} 
+    {%- set city =  post.city  | default('Washington, DC') -%}
+    
     <section class="event-venue">
         <header class="event-venue_header">
             <h2 class="event-venue_heading">{{ city }}</h2>
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
-                    <p class="event-meta_address h-adr">
-                        <span class="event-meta_venue p-extended-address">{{ venue }}</span>
-                        <span class="event-meta_street p-street-address">{{ street }}</span>
-                        <span class="event-meta_city p-locality">{{ city }}</span>
-                        <span class="event-meta_zip p-postal-code">{{ zip }}</span>
-                    </p>
+                    {{ event_meta_address(post,
+                        address_format ='{venue} {street} {city}, {state} {zip}'
+                    ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
                         {{ event_meta_datetime(post.date) }}
                         <a class="event-calendar_download jump-link jump-link__download" href="#">
                             <span class="jump_link_text">Download .ics</span>
-                      </a>
+                        </a>
                 </div>
           </div>
         </header>
@@ -241,7 +276,6 @@
 {% endmacro %}
 
 
-
 {# ==========================================================================
 
    event_agenda()
@@ -255,7 +289,6 @@
    post: A post from a query result.
 
    ========================================================================== #}
-
 
 {% macro event_agenda(post) %}
   {% set options = {
