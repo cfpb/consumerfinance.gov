@@ -26,7 +26,7 @@
 
 {% from "macros.html" import share as share %}
 
-<article class="post">
+<article class="post post__event">
     <header>
         <h1 class="post_heading">
             {{ post.title|safe }}
@@ -39,7 +39,8 @@
         <div class="modification-date date u-right">
             <span>Updated</span>
             <time datetime="{{ post.modified|date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
-                {{ post.modified|date("%m/%d/%Y") }}
+                {%- set update_date = post.modified |date("%m/%d/%Y") -%}
+                {{ update_date[1:] if update_date[0] == '0' else update_date }}
             </time>
         </div>
         {{ share(post.title, false, {
@@ -59,6 +60,7 @@
     <div class="post_body">
         <aside class="post_inset post_inset__right line-container event-status">
             <div class="line-container_body">
+                <h1 class="u-visually-hidden">Event reservation and viewing details</h1>
                 <p>
                     <strong>This event requires an RSVP.</strong>
                 </p>
@@ -71,8 +73,8 @@
                     <strong>Available on Live stream.</strong>
                 </p>
                 <p class="event-meta">
-                    <span class="event-meta_description">
-                        Video link available
+                    <span class="event-meta_description event-meta_description__block">
+                        Video link available :
                     </span>
                     <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
                         <span class="event-meta_date">1/21/2014</span>

@@ -17,9 +17,9 @@
   <article class="post-preview post-preview__event">
       <div class="media-object">
           <a class="media-object_image-container" href="{{ post.permalink }}">
-              {{ event_post_macros.event_location_image(post, {'class': 'media-object_image'}) }}
+              {{ event_post_macros.event_location_image(post) }}
           </a>
-          <div class="media-object_text-container summary">
+          <div class="media-object_text-container summary summary__event">
               {{ event_post_macros.post_summary(post) }}
           </div>
       </div>
@@ -63,7 +63,8 @@
                     </header>
                     <p class="summary_text">
                         <!-- TODO replace temp summary with post summary. -->
-                        {{ 'Include a short summary to give users a quick overview of the event. Should be less than 200 characters in length.' }}
+                        {{ 'Include a short summary to give users a quick 
+                        overview of the event. Should be less than 200 characters in length.' }}
                     </p>
                     <footer class="summary_footer">
                         <time class="summary_event-date event-meta_datetime dt-start">
