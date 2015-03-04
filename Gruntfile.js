@@ -148,6 +148,7 @@ module.exports = function(grunt) {
       main: {
         options: {
           paths: grunt.file.expand('vendor/**/'),
+          compress: true,
           sourceMap: true,
           sourceMapFilename: 'static/css/main.css.map', // where file is generated and located
           sourceMapURL: 'main.css.map', // the complete url and filename put in the compiled css file
