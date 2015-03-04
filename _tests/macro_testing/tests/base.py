@@ -8,7 +8,10 @@ import os.path
 import unittest
 
 from jinja2 import Environment, FileSystemLoader
-from jinja2 import Template
+
+# We'll use BeautifulSoup to make assertions about the HTML resulting from
+# macros
+from bs4 import BeautifulSoup
 
 # We'll use the same code Sheer uses to build the filesystem template search
 # path.
@@ -33,6 +36,10 @@ class MacroTestCase(unittest.TestCase):
     `MacroTestCase` for each Jinja2 template file containing macros. That
     That subclass can then include `test_[macro_name]()` methods that
     test each individual macro.
+
+    render_macro() returns a BeautifulSoup object that you can then use
+    CSS selectors on to make assertions. See
+    http://www.crummy.com/software/BeautifulSoup/bs4/doc/#css-selectors
 
         ```
         class MyMacrosTestCase(MacroTestCase):
@@ -120,7 +127,7 @@ class MacroTestCase(unittest.TestCase):
     def render_macro(self, macro_file, macro, *args, **kwargs):
         """
         Render a given macro with the given arguments and keyword
-        arguments.
+        arguments. Returns a BeautifulSoup object.
 
         Internally method will construct a simple string template that
         calls the macro and renders that template and returns the
@@ -139,7 +146,7 @@ class MacroTestCase(unittest.TestCase):
         test_template = self.env.from_string(test_template_str)
 
         result = test_template.render(self.context)
-        return result
+        return BeautifulSoup(result)
 
 
 class PostMacrosTestCase(MacroTestCase):
@@ -153,7 +160,7 @@ class PostMacrosTestCase(MacroTestCase):
                                     'dek': 'A dek',
                                     'excerpt': 'An excerpt',
                                     'author': ['Me',]})
-        assert 'Test Post' in result
+        assert 'Test Post' in result.select('.summary_heading')[0]
 
 
 
