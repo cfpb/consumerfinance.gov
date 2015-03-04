@@ -1,0 +1,86 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-events.html" as vars with context %}
+
+{% block title -%}
+    {{ vars.mock_event.title }} {# TODO Replace mock data #}
+{%- endblock %}
+
+{% block desc -%}
+    {{ vars.mock_event.excerpt|striptags }} {# TODO Replace mock data #}
+{%- endblock %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    {% import "_event.html" as article with context %}
+
+    {{ article.render(vars.mock_event, vars.path) }}
+
+    {% from "_event-post-macros.html" import event_agenda as event_agenda %}
+    {{ event_agenda(vars.mock_event) }}
+
+    <div class="event-footer">
+        <p class="event-footer_banner">
+            <span class="event-footer_banner-message h4">This event requires an RSVP. Reserve your spot here: </span>
+            <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn"><span class="btn_icon__left cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
+        </p>
+        <div class="content-l">
+            <section class="content-l_col content-l_col-1-2 event-footer_col">
+                <h3 class="h4 u-mb5">Downloads</h3>
+                <a href="#" class="event-footer_link">Download event PDF <span class="cf-icon cf-icon-pdf"></span></a>
+            </section>
+            <section class="content-l_col content-l_col-1-2 event-footer_col">
+                <h3 class="h4 u-mb5">Do you have event questions?</h3>
+                <a href="mailto:reserve@cfpb.gov?subject=Event Question&body=Please include your question and fill in your first and last name below and send this email.%0D%0A%0D%0AQuestion:%0D%0AFirst name:%0D%0ALast name:" class="event-footer_link"><span class="cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_sidebar %}
+    <section class="block u-mt0">
+        {% import "related-posts.html" as related_posts with context %}
+        {{ related_posts.render(event) }}
+    </section>
+    <section class="block">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Stay informed
+            </span>
+        </h1>
+        <div class="block block__sub u-mt0">
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new blogs.
+            </p>
+            {% import "email-subscribe-form.html" as subscribe with context %}
+            {{ subscribe.render(vars.query) }}
+        </div>
+        <div class="block block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(vars.rss_path) }}
+        </div>
+    </section>
+    <section class="block">
+        {%- import "related-links.html" as related_links -%}
+        {{- related_links.render([
+            [
+                '/the-bureau/',
+                'About us'
+            ],
+            [
+                '/contact-us/',
+                'Contact us'
+            ],
+        ]) -}}
+    </section>
+{% endblock %}

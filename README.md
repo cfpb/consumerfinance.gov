@@ -182,6 +182,17 @@ open a terminal and run:
 $ grunt watch
 ```
 
+*Alternatively, if you don't want to run the full watch task, there are two available
+sub-tasks:*
+
+``` bash
+# Watch & compile CSS only
+$ grunt watch:css
+
+# Watch & compile CSS & JS only
+$ grunt watch:cssjs
+```
+
 ## How to test the software
 
 To run browser tests, you'll need to perform the following steps:

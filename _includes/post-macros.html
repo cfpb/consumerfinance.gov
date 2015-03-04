@@ -548,13 +548,13 @@
                     Categories
                 </label>
             {% if doc_type == 'newsroom' -%}
-                {% set categories = query.possible_values_for('category', doc_type='newsroom')|sort(attribute='term') %}
+                {% set categories = query.possible_values_for('category', doc_type='newsroom')|sort(attribute='key') %}
             {%- else -%}
-                {% set categories = query.possible_values_for('category')|sort(attribute='term') %}
+                {% set categories = query.possible_values_for('category')|sort(attribute='key') %}
             {% endif -%}
             {% for category in categories -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('category', category.term)|safe }}
+                    {{ filter_checkbox('category', category.key)|safe }}
                 </label>
             {% endfor %}
             {% if doc_type == 'newsroom' -%}
@@ -572,25 +572,25 @@
                 <label class="form-label-header">
                     Category type
                 </label>
-            {% set categories = query.possible_values_for('type')|sort(attribute='term') -%}
+            {% set categories = query.possible_values_for('type')|sort(attribute='key') -%}
             {% for category in categories -%}
-                {% if category.term != 'cfpb_newsroom' %}
-                    {% if category.term == 'post' %}
+                {% if category.key != 'cfpb_newsroom' %}
+                    {% if category.key == 'post' %}
                         <label class="form-group_item">
-                            {{ filter_checkbox('type', category.term, 'Blog')|safe }}
+                            {{ filter_checkbox('type', category.key, 'Blog')|safe }}
                         </label>
                     {% else %}
                         <label class="form-group_item">
-                            {{ filter_checkbox('type', category.term)|safe }}
+                            {{ filter_checkbox('type', category.key)|safe }}
                         </label>
                     {% endif %}
                 {% endif %}
             {% endfor %}
             {% set newsroom_categories =
-               query.possible_values_for('category', doc_type='newsroom')|sort(attribute='term') %}
+               query.possible_values_for('category', doc_type='newsroom')|sort(attribute='key') %}
             {% for category in newsroom_categories -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('category', category.term)|safe }}
+                    {{ filter_checkbox('category', category.key)|safe }}
                 </label>
             {% endfor %}
             </div>
@@ -638,14 +638,14 @@
             {# Top 3 tags come first #}
             {%- for tags in possible_tags -%}
                 {%- if loop.index < 4 -%}
-                    {{ filter_option('tags', tags.term)|safe }}
+                    {{ filter_option('tags', tags.key)|safe }}
                 {%- endif -%}
             {%- endfor -%}
                 </optgroup>
                 <optgroup label="All other topics">
             {# Then the rest of the tags #}
-            {%- for tags in possible_tags[3:]|sort(attribute='term') -%}
-                    {{ filter_option('tags', tags.term)|safe }}
+            {%- for tags in possible_tags[3:]|sort(attribute='key') -%}
+                    {{ filter_option('tags', tags.key)|safe }}
             {%- endfor -%}
                 </optgroup>
             </select>
@@ -663,12 +663,12 @@
                     multiple
                     data-placeholder="Search for authors">
             {% if doc_type == 'newsroom' -%}
-                {% set authors = query.possible_values_for('author', doc_type='newsroom')|sort(attribute='term') %}
+                {% set authors = query.possible_values_for('author', doc_type='newsroom')|sort(attribute='key') %}
             {%- else -%}
-                {% set authors = query.possible_values_for('author')|sort(attribute='term') %}
+                {% set authors = query.possible_values_for('author')|sort(attribute='key') %}
             {% endif -%}
             {% for author in authors %}
-                {{ filter_option('author', author.term)|safe }}
+                {{ filter_option('author', author.key)|safe }}
             {% endfor %}
             </select>
         </div>

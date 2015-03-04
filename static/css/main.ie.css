@@ -5511,6 +5511,43 @@ tbody tr {
   top: 4px;
 }
 
+.tags__block-list {
+  padding-left: 0;
+}
+
+.tags__block-list .tags_tag {
+  display: list-item;
+}
+
+.tags__block-list .tags_header {
+  margin-top: 0;
+  margin-bottom: 1.16666667em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin: 0 0 .88888889em;
+  color: #101820;
+  position: relative;
+}
+
+.lt-ie9 .tags__block-list .tags_header {
+  font-weight: normal !important;
+}
+
+.tags__hide-header {
+  padding-left: 0;
+}
+
+.tags__hide-header .tags_header {
+  margin: 0;
+}
+
+.tags__hide-header.tags__block-list .tags_header {
+  margin: 0;
+}
+
 .date {
   font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
   font-style: normal;
@@ -6699,6 +6736,17 @@ a.focus .summary_heading {
   font-weight: normal !important;
 }
 
+.summary_event-date {
+  color: #0072ce;
+}
+
+a:hover .summary_event-date,
+a.hover .summary_event-date,
+a:focus .summary_event-date,
+a.focus .summary_event-date {
+  color: #328ed8;
+}
+
 .summary>*:last-child {
   margin-bottom: 0;
 }
@@ -6933,7 +6981,7 @@ a.focus .summary_heading {
   behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.post_header {
+.post_heading {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -6944,31 +6992,31 @@ a.focus .summary_heading {
   margin-bottom: .5em;
 }
 
-.post_header em,
-.post_header i {
+.post_heading em,
+.post_heading i {
   font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
   font-style: italic;
   font-weight: normal;
 }
 
-.lt-ie9 .post_header em,
-.lt-ie9 .post_header i {
+.lt-ie9 .post_heading em,
+.lt-ie9 .post_heading i {
   font-style: normal !important;
 }
 
-.post_header strong,
-.post_header b {
+.post_heading strong,
+.post_heading b {
   font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
   font-style: normal;
   font-weight: bold;
 }
 
-.lt-ie9 .post_header strong,
-.lt-ie9 .post_header b {
+.lt-ie9 .post_heading strong,
+.lt-ie9 .post_heading b {
   font-weight: normal !important;
 }
 
-.post_header {
+.post_heading {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -6979,27 +7027,27 @@ a.focus .summary_heading {
   margin-bottom: .29411765em;
 }
 
-.post_header em,
-.post_header i {
+.post_heading em,
+.post_heading i {
   font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
   font-style: italic;
   font-weight: normal;
 }
 
-.lt-ie9 .post_header em,
-.lt-ie9 .post_header i {
+.lt-ie9 .post_heading em,
+.lt-ie9 .post_heading i {
   font-style: normal !important;
 }
 
-.post_header strong,
-.post_header b {
+.post_heading strong,
+.post_heading b {
   font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
   font-style: normal;
   font-weight: bold;
 }
 
-.lt-ie9 .post_header strong,
-.lt-ie9 .post_header b {
+.lt-ie9 .post_heading strong,
+.lt-ie9 .post_heading b {
   font-weight: normal !important;
 }
 
@@ -7047,6 +7095,16 @@ a.focus .summary_heading {
 
 .post_body {
   color: #43484e;
+}
+
+.post_body:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lt-ie8 .post_body {
+  zoom: 1;
 }
 
 .post_inset {
@@ -7164,6 +7222,46 @@ a.focus .summary_heading {
   color: #75787B;
   font-size: 0.8125em;
   font-style: italic;
+}
+
+.calendar-icon {
+  display: inline-block;
+  min-width: 3em;
+  border: .25em solid #babbbd;
+  border-radius: .375em;
+  background-color: #babbbd;
+  font-family: 'Avenir Next',Helvetica,Arial;
+  line-height: 1;
+  text-align: center;
+}
+
+.calendar-icon:before,
+.calendar-icon:after {
+  display: block;
+}
+
+.calendar-icon:before {
+  color: #fff;
+  font-size: 1em;
+  text-transform: uppercase;
+  padding: 0 0 0.15em;
+  content: attr(data-month);
+}
+
+.calendar-icon:after {
+  padding: 0.15em 0 0;
+  border-radius: 0 0 0.16em 0.16em;
+  background: #fff;
+  color: #babbbd;
+  font-size: 1.5em;
+  content: attr(data-day);
+}
+
+.modification-date {
+  background: #dbedd4;
+  display: inline-block;
+  text-align: center;
+  padding: 0 20px 0;
 }
 
 .nav-secondary {
@@ -8841,6 +8939,335 @@ a.focus .summary_heading {
   display: block;
   margin-top: -0.625em;
   margin-bottom: 3.75em;
+}
+
+.post-preview__event {
+  border-top: 1px solid #babbbd;
+  padding-top: 1em;
+}
+
+.summary .calendar-icon {
+  display: inline-block;
+  min-width: 3em;
+  border: .25em solid #babbbd;
+  border-radius: .375em;
+  background-color: #babbbd;
+  font-family: 'Avenir Next',Helvetica,Arial;
+  line-height: 1;
+  text-align: center;
+  float: left;
+  margin: 0 15px 0 0;
+}
+
+.summary .calendar-icon:before,
+.summary .calendar-icon:after {
+  display: block;
+}
+
+.summary .calendar-icon:before {
+  color: #fff;
+  font-size: 1em;
+  text-transform: uppercase;
+  padding: 0 0 0.15em;
+  content: attr(data-month);
+}
+
+.summary .calendar-icon:after {
+  padding: 0.15em 0 0;
+  border-radius: 0 0 0.16em 0.16em;
+  background: #fff;
+  color: #babbbd;
+  font-size: 1.5em;
+  content: attr(data-day);
+}
+
+.summary .event-meta {
+  color: #101820;
+}
+
+.summary .event-meta_address:before {
+  content: none;
+  margin: 0;
+}
+
+.summary .event-meta_venue:after {
+  content: "\2014";
+  margin-left: .5em;
+}
+
+.summary_header {
+  margin-bottom: .5em;
+}
+
+.summary_heading,
+.event-meta_address {
+  margin: 0;
+}
+
+.summary-meta_container {
+  overflow: auto;
+}
+
+.event-meta {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: .35714286em;
+  font-size: .875em;
+  line-height: 1.57142857;
+}
+
+.lt-ie9 .event-meta {
+  font-weight: normal !important;
+}
+
+.event-meta_description {
+  text-transform: none;
+}
+
+.event-meta_address {
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.event-meta_address:before {
+  content: "\2014";
+  margin-right: .2em;
+}
+
+.event-meta_city:after {
+  content: "\2C";
+}
+
+.event-meta_datetime {
+  letter-spacing: normal;
+}
+
+.event-meta_time:before {
+  content: "\40";
+  margin-right: .2em;
+}
+
+.event-status {
+  color: #101820;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-status em,
+.event-status i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-status em,
+.lt-ie9 .event-status i {
+  font-style: normal !important;
+}
+
+.event-status strong,
+.event-status b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-status strong,
+.lt-ie9 .event-status b {
+  font-weight: normal !important;
+}
+
+.event-status .event-meta {
+  color: #babbbd;
+  font-weight: normal !important;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-status .event-meta em,
+.event-status .event-meta i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-status .event-meta em,
+.lt-ie9 .event-status .event-meta i {
+  font-style: normal !important;
+}
+
+.event-status .event-meta strong,
+.event-status .event-meta b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-status .event-meta strong,
+.lt-ie9 .event-status .event-meta b {
+  font-weight: normal !important;
+}
+
+.event-venue {
+  background: #f1f2f2;
+  border-top: 5px solid #2cb34a;
+}
+
+.event-venue .event-media_container {
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.event-venue_header {
+  padding: 1.5em 1.5em .5em;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-venue_header em,
+.event-venue_header i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-venue_header em,
+.lt-ie9 .event-venue_header i {
+  font-style: normal !important;
+}
+
+.event-venue_header strong,
+.event-venue_header b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-venue_header strong,
+.lt-ie9 .event-venue_header b {
+  font-weight: normal !important;
+}
+
+.event-venue_header .event-calendar_container {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: .35714286em;
+  font-size: .875em;
+  line-height: 1.57142857;
+  text-transform: uppercase;
+}
+
+.lt-ie9 .event-venue_header .event-calendar_container {
+  font-weight: normal !important;
+}
+
+.event-venue_header .event-calendar_download {
+  display: block;
+  font-weight: bold;
+  padding-top: .2em;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.event-venue_header .event-meta {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-venue_header .event-meta em,
+.event-venue_header .event-meta i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-venue_header .event-meta em,
+.lt-ie9 .event-venue_header .event-meta i {
+  font-style: normal !important;
+}
+
+.event-venue_header .event-meta strong,
+.event-venue_header .event-meta b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-venue_header .event-meta strong,
+.lt-ie9 .event-venue_header .event-meta b {
+  font-weight: normal !important;
+}
+
+.event-venue_header .event-meta_address:before {
+  content: none;
+}
+
+.event-venue_header .event-meta_city:after {
+  content: none;
+}
+
+.event-venue_header .event-meta_venue {
+  display: block;
+}
+
+.event-venue_heading {
+  display: inline-block;
+}
+
+.event-footer {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-footer em,
+.event-footer i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-footer em,
+.lt-ie9 .event-footer i {
+  font-style: normal !important;
+}
+
+.event-footer strong,
+.event-footer b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .event-footer strong,
+.lt-ie9 .event-footer b {
+  font-weight: normal !important;
+}
+
+.event-footer_banner {
+  padding: 15px 20px;
+  background-color: #f8f8f8;
+}
+
+.event-footer_banner {
+  border-bottom: 1px solid #babbbd;
+}
+
+.event-footer_banner-message {
+  display: inline-block;
+  padding-right: 20px;
+  margin-bottom: 10px;
 }
 
 .bureau-mission {
