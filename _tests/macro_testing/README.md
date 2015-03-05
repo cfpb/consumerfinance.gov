@@ -33,7 +33,7 @@ in Python and in a JSON file.
 ### JSON Test Specifications
 
 To reduce the amount of boilerplate Python that needs to be written for
-macro unit tests, unit tests can be writen in JSON.
+macro unit tests, unit tests can be written in JSON.
 
 For each template file that defines macros, a single JSON should be
 created that would look like this:
