@@ -148,7 +148,7 @@ case in Python.
 
 
 These unit tests are all based on Python's 
-[`unittest](https://docs.python.org/2/library/unittest.html) module. 
+[`unittest`](https://docs.python.org/2/library/unittest.html) module. 
 All of the Macro test cases inherit from the class `MacroTestCase`, 
 defined in `macrotest.py`. This class sets up the Jinja2 environment 
 for unittesting and provides some convenience methods for mocking 
