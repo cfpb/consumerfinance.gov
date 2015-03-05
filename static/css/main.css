@@ -10316,78 +10316,6 @@ tbody tr {
 */
 /* ==========================================================================
    cfgov-refresh
-   media-object
-   ========================================================================== */
-/* topdoc
-  name: Media object
-  family: cfgov-media-object
-  patterns:
-    - name: Default media object
-      markup: |
-        <article class="media-object">
-            <div class="media-object_image-container">
-                <img class="media-object_image" src="http://placekitten.com/276/155" alt="">
-            </div>
-            <div class="media-object_text-container">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolorum non sapiente nobis molestias delectus optio ipsam
-                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
-                    accusantium doloribus dicta fugiat itaque ab porro.
-                </p>
-            </div>
-        </article>
-      codenotes:
-        - |
-          Structural sheat sheet:
-          -----------------------
-          .media-object
-            .media-object_image-container
-              .media-object_image
-            .media-object_text-container
-      notes:
-        - "The thumbnail uses a 16:9 aspect ratio."
-  tags:
-    - cfgov-media-object
-*/
-.media-object {
-  display: block;
-}
-@media only all and (min-width: 37.5em) {
-  .media-object {
-    position: relative;
-    min-height: 9.9375em;
-    padding-left: 11.5625em;
-  }
-}
-@media only all and (min-width: 37.5em) {
-  .media-object_image-container {
-    position: absolute;
-    top: 0.25em;
-    left: 0;
-    width: 9.6875em;
-    overflow: hidden;
-  }
-}
-.media-object_image {
-  margin-bottom: 0.5em;
-}
-@media only all and (min-width: 37.5em) {
-  .media-object_image {
-    display: block;
-    width: 17.25em;
-    max-width: 17.25em;
-    max-height: 9.6875em;
-    margin-bottom: 0;
-    margin-left: -3.78125em;
-  }
-}
-/* topdoc
-  name: EOF
-  eof: true
-*/
-/* ==========================================================================
-   cfgov-refresh
    meta
    ========================================================================== */
 /* topdoc
@@ -14288,6 +14216,22 @@ a.focus .summary_header {
   .lt-ie9 .popular-stories .list_link,
   .lt-ie9 .related-posts .list_link {
     font-weight: normal !important;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .post-summary-image {
+    position: relative;
+    width: 9.6875em;
+  }
+  .post-summary-image_container {
+    overflow: hidden;
+  }
+  .post-summary-image img {
+    display: block;
+    width: 17.25em;
+    max-width: 17.25em;
+    max-height: 9.6875em;
+    margin-left: -3.78125em;
   }
 }
 /* topdoc

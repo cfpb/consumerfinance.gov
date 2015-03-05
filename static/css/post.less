@@ -462,6 +462,30 @@
     }
 }
 
+.post-summary-image {
+    // crops wide aspect ratio image to centered thumbnail on tablet & larger screens
+    
+    @img-size-w: 276px; // actual image width
+    @img-size-h: 155px; // actual image height
+    
+    .respond-to-min(@tablet-min, {
+        position: relative;
+        width: unit(@img-size-h / @base-font-size-px, em);
+        
+        &_container {
+            overflow: hidden;
+        }
+        
+        img {
+            display: block;
+            width: unit(@img-size-w / @base-font-size-px, em);
+            max-width: unit(@img-size-w / @base-font-size-px, em);
+            max-height: unit(@img-size-h / @base-font-size-px, em);
+            margin-left: unit(-((@img-size-w - @img-size-h) / 2) / @base-font-size-px, em);
+        }
+    });
+}
+
 /* topdoc
   name: Disqus integration
   family: cfgov-post
