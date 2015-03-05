@@ -16,6 +16,76 @@
 
 {% block content_main %}
 
-    Past Events content goes here
+    <section class="media block block__flush-top block__sub">
+        <div class="media_body">
+            <h1>Archived events</h1>
+            <p class="h3 block block__flush-bottom">
+                All of our past events
+            </p>
+        </div>
+
+        {# Set the filters #}
+        {% from "post-macros.html" import filters as filters with context %}
+        {% set filter_by = ['range_date', 'tags'] %}
+        {{ filters(filter_by, vars.query, vars.newsrooms, 'newsroom',
+           { 'expand_label': 'Filter posts' }) }}
+
+        <div class='block block__padded-top block__flush-bottom'>
+            {% from "_event-landing-macros.html" import event_preview as event_preview %}
+            {% for post in vars.events %}
+                {{ event_preview(post, false) }}
+            {% endfor %}
+
+            {% from "post-macros.html" import pagination as pagination with context %}
+            {{ pagination(vars.events, [
+                'tags',
+                'range_date_gte',
+                'range_date_lte'
+            ]) }}
+         </div>
+    </section>
+
+    {# Footer #}
+    <aside>
+        <div class="block u-mb0 block__flush-sides block__bg">
+            <div class="content-l content-l__main">
+                <section class="u-mb20 content-l_col content-l_col-1-2">
+                    <div class="u-mb30">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new event updates.
+                        </p>
+                        {% import "email-subscribe-form.html" as subscribe with context %}
+                        {{ subscribe.render(vars.query) }}
+                    </div>
+                    <div>
+                        {% import "rss.html" as rss %}
+                        {{ rss.render(vars.rss_path) }}
+                    </div>
+                </section>
+                <section class="content-l_col content-l_col-1-2">
+                    {%- import "related-links.html" as related_links -%}
+                    {{- related_links.render([
+                        [
+                            '/newsroom/',
+                            'Newsroom'
+                        ],
+                        [
+                            '/the-bureau/',
+                            'About us'
+                        ],
+                        [
+                            '/blog/',
+                            'The blog'
+                        ]
+                    ]) -}}
+                </section>
+            </div>
+        </div>
+    </aside>
 
 {% endblock %}
