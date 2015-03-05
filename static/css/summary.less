@@ -11,18 +11,23 @@
     - name: Default summary
       markup: |
         <article class="summary">
-            <h1 class="summary_header">
-                Preventing illegal discrimination in auto lending
-            </h1>
+            <header class="summary_header">
+                <h1 class="summary_heading">
+                    Preventing illegal discrimination in auto lending
+                </h1>
+            </header>
             <p class="summary_text">
                 Every year, millions of American families buy a car –
                 and it will be one of the most significant purchases they make.
                 One key priority for us is protecting consumers from the silent
                 pickpocket of discrimination.
             </p>
-            <p class="summary_byline">
-                By Patrice Ficklin
-            </p>
+            <footer class="summary_footer">
+                <p class="summary_byline">
+                    By Patrice Ficklin
+                </p>
+                <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
+            </footer>
         </article>
       codenotes:
         - |
@@ -30,8 +35,10 @@
           -----------------------
           .summary
             .summary_header
+                .summary_heading
             .summary_text
-            .summary_byline
+            .summary_footer
+                .summary_byline
   tags:
     - cfgov-summary
 */
@@ -41,7 +48,7 @@
     // Incase .summary is used on an inline element like <a>
     display: block;
 
-    &_header {
+    &_heading {
         color: @black;
         .u-link-child__hover(@pacific-80);
         .h3();
@@ -61,9 +68,23 @@
         color: @darkgray;
     }
 
-    &_byline {
+    &_footer {
         color: @black;
         .webfont-regular();
+    }
+
+    &_event-date {
+        color: @pacific;
+        .u-link-child__hover(@pacific-80);
+    }
+
+    // Remove the bottom margin from the last child block in the summary
+    > *:last-child {
+        margin-bottom: 0;
+
+        > *:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 

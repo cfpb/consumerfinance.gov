@@ -1,0 +1,101 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-events.html" as vars with context %}
+
+{# This sets the related links in the footer
+{% set view = get_document('views', 'newsroom') %}
+#}
+
+{% block title -%}
+    Upcoming Events
+{%- endblock %}
+
+{% block desc -%}
+    Events description...
+{%- endblock %}
+
+{% block hero %}
+    {# Only show the hero when:
+       1. We are on the first page of paginated results
+       2. A hero exists
+    #}
+
+    {%
+        set current_page = 1
+    %}
+
+    {%
+        set hero = true
+    %}
+
+    {#{% if vars.events.current_page == 1 and view.hero %}#}
+    {% from "_event-landing-macros.html" import event_hero as event_hero %}
+    {% if current_page == 1 and hero %}
+        {{ event_hero(hero) }}
+    {% endif %}
+
+{% endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    <section class="media block block__flush-top block__sub">
+        <div class="media_body">
+            <h1>Upcoming events</h1>
+            {# TODO Replace ipsum with latest upcoming event content. #}
+            <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
+        </div>
+
+        {% for post in vars.events %}
+            {% from "_event-landing-macros.html" import event_preview as event_preview %}
+            {{ event_preview(post) }}
+        {% endfor %}
+    </section>
+
+    {# Footer #}
+    <aside>
+        <div class="block u-mb0 block__flush-sides block__bg">
+            <div class="content-l content-l__main">
+                <section class="u-mb20 content-l_col content-l_col-1-2">
+                    <div class="u-mb30">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new event updates.
+                        </p>
+                        {% import "email-subscribe-form.html" as subscribe with context %}
+                        {{ subscribe.render(vars.query) }}
+                    </div>
+                    <div>
+                        {% import "rss.html" as rss %}
+                        {{ rss.render(vars.rss_path) }}
+                    </div>
+                </section>
+                <section class="content-l_col content-l_col-1-2">
+                    {% import "related-links.html" as related_links %}
+                    {%- import "related-links.html" as related_links -%}
+                    {{- related_links.render([
+                        [
+                            '/newsroom/',
+                            'Newsroom'
+                        ],
+                        [
+                            '/the-bureau/',
+                            'About us'
+                        ],
+                        [
+                            '/blog/',
+                            'The blog'
+                        ]
+                    ]) -}}
+                </section>
+            </div>
+        </div>
+    </aside>
+
+{% endblock %}

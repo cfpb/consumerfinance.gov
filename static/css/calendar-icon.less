@@ -1,0 +1,92 @@
+/* ==========================================================================
+   cfgov-refresh
+   calendar-icon
+   ========================================================================== */
+
+/* topdoc
+  name: Calendar Icon
+  family: cfgov-calendar-icon
+  notes:
+    - "A square-ish calendar icon with a three-letter month name and date."
+  patterns:
+    - name: Calendar Icon
+      markup: |
+        <time class="calendar-icon" data-month="Jan" data-day="21" datetime="2015-01-21">
+          <span class="u-visually-hidden">Jan 21, 2015</span>
+        </time>
+        denotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          time.calendar-icon
+            span.u-visually-hidden
+  tags:
+    - cfgov-calendar-icon
+*/
+
+
+/*  Mixin to generate a calendar icon.
+    @month [String] The month (3-letter abbreviation, typically).
+    @date [Number] The day in the month.
+    @background-color [Color] A color value for the icon background (behind the month).
+    @foreground-color [Color] A color value for the color behind the day.
+    @scale [Number] A multiplier for the size of the icon (1 is the default). */
+.cf-calendar-icon( @month, @date, @background-color, @foreground-color, @scale ) {
+    /* Display & Box Model */
+    display: inline-block;
+    min-width: 3em * @scale;
+    border: 0.25em solid @background-color;
+    border-radius: 0.375em * @scale;
+
+    /* Background */
+    background-color: @background-color;
+
+    /* Foreground */
+    font-family: 'Avenir Next', Helvetica, Arial;
+    line-height: 1;
+    text-align: center;
+
+    &:before,
+    &:after {
+        /* Display & Box Model */
+        display: block;
+    }
+
+    &:before {
+        /* Foreground */
+        color: @foreground-color;
+        font-size: 1em * @scale;
+        text-transform: uppercase;
+
+        /* Display & Box Model */
+        padding: 0 0 0.15em;
+
+        /* Miscellaneous, alphabetic */
+        content: @month;
+    }
+
+    &:after {
+        /* Display & Box Model */
+        padding: 0.15em 0 0;
+        border-radius: 0 0 0.16em 0.16em;
+
+        /* Background */
+        background: @foreground-color;
+
+        /* Foreground */
+        color: @background-color;
+        font-size: 1.5em * @scale;
+
+        /* Miscellaneous, alphabetic */
+        content: @date;
+    }
+}
+
+.calendar-icon {
+    .cf-calendar-icon( attr(data-month), attr(data-day), @gray-50, @white, 1 );
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

@@ -1,0 +1,311 @@
+
+
+{# ==========================================================================
+
+   calendar_icon()
+
+   ==========================================================================
+
+   Description:
+
+   Create an HTML calendar icon when given:
+
+   calendar_date:      A valid date.
+
+   additional_classes: Extra classes you wish to add to the icon, space
+                       separated.
+
+   ========================================================================== #}
+
+{% macro calendar_icon(calendar_date, additional_classes) %}
+    <time class="calendar-icon {{ additional_classes }}" data-month="{{ calendar_date | date('%b') }}" data-day="{{ calendar_date | date('%d') }}" datetime="{{ calendar_date }}">
+        <span class="u-visually-hidden">{{ calendar_date | date('%b %d, %Y') }}</span>
+    </time>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_location_image()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML image when given:
+
+   post: A post from a query result.
+
+   options (optional): An object to use for customizing a event location image using
+                       Google Maps.
+
+   options.class:    A class name to be applied to the img element.
+
+   options.location: A location as either a comma-separated {latitude,longitude}
+                     pair (e.g. "40.714728,-73.998672") or a string address
+                     (e.g. "city hall, new york, ny").
+
+   options.scale:    Affects the number of pixels that are returned.
+                     Accepted values are 1, 2 and 4.
+
+   options.size:     Defines the rectangular dimensions of the map image.
+                     {horizontal_value}x{vertical_value} (e.g. 500x400)
+
+   options.zoom:     Determines the magnification level of the map.
+
+
+
+   ========================================================================== #}
+
+{% macro event_location_image(post, options) %}
+
+    {%- set location = (post.location or 'Washington DC') -%}
+    {%- set scale = ('&scale=' + (options.scale or '2')) -%}
+    {%- set size = ('&size=' + (options.size or '276x155')) -%}
+    {%- set zoom = ('&zoom=' + (options.zoom or '12')) -%}
+    {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
+
+    <img class="{{ options.class }}" src="{{ url ~ location ~ size ~ zoom ~ scale }}" alt="Google Maps image of {{ location }}">
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_meta()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML event meta markup when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_meta(post) %}
+    <div class="event-meta h-event">
+        {{ event_meta_address(post) }}
+        {{ event_meta_datetime(post.date)  }}
+    </div>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_meta_address()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML event meta address markup when given:
+
+   post: A post date from a query result.
+
+   ========================================================================== #}
+
+{% macro event_meta_address(post) %}
+    {%- set city = (post.location or 'Washington DC') -%}
+    {%- set state = (post.state or '') -%}
+    {%- set venue = (post.venue or 'CFPB') -%}
+    <p class="event-meta_address h-adr">
+        <span class="event-meta_city p-locality">{{ city }}</span>
+        <span class="event-meta_state p-region">{{ state }}</span>
+        <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+    </p>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_meta_datetime()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML event meta date/time markup when given:
+
+   date: A post date from a query result.
+
+   ========================================================================== #}
+
+{% macro event_meta_datetime(date) %}
+    <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%d %H:%M %p %Z') }}">
+        <span class="event-meta_date">{{ date | date('%b %m, %Y') }}</span>
+        <span class="event-meta_time">{{ date | date('%H:%M %p %Z') }}</span>
+    </time>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   post_summary()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event post summary when given:
+
+   post: A post from a query result.
+
+   path: The path to which post filters are applied.
+
+   ========================================================================== #}
+
+
+{% macro post_summary(post, path) %}
+
+{%- import "tags.html" as tags %}
+    <a href="{{ post.permalink }}">
+        <header class="summary_header">
+            {{ calendar_icon(post.date) }}
+            <div class="summary-meta_container">
+                <h1 class="summary_heading">{{ post.title|safe }}</h1>
+                {{ event_meta(post) }}
+            </div>
+        </header>
+        <p class="summary_text">
+            {% if post.dek %}
+                {{ post.dek|striptags }}
+            {% else %}
+                {{ post.excerpt|striptags }}
+            {% endif %}
+        </p>
+    </a>
+    <footer>
+      {{ tags.render(post.tags, path) }}
+    </footer>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_venue()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event post venue when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+
+{% macro event_venue(post) %}
+    {%- set city =  (post.location or 'Washington, DC') -%}
+    {%- set street = (post.street or '1275 First St NE') -%}
+    {%- set venue = (post.venue or 'CFPB') -%}
+    {%- set zip = (post.zip_code or '20002') -%}
+
+    <section class="event-venue">
+        <header class="event-venue_header">
+            <h2 class="event-venue_heading">{{ city }}</h2>
+            <div class="content-l">
+                <div class="event-meta content-l_col content-l_col-1-2">
+                    <p class="event-meta_address h-adr">
+                        <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+                        <span class="event-meta_street p-street-address">{{ street }}</span>
+                        <span class="event-meta_city p-locality">{{ city }}</span>
+                        <span class="event-meta_zip p-postal-code">{{ zip }}</span>
+                    </p>
+                </div>
+                <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                        {{ event_meta_datetime(post.date) }}
+                        <a class="event-calendar_download jump-link jump-link__download" href="#">
+                            <span class="jump_link_text">Download .ics</span>
+                      </a>
+                </div>
+          </div>
+        </header>
+        <footer>
+            <figure class="event-media_container">
+                {{ event_location_image(post, {
+                    'zoom': '12',
+                    'scale': '2',
+                    'size': '640x320'
+                }) }}
+            </figure>
+        </footer>
+    </section>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_agenda()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event agenda table when given
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+
+{% macro event_agenda(post) %}
+  {% set options = {
+      'time_col_classes': 'u-w25pct',
+      'agenda_col_classes': 'u-w25pct',
+      'location_col_classes': 'u-w25pct',
+      'speaker_col_classes': 'u-w25pct',
+  } %}
+  <div class="block
+              block__padded-top
+              block__border-top">
+    <h2>Agenda</h2>
+    <table class="u-w100pct block u-mt0 simple-table">
+        <thead>
+            <tr>
+                <th class="{{ options.time_col_classes }}">Time</th>
+                <th class="{{ options.desc_col_classes }}">Agenda</th>
+                <th class="{{ options.location_col_classes }}">Location</th>
+                <th class="{{ options.speaker_col_classes }}">Speakers</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for block in post.agenda %}
+            <tr>
+                <td class="{{ options.time_col_classes }}">
+                    {{ block.dtstart }}
+                    &ndash;
+                    {{ block.dtend }}
+                </td>
+                <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
+                    {{ block.summary }}
+                </td>
+                <td class="{{ options.location_col_classes }}" data-label="Location">
+                    {{ block.location.street }}<br>
+                    {{ block.location.city }},
+                    {{ block.location.state }}
+                    {{ block.location.zip }}
+                </td>
+                <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
+                    {% for speaker in block.speakers %}
+                        {%- if speaker.url -%}
+                            <a href="{{ speaker.url }}">{{ speaker.name }}, {{ speaker.position }}</a>{{ ';' if loop.index < loop.length }}
+                        {% else %}
+                            {{ speaker.name }}, {{ speaker.position }}{{ ';' if loop.index < loop.length }}
+                        {%- endif -%}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+{% endmacro %}
