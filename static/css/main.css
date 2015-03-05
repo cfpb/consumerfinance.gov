@@ -8919,7 +8919,7 @@ tbody tr {
   }
 }
 /* topdoc
-  name: Simple Tables
+  name: Simple Table
   family: cfgov-cf-enhancements
   notes:
     - Extends the above stacked tables for sm devices
@@ -14669,9 +14669,31 @@ a.focus .summary_event-date {
   /* Background */
   background-color: #babbbd;
   /* Foreground */
-  font-family: 'Avenir Next', Helvetica, Arial;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
   line-height: 1;
   text-align: center;
+}
+.calendar-icon em,
+.calendar-icon i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .calendar-icon em,
+.lt-ie9 .calendar-icon i {
+  font-style: normal !important;
+}
+.calendar-icon strong,
+.calendar-icon b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .calendar-icon strong,
+.lt-ie9 .calendar-icon b {
+  font-weight: normal !important;
 }
 .calendar-icon:before,
 .calendar-icon:after {
@@ -14684,7 +14706,7 @@ a.focus .summary_event-date {
   font-size: 1em;
   text-transform: uppercase;
   /* Display & Box Model */
-  padding: 0 0 0.15em;
+  padding-bottom: 0.15em;
   /* Miscellaneous, alphabetic */
   content: attr(data-month);
 }
@@ -14733,10 +14755,23 @@ a.focus .summary_event-date {
     - cfgov-modification-date
 */
 .modification-date {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.41666667em;
+  font-size: 0.75em;
+  line-height: 1.83333333;
   background: #dbedd4;
-  display: inline-block;
+  color: #101820;
+  letter-spacing: 0;
+  padding: 0.0625em 0.625em;
   text-align: center;
-  padding: 0 20px 0;
+}
+.lt-ie9 .modification-date {
+  font-weight: normal !important;
 }
 /* topdoc
   name: EOF
@@ -17126,16 +17161,29 @@ a.focus .summary_event-date {
    cfgov-refresh
    Page-specific styles for event post detail page.
    ========================================================================== */
+/* Event-Post
+   ========================================================================== */
+.post__event {
+  padding-right: 1.875em;
+  margin-right: 1.875em;
+}
+/* Event-Post-Preview
+   ========================================================================== */
 .post-preview__event {
   border-top: 1px solid #babbbd;
   padding-top: 1em;
+}
+.post-preview__event .media-object_image-container {
+  top: 0;
 }
 @media only all and (max-width: 37.4375em) {
   .post-preview__event .media-object_image-container {
     display: none;
   }
 }
-.summary .calendar-icon {
+/* Event-Summary
+   ========================================================================== */
+.summary__event .calendar-icon {
   /* Display & Box Model */
   display: inline-block;
   min-width: 3em;
@@ -17144,28 +17192,50 @@ a.focus .summary_event-date {
   /* Background */
   background-color: #babbbd;
   /* Foreground */
-  font-family: 'Avenir Next', Helvetica, Arial;
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
   line-height: 1;
   text-align: center;
   float: left;
   margin: 0 15px 0 0;
 }
-.summary .calendar-icon:before,
-.summary .calendar-icon:after {
+.summary__event .calendar-icon em,
+.summary__event .calendar-icon i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .summary__event .calendar-icon em,
+.lt-ie9 .summary__event .calendar-icon i {
+  font-style: normal !important;
+}
+.summary__event .calendar-icon strong,
+.summary__event .calendar-icon b {
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+.lt-ie9 .summary__event .calendar-icon strong,
+.lt-ie9 .summary__event .calendar-icon b {
+  font-weight: normal !important;
+}
+.summary__event .calendar-icon:before,
+.summary__event .calendar-icon:after {
   /* Display & Box Model */
   display: block;
 }
-.summary .calendar-icon:before {
+.summary__event .calendar-icon:before {
   /* Foreground */
   color: #ffffff;
   font-size: 1em;
   text-transform: uppercase;
   /* Display & Box Model */
-  padding: 0 0 0.15em;
+  padding-bottom: 0.15em;
   /* Miscellaneous, alphabetic */
   content: attr(data-month);
 }
-.summary .calendar-icon:after {
+.summary__event .calendar-icon:after {
   /* Display & Box Model */
   padding: 0.15em 0 0;
   border-radius: 0 0 0.16em 0.16em;
@@ -17177,64 +17247,78 @@ a.focus .summary_event-date {
   /* Miscellaneous, alphabetic */
   content: attr(data-day);
 }
-.summary .event-meta {
+.summary__event .event-meta {
   color: #101820;
 }
+.summary__event .event-meta_address {
+  margin: 0;
+}
+.summary__event .event-meta_address:after {
+  content: "\2014";
+  margin-left: .2em;
+}
 @media only all and (max-width: 37.4375em) {
-  .summary .event-meta_address {
+  .summary__event .event-meta_address {
     display: block;
   }
-}
-.summary .event-meta_address:before {
-  content: none;
-  margin: 0;
-}
-.summary .event-meta_venue:after {
-  content: "\2014";
-  margin-left: .5em;
-}
-@media only all and (max-width: 37.4375em) {
-  .summary .event-meta_venue:after {
+  .summary__event .event-meta_address:after {
     content: none;
+    margin-right: 0;
   }
 }
-.summary_header {
-  margin-bottom: .5em;
+.summary__event .summary_header {
+  margin-bottom: 1em;
 }
-.summary_heading,
-.event-meta_address {
-  margin: 0;
+.summary__event .summary_heading {
+  margin: -0.125em 0 0 0;
 }
-.summary-meta_container {
+.summary__event .summary-meta_container {
   overflow: auto;
 }
+/* Event-Meta
+   ========================================================================== */
 .event-meta {
+  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.event-meta em,
+.event-meta i {
+  font-family: "AvenirNextLTW01-Italic", Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+.lt-ie9 .event-meta em,
+.lt-ie9 .event-meta i {
+  font-style: normal !important;
+}
+.event-meta strong,
+.event-meta b {
   font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-top: 0;
-  margin-bottom: 0.35714286em;
-  font-size: 0.875em;
-  line-height: 1.57142857;
 }
-.lt-ie9 .event-meta {
+.lt-ie9 .event-meta strong,
+.lt-ie9 .event-meta b {
+  font-weight: normal !important;
+}
+.event-meta__medium {
+  font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+.lt-ie9 .event-meta__medium {
   font-weight: normal !important;
 }
 .event-meta_description {
   text-transform: none;
 }
+.event-meta_description__block {
+  display: block;
+}
 .event-meta_address {
   text-transform: capitalize;
   display: inline-block;
-}
-.event-meta_address:before {
-  content: "\2014";
-  margin-right: .2em;
-}
-.event-meta_city:after {
-  content: "\2C";
 }
 .event-meta_datetime {
   letter-spacing: normal;
@@ -17243,6 +17327,8 @@ a.focus .summary_event-date {
   content: "\40";
   margin-right: .2em;
 }
+/* Event-Status
+   ========================================================================== */
 .event-status {
   color: #101820;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
@@ -17271,7 +17357,6 @@ a.focus .summary_event-date {
 }
 .event-status .event-meta {
   color: #babbbd;
-  font-weight: normal !important;
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -17296,6 +17381,8 @@ a.focus .summary_event-date {
 .lt-ie9 .event-status .event-meta b {
   font-weight: normal !important;
 }
+/* Event-Venue
+   ========================================================================== */
 .event-venue {
   background: #f1f2f2;
   border-top: 5px solid #2cb34a;
@@ -17387,16 +17474,10 @@ a.focus .summary_event-date {
 .lt-ie9 .event-venue_header .event-meta b {
   font-weight: normal !important;
 }
-.event-venue_header .event-meta_address:before {
-  content: none;
-}
 @media only all and (max-width: 37.4375em) {
   .event-venue_header .event-meta_address {
     margin: 0;
   }
-}
-.event-venue_header .event-meta_city:after {
-  content: none;
 }
 .event-venue_header .event-meta_venue {
   display: block;
@@ -17404,6 +17485,8 @@ a.focus .summary_event-date {
 .event-venue_heading {
   display: inline-block;
 }
+/* Event-Footer
+   ========================================================================== */
 .event-footer {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
