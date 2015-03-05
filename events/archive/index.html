@@ -16,6 +16,19 @@
 
 {% block content_main %}
 
-    Past Events content goes here
+    <section class="media block block__flush-top block__sub">
+        <div class="media_body">
+            <h1>Archived events</h1>
+            <p class="h3 block block__flush-bottom">
+                All of our past events
+            </p>
+        </div>
+        <div class='block block__padded-top'>
+            {% for post in vars.events %}
+                {% from "_event-landing-macros.html" import event_preview as event_preview %}
+                {{ event_preview(post, media_object=False) }}
+            {% endfor %}
+         </div>
+    </section>
 
 {% endblock %}
