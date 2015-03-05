@@ -18,8 +18,9 @@ def JSONTestCaseLoader(tests_path, recursive=False):
     If `recursive` is True, it will also look in subdirectories. This is
     not yet supported.
     """
+    path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), tests_path))
 
-    json_files = [f for f in os.listdir(tests_path) if f.endswith('.json')]
+    json_files = [f for f in os.listdir(path) if f.endswith('.json')]
     for json_file in json_files:
         # Create a camelcased name for the test. This is a minor thing, but I
         # think it's nice.
@@ -27,7 +28,7 @@ def JSONTestCaseLoader(tests_path, recursive=False):
         class_name = ''.join(x for x in name.title() if x not in ' _-') + 'TestCase'
 
         # Get the full path to the file and create a test class
-        json_file_path = os.path.join(tests_path, json_file)
+        json_file_path = os.path.join(path, json_file)
         test_class = JSONSpecMacroTestCaseFactory(class_name, json_file_path)
 
         # Add the test class to globals() so that unittest.main() picks it up
