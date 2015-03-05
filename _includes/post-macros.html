@@ -675,119 +675,123 @@
 
     {# Date range filters #}
     {% elif filter == 'range_date' %}
-        <label class="form-l_col-2-3 form-label-header">
-            Date range
-        </label>
-        <!--
-            =================
-            "From" date input
-            =================
-        -->
-        <!-- No-JS date input -->
-        {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
-        <div class="form-l_col-1-3 js-filter_range-date-wrapper">
-            <label for="{{ options.id_range_date_gte }}">
-                From:
+        <div class="form-l_col form-l_col-2-3">
+          <div class="form-l form-l__flush">
+            <label class="form-l_col-1 form-label-header">
+                Date range
             </label>
-            <input class="js-filter_range-date js-filter_range-date__gte"
-                   id="{{ options.id_range_date_gte }}"
-                   name="filter_range_date_gte"
-                   type="text"
-                   value="{{ from_date if from_date }}"
-                   placeholder="YYYY-MM">
+            <!--
+                =================
+                "From" date input
+                =================
+            -->
+            <!-- No-JS date input -->
+            {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
+            <div class="form-l_col-1-2 js-filter_range-date-wrapper">
+                <label for="{{ options.id_range_date_gte }}">
+                    From:
+                </label>
+                <input class="js-filter_range-date js-filter_range-date__gte"
+                       id="{{ options.id_range_date_gte }}"
+                       name="filter_range_date_gte"
+                       type="text"
+                       value="{{ from_date if from_date }}"
+                       placeholder="YYYY-MM">
+            </div>
+            <!-- JS date input -->
+            <div class="form-l_col-1-2 input-group js-filter_range-date-replacement"
+                 style="display:none;">
+                <label for="{{ options.id_from_month }}">
+                    From:
+                </label>
+                <div class="input-group_item custom-select">
+                    <select class="form-input-month js-filter_month"
+                            id="{{ options.id_from_month }}">
+                        <option value="">Month</option>
+                        <option value="01">Jan</option>
+                        <option value="02">Feb</option>
+                        <option value="03">Mar</option>
+                        <option value="04">Apr</option>
+                        <option value="05">May</option>
+                        <option value="06">Jun</option>
+                        <option value="07">Jul</option>
+                        <option value="08">Aug</option>
+                        <option value="09">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                </div>
+                <div class="input-group_item custom-select">
+                    <select class="form-input_year js-filter_year"
+                            id="{{ options.id_from_year }}">
+                        <option value="">Year</option>
+                    {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {%- endfor -%}
+                    </select>
+                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                </div>
+            </div> <!-- END js date input -->
+            <!-- END "From" date input -->
+            <!--
+                ===============
+                "To" date input
+                ===============
+            -->
+            <!-- No-JS date input -->
+            {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
+            <div class="form-l_col-1-2 js-filter_range-date-wrapper">
+                <label for="{{ options.id_range_date_lte }}">
+                    To:
+                </label>
+                <input class="js-filter_range-date js-filter_range-date__lte"
+                       id="{{ options.id_range_date_lte }}"
+                       name="filter_range_date_lte"
+                       type="text"
+                       value="{{ to_date if to_date }}"
+                       placeholder="YYYY-MM">
+            </div>
+            <!-- JS date input -->
+            <div class="form-l_col-1-2 input-group js-filter_range-date-replacement"
+                 style="display:none;">
+                <label for="{{ options.id_to_month }}">
+                    To:
+                </label>
+                <div class="custom-select input-group_item">
+                    <select class="form-input-month js-filter_month"
+                            id="{{ options.id_to_month }}">
+                        <option value="">Month</option>
+                        <option value="01">Jan</option>
+                        <option value="02">Feb</option>
+                        <option value="03">Mar</option>
+                        <option value="04">Apr</option>
+                        <option value="05">May</option>
+                        <option value="06">Jun</option>
+                        <option value="07">Jul</option>
+                        <option value="08">Aug</option>
+                        <option value="09">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                </div>
+                <div class="custom-select input-group_item">
+                    <select class="form-input_year js-filter_year"
+                            id="{{ options.id_to_year }}">
+                        <option value="">Year</option>
+                    {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {%- endfor %}
+                    </select>
+                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                </div>
+            </div> <!-- END JS date input -->
+            <!-- END "To" date input -->
+          </div>
         </div>
-        <!-- JS date input -->
-        <div class="form-l_col-1-3 input-group js-filter_range-date-replacement"
-             style="display:none;">
-            <label for="{{ options.id_from_month }}">
-                From:
-            </label>
-            <div class="input-group_item custom-select">
-                <select class="form-input-month js-filter_month"
-                        id="{{ options.id_from_month }}">
-                    <option value="">Month</option>
-                    <option value="01">Jan</option>
-                    <option value="02">Feb</option>
-                    <option value="03">Mar</option>
-                    <option value="04">Apr</option>
-                    <option value="05">May</option>
-                    <option value="06">Jun</option>
-                    <option value="07">Jul</option>
-                    <option value="08">Aug</option>
-                    <option value="09">Sep</option>
-                    <option value="10">Oct</option>
-                    <option value="11">Nov</option>
-                    <option value="12">Dec</option>
-                </select>
-                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-            </div>
-            <div class="input-group_item custom-select">
-                <select class="form-input_year js-filter_year"
-                        id="{{ options.id_from_year }}">
-                    <option value="">Year</option>
-                {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
-                    <option value="{{ year }}">{{ year }}</option>
-                {%- endfor -%}
-                </select>
-                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-            </div>
-        </div> <!-- END js date input -->
-        <!-- END "From" date input -->
-        <!--
-            ===============
-            "To" date input
-            ===============
-        -->
-        <!-- No-JS date input -->
-        {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
-        <div class="form-l_col-1-3 js-filter_range-date-wrapper">
-            <label for="{{ options.id_range_date_lte }}">
-                To:
-            </label>
-            <input class="js-filter_range-date js-filter_range-date__lte"
-                   id="{{ options.id_range_date_lte }}"
-                   name="filter_range_date_lte"
-                   type="text"
-                   value="{{ to_date if to_date }}"
-                   placeholder="YYYY-MM">
-        </div>
-        <!-- JS date input -->
-        <div class="form-l_col-1-3 input-group js-filter_range-date-replacement"
-             style="display:none;">
-            <label for="{{ options.id_to_month }}">
-                To:
-            </label>
-            <div class="custom-select input-group_item">
-                <select class="form-input-month js-filter_month"
-                        id="{{ options.id_to_month }}">
-                    <option value="">Month</option>
-                    <option value="01">Jan</option>
-                    <option value="02">Feb</option>
-                    <option value="03">Mar</option>
-                    <option value="04">Apr</option>
-                    <option value="05">May</option>
-                    <option value="06">Jun</option>
-                    <option value="07">Jul</option>
-                    <option value="08">Aug</option>
-                    <option value="09">Sep</option>
-                    <option value="10">Oct</option>
-                    <option value="11">Nov</option>
-                    <option value="12">Dec</option>
-                </select>
-                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-            </div>
-            <div class="custom-select input-group_item">
-                <select class="form-input_year js-filter_year"
-                        id="{{ options.id_to_year }}">
-                    <option value="">Year</option>
-                {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
-                    <option value="{{ year }}">{{ year }}</option>
-                {%- endfor %}
-                </select>
-                <span class="custom-select_icon cf-icon cf-icon-down"></span>
-            </div>
-        </div> <!-- END JS date input -->
-        <!-- END "To" date input -->
 
     {% endif %}
 {% endfor %}
