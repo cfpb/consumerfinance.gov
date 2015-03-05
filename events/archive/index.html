@@ -31,4 +31,48 @@
          </div>
     </section>
 
+    {# Footer #}
+    <aside>
+        <div class="block u-mb0 block__flush-sides block__bg">
+            <div class="content-l content-l__main">
+                <section class="u-mb20 content-l_col content-l_col-1-2">
+                    <div class="u-mb30">
+                        <h1 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h1>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new event updates.
+                        </p>
+                        {% import "email-subscribe-form.html" as subscribe with context %}
+                        {{ subscribe.render(vars.query) }}
+                    </div>
+                    <div>
+                        {% import "rss.html" as rss %}
+                        {{ rss.render(vars.rss_path) }}
+                    </div>
+                </section>
+                <section class="content-l_col content-l_col-1-2">
+                    {% import "related-links.html" as related_links %}
+                    {%- import "related-links.html" as related_links -%}
+                    {{- related_links.render([
+                        [
+                            '/newsroom/',
+                            'Newsroom'
+                        ],
+                        [
+                            '/the-bureau/',
+                            'About us'
+                        ],
+                        [
+                            '/blog/',
+                            'The blog'
+                        ]
+                    ]) -}}
+                </section>
+            </div>
+        </div>
+    </aside>
+
 {% endblock %}
