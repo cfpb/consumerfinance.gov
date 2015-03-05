@@ -23,18 +23,25 @@
                 All of our past events
             </p>
         </div>
-
+        
         {# Set the filters #}
         {% from "post-macros.html" import filters as filters with context %}
         {% set filter_by = ['range_date', 'tags'] %}
         {{ filters(filter_by, vars.query, vars.newsrooms, 'newsroom',
            { 'expand_label': 'Filter posts' }) }}
 
-        <div class='block block__padded-top'>
+        <div class='block block__padded-top block__flush-bottom'>
+            {% from "_event-landing-macros.html" import event_preview as event_preview %}
             {% for post in vars.events %}
-                {% from "_event-landing-macros.html" import event_preview as event_preview %}
                 {{ event_preview(post, media_object=False) }}
             {% endfor %}
+
+            {% from "post-macros.html" import pagination as pagination with context %}
+            {{ pagination(vars.events, [
+                'tags',
+                'range_date_gte',
+                'range_date_lte'
+            ]) }}
          </div>
     </section>
 
