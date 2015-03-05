@@ -61,7 +61,7 @@
 
    ========================================================================== #}
 
-{% macro event_location_image(post, options) %}
+{% macro event_location_image(post, options={}) %}
     {%- set location = (options.location or post.location) 
                        | default('Washington DC', true) 
                        | urlencode -%}
