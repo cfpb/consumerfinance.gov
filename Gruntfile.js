@@ -141,7 +141,7 @@ module.exports = function(grunt) {
 
     /**
      * Less: https://github.com/gruntjs/grunt-contrib-less
-     * 
+     *
      * Compile Less files to CSS.
      */
     less: {
@@ -324,40 +324,24 @@ module.exports = function(grunt) {
     },
 
     /**
-     * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
-     *
-     * Validate files with JSHint.
-     * Below are options that conform to idiomatic.js standards.
-     * Feel free to add/remove your favorites: http://www.jshint.com/docs/#options
+     * Lint the JavaScript.
      */
-    jshint: {
-      options: {
-        camelcase: false,
-        curly: true,
-        forin: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        quotmark: true,
-        sub: true,
-        boss: true,
-        strict: true,
-        evil: true,
-        eqnull: true,
-        browser: true,
-        plusplus: false,
-        globals: {
-          jQuery: true,
-          $: true,
-          module: true,
-          require: true,
-          define: true,
-          console: true,
-          EventEmitter: true
-        }
-      },
-      all: ['static/js/main.js']
+    lintjs: {
+      /**
+       * Validate files with ESLint.
+       * https://www.npmjs.com/package/grunt-contrib-eslint
+       */
+      eslint: {
+        options: {
+            config: "_settings/eslint.yaml",
+            quiet: false
+        },
+        src: [
+            'static/js/**/*',
+            '!static/js/main.js',
+            '!static/js/main.min.js'
+        ]
+      }
     },
 
     /**
@@ -469,6 +453,9 @@ module.exports = function(grunt) {
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin', 'usebanner:css']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
-  grunt.registerTask('test', ['jshint']);
-
+  grunt.registerTask('test', ['lintjs']);
+  grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
+    grunt.config.set(this.target, this.data);
+    grunt.task.run(this.target);
+  });
 };
