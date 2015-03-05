@@ -391,7 +391,6 @@ module.exports = function(grunt) {
       'header',
       'lists',
       'media',
-      'media-object',
       'meta',
       'misc',
       'nav-secondary',

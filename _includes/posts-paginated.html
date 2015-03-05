@@ -31,13 +31,15 @@
         {% endif %}
         </div>
     {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
-        <a class="media-object" href="{{ post.permalink }}">
-            <div class="media-object_image-container">
-                <img class="media-object_image"
-                     src="{{ post.thumbnail.images.fj_thumbnail.url }}"
-                     alt="{{ post.thumbnail.alt_text }}">
+        <a class="media" href="{{ post.permalink }}">
+            <div class="media_image-container post-summary-image">
+                <div class="post-summary-image_container">
+                    <img class="media_image"
+                         src="{{ post.thumbnail.images.fj_thumbnail.url }}"
+                         alt="{{ post.thumbnail.alt_text }}">
+                </div>
             </div>
-            <div class="media-object_text-container summary">
+            <div class="media_body">
                 {{ post_macros.post_summary(post) }}
             </div>
         </a>
