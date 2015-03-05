@@ -55,10 +55,19 @@ class MacroTestCase(unittest.TestCase):
         # lives three levels above the cfgov-refresh root.
         root_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ),
                                                 os.pardir, os.pardir))
+        underscore_exceptions = ['_layouts', '_includes']
         search_path = build_search_path(root_dir,
                                         search_path,
-                                        append=['_layouts', '_includes'],
+                                        append=underscore_exceptions,
                                         include_start_directory=True)
+
+        # BUT this search path isn't complete... because Sheer includes the
+        # request directory in the search path. To try to emulate that we'll add
+        # all non-ignored subdirectories.
+        search_path += [x[0] for x in os.walk(root_dir)
+                        if not x[0].startswith('_') or x[0].startswith('.') or
+                            x[0] in underscore_exceptions]
+
         self.env = Environment(loader=FileSystemLoader(search_path))
 
         # Sheer filters that are added to the default. These are generally
@@ -134,16 +143,12 @@ class MacroTestCase(unittest.TestCase):
         # We need to format args and kwargs as string arguments for the macro.
         # After that we combine them. filter() is used in case one or the other
         # strings is empty, ''.
-
         str_args = u', '.join('%r'.encode('utf-8') % a for a in args).encode('utf-8')
         str_kwargs = u', '.join('%s=%r' % x for x in kwargs.iteritems())
-
-
         str_combined = u', '.join(filter(None, [str_args, str_kwargs]))
 
         # Here is our test template that uses the macro.
-        test_template_str = u'''{%% import "%s" as macro_file %%}
-{{ macro_file.%s(%s) }}''' % (macro_file, macro, str_combined)
+        test_template_str = u'''{%% import "%s" as macro_file %%}{{ macro_file.%s(%s) }}''' % (macro_file, macro, str_combined)
         test_template = self.env.from_string(test_template_str)
 
         result = test_template.render(self.context)
