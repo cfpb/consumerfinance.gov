@@ -10,19 +10,30 @@
 
    post: A post from a query result.
 
+   media_object (optional):
+            The optional boolean flag to wrap the block in a media object
+            and include a map image.
+            Defaults to true.
+
    ========================================================================== #}
 
-{% macro event_preview(post) %}
+{% macro event_preview(post, media_object=true) %}
   {% import "_event-post-macros.html" as event_post_macros with context %}
   <article class="post-preview post-preview__event">
+    {% if media_object %}
       <div class="media-object">
-          <a class="media-object_image-container" href="{{ post.permalink }}">
-              {{ event_post_macros.event_location_image(post) }}
-          </a>
-          <div class="media-object_text-container summary summary__event">
-              {{ event_post_macros.post_summary(post) }}
-          </div>
+        <a class="media-object_image-container" href="{{ post.permalink }}">
+            {{ event_post_macros.event_location_image(post) }}
+        </a>
+        <div class="media-object_text-container summary summary__event">
+            {{ event_post_macros.post_summary(post) }}
+        </div>
       </div>
+    {% else %}
+        <div class="summary summary__event">
+          {{ event_post_macros.post_summary(post) }}
+        </div>
+    {% endif %}
   </article>
 {% endmacro %}
 
@@ -63,7 +74,7 @@
                     </header>
                     <p class="summary_text">
                         <!-- TODO replace temp summary with post summary. -->
-                        {{ 'Include a short summary to give users a quick 
+                        {{ 'Include a short summary to give users a quick
                         overview of the event. Should be less than 200 characters in length.' }}
                     </p>
                     <footer class="summary_footer">

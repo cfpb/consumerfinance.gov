@@ -83,9 +83,35 @@ denotes:
   /* Background */
   background-color: #babbbd;
   /* Foreground */
-  font-family: 'Avenir Next', Helvetica, Arial;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
   line-height: 1;
   text-align: center;
+}
+
+.calendar-icon em,
+.calendar-icon i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .calendar-icon em,
+.lt-ie9 .calendar-icon i {
+  font-style: normal !important;
+}
+
+.calendar-icon strong,
+.calendar-icon b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .calendar-icon strong,
+.lt-ie9 .calendar-icon b {
+  font-weight: normal !important;
 }
 
 .calendar-icon:before,
@@ -100,7 +126,7 @@ denotes:
   font-size: 1em;
   text-transform: uppercase;
   /* Display &amp; Box Model */
-  padding: 0 0 0.15em;
+  padding-bottom: 0.15em;
   /* Miscellaneous, alphabetic */
   content: attr(data-month);
 }
