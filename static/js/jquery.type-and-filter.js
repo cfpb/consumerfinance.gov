@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * jquery.type-and-filter.js
  *
@@ -35,7 +37,7 @@
                     filteredMessageSingular: 'There is 1 result for "{{ term }}".',
                     filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
                     minTermMessage: '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
-                    'clickCallback': function( e ){}
+                    'clickCallback': function( e ) {}
                 }, userSettings ),
                 $this = $( this ),
                 $button = settings.$button,
@@ -218,7 +220,7 @@
         //     var match = $.fn.typeAndFilter.strictSearch( searchTerm, value );
         //     ...
         // }
-        
+
         // Loop through each item, if it contains matching text then show it,
         // if it doesn't then hide it.
         var terms = searchTerm.split(' '),
@@ -242,7 +244,7 @@
                 // If we find a match then break out of the loop so we don't
                 // unmatch this during subsequent comparisons.
                 if ( match ) {
-                  break;
+                    break;
                 }
             }
         }

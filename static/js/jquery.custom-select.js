@@ -1,6 +1,8 @@
+'use strict';
+
 (function ($) {
 
-    $.fn.customSelect = function( userSettings ){
+    $.fn.customSelect = function( userSettings ) {
 
         function getSelectedOptionText($customSelect) {
             return $customSelect.find('option[value="' + $customSelect.find('.custom-select_select').val() + '"]').text();
@@ -8,7 +10,7 @@
 
         function updateSelectText($customSelect) {
             var $text = $customSelect.find('.custom-select_text');
-            
+
             // Update the text
             $text.text(getSelectedOptionText($customSelect));
 
@@ -22,10 +24,10 @@
             return $text;
         }
 
-        return $(this).each(function(){
-            if($(this).has('select')){
+        return $(this).each(function() {
+            if ($(this).has('select')) {
                 var settings = $.extend({
-                        'clickCallback': function(e){}
+                        'clickCallback': function(e) {}
                     }, userSettings ),
                     changeCallback = settings.clickCallback,
                     $this = $(this),
@@ -39,35 +41,35 @@
                 // Backfill support for :hover on certain elements.
                 $select
                 .hover(
-                    function(){ $this.addClass('is-hovered'); },
-                    function(){
+                    function() { $this.addClass('is-hovered'); },
+                    function() {
                         $this.removeClass('is-hovered');
                         $this.removeClass('is-focused');
                     }
                 )
                 .focus(
-                    function(){ $this.addClass('is-hovered'); },
-                    function(){
+                    function() { $this.addClass('is-hovered'); },
+                    function() {
                         $this.removeClass('is-hovered');
                         $this.removeClass('is-focused');
                     }
                 );
 
                 // Bind click, focus, blur and custom events.
-                $select.on('updateState', function(){
+                $select.on('updateState', function() {
                     updateSelectText($(this).parents('.custom-select'));
                 })
                 .trigger('updateState')
-                .on('change', function(){
+                .on('change', function() {
                     $(this).trigger('updateState');
                     changeCallback({
                         'select': $select
                     });
                 })
-                .on('focus', function(){
+                .on('focus', function() {
                     $this.addClass('is-focused');
                 })
-                .on('blur', function(){ $this.removeClass('is-focused'); });
+                .on('blur', function() { $this.removeClass('is-focused'); });
             }
         });
     };
