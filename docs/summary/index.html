@@ -33,38 +33,48 @@
           <h3 class="docs-pattern_header">Default summary</h3>
           <section class="docs-pattern_pattern">
 <article class="summary">
-    <h1 class="summary_header">
-        Preventing illegal discrimination in auto lending
-    </h1>
+    <header class="summary_header">
+        <h1 class="summary_heading">
+            Preventing illegal discrimination in auto lending
+        </h1>
+    </header>
     <p class="summary_text">
         Every year, millions of American families buy a car –
         and it will be one of the most significant purchases they make.
         One key priority for us is protecting consumers from the silent
         pickpocket of discrimination.
     </p>
-    <p class="summary_byline">
-        By Patrice Ficklin
-    </p>
+    <footer class="summary_footer">
+        <p class="summary_byline">
+            By Patrice Ficklin
+        </p>
+        <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
+    </footer>
 </article>
 
           </section>
           <footer class="docs-pattern_footer">
             <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;summary&quot;&gt;
-    &lt;h1 class=&quot;summary_header&quot;&gt;
-        Preventing illegal discrimination in auto lending
-    &lt;/h1&gt;
+    &lt;header class=&quot;summary_header&quot;&gt;
+        &lt;h1 class=&quot;summary_heading&quot;&gt;
+            Preventing illegal discrimination in auto lending
+        &lt;/h1&gt;
+    &lt;/header&gt;
     &lt;p class=&quot;summary_text&quot;&gt;
         Every year, millions of American families buy a car –
         and it will be one of the most significant purchases they make.
         One key priority for us is protecting consumers from the silent
         pickpocket of discrimination.
     &lt;/p&gt;
-    &lt;p class=&quot;summary_byline&quot;&gt;
-        By Patrice Ficklin
-    &lt;/p&gt;
+    &lt;footer class=&quot;summary_footer&quot;&gt;
+        &lt;p class=&quot;summary_byline&quot;&gt;
+            By Patrice Ficklin
+        &lt;/p&gt;
+        &lt;span class=&quot;summary_event-date&quot;&gt;1/21/2015 @ 3:20 PM CST&lt;/span&gt;
+    &lt;/footer&gt;
 &lt;/article&gt;</code></pre>
             <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
-              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;summary\&amp;quot;&gt;\n    &lt;h1 class=\&amp;quot;summary_header\&amp;quot;&gt;\n        Preventing illegal discrimination in auto lending\n    &lt;/h1&gt;\n    &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n        Every year, millions of American families buy a car –\n        and it will be one of the most significant purchases they make.\n        One key priority for us is protecting consumers from the silent\n        pickpocket of discrimination.\n    &lt;/p&gt;\n    &lt;p class=\&amp;quot;summary_byline\&amp;quot;&gt;\n        By Patrice Ficklin\n    &lt;/p&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;summary\&amp;quot;&gt;\n    &lt;header class=\&amp;quot;summary_header\&amp;quot;&gt;\n        &lt;h1 class=\&amp;quot;summary_heading\&amp;quot;&gt;\n            Preventing illegal discrimination in auto lending\n        &lt;/h1&gt;\n    &lt;/header&gt;\n    &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n        Every year, millions of American families buy a car –\n        and it will be one of the most significant purchases they make.\n        One key priority for us is protecting consumers from the silent\n        pickpocket of discrimination.\n    &lt;/p&gt;\n    &lt;footer class=\&amp;quot;summary_footer\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;summary_byline\&amp;quot;&gt;\n            By Patrice Ficklin\n        &lt;/p&gt;\n        &lt;span class=\&amp;quot;summary_event-date\&amp;quot;&gt;1/21/2015 @ 3:20 PM CST&lt;/span&gt;\n    &lt;/footer&gt;\n&lt;/article&gt;\n&amp;quot;}">
               <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
             </form>
             <ul class="docs-codenotes">
@@ -73,8 +83,10 @@
 -----------------------
 .summary
   .summary_header
+      .summary_heading
   .summary_text
-  .summary_byline</code></pre>
+  .summary_footer
+      .summary_byline</code></pre>
               </li>
             </ul>
           </footer>
@@ -84,7 +96,7 @@
         <pre class="docs-code"><code data-language="css">.summary {
   display: block;
 }
-.summary_header {
+.summary_heading {
   color: #101820;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
   font-style: normal;
@@ -95,34 +107,34 @@
   line-height: 1.27272727;
   margin-bottom: 0.45454545em;
 }
-a:hover .summary_header,
-a.hover .summary_header,
-a:focus .summary_header,
-a.focus .summary_header {
+a:hover .summary_heading,
+a.hover .summary_heading,
+a:focus .summary_heading,
+a.focus .summary_heading {
   color: #328ed8;
 }
-.summary_header em,
-.summary_header i {
+.summary_heading em,
+.summary_heading i {
   font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .summary_header em,
-.lt-ie9 .summary_header i {
+.lt-ie9 .summary_heading em,
+.lt-ie9 .summary_heading i {
   font-style: normal !important;
 }
-.summary_header strong,
-.summary_header b {
+.summary_heading strong,
+.summary_heading b {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .summary_header strong,
-.lt-ie9 .summary_header b {
+.lt-ie9 .summary_heading strong,
+.lt-ie9 .summary_heading b {
   font-weight: normal !important;
 }
 @media only all and (max-width: 37.4375em) {
-  .summary_header {
+  .summary_heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -131,12 +143,12 @@ a.focus .summary_header {
     font-weight: 500;
     line-height: 1.22222222;
   }
-  .lt-ie9 .summary_header {
+  .lt-ie9 .summary_heading {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) {
-  .summary_header {
+  .summary_heading {
     font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -146,29 +158,29 @@ a.focus .summary_header {
     line-height: 1.26923077;
     margin-bottom: 0.34615385em;
   }
-  .summary_header em,
-  .summary_header i {
+  .summary_heading em,
+  .summary_heading i {
     font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .summary_header em,
-  .lt-ie9 .summary_header i {
+  .lt-ie9 .summary_heading em,
+  .lt-ie9 .summary_heading i {
     font-style: normal !important;
   }
-  .summary_header strong,
-  .summary_header b {
+  .summary_heading strong,
+  .summary_heading b {
     font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .summary_header strong,
-  .lt-ie9 .summary_header b {
+  .lt-ie9 .summary_heading strong,
+  .lt-ie9 .summary_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
-  .summary_header {
+  .summary_heading {
     font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -177,29 +189,29 @@ a.focus .summary_header {
     font-size: 1.375em;
     line-height: 1.27272727;
   }
-  .summary_header em,
-  .summary_header i {
+  .summary_heading em,
+  .summary_heading i {
     font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
     font-style: italic;
     font-weight: normal;
   }
-  .lt-ie9 .summary_header em,
-  .lt-ie9 .summary_header i {
+  .lt-ie9 .summary_heading em,
+  .lt-ie9 .summary_heading i {
     font-style: normal !important;
   }
-  .summary_header strong,
-  .summary_header b {
+  .summary_heading strong,
+  .summary_heading b {
     font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
   }
-  .lt-ie9 .summary_header strong,
-  .lt-ie9 .summary_header b {
+  .lt-ie9 .summary_heading strong,
+  .lt-ie9 .summary_heading b {
     font-weight: normal !important;
   }
 }
 @media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
-  .summary_header {
+  .summary_heading {
     margin-top: 0;
     margin-bottom: 1.16666667em;
     font-size: 1.125em;
@@ -208,7 +220,7 @@ a.focus .summary_header {
     font-weight: 500;
     line-height: 1.22222222;
   }
-  .lt-ie9 .summary_header {
+  .lt-ie9 .summary_heading {
     font-weight: normal !important;
   }
 }
@@ -239,31 +251,46 @@ a.focus .summary_header {
 .lt-ie9 .summary_text b {
   font-weight: normal !important;
 }
-.summary_byline {
+.summary_footer {
   color: #101820;
   font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
-.summary_byline em,
-.summary_byline i {
+.summary_footer em,
+.summary_footer i {
   font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-.lt-ie9 .summary_byline em,
-.lt-ie9 .summary_byline i {
+.lt-ie9 .summary_footer em,
+.lt-ie9 .summary_footer i {
   font-style: normal !important;
 }
-.summary_byline strong,
-.summary_byline b {
+.summary_footer strong,
+.summary_footer b {
   font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
-.lt-ie9 .summary_byline strong,
-.lt-ie9 .summary_byline b {
+.lt-ie9 .summary_footer strong,
+.lt-ie9 .summary_footer b {
   font-weight: normal !important;
+}
+.summary_event-date {
+  color: #0072ce;
+}
+a:hover .summary_event-date,
+a.hover .summary_event-date,
+a:focus .summary_event-date,
+a.focus .summary_event-date {
+  color: #328ed8;
+}
+.summary &gt; *:last-child {
+  margin-bottom: 0;
+}
+.summary &gt; *:last-child &gt; *:last-child {
+  margin-bottom: 0;
 }</code></pre>
       </div>
     </div>

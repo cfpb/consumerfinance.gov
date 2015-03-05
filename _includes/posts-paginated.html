@@ -7,28 +7,25 @@
 
 {% for post in posts %}
 
-    {% if path == '/newsroom/' and post.custom_fields.display_in_newsroom %}
+    {#- Newsroom contains select Blog posts.
+        These Newsroom Blog posts can be identified by a special
+        `display_in_newsroom` property.
+        When a Blog post is listed in Newsroom we should ignore its category
+        name and instead categorize it as "Blog". #}
+    {%- if vars.path == '/newsroom/' and post.custom_fields.display_in_newsroom %}
         {% set category = 'Blog' %}
-        {% set category_filter_url = '?filter_type=post' %}
     {% elif post.category.0 %}
         {% set category = post.category.0 %}
-        {% set category_filter_url = '?filter_category=' + category|urlencode|replace('%20', '+') %}
-    {% endif %}
+    {% endif -%}
+    {%- import "category-slug.html" as category_slug %}
+    {%- set slug = category_slug.render(category, vars.path, 'meta-header_left') -%}
 
     <article class="post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
-                {{ post.date|date("%b %d, %Y") }}
+                {{ post.date|date('%b %d, %Y') }}
             </span>
-        {% if category %}
-            <a class="category-slug meta-header_left" href="{{ category_filter_url }}">
-                {{ post_macros.category_icon(category, 'category-slug_icon')|safe }}
-                <span class="u-visually-hidden">Category:</span>
-                {{ category }}
-            </a>
-        {% else %}
-            &nbsp;
-        {% endif %}
+            {{ slug if category else '&nbsp;' }}
         </div>
     {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
         <a class="media" href="{{ post.permalink }}">

@@ -29,8 +29,9 @@ def documents(name, url, **kwargs):
         yield process_contact(post)
 
 def convert_custom_field(post_type, attribute, index=0, new_attribute=None):
-    
-    if attribute in post_type['custom_fields']:
+    # Check to make sure the index is in range for the list
+    if attribute in post_type['custom_fields'] and \
+        len(post_type['custom_fields'][attribute]) >= (index + 1):
         if new_attribute is None:
             post_type[attribute] = post_type['custom_fields'][attribute][index]
         else:
