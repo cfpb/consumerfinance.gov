@@ -252,6 +252,7 @@
 {% macro event_venue(post) %} 
     {%- set city =  post.city  | default('Washington, DC') -%}
     
+
     <section class="event-venue">
         <header class="event-venue_header">
             <h2 class="event-venue_heading">{{ city }}</h2>
@@ -262,20 +263,28 @@
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                    {% if (request.url_rule.endpoint == 'event_archive') %}
+                        Video Replay will be<br> available shortly
+                    {% else %}
                         {{ event_meta_datetime(post.date) }}
                         <a class="event-calendar_download jump-link jump-link__download" href="#">
                             <span class="jump_link_text">Download .ics</span>
                         </a>
+                    {% endif %}
                 </div>
           </div>
         </header>
         <footer>
             <figure class="event-media_container">
-                {{ event_location_image(post, {
-                    'zoom': '12',
-                    'scale': '2',
-                    'size': '640x320'
-                }) }}
+                {% if (request.url_rule.endpoint == 'event_archive') %}
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/9/94/Large.mc.arp.750pix.jpg" />
+                {% else %}
+                    {{ event_location_image(post, {
+                        'zoom': '12',
+                        'scale': '2',
+                        'size': '640x320'
+                    }) }}
+                {% endif %}
             </figure>
         </footer>
     </section>
