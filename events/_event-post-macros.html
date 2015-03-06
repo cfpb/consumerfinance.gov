@@ -277,6 +277,7 @@
         <footer>
             <figure class="event-media_container">
                 {% if (request.url_rule.endpoint == 'event_archive') %}
+                    {# TODO Replace image URL with actual post url #}
                     <img src="http://upload.wikimedia.org/wikipedia/commons/9/94/Large.mc.arp.750pix.jpg" />
                 {% else %}
                     {{ event_location_image(post, {
