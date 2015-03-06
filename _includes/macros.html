@@ -66,7 +66,7 @@
    title:                      The title of the thing to share. Used by the
                                'share via email'.
 
-   show_header (optional):     Toggles the heading. Defaults to false.
+   hide_heading (optional):    Toggles the heading. Defaults to true.
 
    twitter_options (optional): See `options` under the `share_twitter_url()`
                                macro.
@@ -80,11 +80,9 @@
 
    ========================================================================== #}
 
-{% macro share(title, show_header=false, twitter_options={}) %}
+{% macro share(title, hide_heading=true, twitter_options={}) %}
     <aside>
-    {% if show_header %}
-        <h1 class="h5">Share this page</h1>
-    {% endif %}
+        <h1 class="h5 {{'u-visually-hidden' if hide_heading}}">Share this page</h1>
         <ul class="post_share list__horizontal">
             <li class="list_item">
                 <a class="share-icon"
