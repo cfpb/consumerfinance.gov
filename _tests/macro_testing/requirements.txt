@@ -1,0 +1,4 @@
+beautifulsoup4==4.3.2
+Jinja2==2.7.3
+mock==1.0.1
+sheer
