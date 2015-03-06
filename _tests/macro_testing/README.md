@@ -80,8 +80,9 @@ this:
         {
             "selector": "<css selector>",
             "index": <1>,
-            "assertion": "<equal>",
             "value": "<string contained>"
+            "assertion": "<equal>",
+            "attribute": "<class>"
         }
     ]
 }
@@ -124,15 +125,13 @@ mocking:
 **`assertions`** defines the assertions to make about the result of
 rendering the macro. Assertion definitions take a CSS `selector`, an 
 `index` in the list of matches for that selector (default is `0`), an 
-`assertion` to make an  a `value` for comparison (if necessary for the 
-assertion).
+`assertion` to make about the selected element or its `attribute` (if 
+given), and a `value` for comparison (if necessary for the assertion).
 
 The `assertion` can be any of the following:
 
 - `equal`
 - `not equal`
-- `true`
-- `false`
 - `exists`
 - `in`
 - `not in`
