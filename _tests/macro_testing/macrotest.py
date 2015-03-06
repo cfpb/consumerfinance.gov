@@ -43,7 +43,6 @@ class MacroTestCase(unittest.TestCase):
                 result = self.render_macro('mymacros.html', 'amacro')
                 assert 'something' in result
         ````
-
     """
 
     def setup_environment(self, search_path='/'):
@@ -155,26 +154,36 @@ class MacroTestCase(unittest.TestCase):
         return BeautifulSoup(result)
 
 
-    def make_assertion(self, result, selector, index=0, assertion='exists', value=None):
+    def make_assertion(self, result, selector, index=0,
+                       value=None, assertion='exists', attribute=''):
         """
         Make an assertion based on the BeautifulSoup result object.
 
         This method will find the given CSS selector, and make the given
-        assertion about the selector's match at the given index. If the
-        assertion requires a value to compare to, it should be given.
+        assertion about the attribute of selector's match at the given
+        index. If the assertion requires a value to compare to, it should
+        be given. If no attribute is given the assertion is made about
+        the entire match.
         """
+
         selection = result.select(selector)
 
+        # Get the value we're making assertions about. It's either the selection
+        # itself or the value of the given attribute on the selection.
+        selection_value = selection[index]
+        if attribute:
+            selection_value = selection[index].get(attribute)
+
         if assertion == 'equal':
-            assert value == selection[index]
+            assert value == selection_value
         elif assertion == 'not equal':
-            assert value != selection[index]
+            assert value != selection_value
         elif assertion == 'exists':
-            assert len(selection) > index
+            assert selection_value
         elif assertion == 'in':
-            assert value in selection[index]
+            assert value in selection_value
         elif assertion == 'not in':
-            assert value not in selection[index]
+            assert value not in selection_value
 
 
 def JSONSpecMacroTestCaseFactory(name, json_file):
@@ -203,8 +212,9 @@ def JSONSpecMacroTestCaseFactory(name, json_file):
                 {
                     "selector": "<css selector>",
                     "index": <1>,
-                    "assertion": "<equal>",
                     "value": "<string contained>",
+                    "assertion": "<equal>",
+                    "attribute": "<attribute name>",
                 "
             ]
         }
@@ -212,7 +222,8 @@ def JSONSpecMacroTestCaseFactory(name, json_file):
     Assertion definitions take a CSS selector, an index in the list of
     matches for that selector (default is 0), the names and mock values
     of any filters or context functions that are used, an assertion,
-    and a value for comparison (if necessary for the assertion).
+    a value for comparison (if necessary for the assertion), and, if
+    necessary, the attribute on the selected element to compare to.
 
     "arguments", "keyword_arguments", "filters", and
     "context_functions" are optional.
@@ -220,13 +231,9 @@ def JSONSpecMacroTestCaseFactory(name, json_file):
     Assertions can be any of the following:
         * equal
         * not equal
-        * true
-        * false
         * exists
         * in
         * not in
-
-            *: Not yet supported
 
     So a JSON file with multiple testcases (should ideall corrospond
     to a ']ngle template file) would look like this:
@@ -275,10 +282,12 @@ def JSONSpecMacroTestCaseFactory(name, json_file):
                 index = a.get('index', 0)
                 assertion = a.get('assertion', 'exists')
                 value = a.get('value')
+                attribute = a.get('attribute', '')
 
                 try:
                     self.make_assertion(result, selector, index=index,
-                                        assertion=assertion, value=value)
+                                        value=value, assertion=assertion,
+                                        attribute=attribute)
                 except AssertionError as e:
                     # Try to provide some more relevent information to the
                     # assertion error, since by default it'll just say the
