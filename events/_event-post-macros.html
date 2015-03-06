@@ -97,8 +97,8 @@
 
    ========================================================================== #}
 
-{% macro event_meta(post, address_format='{city} {state}', datetime_format={})%}
-    <div class="event-meta h-event">
+{% macro event_meta(post, address_format='{city}, {state}', datetime_format={})%}
+    <div class="event-meta event-meta__medium h-event">
         {{ event_meta_address(post, address_format) }} 
         {{ event_meta_datetime(post.date, datetime_format) }}
     </div>
@@ -123,7 +123,7 @@
 
    ========================================================================== #}
 
-{% macro event_meta_address(post, address_format='{city} {state}') %}
+{% macro event_meta_address(post, address_format='{city}, {state}') %}
     {%- set city  =  post.city   | default('Washington', true) -%}
     {%- set state =  post.state  | default('DC', true) -%}
     {%- set street = post.street | default('1275 First St NE', true) -%}
