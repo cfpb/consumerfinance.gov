@@ -20,16 +20,16 @@
                        create the filtered URL: {{ path }}?filter_tags={{ tag }}.
 
    hide_header:        The optional boolean flag to hide the tags_header element.
-                       Defaults to False. Adds class 'tags__hide-header' if True
+                       Defaults to false. Adds class 'tags__hide-header' if true
                        value passed.
 
    display_block       The optional boolean flag to display the tags list as block.
-                       Defaults to False. Adds class 'tags__block-list' if True
+                       Defaults to false. Adds class 'tags__block-list' if true
                        value passed.
 
    ========================================================================== #}
 
-{% macro render(tags, path, hide_header=False, display_block=False) %}
+{% macro render(tags, path, hide_header=false, display_block=false) %}
 <div class="tags {{'tags__hide-header' if hide_header}} {{'tags__block-list' if display_block}}">
     <h1 class="tags_header {{'u-visually-hidden' if hide_header}}">Topics:</h1>
     <ul class="tags_list">
