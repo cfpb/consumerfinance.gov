@@ -54,8 +54,8 @@
             </p>
         </div>
         <div class='block block__padded-top'>
+            {% from "_event-landing-macros.html" import event_preview as event_preview %}
             {% for post in vars.events %}
-                {% from "_event-landing-macros.html" import event_preview as event_preview %}
                 {{ event_preview(post) }}
             {% endfor %}
          </div>
