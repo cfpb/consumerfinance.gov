@@ -20,20 +20,22 @@
 {% macro event_preview(post, media_object=true) %}
   {% import "_event-post-macros.html" as event_post_macros with context %}
   <article class="post-preview post-preview__event">
-    {% if media_object %}
-      <div class="media-object">
-        <a class="media-object_image-container" href="{{ post.permalink }}">
-            {{ event_post_macros.event_location_image(post) }}
-        </a>
-        <div class="media-object_text-container summary summary__event">
+      {% if media_object %}
+          <div class="media">
+            <a class="media_image-container post-summary-image" href="{{ post.permalink }}">
+                  <div class="post-summary-image_container">
+                      {{ event_post_macros.event_location_image(post) }}
+                  </div>
+              </a>
+              <div class="media_body media_body__event">
+                  {{ event_post_macros.post_summary(post) }}
+              </div>
+          </div>
+      {% else %}
+          <div class="media_body media_body__event">
             {{ event_post_macros.post_summary(post) }}
-        </div>
-      </div>
-    {% else %}
-        <div class="summary summary__event">
-          {{ event_post_macros.post_summary(post) }}
-        </div>
-    {% endif %}
+          </div>
+      {% endif %}
   </article>
 {% endmacro %}
 
