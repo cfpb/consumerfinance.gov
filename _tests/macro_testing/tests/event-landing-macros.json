@@ -1,0 +1,39 @@
+{
+    "file": "_event-landing-macros.html",
+    "tests": [
+        {
+            "macro_name": "event_preview",
+            "arguments": [
+                {
+                    "title": "Test Post",
+                    "dek": "A dek",
+                    "excerpt": "An excerpt",
+                    "author": ["Me"],
+                    "date": "2014-10-28"
+                 }
+            ],
+            "assertions": [
+                {
+                    "selector": ".summary_heading",
+                    "index": 0,
+                    "assertion": "in",
+                    "value": "Test Post"
+                },
+                {
+                    "selector": ".calendar-icon span",
+                    "index": 0,
+                    "value": "u-visually-hidden",
+                    "assertion": "equal",
+                    "attribute": "class"
+                },
+                {
+                    "selector": ".calendar-icon span",
+                    "index": 0,
+                    "value": "Oct 28, 2014",
+                    "assertion": "in"
+                }
+            
+            ]
+        }
+    ]
+}
