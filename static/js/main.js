@@ -12589,12 +12589,14 @@ String.prototype.score = function(word, fuzziness) {
 
 }( jQuery ));
 
+'use strict';
+
 var modernBrowser = 'innerWidth' in window,
     viewportEl = modernBrowser ? window : (document.documentElement || document.body),
     propPrefix = modernBrowser ? 'inner' : 'client';
-    
+
 function getViewportDimensions() {
-    return {width: viewportEl[propPrefix + 'Width'], height: viewportEl[propPrefix + 'Height']};
+    return {'width': viewportEl[propPrefix + 'Width'], 'height': viewportEl[propPrefix + 'Height']};
 }
 
 
@@ -12602,7 +12604,7 @@ function getViewportDimensions() {
  * @name BreakpointHandler
  *
  * @description On window resize, checks viewport
- * width against a specified breakpoint value or range, 
+ * width against a specified breakpoint value or range,
  * and calls `enter` or `leave` callback if breakpoint
  * region has just been entered or exited.
  *
@@ -12613,18 +12615,18 @@ function getViewportDimensions() {
  *  enter: callback when breakpoint region entered,
  *  leave: callback when breakpoint region exited
  * }
- * 
+ *
  */
 
-BreakpointHandler = function (opts) {
-    opts || (opts = {});
+function BreakpointHandler(opts) {
+    opts = opts || {};
     this.match = false;
     this.breakpoint = opts.breakpoint;
     this.enter = opts.enter;
     this.leave = opts.leave;
     this.type = opts.type || 'max';
     this.init();
-};
+}
 
 BreakpointHandler.prototype.init = function () {
     this.handleViewportChange();
@@ -12633,7 +12635,7 @@ BreakpointHandler.prototype.init = function () {
 
 BreakpointHandler.prototype.watchWindowResize = function () {
     var self = this;
-    $(window).bind("resize", function () {
+    $(window).bind('resize', function () {
         self.handleViewportChange();
     });
 };
@@ -12642,44 +12644,42 @@ BreakpointHandler.prototype.handleViewportChange = function () {
     var width = viewportEl[propPrefix + 'Width'],
         match = this.testBreakpoint(width);
     if (match !== this.match) {
-        if (match) {
-            this.enter && this.enter();
-        } else {
-            this.leave && this.leave();
-        }
+        if (match && this.enter) this.enter();
+        else if (this.leave) this.leave();
     }
     this.match = match;
 };
 
 BreakpointHandler.prototype.testBreakpoint = function (width) {
+    var atBreakpoint;
     switch (this.type) {
         case 'max':
-            return width <= this.breakpoint;
+            atBreakpoint = (width <= this.breakpoint);
             break;
         case 'min':
-            return width >= this.breakpoint;
+            atBreakpoint = (width >= this.breakpoint);
             break;
         case 'range':
-            return width >= this.breakpoint[0] && width <= this.breakpoint[1];
+            atBreakpoint = (width >= this.breakpoint[0] && width <= this.breakpoint[1]);
             break;
         default:
-            return;
+            // no default
     }
+    return atBreakpoint;
 };
 
 /**
  * @name MobileOnlyExpandable
  *
  * @description Hides content in an expandable for mobile screens.
- * When viewport size drops below specified max-width breakpoint, 
+ * When viewport size drops below specified max-width breakpoint,
  * visible expandable content is hidden.
  * When breakpoint is exceeded, expandable content is shown.
  * (Expandable trigger is currently hidden/shown via media query.)
  *
  * @params {object} elem jQuery `expandable` element
  * @params {number} breakpoint mobile max-width value
- * 
- * 
+ *
  */
 
 function MobileOnlyExpandable(elem, breakpoint) {
@@ -12687,14 +12687,14 @@ function MobileOnlyExpandable(elem, breakpoint) {
     this.expandableTarget = this.expandable.children('.expandable_target');
     this.breakpoint = breakpoint;
     this.init();
-};
+}
 
 MobileOnlyExpandable.prototype.init = function () {
     // Make sure we have necessary elements before proceeding.
     if (this.expandable instanceof jQuery && this.expandableTarget instanceof jQuery) {
         this.breakpointHandler = new BreakpointHandler({
             breakpoint: this.breakpoint,
-            type: "max",
+            type: 'max',
             enter: $.proxy(this.closeExpandable, this),
             leave: $.proxy(this.openExpandable, this)
         });
@@ -12719,47 +12719,49 @@ MobileOnlyExpandable.prototype.openExpandable = function () {
     }
 };
 
+'use strict';
+
 /**
  * @name contentSlider
  *
  * @description Slides content in and out of a container div.
  *
- * When an element inside container with class `content-show` 
+ * When an element inside container with class `content-show`
  * is clicked, the element matching its `data-content` value
  * will be cloned, inserted in a slide, and rotated into view in the
- * container, whose height will be recalculated to match new contents. 
+ * container, whose height will be recalculated to match new contents.
  * When elements with class `content-hide` are clicked,
  * the slide containing the element will be rotated out of view
  * and then removed from the DOM.
  *
- * @params {string} elem container element
- * @params {number} slideCount number of permanent slides in the container
- * 
+ * @param {string} elem container element
+ * @param {number} slideCount number of permanent slides in the container
+ *
  */
- 
 function contentSlider(elem, slideCount) {
     var self = this;
     this.$container = $(elem);
     this.speed = 300;
     this.slideCount = slideCount;
-    // init slick carousel
+
+    // Initialize slick carousel.
     this.$container.slick({
-         dots: false,
-         infinite: false,
-         swipe: false,
-         speed: this.speed,
-         adaptiveHeight: true,
-         arrows: false,
-         onBeforeChange: function (slider, currInd, targetInd) {
-             // when slide is changed, animate height of container to accommodate
-             // new slide's height.
-             var slide = slider.$slides[targetInd];
-             slider.$slider.animate({height: $(slide).height() + 'px'}, self.speed);
-         }
-     });
-     this.slickObj = this.$container.getSlick();
-     this.init();
-};
+        dots: false,
+        infinite: false,
+        swipe: false,
+        speed: this.speed,
+        adaptiveHeight: true,
+        arrows: false,
+        onBeforeChange: function (slider, currInd, targetInd) {
+            // when slide is changed, animate height of container to accommodate
+            // new slide's height.
+            var slide = slider.$slides[targetInd];
+            slider.$slider.animate({height: $(slide).height() + 'px'}, self.speed);
+        }
+    });
+    this.slickObj = this.$container.getSlick();
+    this.init();
+}
 
 contentSlider.prototype.init = function () {
     var self = this;
@@ -12772,7 +12774,7 @@ contentSlider.prototype.slideInContent = function (e) {
     e.preventDefault();
     var contents,
         self = this,
-        $div = $('<div>'), 
+        $div = $('<div>'),
         $node = $($(e.currentTarget).data('content'));
     if ($node.length) {
         // TODO: move content instead of cloning; use ids instead of classes
@@ -12786,21 +12788,26 @@ contentSlider.prototype.slideOutContent = function (e) {
     var self = this;
     e.preventDefault();
     this.$container.slickPrev();
-    // once slide has been animated out of view, remove it from DOM
+
+    // Once slide has been animated out of view, remove it from DOM.
     setTimeout(function () {
         self.$container.slickRemove(self.slickObj.$slides.length - 1);
     }, this.speed);
 };
 
 contentSlider.prototype.destroy = function () {
-    // remove all but permanent slides
+    // Remove all but permanent slides.
     while (this.slickObj.$slides.length > this.slideCount) {
         this.$container.slickRemove(this.slickObj.$slides.length - 1);
     }
-    // remove listeners on container
+
+    // Remove listeners on container.
     this.$container.off('click.slider');
     this.$container.unslick();
 };
+
+'use strict';
+
 /*
  * ======================================================================
  * Aria Button
@@ -12822,15 +12829,17 @@ $.fn.cfpbAriaButton = function( userSettings ) {
         $this.click(function() {
             togglePressedVal( $this );
         });
-        $this.keyup(function(event){
-            if ( event.which === 32 ) { // Space key
+        $this.keyup(function(event) {
+            // Space key
+            if ( event.which === 32 ) {
                 event.preventDefault();
                 togglePressedVal( $this );
             }
         });
         // Prevent the spacebar from scrolling the page
-        $this.keydown(function(event){
-            if ( event.which === 32 ) { // Space key
+        $this.keydown(function(event) {
+            // Space key
+            if ( event.which === 32 ) {
                 event.preventDefault();
             }
         });
@@ -12845,9 +12854,9 @@ $.fn.cfpbAriaButton = function( userSettings ) {
 
 function toggleBoolean( userBoolean ) {
     var typedBoolean;
-    if ( typeof( userBoolean ) === 'boolean' ) {
+    if ( typeof userBoolean === 'boolean' ) {
         typedBoolean = userBoolean;
-    } else if ( typeof( userBoolean ) === 'string' ) {
+    } else if ( typeof userBoolean === 'string' ) {
         typedBoolean = ( userBoolean === 'true' ) ? true : false;
     }
     return !typedBoolean;
@@ -12867,7 +12876,7 @@ $(function() {
         $slidingNavPage = $('.sliding-nav_page'),
         $slidingNavPageOverlay = $('.sliding-nav_page-overlay');
 
-    $slidingNavTrigger.click(function( e ){
+    $slidingNavTrigger.click(function( e ) {
         e.preventDefault();
 
         // First deal with the filters button if it exists
@@ -12876,7 +12885,7 @@ $(function() {
         }
 
         if ( $slidingNav.hasClass('is-open') ) {
-            window.setTimeout( function(){
+            window.setTimeout( function() {
                 $slidingNavPage.removeClass('is-scroll-disabled');
             }, 200 );
             $slidingNav.removeClass('is-open');
@@ -12884,8 +12893,8 @@ $(function() {
         } else {
             $slidingNav.addClass('is-open');
             $(window).scroll( slidingNavStopScroll );
-            $slidingNavPageOverlay.click(function( e ){
-                e.preventDefault();
+            $slidingNavPageOverlay.click( function( evt ) {
+                evt.preventDefault();
                 $( $slidingNavTrigger[0] ).trigger('click');
             });
         }
@@ -12905,11 +12914,11 @@ $(function() {
     // Expanding list
     // TODO: Determine if we should actually use the cfpbAriaButton plugin.
     $('.list-expanding_trigger').cfpbAriaButton();
-    $('.list-expanding_trigger').click(function( e ){
+    $('.list-expanding_trigger').click( function( e ) {
         e.preventDefault();
         $(this).next().find('.list-expanding_child-list').slideToggle(100);
     });
-    $('.list-expanding_trigger').keyup(function( e ){
+    $('.list-expanding_trigger').keyup( function( e ) {
         if ( e.which === 32 ) { // Space key
             e.preventDefault();
             $(this).next().find('.list-expanding_child-list').slideToggle(100);
@@ -12943,7 +12952,7 @@ $(function() {
     // Add aria-expanded
     $desktopMenuChild.attr( 'aria-expanded', 'false' );
 
-    $desktopMenu.mouseleave(function( e ){
+    $desktopMenu.mouseleave( function( e ) {
 
         // Update the mouse and menu state
         aMenuItemWasOpened = false;
@@ -12954,7 +12963,7 @@ $(function() {
 
     });
 
-    $desktopMenuTrigger.mouseenter(function( e ){
+    $desktopMenuTrigger.mouseenter( function( e ) {
 
         if (!isSmall) {
             // Update aria-expanded
@@ -12977,7 +12986,7 @@ $(function() {
 
     });
 
-    $desktopMenuTrigger.mouseleave(function( e ){
+    $desktopMenuTrigger.mouseleave( function( e ) {
 
         if (!isSmall) {
             // Update the menu item state
@@ -13004,7 +13013,7 @@ $(function() {
    Nav-secondary
    ========================================================================== */
 
-$(document).ready(function(){
+$(document).ready( function() {
     // This needs to be in document ready because that is when the jquery plugins
     // are instantiated.
 
@@ -13117,13 +13126,13 @@ $('.js-form_clear').on('click', function() {
     // Clear checkboxes
     $form.find('[type="checkbox"]')
     .removeAttr('checked');
-    
+
     // Clear select options
     $form.find('select option')
     .removeAttr('selected');
     $form.find('select option:first')
     .attr('selected', true);
-    
+
     // Clear .custom-input elements
     $form.find('.custom-input')
     .trigger('updateState');
@@ -13159,19 +13168,19 @@ $('.history-section-expandable').find('.expandable_target')
    ========================================================================== */
 
 $('.js-filter_range-date-wrapper').each(function( index ) {
-  var $this = $( this );
-  var $newThis = $this.next('.js-filter_range-date-replacement');
-  var options = {
-      newHTML: $newThis,
-      newInputsOrder: [
-        '#' + $newThis.find('.js-filter_year').attr('id'),
-        '#' + $newThis.find('.js-filter_month').attr('id')
-      ],
-      initialValues: $this.find('.js-filter_range-date').val().split('-'),
-      delimiter: '-'
-  };
-  $this.cf_inputSplit( options );
-  $( options.newInputsOrder ).trigger('updateState');
+    var $this = $( this );
+    var $newThis = $this.next('.js-filter_range-date-replacement');
+    var options = {
+        newHTML: $newThis,
+        newInputsOrder: [
+            '#' + $newThis.find('.js-filter_year').attr('id'),
+            '#' + $newThis.find('.js-filter_month').attr('id')
+        ],
+        initialValues: $this.find('.js-filter_range-date').val().split('-'),
+        delimiter: '-'
+    };
+    $this.cf_inputSplit( options );
+    $( options.newInputsOrder ).trigger('updateState');
 });
 
 
@@ -13225,27 +13234,27 @@ $('body').cf_pagination({
    ========================================================================== */
 
 $('.js-validate-filters').each(function() {
-  var $this = $( this ),
-      $gte = $this.find('.js-filter_range-date__gte'),
-      $lte = $this.find('.js-filter_range-date__lte');
+    var $this = $( this ),
+        $gte = $this.find('.js-filter_range-date__gte'),
+        $lte = $this.find('.js-filter_range-date__lte');
 
-  function validDateRange(date1, date2) {
-     return date2.getTime() > date1.getTime();
-  }
-
-  $( this ).on('submit', function( e ) {
-    var validDate = validDateRange(
-        new Date( Date.parse($gte.val()) ),
-        new Date( Date.parse($lte.val()) )
-    );
-    if ( !validDate ) {
-        // Swap the values
-        var gteVal = $gte.val();
-        var lteVal = $lte.val();
-        $gte.val( lteVal );
-        $lte.val( gteVal );
+    function validDateRange(date1, date2) {
+        return date2.getTime() > date1.getTime();
     }
-  });
+
+    $( this ).on('submit', function( e ) {
+        var validDate = validDateRange(
+            new Date( Date.parse($gte.val()) ),
+            new Date( Date.parse($lte.val()) )
+        );
+        if ( !validDate ) {
+            // Swap the values
+            var gteVal = $gte.val();
+            var lteVal = $lte.val();
+            $gte.val( lteVal );
+            $lte.val( gteVal );
+        }
+    });
 });
 
 
@@ -13270,7 +13279,7 @@ function getQueryVariable(key, queryString) {
 
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        if (pair[0] == key) {
+        if (pair[0] === key) {
             return pair[1];
         }
     }
@@ -13284,19 +13293,18 @@ function replaceQueryVariable(key, value, queryString) {
 
     if (typeof queryString === 'string') {
         query = queryString;
+    } else if (window.location.search.charAt(0) === '?') {
+        query = window.location.search.substring(1);
     } else {
-        if (window.location.search.charAt(0) === '?') {
-            query = window.location.search.substring(1);
-        } else {
-            query = window.location.search;
-        }
+        query = window.location.search;
     }
 
     vars = query.split('&');
 
+    var pair;
     for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (pair[0] == key) {
+        pair = vars[i].split('=');
+        if (pair[0] === key) {
             return '?' + query.replace(
                 pair[0] + '=' + pair[1],
                 pair[0] + '=' + value
@@ -13310,9 +13318,8 @@ function replaceQueryVariable(key, value, queryString) {
 function getQuery() {
     if (window.location.search.charAt(0) === '') {
         return false;
-    } else {
-        return window.location.search;
     }
+    return window.location.search;
 }
 
 /* ==========================================================================

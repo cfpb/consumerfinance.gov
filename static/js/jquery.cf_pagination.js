@@ -1,6 +1,8 @@
+'use strict';
+
 (function ($) {
 
-    $.fn.cf_pagination = function(userSettings){
+    $.fn.cf_pagination = function(userSettings) {
 
         // Todo: Modify the URL using https://github.com/browserstate/history.js
 
@@ -19,7 +21,7 @@
         function updatePosts(results) {
             // Animation
             $('#pagination_content')
-            .fadeOut(400, function(){
+            .fadeOut(400, function() {
                 $(this).replaceWith(results);
                 $('#pagination_content')
                 .hide()
@@ -43,12 +45,12 @@
             return promise;
         }
 
-        return $(this).each(function(){
+        return $(this).each(function() {
             var settings = $.extend({
-                        'callback': function(e){}
+                        'callback': function(e) {}
                     }, userSettings );
 
-            $(this).on('submit', '.pagination_form', function(e){
+            $(this).on('submit', '.pagination_form', function(e) {
                 submit(e, settings.callback);
             });
         });
