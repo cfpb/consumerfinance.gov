@@ -5362,37 +5362,6 @@ tbody tr {
   width: auto;
 }
 
-.media-object {
-  display: block;
-}
-
-.media-object {
-  position: relative;
-  min-height: 9.9375em;
-  padding-left: 11.5625em;
-}
-
-.media-object_image-container {
-  position: absolute;
-  top: .25em;
-  left: 0;
-  width: 9.6875em;
-  overflow: hidden;
-}
-
-.media-object_image {
-  margin-bottom: .5em;
-}
-
-.media-object_image {
-  display: block;
-  width: 17.25em;
-  max-width: 17.25em;
-  max-height: 9.6875em;
-  margin-bottom: 0;
-  margin-left: -3.78125em;
-}
-
 .tags {
   position: relative;
   padding-left: 4.125em;
@@ -7211,6 +7180,23 @@ a.focus .summary_event-date {
 .lt-ie9 .popular-stories .list_link b,
 .lt-ie9 .related-posts .list_link b {
   font-weight: normal !important;
+}
+
+.post-summary-image {
+  position: relative;
+  width: 9.6875em;
+}
+
+.post-summary-image_container {
+  overflow: hidden;
+}
+
+.post-summary-image img {
+  display: block;
+  width: 17.25em;
+  max-width: 17.25em;
+  max-height: 9.6875em;
+  margin-left: -3.78125em;
 }
 
 .comments {
