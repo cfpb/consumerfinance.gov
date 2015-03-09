@@ -141,13 +141,17 @@ module.exports = function(grunt) {
 
     /**
      * Less: https://github.com/gruntjs/grunt-contrib-less
-     * 
+     *
      * Compile Less files to CSS.
      */
     less: {
       main: {
         options: {
           paths: grunt.file.expand('vendor/**/'),
+          compress: true,
+          sourceMap: true,
+          sourceMapFilename: 'static/css/main.css.map', // where file is generated and located
+          sourceMapURL: 'main.css.map', // the complete url and filename put in the compiled css file
         },
         files: {
           'static/css/main.css': ['static/css/main.less']
@@ -238,30 +242,6 @@ module.exports = function(grunt) {
         },
         files: {
           src: ['static/js/*.min.js']
-        }
-      }
-    },
-
-    /**
-     * CSS Min: https://github.com/gruntjs/grunt-contrib-cssmin
-     *
-     * Compress CSS files.
-     */
-    cssmin: {
-      main: {
-        options: {
-          processImport: false
-        },
-        files: {
-          'static/css/main.min.css': ['static/css/main.css'],
-        }
-      },
-      'ie-alternate': {
-        options: {
-          processImport: false
-        },
-        files: {
-          'static/css/main.ie.min.css': ['static/css/main.ie.css'],
         }
       }
     },
@@ -465,7 +445,7 @@ module.exports = function(grunt) {
    */
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
                                 'copy:static-legacy', 'concat:cf-less']);
-  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'cssmin', 'usebanner:css']);
+  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['jshint']);
