@@ -28,5 +28,10 @@
     "url":       "/events/<id>/",
     "type":      "posts",
     "permalink": true
+  },
+  "event_archive": {
+    "url":       "/events/archive/<id>/",
+    "type":      "posts",
+    "permalink": true
   }
 }
