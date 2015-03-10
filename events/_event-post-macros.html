@@ -98,7 +98,7 @@
    ========================================================================== #}
 
 {% macro event_meta(post, address_format='{city}, {state}', datetime_format={})%}
-    <div class="event-meta event-meta__medium h-event">
+    <div class="event-meta h-event">
         {{ event_meta_address(post, address_format) }}
         {{ event_meta_datetime(post.date, datetime_format) }}
     </div>
