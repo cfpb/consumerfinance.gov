@@ -1,6 +1,4 @@
-
-{% set results = queries.office.search_with_url_arguments(q="_id:students-2",size=1) %}
-{% set office = results | first %}
+{% set office = get_document("office", "students-2") %}
 {% set path = '/offices/' + office.slug + '/' %}
 {% set initiative = students_initiative %}
 {% set activity_type = "Students" %}
