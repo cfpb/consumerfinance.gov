@@ -18,7 +18,7 @@
 
 .post-preview__event {
     border-top: 1px solid @gray-50;
-    padding-top: 1em;
+    padding-top: unit(30px  / @base-font-size-px, em);
 
     .media-object_image-container {
         top: 0;
@@ -41,7 +41,7 @@
     }
 
     .event-meta {
-        color: @black;
+        color: @darkgray;
     }
 
     .event-meta_address {
@@ -70,6 +70,11 @@
     .summary_heading {
         // Setting margin-top to align with calendar icon.
         margin: -1 * unit(2px  / @base-font-size-px, em) 0 0 0;
+
+        .respond-to-max(@mobile-max {
+            .h3();
+            margin-bottom: 0;
+        });
     }
 
     .summary-meta_container {
