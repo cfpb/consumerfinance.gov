@@ -5324,7 +5324,7 @@ tbody tr {
 
 .media_image-container {
   float: left;
-  margin-right: 15px;
+  margin-right: 30px;
 }
 
 .media_image-container.media_image-container__wide-margin {
@@ -5750,7 +5750,7 @@ a.category-slug.active {
 
 .meta-header {
   padding-bottom: .5em;
-  margin-bottom: .625em;
+  margin-bottom: 1.875em;
   border-bottom: 1px solid #babbbd;
 }
 
@@ -8974,7 +8974,7 @@ a.focus .summary_event-date {
 
 .post-preview__event {
   border-top: 1px solid #babbbd;
-  padding-top: 1em;
+  padding-top: 1.875em;
 }
 
 .post-preview__event .media-object_image-container {
