@@ -16,7 +16,8 @@
   },
   "initiative": {
     "url":       "$WORDPRESS/api/get_posts/?post_type=initiative",
-    "processor": "wordpress_initiative_processor"
+    "processor": "wordpress_initiative_processor",
+    "mappings": "_settings/initiative_mappings.json"
   },
   "office": {
     "url":       "$WORDPRESS/api/get_posts/?post_type=office",
