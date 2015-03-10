@@ -9195,6 +9195,20 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
+.event-status_rsvp p:first-child {
+  line-height: 1;
+  margin-bottom: .9375em;
+}
+
+.event-status_rsvp p:last-child {
+  margin-bottom: 1.875em;
+}
+
+.event-status_livestream p:first-child {
+  line-height: 1;
+  margin-bottom: .625em;
+}
+
 .event-venue {
   background: #f1f2f2;
   border-top: 5px solid #2cb34a;
