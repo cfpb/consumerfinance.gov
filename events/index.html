@@ -41,7 +41,7 @@
 
 {% block content_main %}
 
-    <section class="media block block__flush-top block__sub">
+    <section class="media block block__flush-bottom block__flush-top">
         <div class="media_body">
             <h1>Upcoming events</h1>
             {# TODO Replace ipsum with latest upcoming event content. #}
@@ -53,7 +53,7 @@
                 Duis aute irure dolor in reprehenderit.
             </p>
         </div>
-        <div class='block block__padded-top'>
+        <div class='block block__flush-bottom block__padded-top'>
             {% from "_event-landing-macros.html" import event_preview as event_preview %}
             {% for post in vars.events %}
                 {{ event_preview(post) }}
