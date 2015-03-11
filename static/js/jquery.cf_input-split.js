@@ -1,3 +1,5 @@
+'use strict';
+
 (function ($) {
 
     /* ==========================================================================
@@ -51,7 +53,7 @@
            $('#myfield').cf_fieldSplit({
                newInputsOrder: ['#year', '#month']
            });
-       
+
        delimiter: Sets the delimiter when concatenating the values of the
        replacement fields. Defaults to `-`.
 
@@ -119,7 +121,7 @@
 
                     // Now that we have an array of new inputs we can loop
                     // through them and add stuff.
-                    for (var i = 0; i < this.newInputs.length; i++) {
+                    for (i = 0; i < this.newInputs.length; i++) {
                         var $input = $(this.newInputs[i]);
 
                         // Attach an event listener to the new inputs so we can
@@ -132,7 +134,7 @@
                         // Add an intial value if one was specified.
                         // Currently only select elements are supported.
                         if ($input.is('select')) {
-                            $input.find('option').each(function(){
+                            $input.find('option').each(function() {
                                 if ($(this).val() === inputSplit.initialValues[i]) {
                                     $(this).prop('selected', true);
                                     $(this).attr('selected', true);
@@ -169,9 +171,8 @@
                     // If there is only one non-empty value return it.
                     if (vals.length > 1) {
                         return vals.join(this.delimiter);
-                    } else {
-                        return vals[0];
                     }
+                    return vals[0];
                 },
 
                 getFormElements: function($html) {
@@ -179,9 +180,8 @@
                     // If it's not then return any form fields inside of it.
                     if ($html.is(this.genericFields)) {
                         return $html;
-                    } else {
-                        return $html.find(this.genericFields);
                     }
+                    return $html.find(this.genericFields);
                 }
             };
 

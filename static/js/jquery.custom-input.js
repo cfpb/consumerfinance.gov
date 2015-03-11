@@ -1,19 +1,21 @@
+'use strict';
+
 (function ($) {
 
-    $.fn.customInput = function( userSettings ){
+    $.fn.customInput = function( userSettings ) {
 
         function mirrorCheckedStateWithClasses($input, $label) {
-            if($input.is(':checked')) {
+            if ($input.is(':checked')) {
                 $label.addClass('is-checked');
             } else {
-                $label.removeClass('is-checked is-checkedHovered is-checkedFocused');                        
+                $label.removeClass('is-checked is-checkedHovered is-checkedFocused');
             }
         }
 
-        return $(this).each(function(){
-            if($(this).is('[type=checkbox],[type=radio]')){
+        return $(this).each(function() {
+            if ($(this).is('[type=checkbox],[type=radio]')) {
                 var settings = $.extend({
-                        'clickCallback': function(e){}
+                        'clickCallback': function(e) {}
                     }, userSettings ),
                     clickCallback = settings.clickCallback,
                     input = $(this).addClass('custom-input_input'),
@@ -34,24 +36,24 @@
 
                 // Backfill support for :hover on certain elements.
                 label.hover(
-                    function(){ label.addClass('is-hovered'); },
-                    function(){
+                    function() { label.addClass('is-hovered'); },
+                    function() {
                         label.removeClass('is-hovered');
                         label.removeClass('is-focused');
                         label.removeClass('is-checkedFocused');
                     }
                 )
-                .on('mousedown', function(){
+                .on('mousedown', function() {
                     label.addClass('is-active');
                 })
-                .on('mouseup', function(){
+                .on('mouseup', function() {
                     label.removeClass('is-active');
                 });
 
                 // Bind click, focus, blur and custom events.
-                input.on('updateState', function(){
+                input.on('updateState', function() {
                     if (input.is('[type=radio]')) {
-                        $('[name="' + input.attr('name') + '"]').each(function(){
+                        $('[name="' + input.attr('name') + '"]').each(function() {
                             mirrorCheckedStateWithClasses($(this), $(this).parents('.custom-input_label'));
                         });
                     } else {
@@ -59,20 +61,20 @@
                     }
                 })
                 .trigger('updateState')
-                .on('click', function(){
+                .on('click', function() {
                     $(this).trigger('updateState');
                     clickCallback({
                         'input': input,
                         'label': label
                     });
                 })
-                .on('focus', function(){
+                .on('focus', function() {
                     label.addClass('is-focused');
-                    if( input.is(':checked') ){
+                    if ( input.is(':checked') ) {
                         label.addClass('is-checkedFocus');
                     }
                 })
-                .on('blur', function(){ label.removeClass('is-focused is-checkedFocused'); });
+                .on('blur', function() { label.removeClass('is-focused is-checkedFocused'); });
             }
         });
     };

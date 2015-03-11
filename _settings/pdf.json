@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Leadership Calendar",
+    "settings": {
+      "render_url": "http://localhost/the-bureau/leadership-calendar/print/",
+      "url_rule": "/the-bureau/leadership-calendar/pdf/",
+      "stylesheet_url": "http://localhost/static/css/pdfreactor-fonts.css",
+      "filename": "cfpb_leadership-calendar.pdf"
+    }
+  }
+]
