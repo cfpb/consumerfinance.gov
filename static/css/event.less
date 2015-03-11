@@ -3,18 +3,37 @@
    Page-specific styles for event post detail page.
    ========================================================================== */
 
+
+/* Event-Post
+   ========================================================================== */
+
+.post__event {
+    padding-right: unit(30px / @base-font-size-px, em);
+    margin-right: unit(30px  / @base-font-size-px, em);
+}
+
+
+/* Event-Post-Preview
+   ========================================================================== */
+
 .post-preview__event {
     border-top: 1px solid @gray-50;
-    padding-top:  1em;
+    padding-top: unit(30px / @base-font-size-px, em);
 
     .media-object_image-container {
-         .respond-to-max(@mobile-max {
+        top: 0;
+        .respond-to-max(@mobile-max {
             display: none;
         });
     }
 }
 
-.summary {
+
+/* Event-Media-Body
+   ========================================================================== */
+
+.media_body__event{
+
     .calendar-icon {
         .cf-calendar-icon( attr(data-month), attr(data-day), @gray-50, @white, 1);
         float: left;
@@ -22,65 +41,74 @@
     }
 
     .event-meta {
-        color: @black;
+        color: @darkgray;
     }
 
     .event-meta_address {
+        margin: 0;
+
+        // Adding em dash after address
+        &:after {
+            content: "\2014";
+            margin-left: .2em;
+        }
 
         .respond-to-max(@mobile-max {
             display: block;
-        });
 
-        &:before {
-            content: none;
-            margin: 0;
-        }
+            &:after {
+                content: none;
+                margin-right: 0;
+            }
+        });
     }
 
-    .event-meta_venue:after {
-        content: "\2014";
-        margin-left: .5em;
+    .summary_header {
+        margin-bottom: 1em;
+    }
+
+    .summary_heading {
+        // Setting margin-top to align with calendar icon.
+        margin: -1 * unit(2px  / @base-font-size-px, em) 0 0 0;
 
         .respond-to-max(@mobile-max {
-            content: none;
+            .h3();
+            margin-bottom: 0;
         });
+    }
+
+    .summary-meta_container {
+        overflow: auto;
+    }
+
+    .tags_list {
+        margin: 0;
     }
 }
 
-.summary_header {
-    margin-bottom: .5em;
-}
 
-.summary_heading, .event-meta_address {
-    margin: 0;
-}
-
-.summary-meta_container {
-    overflow: auto;
-}
+/* Event-Meta
+   ========================================================================== */
 
 .event-meta {
-    .h5();
+    .webfont-regular();
+
+    &__medium {
+        .webfont-medium();
+    }
 }
 
 .event-meta_description {
     text-transform: none;
+
+    &__block {
+        display: block;
+    }
 }
 
 .event-meta_address {
     text-transform: capitalize;
     display: inline-block;
-
-    // Adding em dash after address
-    &:before{
-        content: "\2014";
-        margin-right: .2em;
-    }
-}
-
-// Adding comma after city
-.event-meta_city:after {
-    content: "\2C";
 }
 
 .event-meta_datetime {
@@ -89,9 +117,13 @@
 
 // Adding "at" symbol before time
 .event-meta_time:before {
-    content: "\40";
+    content: "\2014";
     margin-right: .2em;
 }
+
+
+/* Event-Status
+   ========================================================================== */
 
 .event-status {
     color: @black;
@@ -99,10 +131,31 @@
 
     .event-meta {
         color: @gray-50;
-        font-weight: normal !important;
         .webfont-regular();
     }
 }
+
+// The spacing for the RSVP/Livestream aside on the event details.
+// Spacing should follow a 1/2/1 ratio (15px/30px/15px).
+.event-status_rsvp p:first-child {
+    line-height: 1;
+    margin-bottom: unit(15px  / @base-font-size-px, em);
+}
+
+.event-status_rsvp p:last-child {
+    margin-bottom: unit(30px  / @base-font-size-px, em);
+}
+
+.event-status_livestream p:first-child {
+    line-height: 1;
+    // The margin is kept at 10px to accommodate the line-height
+    // of the text so that the gap appears to be 15px.
+    margin-bottom: unit(10px  / @base-font-size-px, em);
+}
+
+
+/* Event-Venue
+   ========================================================================== */
 
 .event-venue {
     background: @gray-10;
@@ -128,8 +181,9 @@
     }
 
     .event-calendar_download {
+        .webfont-demi();
+
         display: block;
-        font-weight: bold;
         padding-top: .2em;
         text-decoration: none;
         text-transform: none;
@@ -145,17 +199,9 @@
      }
 
     .event-meta_address {
-        &:before {
-            content : none;
-        }
-
         .respond-to-max(@mobile-max {
             margin: 0;
         });
-    }
-
-    .event-meta_city:after {
-        content : none;
     }
 
     .event-meta_venue {
@@ -167,6 +213,9 @@
     display: inline-block;
 }
 
+
+/* Event-Footer
+   ========================================================================== */
 
 .event-footer {
     .webfont-regular();
