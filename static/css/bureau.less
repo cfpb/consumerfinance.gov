@@ -1,18 +1,23 @@
+/* ==========================================================================
+   cfgov-refresh
+   Bureau mission page at /the-bureau/.
+   ========================================================================== */
+
 .bureau-mission {
     margin-bottom: unit(45px / @base-font-size-px, em);
-    
+
     .respond-to-min(1024px, {
         margin-top: unit(60px / @base-font-size-px, em);
     });
-    
+
     &_media .image-container {
         margin-left: 10px;
     }
-    
+
     &_section {
         margin-top: unit(30px / @base-font-size-px, em);
     }
-    
+
     &_section + &_section {
         .respond-to-min(600px, {
             border-top: 1px solid @gray-50;
@@ -22,46 +27,46 @@
 }
 
 .bureau-functions {
-    
+
     .respond-to-min(600px, {
         border-top: 1px solid @gray-50;
     });
-    
+
     &_list {
         .webfont-regular();
         .respond-to-min(1024px, {
             .grid_column(6);
         });
     }
-    
+
     .expandable {
         background-color: inherit;
     }
 }
 
 .bureau-bio {
-    
+
     .media_image {
         width: 125px;
         .respond-to-max(1024px, {
             width: 80px;
         });
     }
-    
+
     &_name {
         .h3();
-        margin-bottom: unit(19px / @font-size, em); 
+        margin-bottom: unit(19px / @font-size, em);
         .respond-to-max(1024px, {
             .h4();
             margin-bottom: unit(15px / @font-size, em);
         });
     }
-    
+
 }
 
 .bureau-history {
     position: relative;
-    
+
     &_header {
         .respond-to-min(1024px, {
             position: absolute;
@@ -76,15 +81,15 @@
             top: 48px;
         });
     }
-    
+
     &_image {
         width: 250px;
-        
+
         .respond-to-max(599px, {
             width: 100%;
             max-width: 100%;
         });
-        
+
         .respond-to-range(600px, 768px, {
             width: 215px;
         });
@@ -106,12 +111,12 @@
                     font-size: 40px;
                     opacity: 1;
                 }
-                
+
                 &:hover:before {
                     color: @gray;
                 }
             }
-    
+
         }
 
         li.slick-active {
@@ -121,12 +126,12 @@
             }
         }
     }
-    
+
     .slick-prev {
         left: 10%;
 
         &:before {
-            // cf-icon-left
+            // cf-icon-left.
             content: "\e000";
         }
     }
@@ -135,7 +140,7 @@
         right: 10%;
 
         &:before {
-            // cf-icon-right
+            // cf-icon-right.
             content: "\e002";
         }
     }
@@ -158,8 +163,5 @@
             .cf-icon();
         }
     }
-    
+
 }
-
-
-
