@@ -4910,6 +4910,15 @@ tbody tr {
   margin-left: -30px;
 }
 
+.expandable_header-left {
+  width: 78%;
+}
+
+.expandable_header-right {
+  width: 22%;
+  text-align: right;
+}
+
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
