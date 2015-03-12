@@ -9380,6 +9380,14 @@ a.focus .summary_event-date {
   padding-top: 1.875em;
 }
 
+.bureau-mission .media_image {
+  width: 120px;
+}
+
+.bureau-mission .media_image {
+  width: 80px;
+}
+
 .bureau-functions {
   border-top: 1px solid #babbbd;
 }
