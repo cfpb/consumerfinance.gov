@@ -7205,7 +7205,7 @@ a.focus .summary_event-date {
 }
 
 .comments_policy {
-  color: #75787B;
+  color: #75787b;
   font-size: 0.8125em;
   font-style: italic;
 }
@@ -9043,7 +9043,7 @@ a.focus .summary_event-date {
 }
 
 .media_body__event .event-meta {
-  color: #101820;
+  color: #43484e;
 }
 
 .media_body__event .event-meta_address {
@@ -9129,7 +9129,7 @@ a.focus .summary_event-date {
 }
 
 .event-meta_time:before {
-  content: "\40";
+  content: "\2014";
   margin-right: .2em;
 }
 
