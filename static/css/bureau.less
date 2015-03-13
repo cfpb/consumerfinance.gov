@@ -24,6 +24,13 @@
             padding-top: unit(30px / @base-font-size-px, em);
         });
     }
+
+    .media_image {
+        width: 120px;
+        .respond-to-max(1024px, {
+            width: 80px;
+        });
+    }
 }
 
 .bureau-functions {
