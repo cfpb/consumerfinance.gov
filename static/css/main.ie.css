@@ -8803,7 +8803,7 @@ a.focus .summary_event-date {
 }
 
 .budget_page-content h4 {
-  margin-top: 30px;
+  margin-top: 2.8125em;
 }
 
 .budget_page-content ul {
@@ -8956,9 +8956,9 @@ a.focus .summary_event-date {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
-  content: "\e402";
+  content: "\e406";
   margin-right: .5em;
-  color: #101820;
+  color: #0072ce;
 }
 
 .budget_page-content.funding-request h4 {
@@ -9387,6 +9387,14 @@ a.focus .summary_event-date {
 .bureau-mission_section+.bureau-mission_section {
   border-top: 1px solid #babbbd;
   padding-top: 1.875em;
+}
+
+.bureau-mission .media_image {
+  width: 120px;
+}
+
+.bureau-mission .media_image {
+  width: 80px;
 }
 
 .bureau-functions {
