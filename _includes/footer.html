@@ -152,7 +152,7 @@
             </div><!-- END .footer-right -->
 
             <div class="footer-left">
-                <div class="footer_nested-col-group">
+                <div class="footer_nested-col-group" itemprop="author" itemscope itemtype="http://schema.org/Organization">
 
                     <div class="footer_logo">
                         <img class="logo u-js-only"
@@ -170,24 +170,30 @@
                         </noscript>
                     </div>
                     <p class="footer_address">
-                        <span class="footer_address-word-break">
-                            Consumer Financial
+                        <span itemprop="name">
+                            <span class="footer_address-word-break">
+                                Consumer Financial
+                            </span>
+                            Protection Bureau<br>
                         </span>
-                        Protection Bureau<br>
-                        1700 G Street, NW<br>
-                        Washington, D.C. 20552
+                        <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                            <span itemprop="streetAddress">1700 G Street, NW<br></span>
+                            <span itemprop="addressLocality">Washington</span>,
+                            <span itemprop="addressRegion">D.C.</span>
+                            <span itemprop="postalCode">20552</span>
+                        </span>
                     </p>
                     <div class="footer_general-inqueries">
                         <b class="footer_general-inqueries-label">For general inquiries only</b>
                         <ul class="list list__links">
                             <li class="list_item">
                                 <a class="list_link footer_general-inqueries-phone" href="tel:202-435-7000">
-                                    (202) 435-7000
+                                    <span itemprop="telephone">(202) 435-7000</span>
                                 </a>
                             </li>
                             <li class="list_item">
                                 <a class="list_link" href="mailto:info@consumerfinance.gov">
-                                    info@consumerfinance.gov
+                                    <span itemprop="email">info@consumerfinance.gov</span>
                                 </a>
                             </li>
                         </ul>

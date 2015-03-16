@@ -27,35 +27,35 @@
 
 {% from "macros.html" import share as share %}
 
-<article class="post">
+<article class="post" itemscope itemtype="http://schema.org/Article">
     <header>
         {% if post.category.0 %}
             {%- import "category-slug.html" as category_slug %}
             {{ category_slug.render(post.category.0, path, 'post_slug') }}
         {% endif %}
-        <h1 class="post_heading">
+        <h1 class="post_heading" itemprop="name">
             {{ post.title|safe }}
         </h1>
     {% if post.dek %}
-        <p class="post_dek">
+        <p class="post_dek" itemprop="description">
             {{ post.dek|safe }}
         </p>
     {% endif %}
         <div class="post_meta">
         {% if post.author.0 %}
             <span class="post_byline">
-                By <a href="{{ path }}?filter_author={{ post.author.0 }}">
-                    {{ post.author.0 }}
+                By <a href="{{ path }}?filter_author={{ post.author.0 }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="name">{{ post.author.0 }}</span>
                 </a>
                 {% if post.author.1 %}
-                    and <a href="{{ path }}?filter_author={{ post.author.1 }}">
-                        {{ post.author.1 }}
+                    and <a href="{{ path }}?filter_author={{ post.author.1 }}" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                      <span itemprop="name">{{ post.author.1 }}</span>
                     </a>
                 {% endif %}
                 &ndash;
             </span>
         {% endif %}
-            <span class="post_date date">
+            <span class="post_date date" itemprop="datePublished">
                 {{ post.date|date("%b %d, %Y") }}
             </span>
         </div>
@@ -68,10 +68,11 @@
     {% if post.thumbnail.images %}
         <img class="post_featured-img"
              src="{{ post.thumbnail.images.full.url }}"
-             alt="{{ post.thumbnail.alt_text }}">
+             alt="{{ post.thumbnail.alt_text }}"
+             itemprop="image">
     {% endif %}
     </header>
-    <div class="post_body">
+    <div class="post_body" itemprop="articleBody">
         {{ post.content|safe }}
     </div>
 {% if post.tags|length %}
