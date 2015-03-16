@@ -1,9 +1,15 @@
+/* ==========================================================================
+   cfgov-refresh
+   Budgeting pages at /budget/.
+   ========================================================================== */
+
 .budget_page-content {
-    
+
     h4 {
-        margin-top: @grid_gutter-width;
+        // Negative offset is to accommodate for the gap added by line-height.
+        margin-top: unit( ((@grid_gutter-width * 2) - 15) / @base-font-size-px, em);
     }
-    
+
     ul {
       .list__unstyled();
       .list__links();
@@ -11,30 +17,30 @@
 
       li {
           .list_item();
-          
+
           a {
               .list_link();
               .jump-link();
           }
       }
     }
-    
-    &.financial-report a, 
+
+    &.financial-report a,
     &.performance-plan a,
-    &.funding-request a span{
+    &.funding-request a span {
         &:before {
             .cf-icon();
-            content: "\e402";
+            content: "\e406";
             margin-right: .5em;
-            color: @black;
+            color: @pacific;
         }
     }
-    
+
     &.funding-request {
         h4 {
             margin-top: unit(35px / @base-font-size-px, em);
         }
-            
+
         a span {
             color: @black;
             padding-right: .5em;
@@ -45,13 +51,12 @@
             });
         }
     }
-    
-    &.performance-plan {  
+
+    &.performance-plan {
         sub {
             display: block;
             margin-top: unit(-10px / @base-font-size-px, em);
             margin-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
         }
-    }  
-    
+    }
 }
