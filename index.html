@@ -15,7 +15,7 @@
     'consumer_guides': '0%',
     'submit_a_complaint': '0%',
     'data_and_research': '0%',
-    'for_industry': '0%',
+    'policy_and_compliance': '0%',
     'about': '35%',
 } %}
 
@@ -35,8 +35,8 @@
             height: {{ pct.data_and_research }};
             /* background: #2CB34A; */
         }
-        #for-industry .bar-chart {
-            height: {{ pct.for_industry }};
+        #policy-and-compliance .bar-chart {
+            height: {{ pct.policy_and_compliance }};
             /* background: #2CB34A; */
         }
         #about .bar-chart {
@@ -100,14 +100,14 @@
                         <h3 class="chart-name">Data & Research</h3>
                         <div class="chart-value u-visually-hidden">{{ pct.data_and_research }}</div>
                     </div>
-                    <div class="progress-charts_container" id="for-industry">
+                    <div class="progress-charts_container" id="policy-and-compliance">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div class="bar-chart"></div>
                             </div>
                         </canvas>
-                        <h3 class="chart-name">For Industry</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.for_industry }}</div>
+                        <h3 class="chart-name">Policy & Compliance</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.policy_and_compliance }}</div>
                     </div>
                     <div class="progress-charts_container" id="about">
                         <canvas class="progress-charts_chart">
@@ -218,8 +218,8 @@
             value: 0
           },
           {
-            name: "for industry",
-            done: parseInt( $("#for-industry .chart-value").text() ) / 100,
+            name: "policy and compliance",
+            done: parseInt( $("#policy-and-compliance .chart-value").text() ) / 100,
             value: 0
           },
           {
@@ -329,13 +329,13 @@
         // ------------------------------------------------
 
         $( window ).resize(function() {
-          //reset after resize (just in case)
+          // Reset after resize (just in case).
           waitForFinalEvent();
         });
 
 
         // ------------------------------------------------
-        // utilities
+        // Utilities
         // ------------------------------------------------
 
         function getRadians(degrees) {
