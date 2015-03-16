@@ -4910,6 +4910,15 @@ tbody tr {
   margin-left: -30px;
 }
 
+.expandable_header-left {
+  width: 78%;
+}
+
+.expandable_header-right {
+  width: 22%;
+  text-align: right;
+}
+
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
@@ -7205,7 +7214,7 @@ a.focus .summary_event-date {
 }
 
 .comments_policy {
-  color: #75787B;
+  color: #75787b;
   font-size: 0.8125em;
   font-style: italic;
 }
@@ -8794,7 +8803,7 @@ a.focus .summary_event-date {
 }
 
 .budget_page-content h4 {
-  margin-top: 30px;
+  margin-top: 2.8125em;
 }
 
 .budget_page-content ul {
@@ -8947,9 +8956,9 @@ a.focus .summary_event-date {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
-  content: "\e402";
+  content: "\e406";
   margin-right: .5em;
-  color: #101820;
+  color: #0072ce;
 }
 
 .budget_page-content.funding-request h4 {
@@ -9043,7 +9052,7 @@ a.focus .summary_event-date {
 }
 
 .media_body__event .event-meta {
-  color: #101820;
+  color: #43484e;
 }
 
 .media_body__event .event-meta_address {
@@ -9129,7 +9138,7 @@ a.focus .summary_event-date {
 }
 
 .event-meta_time:before {
-  content: "\40";
+  content: "\2014";
   margin-right: .2em;
 }
 
@@ -9378,6 +9387,14 @@ a.focus .summary_event-date {
 .bureau-mission_section+.bureau-mission_section {
   border-top: 1px solid #babbbd;
   padding-top: 1.875em;
+}
+
+.bureau-mission .media_image {
+  width: 120px;
+}
+
+.bureau-mission .media_image {
+  width: 80px;
 }
 
 .bureau-functions {

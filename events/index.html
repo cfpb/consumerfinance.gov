@@ -13,27 +13,36 @@
     Events description...
 {%- endblock %}
 
+
+{# Only show the hero when:
+    1. We are on the first page of paginated results
+    2. A hero exists
+#}
+
+{# TODO remove commented line #}
+{# set show_hero = (vars.events.current_page == 1 and view.hero) %#}
+{% set show_hero = true %}
+
+{% block content_sidebar_modifiers %}
+    {{ super() }}
+    {% if show_hero %}
+        u-hide-on-mobile
+    {% endif %}
+{% endblock %}
+
 {% block hero %}
-    {# Only show the hero when:
-       1. We are on the first page of paginated results
-       2. A hero exists
-    #}
-
-    {%
-        set current_page = 1
-    %}
-
-    {%
-        set hero = true
-    %}
-
-    {#{% if vars.events.current_page == 1 and view.hero %}#}
-    {% from "_event-landing-macros.html" import event_hero as event_hero %}
-    {% if current_page == 1 and hero %}
+    {% if show_hero %}
+        {% import "sidenav.html" as sidenav %}
+        {{ sidenav.render(
+            vars.nav_items, 
+            'index',
+            'u-show-on-mobile u-mb0'
+        ) }}
+        {% from "_event-landing-macros.html" import event_hero as event_hero %}
         {{ event_hero(hero) }}
     {% endif %}
-
 {% endblock %}
+
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
