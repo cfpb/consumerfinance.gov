@@ -1,0 +1,8 @@
+{
+  "name": "CFPB Events Archive",
+  "query": {
+    "doc_type": "events_archive",
+    "size": 10,
+    "sort": "date:desc"
+  }
+}
