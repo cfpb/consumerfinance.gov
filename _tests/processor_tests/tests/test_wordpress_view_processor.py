@@ -40,7 +40,7 @@ class WordpressViewProcessorTestCase(unittest.TestCase):
         # Test that the related hero got pulled in.
         hero = document['hero']
 
-        self.assertItemsEqual(hero['related_post'],
+        self.assertItemsEqual(hero['related_posts'],
                               hero['custom_fields']['related_post'])
 
 
