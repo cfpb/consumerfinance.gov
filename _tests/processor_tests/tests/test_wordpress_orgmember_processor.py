@@ -12,6 +12,11 @@ class WordpressOrgmemberProcessorTestCase(unittest.TestCase):
     """
     wordpress_orgmember_processor grabs orgmember from the WordPress API
     and returns them for indexing in Elasticsearch by Sheer.
+
+
+    This doesn't unittest individual functions within the module. It
+    tests the `documents()` function, which is what Sheer calls, and
+    ensures that the output is appropriate for the input.
     """
 
     @mock.patch('requests.get')
