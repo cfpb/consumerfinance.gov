@@ -43,7 +43,7 @@ def process_post(post, newsroom = False):
         links = []
         for x in xrange(0,10):
             custom_fields = post['custom_fields']
-            key = 'watchroom_data_%s' % x
+            key = 'watchroom_data_%s_link' % x
             if key in custom_fields:
                 links.append(custom_fields[key])
         post['links'] = links

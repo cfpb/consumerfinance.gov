@@ -40,5 +40,6 @@ class WordpressPostProcessorTestCase(unittest.TestCase):
 
         # Introspect the custom fields
         self.assertEqual(len(custom_fields), 10)
+        self.assertEqual(len(custom_fields), len(document['links']))
 
 
