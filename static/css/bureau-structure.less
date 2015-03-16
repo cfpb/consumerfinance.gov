@@ -150,23 +150,6 @@
         }
     }
 
-    .node_expander {
-        position: absolute;
-        right: 10px;
-        top: 20px;
-        z-index: 10;
-
-        .respond-to-max(599px, {
-            height: 30px;
-            top: 50%;
-            margin-top: -@base-font-size-px/2;
-        });
-
-        .expandable_link {
-            font-size: @base-font-size-px;
-        }
-    }
-
     #content-slider-container {
         position: relative;
         margin-left: -10px;
@@ -225,6 +208,23 @@
                 }
             }
         });
+    }
+}
+
+.node_expander {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    z-index: 10;
+
+    .respond-to-max(599px, {
+        height: 30px;
+        top: 50%;
+        margin-top: -@base-font-size-px/2;
+    });
+
+    .expandable_link {
+        font-size: @base-font-size-px;
     }
 }
 
