@@ -41,7 +41,7 @@ def process_post(post, newsroom = False):
         post['author'] = [post['author']['name']]
         # convert watchroom_data_x into a proper list
         links = []
-        for x in xrange(0,5):
+        for x in xrange(0,10):
             custom_fields = post['custom_fields']
             key = 'watchroom_data_%s' % x
             if key in custom_fields:
