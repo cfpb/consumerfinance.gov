@@ -33,7 +33,7 @@
     <h1 class="tags_heading {{'u-visually-hidden' if hide_heading}}">Topics:</h1>
     <ul class="tags_list">
     {% for tag in tags %}
-        <li class="tags_tag">
+        <li class="tags_tag" itemprop="about">
             <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}">
                 <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 {{ tag }}
