@@ -52,7 +52,7 @@ def process_view(post):
         response = requests.get(hero_url)
         hero_data = json.loads(response.content)
         hero_data = hero_data['post']
-        hero_data['related_post'] = hero_data['custom_fields']['related_post']
+        hero_data['related_posts'] = hero_data['custom_fields']['related_post']
         post['hero'] = hero_data
 
     return post
