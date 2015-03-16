@@ -22,3 +22,17 @@
     });
 }
 
+.nav__small-business {
+    .expandable_header {
+        position: relative;
+    }
+
+    .expandable_header-right {
+        .node_expander();
+        .respond-to-max(@mobile-max, {
+            margin-top: -@base-font-size-px;   
+        });
+        top: @base-font-size-px;
+    }
+}
+
