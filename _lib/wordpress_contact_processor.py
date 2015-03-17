@@ -40,14 +40,14 @@ def convert_custom_field(post_type, attribute, index=0, new_attribute=None):
 def process_contact(contact):
     del contact['comments']
     contact['_id'] = contact['slug']
+    convert_custom_field(contact, 'email_0_addr')
+    convert_custom_field(contact, 'email_0_desc')
     convert_custom_field(contact, 'email_1_addr')
     convert_custom_field(contact, 'email_1_desc')
-    convert_custom_field(contact, 'email_2_addr')
-    convert_custom_field(contact, 'email_2_desc')
+    convert_custom_field(contact, 'phone_0_num')
+    convert_custom_field(contact, 'phone_0_desc')
     convert_custom_field(contact, 'phone_1_num')
     convert_custom_field(contact, 'phone_1_desc')
-    convert_custom_field(contact, 'phone_2_num')
-    convert_custom_field(contact, 'phone_2_desc')
     convert_custom_field(contact, 'fax_num')
     convert_custom_field(contact, 'fax_desc')
     convert_custom_field(contact, 'sitewide_desc')
@@ -57,10 +57,6 @@ def process_contact(contact):
     convert_custom_field(contact, 'state')
     convert_custom_field(contact, 'zip_code')
     convert_custom_field(contact, 'addr_desc')
-    convert_custom_field(contact, 'email_0_addr', index=0, new_attribute='email_addr')
-    convert_custom_field(contact, 'email_0_addr', index=0, new_attribute='email_desc')
-    convert_custom_field(contact, 'phone_0_num', index=0, new_attribute='phone_num')
-    convert_custom_field(contact, 'phone_0_desc', index=0, new_attribute='phone_desc')
     convert_custom_field(contact, 'web_0', index=0, new_attribute='web_addr')
     convert_custom_field(contact, 'web_0', index=1, new_attribute='web_desc')
     return contact

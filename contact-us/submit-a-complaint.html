@@ -10,12 +10,12 @@
 <div class="content-l">
     <div class="content-l_col content-l_col-1-2">
         <ul class="list list__unstyled">
-        {%- if submit_a_complaint.phone_num %}
+        {%- if submit_a_complaint.phone_0_num %}
             <li class="list_item short-desc">
-                {{ format_phone(submit_a_complaint.phone_num) }}
-            {%- if submit_a_complaint.phone_desc %}
+                {{ format_phone(submit_a_complaint.phone_0_num) }}
+            {%- if submit_a_complaint.phone_0_desc %}
                 <span class="micro-copy micro-copy__large">
-                    {{ submit_a_complaint.phone_desc }}
+                    {{ submit_a_complaint.phone_0_desc }}
                 </span>
             {%- endif %}
             </li>
