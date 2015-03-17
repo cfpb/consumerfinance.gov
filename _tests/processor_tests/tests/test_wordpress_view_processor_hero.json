@@ -1,0 +1,54 @@
+{  
+    "status":"ok",
+    "post":{  
+        "id":1,
+        "type":"cfpb_hero",
+        "slug":"my-related-hero",
+        "url":"http://somewhere/hero/my-related-hero/",
+        "status":"publish",
+        "title":"My Related Hero",
+        "title_plain":"My Related Hero",
+        "content":"",
+        "excerpt":"",
+        "date":"2014-10-28 09:28:10",
+        "modified":"2014-10-28 09:44:19",
+        "categories":[  
+        ],
+        "tags":[  
+        ],
+        "author":{  
+            "id":1,
+            "slug":"aauthor",
+            "name":"Arthur Author",
+            "first_name":"Arthur",
+            "last_name":"Author",
+            "nickname":"aauthor",
+            "url":"",
+            "description":""
+        },
+        "comments":[  
+        ],
+        "attachments":[  
+        ],
+        "comment_count":0,
+        "comment_status":"closed",
+        "custom_fields":{  
+            "background_color":[  
+                "rgb(51,126,125)"
+            ],
+            "desktop_image":[  
+                "/static/img/hero-large.png"
+            ],
+            "mobile_image":[  
+                "/static/img/hero-small.png"
+            ],
+            "related_post":[  
+                "blog"
+            ]
+        },
+        "dek":"",
+        "order":0,
+        "parent":0
+    },
+    "previous_url":"http://somewhere/hero/new-hero/"
+}

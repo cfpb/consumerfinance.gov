@@ -2,8 +2,8 @@
 
 {% from "post-macros.html" import category_icon as category_icon %}
 
-{% if hero['related_post'] %}
-    {% set related_post = get_document('posts', hero['related_post']) %}
+{% if hero['related_posts'] %}
+    {% set related_post = get_document('posts', hero['related_posts'][0]) %}
 {% endif %}
 
 {% if related_post %}
