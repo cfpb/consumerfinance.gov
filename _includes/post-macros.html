@@ -474,7 +474,10 @@
 {%- for filter in filters %}
     {%- if filter == 'range_date' -%}
         {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_gte')) %}
-        {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
+        {# Only show one date if the start & end range values are the same. #}
+        {%- if selected_filters_for_field('range_date_gte') != selected_filters_for_field('range_date_lte') -%}
+          {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
+        {%- endif -%}
     {%- elif filter == 'activity_category' -%}
         {% set _ignore = active_filters.extend(selected_filters_for_field('type')) %}
         {% set _ignore = active_filters.extend(selected_filters_for_field('category')) %}
