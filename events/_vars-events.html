@@ -154,18 +154,14 @@
 }
 %}
 
-{# TODO Once the events post type is created,
-the following needs to be added to `_settings/lookups.json`.
-
-  "event": {
-    "url":       "/events/<id>/",
-    "type":      "events",
-    "permalink": true
-  }
-
+{# TODO Once the events post type is created:
+    The events/events_archive processors need the correct links
 #}
 
-
-{# Temp using blog query to render the signup form #}
-{% set query = queries.posts %}
+{% if ('/events/archive/' in request.path.lower()) %}
+    {% set query = queries.events_archive %}
+{% else %}
+    {% set query = queries.events %}
+{% endif %}
 {% set events = query.search_with_url_arguments(size=10) %}
+
