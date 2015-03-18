@@ -47,10 +47,6 @@
     - cfgov-header
 */
 
-.header {
-
-}
-
 .header_logo {
     margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
     vertical-align: middle; // removes typical inline vertical whitespace
@@ -418,7 +414,7 @@
     }
 
     .desktop-menu_full-wrapper_decoration {
-        padding: @grid_gutter-width 0;
+        padding: (@grid_gutter-width - unit(10px, em)) 0;
         background: @gray-5;
         border-top: 1px solid @gray-50;
         border-bottom: 4px solid @gray-50;
@@ -440,6 +436,20 @@
 
     .desktop-menu_horizontal-list.list__horizontal > .list_item {
         margin: 0 @grid_gutter-width / 2;
+        line-height: 2;
+    }
+
+});
+
+.respond-to-range(801px, 814px, {
+    .primary-nav_header-space {
+        // Magic number - dependent on height of horizontal navbar.
+        padding-bottom: 78px;
+    }
+
+    .primary-nav_top-level-list > .list_item > .list_link {
+        max-width: 130px;
+        text-align: center;
     }
 
 });
