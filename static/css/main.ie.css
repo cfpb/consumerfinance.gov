@@ -7690,7 +7690,7 @@ a.focus .summary_event-date {
 }
 
 .desktop-menu_full-wrapper_decoration {
-  padding: 30px 0;
+  padding: 20px 0;
   background: #f8f8f8;
   border-top: 1px solid #babbbd;
   border-bottom: 4px solid #babbbd;
@@ -7753,6 +7753,7 @@ a.focus .summary_event-date {
 
 .desktop-menu_horizontal-list.list__horizontal>.list_item {
   margin: 0 15px;
+  line-height: 2;
 }
 
 .footer {
@@ -8976,6 +8977,28 @@ a.focus .summary_event-date {
   margin-bottom: 3.75em;
 }
 
+.block__business-step {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.nav__small-business .expandable_header {
+  position: relative;
+}
+
+.nav__small-business .expandable_header-right {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+  top: 16px;
+}
+
+.nav__small-business .expandable_header-right .expandable_link {
+  font-size: 16px;
+}
+
 .post__event {
   padding-right: 1.875em;
   margin-right: 1.875em;
@@ -9712,17 +9735,6 @@ a.focus .summary_event-date {
   border-width: 0 0 1px 0;
 }
 
-.org-chart .node_expander {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  z-index: 10;
-}
-
-.org-chart .node_expander .expandable_link {
-  font-size: 16px;
-}
-
 .org-chart #content-slider-container {
   position: relative;
   margin-left: -10px;
@@ -9744,6 +9756,17 @@ a.focus .summary_event-date {
   display: none;
   background-color: inherit;
   margin-bottom: 20px;
+}
+
+.node_expander {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+}
+
+.node_expander .expandable_link {
+  font-size: 16px;
 }
 
 .role {
