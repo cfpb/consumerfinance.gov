@@ -386,10 +386,13 @@
 
                     var $browser        = $self.find('.js-browser_window');
                     var $screen         = $browser.find('img');
-                    var frameHeight     = $browser.height();
-                    var screenHeight    = $screen.height();
-                    var speed           = ( screenHeight / 250 );
-                    var newTop          = ( screenHeight - frameHeight) * -1;
+                    var speed           = ( $screen.height() / 150 );
+                    var newTop          = ( $screen.height() - $browser.height() ) * -1;
+
+                    $(window).resize(function() {
+                        newTop  = ( $screen.height() - $browser.height() ) * -1;
+                        speed   = ( $screen.height() / 150 );
+                    });
 
                     function scrollDown($elem) {
                         $elem
