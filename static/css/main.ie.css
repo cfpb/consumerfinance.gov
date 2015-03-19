@@ -7514,16 +7514,16 @@ a.focus .summary_event-date {
   margin-bottom: .35714286em;
   font-size: .875em;
   line-height: 1.57142857;
-  border-bottom-width: 1px;
+  border-bottom-width: 0 !important;
+  color: #e3e4e5;
 }
 
 .lt-ie9 .header_misc_es {
   font-weight: normal !important;
 }
 
-.header_misc_es:hover,
-.header_misc_es.hover {
-  border-bottom-width: 1px;
+.header_misc_es:hover {
+  color: #e3e4e5;
 }
 
 .primary-nav_top-level-list>.list_item>.list_link {
