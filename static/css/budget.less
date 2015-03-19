@@ -10,29 +10,45 @@
         margin-top: unit( ((@grid_gutter-width * 2) - 15) / @base-font-size-px, em);
     }
 
-    ul {
-      .list__unstyled();
-      .list__links();
-      .list__icons();
+    &.financial-report,
+    &.performance-plan,
+    &.funding-request {
+        ul {
+            .list__links();
+            .list__icons();
 
-      li {
-          .list_item();
+            li {
+                .list__links .list_item();
+                .list__icons .list_item();
+                margin-left: 0;
 
-          a {
-              .list_link();
-              .jump-link();
-          }
-      }
-    }
+                a {
+                    .list_link();
+                    .jump-link();
 
-    &.financial-report a,
-    &.performance-plan a,
-    &.funding-request a span {
-        &:before {
-            .cf-icon();
-            content: "\e406";
-            margin-right: .5em;
-            color: @pacific;
+                    // Override the jump-link padding, left, display values.
+                    // TODO: Explore creating a jump-link-icon pattern.
+                    // TODO: Avoid using !important if possible.
+                    padding-left: 1.25em !important;
+                    left: 0;
+                    display: block;
+
+                    &:before {
+                        .list__icons .list_icon();
+                        .cf-icon();
+                        content: "\e406";
+                        color: @pacific;
+
+                        // Override the jump-link line-height.
+                        line-height: @base-line-height;
+
+                        .respond-to-max(599px, {
+                            // Add jump-link padding offset on small screens.
+                            top: unit(10px / @base-font-size-px, em);
+                        });
+                    }
+                }
+            }
         }
     }
 
@@ -46,8 +62,8 @@
             padding-right: .5em;
 
             .respond-to-min(1024px, {
-                float: left;
-                width: 12em;
+                display: inline-block;
+                width: 11em;
             });
         }
     }
