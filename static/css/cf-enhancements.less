@@ -116,6 +116,7 @@
 }
 
 
+
 /* topdoc
   name: Superheader print styles
   family: cfgov-cf-enhancements
@@ -496,11 +497,6 @@ tbody {
 
 }
 
-/* topdoc
-    name: EOF
-    eof: true
-*/
-
 .expandable_header-left {
   width: 78%;
 }
@@ -509,3 +505,151 @@ tbody {
   width: 22%;
   text-align: right;
 }
+
+
+/* topdoc
+  name: Icon list modifier
+  family: cf-typography
+  notes:
+    - "Set up a list with icons on the left, in place of bullets."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                List item 2
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax list_icon"></span>
+                List item 3
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list__unstyled();
+
+    .list_item {
+        margin-left: 2em;
+        position: relative;
+    }
+
+    .list_icon {
+        position: absolute;
+        width: 1.5em;
+        left: 0;
+        top: 0;
+        line-height: @base-line-height;
+        .list__icons .list_icon__left();
+    }
+}
+
+
+/* topdoc
+  name: List icon left modifier
+  family: cf-typography
+  notes:
+    - "Left align the icons in an icon list."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-technology list_icon list_icon__left"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon list_icon__left"></span>
+                List item 2
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-money list_icon list_icon__left"></span>
+                List item 3
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list_icon__left {
+        // TODO: Remove the !important once this lands in cf-typography.
+        text-align: left !important;
+    }
+}
+
+/* topdoc
+  name: List icon center modifier
+  family: cf-typography
+  notes:
+    - "Center align the icons in an icon list."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-technology list_icon list_icon__center"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon list_icon__center"></span>
+                List item 2
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-money list_icon list_icon__center"></span>
+                List item 3
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list_icon__center {
+        text-align: center;
+    }
+}
+
+/* topdoc
+  name: List icon right modifier
+  family: cf-typography
+  notes:
+    - "Right align the icons in an icon list."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item list_icon__right">
+                <span class="cf-icon cf-icon-technology list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item list_icon__right">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                List item 2
+            </li>
+            <li class="list_item list_icon__right">
+                <span class="cf-icon cf-icon-money list_icon"></span>
+                List item 3
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list_icon__right {
+        text-align: right;
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
