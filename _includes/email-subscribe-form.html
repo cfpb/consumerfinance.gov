@@ -1,5 +1,7 @@
 
 {% macro render(query, code) %}
+{% set url_path = request.path.lower() %}
+{% set is_blog_or_event = ('/blog/' in url_path) or ('/events/' in url_path) %}
 
 <form class="reveal-on-focus"
       id="email-subscribe-form"
@@ -34,7 +36,7 @@
     </div>
     {% endif %}
     #}
-    {% if query -%}
+    {% if query and is_blog_or_event == false -%}
     <div class="form-group reveal-on-focus_content u-clearfix">
     {% for category in query.possible_values_for('category')|sort(attribute='key') -%}
     {% set govdelivery_categories = [
