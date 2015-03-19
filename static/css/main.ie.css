@@ -10577,6 +10577,11 @@ a.focus .summary_event-date {
   text-align: center;
 }
 
+.pv-logo_img {
+  display: inline-block;
+  max-width: 250px;
+}
+
 .pv-nav {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
