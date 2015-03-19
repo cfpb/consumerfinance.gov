@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block title %}
+    consumerfinance.gov is evolving
+{% endblock title %}
+
+{% block desc %}
+    We’re maturing as an agency. So is our website.
+{% endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
+{%- endblock %}
+
+{% block body %}
+
+    <div class="beta-banner expandable" id="beta-banner">
+        <div class="wrapper wrapper__match-content">
+            <div class="beta-banner_head">
+                <span class="cf-icon cf-icon-error-round beta-banner_icon"></span>
+                This beta site is a work in progress.
+            </div>
+            <p class="beta-banner_desc expandable_content">
+                We're prototyping new designs. Expect some errors and inaccuracies.
+                Accurate information continues at
+                <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
+            </p>
+            <button class="btn beta-banner_btn expandable_target" id="beta-banner_btn">
+                <span class="expandable_cue-close">
+                    Collapse <span class="cf-icon cf-icon-up"></span>
+                </span>
+                <span class="expandable_cue-open">
+                    More info <span class="cf-icon cf-icon-down"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <header class="wrapper wrapper__match-content pv-header">
+        <div class="pv-logo">
+            <img class="pv-logo_img" src="static/img/logo.png" alt="CFPB logo">
+        </div>
+        <nav class="pv-nav">
+            <a href="#ux_container" class="pv-nav_link">Organized</a>
+            <a href="#users_container" class="pv-nav_link">User-focused</a>
+            <a href="#responsive_container" class="pv-nav_link">Flexible</a>
+            <a href="#design_container" class="pv-nav_link">Consistent</a>
+        </nav>
+    </header>
+
+    <!-- PRIMARY CONTENT -->
+
+    {% block content_main %}
+
+    <section id="intro_container" class="pv-intro">
+        <div class="wrapper wrapper__match-content">
+            <header class="pv-intro_header">
+                <h1 class="pv-intro_heading">consumerfinance.gov is evolving.</h1>
+                <p class="pv-intro_sub-heading">We’re maturing as an agency. So is our website.</p>
+            </header>
+            <div class="pv-intro_video-display">
+                <div class="pv-intro_video-obj">
+                    <iframe width="450" height="253" src="https://www.youtube.com/embed/ttic5co1oDg?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="design_container" class="pv-section pv-design">
+        <div class="wrapper wrapper__match-content">
+            <header class="pv-section_header">
+                <h2 class="pv-section_heading">Brighter. Friendlier. More consistent.</h2>
+                <p class="pv-section_sub-heading">We’ve taken our research to heart. Our design patterns make the site more beautiful and functional for both our internal and external users.</p>
+            </header>
+
+            <div class="pv-carousel">
+                <div class="pv-carousel_item">
+                    <div class="pv-browser">
+                        <div class="pv-browser_toolbar"></div>
+                        <div class="pv-browser_window">
+                            <img alt="refreshed homepage" src="browsers/homepage.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="pv-carousel_item">
+                    <div class="pv-browser">
+                        <div class="pv-browser_toolbar"></div>
+                        <div class="pv-browser_window">
+                            <img alt="refreshed about page" src="browsers/about.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="pv-carousel_item">
+                    <div class="pv-browser">
+                        <div class="pv-browser_toolbar"></div>
+                        <div class="pv-browser_window">
+                            <img alt="refreshed blog" src="browsers/blog.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="pv-carousel_item">
+                    <div class="pv-browser">
+                        <div class="pv-browser_toolbar"></div>
+                        <div class="pv-browser_window">
+                            <img alt="refreshd consumer guides" src="browsers/guides.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pv-thumbs">
+                <div class="pv-thumbnail">
+                    <img alt="illustration example" src="thumbnails/illustration.png" class="pv-thumbnail_img">
+                    <h3 class="pv-thumbnail_heading">Illustrations that connect</h3>
+                    <p>We’ve incorporated more imagery to help users make quicker connections with the content they’re looking for. Images efficiently add context and interest around content. This makes resources feel richer and more approachable.</p>
+                </div>
+
+                <div class="pv-thumbnail">
+                    <img alt="icons example" src="thumbnails/icons.png"  class="pv-thumbnail_img">
+                    <h3 class="pv-thumbnail_heading">Iconography that organizes</h3>
+                    <p>Some tools, actions, and information are similar across different parts of the site. Our extensive icon library creates consistent visual cues to organize content and draw users’ attention.</p>
+                </div>
+
+                <div class="pv-thumbnail">
+                    <img alt="typography example" src="thumbnails/typography.png" class="pv-thumbnail_img">
+                    <h3 class="pv-thumbnail_heading">Typography that clarifies</h3>
+                    <p>You’ve had enough of the fine print. We revised our type to make it more legible and accessible. It is now lighter and more open.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="responsive_container" class="pv-section">
+        <div class="wrapper wrapper__match-content">
+            <header class="pv-section_header">
+                <h2 class="pv-section_heading">Accessible on any device.</h2>
+                <p class="pv-section_sub-heading">Users are visiting consumerfinance.gov on an ever-increasing variety of devices, so we’re creating a flexible design solution to fit any screen size.</p>
+            </header>
+
+            <div class="pv-devices">
+                <img alt="macbook pro" src="/static/img/pv-devices.png">
+            </div>
+
+            <div class="pv-stats">
+                <div class="pv-stat">
+                    <h3 class="pv-stat_heading">20%</h3>
+                    <p class="pv-stat_content">of our overall web traffic now comes from mobile devices.</p>
+                </div>
+                <div class="pv-stat">
+                    <h3 class="pv-stat_heading">150%</h3>
+                    <p class="pv-stat_content">increase in traffic from mobile devices from 2012&ndash;2013.</p>
+                </div>
+                <div class="pv-stat">
+                    <h3 class="pv-stat_heading">1,725</h3>
+                    <p class="pv-stat_content">discrete web browser versions accessed our site in November 2013.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="users_container" class="pv-section">
+        <div class="wrapper wrapper__match-content">
+            <header class="pv-section_header">
+                <h2 class="pv-section_heading">A better user experience.</h2>
+                <p class="pv-section_sub-heading">In the last six months we’ve spoken with consumers, industry leaders, and people within the bureau. We used what they told us about their needs and the needs of people they work with to create user archetypes. These archetypes have been integral to how we’ve shaped and organized the site.</p>
+            </header>
+
+            <div class="pv-persona-type">
+                <h3 class="pv-persona-type_heading pv-persona-type_heading__individual">Consumer segments</h3>
+
+                <div id="overwhelmed" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__individual">Overwhelmed</h4>
+                    <p>Overwhelmed users feel stress and can be confused by financial jargon. We want language to be clear, concise, and in small digestible chunks so users can more easily absorb financial information.</p>
+                </div>
+
+                <div id="data_driven" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__individual">Data-driven</h4>
+                    <p>These users want to know more and love to research data. Our designs should be interactive, engaging, and informative so they can drill down to the relevant information.</p>
+                </div>
+
+                <div id="outsourcers" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__individual">Outsourcers</h4>
+                    <p>They trust people they see as experts with previous financial experience to impart the right information. An authoritative but impartial design gives them confidence they are getting the right information.</p>
+                </div>
+
+                <div id="help" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__individual">Help</h4>
+                    <p>Some people need help because they are drowning and in need of financial assistance immediately. We give them friendly information and direct them to financial guidance.</p>
+                </div>
+            </div>
+
+            <div class="pv-persona-type">
+                <h3 class="pv-persona-type_heading pv-persona-type_heading__industry">Non-consumer segments</h3>
+
+                <div id="watcher" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__industry">Watchers</h4>
+                    <p>Watchers keep up with the CFPB as an institution. They don’t just want to see output, they want to see the work we do to get there as it’s happening.</p>
+                </div>
+
+                <div id="industry" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__industry">Industry</h4>
+                    <p>Industry depends on the CFPB’s regulation and enforcement actions to help them serve the financial industry. We should provide these users with the latest news and easy-to-find regulation information.</p>
+                </div>
+
+                <div id="researcher" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__industry">Researchers</h4>
+                    <p>Researchers utilize the CFPB’s data to help them do their jobs. We should provide them with clear documentation and methods to sort/filter our information.</p>
+                </div>
+
+                <div id="educator" class="pv-single-persona">
+                    <h4 class="pv-single-persona_heading pv-single-persona_heading__industry">Educators &amp; service providers</h4>
+                    <p>They promote our information and services to their own audiences. Our content should be easy to navigate and information should be print-friendly.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="ux_container" class="pv-section">
+        <div class="wrapper wrapper__match-content">
+            <header class="pv-section_header">
+                <h2 class="pv-section_heading">Getting you where you need to go.</h2>
+                <p class="pv-section_sub-heading">Whether you want to browse for information or solve an issue, we make it easy to find what you need with straightforward organization, easy-to-find content, and menus that provide context and work on mobile.</p>
+            </header>
+
+            <div class="pv-structure">
+
+                <div class="pv-structure_group">
+                    <div class="pv-structure_desc">
+                        <h3 class="pv-structure_heading">Current site structure</h3>
+                        <p>Each audience has to search across all of cf.gov to find the resources they need. It can be difficult for them to find what they need.</p>
+                    </div>
+                </div>
+
+                <div class="pv-structure_group">
+                    <div class="pv-structure_desc inactive">
+                        <h3 class="pv-structure_heading">Revised site structure</h3>
+                        <p>Navigation categories are more focused on specific user groups. Users are more likely to find the resources they need together in one place.</p>
+                    </div>
+                </div>
+
+                <div class="pv-structure_chart">
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Inside the CFPB</h4>
+                        <h5 class="pv-structure_audience consumer">Consumers</h5>
+                        <h5 class="pv-structure_audience industry">Industry</h5>
+                        <h5 class="pv-structure_audience watcher">Watchers</h5>
+                        <h5 class="pv-structure_audience researcher">Researchers</h5>
+                        <h5 class="pv-structure_audience educator">Educators</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Get Assistance</h4>
+                        <h5 class="pv-structure_audience consumer">Consumers</h5>
+                        <h5 class="pv-structure_audience industry">Industry</h5>
+                        <h5 class="pv-structure_audience educator">Educators</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Participate</h4>
+                        <h5 class="pv-structure_audience consumer">Consumers</h5>
+                        <h5 class="pv-structure_audience watcher">Watchers</h5>
+                        <h5 class="pv-structure_audience researcher">Researchers</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Law &amp; regulation</h4>
+                        <h5 class="pv-structure_audience industry">Industry</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Submit a complaint</h4>
+                        <h5 class="pv-structure_audience consumer">Consumers</h5>
+                    </div>
+                </div>
+
+                <div class="pv-structure_chart inactive">
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Consumer guides</h4>
+                        <h5 class="pv-structure_audience consumer">Consumers</h5>
+                        <h5 class="pv-structure_audience educator">Educators</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Complaints</h4>
+                        <h5 class="pv-structure_audience consumer">Consumers</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Data &amp; research</h4>
+                        <h5 class="pv-structure_audience researcher">Researchers</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">Policy & Compliance</h4>
+                        <h5 class="pv-structure_audience industry">Industry</h5>
+                    </div>
+
+                    <div class="pv-structure_chart-col">
+                        <h4 class="pv-structure_category">About</h4>
+                        <h5 class="pv-structure_audience watcher">Watchers</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pv-navigation">
+                <h2 class="pv-navigation_heading">Navigation tailored for every section.</h2>
+                <p class="pv-navigation_desc">Different audiences have different needs, so our navigation reflects this. We tailor each navigation menu to be meaningful to the section’s key audience.</p>
+
+                <video class="video-js vjs-default-skin pv-navigation_video"
+                             preload="none"
+                             width="554"
+                             height="450"
+                             data-setup="{}"
+                             autoplay loop webkit-playsinline>
+                    <source src="video/desktop.mp4" type='video/mp4' />
+                    <source src="video/desktop.webm" type='video/webm' />
+                    <source src="video/desktop.ogv" type='video/ogg' />
+                </video>
+            </div>
+
+            <div class="pv-navigation">
+                <h2 class="pv-navigation_heading">Intuitive mobile navigation that just works.</h2>
+                <p class="pv-navigation_desc">A smaller screen shouldn’t mean a smaller experience. Tablets get the full desktop navigation optimized for touch instead of click. At phone size, our mobile menu allows access to any part of the site, and a secondary navigation at the top of the page helps users discover deeper content.</p>
+
+                <video class="video-js vjs-default-skin pv-navigation_video"
+                             preload="none"
+                             width="554"
+                             height="450"
+                             data-setup="{}"
+                             autoplay loop webkit-playsinline>
+                    <source src="video/touch.mp4" type='video/mp4' />
+                    <source src="video/touch.webm" type='video/webm' />
+                    <source src="video/touch.ogv" type='video/ogg' />
+                </video>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="ready_container" class="pv-section pv-ready">
+        <div class="wrapper wrapper__match-content">
+            <header class="pv-section_header pv-ready_header">
+                <h2 class="pv-section_heading">I'm ready to try the new beta site, take me there!</h2>
+                <a href="http://beta.consumerfinance.gov/" class="btn pv-ready_btn">Go to CFPB beta</a>
+                <p class="pv-ready_not-ready">
+                    Or go to the
+                    <a href="http://www.consumerfinance.gov" class="jump-link jump-link__right pv-jump-link">current version of our website</a>
+                </p>
+            </header>
+
+            <div class="pv-ready_content">
+                <h2 class="pv-ready_h2">
+                    <span class="cf-icon cf-icon-error-round beta-banner_icon"></span>
+                    Things to consider when using beta
+                </h2>
+
+                <p class="pv-ready_desc">
+                Starting with this beta release, consumerfinance.gov is evolving to better serve the public. Our goal is for <a href="http://beta.consumerfinance.gov">beta.consumerfinance.gov</a> to give both users and developers a clear idea of the website’s eventual design, technical features, and capabilities. So you’ll get an idea of how it’s going to look and function, but the content often won’t be accurate while we’re working here. If you are relying on our website for regulatory guidance or legal research you should consult the official editions of those sources to confirm your findings on <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>. Nothing on <a href="http://beta.consumerfinance.gov">beta.consumerfinance.gov</a> binds the Bureau or creates any rights, benefits, or defenses, substantive or procedural, that are enforceable by any party in any manner.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    {% endblock %}
+
+    <!-- /PRIMARY CONTENT -->
+
+{% endblock body %}
+
+{% block javascript %}
+    {{ super() }}
+    <script src="/static/vendor/slick-carousel/slick.min.js"></script>
+    <script>
+        $('document').ready(function () {
+            if (!$('html').hasClass('lt-ie9')) {
+                $('.pv-carousel').slick({
+                    dots: true
+                });
+            }
+        });
+    </script>
+{% endblock javascript %}
