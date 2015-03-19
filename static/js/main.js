@@ -13286,11 +13286,11 @@ $('.js-validate-filters').each(function() {
         var gteParsedVal = formatDateString(gteVal, lteVal);
         var lteParsedVal = formatDateString(lteVal, gteVal);
 
-        var validDate = isValidDateRange(
+        var validDateRange = isValidDateRange(
             new Date( gteParsedVal ),
             new Date( lteParsedVal )
         );
-        if ( validDate ) {
+        if ( validDateRange ) {
             $gte.val( gteParsedVal );
             $lte.val( lteParsedVal );
         } else {
