@@ -573,3 +573,22 @@ $(document).ready(function() {
         $('#beta-banner').get(0).expand();
     }
 });
+
+
+/* ==========================================================================
+   Collapsing Beta banner
+   ========================================================================== */
+
+$('.js-smooth-scroll').on('click', function(e) {
+    e.preventDefault();
+
+    var self    = this;
+    var $target = $(self.hash);
+
+    if ( $target.length > 0 ) {
+        var destination = $target.offset().top;
+
+        $('html:not(:animated),body:not(:animated)')
+            .animate({scrollTop: destination - 40 }, 500 );
+    }
+});
