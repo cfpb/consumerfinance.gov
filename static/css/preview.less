@@ -205,14 +205,8 @@
 }
 
 .pv-browser {
-    position:relative;
-
     width: 80%;
     margin: 0 auto;
-
-    @media (min-width: 765px) {
-        width: 60%;
-    }
 
     &_toolbar {
         padding-top: 5.5%;
@@ -237,6 +231,12 @@
             -webkit-box-shadow: 0px 0px 40px 0px rgba(50, 50, 50, 0.4);
             -moz-box-shadow:    0px 0px 40px 0px rgba(50, 50, 50, 0.4);
             box-shadow:         0px 0px 40px 0px rgba(50, 50, 50, 0.4);
+        }
+
+        img {
+            display: block;
+
+            width: 100%;
         }
     }
 }

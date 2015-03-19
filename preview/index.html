@@ -78,7 +78,7 @@
                 <div class="pv-carousel_item">
                     <div class="pv-browser">
                         <div class="pv-browser_toolbar"></div>
-                        <div class="pv-browser_window">
+                        <div class="pv-browser_window js-browser_window">
                             <img alt="refreshed homepage" src="browsers/homepage.jpg">
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                 <div class="pv-carousel_item">
                     <div class="pv-browser">
                         <div class="pv-browser_toolbar"></div>
-                        <div class="pv-browser_window">
+                        <div class="pv-browser_window js-browser_window">
                             <img alt="refreshed about page" src="browsers/about.jpg">
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                 <div class="pv-carousel_item">
                     <div class="pv-browser">
                         <div class="pv-browser_toolbar"></div>
-                        <div class="pv-browser_window">
+                        <div class="pv-browser_window js-browser_window">
                             <img alt="refreshed blog" src="browsers/blog.jpg">
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                 <div class="pv-carousel_item">
                     <div class="pv-browser">
                         <div class="pv-browser_toolbar"></div>
-                        <div class="pv-browser_window">
+                        <div class="pv-browser_window js-browser_window">
                             <img alt="refreshd consumer guides" src="browsers/guides.jpg">
                         </div>
                     </div>
@@ -377,10 +377,54 @@
     <script>
         $('document').ready(function () {
             if (!$('html').hasClass('lt-ie9')) {
+                var scrollingTimeout;
+
+                var animateBrowser = function($self) {
+                    var $existing       = $('.is-scrolling');
+                    $existing.removeAttr('style').removeClass('is-scrolling');
+                    window.clearTimeout(scrollingTimeout);
+
+                    var $browser        = $self.find('.js-browser_window');
+                    var $screen         = $browser.find('img');
+                    var frameHeight     = $browser.height();
+                    var screenHeight    = $screen.height();
+                    var speed           = ( screenHeight / 250 );
+                    var newTop          = ( screenHeight - frameHeight) * -1;
+
+                    function scrollDown($elem) {
+                        $elem
+                            .css('transform', 'translateY(' + newTop + 'px)')
+                            .addClass('is-scrolling');
+
+                        scrollingTimeout = setTimeout( function() {
+                              scrollUp($elem);
+                        }, (speed * 1000) );
+                    };
+
+                    function scrollUp($elem) {
+                        $elem
+                            .css('transform', 'translateY(0px)')
+                        scrollingTimeout = setTimeout( function() {
+                              scrollDown($elem);
+                        }, (speed * 1000) );
+                    };
+
+                    $screen.css('transition', 'transform ' + speed + 's cubic-bezier(0.3, 0, 0.4, 1.00)');
+
+                    scrollDown($screen);
+                };
                 $('.pv-carousel').slick({
-                    dots: true
+                    dots: true,
+                    onInit: function() {
+                        var $active = $('.slick-active');
+                        animateBrowser($active);
+                    },
+                    onAfterChange: function() {
+                        var $active = $('.slick-active');
+                        animateBrowser($active);
+                    }
                 });
             }
         });
     </script>
-{% endblock javascript %}
+\{% endblock javascript %}

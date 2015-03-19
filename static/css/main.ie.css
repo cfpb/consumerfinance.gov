@@ -10725,7 +10725,6 @@ a.focus .summary_event-date {
 }
 
 .pv-browser {
-  position: relative;
   width: 80%;
   margin: 0 auto;
 }
@@ -10743,6 +10742,11 @@ a.focus .summary_event-date {
   margin-bottom: 60px;
   -webkit-box-shadow: 0 0 20px 0 rgba(50,50,50,0.3);
   box-shadow: 0 0 20px 0 rgba(50,50,50,0.3);
+}
+
+.pv-browser_window img {
+  display: block;
+  width: 100%;
 }
 
 .pv-thumbs {
