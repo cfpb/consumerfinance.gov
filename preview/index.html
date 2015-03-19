@@ -226,21 +226,21 @@
 
             <div class="pv-structure">
 
-                <div class="pv-structure_group">
+                <div class="pv-structure_group js-structure_btn">
                     <div class="pv-structure_desc">
                         <h3 class="pv-structure_heading">Current site structure</h3>
                         <p>Each audience has to search across all of cf.gov to find the resources they need. It can be difficult for them to find what they need.</p>
                     </div>
                 </div>
 
-                <div class="pv-structure_group">
-                    <div class="pv-structure_desc inactive">
+                <div class="pv-structure_group js-structure_btn inactive">
+                    <div class="pv-structure_desc">
                         <h3 class="pv-structure_heading">Revised site structure</h3>
                         <p>Navigation categories are more focused on specific user groups. Users are more likely to find the resources they need together in one place.</p>
                     </div>
                 </div>
 
-                <div class="pv-structure_chart">
+                <div class="pv-structure_chart js-structure_chart">
                     <div class="pv-structure_chart-col">
                         <h4 class="pv-structure_category">Inside the CFPB</h4>
                         <h5 class="pv-structure_audience consumer">Consumers</h5>
@@ -275,7 +275,7 @@
                     </div>
                 </div>
 
-                <div class="pv-structure_chart inactive">
+                <div class="pv-structure_chart js-structure_chart inactive">
                     <div class="pv-structure_chart-col">
                         <h4 class="pv-structure_category">Consumer guides</h4>
                         <h5 class="pv-structure_audience consumer">Consumers</h5>
@@ -425,6 +425,30 @@
                     }
                 });
             }
+
+            (function() {
+                var $triggers   = $('.js-structure_btn')
+                var $targets    = $('.js-structure_chart');
+
+                $triggers.on('click', function() {
+                    console.log('clicked');
+                    var $self = $(this);
+                    var $others = $triggers.not($self);
+
+                    $others.addClass('inactive');
+                    $self.removeClass('inactive')
+
+                    $.each($targets, function() {
+                        var $target = $(this);
+                        if ( $target.hasClass('inactive') ) {
+                            $target.removeClass('inactive');
+                        } else {
+                            $target.addClass('inactive');
+                        }
+                    });
+                });
+            })();
+
         });
     </script>
 \{% endblock javascript %}

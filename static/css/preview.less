@@ -430,13 +430,12 @@
         -o-transition: background-color 0.35s ease-in-out;
         transition: background-color 0.35s ease-in-out;
 
-        &.inactive {
+        .inactive & {
             background-color: @gray-20;
             color: @gray-50;
         }
 
-        &:hover,
-        &.inactive:hover {
+        &:hover {
             background: @green-tint;
         }
     }

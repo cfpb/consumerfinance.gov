@@ -11028,13 +11028,12 @@ a.focus .summary_event-date {
   transition: background-color .35s ease-in-out;
 }
 
-.pv-structure_desc.inactive {
+.inactive .pv-structure_desc {
   background-color: #e3e4e5;
   color: #babbbd;
 }
 
-.pv-structure_desc:hover,
-.pv-structure_desc.inactive:hover {
+.pv-structure_desc:hover {
   background: #dbedd4;
 }
 
