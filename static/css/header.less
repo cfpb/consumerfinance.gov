@@ -47,10 +47,6 @@
     - cfgov-header
 */
 
-.header {
-
-}
-
 .header_logo {
     margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
     vertical-align: middle; // removes typical inline vertical whitespace
@@ -88,14 +84,18 @@
         &_tel {
             padding-right: @grid_gutter-width / 2;
             border-right: 1px solid @gray-50;
-            // subtracting typical inline horizonal whitespace from right margin
+            // Subtracting typical inline horizonal whitespace from right margin.
             margin-right: unit(@grid_gutter-width / 2 / @base-font-size-px, em) - 0.25em;
             .u-link__colors(@darkgray);
         }
 
         &_es {
             .h5();
-            .u-link__border();
+            .u-link__no-border();
+            color: @gray-20;
+            &:hover {
+                color: @gray-20;
+            }
         }
     });
 }
@@ -107,9 +107,9 @@
   patterns:
     - name: TBD
       markup: |
-        
+
       notes:
-        - 
+        -
   tags:
     - cfgov-header
 */
@@ -125,7 +125,7 @@
 }
 
 .desktop-menu_horizontal-list .list_link {
-    // override standard visited link color
+    // Override standard visited link color.
     .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
 }
 
@@ -148,16 +148,17 @@
     }
 
     .primary-nav_top-level-list.list-expanding {
-        // Nested list borders
-        // Negative bottom margin to remove duplicate bottom border
+        // Nested list borders.
+        // Negative bottom margin to remove duplicate bottom border.
         & .list-expanding {
             margin: 0 0 -1px;
         }
-     
+
         & .list_item {
             display: block;
             border-bottom: 1px solid @gray-50;
-            margin-right: 0; // overriding .list-horizontal .list_item
+            // Overriding .list-horizontal .list_item.
+            margin-right: 0;
 
             &:first-child {
                 border-top: 1px solid @gray-50;
@@ -198,20 +199,20 @@
             background: @gray-20 !important;
         }
 
-        // Two levels deep
+        // Two levels deep.
         & .list-expanding .list-expanding_list-item a {
             padding-left: @grid_gutter-width;
             background: @gray-10;
             font-size: 1em;
         }
 
-        // Three levels deep
+        // Three levels deep.
         & .list-expanding .list-expanding .list-expanding_list-item a {
             padding-left: @grid_gutter-width * 1.5;
             background: @gray-5;
         }
 
-        // Give the expanding trigger an icon
+        // Give the expanding trigger an icon.
         .list-expanding_trigger:after {
             position: absolute;
             right: @grid_gutter-width / 2;
@@ -227,7 +228,7 @@
             content: "\e004";
         }
 
-        // Hide a child list if the trigger is not pressed
+        // Hide a child list if the trigger is not pressed.
         .list-expanding_trigger[aria-pressed="false"] .list-expanding_child-list {
             display: none;
         }
@@ -236,7 +237,7 @@
     .sliding-nav {
         .u-clearfix();
         // Putting the navigation background here instead of on .sliding-nav_nav
-        // is a trick to get the bg of the nav to match the height of .sliding-nav_page
+        // is a trick to get the bg of the nav to match the height of .sliding-nav_page.
         background: @gray;
     }
     .sliding-nav.is-open {
@@ -257,7 +258,7 @@
         box-shadow: -6px 0 0 rgba(16, 24, 32, 0.2);
     }
 
-    // This overlays the main content and when clicked closes the menu
+    // This overlays the main content and when clicked closes the menu.
     .sliding-nav_page-overlay {
         position: relative;
     }
@@ -343,14 +344,16 @@
 
     .primary-nav {
         position: absolute;
-        top: 100px; // magic number - dependent on height of logo and its vertical padding
+        // Magic number - dependent on height of logo and its vertical padding.
+        top: 100px;
         right: 0;
         left: 0;
         z-index: 100;
     }
 
     .primary-nav_header-space {
-        padding-bottom: 54px; // magic number - dependent on height of horizontal navbar
+        // Magic number - dependent on height of horizontal navbar.
+        padding-bottom: 54px;
     }
 
     .primary-nav .primary-nav_top-level-list {
@@ -376,11 +379,12 @@
     .primary-nav_top-level-list > .list_item > .list_link {
         display: block;
         padding-bottom: @grid_gutter-width;
-        margin: 0 0 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+        // Margin on link for larger hit area.
+        margin: 0 0 0 (@grid_gutter-width / 2);
         font-size: unit(18px / @base-font-size-px, em);
     }
 
-    // Hide only when js is available
+    // Hide only when js is available.
     .desktop-menu_full-wrapper {
         width: 100%;
         max-height: 0;
@@ -388,31 +392,33 @@
         position: absolute;
         left: 0;
         z-index: 100;
-        -webkit-transform: translate3d(0,0,0); // Maybe this will kick on the gpu?
+        // Maybe this will kick on the gpu?
+        -webkit-transform: translate3d(0,0,0);
     }
 
     // Expand the menu by looking for aria attributes.
     // This will help us to keep our eye on a11y.
-    // The .no-js selector enables simple hover menu support for users without JavaScript
+    // The .no-js selector enables simple hover menu support for users w/o JS.
     .desktop-menu_full-wrapper[aria-expanded="true"],
     .no-js .list_item:hover .desktop-menu_full-wrapper {
         z-index: 200;
         max-height: 15em;
-        -webkit-transform: translate3d(0,0,0); // Maybe this will kick on the gpu?
+        // Maybe this will kick on the gpu?
+        -webkit-transform: translate3d(0,0,0);
     }
 
-    // Only use transitions when allowed, js controls the transition toggling logic
-    // Transition off
+    // Only use transitions when allowed, JS controls transition toggle logic.
+    // Transition off.
     .has-transition .desktop-menu_full-wrapper {
         transition: 0.25s max-height linear;
     }
-    // Transition on
+    // Transition on.
     .has-transition .desktop-menu_full-wrapper[aria-expanded="true"] {
         transition: 0.275s max-height ease-out;
     }
 
     .desktop-menu_full-wrapper_decoration {
-        padding: @grid_gutter-width 0;
+        padding: (@grid_gutter-width - unit(10px, em)) 0;
         background: @gray-5;
         border-top: 1px solid @gray-50;
         border-bottom: 4px solid @gray-50;
@@ -425,7 +431,7 @@
         .webfont-regular();
     }
 
-    // Horizontal list
+    // Horizontal list.
     .desktop-menu_full-wrapper .desktop-menu_horizontal-list {
         padding-left: @grid_gutter-width / 2;
         margin-top: 0;
@@ -434,13 +440,28 @@
 
     .desktop-menu_horizontal-list.list__horizontal > .list_item {
         margin: 0 @grid_gutter-width / 2;
+        line-height: 2;
+    }
+
+});
+
+.respond-to-range(801px, 814px, {
+    .primary-nav_header-space {
+        // Magic number - dependent on height of horizontal navbar.
+        padding-bottom: 78px;
+    }
+
+    .primary-nav_top-level-list > .list_item > .list_link {
+        max-width: 130px;
+        text-align: center;
     }
 
 });
 
 .respond-to-min(1024px, {
     .primary-nav_top-level-list > .list_item > .list_link {
-        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+        // Margin on link for larger hit area.
+        margin: 0 (@grid_gutter-width / 2);
     }
 });
 

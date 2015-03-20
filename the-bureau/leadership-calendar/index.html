@@ -22,20 +22,21 @@
     {% from "post-macros.html" import pagination as pagination with context %}
 
     <div class="block u-mt0 block__padded-bottom block__border-bottom">
-        <h1 class="h3">
+        <h1>Leadership Calendar</h1>
+        <p class="h3">
             At the Consumer Financial Protection Bureau, we are committed to letting you
             know how we’re working for you every day by, among other things, providing you
             with a view into the workday of the CFPB’s senior leadership.
-        </h1>
+        </p>
         <p>
-            Richard Cordray is the Director of the CFPB. We post his calendar online,
-            typically on a monthly basis, after reviewing it to determine whether any
-            information contained therein must or should be withheld from public disclosure
+            Richard Cordray is the Director of the CFPB. Steve Antonakes is the Deputy Director.
+            We post their calendars online, typically on a monthly basis, after reviewing it to determine 
+            whether any information contained therein must or should be withheld from public disclosure 
             in accordance with the Freedom of Information Act. We update the calendar
-            retrospectively; we do not post current or future calendars. Due to the
-            time-intensive preparation process, each month’s calendar will appear on this
-            page a few weeks after that month has concluded. We will begin updating
-            Mr. Cordray’s calendar with his January appointments.
+            retrospectively for the months they have occupied these leadership roles. We do not post 
+            current or future calendars. Due to the time-intensive preparation process, each 
+            month’s calendar will appear on this page a few weeks after that month has concluded. We 
+            have also retained the calendars of people who have previously lead the day-to-day work of the CFPB.
         </p>
         {{ share(self.title(), false) }}
     </div>
@@ -63,9 +64,9 @@
             Download a copy
         </h1>
         <p>
-            Quisque consequat quam sem, a condimentum augue consequat nec. Aenean tristique
-            faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
-            dapibus, a viverra elit tempor.
+            Choose the names and dates for which you want to see the calendar. Appointments are 
+            only available for months when someone was serving in Bureau leadership. We'll 
+            generate a PDF of the results for you. Very large requests may take a while.
         </p>
         {{ filters(
             ['calendar', 'range_date'], query, posts, 'calendar_event',

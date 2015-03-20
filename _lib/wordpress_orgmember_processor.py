@@ -37,5 +37,6 @@ def process_orgmember(member):
     else:
         member['name'] = ''
     member['titles'] = [member['custom_fields'].get(title)[0] for title in \
-                           ['title_1', 'title_2'] if member['custom_fields'].get(title)]
+                           ['titles_0_title', 'titles_1_title'] \
+                        if member['custom_fields'].get(title)]
     return member

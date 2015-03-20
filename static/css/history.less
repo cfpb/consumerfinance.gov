@@ -1,6 +1,6 @@
 /* ==========================================================================
    cfgov-refresh
-   History (The Bureau)
+   History (The Bureau) page.
    ========================================================================== */
 
 .history-section-expandable {
@@ -24,7 +24,7 @@
     .history-section-expandable_header {
         margin-top: 0;
     }
-    
+
     .respond-to-min(600px, {
         margin-right: -@grid_gutter-width;
         padding: 0 @grid_gutter-width @grid_gutter-width;
@@ -72,7 +72,7 @@
 }
 
 .history-year {
-    .h3(); 
+    .h3();
     padding: unit(10px / @font-size, em) unit(15px / @font-size, em);
     border-radius: unit(4px / @font-size, em);
     margin: 0 0 @grid_gutter-width;
@@ -81,7 +81,8 @@
     text-align: center;
 
     .respond-to-min(801px, {
-        width: 3em; // enough width for four characters
+        // Enough width for four characters.
+        width: 3em;
     });
 
     .respond-to-min(1200px, {
@@ -107,14 +108,14 @@
 
 .history-item__right {
     clear: right;
-    
-    // Green dot with black border positioning
+
+    // Green dot with black border positioning.
     &:before {
         top: 17px;
         left: -47px;
     }
 
-    // White triangle positioning
+    // White triangle positioning.
     &:after {
         border-width: 12px 12px 12px 0;
         border-color: transparent @white transparent transparent;
@@ -124,15 +125,15 @@
 }
 .history-item__left {
     clear: left;
-    
-    // Green dot with black border positioning
+
+    // Green dot with black border positioning.
     &:before {
         top: 17px;
         right: -47px;
         left: initial;
     }
 
-    // White triangle positioning
+    // White triangle positioning.
     &:after {
         border-width: 12px 0 12px 12px;
         border-color: transparent transparent transparent @white;
@@ -151,7 +152,7 @@
         margin-left: 49px;
         .history-item__right();
 
-        // Green dot with black border
+        // Green dot with black border.
         &:before {
             content: '';
             display: block;
@@ -163,7 +164,7 @@
             background: @green;
         }
 
-        // White triangle
+        // White triangle.
         &:after {
             content: '';
             display: block;

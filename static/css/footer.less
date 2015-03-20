@@ -20,8 +20,8 @@
     // There is a 10px margin-bottom on the  last .footer_list li's, plus the
     // 50px bottom padding = 60px of total padding at the bottom of the footer.
     padding-bottom: unit(50px / @base-font-size-px, em);
-    border-top: 3px solid @green;
-    background: @gray-10;
+    border-top: 10px solid @green;
+    background: @gray-5;
 
     &_share-icon-list {
         margin-bottom: unit(30px / @base-font-size-px, em);
@@ -80,11 +80,11 @@
             font-size: unit(12px / @base-font-size-px, em);
         });
 
-        &-word-break {
-            .respond-to-min(768px, {
+        .respond-to-range(768px, 1199px, {
+            &-word-break {
                 display: block;
-            });
-        }
+            }
+        });
     }
 
     &_general-inqueries {
@@ -151,10 +151,18 @@
         .respond-to-max(479px, {
             margin-bottom: unit(10px / @base-font-size-px, em);
             .list__spaced();
+
+            &:first-child {
+                margin-bottom: unit(24px / @base-font-size-px, em);
+            }
         });
 
         .respond-to-min(480px, {
             .list__horizontal();
+
+            &:first-child {
+                margin-bottom: 0;
+            }
         });
 
         .list_item {
@@ -173,6 +181,7 @@
                 .u-link__no-border();
             }
         }
+
     }
 
     &-pre {
@@ -240,36 +249,23 @@
         });
 
         .footer_nested-col-group {
-            .respond-to-min(768px, {
+            .respond-to-range(768px, 1199px, {
                 .grid_nested-col-group();
             });
         }
 
-        .footer_logo {
-            .respond-to-range(768px, 1199px, {
-                .grid_column(6);
-            });
-            .respond-to-min(1200px, {
-                .grid_column(12);
-                margin-bottom: unit(20px / @base-font-size-px, em);
-            });
-        }
-
         .footer_address {
+            .respond-to-min(1200px, {
+                margin-bottom: unit(30px / @base-font-size-px, em);
+            });
             .respond-to-range(768px, 1199px, {
                 .grid_column(3);
-            });
-            .respond-to-min(1200px, {
-                .grid_column(6);
             });
         }
 
         .footer_general-inqueries {
             .respond-to-range(768px, 1199px, {
                 .grid_column(3);
-            });
-            .respond-to-min(1200px, {
-                .grid_column(6);
             });
         }
     }

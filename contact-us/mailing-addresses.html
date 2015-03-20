@@ -1,6 +1,7 @@
 {% from "macros.html" import format_address as format_address %}
-{% set administrative_offices = get_document('contact', 'administrative-offices') %}
-{% set consumer_contact_center = get_document('contact', 'consumer-contact-center') %}
+{% import "_vars-contact-us.html" as vars with context %}
+{% set administrative_offices = vars.administrative_offices %}
+{% set consumer_contact_center = vars.consumer_contact_center  %}
 
 <section class="block u-mt0 content-l content-l__sidebar">
 
@@ -30,12 +31,14 @@
             {{ administrative_offices.title }}
         </h2>
         <p class="short-desc">
+            {{- administrative_offices.name -}}<br>
             {{- format_address(administrative_offices) -}}
         </p>
         <h2 class="h5">
             {{ consumer_contact_center.title }}
         </h2>
         <p class="short-desc">
+            {{- consumer_contact_center.name -}}<br>
             {{- format_address(consumer_contact_center) -}}
         </p>
     </div>

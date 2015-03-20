@@ -3,22 +3,26 @@
 {% set active_nav_id = 'performance-plan-report' %}
 
 {% block title -%}
-    Performance Plan Report
+    Annual Performance Plan and Report
 {%- endblock %}
 
 {% block desc -%}
-    
+
 {%- endblock %}
 
 {% block content_main %}
 
     <div class="block block__flush-top block__sub">
+        <h1>Performance Plan Report</h1>
         <p class="h3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+            Every year, the CFPB releases an update on its goals, investment choices,
+            and accomplishments, which align with the larger long-term Strategic Plan.
+            The aim is to provide a balanced and transparent status update to American
+            consumers, Congress, and other key stakeholders..
         <p>
     </div>
     <div class="block block__flush-top budget_page-content performance-plan">
-        {% set page = get_document('pages', '63173') %}
+        {% set page = get_document('pages', '36611') %}
         {{ page.content | safe }}
     </div>
 

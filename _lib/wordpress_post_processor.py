@@ -41,15 +41,15 @@ def process_post(post, newsroom = False):
         post['author'] = [post['author']['name']]
         # convert watchroom_data_x into a proper list
         links = []
-        for x in xrange(0,5):
+        for x in xrange(0,10):
             custom_fields = post['custom_fields']
-            key = 'watchroom_data_%s' % x
+            key = 'watchroom_data_%s_link' % x
             if key in custom_fields:
                 links.append(custom_fields[key])
         post['links'] = links
     else:
         post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
-        post['author'] = [author['title'] for author in post['taxonomy_author']]
+        post['author'] = [author['title'] for author in post['taxonomy_fj_author']]
     if newsroom and post['type'] == 'post':
         post['category'][0] = "Blog"
     author_template = Template("$first_name $last_name")
