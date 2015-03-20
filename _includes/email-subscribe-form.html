@@ -34,7 +34,8 @@
     </div>
     {% endif %}
     #}
-    {% if query -%}
+    {# TODO: Remove "and false" when topics are available for email sign-ups. #}
+    {% if query and false -%}
     <div class="form-group reveal-on-focus_content u-clearfix">
     {% for category in query.possible_values_for('category')|sort(attribute='key') -%}
     {% set govdelivery_categories = [
