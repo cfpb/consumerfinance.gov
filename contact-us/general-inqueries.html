@@ -8,19 +8,20 @@
     {{ general_inqueries.sitewide_desc }}
 </p>
 <ul class="list list__icons">
-{%- if general_inqueries.email_addr %}
+{%- if general_inqueries.email_0_addr %}
     <li class="list_item u-break-word">
         <span class="cf-icon cf-icon-email list_icon"></span>
-        <a class="list_link" href="mailto:{{ general_inqueries.email_addr }}">
-            {{ general_inqueries.email_addr }}
+        <a class="list_link" href="mailto:{{ general_inqueries.email_0_addr }}">
+            {{ general_inqueries.email_0_addr }}
         </a>
     </li>
 {%- endif %}
-{%- if general_inqueries.phone_num %}
+
+{%- if general_inqueries.phone_0_num %}
     <li class="list_item">
         <span class="cf-icon cf-icon-phone list_icon"></span>
         <span class="short-desc">
-            {{ format_phone(general_inqueries.phone_num) }}
+            {{ format_phone(general_inqueries.phone_0_num) }}
         </span>
     </li>
 {%- endif %}

@@ -37,7 +37,7 @@
     .calendar-icon {
         .cf-calendar-icon( attr(data-month), attr(data-day), @gray-50, @white, 1);
         float: left;
-        margin: 0 (@grid_gutter-width/2) 0 0;
+        margin: 0 (@grid_gutter-width / 2) 0 0;
     }
 
     .event-meta {
@@ -69,7 +69,7 @@
 
     .summary_heading {
         // Setting margin-top to align with calendar icon.
-        margin: -1 * unit(2px  / @base-font-size-px, em) 0 0 0;
+        margin: -1 * unit(2px / @base-font-size-px, em) 0 0 0;
 
         .respond-to-max(@mobile-max {
             .h3();
@@ -115,7 +115,7 @@
     letter-spacing: normal;
 }
 
-// Adding "at" symbol before time
+// Adding "at" symbol before time.
 .event-meta_time:before {
     content: "\2014";
     margin-right: .2em;
@@ -139,18 +139,18 @@
 // Spacing should follow a 1/2/1 ratio (15px/30px/15px).
 .event-status_rsvp p:first-child {
     line-height: 1;
-    margin-bottom: unit(15px  / @base-font-size-px, em);
+    margin-bottom: unit(15px / @base-font-size-px, em);
 }
 
 .event-status_rsvp p:last-child {
-    margin-bottom: unit(30px  / @base-font-size-px, em);
+    margin-bottom: unit(30px / @base-font-size-px, em);
 }
 
 .event-status_livestream p:first-child {
     line-height: 1;
     // The margin is kept at 10px to accommodate the line-height
     // of the text so that the gap appears to be 15px.
-    margin-bottom: unit(10px  / @base-font-size-px, em);
+    margin-bottom: unit(10px / @base-font-size-px, em);
 }
 
 
@@ -161,8 +161,8 @@
     background: @gray-10;
     border-top: 5px solid @green;
 
-    .event-media_container  {
-        max-height:  400px;
+    .event-media_container {
+        max-height: 400px;
         overflow: hidden;
     }
 }

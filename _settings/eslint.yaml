@@ -29,7 +29,7 @@ rules:
   # Warn of use of the console.
   no-console: 1
 
-  # Disallow use of constant expressions in conditions
+  # Disallow use of constant expressions in conditions.
   no-constant-condition: 2
 
   # Disallow control characters in regular expressions.

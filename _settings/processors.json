@@ -38,6 +38,16 @@
     "processor": "wordpress_post_processor",
     "mappings":  "_settings/posts_mappings.json"
   },
+  "events": {
+    "url":       "$WORDPRESS/api/get_posts/",
+    "processor": "wordpress_post_processor",
+    "mappings":  "_settings/posts_mappings.json"
+  },
+  "events_archive": {
+    "url":       "$WORDPRESS/api/get_posts/",
+    "processor": "wordpress_post_processor",
+    "mappings":  "_settings/posts_mappings.json"
+  },
   "newsroom": {
     "url":       "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
     "processor": "wordpress_post_processor",

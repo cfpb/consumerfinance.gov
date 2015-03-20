@@ -1,0 +1,8 @@
+{
+  "name": "CFPB Events",
+  "query": {
+    "doc_type": "events",
+    "size": 10,
+    "sort": "date:desc"
+  }
+}
