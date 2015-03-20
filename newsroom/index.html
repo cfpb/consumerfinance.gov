@@ -16,6 +16,8 @@
 
 {% block content_main %}
 
+    <h1 class="u-mb30">Newsroom</h1>
+
     {# Get the latest Featured Topic #}
     {% import "featured-topic.html" as featured_topics %}
     {{ featured_topics.render(queries.watchroom.search_with_url_arguments(size=1)) }}
