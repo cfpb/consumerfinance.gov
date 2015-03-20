@@ -58,7 +58,7 @@
             ],
             "taxonomy_post_format":[  
             ],
-            "taxonomy_author":[  
+            "taxonomy_fj_author":[  
                 {  
                     "id":1,
                     "slug":"arthur-author",
