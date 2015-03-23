@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * ======================================================================
  * Aria Button
@@ -19,15 +21,17 @@ $.fn.cfpbAriaButton = function( userSettings ) {
         $this.click(function() {
             togglePressedVal( $this );
         });
-        $this.keyup(function(event){
-            if ( event.which === 32 ) { // Space key
+        $this.keyup(function(event) {
+            // Space key
+            if ( event.which === 32 ) {
                 event.preventDefault();
                 togglePressedVal( $this );
             }
         });
         // Prevent the spacebar from scrolling the page
-        $this.keydown(function(event){
-            if ( event.which === 32 ) { // Space key
+        $this.keydown(function(event) {
+            // Space key
+            if ( event.which === 32 ) {
                 event.preventDefault();
             }
         });
@@ -42,9 +46,9 @@ $.fn.cfpbAriaButton = function( userSettings ) {
 
 function toggleBoolean( userBoolean ) {
     var typedBoolean;
-    if ( typeof( userBoolean ) === 'boolean' ) {
+    if ( typeof userBoolean === 'boolean' ) {
         typedBoolean = userBoolean;
-    } else if ( typeof( userBoolean ) === 'string' ) {
+    } else if ( typeof userBoolean === 'string' ) {
         typedBoolean = ( userBoolean === 'true' ) ? true : false;
     }
     return !typedBoolean;
@@ -64,16 +68,16 @@ $(function() {
         $slidingNavPage = $('.sliding-nav_page'),
         $slidingNavPageOverlay = $('.sliding-nav_page-overlay');
 
-    $slidingNavTrigger.click(function( e ){
+    $slidingNavTrigger.click(function( e ) {
         e.preventDefault();
 
-        // First deal with the filters button if it exists
+        // First deal with the filters button if it exists.
         if ( $('.l-sidenav').hasClass('is-open') ) {
             $('.l-sidenav-btn').trigger('click');
         }
 
         if ( $slidingNav.hasClass('is-open') ) {
-            window.setTimeout( function(){
+            window.setTimeout( function() {
                 $slidingNavPage.removeClass('is-scroll-disabled');
             }, 200 );
             $slidingNav.removeClass('is-open');
@@ -81,8 +85,8 @@ $(function() {
         } else {
             $slidingNav.addClass('is-open');
             $(window).scroll( slidingNavStopScroll );
-            $slidingNavPageOverlay.click(function( e ){
-                e.preventDefault();
+            $slidingNavPageOverlay.click( function( evt ) {
+                evt.preventDefault();
                 $( $slidingNavTrigger[0] ).trigger('click');
             });
         }
@@ -102,11 +106,11 @@ $(function() {
     // Expanding list
     // TODO: Determine if we should actually use the cfpbAriaButton plugin.
     $('.list-expanding_trigger').cfpbAriaButton();
-    $('.list-expanding_trigger').click(function( e ){
+    $('.list-expanding_trigger').click( function( e ) {
         e.preventDefault();
         $(this).next().find('.list-expanding_child-list').slideToggle(100);
     });
-    $('.list-expanding_trigger').keyup(function( e ){
+    $('.list-expanding_trigger').keyup( function( e ) {
         if ( e.which === 32 ) { // Space key
             e.preventDefault();
             $(this).next().find('.list-expanding_child-list').slideToggle(100);
@@ -140,7 +144,7 @@ $(function() {
     // Add aria-expanded
     $desktopMenuChild.attr( 'aria-expanded', 'false' );
 
-    $desktopMenu.mouseleave(function( e ){
+    $desktopMenu.mouseleave( function( e ) {
 
         // Update the mouse and menu state
         aMenuItemWasOpened = false;
@@ -151,7 +155,7 @@ $(function() {
 
     });
 
-    $desktopMenuTrigger.mouseenter(function( e ){
+    $desktopMenuTrigger.mouseenter( function( e ) {
 
         if (!isSmall) {
             // Update aria-expanded
@@ -174,7 +178,7 @@ $(function() {
 
     });
 
-    $desktopMenuTrigger.mouseleave(function( e ){
+    $desktopMenuTrigger.mouseleave( function( e ) {
 
         if (!isSmall) {
             // Update the menu item state
@@ -201,7 +205,7 @@ $(function() {
    Nav-secondary
    ========================================================================== */
 
-$(document).ready(function(){
+$(document).ready( function() {
     // This needs to be in document ready because that is when the jquery plugins
     // are instantiated.
 
@@ -314,13 +318,13 @@ $('.js-form_clear').on('click', function() {
     // Clear checkboxes
     $form.find('[type="checkbox"]')
     .removeAttr('checked');
-    
+
     // Clear select options
     $form.find('select option')
     .removeAttr('selected');
     $form.find('select option:first')
     .attr('selected', true);
-    
+
     // Clear .custom-input elements
     $form.find('.custom-input')
     .trigger('updateState');
@@ -356,19 +360,19 @@ $('.history-section-expandable').find('.expandable_target')
    ========================================================================== */
 
 $('.js-filter_range-date-wrapper').each(function( index ) {
-  var $this = $( this );
-  var $newThis = $this.next('.js-filter_range-date-replacement');
-  var options = {
-      newHTML: $newThis,
-      newInputsOrder: [
-        '#' + $newThis.find('.js-filter_year').attr('id'),
-        '#' + $newThis.find('.js-filter_month').attr('id')
-      ],
-      initialValues: $this.find('.js-filter_range-date').val().split('-'),
-      delimiter: '-'
-  };
-  $this.cf_inputSplit( options );
-  $( options.newInputsOrder ).trigger('updateState');
+    var $this = $( this );
+    var $newThis = $this.next('.js-filter_range-date-replacement');
+    var options = {
+        newHTML: $newThis,
+        newInputsOrder: [
+            '#' + $newThis.find('.js-filter_year').attr('id'),
+            '#' + $newThis.find('.js-filter_month').attr('id')
+        ],
+        initialValues: $this.find('.js-filter_range-date').val().split('-'),
+        delimiter: '-'
+    };
+    $this.cf_inputSplit( options );
+    $( options.newInputsOrder ).trigger('updateState');
 });
 
 
@@ -422,27 +426,64 @@ $('body').cf_pagination({
    ========================================================================== */
 
 $('.js-validate-filters').each(function() {
-  var $this = $( this ),
-      $gte = $this.find('.js-filter_range-date__gte'),
-      $lte = $this.find('.js-filter_range-date__lte');
+    var $this = $( this ),
+        $gte = $this.find('.js-filter_range-date__gte'),
+        $lte = $this.find('.js-filter_range-date__lte');
 
-  function validDateRange(date1, date2) {
-     return date2.getTime() > date1.getTime();
-  }
+    // @param date1 {Date} The starting date in the range.
+    // @param date2 {Date} The ending date in the range.
+    // @return {Boolean} true if the ending date is after the starting date.
+    function isValidDateRange(date1, date2) {
+        return date2.getTime() > date1.getTime();
+    }
 
-  $( this ).on('submit', function( e ) {
-    var validDate = validDateRange(
-        new Date( Date.parse($gte.val()) ),
-        new Date( Date.parse($lte.val()) )
-    );
-    if ( !validDate ) {
-        // Swap the values
+    // Check that the date isn't empty,
+    // and set it to the other set date if it is.
+    // If it's still empty, return an empty string.
+    // If year or month is missing, the current month or year are added.
+    // @param targetDate {String} Date string to format.
+    // @param compData {String} Other date in the date range we're checking.
+    // @return {String} Formatted targetDate or an empty string.
+    //   Throws an error if the expected YYYY-MM format is wrong.
+    function formatDateString(targetDate, compDate) {
+        var formattedDate = targetDate === '' ? compDate : targetDate;
+        if (formattedDate === '') return formattedDate;
+
+        if (/^\d{4}$/.test(formattedDate)) {
+            var month = String(new Date().getMonth() + 1);
+            if (month.length !== 2) month = '0' + month;
+            formattedDate += '-' + month;
+        } else if (/^\d{2}$/.test(formattedDate)) {
+            var year = new Date().getFullYear();
+            formattedDate = year + '-' + formattedDate;
+        } else if (/^\d{4}-\d{2}$/.test(formattedDate) === false) {
+            var msg = 'Unexpected date format! Should be in YYYY-MM format.';
+            throw new Error(msg);
+        }
+
+        return formattedDate;
+    }
+
+    $( this ).on('submit', function( e ) {
         var gteVal = $gte.val();
         var lteVal = $lte.val();
-        $gte.val( lteVal );
-        $lte.val( gteVal );
-    }
-  });
+
+        var gteParsedVal = formatDateString(gteVal, lteVal);
+        var lteParsedVal = formatDateString(lteVal, gteVal);
+
+        var validDateRange = isValidDateRange(
+            new Date( gteParsedVal ),
+            new Date( lteParsedVal )
+        );
+        if ( validDateRange ) {
+            $gte.val( gteParsedVal );
+            $lte.val( lteParsedVal );
+        } else {
+            // Swap the values if "from" value comes after "to" value.
+            $gte.val( lteParsedVal );
+            $lte.val( gteParsedVal );
+        }
+    });
 });
 
 
@@ -467,7 +508,7 @@ function getQueryVariable(key, queryString) {
 
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        if (pair[0] == key) {
+        if (pair[0] === key) {
             return pair[1];
         }
     }
@@ -481,19 +522,18 @@ function replaceQueryVariable(key, value, queryString) {
 
     if (typeof queryString === 'string') {
         query = queryString;
+    } else if (window.location.search.charAt(0) === '?') {
+        query = window.location.search.substring(1);
     } else {
-        if (window.location.search.charAt(0) === '?') {
-            query = window.location.search.substring(1);
-        } else {
-            query = window.location.search;
-        }
+        query = window.location.search;
     }
 
     vars = query.split('&');
 
+    var pair;
     for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (pair[0] == key) {
+        pair = vars[i].split('=');
+        if (pair[0] === key) {
             return '?' + query.replace(
                 pair[0] + '=' + pair[1],
                 pair[0] + '=' + value
@@ -507,9 +547,8 @@ function replaceQueryVariable(key, value, queryString) {
 function getQuery() {
     if (window.location.search.charAt(0) === '') {
         return false;
-    } else {
-        return window.location.search;
     }
+    return window.location.search;
 }
 
 /* ==========================================================================

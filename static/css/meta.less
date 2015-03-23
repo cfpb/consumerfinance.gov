@@ -3,7 +3,6 @@
    meta
    ========================================================================== */
 
-
 /* topdoc
   name: Tags
   family: cfgov-meta
@@ -11,7 +10,7 @@
     - name: Default example
       markup: |
         <div class="tags">
-            <h4 class="tags_header">Topics:</h4>
+            <h4 class="tags_heading">Topics:</h4>
             <ul class="tags_list">
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
@@ -69,10 +68,10 @@
                 </li>
             </ul>
         </div>
-    - name: Hide header modifier
+    - name: Hide heading modifier
       markup: |
-        <div class="tags tags__hide-header">
-            <h4 class="tags_header u-visually-hidden">Topics:</h4>
+        <div class="tags tags__hide-heading">
+            <h4 class="tags_heading u-visually-hidden">Topics:</h4>
             <ul class="tags_list">
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
@@ -130,10 +129,10 @@
                 </li>
             </ul>
         </div>
-    - name: Block list modifier 
-      markup: | 
+    - name: Block list modifier
+      markup: |
         <div class="tags tags__block-list">
-            <h4 class="tags_header">Topics:</h4>
+            <h4 class="tags_heading">Topics:</h4>
             <ul class="tags_list">
                 <li class="tags_tag">
                     <a href="#" class="tags_link">
@@ -190,7 +189,7 @@
                     </a>
                 </li>
             </ul>
-        </div>  
+        </div>
   tags:
     - cfgov-meta
 */
@@ -200,11 +199,11 @@
 
     .respond-to-min(@bp, {
         position: relative;
-        // 58px here comes from the .tags_header width.
+        // 58px here comes from the .tags_heading width.
         padding-left: unit((58px + 8px) / @base-font-size-px, em);
     });
 
-    &_header {
+    &_heading {
         .h4();
         // Bottom margin is eyeballed to 20px from the baseline.
         margin: 0 0 unit(16px / @font-size, em);
@@ -247,7 +246,7 @@
         position: relative;
         .h6();
         display: block;
-        // Eyeballed to 15px including line height.
+        // Eyeballed to 15px including line-height.
         padding: 12px 0 8px;
         margin: 0 0 0 unit(@bullet-font-size / @font-size, em);
         // Match the height of the bullet.
@@ -264,7 +263,7 @@
             padding: 0;
         });
     }
-    
+
     &_bullet {
         position: absolute;
         left: -1em;
@@ -275,7 +274,7 @@
         display: block;
         width: 1em;
         color: @gold-80;
-        // 12px is the font size of .tags_link
+        // 12px is the font size of .tags_link.
         font-size: unit(@bullet-font-size / 12px, em);
     }
 
@@ -286,7 +285,7 @@
             display: list-item;
         }
 
-        .tags_header {
+        .tags_heading {
             .h4();
             // Bottom margin is eyeballed to 20px from the baseline.
             margin: 0 0 unit(16px / @font-size, em);
@@ -295,16 +294,16 @@
         }
     }
 
-    &__hide-header {
+    &__hide-heading {
         padding-left: 0;
 
-        .tags_header{
+        .tags_heading {
             margin: 0;
         }
     }
-    
-    &__hide-header&__block-list {
-        .tags_header {
+
+    &__hide-heading&__block-list {
+        .tags_heading {
             margin: 0;
         }
     }
@@ -610,7 +609,7 @@
 
 .meta-header {
     padding-bottom: unit(8px / @base-font-size-px, em);
-    margin-bottom: unit(10px / @base-font-size-px, em);
+    margin-bottom: unit(30px / @base-font-size-px, em);
     border-bottom: 1px solid @gray-50;
 }
 

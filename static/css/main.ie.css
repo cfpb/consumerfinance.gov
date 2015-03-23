@@ -4910,6 +4910,54 @@ tbody tr {
   margin-left: -30px;
 }
 
+.expandable_header-left {
+  width: 78%;
+}
+
+.expandable_header-right {
+  width: 22%;
+  text-align: right;
+}
+
+.budget_page-content .list__icons,
+.business_page-content .list__icons {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.budget_page-content .list__icons .list_item,
+.business_page-content .list__icons .list_item {
+  margin-left: 0;
+}
+
+.budget_page-content .list__icons .list_item,
+.business_page-content .list__icons .list_item {
+  margin-left: 2em;
+  position: relative;
+}
+
+.budget_page-content .list__icons .list_icon,
+.business_page-content .list__icons .list_icon {
+  position: absolute;
+  width: 1.5em;
+  left: 0;
+  top: 0;
+  line-height: 1.375;
+  text-align: left !important;
+}
+
+.list__icons .list_icon__left {
+  text-align: left !important;
+}
+
+.list__icons .list_icon__center {
+  text-align: center;
+}
+
+.list__icons .list_icon__right {
+  text-align: right;
+}
+
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
@@ -5324,7 +5372,7 @@ tbody tr {
 
 .media_image-container {
   float: left;
-  margin-right: 15px;
+  margin-right: 30px;
 }
 
 .media_image-container.media_image-container__wide-margin {
@@ -5367,7 +5415,7 @@ tbody tr {
   padding-left: 4.125em;
 }
 
-.tags_header {
+.tags_heading {
   margin-top: 0;
   margin-bottom: 1.16666667em;
   font-size: 1.125em;
@@ -5379,11 +5427,11 @@ tbody tr {
   color: #101820;
 }
 
-.lt-ie9 .tags_header {
+.lt-ie9 .tags_heading {
   font-weight: normal !important;
 }
 
-.tags_header {
+.tags_heading {
   position: absolute;
   left: 0;
   width: 3.22222222em;
@@ -5488,7 +5536,7 @@ tbody tr {
   display: list-item;
 }
 
-.tags__block-list .tags_header {
+.tags__block-list .tags_heading {
   margin-top: 0;
   margin-bottom: 1.16666667em;
   font-size: 1.125em;
@@ -5501,19 +5549,19 @@ tbody tr {
   position: relative;
 }
 
-.lt-ie9 .tags__block-list .tags_header {
+.lt-ie9 .tags__block-list .tags_heading {
   font-weight: normal !important;
 }
 
-.tags__hide-header {
+.tags__hide-heading {
   padding-left: 0;
 }
 
-.tags__hide-header .tags_header {
+.tags__hide-heading .tags_heading {
   margin: 0;
 }
 
-.tags__hide-header.tags__block-list .tags_header {
+.tags__hide-heading.tags__block-list .tags_heading {
   margin: 0;
 }
 
@@ -5750,7 +5798,7 @@ a.category-slug.active {
 
 .meta-header {
   padding-bottom: .5em;
-  margin-bottom: .625em;
+  margin-bottom: 1.875em;
   border-bottom: 1px solid #babbbd;
 }
 
@@ -7205,7 +7253,7 @@ a.focus .summary_event-date {
 }
 
 .comments_policy {
-  color: #75787B;
+  color: #75787b;
   font-size: 0.8125em;
   font-style: italic;
 }
@@ -7216,9 +7264,35 @@ a.focus .summary_event-date {
   border: .25em solid #babbbd;
   border-radius: .375em;
   background-color: #babbbd;
-  font-family: 'Avenir Next',Helvetica,Arial;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
   line-height: 1;
   text-align: center;
+}
+
+.calendar-icon em,
+.calendar-icon i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .calendar-icon em,
+.lt-ie9 .calendar-icon i {
+  font-style: normal !important;
+}
+
+.calendar-icon strong,
+.calendar-icon b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .calendar-icon strong,
+.lt-ie9 .calendar-icon b {
+  font-weight: normal !important;
 }
 
 .calendar-icon:before,
@@ -7227,10 +7301,10 @@ a.focus .summary_event-date {
 }
 
 .calendar-icon:before {
+  padding-bottom: 0.15em;
   color: #fff;
   font-size: 1em;
   text-transform: uppercase;
-  padding: 0 0 0.15em;
   content: attr(data-month);
 }
 
@@ -7244,10 +7318,24 @@ a.focus .summary_event-date {
 }
 
 .modification-date {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: .41666667em;
+  font-size: .75em;
+  line-height: 1.83333333;
   background: #dbedd4;
-  display: inline-block;
+  color: #101820;
+  letter-spacing: 0;
+  padding: .0625em .625em;
   text-align: center;
-  padding: 0 20px 0;
+}
+
+.lt-ie9 .modification-date {
+  font-weight: normal !important;
 }
 
 .nav-secondary {
@@ -7465,16 +7553,16 @@ a.focus .summary_event-date {
   margin-bottom: .35714286em;
   font-size: .875em;
   line-height: 1.57142857;
-  border-bottom-width: 1px;
+  border-bottom-width: 0 !important;
+  color: #e3e4e5;
 }
 
 .lt-ie9 .header_misc_es {
   font-weight: normal !important;
 }
 
-.header_misc_es:hover,
-.header_misc_es.hover {
-  border-bottom-width: 1px;
+.header_misc_es:hover {
+  color: #e3e4e5;
 }
 
 .primary-nav_top-level-list>.list_item>.list_link {
@@ -7641,7 +7729,7 @@ a.focus .summary_event-date {
 }
 
 .desktop-menu_full-wrapper_decoration {
-  padding: 30px 0;
+  padding: 20px 0;
   background: #f8f8f8;
   border-top: 1px solid #babbbd;
   border-bottom: 4px solid #babbbd;
@@ -7704,13 +7792,14 @@ a.focus .summary_event-date {
 
 .desktop-menu_horizontal-list.list__horizontal>.list_item {
   margin: 0 15px;
+  line-height: 2;
 }
 
 .footer {
   padding-top: 3.125em;
   padding-bottom: 3.125em;
-  border-top: 3px solid #2cb34a;
-  background: #f1f2f2;
+  border-top: 10px solid #2cb34a;
+  background: #f8f8f8;
 }
 
 .footer_share-icon-list {
@@ -7902,6 +7991,7 @@ a.focus .summary_event-date {
 
 .footer_general-inqueries-label {
   display: block;
+  font-size: 1em;
   margin-bottom: .5em;
   font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
   font-style: normal;
@@ -8100,6 +8190,10 @@ a.focus .summary_event-date {
   margin-left: 0;
 }
 
+.footer_long-list:first-child {
+  margin-bottom: 0;
+}
+
 .footer_long-list .list_item {
   margin-right: 26px;
   margin-bottom: .625em;
@@ -8224,29 +8318,6 @@ a.focus .summary_event-date {
   position: relative;
   margin-left: -15px;
   margin-right: -15px;
-}
-
-.footer-left .footer_logo {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 50%;
-}
-
-.ie .footer-left .footer_logo {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .footer-left .footer_logo {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .footer-left .footer_address {
@@ -8754,58 +8825,78 @@ a.focus .summary_event-date {
 }
 
 .budget_page-content h4 {
-  margin-top: 30px;
+  margin-top: 2.8125em;
 }
 
-.budget_page-content ul {
+.budget_page-content.financial-report ul,
+.budget_page-content.performance-plan ul,
+.budget_page-content.funding-request ul {
   padding-left: 0;
   list-style-type: none;
 }
 
-.budget_page-content ul .list_item {
+.budget_page-content.financial-report ul .list_item,
+.budget_page-content.performance-plan ul .list_item,
+.budget_page-content.funding-request ul .list_item {
   margin-left: 0;
 }
 
-.budget_page-content ul .list_item {
-  margin-left: 0;
-}
-
-.budget_page-content ul .list_item {
+.budget_page-content.financial-report ul .list_item,
+.budget_page-content.performance-plan ul .list_item,
+.budget_page-content.funding-request ul .list_item {
   margin-bottom: .625em;
 }
 
-.budget_page-content ul.list__spaced .list_item+.list_item {
+.budget_page-content.financial-report ul.list__spaced .list_item+.list_item,
+.budget_page-content.performance-plan ul.list__spaced .list_item+.list_item,
+.budget_page-content.funding-request ul.list__spaced .list_item+.list_item {
   margin-top: 0;
 }
 
-.budget_page-content ul.list__icons .list_link {
+.budget_page-content.financial-report ul.list__icons .list_link,
+.budget_page-content.performance-plan ul.list__icons .list_link,
+.budget_page-content.funding-request ul.list__icons .list_link {
   position: relative;
   left: -0.125em;
 }
 
-.budget_page-content ul.list__icons .icon-link:before,
-.budget_page-content ul.list__icons .icon-link:after {
+.budget_page-content.financial-report ul.list__icons .icon-link:before,
+.budget_page-content.performance-plan ul.list__icons .icon-link:before,
+.budget_page-content.funding-request ul.list__icons .icon-link:before,
+.budget_page-content.financial-report ul.list__icons .icon-link:after,
+.budget_page-content.performance-plan ul.list__icons .icon-link:after,
+.budget_page-content.funding-request ul.list__icons .icon-link:after {
   width: 1.125em;
   text-align: center;
 }
 
-.budget_page-content ul .list_link {
+.budget_page-content.financial-report ul .list_link,
+.budget_page-content.performance-plan ul .list_link,
+.budget_page-content.funding-request ul .list_link {
   position: relative;
   left: -0.125em;
 }
 
-.budget_page-content ul .icon-link:before,
-.budget_page-content ul .icon-link:after {
+.budget_page-content.financial-report ul .icon-link:before,
+.budget_page-content.performance-plan ul .icon-link:before,
+.budget_page-content.funding-request ul .icon-link:before,
+.budget_page-content.financial-report ul .icon-link:after,
+.budget_page-content.performance-plan ul .icon-link:after,
+.budget_page-content.funding-request ul .icon-link:after {
   width: 1.125em;
   text-align: center;
 }
 
-.budget_page-content ul li {
-  margin-left: 0;
+.budget_page-content.financial-report ul li,
+.budget_page-content.performance-plan ul li,
+.budget_page-content.funding-request ul li {
   margin-bottom: .625em;
+  margin-left: 0;
 }
 
-.budget_page-content ul li a {
+.budget_page-content.financial-report ul a,
+.budget_page-content.performance-plan ul a,
+.budget_page-content.funding-request ul a {
   left: -0.125em;
   font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
   font-style: normal;
@@ -8813,19 +8904,30 @@ a.focus .summary_event-date {
   font-size: 1em;
   border-bottom-width: 0;
   position: relative;
+  padding-left: 1.25em !important;
+  left: 0;
+  display: block;
 }
 
-.lt-ie9 .budget_page-content ul li a {
+.lt-ie9 .budget_page-content.financial-report ul a,
+.lt-ie9 .budget_page-content.performance-plan ul a,
+.lt-ie9 .budget_page-content.funding-request ul a {
   font-weight: normal !important;
 }
 
-.budget_page-content ul li a_text {
+.budget_page-content.financial-report ul a_text,
+.budget_page-content.performance-plan ul a_text,
+.budget_page-content.funding-request ul a_text {
   border-bottom-width: 1px;
   border-bottom-style: inherit;
 }
 
-.budget_page-content ul li a:before,
-.budget_page-content ul li a:after {
+.budget_page-content.financial-report ul a:before,
+.budget_page-content.performance-plan ul a:before,
+.budget_page-content.funding-request ul a:before,
+.budget_page-content.financial-report ul a:after,
+.budget_page-content.performance-plan ul a:after,
+.budget_page-content.funding-request ul a:after {
   font-family: 'CFPB Minicons';
   display: inline-block;
   font-style: normal;
@@ -8836,80 +8938,188 @@ a.focus .summary_event-date {
   margin-left: 1px;
 }
 
-.budget_page-content ul li a__download:after,
-.budget_page-content ul li a__download.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__download:after,
+.budget_page-content.performance-plan ul a__download:after,
+.budget_page-content.funding-request ul a__download:after,
+.budget_page-content.financial-report ul a__download.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__download.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__download.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__download.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__download.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__download.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__download.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__download.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__download.budget_page-content.funding-request ul a__before:before {
   content: "\e406";
 }
 
-.budget_page-content ul li a__email:after,
-.budget_page-content ul li a__email.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__email:after,
+.budget_page-content.performance-plan ul a__email:after,
+.budget_page-content.funding-request ul a__email:after,
+.budget_page-content.financial-report ul a__email.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__email.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__email.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__email.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__email.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__email.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__email.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__email.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__email.budget_page-content.funding-request ul a__before:before {
   content: "\e302";
 }
 
-.budget_page-content ul li a__external-link:after,
-.budget_page-content ul li a__external-link.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__external-link:after,
+.budget_page-content.performance-plan ul a__external-link:after,
+.budget_page-content.funding-request ul a__external-link:after,
+.budget_page-content.financial-report ul a__external-link.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__external-link.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__external-link.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__external-link.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__external-link.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__external-link.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__external-link.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__external-link.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__external-link.budget_page-content.funding-request ul a__before:before {
   content: "\e610";
 }
 
-.budget_page-content ul li a__fax:after,
-.budget_page-content ul li a__fax.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__fax:after,
+.budget_page-content.performance-plan ul a__fax:after,
+.budget_page-content.funding-request ul a__fax:after,
+.budget_page-content.financial-report ul a__fax.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__fax.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__fax.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__fax.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__fax.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__fax.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__fax.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__fax.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__fax.budget_page-content.funding-request ul a__before:before {
   content: "\e310";
 }
 
-.budget_page-content ul li a__left:after,
-.budget_page-content ul li a__left.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__left:after,
+.budget_page-content.performance-plan ul a__left:after,
+.budget_page-content.funding-request ul a__left:after,
+.budget_page-content.financial-report ul a__left.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__left.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__left.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__left.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__left.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__left.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__left.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__left.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__left.budget_page-content.funding-request ul a__before:before {
   content: "\e000";
 }
 
-.budget_page-content ul li a__mail:after,
-.budget_page-content ul li a__mail.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__mail:after,
+.budget_page-content.performance-plan ul a__mail:after,
+.budget_page-content.funding-request ul a__mail:after,
+.budget_page-content.financial-report ul a__mail.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__mail.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__mail.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__mail.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__mail.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__mail.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__mail.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__mail.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__mail.budget_page-content.funding-request ul a__before:before {
   content: "\e304";
 }
 
-.budget_page-content ul li a__pdf:after,
-.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__pdf:after,
+.budget_page-content.performance-plan ul a__pdf:after,
+.budget_page-content.funding-request ul a__pdf:after,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.funding-request ul a__before:before {
   content: "\e402";
 }
 
-.budget_page-content ul li a__pdf:after,
-.budget_page-content ul li a__pdf.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__pdf:after,
+.budget_page-content.performance-plan ul a__pdf:after,
+.budget_page-content.funding-request ul a__pdf:after,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.funding-request ul a__before:before {
   content: "\e402";
 }
 
-.budget_page-content ul li a__phone:after,
-.budget_page-content ul li a__phone.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__phone:after,
+.budget_page-content.performance-plan ul a__phone:after,
+.budget_page-content.funding-request ul a__phone:after,
+.budget_page-content.financial-report ul a__phone.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__phone.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__phone.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__phone.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__phone.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__phone.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__phone.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__phone.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__phone.budget_page-content.funding-request ul a__before:before {
   content: "\e306";
 }
 
-.budget_page-content ul li a__right:after,
-.budget_page-content ul li a__right.budget_page-content ul li a__before:before {
+.budget_page-content.financial-report ul a__right:after,
+.budget_page-content.performance-plan ul a__right:after,
+.budget_page-content.funding-request ul a__right:after,
+.budget_page-content.financial-report ul a__right.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__right.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__right.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__right.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__right.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__right.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__right.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__right.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__right.budget_page-content.funding-request ul a__before:before {
   content: "\e002";
 }
 
-.budget_page-content ul li a__before:after {
+.budget_page-content.financial-report ul a__before:after,
+.budget_page-content.performance-plan ul a__before:after,
+.budget_page-content.funding-request ul a__before:after {
   content: '';
 }
 
-.budget_page-content ul li a__no-wrap {
+.budget_page-content.financial-report ul a__no-wrap,
+.budget_page-content.performance-plan ul a__no-wrap,
+.budget_page-content.funding-request ul a__no-wrap {
   white-space: nowrap;
 }
 
-.budget_page-content ul li a__large {
+.budget_page-content.financial-report ul a__large,
+.budget_page-content.performance-plan ul a__large,
+.budget_page-content.funding-request ul a__large {
   font-size: 1.125em;
 }
 
-.budget_page-content.financial-report a:before,
-.budget_page-content.performance-plan a:before,
-.budget_page-content.funding-request a span:before {
+.budget_page-content.financial-report ul a:before,
+.budget_page-content.performance-plan ul a:before,
+.budget_page-content.funding-request ul a:before {
+  width: 1.5em;
+  text-align: center;
   font-family: 'CFPB Minicons';
   display: inline-block;
   font-style: normal;
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
-  content: "\e402";
-  margin-right: .5em;
-  color: #101820;
+  content: "\e406";
+  color: #0072ce;
+  line-height: 1.375;
 }
 
 .budget_page-content.funding-request h4 {
@@ -8927,38 +9137,95 @@ a.focus .summary_event-date {
   margin-bottom: 3.75em;
 }
 
-.post-preview__event {
-  border-top: 1px solid #babbbd;
-  padding-top: 1em;
+.block__business-step {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-.summary .calendar-icon {
+.nav__small-business .expandable_header {
+  position: relative;
+}
+
+.nav__small-business .expandable_header-right {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+  top: 16px;
+}
+
+.nav__small-business .expandable_header-right .expandable_link {
+  font-size: 16px;
+}
+
+.post__event {
+  padding-right: 1.875em;
+  margin-right: 1.875em;
+}
+
+.post-preview__event {
+  border-top: 1px solid #babbbd;
+  padding-top: 1.875em;
+}
+
+.post-preview__event .media-object_image-container {
+  top: 0;
+}
+
+.media_body__event .calendar-icon {
   display: inline-block;
   min-width: 3em;
   border: .25em solid #babbbd;
   border-radius: .375em;
   background-color: #babbbd;
-  font-family: 'Avenir Next',Helvetica,Arial;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
   line-height: 1;
   text-align: center;
   float: left;
   margin: 0 15px 0 0;
 }
 
-.summary .calendar-icon:before,
-.summary .calendar-icon:after {
+.media_body__event .calendar-icon em,
+.media_body__event .calendar-icon i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .media_body__event .calendar-icon em,
+.lt-ie9 .media_body__event .calendar-icon i {
+  font-style: normal !important;
+}
+
+.media_body__event .calendar-icon strong,
+.media_body__event .calendar-icon b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .media_body__event .calendar-icon strong,
+.lt-ie9 .media_body__event .calendar-icon b {
+  font-weight: normal !important;
+}
+
+.media_body__event .calendar-icon:before,
+.media_body__event .calendar-icon:after {
   display: block;
 }
 
-.summary .calendar-icon:before {
+.media_body__event .calendar-icon:before {
+  padding-bottom: 0.15em;
   color: #fff;
   font-size: 1em;
   text-transform: uppercase;
-  padding: 0 0 0.15em;
   content: attr(data-month);
 }
 
-.summary .calendar-icon:after {
+.media_body__event .calendar-icon:after {
   padding: 0.15em 0 0;
   border-radius: 0 0 0.16em 0.16em;
   background: #fff;
@@ -8967,46 +9234,72 @@ a.focus .summary_event-date {
   content: attr(data-day);
 }
 
-.summary .event-meta {
-  color: #101820;
+.media_body__event .event-meta {
+  color: #43484e;
 }
 
-.summary .event-meta_address:before {
-  content: none;
+.media_body__event .event-meta_address {
   margin: 0;
 }
 
-.summary .event-meta_venue:after {
+.media_body__event .event-meta_address:after {
   content: "\2014";
-  margin-left: .5em;
+  margin-left: .2em;
 }
 
-.summary_header {
-  margin-bottom: .5em;
+.media_body__event .summary_header {
+  margin-bottom: 1em;
 }
 
-.summary_heading,
-.event-meta_address {
-  margin: 0;
+.media_body__event .summary_heading {
+  margin: -0.125em 0 0 0;
 }
 
-.summary-meta_container {
+.media_body__event .summary-meta_container {
   overflow: auto;
 }
 
+.media_body__event .tags_list {
+  margin: 0;
+}
+
 .event-meta {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.event-meta em,
+.event-meta i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .event-meta em,
+.lt-ie9 .event-meta i {
+  font-style: normal !important;
+}
+
+.event-meta strong,
+.event-meta b {
   font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
   font-style: normal;
   font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-top: 0;
-  margin-bottom: .35714286em;
-  font-size: .875em;
-  line-height: 1.57142857;
 }
 
-.lt-ie9 .event-meta {
+.lt-ie9 .event-meta strong,
+.lt-ie9 .event-meta b {
+  font-weight: normal !important;
+}
+
+.event-meta__medium {
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .event-meta__medium {
   font-weight: normal !important;
 }
 
@@ -9014,18 +9307,13 @@ a.focus .summary_event-date {
   text-transform: none;
 }
 
+.event-meta_description__block {
+  display: block;
+}
+
 .event-meta_address {
   text-transform: capitalize;
   display: inline-block;
-}
-
-.event-meta_address:before {
-  content: "\2014";
-  margin-right: .2em;
-}
-
-.event-meta_city:after {
-  content: "\2C";
 }
 
 .event-meta_datetime {
@@ -9033,7 +9321,7 @@ a.focus .summary_event-date {
 }
 
 .event-meta_time:before {
-  content: "\40";
+  content: "\2014";
   margin-right: .2em;
 }
 
@@ -9070,7 +9358,6 @@ a.focus .summary_event-date {
 
 .event-status .event-meta {
   color: #babbbd;
-  font-weight: normal !important;
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -9098,6 +9385,20 @@ a.focus .summary_event-date {
 .lt-ie9 .event-status .event-meta strong,
 .lt-ie9 .event-status .event-meta b {
   font-weight: normal !important;
+}
+
+.event-status_rsvp p:first-child {
+  line-height: 1;
+  margin-bottom: .9375em;
+}
+
+.event-status_rsvp p:last-child {
+  margin-bottom: 1.875em;
+}
+
+.event-status_livestream p:first-child {
+  line-height: 1;
+  margin-bottom: .625em;
 }
 
 .event-venue {
@@ -9158,11 +9459,17 @@ a.focus .summary_event-date {
 }
 
 .event-venue_header .event-calendar_download {
-  display: block;
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
   font-weight: bold;
+  display: block;
   padding-top: .2em;
   text-decoration: none;
   text-transform: none;
+}
+
+.lt-ie9 .event-venue_header .event-calendar_download {
+  font-weight: normal !important;
 }
 
 .event-venue_header .event-meta {
@@ -9193,14 +9500,6 @@ a.focus .summary_event-date {
 .lt-ie9 .event-venue_header .event-meta strong,
 .lt-ie9 .event-venue_header .event-meta b {
   font-weight: normal !important;
-}
-
-.event-venue_header .event-meta_address:before {
-  content: none;
-}
-
-.event-venue_header .event-meta_city:after {
-  content: none;
 }
 
 .event-venue_header .event-meta_venue {
@@ -9271,6 +9570,14 @@ a.focus .summary_event-date {
 .bureau-mission_section+.bureau-mission_section {
   border-top: 1px solid #babbbd;
   padding-top: 1.875em;
+}
+
+.bureau-mission .media_image {
+  width: 120px;
+}
+
+.bureau-mission .media_image {
+  width: 80px;
 }
 
 .bureau-functions {
@@ -9588,17 +9895,6 @@ a.focus .summary_event-date {
   border-width: 0 0 1px 0;
 }
 
-.org-chart .node_expander {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  z-index: 10;
-}
-
-.org-chart .node_expander .expandable_link {
-  font-size: 16px;
-}
-
 .org-chart #content-slider-container {
   position: relative;
   margin-left: -10px;
@@ -9620,6 +9916,17 @@ a.focus .summary_event-date {
   display: none;
   background-color: inherit;
   margin-bottom: 20px;
+}
+
+.node_expander {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  z-index: 10;
+}
+
+.node_expander .expandable_link {
+  font-size: 16px;
 }
 
 .role {
@@ -10209,10 +10516,6 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
-.press-logo_logo {
-  text-align: center;
-}
-
 .press-section_title {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
@@ -10332,31 +10635,6 @@ a.focus .summary_event-date {
 .lt-ie9 .contact-person__director .contact-person_name strong,
 .lt-ie9 .contact-person__director .contact-person_name b {
   font-weight: normal !important;
-}
-
-.press-logo_logo {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-  position: relative;
-  left: 8.33333333%;
-}
-
-.ie .press-logo_logo {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .press-logo_logo {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .demo-placeholder {

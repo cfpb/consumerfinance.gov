@@ -1,6 +1,6 @@
 /* ==========================================================================
    cfgov-refresh
-   Beta splash page and banner
+   Beta splash page and banner.
    ========================================================================== */
 
 .beta-banner {
@@ -39,7 +39,7 @@
 .beta-banner_btn {
     .btn__secondary();
     width: 100%;
-    // restore standard btn padding, which is removed by .expandable_target
+    // Restore standard btn padding, which is removed by .expandable_target.
     padding:
         unit( @btn-v-padding / @btn-font-size, em )
         unit( 14px / @btn-font-size, em );
@@ -65,11 +65,12 @@
     });
 
     .respond-to-max(599px, {
-        font-size: 1em; // prevent double-shrinkage
+        // Prevent double-shrinkage.
+        font-size: 1em;
     });
 
     .respond-to-min(600px, {
-        // Adjust to match increasing side margins
+        // Adjust to match increasing side margins.
         right: @grid_gutter-width / 2;
     });
 
@@ -82,7 +83,7 @@
 
 .beta-hero {
     min-height: 420px;
-    // top padding reduced from 30px to compensate for line-height on title
+    // Top padding reduced from 30px to compensate for line-height on title.
     padding: unit(25px / @base-font-size-px, em) (@grid_gutter-width / 2);
     background: @teal-20;
     background-image: url('/static/img/beta-illustration_sm.png');
@@ -104,7 +105,7 @@
     });
 
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-        /* Retina-specific stuff here */
+        // Retina-specific stuff here.
         background-image: url('/static/img/beta-illustration_sm@2x.png');
 
         @media (min-width: 601px) {
@@ -128,7 +129,8 @@
 
     .respond-to-min(601px, {
         .h2();
-        margin-bottom: 1em; // override the property set in .h2()
+        // Override the property set in .h2().
+        margin-bottom: 1em;
     });
 }
 
@@ -185,7 +187,7 @@
 
     .respond-to-max(479px, {
         position: relative;
-        top: 39px; // Half height of graph (50px) - half of line-height (11px)
+        // Half height of graph (50px) - half of line-height (11px).
+        top: 39px;
     });
 }
-

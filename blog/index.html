@@ -22,7 +22,7 @@
        selected_filters_for_field('category')|length +
        selected_filters_for_field('tags')|length +
        selected_filters_for_field('author')|length +
-       selected_filters_for_field('range_date_gte')|length + 
+       selected_filters_for_field('range_date_gte')|length +
        selected_filters_for_field('range_date_lte')|length
     %}
     {% if active_filters_total == 0 and vars.posts.current_page == 1 and view.hero %}
@@ -31,6 +31,9 @@
 {% endblock %}
 
 {% block content_main %}
+
+    <h1>Blog</h1>
+
     {% set filter_by = ['category', 'tags', 'author', 'range_date'] %}
     {% from "post-macros.html" import filters as filters with context %}
     {{ filters(filter_by, vars.query, vars.posts, 'posts',

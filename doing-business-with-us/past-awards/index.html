@@ -27,9 +27,11 @@
         <a href="/budget/">see our budget and strategy</a>.
     </p>
 
-    {% set page = get_document('pages', '63219') %}
-    {{ page.content | safe }}
+    <div class="business_page-content">
+        {% set page = get_document('pages', '36603') %}
+        {{ page.content | safe }}
 
-    {% include "_process-smbiz-footer.html" %}
+        {% include "_process-smbiz-footer.html" %}
+    </div>
 
 {% endblock %}

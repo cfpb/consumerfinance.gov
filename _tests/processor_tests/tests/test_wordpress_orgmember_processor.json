@@ -1,0 +1,62 @@
+{  
+    "status":"ok",
+    "count":1,
+    "count_total":1,
+    "pages":1,
+    "posts":[  
+        {  
+            "id":1,
+            "type":"orgmember",
+            "slug":"an-orgmember-slug",
+            "url":"http:ihttp://somewhere/orgmember/an-orgmember-slug",
+            "status":"publish",
+            "title":"An Org Member",
+            "title_plain":"An Org Member",
+            "content":"",
+            "excerpt":"",
+            "date":"2014-10-16 23:12:21",
+            "modified":"2014-10-16 23:12:21",
+            "categories":[  
+            ],
+            "tags":[  
+            ],
+            "author":{  
+                "id":339,
+                "slug":"aauthor",
+                "name":"Arthur Author",
+                "first_name":"Arthur",
+                "last_name":"Author",
+                "nickname":"Author",
+                "url":"",
+                "description":""
+            },
+            "comments":[  
+            ],
+            "attachments":[  
+            ],
+            "comment_count":0,
+            "comment_status":"closed",
+            "custom_fields":{  
+                "name":[  
+                    "Name Custom Field"
+                ],
+                "titles_0_title": "First Title",
+                "titles_1_title": "Second Title"
+            },
+            "dek":"",
+            "order":40,
+            "parent":0,
+            "taxonomy_orgmember_cat":[  
+                {  
+                    "id":123,
+                    "slug":"taxonomy-cat-slug",
+                    "title":"Taxonomy Cat",
+                    "description":"",
+                    "parent":321,
+                    "post_count":1
+                }
+            ]
+        }
+    ]
+}
+

@@ -10,19 +10,32 @@
 
    post: A post from a query result.
 
+   media_object (optional):
+            The optional boolean flag to wrap the block in a media object
+            and include a map image.
+            Defaults to true.
+
    ========================================================================== #}
 
-{% macro event_preview(post) %}
+{% macro event_preview(post, media_object=true) %}
   {% import "_event-post-macros.html" as event_post_macros with context %}
   <article class="post-preview post-preview__event">
-      <div class="media-object">
-          <a class="media-object_image-container" href="{{ post.permalink }}">
-              {{ event_post_macros.event_location_image(post, {'class': 'media-object_image'}) }}
-          </a>
-          <div class="media-object_text-container summary">
-              {{ event_post_macros.post_summary(post) }}
+      {% if media_object %}
+          <div class="media">
+            <a class="media_image-container post-summary-image" href="{{ post.permalink }}">
+                  <div class="post-summary-image_container">
+                      {{ event_post_macros.event_location_image(post) }}
+                  </div>
+              </a>
+              <div class="media_body media_body__event">
+                  {{ event_post_macros.post_summary(post) }}
+              </div>
           </div>
-      </div>
+      {% else %}
+          <div class="media_body media_body__event">
+            {{ event_post_macros.post_summary(post) }}
+          </div>
+      {% endif %}
   </article>
 {% endmacro %}
 
@@ -46,6 +59,7 @@
   {% from "post-macros.html" import category_icon as category_icon %}
   <section class="content_hero hero">
     <div class="hero_wrapper">
+        <!-- TODO replace link with link to event -->
         <a href="#" class="hero_card hero_card__events">
             <article class="hero_preview">
                 <span class="category-slug">
@@ -63,7 +77,8 @@
                     </header>
                     <p class="summary_text">
                         <!-- TODO replace temp summary with post summary. -->
-                        {{ 'Include a short summary to give users a quick overview of the event. Should be less than 200 characters in length.' }}
+                        {{ 'Include a short summary to give users a quick
+                        overview of the event. Should be less than 200 characters in length.' }}
                     </p>
                     <footer class="summary_footer">
                         <time class="summary_event-date event-meta_datetime dt-start">

@@ -59,7 +59,7 @@
                 {{ post.date|date("%b %d, %Y") }}
             </span>
         </div>
-        {{ share(post.title, false, {
+        {{ share(post.title, true, {
            'text':     post.twtr_text,
            'related':  post.twtr_rel,
            'language': post.twtr_lang,

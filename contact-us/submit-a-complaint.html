@@ -10,24 +10,22 @@
 <div class="content-l">
     <div class="content-l_col content-l_col-1-2">
         <ul class="list list__unstyled">
-        {%- if submit_a_complaint.phone_num %}
+        {%- if submit_a_complaint.phone_0_num %}
             <li class="list_item short-desc">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                {{ format_phone(submit_a_complaint.phone_num) }}
-            {%- if submit_a_complaint.phone_desc %}
+                {{ format_phone(submit_a_complaint.phone_0_num) }}
+            {%- if submit_a_complaint.phone_0_desc %}
                 <span class="micro-copy micro-copy__large">
-                    {{ submit_a_complaint.phone_desc }}
+                    {{ submit_a_complaint.phone_0_desc }}
                 </span>
             {%- endif %}
             </li>
         {%- endif %}
-        {%- if submit_a_complaint.phone_2_num %}
+        {%- if submit_a_complaint.phone_1_num %}
             <li class="list_item short-desc">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                {{ format_phone(submit_a_complaint.phone_2_num) }}
-            {%- if submit_a_complaint.phone_2_desc %}
+                {{ format_phone(submit_a_complaint.phone_1_num) }}
+            {%- if submit_a_complaint.phone_1_desc %}
                 <span class="micro-copy micro-copy__large">
-                    {{ submit_a_complaint.phone_2_desc }}
+                    {{ submit_a_complaint.phone_1_desc }}
                 </span>
             {%- endif %}
             </li>
@@ -43,7 +41,7 @@
     </div>
 </div>
 {%- if submit_a_complaint.web_addr %}
-<a class="jump-link" href="{{ submit_a_complaint.web_addr }}">
+<a class="jump-link jump-link__right" href="{{ submit_a_complaint.web_addr }}">
     {{ submit_a_complaint.web_desc if submit_a_complaint.web_desc else submit_a_complaint.web_addr }}
 </a>
 {%- endif %}
