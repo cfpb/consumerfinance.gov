@@ -49,7 +49,9 @@ def process_post(post, newsroom = False):
         post['links'] = links
     else:
         post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
-        post['author'] = [author['title'] for author in post['taxonomy_fj_author']]
+        post['author'] = [author['title'] for author in
+            post['taxonomy_fj_author'] if 'Press Release' not in
+            post['category']]
     if newsroom and post['type'] == 'post':
         post['category'][0] = "Blog"
     author_template = Template("$first_name $last_name")
