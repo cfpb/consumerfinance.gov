@@ -1,4 +1,24 @@
 {
+  "name": "cfgov-refresh",
+  "version": "3.0.0-0.2.3",
+  "description": "Refreshing consumerfinance.gov.",
+  "keywords": [
+    "cfpb",
+    "consumerfinance.gov",
+    "capital-framework"
+  ],
+  "authors": [
+    {
+      "name": "Consumer Financial Protection Bureau",
+      "url": "https://cfpb.github.io/"
+    }
+  ],
+  "homepage": "https://github.com/cfpb/cfgov-refresh",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/cfgov-refresh.git"
+  },
+  "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "devDependencies": {
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "grunt": "~0.4.4",
