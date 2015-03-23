@@ -1,0 +1,621 @@
+ecmaFeatures:
+  ecmascript: 6
+
+env:
+  browser: true
+  node: true
+
+globals:
+  jQuery: true
+  $: true
+
+# Linting rules for ESLint.
+# 0's ignore a rule, 1's produce a warning, and 2's throw an error.
+# See http://eslint.org/docs/rules/ for full documentation.
+rules:
+
+  # Rules for flagging POSSIBLE ERRORS.
+
+  # Disallow trailing commas in object literals.
+  # This rule is needed for IE8- support.
+  no-comma-dangle: 2
+
+  # Disallow assignment in conditional expressions.
+  # Unless they are enclosed in parentheses.
+  no-cond-assign:
+    - 2
+    - except-parens
+
+  # Warn of use of the console.
+  no-console: 1
+
+  # Disallow use of constant expressions in conditions.
+  no-constant-condition: 2
+
+  # Disallow control characters in regular expressions.
+  no-control-regex: 2
+
+  # Disallow use of debugger.
+  no-debugger: 2
+
+  # Disallow duplicate keys when creating object literals.
+  no-dupe-keys: 2
+
+  # Disallow empty statements.
+  no-empty: 2
+
+  # Disallow the use of empty character classes in regular expressions.
+  no-empty-class: 2
+
+  # Disallow assigning to the exception in a catch block.
+  no-ex-assign: 2
+
+  # Disallow double-negation boolean casts in a boolean context.
+  no-extra-boolean-cast: 2
+
+  # Warn about unnecessary parentheses.
+  no-extra-parens: 1
+
+  # Disallow unnecessary semicolons.
+  no-extra-semi: 2
+
+  # Disallow overwriting functions written as function declarations.
+  no-func-assign: 2
+
+  # Disallow function declarations in nested blocks.
+  no-inner-declarations:
+    - 2
+    - functions
+
+  # Disallow invalid regular expression strings in the RegExp constructor.
+  no-invalid-regexp: 2
+
+  # Disallow irregular whitespace outside of strings and comments.
+  no-irregular-whitespace: 2
+
+  # Disallow negation of the left operand of an in expression.
+  no-negated-in-lhs: 2
+
+  # Disallow the use of the global Math and JSON objects as functions.
+  no-obj-calls: 2
+
+  # Disallow multiple spaces in a regular expression literal.
+  no-regex-spaces: 2
+
+  # Disallow reserved words being used as object literal keys.
+  # Unneeded in ECMAScript 5+ environments.
+  no-reserved-keys: 2
+
+  # Disallow sparse arrays. Array values should be explicitly defined.
+  no-sparse-arrays: 2
+
+  # Disallow unreachable statements after a return, throw, continue, or break.
+  no-unreachable: 2
+
+  # Disallow comparisons with the value NaN.
+  use-isnan: 2
+
+  # Ensure JSDoc comments are valid.
+  # Prefer @returns syntax over @return.
+  valid-jsdoc:
+    - 2
+    -
+      prefer:
+        return: returns
+      requireReturn: false
+      requireParamDescription: true
+      requireReturnDescription: true
+
+  # Ensure that the results of typeof are compared against a valid string.
+  valid-typeof: 2
+
+
+  # Rules for encouraging BEST PRACTICES.
+
+  # Treat var statements as if they were block scoped.
+  # Warn if used outside of binding context.
+  block-scoped-var: 1
+
+  # Specify the maximum cyclomatic complexity allowed in a program.
+  # Warn when maximum is exceeded.
+  complexity:
+    - 1
+    - 3
+
+  # Require return statements to either always or never specify values.
+  consistent-return: 2
+
+  # Specify curly brace conventions for all control statements.
+  # Same-line exclusion of braces is permitted.
+  curly:
+    - 1
+    - multi-line
+
+  # Require default case in switch statements.
+  # Include `// no default` at end of the statement if there is no default.
+  default-case: 2
+
+  # Encourages use of dot notation whenever possible.
+  # `allowKeywords` = false follows ECMAScript version 3 compatible style.
+  dot-notation:
+    - 2
+    -
+      allowKeywords: false
+      allowPattern: ''
+
+  # Require the use of === and !==.
+  eqeqeq:
+     - 2
+     - smart
+
+  # Warn whether for-in loops are missing an if statement.
+  guard-for-in: 1
+
+  # Disallow the use of alert, confirm, and prompt.
+  no-alert: 2
+
+  # Disallow use of arguments.caller or arguments.callee.
+  no-caller: 2
+
+  # Disallow division operators explicitly at beginning of regular expression.
+  no-div-regex: 2
+
+  # Disallow else after a return in an if.
+  no-else-return: 2
+
+  # Disallow use of labels for anything other then loops and switches.
+  no-empty-label: 2
+
+  # Disallow comparisons to null without a type-checking operator.
+  no-eq-null: 2
+
+  # Disallow use of eval().
+  no-eval: 2
+
+  # Disallow adding to native types.
+  no-extend-native: 2
+
+  # Disallow unnecessary function binding.
+  no-extra-bind: 2
+
+  # Warn for fallthrough of case statements.
+  no-fallthrough: 1
+
+  # Disallow the use of leading or trailing decimal points in numeric literals.
+  no-floating-decimal: 2
+
+  # Disallow use of eval()-like methods.
+  no-implied-eval: 2
+
+  # Disallow usage of __iterator__ property.
+  no-iterator: 2
+
+  # Disallow use of labeled statements.
+  no-labels: 2
+
+  # Disallow unnecessary nested blocks.
+  no-lone-blocks: 2
+
+  # Disallow creation of functions within loops.
+  no-loop-func: 2
+
+  # Disallow use of multiple spaces, except in property definitions.
+  no-multi-spaces:
+    - 2
+    -
+      exceptions:
+        BinaryExpression: false
+        Property: true
+
+  # Disallow use of multiline strings with a trailing backslash.
+  # This rule is needed for ECMAScript environments earlier than 5.
+  no-multi-str: 2
+
+  # Disallow reassignments of native objects.
+  no-native-reassign: 2
+
+  # Warn use of new operator when not part of the assignment or comparison.
+  no-new: 1
+
+  # Disallow use of new operator for Function object.
+  no-new-func: 2
+
+  # Disallows creating new instances of String, Number, and Boolean.
+  no-new-wrappers: 2
+
+  # Disallow use of octal literals.
+  no-octal: 2
+
+  # Disallow use of octal escape sequences in string literals, e.g. "\251".
+  no-octal-escape: 2
+
+  # Disallow use of process.env.
+  # Only applicable to Node.js.
+  no-process-env: 2
+
+  # Disallow usage of __proto__ property.
+  no-proto: 2
+
+  # Disallow declaring the same variable more then once.
+  no-redeclare: 2
+
+  # Disallow use of assignment in return statement.
+  no-return-assign: 2
+
+  # Disallow use of javascript: urls.
+  no-script-url: 2
+
+  # Disallow comparisons where both sides are exactly the same.
+  no-self-compare: 2
+
+  # Warn about use of comma operator.
+  no-sequences: 1
+
+  # Restrict what can be thrown as an exception.
+  no-throw-literal: 2
+
+  # Disallow usage of expressions in statement position.
+  no-unused-expressions: 2
+
+  # Disallow use of void operator.
+  no-void: 2
+
+  # Warn usage of configurable warning terms in comments, e. g. TODO.
+  no-warning-comments:
+    - 1
+    -
+      terms:
+        - todo
+        - fixme
+        - xxx
+      location: start
+
+  # Disallow use of the with statement.
+  no-with: 2
+
+  # Require use of the second argument for parseInt().
+  radix: 2
+
+  # Don't require all vars on top of their containing scope.
+  vars-on-top: 0
+
+  # Require immediate function invocation to be wrapped in parentheses.
+  wrap-iife:
+    - 2
+    - outside
+
+  # Disallow Yoda conditions, except in ranges.
+  yoda:
+    - 2
+    - never
+    -
+      exceptRange: true
+
+
+  # Rules for STRICT MODE.
+
+  # Controls location of Use Strict Directives.
+  # Ensures all function bodies are strict mode code, while global code is not.
+  # Caveat: when run on pre-concatenated code, global mode may look like
+  # function mode after concatenation.
+  strict:
+    - 2
+    - global
+
+
+  # Rules for VARIABLES.
+
+  # Disallow the catch clause parameter name being the same as a variable
+  # in the outer scope.
+  # This rule is needed for IE8- support.
+  no-catch-shadow: 2
+
+  # Disallow deletion of variables.
+  no-delete-var: 2
+
+  # Disallow labels that share a name with a variable.
+  no-label-var: 2
+
+  # Disallow declaration of variables already declared in the outer scope.
+  no-shadow: 2
+
+  # Disallow shadowing of names such as arguments.
+  no-shadow-restricted-names: 2
+
+  # Disallow use of undeclared vars unless mentioned in a /*global */ block.
+  no-undef: 2
+
+  # Disallow use of undefined when initializing variables.
+  no-undef-init: 2
+
+  # Disallow use of undefined variable.
+  no-undefined: 2
+
+  # Warn when declaration of variables that are not used in the code.
+  no-unused-vars:
+    - 1
+    -
+      vars: all
+      args: after-used
+
+  # Disallow use of variables before they are defined.
+  no-use-before-define:
+    - 2
+    - nofunc
+
+
+  # Rules for NODE.JS.
+
+  # Enforces error handling in callbacks.
+  # Matches any string that contains err or Err (err, error, anyError, an_err).
+  handle-callback-err:
+    - 2
+    - ^.*(e|E)rr
+
+  # Warn mixing regular variable and require declarations.
+  # This rule may have inaccurate behavior in Node 0.6- and if UMD is used.
+  no-mixed-requires:
+    - 1
+    - true
+
+  # Disallow use of new operator with the require function.
+  no-new-require: 2
+
+  # Disallow string concatenation with __dirname and __filename.
+  no-path-concat: 2
+
+  # Disallow process.exit().
+  no-process-exit: 2
+
+  # Don't restrict usage of specific node modules.
+  no-restricted-modules: 0
+
+  # Disallow use of synchronous methods.
+  no-sync: 2
+
+
+  # Rules for STYLISTIC ISSUES.
+  # These rules are purely matters of style and are quite subjective.
+
+  # This option sets a specific tab width for your code.
+  # Enforces 4 spaces indention.
+  indent:
+    - 2
+    - 4
+    -
+      indentSwitchCase: false
+
+  # Enforce one true brace style.
+  brace-style:
+    - 2
+    - 1tbs
+    -
+      allowSingleLine: true
+
+  # Warn about non-camel case names.
+  camelcase: 1
+
+  # Enforce spacing before and after comma.
+  comma-spacing:
+    - 2
+    -
+      before: false
+      after: true
+
+  # Enforce one true comma style.
+  comma-style:
+    - 2
+    - last
+
+  # Allow any naming when capturing the current execution context.
+  # This should be turned on if ESLint supports a regex for the
+  # matching value in the future for the ^[_]?self regex.
+  consistent-this:
+    - 0
+    - ''
+
+  # Enforce newline at the end of file, with no multiple empty lines.
+  eol-last: 2
+
+  # Warn about function expressions not having a name.
+  func-names: 1
+
+  # Prefer function declarations because of variable hoisting behavior.
+  # Warn for use of function expressions.
+  func-style:
+    - 1
+    - declaration
+
+  # Enforces spacing between keys and values in object literal properties.
+  key-spacing:
+    - 2
+    -
+      beforeColon: false
+      afterColon: true
+
+  # Specify the maximum depth callbacks can be nested.
+  max-nested-callbacks:
+    - 2
+    - 3
+
+  # Require a capital letter for constructors.
+  new-cap:
+    - 2
+    -
+      newIsCap: true
+      capIsNew: true
+      newIsCapExceptions: []
+      capIsNewExceptions: []
+
+  # Disallow omission of parentheses when invoking a constructor with no arguments.
+  new-parens: 2
+
+  # Disallow use of the Array constructor.
+  no-array-constructor: 2
+
+  # Warn comments inline after code.
+  no-inline-comments: 1
+
+  # Disallow if as the only statement in an else block.
+  no-lonely-if: 2
+
+  # Disallow mixed spaces and tabs for indentation.
+  # Include "smart-tabs" option to suppresses warnings tabs used for alignment.
+  no-mixed-spaces-and-tabs: 2
+
+  # Warn when more than 2 blank lines are used.
+  no-multiple-empty-lines:
+    - 1
+    -
+      max: 2
+
+  # Disallow nested ternary expressions.
+  no-nested-ternary: 2
+
+  # Disallow use of the Object constructor.
+  no-new-object: 2
+
+  # Disallow space before semicolon.
+  no-space-before-semi: 2
+
+  # Disallow space between function identifier and invocation.
+  no-spaced-func: 2
+
+  # Allow the use of ternary operators.
+  no-ternary: 0
+
+  # Disallow trailing whitespace at the end of lines.
+  no-trailing-spaces: 2
+
+  # Allow dangling underscores in identifiers.
+  no-underscore-dangle: 0
+
+  # Disallow wrapping of non-IIFE statements in parens.
+  no-wrap-func: 2
+
+  # Allow multiple var statements per function.
+  one-var: 0
+
+  # Require assignment operator shorthand or prohibit it entirely.
+  operator-assignment:
+    - 2
+    - always
+
+  # Don't enforce padding within blocks.
+  padded-blocks:
+    - 0
+    - always
+
+  # Warn about unnecessary quotes around object literal property names.
+  quote-props:
+    - 1
+    - as-needed
+
+  # Require single quotes, unless escaping quotes would be necessary.
+  quotes:
+    - 2
+    - single
+    - avoid-escape
+
+  # Require or disallow use of semicolons instead of ASI.
+  semi:
+    - 2
+    - always
+
+  # Don't enforce sorting variables within the same declaration block.
+  sort-vars: 0
+
+  # Require a space after certain keywords.
+  space-after-keywords:
+    - 2
+    - always
+
+  # Require space before blocks.
+  space-before-blocks:
+    - 2
+    - always
+
+  # Warn about no space before function parentheses.
+  space-before-function-parentheses:
+    - 1
+    -
+      anonymous: never
+      named: never
+
+  # Warn about spaces inside brackets.
+  space-in-brackets:
+    - 1
+    - always
+
+  # Warn about no spaces inside parentheses.
+  space-in-parens:
+    - 1
+    - never
+
+  # Require spaces around operators.
+  space-infix-ops: 2
+
+  # Require a space after return, throw, and case.
+  space-return-throw-case: 2
+
+  # Require spaces before/after unary operators.
+  space-unary-ops:
+    - 2
+    -
+      words: true
+      nonwords: false
+
+  # Require a space immediately following the // in a line comment.
+  spaced-line-comment:
+    - 2
+    - always
+
+  # Require regex literals to be wrapped in parentheses.
+  wrap-regex: 2
+
+
+  # Rules for ECMASCRIPT 6.
+  # These rules are only relevant to ES6 environments.
+
+  # Don't warn about using let or const instead of var.
+  # This should be turned on when browser support is better.
+  no-var: 0
+
+  # Enforce the position of the * in generator functions
+  generator-star:
+    - 2
+    - end
+
+
+  # Rules for LEGACY SUPPORT.
+  # These rules provide compatibility with JSHint/JSLint rules.
+
+  # Specify the maximum depth that blocks can be nested.
+  max-depth:
+    - 1
+    - 5
+
+  # Specify the maximum length of a line in your program.
+  # Warn when exceeding a maximum length of 80 characters.
+  max-len:
+    - 1
+    - 80
+    - 4
+
+  # Limits the number of parameters that can be used in the function declaration.
+  # Warn when exceeding five parameters.
+  max-params:
+    - 1
+    - 5
+
+  # Specify the maximum number of statement allowed in a function.
+  # Warn when exceeding twenty-five statements.
+  max-statements:
+    - 1
+    - 25
+
+  # Allow use of bitwise operators.
+  no-bitwise: 0
+
+  # Allow use of unary operators, ++ and --.
+  no-plusplus: 0

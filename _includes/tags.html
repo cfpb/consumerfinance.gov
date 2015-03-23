@@ -19,19 +19,18 @@
                        using the literal string '/blog/'. Path is used to
                        create the filtered URL: {{ path }}?filter_tags={{ tag }}.
 
-   display_header:     The optional boolean flag to display the tags_header element.
-                       Defaults to True. Adds class 'tags__hide-header' if falsy
-                       value passed (e.g., '', False, None).
+   hide_heading:       The optional boolean flag to hide the tags_heading element.
+                       Defaults to false. Adds class 'tags__hide-heading' if true value passed.
 
-   display_inline:     The optional boolean flag to display the tags list inline.
-                       Defaults to True. Adds class 'tags__block-list' if falsy
+   display_block       The optional boolean flag to display the tags list as block.
+                       Defaults to false. Adds class 'tags__block-list' if true
                        value passed.
 
    ========================================================================== #}
 
-{% macro render(tags, path, display_header=True, display_inline=True) %}
-<div class="tags {{'tags__hide-header' if not display_header}} {{'tags__block-list' if not display_inline}}">
-    <h1 class="tags_header {{'u-visually-hidden' if not display_header}}">Topics:</h1>
+{% macro render(tags, path, hide_heading=false, display_block=false) %}
+<div class="tags {{'tags__hide-heading' if hide_heading}} {{'tags__block-list' if display_block}}">
+    <h1 class="tags_heading {{'u-visually-hidden' if hide_heading}}">Topics:</h1>
     <ul class="tags_list">
     {% for tag in tags %}
         <li class="tags_tag">

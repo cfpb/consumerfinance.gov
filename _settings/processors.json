@@ -16,7 +16,8 @@
   },
   "initiative": {
     "url":       "$WORDPRESS/api/get_posts/?post_type=initiative",
-    "processor": "wordpress_initiative_processor"
+    "processor": "wordpress_initiative_processor",
+    "mappings": "_settings/initiative_mappings.json"
   },
   "office": {
     "url":       "$WORDPRESS/api/get_posts/?post_type=office",
@@ -33,6 +34,16 @@
     "mappings":  "_settings/page_mappings.json"
   },
   "posts": {
+    "url":       "$WORDPRESS/api/get_posts/",
+    "processor": "wordpress_post_processor",
+    "mappings":  "_settings/posts_mappings.json"
+  },
+  "events": {
+    "url":       "$WORDPRESS/api/get_posts/",
+    "processor": "wordpress_post_processor",
+    "mappings":  "_settings/posts_mappings.json"
+  },
+  "events_archive": {
     "url":       "$WORDPRESS/api/get_posts/",
     "processor": "wordpress_post_processor",
     "mappings":  "_settings/posts_mappings.json"
