@@ -4919,21 +4919,25 @@ tbody tr {
   text-align: right;
 }
 
-.list__icons {
+.budget_page-content .list__icons,
+.business_page-content .list__icons {
   padding-left: 0;
   list-style-type: none;
 }
 
-.list__icons .list_item {
+.budget_page-content .list__icons .list_item,
+.business_page-content .list__icons .list_item {
   margin-left: 0;
 }
 
-.list__icons .list_item {
+.budget_page-content .list__icons .list_item,
+.business_page-content .list__icons .list_item {
   margin-left: 2em;
   position: relative;
 }
 
-.list__icons .list_icon {
+.budget_page-content .list__icons .list_icon,
+.business_page-content .list__icons .list_icon {
   position: absolute;
   width: 1.5em;
   left: 0;
@@ -7987,6 +7991,7 @@ a.focus .summary_event-date {
 
 .footer_general-inqueries-label {
   display: block;
+  font-size: 1em;
   margin-bottom: .5em;
   font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
   font-style: normal;
@@ -8886,14 +8891,12 @@ a.focus .summary_event-date {
 .budget_page-content.performance-plan ul li,
 .budget_page-content.funding-request ul li {
   margin-bottom: .625em;
-  margin-left: 2em;
-  position: relative;
   margin-left: 0;
 }
 
-.budget_page-content.financial-report ul li a,
-.budget_page-content.performance-plan ul li a,
-.budget_page-content.funding-request ul li a {
+.budget_page-content.financial-report ul a,
+.budget_page-content.performance-plan ul a,
+.budget_page-content.funding-request ul a {
   left: -0.125em;
   font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
   font-style: normal;
@@ -8906,25 +8909,25 @@ a.focus .summary_event-date {
   display: block;
 }
 
-.lt-ie9 .budget_page-content.financial-report ul li a,
-.lt-ie9 .budget_page-content.performance-plan ul li a,
-.lt-ie9 .budget_page-content.funding-request ul li a {
+.lt-ie9 .budget_page-content.financial-report ul a,
+.lt-ie9 .budget_page-content.performance-plan ul a,
+.lt-ie9 .budget_page-content.funding-request ul a {
   font-weight: normal !important;
 }
 
-.budget_page-content.financial-report ul li a_text,
-.budget_page-content.performance-plan ul li a_text,
-.budget_page-content.funding-request ul li a_text {
+.budget_page-content.financial-report ul a_text,
+.budget_page-content.performance-plan ul a_text,
+.budget_page-content.funding-request ul a_text {
   border-bottom-width: 1px;
   border-bottom-style: inherit;
 }
 
-.budget_page-content.financial-report ul li a:before,
-.budget_page-content.performance-plan ul li a:before,
-.budget_page-content.funding-request ul li a:before,
-.budget_page-content.financial-report ul li a:after,
-.budget_page-content.performance-plan ul li a:after,
-.budget_page-content.funding-request ul li a:after {
+.budget_page-content.financial-report ul a:before,
+.budget_page-content.performance-plan ul a:before,
+.budget_page-content.funding-request ul a:before,
+.budget_page-content.financial-report ul a:after,
+.budget_page-content.performance-plan ul a:after,
+.budget_page-content.funding-request ul a:after {
   font-family: 'CFPB Minicons';
   display: inline-block;
   font-style: normal;
@@ -8935,181 +8938,177 @@ a.focus .summary_event-date {
   margin-left: 1px;
 }
 
-.budget_page-content.financial-report ul li a__download:after,
-.budget_page-content.performance-plan ul li a__download:after,
-.budget_page-content.funding-request ul li a__download:after,
-.budget_page-content.financial-report ul li a__download.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__download.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__download.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__download.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__download.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__download.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__download.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__download.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__download.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__download:after,
+.budget_page-content.performance-plan ul a__download:after,
+.budget_page-content.funding-request ul a__download:after,
+.budget_page-content.financial-report ul a__download.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__download.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__download.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__download.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__download.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__download.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__download.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__download.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__download.budget_page-content.funding-request ul a__before:before {
   content: "\e406";
 }
 
-.budget_page-content.financial-report ul li a__email:after,
-.budget_page-content.performance-plan ul li a__email:after,
-.budget_page-content.funding-request ul li a__email:after,
-.budget_page-content.financial-report ul li a__email.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__email.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__email.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__email.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__email.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__email.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__email.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__email.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__email.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__email:after,
+.budget_page-content.performance-plan ul a__email:after,
+.budget_page-content.funding-request ul a__email:after,
+.budget_page-content.financial-report ul a__email.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__email.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__email.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__email.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__email.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__email.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__email.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__email.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__email.budget_page-content.funding-request ul a__before:before {
   content: "\e302";
 }
 
-.budget_page-content.financial-report ul li a__external-link:after,
-.budget_page-content.performance-plan ul li a__external-link:after,
-.budget_page-content.funding-request ul li a__external-link:after,
-.budget_page-content.financial-report ul li a__external-link.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__external-link.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__external-link.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__external-link.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__external-link.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__external-link.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__external-link.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__external-link.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__external-link.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__external-link:after,
+.budget_page-content.performance-plan ul a__external-link:after,
+.budget_page-content.funding-request ul a__external-link:after,
+.budget_page-content.financial-report ul a__external-link.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__external-link.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__external-link.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__external-link.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__external-link.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__external-link.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__external-link.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__external-link.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__external-link.budget_page-content.funding-request ul a__before:before {
   content: "\e610";
 }
 
-.budget_page-content.financial-report ul li a__fax:after,
-.budget_page-content.performance-plan ul li a__fax:after,
-.budget_page-content.funding-request ul li a__fax:after,
-.budget_page-content.financial-report ul li a__fax.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__fax.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__fax.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__fax.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__fax.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__fax.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__fax.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__fax.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__fax.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__fax:after,
+.budget_page-content.performance-plan ul a__fax:after,
+.budget_page-content.funding-request ul a__fax:after,
+.budget_page-content.financial-report ul a__fax.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__fax.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__fax.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__fax.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__fax.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__fax.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__fax.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__fax.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__fax.budget_page-content.funding-request ul a__before:before {
   content: "\e310";
 }
 
-.budget_page-content.financial-report ul li a__left:after,
-.budget_page-content.performance-plan ul li a__left:after,
-.budget_page-content.funding-request ul li a__left:after,
-.budget_page-content.financial-report ul li a__left.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__left.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__left.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__left.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__left.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__left.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__left.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__left.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__left.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__left:after,
+.budget_page-content.performance-plan ul a__left:after,
+.budget_page-content.funding-request ul a__left:after,
+.budget_page-content.financial-report ul a__left.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__left.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__left.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__left.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__left.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__left.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__left.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__left.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__left.budget_page-content.funding-request ul a__before:before {
   content: "\e000";
 }
 
-.budget_page-content.financial-report ul li a__mail:after,
-.budget_page-content.performance-plan ul li a__mail:after,
-.budget_page-content.funding-request ul li a__mail:after,
-.budget_page-content.financial-report ul li a__mail.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__mail.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__mail.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__mail.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__mail.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__mail.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__mail.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__mail.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__mail.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__mail:after,
+.budget_page-content.performance-plan ul a__mail:after,
+.budget_page-content.funding-request ul a__mail:after,
+.budget_page-content.financial-report ul a__mail.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__mail.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__mail.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__mail.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__mail.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__mail.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__mail.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__mail.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__mail.budget_page-content.funding-request ul a__before:before {
   content: "\e304";
 }
 
-.budget_page-content.financial-report ul li a__pdf:after,
-.budget_page-content.performance-plan ul li a__pdf:after,
-.budget_page-content.funding-request ul li a__pdf:after,
-.budget_page-content.financial-report ul li a__pdf.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__pdf.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__pdf.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__pdf.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__pdf.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__pdf.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__pdf.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__pdf.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__pdf.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__pdf:after,
+.budget_page-content.performance-plan ul a__pdf:after,
+.budget_page-content.funding-request ul a__pdf:after,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.funding-request ul a__before:before {
   content: "\e402";
 }
 
-.budget_page-content.financial-report ul li a__pdf:after,
-.budget_page-content.performance-plan ul li a__pdf:after,
-.budget_page-content.funding-request ul li a__pdf:after,
-.budget_page-content.financial-report ul li a__pdf.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__pdf.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__pdf.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__pdf.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__pdf.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__pdf.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__pdf.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__pdf.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__pdf.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__pdf:after,
+.budget_page-content.performance-plan ul a__pdf:after,
+.budget_page-content.funding-request ul a__pdf:after,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__pdf.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__pdf.budget_page-content.funding-request ul a__before:before {
   content: "\e402";
 }
 
-.budget_page-content.financial-report ul li a__phone:after,
-.budget_page-content.performance-plan ul li a__phone:after,
-.budget_page-content.funding-request ul li a__phone:after,
-.budget_page-content.financial-report ul li a__phone.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__phone.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__phone.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__phone.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__phone.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__phone.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__phone.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__phone.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__phone.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__phone:after,
+.budget_page-content.performance-plan ul a__phone:after,
+.budget_page-content.funding-request ul a__phone:after,
+.budget_page-content.financial-report ul a__phone.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__phone.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__phone.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__phone.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__phone.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__phone.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__phone.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__phone.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__phone.budget_page-content.funding-request ul a__before:before {
   content: "\e306";
 }
 
-.budget_page-content.financial-report ul li a__right:after,
-.budget_page-content.performance-plan ul li a__right:after,
-.budget_page-content.funding-request ul li a__right:after,
-.budget_page-content.financial-report ul li a__right.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.financial-report ul li a__right.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.financial-report ul li a__right.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.performance-plan ul li a__right.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.performance-plan ul li a__right.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.performance-plan ul li a__right.budget_page-content.funding-request ul li a__before:before,
-.budget_page-content.funding-request ul li a__right.budget_page-content.financial-report ul li a__before:before,
-.budget_page-content.funding-request ul li a__right.budget_page-content.performance-plan ul li a__before:before,
-.budget_page-content.funding-request ul li a__right.budget_page-content.funding-request ul li a__before:before {
+.budget_page-content.financial-report ul a__right:after,
+.budget_page-content.performance-plan ul a__right:after,
+.budget_page-content.funding-request ul a__right:after,
+.budget_page-content.financial-report ul a__right.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.financial-report ul a__right.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.financial-report ul a__right.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.performance-plan ul a__right.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.performance-plan ul a__right.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.performance-plan ul a__right.budget_page-content.funding-request ul a__before:before,
+.budget_page-content.funding-request ul a__right.budget_page-content.financial-report ul a__before:before,
+.budget_page-content.funding-request ul a__right.budget_page-content.performance-plan ul a__before:before,
+.budget_page-content.funding-request ul a__right.budget_page-content.funding-request ul a__before:before {
   content: "\e002";
 }
 
-.budget_page-content.financial-report ul li a__before:after,
-.budget_page-content.performance-plan ul li a__before:after,
-.budget_page-content.funding-request ul li a__before:after {
+.budget_page-content.financial-report ul a__before:after,
+.budget_page-content.performance-plan ul a__before:after,
+.budget_page-content.funding-request ul a__before:after {
   content: '';
 }
 
-.budget_page-content.financial-report ul li a__no-wrap,
-.budget_page-content.performance-plan ul li a__no-wrap,
-.budget_page-content.funding-request ul li a__no-wrap {
+.budget_page-content.financial-report ul a__no-wrap,
+.budget_page-content.performance-plan ul a__no-wrap,
+.budget_page-content.funding-request ul a__no-wrap {
   white-space: nowrap;
 }
 
-.budget_page-content.financial-report ul li a__large,
-.budget_page-content.performance-plan ul li a__large,
-.budget_page-content.funding-request ul li a__large {
+.budget_page-content.financial-report ul a__large,
+.budget_page-content.performance-plan ul a__large,
+.budget_page-content.funding-request ul a__large {
   font-size: 1.125em;
 }
 
-.budget_page-content.financial-report ul li a:before,
-.budget_page-content.performance-plan ul li a:before,
-.budget_page-content.funding-request ul li a:before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  text-align: left !important;
+.budget_page-content.financial-report ul a:before,
+.budget_page-content.performance-plan ul a:before,
+.budget_page-content.funding-request ul a:before {
   width: 1.5em;
   text-align: center;
   font-family: 'CFPB Minicons';
@@ -10517,10 +10516,6 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
-.press-logo_logo {
-  text-align: center;
-}
-
 .press-section_title {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
@@ -10640,31 +10635,6 @@ a.focus .summary_event-date {
 .lt-ie9 .contact-person__director .contact-person_name strong,
 .lt-ie9 .contact-person__director .contact-person_name b {
   font-weight: normal !important;
-}
-
-.press-logo_logo {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-  position: relative;
-  left: 8.33333333%;
-}
-
-.ie .press-logo_logo {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .press-logo_logo {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
 .demo-placeholder {

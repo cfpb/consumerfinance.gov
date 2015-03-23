@@ -1,6 +1,6 @@
 # Content Processor Tests
 
-Test the Sheer content processors that bring content into Elasticsearch 
+Test the Sheer content processors that bring content into Elasticsearch
 for cfgov-refresh.
 
 ## Running
@@ -10,11 +10,11 @@ From within this directory:
 1. Install the requirements: `pip install -r requirements.txt`
 2. Run the test runner: `python test_processors.py`
 
-## Writing 
+## Writing
 
-Tests are written using Python's [`unittest`](https://docs.python.org/2/library/unittest.html) (`unittest2` in Python 2.6). 
+Tests are written using Python's [`unittest`](https://docs.python.org/2/library/unittest.html) (`unittest2` in Python 2.6).
 
-There are JSON files that is used to mock HTTP requests (`request.get()`) response content. 
+There are JSON files that are used to mock HTTP requests (`request.get()`) response content.
 
 An example:
 

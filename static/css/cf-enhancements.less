@@ -533,21 +533,28 @@ tbody {
     - cf-typography
 */
 
-.list__icons {
-    .list__unstyled();
+// TODO: Move multi-line list__icons outside of budget and procurement pages.
+// Currently, they conflict with the default list__links style
+// when the classes are placed directly in markup, for example
+// see the lists on /newsroom/press-resources/.
+.budget_page-content,
+.business_page-content {
+    .list__icons {
+        .list__unstyled();
 
-    .list_item {
-        margin-left: 2em;
-        position: relative;
-    }
+        .list_item {
+            margin-left: 2em;
+            position: relative;
+        }
 
-    .list_icon {
-        position: absolute;
-        width: 1.5em;
-        left: 0;
-        top: 0;
-        line-height: @base-line-height;
-        .list__icons .list_icon__left();
+        .list_icon {
+            position: absolute;
+            width: 1.5em;
+            left: 0;
+            top: 0;
+            line-height: @base-line-height;
+            .list__icons .list_icon__left();
+        }
     }
 }
 
