@@ -38,25 +38,39 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-# Grunt.js #
-############
-node_modules/
-.grunt/
-
-# Bower packages #
+# Vim swap files #
 ##################
-bower_components/
-/vendor
-
-# Sheer stuff #
-###############
 *.swp
+
+# Python #
+#################
 *.pyc
+*.egg-info/
+__pycache__/
+*.py[cod]
 .env
 
-# Floobits stuff #
-##################
-.floo*
+# Django #
+#################
+*.egg-info
+.installed.cfg
+
+# Unit test / coverage reports
+#################
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Front-End #
+#############
+node_modules/
+bower_components/
+.grunt/
+src/vendor/
+/dist
 
 # Topdoc stuff #
 ##################

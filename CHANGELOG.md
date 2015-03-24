@@ -1,5 +1,6 @@
 All notable changes to this project will be documented in this file.
-See the [README](README.md) for an explanation of our versioning conventions.
+We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
+
 
 ## 3.0.0-0.2.3 - 2015-03-23
 

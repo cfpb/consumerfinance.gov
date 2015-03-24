@@ -74,8 +74,8 @@
 -->
 
 {% block css %}
-<!--[if lt IE 9]>      <link rel="stylesheet" href="/static/css/main.ie.css"> <![endif]-->
-<!--[if gt IE 8]><!--> <link rel="stylesheet" href="/static/css/main.css"> <!--<![endif]-->
+<!--[if lt IE 9]>      <link rel="stylesheet" href="/dist/static/css/main.ie.css"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="/dist/static/css/main.css"> <!--<![endif]-->
 {% endblock css %}
 
 <!--
@@ -184,7 +184,7 @@
     specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
 -->
 {% block javascript %}
-<script src="/static/js/main.min.js"></script>
+<script src="/dist/static/js/main.min.js"></script>
 {% endblock javascript %}
 
 </body>
