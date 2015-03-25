@@ -1030,24 +1030,24 @@
     - cfgov-misc
 */
 
+
+// Size of cicular background.
+@size: 1.5em;
+
 .char-icon {
     &:before {
         display: inline-block;
         box-sizing: border-box;
-        width: 1.5em;
-        height: 1.5em;
-        padding: 0.25em 0;
+        width: @size;
+        height: @size;
+        padding: 0;
         border-radius: 100%;
         margin-right: 0.375em;
-
         position: relative;
-        top: -( unit(1px / 13px, em) );
-
         background: @green;
         color: @white;
         .webfont-medium();
-        font-size: percentage(13 / 14);
-        line-height: 1;
+        line-height: @size;
         text-align: center;
     }
 
