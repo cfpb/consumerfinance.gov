@@ -201,11 +201,12 @@ To run browser tests, you'll need to perform the following steps:
   - Mac: `brew install chromedriver`
   - Manual (Linux/Mac): Download the latest
     [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
-    binary and put it somehwere on your path (e.g. `/path/to/your/venv/bin`)
+    binary and put it somewhere on your path (e.g. `/path/to/your/venv/bin`)
 2. In `_tests/browser_testing/features/`, copy `example-environment.cfg` to
 `environment.cfg` and change the `chrome_driver` path to the proper path
 for your webdriver binary.  If you installed via homebrew,
-this will be `/path/to/homebrew/bin/chromedriver`.
+you can find the path with `brew info chromedriver`, which will give you
+the chromedriver directory. Use this path, but include the chromedriver name at the end to target the executable, something like `/path/to/homebrew/bin/chromedriver`.
 3. `pip install -r _tests/browser_testing/requirements.txt`
 4. `cd _tests/browser_testing/`
 5. Start the tests: `behave`
@@ -349,11 +350,12 @@ We have a handy function `search_with_url_arguments()` that:
 
 URL query string filters can be further broken down into two types:
 
-1. Bool - Used when you want to filter by whether a field matches a keyword,
-  is True or False, etc.
+1. Term - Used when you want to filter by whether a field matches a term.  Note that in order
+to use this type of filter, the field you are matching it against must have `"index": "not_analyzed"`
+set in the mapping.
 2. Range - Used for when you want to filter something by a range (e.g. dates or numbers)
 
-An example of Bool is:
+An example of Term is:
 
 `?filter_category=Op-Ed`
 
@@ -384,24 +386,22 @@ defined in the `_queries/object-name.json` file,
 then mixes them in with any additional arguments
 from the URL query string in addition to what is passed into the function itself.
 
-The list of available arguments are outlined in elasticsearch-py's
-[search method](http://elasticsearch-
-py.readthedocs.org/en/master/api.html#elasticsearch.Elasticsearch.search).
+When using `search_with_url_arguments()`, you can also pass in filters with the same `filter_` syntax as above.
 
-The most common ones we use are `size` (to change the number of results returned)
-and `q` (to query based on specific fields).
+For example:
 
-When using `q`, you'll need to use the
-[Lucene Query Parser Syntax](http://lucene.apache.org/core/2_9_4/queryparsersyntax.html).
+`search_with_url_arguments(filter_category='Op-Ed')`
 
-Here is an example of using `q`:
+Multiple term filters on the same field will be combined in an OR clause, while
+term filters of different fields will be combined in an AND clause.
 
-```
-{% set events_jan2014 = queries.calendar_event.search_with_url_arguments(q="dtstart:[2014-01-01 TO 2014-01-31]") %}
-```
+For example:
 
-This will return a queryset of calendar_event objects which,
-for the field 'dtstart', have a date in January, 2014.
+`search_with_url_arguments(filter_tag='Students', filter_tag='Finance', filter_author='Batman')`
+
+This will return documents that have the tag Students OR Finance, AND have an author of Batman.
+
+If you need more control over your filter than that, enter it manually in the _queries/filtername.json file.
 
 ----
 

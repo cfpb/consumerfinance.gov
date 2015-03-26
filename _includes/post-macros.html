@@ -138,34 +138,39 @@
         {% set doc_type = activity_type %}
         {% set icon = category_icon('blog') %}
         {% set header = 'Blog' %}
-        {% set querystring = 'tags:"' + tags + '"' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_tags=tags) %}
     {% elif activity_type|lower == 'op-ed' %}
         {% set doc_type = 'newsroom' %}
         {% set icon = category_icon(activity_type) %}
         {% set header = 'Op-Ed' %}
-        {% set querystring = 'category:"Op-Ed" AND tags:"' + tags + '"' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Op-Ed', filter_tags=tags) %}
     {% elif activity_type|lower == 'press release' %}
         {% set doc_type = 'newsroom' %}
         {% set icon = category_icon(activity_type) %}
         {% set header = 'Press Release' %}
-        {% set querystring = 'category:"Press Release" AND tags:"' + tags + '"' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Press Release', filter_tags=tags) %}
     {% elif activity_type|lower == 'speech' %}
         {% set doc_type = 'newsroom' %}
         {% set icon = category_icon(activity_type) %}
         {% set header = 'Speech' %}
-        {% set querystring = 'category:"Speech" AND tags:"' + tags + '"' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Speech', filter_tags=tags) %}
     {% elif activity_type|lower == 'testimony' %}
         {% set doc_type = 'newsroom' %}
         {% set icon = category_icon(activity_type) %}
         {% set header = 'Testimony' %}
-        {% set querystring = 'category:"Testimony" AND tags:"' + tags + '"' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Testimony', filter_tags=tags) %}
     {% else %}
         {% set doc_type = 'posts' %}
         {% set icon = category_icon('blog') %}
         {% set header = 'Feed' %}
-        {% set querystring = 'tags:"' + tags + '"' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_tags=tags) %}
     {% endif %}
-    {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,q=querystring) %}
     {% if feed.total > 0 %}
     <aside class="activity">
         <h1 class="h4">{{ icon }} {{ header }}</h1>
@@ -469,7 +474,10 @@
 {%- for filter in filters %}
     {%- if filter == 'range_date' -%}
         {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_gte')) %}
-        {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
+        {# Only show one date if the start & end range values are the same. #}
+        {%- if selected_filters_for_field('range_date_gte') != selected_filters_for_field('range_date_lte') -%}
+          {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
+        {%- endif -%}
     {%- elif filter == 'activity_category' -%}
         {% set _ignore = active_filters.extend(selected_filters_for_field('type')) %}
         {% set _ignore = active_filters.extend(selected_filters_for_field('category')) %}

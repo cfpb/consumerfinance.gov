@@ -58,12 +58,12 @@
                         </button>
                     </li>
                 {% set parents = queries.orgmember.search_with_url_arguments(
-                   q="has_parent:false AND category:{}".format(category)) %}
+                   filter_has_parent='false', filter_category=category) %}
                 {% for parent in parents %}
                     {% set par_loop = loop %}
                     <li class="org-chart_node expandable">
                         {% set children = queries.orgmember.search_with_url_arguments(
-                           q="parent:{}".format(parent.id)) %}
+                           filter_parent=parent.id) %}
                     {% if children|list|length %}
                         <button class="org-chart_role expandable_target expandable_header content-show" 
                                 data-content=".nodes{{ cat_loop.index }}_{{ par_loop.index }}">

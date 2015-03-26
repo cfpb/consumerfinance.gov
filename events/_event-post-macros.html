@@ -17,9 +17,9 @@
    ========================================================================== #}
 
 {% macro calendar_icon(calendar_date, additional_classes) %}
-    <time class="calendar-icon {{ additional_classes }}" 
-        data-month="{{ calendar_date | date('%b') }}" 
-        data-day="{{ calendar_date | date('%d') }}" 
+    <time class="calendar-icon {{ additional_classes }}"
+        data-month="{{ calendar_date | date('%b') }}"
+        data-day="{{ calendar_date | date('%d') }}"
         datetime="{{ calendar_date }}">
         <span class="u-visually-hidden">{{ calendar_date | date('%b %d, %Y') }}</span>
     </time>
@@ -54,7 +54,7 @@
 
    options.size:               Defines the rectangular dimensions of the map image.
                                {horizontal_value}x{vertical_value} (e.g. 500x400)
-                               Defaults to '276x276'.
+                               Defaults to '276x155'.
 
    options.zoom:               Sets pixel density for high-dpi devices.
                                Defaults to '12'.
@@ -62,16 +62,16 @@
    ========================================================================== #}
 
 {% macro event_location_image(post, options={}) %}
-    {%- set location = (options.location or post.location) 
-                       | default('Washington DC', true) 
+    {%- set location = (options.location or post.location)
+                       | default('Washington DC', true)
                        | urlencode -%}
     {%- set scale = '&scale=' + options.scale | default('2') -%}
-    {%- set size =  '&size='  + options.size  | default('276x276') -%}
+    {%- set size =  '&size='  + options.size  | default('276x155') -%}
     {%- set zoom =  '&zoom='  + options.zoom  | default('12') -%}
     {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
 
-    <img class="{{ options.additional_classes }}" 
-        src="{{ url ~ location ~ size ~ zoom ~ scale }}" 
+    <img class="{{ options.additional_classes }}"
+        src="{{ url ~ location ~ size ~ zoom ~ scale }}"
         alt="Google Maps image of {{ location }}">
 {% endmacro %}
 
@@ -88,18 +88,18 @@
 
    post:                        A post from a query result.
 
-   address_format (optional):   A python string format to display 
-                                address information  
+   address_format (optional):   A python string format to display
+                                address information
                                 (e.g. '{venue} - {city}, {state}').
 
-   datetime_format (optional):  An object to use for customizing event-meta 
+   datetime_format (optional):  An object to use for customizing event-meta
                                 time and date formats.
 
    ========================================================================== #}
 
 {% macro event_meta(post, address_format='{city}, {state}', datetime_format={})%}
-    <div class="event-meta event-meta__medium h-event">
-        {{ event_meta_address(post, address_format) }} 
+    <div class="event-meta h-event">
+        {{ event_meta_address(post, address_format) }}
         {{ event_meta_datetime(post.date, datetime_format) }}
     </div>
 {% endmacro %}
@@ -117,8 +117,8 @@
 
    post                     : A post date from a query result.
 
-   address_format (optional): A python string format to display to 
-                              address information  
+   address_format (optional): A python string format to display to
+                              address information
                               (e.g. '{venue} - {city}, {state}').
 
    ========================================================================== #}
@@ -150,7 +150,7 @@
         {% macro _zip() %}
             <span class="event-meta_zip p-postal-code">{{ zip }}</span>
         {% endmacro %}
-        
+
         {{
             address_format.format(**{
                 'city'   : _city()   | trim,
@@ -158,7 +158,7 @@
                 'state'  : _state()  | trim,
                 'venue'  : _venue()  | trim,
                 'zip'    : _zip()    | trim
-            }) | safe 
+            }) | safe
         }}
     </p>
 {% endmacro %}
@@ -183,8 +183,8 @@
 
 {% macro event_meta_datetime(date, datetime_format={}) %}
     {%- set date_format =  datetime_format.date_format | default('%b %d, %Y', true)   -%}
-    {%- set time_format =  datetime_format.time_format | default('%I:%M %p %Z', true) -%} 
-    
+    {%- set time_format =  datetime_format.time_format | default('%I:%M %p %Z', true) -%}
+
     <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%dT%H:%M:%S%z') }}">
         <span class="event-meta_date">{{ date | date(date_format) }}</span>
         <span class="event-meta_time">{{ date | date(time_format) }}</span>
@@ -230,7 +230,7 @@
         </p>
     </a>
     <footer>
-      {{ tags.render(post.tags, path, True) }}
+      {{ tags.render(post.tags, path, true) }}
     </footer>
 {% endmacro %}
 
@@ -249,9 +249,9 @@
 
    ========================================================================== #}
 
-{% macro event_venue(post) %} 
+{% macro event_venue(post) %}
     {%- set city =  post.city  | default('Washington, DC') -%}
-    
+
 
     <section class="event-venue">
         <header class="event-venue_header">
@@ -267,6 +267,7 @@
                         Video Replay will be<br> available shortly
                     {% else %}
                         {{ event_meta_datetime(post.date) }}
+                        <!-- TDOD: Replace with real download link -->
                         <a class="event-calendar_download jump-link jump-link__download" href="#">
                             <span class="jump_link_text">Download .ics</span>
                         </a>

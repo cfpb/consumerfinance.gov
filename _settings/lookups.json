@@ -24,14 +24,14 @@
     "type":      "watchroom",
     "permalink": true
   },
-  "event": {
-    "url":       "/events/<id>/",
-    "type":      "posts",
-    "permalink": true
-  },
   "event_archive": {
     "url":       "/events/archive/<id>/",
-    "type":      "posts",
+    "type":      "events_archive",
+    "permalink": true
+  },
+  "event": {
+    "url":       "/events/<id>/",
+    "type":      "events",
     "permalink": true
   }
 }

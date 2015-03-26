@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* topdoc
-  name: Media 
+  name: Media
   family: cfgov-media
   patterns:
     - name: Media object (OOCSS)
@@ -50,7 +50,7 @@
         </article>
       notes:
         - "Image is positioned to right instead of left of content."
-        
+
     - name: .media_image-container__wide-margin modifier
       markup: |
         <article class="media">
@@ -93,43 +93,43 @@
     &_image-container {
         .respond-to-min(600px {
             float: left;
-            margin-right: unit(@grid_gutter-width / 2, px);
+            margin-right: unit(@grid_gutter-width, px);
         });
-        
+
         .respond-to-max(599px {
             margin-left: 0;
             margin-right: 0;
         });
-        
+
         &.media_image-container__wide-margin {
             margin-right: unit(@grid_gutter-width, px);
-            
+
             .respond-to-max(599px {
                 margin-left: 0;
                 margin-right: 0;
             });
         }
-        
+
     }
 
     &_image-container__right {
         display: block;
-        
+
         .respond-to-min(600px {
             float: right;
             margin-left: unit(@grid_gutter-width / 2, px);
             margin-right: 0;
         });
-        
+
         &.media_image-container__wide-margin {
             margin-left: unit(@grid_gutter-width, px);
             margin-right: 0;
-            
+
             .respond-to-max(599px {
                 margin-left: 0;
             });
         }
-        
+
     }
 
     &_image {
@@ -140,14 +140,14 @@
         .respond-to-max(599px {
             margin-top: unit(@grid_gutter-width / 2, px);
         });
-        
+
         .respond-to-min(600px {
             display: table-cell;
             width: 10000px;
             vertical-align:top;
         });
     }
-    
+
     .lt-ie8 &_body {
         zoom: 1;
         display: block;
@@ -155,9 +155,7 @@
     }
 }
 
-
 /* topdoc
     name: EOF
     eof: true
 */
-

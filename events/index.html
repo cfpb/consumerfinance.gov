@@ -13,27 +13,36 @@
     Events description...
 {%- endblock %}
 
+
+{# Only show the hero when:
+    1. We are on the first page of paginated results
+    2. A hero exists
+#}
+
+{# TODO remove commented line #}
+{# set show_hero = (vars.events.current_page == 1 and view.hero) %#}
+{% set show_hero = true %}
+
+{% block content_sidebar_modifiers %}
+    {{ super() }}
+    {% if show_hero %}
+        u-hide-on-mobile
+    {% endif %}
+{% endblock %}
+
 {% block hero %}
-    {# Only show the hero when:
-       1. We are on the first page of paginated results
-       2. A hero exists
-    #}
-
-    {%
-        set current_page = 1
-    %}
-
-    {%
-        set hero = true
-    %}
-
-    {#{% if vars.events.current_page == 1 and view.hero %}#}
-    {% from "_event-landing-macros.html" import event_hero as event_hero %}
-    {% if current_page == 1 and hero %}
+    {% if show_hero %}
+        {% import "sidenav.html" as sidenav %}
+        {{ sidenav.render(
+            vars.nav_items, 
+            'index',
+            'u-show-on-mobile u-mb0'
+        ) }}
+        {% from "_event-landing-macros.html" import event_hero as event_hero %}
         {{ event_hero(hero) }}
     {% endif %}
-
 {% endblock %}
+
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -41,7 +50,7 @@
 
 {% block content_main %}
 
-    <section class="media block block__flush-top block__sub">
+    <section class="media block block__flush-bottom block__flush-top">
         <div class="media_body">
             <h1>Upcoming events</h1>
             {# TODO Replace ipsum with latest upcoming event content. #}
@@ -53,7 +62,7 @@
                 Duis aute irure dolor in reprehenderit.
             </p>
         </div>
-        <div class='block block__padded-top'>
+        <div class='block block__flush-bottom block__padded-top'>
             {% from "_event-landing-macros.html" import event_preview as event_preview %}
             {% for post in vars.events %}
                 {{ event_preview(post) }}

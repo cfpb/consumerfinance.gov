@@ -15,7 +15,7 @@
     'consumer_guides': '0%',
     'submit_a_complaint': '0%',
     'data_and_research': '0%',
-    'for_industry': '0%',
+    'policy_and_compliance': '0%',
     'about': '35%',
 } %}
 
@@ -35,8 +35,8 @@
             height: {{ pct.data_and_research }};
             /* background: #2CB34A; */
         }
-        #for-industry .bar-chart {
-            height: {{ pct.for_industry }};
+        #policy-and-compliance .bar-chart {
+            height: {{ pct.policy_and_compliance }};
             /* background: #2CB34A; */
         }
         #about .bar-chart {
@@ -53,10 +53,9 @@
         <section class="content_hero hero beta-hero">
             <h1 class="beta-hero_title">Welcome to beta.<wbr>consumerfinance.gov!</h1>
             <p class="beta-hero_desc">
-                We&rsquo;re redesigning consumerfinance.gov to make it easier to use.
+                We’re redesigning consumerfinance.gov to make it easier to use.
                 Follow our work here as we build in the open.
             </p>
-            <a class="btn btn__super" href="beta/">Learn more about beta</a>
         </section>
 
         <!-- .content_bar must come after .content_hero but before .content_wrapper -->
@@ -64,10 +63,9 @@
 
         <div class="wrapper content_wrapper">
             <section class="content_main">
-                <h2 class="h1">What we&rsquo;re working on</h2>
+                <h2 class="h1">What we’re working on</h2>
                 <p class="short-desc">
-                    You deserve a website that works for you.
-                    We&rsquo;re redesigning and reorganizing, section by section,
+                    We’re redesigning and reorganizing, section by section,
                     so you can find the information you need quickly and easily, on any device.
                     These charts tell you how much of each section we've published in the new format.
                 </p>
@@ -100,14 +98,14 @@
                         <h3 class="chart-name">Data & Research</h3>
                         <div class="chart-value u-visually-hidden">{{ pct.data_and_research }}</div>
                     </div>
-                    <div class="progress-charts_container" id="for-industry">
+                    <div class="progress-charts_container" id="policy-and-compliance">
                         <canvas class="progress-charts_chart">
                             <div class="chart-bg">
                                 <div class="bar-chart"></div>
                             </div>
                         </canvas>
-                        <h3 class="chart-name">For Industry</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.for_industry }}</div>
+                        <h3 class="chart-name">Policy & Compliance</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.policy_and_compliance }}</div>
                     </div>
                     <div class="progress-charts_container" id="about">
                         <canvas class="progress-charts_chart">
@@ -136,13 +134,8 @@
                             </p>
                             <ul class="list__links">
                                 <li class="list_item">
-                                    <a class="list_link jump-link" href="https://www.consumerfinance.gov/">
+                                    <a class="list_link jump-link" href="http://www.consumerfinance.gov/">
                                         Go to consumerfinance.gov
-                                    </a>
-                                </li>
-                                <li class="list_item">
-                                    <a class="list_link jump-link" href="beta/">
-                                        Learn more about the beta project
                                     </a>
                                 </li>
                             </ul>
@@ -159,7 +152,7 @@
                                 <li class="list_item">
                                     <a class="list_link jump-link jump-link__external-link"
                                        href="https://cfpb.github.io/">
-                                        Learn about out projects at CFPB Open Tech
+                                        Learn about our projects at CFPB Open Tech
                                     </a>
                                 </li>
                                 <li class="list_item">
@@ -218,8 +211,8 @@
             value: 0
           },
           {
-            name: "for industry",
-            done: parseInt( $("#for-industry .chart-value").text() ) / 100,
+            name: "policy and compliance",
+            done: parseInt( $("#policy-and-compliance .chart-value").text() ) / 100,
             value: 0
           },
           {
@@ -329,13 +322,13 @@
         // ------------------------------------------------
 
         $( window ).resize(function() {
-          //reset after resize (just in case)
+          // Reset after resize (just in case).
           waitForFinalEvent();
         });
 
 
         // ------------------------------------------------
-        // utilities
+        // Utilities
         // ------------------------------------------------
 
         function getRadians(degrees) {

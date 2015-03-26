@@ -16,22 +16,26 @@
 
 {% block content_main %}
 
-    <h1 class="u-visually-hidden">Press Resources</h1>
+    <h1>Press Resources</h1>
 
     <section class="press-section press-contacts">
 
         <h1 class="press-section_title press-contacts_title">Press contacts</h1>
 
-        <p class="press-section_intro press-contacts_intro">
+        <p>
             We are committed to engaging with the public and members of the media regularly
-            with accurate and up-to-date information on our work. News media should use
-            this information to reach our Office of Communications. For other questions,
-            see <a href="/contact-us/">Contact Us</a>.
+            with accurate and up-to-date information on our work.
+        </p>
+        
+        <p>
+            To report an issue you’re having with a financial company, please call 
+            <a href="tel:8554112372">(855) 411-CFPB (2372)</a>. News media should use the 
+            information below to reach our Office of Communications.
         </p>
 
         <ul class="press-contacts_main-contact-list list list__links list__icons">
             <li class="list_item">
-                <a class="list_link" href="mailto:inquiries@cfpb.gov">
+                <a class="list_link" href="mailto:inquiries@consumerfinance.gov">
                     <span class="cf-icon cf-icon-email list_icon"></span>
                     press@consumerfinance.gov
                 </a>
@@ -72,21 +76,6 @@
                     </li>
                     <li class="list_item">
                         <a href="tel:2024359469">(202) 435-9469</a>
-                    </li>
-                </ul>
-            </section>
-
-            <section class="contact-person content-l_col-1-2">
-                <h1 class="contact-person_name">Mallory McLean</h1>
-                <div class="contact-person_title">Regional Spokesperson</div>
-                <ul class="contact-person_methods list list__unstyled">
-                    <li class="list_item">
-                        <a href="mailto:mallory.mclean@cfpb.gov">
-                            mallory.mclean@cfpb.gov
-                        </a>
-                    </li>
-                    <li class="list_item">
-                        <a href="tel:2024357955">(202) 435-7955</a>
                     </li>
                 </ul>
             </section>
@@ -138,7 +127,7 @@
 
             <section class="contact-person contact-person__director content-l_col-1-2">
                 <img class="contact-person_photo"
-                     src="cordray_round_360.jpg"
+                     src="/static/img/cordray_round_360.jpg"
                      alt=""
                      width="180">
                 <div class="contact-person_title">Director</div>
@@ -152,13 +141,13 @@
                     </li>
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
-                           href="201402_cfpb_photo_richard-cordray_high-res.jpg">
+                           href="/static/img/201402_cfpb_photo_richard-cordray_high-res.jpg">
                             High-res portrait
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
-                           href="201402_cfpb_photo_richard-cordray_low-res.jpg">
+                           href="/static/img/201402_cfpb_photo_richard-cordray_low-res.jpg">
                             Low-res portrait
                         </a>
                     </li>
@@ -167,7 +156,7 @@
 
             <section class="contact-person contact-person__director content-l_col-1-2">
                 <img class="contact-person_photo"
-                     src="antonakes_round_360.jpg"
+                     src="/static/img/antonakes_round_360.jpg"
                      alt=""
                      width="180">
                 <div class="contact-person_title">Deputy Director</div>
@@ -181,13 +170,13 @@
                     </li>
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
-                           href="201405_cfpb_photo_steve-antonakes_high-res.jpg">
+                           href="/static/img/201405_cfpb_photo_steve-antonakes_high-res.jpg">
                             High-res portrait
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
-                           href="201405_cfpb_photo_steve-antonakes_low-res.jpg">
+                           href="/static/img/201405_cfpb_photo_steve-antonakes_low-res.jpg">
                             Low-res portrait
                         </a>
                     </li>
@@ -202,33 +191,7 @@
         </a>
 
     </section><!-- END .press-section.press-photos-bios -->
-
-    <section class="press-section press-logo">
-
-        <h1 class="press-section_title press-logo_title">Logo and usage</h1>
-
-        <div class="content-l content-l__main">
-
-            <p class="press-section_intro press-logo_intro content-l_col-2-3">
-                The CFPB logo was designed to symbolize vigilance, transparency, and
-                a consumer focus. Consumers are the foundation and focus of our mission and
-                our logo reflects that. A soft beam of light symbolizes our efforts to
-                illuminate the financial landscape and foster transparency in the
-                marketplace.</p>
-
-            <figure class="press-logo_logo">
-                <img src="CFPB_2Tone_isolated_RGB_352.png" alt="CFPB logo" width="176">
-            </figure>
-
-        </div><!-- END .content-l -->
-
-        <a class="jump-link jump-link__large"
-           href="https://cfpb.github.io/design-manual/identity/logo/">
-            Logo files and more in the CFPB Design Manual
-        </a>
-
-    </section><!-- END .press-section.press-logo -->
-
+    
     <aside class="block block__bg block__flush-sides u-mb0">
         <div class="content-l content-l__main">
             <section class="content-l_col content-l_col-1-2">
@@ -239,7 +202,7 @@
                 </h1>
                 <div class="block block__sub u-mt0">
                     <p class="short-desc">
-                        Subscribe to our email newsletter. We will update you on new blogs.
+                        Subscribe to get our press releases by email.
                     </p>
                     {% import "email-subscribe-form.html" as subscribe with context %}
                     {{ subscribe.render(vars.query) }}
