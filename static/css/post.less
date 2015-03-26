@@ -413,6 +413,36 @@
 .post_body {
     .u-clearfix();
     color: @darkgray;
+
+    // Spacing has been eyeballed to be 30px.
+    p ~ h1, p ~ .h1 {
+        margin-top: unit(22px / @base-font-size-px, em);
+    }
+
+    // Spacing has been eyeballed to be 30px.
+    p ~ h2, p ~ .h2 {
+        margin-top: unit(31px / @base-font-size-px, em);
+    }
+
+    // Spacing has been eyeballed to be 30px.
+    p ~ h3, p ~ .h3 {
+        margin-top: unit(35px / @base-font-size-px, em);
+    }
+
+    // Spacing has been eyeballed to be 15px.
+    p ~ h4, p ~ .h4 {
+        margin-bottom: unit(7px / @base-font-size-px, em);
+    }
+
+    // Spacing has been eyeballed to be 15px.
+    p ~ h5, p ~ .h5 {
+        margin-bottom: unit(6px / @base-font-size-px, em);
+    }
+
+    // Spacing has been eyeballed to be 15px.
+    p ~ h6, p ~ .h6 {
+        margin-bottom: unit(5px / @base-font-size-px, em);
+    }
 }
 
 .post_inset {
