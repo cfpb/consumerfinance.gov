@@ -20,5 +20,15 @@
         }
       ]
     }
-  ]
+  ],
+  "feed": {
+    "feed_title": "CFPB Newsroom",
+    "feed_url": "/newsroom/",
+    "entry_title": "$$title$$",
+    "entry_author": "$$author$$",
+    "entry_content": "$$content$$",
+    "entry_summary": "$$excerpt$$",
+    "entry_url": "$$url$$",
+    "entry_updated": "$$modified$$"
+  }
 }
