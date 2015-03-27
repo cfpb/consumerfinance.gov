@@ -842,7 +842,6 @@
         {%- if is_filter_selected(field, value) %}
             selected
         {%- endif -%}
-            >
-        {{ value }}
+        {{ '>' | safe ~ value }}
     </option>
 {% endmacro %}
