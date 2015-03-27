@@ -9713,6 +9713,147 @@ a.focus .summary_event-date {
   margin-bottom: 10px;
 }
 
+.error_action_container {
+  background-color: #fff;
+}
+
+.error_action_container .content-l_col.content-l_col-1-2 {
+  display: block;
+  width: 100%;
+}
+
+.error_action_container .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+  border-left-width: 15px;
+  margin-top: 3.75em;
+}
+
+.error_action_container .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+  position: static;
+  width: 100%;
+  margin-left: auto !important;
+}
+
+.error_action_container .content-l_col.content-l_col-1-2.content-l_col__before-divider:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+
+.error_action_container.content-l__large-gutters .content-l_col.content-l_col-1-2.content-l_col__before-divider {
+  border-left-width: 30px;
+}
+
+.error_action_container .content-l_col.content-l_col-1-2+.content-l_col.content-l_col-1-2 {
+  margin-top: 1.875em;
+}
+
+.error_copy_container {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .error_copy_container {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .error_copy_container {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+
+.error_header {
+  color: #fff;
+}
+
+.error_header .superheader {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.error_header .superheader em,
+.error_header .superheader i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .error_header .superheader em,
+.lt-ie9 .error_header .superheader i {
+  font-style: normal !important;
+}
+
+.error_header .superheader strong,
+.error_header .superheader b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .error_header .superheader strong,
+.lt-ie9 .error_header .superheader b {
+  font-weight: normal !important;
+}
+
+.error_main {
+  background-color: #43484e;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.error_main em,
+.error_main i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .error_main em,
+.lt-ie9 .error_main i {
+  font-style: normal !important;
+}
+
+.error_main strong,
+.error_main b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .error_main strong,
+.lt-ie9 .error_main b {
+  font-weight: normal !important;
+}
+
+.error_main__404 .content_wrapper {
+  background: transparent url('/static/img/plug.png') no-repeat top right;
+}
+
+.error_main__500 {
+  background: #43484e url('/static/img/server-rack.png') no-repeat 757px 60px;
+}
+
+.error_main__500 {
+  background-position: 607px 60px;
+}
+
 .bureau-mission {
   margin-bottom: 2.8125em;
 }
