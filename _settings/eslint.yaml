@@ -316,8 +316,8 @@ rules:
   # Disallow labels that share a name with a variable.
   no-label-var: 2
 
-  # Disallow declaration of variables already declared in the outer scope.
-  no-shadow: 2
+  # Warn when declaring variables already declared in the outer scope.
+  no-shadow: 1
 
   # Disallow shadowing of names such as arguments.
   no-shadow-restricted-names: 2
@@ -364,8 +364,8 @@ rules:
   # Disallow string concatenation with __dirname and __filename.
   no-path-concat: 2
 
-  # Disallow process.exit().
-  no-process-exit: 2
+  # Warn on use of process.exit().
+  no-process-exit: 1
 
   # Don't restrict usage of specific node modules.
   no-restricted-modules: 0
