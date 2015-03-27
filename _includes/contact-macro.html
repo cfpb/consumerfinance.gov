@@ -18,23 +18,27 @@
         {%- if contact.email_addr %}
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:{{ contact.email_addr }}">
-                    {{ contact.email_addr }}
-                </a>
+                <span class="list_text">
+                    <a class="list_link" href="mailto:{{ contact.email_addr }}">
+                        {{ contact.email_addr }}
+                    </a>
+                </span>
             </li>
         {%- endif %}
         {%- if contact.email_2_addr %}
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
-                    {{ contact.email_2_addr }}
-                </a>
+                <span class="list_text">
+                    <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
+                        {{ contact.email_2_addr }}
+                    </a>
+                </span>
             </li>
         {%- endif %}
         {%- if contact.phone_num %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="short-desc">
+                <span class="short-desc list_text">
                     {{ format_phone(contact.phone_num) }}
                 </span>
             {%- if contact.phone_desc %}
@@ -47,7 +51,7 @@
         {%- if contact.phone_2_num %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="short-desc">
+                <span class="short-desc list_text">
                     {{ format_phone(contact.phone_2_num) }}
                 </span>
             </li>
@@ -55,7 +59,7 @@
         {%- if contact.fax_num %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-fax list_icon"></span>
-                <span class="short-desc">
+                <span class="short-desc list_text">
                     {{ format_phone(contact.fax_num) }}
                 </span>
             </li>
