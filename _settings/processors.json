@@ -39,9 +39,9 @@
     "mappings":  "_settings/posts_mappings.json"
   },
   "events": {
-    "url":       "$WORDPRESS/api/get_posts/",
-    "processor": "wordpress_post_processor",
-    "mappings":  "_settings/posts_mappings.json"
+    "url":       "$WORDPRESS/api/get_posts/?post_type=event",
+    "processor": "wordpress_event_processor",
+    "mappings":  "_settings/events_mappings.json"
   },
   "events_archive": {
     "url":       "$WORDPRESS/api/get_posts/",
