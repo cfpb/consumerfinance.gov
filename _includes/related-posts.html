@@ -12,10 +12,19 @@
     <ul class="list list__unstyled list__spaced">
     {% for similar in more_like_this(post, search_types=doc_types, search_size=quantity) %}
         <li class="list_item">
-            <a class="list_link"
-               href="{{ similar.permalink }}">
-                {{ similar.title|safe }}
-            </a>
+            <h4 class='u-mb5'>
+                <a class="list_link"
+                    href="{{ similar.permalink }}">
+                    {{ similar.title|safe }}
+                </a>
+            </h4>
+            <p class="short-desc u-mb0">
+                <!-- TODO: Use real content description -->
+                This is a brief Description
+            </p>
+            <p class="date">
+                {{ similar.date| date('%m/%d/%y') }}
+            </p>
         </li>
     {% endfor %}
     </ul>
