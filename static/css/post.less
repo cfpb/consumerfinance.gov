@@ -457,13 +457,22 @@
 
     .list_link {
         .h4();
-        .u-link__colors(@black, @pacific-80);
-        .u-link__no-border();
+        .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
+        border-width: 0;
+
+        &:hover {
+            border-bottom: 1px dotted;
+        }
 
         .respond-to-min(600px, {
             .h3();
+            font-size: unit(16px / @base-font-size-px, em);
         });
     }
+}
+
+.related_content, .content__bleedbar .content_wrapper:after {
+    background-color: @gray-5;
 }
 
 .post-summary-image {
