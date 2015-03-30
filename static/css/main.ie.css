@@ -1677,6 +1677,7 @@ textarea.success {
   font-style: normal;
 }
 
+.cf-icon,
 .cf-icon {
   font-family: 'CFPB Minicons';
   display: inline-block;
@@ -2982,6 +2983,38 @@ textarea.success {
   *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e641');
 }
 
+.cf-icon-history:before {
+  content: "\e642";
+}
+
+.lt-ie8 .cf-icon-history {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e642');
+}
+
+.cf-icon-history-round:before {
+  content: "\e643";
+}
+
+.lt-ie8 .cf-icon-history-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e643');
+}
+
+.cf-icon-table-of-contents:before {
+  content: "\e644";
+}
+
+.lt-ie8 .cf-icon-table-of-contents {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e644');
+}
+
+.cf-icon-table-of-contents-round:before {
+  content: "\e645";
+}
+
+.lt-ie8 .cf-icon-table-of-contents-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e645');
+}
+
 .cf-icon-newspaper:before {
   content: "\e700";
 }
@@ -3124,6 +3157,70 @@ textarea.success {
 
 .lt-ie8 .cf-icon-date-round {
   *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e719');
+}
+
+.cf-icon-closing-quote:before {
+  content: "\e720";
+}
+
+.lt-ie8 .cf-icon-closing-quote {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e720');
+}
+
+.cf-icon-closing-quote-round:before {
+  content: "\e721";
+}
+
+.lt-ie8 .cf-icon-closing-quote-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e721');
+}
+
+.cf-icon-livestream:before {
+  content: "\e722";
+}
+
+.lt-ie8 .cf-icon-livestream {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e722');
+}
+
+.cf-icon-livestream-round:before {
+  content: "\e723";
+}
+
+.lt-ie8 .cf-icon-livestream-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e723');
+}
+
+.cf-icon-parents:before {
+  content: "\e724";
+}
+
+.lt-ie8 .cf-icon-parents {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e724');
+}
+
+.cf-icon-parents-round:before {
+  content: "\e725";
+}
+
+.lt-ie8 .cf-icon-parents-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e725');
+}
+
+.cf-icon-servicemembers:before {
+  content: "\e726";
+}
+
+.lt-ie8 .cf-icon-servicemembers {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e726');
+}
+
+.cf-icon-servicemembers-round:before {
+  content: "\e727";
+}
+
+.lt-ie8 .cf-icon-servicemembers-round {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e727');
 }
 
 .content-l {
@@ -6324,18 +6421,15 @@ a.hero_card {
   box-sizing: border-box;
   width: 1.5em;
   height: 1.5em;
-  padding: 0.25em 0;
   border-radius: 100%;
   margin-right: 0.375em;
   position: relative;
-  top: -0.07692308em;
   background: #2cb34a;
   color: #fff;
   font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 92.85714286%;
-  line-height: 1;
+  line-height: 1.5em;
   text-align: center;
 }
 
@@ -7122,6 +7216,36 @@ a.focus .summary_event-date {
 
 .lt-ie8 .post_body {
   zoom: 1;
+}
+
+.post_body p~h1,
+.post_body p~.h1 {
+  margin-top: 1.375em;
+}
+
+.post_body p~h2,
+.post_body p~.h2 {
+  margin-top: 1.9375em;
+}
+
+.post_body p~h3,
+.post_body p~.h3 {
+  margin-top: 2.1875em;
+}
+
+.post_body p~h4,
+.post_body p~.h4 {
+  margin-bottom: .4375em;
+}
+
+.post_body p~h5,
+.post_body p~.h5 {
+  margin-bottom: .375em;
+}
+
+.post_body p~h6,
+.post_body p~.h6 {
+  margin-bottom: .3125em;
 }
 
 .post_inset {
