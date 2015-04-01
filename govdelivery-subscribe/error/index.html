@@ -5,17 +5,28 @@
 {%- endblock %}
 
 {% block desc -%}
-    Your subscription was not successfuly received.
+    Your subscription was not successfully received.
 {%- endblock %}
 
 {% block content_main %}
+    <h1><span class="cf-icon cf-icon-error-round"></span> Not just yet!</h1>
+    <p class="short-desc">
+        We’re still building the email signup function for <br>
+  		this beta release. It will be available soon. For now:
+    </p>
+    <ol class="short-desc">
+        <li>Keep exploring <a href="http://beta.consumerfinance.gov">beta.consumerfinance.gov</a>.</li>
+        <li>Check back often to follow our progress.</li>
+        <li>Sign up for general CFPB updates at <a href="http://www.consumerfinance.gov">www.consumerfinance.gov</a>.</li>
+    </ol>
+    <!-- Commented out until email signup is ready to use.
     <h1><span class="cf-icon cf-icon-error-round"></span> Please try again.</h1>
     <p class="short-desc">
-        Your subscription was not successfuly received.<br>
+        Your subscription was not successfully received.<br>
         Please go back and check the following:
     </p>
     <ol class="short-desc">
-        <li>Please include a valid email address</li>
-        <li>Please choose at least one category in the list of checkboxes</li>
-    </ol>
+        <li>Please include a valid email address.</li>
+        <li>Please choose at least one category in the list of checkboxes.</li>
+    </ol> -->
 {% endblock %}
