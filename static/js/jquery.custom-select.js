@@ -77,4 +77,4 @@
     // Auto init
     $('.custom-select').customSelect();
 
-}(jQuery));
+})(jQuery);

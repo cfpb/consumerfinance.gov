@@ -82,4 +82,4 @@
     // Auto init
     $('.custom-input').customInput();
 
-}(jQuery));
+})(jQuery);

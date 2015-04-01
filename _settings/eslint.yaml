@@ -18,7 +18,8 @@ rules:
 
   # Disallow trailing commas in object literals.
   # This rule is needed for IE8- support.
-  no-comma-dangle: 2
+  comma-dangle:
+    - never
 
   # Disallow assignment in conditional expressions.
   # Unless they are enclosed in parentheses.
@@ -282,7 +283,7 @@ rules:
   # Require immediate function invocation to be wrapped in parentheses.
   wrap-iife:
     - 2
-    - outside
+    - inside
 
   # Disallow Yoda conditions, except in ranges.
   yoda:
@@ -393,7 +394,10 @@ rules:
       allowSingleLine: true
 
   # Warn about non-camel case names.
-  camelcase: 1
+  camelcase:
+    - 1
+    -
+      properties: always
 
   # Enforce spacing before and after comma.
   comma-spacing:
@@ -475,9 +479,6 @@ rules:
   # Disallow use of the Object constructor.
   no-new-object: 2
 
-  # Disallow space before semicolon.
-  no-space-before-semi: 2
-
   # Disallow space between function identifier and invocation.
   no-spaced-func: 2
 
@@ -522,6 +523,13 @@ rules:
     - 2
     - always
 
+  # Disallow space before semicolon.
+  semi-spacing:
+    - 2
+    -
+      before: false
+      after: true
+
   # Don't enforce sorting variables within the same declaration block.
   sort-vars: 0
 
@@ -536,7 +544,7 @@ rules:
     - always
 
   # Warn about no space before function parentheses.
-  space-before-function-parentheses:
+  space-before-function-paren:
     - 1
     -
       anonymous: never
@@ -581,10 +589,10 @@ rules:
   # This should be turned on when browser support is better.
   no-var: 0
 
-  # Enforce the position of the * in generator functions
-  generator-star:
+  # Enforce the position of the * in generator functions.
+  generator-star-spacing:
     - 2
-    - end
+    - before
 
 
   # Rules for LEGACY SUPPORT.
