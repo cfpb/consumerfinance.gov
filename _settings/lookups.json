@@ -19,9 +19,9 @@
     "type":      "posts",
     "permalink": true
   },
-  "watchroom": {
-    "url":       "/watchroom/<id>/",
-    "type":      "watchroom",
+  "featured_topic": {
+    "url":       "/featured_topic/<id>/",
+    "type":      "featured_topic",
     "permalink": true
   },
   "event_archive": {

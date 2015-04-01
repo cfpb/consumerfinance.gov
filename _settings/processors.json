@@ -57,8 +57,8 @@
     "url":       "$WORDPRESS/api/get_posts/?post_type=view",
     "processor": "wordpress_view_processor"
   },
-  "watchroom": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=watchroom",
+  "featured_topic": {
+    "url":       "$WORDPRESS/api/get_posts/?post_type=featured_topic",
     "processor": "wordpress_post_processor",
     "mappings":  "_settings/posts_mappings.json"
   }
