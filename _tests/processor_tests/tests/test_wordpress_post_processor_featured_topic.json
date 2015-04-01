@@ -8,43 +8,43 @@
             "excerpt": "<p>Lorem ipsum dolor sit amet</p>\n", 
             "id": 1, 
             "custom_fields": {
-                "watchroom_data_0_link": [
+                "featured_topic_data_0_link": [
                     "http://somewhere/", 
                     "Testing a first link"
                 ], 
-                "watchroom_data_1_link": [
+                "featured_topic_data_1_link": [
                     "http://somewhere/", 
                     "Testing a second link"
                 ], 
-                "watchroom_data_2_link": [
+                "featured_topic_data_2_link": [
                     "http://somewhere/", 
                     "Testing a third link"
                 ],
-                "watchroom_data_3_link": [
+                "featured_topic_data_3_link": [
                     "http://somewhere/", 
                     "Testing a fourth link"
                 ],
-                "watchroom_data_4_link": [
+                "featured_topic_data_4_link": [
                     "http://somewhere/", 
                     "Testing a fifth link"
                 ],
-                "watchroom_data_5_link": [
+                "featured_topic_data_5_link": [
                     "http://somewhere/", 
                     "Testing a sixth link"
                 ],
-                "watchroom_data_6_link": [
+                "featured_topic_data_6_link": [
                     "http://somewhere/", 
                     "Testing a seventh link"
                 ],
-                "watchroom_data_7_link": [
+                "featured_topic_data_7_link": [
                     "http://somewhere/", 
                     "Testing a eighth link"
                 ],
-                "watchroom_data_8_link": [
+                "featured_topic_data_8_link": [
                     "http://somewhere/", 
                     "Testing a ninth link"
                 ],
-                "watchroom_data_9_link": [
+                "featured_topic_data_9_link": [
                     "http://somewhere/", 
                     "Testing a tenth link"
                 ]
@@ -63,16 +63,16 @@
             "content": "<p>Lorem ipsum dolor sit amet</p>\n", 
             "comment_count": 0, 
             "categories": [], 
-            "type": "watchroom", 
+            "type": "featured_topic", 
             "status": "publish", 
             "parent": 0, 
             "tags": [], 
             "date": "2014-07-28 16:19:46", 
-            "slug": "who-watches-the-watchroom", 
+            "slug": "who-watches-the-featured_topic", 
             "comment_status": "closed", 
-            "title_plain": "Who Watches the Watchroom?", 
-            "url": "http://somewhere/watchroom/who-watches-the-watchroom/", 
-            "title": "Who Watches the Watchroom?", 
+            "title_plain": "Who Watches the Featured Topic?", 
+            "url": "http://somewhere/featured_topic/who-watches-the-featured_topic/", 
+            "title": "Who Watches the Featured Topic?", 
             "modified": "2014-08-13 13:36:30", 
             "dek": "", 
             "order": 0
@@ -80,7 +80,7 @@
     ], 
     "query": {
         "count": "-1", 
-        "post_type": "watchroom", 
+        "post_type": "featured_topic", 
         "page": "1", 
         "ignore_sticky_posts": true
     }, 
