@@ -14,11 +14,9 @@ def step(context, tag, event_name):
     tags = context.events.get_tags(event_name)
     assert_that(tag, is_in(tags))
 
-
 @then(u'I should see the location "{location}" displayed under "{event_name}"')
 def step(context, location, event_name):
     actual_location = context.events.get_location(event_name)
-    print 'actual location is', actual_location
     assert_that(actual_location, equal_to(location))
 
 @then(u'I should see the date "{date}" displayed under "{event_name}"')
