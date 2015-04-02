@@ -12,21 +12,21 @@ Scenario Outline: Test that the proper number of events show up
 
 @events
 Scenario Outline: Test that clicking on individual events navigates to proper page
-  When I click on the "<link_name>" link
+  When I click on the "<link_name>" event title link
   Then I should be directed to the internal "<relative_url>" URL
   And I should see "<page_title>" displayed in the page title
 
 Examples:
   | link_name          |  relative_url          | page_title           |
-  | Explainer: How small businesses play a role in the rulemaking process | /events/explainer-how-small-businesses-play-a-role-in-the-rulemaking-process/ | TITLE Spring 2014 rulemaking agenda  - cfgov-refresh demo |
-  | Live from Newark! | /events/live-from-newark/ | TITLE Spring 2014 rulemaking agenda  - cfgov-refresh demo |
+  | Explainer: How small businesses play a role in the rulemaking process | /events/explainer-how-small-businesses-play-a-role-in-the-rulemaking-process/ | TITLE Spring 2014 rulemaking agenda - cfgov-refresh demo |
+  | Live from Newark! | /events/live-from-newark/ | TITLE Spring 2014 rulemaking agenda - cfgov-refresh demo |
 
 @events
 Scenario Outline: Test that event tags are displaying
-  Then I should see "<tag>" displayed under "<event_name>"
+  Then I should see the tag "<tag>" displayed under "<event_name>"
 
 Examples:
-  | tag_1         | event_name               |
+  | tag         | event_name                 |
   | FIELD HEARING | Save the date, Richmond! |
   | PAYDAY LOANS  | Save the date, Richmond! |
   | ARBITRATION   | Live from Newark!        |
@@ -34,9 +34,9 @@ Examples:
 
 @events
 Scenario Outline: Test that the location, date, and time are displaying properly
-  Then I should see "<location>" displayed under "<event_name>"
-  And I should see "<date>" displayed under "<event_name>"
-  And I should see "<time>" displayed under "<event_name>"
+  Then I should see the location "<location>" displayed under "<event_name>"
+  And I should see the date "<date>" displayed under "<event_name>"
+  And I should see the time "<time>" displayed under "<event_name>"
 
 Examples:
   | location       | date     | time         | event_name               |
