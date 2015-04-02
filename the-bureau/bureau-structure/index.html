@@ -20,13 +20,13 @@
     {% import "role-macro.html" as role_macro with context %}
 
     <div class="org-chart">
-        
+
         <div class="org-chart_root">
             <img src="/static/img/cordray_round_360.jpg" width="150">
             <h1 class="h2 u-mb0">Richard Cordray</h1>
             <h2 class="h4">Director</h2>
         </div>
-        
+
         <div id="content-slider-container">
             <div id="content-slider">
                 <div>
@@ -133,9 +133,11 @@
                     other event; or to inquire about any CFPB events.
                 </p>
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:cfpb.events@cfpb.gov">
-                    cfpb.events@cfpb.gov
-                </a>
+                <span class="list_text">
+                    <a class="list_link" href="mailto:cfpb.events@cfpb.gov">
+                        cfpb.events@cfpb.gov
+                    </a>
+                </span>
             </div>
         </div>
 
@@ -147,7 +149,7 @@
     <script>
         $('document').ready(function () {
             var slider, handler;
-            if (!$('html').hasClass('lt-ie9')) {     
+            if (!$('html').hasClass('lt-ie9')) {
                 handler = new BreakpointHandler({
                     breakpoint: 599,
                     type: "max",
