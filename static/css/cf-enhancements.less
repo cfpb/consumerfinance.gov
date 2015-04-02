@@ -660,3 +660,34 @@ tbody {
     name: EOF
     eof: true
 */
+
+
+/* topdoc
+  name: Full Width Buttons
+  family: cf-enhancements
+  notes:
+    - "Modifier to buttons full width at small screen sizes"
+  patterns:
+    - name: Default example
+      markup: |
+        <btn class="btn btn__full">Button Text</btn>
+  tags:
+    - cf-buttons
+*/
+
+.btn__full {
+
+    .respond-to-max(599px , {
+        display: block;
+        width: 100%;
+
+        + .btn__full {
+            margin-left: initial;
+        }
+    });
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
