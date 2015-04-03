@@ -509,7 +509,7 @@ tbody {
 
 /* topdoc
   name: Icon list modifier
-  family: cf-typography
+  family: cfgov-cf-enhancements
   notes:
     - "Set up a list with icons on the left, in place of bullets."
   patterns:
@@ -518,50 +518,39 @@ tbody {
         <ul class="list list__icons">
             <li class="list_item">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                List item 1
+                <span class="list_text">List item 1</span>
             </li>
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                List item 2
+                <span class="list_text">List item 2</span>
             </li>
             <li class="list_item">
                 <span class="cf-icon cf-icon-fax list_icon"></span>
-                List item 3
+                <span class="list_text">List item 3</span>
             </li>
         </ul>
   tags:
     - cf-typography
 */
 
-// TODO: Move multi-line list__icons outside of budget and procurement pages.
-// Currently, they conflict with the default list__links style
-// when the classes are placed directly in markup, for example
-// see the lists on /newsroom/press-resources/.
-.budget_page-content,
-.business_page-content {
-    .list__icons {
-        .list__unstyled();
+.list__icons {
+    .list__unstyled();
 
-        .list_item {
-            margin-left: 2em;
-            position: relative;
-        }
+    .list_icon,
+    .list_text {
+        display: table-cell;
+    }
 
-        .list_icon {
-            position: absolute;
-            width: 1.5em;
-            left: 0;
-            top: 0;
-            line-height: @base-line-height;
-            .list__icons .list_icon__left();
-        }
+    .list_icon {
+        width: 1.5em;
+        .list__icons .list_icon__left();
     }
 }
 
 
 /* topdoc
   name: List icon left modifier
-  family: cf-typography
+  family: cfgov-cf-enhancements
   notes:
     - "Left align the icons in an icon list."
   patterns:
@@ -570,15 +559,15 @@ tbody {
         <ul class="list list__icons">
             <li class="list_item">
                 <span class="cf-icon cf-icon-technology list_icon list_icon__left"></span>
-                List item 1
+                <span class="list_text">List item 1</span>
             </li>
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon list_icon__left"></span>
-                List item 2
+                <span class="list_text">List item 2</span>
             </li>
             <li class="list_item">
                 <span class="cf-icon cf-icon-money list_icon list_icon__left"></span>
-                List item 3
+                <span class="list_text">List item 3</span>
             </li>
         </ul>
   tags:
@@ -594,7 +583,7 @@ tbody {
 
 /* topdoc
   name: List icon center modifier
-  family: cf-typography
+  family: cfgov-cf-enhancements
   notes:
     - "Center align the icons in an icon list."
   patterns:
@@ -603,15 +592,15 @@ tbody {
         <ul class="list list__icons">
             <li class="list_item">
                 <span class="cf-icon cf-icon-technology list_icon list_icon__center"></span>
-                List item 1
+                <span class="list_text">List item 1</span>
             </li>
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon list_icon__center"></span>
-                List item 2
+                <span class="list_text">List item 2</span>
             </li>
             <li class="list_item">
                 <span class="cf-icon cf-icon-money list_icon list_icon__center"></span>
-                List item 3
+                <span class="list_text">List item 3</span>
             </li>
         </ul>
   tags:
@@ -626,7 +615,7 @@ tbody {
 
 /* topdoc
   name: List icon right modifier
-  family: cf-typography
+  family: cfgov-cf-enhancements
   notes:
     - "Right align the icons in an icon list."
   patterns:
@@ -635,15 +624,15 @@ tbody {
         <ul class="list list__icons">
             <li class="list_item list_icon__right">
                 <span class="cf-icon cf-icon-technology list_icon"></span>
-                List item 1
+                <span class="list_text">List item 1</span>
             </li>
             <li class="list_item list_icon__right">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                List item 2
+                <span class="list_text">List item 2</span>
             </li>
             <li class="list_item list_icon__right">
                 <span class="cf-icon cf-icon-money list_icon"></span>
-                List item 3
+                <span class="list_text">List item 3</span>
             </li>
         </ul>
   tags:
@@ -653,7 +642,100 @@ tbody {
 .list__icons {
     .list_icon__right {
         text-align: right;
+        padding-right: .5em;
     }
+}
+
+
+/* topdoc
+  name: Download links list
+  family: cfgov-cf-enhancements
+  patterns:
+    codenotes:
+        - ".list__download();"
+    notes:
+        - "Styles a list of links with associated download icons."
+  tags:
+    - cf-typography
+*/
+.list__download() {
+    ul {
+        .list__links();
+        .list__icons();
+
+        // TODO: Check if `left` could be used instead,
+        // like what is done with the jump-links.
+        // Optical offset for left-aligning list with text.
+        margin-left: unit( 2px / @base-font-size-px, em );
+
+        li {
+            .list__links .list_item();
+            .list__icons .list_item();
+        }
+
+        a {
+            .list_link();
+            .jump-link();
+
+            // Override jump-link optical offset value.
+            left: 0;
+
+            span {
+                .list__icons .list_text();
+            }
+
+            &:before {
+                .cf-icon();
+                .list__icons .list_icon();
+                content: "\e406";
+                color: @pacific;
+            }
+        }
+
+        // Remove the bottom border on all but the last
+        // link when at mobile sizes, so that the top and bottom
+        // dotted borders don't double-up to 2px width.
+        // Does not work in IE8.
+        :not(:last-child) {
+            a {
+                .respond-to-max(599px, {
+                    border-bottom: none;
+                });
+            }
+        }
+
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
+
+
+/* topdoc
+  name: Full Width Buttons
+  family: cf-enhancements
+  notes:
+    - "Modifier to buttons full width at small screen sizes"
+  patterns:
+    - name: Default example
+      markup: |
+        <btn class="btn btn__full">Button Text</btn>
+  tags:
+    - cf-buttons
+*/
+
+.btn__full {
+
+    .respond-to-max(599px , {
+        display: block;
+        width: 100%;
+
+        + .btn__full {
+            margin-left: initial;
+        }
+    });
 }
 
 /* topdoc
