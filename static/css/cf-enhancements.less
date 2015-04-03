@@ -506,6 +506,21 @@ tbody {
   text-align: right;
 }
 
+// TODO: After merging into cf-expandables, this variable can be removed.
+@expandable-group-divider: darken(#895983, 15%);
+// TODO: If/when `border-bottom` is removed from `.expandable-group_header`
+// the following override is not necessary.
+.expandable-group_header {
+    border-bottom: none;
+}
+// Adds top border to expandable item so expandables have top-border
+// when header is absent.
+// TODO: `.expandable-group_items` is non-standard,
+// see https://github.com/cfpb/cf-expandables/issues/45
+.expandable-group_items .expandable:first-child {
+    border-top: 1px solid @expandable-group-divider;
+}
+
 
 /* topdoc
   name: Icon list modifier
