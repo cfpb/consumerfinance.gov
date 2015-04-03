@@ -1,6 +1,5 @@
 {% extends "layout-side-nav.html" %}
 {% import "_vars-newsroom.html" as vars with context %}
-{% set view = get_document('views', 'newsroom') %}
 
 {% block title -%}
     Newsroom
@@ -58,7 +57,16 @@
             <div class="content-l content-l__main">
                 <section class="block u-mt0 content-l_col content-l_col-1-2">
                     {% import "related-links.html" as related_links %}
-                    {{ related_links.render(view.related_links) }}
+                    {{- related_links.render([
+                        [
+                            '/blog/',
+                            'The blog'
+                        ],
+                        [
+                            '/the-bureau/',
+                            'About us'
+                        ]
+                    ]) -}}
                 </section>
                 <section class="block content-l_col content-l_col-1-2">
                     {% include "upcoming-events.html" %}
