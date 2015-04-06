@@ -1,6 +1,34 @@
 All notable changes to this project will be documented in this file.
 See the [README](README.md) for an explanation of our versioning conventions.
 
+## 3.0.0-0.3.3 - 2015-04-06
+
+### Added
+- Added Privacy Policy page.
+- Added Event Request a Speaker page.
+- Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
+
+### Changed
+- Added styles to 500 and 404 error pages.
+- Added full width button modifier for buttons on smaller screens.
+- Updated ESLint configuration to the latest ESLint release (v0.18.0).
+- Updated `/newsroom/` and `/blog/` post sidebars to add description
+  and date, and to update styles.
+- Updated icons to use livestream icon instead of wifi icon.
+- Updated blog post spacing to be consistent with overall-project spacing.
+- Updated round step-by-step slug icons to central-align numbers.
+
+### Fixed
+- Updated related links module on `/newsroom/`.
+- Added small screen styles to helpful terms vertical list
+  on `/contact-us/` page.
+- Updated multi-line icon list styles.
+- Fixed missing `jump-link__right` modifier from `/featured-topic.html`.
+- Fixed an issue within `/newsroom/` and `/activity-log/` filters where selecting "Blog"
+  and another category would return zero results.
+- Fixed issue in filters where an input whitespace would prevent suggestions from showing.
+- Fixed HTML, typos, and grammatical errors.
+
 ## 3.0.0-0.2.3 - 2015-03-23
 
 ### Changed
