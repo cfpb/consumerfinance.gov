@@ -3,10 +3,20 @@
    Contact us page.
    ========================================================================== */
 
-.helpful-terms_header {
-    .h5();
-    margin-right: unit(6px / @font-size, em);
-    vertical-align: middle;
+.helpful-terms {
+    &_header {
+        .h5();
+        margin-right: unit(6px / @font-size, em);
+        vertical-align: middle;
+    }
+
+    &_list {
+        .respond-to-min(600px, {
+            .list__horizontal();
+
+            display: inline-block;
+        });
+    }
 }
 
 .type-and-filter_message {
@@ -37,7 +47,6 @@
 }
 
 .contact-list_btn {
-    width: 100%;
     margin: unit(30px / @super-btn-font-size, em) 0;
     .respond-to-min(801px, {
         display: none;
