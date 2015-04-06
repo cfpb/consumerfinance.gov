@@ -1,0 +1,68 @@
+/* ==========================================================================
+   cfgov-refresh
+   Page-specific styles for the error pages.
+   ========================================================================== */
+
+.btn__error-home {
+    .respond-to-max(@tablet-min, {
+        text-align: center;
+    });
+}
+
+.error_action_container {
+    background-color: @white;
+
+    .respond-to-max(1025px, {
+        .stack-col(content-l_col-1-2);   
+    });
+}
+
+.error_copy_container {
+    .grid_column(6);
+
+    .respond-to-max(799px, {
+        .grid_column(12);
+    });
+}
+
+.error_header {
+    color: @white;
+
+    .superheader {
+        .webfont-regular();
+
+        .respond-to-max(799px, {
+            .h1();
+        });
+    }   
+}
+
+.error_main {
+    background-color: @darkgray;
+    .webfont-regular();
+
+    &__404 {
+        .content_wrapper {
+            background: transparent url('/static/img/plug.png') no-repeat top right;
+            
+            .respond-to-max(799px, {
+                background: none;
+            });
+        }
+    }
+
+    &__500 {   
+            @background-image-size__px: 757px;
+            @background-image-offset-x__px: @background-image-size__px - 150px;
+
+            background: @darkgray url('/static/img/server-rack.png') no-repeat @background-image-size__px 60px;
+
+            .respond-to-max(799px, {
+                background-image: none;
+            });
+
+            .respond-to-range(800px, 1024px, {
+                background-position: @background-image-offset-x__px 60px;
+            });
+    }
+}
