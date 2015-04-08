@@ -1,6 +1,11 @@
 All notable changes to this project will be documented in this file.
 See the [README](README.md) for an explanation of our versioning conventions.
 
+## 3.0.0-0.2.4 - 2015-04-01
+
+### Changed
+- The name "Watchroom" to "Featured Topic"
+
 ## 3.0.0-0.2.3 - 2015-03-23
 
 ### Changed

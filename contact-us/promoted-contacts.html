@@ -4,7 +4,7 @@
 {% set tribal_consultation = get_document('contact', 'tribal-consultation') %}
 
 <div class="block u-mb0 content-l content-l__sidebar">
-    
+
     <section class="block content-l_col content-l_col-1-2">
         <h1 class="h5">
             {{ accessibility_feedback.title }}
@@ -35,15 +35,17 @@
         {%- if whistleblowers.email_addr %}
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:{{ whistleblowers.email_addr }}">
-                    {{ whistleblowers.email_addr }}
-                </a>
+                <span class="list_text">
+                    <a class="list_link" href="mailto:{{ whistleblowers.email_addr }}">
+                        {{ whistleblowers.email_addr }}
+                    </a>
+                </span>
             </li>
         {%- endif %}
         {%- if whistleblowers.phone_num %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="short-desc">
+                <span class="short-desc list_text">
                     {{ format_phone(whistleblowers.phone_num) }}
                 </span>
             </li>
@@ -65,9 +67,11 @@
         <ul class="list list__icons">
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
-                <a class="list_link" href="mailto:{{ tribal_consultation.email_addr }}">
-                    {{ tribal_consultation.email_addr }}
-                </a>
+                <span class="list_text">
+                    <a class="list_link" href="mailto:{{ tribal_consultation.email_addr }}">
+                        {{ tribal_consultation.email_addr }}
+                    </a>
+                </span>
             </li>
         </ul>
     {%- endif %}

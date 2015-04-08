@@ -37,13 +37,13 @@ def process_post(post, newsroom = False):
         post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_cfpb_newsroom_cat_taxonomy']]
     elif post['type'] == 'post':
         post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_fj_category']]
-    if post['type'] == 'watchroom':
+    if post['type'] == 'featured_topic':
         post['author'] = [post['author']['name']]
-        # convert watchroom_data_x into a proper list
+        # convert featured_topic_data_x into a proper list
         links = []
         for x in xrange(0,10):
             custom_fields = post['custom_fields']
-            key = 'watchroom_data_%s_link' % x
+            key = 'featured_topic_data_%s_link' % x
             if key in custom_fields:
                 links.append(custom_fields[key])
         post['links'] = links
