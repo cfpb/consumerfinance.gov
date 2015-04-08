@@ -567,7 +567,7 @@
             {% endfor %}
             {% if doc_type == 'newsroom' -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('type', 'post', 'Blog')|safe }}
+                    {{ filter_checkbox('category', 'Blog', 'Blog')|safe }}
                 </label>
             {%- endif %}
             </div>
@@ -585,7 +585,7 @@
                 {% if category.key != 'cfpb_newsroom' %}
                     {% if category.key == 'post' %}
                         <label class="form-group_item">
-                            {{ filter_checkbox('type', category.key, 'Blog')|safe }}
+                            {{ filter_checkbox('category', 'Blog', 'Blog')|safe }}
                         </label>
                     {% else %}
                         <label class="form-group_item">
@@ -842,7 +842,6 @@
         {%- if is_filter_selected(field, value) %}
             selected
         {%- endif -%}
-            >
-        {{ value }}
+        {{ '>' | safe ~ value }}
     </option>
 {% endmacro %}

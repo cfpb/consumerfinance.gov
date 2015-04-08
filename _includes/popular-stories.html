@@ -11,10 +11,18 @@
     {% for slug in popular_posts %}
         {% set pop_post = get_document('posts', slug) %}
         <li class="list_item">
-            <a class="list_link"
-               href="{{ pop_post.permalink }}">
-                {{ pop_post.title|safe }}
-            </a>
+            <h4 class='u-mb5'>
+                <a class="list_link"
+                   href="{{ pop_post.permalink }}">
+                    {{ pop_post.title|safe }}
+                </a>
+            </h4>
+            <p class="short-desc u-mb0">
+                <!-- TODO: Use real content description -->
+            </p>
+            <p class="date">
+                {{ pop_post.date| date('%m/%d/%y') }}
+            </p>
         </li>
     {% endfor %}
     </ul>

@@ -27,7 +27,7 @@ class WordpressOrgmemberProcessorTestCase(unittest.TestCase):
                                     'test_wordpress_orgmember_processor.json')).read()
         mock_requests_get.return_value = mock_response
 
-        name = 'watchroom'
+        name = 'orgmember'
         url = 'http://mockmockmock/api/get_posts/?post_type=orgmember'
 
         documents = list(wordpress_orgmember_processor.documents(name, url))

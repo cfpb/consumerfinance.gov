@@ -16,7 +16,7 @@ class WordpressPostProcessorTestCase(unittest.TestCase):
     It is currently used for the types:
         post
         newsroom
-        watchroom
+        featured_topic
 
     This doesn't unittest individual functions within the module. It
     tests the `documents()` function, which is what Sheer calls, and
@@ -25,14 +25,14 @@ class WordpressPostProcessorTestCase(unittest.TestCase):
 
     @mock.patch('requests.get')
     def test_watchrooom(self, mock_requests_get):
-        # /api/get_posts/?post_type=watchroom
+        # /api/get_posts/?post_type=featured_topic
         mock_response = mock.Mock()
         mock_response.content = open(os.path.join(os.path.dirname(__file__),
-                                    'test_wordpress_post_processor_watchroom.json')).read()
+                                    'test_wordpress_post_processor_featured_topic.json')).read()
         mock_requests_get.return_value = mock_response
 
-        name = 'watchroom'
-        url = 'http://mockmockmock/api/get_posts/?post_type=watchroom'
+        name = 'featured_topic'
+        url = 'http://mockmockmock/api/get_posts/?post_type=featured_topic'
 
         documents = list(wordpress_post_processor.documents(name, url))
         document = documents[0]
