@@ -14,6 +14,7 @@ from pages.screenshot import Screenshot
 from pages.base import Base
 from pages.navigation import Navigation
 from pages.newsroom import Newsroom
+from pages.events import Events
 from pages.utils import Utils
 
 
@@ -85,6 +86,8 @@ def before_all(context):
                         context.base_url, driver, 10, context.delay_secs)
     context.newsroom = Newsroom(context.logger, context.directory,
                         context.base_url, driver, 10, context.delay_secs)
+    context.events = Events(context.logger, context.directory,
+                        context.base_url, driver, 10, context.delay_secs)
     context.navigation = Navigation(context.logger, context.directory,
                                     context.base_url,
                                     driver, 10, context.delay_secs)
@@ -104,11 +107,13 @@ def before_all(context):
     # Create the mappings
     create_mapping('newsroom', os.path.join(root, '_settings/posts_mappings.json'))
     create_mapping('watchroom', os.path.join(root, '_settings/posts_mappings.json'))
+    create_mapping('events', os.path.join(root, '_settings/posts_mappings.json'))
 
     # Index the documents
     index_documents('newsroom', os.path.join(root, '_tests/browser_testing/fixtures/newsroom.json'))
     index_documents('views', os.path.join(root, '_tests/browser_testing/fixtures/views.json'))
     index_documents('watchroom', os.path.join(root, '_tests/browser_testing/fixtures/watchroom.json'))
+    index_documents('events', os.path.join(root, '_tests/browser_testing/fixtures/events.json'))
 
     
     
