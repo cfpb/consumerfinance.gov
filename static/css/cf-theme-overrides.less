@@ -1,0 +1,236 @@
+/* ==========================================================================
+   Capital Framework theme overrides
+   ========================================================================== */
+
+
+/* cf-core
+   ========================================================================== */
+
+// Sizing variables
+
+@base-font-size-px:             16px;
+@base-line-height-px:           22px;
+@base-line-height:              unit(@base-line-height-px / @base-font-size-px);
+@mobile-max:                    599px;
+@tablet-min:                    600px;
+
+// Color variables
+
+// body
+@text:                          @black;
+
+// a
+@link-text:                     @pacific;
+@link-underline:                @pacific;
+@link-text-visited:             @teal;
+@link-underline-visited:        @teal;
+@link-text-hover:               @pacific-50;
+@link-underline-hover:          @pacific-50;
+@link-text-active:              @navy;
+@link-underline-active:         @navy;
+
+// thead
+@thead-text:                    @white;
+@thead-bg:                      @darkgray;
+@td-bg:                         @gray-5;
+@td-bg-alt:                     @gray-10;
+
+// input
+@input-bg:                      @white;
+@input-border:                  @gray;
+@input-border-focus:            @pacific;
+@input-placeholder:             @gray;
+
+// .figure__bordered
+@figure__bordered:              @gray-50;
+
+
+/* cf-buttons
+   ========================================================================== */
+
+// Color variables
+
+// .btn
+@btn-text:                      @white;
+@btn-bg:                        @pacific;
+@btn-bg-hover:                  @pacific-80;
+@btn-bg-active:                 @navy-80;
+
+// .btn__secondary
+@btn__secondary-text:           @white;
+@btn__secondary-bg:             @gray;
+@btn__secondary-bg-hover:       @gray-80;
+@btn__secondary-bg-active:      @darkgray;
+
+// .btn__warning
+@btn__warning-text:             @white;
+@btn__warning-bg:               @redorange;
+@btn__warning-bg-hover:         @redorange-80;
+@btn__warning-bg-active:        @dark-redorange;
+
+// .btn__disabled
+@btn__disabled-text:            @gray;
+@btn__disabled-bg:              @gray-20;
+@btn__disabled-outline:         @gray-20;
+
+// Sizing variables
+
+// .btn
+@btn-font-size:                 14px;
+@btn-v-padding:                 8px;
+@btn-v-padding-modifier-ie:     .8;
+@super-btn-font-size:           18px;
+
+
+/* cf-expandables
+   ========================================================================== */
+
+// Color variables
+
+// .expandable
+@expandable-focus:              @black;
+
+// .expandable_label
+@expandable_label-text:         @black;
+
+// .expandable_link
+@expandable_link-text:          @pacific;
+
+// .expandable__padded
+@expandable__padded-bg:         @gray-10;
+@expandable__padded-bg-hover:   @gray-20;
+@expandable__padded-divider:    @gray-50;
+
+// .expandable-group
+@expandable-group_header-text:  @gray;
+@expandable-group_header-bg:    @gray-10;
+@expandable-group-bg: @white;
+@expandable-group-divider:      @gray-80;
+
+// Sizing variables
+
+// .expandable_link
+@expandable_link-font-size:     @btn-font-size;
+
+
+/* cf-forms
+   ========================================================================== */
+
+// Color variables
+
+// .error
+@input-error:                   @redorange;
+
+// .success
+@input-success:                 @green;
+
+// Sizing variables
+
+// .input__super
+@input__super-font-size:        @super-btn-font-size;
+
+
+/* cf-grid
+   ========================================================================== */
+
+@grid_box-sizing-polyfill-path: '/static/vendor/box-sizing-polyfill';
+@grid_wrapper-width:            1200px;
+@grid_gutter-width:             30px;
+@grid_total-columns:            12;
+@grid_debug:                    false;
+
+
+/* cf-icons
+   ========================================================================== */
+
+@cf-icon-prefix:                cf-icon;
+@cf-icon-path:                  '../fonts';
+@cf-icon-ie7-support:           true;
+
+
+/* cf-layout
+   ========================================================================== */
+
+// Color variables
+
+// .block
+@block__border-top:             @gray-50;
+@block__border-bottom:          @gray-50;
+@block__bg:                     @gray-10;
+
+// .content_main
+@content_main-border:           @gray-50;
+
+// .content_sidebar
+@content_sidebar-bg:            @gray-10;
+@content_sidebar-border:        @gray-50;
+
+// .content_bar
+@content_bar:                   @green;
+
+// .content_line
+@content_line:                  @gray-50;
+
+// .grid_column__top-divider
+@grid_column__top-divider:      @gray-50;
+
+// .grid_column__top-divider
+@grid_column__left-divider:     @gray-50;
+
+
+/* cf-pagination
+   ========================================================================== */
+
+// Color variables
+
+@pagination-text:               @gray;
+@pagination-bg:                 @gray-20;
+
+// Sizing variables
+
+@pagination-font-size:          16px;
+@pagination-bp:                 640px;
+
+
+/* cf-typography
+   ========================================================================== */
+
+// Color variables
+
+// .pull-quote
+@pull-quote_body:               @black;
+@pull-quote_citation:           @gray;
+
+// .micro-copy
+@micro-copy-text:               @gray;
+
+// .date
+@date-text:                     @gray;
+
+// .category-slug
+@category-slug-text:            @black;
+@category-slug-hover:           @link-text-hover;
+
+// .header-slug
+@header-slug-thin-border:       @gray-20;
+@header-slug-thick-border:      @green;
+
+// .padded-header
+@padded-header-text:            @darkgray;
+@padded-header-bg:              @gray-10;
+@padded-header-border:          @gray-50;
+
+// .fancy-slug
+@fancy-slug-text:               @black;
+@fancy-slug-bg:                 @white;
+@fancy-slug-border:             @gray-50;
+
+// .meta-header
+@meta-header-border:            @gray-50;
+
+// .jump-link
+@jump-link__bg:                 @gray-10;
+@jump-link__bg-border:          @gray-20;
+
+// .list__branded
+@list__branded-bullet:          @green;

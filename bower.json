@@ -20,7 +20,7 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "cf-buttons": "git://github.com/cfpb/cf-buttons.git#1.3.0",
+    "cf-buttons": "git://github.com/cfpb/cf-buttons.git#1.4.1",
     "cf-core": "git://github.com/cfpb/cf-core.git#0.8.0",
     "cf-expandables": "git://github.com/cfpb/cf-expandables.git#0.6.1",
     "cf-forms": "git://github.com/cfpb/cf-forms.git#1.1.0",
