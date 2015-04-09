@@ -64,8 +64,16 @@ module.exports = function(grunt) {
         src: [
           '<%= loc.src %>/vendor/jquery/jquery.js',
           '<%= loc.src %>/vendor/jquery.easing/jquery.easing.js',
+          '<%= loc.src %>/vendor/chosen/chosen.jquery.js',
           '<%= loc.src %>/vendor/cf-*/*.js',
           '!<%= loc.src %>/vendor/cf-*/Gruntfile.js',
+          '<%= loc.src %>/static/js/jquery.custom-input.js',
+          '<%= loc.src %>/static/js/jquery.custom-select.js',
+          '<%= loc.src %>/static/js/jquery.cf_input-split.js',
+          '<%= loc.src %>/vendor/string_score/string_score.js',
+          '<%= loc.src %>/static/js/jquery.type-and-filter.js',
+          '<%= loc.src %>/static/js/breakpoint-handler.js',
+          '<%= loc.src %>/static/js/content-slider.js',
           '<%= loc.src %>/static/js/app.js'
         ],
         dest: '<%= loc.dist %>/static/js/main.js'
@@ -82,7 +90,11 @@ module.exports = function(grunt) {
         options: {
           // The src/vendor paths are needed to find the CF components' files.
           // Feel free to add additional paths to the array passed to `concat`.
-          paths: grunt.file.expand('src/vendor/*').concat([])
+          paths: grunt.file.expand('src/vendor/*').concat([]),
+          compress: true,
+          sourceMap: true,
+          sourceMapFilename: '<%= loc.dist %>/static/css/main.css.map', // where file is generated and located
+          sourceMapURL: 'main.css.map', // the complete url and filename put in the compiled css file
         },
         files: {
           '<%= loc.dist %>/static/css/main.css': ['<%= loc.src %>/static/css/main.less']
