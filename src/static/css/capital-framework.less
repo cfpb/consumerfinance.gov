@@ -2581,7 +2581,7 @@ textarea {
 // .link-with-auto-icon {
 //   .@{cf-icon-prefix}();
 // }
-// 
+//
 // But you can do this:
 // .link-with-auto-icon {
 //   .@cf-icon();
@@ -3575,6 +3575,14 @@ textarea {
         markup: |
           <span class="cf-icon cf-icon-play"></span>
           <span class="cf-icon cf-icon-play-round"></span>
+      - name: history
+        markup: |
+          <span class="cf-icon cf-icon-history"></span>
+          <span class="cf-icon cf-icon-history-round"></span>
+      - name: table of contents
+        markup: |
+          <span class="cf-icon cf-icon-table-of-contents"></span>
+          <span class="cf-icon cf-icon-table-of-contents-round"></span>
       - name: newspaper
         markup: |
           <span class="cf-icon cf-icon-newspaper"></span>
@@ -3611,6 +3619,22 @@ textarea {
         markup: |
           <span class="cf-icon cf-icon-date"></span>
           <span class="cf-icon cf-icon-date-round"></span>
+      - name: closing-quote
+        markup: |
+          <span class="cf-icon cf-icon-closing-quote"></span>
+          <span class="cf-icon cf-icon-closing-quote-round"></span>
+      - name: livestream
+        markup: |
+          <span class="cf-icon cf-icon-livestream"></span>
+          <span class="cf-icon cf-icon-livestream-round"></span>
+      - name: parents
+        markup: |
+          <span class="cf-icon cf-icon-parents"></span>
+          <span class="cf-icon cf-icon-parents-round"></span>
+      - name: servicemembers
+        markup: |
+          <span class="cf-icon cf-icon-servicemembers"></span>
+          <span class="cf-icon cf-icon-servicemembers-round"></span>
     tags:
       - cf-icons
 */
@@ -3825,6 +3849,26 @@ textarea {
     .lt-ie8 & { .cf-icon-ie7("\e641"); }
 }
 
+.@{cf-icon-prefix}-history {
+    &:before  {     content: "\e642"; }
+    .lt-ie8 & { .cf-icon-ie7("\e642"); }
+}
+
+.@{cf-icon-prefix}-history-round {
+    &:before  {     content: "\e643"; }
+    .lt-ie8 & { .cf-icon-ie7("\e643"); }
+}
+
+.@{cf-icon-prefix}-table-of-contents {
+    &:before  {     content: "\e644"; }
+    .lt-ie8 & { .cf-icon-ie7("\e644"); }
+}
+
+.@{cf-icon-prefix}-table-of-contents-round {
+    &:before  {     content: "\e645"; }
+    .lt-ie8 & { .cf-icon-ie7("\e645"); }
+}
+
 .@{cf-icon-prefix}-newspaper {
     &:before  {     content: "\e700"; }
     .lt-ie8 & { .cf-icon-ie7("\e700"); }
@@ -3915,6 +3959,45 @@ textarea {
     .lt-ie8 & { .cf-icon-ie7("\e719"); }
 }
 
+.@{cf-icon-prefix}-closing-quote {
+    &:before  {     content: "\e720"; }
+    .lt-ie8 & { .cf-icon-ie7("\e720"); }
+}
+
+.@{cf-icon-prefix}-closing-quote-round {
+    &:before  {     content: "\e721"; }
+    .lt-ie8 & { .cf-icon-ie7("\e721"); }
+}
+
+.@{cf-icon-prefix}-livestream {
+    &:before  {     content: "\e722"; }
+    .lt-ie8 & { .cf-icon-ie7("\e722"); }
+}
+
+.@{cf-icon-prefix}-livestream-round {
+    &:before  {     content: "\e723"; }
+    .lt-ie8 & { .cf-icon-ie7("\e723"); }
+}
+
+.@{cf-icon-prefix}-parents {
+    &:before  {     content: "\e724"; }
+    .lt-ie8 & { .cf-icon-ie7("\e724"); }
+}
+
+.@{cf-icon-prefix}-parents-round {
+    &:before  {     content: "\e725"; }
+    .lt-ie8 & { .cf-icon-ie7("\e725"); }
+}
+
+.@{cf-icon-prefix}-servicemembers {
+    &:before  {     content: "\e726"; }
+    .lt-ie8 & { .cf-icon-ie7("\e726"); }
+}
+
+.@{cf-icon-prefix}-servicemembers-round {
+    &:before  {     content: "\e727"; }
+    .lt-ie8 & { .cf-icon-ie7("\e727"); }
+}
 
 /* topdoc
   name: EOF
