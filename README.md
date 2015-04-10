@@ -33,23 +33,7 @@ Follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
-The project needs a number of environment variables.
-The project uses a WordPress API URL to pull in content
-and GovDelivery for running the subscription forms:
-
-- `WORDPRESS`(URL to WordPress install)
-- `GOVDELIVERY_BASE_URL`
-- `GOVDELIVERY_ACCOUNT_CODE` (GovDelivery account variable)
-- `GOVDELIVERY_USER` (GovDelivery account variable)
-- `GOVDELIVERY_PASSWORD` (GovDelivery account variable)
-- `SUBSCRIPTION_SUCCESS_URL` (Forwarding location on Subscription Success)
-
-> You can also export the above environment variables to your `.bash_profile`,
-or use your favorite alternative method of setting environment variables.
-
-**NOTE:** GovDelivery is a third-party web service that powers our subscription forms.
-Users may decide to swap this tool out for another third-party service.
-The application will function but throw an error if the above GovDelivery values are not set.
+For necessary server-side configurations, follow instructions in [Back-end-environment-variables](INSTALL.md#Back-end-environment-variables).
 
 ## Usage
 
