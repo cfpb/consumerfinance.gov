@@ -1,5 +1,17 @@
 All notable changes to this project will be documented in this file.
-See the [README](README.md) for an explanation of our versioning conventions.
+
+## How this repo is versioned
+
+We use an adaptation of [Semantic Versioning 2.0.0](http://semver.org).
+Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
+
+- The MAJOR number will be incremented for major redesigns that require the user
+  to relearn how to accomplish tasks on the site.
+- The MINOR number will be incremented when new content or features are added.
+- The PATCH number will be incremented for all other changes that do not rise
+  to the level of a MAJOR or MINOR update.
+
+---------------------------------------
 
 ## Unreleased - unreleased
 
