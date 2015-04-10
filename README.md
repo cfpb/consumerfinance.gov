@@ -24,97 +24,49 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
   Sheer is a Jekyll-inspired, Elasticsearch-powered, CMS-less publishing tool.
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
-- [Node](http://nodejs.org) and NPM (Node Project Manager):
+- [Node](http://nodejs.org) and npm (Node Package Manager):
   Used for downloading and managing front-end dependencies and assets.
 
 ## Installation
 
-#### 1. Back-end setup
-
-Follow the [Sheer installation instructions](https://github.com/cfpb/sheer#installation)
-to get Sheer installed.
-**NOTE:** We suggest creating a virtualenv variable specific to this project,
-such as `cfgov-refresh` instead of `sheer` used in the Sheer installation instructions:
-
-```bash
-$ mkvirtualenv cfgov-refresh
-```
-
-Install the following dependencies into your virtual environment.
-We called ours `cfgov-refresh` (see previous step above):
-
-```bash
-$ workon cfgov-refresh
-
-$ pip install git+git://github.com/dpford/flask-govdelivery
-$ pip install git+git://github.com/rosskarchner/govdelivery
-```
-
-#### 2. Front-end setup
-
-The cfgov-refresh front-end currently uses the following frameworks / tools:
-
-- [Grunt](http://gruntjs.com): task management for pulling in assets,
-  linting and concatenating code, etc.
-- [Bower](http://bower.io): Package manager for front-end dependencies.
-- [Less](http://lesscss.org): CSS pre-processor.
-- [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
-  User interface pattern-library produced by the CFPB.
-
-**NOTE:** If you're new to Capital Framework, we encourage you to
-[start here](https://cfpb.github.io/capital-framework/getting-started).
-
-1. Install [Node.js](http://nodejs.org) however you'd like.
-2. Install [Grunt](http://gruntjs.com) and [Bower](http://bower.io):
-
-```bash
-$ npm install -g grunt-cli bower
-```
+Follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
-The project needs a number of environment variables.
-The project uses a WordPress API URL to pull in content
-and GovDelivery for running the subscription forms:
-
-- `WORDPRESS`(URL to WordPress install)
-- `GOVDELIVERY_BASE_URL`
-- `GOVDELIVERY_ACCOUNT_CODE` (GovDelivery account variable)
-- `GOVDELIVERY_USER` (GovDelivery account variable)
-- `GOVDELIVERY_PASSWORD` (GovDelivery account variable)
-- `SUBSCRIPTION_SUCCESS_URL` (Forwarding location on Subscription Success)
-
-> You can also export the above environment variables to your `.bash_profile`,
-or use your favorite alternative method of setting environment variables.
-
-**NOTE:** GovDelivery is a third-party web service that powers our subscription forms.
-Users may decide to swap this tool out for another third-party service.
-The application will function but throw an error if the above GovDelivery values are not set.
+For necessary server-side configurations, follow instructions in [Back-end environment variables](INSTALL.md#back-end-environment-variables).
 
 ## Usage
 
-Generally you will have four tabs (or windows) open in your terminal when using this project.
+Generally you will have four tabs (or windows)
+open in your terminal when using this project.
 These will be used for:
- 1. **Git operations**. Perform git operations and general development in the repository.
- 2. **Elasticsearch**. Run Elasticsearch instance.
- 3. **Sheer web server**. Run the web server.
- 4. **Grunt watch**. Run Grunt watch task for watching for changes to content.
+ 1. **Git operations**.
+    Perform Git operations and general development in the repository.
+ 2. **Elasticsearch**.
+    Run an Elasticsearch instance.
+ 3. **Sheer web server**.
+    Run the web server.
+ 4. **Grunt watch**.
+    Run the Grunt watch task for watching for changes to content.
 
 What follows are the specific steps for each of these tabs.
 
-### 1. Clone project and pull in latest updates
+### 1. Git operations
 
-Using Terminal, navigate to your project directory (`cd ~/Projects` or equivalent).
-Clone the project with:
+From this tab you can do Git operations,
+such as checking out our different branches:
 
 ```bash
-$ git clone git@github.com:cfpb/cfgov-refresh.git
-$ cd cfgov-refresh
+$ git checkout flapjack # Branch for our staging-development server.
+$ git checkout refresh  # Branch for our staging-stable server.
+$ git checkout beta     # Branch for our production-stable server.
 ```
 
+#### Updating all dependencies
+
 Each time you fetch from the upstream repository (this repo),
-you should install dependencies with NPM and `grunt vendor`,
-then run `grunt` to rebuild everything:
+you should install and update dependencies with npm and `grunt vendor`,
+and then run `grunt` to rebuild all the site's assets:
 
 ```bash
 $ npm install
@@ -123,7 +75,10 @@ $ grunt vendor
 $ grunt
 ```
 
+
 ### 2. Run Elasticsearch
+
+> Note: This Elasticsearch tab (or window) might not be necessary if you set Elasticsearch to start at login when [installing Sheer](https://github.com/cfpb/sheer#installation).
 
 To launch Elasticsearch, first find out where your Elasticsearch config file is located.
 You can do this with [Homebrew](http://brew.sh) using:
@@ -139,7 +94,7 @@ with the proper path to its configuration file. For example, it may look like:
 $ elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
-> You can add the following to your `.bash_profile` that will allow launching of Elasticsearch with the `elsup` command:
+> Note: You can add the following to your `.bash_profile` that will allow launching of Elasticsearch with the `elsup` command:
   ```
   $ alias elsup="elasticsearch --config=/Users/[MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml"
   ```
@@ -151,8 +106,8 @@ To work on the app you will need Sheer running to compile the templates.
 To do this, run the following:
 
 ```bash
-# Use the sheer virtualenv.
-$ workon sheer
+# Use the cfgov-refresh virtualenv.
+$ workon cfgov-refresh
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 $ sheer index
@@ -173,7 +128,7 @@ To view the indexed content you can use a tool called
 serve Sheer with the `--port` argument,
 e.g. to run on port 7001 use `sheer serve --port 7001 --debug`.
 
-### 4. Launch Grunt watch task
+### 4. Launch the Grunt watch task
 
 To watch for changes in the source code and automatically update the running site,
 open a terminal and run:
