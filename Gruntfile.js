@@ -150,6 +150,18 @@ module.exports = function(grunt) {
      */
     banner:
       '/*!\n' +
+      ' *              ad$$             $$\n' +
+      ' *             d$"               $$\n' +
+      ' *             $$                $$\n' +
+      ' *   ,adPYba,  $$$$$ $b,dPYba,   $$,dPYba,\n' +
+      ' *  aP\'    \'$: $$    $$P\'   \'$a  $$P\'   \'$a\n' +
+      ' *  $(         $$    $$(     )$  $$(     )$\n' +
+      ' *  "b,    ,$: $$    $$b,   ,$"  $$b,   ,$"\n' +
+      ' *   `"Ybd$"\'  $$    $$`YbdP"\'   $$`Ybd$"\'\n' +
+      ' *                   $$\n' +
+      ' *                   $$\n' +
+      ' *                   ""\n' +
+      ' *\n' +
       ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
       ' *  <%= pkg.homepage %>\n' +
       ' *  Licensed <%= pkg.license %> by <%= pkg.author.name %> <<%= pkg.author.email %>>\n' +
@@ -209,8 +221,10 @@ module.exports = function(grunt) {
             expand: true,
             cwd: '<%= loc.src %>',
             src: [
-              // HTML files
-              '*.html',
+              // HTML and template files
+              '**/*.html',
+              '_*/*',
+              '**/*.txt'
             ],
             dest: '<%= loc.dist %>'
           },
@@ -220,6 +234,15 @@ module.exports = function(grunt) {
             src: [
               // Fonts
               'fonts/*'
+            ],
+            dest: '<%= loc.dist %>/static'
+          },
+          {
+            expand: true,
+            cwd: '<%= loc.src %>/static',
+            src: [
+              // Images
+              'img/*'
             ],
             dest: '<%= loc.dist %>/static'
           },
@@ -256,9 +279,33 @@ module.exports = function(grunt) {
      * Add files to monitor below.
      */
     watch: {
-      default: {
-        files: ['Gruntfile.js', '<%= loc.src %>/static/css/**/*.less', '<%= loc.src %>/static/js/**/*.js'],
-        tasks: ['default']
+      grunt: {
+        options: {
+          interrupt: true,
+        },
+        files: ['Gruntfile.js'],
+        tasks: ['build']
+      },
+      css: {
+        options: {
+          interrupt: true,
+        },
+        files: ['<%= loc.src %>/static/css/**/*.less'],
+        tasks: ['css']
+      },
+      js: {
+        options: {
+          interrupt: true,
+        },
+        files: ['<%= loc.src %>/static/js/**/*.js'],
+        tasks: ['js']
+      },
+      copy: {
+        options: {
+          interrupt: true,
+        },
+        files: ['<%= loc.src %>/**/*.html', '<%= loc.src %>/_*/*', '<loc.src %>/img/*'],
+        tasks: ['copy']
       }
     }
 
@@ -276,7 +323,7 @@ module.exports = function(grunt) {
   grunt.registerTask('css', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('js', ['concat:js', 'uglify', 'usebanner:js']);
   grunt.registerTask('test', ['eslint']);
-  grunt.registerTask('build', ['test', 'css', 'js', 'copy']);
+  grunt.registerTask('build', ['css', 'js', 'copy']);
   grunt.registerTask('default', ['build']);
 
 };
