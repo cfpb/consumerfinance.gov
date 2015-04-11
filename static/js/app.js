@@ -249,12 +249,12 @@ $('.reveal-on-focus')
    ========================================================================== */
 
 $('.type-and-filter').typeAndFilter({
-   $input: $('.js-type-and-filter_input'),
-   $items: $('.js-type-and-filter_item'),
-   $button: $('.js-type-and-filter_button'),
-   $clear: $('.js-type-and-filter_clear'),
-   $messages: $('.js-type-and-filter_message'),
-   allMessage: 'Showing all {{ count }} contacts.',
+   $input:                  $('.js-type-and-filter_input'),
+   $items:                  $('.js-type-and-filter_item'),
+   $button:                 $('.js-type-and-filter_button'),
+   $clear:                  $('.js-type-and-filter_clear'),
+   $messages:               $('.js-type-and-filter_message'),
+   allMessage:              'Showing all {{ count }} contacts.',
    filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
@@ -296,7 +296,7 @@ $('#contact-list_btn').on( 'click', function () {
    ========================================================================== */
 
 $('.chosen-select').chosen({
-    width: '100%',
+    width:           '100%',
     no_results_text: 'Oops, nothing found!'
 });
 
@@ -363,13 +363,13 @@ $('.js-filter_range-date-wrapper').each(function( index ) {
     var $this = $( this );
     var $newThis = $this.next('.js-filter_range-date-replacement');
     var options = {
-        newHTML: $newThis,
+        newHTML:        $newThis,
         newInputsOrder: [
             '#' + $newThis.find('.js-filter_year').attr('id'),
             '#' + $newThis.find('.js-filter_month').attr('id')
         ],
-        initialValues: $this.find('.js-filter_range-date').val().split('-'),
-        delimiter: '-'
+        initialValues:  $this.find('.js-filter_range-date').val().split('-'),
+        delimiter:      '-'
     };
     $this.cf_inputSplit( options );
     $( options.newInputsOrder ).trigger('updateState');
