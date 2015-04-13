@@ -78,15 +78,6 @@ $ npm install
 $ grunt vendor
 ```
 
-# 4. Updating all dependencies
-
-Each time you fetch from the upstream repository (this repo),
-you should install and update dependencies with npm and `grunt vendor`,
-and then run `grunt` to rebuild all the site's assets:
-
-```bash
-$ npm install
-$ npm update
-$ grunt vendor
-$ grunt
-```
+> Note: You might also need to rebuild all the site's assets by
+  running `grunt`. See the usage section
+  [updating all the project dependencies](README.md#updating-all-dependencies).

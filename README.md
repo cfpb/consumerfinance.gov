@@ -62,9 +62,19 @@ $ git checkout refresh  # Branch for our staging-stable server.
 $ git checkout beta     # Branch for our production-stable server.
 ```
 
-> Note: You might also use this tab to rebuild all the site's assets by
-  running `grunt`. See the installation section on
-  [updating all the project dependencies](INSTALL.md#4-updating-all-dependencies).
+#### Updating all dependencies
+
+Each time you fetch from the upstream repository (this repo),
+you should install and update dependencies with npm and `grunt vendor`,
+and then run `grunt` to rebuild all the site's assets:
+
+```bash
+$ npm install
+$ npm update
+$ grunt vendor
+$ grunt
+```
+
 
 ### 2. Run Elasticsearch
 
