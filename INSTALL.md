@@ -1,4 +1,4 @@
-### 1. Back-end setup
+# 1. Back-end setup
 
 Follow the [Sheer installation instructions](https://github.com/cfpb/sheer#installation)
 to get Sheer installed.
@@ -19,7 +19,7 @@ $ pip install git+git://github.com/dpford/flask-govdelivery
 $ pip install git+git://github.com/rosskarchner/govdelivery
 ```
 
-#### Back-end environment variables
+## Back-end environment variables
 
 The project needs a number of environment variables.
 The project uses a WordPress API URL to pull in content
@@ -40,7 +40,7 @@ Users may decide to swap this tool out for another third-party service.
 The application will function but throw an error if the above GovDelivery values are not set.
 
 
-### 2. Front-end setup
+# 2. Front-end setup
 
 The cfgov-refresh front-end currently uses the following frameworks / tools:
 
@@ -61,7 +61,7 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 $ npm install -g grunt-cli bower
 ```
 
-### 3. Clone project and install dependencies
+# 3. Clone project and install dependencies
 
 Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
 Clone this project's repository and switch to it's directory with:
@@ -78,7 +78,7 @@ $ npm install
 $ grunt vendor
 ```
 
-### 4. Updating all dependencies
+# 4. Updating all dependencies
 
 Each time you fetch from the upstream repository (this repo),
 you should install and update dependencies with npm and `grunt vendor`,
