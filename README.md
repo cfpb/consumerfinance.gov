@@ -78,6 +78,8 @@ $ grunt
 
 ### 2. Run Elasticsearch
 
+> Note: This Elasticsearch tab (or window) might not be necessary if you set Elasticsearch to start at login when [installing Sheer](https://github.com/cfpb/sheer#installation).
+
 To launch Elasticsearch, first find out where your Elasticsearch config file is located.
 You can do this with [Homebrew](http://brew.sh) using:
 
@@ -96,8 +98,6 @@ $ elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsear
   ```
   $ alias elsup="elasticsearch --config=/Users/[MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml"
   ```
-
-> Note: This Elasticsearch tab (or window) might not be necessary if you set Elasticsearch to start at login when [installing Sheer](https://github.com/cfpb/sheer#installation).
 
 
 ### 3. Launch Sheer to serve the site
