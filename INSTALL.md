@@ -78,6 +78,7 @@ $ npm install
 $ grunt vendor
 ```
 
-> Note: You might also need to rebuild all the site's assets by
-  running `grunt`. See the usage section
-  [updating all the project dependencies](README.md#updating-all-dependencies).
+> Note: After installing dependencies,
+rebuild all the site's assets by running `grunt`.
+See the usage section
+[updating all the project dependencies](README.md#updating-all-dependencies).

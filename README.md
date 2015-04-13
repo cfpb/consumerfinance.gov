@@ -92,7 +92,7 @@ with the proper path to its configuration file. For example, it may look like:
 $ elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
-> You can add the following to your `.bash_profile` that will allow launching of Elasticsearch with the `elsup` command:
+> Note: You can add the following to your `.bash_profile` that will allow launching of Elasticsearch with the `elsup` command:
   ```
   $ alias elsup="elasticsearch --config=/Users/[MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml"
   ```
