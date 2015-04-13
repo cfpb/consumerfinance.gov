@@ -41,7 +41,7 @@ Generally you will have four tabs (or windows)
 open in your terminal when using this project.
 These will be used for:
  1. **Git operations**.
-    Perform git operations and general development in the repository.
+    Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
     Run an Elasticsearch instance.
  3. **Sheer web server**.
@@ -53,7 +53,7 @@ What follows are the specific steps for each of these tabs.
 
 ### 1. Git operations
 
-From this tab you can do git operations,
+From this tab you can do Git operations,
 such as checking out our different branches:
 
 ```bash
