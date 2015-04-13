@@ -33,7 +33,7 @@ Follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
-For necessary server-side configurations, follow instructions in [Back-end-environment-variables](INSTALL.md#back-end-environment-variables).
+For necessary server-side configurations, follow instructions in [Back-end environment variables](INSTALL.md#back-end-environment-variables).
 
 ## Usage
 
