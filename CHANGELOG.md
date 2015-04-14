@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Privacy Policy page.
 - Added Event Request a Speaker page.
 - Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
+- Added `brand-palette.less` and `cf-theme-overrides.less`.
 
 ### Changed
 - Added styles to 500 and 404 error pages.
