@@ -79,12 +79,18 @@
 
 
 /* Base styles
-   @import combined CF component Less and make any overrides
+   @import combined CF components Less file and make any overrides.
    ========================================================================== */
 
 @import (less) "../../vendor/cf-concat/cf.less";
-@cf-icon-path: "/static/fonts";
-@grid_box-sizing-polyfill-path: "/cfgov-refresh/static/vendor/box-sizing-polyfill";
+
+// The Capital Framework (CF) brand color palette.
+@import (less) "brand-palette.less";
+
+// Override the CF theme variables with colors from the brand color palette.
+@import (less) "cf-theme-overrides.less";
+
+// Enhancements that are on a migration path to being added to CF.
 @import (less) "cf-enhancements.less";
 
 
