@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and another category would return zero results.
 - Fixed issue in filters where an input whitespace would prevent suggestions from showing.
 - Fixed HTML, typos, and grammatical errors.
+- Fixed lineheight issue in Chosen select boxes
 
 
 ## 3.0.0-0.2.3 - 2015-03-23
