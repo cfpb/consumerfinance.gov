@@ -1,0 +1,204 @@
+{
+    "status": "ok",
+    "count": 1,
+    "count_total": 1,
+    "pages": 1,
+    "posts": [
+    {
+        "id": 1,
+        "type": "event",
+        "slug": "auto-draft",
+        "url": "http://somewhere/event/test-event/",
+        "status": "publish",
+        "title": "Test Event",
+        "title_plain": "Test Event",
+        "content": "",
+        "excerpt": "",
+        "date": "2015-03-17 17:38:58",
+        "modified": "2015-03-25 11:47:16",
+        "categories": [],
+        "tags": [],
+        "author":{  
+            "id":1,
+            "slug":"aauthor",
+            "name":"aauthor",
+            "first_name":"Arthur",
+            "last_name":"Author",
+            "nickname":"aauthor",
+            "url":"",
+            "description":""
+        },
+        "comments": [],
+        "attachments": [],
+        "comment_count": 0,
+        "comment_status": "closed",
+        "custom_fields": {
+            "event_information_title": [
+                "Title of the Event"
+            ],
+            "event_information_venue_name":[  
+                "Title of the event location"
+            ],
+            "event_information_venue_address_address":[  
+                "1234 A Boulevard"
+            ],
+            "event_information_venue_address_suite":[  
+                "A Suite"
+            ],
+            "event_information_venue_address_city":[  
+                "Big City"
+            ],
+            "event_information_venue_address_state":[  
+                "NY"
+            ],
+            "event_information_venue_address_zip_code":[  
+                "12345"
+            ],
+            "event_information_event_intro":[  
+                "Some event introduction."
+            ],
+            "event_information_event_desc":[  
+                "This is an event's description."
+            ],
+            "event_information_reservation_desc":[  
+                "This describes how to make a reservation."
+            ],
+            "event_information_reservation_contact_info":[  
+                "Event contact info"
+            ],
+            "event_time_timezone": [
+                "a:1:{i:0;s:0:\"\";}"
+            ],
+            "event_agenda_beginning_time_timezone": [
+                "a:1:{i:0;s:0:\"\";}"
+            ],
+            "event_agenda_ending_time_timezone": [
+                "a:1:{i:0;s:0:\"\";}"
+            ],
+            "become_live_event_timezone": [
+                "a:1:{i:0;s:17:\"America/Anchorage\";}"
+            ],
+            "become_post_event_timezone": [
+                "a:1:{i:0;s:12:\"America/Adak\";}"
+            ],
+            "event_information_venue_address_suite": [
+                "A Suite"
+            ],
+            "event_information_reservation_contact_info": [
+                "Event contact info"
+            ],
+            "event_agenda_speaker": [
+                "Speaker Name"
+            ],
+            "event_agenda_desc": [
+                "Agenda description"
+            ],
+            "event_agenda_venue_location": [
+                "vanue location in agenda"
+            ],
+            "live_event_live_stream_available": [
+                "on"
+            ],
+            "post_event_flickr_url": [
+                "http://flickr.com/something"
+            ],
+            "post_event_youtube_url": [
+                "http://youtube.com/something"
+            ],
+            "published_date": [
+                "2015-01-01T00:00:00+0000"
+            ],
+            "event_date": [
+                "2015-02-01T00:00:00+0000"
+            ],
+            "event_time": [
+                "2015-03-25T01:00:00-0900"
+            ],
+            "event_agenda_beginning_time": [
+                "2015-03-25T01:00:00-0900"
+            ],
+            "event_agenda_ending_time": [
+                "2015-03-25T02:00:00-0900"
+            ],
+            "become_live_event": [
+                "2015-03-01T03:00:00-1000"
+            ],
+            "become_post_event": [
+                "2015-04-01T04:00:00-0900"
+            ]
+        },
+        "dek": "",
+        "order": 0,
+        "parent": 0,
+        "taxonomy_fj_tag": [],
+        "taxonomy_published_date": [
+        {
+            "id": 624,
+            "slug": "january-1-2015",
+            "title": "January 1 2015",
+            "description": "",
+            "post_count": 1
+        }
+        ],
+        "taxonomy_event_date": [
+        {
+            "id": 625,
+            "slug": "february-1-2015",
+            "title": "February 1 2015",
+            "description": "",
+            "post_count": 1
+        }
+        ],
+        "taxonomy_event_time": [
+        {
+            "id": 626,
+            "slug": "100am-americaadak",
+            "title": "1:00am America/Adak",
+            "description": "",
+            "post_count": 1
+        }
+        ],
+        "taxonomy_event_agenda_beginning_time": [
+        {
+            "id": 627,
+            "slug": "100am-americaadak",
+            "title": "1:00am America/Adak",
+            "description": "",
+            "post_count": 1
+        }
+        ],
+        "taxonomy_event_agenda_ending_time": [
+        {
+            "id": 628,
+            "slug": "200am-americaadak",
+            "title": "2:00am America/Adak",
+            "description": "",
+            "post_count": 1
+        }
+        ],
+        "taxonomy_become_live_event": [
+        {
+            "id": 629,
+            "slug": "march-1-2015-300am-americaadak",
+            "title": "March 1 2015 3:00am America/Adak",
+            "description": "",
+            "post_count": 1
+        }
+        ],
+        "taxonomy_become_post_event": [
+        {
+            "id": 630,
+            "slug": "april-1-2015-400am-americaadak",
+            "title": "April 1 2015 4:00am America/Adak",
+            "description": "",
+            "post_count": 1
+        }
+        ]
+    }
+    ],
+    "query": {
+        "ignore_sticky_posts": true,
+        "post_type": "event"
+    }
+}
+
