@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated blog post spacing to be consistent with overall-project spacing.
 - Updated round step-by-step slug icons to central-align numbers.
 - The name "Watchroom" to "Featured Topic"
+- Updated cf-buttons to 1.4.2.
 
 ### Fixed
 - Updated related links module on `/newsroom/`.
