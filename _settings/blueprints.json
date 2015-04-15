@@ -6,5 +6,10 @@
   "flask_pdfreactor": {
     "package": "flask_pdfreactor.controllers",
     "module":  "reactorapp"
+  },
+  "flask_eventics": {
+    "package": "flask_eventics.controllers",
+    "module":  "eventics"
+
   }
 }
