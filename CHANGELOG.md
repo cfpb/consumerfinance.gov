@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Event Request a Speaker page.
 - Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
 - Added `brand-palette.less` and `cf-theme-overrides.less`.
+- Added `block__border` to `cf-enhancements.less` to provide borders around blocks.
 
 ### Changed
 - Added styles to 500 and 404 error pages.
@@ -32,6 +33,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated round step-by-step slug icons to central-align numbers.
 - The name "Watchroom" to "Featured Topic"
 - Updated cf-buttons to 1.4.2.
+- Updates cf-layout to 0.3.0.
+- Changed block background to 5% gray.
 
 ### Fixed
 - Updated related links module on `/newsroom/`.

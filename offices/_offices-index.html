@@ -18,7 +18,7 @@
     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
     {% import "contact-macro.html" as contact_macro %}
     {% set activities_feed = activity_snippets(activity_type) %}
-    
+
     {% if office.title %}
         <h1>{{ office.title | safe }}</h1>
     {% endif %}
@@ -31,7 +31,8 @@
                             content-l_col-1-2
                         {% else -%}
                             content-l_col-1
-                        {%- endif %}">
+                        {%- endif %}
+                        ">
             <p class="h3">{{ office.intro_text | safe if office.intro_text }}</p>
         </section>
         {% endif %}
@@ -44,7 +45,7 @@
             </section>
         {% endif %}
     </section>
-    
+
     {% if office.top_story %}
     {% set top_story = office.top_story %}
     <section class="office_featured block block__padded-top block__border-top">
@@ -82,7 +83,7 @@
         {% for resource in office.resources %}
             <div class="media office_resource block__sub">
                 <div class="media_image-container media_image-container__wide-margin">
-                    <img class="media_image u-centered-on-mobile" 
+                    <img class="media_image u-centered-on-mobile"
                          width="150"
                          src="{{resource.icon if resource.icon}}">
                 </div>
@@ -90,11 +91,11 @@
                     {% if resource.head %}
                     <h2 class="h3">{{ resource.head | safe }}</h2>
                     {% endif %}
-                
+
                     {% if resource.desc %}
                     <p class="short-desc">{{ resource.desc | safe }}</p>
                     {% endif %}
-                
+
                     {% if resource.link %}
                     <a class="jump-link jump-link__right" href="{{ resource.link[0] if resource.link }}">
                           {{ resource.link[1] if resource.link }}
@@ -105,7 +106,7 @@
         {% endfor %}
     </section>
     {% endif %}
-    
+
     {% if initiatives %}
     <section class="office_initiatives block block__sub block__padded-top block__border-top">
         <h1 class="h2">
@@ -114,15 +115,16 @@
         <div class="content-l content-l__main content-l__large-gutters expandables-group">
         {% for initiative in initiatives %}
             <div class="office_initiative
-                        expandable 
-                        expandable__expanded 
+                        expandable
+                        expandable__expanded
                         expandable__mobile-only
                         content-l_col
                         {% if initiatives|list|length > 1 -%}
                             content-l_col-1-2
                         {% else -%}
                             content-l_col-1
-                        {%- endif %}">
+                        {%- endif %}
+                        ">
                 <button class="expandable_header expandable_target u-show-on-mobile">
                     {% if initiative.title %}
                     <span class="expandable_header-left expandable_label">
@@ -148,12 +150,12 @@
                     <p class="short-desc">
                         {{ initiative.content | safe }}
                     </p>
-                    {% endif %} 
+                    {% endif %}
                     {% if initiative.slug %}
                     <a class="jump-link jump-link__right" href="{{ path + initiative.slug }}">
                         Read more
                     </a>
-                    {% endif %} 
+                    {% endif %}
                 </div>
             </div><!-- END .expandable -->
         {% endfor %}
@@ -161,7 +163,10 @@
     </section>
     {% endif %}
 
-    <div class="block block__flush-sides block__bg u-mb0">
+    <div class="u-mb0
+                block
+                block__bg
+                block__flush-sides">
 
         {% if activities_feed %}
         <section class="office_activities">
@@ -207,8 +212,8 @@
 {% block javascript %}
     {{ super() }}
     <script>
-        $('document').ready(function () { 
-            if (!$('html').hasClass('lt-ie9')) { 
+        $('document').ready(function () {
+            if (!$('html').hasClass('lt-ie9')) {
                 $('.expandable__mobile-only').each(function (i) {
                     new MobileOnlyExpandable($(this), 599);
                 });
