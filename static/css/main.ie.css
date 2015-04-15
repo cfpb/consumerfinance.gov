@@ -3905,7 +3905,7 @@ textarea.success {
 
 .block__bg {
   padding: 1.875em .9375em;
-  background: #f1f2f2;
+  background: #f8f8f8;
 }
 
 .block__bg {
@@ -5098,6 +5098,10 @@ tbody tr {
 .list__icons .list_icon__right {
   text-align: right;
   padding-right: .5em;
+}
+
+.block__border {
+  border: 1px solid #babbbd;
 }
 
 .is-enabled.custom-select {
