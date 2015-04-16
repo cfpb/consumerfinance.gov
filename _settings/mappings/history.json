@@ -1,0 +1,135 @@
+{
+  "properties": {
+    "attachments": {
+      "properties": {
+        "caption": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      }
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "item_date": {
+          "type": "string"
+        },
+        "section_date_from": {
+          "type": "string"
+        },
+        "section_date_to": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "has_parent": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "id": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "item_date": {
+      "type": "string"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "section_date_from": {
+      "type": "string"
+    },
+    "section_date_to": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "properties": {
+        "alt_text": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string"
+        }
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

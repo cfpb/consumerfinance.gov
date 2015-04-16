@@ -1,0 +1,93 @@
+{
+  "properties": {
+    "author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      }
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "popular_posts": {
+          "type": "string"
+        },
+        "related_links_0_link": {
+          "type": "string"
+        },
+        "related_links_1_link": {
+          "type": "string"
+        },
+        "related_links_2_link": {
+          "type": "string"
+        },
+        "related_links_3_link": {
+          "type": "string"
+        },
+        "related_links_4_link": {
+          "type": "string"
+        },
+        "related_post": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "string"
+    },
+    "id": {
+      "type": "long"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "popular_posts": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
