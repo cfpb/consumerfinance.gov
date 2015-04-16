@@ -47,6 +47,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue in filters where an input whitespace would prevent suggestions from showing.
 - Fixed HTML, typos, and grammatical errors.
 - Fixed lineheight issue in Chosen select boxes
+- Updated Google Tag Manager ID from testing account to production account.
 
 
 ## 3.0.0-0.2.3 - 2015-03-23
