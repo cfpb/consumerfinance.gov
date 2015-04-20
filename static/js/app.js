@@ -493,7 +493,7 @@ $('.js-validate-filters').each(function() {
    ========================================================================== */
 
 $('.js-validate_form-not-empty').each(function() {
-    var $form = $( this );
+    var $form = $(this);
 
     $form.on('submit', function() {
         var formIsEmpty = true;
@@ -505,7 +505,7 @@ $('.js-validate_form-not-empty').each(function() {
             }
         });
 
-        if ( formIsEmpty ) {
+        if (formIsEmpty) {
             event = 'form:validate:empty';
         } else {
             event = 'form:validate:not_empty';
@@ -611,7 +611,7 @@ $(document).ready(function() {
    Alert
    ========================================================================== */
 
-(function( $ ) {
+(function($) {
 
     // Alert constructor.
     // @element {Element} Dom Element.
@@ -673,7 +673,7 @@ $(document).ready(function() {
         });
     };
 
-})( jQuery );
+})(jQuery);
 
 /* ==========================================================================
    Alert Initialization
