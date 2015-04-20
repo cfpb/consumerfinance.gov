@@ -1,65 +1,67 @@
 {
   "calendar_event": {
-    "url":       "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
+    "url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
     "processor": "django_calendar_event_processor",
-    "mappings":  "_settings/calendar_event_mappings.json"
+    "mappings": "_settings/mappings/calendar_event.json"
   },
   "contact": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=contact",
+    "url": "$WORDPRESS/api/get_posts/?post_type=contact",
     "processor": "wordpress_contact_processor",
-    "mappings":  "_settings/contact_mappings.json"
+    "mappings": "_settings/mappings/contact.json"
   },
   "history": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=history",
+    "url": "$WORDPRESS/api/get_posts/?post_type=history",
     "processor": "wordpress_history_processor",
-    "mappings":  "_settings/history_mappings.json"
+    "mappings": "_settings/mappings/history.json"
   },
   "initiative": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=initiative",
+    "url": "$WORDPRESS/api/get_posts/?post_type=initiative",
     "processor": "wordpress_initiative_processor",
-    "mappings": "_settings/initiative_mappings.json"
+    "mappings": "_settings/mappings/initiative.json"
   },
   "office": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=office",
-    "processor": "wordpress_office_processor"
+    "url": "$WORDPRESS/api/get_posts/?post_type=office",
+    "processor": "wordpress_office_processor",
+    "mappings": "_settings/mappings/office.json"
   },
   "orgmember": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=orgmember",
+    "url": "$WORDPRESS/api/get_posts/?post_type=orgmember",
     "processor": "wordpress_orgmember_processor",
-    "mappings":  "_settings/orgmember_mappings.json"
+    "mappings": "_settings/mappings/orgmember.json"
   },
   "pages": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=page",
+    "url": "$WORDPRESS/api/get_posts/?post_type=page",
     "processor": "wordpress_page_processor",
-    "mappings":  "_settings/page_mappings.json"
+    "mappings": "_settings/mappings/pages.json"
   },
   "posts": {
-    "url":       "$WORDPRESS/api/get_posts/",
+    "url": "$WORDPRESS/api/get_posts/",
     "processor": "wordpress_post_processor",
-    "mappings":  "_settings/posts_mappings.json"
+    "mappings": "_settings/mappings/posts.json"
   },
   "events": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=event",
+    "url": "$WORDPRESS/api/get_posts/?post_type=event",
     "processor": "wordpress_event_processor",
-    "mappings":  "_settings/events_mappings.json"
+    "mappings": "_settings/mappings/events.json"
   },
   "events_archive": {
-    "url":       "$WORDPRESS/api/get_posts/",
+    "url": "$WORDPRESS/api/get_posts/",
     "processor": "wordpress_post_processor",
-    "mappings":  "_settings/posts_mappings.json"
+    "mappings": "_settings/mappings/posts.json"
   },
   "newsroom": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
+    "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
     "processor": "wordpress_post_processor",
-    "mappings":  "_settings/posts_mappings.json"
+    "mappings": "_settings/mappings/newsroom.json"
   },
   "views": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=view",
-    "processor": "wordpress_view_processor"
+    "url": "$WORDPRESS/api/get_posts/?post_type=view",
+    "processor": "wordpress_view_processor",
+    "mappings": "_settings/mappings/views.json"
   },
   "featured_topic": {
-    "url":       "$WORDPRESS/api/get_posts/?post_type=featured_topic",
+    "url": "$WORDPRESS/api/get_posts/?post_type=featured_topic",
     "processor": "wordpress_post_processor",
-    "mappings":  "_settings/posts_mappings.json"
+    "mappings": "_settings/mappings/posts.json"
   }
 }

@@ -1,0 +1,140 @@
+{
+  "properties": {
+    "attachments": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "cfpb-hud-hca-api-more-info": {
+          "type": "string"
+        },
+        "cfpb-hud-hca-api-print-desc": {
+          "type": "string"
+        },
+        "cfpb-hud-hca-api-print-title": {
+          "type": "string"
+        },
+        "custom_title": {
+          "type": "string"
+        },
+        "dbt_filename": {
+          "type": "string"
+        },
+        "dsq_thread_id": {
+          "type": "string"
+        },
+        "hero": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "twtr_rel": {
+          "type": "string"
+        },
+        "twtr_text": {
+          "type": "string"
+        },
+        "utm_campaign": {
+          "type": "string"
+        },
+        "video_response": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "dek": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "id": {
+      "type": "long"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
