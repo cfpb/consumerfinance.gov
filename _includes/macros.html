@@ -213,3 +213,28 @@
 {% macro slugify(string) -%}
     {{ string|lower|replace(' ', '-') }}
 {%- endmacro %}
+
+
+{# ==========================================================================
+
+   alert()
+
+   ==========================================================================
+
+   Description:
+
+   Builds alert markup when given:
+
+   options (optional): An object used to customize the alert markup.
+
+   options.text      : Text to display within the alert markup.
+
+   ========================================================================== #}
+
+{% macro alert(options) -%}
+    {% set text = options.text | default('Error!') %}
+    <div class="alert">
+        <span class="alert_icon cf-icon cf-icon-error-round"></span>
+        <p class="alert_text">{{ text }}</p>
+    </div>
+{%- endmacro %}
