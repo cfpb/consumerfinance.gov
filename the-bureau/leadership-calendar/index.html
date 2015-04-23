@@ -71,11 +71,15 @@
         {{ filters(
             ['calendar', 'range_date'], query, posts, 'calendar_event',
             {
-                'id_prefix': 'download',
-                'expand_label': 'Download options',
+                'id_prefix'           : 'download',
+                'expand_label'        : 'Download options',
                 'show_current_filters': false,
-                'action': 'pdf/',
-                'submit_label': 'Download PDF'
+                'action'              : 'pdf/',
+                'submit_label'        : 'Download PDF',
+                'additional_classes'  : 'js-validate_form-not-empty',
+                'alert'               : {
+                                            'text': 'Please enter filter critera'    
+                                        }
             }
         ) }}
     </section>

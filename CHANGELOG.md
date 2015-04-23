@@ -1,5 +1,17 @@
 All notable changes to this project will be documented in this file.
-See the [README](README.md) for an explanation of our versioning conventions.
+
+## How this repo is versioned
+
+We use an adaptation of [Semantic Versioning 2.0.0](http://semver.org).
+Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
+
+- The MAJOR number will be incremented for major redesigns that require the user
+  to relearn how to accomplish tasks on the site.
+- The MINOR number will be incremented when new content or features are added.
+- The PATCH number will be incremented for all other changes that do not rise
+  to the level of a MAJOR or MINOR update.
+
+---------------------------------------
 
 ## Unreleased - unreleased
 
@@ -7,9 +19,15 @@ See the [README](README.md) for an explanation of our versioning conventions.
 - Added Privacy Policy page.
 - Added Event Request a Speaker page.
 - Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
+- Added `brand-palette.less` and `cf-theme-overrides.less`.
+- Added `block__border` to `cf-enhancements.less` to provide borders around blocks.
+- Added alert to form validation failure
+- Added .env config for easier project setup
+- Added Event processor
 
 ### Changed
 - Added styles to 500 and 404 error pages.
+- Updated content on 500 and 404 error pages.
 - Added full width button modifier for buttons on smaller screens.
 - Updated ESLint configuration to the latest ESLint release (v0.18.0).
 - Updated `/newsroom/` and `/blog/` post sidebars to add description
@@ -18,6 +36,12 @@ See the [README](README.md) for an explanation of our versioning conventions.
 - Updated blog post spacing to be consistent with overall-project spacing.
 - Updated round step-by-step slug icons to central-align numbers.
 - The name "Watchroom" to "Featured Topic"
+- Updated cf-buttons to 1.4.2.
+- Updates cf-layout to 0.3.0.
+- Changed block background to 5% gray.
+- Updated contact us content
+- Improved Elasticsearch mappings
+- Improved README and INSTALL docs
 
 ### Fixed
 - Updated related links module on `/newsroom/`.
@@ -29,6 +53,9 @@ See the [README](README.md) for an explanation of our versioning conventions.
   and another category would return zero results.
 - Fixed issue in filters where an input whitespace would prevent suggestions from showing.
 - Fixed HTML, typos, and grammatical errors.
+- Fixed line height issue in Chosen select boxes
+- Updated Google Tag Manager ID from testing account to production account.
+- Fixed whistleblower slug on contact us
 
 
 ## 3.0.0-0.2.3 - 2015-03-23

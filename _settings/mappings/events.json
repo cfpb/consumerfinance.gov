@@ -4,22 +4,31 @@
       "type":  "string",
       "store": "yes"
     },
-    "content": {
+    "author": {
       "type":  "string",
-      "store": "yes"
+      "index": "not_analyzed"
     },
     "date": {
       "type":  "date",
       "store": "yes"
+    },
+    "event_intro": {
+        "type": "string",
+        "index": "not_analyzed"
+    },
+    "event_desc": {
+        "type": "string",
+        "index": "not_analyzed"
     },
     "tags": {
       "type":  "string",
       "store": "yes",
       "index": "not_analyzed"
     },
-    "excerpt": {
+    "category": {
       "type":  "string",
-      "store": "yes"
+      "index": "not_analyzed"
     }
   }
 }
+

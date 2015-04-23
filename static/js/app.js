@@ -249,12 +249,12 @@ $('.reveal-on-focus')
    ========================================================================== */
 
 $('.type-and-filter').typeAndFilter({
-   $input: $('.js-type-and-filter_input'),
-   $items: $('.js-type-and-filter_item'),
-   $button: $('.js-type-and-filter_button'),
-   $clear: $('.js-type-and-filter_clear'),
-   $messages: $('.js-type-and-filter_message'),
-   allMessage: 'Showing all {{ count }} contacts.',
+   $input:                  $('.js-type-and-filter_input'),
+   $items:                  $('.js-type-and-filter_item'),
+   $button:                 $('.js-type-and-filter_button'),
+   $clear:                  $('.js-type-and-filter_clear'),
+   $messages:               $('.js-type-and-filter_message'),
+   allMessage:              'Showing all {{ count }} contacts.',
    filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
    filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
 });
@@ -296,7 +296,7 @@ $('#contact-list_btn').on( 'click', function () {
    ========================================================================== */
 
 $('.chosen-select').chosen({
-    width: '100%',
+    width:           '100%',
     no_results_text: 'Oops, nothing found!'
 });
 
@@ -363,13 +363,13 @@ $('.js-filter_range-date-wrapper').each(function( index ) {
     var $this = $( this );
     var $newThis = $this.next('.js-filter_range-date-replacement');
     var options = {
-        newHTML: $newThis,
+        newHTML:        $newThis,
         newInputsOrder: [
             '#' + $newThis.find('.js-filter_year').attr('id'),
             '#' + $newThis.find('.js-filter_month').attr('id')
         ],
-        initialValues: $this.find('.js-filter_range-date').val().split('-'),
-        delimiter: '-'
+        initialValues:  $this.find('.js-filter_range-date').val().split('-'),
+        delimiter:      '-'
     };
     $this.cf_inputSplit( options );
     $( options.newInputsOrder ).trigger('updateState');
@@ -486,6 +486,39 @@ $('.js-validate-filters').each(function() {
     });
 });
 
+/* ==========================================================================
+   Form validation
+
+   Check to make sure at least one form element has a value before submitting.
+   ========================================================================== */
+
+$('.js-validate_form-not-empty').each(function() {
+    var $form = $(this);
+
+    $form.on('submit', function() {
+        var formIsEmpty = true;
+        var event;
+
+        $.each($form.serializeArray(), function(index, element) {
+            if (element.value !== '') {
+                formIsEmpty = false;
+            }
+        });
+
+        if (formIsEmpty) {
+            event = 'form:validate:empty';
+        } else {
+            event = 'form:validate:not_empty';
+        }
+
+        $form.trigger(event, $form);
+
+        return !formIsEmpty;
+    });
+
+    return $form;
+});
+
 
 /* ==========================================================================
    Utilities
@@ -572,4 +605,80 @@ $(document).ready(function() {
         // expand the banner and set the item initially to 'false'.
         $('#beta-banner').get(0).expand();
     }
+});
+
+/* ==========================================================================
+   Alert
+   ========================================================================== */
+
+(function($) {
+
+    // Alert constructor.
+    // @element {Element} Dom Element.
+    // @options {Object} Object used to customize Alert.
+    // Returns Alert instance.
+    var Alert = function(element, options) {
+        this.$element = $(element);
+        this.options = $.extend(true, {}, this.defaults, options);
+        this.init();
+    };
+
+    // Alert methods and shared properties
+    Alert.prototype = {
+
+        constructor: Alert,
+
+        defaults: {
+            validateSelector: '.js-validate_form-not-empty',
+            easing:           'linear'
+        },
+
+        init: function() {
+            var parentForm = this.$element.parents(this.defaults.validateSelector);
+
+            if (parentForm.length === 1) {
+                parentForm.on('form:validate:empty', $.proxy(this.show, this));
+                parentForm.on('form:validate:not_empty', $.proxy(this.hide, this));
+            }
+            return this;
+        },
+
+        destroy: function() {
+            this.$element.removeData();
+            return this;
+        },
+
+        show: function() {
+            this.$element.slideDown({
+                easing: this.defaults.easing
+            });
+            return this;
+        },
+
+        hide: function() {
+            this.$element.slideUp({
+                easing: this.defaults.easing
+            });
+            return this;
+        }
+    };
+
+    // Create the jQuery Alert plugin.
+    // @options {Object} Object used to customize Alert.
+    // Returns jQuery element.
+    $.fn.createAlert = function(options) {
+        return this.each(function() {
+            var $this = $(this);
+            $this.data('plugin', new Alert(this, options));
+        });
+    };
+
+})(jQuery);
+
+/* ==========================================================================
+   Alert Initialization
+   ========================================================================== */
+
+$(document).ready(function() {
+    $('.alert').createAlert();
 });

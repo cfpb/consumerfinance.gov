@@ -1,0 +1,124 @@
+{
+  "properties": {
+    "author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      }
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "intro_govdelivery_code": {
+          "type": "string"
+        },
+        "intro_subscribe_form": {
+          "type": "string"
+        },
+        "intro_text": {
+          "type": "string"
+        },
+        "og_desc": {
+          "type": "string"
+        },
+        "og_title": {
+          "type": "string"
+        },
+        "related_contact": {
+          "type": "string"
+        },
+        "top_story_desc": {
+          "type": "string"
+        },
+        "top_story_head": {
+          "type": "string"
+        },
+        "top_story_links_0_link": {
+          "type": "string"
+        },
+        "top_story_links_1_link": {
+          "type": "string"
+        },
+        "twtr_text": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "string"
+    },
+    "id": {
+      "type": "long"
+    },
+    "intro_govdelivery_code": {
+      "type": "string"
+    },
+    "intro_subscribe_form": {
+      "type": "string"
+    },
+    "intro_text": {
+      "type": "string"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "related_contact": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "top_story": {
+      "properties": {
+        "top_story_desc": {
+          "type": "string"
+        },
+        "top_story_head": {
+          "type": "string"
+        }
+      }
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

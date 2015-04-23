@@ -1,0 +1,43 @@
+{
+    "file": "post-macros.html",
+    "tests": [
+        {
+            "macro_name": "category_icon",
+            "arguments": ["announcements & updates", ""],
+            "assertions": [
+                {
+                    "selector": ".cf-icon-bullhorn",
+                    "assertion": "exists"
+                }
+            ]
+        },
+        {
+            "macro_name": "category_icon",
+            "arguments": ["innovation & data", ""],
+            "assertions": [
+                {
+                    "selector": ".cf-icon-lightbulb",
+                    "assertion": "exists"
+                }
+            ]
+        },
+        {
+            "test_name": "post summary",
+            "macro_name": "post_summary",
+            "arguments": [
+                    {"title": "Test Post",
+                     "dek": "A dek",
+                     "excerpt": "An excerpt",
+                     "author": ["Me"]}
+            ],
+            "assertions": [
+                {
+                    "selector": ".summary_heading",
+                    "index": 0,
+                    "assertion": "in",
+                    "value": "Test Post"
+                }
+            ]
+        }
+    ]
+}
