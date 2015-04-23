@@ -24,20 +24,20 @@
 
         return $( this ).each(function() {
             var settings = $.extend( {
-                    minLength: 3,
-                    fuzzy: true,
-                    fuzziness: 0.5,
-                    threshold: 0.35,
-                    $button: $(),
-                    $clear: $(),
-                    $input: $(),
-                    $items: $(),
-                    $messages: $(),
-                    allMessage: 'Showing all {{ count }}.',
+                    minLength:               3,
+                    fuzzy:                   true,
+                    fuzziness:               0.5,
+                    threshold:               0.35,
+                    $button:                 $(),
+                    $clear:                  $(),
+                    $input:                  $(),
+                    $items:                  $(),
+                    $messages:               $(),
+                    allMessage:              'Showing all {{ count }}.',
                     filteredMessageSingular: 'There is 1 result for "{{ term }}".',
                     filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
-                    minTermMessage: '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
-                    'clickCallback': function( e ) {}
+                    minTermMessage:          '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
+                    'clickCallback':         function( e ) {}
                 }, userSettings ),
                 $this = $( this ),
                 $button = settings.$button,

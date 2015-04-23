@@ -722,11 +722,6 @@ tbody {
     }
 }
 
-/* topdoc
-    name: EOF
-    eof: true
-*/
-
 
 /* topdoc
   name: Full Width Buttons
@@ -752,6 +747,22 @@ tbody {
         }
     });
 }
+
+/* topdoc
+  name: Block
+  family: cf-layout
+  notes:
+    - ".block__border builds on .block to add borders on all sides."
+  tags:
+    - cf-layout
+*/
+@block__border: #BABBBD; // Gray 50%
+.block {
+  &__border {
+    border: 1px solid @block__border;
+  }
+}
+
 
 /* topdoc
     name: EOF

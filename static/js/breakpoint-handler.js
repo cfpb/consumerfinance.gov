@@ -5,7 +5,10 @@ var modernBrowser = 'innerWidth' in window,
     propPrefix = modernBrowser ? 'inner' : 'client';
 
 function getViewportDimensions() {
-    return {'width': viewportEl[propPrefix + 'Width'], 'height': viewportEl[propPrefix + 'Height']};
+    return {
+            'width':  viewportEl[propPrefix + 'Width'],
+            'height': viewportEl[propPrefix + 'Height']
+        };
 }
 
 
@@ -104,9 +107,9 @@ MobileOnlyExpandable.prototype.init = function () {
     if (this.expandable instanceof jQuery && this.expandableTarget instanceof jQuery) {
         this.breakpointHandler = new BreakpointHandler({
             breakpoint: this.breakpoint,
-            type: 'max',
-            enter: $.proxy(this.closeExpandable, this),
-            leave: $.proxy(this.openExpandable, this)
+            type:       'max',
+            enter:      $.proxy(this.closeExpandable, this),
+            leave:      $.proxy(this.openExpandable, this)
         });
     }
 };
