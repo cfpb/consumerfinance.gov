@@ -2,20 +2,19 @@ import sys
 import json
 import os.path
 import requests
-from string import Template
-
 import dateutil.parser
 
+
 def posts_at_url(url):
-    
+
     current_page = 1
     max_page = sys.maxint
 
     while current_page <= max_page:
 
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={'page':current_page, 'count': '-1'})
-        results = json.loads(resp.content) 
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
+        results = json.loads(resp.content)
         current_page += 1
         max_page = results['pages']
         total = 0
@@ -23,25 +22,37 @@ def posts_at_url(url):
             total += 1
             yield p
 
+
 def documents(name, url, **kwargs):
-    
+
     for post in posts_at_url(url):
         yield process_post(post)
 
 
-def process_post(post, newsroom = False):
+def process_post(post):
     del post['comments']
     post['_id'] = post['slug']
-    # remove fields we're not interested in
+    # Set the proper keys for Newsroom
     if post['type'] == 'cfpb_newsroom':
-        post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_cfpb_newsroom_cat_taxonomy']]
+        post['category'] = [cat['title'].replace('&amp;', '&')
+                            for cat in
+                            post['taxonomy_cfpb_newsroom_cat_taxonomy']]
+        post['author'] = [author['title'] for author in
+                          post['taxonomy_fj_author'] if 'Press Release' not in
+                          post['category']]
+    # Set the proper keys for Blog
     elif post['type'] == 'post':
-        post['category'] = [cat['title'].replace('&amp;', '&') for cat in post['taxonomy_fj_category']]
+        post['blog_category'] = [cat['title'].replace('&amp;', '&') for cat in
+                                 post['taxonomy_fj_category']]
+        post['category'] = ['Blog']
+        post['author'] = [author['title'] for author in
+                          post['taxonomy_fj_author']]
+    # Set the proper keys for Featured Topic
     if post['type'] == 'featured_topic':
         post['author'] = [post['author']['name']]
         # convert featured_topic_data_x into a proper list
         links = []
-        for x in xrange(0,10):
+        for x in xrange(0, 10):
             custom_fields = post['custom_fields']
             key = 'featured_topic_data_%s_link' % x
             if key in custom_fields:
@@ -49,12 +60,7 @@ def process_post(post, newsroom = False):
         post['links'] = links
     else:
         post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
-        post['author'] = [author['title'] for author in
-            post['taxonomy_fj_author'] if 'Press Release' not in
-            post['category']]
-    if newsroom and post['type'] == 'post':
-        post['category'][0] = "Blog"
-    author_template = Template("$first_name $last_name")
+
     dt = dateutil.parser.parse(post['date'])
     dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
     post['date'] = dt_string
