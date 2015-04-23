@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `block__border` to `cf-enhancements.less` to provide borders around blocks.
 - Added alert to form validation failure
 - Added .env config for easier project setup
+- Added Event processor
 
 ### Changed
 - Added styles to 500 and 404 error pages.
@@ -40,6 +41,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed block background to 5% gray.
 - Updated contact us content
 - Improved Elasticsearch mappings
+- Improved README and INSTALL docs
 
 ### Fixed
 - Updated related links module on `/newsroom/`.
