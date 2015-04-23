@@ -16,6 +16,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## 3.0.0-0.3.0 - 2015-04-23
+
+### Added
 - Added Privacy Policy page.
 - Added Event Request a Speaker page.
 - Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
