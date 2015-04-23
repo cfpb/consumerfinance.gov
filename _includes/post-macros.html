@@ -536,15 +536,16 @@
 {# A helper macro for filters()
    ========================================================================== #}
 {% macro filters_form(filters, query, doc_type, options) %}
+{% from 'macros.html' import alert  %}
 
-<form class="js-validate-filters"
+<form class="js-validate-filters {{ options.additional_classes }}"
       method="get"
 {%- if options.action != '/' %}
       action="{{ options.action }}">
 {%- else -%}
       >
 {% endif %}
-
+    {{ alert(options.alert) if options.alert }}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 

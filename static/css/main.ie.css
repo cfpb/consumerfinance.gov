@@ -6751,6 +6751,50 @@ a.hero_card {
   font-weight: normal !important;
 }
 
+.alert {
+  background: #f6d9d3;
+  border: 1px solid #d12124;
+  display: none;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.alert_icon {
+  background-color: #fff;
+  border-radius: 100%;
+  color: #D14327;
+  float: left;
+  font-size: 1.875em;
+  position: relative;
+  top: -2px;
+}
+
+.alert_text {
+  margin-top: 0;
+  margin-bottom: 1.16666667em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin: 0;
+  overflow: auto;
+  padding-left: 15px;
+}
+
+.lt-ie9 .alert_text {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .alert {
+  background: #f6d9d3 url('/static/img/warning-icon.png') no-repeat 15px 15px;
+  padding-left: 2.8125em;
+}
+
+.lt-ie9 .alert_icon {
+  display: none;
+}
+
 .summary {
   display: block;
 }

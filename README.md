@@ -3,12 +3,13 @@
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
 This project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Sheer](https://github.com/cfpb/sheer) configurations for loading
-content from the WordPress and Django back-ends through Elasticsearch.
+and [Sheer](https://github.com/cfpb/sheer) configurations for loading content from the
+WordPress and Django back-ends through Elasticsearch.
 
 **Technology stack**:
 - Mac OSX.
-- [Homebrew](http://brew.sh) - package manager for installing system software on Mac OSX.
+- [Homebrew](http://brew.sh) - package manager for installing system
+  software on Mac OSX.
 - Python and PIP (Python package installer).
 - WordPress API data source URL.
 
@@ -33,12 +34,12 @@ Follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
-For necessary server-side configurations, follow instructions in [Back-end environment variables](INSTALL.md#back-end-environment-variables).
+For necessary server-side configurations, follow instructions in
+[INSTALL - Configuration](INSTALL.md#configuration).
 
 ## Usage
 
-Generally you will have four tabs (or windows)
-open in your terminal when using this project.
+Generally you will have four tabs (or windows) open in your terminal when using this project.
 These will be used for:
  1. **Git operations**.
     Perform Git operations and general development in the repository.
@@ -54,12 +55,11 @@ What follows are the specific steps for each of these tabs.
 ### 1. Git operations
 
 From this tab you can do Git operations,
-such as checking out our different branches:
+such as checking out our development branches:
 
 ```bash
-$ git checkout flapjack # Branch for our staging-development server.
-$ git checkout refresh  # Branch for our staging-stable server.
-$ git checkout beta     # Branch for our production-stable server.
+git checkout flapjack # Branch for our staging-development server.
+git checkout refresh  # Branch for our staging-stable server.
 ```
 
 #### Updating all dependencies
@@ -69,36 +69,31 @@ you should install and update dependencies with npm and `grunt vendor`,
 and then run `grunt` to rebuild all the site's assets:
 
 ```bash
-$ npm install
-$ npm update
-$ grunt vendor
-$ grunt
+npm install
+npm update
+grunt vendor
+grunt
 ```
 
 
 ### 2. Run Elasticsearch
 
-> Note: This Elasticsearch tab (or window) might not be necessary if you set Elasticsearch to start at login when [installing Sheer](https://github.com/cfpb/sheer#installation).
+> Note: This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd`
+option when [installing Elasticsearch](INSTALL.md#elasticsearch).
 
 To launch Elasticsearch, first find out where your Elasticsearch config file is located.
 You can do this with [Homebrew](http://brew.sh) using:
 
 ```bash
-$ brew info elasticsearch
+brew info elasticsearch
 ```
 
-The last line of that output should be the command you need to launch Elasticsearch
-with the proper path to its configuration file. For example, it may look like:
+The last line of that output should be the command you need to launch Elasticsearch with the
+proper path to its configuration file. For example, it may look like:
 
+```bash
+elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
-$ elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
-```
-
-> Note: You can add the following to your `.bash_profile` that will allow launching of Elasticsearch with the `elsup` command:
-  ```
-  $ alias elsup="elasticsearch --config=/Users/[MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml"
-  ```
-
 
 ### 3. Launch Sheer to serve the site
 
@@ -107,13 +102,14 @@ To do this, run the following:
 
 ```bash
 # Use the cfgov-refresh virtualenv.
-$ workon cfgov-refresh
+workon cfgov-refresh
 
 # Index the latest content from the API output from a WordPress and Django back-end.
-$ sheer index
+# **This requires the constants in INSTALL - Configuration to be set**
+sheer index
 
 # Start sheer.
-$ sheer serve --debug
+sheer serve --debug
 ```
 
 To view the site browse to: <http://localhost:7000>
@@ -128,6 +124,16 @@ To view the indexed content you can use a tool called
 serve Sheer with the `--port` argument,
 e.g. to run on port 7001 use `sheer serve --port 7001 --debug`.
 
+**NOTE:** You may see the following errors when running Sheer. This is expected.
+```bash
+Error importing package flask_pdfreactor
+Error importing package flask_eventics
+INFO:werkzeug: * Running on http://0.0.0.0:7000/
+INFO:werkzeug: * Restarting with reloader
+Error importing package flask_pdfreactor
+Error importing package flask_eventics
+```
+
 ### 4. Launch the Grunt watch task
 
 To watch for changes in the source code and automatically update the running site,
@@ -137,8 +143,8 @@ open a terminal and run:
 $ grunt watch
 ```
 
-*Alternatively, if you don't want to run the full watch task, there are two available
-sub-tasks:*
+*Alternatively, if you don't want to run the full watch task,
+there are two available sub-tasks:*
 
 ``` bash
 # Watch & compile CSS only
@@ -168,8 +174,8 @@ the chromedriver directory. Use this path, but include the chromedriver name at 
 
 ## Getting help
 
-Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
-to follow the development conversation.
+Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues) to follow the
+development conversation.
 If you find a bug not listed in the issue tracker,
 please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body=
 %23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior
