@@ -44,6 +44,9 @@ def process_view(post):
         if key in custom_fields:
             related.append(custom_fields[key])
     post['related_links'] = related
+    dt = dateutil.parser.parse(post['date'])
+    dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+    post['date'] = dt_string
 
     # append the hero information
     if 'related_hero' in custom_fields and custom_fields['related_hero'][0] != '':

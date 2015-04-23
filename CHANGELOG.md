@@ -21,9 +21,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
 - Added `brand-palette.less` and `cf-theme-overrides.less`.
 - Added `block__border` to `cf-enhancements.less` to provide borders around blocks.
+- Added alert to form validation failure
+- Added .env config for easier project setup
 
 ### Changed
 - Added styles to 500 and 404 error pages.
+- Updated content on 500 and 404 error pages.
 - Added full width button modifier for buttons on smaller screens.
 - Updated ESLint configuration to the latest ESLint release (v0.18.0).
 - Updated `/newsroom/` and `/blog/` post sidebars to add description
@@ -35,6 +38,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated cf-buttons to 1.4.2.
 - Updates cf-layout to 0.3.0.
 - Changed block background to 5% gray.
+- Updated contact us content
+- Improved Elasticsearch mappings
 
 ### Fixed
 - Updated related links module on `/newsroom/`.
@@ -46,8 +51,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and another category would return zero results.
 - Fixed issue in filters where an input whitespace would prevent suggestions from showing.
 - Fixed HTML, typos, and grammatical errors.
-- Fixed lineheight issue in Chosen select boxes
+- Fixed line height issue in Chosen select boxes
 - Updated Google Tag Manager ID from testing account to production account.
+- Fixed whistleblower slug on contact us
 
 
 ## 3.0.0-0.2.3 - 2015-03-23

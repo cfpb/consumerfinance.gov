@@ -1,0 +1,113 @@
+{
+  "properties": {
+    "author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "titles_0_title": {
+          "type": "string"
+        },
+        "titles_1_title": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "string"
+    },
+    "has_parent": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "id": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "taxonomy_orgmember_cat": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "titles": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
