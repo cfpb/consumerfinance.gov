@@ -19,7 +19,7 @@
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
                 <span class="h5 list_text">Email:</span>
-                <p class="list_text">
+                <p>
                     <a class="list_link" href="mailto:{{ contact.email_addr }}">
                         {{ contact.email_addr }}
                     </a>
@@ -30,11 +30,11 @@
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
                 <span class="h5 list_text">Email (Alt):</span>
-                <span class="list_text">
+                <p>
                     <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
                         {{ contact.email_2_addr }}
                     </a>
-                </span>
+                </p>
             </li>
         {%- endif %}
         {%- if contact.phone_num %}
