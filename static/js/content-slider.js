@@ -25,12 +25,12 @@ function contentSlider(elem, slideCount) {
 
     // Initialize slick carousel.
     this.$container.slick({
-        dots: false,
-        infinite: false,
-        swipe: false,
-        speed: this.speed,
+        dots:           false,
+        infinite:       false,
+        swipe:          false,
+        speed:          this.speed,
         adaptiveHeight: true,
-        arrows: false,
+        arrows:         false,
         onBeforeChange: function (slider, currInd, targetInd) {
             // when slide is changed, animate height of container to accommodate
             // new slide's height.

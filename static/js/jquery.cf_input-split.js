@@ -74,20 +74,20 @@
         return this.each(function() {
 
             var options = $.extend({
-                newHTML: '',
+                newHTML:        '',
                 newInputsOrder: [],
-                initialValues: [],
-                delimiter: '',
-                genericFields: 'input, select, textarea'
+                initialValues:  [],
+                delimiter:      '',
+                genericFields:  'input, select, textarea'
             }, userOptions);
 
             var inputSplit = {
-                $oldHTML: $(this),
-                $newHTML: $(options.newHTML),
-                $oldInput: $(),
-                newInputs: options.newInputsOrder,
+                $oldHTML:      $(this),
+                $newHTML:      $(options.newHTML),
+                $oldInput:     $(),
+                newInputs:     options.newInputsOrder,
                 initialValues: options.initialValues,
-                delimiter: options.delimiter,
+                delimiter:     options.delimiter,
                 genericFields: options.genericFields,
 
                 init: function() {
@@ -189,4 +189,4 @@
         });
     };
 
-}(jQuery));
+})(jQuery);

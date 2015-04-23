@@ -1,0 +1,186 @@
+{
+  "properties": {
+    "addr_desc": {
+      "type": "string"
+    },
+    "attn": {
+      "type": "string"
+    },
+    "author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      }
+    },
+    "city": {
+      "type": "string"
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "addr_desc": {
+          "type": "string"
+        },
+        "attn": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "email_0_addr": {
+          "type": "string"
+        },
+        "email_0_desc": {
+          "type": "string"
+        },
+        "email_1_addr": {
+          "type": "string"
+        },
+        "email_1_desc": {
+          "type": "string"
+        },
+        "fax_desc": {
+          "type": "string"
+        },
+        "fax_num": {
+          "type": "string"
+        },
+        "phone_0_desc": {
+          "type": "string"
+        },
+        "phone_0_num": {
+          "type": "string"
+        },
+        "phone_1_desc": {
+          "type": "string"
+        },
+        "phone_1_num": {
+          "type": "string"
+        },
+        "sitewide_desc": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "web": {
+          "type": "string"
+        },
+        "web_0": {
+          "type": "string"
+        },
+        "zip_code": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "string"
+    },
+    "email_0_addr": {
+      "type": "string"
+    },
+    "email_0_desc": {
+      "type": "string"
+    },
+    "email_1_addr": {
+      "type": "string"
+    },
+    "email_1_desc": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "fax_desc": {
+      "type": "string"
+    },
+    "fax_num": {
+      "type": "string"
+    },
+    "id": {
+      "type": "long"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "phone_0_desc": {
+      "type": "string"
+    },
+    "phone_0_num": {
+      "type": "string"
+    },
+    "phone_1_desc": {
+      "type": "string"
+    },
+    "phone_1_num": {
+      "type": "string"
+    },
+    "sitewide_desc": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "street": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "web_addr": {
+      "type": "string"
+    },
+    "zip_code": {
+      "type": "string"
+    }
+  }
+}

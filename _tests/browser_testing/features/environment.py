@@ -103,12 +103,12 @@ def before_all(context):
 
     # Create the mappings
     create_mapping('newsroom', os.path.join(root, '_settings/posts_mappings.json'))
-    create_mapping('watchroom', os.path.join(root, '_settings/posts_mappings.json'))
+    create_mapping('featured_topic', os.path.join(root, '_settings/posts_mappings.json'))
 
     # Index the documents
     index_documents('newsroom', os.path.join(root, '_tests/browser_testing/fixtures/newsroom.json'))
     index_documents('views', os.path.join(root, '_tests/browser_testing/fixtures/views.json'))
-    index_documents('watchroom', os.path.join(root, '_tests/browser_testing/fixtures/watchroom.json'))
+    index_documents('featured_topic', os.path.join(root, '_tests/browser_testing/fixtures/featured_topic.json'))
 
     
     
