@@ -7,18 +7,21 @@
 
 {% for post in posts %}
 
-    {#- Newsroom contains select Blog posts.
-        These Newsroom Blog posts can be identified by a special
-        `display_in_newsroom` property.
-        When a Blog post is listed in Newsroom we should ignore its category
-        name and instead categorize it as "Blog". #}
-    {%- if vars.path == '/newsroom/' and post.custom_fields.display_in_newsroom %}
-        {% set category = 'Blog' %}
+    {#- Blog uses a different category field ('blog_category')
+        so on that page we'll need to tell category_slug to use that field
+        rather than the normal 'category' #}
+    {%- if vars.path == '/blog/' %}
+        {% set category = post.blog_category.0 %}
+        {% set use_blog_category = True %}
     {% elif post.category.0 %}
         {% set category = post.category.0 %}
+        {% set use_blog_category = False %}
     {% endif -%}
     {%- import "category-slug.html" as category_slug %}
-    {%- set slug = category_slug.render(category, vars.path, 'meta-header_left') -%}
+    {%- set slug = category_slug.render(category,
+                                        vars.path,
+                                        'meta-header_left',
+                                        use_blog_category) -%}
 
     <article class="post-preview">
         <div class="meta-header">
@@ -49,8 +52,15 @@
 
 {% endfor %}
 
+{% if vars.path == '/blog/' %}
+    {% set category_field = 'blog_category' %}
+{% else %}
+    {% set category_field = 'category' %}
+
+{% endif %}
+
 {{ post_macros.pagination(posts, [
-    'category',
+    category_field,
     'tags',
     'author',
     'range_date_gte',
