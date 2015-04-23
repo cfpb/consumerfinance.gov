@@ -1,0 +1,231 @@
+{
+  "properties": {
+    "attachments": {
+      "properties": {
+        "caption": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "categories": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "display_in_newsroom": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "dsq_needs_sync": {
+          "type": "string"
+        },
+        "dsq_thread_id": {
+          "type": "string"
+        },
+        "og_desc": {
+          "type": "string"
+        },
+        "og_title": {
+          "type": "string"
+        },
+        "twtr_rel": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "dek": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "id": {
+      "type": "long"
+    },
+    "modified": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "taxonomy_category": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "taxonomy_fj_author": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "taxonomy_fj_category": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "taxonomy_fj_tag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "taxonomy_post_tag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "thumbnail": {
+      "properties": {
+        "size": {
+          "type": "string"
+        }
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{% extends "layout-full.html" %}
+
+{% block title -%}
+    500 internal server error
+{%- endblock %}
+
+{% block desc -%}
+    500 internal server error
+{%- endblock %}
+
+{% block content_modifiers -%}
+    error_main error_main__500
+{%- endblock %}
+
+{% block content_main %}
+    <div class="error_copy_container">
+        <header class="error_header u-mt30">
+            <h1 class="superheader">500 internal server error</h1>
+            <p class="short_desc">That didn’t work the way it was supposed to. You
+                might want to try again in a little bit. We’ll try to resolve
+                the issue.
+            </p>
+        </header>
+        <aside class="error_action_container padded-container u-mt60 u-mb60">
+            <div class="content-l content-l__large-gutters padded-container_body">
+                <div class="content-l_col content-l_col-1-2">
+                    <p>
+                        Explore our other useful tools and resources.
+                    </p>
+                    <a href="/" class="btn btn__full btn__error-home">Visit homepage</a>
+                </div>
+                <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                    <p>
+                        If the problem persists please let us know.
+                    </p>
+                    <a class="jump-link jump-link__right" href="/contact-us">
+                        Contact us
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </div>
+{% endblock %}

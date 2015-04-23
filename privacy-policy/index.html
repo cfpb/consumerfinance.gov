@@ -1,0 +1,50 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-privacy-policy.html" as vars with context %}
+
+{# TODO: Remove and replace with Privacy View #}
+{% set view = get_document('views', 'newsroom') %}
+
+{% block title -%}
+    Privacy policy
+{%- endblock %}
+
+{% block desc -%}
+    Privacy policy
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    <h1>Privacy Act Statement</h1>
+    <h2>5 U.S.C. 552(a)(e)(3)</h2>
+    <p class="h3">The information you provide will permit the Consumer Financial Protection Bureau to process
+        your request or inquiry. Information about your request or inquiry (including your personally
+        identifiable information) may be shared pursuant to the CFPB’s published Privacy Act system
+        of records notice CFPB.013 CFPB External Contact Database.
+    </p>
+    <p class="h3">
+        This collection of information is authorized by 12 U.S.C. § 5491, 5492, or 5511.
+    </p>
+    <p class="h3">Your submission of information is entirely voluntary. You are not required to submit any
+        information. However, if you do not submit the requested information, the CFPB may not be
+        able to process your request or inquiry.
+    </p>
+
+    {# Footer #}
+    <aside>
+        <div class="u-mb0
+                    block
+                    block__bg
+                    block__flush-sides
+                    related_content">
+            <div class="content-l content-l__main">
+                <section class="block u-mt0 content-l_col content-l_col-1-2">
+                    {% import "related-links.html" as related_links %}
+                    {{ related_links.render(view.related_links) }}
+                </section>
+            </div>
+        </div>
+    </aside>
+{% endblock %}

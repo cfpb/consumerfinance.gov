@@ -536,15 +536,16 @@
 {# A helper macro for filters()
    ========================================================================== #}
 {% macro filters_form(filters, query, doc_type, options) %}
+{% from 'macros.html' import alert  %}
 
-<form class="js-validate-filters"
+<form class="js-validate-filters {{ options.additional_classes }}"
       method="get"
 {%- if options.action != '/' %}
       action="{{ options.action }}">
 {%- else -%}
       >
 {% endif %}
-
+    {{ alert(options.alert) if options.alert }}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
@@ -567,7 +568,7 @@
             {% endfor %}
             {% if doc_type == 'newsroom' -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('type', 'post', 'Blog')|safe }}
+                    {{ filter_checkbox('category', 'Blog', 'Blog')|safe }}
                 </label>
             {%- endif %}
             </div>
@@ -585,7 +586,7 @@
                 {% if category.key != 'cfpb_newsroom' %}
                     {% if category.key == 'post' %}
                         <label class="form-group_item">
-                            {{ filter_checkbox('type', category.key, 'Blog')|safe }}
+                            {{ filter_checkbox('category', 'Blog', 'Blog')|safe }}
                         </label>
                     {% else %}
                         <label class="form-group_item">
@@ -842,7 +843,6 @@
         {%- if is_filter_selected(field, value) %}
             selected
         {%- endif -%}
-            >
-        {{ value }}
+        {{ '>' | safe ~ value }}
     </option>
 {% endmacro %}
