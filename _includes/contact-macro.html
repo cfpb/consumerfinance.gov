@@ -23,17 +23,12 @@
                     <a class="list_link" href="mailto:{{ contact.email_addr }}">
                         {{ contact.email_addr }}
                     </a>
-                </p>
-            </li>
-        {%- endif %}
-        {%- if contact.email_2_addr %}
-            <li class="list_item u-break-word">
-                <span class="cf-icon cf-icon-email list_icon"></span>
-                <span class="h5 list_text">Email (Alt):</span>
-                <p>
+                {%- if contact.email_2_addr %}
+                    <br>
                     <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
                         {{ contact.email_2_addr }}
                     </a>
+                {%- endif %}
                 </p>
             </li>
         {%- endif %}
@@ -42,22 +37,21 @@
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="h5 list_text">Phone:</span>
                 <p class="short-desc">
+                    <a class="list_link list_link__phone" href="tel:{{ contact.phone_num }}">
                     {{ format_phone(contact.phone_num) }}
-                {%- if contact.phone_desc %}
+                    </a>
+                    {%- if contact.phone_desc %}
                         <br>
                         <span class="micro-copy micro-copy__large">
                             {{ contact.phone_desc }}
                         </span>
+                    {%- endif %}
+                {%- if contact.phone_2_num %}
+                    <br>
+                    <a class="list_link list_link__phone" href="{{ contact.phone_2_num }}">
+                        {{ format_phone(contact.phone_2_num) }}
+                    </a>
                 {%- endif %}
-                </p>
-            </li>
-        {%- endif %}
-        {%- if contact.phone_2_num %}
-            <li class="list_item">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="h5 list_text">Phone (Alt):</span>
-                <p class="short-desc">
-                    {{ format_phone(contact.phone_2_num) }}
                 </p>
             </li>
         {%- endif %}
