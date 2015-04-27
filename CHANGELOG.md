@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Reverted navs from Contact Us redacting
+
 ### Fixed
 
 
