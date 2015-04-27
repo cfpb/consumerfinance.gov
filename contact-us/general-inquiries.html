@@ -25,7 +25,9 @@
         <span class="cf-icon cf-icon-phone list_icon"></span>
         <span class="h5 list_text">Phone:</span>
         <p class="short-desc">
+            <a class="list_link list_link__phone" href="tel:{{ general_inqueries.phone_0_num }}">
             {{ format_phone(general_inqueries.phone_0_num) }}
+            </a>
         </p>
     </li>
 {%- endif %}
