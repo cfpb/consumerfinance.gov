@@ -23,13 +23,14 @@
                     <a class="list_link" href="mailto:{{ contact.email_addr }}">
                         {{ contact.email_addr }}
                     </a>
+                </p>
                 {%- if contact.email_2_addr %}
-                    <br>
+                <p>
                     <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
                         {{ contact.email_2_addr }}
                     </a>
-                {%- endif %}
                 </p>
+                {%- endif %}
             </li>
         {%- endif %}
         {%- if contact.phone_num %}
@@ -46,13 +47,14 @@
                             {{ contact.phone_desc }}
                         </span>
                     {%- endif %}
+                </p>
                 {%- if contact.phone_2_num %}
-                    <br>
+                <p>
                     <a class="list_link list_link__phone" href="{{ contact.phone_2_num }}">
                         {{ format_phone(contact.phone_2_num) }}
                     </a>
-                {%- endif %}
                 </p>
+                {%- endif %}
             </li>
         {%- endif %}
         {%- if contact.fax_num %}
