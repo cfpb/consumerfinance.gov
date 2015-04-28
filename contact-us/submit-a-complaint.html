@@ -12,30 +12,29 @@
     <li class="list_item">
         <span class="cf-icon cf-icon-phone list_icon"></span>
         <span class="h5 list_text">Phone:</span>
-        <ul class="list list__links">
-            <li class="list_item">
-                <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_0_num }}">
+        <p>
+            <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_0_num }}">
                 {{ format_phone(submit_a_complaint.phone_0_num)| replace("2372", "CFPB (2372)") }}
                 {%- if submit_a_complaint.phone_0_desc %}
                     <span class="micro-copy micro-copy__large">
                         {{ submit_a_complaint.phone_0_desc }}
                     </span>
                 {%- endif %}
-                </a>
-            </li>
+            </a>
+        </p>
         {%- if submit_a_complaint.phone_1_num %}
-            <li class="list_item">
-                <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_1_num }}">
+        <p>
+            <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_1_num }}">
                     {{ format_phone(submit_a_complaint.phone_1_num)| replace("2372", "CFPB (2372)") }}
                 {%- if submit_a_complaint.phone_1_desc %}
                     <span class="micro-copy micro-copy__large">
                         {{ submit_a_complaint.phone_1_desc }}
                     </span>
                 {%- endif %}
-                </a>
-            </li>
+            </a>
+        </p>
         {%- endif %}
-        </ul>
+
     </li>
 {%- endif %}
 </ul>
