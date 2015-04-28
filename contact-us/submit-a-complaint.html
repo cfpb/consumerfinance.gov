@@ -7,25 +7,29 @@
 <p class="short-desc">
     {{ submit_a_complaint.sitewide_desc }}
 </p>
-<ul class="list list__unstyled">
+<ul class="list list__unstyled list__links">
 {%- if submit_a_complaint.phone_0_num %}
-    <li class="list_item short-desc">
-        {{ format_phone(submit_a_complaint.phone_0_num) }}
-    {%- if submit_a_complaint.phone_0_desc %}
-        <span class="micro-copy micro-copy__large">
-            {{ submit_a_complaint.phone_0_desc }}
-        </span>
-    {%- endif %}
+    <li class="list_item">
+        <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_0_num }}">
+        {{ format_phone(submit_a_complaint.phone_0_num)| replace("2372", "CFPB (2372)") }}
+        {%- if submit_a_complaint.phone_0_desc %}
+            <span class="micro-copy micro-copy__large">
+                {{ submit_a_complaint.phone_0_desc }}
+            </span>
+        {%- endif %}
+        </a>
     </li>
 {%- endif %}
 {%- if submit_a_complaint.phone_1_num %}
-    <li class="list_item short-desc">
-        {{ format_phone(submit_a_complaint.phone_1_num) }}
-    {%- if submit_a_complaint.phone_1_desc %}
-        <span class="micro-copy micro-copy__large">
-            {{ submit_a_complaint.phone_1_desc }}
-        </span>
-    {%- endif %}
+    <li class="list_item">
+        <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_1_num }}">
+        {{ format_phone(submit_a_complaint.phone_1_num)| replace("2372", "CFPB (2372)") }}
+        {%- if submit_a_complaint.phone_1_desc %}
+            <span class="micro-copy micro-copy__large">
+                {{ submit_a_complaint.phone_1_desc }}
+            </span>
+        {%- endif %}
+        </a>
     </li>
 {%- endif %}
 </ul>
