@@ -255,8 +255,8 @@ $('.type-and-filter').typeAndFilter({
    $clear:                  $('.js-type-and-filter_clear'),
    $messages:               $('.js-type-and-filter_message'),
    allMessage:              'Showing all {{ count }} contacts.',
-   filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
-   filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
+   filteredMessageSingular: 'Showing 1 contact result.',
+   filteredMessageMultiple: 'Showing {{ count }} contact results.'
 });
 
 // Hide the contact list header of there are zero results.
