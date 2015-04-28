@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added ability to scrub plural terms in typeAndFilter jQuery plugin
+
 ### Changed
 
 - Reverted navs from Contact Us redacting

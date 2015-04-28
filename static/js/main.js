@@ -12515,6 +12515,7 @@ String.prototype.score = function(word, fuzziness) {
         cleanText = cleanText.toLowerCase();
         cleanText = $.fn.typeAndFilter.removeExtraSpaces( cleanText );
         cleanText = $.fn.typeAndFilter.removeWordsOfLength( cleanText, minLength );
+        cleanText = $.fn.typeAndFilter.removePlurality( cleanText );
         // console.log( '\nOriginal text:', text, '\nClean text:', cleanText );
         return cleanText;
     };
@@ -12531,6 +12532,10 @@ String.prototype.score = function(word, fuzziness) {
         return $.grep( words, function( word ) {
             return word.length >= minLength;
         }).join(' ');
+    };
+
+    $.fn.typeAndFilter.removePlurality = function( text ) {
+        return text.replace(/([i][e][s])$|([^aiou])s$/, '$1$2');
     };
 
     $.fn.typeAndFilter.strictSearch = function( text, searchTerm ) {
@@ -13073,8 +13078,8 @@ $('.type-and-filter').typeAndFilter({
    $clear:                  $('.js-type-and-filter_clear'),
    $messages:               $('.js-type-and-filter_message'),
    allMessage:              'Showing all {{ count }} contacts.',
-   filteredMessageSingular: 'There is 1 contact result for "{{ term }}".',
-   filteredMessageMultiple: 'There are {{ count }} contact results for "{{ term }}".'
+   filteredMessageSingular: 'Showing 1 contact result.',
+   filteredMessageMultiple: 'Showing {{ count }} contact results.'
 });
 
 // Hide the contact list header of there are zero results.
