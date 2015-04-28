@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Updated mailing addresses in `/contact-us` sidebar
 - Reverted navs from Contact Us redacting
 
 ### Fixed
