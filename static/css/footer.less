@@ -27,7 +27,7 @@
         margin-top: unit(30px / @base-font-size-px, em);
         .list__horizontal();
 
-        .respond-to-min(768px, {
+        .respond-to-min(860px, {
             margin-top: 0;
             position: absolute;
             // Aligns with the baseline of .footer_nav-list text.
@@ -39,7 +39,7 @@
     &_nav-list {
         .list__links();
 
-        .respond-to-max(767px, {
+        .respond-to-max(859px, {
             border-top-color: @black;
         });
 
@@ -47,7 +47,7 @@
             font-size: unit(18px / @base-font-size-px, em);
             .u-link__colors(@black);
 
-            .respond-to-min(768px, {
+            .respond-to-min(860px, {
                 margin-right: unit(30px / 22px, em);
                 font-size: unit(22px / @base-font-size-px, em);
                 .webfont-regular();
@@ -58,37 +58,10 @@
         .list_link.list_link__disabled {
             border-bottom: 1px dotted;
 
-            .respond-to-min(768px, {
+            .respond-to-min(800px, {
                 .u-link__no-border();
             });
         }
-    }
-
-    &_logo {
-        margin-bottom: unit(10px / @base-font-size-px, em);
-
-        .respond-to-min(768px, {
-            margin-bottom: 0;
-        });
-
-        .logo {
-            width: 218px;
-        }
-    }
-
-    &_address {
-        .webfont-regular();
-
-        .respond-to-min(768px, {
-            margin-bottom: 0;
-            font-size: unit(12px / @base-font-size-px, em);
-        });
-
-        .respond-to-range(768px, 1199px, {
-            &-word-break {
-                display: block;
-            }
-        });
     }
 
     &_list {
@@ -146,47 +119,106 @@
         position: relative;
         margin-bottom: unit(45px / @base-font-size-px, em);
 
-        .respond-to-min(768px, {
-            padding-bottom: unit(30px / @base-font-size-px, em);
-            margin-bottom: unit(30px / @base-font-size-px, em);
-            border-bottom: 1px solid @gray-50;
-        });
-
         .footer_top-button {
             display: none;
         }
 
         .footer_nav-list {
             margin-bottom: 0;
-            .respond-to-min(768px, {
+        }
+
+        .respond-to-min(860px, {
+            padding-bottom: unit(30px / @base-font-size-px, em);
+            margin-bottom: unit(30px / @base-font-size-px, em);
+            border-bottom: 1px solid @gray-50;
+
+            .footer_nav-list {
                 .list__horizontal();
 
                 .list_item {
                     margin-bottom: 0;
                 }
-            });
-        }
+
+            }
+        });
     }
 
-    &-middle {
+    &-middle-left {
         .footer_list {
             margin: 0;
         }
 
+        .respond-to-range(860px, 1199px,{
+            .grid_column(8);
+            border-right: 1px solid @gray-50;
+
+            .footer_col {
+                .grid_column(6);
+            }
+        });
+
+        .respond-to-min(1200px, {
+            .list__horizontal();
+            padding-bottom: unit(30px / @base-font-size-px, em);
+            margin-bottom: unit(30px / @base-font-size-px, em);
+            border-bottom: 1px solid @gray-50;
+
+            .footer_col, .footer_list {
+                display: inline;
+            }
+
+            .list_item {
+                margin-right: 2em;
+            }
+        });
+    }
+
+    &-middle-right {
+        .respond-to-range(860px, 1199px,{
+            .grid_column(4);
+
+            .footer_list {
+                padding-left: @grid_gutter-width;
+                padding-right: @grid_gutter-width;
+            }
+        });
+
+        .respond-to-min(1200px, {
+            .list__horizontal();
+            float: left;
+            width: 50%;
+
+            .list_item {
+                margin-right: 2em;
+            }
+        });
     }
 
     &-post {
-        .respond-to-min(768px, {
+        .respond-to-range(860px, 1199px, {
             padding-top: unit(30px / @base-font-size-px, em);
             margin-top: unit(30px / @base-font-size-px, em);
             border-top: 1px solid @gray-50;
+
+        });
+
+        .respond-to-min(1200px, {
+            float: right;
         });
 
         .footer_official-website {
-            .webfont-regular();
-            .respond-to-min(768px,{
-                float: right;
-                });
+            .short-desc();
+            padding-left: 37px;
+            background: url('../img/us-flag_22x13.png') no-repeat 0 4px;
+
+            .respond-to-max(479px, {
+                max-width: 220px;
+            });
+
+            @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+                background-image: url('../img/us-flag_44x26.png');
+                background-size: 22px;
+            }
         }
     }
 
