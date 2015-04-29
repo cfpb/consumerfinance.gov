@@ -8331,7 +8331,14 @@ a.focus .summary_event-date {
 }
 
 .footer-pre .footer_top-button {
-  display: none;
+  display: block;
+  width: 90%;
+  max-width: 350px;
+  margin: -2em auto 2em;
+}
+
+.footer-pre .footer_top-button .cf-icon-arrow-up {
+  padding-left: 1em;
 }
 
 .footer-pre .footer_nav-list {
@@ -8342,6 +8349,10 @@ a.focus .summary_event-date {
   padding-bottom: 1.875em;
   margin-bottom: 1.875em;
   border-bottom: 1px solid #babbbd;
+}
+
+.footer-pre .footer_top-button {
+  display: none;
 }
 
 .footer-pre .footer_nav-list {

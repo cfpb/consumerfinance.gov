@@ -682,3 +682,18 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.alert').createAlert();
 });
+
+/* ==========================================================================
+   Footer Button: Scroll to Top
+   ========================================================================== */
+
+$(document).ready(function() {
+    var duration = 300;
+
+    $('.footer_top-button').click(function(event) {
+        jQuery('html, body').animate({scrollTop: 0}, duration);
+        return false;
+    });
+});
+
+
