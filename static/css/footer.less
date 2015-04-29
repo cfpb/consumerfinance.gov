@@ -120,7 +120,14 @@
         margin-bottom: unit(45px / @base-font-size-px, em);
 
         .footer_top-button {
-            display: none;
+            display: block;
+            width: 90%;
+            max-width: 350px;
+            margin: -2em auto 2em;
+
+            .cf-icon-arrow-up {
+                padding-left: 1em;
+            }
         }
 
         .footer_nav-list {
@@ -131,6 +138,10 @@
             padding-bottom: unit(30px / @base-font-size-px, em);
             margin-bottom: unit(30px / @base-font-size-px, em);
             border-bottom: 1px solid @gray-50;
+
+            .footer_top-button {
+                display: none;
+            }
 
             .footer_nav-list {
                 .list__horizontal();
