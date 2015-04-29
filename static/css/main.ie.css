@@ -8031,7 +8031,7 @@ a.focus .summary_event-date {
 }
 
 .footer_share-icon-list {
-  margin-bottom: 1.875em;
+  margin-top: 1.875em;
   padding-left: 0;
 }
 
@@ -8049,7 +8049,10 @@ a.focus .summary_event-date {
 }
 
 .footer_share-icon-list {
-  margin-bottom: 0;
+  margin-top: 0;
+  position: absolute;
+  top: -9px;
+  right: 0;
 }
 
 .footer_nav-list {
@@ -8207,128 +8210,6 @@ a.focus .summary_event-date {
 
 .footer_address-word-break {
   display: block;
-}
-
-.footer_general-inqueries .list__links .list_item {
-  margin-bottom: 0;
-}
-
-.footer_general-inqueries {
-  font-size: .75em;
-}
-
-.footer_general-inqueries-label {
-  display: block;
-  font-size: 1em;
-  margin-bottom: .5em;
-  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .footer_general-inqueries-label {
-  font-weight: normal !important;
-}
-
-.footer_general-inqueries-label {
-  display: block;
-  margin-bottom: .5em;
-}
-
-.footer_general-inqueries .list__links {
-  margin-bottom: 0;
-  font-size: 1.125em;
-  border-top-color: #43484e;
-}
-
-.footer_general-inqueries .list_link {
-  color: #43484e;
-  border-color: #43484e;
-}
-
-.footer_general-inqueries .list_link:visited,
-.footer_general-inqueries .list_link.visited {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link:hover,
-.footer_general-inqueries .list_link.hover {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link:focus,
-.footer_general-inqueries .list_link.focus {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link:active,
-.footer_general-inqueries .list_link.active {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link {
-  color: #0072ce;
-  border-color: #0072ce;
-}
-
-.footer_general-inqueries .list_link:visited,
-.footer_general-inqueries .list_link.visited {
-  border-color: #005e5d;
-  color: #005e5d;
-}
-
-.footer_general-inqueries .list_link:hover,
-.footer_general-inqueries .list_link.hover {
-  border-color: #7fb8e6;
-  color: #7fb8e6;
-}
-
-.footer_general-inqueries .list_link:focus,
-.footer_general-inqueries .list_link.focus {
-  border-color: #0072ce;
-  color: #0072ce;
-}
-
-.footer_general-inqueries .list_link:active,
-.footer_general-inqueries .list_link.active {
-  border-color: #002d72;
-  color: #002d72;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone {
-  color: #101820;
-  border-color: #101820;
-  border-bottom-width: 0 !important;
-  display: block;
-  margin-bottom: .33333333em;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:visited,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.visited {
-  border-color: #101820;
-  color: #101820;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:hover,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.hover {
-  border-color: #101820;
-  color: #101820;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:focus,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.focus {
-  border-color: #101820;
-  color: #101820;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:active,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.active {
-  border-color: #101820;
-  color: #101820;
 }
 
 .footer_list {
@@ -8506,10 +8387,8 @@ a.focus .summary_event-date {
   border-bottom: 1px solid #babbbd;
 }
 
-.footer-pre .footer_share-icon-list {
-  position: absolute;
-  top: -9px;
-  right: 0;
+.footer-pre .footer_top-button {
+  display: none;
 }
 
 .footer-pre .footer_nav-list {
@@ -8537,111 +8416,48 @@ a.focus .summary_event-date {
   margin-bottom: 0;
 }
 
-.footer-left {
-  margin-bottom: 2.8125em;
-}
-
-.footer-left .footer_nested-col-group {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.footer-left .footer_address {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-}
-
-.ie .footer-left .footer_address {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .footer-left .footer_address {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.footer-left .footer_general-inqueries {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-}
-
-.ie .footer-left .footer_general-inqueries {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .footer-left .footer_general-inqueries {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.footer-right {
-  padding-bottom: 1.875em;
-  margin-bottom: 1.875em;
-  border-bottom: 1px solid #babbbd;
-}
-
-.footer-right .footer_nested-col-group {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.footer-right .footer_col {
-  display: inline-block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: solid transparent;
-  border-width: 0 15px;
-  margin-right: -0.25em;
-  vertical-align: top;
-  width: 25%;
-}
-
-.ie .footer-right .footer_col {
-  margin-right: -0.26em;
-}
-
-.lt-ie8 .footer-right .footer_col {
-  display: inline;
-  margin-right: 0;
-  zoom: 1;
-  behavior: url('/static/vendor/box-sizing-polyfill/boxsizing.htc');
-}
-
-.footer-right .h6 {
-  color: #babbbd;
-}
-
-.footer-right .list {
-  margin-bottom: 0;
+.footer-middle .footer_list {
+  margin: 0;
 }
 
 .footer-post {
   padding-top: 1.875em;
   margin-top: 1.875em;
   border-top: 1px solid #babbbd;
+}
+
+.footer-post .footer_official-website {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.footer-post .footer_official-website em,
+.footer-post .footer_official-website i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .footer-post .footer_official-website em,
+.lt-ie9 .footer-post .footer_official-website i {
+  font-style: normal !important;
+}
+
+.footer-post .footer_official-website strong,
+.footer-post .footer_official-website b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer-post .footer_official-website strong,
+.lt-ie9 .footer-post .footer_official-website b {
+  font-weight: normal !important;
+}
+
+.footer-post .footer_official-website {
+  float: right;
 }
 
 .footer .list_link__disabled {
