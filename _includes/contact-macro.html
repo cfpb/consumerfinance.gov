@@ -15,43 +15,43 @@
     <div class="content-l_col content-l_col-1-2">
     {%- if contact.email_addr or contact.phone_num or contact.fax_num or contact.street %}
         <ul class="list list__icons">
-        {%- if contact.email_addr %}
+        {%- if contact.email_0_addr %}
             <li class="list_item u-break-word">
                 <span class="cf-icon cf-icon-email list_icon"></span>
                 <span class="h5 list_text">Email:</span>
                 <p>
                     <a class="list_link" href="mailto:{{ contact.email_addr }}">
-                        {{ contact.email_addr }}
+                        {{ contact.email_0_addr }}
                     </a>
                 </p>
-                {%- if contact.email_2_addr %}
+                {%- if contact.email_1_addr %}
                 <p>
                     <a class="list_link" href="mailto:{{ contact.email_2_addr }}">
-                        {{ contact.email_2_addr }}
+                        {{ contact.email_1_addr }}
                     </a>
                 </p>
                 {%- endif %}
             </li>
         {%- endif %}
-        {%- if contact.phone_num %}
+        {%- if contact.phone_0_num %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-phone list_icon"></span>
                 <span class="h5 list_text">Phone:</span>
                 <p class="short-desc">
                     <a class="list_link list_link__phone" href="tel:{{ contact.phone_num }}">
-                    {{ format_phone(contact.phone_num) }}
+                    {{ format_phone(contact.phone_0_num) }}
                     </a>
-                    {%- if contact.phone_desc %}
+                    {%- if contact.phone_0_desc %}
                         <br>
                         <span class="micro-copy micro-copy__large">
-                            {{ contact.phone_desc }}
+                            {{ contact.phone_0_desc }}
                         </span>
                     {%- endif %}
                 </p>
-                {%- if contact.phone_2_num %}
+                {%- if contact.phone_1_num %}
                 <p>
                     <a class="list_link list_link__phone" href="{{ contact.phone_2_num }}">
-                        {{ format_phone(contact.phone_2_num) }}
+                        {{ format_phone(contact.phone_1_num) }}
                     </a>
                 </p>
                 {%- endif %}
