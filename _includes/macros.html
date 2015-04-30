@@ -162,7 +162,7 @@
     {{ contact.street if contact.street }}<br>
     {{ contact.street_2 + '<br>'|safe if contact.street_2 }}
     {{ contact.city + ',' if contact.city }}
-    {{ contact.state if contact.state }}
+    {{ (contact.state + '&nbsp;')|safe if contact.state }}
     {{ contact.zip_code if contact.zip_code }}
 {% endmacro %}
 

@@ -16,6 +16,22 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+
+- Added labels to the phone/email/fax/mail icons on `/contact-us/` page
+- Added ability to scrub plural terms in typeAndFilter jQuery plugin
+
+### Changed
+
+- Updated mailing addresses in `/contact-us/` sidebar
+- Reverted navs from Contact Us redacting
+
+### Fixed
+- Improvements and fixes to `/contact-us/` page
+
+
+## 3.0.0-0.3.0 - 2015-04-23
+
+### Added
 - Added Privacy Policy page.
 - Added Event Request a Speaker page.
 - Added settings to enable the `/blog/` and `/newsroom/` RSS feeds.
@@ -23,7 +39,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `block__border` to `cf-enhancements.less` to provide borders around blocks.
 - Added alert to form validation failure
 - Added .env config for easier project setup
-- Added labels to the phone/email/fax/mail icons on `/contact-us/` page
+- Added Event processor
 
 ### Changed
 - Added styles to 500 and 404 error pages.
@@ -41,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed block background to 5% gray.
 - Updated contact us content
 - Improved Elasticsearch mappings
+- Improved README and INSTALL docs
 
 ### Fixed
 - Updated related links module on `/newsroom/`.
@@ -55,7 +72,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed line height issue in Chosen select boxes
 - Updated Google Tag Manager ID from testing account to production account.
 - Fixed whistleblower slug on contact us
-- Improvements and fixes to `/contact-us/` page
 
 
 ## 3.0.0-0.2.3 - 2015-03-23
