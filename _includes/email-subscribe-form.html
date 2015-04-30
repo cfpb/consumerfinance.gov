@@ -11,18 +11,17 @@
         <label for="email-subscribe-form_email">
             Email address
         </label>
-        <input class="reveal-on-focus_target"
-               id="email-subscribe-form_email"
+        <input id="email-subscribe-form_email"
                type="email"
                name="email"
                placeholder="example@mail.com">
     </div>
     <p class="short-desc u-mt10">
-      The information you provide will permit the Consumer Financial 
+      The information you provide will permit the Consumer Financial
       Protection Bureau to process your request or inquiry.
       <a href="/privacy-policy">See More</a>
     </p>
-    {# Uncomment this and remove condition to test
+    {# TODO: Update this if/when zip code is supported
     {% if 'is_event' %}
     <div class="form-group reveal-on-focus_content u-clearfix">
       <label class="form-group_item">
@@ -39,43 +38,9 @@
     </div>
     {% endif %}
     #}
-    {# TODO: Remove "and false" when topics are available for email sign-ups. #}
-    {% if query and false -%}
-    <div class="form-group reveal-on-focus_content u-clearfix">
-    {% for category in query.possible_values_for('category')|sort(attribute='key') -%}
-    {% set govdelivery_categories = [
-        { 'name': 'Announcements & updates', 'code': 'USCFPB_9' },
-        { 'name': 'Consumer information', 'code': 'USCFPB_10' },
-        { 'name': 'Engagement', 'code': 'USCFPB_11' },
-        { 'name': 'Innovation & data', 'code': 'USCFPB_12' },
-        { 'name': 'Blog', 'code': 'USCFPB_13' },
-        { 'name': 'Op-Ed', 'code': 'USCFPB_14' },
-        { 'name': 'Press Release', 'code': 'USCFPB_15' },
-        { 'name': 'Speech', 'code': 'USCFPB_16' },
-        { 'name': 'Testimony', 'code': 'USCFPB_17' }
-    ] %}
-    {% for allowed_category in govdelivery_categories -%}
-    {% if category.key == allowed_category.name %}
-        <label class="form-group_item">
-            <input class="custom-input"
-                   type="checkbox"
-                   name="code"
-                   value="{{ allowed_category.code }}">
-            {{ category.key }}
-        </label>
-    {% endif %}
-    {% endfor %}
-    {% endfor %}
-    </div>
-    {% elif code -%}
-    <div class="form-group">
-        <input type="hidden"
-               name="code"
-               value="{{ code }}">
-    </div>
-    {% endif -%}
 
     <div class="form-group">
+        <input type="hidden" name="code" value="{{ code }}">
         <input class="btn" type="submit" class="btn" value="Sign up">
     </div>
 
