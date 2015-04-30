@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `block__border` to `cf-enhancements.less` to provide borders around blocks.
 - Added alert to form validation failure
 - Added .env config for easier project setup
+- Added labels to the phone/email/fax/mail icons on `/contact-us/` page
 
 ### Changed
 - Added styles to 500 and 404 error pages.
@@ -54,6 +55,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed line height issue in Chosen select boxes
 - Updated Google Tag Manager ID from testing account to production account.
 - Fixed whistleblower slug on contact us
+- Improvements and fixes to `/contact-us/` page
 
 
 ## 3.0.0-0.2.3 - 2015-03-23
