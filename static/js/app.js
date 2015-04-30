@@ -689,9 +689,10 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     var duration = 300;
+    event.preventDefault();
 
-    $('.footer_top-button').click(function(event) {
-        jQuery('html, body').animate({scrollTop: 0}, duration);
+    $('.js-return-to-top').click(function(event) {
+        $('html, body').animate({scrollTop: 0}, duration);
         return false;
     });
 });
