@@ -8114,8 +8114,7 @@ a.focus .summary_event-date {
 }
 
 .footer_nav-list .list_link {
-  margin-right: 1.36363636em;
-  font-size: 1.375em;
+  margin-right: 1em;
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -8192,6 +8191,7 @@ a.focus .summary_event-date {
 .footer_list .list_link {
   color: #43484e;
   border-color: #43484e;
+  border-bottom: 1px dotted;
 }
 
 .footer_list .list_link:visited,

@@ -690,9 +690,9 @@ $(document).ready(function() {
 $(document).ready(function() {
     var duration = 300;
 
-    $('.footer_top-button').click(function(event) {
-        jQuery('html, body').animate({scrollTop: 0}, duration);
-        return false;
+    $('.js-return-to-top').click(function(event) {
+        event.preventDefault();
+        $('html, body').animate({scrollTop: 0}, duration);
     });
 });
 
