@@ -25,12 +25,12 @@
     {%- if submit_a_complaint.phone_1_num %}
         <p>
             <a class="list_link list_link__phone" href="tel:{{ submit_a_complaint.phone_1_num }}">
-                    {{ format_phone(submit_a_complaint.phone_1_num)| replace("2372", "CFPB (2372)") }}
-                {%- if submit_a_complaint.phone_1_desc %}
-                    <span class="micro-copy micro-copy__large">
-                        {{ submit_a_complaint.phone_1_desc }}
-                    </span>
-                {%- endif %}
+                {{ format_phone(submit_a_complaint.phone_1_num)| replace("2372", "CFPB (2372)") }}
+            {%- if submit_a_complaint.phone_1_desc %}
+                <span class="micro-copy micro-copy__large">
+                    {{ submit_a_complaint.phone_1_desc }}
+                </span>
+            {%- endif %}
             </a>
         </p>
     {%- endif %}
