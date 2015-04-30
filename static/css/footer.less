@@ -27,7 +27,7 @@
         margin-top: unit(30px / @base-font-size-px, em);
         .list__horizontal();
 
-        .respond-to-min(860px, {
+        .respond-to-min(768px, {
             margin-top: 0;
             position: absolute;
             // Aligns with the baseline of .footer_nav-list text.
@@ -39,7 +39,7 @@
     &_nav-list {
         .list__links();
 
-        .respond-to-max(859px, {
+        .respond-to-max(785px, {
             border-top-color: @black;
         });
 
@@ -47,11 +47,16 @@
             font-size: unit(18px / @base-font-size-px, em);
             .u-link__colors(@black);
 
-            .respond-to-min(860px, {
-                margin-right: unit(30px / 22px, em);
-                font-size: unit(22px / @base-font-size-px, em);
+            .respond-to-min(768px, {
+                margin-right: unit(18px / @base-font-size-px, em);
+
                 .webfont-regular();
                 .u-link__hover-border();
+            });
+
+            .respond-to-min(1200px, {
+                margin-right: unit(30px / 22px, em);
+                font-size: unit(22px / @base-font-size-px, em);
             });
         }
 
@@ -69,6 +74,7 @@
 
         .list_link {
             .u-link__colors(@darkgray);
+            border-bottom: 1px dotted;
         }
 
         .list_link.list_link__disabled {
@@ -134,7 +140,7 @@
             margin-bottom: 0;
         }
 
-        .respond-to-min(860px, {
+        .respond-to-min(768px, {
             padding-bottom: unit(30px / @base-font-size-px, em);
             margin-bottom: unit(30px / @base-font-size-px, em);
             border-bottom: 1px solid @gray-50;
@@ -159,7 +165,7 @@
             margin: 0;
         }
 
-        .respond-to-range(860px, 1199px,{
+        .respond-to-range(768px, 1199px,{
             .grid_column(8);
             border-right: 1px solid @gray-50;
 
@@ -185,7 +191,7 @@
     }
 
     &-middle-right {
-        .respond-to-range(860px, 1199px,{
+        .respond-to-range(768px, 1199px,{
             .grid_column(4);
 
             .footer_list {
@@ -206,7 +212,7 @@
     }
 
     &-post {
-        .respond-to-range(860px, 1199px, {
+        .respond-to-range(768px, 1199px, {
             padding-top: unit(30px / @base-font-size-px, em);
             margin-top: unit(30px / @base-font-size-px, em);
             border-top: 1px solid @gray-50;
