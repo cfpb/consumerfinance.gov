@@ -115,6 +115,42 @@
     }
 }
 
+/* topdoc
+  name: respond-to-retina() (mixin)
+  notes:
+    - "This mixin allows us to easily write styles that target retina screens"
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Usage
+      codenotes:
+        - |
+          // Example Less
+          .example {
+              background: url(regular-resolution-image.png);
+
+              .respond-to-retina({
+                  background-image: url(retina-image.png);
+              });
+          }
+
+          // Exports to
+          .example {
+              background: url(regular-resolution-image.png);
+          }
+          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+              .example {
+                  background-image: url(retina-image.png);
+              }
+          }
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-retina(@rules) {
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        @rules();
+    }
+}
 
 
 /* topdoc
