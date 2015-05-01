@@ -376,7 +376,7 @@ rules:
   # Set a specific tab width for your code.
   indent:
     - 2
-    - 4
+    - 2
     -
       indentSwitchCase: false
 
@@ -416,7 +416,7 @@ rules:
   eol-last: 2
 
   # Enforce function expressions not having a name.
-  func-names: 1
+  func-names: 0
 
   # Enforce use of function declarations or expressions
   # because of variable hoisting behavior.
@@ -549,11 +549,18 @@ rules:
   space-in-brackets:
     - 1
     - always
+    -
+      singleValue: true
+      objectsInArrays: false
+      arraysInArrays: false
+      arraysInObjects: false
+      objectsInObjects: false
+      propertyName: false
 
   # Requires spaces inside parentheses.
   space-in-parens:
     - 1
-    - never
+    - always
 
   # Requires spaces around operators.
   space-infix-ops: 2

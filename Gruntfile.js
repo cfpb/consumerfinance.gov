@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   var path = require('path');
+
   var config = {
 
     /**
@@ -178,23 +179,27 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Uglify: https://github.com/gruntjs/grunt-contrib-uglify
+     * Browserify: https://github.com/jmreidy/grunt-browserify
      *
-     * Minify JS files.
-     * Make sure to add any other JS libraries/files you'll be using.
-     * You can exclude files with the ! pattern.
+     * CommonJS JavaScript module manager.
+     * Shared modules are in `common.js`, while page-specific
+     * modules are in scripts that mirror the name of the
+     * URL location path, but ending in `index.js`.
      */
-    uglify: {
-      options: {
-        preserveComments: 'some'
+    browserify: {
+      build: {
+        src: 'src/static/js/routes/**/*.js',
+        dest: 'static/js/routes/common.js'
       },
-      // headScripts: {
-      //   src: 'vendor/html5shiv/html5shiv-printshiv.js',
-      //   dest: 'static/js/html5shiv-printshiv.js'
-      // },
-      bodyScripts: {
-        src: ['static/js/main.js'],
-        dest: 'static/js/main.min.js'
+      options: {
+        // Note: The entire `browserify-shim` config is inside `package.json`.
+        transform: ['uglifyify'],
+        plugin: [
+          ['factor-bundle', {
+            entries: browserifyPageScripts('entries'),
+            outputs: browserifyPageScripts('outputs')
+          }]
+        ]
       }
     },
 
@@ -241,7 +246,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: ['static/js/*.min.js']
+          src: ['static/js/**/*.min.js']
         }
       }
     },
@@ -317,9 +322,7 @@ module.exports = function(grunt) {
             quiet: false
         },
         src: [
-            'static/js/**/*',
-            '!static/js/main.js',
-            '!static/js/main.min.js'
+            'src/static/js/**/*.js'
         ]
       }
     },
@@ -420,6 +423,39 @@ module.exports = function(grunt) {
   };
 
   /**
+  * Generate entry/outputs map of page-specific JavaScript files for factor-bundler
+  * Browserify plugin. Also write to disk JSON map of URL paths to script paths.
+  * @param kind {String} Whether to get paths for file inputs or outputs.
+  */
+  function browserifyPageScripts(kind){
+    var sources = [];
+    var destfls = [];
+    var json = {};
+    var sourcedir = 'src/static/js/routes/';
+    var destfldir = 'static/js/routes/';
+    // Clean directory and build new script paths based on available files.
+    grunt.file.delete(destfldir);
+    var buildPaths = function(abspath, rootdir, subdir, filename){
+                      if (path.extname(filename) !== '.js') return;
+                      if (filename === 'common.js') return;
+                      subdir = subdir ? subdir : '';
+                      var newdir = path.join(rootdir.substr(4), subdir);
+                      var filepath = path.join( newdir, filename );
+                      var minpath = path.join( newdir, filename.substr( 0, filename.length - 3 ) + '.min.js' );
+                      sources.push( abspath );
+                      destfls.push( filepath );
+                      json[path.join(subdir, filename)] = path.join('/', filepath);
+                      grunt.file.mkdir(newdir);
+                     };
+    grunt.file.recurse(sourcedir, buildPaths);
+
+    grunt.file.write('static/js/routes-manifest.json', JSON.stringify(json));
+
+    if (kind === 'entries') return sources;
+    else if (kind === 'outputs') return destfls;
+  }
+
+  /**
    * Initialize a configuration object for the current project.
    */
   grunt.initConfig(config);
@@ -430,7 +466,7 @@ module.exports = function(grunt) {
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
                                 'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
-  grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
+  grunt.registerTask('jsdev', ['concat:bodyScripts', 'lintjs', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['lintjs']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
