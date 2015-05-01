@@ -17,14 +17,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added labels to the phone/email/fax/mail icons on `/contact-us/` page
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
 
 ### Changed
 
-- Updated mailing addresses in `/contact-us` sidebar
+- Updated mailing addresses in `/contact-us/` sidebar
 - Reverted navs from Contact Us redacting
 
 ### Fixed
+- Improvements and fixes to `/contact-us/` page
 
 
 ## 3.0.0-0.3.0 - 2015-04-23
