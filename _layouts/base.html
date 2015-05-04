@@ -189,18 +189,10 @@
     BODY SCRIPTS
     ============
     The number of scripts here must be kept to a minimum.
-    app.js = Application-wide JavaScript.
-    {active_page}.js = Page-specific Javascript.
+    common.min.js = Application-wide JavaScript.
 -->
 {% block javascript %}
-<script src="{{ url_for('static', filename='js/routes/common.js') }}"></script>
-{% set js_route = request.path[1:] + 'index.js' %}
-<script id="page-javascript" type="application/json">
-{
-    "page": "{{js_route}}",
-    "routes": {% include('static/js/routes-manifest.json')%}
-}
-</script>
+<script src="{{ url_for('static', filename='js/routes/common.min.js') }}"></script>
 {% endblock javascript %}
 
 </body>
