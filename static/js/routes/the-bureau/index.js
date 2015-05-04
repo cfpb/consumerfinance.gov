@@ -1,0 +1,5 @@
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({27:[function(require,module,exports){
+"use strict";require("slick");var breakpointHandler=require("../../modules/breakpoint-handler"),BreakpointHandler=breakpointHandler.BreakpointHandler,MobileOnlyExpandable=breakpointHandler.MobileOnlyExpandable,carouselHandler;$("document").ready(function(){$("html").hasClass("lt-ie9")||(carouselHandler=new BreakpointHandler({breakpoint:599,type:"max",enter:function(){$(".bureau-mission").slick({dots:!0})},leave:function(){$(".bureau-mission").unslick()}}),$(".expandable__mobile-only").each(function(e){new MobileOnlyExpandable($(this),599)}))});
+
+
+},{"../../modules/breakpoint-handler":3,"slick":33}]},{},[27]);
