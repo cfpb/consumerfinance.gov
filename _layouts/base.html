@@ -101,16 +101,24 @@
 </head>
 
 <body>
+<!--
+    =========
+    Globals
+    =========
+    Scripts attached to the global space before any other content is loaded.
+    <script src="{{ url_for('static', filename='js/globals.js') }}"></script>
+-->
 
 <!--
     =========
     Analytics
     =========
-    We are double tagging with classic analytics and tag manager so that we can
-    test any differences between the two.
 -->
-
     <!-- CLASSIC ANALYTICS -->
+    <!-- TODO: Remove Google Analytics code snippet once GTM is stable.
+         We are double tagging with classic analytics and tag manager
+         so that we can test any differences between the two.
+         See: https://github.com/cfpb/cfgov-refresh/issues/496 -->
     <script>
         var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -180,11 +188,19 @@
     ============
     BODY SCRIPTS
     ============
-    The number of scripts here must be kept to a minimum. Unless adding a significant amount of JS that is
-    specific to a single page or section of the site, all custom JS should be added to src/static/js/app.js.
+    The number of scripts here must be kept to a minimum.
+    app.js = Application-wide JavaScript.
+    {active_page}.js = Page-specific Javascript.
 -->
 {% block javascript %}
-<script src="/static/js/main.min.js"></script>
+<script src="{{ url_for('static', filename='js/routes/common.js') }}"></script>
+{% set js_route = request.path[1:] + 'index.js' %}
+<script id="page-javascript" type="application/json">
+{
+    "page": "{{js_route}}",
+    "routes": {% include('static/js/routes-manifest.json')%}
+}
+</script>
 {% endblock javascript %}
 
 </body>

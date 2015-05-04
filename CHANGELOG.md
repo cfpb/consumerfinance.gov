@@ -16,13 +16,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
-
 - Added labels to the phone/email/fax/mail icons on `/contact-us/` page
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
+- Added `/modules/util/web-storage-proxy.js` utility module.
+- Added `/modules/util/js-loader.js` utility module.
 
 ### Changed
 
 - Updated mailing addresses in `/contact-us/` sidebar
+- Added `browserify` package and its dependencies
+  and refactored codebase to use Browserify for JS modules.
+- Added additional ESLint option flags in `space-in-brackets` rule.
+- Added ability to scrub plural terms in typeAndFilter jQuery plugin
+- Changed ESLint indent amount to 2 spaces to match CFPB front-end standards.
+- Turns off ESLint `func-names` setting because its too verbose for the gain it provides.
+- Updated `grunt` to `~0.4.5`.
+- Updated `jquery` to `^1.11.3`.
+- Replaced `grunt-uglify` with `uglifyify`.
+- Updated mailing addresses in `/contact-us` sidebar
 - Reverted navs from Contact Us redacting
 
 ### Fixed

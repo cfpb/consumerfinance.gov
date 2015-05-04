@@ -211,6 +211,7 @@
 
 {% block javascript %}
     {{ super() }}
+    <!-- TODO: Move this to a Browserify module. -->
     <script>
         $('document').ready(function () {
             if (!$('html').hasClass('lt-ie9')) {
