@@ -29,9 +29,9 @@ $( document ).ready( function() {
   require( '../modules/jquery/custom-select' ).init();
 
   // Page-specifc modules.
-  var loader = require( '../modules/util/js-loader' );
-  var rawJson = document.getElementById( 'page-javascript' ).innerHTML;
-  var json = JSON.parse( rawJson );
-  var pageScript = json.routes[json.page];
-  if ( pageScript ) loader.loadScript( pageScript );
+  require( './blog/index.js' );
+  require( './contact-us/index.js' );
+  require( './index.js' );
+  require( './the-bureau/index.js' );
+  require( './the-bureau/bureau-structure/index.js' );
 } );
