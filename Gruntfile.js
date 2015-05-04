@@ -118,25 +118,6 @@ module.exports = function(grunt) {
           '!vendor/cf-concat/cf.less'
         ],
         dest: 'vendor/cf-concat/cf.less',
-      },
-      bodyScripts: {
-        src: [
-          'vendor/jquery/jquery.js',
-          'vendor/jquery.easing/jquery.easing.js',
-          // 'vendor/history.js/jquery.history.js',
-          'vendor/chosen/chosen.jquery.js',
-          'vendor/cf-*/*.js',
-          'static/js/jquery.custom-input.js',
-          'static/js/jquery.custom-select.js',
-          'static/js/jquery.cf_input-split.js',
-          'vendor/string_score/string_score.js',
-          'static/js/jquery.type-and-filter.js',
-          'static/js/breakpoint-handler.js',
-          'static/js/content-slider.js',
-          // 'static/js/jquery.cf_pagination.js',
-          'static/js/app.js'
-        ],
-        dest: 'static/js/main.js'
       }
     },
 
@@ -189,17 +170,11 @@ module.exports = function(grunt) {
     browserify: {
       build: {
         src: 'src/static/js/routes/**/*.js',
-        dest: 'static/js/routes/common.js'
+        dest: 'static/js/routes/common.min.js'
       },
       options: {
         // Note: The entire `browserify-shim` config is inside `package.json`.
-        transform: ['uglifyify'],
-        plugin: [
-          ['factor-bundle', {
-            entries: browserifyPageScripts('entries'),
-            outputs: browserifyPageScripts('outputs')
-          }]
-        ]
+        transform: ['uglifyify']
       }
     },
 
@@ -335,7 +310,7 @@ module.exports = function(grunt) {
      */
     watch: {
       all: {
-        files: ['Gruntfile.js', 'static/css/*.less', '<%= concat.bodyScripts.src %>'],
+        files: ['static/css/*.less', 'src/static/js/**/*.js', 'Gruntfile.js'],
         tasks: ['default']
       },
       css: {
@@ -343,7 +318,7 @@ module.exports = function(grunt) {
         tasks: ['cssdev']
       },
       cssjs: {
-        files: ['static/css/*.less', 'static/js/app.js'],
+        files: ['static/css/*.less', 'src/static/js/**/*.js'],
         tasks: ['cssdev', 'jsdev']
       }
     },
@@ -423,39 +398,6 @@ module.exports = function(grunt) {
   };
 
   /**
-  * Generate entry/outputs map of page-specific JavaScript files for factor-bundler
-  * Browserify plugin. Also write to disk JSON map of URL paths to script paths.
-  * @param kind {String} Whether to get paths for file inputs or outputs.
-  */
-  function browserifyPageScripts(kind){
-    var sources = [];
-    var destfls = [];
-    var json = {};
-    var sourcedir = 'src/static/js/routes/';
-    var destfldir = 'static/js/routes/';
-    // Clean directory and build new script paths based on available files.
-    grunt.file.delete(destfldir);
-    var buildPaths = function(abspath, rootdir, subdir, filename){
-                      if (path.extname(filename) !== '.js') return;
-                      if (filename === 'common.js') return;
-                      subdir = subdir ? subdir : '';
-                      var newdir = path.join(rootdir.substr(4), subdir);
-                      var filepath = path.join( newdir, filename );
-                      var minpath = path.join( newdir, filename.substr( 0, filename.length - 3 ) + '.min.js' );
-                      sources.push( abspath );
-                      destfls.push( filepath );
-                      json[path.join(subdir, filename)] = path.join('/', filepath);
-                      grunt.file.mkdir(newdir);
-                     };
-    grunt.file.recurse(sourcedir, buildPaths);
-
-    grunt.file.write('static/js/routes-manifest.json', JSON.stringify(json));
-
-    if (kind === 'entries') return sources;
-    else if (kind === 'outputs') return destfls;
-  }
-
-  /**
    * Initialize a configuration object for the current project.
    */
   grunt.initConfig(config);
@@ -466,7 +408,7 @@ module.exports = function(grunt) {
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
                                 'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
-  grunt.registerTask('jsdev', ['concat:bodyScripts', 'lintjs', 'usebanner:js']);
+  grunt.registerTask('jsdev', ['browserify:build', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['lintjs']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
