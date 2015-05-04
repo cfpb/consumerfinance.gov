@@ -489,21 +489,21 @@ $('.js-validate-filters').each(function() {
 /* ==========================================================================
    Pagination Form validation
 
-   Check to verify page input value is number and with min/max range
+   Check to verify page input value is number and within min/max range
    before submitting form.
    ========================================================================== */
 
-$('.js-validate_pagination').each(function() {
-    var $form = $(this);
+$( '.js-validate_pagination' ).each( function() {
+    var $form = $( this );
     
-    $form.on('submit', function() {
+    $form.on('submit' , function() {
         var formIsValid = false;
-        var $pageInput = $form.find('#pagination_current-page');
-        var pageVal = parseInt($pageInput.val(), 10);
-        var pageMinVal = parseInt($pageInput.attr('min'), 10);
-        var pageMaxVal = parseInt($pageInput.attr('max'), 10);
+        var $pageInput = $form.find( '#pagination_current-page' );
+        var pageVal = parseInt( $pageInput.val(), 10 );
+        var pageMinVal = parseInt( $pageInput.attr('min'), 10 );
+        var pageMaxVal = parseInt( $pageInput.attr('max'), 10 );
 
-        formIsValid = isNaN(pageVal) === false
+        formIsValid = isNaN( pageVal ) === false
                     && pageVal >= pageMinVal
                     && pageVal <= pageMaxVal;
 
