@@ -1,8 +1,16 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cfpb/cfgov-refresh.git"
+  },
   "devDependencies": {
+    "browserify": "^9.0.3",
+    "browserify-shim": "^3.8.6",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
-    "grunt": "~0.4.4",
+    "factor-bundle": "^2.4.0",
+    "grunt": "~0.4.5",
     "grunt-autoprefixer": "~0.6.5",
+    "grunt-browserify": "^3.7.0",
     "grunt-banner": "~0.2.2",
     "grunt-bower-task": "~0.4.0",
     "grunt-concurrent": "~1.0.0",
@@ -10,12 +18,26 @@
     "grunt-contrib-copy": "~0.5.0",
     "grunt-eslint": "^10.0.0",
     "grunt-contrib-less": "~0.11.0",
-    "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-legacssy": "~0.3.1",
     "grunt-string-replace": "~0.2.7",
     "grunt-topdoc": "~0.2.0",
     "load-grunt-tasks": "~0.6.0",
-    "time-grunt": "~1.0.0"
-  }
+    "time-grunt": "~1.0.0",
+    "uglifyify": "^3.0.1"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./vendor/jquery/jquery.js",
+    "jquery-easing": "./vendor/jquery.easing/jquery.easing.js",
+    "cf-expandables": "./vendor/cf-expandables/cf-expandables.js",
+    "chosen": "./vendor/chosen/chosen.jquery.js",
+    "requestNextAnimationFrame": "./static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js",
+    "slick": "./vendor/slick-carousel/slick.min.js"
+  },
+  "browserify-shim": "./_settings/browserify-shims.js"
 }
