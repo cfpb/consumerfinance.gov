@@ -89,7 +89,7 @@
                             Subscribe to our email newsletter. We will update you on new event updates.
                         </p>
                         {% import "email-subscribe-form.html" as subscribe with context %}
-                        {{ subscribe.render(vars.query) }}
+                        {{ subscribe.render(vars.query, 'USCFPB_93') }}
                     </div>
                     <div>
                         {% import "rss.html" as rss %}
