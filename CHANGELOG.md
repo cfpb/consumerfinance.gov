@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaced `grunt-uglify` with `uglifyify`.
 - Updated mailing addresses in `/contact-us` sidebar
 - Reverted navs from Contact Us redacting
+- Refactored email subscribe form
 
 ### Fixed
 - Improvements and fixes to `/contact-us/` page
