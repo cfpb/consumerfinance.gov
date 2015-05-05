@@ -536,7 +536,6 @@
 {# A helper macro for filters()
    ========================================================================== #}
 {% macro filters_form(filters, query, doc_type, options) %}
-{% from 'macros.html' import alert  %}
 
 <form class="js-validate-filters {{ options.additional_classes }}"
       method="get"
@@ -545,7 +544,6 @@
 {%- else -%}
       >
 {% endif %}
-    {{ alert(options.alert) if options.alert }}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
@@ -591,7 +589,7 @@
     {# Calendar filters #}
     {% elif filter == 'calendar' %}
         <div class="form-l_col form-l_col-1-3">
-            <div class="form-group">
+            <div class="form-group required-check-group">
                 <label class="form-label-header">
                     Calendars
                 </label>

@@ -13,7 +13,6 @@ $( document ).ready( function() {
   require( 'cf-expandables' );
 
   // Native-Browserify modules.
-  require( '../modules/alert' ).init();
   require( '../modules/beta-banner-state' ).init();
   require( '../modules/secondary-nav-toggle' ).init();
   require( '../modules/post-filters-form-validation' ).init();

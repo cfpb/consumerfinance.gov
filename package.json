@@ -36,7 +36,11 @@
     "cf-expandables": "./vendor/cf-expandables/cf-expandables.js",
     "chosen": "./vendor/chosen/chosen.jquery.js",
     "requestNextAnimationFrame": "./static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js",
-    "slick": "./vendor/slick-carousel/slick.min.js"
+    "slick": "./vendor/slick-carousel/slick.min.js",
+    "validate": "./vendor/validate/validate.js"
   },
-  "browserify-shim": "./_settings/browserify-shims.js"
+  "browserify-shim": "./_settings/browserify-shims.js",
+  "dependencies": {
+    "handlebars": "^3.0.3"
+  }
 }
