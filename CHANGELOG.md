@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated mailing addresses in `/contact-us` sidebar
 - Reverted navs from Contact Us redacting
 - Updated footer to match new designs
+- Refactored email subscribe form
 
 ### Fixed
 - Improvements and fixes to `/contact-us/` page
