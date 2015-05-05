@@ -45,7 +45,7 @@
                         Subscribe to get our press releases by email.
                     </p>
                     {% import "email-subscribe-form.html" as subscribe with context %}
-                    {{ subscribe.render(vars.query) }}
+                    {{ subscribe.render(vars.query, 'USCFPB_23') }}
                 </div>
                 <div class="block__sub content-l_col content-l_col-1-2">
                     {% import "rss.html" as rss %}

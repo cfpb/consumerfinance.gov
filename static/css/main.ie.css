@@ -5343,6 +5343,63 @@ tbody tr {
   font-weight: normal !important;
 }
 
+.list_link.list_link__phone {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #101820;
+  border-color: #101820;
+  border-bottom-width: 0 !important;
+}
+
+.list_link.list_link__phone em,
+.list_link.list_link__phone i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list_link.list_link__phone em,
+.lt-ie9 .list_link.list_link__phone i {
+  font-style: normal !important;
+}
+
+.list_link.list_link__phone strong,
+.list_link.list_link__phone b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list_link.list_link__phone strong,
+.lt-ie9 .list_link.list_link__phone b {
+  font-weight: normal !important;
+}
+
+.list_link.list_link__phone:visited,
+.list_link.list_link__phone.visited {
+  border-color: #101820;
+  color: #101820;
+}
+
+.list_link.list_link__phone:hover,
+.list_link.list_link__phone.hover {
+  border-color: #101820;
+  color: #101820;
+}
+
+.list_link.list_link__phone:focus,
+.list_link.list_link__phone.focus {
+  border-color: #101820;
+  color: #101820;
+}
+
+.list_link.list_link__phone:active,
+.list_link.list_link__phone.active {
+  border-color: #101820;
+  color: #101820;
+}
+
 .list__unstyled {
   padding-left: 0;
   list-style-type: none;

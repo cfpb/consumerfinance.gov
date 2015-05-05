@@ -33,7 +33,7 @@
                     <ul class="list__links">
                     {% for category in ['Divisions', 'Office of the Director'] %}
                         <li>
-                            <button class="link-text jump-link jump-link__right jump-link__bg content-show" 
+                            <button class="link-text jump-link jump-link__right jump-link__bg content-show"
                                     data-content=".nodes{{ loop.index }}">
                                 {{ category }}
                             </button>
@@ -43,14 +43,14 @@
                 </div>
             </div>
         </div>
-        
+
         <ul class="org-chart_branches">
         {% for category in ['Divisions', 'Office of the Director'] %}
             {% set cat_loop = loop %}
             <li class="org-chart_branch {% if loop.last %} last-child {% endif %}">
                 <h3 class="org-chart_branch_name">{{ category }}</h3>
                 <ul class="org-chart_nodes
-                           content-panel 
+                           content-panel
                            nodes{{ cat_loop.index }}">
                     <li>
                         <button class="content-hide link-text jump-link jump-link__before jump-link__left">
@@ -65,7 +65,7 @@
                         {% set children = queries.orgmember.search_with_url_arguments(
                            filter_parent=parent.id) %}
                     {% if children|list|length %}
-                        <button class="org-chart_role expandable_target expandable_header content-show" 
+                        <button class="org-chart_role expandable_target expandable_header content-show"
                                 data-content=".nodes{{ cat_loop.index }}_{{ par_loop.index }}">
                             <span class="node_expander">
                                 <span class="expandable_link u-hide-on-mobile">
@@ -82,9 +82,9 @@
                             </span>
                             {{ role_macro.display_role(parent) }}
                         </button>
-                        <ul class="org-chart_nodes 
-                                   expandable_content 
-                                   content-panel    
+                        <ul class="org-chart_nodes
+                                   expandable_content
+                                   content-panel
                                    nodes{{ cat_loop.index }}_{{ par_loop.index }}">
                             <li>
                                 <button class="jump-link jump-link__before jump-link__left content-hide">
@@ -103,16 +103,16 @@
                         <div class="org-chart_role">
                             {{ role_macro.display_role(parent) }}
                         </div>
-                    {% endif %}   
+                    {% endif %}
                     </li>
                 {% endfor %}
                 </ul>
             </li>
         {% endfor %}
         </ul>
-        
+
     </div>
-    
+
     <aside class="block block__padded-top block__padded-bottom block__border-top">
         <div class="content-l content-l__main">
             <div class="content-l_col content-l_col-1-2">
@@ -141,39 +141,4 @@
             </div>
         </div>
 
-{% endblock %}
-
-{% block javascript %}
-    {{ super() }}
-    <script src="/static/vendor/slick-carousel/slick.min.js"></script>
-    <script>
-        $('document').ready(function () {
-            var slider, handler;
-            if (!$('html').hasClass('lt-ie9')) {
-                handler = new BreakpointHandler({
-                    breakpoint: 599,
-                    type: "max",
-                    enter: function () {
-                        // close any open expandables
-                        $('.org-chart').find('.expandable__expanded .expandable_target').click();
-                        // hide org chart branches
-                        $('.org-chart_branches').hide();
-                        // show content slider & mobile nav links
-                        $('#content-slider, .content-hide').show();
-                        // init slider
-                        slider = new contentSlider('#content-slider', 1);
-                    },
-                    leave: function () {
-                        // destroy slider
-                        slider && slider.destroy();
-                        slider = null;
-                        // hide content slider & mobile nav links
-                        $('#content-slider, .content-hide').hide();
-                        // show org chart branches
-                        $('.org-chart_branches').show();
-                    }
-                });
-            }
-        });
-    </script>
 {% endblock %}

@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   var path = require('path');
+
   var config = {
 
     /**
@@ -117,25 +118,6 @@ module.exports = function(grunt) {
           '!vendor/cf-concat/cf.less'
         ],
         dest: 'vendor/cf-concat/cf.less',
-      },
-      bodyScripts: {
-        src: [
-          'vendor/jquery/jquery.js',
-          'vendor/jquery.easing/jquery.easing.js',
-          // 'vendor/history.js/jquery.history.js',
-          'vendor/chosen/chosen.jquery.js',
-          'vendor/cf-*/*.js',
-          'static/js/jquery.custom-input.js',
-          'static/js/jquery.custom-select.js',
-          'static/js/jquery.cf_input-split.js',
-          'vendor/string_score/string_score.js',
-          'static/js/jquery.type-and-filter.js',
-          'static/js/breakpoint-handler.js',
-          'static/js/content-slider.js',
-          // 'static/js/jquery.cf_pagination.js',
-          'static/js/app.js'
-        ],
-        dest: 'static/js/main.js'
       }
     },
 
@@ -178,23 +160,21 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Uglify: https://github.com/gruntjs/grunt-contrib-uglify
+     * Browserify: https://github.com/jmreidy/grunt-browserify
      *
-     * Minify JS files.
-     * Make sure to add any other JS libraries/files you'll be using.
-     * You can exclude files with the ! pattern.
+     * CommonJS JavaScript module manager.
+     * Shared modules are in `common.js`, while page-specific
+     * modules are in scripts that mirror the name of the
+     * URL location path, but ending in `index.js`.
      */
-    uglify: {
-      options: {
-        preserveComments: 'some'
+    browserify: {
+      build: {
+        src: 'src/static/js/routes/**/*.js',
+        dest: 'static/js/routes/common.min.js'
       },
-      // headScripts: {
-      //   src: 'vendor/html5shiv/html5shiv-printshiv.js',
-      //   dest: 'static/js/html5shiv-printshiv.js'
-      // },
-      bodyScripts: {
-        src: ['static/js/main.js'],
-        dest: 'static/js/main.min.js'
+      options: {
+        // Note: The entire `browserify-shim` config is inside `package.json`.
+        transform: ['uglifyify']
       }
     },
 
@@ -241,7 +221,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: ['static/js/*.min.js']
+          src: ['static/js/**/*.min.js']
         }
       }
     },
@@ -317,9 +297,7 @@ module.exports = function(grunt) {
             quiet: false
         },
         src: [
-            'static/js/**/*',
-            '!static/js/main.js',
-            '!static/js/main.min.js'
+            'src/static/js/**/*.js'
         ]
       }
     },
@@ -332,7 +310,7 @@ module.exports = function(grunt) {
      */
     watch: {
       all: {
-        files: ['Gruntfile.js', 'static/css/*.less', '<%= concat.bodyScripts.src %>'],
+        files: ['static/css/*.less', 'src/static/js/**/*.js', 'Gruntfile.js'],
         tasks: ['default']
       },
       css: {
@@ -340,7 +318,7 @@ module.exports = function(grunt) {
         tasks: ['cssdev']
       },
       cssjs: {
-        files: ['static/css/*.less', 'static/js/app.js'],
+        files: ['static/css/*.less', 'src/static/js/**/*.js'],
         tasks: ['cssdev', 'jsdev']
       }
     },
@@ -430,7 +408,7 @@ module.exports = function(grunt) {
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
                                 'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
-  grunt.registerTask('jsdev', ['concat:bodyScripts', 'uglify', 'usebanner:js']);
+  grunt.registerTask('jsdev', ['browserify:build', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['lintjs']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
