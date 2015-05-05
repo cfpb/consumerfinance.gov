@@ -29,6 +29,10 @@
       "type": "string",
       "index": "not_analyzed"
     },
+    "blog_category": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
     "categories": {
       "properties": {
         "id": {
