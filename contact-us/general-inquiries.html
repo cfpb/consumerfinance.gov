@@ -11,28 +11,33 @@
 {%- if general_inqueries.email_0_addr %}
     <li class="list_item u-break-word">
         <span class="cf-icon cf-icon-email list_icon"></span>
-        <span class="list_text">
+        <span class="h5 list_text">Email:</span>
+        <p>
             <a class="list_link" href="mailto:{{ general_inqueries.email_0_addr }}">
                 {{ general_inqueries.email_0_addr }}
             </a>
-        </span>
+        </p>
     </li>
 {%- endif %}
 
 {%- if general_inqueries.phone_0_num %}
     <li class="list_item">
         <span class="cf-icon cf-icon-phone list_icon"></span>
-        <span class="short-desc list_text">
+        <span class="h5 list_text">Phone:</span>
+        <p>
+            <a class="list_link list_link__phone" href="tel:{{ general_inqueries.phone_0_num }}">
             {{ format_phone(general_inqueries.phone_0_num) }}
-        </span>
+            </a>
+        </p>
     </li>
 {%- endif %}
 {%- if general_inqueries.fax_num %}
     <li class="list_item">
         <span class="cf-icon cf-icon-fax list_icon"></span>
-        <span class="short-desc list_text">
+        <span class="h5 list_text">Fax:</span>
+        <p class="short-desc">
             {{ format_phone(general_inqueries.fax_num) }}
-        </span>
+        </p>
     </li>
 {%- endif %}
 </ul>

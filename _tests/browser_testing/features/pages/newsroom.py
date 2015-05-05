@@ -44,12 +44,13 @@ TOPIC_SEARCH_INPUT = '//input[@value="Search for topics"]'
 SELECT_AUTHOR = '//div[@id="filter_author_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"author_name")]/..'
 SELECT_TOPIC = '//div[@id="filter_tags_chosen"]/div/ul[@class="chosen-results"]/li/em[contains(text(),"topic_name")]/..'
 
+
 class Newsroom(Base):
 
     def __init__(self, logger, directory, base_url=r'http://localhost/',
                  driver=None, driver_wait=10, delay_secs=0):
         super(Newsroom, self).__init__(logger, directory, base_url,
-                                          driver, driver_wait, delay_secs)
+                                       driver, driver_wait, delay_secs)
         self.logger = logger
         self.driver_wait = driver_wait
 
@@ -83,7 +84,8 @@ class Newsroom(Base):
                                       )
         )
         checkbox.click()
-    def set_date_filter(self, from_month=None, from_year=None, to_month=None, 
+
+    def set_date_filter(self, from_month=None, from_year=None, to_month=None,
                         to_year=None):
         if from_month:
             from_month = self.driver.find_element_by_xpath(
