@@ -27,6 +27,7 @@ $( document ).ready( function() {
   require( '../modules/jquery/cf_pagination' ).init();
   require( '../modules/jquery/custom-input' ).init();
   require( '../modules/jquery/custom-select' ).init();
+  require( '../modules/footer-button' ).init();
 
   // Page-specifc modules.
   require( './blog/index.js' );
