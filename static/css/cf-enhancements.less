@@ -804,3 +804,38 @@ tbody {
     name: EOF
     eof: true
 */
+
+
+/* topdoc
+  name: Warning
+  family: cf-forms
+  notes:
+    - "Adds Warning state to form fields"
+  tags:
+    - cf-forms
+*/
+
+@input-warning:     @gold;
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+select[multiple],
+textarea {
+    &.warning {
+        border: 1px solid @input-warning;
+        outline: 1px solid @input-warning;
+    }
+}
+
+.warning + .@{cf-forms_input-icon-class} {
+    color: @input-warning;
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
