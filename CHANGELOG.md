@@ -18,6 +18,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Added labels to the phone/email/fax/mail icons on `/contact-us/` page
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
+- `.respond-to-retina` mixin for media queries targeting Retina iOS devices
+- Scroll to top functionality on footer
 - Added `/modules/util/web-storage-proxy.js` utility module.
 - Added `/modules/util/js-loader.js` utility module.
 
@@ -35,6 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaced `grunt-uglify` with `uglifyify`.
 - Updated mailing addresses in `/contact-us` sidebar
 - Reverted navs from Contact Us redacting
+- Updated footer to match new designs
 - Refactored email subscribe form
 
 ### Fixed
