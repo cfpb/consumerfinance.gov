@@ -550,27 +550,24 @@
 {% for filter in filters %}
 
     {# Category filters #}
-    {% if filter == 'category' %}
+    {% if filter in ['blog_category', 'category'] %}
         <div class="form-l_col form-l_col-1-3">
             <div class="form-group">
                 <label class="form-label-header">
                     Categories
                 </label>
-            {% if doc_type == 'newsroom' -%}
-                {% set categories = query.possible_values_for('category', doc_type='newsroom')|sort(attribute='key') %}
+            {% if doc_type == 'posts' -%}
+                {% set categories = query.possible_values_for('blog_category')|sort(attribute='key') %}
+                {% set category_field = 'blog_category' %}
             {%- else -%}
                 {% set categories = query.possible_values_for('category')|sort(attribute='key') %}
+                {% set category_field = 'category' %}
             {% endif -%}
             {% for category in categories -%}
                 <label class="form-group_item">
-                    {{ filter_checkbox('category', category.key)|safe }}
+                    {{ filter_checkbox(category_field, category.key)|safe }}
                 </label>
             {% endfor %}
-            {% if doc_type == 'newsroom' -%}
-                <label class="form-group_item">
-                    {{ filter_checkbox('category', 'Blog', 'Blog')|safe }}
-                </label>
-            {%- endif %}
             </div>
         </div>
 
@@ -581,23 +578,9 @@
                 <label class="form-label-header">
                     Category type
                 </label>
-            {% set categories = query.possible_values_for('type')|sort(attribute='key') -%}
+            {% set categories =
+               query.possible_values_for('category')|sort(attribute='key') %}
             {% for category in categories -%}
-                {% if category.key != 'cfpb_newsroom' %}
-                    {% if category.key == 'post' %}
-                        <label class="form-group_item">
-                            {{ filter_checkbox('category', 'Blog', 'Blog')|safe }}
-                        </label>
-                    {% else %}
-                        <label class="form-group_item">
-                            {{ filter_checkbox('type', category.key)|safe }}
-                        </label>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-            {% set newsroom_categories =
-               query.possible_values_for('category', doc_type='newsroom')|sort(attribute='key') %}
-            {% for category in newsroom_categories -%}
                 <label class="form-group_item">
                     {{ filter_checkbox('category', category.key)|safe }}
                 </label>
