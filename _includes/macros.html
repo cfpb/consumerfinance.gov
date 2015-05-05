@@ -238,3 +238,50 @@
         <p class="alert_text">{{ text }}</p>
     </div>
 {%- endmacro %}
+
+
+
+{# ==========================================================================
+
+   subscribe()
+
+   ==========================================================================
+
+   Description:
+
+   Creates an email subscription form when given:
+
+   gd_code: A GovDelivery code for a specified mailing list
+
+   ========================================================================== #}
+
+{% macro subscribe(gd_code) %}
+
+<form id="email-subscribe-form"
+      action="/subscriptions/new/"
+      method="POST"
+      enctype="application/x-www-form-urlencoded">
+
+    <div class="form-group">
+        <label for="email-subscribe-form_email">
+            Email address
+        </label>
+        <input id="email-subscribe-form_email"
+               type="email"
+               name="email"
+               placeholder="example@mail.com">
+    </div>
+    <p class="short-desc u-mt10">
+        The information you provide will permit the Consumer Financial
+        Protection Bureau to process your request or inquiry.
+        <a href="/privacy-policy/">See More</a>
+    </p>
+    <div class="form-group">
+        <input type="hidden" name="code" value="{{ gd_code }}">
+        <input class="btn" type="submit" value="Sign up">
+    </div>
+
+</form>
+
+{% endmacro %}
+
