@@ -26,6 +26,7 @@ except ImportError:
 index_name = "cfgov_test"
 root = os.path.join(os.getcwd(), '../..')
 
+
 class LiveServer(object):
     def __init__(self):
         config = dict(debug=False,
@@ -34,9 +35,8 @@ class LiveServer(object):
                       index=index_name)
         self.app = app_with_config(config)
         worker = lambda app, port: app.run(host='0.0.0.0', port=7000, use_reloader=False)
-        self.process = multiprocessing.Process(
-                    target=worker, args=(self.app, 7000)
-                  )
+        self.process = multiprocessing.Process(target=worker, 
+                                               args=(self.app, 7000))
         self.process.start()
 
     def terminate(self):
@@ -84,7 +84,8 @@ def before_all(context):
     context.base = Base(context.logger, context.directory,
                         context.base_url, driver, 10, context.delay_secs)
     context.newsroom = Newsroom(context.logger, context.directory,
-                        context.base_url, driver, 10, context.delay_secs)
+                                context.base_url, driver, 10, context.delay_secs
+                                )
     context.navigation = Navigation(context.logger, context.directory,
                                     context.base_url,
                                     driver, 10, context.delay_secs)
@@ -102,16 +103,14 @@ def before_all(context):
     es.indices.create(index=index_name)
 
     # Create the mappings
-    create_mapping('newsroom', os.path.join(root, '_settings/posts_mappings.json'))
-    create_mapping('featured_topic', os.path.join(root, '_settings/posts_mappings.json'))
+    create_mapping('newsroom', os.path.join(root, '_settings/mappings/newsroom.json'))
+    create_mapping('featured_topic', os.path.join(root, '_settings/mappings/posts.json'))
 
     # Index the documents
     index_documents('newsroom', os.path.join(root, '_tests/browser_testing/fixtures/newsroom.json'))
     index_documents('views', os.path.join(root, '_tests/browser_testing/fixtures/views.json'))
     index_documents('featured_topic', os.path.join(root, '_tests/browser_testing/fixtures/featured_topic.json'))
 
-    
-    
 
 def before_feature(context, feature):
     context.logger.info('STARTING FEATURE %s' % feature)
@@ -157,7 +156,7 @@ def after_all(context):
             if http_proxy.startswith("http://"):
                 http_proxy = http_proxy[7:]
             connection = httplib.HTTPConnection(http_proxy)
-        else:    
+        else:
             connection = httplib.HTTPConnection("saucelabs.com")
 
         connection.request('PUT', 'http://saucelabs.com/rest/v1/%s/jobs/%s' %
@@ -237,6 +236,7 @@ def setup_config(context):
     else:
         context.take_screenshots = False
 
+
 def create_mapping(doc_type, mapping_json_path):
     es = Elasticsearch()
     mapping_json = open(os.path.join(root, mapping_json_path))
@@ -244,6 +244,7 @@ def create_mapping(doc_type, mapping_json_path):
     es.indices.put_mapping(index=index_name,
                            doc_type=doc_type,
                            body={doc_type: mapping})
+
 
 def index_documents(doc_type, json_path):
     es = Elasticsearch()

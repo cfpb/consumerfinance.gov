@@ -47,6 +47,14 @@
 
 .list_link {
     .webfont-medium();
+
+    &.list_link__phone {
+        .respond-to-min(768px, {
+            .webfont-regular();
+            .u-link__colors(@black);
+            .u-link__no-border;
+        });
+    }
 }
 
 
