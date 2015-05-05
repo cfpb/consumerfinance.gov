@@ -18,12 +18,12 @@
 
     <h1>Activity Log</h1>
     <p class="h3">
-        Find the latest CFPB activities and publications here. Use the filters 
+        Find the latest CFPB activities and publications here. Use the filters
         below to browse by date, specific topics, or types of posts.
     </p>
 
     <div class="block__sub u-mb0">
-        
+
         <div id="pagination_content"></div>
 
         {{ filters(
@@ -41,7 +41,7 @@
                                 {%- set activity_type = item.category.0 %}
                             {%- endif -%}
                         {%- elif item.type == 'posts' -%}
-                            {% set activity_type = 'blog' %}
+                            {% set activity_type = 'Blog' %}
                         {%- endif %}
                         <span class="category-slug u-mb0">
                             {{ category_icon(activity_type, 'category-slug_icon')|safe }}
