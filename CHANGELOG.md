@@ -22,6 +22,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Scroll to top functionality on footer
 - Added `/modules/util/web-storage-proxy.js` utility module.
 - Added `/modules/util/js-loader.js` utility module.
+- Adds ESLint check for `@todo` jsdoc syntax.
+- Updated ESLint configuration to match version `0.20.0.`
+  Adds enforcement of `no-dupe-args` and `no-duplicate-case` rules,
+  and warnings for `no-continue` and `operator-linebreak` rules.
 
 ### Changed
 
@@ -29,10 +33,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `browserify` package and its dependencies
   and refactored codebase to use Browserify for JS modules.
 - Added additional ESLint option flags in `space-in-brackets` rule.
+- Changed ESLint indent amount to 2 spaces from 4 to match CFPB front-end standards.
+- Turns off ESLint `func-names` setting because it's too verbose for the gain it provides.
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
-- Changed ESLint indent amount to 2 spaces to match CFPB front-end standards.
-- Turns off ESLint `func-names` setting because its too verbose for the gain it provides.
 - Updated `grunt` to `~0.4.5`.
+- Updated `grunt-eslint` to version `12.0.0.`
 - Updated `jquery` to `^1.11.3`.
 - Replaced `grunt-uglify` with `uglifyify`.
 - Updated mailing addresses in `/contact-us` sidebar
