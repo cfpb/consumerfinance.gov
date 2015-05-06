@@ -301,7 +301,23 @@ module.exports = function(grunt) {
         ]
       }
     },
-
+    /**
+    * Mocha_istanbul: Run mocha tests and spit out code coverage
+    */
+    mocha_istanbul: {
+      coverage: {
+        src: ['_tests/unit_tests/*.js'],
+        options: {
+          harmony: true,
+          coverageFolder: '_tests/unit_test_coverage',
+          coverage: true,
+          check: {
+            lines: 50,
+            statements: 50
+          }
+        }
+      }
+    },
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      *
