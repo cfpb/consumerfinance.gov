@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require( 'jquery' );
+
 function init() {
 
   $.fn.customInput = function( userSettings ) {
@@ -15,7 +17,7 @@ function init() {
     return $( this ).each( function() {
       if ( $( this ).is( '[type=checkbox],[type=radio]' ) ) {
         var settings = $.extend( {
-            'clickCallback': function( e ) {}
+            clickCallback: function( e ) {}
           }, userSettings ),
           clickCallback = settings.clickCallback,
           input = $( this ).addClass( 'custom-input_input' ),
