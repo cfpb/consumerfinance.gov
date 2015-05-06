@@ -40,7 +40,7 @@ function replaceQueryVariable( key, value, queryString ) {
     query = window.location.search;
   }
 
-  vars = query.split('&');
+  vars = query.split( '&' );
 
   var pair;
   for ( var i = 0; i < vars.length; i++ ) {
@@ -57,7 +57,7 @@ function replaceQueryVariable( key, value, queryString ) {
 }
 
 function getQuery() {
-  if ( window.location.search.charAt(0) === '' ) {
+  if ( window.location.search.charAt( 0 ) === '' ) {
     return false;
   }
   return window.location.search;

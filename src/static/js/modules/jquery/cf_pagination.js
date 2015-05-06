@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require( 'jquery' );
+
 function init() {
 
   $.fn.cf_pagination = function( userSettings ) {

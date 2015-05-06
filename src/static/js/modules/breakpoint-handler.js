@@ -1,5 +1,8 @@
 'use strict';
 
+var $ = require( 'jquery' );
+var jQuery = $;
+
 var modernBrowser = 'innerWidth' in window,
     viewportEl = modernBrowser ? window : document.documentElement || document.body,
     propPrefix = modernBrowser ? 'inner' : 'client';
