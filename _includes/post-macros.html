@@ -17,14 +17,14 @@
    ========================================================================== #}
 
 {% macro category_icon(category, additional_classes) %}
-    {%- if category|lower == 'announcements & updates' -%}
-    <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
-    {%- elif category|lower == 'consumer information' -%}
+    {%- if category|lower == 'info for consumers' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
-    {%- elif category|lower == 'engagement' -%}
-    <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
-    {%- elif category|lower == 'innovation & data' -%}
-    <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
+    {%- elif category|lower == 'at the cfpb' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+    {%- elif category|lower == 'data, research & reports' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-chart"></span>
+    {%- elif category|lower == 'policy & compliance' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-bank-account"></span>
     {%- elif category|lower == 'speech' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-microphone"></span>
     {%- elif category|lower == 'press release' -%}
