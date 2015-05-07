@@ -68,7 +68,7 @@
     margin-bottom: unit(15px / @base-font-size-px, em);
 
     &.expandable__expanded {
-        margin-bottom: unit(30px / @base-font-size-px, em);
+        margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
     }
 
     .respond-to-max(@mobile-max, {
@@ -1191,22 +1191,22 @@
     position: relative;
 
     // Visual offset to align with text
-    top: -2px;    
+    top: -2px;
 }
 
 .alert_text {
     .h4();
     margin: 0;
     overflow: auto;
-    padding-left: @alert-padding__px;      
+    padding-left: @alert-padding__px;
 }
 
 .lt-ie9 {
     .alert {
         background: @redorange-20
-                    url('/static/img/warning-icon.png') 
-                    no-repeat 
-                    @alert-padding__px 
+                    url('/static/img/warning-icon.png')
+                    no-repeat
+                    @alert-padding__px
                     @alert-padding__px;
 
         padding-left: unit(45px / @base-font-size-px, em);
