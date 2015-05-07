@@ -16,7 +16,7 @@ function init() {
         scrollTop: $( this ).parent().offset().top - 15
       }, 500, 'easeOutExpo' );
     }
-  });
+  } );
 }
 
 // Expose public methods.
