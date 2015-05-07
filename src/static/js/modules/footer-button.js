@@ -9,9 +9,9 @@ var $ = require( 'jquery' );
 function init() {
     var duration = 300;
 
-    $('.js-return-to-top').click( function( event ) {
+    $( '.js-return-to-top' ).click( function( event ) {
         event.preventDefault();
-        $('html, body').animate( { scrollTop: 0 }, duration );
+        $( 'html, body' ).animate( { scrollTop: 0 }, duration );
     } );
 }
 

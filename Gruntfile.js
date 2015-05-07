@@ -292,13 +292,26 @@ module.exports = function(grunt) {
        * https://www.npmjs.com/package/grunt-contrib-eslint
        */
       eslint: {
-        options: {
-            config: "_settings/eslint.yaml",
-            quiet: false
+        app: {
+            options: {
+                config: "_settings/eslint.yaml",
+                quiet: false
+            },
+            src: [
+                'src/static/js/**/*.js',
+            ]
         },
-        src: [
-            'src/static/js/**/*.js'
-        ]
+        tests: {
+            options: {
+                config: "_settings/eslint.yaml",
+                rules: {
+                  "no-unused-expressions": 0
+                }
+            },
+            src: [
+                '_tests/unit_tests/*.js'
+            ]
+        }
       }
     },
     /**
@@ -426,7 +439,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('jsdev', ['browserify:build', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
-  grunt.registerTask('test', ['lintjs']);
+  grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);
