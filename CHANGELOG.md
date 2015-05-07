@@ -49,6 +49,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Improvements and fixes to `/contact-us/` page
 
 
+### Removed
+
+- Removed demo text suffix from page titles.
+
+
 ## 3.0.0-0.3.0 - 2015-04-23
 
 ### Added
