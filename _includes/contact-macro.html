@@ -7,9 +7,11 @@
     <div class="content-l_col content-l_col-1-2">
         {{ contact.content|safe }}
     {%- if contact.web_addr %}
-        <a class="jump-link" href="{{ contact.web_addr }}">
-            {{ contact.web_desc if contact.web_desc else contact.web_addr }}
-        </a>
+        <p>
+            <a class="jump-link" href="{{ contact.web_addr }}">
+                {{ contact.web_desc if contact.web_desc else contact.web_addr }}
+            </a>
+        </p>
     {%- endif %}
     </div>
     <div class="content-l_col content-l_col-1-2">
