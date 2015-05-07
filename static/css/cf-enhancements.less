@@ -116,9 +116,11 @@
 }
 
 /* topdoc
-  name: respond-to-retina() (mixin)
+  name: respond-to-dpi() (mixin)
   notes:
-    - "This mixin allows us to easily write styles that target retina screens"
+    - "This mixin allows us to easily write styles
+    that target high-resolution screens,
+    such as Apple retina screens"
   family: cfgov-cf-enhancements
   patterns:
     - name: Usage
@@ -128,7 +130,7 @@
           .example {
               background: url(regular-resolution-image.png);
 
-              .respond-to-retina({
+              .respond-to-dpi({
                   background-image: url(retina-image.png);
               });
           }
@@ -146,7 +148,7 @@
     - cfgov-cf-enhancements
 */
 
-.respond-to-retina(@rules) {
+.respond-to-dpi(@rules) {
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
         @rules();
     }
