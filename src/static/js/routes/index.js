@@ -62,7 +62,10 @@ $( '.progress-charts_chart' ).each( function() {
 
 // Run everything on load (or switch to when in view).
 $( document ).ready( function() {
-  if ( !animationComplete ) {
+  // TODO: Once page-specific JS is only run on the homepage
+  // this check will not be necessary any longer.
+  var chartAvail = $( '.progress-charts_chart' );
+  if ( chartAvail && !animationComplete ) {
     animate();
   }
 } );

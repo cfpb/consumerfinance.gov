@@ -1,5 +1,7 @@
 'use strict';
 
+require( 'slick' );
+
 /**
  * @name contentSlider
  *
