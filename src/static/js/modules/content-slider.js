@@ -1,6 +1,7 @@
 'use strict';
 
 require( 'slick' );
+var $ = require( 'jquery' );
 
 /**
  * @name contentSlider
@@ -19,7 +20,7 @@ require( 'slick' );
  * @param {number} slideCount number of permanent slides in the container
  *
  */
-function contentSlider( elem, slideCount ) {
+function ContentSlider( elem, slideCount ) {
   var self = this;
   this.$container = $( elem );
   this.speed = 300;
@@ -44,14 +45,14 @@ function contentSlider( elem, slideCount ) {
   this.init();
 }
 
-contentSlider.prototype.init = function() {
+ContentSlider.prototype.init = function() {
   var self = this;
   this.$container.height( $( this.slickObj.$slides[0] ).height() );
   this.$container.on( 'click.slider', '.content-show', $.proxy( this.slideInContent, this ) );
   this.$container.on( 'click.slider', '.content-hide', $.proxy( this.slideOutContent, this ) );
 };
 
-contentSlider.prototype.slideInContent = function( e ) {
+ContentSlider.prototype.slideInContent = function( e ) {
   e.preventDefault();
   var contents,
       self = this,
@@ -65,7 +66,7 @@ contentSlider.prototype.slideInContent = function( e ) {
   }
 };
 
-contentSlider.prototype.slideOutContent = function( e ) {
+ContentSlider.prototype.slideOutContent = function( e ) {
   var self = this;
   e.preventDefault();
   this.$container.slickPrev();
@@ -76,7 +77,7 @@ contentSlider.prototype.slideOutContent = function( e ) {
   }, this.speed );
 };
 
-contentSlider.prototype.destroy = function() {
+ContentSlider.prototype.destroy = function() {
   // Remove all but permanent slides.
   while ( this.slickObj.$slides.length > this.slideCount ) {
     this.$container.slickRemove( this.slickObj.$slides.length - 1 );
@@ -87,4 +88,4 @@ contentSlider.prototype.destroy = function() {
   this.$container.unslick();
 };
 
-module.exports = { contentSlider: contentSlider };
+module.exports = { ContentSlider: ContentSlider };
