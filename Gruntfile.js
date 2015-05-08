@@ -292,45 +292,29 @@ module.exports = function(grunt) {
        * https://www.npmjs.com/package/grunt-contrib-eslint
        */
       eslint: {
-        app: {
-            options: {
-                config: "_settings/eslint.yaml",
-                quiet: false
-            },
-            src: [
-                'src/static/js/**/*.js',
-            ]
+        options: {
+            quiet: false
         },
-        tests: {
-            options: {
-                config: "_settings/eslint.yaml",
-                rules: {
-                  "no-unused-expressions": 0
-                }
-            },
-            src: [
-                '_tests/unit_tests/*.js'
-            ]
-        }
+        src: [
+            'src/static/js/**/*.js',
+            '_tests/unit_tests/*.js'
+        ]
       }
     },
+
     /**
-    * Mocha_istanbul: Run mocha tests and spit out code coverage
-    */
+     * Mocha_istanbul: Run mocha tests and spit out code coverage
+     */
     mocha_istanbul: {
       coverage: {
         src: ['_tests/unit_tests/*.js'],
         options: {
-          harmony: true,
           coverageFolder: '_tests/unit_test_coverage',
-          coverage: true,
-          check: {
-            lines: 50,
-            statements: 50
-          }
+          excludes: ['_tests/unit_tests/*']
         }
       }
     },
+
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      *
