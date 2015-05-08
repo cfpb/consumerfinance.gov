@@ -16,6 +16,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## 3.0.0-1.0.0
+
+### Added
 - Added labels to the phone/email/fax/mail icons on `/contact-us/` page
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
 - `.respond-to-retina` mixin for media queries targeting Retina iOS devices
