@@ -29,6 +29,8 @@
     "load-grunt-tasks": "~0.6.0",
     "mocha": "^2.2.4",
     "mocha-jsdom": "^0.3.0",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
     "time-grunt": "~1.0.0",
     "uglifyify": "^3.0.1"
   },

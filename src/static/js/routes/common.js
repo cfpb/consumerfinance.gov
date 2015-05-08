@@ -29,7 +29,7 @@ $( document ).ready( function() {
   require( '../modules/jquery/custom-select' ).init();
   require( '../modules/footer-button' ).init();
 
-  // Page-specifc modules.
+  // Page-specific modules.
   require( './blog/index.js' );
   require( './contact-us/index.js' );
   require( './index.js' );
