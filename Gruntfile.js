@@ -437,7 +437,7 @@ module.exports = function(grunt) {
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
                                 'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
-  grunt.registerTask('jsdev', ['browserify:build', 'usebanner:js']);
+  grunt.registerTask('jsdev', ['lintjs', 'browserify:build', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
   grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
