@@ -4,7 +4,9 @@
 
 'use strict';
 
-require( 'jquery' );
+// TODO: Investigate why jQuery is required by ESLint below.
+var $ = require( 'jquery' );
+var jQuery = $;
 
 ( function( $ ) {
 
@@ -137,10 +139,15 @@ require( 'jquery' );
             // this.newInputs.
             $input.on( 'change', inputSplit.onNewInputChange );
 
-            // Add an intial value if one was specified.
+            // Add an initial value if one was specified.
             // Currently only select elements are supported.
             if ( $input.is( 'select' ) ) {
-              $input.find( 'option' ).each( function() {
+              // TODO: The below line creates a function in a loop,
+              // however this is an ESLint violation. This could should be
+              // refactored to not create the function in the loop but instead
+              // to call a function defined elsewhere and pass in `this`
+              // as a parameter.
+              $input.find( 'option' ).each( function() { // eslint-disable-line
                 if ( $( this ).val() === inputSplit.initialValues[i] ) {
                   $( this ).prop( 'selected', true );
                   $( this ).attr( 'selected', true );
