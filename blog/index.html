@@ -19,7 +19,7 @@
     #}
     {% import "hero.html" as hero with context %}
     {% set active_filters_total =
-       selected_filters_for_field('category')|length +
+       selected_filters_for_field('blog_category')|length +
        selected_filters_for_field('tags')|length +
        selected_filters_for_field('author')|length +
        selected_filters_for_field('range_date_gte')|length +
@@ -34,7 +34,7 @@
 
     <h1>Blog</h1>
 
-    {% set filter_by = ['category', 'tags', 'author', 'range_date'] %}
+    {% set filter_by = ['blog_category', 'tags', 'author', 'range_date'] %}
     {% from "post-macros.html" import filters as filters with context %}
     {{ filters(filter_by, vars.query, vars.posts, 'posts',
        { 'expand_label': 'Filter posts' }) }}
@@ -59,8 +59,8 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
-            {% import "email-subscribe-form.html" as subscribe with context %}
-            {{ subscribe.render(vars.query) }}
+            {% from "macros.html" import subscribe as subscribe with context %}
+            {{ subscribe('USCFPB_91') }}
         </div>
         <div class="block block__sub">
             {% import "rss.html" as rss %}

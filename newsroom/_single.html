@@ -54,8 +54,8 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new newsroom updates.
             </p>
-            {% import "email-subscribe-form.html" as subscribe with context %}
-            {{ subscribe.render(vars.query) }}
+            {% from "macros.html" import subscribe as subscribe with context %}
+            {{ subscribe('USCFPB_23') }}
         </div>
         <div class="block__sub">
             {% import "rss.html" as rss %}

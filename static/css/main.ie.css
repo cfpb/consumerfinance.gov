@@ -5343,6 +5343,63 @@ tbody tr {
   font-weight: normal !important;
 }
 
+.list_link.list_link__phone {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #101820;
+  border-color: #101820;
+  border-bottom-width: 0 !important;
+}
+
+.list_link.list_link__phone em,
+.list_link.list_link__phone i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .list_link.list_link__phone em,
+.lt-ie9 .list_link.list_link__phone i {
+  font-style: normal !important;
+}
+
+.list_link.list_link__phone strong,
+.list_link.list_link__phone b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .list_link.list_link__phone strong,
+.lt-ie9 .list_link.list_link__phone b {
+  font-weight: normal !important;
+}
+
+.list_link.list_link__phone:visited,
+.list_link.list_link__phone.visited {
+  border-color: #101820;
+  color: #101820;
+}
+
+.list_link.list_link__phone:hover,
+.list_link.list_link__phone.hover {
+  border-color: #101820;
+  color: #101820;
+}
+
+.list_link.list_link__phone:focus,
+.list_link.list_link__phone.focus {
+  border-color: #101820;
+  color: #101820;
+}
+
+.list_link.list_link__phone:active,
+.list_link.list_link__phone.active {
+  border-color: #101820;
+  color: #101820;
+}
+
 .list__unstyled {
   padding-left: 0;
   list-style-type: none;
@@ -8031,7 +8088,7 @@ a.focus .summary_event-date {
 }
 
 .footer_share-icon-list {
-  margin-bottom: 1.875em;
+  margin-top: 1.875em;
   padding-left: 0;
 }
 
@@ -8049,7 +8106,10 @@ a.focus .summary_event-date {
 }
 
 .footer_share-icon-list {
-  margin-bottom: 0;
+  margin-top: 0;
+  position: absolute;
+  top: -9px;
+  right: 0;
 }
 
 .footer_nav-list {
@@ -8111,8 +8171,7 @@ a.focus .summary_event-date {
 }
 
 .footer_nav-list .list_link {
-  margin-right: 1.36363636em;
-  font-size: 1.375em;
+  margin-right: 1em;
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -8158,179 +8217,6 @@ a.focus .summary_event-date {
   border-bottom-width: 0 !important;
 }
 
-.footer_logo {
-  margin-bottom: .625em;
-}
-
-.footer_logo {
-  margin-bottom: 0;
-}
-
-.footer_logo .logo {
-  width: 218px;
-}
-
-.footer_address {
-  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.footer_address em,
-.footer_address i {
-  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.lt-ie9 .footer_address em,
-.lt-ie9 .footer_address i {
-  font-style: normal !important;
-}
-
-.footer_address strong,
-.footer_address b {
-  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .footer_address strong,
-.lt-ie9 .footer_address b {
-  font-weight: normal !important;
-}
-
-.footer_address {
-  margin-bottom: 0;
-  font-size: .75em;
-}
-
-.footer_address-word-break {
-  display: block;
-}
-
-.footer_general-inqueries .list__links .list_item {
-  margin-bottom: 0;
-}
-
-.footer_general-inqueries {
-  font-size: .75em;
-}
-
-.footer_general-inqueries-label {
-  display: block;
-  font-size: 1em;
-  margin-bottom: .5em;
-  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .footer_general-inqueries-label {
-  font-weight: normal !important;
-}
-
-.footer_general-inqueries-label {
-  display: block;
-  margin-bottom: .5em;
-}
-
-.footer_general-inqueries .list__links {
-  margin-bottom: 0;
-  font-size: 1.125em;
-  border-top-color: #43484e;
-}
-
-.footer_general-inqueries .list_link {
-  color: #43484e;
-  border-color: #43484e;
-}
-
-.footer_general-inqueries .list_link:visited,
-.footer_general-inqueries .list_link.visited {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link:hover,
-.footer_general-inqueries .list_link.hover {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link:focus,
-.footer_general-inqueries .list_link.focus {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link:active,
-.footer_general-inqueries .list_link.active {
-  border-color: #43484e;
-  color: #43484e;
-}
-
-.footer_general-inqueries .list_link {
-  color: #0072ce;
-  border-color: #0072ce;
-}
-
-.footer_general-inqueries .list_link:visited,
-.footer_general-inqueries .list_link.visited {
-  border-color: #005e5d;
-  color: #005e5d;
-}
-
-.footer_general-inqueries .list_link:hover,
-.footer_general-inqueries .list_link.hover {
-  border-color: #7fb8e6;
-  color: #7fb8e6;
-}
-
-.footer_general-inqueries .list_link:focus,
-.footer_general-inqueries .list_link.focus {
-  border-color: #0072ce;
-  color: #0072ce;
-}
-
-.footer_general-inqueries .list_link:active,
-.footer_general-inqueries .list_link.active {
-  border-color: #002d72;
-  color: #002d72;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone {
-  color: #101820;
-  border-color: #101820;
-  border-bottom-width: 0 !important;
-  display: block;
-  margin-bottom: .33333333em;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:visited,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.visited {
-  border-color: #101820;
-  color: #101820;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:hover,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.hover {
-  border-color: #101820;
-  color: #101820;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:focus,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.focus {
-  border-color: #101820;
-  color: #101820;
-}
-
-.footer_general-inqueries .list_link.footer_general-inqueries-phone:active,
-.footer_general-inqueries .list_link.footer_general-inqueries-phone.active {
-  border-color: #101820;
-  color: #101820;
-}
-
 .footer_list {
   padding-left: 0;
   list-style-type: none;
@@ -8362,6 +8248,7 @@ a.focus .summary_event-date {
 .footer_list .list_link {
   color: #43484e;
   border-color: #43484e;
+  border-bottom: 1px dotted;
 }
 
 .footer_list .list_link:visited,
@@ -8500,20 +8387,29 @@ a.focus .summary_event-date {
   margin-bottom: 2.8125em;
 }
 
+.footer-pre .footer_top-button {
+  display: block;
+  width: 90%;
+  max-width: 350px;
+  margin: -2em auto 2em;
+}
+
+.footer-pre .footer_top-button .cf-icon-arrow-up {
+  padding-left: 1em;
+}
+
+.footer-pre .footer_nav-list {
+  margin-bottom: 0;
+}
+
 .footer-pre {
   padding-bottom: 1.875em;
   margin-bottom: 1.875em;
   border-bottom: 1px solid #babbbd;
 }
 
-.footer-pre .footer_share-icon-list {
-  position: absolute;
-  top: -9px;
-  right: 0;
-}
-
-.footer-pre .footer_nav-list {
-  margin-bottom: 0;
+.footer-pre .footer_top-button {
+  display: none;
 }
 
 .footer-pre .footer_nav-list {
@@ -8537,18 +8433,11 @@ a.focus .summary_event-date {
   margin-bottom: 0;
 }
 
-.footer-left {
-  margin-bottom: 2.8125em;
+.footer-middle-left .footer_list {
+  margin: 0;
 }
 
-.footer-left .footer_nested-col-group {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.footer-left .footer_address {
+.footer-middle-left {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -8557,21 +8446,22 @@ a.focus .summary_event-date {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 25%;
+  width: 66.66666667%;
+  border-right: 1px solid #babbbd;
 }
 
-.ie .footer-left .footer_address {
+.ie .footer-middle-left {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .footer-left .footer_address {
+.lt-ie8 .footer-middle-left {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.footer-left .footer_general-inqueries {
+.footer-middle-left .footer_col {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -8580,34 +8470,21 @@ a.focus .summary_event-date {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 25%;
+  width: 50%;
 }
 
-.ie .footer-left .footer_general-inqueries {
+.ie .footer-middle-left .footer_col {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .footer-left .footer_general-inqueries {
+.lt-ie8 .footer-middle-left .footer_col {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.footer-right {
-  padding-bottom: 1.875em;
-  margin-bottom: 1.875em;
-  border-bottom: 1px solid #babbbd;
-}
-
-.footer-right .footer_nested-col-group {
-  display: block;
-  position: relative;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-.footer-right .footer_col {
+.footer-middle-right {
   display: inline-block;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -8616,32 +8493,71 @@ a.focus .summary_event-date {
   border-width: 0 15px;
   margin-right: -0.25em;
   vertical-align: top;
-  width: 25%;
+  width: 33.33333333%;
 }
 
-.ie .footer-right .footer_col {
+.ie .footer-middle-right {
   margin-right: -0.26em;
 }
 
-.lt-ie8 .footer-right .footer_col {
+.lt-ie8 .footer-middle-right {
   display: inline;
   margin-right: 0;
   zoom: 1;
   behavior: url('/static/vendor/box-sizing-polyfill/boxsizing.htc');
 }
 
-.footer-right .h6 {
-  color: #babbbd;
-}
-
-.footer-right .list {
-  margin-bottom: 0;
+.footer-middle-right .footer_list {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .footer-post {
   padding-top: 1.875em;
   margin-top: 1.875em;
   border-top: 1px solid #babbbd;
+}
+
+.footer-post .footer_official-website {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  padding-left: 37px;
+  background: url('../img/us-flag_22x13.png') no-repeat 0 4px;
+}
+
+.footer-post .footer_official-website em,
+.footer-post .footer_official-website i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .footer-post .footer_official-website em,
+.lt-ie9 .footer-post .footer_official-website i {
+  font-style: normal !important;
+}
+
+.footer-post .footer_official-website strong,
+.footer-post .footer_official-website b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .footer-post .footer_official-website strong,
+.lt-ie9 .footer-post .footer_official-website b {
+  font-weight: normal !important;
+}
+
+.footer-post .footer_official-website__large {
+  font-size: 1.125em;
+}
+
+.footer-post .footer_official-website {
+  background-image: url('../img/us-flag_44x26.png');
+  -webkit-background-size: 22px;
+  background-size: 22px;
 }
 
 .footer .list_link__disabled {
