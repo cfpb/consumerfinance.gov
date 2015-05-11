@@ -22,7 +22,7 @@ describe( 'The Footer Return-to-Top Button', function() {
                             'href="http://www.google.com/">' +
                             'Back to top' +
                           '</a>' ) );
-    require( '../../src/static/js/modules/footer-button.js' ).init();
+    require( '../../../src/static/js/modules/footer-button.js' ).init();
   } );
 
   it( 'should trigger animate function when clicked', function() {

@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">src/static/js/modules/footer-button.js</span></h1>
     <h2>
-        Statements: <span class="metric">42.86% <small>(3 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(7 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">42.86% <small>(3 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(7 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">src/static/js/modules/</a> &#187; footer-button.js</div>
@@ -43,7 +43,25 @@
 16
 17
 18
-19</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -52,15 +70,33 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* ==========================================================================
    Footer Button: Scroll to Top
    ========================================================================== */
@@ -69,22 +105,40 @@
 &nbsp;
 var $ = require( 'jquery' );
 &nbsp;
-<span class="fstat-no" title="function not covered" >function init() {</span>
-<span class="cstat-no" title="statement not covered" >  var duration = 300;</span>
+function init() {
+  var duration = 300;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  $( '.js-return-to-top' ).click( <span class="fstat-no" title="function not covered" >function( event ) {</span></span>
-<span class="cstat-no" title="statement not covered" >    event.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >    $( 'html, body' ).animate( { scrollTop: 0 }, duration );</span>
+  $( '.js-return-to-top' ).click( function( event ) {
+    event.preventDefault();
+    $( 'html, body' ).animate( { scrollTop: 0 }, duration );
   } );
 }
 &nbsp;
 module.exports = { init: init };
+&nbsp;
+&nbsp;
+/*'use strict';
+&nbsp;
+var $ = require( 'jquery' );
+&nbsp;
+function init() {
+  $( '.js-return-to-top' ).click( function( event ) {
+    event.preventDefault();
+    returnToTop(300);
+  } );
+}
+&nbsp;
+function returnToTop(duration) {
+  $( 'html, body' ).animate( { scrollTop: 0 }, duration );
+}
+&nbsp;
+module.exports = { init: init };*/
 &nbsp;</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri May 08 2015 13:42:09 GMT-0400 (EDT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri May 08 2015 18:55:56 GMT-0400 (EDT)</div>
 </div>
 <script src="../../../../prettify.js"></script>
 <script>
