@@ -307,10 +307,10 @@ module.exports = function(grunt) {
      */
     mocha_istanbul: {
       coverage: {
-        src: ['_tests/unit_tests/*.js'],
+        src: ['_tests/unit_tests/**/*.js'],
         options: {
           coverageFolder: '_tests/unit_test_coverage',
-          excludes: ['_tests/unit_tests/*']
+          excludes: ['_tests/unit_tests/**/*.js']
         }
       }
     },
