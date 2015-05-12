@@ -21,6 +21,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
+- Replaced missing string_score library for the type-and-filter plugin
+
 ## 3.0.0-1.0.0
 
 ### Added
