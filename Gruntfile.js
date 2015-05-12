@@ -7,6 +7,12 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
+  // Allows a `--quiet` flag to be passed to Grunt from the command-line.
+  // If the flag is present the value is true, otherwise it is false.
+  // This flag can be used to, for example, suppress warning output
+  // from linters.
+  var envQuiet = grunt.option('quiet') ? true : false;
+
   var config = {
 
     /**
@@ -293,7 +299,7 @@ module.exports = function(grunt) {
        */
       eslint: {
         options: {
-            quiet: false
+            quiet: envQuiet
         },
         src: [
             'src/static/js/**/*.js',
