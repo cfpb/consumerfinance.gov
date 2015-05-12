@@ -65,3 +65,4 @@ docs/*/pdfreactor-fonts.html
 # Testing stuff #
 ##################
 _tests/browser_testing/features/environment.cfg
+_tests/unit_test_coverage/

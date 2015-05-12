@@ -29,7 +29,7 @@ env:
   browser: true
   node: true
   amd: true
-  mocha: true
+  mocha: false
   jasmine: false
   phantomjs: true
   jquery: false
