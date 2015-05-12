@@ -43,6 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed subscribe macro in events archive and archive single, and press
   resources
 - Replaced missing string_score library for the type-and-filter plugin
+- Sheer indexing error when related posts are deleted
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
