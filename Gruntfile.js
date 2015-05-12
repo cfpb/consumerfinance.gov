@@ -293,12 +293,25 @@ module.exports = function(grunt) {
        */
       eslint: {
         options: {
-            config: "_settings/eslint.yaml",
             quiet: false
         },
         src: [
-            'src/static/js/**/*.js'
+            'src/static/js/**/*.js',
+            '_tests/unit_tests/*.js'
         ]
+      }
+    },
+
+    /**
+     * Mocha_istanbul: Run mocha tests and spit out code coverage
+     */
+    mocha_istanbul: {
+      coverage: {
+        src: ['_tests/unit_tests/**/*.js'],
+        options: {
+          coverageFolder: '_tests/unit_test_coverage',
+          excludes: ['_tests/unit_tests/**/*.js']
+        }
       }
     },
 
@@ -410,7 +423,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('jsdev', ['lintjs', 'browserify:build', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
-  grunt.registerTask('test', ['lintjs']);
+  grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);
