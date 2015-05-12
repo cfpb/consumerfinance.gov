@@ -177,6 +177,11 @@ rules:
       allowKeywords: false
       allowPattern: ''
 
+  # Enforces consistent newlines before or after dots.
+  dot-location:
+    - 2
+    - property
+
   # Enforces use of === and !== over == and !=.
   eqeqeq:
      - 2
@@ -471,6 +476,10 @@ rules:
       beforeColon: false
       afterColon: true
 
+  # Disallow mixed 'LF' and 'CRLF' as linebreaks.
+  linebreak-style:
+    - unix
+
   # Specify the maximum depth callbacks can be nested.
   max-nested-callbacks:
     - 2
@@ -532,6 +541,9 @@ rules:
 
   # Disallows dangling underscores in identifiers.
   no-underscore-dangle: 0
+
+  # Disallow the use of Boolean literals in conditional expressions.
+  no-unneeded-ternary: 0
 
   # Disallows wrapping of non-IIFE statements in parens.
   no-wrap-func: 2
