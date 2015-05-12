@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+- Added `--quiet` grunt CLI flag for suppressing linter warnings.
 
 ### Changed
 
