@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated ESLint configuration to match version `0.20.0.`
   Adds enforcement of `no-dupe-args` and `no-duplicate-case` rules,
   and warnings for `no-continue` and `operator-linebreak` rules.
+- Adding mocha tests to `grunt test`
 
 ### Changed
 
