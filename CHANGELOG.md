@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 
 ### Changed
+- Updated grunt-browserify to `^3.8.0`.
 
 ### Fixed
 
