@@ -179,8 +179,8 @@ module.exports = function(grunt) {
         dest: 'static/js/routes/common.min.js'
       },
       options: {
-        // Note: The entire `browserify-shim` config is inside `package.json`.
-        transform: ['uglifyify']
+        // Note: The transforms for minification and
+        // the entire `browserify-shim` config is inside `package.json`.
       }
     },
 
