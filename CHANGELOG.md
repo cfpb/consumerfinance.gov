@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
+- Updated grunt-eslint to `^13.0.0`.
 - Moved eslint config file to home directory.
 - Moved jQuery download to package.json.
 
