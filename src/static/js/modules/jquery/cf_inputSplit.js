@@ -214,8 +214,8 @@ function init() {
         '#' + $newThis.find( '.js-filter_year' ).attr( 'id' ),
         '#' + $newThis.find( '.js-filter_month' ).attr( 'id' )
       ],
-      initialValues:  $this.find( '.js-filter_range-date' ).val().split( '-' ),
-      delimiter:      '-'
+      initialValues: $this.find( '.js-filter_range-date' ).val().split( '-' ),
+      delimiter:     '-'
     };
     $this.cf_inputSplit( options );
     $( options.newInputsOrder ).trigger( 'updateState' );
