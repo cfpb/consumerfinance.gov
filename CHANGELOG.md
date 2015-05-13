@@ -17,9 +17,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
+- Added JS unit testing and code coverage through Mocha and Istanbul.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
+- Moved eslint config file to home directory.
+- Moved jQuery download to package.json.
 
 ### Fixed
 
