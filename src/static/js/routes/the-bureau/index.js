@@ -12,21 +12,26 @@ var breakpointHandler = require( '../../modules/breakpoint-handler' );
 var BreakpointHandler = breakpointHandler.BreakpointHandler;
 var MobileOnlyExpandable = breakpointHandler.MobileOnlyExpandable;
 
-var carouselHandler;
 if ( !$( 'html' ).hasClass( 'lt-ie9' ) ) {
-  carouselHandler = new BreakpointHandler( {
+  var bureauMissionDom = $( '.bureau-mission' );
+  var handler = new BreakpointHandler( {
     breakpoint: 599,
     type:       'max',
-    enter:      function() {
-      $( '.bureau-mission' ).slick( {
-        dots: true
-      } );
-    },
-    leave:      function() {
-      $( '.bureau-mission' ).unslick();
-    }
+    enter:      _enterBreakpoint,
+    leave:      _leaveBreakpoint
   } );
+
   $( '.expandable__mobile-only' ).each( function() {
-    new MobileOnlyExpandable( $( this ), 599 );
+    handler = new MobileOnlyExpandable( $( this ), 599 );
   } );
+}
+
+function _enterBreakpoint() {
+  bureauMissionDom.slick( {
+    dots: true
+  } );
+}
+
+function _leaveBreakpoint() {
+  bureauMissionDom.unslick();
 }

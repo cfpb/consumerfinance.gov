@@ -1,10 +1,10 @@
 'use strict';
 
-require( 'slick' );
 var $ = require( 'jquery' );
+require( 'slick' );
 
 /**
- * @name contentSlider
+ * @name ContentSlider
  *
  * @description Slides content in and out of a container div.
  *
@@ -16,8 +16,8 @@ var $ = require( 'jquery' );
  * the slide containing the element will be rotated out of view
  * and then removed from the DOM.
  *
- * @param {string} elem container element
- * @param {number} slideCount number of permanent slides in the container
+ * @param {string} elem Container element.
+ * @param {number} slideCount Number of permanent slides in the container.
  *
  */
 function ContentSlider( elem, slideCount ) {
