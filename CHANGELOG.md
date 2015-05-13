@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated grunt-browserify to `^3.8.0`.
 
 ### Fixed
+- Fixed macro on offices page template
 
 ## 3.0.0-1.0.0
 
