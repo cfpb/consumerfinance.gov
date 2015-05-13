@@ -51,7 +51,7 @@ def process_view(post):
         hero_url = os.path.expandvars("$WORDPRESS/hero/" + hero_id + "/?json=1")
         response = requests.get(hero_url)
         hero_data = json.loads(response.content)
-        if hero_data['status'] is "ok":
+        if hero_data['status'] is 'ok':
             hero_data = hero_data['post']
             hero_data['related_posts'] = hero_data['custom_fields']['related_post']
             post['hero'] = hero_data
