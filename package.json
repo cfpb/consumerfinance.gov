@@ -23,7 +23,7 @@
     "grunt-string-replace": "~0.2.7",
     "grunt-topdoc": "~0.2.0",
     "istanbul": "^0.3.13",
-    "jquery": "^2.1.4",
+    "jquery": "^1.11.3",
     "jsdom": "^3.1.2",
     "load-grunt-tasks": "~0.6.0",
     "mocha": "^2.2.4",
@@ -35,11 +35,12 @@
   },
   "browserify": {
     "transform": [
-      "browserify-shim"
+      "browserify-shim",
+      "uglifyify"
     ]
   },
   "browser": {
-    "jquery": "./vendor/jquery/jquery.js",
+    "jquery": "./node_modules/jquery/dist/jquery.js",
     "jquery-easing": "./vendor/jquery.easing/jquery.easing.js",
     "cf-expandables": "./vendor/cf-expandables/cf-expandables.js",
     "chosen": "./vendor/chosen/chosen.jquery.js",
