@@ -33,6 +33,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - Replaced missing string_score library for the type-and-filter plugin
 
+### Removed
+- Removed string-replace:static-legacy Grunt task.
+
 ## 3.0.0-1.0.0
 
 ### Added
