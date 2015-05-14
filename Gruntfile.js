@@ -192,20 +192,20 @@ module.exports = function(grunt) {
      */
     banner:
       '/*!\n' +
-      ' *              ad$$             $$\n' +
-      ' *             d$"               $$\n' +
-      ' *             $$                $$\n' +
-      ' *   ,adPYba,  $$$$$ $b,dPYba,   $$,dPYba,\n' +
-      ' *  aP\'    \'$: $$    $$P\'   \'$a  $$P\'   \'$a\n' +
-      ' *  $(         $$    $$(     )$  $$(     )$\n' +
-      ' *  "b,    ,$: $$    $$b,   ,$"  $$b,   ,$"\n' +
-      ' *   `"Ybd$"\'  $$    $$`YbdP"\'   $$`Ybd$"\'\n' +
-      ' *                   $$\n' +
-      ' *                   $$\n' +
-      ' *                   ""\n' +
+      ' *               ad$$               $$\n' +
+      ' *              d$"                 $$\n' +
+      ' *              $$                  $$\n' +
+      ' *   ,adPYba.   $$$$$  $$.,dPYba.   $$.,dPYba.\n' +
+      ' *  aP′    `$:  $$     $$P′    `$a  $$P′    `$a\n' +
+      ' *  $(          $$     $$(      )$  $$(      )$\n' +
+      ' *  "b.    ,$:  $$     $$b.    ,$"  $$b.    ,$"\n' +
+      ' *   `"Ybd$"′   $$     $$`"YbdP"′   $$`"YbdP"′\n' +
+      ' *                     $$\n' +
+      ' *                     $$\n' +
+      ' *                     $$\n' +
       ' *\n' +
       ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
-      ' *  <%= pkg.homepage %>' +
+      ' *  <%= pkg.homepage %>\n' +
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */',
 
