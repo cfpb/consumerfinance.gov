@@ -27,6 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated grunt-banner to `^0.4.0` and updates banner ascii art and format.
 - Changed bower.json authors array field to use `homepage` in place of `url`,
   and adds `email` field.
+- Adds path variables to Gruntfile.
 
 ### Fixed
 - Fixed macro on offices page template
