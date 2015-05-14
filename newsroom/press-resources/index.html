@@ -208,8 +208,8 @@
                     <p class="short-desc">
                         Subscribe to get our press releases by email.
                     </p>
-                    {% import "email-subscribe-form.html" as subscribe with context %}
-                    {{ subscribe.render(vars.query) }}
+                    {% from "macros.html" import subscribe as subscribe with context %}
+                    {{ subscribe('USCFPB_23') }}
                 </div>
                 <div class="block block__sub">
                     {% import "rss.html" as rss %}

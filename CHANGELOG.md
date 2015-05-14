@@ -31,7 +31,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed macro on offices page template
-
+- Fixed subscribe macro in events archive and archive single, and press
+  resources
 - Replaced missing string_score library for the type-and-filter plugin
 
 ### Removed
