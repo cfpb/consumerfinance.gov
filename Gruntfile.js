@@ -7,12 +7,27 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
+  // Allows a `--quiet` flag to be passed to Grunt from the command-line.
+  // If the flag is present the value is true, otherwise it is false.
+  // This flag can be used to, for example, suppress warning output
+  // from linters.
+  var envQuiet = grunt.option('quiet') ? true : false;
+
   var config = {
 
     /**
      * Pull in the package.json file so we can read its metadata.
      */
     pkg: grunt.file.readJSON('bower.json'),
+
+    /**
+     * Set some src and dist location variables.
+     */
+    loc: {
+      src: './src',
+      dist: '.',
+      test: './_tests'
+    },
 
     /**
      * Bower: https://github.com/yatskevich/grunt-bower-task
@@ -46,47 +61,6 @@ module.exports = function(grunt) {
      * Replace strings on files by using string or regex patters.
      */
     'string-replace': {
-      'static-legacy': {
-        files: {
-          'static-legacy/css/styles.css': 'static-legacy/css/styles.css'
-        },
-        options: {
-          replacements: [
-            {
-              pattern: /"Avenir Next"/ig,
-              replacement: '"AvenirNextLTW01-Regular"'
-            },
-            {
-              pattern: /"Avenir Next Regular"/ig,
-              replacement: '"AvenirNextLTW01-Regular"'
-            },
-            {
-              pattern: /"Avenir Next Demi"/ig,
-              replacement: '"AvenirNextLTW01-Demi"'
-            },
-            {
-              pattern: /"Avenir Next Demi Italic"/ig,
-              replacement: '"AvenirNextLTW01-Demi"'
-            },
-            {
-              pattern: /"Avenir Next Medium"/ig,
-              replacement: '"AvenirNextLTW01-Medium"'
-            },
-            {
-              pattern: /font-weight:(?:\s)*400;/ig,
-              replacement: 'font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;'
-            },
-            {
-              pattern: /font-weight:(?:\s)*500;/ig,
-              replacement: 'font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;'
-            },
-            {
-              pattern: /font-weight:(?:\s)*600;/ig,
-              replacement: 'font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;'
-            }
-          ]
-        }
-      },
       chosen: {
         files: {
           'vendor/chosen/': 'vendor/chosen/chosen.css'
@@ -132,11 +106,13 @@ module.exports = function(grunt) {
           paths: grunt.file.expand('vendor/**/'),
           compress: true,
           sourceMap: true,
-          sourceMapFilename: 'static/css/main.css.map', // where file is generated and located
-          sourceMapURL: 'main.css.map', // the complete url and filename put in the compiled css file
+          // Where the sourcemap file is generated and located.
+          sourceMapFilename: '<%= loc.dist %>/static/css/main.css.map',
+          // The complete URL and sourcemap filename put in the compiled CSS file.
+          sourceMapURL: 'main.css.map',
         },
         files: {
-          'static/css/main.css': ['static/css/main.less']
+          '<%= loc.dist %>/static/css/main.css': ['static/css/main.less']
         }
       }
     },
@@ -155,7 +131,7 @@ module.exports = function(grunt) {
       main: {
         // Prefix `static/css/main.css` and overwrite.
         expand: true,
-        src: ['static/css/main.css']
+        src: ['<%= loc.dist %>/static/css/main.css']
       },
     },
 
@@ -169,12 +145,12 @@ module.exports = function(grunt) {
      */
     browserify: {
       build: {
-        src: 'src/static/js/routes/**/*.js',
-        dest: 'static/js/routes/common.min.js'
+        src: '<%= loc.src %>/static/js/routes/**/*.js',
+        dest: '<%= loc.dist %>/static/js/routes/common.min.js'
       },
       options: {
-        // Note: The entire `browserify-shim` config is inside `package.json`.
-        transform: ['uglifyify']
+        // Note: The transforms for minification and
+        // the entire `browserify-shim` config is inside `package.json`.
       }
     },
 
@@ -186,20 +162,20 @@ module.exports = function(grunt) {
      */
     banner:
       '/*!\n' +
-      ' *              ad$$             $$\n' +
-      ' *             d$"               $$\n' +
-      ' *             $$                $$\n' +
-      ' *   ,adPYba,  $$$$$ $b,dPYba,   $$,dPYba,\n' +
-      ' *  aP\'    \'$: $$    $$P\'   \'$a  $$P\'   \'$a\n' +
-      ' *  $(         $$    $$(     )$  $$(     )$\n' +
-      ' *  "b,    ,$: $$    $$b,   ,$"  $$b,   ,$"\n' +
-      ' *   `"Ybd$"\'  $$    $$`YbdP"\'   $$`Ybd$"\'\n' +
-      ' *                   $$\n' +
-      ' *                   $$\n' +
-      ' *                   ""\n' +
+      ' *               ad$$               $$\n' +
+      ' *              d$"                 $$\n' +
+      ' *              $$                  $$\n' +
+      ' *   ,adPYba.   $$$$$  $$.,dPYba.   $$.,dPYba.\n' +
+      ' *  aP′    `$:  $$     $$P′    `$a  $$P′    `$a\n' +
+      ' *  $(          $$     $$(      )$  $$(      )$\n' +
+      ' *  "b.    ,$:  $$     $$b.    ,$"  $$b.    ,$"\n' +
+      ' *   `"Ybd$"′   $$     $$`"YbdP"′   $$`"YbdP"′\n' +
+      ' *                     $$\n' +
+      ' *                     $$\n' +
+      ' *                     $$\n' +
       ' *\n' +
       ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
-      ' *  <%= pkg.homepage %>' +
+      ' *  <%= pkg.homepage %>\n' +
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */',
 
@@ -211,7 +187,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: ['static/css/*.min.css']
+          src: ['<%= loc.dist %>/static/css/*.min.css']
         }
       },
       js: {
@@ -221,7 +197,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: ['static/js/**/*.min.js']
+          src: ['<%= loc.dist %>/static/js/**/*.min.js']
         }
       }
     },
@@ -235,12 +211,12 @@ module.exports = function(grunt) {
       'ie-alternate': {
         options: {
           // Flatten all media queries with a min-width over 960 or lower.
-          // All media queries over 960 will be excluded fromt he stylesheet.
+          // All media queries over 960 will be excluded from the stylesheet.
           // EM calculation: 960 / 16 = 60
           legacyWidth: 60
         },
         files: {
-          'static/css/main.ie.css': 'static/css/main.css'
+          '<%= loc.dist %>/static/css/main.ie.css': '<%= loc.dist %>/static/css/main.css'
         }
       }
     },
@@ -293,12 +269,25 @@ module.exports = function(grunt) {
        */
       eslint: {
         options: {
-            config: "_settings/eslint.yaml",
-            quiet: false
+            quiet: envQuiet
         },
         src: [
-            'src/static/js/**/*.js'
+            '<%= loc.src %>/static/js/**/*.js',
+            '<%= loc.test %>/unit_tests/*.js'
         ]
+      }
+    },
+
+    /**
+     * Mocha_istanbul: Run mocha tests and spit out code coverage
+     */
+    mocha_istanbul: {
+      coverage: {
+        src: ['<%= loc.test %>/unit_tests/**/*.js'],
+        options: {
+          coverageFolder: '<%= loc.test %>/unit_test_coverage',
+          excludes: ['<%= loc.test %>/unit_tests/**/*.js']
+        }
       }
     },
 
@@ -310,7 +299,7 @@ module.exports = function(grunt) {
      */
     watch: {
       all: {
-        files: ['static/css/*.less', 'src/static/js/**/*.js', 'Gruntfile.js'],
+        files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js', 'Gruntfile.js'],
         tasks: ['default']
       },
       css: {
@@ -318,7 +307,7 @@ module.exports = function(grunt) {
         tasks: ['cssdev']
       },
       cssjs: {
-        files: ['static/css/*.less', 'src/static/js/**/*.js'],
+        files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js'],
         tasks: ['cssdev', 'jsdev']
       }
     },
@@ -405,12 +394,12 @@ module.exports = function(grunt) {
   /**
    * Create custom task aliases and combinations.
    */
-  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
+  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen',
                                 'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
-  grunt.registerTask('jsdev', ['browserify:build', 'usebanner:js']);
+  grunt.registerTask('jsdev', ['lintjs', 'browserify:build', 'usebanner:js']);
   grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
-  grunt.registerTask('test', ['lintjs']);
+  grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);

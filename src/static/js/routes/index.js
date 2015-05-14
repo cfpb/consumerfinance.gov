@@ -5,6 +5,8 @@
 
 'use strict';
 
+var $ = require( 'jquery' );
+
 window.requestNextAnimationFrame = require( 'requestNextAnimationFrame' );
 
 // Multiplier determines how pixel dense the canvas should be.
@@ -62,7 +64,10 @@ $( '.progress-charts_chart' ).each( function() {
 
 // Run everything on load (or switch to when in view).
 $( document ).ready( function() {
-  if ( !animationComplete ) {
+  // TODO: Once page-specific JS is only run on the homepage
+  // this check will not be necessary any longer.
+  var chartAvail = $( '.progress-charts_chart' );
+  if ( chartAvail && !animationComplete ) {
     animate();
   }
 } );
@@ -82,7 +87,7 @@ function animate() {
     }
     // send values to be drawn
     drawGraph( ctx, charts[i].value );
-  });
+  } );
   // each loop through is a animation frame, so count up the frames
   iterationCount++;
   // if charts aren't finished animating, loop again
@@ -108,7 +113,7 @@ function drawGraph( context, value ) {
     // fill percentage arc
     context.beginPath();
     context.moveTo( center.x, center.y );
-    context.arc( center.x, center.y, radius, getRadians(arcStart), getRadians( pct ), false );
+    context.arc( center.x, center.y, radius, getRadians( arcStart ), getRadians( pct ), false );
     context.closePath();
     context.fillStyle = '#FF931B';
     context.fill();
@@ -117,7 +122,8 @@ function drawGraph( context, value ) {
     context.arc( center.x, center.y, radius / 1.85, 0, 2 * Math.PI );
     context.fillStyle = '#FFF';
     context.fill();
-  } else { // switch to green
+  // switch to green
+  } else {
     // decimal 0.0 - 1 for percentage
     pct = arcStart + ( value * 360 );
     // fill percentage arc
@@ -129,21 +135,21 @@ function drawGraph( context, value ) {
     context.fill();
     // center circle
     context.beginPath();
-    context.arc(center.x, center.y, radius / 1.85, 0, 2 * Math.PI);
+    context.arc( center.x, center.y, radius / 1.85, 0, 2 * Math.PI );
     context.fillStyle = '#ADDC91';
     context.fill();
     // check mark
-    var unit = ( radius - (4 * multiplier) ) / 5;
+    var unit = ( radius - ( 4 * multiplier ) ) / 5;
     context.beginPath();
-    context.moveTo(center.x - unit, center.y);
-    context.lineTo(center.x - unit / 2, center.y + unit);
-    context.lineWidth = 6 * (radius / 100) * multiplier;
+    context.moveTo( center.x - unit, center.y );
+    context.lineTo( center.x - unit / 2, center.y + unit );
+    context.lineWidth = 6 * ( radius / 100 ) * multiplier;
     context.strokeStyle = '#FFF';
     context.lineCap = 'round';
     context.stroke();
     context.beginPath();
-    context.moveTo(center.x - unit / 2, center.y + unit);
-    context.lineTo(center.x + unit, center.y - unit);
+    context.moveTo( center.x - unit / 2, center.y + unit );
+    context.lineTo( center.x + unit, center.y - unit );
     context.stroke();
   }
 }
@@ -158,23 +164,23 @@ function getRadians( degrees ) {
 }
 
 function easeInOutQuint( currentIteration, startValue, changeInValue, totalIterations ) {
-  if ( (currentIteration /= totalIterations / 2) < 1) {
+  if ( ( currentIteration /= totalIterations / 2 ) < 1 ) {
     return changeInValue / 2 * Math.pow( currentIteration, 5 ) + startValue;
   }
-  return changeInValue / 2 * (Math.pow( currentIteration - 2, 5 ) + 2) + startValue;
+  return changeInValue / 2 * ( Math.pow( currentIteration - 2, 5 ) + 2 ) + startValue;
 }
 
 // wait for timer
-var waitForFinalEvent = ( function () {
+var waitForFinalEvent = ( function() {
   var timers = {};
-  return function ( callback, ms, uniqueId ) {
+  return function( callback, ms, uniqueId ) {
     if ( !uniqueId ) {
       uniqueId = "Don't call this twice without a uniqueId";
     }
     if ( timers[uniqueId] ) {
       clearTimeout( timers[uniqueId] );
     }
-    timers[uniqueId] = setTimeout(callback, ms);
+    timers[uniqueId] = setTimeout( callback, ms );
   };
 } )();
 

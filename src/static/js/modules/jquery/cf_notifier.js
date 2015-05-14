@@ -7,16 +7,18 @@
 var $ = require( 'jquery' );
 var handlebars = require( 'handlebars' );
 
+var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }}" style="display: none;">' +
+  '<span class="cf-notification_icon cf-notification_icon__{{ state }} cf-icon cf-icon-{{ icon }}-round"></span>' +
+  '<p class="cf-notification_text">{{ message }}</p>' +
+  '</div>';
+
 var _notifier = {
   defaults: {
     message:    'There was an error with your submission',
     state:      'error',
     speed:      400,
     easing:     'swing',
-    template:   '<div class="cf-notification cf-notification__{{ state }}" style="display: none;">' +
-      '<span class="cf-notification_icon cf-notification_icon__{{ state }} cf-icon cf-icon-{{ icon }}-round"></span>' +
-      '<p class="cf-notification_text">{{ message }}</p>' +
-      '</div>',
+    template:   _notifierTemplate,
     input:      null,
     onRender:   null,
     onClearAll: null,
@@ -27,8 +29,8 @@ var _notifier = {
   // @returns {string} The expanded HTML string
   _generateHTML: function() {
     var data = {
-      message:  _notifier.settings.message,
-      state:    _notifier.settings.state
+      message: _notifier.settings.message,
+      state:   _notifier.settings.state
     };
 
     if ( data.state === 'success' ) {
@@ -41,7 +43,7 @@ var _notifier = {
 
     var template = handlebars.compile( _notifier.settings.template );
 
-    return template( data ) ;
+    return template( data );
   },
 
   // Clear any previously created notifications
@@ -51,7 +53,7 @@ var _notifier = {
         easing:   _notifier.settings.easing,
         complete: function() {
           $( this ).remove();
-          _notifier.existing = undefined;
+          _notifier.existing = false;
           if ( callback ) {
             callback();
           }
@@ -150,13 +152,13 @@ function init() {
     var method = arguments[0];
 
     if ( _notifier[method] ) {
-      method  = _notifier[method];
+      method = _notifier[method];
       options = Array.prototype.slice.call( arguments, 1 );
-    } else if ( typeof( method ) === 'object' || !method ) {
-      method  = _notifier.init;
+    } else if ( typeof ( method ) === 'object' || !method ) {
+      method = _notifier.init;
       options = arguments;
     } else {
-      $.error( 'Method "' +  method + '"" does not exist in the cf__notifier plugin' );
+      $.error( 'Method "' + method + '"" does not exist in the cf__notifier plugin' );
       return this;
     }
 
