@@ -45,7 +45,8 @@
     "cf-expandables": "./vendor/cf-expandables/cf-expandables.js",
     "chosen": "./vendor/chosen/chosen.jquery.js",
     "requestNextAnimationFrame": "./static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js",
-    "slick": "./vendor/slick-carousel/slick.min.js"
+    "slick": "./vendor/slick-carousel/slick.min.js",
+    "string_score": "./vendor/string_score/string_score.js"
   },
   "browserify-shim": "./_settings/browserify-shims.js"
 }
