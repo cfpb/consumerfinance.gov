@@ -40,8 +40,8 @@
             <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
                 <p class="h3 u-show-on-mobile">Stay informed</p>
                 <p class="short-desc">Stay up to date with our email newsletter</p>
-                {% import "email-subscribe-form.html" as subscribe with context %}
-                {{ subscribe.render(null, office.intro_govdelivery_code) }}
+                {% from "macros.html" import subscribe as subscribe with context %}
+                {{ subscribe(office.intro_govdelivery_code) }}
             </section>
         {% endif %}
     </section>
