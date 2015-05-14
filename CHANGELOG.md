@@ -24,6 +24,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated grunt-eslint to `^13.0.0`.
 - Moved eslint config file to home directory.
 - Moved jQuery download to package.json.
+- Updated grunt-banner to `^0.4.0` and updates banner ascii art and format.
+- Changed bower.json authors array field to use `homepage` in place of `url`,
+  and adds `email` field.
 
 ### Fixed
 
