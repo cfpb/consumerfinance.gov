@@ -52,47 +52,6 @@ module.exports = function(grunt) {
      * Replace strings on files by using string or regex patters.
      */
     'string-replace': {
-      'static-legacy': {
-        files: {
-          'static-legacy/css/styles.css': 'static-legacy/css/styles.css'
-        },
-        options: {
-          replacements: [
-            {
-              pattern: /"Avenir Next"/ig,
-              replacement: '"AvenirNextLTW01-Regular"'
-            },
-            {
-              pattern: /"Avenir Next Regular"/ig,
-              replacement: '"AvenirNextLTW01-Regular"'
-            },
-            {
-              pattern: /"Avenir Next Demi"/ig,
-              replacement: '"AvenirNextLTW01-Demi"'
-            },
-            {
-              pattern: /"Avenir Next Demi Italic"/ig,
-              replacement: '"AvenirNextLTW01-Demi"'
-            },
-            {
-              pattern: /"Avenir Next Medium"/ig,
-              replacement: '"AvenirNextLTW01-Medium"'
-            },
-            {
-              pattern: /font-weight:(?:\s)*400;/ig,
-              replacement: 'font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;'
-            },
-            {
-              pattern: /font-weight:(?:\s)*500;/ig,
-              replacement: 'font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;'
-            },
-            {
-              pattern: /font-weight:(?:\s)*600;/ig,
-              replacement: 'font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;'
-            }
-          ]
-        }
-      },
       chosen: {
         files: {
           'vendor/chosen/': 'vendor/chosen/chosen.css'
@@ -424,7 +383,7 @@ module.exports = function(grunt) {
   /**
    * Create custom task aliases and combinations.
    */
-  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'string-replace:static-legacy',
+  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen',
                                 'copy:static-legacy', 'concat:cf-less']);
   grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('jsdev', ['lintjs', 'browserify:build', 'usebanner:js']);
