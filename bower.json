@@ -10,7 +10,8 @@
   "authors": [
     {
       "name": "Consumer Financial Protection Bureau",
-      "url": "https://cfpb.github.io/"
+      "email": "tech@cfpb.gov",
+      "homepage": "https://cfpb.github.io/"
     }
   ],
   "homepage": "https://github.com/cfpb/cfgov-refresh",

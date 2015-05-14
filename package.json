@@ -9,7 +9,7 @@
     "chai": "^2.3.0",
     "grunt": "~0.4.5",
     "grunt-autoprefixer": "~0.6.5",
-    "grunt-banner": "~0.2.2",
+    "grunt-banner": "^0.4.0",
     "grunt-bower-task": "~0.4.0",
     "grunt-browserify": "^3.8.0",
     "grunt-concurrent": "~1.0.0",
