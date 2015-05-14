@@ -33,10 +33,10 @@ var _validator = {
 
     $.each( _validator.settings.types, function( i ) {
       var validation;
-      var type        = this;
+      var type = this;
       var notRequired = ( type === 'required' && !$input.prop( 'required' ) );
-      var notEmail    = ( type === 'email' && $input.attr( 'type') !== 'email' );
-      var notRadio    = ( type === 'radiogroup' && $input.attr( 'type' ) !== 'radio' );
+      var notEmail = ( type === 'email' && $input.attr( 'type') !== 'email' );
+      var notRadio = ( type === 'radiogroup' && $input.attr( 'type' ) !== 'radio' );
       var notCheckbox = ( type === 'checkgroup' && $input.attr( 'type' ) !== 'checkbox' );
 
       if ( notRequired || notEmail || notRadio || notCheckbox ) {
@@ -49,7 +49,7 @@ var _validator = {
       } else if ( type === 'email' ) {
         validation = _validate.single( value, { email: true } );
       }
-      status[type] = ( validation === undefined );
+      status[type] = ( typeof validation === 'undefined' );
     } );
 
     return status;
@@ -60,13 +60,13 @@ var _validator = {
   _validateFields: function( fields ) {
     var checkgroups = {};
     var validatedFields = {
-      valid:    [],
-      invalid:  []
+      valid:   [],
+      invalid: []
     };
 
     fields.each( function( i ) {
-      var $input  = $( this );
-      var failed  = false;
+      var $input = $( this );
+      var failed = false;
       var field;
 
       // if it's a button elem or type is button or submit, skip it
@@ -74,8 +74,8 @@ var _validator = {
         return;
       // if it's a checkbox test the entire check group
       } else if ( $input.is( ':checkbox' ) ) {
-        var name    = $input.attr( 'name' );
-        var $group  = $input.closest( '.form-group' );
+        var name = $input.attr( 'name' );
+        var $group = $input.closest( '.form-group' );
 
         if ( checkgroups[name] || !$group.hasClass( 'required-check-group' ) ) {
           return;
@@ -90,12 +90,12 @@ var _validator = {
           status: {
             checkgroup: isChecked
           }
-        }
+        };
 
         checkgroups[name] = true;
       } else {
-        var value       = $input.val();
-        var validation  = _validator._validateInput( $input, value );
+        var value = $input.val();
+        var validation = _validator._validateInput( $input, value );
 
         field = {
           elem:   $input,
@@ -164,13 +164,13 @@ function init() {
     var method = arguments[0];
 
     if ( _validator[method] ) {
-      method  = _validator[method];
+      method = _validator[method];
       options = Array.prototype.slice.call( arguments, 1 );
-    } else if ( typeof( method ) === 'object' || !method ) {
-      method  = _validator.init;
+    } else if ( typeof ( method ) === 'object' || !method ) {
+      method = _validator.init;
       options = arguments;
     } else {
-      $.error( 'Method "' +  method + '"" does not exist in the cf_formValidator plugin' );
+      $.error( 'Method "' + method + '"" does not exist in the cf_formValidator plugin' );
       return this;
     }
 

@@ -19,6 +19,7 @@
 'use strict';
 
 var $ = require( 'jquery' );
+var score = require( 'string_score' );
 
 function init() {
 

@@ -5,36 +5,41 @@
 
 'use strict';
 
+var $ = require( 'jquery' );
 require( 'slick' );
 
-var ContentSlider = require( '../../../modules/content-slider' ).contentSlider;
+var ContentSlider = require( '../../../modules/content-slider' ).ContentSlider;
 var BreakpointHandler = require( '../../../modules/breakpoint-handler' ).BreakpointHandler;
 
-$('document').ready(function () {
-  var slider, handler;
-  if (!$( 'html' ).hasClass( 'lt-ie9' )) {
-    handler = new BreakpointHandler( {
-      breakpoint: 599,
-      type:       'max',
-      enter:      function() {
-        // close any open expandables
-        $( '.org-chart' ).find( '.expandable__expanded .expandable_target' ).click();
-        // hide org chart branches
-        $( '.org-chart_branches' ).hide();
-        // show content slider & mobile nav links
-        $( '#content-slider, .content-hide' ).show();
-        // init slider
-        slider = new ContentSlider( '#content-slider', 1);
-      },
-      leave:      function() {
-        // destroy slider
-        slider && slider.destroy();
-        slider = null;
-        // hide content slider & mobile nav links
-        $( '#content-slider, .content-hide' ).hide();
-        // show org chart branches
-        $( '.org-chart_branches' ).show();
-      }
-    });
-  }
-});
+if ( !$( 'html' ).hasClass( 'lt-ie9' ) ) {
+  var settings = {
+    breakpoint: 599,
+    type:       'max',
+    enter:      _createSlider,
+    leave:      _destroySlider
+  };
+
+  var handler = new BreakpointHandler( settings );
+}
+
+var _slider;
+function _createSlider() {
+  // Close any open expandables.
+  $( '.org-chart' ).find( '.expandable__expanded .expandable_target' ).click();
+  // Hide org chart branches.
+  $( '.org-chart_branches' ).hide();
+  // Show content slider & mobile nav links.
+  $( '#content-slider, .content-hide' ).show();
+  // Initialize slider.
+  _slider = new ContentSlider( '#content-slider', 1 );
+}
+
+function _destroySlider() {
+  // Destroy slider.
+  if ( _slider ) _slider.destroy();
+  _slider = null;
+  // Hide content slider & mobile nav links.
+  $( '#content-slider, .content-hide' ).hide();
+  // Show org chart branches.
+  $( '.org-chart_branches' ).show();
+}

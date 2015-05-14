@@ -16,12 +16,42 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+- Added `--quiet` grunt CLI flag for suppressing linter warnings.
+- Added JS unit testing and code coverage through Mocha and Istanbul.
+
+### Changed
+- Updated grunt-browserify to `^3.8.0`.
+- Updated grunt-eslint to `^13.0.0`.
+- Moved eslint config file to home directory.
+- Moved jQuery download to package.json.
+- Updated grunt-banner to `^0.4.0` and updates banner ascii art and format.
+- Changed bower.json authors array field to use `homepage` in place of `url`,
+  and adds `email` field.
+- Adds path variables to Gruntfile.
+
+### Fixed
+- Fixed macro on offices page template
+- Fixed subscribe macro in events archive and archive single, and press
+  resources
+- Replaced missing string_score library for the type-and-filter plugin
+
+### Removed
+- Removed string-replace:static-legacy Grunt task.
+
+## 3.0.0-1.0.0
+
+### Added
 - Added labels to the phone/email/fax/mail icons on `/contact-us/` page
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
 - `.respond-to-retina` mixin for media queries targeting Retina iOS devices
 - Scroll to top functionality on footer
 - Added `/modules/util/web-storage-proxy.js` utility module.
 - Added `/modules/util/js-loader.js` utility module.
+- Adds ESLint check for `@todo` jsdoc syntax.
+- Updated ESLint configuration to match version `0.20.0.`
+  Adds enforcement of `no-dupe-args` and `no-duplicate-case` rules,
+  and warnings for `no-continue` and `operator-linebreak` rules.
+- Adding mocha tests to `grunt test`
 
 ### Changed
 
@@ -29,10 +59,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `browserify` package and its dependencies
   and refactored codebase to use Browserify for JS modules.
 - Added additional ESLint option flags in `space-in-brackets` rule.
+- Changed ESLint indent amount to 2 spaces from 4 to match CFPB front-end standards.
+- Turns off ESLint `func-names` setting because it's too verbose for the gain it provides.
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
-- Changed ESLint indent amount to 2 spaces to match CFPB front-end standards.
-- Turns off ESLint `func-names` setting because its too verbose for the gain it provides.
 - Updated `grunt` to `~0.4.5`.
+- Updated `grunt-eslint` to version `12.0.0.`
 - Updated `jquery` to `^1.11.3`.
 - Replaced `grunt-uglify` with `uglifyify`.
 - Updated mailing addresses in `/contact-us` sidebar
@@ -42,6 +73,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Improvements and fixes to `/contact-us/` page
+
+
+### Removed
+
+- Removed demo text suffix from page titles.
 
 
 ## 3.0.0-0.3.0 - 2015-04-23
