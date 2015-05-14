@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved jQuery download to package.json.
 
 ### Fixed
+- Fixed macro on offices page template
 
 - Replaced missing string_score library for the type-and-filter plugin
 
