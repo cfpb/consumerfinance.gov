@@ -225,31 +225,6 @@
 
 {# ==========================================================================
 
-   alert()
-
-   ==========================================================================
-
-   Description:
-
-   Builds alert markup when given:
-
-   options (optional): An object used to customize the alert markup.
-
-   options.text      : Text to display within the alert markup.
-
-   ========================================================================== #}
-
-{% macro alert(options) -%}
-    {% set text = options.text | default('Error!') %}
-    <div class="alert">
-        <span class="alert_icon cf-icon cf-icon-error-round"></span>
-        <p class="alert_text">{{ text }}</p>
-    </div>
-{%- endmacro %}
-
-
-{# ==========================================================================
-
    subscribe()
 
    ==========================================================================
@@ -270,13 +245,14 @@
       enctype="application/x-www-form-urlencoded">
 
     <div class="form-group">
-        <label for="email-subscribe-form_email">
+        <label for="email-subscribe-form_email-1">
             Email address
         </label>
-        <input id="email-subscribe-form_email"
+        <input id="email-subscribe-form_email-1"
                type="email"
-               name="email"
-               placeholder="example@mail.com">
+               name="email1"
+               placeholder="example@mail.com"
+               required>
     </div>
     <p class="short-desc u-mt10">
         The information you provide will permit the Consumer Financial

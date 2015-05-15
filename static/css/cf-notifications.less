@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Capital Framework
+   Notification Styling
+   ========================================================================== */
+
+
+/* topdoc
+  name: Notifications
+  family: cf-notifications
+  notes:
+    - "Markup and styling for notifications"
+  patterns:
+    - name: Default Usage
+      markup: |
+        <div class="cf-notification cf-notification__error">
+          <span class="cf-notification_icon cf-notification_icon__error cf-icon cf-icon-error-round"></span>
+          <p class="cf-notification_text">This is the default alert.</p>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+@notification-padding__px: 11px;
+
+.cf-notification {
+    display: none;
+    position: relative;
+
+    padding: @notification-padding__px;
+    padding-left: 40px;
+    margin-bottom: @notification-padding__px + 4px;
+
+    background: @gray-20;
+    border: 1px solid @gray;
+
+    &__error {
+        background: @redorange-20;
+        border-color: @input-error;
+    }
+
+    &__success {
+        background: @green-tint;
+        border-color: @input-success;
+    }
+
+    &__warning {
+        background: @gold-20;
+        border-color: @input-warning;
+    }
+
+    &_icon {
+        position: absolute;
+        top: @notification-padding__px + 2px;
+        left: @notification-padding__px + 4px;
+
+        color: @gray-20;
+        font-size: unit( 18px / @base-font-size-px, em );
+
+        &__error {
+            color: #d14327;
+        }
+
+        &__success {
+            color: #2cb34a;
+        }
+
+        &__warning {
+            color: #ff931b;
+        }
+    }
+
+    &_text {
+        .h4();
+        margin: 0;
+    }
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

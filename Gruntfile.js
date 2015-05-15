@@ -304,11 +304,11 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['static/css/*.less'],
-        tasks: ['cssdev']
+        tasks: ['css']
       },
       cssjs: {
         files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js'],
-        tasks: ['cssdev', 'jsdev']
+        tasks: ['css', 'js']
       }
     },
 
@@ -396,12 +396,14 @@ module.exports = function(grunt) {
    */
   grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen',
                                 'copy:static-legacy', 'concat:cf-less']);
-  grunt.registerTask('cssdev', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
-  grunt.registerTask('jsdev', ['lintjs', 'browserify:build', 'usebanner:js']);
-  grunt.registerTask('default', ['cssdev', 'jsdev', 'copy:vendor', 'concurrent:topdoc']);
+  grunt.registerTask('css', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
+  grunt.registerTask('js', ['browserify:build', 'usebanner:js']);
   grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);
   });
+
+  grunt.registerTask('build', ['test', 'css', 'js', 'copy:vendor']);
+  grunt.registerTask('default', ['build']);
 };
