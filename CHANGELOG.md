@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added cf-notifications stylesheet to style notifications
 - Added cf_notifier plugin for sending UI notifications
 - Added cf_formValidator plugin for validating form inputs
+- Added Grunt `build` task and set it as default.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -32,6 +33,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and adds `email` field.
 - Adds path variables to Gruntfile.
 - Updated form-validation script to use cf_formValidator and cf_notifier
+- Changed Grunt `jsdev` and `cssdev` to `js` and `css`.
+- Moved testing to build task.
 
 ### Fixed
 - Fixed macro on offices page template
