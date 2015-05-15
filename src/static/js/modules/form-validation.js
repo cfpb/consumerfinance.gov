@@ -9,31 +9,37 @@ var $ = require( 'jquery' );
 require( './jquery/cf_formValidator' ).init();
 require( './jquery/cf_notifier' ).init();
 
+function _createMessage( type, label ) {
+  var message;
+
+  switch ( type ) {
+    case 'required':
+      message = 'Please fill out the ' + label + ' field.';
+      break;
+    case 'email':
+      message = 'Please include a valid email address.';
+      break;
+    case 'checkgroup':
+      message = 'Please select at least one of the ' + label + ' options.';
+      break;
+    default:
+      break;
+  }
+  return message;
+}
+
 function _sendNotification( elem, field ) {
   var label = field.label;
   var type;
-  var message;
 
   for ( var key in field.status ) {
-    if ( field.status.hasOwnProperty(key) && field.status[key] === false ) {
+    if ( field.status.hasOwnProperty( key ) && field.status[key] === false ) {
       type = key;
     }
   }
 
-  if ( type === 'required' ) {
-    message = 'Please fill out the ' + label + ' field.';
-  }
-
-  if ( type === 'email' ) {
-    message = 'Please include a valid email address.';
-  }
-
-  if ( type === 'checkgroup' ) {
-    message = 'Please select at least one of the ' + label + ' options.';
-  }
-
   $( elem ).trigger( 'cf_notifier:notify', {
-    message: message
+    message: _createMessage( type, label )
   } );
   $( field.elem ).addClass( 'error' );
 }
@@ -41,7 +47,7 @@ function _sendNotification( elem, field ) {
 function _clearNotification( elem ) {
   var $elem = $( elem );
   $elem.trigger( 'cf_notifier:clear' );
-  $elem.find('.error').removeClass( 'error' );
+  $elem.find( '.error' ).removeClass( 'error' );
 }
 
 function init() {
@@ -50,7 +56,7 @@ function init() {
       event.preventDefault();
       _sendNotification( this, fields.invalid[0] );
     },
-    onSuccess: function( event, fields ) {
+    onSuccess: function() {
       _clearNotification( this );
     }
   } ).cf_notifier();

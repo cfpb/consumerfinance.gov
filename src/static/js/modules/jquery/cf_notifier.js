@@ -80,7 +80,7 @@ var _notifier = {
       _notifier.settings = $.extend( {}, _notifier.settings, options );
       _notifier.html = _notifier._generateHTML( _notifier.settings );
       if ( _notifier.existing ) {
-        _notifier._clearExisting( function () {
+        _notifier._clearExisting( function() {
           _notifier._notify( elem );
         } );
       } else {
@@ -92,10 +92,9 @@ var _notifier = {
   // Listen for custom cf_notifier:clear event
   _initClearListener: function() {
     _notifier.elem.on( 'cf_notifier:clear', function( event, options ) {
-      var elem = $( this );
       _notifier.settings = $.extend( {}, _notifier.settings, options );
       if ( _notifier.existing ) {
-        _notifier._clearExisting( function () {
+        _notifier._clearExisting( function() {
           if ( _notifier.settings.onClearAll ) {
             _notifier.settings.onClearAll.call( this );
           }
@@ -107,7 +106,7 @@ var _notifier = {
   },
 
   // Remove all custom cf_notifier event listeners
-  _rmCF_NotifierListeners: function() {
+  _rmCFNotifierListeners: function() {
     _notifier.elem.off( 'cf_notifier' );
   },
 
@@ -127,7 +126,7 @@ var _notifier = {
   destroy: function() {
     return this.each( function() {
 
-      _notifier._rmCF_NotifierListeners();
+      _notifier._rmCFNotifierListeners();
 
       if ( _notifier.existing ) {
         _notifier._clearExisting( function() {
@@ -154,7 +153,7 @@ function init() {
     if ( _notifier[method] ) {
       method = _notifier[method];
       options = Array.prototype.slice.call( arguments, 1 );
-    } else if ( typeof ( method ) === 'object' || !method ) {
+    } else if ( typeof method === 'object' || !method ) {
       method = _notifier.init;
       options = arguments;
     } else {
