@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added cf_notifier plugin for sending UI notifications
 - Added cf_formValidator plugin for validating form inputs
 - Added Grunt `build` task and set it as default.
+- Added hero and YouTube video functionality to the '/the-bureau/' page.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -35,6 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated form-validation script to use cf_formValidator and cf_notifier
 - Changed Grunt `jsdev` and `cssdev` to `js` and `css`.
 - Moved testing to build task.
+- Updated 404 image to the latest image provided by the design team.
 
 ### Fixed
 - Fixed macro on offices page template
