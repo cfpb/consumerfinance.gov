@@ -20,8 +20,8 @@ var _validator = {
       'checkgroup',
       'radiogroup'
     ],
-    onFailure: function( event, fields ) {},
-    onSuccess: function( event, fields ) {}
+    onFailure: function() {},
+    onSuccess: function() {}
   },
 
   // Validate an individual input for each of the set types
@@ -31,13 +31,13 @@ var _validator = {
   _validateInput: function( $input, value ) {
     var status = {};
 
-    $.each( _validator.settings.types, function( i ) {
+    $.each( _validator.settings.types, function() {
       var validation;
       var type = this;
-      var notRequired = ( type === 'required' && !$input.prop( 'required' ) );
-      var notEmail = ( type === 'email' && $input.attr( 'type') !== 'email' );
-      var notRadio = ( type === 'radiogroup' && $input.attr( 'type' ) !== 'radio' );
-      var notCheckbox = ( type === 'checkgroup' && $input.attr( 'type' ) !== 'checkbox' );
+      var notRequired = type === 'required' && !$input.prop( 'required' );
+      var notEmail = type === 'email' && $input.attr( 'type' ) !== 'email';
+      var notRadio = type === 'radiogroup' && $input.attr( 'type' ) !== 'radio';
+      var notCheckbox = type === 'checkgroup' && $input.attr( 'type' ) !== 'checkbox';
 
       if ( notRequired || notEmail || notRadio || notCheckbox ) {
         status[type] = null;
@@ -49,7 +49,7 @@ var _validator = {
       } else if ( type === 'email' ) {
         validation = _validate.single( value, { email: true } );
       }
-      status[type] = ( typeof validation === 'undefined' );
+      status[type] = typeof validation === 'undefined';
     } );
 
     return status;
@@ -64,7 +64,7 @@ var _validator = {
       invalid: []
     };
 
-    fields.each( function( i ) {
+    fields.each( function() {
       var $input = $( this );
       var failed = false;
       var field;
@@ -149,12 +149,12 @@ var _validator = {
     } );
   },
 
-  destroy: function( options ) {
+  destroy: function() {
     return this.each( function() {
       _validator._rmSubmitListener();
 
       _validator.settings = [];
-    });
+    } );
   }
 };
 
@@ -166,11 +166,11 @@ function init() {
     if ( _validator[method] ) {
       method = _validator[method];
       options = Array.prototype.slice.call( arguments, 1 );
-    } else if ( typeof ( method ) === 'object' || !method ) {
+    } else if ( typeof method === 'object' || !method ) {
       method = _validator.init;
       options = arguments;
     } else {
-      $.error( 'Method "' + method + '"" does not exist in the cf_formValidator plugin' );
+      $.error( 'Method "' + method + '" does not exist in the cf_formValidator plugin' );
       return this;
     }
 
