@@ -46,7 +46,11 @@
     "chosen": "./vendor/chosen/chosen.jquery.js",
     "requestNextAnimationFrame": "./static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js",
     "slick": "./vendor/slick-carousel/slick.min.js",
-    "string_score": "./vendor/string_score/string_score.js"
+    "string_score": "./vendor/string_score/string_score.js",
+    "validate": "./vendor/validate/validate.js"
   },
-  "browserify-shim": "./_settings/browserify-shims.js"
+  "browserify-shim": "./_settings/browserify-shims.js",
+  "dependencies": {
+    "handlebars": "^3.0.3"
+  }
 }
