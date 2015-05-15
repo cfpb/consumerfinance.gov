@@ -18,6 +18,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 - Added JS unit testing and code coverage through Mocha and Istanbul.
+- Added cf-notifications stylesheet to style notifications
+- Added cf_notifier plugin for sending UI notifications
+- Added cf_formValidator plugin for validating form inputs
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -28,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed bower.json authors array field to use `homepage` in place of `url`,
   and adds `email` field.
 - Adds path variables to Gruntfile.
+- Updated form-validation script to use cf_formValidator and cf_notifier
 
 ### Fixed
 - Fixed macro on offices page template
@@ -37,6 +41,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
+- Alert.js plugin
+- alert macro
 
 ## 3.0.0-1.0.0
 
