@@ -53,6 +53,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed string-replace:static-legacy Grunt task.
 - Alert.js plugin
 - alert macro
+- Unused index.html file from /initiatives/
+- Unnecessary setting of template variables
 
 
 ## 3.0.0-1.0.1 - 2015-05-18
