@@ -71,6 +71,8 @@
    twitter_options (optional): See `options` under the `share_twitter_url()`
                                macro.
 
+   share_options (optional):   Object used to modify share markup.
+
    ==========================================================================
 
    Example:
@@ -80,20 +82,25 @@
 
    ========================================================================== #}
 
-{% macro share(title, hide_heading=false, twitter_options={}) %}
-    <aside>
-        <h1 class="h5 {{'u-visually-hidden' if hide_heading}}">Share this page</h1>
+{% macro share(title, hide_heading=false, twitter_options={}, share_options={}) %}
+    {% set text = share_options.text | default('Share this page') %}
+    {% set additional_classes = share_options.additional_classes  %}
+
+    <aside {{ ('class=' ~ additional_classes) if additional_classes }}>
+        <h1 class="h5 {{'u-visually-hidden' if hide_heading}}">{{ text }}</h1>
         <ul class="post_share list__horizontal">
             <li class="list_item">
                 <a class="share-icon"
-                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ title }}&amp;pubid=ra-4da354ee346886d2">
+                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ title }}&amp;pubid=ra-4da354ee346886d2"
+                   target="_blank">
                     <span class="cf-icon cf-icon-email-social-square"></span>
                     <span class="u-visually-hidden">Share by email</span>
                 </a>
             </li>
             <li class="list_item">
                 <a class="share-icon"
-                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}">
+                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}"
+                   target="_blank">
                     <span class="cf-icon cf-icon-facebook-square"></span>
                     <span class="u-visually-hidden">Share on Facebook</span>
                 </a>
@@ -192,6 +199,7 @@
     {{ string|replace('\n', '')|replace(' ', '')|list|length }}
 {% endmacro %}
 
+
 {# ==========================================================================
 
    slugify()
@@ -260,3 +268,70 @@
 
 {% endmacro %}
 
+
+{# ==========================================================================
+
+   YouTube()
+
+   ==========================================================================
+
+   Description:
+
+   Builds YouTube markup when given:
+
+   options (optional): An object used to customize the YouTube markup.
+
+   options.image_res: The image resolution to use for the YouTube image.
+
+   options.video_id: An id associated with a YouTube video.
+
+   ========================================================================== #}
+
+{% macro YouTube(options) -%}
+    {% set image_res = options.image_res | default('default') %}
+    {% set image_res_options = {
+          'default' : 'default.jpg',
+          'standard': 'sddefault.jpg',
+          'medium'  : 'mqdefault.jpg',
+          'max'     : 'maxresdefault.jpg',
+          'high'    : 'hqdefault.jpg'
+        }
+    %}
+    {% set video_id  = options.video_id %}
+    {% set video_url = 'http://www.youtube.com/embed/' + video_id %}
+    {% set image_url = options.image_url | default(
+                                              'http://img.youtube.com/vi/'
+                                              + video_id
+                                              + '/'
+                                              + image_res_options[image_res]
+                                           )
+    %}
+    <div class="youtube-player_container" data-video-id="{{ video_id }}">
+        {{ caller() | safe if caller }}
+        <div class="youtube-player_video-container show-on_yt-playing">
+            <div class="youtube-player_iframe-container">
+                <div id="youtube-player"></div>
+            </div>
+            <div class="youtube-player_actions-container">
+                <div class="youtube-player_video-actions">
+                    <a class="btn youtube-player_close-btn" href="/the-bureau/">
+                        <span class="btn_icon__left cf-icon cf-icon-delete-round cf-icon-left"></span>
+                        close
+                    </a>
+                </div>
+                {{ share(share_options = {
+                              'text' : 'SHARE THIS VIDEO',
+                              'additional_classes' : 'youtube-player_share-actions'
+                }) }}
+            </div>
+        </div>
+        <div class="youtube-player_image-container hide-on_yt-playing">
+            <a class="youtube-player_play-btn" href="https://www.youtube.com/watch?v={{ video_id }}" target="_blank">
+                <span class="u-visually-hidden">Play video</span>
+            </a>
+            <img class="youtube-player_image"
+                 alt="YouTube video image"
+                 src="{{ image_url }}" >
+        </div>
+  </div>
+{%- endmacro %}
