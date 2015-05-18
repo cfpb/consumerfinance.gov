@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added cf_formValidator plugin for validating form inputs
 - Added Grunt `build` task and set it as default.
 - Added hero and YouTube video functionality to the '/the-bureau/' page.
+- Added ajax subscription submission.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
