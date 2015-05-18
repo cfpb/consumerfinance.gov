@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Grunt `build` task and set it as default.
 - Added hero and YouTube video functionality to the '/the-bureau/' page.
 - Added ajax subscription submission.
+- Initiative folder and files for Initiative pages
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -38,11 +39,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed Grunt `jsdev` and `cssdev` to `js` and `css`.
 - Moved testing to build task.
 - Updated 404 image to the latest image provided by the design team.
+- Office folder and files for Office pages
 
 ### Fixed
 - Fixed macro on offices page template
 - Fixed subscribe macro in events archive and archive single, and press resources
 - Sheer indexing error when related posts are deleted
+- Office and Initiative processors
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
