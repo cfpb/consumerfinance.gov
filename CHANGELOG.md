@@ -46,6 +46,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed subscribe macro in events archive and archive single, and press resources
 - Sheer indexing error when related posts are deleted
 - Office and Initiative processors
+- Slick carousel site-wide JS error.
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
