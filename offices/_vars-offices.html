@@ -2,9 +2,6 @@
 {% set query = queries.initiative %}
 {% set initiatives = query.search_with_url_arguments(size=6, filter_has_parent="false", filter_related_office=office.slug) %}
 
-{% set tag = "foia" %}
-{% set activity_type = ["cfpb_report"] %}
-
 {% set nav_items = [(path + office.slug + '/', 'index', office.title)] -%}
 {% for initiative in initiatives %}
     {%- set _ignore = nav_items.append(('/initiatives/' + initiative.slug + '/', initiative.slug, initiative.title|safe)) -%}
