@@ -78,14 +78,16 @@
         </h1>
         {% for resource in office.resources %}
             <div class="media office_resource block__sub">
+                {% if resource.icon %}
                 <div class="media_image-container media_image-container__wide-margin">
                     <img class="media_image u-centered-on-mobile"
                          width="150"
                          src="{{resource.icon if resource.icon}}">
                 </div>
+                {% endif %}
                 <div class="media_body">
-                    {% if resource.head %}
-                    <h2 class="h3">{{ resource.head | safe }}</h2>
+                    {% if resource.title %}
+                    <h2 class="h3">{{ resource.title | safe }}</h2>
                     {% endif %}
 
                     {% if resource.desc %}
@@ -173,7 +175,7 @@
             </h1>
             {{ activities_feed }}
             <!-- link to activities page? -->
-            <a class="jump-link jump-link__right">
+            <a class="jump-link jump-link__right" href="/activity-log/">
                 View all of our activity
             </a>
         </section>
@@ -188,9 +190,6 @@
                     Office Contact Information
                 </span>
             </h1>
-            {% if contact.sitewide_desc %}
-            <p class="short-desc">{{ contact.sitewide_desc }}</p>
-            {% endif %}
             <div class="content-l content-l__main content-l__large-gutters">
                 <div class="content-l_col content-l_col-1">
                     <h2 class="h5">{{ contact.title }}</h2>

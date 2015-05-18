@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added hero and YouTube video functionality to the '/the-bureau/' page.
 - Added ajax subscription submission.
 - Initiative folder and files for Initiative pages
+- Added custom template for FOIA faqs page
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -40,6 +41,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved testing to build task.
 - Updated 404 image to the latest image provided by the design team.
 - Office folder and files for Office pages
+- Updated template for office pages
 
 ### Fixed
 - Fixed macro on offices page template
