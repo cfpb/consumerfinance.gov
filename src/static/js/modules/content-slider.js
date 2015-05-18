@@ -35,7 +35,7 @@ function ContentSlider( elem, slideCount ) {
     adaptiveHeight: true,
     arrows:         false,
     onBeforeChange: function( slider, currInd, targetInd ) {
-      // when slide is changed, animate height of container to accommodate
+      // When slide is changed, animate height of container to accommodate
       // new slide's height.
       var slide = slider.$slides[targetInd];
       slider.$slider.animate( { height: $( slide ).height() + 'px' }, self.speed );
@@ -46,6 +46,9 @@ function ContentSlider( elem, slideCount ) {
 }
 
 ContentSlider.prototype.init = function() {
+  // TODO: Remove this line when per-page JS is implemented.
+  if ( !_isSlickAvailableOn( this ) ) return;
+
   var self = this;
   this.$container.height( $( this.slickObj.$slides[0] ).height() );
   this.$container.on( 'click.slider', '.content-show', $.proxy( this.slideInContent, this ) );
@@ -59,7 +62,7 @@ ContentSlider.prototype.slideInContent = function( e ) {
       $div = $( '<div>' ),
       $node = $( $( e.currentTarget ).data( 'content' ) );
   if ( $node.length ) {
-    // TODO: move content instead of cloning; use ids instead of classes
+    // TODO: Move content instead of cloning; use ids instead of classes.
     contents = $node.first().clone().show().appendTo( $div );
     this.$container.slickAdd( $div );
     this.$container.slickNext();
@@ -78,6 +81,9 @@ ContentSlider.prototype.slideOutContent = function( e ) {
 };
 
 ContentSlider.prototype.destroy = function() {
+  // TODO: Remove this line when per-page JS is implemented.
+  if ( !_isSlickAvailableOn( this ) ) return;
+
   // Remove all but permanent slides.
   while ( this.slickObj.$slides.length > this.slideCount ) {
     this.$container.slickRemove( this.slickObj.$slides.length - 1 );
@@ -88,4 +94,11 @@ ContentSlider.prototype.destroy = function() {
   this.$container.unslick();
 };
 
-module.exports = { ContentSlider: ContentSlider };
+// TODO: This is used on at least `/the-bureau/bureau-structure/`,
+// when page-specific JS is implemented the `this.slickObj` check for
+// existence can be removed.
+function _isSlickAvailableOn(target) {
+  return target.slickObj === null ? false : true;
+}
+
+module.exports = ContentSlider;
