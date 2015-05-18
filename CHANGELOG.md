@@ -41,15 +41,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed macro on offices page template
-- Fixed subscribe macro in events archive and archive single, and press
-  resources
-- Replaced missing string_score library for the type-and-filter plugin
+- Fixed subscribe macro in events archive and archive single, and press resources
 - Sheer indexing error when related posts are deleted
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
 - Alert.js plugin
 - alert macro
+
+
+## 3.0.0-1.0.1 - 2015-05-18
+
+### Fixed
+- Replaced missing string_score library for the type-and-filter plugin
 
 ## 3.0.0-1.0.0
 
