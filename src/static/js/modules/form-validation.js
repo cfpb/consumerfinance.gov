@@ -50,14 +50,38 @@ function _clearNotification( elem ) {
   $elem.find( '.error' ).removeClass( 'error' );
 }
 
+function _sendSubscriptionRequest( elem ) {
+  var $form = $( elem );
+  var action = $form.attr( 'action' );
+  var formData = $form.serialize();
+
+  $.post( action, formData, function( data ) {
+    if ( data.result === 'fail' ) {
+      $form.trigger( 'cf_notifier:notify', {
+        message: 'There was an error in your submission, please try again later.',
+        state:   'error'
+      } );
+    } else {
+      $form.trigger( 'cf_notifier:notify', {
+        message: 'Your subscription was successfuly received.',
+        state:   'success'
+      } );
+    }
+  } );
+}
+
 function init() {
   $( 'form' ).cf_formValidator( 'init', {
     onFailure: function( event, fields ) {
       event.preventDefault();
       _sendNotification( this, fields.invalid[0] );
     },
-    onSuccess: function() {
+    onSuccess: function( event ) {
       _clearNotification( this );
+      if ( this.id === 'email-subscribe-form' ) {
+        event.preventDefault();
+        _sendSubscriptionRequest( this );
+      }
     }
   } ).cf_notifier();
 }
