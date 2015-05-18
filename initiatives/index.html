@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-offices.html" as vars with context %}
+{% import "_vars-initiatives.html" as vars with context %}
 {% set active_nav_id = initiative.slug %}
 
 {% block title -%}
@@ -16,9 +16,6 @@
 
 {% block content_main %}
 
-    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
-    {% set activities_feed = activity_snippets(activity_type) %}
-    
     {% if initiative.title %}
     <h1>{{ initiative.title | safe }}</h1>
     {% endif %}
@@ -29,29 +26,29 @@
     </section>                   
     {% endif %}
     
-    {% if initiative.subinitiatives %}
+    {% if subinitiatives %}
     <section class="block block__padded-top block__border-top block__flush-bottom">
         <div class="content-l content-l__main">
-            {% for subinitiative in initiative.subinitiatives %}
+            {% for subinitiative in subinitiatives %}
             <!-- TODO: link header styles -->
             <div class="initiative_topic block__sub block__flush-top
-                        {{ 'office_col' if initiative.subinitiatives|length > 1 else 'content-l_col-1' -}}">
+                        {{ 'office_col' if subinitiatives|length > 1 else 'content-l_col-1' -}}">
 
-                {% if subinitiative.header %}
+                {% if subinitiative.title %}
                 <h2 class="h3">
-                    {{ subinitiative.header | safe }}
+                    {{ subinitiative.title | safe }}
                 </h2>
                 {% endif %}
                 
-                {% if subinitiative.desc %}
+                {% if subinitiative.content %}
                 <p class="short-desc">
-                    {{ subinitiative.desc | safe }}
+                    {{ subinitiative.content | safe }}
                 </p>
                 {% endif %}
                 
-                {% if subinitiative.links %}
+                {% if subinitiative.related_links %}
                 <ul class="list__links">
-                {% for link in subinitiative.links %}
+                {% for link in subinitiative.related_links %}
                     <li class="list_item">
                         <a class="jump-link jump-link__right list_link" href="{{link[0] if link[0]}}">
                             {{ link[1] if link[1] }}

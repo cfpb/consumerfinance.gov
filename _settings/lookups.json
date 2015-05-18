@@ -4,9 +4,14 @@
     "type":      "contact",
     "permalink": true
   },
-  "students_initiative": {
-    "url":       "/offices/students-2/<id>/",
+  "initiative": {
+    "url":       "/initiatives/<id>/",
     "type":      "initiative",
+    "permalink": true
+  },
+  "office": {
+    "url":       "/offices/<id>/",
+    "type":      "office",
     "permalink": true
   },
   "newsroom": {
