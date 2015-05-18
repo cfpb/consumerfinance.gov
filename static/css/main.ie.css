@@ -10094,6 +10094,117 @@ a.focus .summary_event-date {
   -webkit-font-smoothing: antialiased;
 }
 
+.hero__bureau {
+  padding-top: 0;
+}
+
+.hero__bureau .hero_wrapper {
+  padding-top: 3.75em;
+}
+
+.hero_card__bureau .hero_preview {
+  padding-bottom: 3.75em;
+}
+
+.hero_card__bureau .jump-link {
+  display: block;
+  margin: .9375em 0;
+}
+
+#youtube-player {
+  float: left;
+}
+
+.youtube-player_container {
+  overflow: hidden;
+}
+
+.youtube-player_container.yt-playing {
+  background-color: #000;
+}
+
+.youtube-player_container.yt-playing .hide-on_yt-playing {
+  display: none;
+}
+
+.youtube-player_container.yt-playing .show-on_yt-playing {
+  display: block;
+}
+
+.youtube-player_container.yt-playing .youtube-player_video-container {
+  display: table;
+}
+
+.youtube-player_iframe-container {
+  float: left;
+}
+
+.youtube-player_image {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.youtube-player_image__center {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.youtube-player_play-btn {
+  background: url('/static/img/youtube-play-btn.png') no-repeat;
+  height: 73px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 73px;
+  z-index: 10;
+}
+
+.lt-ie9 .youtube-player_play-btn {
+  margin-left: -73px;
+}
+
+.youtube-player_actions-container {
+  color: #fff;
+  float: left;
+}
+
+.youtube-player_actions-container h1 {
+  margin: 1.875em 0 .9375em 0;
+}
+
+.youtube-player_actions-container {
+  margin: 1.875em 0 0 1.875em;
+  width: 150px;
+}
+
+.youtube-player_share-actions .cf-icon {
+  background: #fff;
+  height: 20px;
+  width: 22px;
+}
+
+.youtube-player_share-actions .cf-icon:before {
+  position: relative;
+  top: -3px;
+}
+
+.youtube-player_share-actions .share-icon {
+  color: #0072ce;
+}
+
+.youtube-player_video-container {
+  display: none;
+  margin: auto;
+}
+
 .org-chart {
   width: 530px;
   margin: 0 auto;
