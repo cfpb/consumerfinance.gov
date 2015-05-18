@@ -5,10 +5,6 @@
     {{ office.title | safe if office.title }}
 {%- endblock %}
 
-{% block desc -%}
-    {{ office.desc | safe if office.desc }}
-{%- endblock %}
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
@@ -107,19 +103,19 @@
     </section>
     {% endif %}
 
-    {% if initiatives %}
+    {% if vars.initiatives %}
     <section class="office_initiatives block block__sub block__padded-top block__border-top">
         <h1 class="h2">
             Our Work
         </h1>
         <div class="content-l content-l__main content-l__large-gutters expandables-group">
-        {% for initiative in initiatives %}
+        {% for initiative in vars.initiatives %}
             <div class="office_initiative
                         expandable
                         expandable__expanded
                         expandable__mobile-only
                         content-l_col
-                        {% if initiatives|list|length > 1 -%}
+                        {% if vars.initiatives.result_dict|length > 1 -%}
                             content-l_col-1-2
                         {% else -%}
                             content-l_col-1
@@ -146,13 +142,13 @@
                         {{ initiative.title | safe }}
                     </h2>
                     {% endif %}
-                    {% if initiative.content %}
+                    {% if initiative.excerpt %}
                     <p class="short-desc">
-                        {{ initiative.content | safe }}
+                        {{ initiative.excerpt | safe }}
                     </p>
                     {% endif %}
                     {% if initiative.slug %}
-                    <a class="jump-link jump-link__right" href="{{ path + initiative.slug }}">
+                    <a class="jump-link jump-link__right" href="{{ '/initiatives/' + initiative.slug + '/' }}">
                         Read more
                     </a>
                     {% endif %}
