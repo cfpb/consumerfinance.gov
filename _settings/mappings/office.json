@@ -2,6 +2,9 @@
   "properties": {
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -19,6 +22,9 @@
         },
         "slug": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
@@ -27,43 +33,6 @@
     },
     "comment_status": {
       "type": "string"
-    },
-    "custom_fields": {
-      "properties": {
-        "intro_govdelivery_code": {
-          "type": "string"
-        },
-        "intro_subscribe_form": {
-          "type": "string"
-        },
-        "intro_text": {
-          "type": "string"
-        },
-        "og_desc": {
-          "type": "string"
-        },
-        "og_title": {
-          "type": "string"
-        },
-        "related_contact": {
-          "type": "string"
-        },
-        "top_story_desc": {
-          "type": "string"
-        },
-        "top_story_head": {
-          "type": "string"
-        },
-        "top_story_links_0_link": {
-          "type": "string"
-        },
-        "top_story_links_1_link": {
-          "type": "string"
-        },
-        "twtr_text": {
-          "type": "string"
-        }
-      }
     },
     "date": {
       "type": "string"
@@ -92,6 +61,25 @@
     "related_contact": {
       "type": "string"
     },
+    "relative_url": {
+      "type": "string"
+    },
+    "resources": {
+      "properties": {
+        "desc": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "slug": {
       "type": "string"
     },
@@ -110,6 +98,9 @@
           "type": "string"
         },
         "top_story_head": {
+          "type": "string"
+        },
+        "top_story_links": {
           "type": "string"
         }
       }
