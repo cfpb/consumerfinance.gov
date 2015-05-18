@@ -2,6 +2,9 @@
   "properties": {
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -19,6 +22,9 @@
         },
         "slug": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
@@ -31,102 +37,14 @@
     "content": {
       "type": "string"
     },
-    "custom_fields": {
-      "properties": {
-        "og_desc": {
-          "type": "string"
-        },
-        "og_title": {
-          "type": "string"
-        },
-        "related_office": {
-          "type": "string"
-        },
-        "subinitiative_0_desc": {
-          "type": "string"
-        },
-        "subinitiative_0_header": {
-          "type": "string"
-        },
-        "subinitiative_0_links_0_link": {
-          "type": "string"
-        },
-        "subinitiative_0_links_1_link": {
-          "type": "string"
-        },
-        "subinitiative_0_links_2_link": {
-          "type": "string"
-        },
-        "subinitiative_0_links_3_link": {
-          "type": "string"
-        },
-        "subinitiative_0_links_4_link": {
-          "type": "string"
-        },
-        "subinitiative_1_desc": {
-          "type": "string"
-        },
-        "subinitiative_1_header": {
-          "type": "string"
-        },
-        "subinitiative_1_links_0_link": {
-          "type": "string"
-        },
-        "subinitiative_1_links_1_link": {
-          "type": "string"
-        },
-        "subinitiative_1_links_2_link": {
-          "type": "string"
-        },
-        "subinitiative_1_links_3_link": {
-          "type": "string"
-        },
-        "subinitiative_1_links_4_link": {
-          "type": "string"
-        },
-        "subinitiative_2_desc": {
-          "type": "string"
-        },
-        "subinitiative_2_header": {
-          "type": "string"
-        },
-        "subinitiative_2_links_0_link": {
-          "type": "string"
-        },
-        "subinitiative_2_links_1_link": {
-          "type": "string"
-        },
-        "subinitiative_2_links_2_link": {
-          "type": "string"
-        },
-        "subinitiative_2_links_3_link": {
-          "type": "string"
-        },
-        "subinitiative_3_desc": {
-          "type": "string"
-        },
-        "subinitiative_3_header": {
-          "type": "string"
-        },
-        "subinitiative_3_links_0_link": {
-          "type": "string"
-        },
-        "subinitiative_4_desc": {
-          "type": "string"
-        },
-        "subinitiative_4_header": {
-          "type": "string"
-        },
-        "twtr_text": {
-          "type": "string"
-        }
-      }
-    },
     "date": {
       "type": "string"
     },
     "excerpt": {
       "type": "string"
+    },
+    "has_parent": {
+      "type": "boolean"
     },
     "id": {
       "type": "long"
@@ -143,6 +61,9 @@
     "related_office": {
       "type": "string",
       "index": "not_analyzed"
+    },
+    "relative_url": {
+      "type": "string"
     },
     "slug": {
       "type": "string"
