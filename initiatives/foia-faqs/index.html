@@ -5,6 +5,10 @@
 {% import "_vars-initiatives.html" as vars with context %}
 {% set active_nav_id = initiative.slug %}
 
+{% block title -%}
+    {{ initiative.title | safe if initiative.title }}
+{%- endblock %}
+
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
