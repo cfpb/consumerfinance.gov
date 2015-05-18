@@ -56,6 +56,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - alert macro
 - Unused index.html file from /initiatives/
 - Unnecessary setting of template variables
+- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
 
 
 ## 3.0.0-1.0.1 - 2015-05-18
