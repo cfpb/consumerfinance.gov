@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Youtube Initialization
+   YouTube Initialization
    Used on at least `/the-bureau/`.
    ========================================================================== */
 
@@ -10,6 +10,17 @@ var jsLoader = require( './util/js-loader' );
 var viewportDimensions = require( './breakpoint-handler' ).getViewportDimensions;
 
 function init() {
+  // Create the jQuery YouTube plugin.
+  // @param {Object} Object used to customize YouTube.
+  // @returns jQuery element.
+  $.fn.createYouTube = function( options ) {
+    options = $.extend( true, {}, this.data(), options );
+
+    return this.each( function() {
+      $( this ).data( 'plugin', new YouTube( this, options ) );
+    } );
+  };
+
   return $( '.youtube-player_container' ).createYouTube();
 }
 
@@ -164,17 +175,6 @@ YouTube.prototype = {
 
     return this;
   }
-};
-
-// Create the jQuery YouTube plugin.
-// @options {Object} Object used to customize YouTube.
-// @returns jQuery element.
-$.fn.createYouTube = function( options ) {
-  options = $.extend( true, {}, this.data(), options );
-
-  return this.each( function() {
-    $( this ).data( 'plugin', new YouTube( this, options ) );
-  } );
 };
 
 // Expose public methods.

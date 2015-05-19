@@ -82,7 +82,7 @@
                 <div class="media_image-container media_image-container__wide-margin">
                     <img class="media_image u-centered-on-mobile"
                          width="150"
-                         src="{{resource.icon if resource.icon}}">
+                         src="{{resource.icon}}">
                 </div>
                 {% endif %}
                 <div class="media_body">
@@ -96,7 +96,7 @@
 
                     {% if resource.link %}
                     <a class="jump-link jump-link__right" href="{{ resource.link[0] if resource.link }}">
-                          {{ resource.link[1] if resource.link }}
+                          {{ resource.link[1] }}
                     </a>
                     {% endif %}
                 </div>
