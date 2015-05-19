@@ -18,13 +18,13 @@
     {% if initiative.title %}
     <h1>{{ initiative.title | safe }}</h1>
     {% endif %}
-    
+
     {% if initiative.content %}
     <section class="initiative_description block block__flush-top">
         {{ initiative.content | safe }}
-    </section>                   
+    </section>
     {% endif %}
-    
+
     {% if vars.subinitiatives %}
     <section class="block block__padded-top block__border-top block__flush-bottom">
         <div class="content-l content-l__main">
@@ -38,13 +38,13 @@
                     {{ subinitiative.title | safe }}
                 </h2>
                 {% endif %}
-                
+
                 {% if subinitiative.content %}
                 <p class="short-desc">
                     {{ subinitiative.content | safe }}
                 </p>
                 {% endif %}
-                
+
                 {% if subinitiative.related_links %}
                 <ul class="list__links">
                 {% for link in subinitiative.related_links %}
@@ -56,24 +56,24 @@
                 {% endfor %}
                 </ul>
                 {% endif %}
-                
+
             </div>
             {% endfor %}
         </div>
     </section>
     {% endif %}
-    
+
     {% if activities_feed %}
-    <aside class="block block__flush-sides block__bg u-mb0 u-mt0">    
+    <aside class="block block__flush-sides block__bg u-mb0 u-mt0">
         <section class="office_activities">
             <h1 class="header-slug">
                 <span class="header-slug_inner">
                     Activities
                 </span>
-            </h1>     
+            </h1>
             {{ activities_feed }}
         </section>
-    </aside>  
+    </aside>
     {% endif %}
 
 {% endblock %}
