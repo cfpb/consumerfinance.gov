@@ -31,7 +31,7 @@ function init() {
           event.preventDefault();
           togglePressedVal( $this );
         }
-      });
+      } );
       // Prevent the spacebar from scrolling the page.
       $this.keydown( function( event ) {
         // Space key pressed.

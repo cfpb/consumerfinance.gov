@@ -116,9 +116,11 @@
 }
 
 /* topdoc
-  name: respond-to-retina() (mixin)
+  name: respond-to-dpi(@ratio) (mixin)
   notes:
-    - "This mixin allows us to easily write styles that target retina screens"
+    - "This mixin allows us to easily write styles
+    that target high-resolution screens,
+    such as Apple retina screens"
   family: cfgov-cf-enhancements
   patterns:
     - name: Usage
@@ -128,7 +130,7 @@
           .example {
               background: url(regular-resolution-image.png);
 
-              .respond-to-retina({
+              .respond-to-dpi(2, {
                   background-image: url(retina-image.png);
               });
           }
@@ -146,8 +148,9 @@
     - cfgov-cf-enhancements
 */
 
-.respond-to-retina(@rules) {
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+.respond-to-dpi(@ratio, @rules) {
+    @dpi: (@ratio * 96dpi);
+    @media (-webkit-min-device-pixel-ratio: @ratio), (min-resolution: @dpi) {
         @rules();
     }
 }
@@ -799,6 +802,41 @@ tbody {
   }
 }
 
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
+
+
+/* topdoc
+  name: Warning
+  family: cf-forms
+  notes:
+    - "Adds Warning state to form fields"
+  tags:
+    - cf-forms
+*/
+
+@input-warning:     @gold;
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+select[multiple],
+textarea {
+    &.warning {
+        border: 1px solid @input-warning;
+        outline: 1px solid @input-warning;
+    }
+}
+
+.warning + .@{cf-forms_input-icon-class} {
+    color: @input-warning;
+}
 
 /* topdoc
     name: EOF

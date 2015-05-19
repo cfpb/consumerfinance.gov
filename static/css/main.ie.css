@@ -5104,6 +5104,82 @@ tbody tr {
   border: 1px solid #babbbd;
 }
 
+input[type="text"].warning,
+input[type="search"].warning,
+input[type="email"].warning,
+input[type="url"].warning,
+input[type="tel"].warning,
+input[type="number"].warning,
+select[multiple].warning,
+textarea.warning {
+  border: 1px solid #ff9e1b;
+  outline: 1px solid #ff9e1b;
+}
+
+.warning+.cf-form_input-icon {
+  color: #ff9e1b;
+}
+
+.cf-notification {
+  display: none;
+  position: relative;
+  padding: 11px;
+  padding-left: 40px;
+  margin-bottom: 15px;
+  background: #e3e4e5;
+  border: 1px solid #75787b;
+}
+
+.cf-notification__error {
+  background: #f6d9d3;
+  border-color: #d12124;
+}
+
+.cf-notification__success {
+  background: #dbedd4;
+  border-color: #2cb34a;
+}
+
+.cf-notification__warning {
+  background: #ffecd1;
+  border-color: #ff9e1b;
+}
+
+.cf-notification_icon {
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  color: #e3e4e5;
+  font-size: 1.125em;
+}
+
+.cf-notification_icon__error {
+  color: #d14327;
+}
+
+.cf-notification_icon__success {
+  color: #2cb34a;
+}
+
+.cf-notification_icon__warning {
+  color: #ff931b;
+}
+
+.cf-notification_text {
+  margin-top: 0;
+  margin-bottom: 1.16666667em;
+  font-size: 1.125em;
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.22222222;
+  margin: 0;
+}
+
+.lt-ie9 .cf-notification_text {
+  font-weight: normal !important;
+}
+
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
@@ -6806,50 +6882,6 @@ a.hero_card {
 
 .lt-ie9 .step-slug {
   font-weight: normal !important;
-}
-
-.alert {
-  background: #f6d9d3;
-  border: 1px solid #d12124;
-  display: none;
-  margin-bottom: 15px;
-  padding: 15px;
-}
-
-.alert_icon {
-  background-color: #fff;
-  border-radius: 100%;
-  color: #D14327;
-  float: left;
-  font-size: 1.875em;
-  position: relative;
-  top: -2px;
-}
-
-.alert_text {
-  margin-top: 0;
-  margin-bottom: 1.16666667em;
-  font-size: 1.125em;
-  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.22222222;
-  margin: 0;
-  overflow: auto;
-  padding-left: 15px;
-}
-
-.lt-ie9 .alert_text {
-  font-weight: normal !important;
-}
-
-.lt-ie9 .alert {
-  background: #f6d9d3 url('/static/img/warning-icon.png') no-repeat 15px 15px;
-  padding-left: 2.8125em;
-}
-
-.lt-ie9 .alert_icon {
-  display: none;
 }
 
 .summary {
@@ -10060,6 +10092,117 @@ a.focus .summary_event-date {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
+}
+
+.hero__bureau {
+  padding-top: 0;
+}
+
+.hero__bureau .hero_wrapper {
+  padding-top: 3.75em;
+}
+
+.hero_card__bureau .hero_preview {
+  padding-bottom: 3.75em;
+}
+
+.hero_card__bureau .jump-link {
+  display: block;
+  margin: .9375em 0;
+}
+
+#youtube-player {
+  float: left;
+}
+
+.youtube-player_container {
+  overflow: hidden;
+}
+
+.youtube-player_container.yt-playing {
+  background-color: #000;
+}
+
+.youtube-player_container.yt-playing .hide-on_yt-playing {
+  display: none;
+}
+
+.youtube-player_container.yt-playing .show-on_yt-playing {
+  display: block;
+}
+
+.youtube-player_container.yt-playing .youtube-player_video-container {
+  display: table;
+}
+
+.youtube-player_iframe-container {
+  float: left;
+}
+
+.youtube-player_image {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.youtube-player_image__center {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.youtube-player_play-btn {
+  background: url('/static/img/youtube-play-btn.png') no-repeat;
+  height: 73px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 73px;
+  z-index: 10;
+}
+
+.lt-ie9 .youtube-player_play-btn {
+  margin-left: -73px;
+}
+
+.youtube-player_actions-container {
+  color: #fff;
+  float: left;
+}
+
+.youtube-player_actions-container h1 {
+  margin: 1.875em 0 .9375em 0;
+}
+
+.youtube-player_actions-container {
+  margin: 1.875em 0 0 1.875em;
+  width: 150px;
+}
+
+.youtube-player_share-actions .cf-icon {
+  background: #fff;
+  height: 20px;
+  width: 22px;
+}
+
+.youtube-player_share-actions .cf-icon:before {
+  position: relative;
+  top: -3px;
+}
+
+.youtube-player_share-actions .share-icon {
+  color: #0072ce;
+}
+
+.youtube-player_video-container {
+  display: none;
+  margin: auto;
 }
 
 .org-chart {
