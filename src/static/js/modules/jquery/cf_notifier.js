@@ -116,7 +116,6 @@ var _notifier = {
       _notifier.settings = $.extend( {}, _notifier.defaults, options );
 
       if ( _notifier.elem.length > 0 ) {
-
         _notifier._initNotifyListener();
         _notifier._initClearListener();
       }

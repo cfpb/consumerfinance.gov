@@ -3,6 +3,9 @@
    Bureau mission page at /the-bureau/.
    ========================================================================== */
 
+// Size of play button image;
+@play-btn-size__px: 73px;
+
 .bureau-mission {
     margin-bottom: unit(45px / @base-font-size-px, em);
 
@@ -232,7 +235,7 @@
 
         .respond-to-max(825px, {
             display: block;
-        })
+        });
     }
 
     .respond-to-max(660px, {
@@ -268,9 +271,6 @@
         .u-flexible-container();
     });
 }
-
-// Size of play button image;
-@play-btn-size__px: 73px;
 
 .youtube-player_play-btn {
     background: url('/static/img/youtube-play-btn.png') no-repeat;

@@ -7,10 +7,10 @@ var jsdom = require( 'mocha-jsdom' );
 describe( 'CFNotifier', function() {
   var $, $form;
 
-  jsdom({
+  jsdom( {
     file: '_tests/unit_tests/fixtures/forms.html',
     console: false
-  });
+  } );
 
   before( function() {
     $ = require( 'jquery' );
