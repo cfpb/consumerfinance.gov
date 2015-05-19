@@ -49,6 +49,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Sheer indexing error when related posts are deleted
 - Office and Initiative processors
 - Slick carousel site-wide JS error.
+- Fixed issue with some contacts not showing phone numbers and email addresses
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
