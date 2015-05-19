@@ -1,9 +1,10 @@
 'use strict';
 
+var $ = require( 'jquery' );
 require( 'slick' );
 
 /**
- * @name contentSlider
+ * @name ContentSlider
  *
  * @description Slides content in and out of a container div.
  *
@@ -15,11 +16,11 @@ require( 'slick' );
  * the slide containing the element will be rotated out of view
  * and then removed from the DOM.
  *
- * @param {string} elem container element
- * @param {number} slideCount number of permanent slides in the container
+ * @param {string} elem Container element.
+ * @param {number} slideCount Number of permanent slides in the container.
  *
  */
-function contentSlider( elem, slideCount ) {
+function ContentSlider( elem, slideCount ) {
   var self = this;
   this.$container = $( elem );
   this.speed = 300;
@@ -34,7 +35,7 @@ function contentSlider( elem, slideCount ) {
     adaptiveHeight: true,
     arrows:         false,
     onBeforeChange: function( slider, currInd, targetInd ) {
-      // when slide is changed, animate height of container to accommodate
+      // When slide is changed, animate height of container to accommodate
       // new slide's height.
       var slide = slider.$slides[targetInd];
       slider.$slider.animate( { height: $( slide ).height() + 'px' }, self.speed );
@@ -44,28 +45,31 @@ function contentSlider( elem, slideCount ) {
   this.init();
 }
 
-contentSlider.prototype.init = function() {
+ContentSlider.prototype.init = function() {
+  // TODO: Remove this line when per-page JS is implemented.
+  if ( !_isSlickAvailableOn( this ) ) return;
+
   var self = this;
   this.$container.height( $( this.slickObj.$slides[0] ).height() );
   this.$container.on( 'click.slider', '.content-show', $.proxy( this.slideInContent, this ) );
   this.$container.on( 'click.slider', '.content-hide', $.proxy( this.slideOutContent, this ) );
 };
 
-contentSlider.prototype.slideInContent = function( e ) {
+ContentSlider.prototype.slideInContent = function( e ) {
   e.preventDefault();
   var contents,
       self = this,
       $div = $( '<div>' ),
       $node = $( $( e.currentTarget ).data( 'content' ) );
   if ( $node.length ) {
-    // TODO: move content instead of cloning; use ids instead of classes
+    // TODO: Move content instead of cloning; use ids instead of classes.
     contents = $node.first().clone().show().appendTo( $div );
     this.$container.slickAdd( $div );
     this.$container.slickNext();
   }
 };
 
-contentSlider.prototype.slideOutContent = function( e ) {
+ContentSlider.prototype.slideOutContent = function( e ) {
   var self = this;
   e.preventDefault();
   this.$container.slickPrev();
@@ -76,7 +80,10 @@ contentSlider.prototype.slideOutContent = function( e ) {
   }, this.speed );
 };
 
-contentSlider.prototype.destroy = function() {
+ContentSlider.prototype.destroy = function() {
+  // TODO: Remove this line when per-page JS is implemented.
+  if ( !_isSlickAvailableOn( this ) ) return;
+
   // Remove all but permanent slides.
   while ( this.slickObj.$slides.length > this.slideCount ) {
     this.$container.slickRemove( this.slickObj.$slides.length - 1 );
@@ -87,4 +94,11 @@ contentSlider.prototype.destroy = function() {
   this.$container.unslick();
 };
 
-module.exports = { contentSlider: contentSlider };
+// TODO: This is used on at least `/the-bureau/bureau-structure/`,
+// when page-specific JS is implemented the `this.slickObj` check for
+// existence can be removed.
+function _isSlickAvailableOn(target) {
+  return target.slickObj === null ? false : true;
+}
+
+module.exports = ContentSlider;
