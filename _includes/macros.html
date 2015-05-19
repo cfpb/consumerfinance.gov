@@ -298,9 +298,8 @@
         }
     %}
     {% set video_id  = options.video_id %}
-    {% set video_url = 'http://www.youtube.com/embed/' + video_id %}
     {% set image_url = options.image_url | default(
-                                              'http://img.youtube.com/vi/'
+                                              'https://img.youtube.com/vi/'
                                               + video_id
                                               + '/'
                                               + image_res_options[image_res]
@@ -320,13 +319,15 @@
                     </a>
                 </div>
                 {{ share(share_options = {
-                              'text' : 'SHARE THIS VIDEO',
-                              'additional_classes' : 'youtube-player_share-actions'
+                    'text' : 'SHARE THIS VIDEO',
+                    'additional_classes' : 'youtube-player_share-actions'
                 }) }}
             </div>
         </div>
         <div class="youtube-player_image-container hide-on_yt-playing">
-            <a class="youtube-player_play-btn" href="https://www.youtube.com/watch?v={{ video_id }}" target="_blank">
+            <a class="youtube-player_play-btn"
+               href="https://www.youtube.com/watch?v={{ video_id }}"
+               target="_blank">
                 <span class="u-visually-hidden">Play video</span>
             </a>
             <img class="youtube-player_image"
