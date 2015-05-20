@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated 404 image to the latest image provided by the design team.
 - Office folder and files for Office pages
 - Updated template for office pages
+- Relaxed ESLint `key-spacing` rule to warning.
 
 ### Fixed
 - Fixed macro on offices page template
