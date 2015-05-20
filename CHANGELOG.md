@@ -16,6 +16,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## 3.0.0-1.1.0 - 2015-05-20
+
+### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 - Added JS unit testing and code coverage through Mocha and Istanbul.
 - Added cf-notifications stylesheet to style notifications
