@@ -28,19 +28,16 @@ var _notifier = {
   // Generate a string of HTML from the plugin's settings
   // @returns {string} The expanded HTML string
   _generateHTML: function() {
+    var icon = {
+      error:   'delete',
+      success: 'approved',
+      warning: 'error',
+    };
     var data = {
       message: _notifier.settings.message,
-      state:   _notifier.settings.state
+      state:   _notifier.settings.state,
+      icon:    icon[_notifier.settings.state]
     };
-
-    if ( data.state === 'success' ) {
-      data.icon = 'approved';
-    } else if ( data.state === 'warning' ) {
-      data.icon = 'error';
-    } else {
-      data.icon = 'delete';
-    }
-
     var template = handlebars.compile( _notifier.settings.template );
 
     return template( data );
@@ -63,8 +60,8 @@ var _notifier = {
 
   // Create a notification
   _notify: function( elem ) {
-    $( _notifier.html )
-      .prependTo( elem )
+    var html = _notifier._generateHTML();
+    $( html ).prependTo( elem )
       .slideDown( _notifier.settings.speed, function() {
         _notifier.existing = this;
         if ( _notifier.settings.onRender ) {
@@ -76,15 +73,14 @@ var _notifier = {
   // Listen for custom cf_notifier:notify event
   _initNotifyListener: function() {
     _notifier.elem.on( 'cf_notifier:notify', function( event, options ) {
-      var elem = $( this );
       _notifier.settings = $.extend( {}, _notifier.settings, options );
-      _notifier.html = _notifier._generateHTML( _notifier.settings );
+      var $target = $( this );
       if ( _notifier.existing ) {
         _notifier._clearExisting( function() {
-          _notifier._notify( elem );
+          _notifier._notify( $target );
         } );
       } else {
-        _notifier._notify( elem );
+        _notifier._notify( $target );
       }
     } );
   },
@@ -124,7 +120,6 @@ var _notifier = {
 
   destroy: function() {
     return this.each( function() {
-
       _notifier._rmCFNotifierListeners();
 
       if ( _notifier.existing ) {
