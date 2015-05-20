@@ -24,6 +24,12 @@ var _validator = {
     onSuccess: function() {}
   },
 
+  /**
+   * Check's wether the passed input should be skipped for the passed test type
+   * @param   {object}  elem The input we're testing
+   * @param   {string}  type The test type we're checking for
+   * @returns {boolean}      Wether this input should be tested for the type
+   */
   _skipType: function( elem, type ) {
     var typeAttr = elem.attr( 'type' );
     var skips = {
@@ -35,9 +41,11 @@ var _validator = {
     return skips[type];
   },
 
-  // Validate an individual input for each of the set types
-  // @param   {object} elem The jQuery object of the input
-  // @returns {object}      The status of each of the tested types
+  /**
+   * Validate an individual input for each of the set types
+   * @param   {object} elem The jQuery object of the input
+   * @returns {object}      The status of each of the tested types
+  */
   _validateTypes: function( elem ) {
     var status = {};
     var value = elem.val();
@@ -46,18 +54,22 @@ var _validator = {
       email:    _validate.single( value, { email: true } )
     };
 
-    $.each( _validator.settings.types, function() {
-      var type = this;
-      if ( _validator._skipType( elem, type ) ) {
-        status[type] = null;
+    $.each( _validator.settings.types, function( key, val ) {
+      if ( _validator._skipType( elem, val ) ) {
+        status[val] = null;
         return false;
       }
-      status[type] = typeof validation[type] === 'undefined';
+      status[val] = typeof validation[val] === 'undefined';
     } );
 
     return status;
   },
 
+  /**
+   * Returns  the formatted validation of the tested input
+   * @param   {object} elem The input we're testing
+   * @returns {object}      The formatted validation object of the tested input
+   */
   _validateInput: function( elem ) {
     return {
       elem:   elem,
@@ -67,6 +79,11 @@ var _validator = {
     };
   },
 
+  /**
+   * Returns  the formatted validation of the tested check group
+   * @param   {object} elem The check group we're testing
+   * @returns {object}      The formatted validation object of the tested input
+   */
   _validateCheckGroup: function( elem ) {
     return {
       elem:   elem,
@@ -78,13 +95,11 @@ var _validator = {
     };
   },
 
-
-  _validateField: function( field ) {
-
-  },
-
-  // Validate the fields of our form
-  // @returns {object} Two inner objects containing the valid and invalid fields
+  /**
+   * Validate the fields of our form
+   * @param   {object} [fields] The list of input fields we're testing
+   * @returns {object}          The tested list of fields broken into valid and invalid blocks
+  */
   _validateFields: function( fields ) {
     var checkgroups = {};
     var validatedFields = {
