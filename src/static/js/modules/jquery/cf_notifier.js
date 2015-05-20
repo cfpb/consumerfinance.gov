@@ -14,31 +14,36 @@ var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }
 
 var _notifier = {
   defaults: {
-    message:    'There was an error with your submission',
-    state:      'error',
-    speed:      400,
-    easing:     'swing',
-    template:   _notifierTemplate,
-    input:      null,
-    onRender:   null,
-    onClearAll: null,
-    onDestroy:  null
+    message:        'There was an error with your submission',
+    state:          'error',
+    speed:          400,
+    easing:         'swing',
+    template:       _notifierTemplate,
+    insertLocation: 'prependTo',
+    insertTarget:   null,
+    input:          null,
+    onRender:       null,
+    onClearAll:     null,
+    onDestroy:      null
   },
 
-  // Generate a string of HTML from the plugin's settings
-  // @returns {string} The expanded HTML string
+  /**
+   * Generate a string of HTML from the plugin's settings
+   * @returns {string} The expanded HTML string
+  */
   _generateHTML: function() {
+    var settings = _notifier.settings;
     var icon = {
       error:   'delete',
       success: 'approved',
-      warning: 'error',
+      warning: 'error'
     };
     var data = {
-      message: _notifier.settings.message,
-      state:   _notifier.settings.state,
-      icon:    icon[_notifier.settings.state]
+      message: settings.message,
+      state:   settings.state,
+      icon:    icon[settings.state]
     };
-    var template = handlebars.compile( _notifier.settings.template );
+    var template = handlebars.compile( settings.template );
 
     return template( data );
   },
@@ -61,7 +66,7 @@ var _notifier = {
   // Create a notification
   _notify: function( elem ) {
     var html = _notifier._generateHTML();
-    $( html ).prependTo( elem )
+    $( html )[_notifier.settings.insertLocation]( elem )
       .slideDown( _notifier.settings.speed, function() {
         _notifier.existing = this;
         if ( _notifier.settings.onRender ) {
@@ -74,7 +79,7 @@ var _notifier = {
   _initNotifyListener: function() {
     _notifier.elem.on( 'cf_notifier:notify', function( event, options ) {
       _notifier.settings = $.extend( {}, _notifier.settings, options );
-      var $target = $( this );
+      var $target = _notifier.settings.insertTarget || $( this );
       if ( _notifier.existing ) {
         _notifier._clearExisting( function() {
           _notifier._notify( $target );
