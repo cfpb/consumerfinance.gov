@@ -470,7 +470,7 @@ rules:
 
   # Enforce spacing between keys and values in object literal properties.
   key-spacing:
-    - 2
+    - 1
     -
       align: value
       beforeColon: false
@@ -557,7 +557,6 @@ rules:
   operator-assignment:
     - 2
     - always
-
 
   # Enforce operators to be placed before or after line breaks.
   operator-linebreak:
