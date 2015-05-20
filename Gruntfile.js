@@ -11,7 +11,9 @@ module.exports = function(grunt) {
   // If the flag is present the value is true, otherwise it is false.
   // This flag can be used to, for example, suppress warning output
   // from linters.
-  var envQuiet = grunt.option('quiet') ? true : false;
+  var env = {
+    quiet: grunt.option('quiet') ? true : false
+  };
 
   var config = {
 
@@ -269,7 +271,7 @@ module.exports = function(grunt) {
        */
       eslint: {
         options: {
-            quiet: envQuiet
+            quiet: env.quiet
         },
         src: [
             '<%= loc.src %>/static/js/**/*.js',
