@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ajax subscription submission.
 - Initiative folder and files for Initiative pages
 - Added custom template for FOIA faqs page
+- Added `setup.sh` script for bootstrapping the project.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
