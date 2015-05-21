@@ -44,6 +44,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Office folder and files for Office pages
 - Updated template for office pages
 - Relaxed ESLint `key-spacing` rule to warning.
+- Refactored breakpoint-handler module into separate class modules
+  and utility function.
 
 ### Fixed
 - Fixed macro on offices page template
