@@ -9,7 +9,7 @@ var $ = require( 'jquery' );
 require( 'slick' );
 
 var ContentSlider = require( '../../../modules/content-slider' );
-var BreakpointHandler = require( '../../../modules/breakpoint-handler' ).BreakpointHandler;
+var BreakpointHandler = require( '../../../modules/BreakpointHandler' );
 
 if ( !$( 'html' ).hasClass( 'lt-ie9' ) ) {
   var settings = {
