@@ -212,10 +212,7 @@ rules:
   no-eval: 2
 
   # Disallows adding to native types.
-  no-extend-native:
-    - 2
-    - exceptions:
-        - Array
+  no-extend-native: 2
 
   # Disallows unnecessary function binding.
   no-extra-bind: 2

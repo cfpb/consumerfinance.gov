@@ -5,7 +5,7 @@
 'use strict';
 
 var $ = require( 'jquery' );
-require( '../array-foreach-polyfill' );
+require( '../polyfill/array-foreach-polyfill' );
 var _validate = require( 'validate' );
 
 var _validator = {
