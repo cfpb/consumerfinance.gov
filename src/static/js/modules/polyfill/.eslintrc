@@ -1,0 +1,6 @@
+# ESLint overrides for polyfills.
+rules:
+  no-extend-native:
+    - 1
+    - exceptions:
+      - Array
