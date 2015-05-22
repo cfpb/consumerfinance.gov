@@ -8,9 +8,8 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 
-var breakpointHandler = require( '../../modules/breakpoint-handler' );
-var BreakpointHandler = breakpointHandler.BreakpointHandler;
-var MobileOnlyExpandable = breakpointHandler.MobileOnlyExpandable;
+var BreakpointHandler = require( '../../modules/BreakpointHandler' );
+var MobileOnlyExpandable = require( '../../modules/MobileOnlyExpandable' );
 
 if ( !$( 'html' ).hasClass( 'lt-ie9' ) ) {
   var bureauMissionDom = $( '.bureau-mission' );
