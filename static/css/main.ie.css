@@ -7243,6 +7243,14 @@ a.focus .summary_event-date {
   margin: 3.375em 0 1.75em;
 }
 
+.cf-notification__pagination-ctr {
+  margin-top: 1.875em;
+}
+
+.cf-notification__pagination-ctr .cf-notification {
+  margin-bottom: 0;
+}
+
 .press-information {
   margin-top: 3.75em;
 }
