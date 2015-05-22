@@ -5120,6 +5120,19 @@ textarea.warning {
   color: #ff9e1b;
 }
 
+.input__long[type="text"],
+.input__long[type="search"],
+.input__long[type="email"],
+.input__long[type="url"],
+.input__long[type="tel"],
+.input__long[type="number"] {
+  width: 100%;
+}
+
+textarea.input__long {
+  width: 100%;
+}
+
 .cf-notification {
   display: none;
   position: relative;
@@ -5178,6 +5191,10 @@ textarea.warning {
 
 .lt-ie9 .cf-notification_text {
   font-weight: normal !important;
+}
+
+.u-b0 {
+  border: 0 !important;
 }
 
 .is-enabled.custom-select {

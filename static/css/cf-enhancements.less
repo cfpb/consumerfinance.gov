@@ -838,6 +838,19 @@ textarea {
     color: @input-warning;
 }
 
+.input__long {
+    &[type="text"],
+    &[type="search"],
+    &[type="email"],
+    &[type="url"],
+    &[type="tel"],
+    &[type="number"]{
+        width: 100%;
+  }
+}
+
+textarea.input__long {width: 100%}
+
 /* topdoc
     name: EOF
     eof: true
