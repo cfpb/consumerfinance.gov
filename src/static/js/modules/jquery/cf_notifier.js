@@ -25,8 +25,10 @@ var _notifier = {
     onDestroy:  null
   },
 
-  // Generate a string of HTML from the plugin's settings
-  // @returns {string} The expanded HTML string
+  /**
+  * Generate a string of HTML from the plugin's settings.
+  * @returns {string} The expanded HTML string.
+  */
   _generateHTML: function() {
     var data = {
       message: _notifier.settings.message,

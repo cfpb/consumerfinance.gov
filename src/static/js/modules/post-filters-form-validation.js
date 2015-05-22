@@ -15,21 +15,25 @@ function init() {
         $gte = $this.find( '.js-filter_range-date__gte' ),
         $lte = $this.find( '.js-filter_range-date__lte' );
 
-    // @param date1 {Date} The starting date in the range.
-    // @param date2 {Date} The ending date in the range.
-    // @return {Boolean} true if the ending date is after the starting date.
+    /**
+    * @param {Date} date1 The starting date in the range.
+    * @param {Date} date2 The ending date in the range.
+    * @returns {boolean} true if the ending date is after the starting date.
+    */
     function isValidDateRange( date1, date2 ) {
       return date2.getTime() > date1.getTime();
     }
 
-    // Check that the date isn't empty,
-    // and set it to the other set date if it is.
-    // If it's still empty, return an empty string.
-    // If year or month is missing, the current month or year are added.
-    // @param targetDate {String} Date string to format.
-    // @param compData {String} Other date in the date range we're checking.
-    // @return {String} Formatted targetDate or an empty string.
-    //   Throws an error if the expected YYYY-MM format is wrong.
+    /**
+    * Check that the date isn't empty,
+    * and set it to the other set date if it is.
+    * If it's still empty, return an empty string.
+    * If year or month is missing, the current month or year are added.
+    * @param {string} targetDate Date string to format.
+    * @param {string} compDate Other date in the date range we're checking.
+    * @returns {string} Formatted targetDate or an empty string.
+    * @throws {Error} If the expected YYYY-MM format is wrong.
+    */
     function formatDateString( targetDate, compDate ) {
       var formattedDate = targetDate === '' ? compDate : targetDate;
       if ( formattedDate === '' ) return formattedDate;

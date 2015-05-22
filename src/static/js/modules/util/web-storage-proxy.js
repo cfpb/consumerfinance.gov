@@ -20,34 +20,40 @@
 // false = localStorage (persistent).
 var _sessionOnly = false;
 
-// Set an item value specified by the key in web storage.
-// @param key {String} The key for the value.
-// @param value {String} The value to store.
-// @param sessionOnly {Boolean} (Optional)
-//   Use non-persistent storage (true) or persistent storage (false).
-// @return {String} The value set in web storage.
+/**
+ * Set an item value specified by the key in web storage.
+ * @param {string} key The key for the value.
+ * @param {string} value The value to store.
+ * @param {boolean} sessionOnly (Optional)
+ *   Use non-persistent storage (true) or persistent storage (false).
+ * @returns {string} The value set in web storage.
+ */
 function setItem( key, value, sessionOnly ) {
   var storage = _sessionOrLocal( sessionOnly );
   storage.setItem( key, value );
   return value;
 }
 
-// Get an item value specified by the key in web storage.
-// @param key {String} The key for the value.
-// @param sessionOnly {Boolean} (Optional)
-//   Use non-persistent storage (true) or persistent storage (false).
-// @return {String} The value set in web storage.
+/**
+ * Get an item value specified by the key in web storage.
+ * @param {string} key The key for the value.
+ * @param {boolean} sessionOnly (Optional)
+ *   Use non-persistent storage (true) or persistent storage (false).
+ * @returns {string} The value set in web storage.
+ */
 function getItem( key, sessionOnly ) {
   var storage = _sessionOrLocal( sessionOnly );
   return storage.getItem( key );
 }
 
-// Remove an item specified by the key.
-// @param key {String} The key for the value.
-// @param sessionOnly {Boolean} (Optional)
-//   Use non-persistent storage (true) or persistent storage (false).
-// @return {Boolean} Returns true if the item existed and it was
-//   removed. Returns false if the item didn't exist to begin with.
+/**
+ * Remove an item specified by the key.
+ * @param {string} key The key for the value.
+ * @param {boolean} sessionOnly (Optional)
+ *   Use non-persistent storage (true) or persistent storage (false).
+ * @returns {boolean} Returns true if the item existed and it was
+ *   removed. Returns false if the item didn't exist to begin with.
+ */
 function removeItem( key, sessionOnly ) {
   var storage = _sessionOrLocal( sessionOnly );
   var returnVal = true;
@@ -57,10 +63,12 @@ function removeItem( key, sessionOnly ) {
   return returnVal;
 }
 
-// Internal function for setting default session type.
-// Throws an error if parameter isn't a boolean.
-// @param sessionOnly {Boolean}
-//   Use non-persistent storage (true) or persistent storage (false).
+/**
+ * Internal function for setting default session type.
+ * @param {boolean} sessionOnly
+ *   Use non-persistent storage (true) or persistent storage (false).
+ * @throws {Error} If parameter isn't a boolean.
+ */
 function setSessionType( sessionOnly ) {
   if ( typeof sessionOnly !== 'boolean' ) {
     throw new Error( 'Setting requires a boolean value.' );
@@ -68,10 +76,12 @@ function setSessionType( sessionOnly ) {
   _sessionOnly = sessionOnly;
 }
 
-// Internal function for whether to use local or session storage.
-// @param sessionOnly {Boolean}
-//   Use non-persistent storage (true) or persistent storage (false).
-// @return {Object} A local storage or session storage instance.
+/**
+ * Internal function for whether to use local or session storage.
+ * @param {boolean} sessionOnly
+ *   Use non-persistent storage (true) or persistent storage (false).
+ * @returns {object} A local storage or session storage instance.
+ */
 function _sessionOrLocal( sessionOnly ) {
   // Use default setting if none is provided.
   if ( typeof sessionOnly === 'undefined' ) sessionOnly = _sessionOnly;

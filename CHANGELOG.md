@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Relaxed ESLint `key-spacing` rule to warning.
 - Refactored breakpoint-handler module into separate class modules
   and utility function.
+- PascalCase ContentSlider module to properly designate class status.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order

@@ -11,9 +11,11 @@ var utilities = require( './util/utilities' );
 var _viewportWidth = utilities.getViewportDimensions().width;
 
 function init() {
-  // Create the jQuery YouTube plugin.
-  // @param {Object} Object used to customize YouTube.
-  // @returns jQuery element.
+  /**
+  * Create the jQuery YouTube plugin.
+  * @param {object} options Object used to customize YouTube.
+  * @returns {object} jQuery element.
+  */
   $.fn.createYouTube = function( options ) {
     options = $.extend( true, {}, this.data(), options );
 
@@ -25,10 +27,13 @@ function init() {
   return $( '.youtube-player_container' ).createYouTube();
 }
 
-// YouTube constructor.
-// @param element {Element} DOM Element.
-// @param options {Object} Object used to customize YouTube.
-// @returns {Object} An YouTube instance.
+// TODO Move YouTube "class" to its own YouTube.js module.
+/**
+* YouTube constructor.
+* @class
+* @param {HTMLElement} element DOM Element.
+* @param {object} options Object used to customize YouTube.
+*/
 function YouTube( element, options ) {
   var playerOptions = this.defaults.playerOptions;
   this.$element = $( element );
