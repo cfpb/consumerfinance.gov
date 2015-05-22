@@ -54,6 +54,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Office and Initiative processors
 - Slick carousel site-wide JS error.
 - Fixed issue with some contacts not showing phone numbers and email addresses
+- Fixed an issue where scripts were being initialized out of order
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
