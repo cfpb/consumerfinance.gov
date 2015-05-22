@@ -7,13 +7,15 @@
     <div class="content-l_col content-l_col-1-2">
         {{ contact.content|safe }}
     {%- if contact.web_addr %}
-        <a class="jump-link" href="{{ contact.web_addr }}">
-            {{ contact.web_desc if contact.web_desc else contact.web_addr }}
-        </a>
+        <p>
+            <a class="jump-link" href="{{ contact.web_addr }}">
+                {{ contact.web_desc if contact.web_desc else contact.web_addr }}
+            </a>
+        </p>
     {%- endif %}
     </div>
     <div class="content-l_col content-l_col-1-2">
-    {%- if contact.email_addr or contact.phone_num or contact.fax_num or contact.street %}
+    {%- if contact.email_0_addr or contact.phone_0_num or contact.fax_num or contact.street %}
         <ul class="list list__icons">
         {%- if contact.email_0_addr %}
             <li class="list_item u-break-word">
