@@ -7,7 +7,8 @@
 
 var $ = require( 'jquery' );
 var jsLoader = require( './util/js-loader' );
-var viewportDimensions = require( './breakpoint-handler' ).getViewportDimensions;
+var utilities = require( './util/utilities' );
+var _viewportWidth = utilities.getViewportDimensions().width;
 
 function init() {
   // Create the jQuery YouTube plugin.
@@ -145,7 +146,7 @@ YouTube.prototype = {
     }
     this.$element.addClass( 'yt-playing' );
 
-    if ( viewportDimensions().width <= 800 ) {
+    if ( _viewportWidth <= 800 ) {
       $( 'html, body' ).animate( { scrollTop: 0 }, 500 );
     }
 
