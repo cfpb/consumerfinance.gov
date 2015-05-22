@@ -1,0 +1,161 @@
+{% set initiative = get_document("initiative", "submit-a-request") %}
+{% set path = "/initiatives/" + initiative.slug %}
+
+{% extends "layout-side-nav.html" %}
+{% import "_vars-initiatives.html" as vars with context %}
+{% set active_nav_id = initiative.slug %}
+
+{% block title -%}
+    {{ initiative.title | safe if initiative.title }}
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {% if initiative.title %}
+        <h1>{{ initiative.title | safe }}</h1>
+    {% endif %}
+
+    {% if initiative.content %}
+    <section class="initiative_description block block__flush-top">
+        {{ initiative.content | safe }}
+    </section>
+    {% endif %}
+
+    <!-- Start Custom Module. -->
+    <section class="block">
+        <p class="h4">Enter your information to auto-generate a FOIA request letter</p>
+        <form>
+            <div class="form-l">
+
+                <label class="form-label-header form-l_col form-l_col-1-3" for="foia-request_first-name">
+                    First Name
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <input type="text"
+                           class="form-group_item input__long"
+                           placeholder="Requestor's First Name"
+                           id="foia-request_first-name">
+                    </input>
+                </div>
+
+
+
+                <label class="form-label-header form-l_col form-l_col-1-3" for="foia-request_last-name">
+                    Last Name
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <input type="text"
+                           class="input__long"
+                           placeholder="Requestor's Last Name"
+                           id="foia-request_last-name">
+                    </input>
+                </div>
+
+                <label class="form-label-header form-l_col form-l_col-1-3" for="foia-request_request-desc">
+                    Request description
+                    <div class="short-description">
+                        Identify documents information as specifically as possible
+                    </div>
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <textarea
+                           class="input__long"
+                           id="foia-request_request-desc">
+                    </textarea>
+                </div>
+
+                <label class="form-label-header form-l_col form-l_col-1-3" for="foia-request_request-fee">
+                    Request Fee
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <select class="custom-select custom-select_select"
+                            data-placeholder="Select the FOIA request category"
+                            id="foia-request_request-fee">
+                        <option value="Commercial">Commercial</option>
+                        <option value="Media">Media</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <label class="form-label-header
+                              form-l_col
+                              form-l_col-1-3"
+                       for="foia-request_request-fee-waiver">
+                    Request fee waiver
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <fieldset class="u-b0">
+                        <label class="form-l_col-1-2">
+                            <input type="radio">
+                            No
+                        </label>
+                        <label class="form-l_col-1-2">
+                            <input type="radio">
+                            Yes
+                        </label>
+                    </fieldset>
+                </div>
+
+                <label class="form-label-header
+                              form-l_col
+                              form-l_col-1-3"
+                       for="foia-request_expedite">
+                    Expedite treatment
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <fieldset class="u-b0">
+                        <label class="form-l_col-1-2">
+                            <input type="radio">
+                            No
+                        </label>
+                        <label class="form-l_col-1-2">
+                            <input type="radio">
+                            Yes
+                        </label>
+                    </fieldset>
+                </div>
+
+                <label class="form-label-header
+                              form-l_col
+                              form-l_col-1-3"
+                       for="foia-request_response-method">
+                    Response method
+                </label>
+                <div class="form-l_col form-l_col-2-3">
+                    <fieldset class="u-b0">
+                        <label class="form-l_col-1-3">
+                            <input type="radio">
+                            Email
+                        </label>
+                        <label class="form-l_col-1-3">
+                            <input type="radio">
+                            Mail
+                        </label>
+                        <label class="form-l_col-1-3">
+                            <input type="radio">
+                            Fax
+                        </label>
+                    </fieldset>
+                </div>
+
+
+
+                <div class="form-actions form-actions__right-on-med ">
+                    <input class="btn form-actions_item" type="submit" value="Generate FOIA PDF"></input>
+                    <a href="#" class="pdf form-actions_item">Sample Letter</a>
+                </div>
+
+            </div>
+        </form>
+        <div class="block">
+            <p>You may send your request by email or mail at the following address:</p>
+            <p>More information about how to submit a request, consult with FOIA and Privacy Act request guidebook</p>
+        </div>
+    </section>
+    <!-- End Custom Module. -->
+
+{% endblock %}
