@@ -21,6 +21,51 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
+## 3.0.0-1.1.0 - 2015-05-20
+
+### Added
+- Added `--quiet` grunt CLI flag for suppressing linter warnings.
+- Added JS unit testing and code coverage through Mocha and Istanbul.
+- Added cf-notifications stylesheet to style notifications
+- Added cf_notifier plugin for sending UI notifications
+- Added cf_formValidator plugin for validating form inputs
+- Added Grunt `build` task and set it as default.
+- Added hero and YouTube video functionality to the '/the-bureau/' page.
+- Added ajax subscription submission.
+- Initiative folder and files for Initiative pages
+- Added custom template for FOIA faqs page
+
+### Changed
+- Updated grunt-browserify to `^3.8.0`.
+- Updated grunt-eslint to `^13.0.0`.
+- Moved eslint config file to home directory.
+- Moved jQuery download to package.json.
+- Updated grunt-banner to `^0.4.0` and updates banner ascii art and format.
+- Changed bower.json authors array field to use `homepage` in place of `url`,
+  and adds `email` field.
+- Adds path variables to Gruntfile.
+- Updated form-validation script to use cf_formValidator and cf_notifier
+- Changed Grunt `jsdev` and `cssdev` to `js` and `css`.
+- Moved testing to build task.
+- Updated 404 image to the latest image provided by the design team.
+- Office folder and files for Office pages
+- Updated template for office pages
+
+### Fixed
+- Fixed macro on offices page template
+- Fixed subscribe macro in events archive and archive single, and press resources
+- Sheer indexing error when related posts are deleted
+- Office and Initiative processors
+- Slick carousel site-wide JS error.
+- Fixed issue with some contacts not showing phone numbers and email addresses
+
+### Removed
+- Removed string-replace:static-legacy Grunt task.
+- Alert.js plugin
+- alert macro
+- Unused index.html file from /initiatives/
+- Unnecessary setting of template variables
+
 
 ## 3.0.0-1.0.1 - 2015-05-18
 
@@ -36,6 +81,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Scroll to top functionality on footer
 - Added `/modules/util/web-storage-proxy.js` utility module.
 - Added `/modules/util/js-loader.js` utility module.
+- Adds ESLint check for `@todo` jsdoc syntax.
+- Updated ESLint configuration to match version `0.20.0.`
+  Adds enforcement of `no-dupe-args` and `no-duplicate-case` rules,
+  and warnings for `no-continue` and `operator-linebreak` rules.
+- Adding mocha tests to `grunt test`
 
 ### Changed
 
@@ -43,10 +93,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `browserify` package and its dependencies
   and refactored codebase to use Browserify for JS modules.
 - Added additional ESLint option flags in `space-in-brackets` rule.
+- Changed ESLint indent amount to 2 spaces from 4 to match CFPB front-end standards.
+- Turns off ESLint `func-names` setting because it's too verbose for the gain it provides.
 - Added ability to scrub plural terms in typeAndFilter jQuery plugin
-- Changed ESLint indent amount to 2 spaces to match CFPB front-end standards.
-- Turns off ESLint `func-names` setting because its too verbose for the gain it provides.
 - Updated `grunt` to `~0.4.5`.
+- Updated `grunt-eslint` to version `12.0.0.`
 - Updated `jquery` to `^1.11.3`.
 - Replaced `grunt-uglify` with `uglifyify`.
 - Updated mailing addresses in `/contact-us` sidebar
@@ -56,6 +107,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Improvements and fixes to `/contact-us/` page
+
+
+### Removed
+
+- Removed demo text suffix from page titles.
 
 
 ## 3.0.0-0.3.0 - 2015-04-23

@@ -5,10 +5,6 @@
     {{ office.title | safe if office.title }}
 {%- endblock %}
 
-{% block desc -%}
-    {{ office.desc | safe if office.desc }}
-{%- endblock %}
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
@@ -40,8 +36,8 @@
             <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
                 <p class="h3 u-show-on-mobile">Stay informed</p>
                 <p class="short-desc">Stay up to date with our email newsletter</p>
-                {% import "email-subscribe-form.html" as subscribe with context %}
-                {{ subscribe.render(null, office.intro_govdelivery_code) }}
+                {% from "macros.html" import subscribe as subscribe with context %}
+                {{ subscribe(office.intro_govdelivery_code) }}
             </section>
         {% endif %}
     </section>
@@ -82,14 +78,16 @@
         </h1>
         {% for resource in office.resources %}
             <div class="media office_resource block__sub">
+                {% if resource.icon %}
                 <div class="media_image-container media_image-container__wide-margin">
                     <img class="media_image u-centered-on-mobile"
                          width="150"
-                         src="{{resource.icon if resource.icon}}">
+                         src="{{resource.icon}}">
                 </div>
+                {% endif %}
                 <div class="media_body">
-                    {% if resource.head %}
-                    <h2 class="h3">{{ resource.head | safe }}</h2>
+                    {% if resource.title %}
+                    <h2 class="h3">{{ resource.title | safe }}</h2>
                     {% endif %}
 
                     {% if resource.desc %}
@@ -98,7 +96,7 @@
 
                     {% if resource.link %}
                     <a class="jump-link jump-link__right" href="{{ resource.link[0] if resource.link }}">
-                          {{ resource.link[1] if resource.link }}
+                          {{ resource.link[1] }}
                     </a>
                     {% endif %}
                 </div>
@@ -107,19 +105,19 @@
     </section>
     {% endif %}
 
-    {% if initiatives %}
+    {% if vars.initiatives %}
     <section class="office_initiatives block block__sub block__padded-top block__border-top">
         <h1 class="h2">
             Our Work
         </h1>
         <div class="content-l content-l__main content-l__large-gutters expandables-group">
-        {% for initiative in initiatives %}
+        {% for initiative in vars.initiatives %}
             <div class="office_initiative
                         expandable
                         expandable__expanded
                         expandable__mobile-only
                         content-l_col
-                        {% if initiatives|list|length > 1 -%}
+                        {% if vars.initiatives.result_dict|length > 1 -%}
                             content-l_col-1-2
                         {% else -%}
                             content-l_col-1
@@ -146,13 +144,13 @@
                         {{ initiative.title | safe }}
                     </h2>
                     {% endif %}
-                    {% if initiative.content %}
+                    {% if initiative.excerpt %}
                     <p class="short-desc">
-                        {{ initiative.content | safe }}
+                        {{ initiative.excerpt | safe }}
                     </p>
                     {% endif %}
                     {% if initiative.slug %}
-                    <a class="jump-link jump-link__right" href="{{ path + initiative.slug }}">
+                    <a class="jump-link jump-link__right" href="{{ '/initiatives/' + initiative.slug + '/' }}">
                         Read more
                     </a>
                     {% endif %}
@@ -177,7 +175,7 @@
             </h1>
             {{ activities_feed }}
             <!-- link to activities page? -->
-            <a class="jump-link jump-link__right">
+            <a class="jump-link jump-link__right" href="/activity-log/">
                 View all of our activity
             </a>
         </section>
@@ -192,9 +190,6 @@
                     Office Contact Information
                 </span>
             </h1>
-            {% if contact.sitewide_desc %}
-            <p class="short-desc">{{ contact.sitewide_desc }}</p>
-            {% endif %}
             <div class="content-l content-l__main content-l__large-gutters">
                 <div class="content-l_col content-l_col-1">
                     <h2 class="h5">{{ contact.title }}</h2>

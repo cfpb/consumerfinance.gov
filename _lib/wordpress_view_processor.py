@@ -9,22 +9,22 @@ import requests
 import dateutil.parser
 
 def posts_at_url(url):
-    
+
     url = os.path.expandvars(url)
     current_page = 1
     max_page = sys.maxint
 
     while current_page <= max_page:
 
-        resp = requests.get(url, params={'page':current_page})
-        results = json.loads(resp.content) 
+        resp = requests.get(url, params={'page': current_page})
+        results = json.loads(resp.content)
         current_page += 1
         max_page = results['pages']
         for p in results['posts']:
             yield p
-     
+
 def documents(name, url, **kwargs):
-    
+
     for view in posts_at_url(url):
         yield process_view(view)
 
@@ -38,8 +38,8 @@ def process_view(post):
         post['popular_posts'] = popular_posts
 
     # convert related links into a proper list
-    related =[]
-    for x in xrange(0,5):
+    related = []
+    for x in xrange(0, 5):
         key = 'related_link_%s' % x
         if key in custom_fields:
             related.append(custom_fields[key])
@@ -51,8 +51,9 @@ def process_view(post):
         hero_url = os.path.expandvars("$WORDPRESS/hero/" + hero_id + "/?json=1")
         response = requests.get(hero_url)
         hero_data = json.loads(response.content)
-        hero_data = hero_data['post']
-        hero_data['related_posts'] = hero_data['custom_fields']['related_post']
-        post['hero'] = hero_data
+        if hero_data['status'] is 'ok':
+            hero_data = hero_data['post']
+            hero_data['related_posts'] = hero_data['custom_fields']['related_post']
+            post['hero'] = hero_data
 
     return post

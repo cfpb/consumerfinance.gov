@@ -29,7 +29,7 @@
 
 <article class="post">
     <header>
-        {%- import "category-slug.html" as category_slug %}
+        {%- import 'category-slug.html' as category_slug %}
         {% if path == '/blog/' and post.blog_category.0 %}
             {% set use_blog_category = True %}
             {{ category_slug.render(post.blog_category.0,

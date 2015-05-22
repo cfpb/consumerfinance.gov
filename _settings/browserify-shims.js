@@ -14,6 +14,5 @@ module.exports = {
     }
   },
   chosen: { exports: 'chosen' },
-  requestNextAnimationFrame: { exports: 'requestNextAnimationFrame' },
-  slick: { exports: 'slick' }
+  requestNextAnimationFrame: { exports: 'requestNextAnimationFrame' }
 };

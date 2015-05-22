@@ -13,7 +13,6 @@ $( document ).ready( function() {
   require( 'cf-expandables' );
 
   // Native-Browserify modules.
-  require( '../modules/alert' ).init();
   require( '../modules/beta-banner-state' ).init();
   require( '../modules/secondary-nav-toggle' ).init();
   require( '../modules/post-filters-form-validation' ).init();
@@ -28,8 +27,9 @@ $( document ).ready( function() {
   require( '../modules/jquery/custom-input' ).init();
   require( '../modules/jquery/custom-select' ).init();
   require( '../modules/footer-button' ).init();
+  require( '../modules/youtube' ).init();
 
-  // Page-specifc modules.
+  // Page-specific modules.
   require( './blog/index.js' );
   require( './contact-us/index.js' );
   require( './index.js' );
