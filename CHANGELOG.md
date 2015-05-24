@@ -16,6 +16,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+
+### Changed
+- Refactored breakpoint-handler module into separate class modules
+  and utility function.
+
+### Fixed
+- Fixed an issue where scripts were being initialized out of order
+
+### Removed
+- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+
+
+## 3.0.0-1.1.0 - 2015-05-20
+
+### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 - Added JS unit testing and code coverage through Mocha and Istanbul.
 - Added cf-notifications stylesheet to style notifications
@@ -44,8 +59,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Office folder and files for Office pages
 - Updated template for office pages
 - Relaxed ESLint `key-spacing` rule to warning.
-- Refactored breakpoint-handler module into separate class modules
-  and utility function.
 
 ### Fixed
 - Fixed macro on offices page template
@@ -54,7 +67,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Office and Initiative processors
 - Slick carousel site-wide JS error.
 - Fixed issue with some contacts not showing phone numbers and email addresses
-- Fixed an issue where scripts were being initialized out of order
 
 ### Removed
 - Removed string-replace:static-legacy Grunt task.
@@ -62,7 +74,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - alert macro
 - Unused index.html file from /initiatives/
 - Unnecessary setting of template variables
-- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
 
 
 ## 3.0.0-1.0.1 - 2015-05-18
