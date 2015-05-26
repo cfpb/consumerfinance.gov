@@ -37,7 +37,7 @@ function init() {
           allMessage:              'Showing all {{ count }}.',
           filteredMessageSingular: 'There is 1 result for "{{ term }}".',
           filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
-          minTermMessage:          '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
+          minTermMessage:          'The search term "{{ term }}" is not long enough. <span class="short-desc">Please use a minimum of 3 characters.</span>',
           clickCallback:           function( e ) {}
         }, userSettings ),
         $this = $( this ),
@@ -171,7 +171,6 @@ function init() {
     cleanText = $.fn.typeAndFilter.removeExtraSpaces( cleanText );
     cleanText = $.fn.typeAndFilter.removeWordsOfLength( cleanText, minLength );
     cleanText = $.fn.typeAndFilter.removePlurality( cleanText );
-    // console.log( '\nOriginal text:', text, '\nClean text:', cleanText );
     return cleanText;
   };
 

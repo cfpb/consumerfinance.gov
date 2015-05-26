@@ -5180,6 +5180,11 @@ textarea.warning {
   font-weight: normal !important;
 }
 
+.cf-notification_text .short-desc {
+  display: block;
+  font-size: 16px;
+}
+
 .is-enabled.custom-select {
   overflow: hidden;
   position: relative;
