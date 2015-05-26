@@ -5201,20 +5201,6 @@ textarea.warning {
   font-weight: normal !important;
 }
 
-.form-label {
-  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .form-label {
-  font-weight: normal !important;
-}
-
-.form-label__right {
-  text-align: right;
-}
-
 .u-b0 {
   border: 0 !important;
 }
@@ -5444,8 +5430,25 @@ textarea.warning {
   margin-left: 1.875em;
 }
 
+.form-l__bg {
+  padding: .46875em .234375em;
+  background: #c5c5c5;
+}
+
+.form-l__bg {
+  padding: .9375em .46875em;
+}
+
 .form-l_col {
   margin-bottom: 1.875em;
+}
+
+.form-l-inset {
+  padding: .46875em .234375em;
+}
+
+.form-l-inset .form-l-inset_container {
+  background: #c5c5c5;
 }
 
 .list_link {
