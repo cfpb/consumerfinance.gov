@@ -41,7 +41,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - Removes `copy:static-legacy` and `grunt-contrib-copy` package.
 - Removed unneeded entries from `exportsOverride` in `bower.json`.
-- Removed CF fonts, "chosen" images, and other vendor files from repo.
+- Gitignored CF fonts, "chosen" images, and other vendor files from repo,
+  which are slated for eventual removal.
 
 
 ## 3.0.0-1.1.0 - 2015-05-20
