@@ -3,13 +3,19 @@
    Master Less File.
    ========================================================================== */
 
+// Set up directory variables.
+// These should be consistent with the directory variables in Gruntfile.js.
+// TODO: Add "/dist" when `dist` directory is ready.
+@loc-dist: "";
+// As shown in Gruntfile.js, lib directory is the same value as in .bowerrc.
+@loc-lib: "/src/vendor";
 
-// @import Normalize before all other Less/CSS.
-@import (less) "../../vendor/normalize-css/normalize.css";
-@import (less) "../../vendor/normalize-legacy-addon/normalize-legacy-addon.css";
+// @import Normalize before all other Less/CSS
+@import (less) "@{loc-lib}/normalize-css/normalize.css";
+@import (less) "@{loc-lib}/normalize-legacy-addon/normalize-legacy-addon.css";
 
-// @import third party plugins.
-@import (less) "../../vendor/chosen/chosen.css";
+// @import third party plugins
+@import (less) "@{loc-lib}/chosen/chosen.css";
 
 // @import third party plugin overrides.
 @import (less) "chosen-overrides.less";
@@ -20,7 +26,7 @@
    ========================================================================== */
 
 // Combined CF components.
-@import (less) "../../vendor/cf-concat/cf.less";
+@import (less) "@{loc-lib}/capital-framework/capital-framework.less";
 
 // The Capital Framework (CF) brand color palette.
 @import (less) "brand-palette.less";

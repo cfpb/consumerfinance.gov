@@ -38,6 +38,9 @@
     "validate": "~0.7.1"
   },
   "exportsOverride": {
+    "box-sizing-polyfill": {
+      "js": "boxsizing.htc"
+    },
     "cf-*": {
       "css": "src/**/*.css",
       "less": "src/**/*.less",
@@ -45,18 +48,17 @@
       "js": "src/**/*.js"
     },
     "chosen": {
-      "css": "chosen.css",
-      "img": "*.png",
-      "js": "chosen.jquery.js"
+      "img": "*.png"
+    },
+    "slick-carousel": {
+      "css": ["slick/slick.css", "slick/slick.css.map"],
+      "img": "slick/ajax-loader.gif"
     },
     "history.js": {
       "js": "scripts/bundled-uncompressed/html5/jquery.history.js"
     },
     "html5shiv": {
       "js": "dist/html5shiv-printshiv.min.js"
-    },
-    "jquery.easing": {
-      "js": "js/jquery.easing.js"
     },
     "string_score": {
       "js": "string_score.js"
