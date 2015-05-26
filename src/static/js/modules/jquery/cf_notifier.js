@@ -9,7 +9,7 @@ var handlebars = require( 'handlebars' );
 
 var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }}" style="display: none;">' +
   '<span class="cf-notification_icon cf-notification_icon__{{ state }} cf-icon cf-icon-{{ icon }}-round"></span>' +
-  '<p class="cf-notification_text">{{ message }}</p>' +
+  '<p class="cf-notification_text">{{{ message }}}</p>' +
   '</div>';
 
 var _notifier = {
@@ -26,6 +26,8 @@ var _notifier = {
     onClearAll:     null,
     onDestroy:      null
   },
+
+  existing: false,
 
   /**
    * Generate a string of HTML from the plugin's settings

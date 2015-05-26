@@ -66,19 +66,26 @@ function _sendSubscriptionRequest( elem ) {
 }
 
 function init() {
-  $( 'form' ).cf_formValidator( 'init', {
-    onFailure: function( event, fields ) {
-      event.preventDefault();
-      _sendError( this, fields.invalid[0] );
-    },
-    onSuccess: function( event ) {
-      _clearError( this );
-      if ( this.id === 'email-subscribe-form' ) {
+  $( 'form' )
+    .cf_notifier()
+    .cf_formValidator( 'init', {
+      onFailure: function( event, fields ) {
         event.preventDefault();
-        _sendSubscriptionRequest( this );
+        _sendError( this, fields.invalid[0] );
+      },
+      onSuccess: function( event ) {
+        if ( $( this ).hasClass( 'js-type-and-filter_form' ) ) {
+          event.preventDefault();
+          $( '.type-and-filter' ).trigger( 'attemptSearch' );
+        } else {
+          _clearError( this );
+          if ( this.id === 'email-subscribe-form' ) {
+            event.preventDefault();
+            _sendSubscriptionRequest( this );
+          }
+        }
       }
-    }
-  } ).cf_notifier();
+    } );
 }
 
 module.exports = { init: init };
