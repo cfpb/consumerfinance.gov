@@ -29,11 +29,11 @@ function init() {
           fuzzy:                   true,
           fuzziness:               0.5,
           threshold:               0.35,
+          $form:                   $(),
           $button:                 $(),
           $clear:                  $(),
           $input:                  $(),
           $items:                  $(),
-          $messages:               $(),
           allMessage:              'Showing all {{ count }}.',
           filteredMessageSingular: 'There is 1 result for "{{ term }}".',
           filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
@@ -41,8 +41,8 @@ function init() {
           clickCallback:           function( e ) {}
         }, userSettings ),
         $this = $( this ),
+        $form = settings.$form,
         $button = settings.$button,
-        $messages = settings.$messages,
         $input = settings.$input,
         $items = settings.$items,
         $clear = settings.$clear,
@@ -86,7 +86,10 @@ function init() {
           if ( searchTerm.length >= 3 ) {
             $this.trigger( 'search' );
           } else {
-            $messages.trigger( 'minTerm' );
+            $form.trigger( 'cf_notifier:notify', {
+              message: settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() ),
+              state: 'error'
+            } );
             $input.addClass( 'error' );
           }
         } )
@@ -94,7 +97,22 @@ function init() {
         .on( 'search', function() {
           $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
           resultsCount = $items.filter( ':visible' ).length;
-          $messages.trigger( 'searchResults' );
+          var message = settings.filteredMessageMultiple;
+          var state = 'success';
+          if ( resultsCount === 1 ) {
+            message = settings.filteredMessageSingular;
+          }
+          if ( resultsCount === 0 ) {
+            state = 'warning';
+          }
+
+          message = message.replace( /{{[\s]*term[\s]*}}/, searchTerm );
+          message = message.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+
+          $form.trigger( 'cf_notifier:notify', {
+            message: message,
+            state:   state
+          } );
         } )
         // Reset/clear the plugin.
         .on( 'clear', function() {
@@ -105,38 +123,16 @@ function init() {
             .focus();
           $items.show();
           resultsCount = $items.filter( ':visible' ).length;
-          $messages.trigger( 'allItems' );
+          var message = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+          $form.trigger( 'cf_notifier:notify', {
+            message:        message,
+            state:          'success',
+            insertLocation: 'appendTo'
+          } );
         } )
         // Remove the validation class during these two events.
         .on( 'search clear', function() {
           $input.removeClass( 'error' );
-        } );
-      $messages
-        // Display an error message specific to the minimum search term.
-        .on( 'minTerm', function() {
-          var html = settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() );
-          $messages.html( html );
-        } )
-        // Display a message containing the search term and its number
-        // of results. Also determines which template to use, singular
-        // vs multiple.
-        .on( 'searchResults', function() {
-          var html,
-            template;
-          if ( resultsCount === 1 ) {
-            template = settings.filteredMessageSingular;
-          } else {
-            template = settings.filteredMessageMultiple;
-          }
-          html = template.replace( /{{[\s]*term[\s]*}}/, searchTerm );
-          html = html.replace( /{{[\s]*count[\s]*}}/, resultsCount );
-          $messages.html( html );
-        } )
-        // Display a message letting the user know that all of the results
-        // are visible.
-        .on( 'allItems', function() {
-          var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
-          $messages.html( html );
         } );
       $input
         // Show clear button if the input contains text; hide if empty.
@@ -151,14 +147,15 @@ function init() {
       //
       // Initial dom manipulation setup.
       //
-
       resultsCount = $items.length;
       // Hide the clear button unless there is text in the input.
       $input.trigger( 'valChange' );
-      // Set aria attributes
-      $messages.attr( 'aria-live', 'polite' );
       // All items are visible by default so show the appropriate message.
-      $messages.trigger( 'allItems' );
+      $form.trigger( 'cf_notifier:notify', {
+        message:        settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount ),
+        state:          'success',
+        insertLocation: 'appendTo'
+      } );
     } );
   };
 
