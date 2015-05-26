@@ -17,15 +17,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added `setup.sh` script for bootstrapping the project.
+- Added insertTarget and insertLocation options to cf_notifier plugins
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
 - Refactored breakpoint-handler module into separate class modules
   and utility function.
 - PascalCase ContentSlider module to properly designate class status.
+- Reduced complexity of validation and notification plugins
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
+- Fixed most of the warnings in validation and notification plugins
 
 ### Removed
 - Removes `copy:static-legacy` and `grunt-contrib-copy` package.

@@ -10,25 +10,16 @@ require( './jquery/cf_formValidator' ).init();
 require( './jquery/cf_notifier' ).init();
 
 function _createMessage( type, label ) {
-  var message;
+  var message = {
+    required:   'Please fill out the ' + label + ' field.',
+    email:      'Please include a valid email address.',
+    checkgroup: 'Please select at least one of the ' + label + ' options.'
+  };
 
-  switch ( type ) {
-    case 'required':
-      message = 'Please fill out the ' + label + ' field.';
-      break;
-    case 'email':
-      message = 'Please include a valid email address.';
-      break;
-    case 'checkgroup':
-      message = 'Please select at least one of the ' + label + ' options.';
-      break;
-    default:
-      break;
-  }
-  return message;
+  return message[type];
 }
 
-function _sendNotification( elem, field ) {
+function _sendError( elem, field ) {
   var label = field.label;
   var type;
 
@@ -39,12 +30,13 @@ function _sendNotification( elem, field ) {
   }
 
   $( elem ).trigger( 'cf_notifier:notify', {
-    message: _createMessage( type, label )
+    message: _createMessage( type, label ),
+    state:   'error'
   } );
   $( field.elem ).addClass( 'error' );
 }
 
-function _clearNotification( elem ) {
+function _clearError( elem ) {
   var $elem = $( elem );
   $elem.trigger( 'cf_notifier:clear' );
   $elem.find( '.error' ).removeClass( 'error' );
@@ -54,19 +46,22 @@ function _sendSubscriptionRequest( elem ) {
   var $form = $( elem );
   var action = $form.attr( 'action' );
   var formData = $form.serialize();
+  var states = {
+    fail: {
+      message: 'There was an error in your submission, please try again later.',
+      state:   'error'
+    },
+    pass: {
+      message: 'Your subscription was successfuly received.',
+      state:   'success'
+    }
+  };
 
   $.post( action, formData, function( data ) {
-    if ( data.result === 'fail' ) {
-      $form.trigger( 'cf_notifier:notify', {
-        message: 'There was an error in your submission, please try again later.',
-        state:   'error'
-      } );
-    } else {
-      $form.trigger( 'cf_notifier:notify', {
-        message: 'Your subscription was successfuly received.',
-        state:   'success'
-      } );
-    }
+    $form.trigger( 'cf_notifier:notify', {
+      message: states[data.result].message,
+      state:   states[data.result].state
+    } );
   } );
 }
 
@@ -74,10 +69,10 @@ function init() {
   $( 'form' ).cf_formValidator( 'init', {
     onFailure: function( event, fields ) {
       event.preventDefault();
-      _sendNotification( this, fields.invalid[0] );
+      _sendError( this, fields.invalid[0] );
     },
     onSuccess: function( event ) {
-      _clearNotification( this );
+      _clearError( this );
       if ( this.id === 'email-subscribe-form' ) {
         event.preventDefault();
         _sendSubscriptionRequest( this );
