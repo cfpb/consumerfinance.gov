@@ -22,9 +22,9 @@
     "grunt-string-replace": "~0.2.7",
     "grunt-topdoc": "~0.2.0",
     "istanbul": "^0.3.13",
+    "jit-grunt": "~0.9.1",
     "jquery": "^1.11.3",
     "jsdom": "^3.1.2",
-    "load-grunt-tasks": "~0.6.0",
     "mocha": "^2.2.4",
     "mocha-jsdom": "^0.3.0",
     "sinon": "^1.14.1",
@@ -39,14 +39,15 @@
     ]
   },
   "browser": {
+    "history": "./src/vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "jquery-easing": "./vendor/jquery.easing/jquery.easing.js",
-    "cf-expandables": "./vendor/cf-expandables/cf-expandables.js",
-    "chosen": "./vendor/chosen/chosen.jquery.js",
+    "jquery-easing": "./src/vendor/jquery.easing/js/jquery.easing.js",
+    "cf-expandables": "./src/vendor/cf-expandables/src/js/cf-expandables.js",
+    "chosen": "./src/vendor/chosen/chosen.jquery.js",
     "requestNextAnimationFrame": "./static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js",
-    "slick": "./vendor/slick-carousel/slick.min.js",
-    "string_score": "./vendor/string_score/string_score.js",
-    "validate": "./vendor/validate/validate.js"
+    "slick": "./src/vendor/slick-carousel/slick/slick.js",
+    "string_score": "./src/vendor/string_score/string_score.js",
+    "validate": "./src/vendor/validate/validate.js"
   },
   "browserify-shim": "./_settings/browserify-shims.js",
   "dependencies": {

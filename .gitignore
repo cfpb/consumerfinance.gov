@@ -46,7 +46,7 @@ node_modules/
 # Bower packages #
 ##################
 bower_components/
-/vendor
+src/vendor
 
 # Sheer stuff #
 ###############
@@ -66,3 +66,17 @@ docs/*/pdfreactor-fonts.html
 ##################
 _tests/browser_testing/features/environment.cfg
 _tests/unit_test_coverage/
+
+# TODO: Remove these ignores when /dist/ directory exists. #
+##################
+static/fonts/cf-icons.eot
+static/fonts/cf-icons.svg
+static/fonts/cf-icons.ttf
+static/fonts/cf-icons.woff
+static/img/chosen-sprite.png
+static/img/chosen-sprite@2x.png
+static/img/ajax-loader.gif
+static/js/boxsizing.htc
+static/js/html5shiv-printshiv.min.js
+static/css/slick.css
+static/css/slick.css.map
