@@ -14,36 +14,36 @@ var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }
 
 var _notifier = {
   defaults: {
-    message:    'There was an error with your submission',
-    state:      'error',
-    speed:      400,
-    easing:     'swing',
-    template:   _notifierTemplate,
-    input:      null,
-    onRender:   null,
-    onClearAll: null,
-    onDestroy:  null
+    message:        'There was an error with your submission',
+    state:          'error',
+    speed:          400,
+    easing:         'swing',
+    template:       _notifierTemplate,
+    insertLocation: 'prependTo',
+    insertTarget:   null,
+    input:          null,
+    onRender:       null,
+    onClearAll:     null,
+    onDestroy:      null
   },
 
   /**
-  * Generate a string of HTML from the plugin's settings.
-  * @returns {string} The expanded HTML string.
+   * Generate a string of HTML from the plugin's settings
+   * @returns {string} The expanded HTML string
   */
   _generateHTML: function() {
-    var data = {
-      message: _notifier.settings.message,
-      state:   _notifier.settings.state
+    var settings = _notifier.settings;
+    var icon = {
+      error:   'delete',
+      success: 'approved',
+      warning: 'error'
     };
-
-    if ( data.state === 'success' ) {
-      data.icon = 'approved';
-    } else if ( data.state === 'warning' ) {
-      data.icon = 'error';
-    } else {
-      data.icon = 'delete';
-    }
-
-    var template = handlebars.compile( _notifier.settings.template );
+    var data = {
+      message: settings.message,
+      state:   settings.state,
+      icon:    icon[settings.state]
+    };
+    var template = handlebars.compile( settings.template );
 
     return template( data );
   },
@@ -65,8 +65,8 @@ var _notifier = {
 
   // Create a notification
   _notify: function( elem ) {
-    $( _notifier.html )
-      .prependTo( elem )
+    var html = _notifier._generateHTML();
+    $( html )[_notifier.settings.insertLocation]( elem )
       .slideDown( _notifier.settings.speed, function() {
         _notifier.existing = this;
         if ( _notifier.settings.onRender ) {
@@ -78,15 +78,14 @@ var _notifier = {
   // Listen for custom cf_notifier:notify event
   _initNotifyListener: function() {
     _notifier.elem.on( 'cf_notifier:notify', function( event, options ) {
-      var elem = $( this );
       _notifier.settings = $.extend( {}, _notifier.settings, options );
-      _notifier.html = _notifier._generateHTML( _notifier.settings );
+      var $target = _notifier.settings.insertTarget || $( this );
       if ( _notifier.existing ) {
         _notifier._clearExisting( function() {
-          _notifier._notify( elem );
+          _notifier._notify( $target );
         } );
       } else {
-        _notifier._notify( elem );
+        _notifier._notify( $target );
       }
     } );
   },
@@ -126,7 +125,6 @@ var _notifier = {
 
   destroy: function() {
     return this.each( function() {
-
       _notifier._rmCFNotifierListeners();
 
       if ( _notifier.existing ) {
