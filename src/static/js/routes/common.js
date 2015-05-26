@@ -28,6 +28,7 @@ $( document ).ready( function() {
   require( '../modules/jquery/custom-select' ).init();
   require( '../modules/footer-button' ).init();
   require( '../modules/youtube' ).init();
+  require( '../modules/pagination-validation.js' ).init();
 
   // Page-specific modules.
   require( './blog/index.js' );
