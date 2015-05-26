@@ -3,18 +3,7 @@
    forms
    ========================================================================== */
 
-/*
-  Adding more labels
-*/
 
-
-.form-label {
-  .webfont-demi();
-  &__right {
-    text-align: right
-  }
-
-}
 
 /*
   Radio Button Styling
@@ -617,6 +606,16 @@
             }
         });
     }
+    &__bg {
+      padding: unit((@grid_gutter-width / 4) / @base-font-size-px, em)
+               unit((@grid_gutter-width / 8) / @base-font-size-px, em);
+      background: darken(@block__bg, 20%);
+
+      .respond-to-min(600px, {
+        padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 4) / @base-font-size-px, em);
+        });
+    }
 }
 
 .form-l_col {
@@ -648,6 +647,14 @@
     });
 }
 
+.form-l-inset {
+    padding: unit((@grid_gutter-width / 4) / @base-font-size-px, em)
+               unit((@grid_gutter-width / 8) / @base-font-size-px, em);
+
+    .form-l-inset_container{
+      background: darken(@block__bg, 20%);
+    }
+}
 
 /* topdoc
   name: EOF

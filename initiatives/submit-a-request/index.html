@@ -58,7 +58,7 @@
                         block__padded-bottom">
                 <h2 class="h4">
                     <span class="step-slug char-icon char-icon__2 u-mb15">Step two</span>
-                    Generate the PDF
+                    Generate a PDF
                 </h2>
                 <img src="http://placekitten.com/g/150/150">
             </div>
@@ -66,7 +66,7 @@
             <div class="content-l_col content-l_col-1-3">
                 <h2 class="h4">
                     <span class="step-slug char-icon char-icon__3 u-mb15">Step three</span>
-                    Mail, fax or email PDF
+                    Email, fax or mail the PDF
                 </h2>
                 <img src="http://placekitten.com/g/150/150">
             </div>
@@ -75,49 +75,63 @@
     <!-- Three Steps End -->
 
     <!-- Start Form Module. -->
-    <section class="block">
-        <h2>Enter your information to auto-generate a FOIA request letter</h2>
+    <section class="block block__bg block__border block__flush-sides">
         <form>
             <div class="form-l">
-
-                <label class="form-label form-label__right form-l_col form-l_col-1-3" for="foia-request_first-name">
-                    First Name
-                </label>
-                <div class="form-l_col form-l_col-2-3 input__long">
+                <div class="form-l_col form-l_col-1-2 input__long">
+                    <label class="form-label-header" for="foia-request_first-name">
+                        First Name
+                    </label>
                     <input type="text"
-                           class="form-group_item"
                            placeholder="Requestor's First Name"
                            id="foia-request_first-name">
                     </input>
                 </div>
 
-
-
-                <label class="form-label form-label__right form-l_col form-l_col-1-3" for="foia-request_last-name">
-                    Last Name
-                </label>
-                <div class="form-l_col form-l_col-2-3 input__long">
+                <div class="form-l_col form-l_col-1-2 input__long">
+                    <label class="form-label-header" for="foia-request_last-name">
+                        Last Name
+                    </label>
                     <input type="text"
                            placeholder="Requestor's Last Name"
                            id="foia-request_last-name">
                     </input>
                 </div>
 
-                <label class="form-label form-label__right form-l_col form-l_col-1-3" for="foia-request_request-desc">
-                    Request description
-                    <div class="micro-copy micro-copy__large">
-                        Identify documents information as specifically as possible
-                    </div>
-                </label>
-                <div class="form-l_col form-l_col-2-3 input__long">
+                <div class="form-l_col form-l_col-1">
+                    <label class="form-label-header" for="foia-request_dates">
+                        Document Dates
+                    </label>
+                </div>
+                <div class="form-l_col form-l_col-1-2 input__long">
+                    <input type="text"
+                           placeholder="mm/dd/yyyy"
+                           id="foia-request_last-name">
+                    </input>
+                </div>
+                <div class="form-l_col form-l_col-1-2 input__long">
+                    <input type="text"
+                           placeholder="mm/dd/yyyy"
+                           id="foia-request_last-name">
+                    </input>
+                </div>
+
+                <div class="form-l_col form-l_col-1 input__long">
+                    <label class="form-label-header" for="foia-request_request-desc">
+                        Request description
+                        <div class="micro-copy micro-copy__large">
+                            Identify documents information as specifically as possible
+                        </div>
+                    </label>
+
                     <textarea id="foia-request_request-desc">
                     </textarea>
                 </div>
 
-                <label class="form-label form-label__right form-l_col form-l_col-1-3" for="foia-request_request-fee">
-                    Request Fee
-                </label>
-                <div class="form-l_col form-l_col-2-3 input__long">
+                <div class="form-l_col form-l_col-1 input__long">
+                    <label class="form-label-header" for="foia-request_request-fee">
+                        Request Fee
+                    </label>
                     <div class="custom-select">
                         <select class="custom-select_select"
                                 data-placeholder="Select the FOIA request category"
@@ -131,23 +145,27 @@
                     </div>
                 </div>
 
-                <label class="form-label form-label__right
-                              form-l_col
-                              form-l_col-1-3"
-                       for="foia-request_request-fee-waiver">
-                    Request fee waiver
-                </label>
-                <div class="form-l_col form-l_col-2-3">
-                    <fieldset class="u-b0">
-                        <label class="form-l_col-1-2">
-                            <input type="radio" name="request-fee-waiver_button">
-                            No
-                        </label>
-                        <label class="form-l_col-1-2">
-                            <input type="radio" name="request-fee-waiver_button">
-                            Yes
-                        </label>
-                    </fieldset>
+                <div class="form-l_col form-l_col-1">
+                    <label class="form-label-header"
+                           for="foia-request_request-fee-waiver">
+                        Request fee waiver
+                    </label>
+                    <div class="form-l_col form-l_col-1 form-group">
+                        <fieldset class="u-b0">
+                            <div class="form-l_col-1-2 form-l-inset form-group-item">
+                            <label class="form-l-inset_container">
+                                <input class="custom-input" type="radio" name="request-fee-waiver_button">
+                                No
+                            </label>
+                            </div>
+                            <div class="form-l_col-1-2 form-l__bg form-group-item">
+                            <label class="">
+                                <input class="custom-input" type="radio" name="request-fee-waiver_button">
+                                Yes
+                            </label>
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
 
                 <label class="form-label form-label__right
