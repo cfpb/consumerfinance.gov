@@ -65,15 +65,7 @@ git checkout refresh  # Branch for our staging-stable server.
 #### Updating all dependencies
 
 Each time you fetch from the upstream repository (this repo),
-you should install and update dependencies with npm and `grunt vendor`,
-and then run `grunt` to rebuild all the site's assets:
-
-```bash
-npm install
-npm update
-grunt vendor
-grunt
-```
+you should install and update dependencies by running `./setup.sh`.
 
 
 ### 2. Run Elasticsearch

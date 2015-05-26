@@ -22,9 +22,7 @@ var $ = require( 'jquery' );
 var score = require( 'string_score' );
 
 function init() {
-
   $.fn.typeAndFilter = function( userSettings ) {
-
     return $( this ).each( function() {
       var settings = $.extend( {
           minLength:               3,
@@ -187,7 +185,7 @@ function init() {
   $.fn.typeAndFilter.removeWordsOfLength = function( text, minLength ) {
     // Convert the text into an array that we can filter.
     var words = text.split( ' ' );
-    // Filters out words fromt he array that don't meet the minimum
+    // Filters out words from the array that don't meet the minimum
     // length; then converts the array back into a string.
     return $.grep( words, function( word ) {
       return word.length >= minLength;
