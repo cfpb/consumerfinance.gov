@@ -11,7 +11,9 @@ module.exports = function(grunt) {
   // If the flag is present the value is true, otherwise it is false.
   // This flag can be used to, for example, suppress warning output
   // from linters.
-  var envQuiet = grunt.option('quiet') ? true : false;
+  var env = {
+    quiet: grunt.option('quiet') ? true : false
+  };
 
   var config = {
 
@@ -222,44 +224,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Copy: https://github.com/gruntjs/grunt-contrib-copy
-     *
-     * Copy files and folders.
-     */
-    copy: {
-      'static-legacy': {
-        files:
-        [
-          {
-            expand: true,
-            cwd: 'vendor/cf-core/',
-            src: [
-              'licensed-fonts.css'
-            ],
-            dest: 'static-legacy/css/'
-          }
-        ]
-      },
-      vendor: {
-        files:
-        [
-          {
-            expand: true,
-            cwd: '',
-            src: [
-              // Only include vendor files that we use independently
-              'vendor/html5shiv/html5shiv-printshiv.min.js',
-              'vendor/box-sizing-polyfill/boxsizing.htc',
-              'vendor/slick-carousel/slick.min.js',
-              'vendor/slick-carousel/slick.css'
-            ],
-            dest: 'static'
-          }
-        ]
-      }
-    },
-
-    /**
      * Lint the JavaScript.
      */
     lintjs: {
@@ -269,7 +233,7 @@ module.exports = function(grunt) {
        */
       eslint: {
         options: {
-            quiet: envQuiet
+            quiet: env.quiet
         },
         src: [
             '<%= loc.src %>/static/js/**/*.js',
@@ -394,8 +358,7 @@ module.exports = function(grunt) {
   /**
    * Create custom task aliases and combinations.
    */
-  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen',
-                                'copy:static-legacy', 'concat:cf-less']);
+  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen', 'concat:cf-less']);
   grunt.registerTask('css', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('js', ['browserify:build', 'usebanner:js']);
   grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
@@ -404,6 +367,6 @@ module.exports = function(grunt) {
     grunt.task.run(this.target);
   });
 
-  grunt.registerTask('build', ['test', 'css', 'js', 'copy:vendor']);
+  grunt.registerTask('build', ['test', 'css', 'js']);
   grunt.registerTask('default', ['build']);
 };

@@ -16,6 +16,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+- Added `setup.sh` script for bootstrapping the project.
+
+### Changed
+- Relaxed ESLint `key-spacing` rule to warning.
+- Refactored breakpoint-handler module into separate class modules
+  and utility function.
+- PascalCase ContentSlider module to properly designate class status.
+
+### Fixed
+- Fixed an issue where scripts were being initialized out of order
+
+### Removed
+- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+
+
+## 3.0.0-1.1.0 - 2015-05-20
+
+### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 - Added JS unit testing and code coverage through Mocha and Istanbul.
 - Added cf-notifications stylesheet to style notifications

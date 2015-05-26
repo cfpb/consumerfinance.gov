@@ -7,10 +7,10 @@
 var $ = require( 'jquery' );
 
 function init() {
-
-  $( '.history-section-expandable' ).find( '.expandable_target' )
-    .not( $( '.history-section-expandable' ).find( '.expandable .expandable_target' ) )
-    .on( 'click', function() {
+  var $historySectionExpandable = $( '.history-section-expandable' );
+  $historySectionExpandable.find( '.expandable_target' )
+  .not( $historySectionExpandable.find( '.expandable .expandable_target' ) )
+  .on( 'click', function() {
     if ( $( this ).attr( 'aria-pressed' ) === 'false' ) {
       $( 'html, body' ).animate( {
         scrollTop: $( this ).parent().offset().top - 15
