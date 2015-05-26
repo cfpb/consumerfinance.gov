@@ -63,6 +63,10 @@ function getQuery() {
   return window.location.search;
 }
 
+/**
+ * @returns {object} An object literal with the viewport
+ *   width and height as properties.
+ */
 function getViewportDimensions() {
   // TODO: Check what browsers this is necessary for and
   // check whether it is still applicable.

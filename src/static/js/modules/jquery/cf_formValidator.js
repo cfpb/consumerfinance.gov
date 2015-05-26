@@ -25,10 +25,12 @@ var _validator = {
     onSuccess: function() {}
   },
 
-  // Validate an individual input for each of the set types
-  // @param   {object} $input The jQuery object of the input
-  // @param   {string} value  The evaluated value of the input
-  // @returns {object}        The status of each of the tested types
+  /**
+  * Validate an individual input for each of the set types.
+  * @param   {object} $input The jQuery object of the input.
+  * @param   {string} value  The evaluated value of the input.
+  * @returns {object}        The status of each of the tested types.
+  */
   _validateInput: function( $input, value ) {
     var status = {};
 
@@ -56,8 +58,12 @@ var _validator = {
     return status;
   },
 
-  // Validate the fields of our form
-  // @returns {object} Two inner objects containing the valid and invalid fields
+  // TODO Check type of fields param.
+  /**
+  * Validate the fields of our form.
+  * @param {object} fields Input fields to check.
+  * @returns {object} Two inner objects containing the valid and invalid fields.
+  */
   _validateFields: function( fields ) {
     var checkgroups = {};
     var validatedFields = {

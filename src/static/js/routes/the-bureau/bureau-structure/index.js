@@ -8,7 +8,7 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 
-var ContentSlider = require( '../../../modules/content-slider' );
+var ContentSlider = require( '../../../modules/ContentSlider' );
 var BreakpointHandler = require( '../../../modules/BreakpointHandler' );
 
 function init() {
