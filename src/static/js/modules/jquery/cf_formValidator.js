@@ -26,7 +26,7 @@ var _validator = {
   },
 
   /**
-   * Check's wether the passed input should be skipped for the passed test type
+   * Checks wether the passed input should be skipped for the passed test type
    * @param   {object}  elem The input we're testing
    * @param   {string}  type The test type we're checking for
    * @returns {boolean}      Wether this input should be tested for the type
@@ -98,8 +98,8 @@ var _validator = {
 
   /**
    * Validate the fields of our form
-   * @param   {object} [fields] The list of input fields we're testing
-   * @returns {object}          The tested list of fields broken into valid and invalid blocks
+   * @param   {object} fields  The list of input fields we're testing
+   * @returns {object}         The tested list of fields broken into valid and invalid blocks
   */
   _validateFields: function( fields ) {
     var checkgroups = {};
