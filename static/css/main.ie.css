@@ -10104,10 +10104,16 @@ a.focus .summary_event-date {
 
 .hero__bureau {
   padding-top: 0;
+  border-top: 1px solid #babbbd;
 }
 
 .hero__bureau .hero_wrapper {
   padding-top: 3.75em;
+}
+
+.hero__bureau .youtube-player_image {
+  width: 1200px;
+  top: -1.875em;
 }
 
 .hero_card__bureau .hero_preview {
@@ -10124,6 +10130,7 @@ a.focus .summary_event-date {
 }
 
 .youtube-player_container {
+  background: #fff;
   overflow: hidden;
 }
 
@@ -10148,31 +10155,25 @@ a.focus .summary_event-date {
 }
 
 .youtube-player_image {
-  left: 0;
+  margin: 0 auto;
   position: absolute;
   top: 0;
-}
-
-.youtube-player_image__center {
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .youtube-player_play-btn {
-  background: url('/static/img/youtube-play-btn.png') no-repeat;
   height: 73px;
-  left: 50%;
+  width: 73px;
   position: absolute;
+  left: 50%;
   top: 50%;
+  background: url('/static/img/youtube-play-btn.png') no-repeat;
+  z-index: 10;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: 73px;
-  z-index: 10;
 }
 
 .lt-ie9 .youtube-player_play-btn {
@@ -10180,8 +10181,8 @@ a.focus .summary_event-date {
 }
 
 .youtube-player_actions-container {
-  color: #fff;
   float: left;
+  color: #fff;
 }
 
 .youtube-player_actions-container h1 {
