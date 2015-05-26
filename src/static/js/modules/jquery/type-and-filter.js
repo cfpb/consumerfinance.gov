@@ -22,9 +22,7 @@ var $ = require( 'jquery' );
 var score = require( 'string_score' );
 
 function init() {
-
   $.fn.typeAndFilter = function( userSettings ) {
-
     return $( this ).each( function() {
       var settings = $.extend( {
           minLength:               3,

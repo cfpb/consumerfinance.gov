@@ -16,6 +16,23 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+- Added `setup.sh` script for bootstrapping the project.
+
+### Changed
+- Relaxed ESLint `key-spacing` rule to warning.
+- Refactored breakpoint-handler module into separate class modules
+  and utility function.
+
+### Fixed
+- Fixed an issue where scripts were being initialized out of order
+
+### Removed
+- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+
+
+## 3.0.0-1.1.0 - 2015-05-20
+
+### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 - Added JS unit testing and code coverage through Mocha and Istanbul.
 - Added cf-notifications stylesheet to style notifications
@@ -26,7 +43,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ajax subscription submission.
 - Initiative folder and files for Initiative pages
 - Added custom template for FOIA faqs page
-- Added `setup.sh` script for bootstrapping the project.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -43,7 +59,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated 404 image to the latest image provided by the design team.
 - Office folder and files for Office pages
 - Updated template for office pages
-- Relaxed ESLint `key-spacing` rule to warning.
 
 ### Fixed
 - Fixed macro on offices page template
