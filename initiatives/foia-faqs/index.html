@@ -1,6 +1,11 @@
 {% set initiative = get_document("initiative", "foia-faqs") %}
 {% set path = "/initiatives/" + initiative.slug %}
 
+{% set activity_type = "FOIA" %}
+{% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+{% set activities_feed = activity_snippets(activity_type) %}
+
+
 {% extends "layout-side-nav.html" %}
 {% import "_vars-initiatives.html" as vars with context %}
 {% set active_nav_id = initiative.slug %}

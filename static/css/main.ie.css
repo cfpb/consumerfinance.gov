@@ -5120,17 +5120,25 @@ textarea.warning {
   color: #ff9e1b;
 }
 
-.input__long[type="text"],
-.input__long[type="search"],
-.input__long[type="email"],
-.input__long[type="url"],
-.input__long[type="tel"],
-.input__long[type="number"] {
+.input__long input[type="text"],
+.input__long input[type="search"],
+.input__long input[type="email"],
+.input__long input[type="url"],
+.input__long input[type="tel"],
+.input__long input[type="number"],
+.input__long textarea {
   width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-textarea.input__long {
+.input__long select,
+.input__long .custom-select {
   width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .cf-notification {
@@ -5191,6 +5199,20 @@ textarea.input__long {
 
 .lt-ie9 .cf-notification_text {
   font-weight: normal !important;
+}
+
+.form-label {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .form-label {
+  font-weight: normal !important;
+}
+
+.form-label__right {
+  text-align: right;
 }
 
 .u-b0 {

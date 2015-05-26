@@ -839,17 +839,24 @@ textarea {
 }
 
 .input__long {
-    &[type="text"],
-    &[type="search"],
-    &[type="email"],
-    &[type="url"],
-    &[type="tel"],
-    &[type="number"]{
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"],
+    textarea {
         width: 100%;
+        box-sizing: border-box;
+    }
+    select,
+    .custom-select {
+        width: 100%;
+        box-sizing: border-box;
   }
 }
 
-textarea.input__long {width: 100%}
+
 
 /* topdoc
     name: EOF
