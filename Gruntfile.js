@@ -242,7 +242,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: ['<%= loc.dist %>/static/js/**/*.min.js']
+          src: ['<%= loc.dist %>/static/js/routes/*.min.js']
         }
       }
     },

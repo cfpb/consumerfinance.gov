@@ -68,6 +68,8 @@ _tests/browser_testing/features/environment.cfg
 _tests/unit_test_coverage/
 
 # TODO: Remove these ignores when /dist/ directory exists. #
+#       These files are committed in the repo as well and  #
+#       should be deleted from the repo when removed here. #
 ##################
 static/fonts/cf-icons.eot
 static/fonts/cf-icons.svg
