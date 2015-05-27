@@ -29,20 +29,21 @@ function init() {
           fuzzy:                   true,
           fuzziness:               0.5,
           threshold:               0.35,
+          keyup:                   false,
+          $form:                   $(),
           $button:                 $(),
           $clear:                  $(),
           $input:                  $(),
           $items:                  $(),
-          $messages:               $(),
           allMessage:              'Showing all {{ count }}.',
           filteredMessageSingular: 'There is 1 result for "{{ term }}".',
           filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
-          minTermMessage:          '<i>The search term "{{ term }}" is not long enough.<br>Please use a minimum of 3 characters.</i>',
+          minTermMessage:          'The search term "{{ term }}" is not long enough. <span class="short-desc">Please use a minimum of 3 characters.</span>',
           clickCallback:           function( e ) {}
         }, userSettings ),
         $this = $( this ),
+        $form = settings.$form,
         $button = settings.$button,
-        $messages = settings.$messages,
         $input = settings.$input,
         $items = settings.$items,
         $clear = settings.$clear,
@@ -58,13 +59,17 @@ function init() {
       // Set event handlers
       //
 
-      // Check to see if we should perform the filter on button click or
-      // as you type.
+      // Check to see if we should perform the filter on button click.
       if ( $button.length > 0 ) {
         $button.on( 'click', function() {
           $this.trigger( 'attemptSearch' );
         } );
-      } else {
+      }
+      // Check to see if we should perform the filter as you type.
+      //
+      // TODO: Set a timeout before triggering search so that we're not
+      // triggering back to back searches.
+      if ( settings.keyup ) {
         $input.on( 'keyup paste', function() {
           $this.trigger( 'attemptSearch' );
         } );
@@ -86,7 +91,11 @@ function init() {
           if ( searchTerm.length >= 3 ) {
             $this.trigger( 'search' );
           } else {
-            $messages.trigger( 'minTerm' );
+            $form.trigger( 'cf_notifier:notify', {
+              message: settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() ),
+              state: 'error',
+              insertLocation: 'appendTo'
+            } );
             $input.addClass( 'error' );
           }
         } )
@@ -94,7 +103,23 @@ function init() {
         .on( 'search', function() {
           $.fn.typeAndFilter.filterItems( $items, searchTerm, true, settings );
           resultsCount = $items.filter( ':visible' ).length;
-          $messages.trigger( 'searchResults' );
+          var message = settings.filteredMessageMultiple;
+          var state = 'success';
+          if ( resultsCount === 1 ) {
+            message = settings.filteredMessageSingular;
+          }
+          if ( resultsCount === 0 ) {
+            state = 'warning';
+          }
+
+          message = message.replace( /{{[\s]*term[\s]*}}/, searchTerm );
+          message = message.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+
+          $form.trigger( 'cf_notifier:notify', {
+            message: message,
+            state:   state,
+            insertLocation: 'appendTo'
+          } );
         } )
         // Reset/clear the plugin.
         .on( 'clear', function() {
@@ -105,38 +130,12 @@ function init() {
             .focus();
           $items.show();
           resultsCount = $items.filter( ':visible' ).length;
-          $messages.trigger( 'allItems' );
+          var message = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+          $form.trigger( 'cf_notifier:clear' );
         } )
         // Remove the validation class during these two events.
         .on( 'search clear', function() {
           $input.removeClass( 'error' );
-        } );
-      $messages
-        // Display an error message specific to the minimum search term.
-        .on( 'minTerm', function() {
-          var html = settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() );
-          $messages.html( html );
-        } )
-        // Display a message containing the search term and its number
-        // of results. Also determines which template to use, singular
-        // vs multiple.
-        .on( 'searchResults', function() {
-          var html,
-            template;
-          if ( resultsCount === 1 ) {
-            template = settings.filteredMessageSingular;
-          } else {
-            template = settings.filteredMessageMultiple;
-          }
-          html = template.replace( /{{[\s]*term[\s]*}}/, searchTerm );
-          html = html.replace( /{{[\s]*count[\s]*}}/, resultsCount );
-          $messages.html( html );
-        } )
-        // Display a message letting the user know that all of the results
-        // are visible.
-        .on( 'allItems', function() {
-          var html = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
-          $messages.html( html );
         } );
       $input
         // Show clear button if the input contains text; hide if empty.
@@ -151,14 +150,9 @@ function init() {
       //
       // Initial dom manipulation setup.
       //
-
       resultsCount = $items.length;
       // Hide the clear button unless there is text in the input.
       $input.trigger( 'valChange' );
-      // Set aria attributes
-      $messages.attr( 'aria-live', 'polite' );
-      // All items are visible by default so show the appropriate message.
-      $messages.trigger( 'allItems' );
     } );
   };
 
@@ -174,7 +168,6 @@ function init() {
     cleanText = $.fn.typeAndFilter.removeExtraSpaces( cleanText );
     cleanText = $.fn.typeAndFilter.removeWordsOfLength( cleanText, minLength );
     cleanText = $.fn.typeAndFilter.removePlurality( cleanText );
-    // console.log( '\nOriginal text:', text, '\nClean text:', cleanText );
     return cleanText;
   };
 
