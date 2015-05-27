@@ -5133,6 +5133,10 @@ textarea.warning {
   box-sizing: border-box;
 }
 
+.input__long textarea {
+  height: 10em;
+}
+
 .input__long select,
 .input__long .custom-select {
   width: 100%;
@@ -5201,8 +5205,10 @@ textarea.warning {
   font-weight: normal !important;
 }
 
-.u-b0 {
-  border: 0 !important;
+.u-reset {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .is-enabled.custom-select {
@@ -5430,25 +5436,30 @@ textarea.warning {
   margin-left: 1.875em;
 }
 
-.form-l__bg {
-  padding: .46875em .234375em;
-  background: #c5c5c5;
-}
-
-.form-l__bg {
-  padding: .9375em .46875em;
-}
-
 .form-l_col {
   margin-bottom: 1.875em;
 }
 
 .form-l-inset {
-  padding: .46875em .234375em;
+  border-left-width: 2.5px;
+  border-right-width: 2.5px;
+}
+
+.form-l-inset:first-child {
+  border-left-width: 15px;
+}
+
+.form-l-inset:last-child {
+  border-right-width: 15px;
 }
 
 .form-l-inset .form-l-inset_container {
-  background: #c5c5c5;
+  padding: .9375em .9375em;
+  background: #e3e4e5;
+}
+
+.form-l-inset .form-l-inset_container {
+  padding: .9375em .9375em;
 }
 
 .list_link {

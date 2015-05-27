@@ -8,7 +8,11 @@
 /*
   Radio Button Styling
 */
-.u-b0 {border: 0 !important}
+.u-reset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
 
 /* topdoc
     name: Custom select menus via jquery.custom-input
@@ -606,16 +610,6 @@
             }
         });
     }
-    &__bg {
-      padding: unit((@grid_gutter-width / 4) / @base-font-size-px, em)
-               unit((@grid_gutter-width / 8) / @base-font-size-px, em);
-      background: darken(@block__bg, 20%);
-
-      .respond-to-min(600px, {
-        padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
-                 unit((@grid_gutter-width / 4) / @base-font-size-px, em);
-        });
-    }
 }
 
 .form-l_col {
@@ -648,12 +642,26 @@
 }
 
 .form-l-inset {
-    padding: unit((@grid_gutter-width / 4) / @base-font-size-px, em)
-               unit((@grid_gutter-width / 8) / @base-font-size-px, em);
+      // The margin between two columns is 30px.
+      border-left-width: 2.5px;
+      border-right-width: 2.5px;
+    &:first-child { border-left-width: 15px;}
+    &:last-child {
+        border-right-width: 15px;
+      }
+    .form-l-inset_container {
+      padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
+               unit((@grid_gutter-width / 2) / @base-font-size-px, em);
 
-    .form-l-inset_container{
-      background: darken(@block__bg, 20%);
+      background: @gray-20;
+
+
+      .respond-to-min(600px, {
+        padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+        });
     }
+
 }
 
 /* topdoc

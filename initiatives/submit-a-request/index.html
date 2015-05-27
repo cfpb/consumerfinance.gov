@@ -26,206 +26,272 @@
     {% if initiative.content %}
     <section class="initiative_description block block__flush-top">
         {{ initiative.content | safe }}
+
+        <!-- Extra Content. Remove once content updates. -->
+        <ul class="short-desc">
+            <li>Step 1: Fill out the form</li>
+            <li>Step 2: Generate a PDF</li>
+            <li>Step 3: Email, fax or mail the PDF</li>
+        </ul>
     </section>
     {% endif %}
 
-    <!-- Three Steps Start -->
-    <section class="block
-                    block__bg
-                    block__border
-                    block__flush-sides
-                    block__business-step_container">
-        <div class="content-l content-l__main">
-            <div class="content-l_col
-                        content-l_col-1-3
-                        block
-                        block__padded-bottom
-                        block__border-bottom
-                        block__flush-top
-                        block__business-step">
-                <h2 class="h4">
-                    <span class="step-slug char-icon char-icon__1 u-mb15">Step one</span>
-                    Fill out the form
-                </h2>
-                <img src="http://placekitten.com/g/150/150">
-            </div>
-
-            <div class="content-l_col
-                        content-l_col-1-3
-                        block
-                        block__border-bottom
-                        block__business-step
-                        block__padded-bottom">
-                <h2 class="h4">
-                    <span class="step-slug char-icon char-icon__2 u-mb15">Step two</span>
-                    Generate a PDF
-                </h2>
-                <img src="http://placekitten.com/g/150/150">
-            </div>
-
-            <div class="content-l_col content-l_col-1-3">
-                <h2 class="h4">
-                    <span class="step-slug char-icon char-icon__3 u-mb15">Step three</span>
-                    Email, fax or mail the PDF
-                </h2>
-                <img src="http://placekitten.com/g/150/150">
-            </div>
-        </div>
-    </section>
-    <!-- Three Steps End -->
-
     <!-- Start Form Module. -->
     <section class="block block__bg block__border block__flush-sides">
-        <form>
-            <div class="form-l">
-                <div class="form-l_col form-l_col-1-2 input__long">
-                    <label class="form-label-header" for="foia-request_first-name">
-                        First Name
-                    </label>
-                    <input type="text"
-                           placeholder="Requestor's First Name"
-                           id="foia-request_first-name">
-                    </input>
-                </div>
+        <form class="form-l">
 
-                <div class="form-l_col form-l_col-1-2 input__long">
-                    <label class="form-label-header" for="foia-request_last-name">
-                        Last Name
-                    </label>
-                    <input type="text"
-                           placeholder="Requestor's Last Name"
-                           id="foia-request_last-name">
-                    </input>
-                </div>
-
-                <div class="form-l_col form-l_col-1">
-                    <label class="form-label-header" for="foia-request_dates">
-                        Document Dates
-                    </label>
-                </div>
-                <div class="form-l_col form-l_col-1-2 input__long">
-                    <input type="text"
-                           placeholder="mm/dd/yyyy"
-                           id="foia-request_last-name">
-                    </input>
-                </div>
-                <div class="form-l_col form-l_col-1-2 input__long">
-                    <input type="text"
-                           placeholder="mm/dd/yyyy"
-                           id="foia-request_last-name">
-                    </input>
-                </div>
-
-                <div class="form-l_col form-l_col-1 input__long">
-                    <label class="form-label-header" for="foia-request_request-desc">
-                        Request description
-                        <div class="micro-copy micro-copy__large">
-                            Identify documents information as specifically as possible
-                        </div>
-                    </label>
-
-                    <textarea id="foia-request_request-desc">
-                    </textarea>
-                </div>
-
-                <div class="form-l_col form-l_col-1 input__long">
-                    <label class="form-label-header" for="foia-request_request-fee">
-                        Request Fee
-                    </label>
-                    <div class="custom-select">
-                        <select class="custom-select_select"
-                                data-placeholder="Select the FOIA request category"
-                                id="foia-request_request-fee">
-                            <option value="">Select the FOIA request category</option>
-                            <option value="Commercial">Commercial</option>
-                            <option value="Media">Media</option>
-                            <option value="Others">Others</option>
-                        </select>
-                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                    </div>
-                </div>
-
-                <div class="form-l_col form-l_col-1">
-                    <label class="form-label-header"
-                           for="foia-request_request-fee-waiver">
-                        Request fee waiver
-                    </label>
-                    <div class="form-l_col form-l_col-1 form-group">
-                        <fieldset class="u-b0">
-                            <div class="form-l_col-1-2 form-l-inset form-group-item">
-                            <label class="form-l-inset_container">
-                                <input class="custom-input" type="radio" name="request-fee-waiver_button">
-                                No
-                            </label>
-                            </div>
-                            <div class="form-l_col-1-2 form-l__bg form-group-item">
-                            <label class="">
-                                <input class="custom-input" type="radio" name="request-fee-waiver_button">
-                                Yes
-                            </label>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-
-                <label class="form-label form-label__right
-                              form-l_col
-                              form-l_col-1-3"
-                       for="foia-request_expedite">
-                    Expedite treatment
+            <div class="form-l_col form-l_col-1-2 input__long">
+                <label class="form-label-header" for="foia-request_first-name">
+                    First name
                 </label>
-                <div class="form-l_col form-l_col-2-3">
-                    <fieldset class="u-b0">
-                        <label class="form-l_col-1-2">
-                            <input type="radio" name="expedite_button">
+                <input type="text"
+                       placeholder="Requestor's First Name"
+                       id="foia-request_first-name">
+                </input>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2 input__long">
+                <label class="form-label-header" for="foia-request_last-name">
+                    Last name
+                </label>
+                <input type="text"
+                       placeholder="Requestor's Last Name"
+                       id="foia-request_last-name">
+                </input>
+            </div>
+
+            <div class="form-l_col form-l_col-1 u-mb0">
+                <label class="form-label-header" for="foia-request_dates">
+                    Document dates
+                </label>
+            </div>
+            <fieldset class="u-reset" id="foia_request_dates">
+                <div class="form-l_col form-l_col-1-2 input__long">
+                    <label class="micro-copy micro-copy__large">
+                        From:
+                    <input type="text"
+                           placeholder="mm/dd/yyyy"
+                           id="foia-request_starting-date">
+                    </input>
+                    </label>
+                </div>
+                <div class="form-l_col form-l_col-1-2 input__long">
+                    <label class="micro-copy micro-copy__large">
+                        To:
+                        <input type="text"
+                               placeholder="mm/dd/yyyy"
+                               id="foia-request_ending-date">
+                        </input>
+                    </label>
+                </div>
+            </fieldset>
+
+            <div class="form-l_col form-l_col-1 input__long">
+                <label class="" for="foia-request_request-desc">
+                    <span class="form-label-header">
+                        Request description
+                    </span><br/>
+                    <span class="micro-copy micro-copy__large">
+                        Describe the records you seek from the CFPB. Review our FAQs for additional guidance
+                    </span>
+                </label>
+
+                <textarea id="foia-request_request-desc">
+                </textarea>
+            </div>
+
+            <div class="form-l_col form-l_col-1 input__long">
+                <label class="form-label-header" for="foia-request_request-fee">
+                    Select a request category
+                </label>
+                <div class="custom-select">
+                    <select class="custom-select_select"
+                            data-placeholder="Select the FOIA request category"
+                            id="foia-request_request-fee">
+                        <option value="">Select the FOIA request category</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Media">Media</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                </div>
+            </div>
+
+            <div class="form-l_col form-l_col-1 u-mb0">
+                <label class="form-label-header"
+                       for="foia-request_request-fee-waiver">
+                    Requesting a fee waiver?
+                </label>
+            </div>
+            <fieldset class="u-reset">
+                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="">
+                            <input class="custom-input" type="radio" name="request-fee-waiver_button">
                             No
                         </label>
-                        <label class="form-l_col-1-2">
-                            <input type="radio" name="expedite_button">
+                    </div>
+                </div>
+                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="">
+                            <input class="custom-input" type="radio" name="request-fee-waiver_button">
                             Yes
                         </label>
-                    </fieldset>
+                    </div>
                 </div>
+            </fieldset>
 
-                <label class="form-label form-label__right
-                              form-l_col
-                              form-l_col-1-3"
-                       for="foia-request_response-method">
-                    Response method
+            <div class="form-l_col form-l_col-1 input__long">
+                <label class="" for="foia-request_request-desc">
+                    <span class="form-label-header">
+                        Fee waiver justification explanation
+                    </span><br/>
+                    <span class="micro-copy micro-copy__large">
+                        Describe how the disclosed records would serve a public interest
+                    </span>
                 </label>
-                <div class="form-l_col form-l_col-2-3">
-                    <fieldset class="u-b0">
-                        <label class="form-l_col-1-3">
-                            <input type="radio" name="response-method_button">
+
+                <textarea id="foia-request_request-desc">
+                </textarea>
+            </div>
+
+            <div class="form-l_col form-l_col-1 u-mb0">
+                <label class="form-label-header"
+                       for="foia-request_expedite">
+                    Requesting expedited treatment?
+                </label>
+            </div>
+            <fieldset class="u-reset">
+                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="">
+                            <input class="custom-input" type="radio" name="expedite_button">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="form-l_col-1-2 input-group-item">
+                            <input class="custom-input" type="radio" name="expedite_button">
+                            Yes
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-l_col form-l_col-1 u-mb0">
+                <label class="form-label-header"
+                       for="foia-request_response-method">
+                    Preferred response method
+                </label>
+            </div>
+            <fieldset class="u-reset">
+                <div class="form-l_col form-l_col-1-3 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="">
+                            <input class="custom-input" type="radio" name="response-method_button">
                             Email
                         </label>
-                        <label class="form-l_col-1-3">
-                            <input type="radio" name="response-method_button">
+                    </div>
+                </div>
+                <div class="form-l_col form-l_col-1-3 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="">
+                            <input class="custom-input" type="radio" name="response-method_button">
                             Mail
                         </label>
-                        <label class="form-l_col-1-3">
-                            <input type="radio" name="response-method_button">
+                    </div>
+                </div>
+                <div class="form-l_col form-l_col-1-3 form-l-inset">
+                    <div class="form-l-inset_container">
+                        <label class="">
+                            <input class="custom-input" type="radio" name="response-method_button">
                             Fax
                         </label>
-                    </fieldset>
+                    </div>
                 </div>
+            </fieldset>
 
-
-
-                <div class="form-actions form-actions__right-on-med ">
-                    <input class="btn form-actions_item" type="submit" value="Generate FOIA PDF"></input>
-                    <a href="#" class="btn btn__link form-actions_item">
-                        Sample Letter
-                        <span class="cf-icon cf-icon-pdf"></span>
-                    </a>
-                </div>
-
+            <div class="form-l_col form-l_col-1 input__long">
+                <label class="form-label-header" for="foia-request_organization-name">
+                    Organization Name
+                </label>
+                <input type="text"
+                       placeholder=""
+                       id="foia-request_organization-name">
+                </input>
             </div>
+
+            <div class="form-l_col form-l_col-1 input__long">
+                <label class="form-label-header" for="foia-request_organization-name">
+                    Address
+                </label>
+                <input type="text"
+                       placeholder=""
+                       id="foia-request_organization-name">
+                </input>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2 input__long">
+                <label class="form-label-header" for="foia-request_organization-name">
+                    City
+                </label>
+                <input type="text"
+                       placeholder=""
+                       id="foia-request_organization-name">
+                </input>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2 input__long">
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header" for="foia-request_organization-name">
+                        State
+                    </label>
+                    <div class="custom-select">
+                    <select class="custom-select_select"
+                            data-placeholder="Select the FOIA request category"
+                            id="foia-request_request-fee">
+                        <option value="">Please select</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Media">Media</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                </div>
+                </div>
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header" for="foia-request_organization-name">
+                        Zip code
+                    </label>
+                    <input type="text"
+                           placeholder=""
+                           id="foia-request_organization-name">
+                    </input>
+                </div>
+            </div>
+
+
+            <div class="form-actions form-actions__right-on-med ">
+                <input class="btn form-actions_item" type="submit" value="Generate FOIA PDF"></input>
+                <a href="#" class="btn btn__link form-actions_item">
+                    Sample Letter
+                    <span class="cf-icon cf-icon-pdf"></span>
+                </a>
+            </div>
+
         </form>
     </section>
     <!-- End Form Module. -->
     <section class="block">
-        <p class="short-desc">You may send your request by email or mail at the following address:</p>
+        <h3>How to submit</h3>
+        <p>
+            To minimize delays associated with mail delivery
+            or other possible misrouting of your request,
+            we recommend submitting your request by email.
+            However, we can also accept by fax or mail.
+        </p>
         <div class="content-l content-l__main">
             <div class="content-l_col
                         content-l_col-1-3
@@ -251,7 +317,8 @@
                 <p class="short-desc">
                     Consumer Financial Protection Bureau<br/>
                     Attention: Chief FOIA Officer<br/>
-                    1700 G Street, NW Washington, DC 20552
+                    1700 G Street NW<br/>
+                    Washington, DC 20552
                 </p>
             </div>
             <div class="content-l_col
@@ -267,10 +334,24 @@
                 </p>
             </div>
         </div>
-        <p class="short-desc">
-            For more information about how to submit a request, consult with <a href="#" class="icon-link icon-link__pdf">FOIA and Privacy Act request guidebook.</a>
+        <h3>Write your own letter</h3>
+        <p>
+            If you are writing your own letter, make certain to include, at a minimum, the information below. Our sample letter can provide more guidance.
         </p>
+        <p>A request should include:</p>
+        <ul>
+            <li>Your contact information (e.g., full name, address, phone number, email address).</li>
+            <li>As many details as possible about the information you are seeking from the Consumer Financial Protection Bureau (e.g., “Consumer complaints received between January 1, 2013 and the present that were related to overdraft charges”).</li>
+            <li>Type of requester. For example: “for commercial purposes,” “news media,” “non-commercial scientific institution,” “educational institution,” or “other.”</li>
+            <li>
+                Indicate whether you are willing to pay fees for searching, reviewing, and/or duplication
+                records. You may request that fees be waived because the request is not commercial and
+                it will significantly contribute to public understanding of the operations or activities of
+                the government; please make sure you include a waiver justification for us to consider.
+            </li>
+        </ul>
     </section>
+
     {% if activities_feed %}
     <aside class="block block__flush-sides block__bg u-mb0 u-mt0">
         <section class="office_activities">
@@ -280,7 +361,6 @@
                 </span>
             </h1>
             {{ activities_feed }}
-            <!-- link to activities page? -->
             <a class="jump-link jump-link__right" href="/activity-log/">
                 View all of our activity
             </a>
