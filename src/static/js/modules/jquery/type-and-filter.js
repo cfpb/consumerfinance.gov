@@ -29,6 +29,7 @@ function init() {
           fuzzy:                   true,
           fuzziness:               0.5,
           threshold:               0.35,
+          keyup:                   false,
           $form:                   $(),
           $button:                 $(),
           $clear:                  $(),
@@ -58,13 +59,17 @@ function init() {
       // Set event handlers
       //
 
-      // Check to see if we should perform the filter on button click or
-      // as you type.
+      // Check to see if we should perform the filter on button click.
       if ( $button.length > 0 ) {
         $button.on( 'click', function() {
           $this.trigger( 'attemptSearch' );
         } );
-      } else {
+      }
+      // Check to see if we should perform the filter as you type.
+      //
+      // TODO: Set a timeout before triggering search so that we're not
+      // triggering back to back searches.
+      if ( settings.keyup ) {
         $input.on( 'keyup paste', function() {
           $this.trigger( 'attemptSearch' );
         } );
@@ -88,7 +93,8 @@ function init() {
           } else {
             $form.trigger( 'cf_notifier:notify', {
               message: settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() ),
-              state: 'error'
+              state: 'error',
+              insertLocation: 'appendTo'
             } );
             $input.addClass( 'error' );
           }
@@ -111,7 +117,8 @@ function init() {
 
           $form.trigger( 'cf_notifier:notify', {
             message: message,
-            state:   state
+            state:   state,
+            insertLocation: 'appendTo'
           } );
         } )
         // Reset/clear the plugin.
@@ -124,11 +131,7 @@ function init() {
           $items.show();
           resultsCount = $items.filter( ':visible' ).length;
           var message = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
-          $form.trigger( 'cf_notifier:notify', {
-            message:        message,
-            state:          'success',
-            insertLocation: 'appendTo'
-          } );
+          $form.trigger( 'cf_notifier:clear' );
         } )
         // Remove the validation class during these two events.
         .on( 'search clear', function() {
@@ -150,12 +153,6 @@ function init() {
       resultsCount = $items.length;
       // Hide the clear button unless there is text in the input.
       $input.trigger( 'valChange' );
-      // All items are visible by default so show the appropriate message.
-      $form.trigger( 'cf_notifier:notify', {
-        message:        settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount ),
-        state:          'success',
-        insertLocation: 'appendTo'
-      } );
     } );
   };
 

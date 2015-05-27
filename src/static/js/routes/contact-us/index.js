@@ -14,7 +14,6 @@ function init() {
     $input:                  $( '.js-type-and-filter_input' ),
     $items:                  $( '.js-type-and-filter_item' ),
     $form:                   $( '.js-type-and-filter_form' ),
-    $button:                 $( '.js-type-and-filter_button' ),
     $clear:                  $( '.js-type-and-filter_clear' ),
     allMessage:              'Showing all {{ count }} contacts.',
     filteredMessageSingular: '{{ count }} filtered contact result.',
@@ -30,7 +29,6 @@ function init() {
   // Clicking on a helpful term should trigger a filter.
   $( '.js-helpful-term' ).on( 'click', function() {
     $( '.js-type-and-filter_input' ).val( $( this ).text() ).trigger( 'valChange' );
-    $( '.type-and-filter' ).trigger( 'attemptSearch' );
   } );
 }
 
