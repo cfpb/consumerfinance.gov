@@ -6,10 +6,11 @@
                    list__horizontal
                    list-expanding">
             {%- for top_level, first_level in vars.nav_items_toplevel %}
+            {% set first_level_length = first_level|length %}
             <li class="list_item list-expanding_list-item">
-                <a class="list_link
-                          {{ ' list-expanding_trigger' if first_level|length > 0
-                          else ' list_link__disabled' }}">
+                {%- if first_level_length > 0 %}
+                {# TODO: Make this a <button>, it is not a real link. #}
+                <a class="list_link list-expanding_trigger" href="#">
                     {{ top_level }}
                 </a>
                 <div class="desktop-menu_full-wrapper">
@@ -27,6 +28,11 @@
                         </ul>
                     </div>
                 </div>
+                {%- else %}
+                <a class="list_link list_link__disabled">
+                    {{ top_level }}
+                </a>
+                {%- endif %}
             </li>
             {%- endfor %}
         </ul><!-- END .primary-nav_top-level-list -->
