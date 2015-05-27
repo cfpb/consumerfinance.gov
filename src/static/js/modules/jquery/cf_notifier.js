@@ -16,7 +16,7 @@ var _notifier = {
   defaults: {
     message:        'There was an error with your submission',
     state:          'error',
-    speed:          400,
+    speed:          200,
     easing:         'swing',
     template:       _notifierTemplate,
     insertLocation: 'prependTo',
@@ -53,7 +53,7 @@ var _notifier = {
   // Clear any previously created notifications
   _clearExisting: function( callback ) {
     $( _notifier.existing ).slideUp( {
-        speed:    _notifier.settings.speed,
+        duration: _notifier.settings.speed,
         easing:   _notifier.settings.easing,
         complete: function() {
           $( this ).remove();
@@ -69,10 +69,14 @@ var _notifier = {
   _notify: function( elem ) {
     var html = _notifier._generateHTML();
     $( html )[_notifier.settings.insertLocation]( elem )
-      .slideDown( _notifier.settings.speed, function() {
-        _notifier.existing = this;
-        if ( _notifier.settings.onRender ) {
-          _notifier.settings.onRender.call( this );
+      .slideDown( {
+        duration: _notifier.settings.speed,
+        easing:   _notifier.settings.easing,
+        complete: function() {
+          _notifier.existing = this;
+          if ( _notifier.settings.onRender ) {
+            _notifier.settings.onRender.call( this );
+          }
         }
       } );
   },
