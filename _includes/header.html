@@ -6,9 +6,8 @@
                    list__horizontal
                    list-expanding">
             {%- for top_level, first_level in vars.nav_items_toplevel %}
-            {% set first_level_length = first_level|length %}
             <li class="list_item list-expanding_list-item">
-                {%- if first_level_length > 0 %}
+                {%- if first_level|length > 0 %}
                 {# TODO: Make this a <button>, it is not a real link. #}
                 <a class="list_link list-expanding_trigger" href="#">
                     {{ top_level }}
