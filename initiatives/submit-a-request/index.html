@@ -38,56 +38,54 @@
 
     <!-- Start Form Module. -->
     <section class="block block__bg block__border block__flush-sides">
-        <form class="form-l">
-
-            <div class="form-l_col form-l_col-1-2 input__long">
+        <form class="form-l js-validate-filters">
+            <div class="form-l_col form-l_col-1-2">
                 <label class="form-label-header" for="foia-request_first-name">
                     First name
                 </label>
-                <input type="text"
-                       placeholder="Requestor's First Name"
-                       id="foia-request_first-name">
-                </input>
+                <input class="input__long"
+                       id="foia-request_first-name"
+                       required
+                       type="text">
             </div>
 
-            <div class="form-l_col form-l_col-1-2 input__long">
+            <div class="form-l_col form-l_col-1-2">
                 <label class="form-label-header" for="foia-request_last-name">
                     Last name
                 </label>
-                <input type="text"
-                       placeholder="Requestor's Last Name"
-                       id="foia-request_last-name">
-                </input>
+                <input class="input__long"
+                       id="foia-request_last-name"
+                       required
+                       type="text">
             </div>
-
-            <div class="form-l_col form-l_col-1 u-mb0">
-                <label class="form-label-header" for="foia-request_dates">
-                    Document dates
-                </label>
-            </div>
-            <fieldset class="u-reset" id="foia_request_dates">
-                <div class="form-l_col form-l_col-1-2 input__long">
-                    <label class="micro-copy micro-copy__large">
+            <fieldset class="u-reset">
+                <div class="form-l_col form-l_col-1 u-mb0">
+                    <legend class="form-label-header">
+                        Document dates
+                    </legend>
+                </div>
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="micro-copy micro-copy__large" for="foia-request_starting-date">
                         From:
-                    <input type="text"
-                           placeholder="mm/dd/yyyy"
-                           id="foia-request_starting-date">
-                    </input>
                     </label>
+                    <input class="input__long"
+                           id="foia-request_starting-date"
+                           placeholder="mm/dd/yyyy"
+                           type="text">
                 </div>
                 <div class="form-l_col form-l_col-1-2 input__long">
-                    <label class="micro-copy micro-copy__large">
+                    <label class="micro-copy micro-copy__large" for="foia-request_ending-date">
                         To:
-                        <input type="text"
-                               placeholder="mm/dd/yyyy"
-                               id="foia-request_ending-date">
-                        </input>
                     </label>
+                    <input class="input__long"
+                           id="foia-request_ending-date"
+                           placeholder="mm/dd/yyyy"
+                           type="text">
                 </div>
             </fieldset>
 
-            <div class="form-l_col form-l_col-1 input__long">
-                <label class="" for="foia-request_request-desc">
+            <div class="form-l_col form-l_col-1">
+                <label for="foia-request_request-desc">
                     <span class="form-label-header">
                         Request description
                     </span><br/>
@@ -95,12 +93,11 @@
                         Describe the records you seek from the CFPB. Review our FAQs for additional guidance
                     </span>
                 </label>
-
-                <textarea id="foia-request_request-desc">
+                <textarea class="input__long" id="foia-request_request-desc"  required>
                 </textarea>
             </div>
 
-            <div class="form-l_col form-l_col-1 input__long">
+            <div class="form-l_col form-l_col-1 ">
                 <label class="form-label-header" for="foia-request_request-fee">
                     Select a request category
                 </label>
@@ -117,16 +114,15 @@
                 </div>
             </div>
 
-            <div class="form-l_col form-l_col-1 u-mb0">
-                <label class="form-label-header"
-                       for="foia-request_request-fee-waiver">
-                    Requesting a fee waiver?
-                </label>
-            </div>
-            <fieldset class="u-reset">
+            <fieldset class="u-reset js-additional-field">
+                <div class="form-l_col form-l_col-1 u-mb0">
+                    <legend class="form-label-header">
+                        Requesting a fee waiver?
+                    </legend>
+                </div>
                 <div class="form-l_col form-l_col-1-2 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="">
+                        <label>
                             <input class="custom-input" type="radio" name="request-fee-waiver_button">
                             No
                         </label>
@@ -134,38 +130,40 @@
                 </div>
                 <div class="form-l_col form-l_col-1-2 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="">
-                            <input class="custom-input" type="radio" name="request-fee-waiver_button">
+                        <label>
+                            <input class="custom-input js-additional-field_trigger"
+                                   type="radio"
+                                   name="request-fee-waiver_button"
+                                   data-additional-fields="#foia-request-fee-waiver-justify">
                             Yes
                         </label>
                     </div>
                 </div>
             </fieldset>
 
-            <div class="form-l_col form-l_col-1 input__long">
-                <label class="" for="foia-request_request-desc">
+            <div class="form-l_col form-l_col-1 input__long" id="foia-request-fee-waiver-justify">
+                <label>
                     <span class="form-label-header">
                         Fee waiver justification explanation
                     </span><br/>
                     <span class="micro-copy micro-copy__large">
                         Describe how the disclosed records would serve a public interest
                     </span>
-                </label>
 
-                <textarea id="foia-request_request-desc">
-                </textarea>
-            </div>
-
-            <div class="form-l_col form-l_col-1 u-mb0">
-                <label class="form-label-header"
-                       for="foia-request_expedite">
-                    Requesting expedited treatment?
+                    <textarea class="input__long">
+                    </textarea>
                 </label>
             </div>
+
             <fieldset class="u-reset">
+                <div class="form-l_col form-l_col-1 u-mb0">
+                    <legend class="form-label-header">
+                        Requesting expedited treatment?
+                    </legend>
+                </div>
                 <div class="form-l_col form-l_col-1-2 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="">
+                        <label>
                             <input class="custom-input" type="radio" name="expedite_button">
                             No
                         </label>
@@ -173,7 +171,7 @@
                 </div>
                 <div class="form-l_col form-l_col-1-2 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="form-l_col-1-2 input-group-item">
+                        <label>
                             <input class="custom-input" type="radio" name="expedite_button">
                             Yes
                         </label>
@@ -181,16 +179,16 @@
                 </div>
             </fieldset>
 
-            <div class="form-l_col form-l_col-1 u-mb0">
-                <label class="form-label-header"
-                       for="foia-request_response-method">
-                    Preferred response method
-                </label>
-            </div>
-            <fieldset class="u-reset">
+            <fieldset class="u-reset js-additional-field">
+                <div class="form-l_col form-l_col-1 u-mb0">
+                    <legend class="form-label-header"
+                           for="foia-request_response-method">
+                        Preferred response method
+                    </legend>
+                </div>
                 <div class="form-l_col form-l_col-1-3 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="">
+                        <label>
                             <input class="custom-input" type="radio" name="response-method_button">
                             Email
                         </label>
@@ -198,80 +196,82 @@
                 </div>
                 <div class="form-l_col form-l_col-1-3 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="">
-                            <input class="custom-input" type="radio" name="response-method_button">
+                        <label>
+                            <input class="custom-input js-additional-field_trigger"
+                                   type="radio"
+                                   name="response-method_button"
+                                   data-additional-fields="#foia-request_organization-info">
                             Mail
                         </label>
                     </div>
                 </div>
                 <div class="form-l_col form-l_col-1-3 form-l-inset">
                     <div class="form-l-inset_container">
-                        <label class="">
-                            <input class="custom-input" type="radio" name="response-method_button">
+                        <label>
+                            <input class="custom-input js-additional-field_trigger"
+                                   type="radio"
+                                   name="response-method_button"
+                                   data-additional-fields="#foia-request_organization-info">
                             Fax
                         </label>
                     </div>
                 </div>
             </fieldset>
 
-            <div class="form-l_col form-l_col-1 input__long">
-                <label class="form-label-header" for="foia-request_organization-name">
-                    Organization Name
-                </label>
-                <input type="text"
-                       placeholder=""
-                       id="foia-request_organization-name">
-                </input>
-            </div>
-
-            <div class="form-l_col form-l_col-1 input__long">
-                <label class="form-label-header" for="foia-request_organization-name">
-                    Address
-                </label>
-                <input type="text"
-                       placeholder=""
-                       id="foia-request_organization-name">
-                </input>
-            </div>
-
-            <div class="form-l_col form-l_col-1-2 input__long">
-                <label class="form-label-header" for="foia-request_organization-name">
-                    City
-                </label>
-                <input type="text"
-                       placeholder=""
-                       id="foia-request_organization-name">
-                </input>
-            </div>
-
-            <div class="form-l_col form-l_col-1-2 input__long">
-                <div class="form-l_col form-l_col-1-2">
+            <fieldset class="u-reset" id="foia-request_organization-info">
+                <div class="form-l_col form-l_col-1">
                     <label class="form-label-header" for="foia-request_organization-name">
-                        State
+                        Organization Name
                     </label>
-                    <div class="custom-select">
-                    <select class="custom-select_select"
-                            data-placeholder="Select the FOIA request category"
-                            id="foia-request_request-fee">
-                        <option value="">Please select</option>
-                        <option value="Commercial">Commercial</option>
-                        <option value="Media">Media</option>
-                        <option value="Others">Others</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                    <input class="input__long"
+                           id="foia-request_organization-info"
+                           type="text">
                 </div>
-                </div>
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header" for="foia-request_organization-name">
-                        Zip code
-                    </label>
-                    <input type="text"
-                           placeholder=""
-                           id="foia-request_organization-name">
-                    </input>
-                </div>
-            </div>
 
+                <div class="form-l_col form-l_col-1">
+                    <label class="form-label-header" for="foia-request_organization-address">
+                        Address
+                    </label>
+                    <input class="input__long"
+                           id="foia-request_organization-address"
+                           type="text">
+
+                </div>
+
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header" for="foia-request_organization-city">
+                        City
+                    </label>
+                    <input class="input__long"
+                           id="foia-request_organization-city"
+                           type="text">
+                </div>
+
+                <div class="form-l_col form-l_col-1-2">
+                    <div class="form-l_col form-l_col-1-2">
+                        <label class="form-label-header" for="foia-request_organization-state">
+                            State
+                        </label>
+                        <div class="custom-select">
+                        <select class="custom-select_select"
+                                data-placeholder="Select the FOIA request category"
+                                id="foia-request_organization-state">
+                            <option value="">Please select</option>
+                            <option value="State">States to be added</option>
+                        </select>
+                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                    </div>
+                    </div>
+                    <div class="form-l_col form-l_col-1-2">
+                        <label class="form-label-header" for="foia-request_organization-zip">
+                            Zip code
+                        </label>
+                        <input class="input__long"
+                               id="foia-request_organization-zip"
+                               type="text">
+                    </div>
+                </div>
+            </fieldset>
 
             <div class="form-actions form-actions__right-on-med ">
                 <input class="btn form-actions_item" type="submit" value="Generate FOIA PDF"></input>

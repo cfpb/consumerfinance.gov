@@ -838,29 +838,69 @@ textarea {
     color: @input-warning;
 }
 
+
+/* topdoc
+  name: Long Input
+  family: cf-forms
+  patterns:
+    - name: .input__long
+      markup: |
+        <div class="form-l_col form-l_col-1-2">
+            <label class="form-label-header">
+                First name
+            </label>
+            <input type="text" class="input__long">
+        </div>
+
+      notes:
+        - "An input that fills the space it is given by the layout."
+  tags:
+    - cf-forms
+*/
+
 .input__long {
-    input[type="text"],
-    input[type="search"],
-    input[type="email"],
-    input[type="url"],
-    input[type="tel"],
-    input[type="number"],
-    textarea {
+    &[type="text"],
+    &[type="search"],
+    &[type="email"],
+    &[type="url"],
+    &[type="tel"],
+    &[type="number"] {
         width: 100%;
         box-sizing: border-box;
     }
 
-    textarea {
-        height: 10em;
-    }
-
-    select,
-    .custom-select {
+    &.custom-select {
         width: 100%;
         box-sizing: border-box;
   }
 }
 
+textarea.input__long {
+    width: 100%;
+    box-sizing: border-box;
+    height: 10em;
+}
+
+
+/* topdoc
+  name: Reset all
+  family: cf-core
+  patterns:
+    - name: .u-reset
+      markup: |
+        <fieldset class="u-reset">
+        </fieldset>
+      notes:
+        - "An class to remove any default spacing or borders on an element."
+  tags:
+    - cf-utilities
+*/
+
+.u-reset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
 
 
 /* topdoc

@@ -5120,29 +5120,37 @@ textarea.warning {
   color: #ff9e1b;
 }
 
-.input__long input[type="text"],
-.input__long input[type="search"],
-.input__long input[type="email"],
-.input__long input[type="url"],
-.input__long input[type="tel"],
-.input__long input[type="number"],
-.input__long textarea {
+.input__long[type="text"],
+.input__long[type="search"],
+.input__long[type="email"],
+.input__long[type="url"],
+.input__long[type="tel"],
+.input__long[type="number"] {
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.input__long textarea {
+.input__long.custom-select {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+textarea.input__long {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   height: 10em;
 }
 
-.input__long select,
-.input__long .custom-select {
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+.u-reset {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .cf-notification {
@@ -5203,12 +5211,6 @@ textarea.warning {
 
 .lt-ie9 .cf-notification_text {
   font-weight: normal !important;
-}
-
-.u-reset {
-  border: 0;
-  margin: 0;
-  padding: 0;
 }
 
 .is-enabled.custom-select {
@@ -5441,12 +5443,11 @@ textarea.warning {
 }
 
 .form-l-inset {
-  border-left-width: 2.5px;
   border-right-width: 2.5px;
 }
 
-.form-l-inset:first-child {
-  border-left-width: 15px;
+.form-l-inset+.form-l-inset {
+  border-left-width: 2.5px;
 }
 
 .form-l-inset:last-child {
