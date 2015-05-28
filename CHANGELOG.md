@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `grunt watch:js` task for completeness.
 - Added vendor directory variable to `main.less`.
 - Added warning for concat:cf-less Grunt task when sourcefiles are missing.
+- Added form for Submit a request FOIA page
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
