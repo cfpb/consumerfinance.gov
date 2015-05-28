@@ -28,12 +28,13 @@ $( document ).ready( function() {
   require( '../modules/jquery/custom-select' ).init();
   require( '../modules/footer-button' ).init();
   require( '../modules/youtube' ).init();
+  require( '../modules/pagination-validation.js' ).init();
   require( '../modules/show-hide-fields.js' ).init();
 
   // Page-specific modules.
   require( './blog/index.js' );
-  require( './contact-us/index.js' );
-  require( './index.js' );
-  require( './the-bureau/index.js' );
-  require( './the-bureau/bureau-structure/index.js' );
+  require( './contact-us/index.js' ).init();
+  require( './index.js' ).init();
+  require( './the-bureau/index.js' ).init();
+  require( './the-bureau/bureau-structure/index.js' ).init();
 } );

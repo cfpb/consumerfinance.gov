@@ -16,6 +16,40 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+- Added `setup.sh` script for bootstrapping the project.
+- Added insertTarget and insertLocation options to cf_notifier plugins
+- Added `box-sizing-polyfill` to `exportsOverride` as needed for
+  `grunt-bower-task` to work correctly. `box-sizing-polyfill`
+  is installed by cf-grid.
+- Added `grunt watch:js` task for completeness.
+- Added vendor directory variable to `main.less`.
+- Added warning for concat:cf-less Grunt task when sourcefiles are missing.
+
+### Changed
+- Relaxed ESLint `key-spacing` rule to warning.
+- Refactored breakpoint-handler module into separate class modules
+  and utility function.
+- PascalCase ContentSlider module to properly designate class status.
+- Reduced complexity of validation and notification plugins
+- Changed vendor directory to `src/vendor` and updated paths.
+- Changed to using `jit-grunt` in place of `load-grunt-tasks`.
+- Updated contact us filter to use new notifications
+  (replacing type-and-filter messaging with cf_notifier)
+
+### Fixed
+- Fixed an issue where scripts were being initialized out of order
+- Fixed most of the warnings in validation and notification plugins
+
+### Removed
+- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+- Removed unneeded entries from `exportsOverride` in `bower.json`.
+- Gitignored CF fonts, "chosen" images, and other vendor files from repo,
+  which are slated for eventual removal.
+
+
+## 3.0.0-1.1.0 - 2015-05-20
+
+### Added
 - Added `--quiet` grunt CLI flag for suppressing linter warnings.
 - Added JS unit testing and code coverage through Mocha and Istanbul.
 - Added cf-notifications stylesheet to style notifications
@@ -26,7 +60,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ajax subscription submission.
 - Initiative folder and files for Initiative pages
 - Added custom template for FOIA faqs page
-- Added `setup.sh` script for bootstrapping the project.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
@@ -43,7 +76,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated 404 image to the latest image provided by the design team.
 - Office folder and files for Office pages
 - Updated template for office pages
-- Relaxed ESLint `key-spacing` rule to warning.
 
 ### Fixed
 - Fixed macro on offices page template
