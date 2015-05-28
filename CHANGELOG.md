@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed to using `jit-grunt` in place of `load-grunt-tasks`.
 - Updated contact us filter to use new notifications
   (replacing type-and-filter messaging with cf_notifier)
+- Sped up notification animations
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
