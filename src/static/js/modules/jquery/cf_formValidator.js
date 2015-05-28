@@ -5,6 +5,7 @@
 'use strict';
 
 var $ = require( 'jquery' );
+require( '../polyfill/array-foreach-polyfill' );
 var _validate = require( 'validate' );
 
 var _validator = {
@@ -24,39 +25,82 @@ var _validator = {
     onSuccess: function() {}
   },
 
-  // Validate an individual input for each of the set types
-  // @param   {object} $input The jQuery object of the input
-  // @param   {string} value  The evaluated value of the input
-  // @returns {object}        The status of each of the tested types
-  _validateInput: function( $input, value ) {
+  /**
+   * Checks wether the passed input should be skipped for the passed test type
+   * @param   {object}  elem The input we're testing
+   * @param   {string}  type The test type we're checking for
+   * @returns {boolean}      Wether this input should be tested for the type
+   */
+  _skipType: function( elem, type ) {
+    var typeAttr = elem.attr( 'type' );
+    var skips = {
+      required:   !elem.prop( 'required' ),
+      email:      typeAttr !== 'email',
+      radiogroup: typeAttr !== 'radio',
+      checkgroup: typeAttr !== 'checkbox'
+    };
+    return skips[type];
+  },
+
+  /**
+   * Validate an individual input for each of the set types
+   * @param   {object} elem The jQuery object of the input
+   * @returns {object}      The status of each of the tested types
+  */
+  _validateTypes: function( elem ) {
     var status = {};
+    var value = elem.val();
+    var validation = {
+      required: _validate.single( value, { presence: true } ),
+      email:    _validate.single( value, { email: true } )
+    };
 
-    $.each( _validator.settings.types, function() {
-      var validation;
-      var type = this;
-      var notRequired = type === 'required' && !$input.prop( 'required' );
-      var notEmail = type === 'email' && $input.attr( 'type' ) !== 'email';
-      var notRadio = type === 'radiogroup' && $input.attr( 'type' ) !== 'radio';
-      var notCheckbox = type === 'checkgroup' && $input.attr( 'type' ) !== 'checkbox';
-
-      if ( notRequired || notEmail || notRadio || notCheckbox ) {
-        status[type] = null;
+    $.each( _validator.settings.types, function( key, val ) {
+      if ( _validator._skipType( elem, val ) ) {
+        status[val] = null;
         return false;
       }
-
-      if ( type === 'required' ) {
-        validation = _validate.single( value, { presence: true } );
-      } else if ( type === 'email' ) {
-        validation = _validate.single( value, { email: true } );
-      }
-      status[type] = typeof validation === 'undefined';
+      status[val] = typeof validation[val] === 'undefined';
     } );
 
     return status;
   },
 
-  // Validate the fields of our form
-  // @returns {object} Two inner objects containing the valid and invalid fields
+  /**
+   * Returns  the formatted validation of the tested input
+   * @param   {object} elem The input we're testing
+   * @returns {object}      The formatted validation object of the tested input
+   */
+  _validateInput: function( elem ) {
+    return {
+      elem:   elem,
+      value:  elem.val(),
+      label:  $.trim( $( 'label[for="' + elem.attr( 'id' ) + '"]' ).text() ),
+      status: _validator._validateTypes( elem )
+    };
+  },
+
+  /**
+   * Returns  the formatted validation of the tested check group
+   * @param   {object} elem The check group we're testing
+   * @returns {object}      The formatted validation object of the tested input
+   */
+  _validateCheckGroup: function( elem ) {
+    return {
+      elem:   elem,
+      value:  null,
+      label:  $.trim( elem.find( '.form-label-header' ).text() ),
+      status: {
+        checkgroup: elem.find( 'input:checked' ).length > 0
+      }
+    };
+  },
+
+  /**
+   * Validate the fields of our form
+   * @param   {object} fields  The list of input fields we're testing
+   * @returns {object}         The tested list of fields broken into valid and invalid blocks
+  */
   _validateFields: function( fields ) {
     var checkgroups = {};
     var validatedFields = {
@@ -76,33 +120,13 @@ var _validator = {
       } else if ( $input.is( ':checkbox' ) ) {
         var name = $input.attr( 'name' );
         var $group = $input.closest( '.form-group' );
-
         if ( checkgroups[name] || !$group.hasClass( 'required-check-group' ) ) {
           return;
         }
-
-        var isChecked = $group.find( 'input:checked' ).length > 0;
-
-        field = {
-          elem:   $group,
-          value:  null,
-          label:  $.trim( $group.find( '.form-label-header' ).text() ),
-          status: {
-            checkgroup: isChecked
-          }
-        };
-
+        field = _validator._validateCheckGroup( $group );
         checkgroups[name] = true;
       } else {
-        var value = $input.val();
-        var validation = _validator._validateInput( $input, value );
-
-        field = {
-          elem:   $input,
-          value:  value,
-          label:  $.trim( $( 'label[for="' + $input.attr( 'id' ) + '"]' ).text() ),
-          status: validation
-        };
+        field = _validator._validateInput( $input );
       }
 
       for ( var prop in field.status ) {

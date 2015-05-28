@@ -2,8 +2,13 @@ module.exports = function(grunt) {
 
   'use strict';
 
-  require('load-grunt-tasks')(grunt);
-  require('time-grunt')(grunt);
+  require( 'time-grunt' )( grunt );
+  require( 'jit-grunt' )( grunt, {
+    // Static mappings below;
+    // needed because task name does not match package name.
+    bower: 'grunt-bower-task',
+    usebanner: 'grunt-banner'
+  } );
 
   var path = require('path');
 
@@ -23,35 +28,55 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('bower.json'),
 
     /**
-     * Set some src and dist location variables.
+     * Set directory location variables.
      */
     loc: {
-      src: './src',
+      src:  './src',
       dist: '.',
+      lib:  grunt.file.readJSON('./.bowerrc').directory,
       test: './_tests'
     },
 
     /**
      * Bower: https://github.com/yatskevich/grunt-bower-task
      *
-     * Install Bower packages and migrate static assets.
+     * Migrate static assets to distribution directory.
      */
     bower: {
-      install: {
+      process: {
         options: {
-          targetDir: './vendor/',
-          install: true,
-          verbose: true,
-          cleanBowerDir: true,
-          cleanTargetDir: true,
-          layout: function(type, component) {
-            if (type === 'img') {
-              return path.join('../static/img');
-            } else if (type === 'fonts') {
-              return path.join('../static/fonts');
-            } else {
-              return path.join(component);
+          targetDir: '<%= loc.lib %>',
+          install: false,
+          cleanTargetDir: false,
+          // The `exportsOverride` section in `bower.json` is used to map
+          // bower package components to types (js, css, less, img, fonts),
+          // which can then be moved in the `layout` function below.
+          //
+          // TODO: Switch to maintained grunt bower task.
+          // There is a bug in the `grunt-bower-task` which means
+          // certain packages have to appear in the `exportsOverride`
+          // section, even though they are only being copied in place.
+          // This has occurred with the `history.js`,
+          // and `string_score` packages. The consequence of this is that
+          // they are listed in `bower.json` and in the `browser` field
+          // in `package.json` when it shouldn't be necessary to list them
+          // in both places.
+          // Unfortunately, the `grunt-bower-task` is not being maintained
+          // as of May, 2015, so this likely will not be fixed soon.
+          // See background in issue:
+          // https://github.com/yatskevich/grunt-bower-task/issues/159
+          layout: function( type, component, source ) {
+            var lib = config.loc.lib;
+            var dist = config.loc.dist + '/static/';
+            var assetPath = component;
+            if ( ( type === 'img' || type === 'fonts' ) ||
+                 ( type === 'js' && component === 'box-sizing-polyfill' ) ||
+                 ( type === 'css' && component === 'slick-carousel' ) ||
+                 ( type === 'js' && component === 'html5shiv') ) {
+              assetPath = path.relative( lib , dist + type );
+              grunt.log.writeln('Moving ./' + source + ' to ' + dist + type);
             }
+            return assetPath;
           }
         }
       }
@@ -62,19 +87,32 @@ module.exports = function(grunt) {
      *
      * Replace strings on files by using string or regex patters.
      */
+    // TODO: Prefix replacement URLs with <%= loc.dist %> when `/dist`
+    // directory exists.
     'string-replace': {
       chosen: {
         files: {
-          'vendor/chosen/': 'vendor/chosen/chosen.css'
+          '<%= loc.lib %>/chosen/': '<%= loc.lib %>/chosen/chosen.css'
         },
         options: {
           replacements: [{
             pattern: /url\('chosen-sprite.png'\)/ig,
-            replacement: 'url("../img/chosen-sprite.png")'
+            replacement: 'url("/static/img/chosen-sprite.png")'
           },
           {
             pattern: /url\('chosen-sprite@2x.png'\)/ig,
-            replacement: 'url("../img/chosen-sprite@2x.png")'
+            replacement: 'url("/static/img/chosen-sprite@2x.png")'
+          }]
+        }
+      },
+      'slick-carousel': {
+        files: {
+          '<%= loc.dist %>/static/css/': '<%= loc.dist %>/static/css/slick.css'
+        },
+        options: {
+          replacements: [{
+            pattern: /url\(".\/ajax-loader.gif"\)/ig,
+            replacement: 'url("/static/img/ajax-loader.gif")'
           }]
         }
       }
@@ -88,12 +126,12 @@ module.exports = function(grunt) {
     concat: {
       'cf-less': {
         src: [
-          'vendor/cf-*/*.less',
-          '!vendor/cf-core/*.less',
-          'vendor/cf-core/cf-core.less',
-          '!vendor/cf-concat/cf.less'
+          '<%= loc.lib %>/cf-*/*.less',
+          '!<%= loc.lib %>/cf-core/*.less',
+          '<%= loc.lib %>/cf-core/cf-core.less'
         ],
-        dest: 'vendor/cf-concat/cf.less',
+        dest: '<%= loc.lib %>/capital-framework/capital-framework.less',
+        nonull: true
       }
     },
 
@@ -105,7 +143,12 @@ module.exports = function(grunt) {
     less: {
       main: {
         options: {
-          paths: grunt.file.expand('vendor/**/'),
+          // Specifies directories to scan for @import directives when parsing.
+          // Additional paths can be passed to the array in `concat()`.
+          paths: function( source ) {
+            grunt.log.writeln( 'Processing ' + source );
+            return grunt.file.expand( config.loc.lib + '/*' ).concat([])
+          },
           compress: true,
           sourceMap: true,
           // Where the sourcemap file is generated and located.
@@ -199,7 +242,7 @@ module.exports = function(grunt) {
           linebreak: true
         },
         files: {
-          src: ['<%= loc.dist %>/static/js/**/*.min.js']
+          src: ['<%= loc.dist %>/static/js/routes/*.min.js']
         }
       }
     },
@@ -220,44 +263,6 @@ module.exports = function(grunt) {
         files: {
           '<%= loc.dist %>/static/css/main.ie.css': '<%= loc.dist %>/static/css/main.css'
         }
-      }
-    },
-
-    /**
-     * Copy: https://github.com/gruntjs/grunt-contrib-copy
-     *
-     * Copy files and folders.
-     */
-    copy: {
-      'static-legacy': {
-        files:
-        [
-          {
-            expand: true,
-            cwd: 'vendor/cf-core/',
-            src: [
-              'licensed-fonts.css'
-            ],
-            dest: 'static-legacy/css/'
-          }
-        ]
-      },
-      vendor: {
-        files:
-        [
-          {
-            expand: true,
-            cwd: '',
-            src: [
-              // Only include vendor files that we use independently
-              'vendor/html5shiv/html5shiv-printshiv.min.js',
-              'vendor/box-sizing-polyfill/boxsizing.htc',
-              'vendor/slick-carousel/slick.min.js',
-              'vendor/slick-carousel/slick.css'
-            ],
-            dest: 'static'
-          }
-        ]
       }
     },
 
@@ -304,13 +309,17 @@ module.exports = function(grunt) {
         files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js', 'Gruntfile.js'],
         tasks: ['default']
       },
+      cssjs: {
+        files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js'],
+        tasks: ['css', 'js']
+      },
       css: {
         files: ['static/css/*.less'],
         tasks: ['css']
       },
-      cssjs: {
-        files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js'],
-        tasks: ['css', 'js']
+      js: {
+        files: ['<%= loc.src %>/static/js/**/*.js'],
+        tasks: ['js']
       }
     },
 
@@ -367,6 +376,9 @@ module.exports = function(grunt) {
     return topdoc;
   }
 
+  // TODO: `grunt topdoc` task is currently unused, the idea is docs would
+  // be deployed to the gh-pages branch only. However, this is not currently
+  // set up. The task used will be `concurrent:topdoc`, which is set up below.
   config.topdoc = dynamicTopdocTasks();
 
   /**
@@ -396,8 +408,8 @@ module.exports = function(grunt) {
   /**
    * Create custom task aliases and combinations.
    */
-  grunt.registerTask('vendor', ['bower:install', 'string-replace:chosen',
-                                'copy:static-legacy', 'concat:cf-less']);
+  grunt.registerTask('vendor', ['bower:process', 'string-replace:chosen',
+                                'string-replace:slick-carousel', 'concat:cf-less']);
   grunt.registerTask('css', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('js', ['browserify:build', 'usebanner:js']);
   grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
@@ -405,7 +417,6 @@ module.exports = function(grunt) {
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);
   });
-
-  grunt.registerTask('build', ['test', 'css', 'js', 'copy:vendor']);
+  grunt.registerTask('build', ['test', 'css', 'js']);
   grunt.registerTask('default', ['build']);
 };

@@ -4,9 +4,11 @@
 
 'use strict';
 
-// Dynamically attach and load a script tag in the head of the page.
-// @param url {String} The URL of the script to load.
-// @param callback {Function} (Optional) a function to call when done.
+/**
+ * Dynamically attach and load a script tag in the head of the page.
+ * @param {string} url The URL of the script to load.
+ * @param {Function} callback (Optional) a function to call when done.
+ */
 function loadScript( url, callback ) {
   var script = document.createElement( 'script' );
   script.type = 'text/javascript';
