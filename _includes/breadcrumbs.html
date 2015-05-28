@@ -1,0 +1,9 @@
+{% macro render(items, additional_classes) %}
+<nav class="breadcrumbs {{ additional_classes }}">
+    {% for href, id, caption in items %}
+    <a class="breadcrumbs_link" href="{{ href }}">
+        {{ caption|e }}
+    </a>
+    {% endfor %}
+</nav>
+{% endmacro %}
