@@ -29,6 +29,8 @@ $( document ).ready( function() {
   require( '../modules/footer-button' ).init();
   require( '../modules/youtube' ).init();
   require( '../modules/pagination-validation.js' ).init();
+  require( '../modules/external-site.js' ).init();
+  require( '../modules/external-site-redirect.js' ).init();
 
   // Page-specific modules.
   require( './blog/index.js' );
