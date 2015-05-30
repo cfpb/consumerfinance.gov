@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed to using `jit-grunt` in place of `load-grunt-tasks`.
 - Updated contact us filter to use new notifications
   (replacing type-and-filter messaging with cf_notifier)
+- Replaced placeholder Activity Feed on FOIA faq page with actual Activity Feed
 - Sped up notification animations
 
 ### Fixed
