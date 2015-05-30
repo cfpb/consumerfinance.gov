@@ -28,16 +28,19 @@
         {{ initiative.content | safe }}
 
         <!-- Extra Content. Remove once content updates. -->
-        <ul class="short-desc">
-            <li>Step 1: Fill out the form</li>
-            <li>Step 2: Generate a PDF</li>
-            <li>Step 3: Email, fax or mail the PDF</li>
-        </ul>
+        <ol class="list list__steps short-desc">
+            <li class="list-item">Fill out the form</li>
+            <li class="list-item">Generate a PDF</li>
+            <li class="list-item">Email, fax or mail the PDF</li>
+        </ol>
     </section>
     {% endif %}
 
     <!-- Start Form Module. -->
-    <section class="block block__bg block__border block__flush-sides">
+    <section class="block
+                    block__bg
+                    block__border
+                    block__flush-sides">
         <form class="form-l js-validate-filters">
             <div class="form-l_col form-l_col-1-2">
                 <label class="form-label-header" for="foia-request_first-name">
@@ -65,7 +68,8 @@
                     </legend>
                 </div>
                 <div class="form-l_col form-l_col-1-2">
-                    <label class="micro-copy micro-copy__large" for="foia-request_starting-date">
+                    <label class="micro-copy micro-copy__large"
+                           for="foia-request_starting-date">
                         From:
                     </label>
                     <input class="input__long"
@@ -74,7 +78,8 @@
                            type="text">
                 </div>
                 <div class="form-l_col form-l_col-1-2 input__long">
-                    <label class="micro-copy micro-copy__large" for="foia-request_ending-date">
+                    <label class="micro-copy micro-copy__large"
+                           for="foia-request_ending-date">
                         To:
                     </label>
                     <input class="input__long"
@@ -90,15 +95,19 @@
                         Request description
                     </span><br/>
                     <span class="micro-copy micro-copy__large">
-                        Describe the records you seek from the CFPB. Review our FAQs for additional guidance
+                        Describe the records you seek from the CFPB.
+                        <a href="../foia-faqs" target="_blank">Review our FAQs for additional guidance.</a>
                     </span>
                 </label>
-                <textarea class="input__long" id="foia-request_request-desc"  required>
+                <textarea class="input__long"
+                          id="foia-request_request-desc"
+                          required>
                 </textarea>
             </div>
 
             <div class="form-l_col form-l_col-1 ">
-                <label class="form-label-header" for="foia-request_request-fee">
+                <label class="form-label-header"
+                       for="foia-request_request-fee">
                     Select a request category
                 </label>
                 <div class="custom-select">
@@ -115,20 +124,28 @@
             </div>
 
             <fieldset class="u-reset js-additional-field">
-                <div class="form-l_col form-l_col-1 u-mb0">
+                <div class="form-l_col
+                            form-l_col-1
+                            u-mb0">
                     <legend class="form-label-header">
                         Requesting a fee waiver?
                     </legend>
                 </div>
-                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-2
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
-                            <input class="custom-input" type="radio" name="request-fee-waiver_button">
+                            <input class="custom-input"
+                                   type="radio"
+                                   name="request-fee-waiver_button">
                             No
                         </label>
                     </div>
                 </div>
-                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-2
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
                             <input class="custom-input js-additional-field_trigger"
@@ -141,7 +158,8 @@
                 </div>
             </fieldset>
 
-            <div class="form-l_col form-l_col-1 input__long" id="foia-request-fee-waiver-justify">
+            <div class="form-l_col form-l_col-1 js-remove-to-reveal"
+                 id="foia-request-fee-waiver-justify">
                 <label>
                     <span class="form-label-header">
                         Fee waiver justification explanation
@@ -150,18 +168,22 @@
                         Describe how the disclosed records would serve a public interest
                     </span>
 
-                    <textarea class="input__long">
+                    <textarea class="input__long" disabled>
                     </textarea>
                 </label>
             </div>
 
             <fieldset class="u-reset">
-                <div class="form-l_col form-l_col-1 u-mb0">
+                <div class="form-l_col
+                            form-l_col-1
+                            u-mb0">
                     <legend class="form-label-header">
                         Requesting expedited treatment?
                     </legend>
                 </div>
-                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-2
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
                             <input class="custom-input" type="radio" name="expedite_button">
@@ -169,7 +191,9 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-l_col form-l_col-1-2 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-2
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
                             <input class="custom-input" type="radio" name="expedite_button">
@@ -180,13 +204,17 @@
             </fieldset>
 
             <fieldset class="u-reset js-additional-field">
-                <div class="form-l_col form-l_col-1 u-mb0">
+                <div class="form-l_col
+                            form-l_col-1
+                            u-mb0">
                     <legend class="form-label-header"
                            for="foia-request_response-method">
                         Preferred response method
                     </legend>
                 </div>
-                <div class="form-l_col form-l_col-1-3 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-3
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
                             <input class="custom-input" type="radio" name="response-method_button">
@@ -194,7 +222,9 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-l_col form-l_col-1-3 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-3
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
                             <input class="custom-input js-additional-field_trigger"
@@ -205,7 +235,9 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-l_col form-l_col-1-3 form-l-inset">
+                <div class="form-l_col
+                            form-l_col-1-3
+                            form-l-inset">
                     <div class="form-l-inset_container">
                         <label>
                             <input class="custom-input js-additional-field_trigger"
@@ -218,48 +250,58 @@
                 </div>
             </fieldset>
 
-            <fieldset class="u-reset" id="foia-request_organization-info">
+            <fieldset class="u-reset js-remove-to-reveal" id="foia-request_organization-info">
                 <div class="form-l_col form-l_col-1">
-                    <label class="form-label-header" for="foia-request_organization-name">
+                    <label class="form-label-header"
+                           for="foia-request_organization-name">
                         Organization Name
                     </label>
                     <input class="input__long"
                            id="foia-request_organization-info"
-                           type="text">
+                           type="text"
+                           disabled>
                 </div>
 
                 <div class="form-l_col form-l_col-1">
-                    <label class="form-label-header" for="foia-request_organization-address">
+                    <label class="form-label-header"
+                           for="foia-request_organization-address">
                         Address
                     </label>
                     <input class="input__long"
                            id="foia-request_organization-address"
-                           type="text">
+                           type="text"
+                           disabled>
 
                 </div>
 
                 <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header" for="foia-request_organization-city">
+                    <label class="form-label-header"
+                           for="foia-request_organization-city">
                         City
                     </label>
                     <input class="input__long"
                            id="foia-request_organization-city"
-                           type="text">
+                           type="text"
+                           disabled>
                 </div>
 
                 <div class="form-l_col form-l_col-1-2">
                     <div class="form-l_col form-l_col-1-2">
-                        <label class="form-label-header" for="foia-request_organization-state">
+                        <label class="form-label-header"
+                               for="foia-request_organization-state">
                             State
                         </label>
                         <div class="custom-select">
                         <select class="custom-select_select"
                                 data-placeholder="Select the FOIA request category"
-                                id="foia-request_organization-state">
+                                id="foia-request_organization-state"
+                                disabled>
                             <option value="">Please select</option>
                             <option value="State">States to be added</option>
                         </select>
-                        <span class="custom-select_icon cf-icon cf-icon-down"></span>
+                        <span class="custom-select_icon
+                                     cf-icon
+                                     cf-icon-down"></span>
                     </div>
                     </div>
                     <div class="form-l_col form-l_col-1-2">
@@ -268,13 +310,16 @@
                         </label>
                         <input class="input__long"
                                id="foia-request_organization-zip"
-                               type="text">
+                               type="text"
+                               disabled>
                     </div>
                 </div>
             </fieldset>
 
             <div class="form-actions form-actions__right-on-med ">
-                <input class="btn form-actions_item" type="submit" value="Generate FOIA PDF"></input>
+                <input class="btn form-actions_item"
+                       type="submit"
+                       value="Generate FOIA PDF">
                 <a href="#" class="btn btn__link form-actions_item">
                     Sample Letter
                     <span class="cf-icon cf-icon-pdf"></span>
@@ -336,24 +381,41 @@
         </div>
         <h3>Write your own letter</h3>
         <p>
-            If you are writing your own letter, make certain to include, at a minimum, the information below. Our sample letter can provide more guidance.
+            If you are writing your own letter,
+            make certain to include, at a minimum,
+            the information below.
+            Our sample letter can provide more guidance.
         </p>
         <p>A request should include:</p>
         <ul>
-            <li>Your contact information (e.g., full name, address, phone number, email address).</li>
-            <li>As many details as possible about the information you are seeking from the Consumer Financial Protection Bureau (e.g., “Consumer complaints received between January 1, 2013 and the present that were related to overdraft charges”).</li>
-            <li>Type of requester. For example: “for commercial purposes,” “news media,” “non-commercial scientific institution,” “educational institution,” or “other.”</li>
+            <li>Your contact information
+                (e.g., full name, address, phone number, email address).</li>
+            <li>As many details as possible about the information
+                you are seeking from the Consumer Financial Protection Bureau
+                (e.g., “Consumer complaints received between January 1, 2013
+                and the present that were related to overdraft charges”).</li>
+            <li>Type of requester.
+                For example: “for commercial purposes,”
+                “news media,”
+                “non-commercial scientific institution,”
+                “educational institution,” or “other.”</li>
             <li>
-                Indicate whether you are willing to pay fees for searching, reviewing, and/or duplication
-                records. You may request that fees be waived because the request is not commercial and
-                it will significantly contribute to public understanding of the operations or activities of
-                the government; please make sure you include a waiver justification for us to consider.
+                Indicate whether you are willing to pay fees
+                for searching, reviewing, and/or duplication records.
+                You may request that fees be waived because the request is not commercial
+                and it will significantly contribute to public understanding
+                of the operations or activities of the government;
+                please make sure you include a waiver justification for us to consider.
             </li>
         </ul>
     </section>
 
     {% if activities_feed %}
-    <aside class="block block__flush-sides block__bg u-mb0 u-mt0">
+    <aside class="block
+                  block__flush-sides
+                  block__bg
+                  u-mb0
+                  u-mt0">
         <section class="office_activities">
             <h1 class="header-slug">
                 <span class="header-slug_inner">

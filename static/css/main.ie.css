@@ -5100,6 +5100,21 @@ tbody tr {
   padding-right: .5em;
 }
 
+.list__steps {
+  padding-left: 0;
+  counter-reset: item;
+  list-style: none;
+}
+
+.list__steps .list-item {
+  position: relative;
+}
+
+.list__steps .list-item::before {
+  content: "Step " counter(item) ": ";
+  counter-increment: item;
+}
+
 .block__border {
   border: 1px solid #babbbd;
 }
@@ -5151,6 +5166,14 @@ textarea.input__long {
   border: 0;
   margin: 0;
   padding: 0;
+}
+
+.js-remove-to-reveal {
+  display: none !important;
+}
+
+.no-js .js-remove-to-reveal {
+  display: block;
 }
 
 .cf-notification {
@@ -5462,10 +5485,6 @@ textarea.input__long {
 .form-l-inset .form-l-inset_container {
   padding: .9375em .9375em;
   background: #e3e4e5;
-}
-
-.form-l-inset .form-l-inset_container {
-  padding: .9375em .9375em;
 }
 
 .list_link {
