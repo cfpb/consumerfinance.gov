@@ -8,6 +8,9 @@
     },
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -25,6 +28,9 @@
         },
         "slug": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
@@ -40,96 +46,39 @@
     "content": {
       "type": "string"
     },
-    "custom_fields": {
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "email": {
       "properties": {
-        "addr_desc": {
+        "addr": {
           "type": "string"
         },
-        "attn": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string"
-        },
-        "email_0_addr": {
-          "type": "string"
-        },
-        "email_0_desc": {
-          "type": "string"
-        },
-        "email_1_addr": {
-          "type": "string"
-        },
-        "email_1_desc": {
-          "type": "string"
-        },
-        "fax_desc": {
-          "type": "string"
-        },
-        "fax_num": {
-          "type": "string"
-        },
-        "phone_0_desc": {
-          "type": "string"
-        },
-        "phone_0_num": {
-          "type": "string"
-        },
-        "phone_1_desc": {
-          "type": "string"
-        },
-        "phone_1_num": {
-          "type": "string"
-        },
-        "sitewide_desc": {
-          "type": "string"
-        },
-        "state": {
-          "type": "string"
-        },
-        "street": {
-          "type": "string"
-        },
-        "web": {
-          "type": "string"
-        },
-        "web_0": {
-          "type": "string"
-        },
-        "zip_code": {
+        "desc": {
           "type": "string"
         }
       }
     },
-    "date": {
-      "type": "string"
-    },
-    "email_0_addr": {
-      "type": "string"
-    },
-    "email_0_desc": {
-      "type": "string"
-    },
-    "email_1_addr": {
-      "type": "string"
-    },
-    "email_1_desc": {
-      "type": "string"
-    },
     "excerpt": {
       "type": "string"
     },
-    "fax_desc": {
-      "type": "string"
-    },
-    "fax_num": {
-      "type": "string"
+    "fax": {
+      "properties": {
+        "desc": {
+          "type": "string"
+        },
+        "num": {
+          "type": "string"
+        }
+      }
     },
     "id": {
       "type": "long"
     },
     "modified": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "order": {
       "type": "long"
@@ -137,16 +86,17 @@
     "parent": {
       "type": "long"
     },
-    "phone_0_desc": {
-      "type": "string"
+    "phone": {
+      "properties": {
+        "desc": {
+          "type": "string"
+        },
+        "num": {
+          "type": "string"
+        }
+      }
     },
-    "phone_0_num": {
-      "type": "string"
-    },
-    "phone_1_desc": {
-      "type": "string"
-    },
-    "phone_1_num": {
+    "relative_url": {
       "type": "string"
     },
     "sitewide_desc": {
@@ -164,6 +114,101 @@
     "street": {
       "type": "string"
     },
+    "thumbnail": {
+      "properties": {
+        "alt_text": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "images": {
+          "properties": {
+            "full": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "large": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
+        "size": {
+          "type": "string"
+        }
+      }
+    },
     "title": {
       "type": "string"
     },
@@ -176,8 +221,15 @@
     "url": {
       "type": "string"
     },
-    "web_addr": {
-      "type": "string"
+    "web": {
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
     },
     "zip_code": {
       "type": "string"

@@ -1,7 +1,13 @@
 {
   "properties": {
+    "alt_title": {
+      "type": "string"
+    },
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -19,6 +25,9 @@
         },
         "slug": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
@@ -28,38 +37,24 @@
     "comment_status": {
       "type": "string"
     },
-    "custom_fields": {
-      "properties": {
-        "popular_posts": {
-          "type": "string"
-        },
-        "related_links_0_link": {
-          "type": "string"
-        },
-        "related_links_1_link": {
-          "type": "string"
-        },
-        "related_links_2_link": {
-          "type": "string"
-        },
-        "related_links_3_link": {
-          "type": "string"
-        },
-        "related_links_4_link": {
-          "type": "string"
-        },
-        "related_post": {
-          "type": "string"
-        }
-      }
-    },
     "date": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "id": {
       "type": "long"
     },
     "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
       "type": "string"
     },
     "order": {
@@ -69,6 +64,19 @@
       "type": "long"
     },
     "popular_posts": {
+      "type": "string"
+    },
+    "related_links": {
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "relative_url": {
       "type": "string"
     },
     "slug": {
@@ -83,10 +91,31 @@
     "title_plain": {
       "type": "string"
     },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
+      "type": "string"
+    },
     "type": {
       "type": "string"
     },
     "url": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
       "type": "string"
     }
   }

@@ -31,36 +31,20 @@ def documents(name, url, **kwargs):
 def process_post(post):
     del post["comments"]
     post["_id"] = post["slug"]
-    post["blog_category"] = [cat["title"].replace("&amp;", "&") for cat in
-                             post["taxonomy_fj_category"]]
-    post["category"] = ["Blog"]
+    post["category"] = [cat["title"].replace("&amp;", "&")
+                        for cat in
+                        post["taxonomy_cfpb_newsroom_cat_taxonomy"]]
     post["author"] = [author["title"] for author in
-                      post["taxonomy_fj_author"]]
+                      post["taxonomy_fj_author"] if "Press Release" not in
+                      post["category"]]
     post["tags"] = [tag["title"] for tag in post["taxonomy_fj_tag"]]
 
     names = ["og_title", "og_image", "og_desc", "twtr_text", "twtr_lang",
              "twtr_rel", "twtr_hash", "utm_campaign", "utm_term",
-             "utm_content", "alt_title", "popular_posts",
-             "show_featured_image_in_post", "display_in_newsroom",
-             "related_links", "dsq_needs_sync", "dsq_thread_id"]
+             "utm_content", "dsq_thread_id", "alt_title"]
     for name in names:
         if name in post["custom_fields"]:
             post[name] = post["custom_fields"][name]
-
-    if "related_hero" in post["custom_fields"]:
-        if type(post["custom_fields"]["related_hero"]) is str:
-            post["related_hero"] = post["custom_fields"]["related_hero"]
-        else:
-            post["related_hero"] = post["custom_fields"]["related_hero"][0]
-
-    if "related_links" not in post:
-        related = []
-        for x in range(5):
-            key = "related_links_%s" % x
-            if key in post["custom_fields"]:
-                related.append({"url": post["custom_fields"][key][0],
-                                "label": post["custom_fields"][key][1]})
-        post["related_links"] = related
 
     del post["custom_fields"]
 
