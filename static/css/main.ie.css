@@ -9840,6 +9840,105 @@ a.focus .summary_event-date {
   margin-bottom: 10px;
 }
 
+.external-site_container {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.external-site_container em,
+.external-site_container i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .external-site_container em,
+.lt-ie9 .external-site_container i {
+  font-style: normal !important;
+}
+
+.external-site_container strong,
+.external-site_container b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .external-site_container strong,
+.lt-ie9 .external-site_container b {
+  font-weight: normal !important;
+}
+
+.external-site_container .content_bar {
+  background: #babbbd;
+  height: 1px;
+}
+
+.external-site_container .padded-container {
+  background-color: #fff;
+}
+
+.external-site_text {
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .external-site_text {
+  font-weight: normal !important;
+}
+
+.external-site_back-btn:link,
+.external-site_back-btn:visited {
+  background-color: #43484e;
+}
+
+.external-site_back-btn:hover {
+  background-color: #5b6169;
+}
+
+.external-site_back-btn,
+.external-site_proceed-btn {
+  min-width: 180px;
+  margin: 0 1.875em 1.875em 0;
+  text-align: center;
+}
+
+.external-site_reload-duration {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: .73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.external-site_reload-duration em,
+.external-site_reload-duration i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .external-site_reload-duration em,
+.lt-ie9 .external-site_reload-duration i {
+  font-style: normal !important;
+}
+
+.external-site_reload-duration strong,
+.external-site_reload-duration b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .external-site_reload-duration strong,
+.lt-ie9 .external-site_reload-duration b {
+  font-weight: normal !important;
+}
+
 .error_action_container {
   background-color: #fff;
 }
