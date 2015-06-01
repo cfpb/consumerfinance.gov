@@ -25,6 +25,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added vendor directory variable to `main.less`.
 - Added warning for concat:cf-less Grunt task when sourcefiles are missing.
 - Added form for Submit a request FOIA page
+- Added styles, JavaScript for hiding and showing additional fields in forms
+- Added toplevel navigation items config file for removing hardcoded
+  navigation menu items.
+- Added external url redirect page, styles, and JavaScript.
+
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -36,6 +41,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed to using `jit-grunt` in place of `load-grunt-tasks`.
 - Updated contact us filter to use new notifications
   (replacing type-and-filter messaging with cf_notifier)
+- Replaced placeholder Activity Feed on FOIA faq page with actual Activity Feed
+- Sped up notification animations
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
@@ -61,6 +68,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ajax subscription submission.
 - Initiative folder and files for Initiative pages
 - Added custom template for FOIA faqs page
+- Added `setup.sh` script for bootstrapping the project.
+- Added custom template for FOIA records page.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.

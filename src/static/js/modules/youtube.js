@@ -143,6 +143,7 @@ YouTube.prototype = {
 
   play: function( e ) {
     e.preventDefault();
+    e.stopImmediatePropagation();
     if ( this.playerInitialized ) {
       this.player.seekTo( 0 );
       this.player.playVideo();
