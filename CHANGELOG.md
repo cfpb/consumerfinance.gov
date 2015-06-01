@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added warning for concat:cf-less Grunt task when sourcefiles are missing.
 - Added toplevel navigation items config file for removing hardcoded
   navigation menu items.
+- Added external url redirect page, styles, and JavaScript.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
