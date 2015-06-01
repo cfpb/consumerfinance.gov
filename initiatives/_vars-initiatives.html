@@ -13,3 +13,7 @@
 {% for init in related_initiatives %}
     {%- set _ignore = nav_items.append((path + init.slug + '/', init.slug, init.title|safe)) -%}
 {% endfor %}
+
+{# TODO: Update _queries/records.json when we have real record posts #}
+{% set record_query = queries.records %}
+{% set records = record_query.search_with_url_arguments(size=10) %}
