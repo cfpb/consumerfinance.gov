@@ -1,32 +1,10 @@
 {
   "properties": {
-    "attachments": {
-      "properties": {
-        "caption": {
-          "type": "string"
-        },
-        "id": {
-          "type": "long"
-        },
-        "mime_type": {
-          "type": "string"
-        },
-        "parent": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        }
-      }
-    },
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -44,6 +22,9 @@
         },
         "slug": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
@@ -56,19 +37,6 @@
     "content": {
       "type": "string"
     },
-    "custom_fields": {
-      "properties": {
-        "item_date": {
-          "type": "string"
-        },
-        "section_date_from": {
-          "type": "string"
-        },
-        "section_date_to": {
-          "type": "string"
-        }
-      }
-    },
     "date": {
       "type": "date",
       "format": "dateOptionalTime"
@@ -77,25 +45,26 @@
       "type": "string"
     },
     "has_parent": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "boolean"
     },
     "id": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "long"
     },
     "item_date": {
       "type": "string"
     },
     "modified": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "order": {
       "type": "long"
     },
     "parent": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "long"
+    },
+    "relative_url": {
+      "type": "string"
     },
     "section_date_from": {
       "type": "string"
@@ -113,6 +82,91 @@
       "properties": {
         "alt_text": {
           "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "images": {
+          "properties": {
+            "full": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "large": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image": {
+              "properties": {
+                  "height": {
+                    "type": "long"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "long"
+                  }
+              }
+            },
+            "post_image_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            }
+          }
         },
         "size": {
           "type": "string"

@@ -28,6 +28,9 @@
         }
       }
     },
+    "body_content": {
+      "type": "string"
+    },
     "comment_count": {
       "type": "long"
     },
@@ -38,6 +41,10 @@
       "type": "string"
     },
     "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "dek": {
       "type": "string"
     },
     "excerpt": {
@@ -50,6 +57,16 @@
       "type": "long"
     },
     "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
       "type": "string"
     },
     "order": {
@@ -58,11 +75,24 @@
     "parent": {
       "type": "long"
     },
+    "related_links": {
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
     "related_office": {
       "type": "string",
       "index": "not_analyzed"
     },
     "relative_url": {
+      "type": "string"
+    },
+    "show_in_office": {
       "type": "string"
     },
     "slug": {
@@ -71,16 +101,59 @@
     "status": {
       "type": "string"
     },
+    "tags": {
+      "type": "string"
+    },
+    "taxonomy_fj_tag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "title": {
       "type": "string"
     },
     "title_plain": {
       "type": "string"
     },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
+      "type": "string"
+    },
     "type": {
       "type": "string"
     },
     "url": {
+      "type": "string"
+    },
+    "use_filtered_feed": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
       "type": "string"
     }
   }

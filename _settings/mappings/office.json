@@ -35,21 +35,36 @@
       "type": "string"
     },
     "date": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "id": {
       "type": "long"
     },
-    "intro_govdelivery_code": {
-      "type": "string"
-    },
-    "intro_subscribe_form": {
-      "type": "string"
-    },
-    "intro_text": {
-      "type": "string"
+    "intro": {
+      "properties": {
+        "govdelivery_code": {
+          "type": "string"
+        },
+        "subscribe_form": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
     },
     "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
       "type": "string"
     },
     "order": {
@@ -59,6 +74,9 @@
       "type": "long"
     },
     "related_contact": {
+      "type": "string"
+    },
+    "related_hero": {
       "type": "string"
     },
     "relative_url": {
@@ -73,18 +91,47 @@
           "type": "string"
         },
         "link": {
-          "type": "string"
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
         },
         "title": {
           "type": "string"
         }
       }
     },
+    "short_title": {
+      "type": "string"
+    },
     "slug": {
       "type": "string"
     },
     "status": {
       "type": "string"
+    },
+    "tags": {
+      "type": "string"
+    },
+    "taxonomy_fj_tag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
     },
     "title": {
       "type": "string"
@@ -94,21 +141,49 @@
     },
     "top_story": {
       "properties": {
-        "top_story_desc": {
+        "desc": {
           "type": "string"
         },
-        "top_story_head": {
+        "head": {
           "type": "string"
         },
-        "top_story_links": {
-          "type": "string"
+        "links": {
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
         }
       }
+    },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
+      "type": "string"
     },
     "type": {
       "type": "string"
     },
     "url": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
       "type": "string"
     }
   }
