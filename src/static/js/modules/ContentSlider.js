@@ -4,9 +4,10 @@ var $ = require( 'jquery' );
 require( 'slick' );
 
 /**
- * @name ContentSlider
+ * ContentSlider
+ * @class
  *
- * @description Slides content in and out of a container div.
+ * @classdesc Slides content in and out of a container div.
  *
  * When an element inside container with class `content-show`
  * is clicked, the element matching its `data-content` value
@@ -18,7 +19,6 @@ require( 'slick' );
  *
  * @param {string} elem Container element.
  * @param {number} slideCount Number of permanent slides in the container.
- *
  */
 function ContentSlider( elem, slideCount ) {
   var self = this;

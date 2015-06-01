@@ -142,6 +142,9 @@ there are two available sub-tasks:*
 # Watch & compile CSS only
 $ grunt watch:css
 
+# Watch & compile JS only
+$ grunt watch:js
+
 # Watch & compile CSS & JS only
 $ grunt watch:cssjs
 ```
