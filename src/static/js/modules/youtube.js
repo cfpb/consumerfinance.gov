@@ -80,7 +80,7 @@ YouTube.prototype = {
 
   _embedScript: function() {
     window.onYouTubeIframeAPIReady = this.initPlayer;
-    jsLoader.loadScript( 'http://www.youtube.com/iframe_api' );
+    jsLoader.loadScript( 'https://www.youtube.com/iframe_api' );
 
     return this;
   },
