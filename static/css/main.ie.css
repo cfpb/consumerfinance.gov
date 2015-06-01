@@ -5100,6 +5100,21 @@ tbody tr {
   padding-right: .5em;
 }
 
+.list__steps {
+  padding-left: 0;
+  counter-reset: item;
+  list-style: none;
+}
+
+.list__steps .list-item {
+  position: relative;
+}
+
+.list__steps .list-item::before {
+  content: "Step " counter(item) ": ";
+  counter-increment: item;
+}
+
 .block__border {
   border: 1px solid #babbbd;
 }
@@ -5118,6 +5133,47 @@ textarea.warning {
 
 .warning+.cf-form_input-icon {
   color: #ff9e1b;
+}
+
+.input__long[type="text"],
+.input__long[type="search"],
+.input__long[type="email"],
+.input__long[type="url"],
+.input__long[type="tel"],
+.input__long[type="number"] {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.input__long.custom-select {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+textarea.input__long {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 10em;
+}
+
+.u-reset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.js-remove-to-reveal {
+  display: none !important;
+}
+
+.no-js .js-remove-to-reveal {
+  display: block;
 }
 
 .cf-notification {
@@ -5412,6 +5468,23 @@ textarea.warning {
 
 .form-l_col {
   margin-bottom: 1.875em;
+}
+
+.form-l-inset {
+  border-right-width: 2.5px;
+}
+
+.form-l-inset+.form-l-inset {
+  border-left-width: 2.5px;
+}
+
+.form-l-inset:last-child {
+  border-right-width: 15px;
+}
+
+.form-l-inset .form-l-inset_container {
+  padding: .9375em .9375em;
+  background: #e3e4e5;
 }
 
 .list_link {
