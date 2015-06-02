@@ -1,59 +1,6 @@
 {
   "properties": {
-    "alt_title": {
-      "type": "string"
-    },
-    "attachments": {
-      "properties": {
-        "caption": {
-          "type": "string"
-        },
-        "id": {
-          "type": "long"
-        },
-      "mime_type": {
-          "type": "string"
-        },
-        "parent": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        }
-      }
-    },
     "author": {
-      "type": "string"
-    },
-    "blog_category": {
-      "type": "string"
-    },
-    "categories": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "parent": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "category": {
       "type": "string"
     },
     "comment_count": {
@@ -69,23 +16,21 @@
       "type": "date",
       "format": "dateOptionalTime"
     },
-    "dek": {
-      "type": "string"
-    },
-    "display_in_newsroom": {
-      "type": "string"
-    },
-    "dsq_needs_sync": {
-      "type": "string"
-    },
-    "dsq_thread_id": {
-      "type": "string"
-    },
     "excerpt": {
       "type": "string"
     },
     "id": {
       "type": "long"
+    },
+    "links": {
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
     },
     "modified": {
       "type": "date",
@@ -106,26 +51,7 @@
     "parent": {
       "type": "long"
     },
-    "popular_posts": {
-      "type": "string"
-    },
-    "related_hero": {
-      "type": "string"
-    },
-    "related_links": {
-      "properties": {
-        "label": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        }
-      }
-    },
     "relative_url": {
-      "type": "string"
-    },
-    "show_featured_image_in_post": {
       "type": "string"
     },
     "slug": {
@@ -133,95 +59,6 @@
     },
     "status": {
       "type": "string"
-    },
-    "tags": {
-      "type": "string"
-    },
-    "taxonomy_category": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "parent": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "taxonomy_fj_author": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "taxonomy_fj_category": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "parent": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "taxonomy_fj_tag": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "taxonomy_post_tag": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
     },
     "thumbnail": {
       "properties": {

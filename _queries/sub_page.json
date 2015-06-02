@@ -1,0 +1,7 @@
+{
+  "name": "Sub-page",
+  "query": {
+    "doc_type": "sub_page",
+    "size": 20
+  }
+}
