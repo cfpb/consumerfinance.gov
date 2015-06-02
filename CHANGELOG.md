@@ -43,6 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   (replacing type-and-filter messaging with cf_notifier)
 - Replaced placeholder Activity Feed on FOIA faq page with actual Activity Feed
 - Sped up notification animations
+- Added custom template for FOIA records page.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
@@ -68,8 +69,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ajax subscription submission.
 - Initiative folder and files for Initiative pages
 - Added custom template for FOIA faqs page
-- Added `setup.sh` script for bootstrapping the project.
-- Added custom template for FOIA records page.
 
 ### Changed
 - Updated grunt-browserify to `^3.8.0`.
