@@ -4,18 +4,18 @@ import os.path
 import requests
 
 def posts_at_url(url):
-    
+
     current_page = 1
     max_page = sys.maxint
 
     while current_page <= max_page:
 
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
+        resp = requests.get(url, params={"page": current_page, "count": "-1"})
         results = json.loads(resp.content)
         current_page += 1
-        max_page = results['pages']
-        for p in results['posts']:
+        max_page = results["pages"]
+        for p in results["posts"]:
             yield p
 
 def documents(name, url, **kwargs):
@@ -24,51 +24,82 @@ def documents(name, url, **kwargs):
         yield process_office(post)
 
 
-def process_office(item):
+def process_office(post):
 
-    item['_id'] = item['slug']
-    custom_fields = item['custom_fields']
+    post["_id"] = post["slug"]
+    custom_fields = post["custom_fields"]
 
     # get intro text & subscribe form data from custom fields
-    for attr in ['intro_text', 'intro_subscribe_form', 'intro_govdelivery_code', 'related_contact']:
+    intro = {}
+    for attr in ["intro_text", "intro_subscribe_form", "intro_govdelivery_code"]:
         if attr in custom_fields:
-            item[attr] = custom_fields[attr][0]
+            new_attr = attr.replace("intro_", "")
+            intro[new_attr] = custom_fields[attr]
+    if intro:
+        post["intro"] = intro
 
     # build top story dict
     top_story = {}
-    for attr in ['top_story_head', 'top_story_desc']:
+    for attr in ["top_story_head", "top_story_desc"]:
         if attr in custom_fields:
-            top_story[attr] = custom_fields[attr][0]
+            new_attr = attr.replace("top_story_", "")
+            top_story[new_attr] = custom_fields[attr]
 
     # convert top story links into a proper list
-    top_story_links = []
-    for x in xrange(0, 5):
-        key = 'top_story_links_%s_link' % x
-        if key in custom_fields:
-            top_story_links.append(custom_fields[key])
+    if "top_story_links" in custom_fields:
+        top_story["links"] = custom_fields["top_story_links"]
+    else:
+        top_story_links = []
+        for x in range(5):
+            key = "top_story_links_%s" % x
+            if key in custom_fields:
+                top_story_links.append({"url": custom_fields[key][0],
+                                        "label": custom_fields[key][1]})
 
-    if top_story_links:
-        top_story['top_story_links'] = top_story_links
+        if top_story_links:
+            top_story["links"] = top_story_links
 
     if top_story:
-        item['top_story'] = top_story
+        post["top_story"] = top_story
 
     # create list of office resource dicts
-    item['resources'] = []
-    for x in xrange(0, 4):
-        resource = {}
-        fields = ['title', 'desc', 'icon', 'link']
-        for field in fields:
-            field_name = 'resource_%s_%s' % (str(x), field)
-            if field_name in custom_fields and custom_fields[field_name][0] != '':
-                if field == 'link':
-                    resource[field] = custom_fields[field_name]
-                else:
-                    resource[field] = custom_fields[field_name][0]
+    if "resources" in custom_fields:
+        post["resources"] = custom_fields["resources"]
+    else:
+        post["resources"] = []
+        for x in range(4):
+            resource = {}
+            fields = ["title", "desc", "icon", "link"]
+            for field in fields:
+                field_name = "resource_%s_%s" % (str(x), field)
+                if field_name in custom_fields and custom_fields[field_name]:
+                    if field == "link":
+                        resource[field] = \
+                            {"url": custom_fields[field_name][0],
+                             "label": custom_fields[field_name][1]}
+                    else:
+                        resource[field] = custom_fields[field_name]
 
-        if resource:
-            item['resources'].append(resource)
+            if resource:
+                post["resources"].append(resource)
 
-    del item['custom_fields']
+    # add other custom fields
+    names = ["og_title", "og_image", "og_desc", "twtr_text", "twtr_lang",
+             "twtr_rel", "twtr_hash", "utm_campaign", "utm_term",
+             "utm_content", "short_title"]
+    for name in names:
+        if name in custom_fields:
+            post[name] = custom_fields[name]
 
-    return item
+    for related in ["related_hero", "related_contact"]:
+        if related in custom_fields:
+            if type(custom_fields[related]) is str:
+                post[related] = custom_fields[related]
+            else:
+                post[related] = custom_fields[related][0]
+
+    post["tags"] = [tag["title"] for tag in post["taxonomy_fj_tag"]]
+
+    del post["custom_fields"]
+
+    return post

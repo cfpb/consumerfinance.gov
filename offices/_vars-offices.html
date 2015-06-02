@@ -1,8 +1,8 @@
 {% set path = '/offices/' %}
-{% set query = queries.initiative %}
-{% set initiatives = query.search_with_url_arguments(size=6, filter_has_parent="false", filter_related_office=office.slug) %}
+{% set query = queries.sub_page %}
+{% set sub_pages = query.search_with_url_arguments(size=15, filter_has_parent="false", filter_related_office=office.slug) %}
 
-{% set nav_items = [(path + office.slug + '/', 'index', office.title)] -%}
-{% for initiative in initiatives %}
-    {%- set _ignore = nav_items.append(('/initiatives/' + initiative.slug + '/', initiative.slug, initiative.title|safe)) -%}
+{% set nav_items = [(office.permalink, 'index', office.title)] -%}
+{% for page in sub_pages %}
+    {%- set _ignore = nav_items.append((page.permalink, page.slug, page.title|safe)) -%}
 {% endfor %}

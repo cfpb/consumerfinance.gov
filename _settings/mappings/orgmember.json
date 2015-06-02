@@ -2,6 +2,9 @@
   "properties": {
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -19,12 +22,14 @@
         },
         "slug": {
           "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
     "category": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "string"
     },
     "comment_count": {
       "type": "long"
@@ -32,32 +37,19 @@
     "comment_status": {
       "type": "string"
     },
-    "custom_fields": {
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "titles_0_title": {
-          "type": "string"
-        },
-        "titles_1_title": {
-          "type": "string"
-        }
-      }
-    },
     "date": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "has_parent": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "boolean"
     },
     "id": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "long"
     },
     "modified": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "name": {
       "type": "string"
@@ -66,8 +58,10 @@
       "type": "long"
     },
     "parent": {
-      "type": "string",
-      "index": "not_analyzed"
+      "type": "long"
+    },
+    "relative_url": {
+      "type": "string"
     },
     "slug": {
       "type": "string"

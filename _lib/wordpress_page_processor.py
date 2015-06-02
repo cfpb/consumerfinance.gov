@@ -2,8 +2,6 @@ import sys
 import json
 import os.path
 import requests
-import dateutil.parser
-from string import Template
 
 
 def posts_at_url(url):
@@ -13,12 +11,12 @@ def posts_at_url(url):
 
     while current_page <= max_page:
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={'page':current_page, 'count': '-1'})
+        resp = requests.get(url, params={"page": current_page, "count": "-1"})
         results = json.loads(resp.content)
         current_page += 1
-        max_page = results['pages']
+        max_page = results["pages"]
 
-        for p in results['posts']:
+        for p in results["posts"]:
             yield p
 
 
@@ -28,14 +26,9 @@ def documents(name, url, **kwargs):
         yield process_post(post)
 
 
-def process_post(post):
-    
-    del post['comments']
-    post['_id'] = post['id']
+def process_post(page):
 
-    # Format date
-    dt = dateutil.parser.parse(post['date'])
-    dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
-    post['date'] = dt_string
+    del page["comments"]
+    page["_id"] = page["id"]
 
-    return post
+    return page

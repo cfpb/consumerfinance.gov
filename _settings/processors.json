@@ -14,11 +14,11 @@
     "processor": "wordpress_history_processor",
     "mappings": "_settings/mappings/history.json"
   },
-  "initiative": {
-    "url": "$WORDPRESS/api/get_posts/?post_type=initiative",
-    "processor": "wordpress_initiative_processor",
-    "mappings": "_settings/mappings/initiative.json"
-  },
+  "sub_page": {
+    "url": "$WORDPRESS/api/get_posts/?post_type=sub_page",
+    "processor": "wordpress_sub-page_processor",
+    "mappings": "_settings/mappings/sub_page.json"
+},
   "office": {
     "url": "$WORDPRESS/api/get_posts/?post_type=office",
     "processor": "wordpress_office_processor",
@@ -51,7 +51,7 @@
   },
   "newsroom": {
     "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
-    "processor": "wordpress_post_processor",
+    "processor": "wordpress_newsroom_processor",
     "mappings": "_settings/mappings/newsroom.json"
   },
   "views": {
@@ -61,7 +61,7 @@
   },
   "featured_topic": {
     "url": "$WORDPRESS/api/get_posts/?post_type=featured_topic",
-    "processor": "wordpress_post_processor",
-    "mappings": "_settings/mappings/posts.json"
+    "processor": "wordpress_featured-topic_processor",
+    "mappings": "_settings/mappings/featured_topic.json"
   }
 }
