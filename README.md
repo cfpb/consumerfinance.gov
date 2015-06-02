@@ -64,6 +64,7 @@ git checkout refresh  # Branch for our staging-stable server.
 
 #### Updating all dependencies
 
+`setup.sh` will install any updated dependecies and rebuild the site's assets.
 Each time you fetch from the upstream repository (this repo),
 you should install and update dependencies by running `./setup.sh`.
 
