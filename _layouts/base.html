@@ -89,13 +89,13 @@
 -->
 
 <!--[if lt IE 9]>
-    <script src="/static/vendor/html5shiv/html5shiv-printshiv.min.js"></script>
+    <script src="/static/js/html5shiv-printshiv.min.js"></script>
 <![endif]-->
 
     <script>
-        // Confirm availability of JS and remove no-js class from html
+        // Confirm availability of JS and remove no-js class from html.
         var docElement = document.documentElement;
-        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+        docElement.className = docElement.className.replace( /(^|\s)no-js(\s|$)/, '$1$2' );
     </script>
 
 </head>
@@ -161,17 +161,19 @@
 
 <div class="sliding-nav">
   <div class="sliding-nav_nav">
-
-    {% include "header.html" %}
+    {% block header %}
+        {% include "header.html" %}
+    {% endblock header %}
 
     <!-- PRIMARY CONTENT -->
     {% block content %}
         This will be replaced in templates that extend this template and override "content".
     {% endblock content %}
-    <!-- /PRIMARY CONTENT -->
+     <!-- /PRIMARY CONTENT -->
 
-    {% include "footer.html" %}
-
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock footer %}
   </div><!-- END .sliding-nav_page -->
 </div><!-- END .sliding-nav -->
 

@@ -1,6 +1,10 @@
 {% set initiative = get_document("initiative", "foia-faqs") %}
 {% set path = "/initiatives/" + initiative.slug %}
 
+{% set activity_type = "FOIA" %}
+{% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+{% set activities_feed = activity_snippets(activity_type) %}
+
 {% extends "layout-side-nav.html" %}
 {% import "_vars-initiatives.html" as vars with context %}
 {% set active_nav_id = initiative.slug %}
@@ -141,36 +145,20 @@
       </div><!-- END .block.expandable-group -->
     </section>
 
-    <aside>
-        <div class="block u-mb0 block__flush-sides block__bg">
-            <h3>Latest FOIA Activities</h3>
-            <div class="content-l_col-1-2">
-                <ul class="list list__unstyled">
-                    <li class="list_item">
-                        <a href="#" class="list_link">Preasent sir amer faucibus magna</a> <p class="date"> June 12, 2014</p>
-                    </li>
-                    <li class="list_item">
-                        <a href="#" class="list_link">Preasent sir amer faucibus magna</a> <p class="date"> June 12, 2014</p>
-                    </li>
-                    <li class="list_item">
-                        <a href="#" class="list_link">Preasent sir amer faucibus magna</a> <p class="date"> June 12, 2014</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="content-l_col-1-2">
-                <ul class="list list__unstyled">
-                    <li class="list_item">
-                        <a href="#" class="list_link">Preasent sir amer faucibus magna</a> <p class="date"> June 12, 2014</p>
-                    </li>
-                    <li class="list_item">
-                        <a href="#" class="list_link">Preasent sir amer faucibus magna</a> <p class="date"> June 12, 2014</p>
-                    </li>
-                    <li class="list_item">
-                        <a href="#" class="list_link">Preasent sir amer faucibus magna</a> <p class="date"> June 12, 2014</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    {% if activities_feed %}
+    <aside class="block block__flush-sides block__bg u-mb0 u-mt0">
+        <section class="office_activities">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Latest Office Activities
+                </span>
+            </h1>
+            {{ activities_feed }}
+            <a class="jump-link jump-link__right" href="/activity-log/">
+                View all of our activity
+            </a>
+        </section>
     </aside>
+    {% endif %}
 
 {% endblock %}

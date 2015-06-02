@@ -16,10 +16,45 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased - unreleased
 
 ### Added
+- Added `setup.sh` script for bootstrapping the project.
+- Added insertTarget and insertLocation options to cf_notifier plugins
+- Added `box-sizing-polyfill` to `exportsOverride` as needed for
+  `grunt-bower-task` to work correctly. `box-sizing-polyfill`
+  is installed by cf-grid.
+- Added `grunt watch:js` task for completeness.
+- Added vendor directory variable to `main.less`.
+- Added warning for concat:cf-less Grunt task when sourcefiles are missing.
+- Added form for Submit a request FOIA page
+- Added styles, JavaScript for hiding and showing additional fields in forms
+- Added toplevel navigation items config file for removing hardcoded
+  navigation menu items.
+- Added external url redirect page, styles, and JavaScript.
+
 
 ### Changed
+- Relaxed ESLint `key-spacing` rule to warning.
+- Refactored breakpoint-handler module into separate class modules
+  and utility function.
+- PascalCase ContentSlider module to properly designate class status.
+- Reduced complexity of validation and notification plugins
+- Changed vendor directory to `src/vendor` and updated paths.
+- Changed to using `jit-grunt` in place of `load-grunt-tasks`.
+- Updated contact us filter to use new notifications
+  (replacing type-and-filter messaging with cf_notifier)
+- Replaced placeholder Activity Feed on FOIA faq page with actual Activity Feed
+- Sped up notification animations
+- Added custom template for FOIA records page.
 
 ### Fixed
+- Fixed an issue where scripts were being initialized out of order
+- Fixed most of the warnings in validation and notification plugins
+
+### Removed
+- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+- Removed unneeded entries from `exportsOverride` in `bower.json`.
+- Gitignored CF fonts, "chosen" images, and other vendor files from repo,
+  which are slated for eventual removal.
+
 
 ## 3.0.0-1.1.0 - 2015-05-20
 
