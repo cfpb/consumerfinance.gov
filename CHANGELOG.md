@@ -44,10 +44,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaced placeholder Activity Feed on FOIA faq page with actual Activity Feed
 - Sped up notification animations
 - Added custom template for FOIA records page.
+- Refactored code for Wordpress updates
+- Initiatives renamed to Sub-pages
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
 - Fixed most of the warnings in validation and notification plugins
+- Fixed processor name bug
 
 ### Removed
 - Removes `copy:static-legacy` and `grunt-contrib-copy` package.
