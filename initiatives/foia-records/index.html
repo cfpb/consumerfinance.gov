@@ -1,0 +1,35 @@
+{% set initiative = get_document("initiative", "foia-records") %}
+{% set path = "/initiatives/foia-records/"  %}
+
+{% extends "layout-side-nav.html" %}
+{% import "_vars-initiatives.html" as vars with context %}
+{% set active_nav_id = 'foia-records' %}
+
+{% block title -%}
+    {{ initiative.title | safe if initiative.title }}
+{%- endblock %}
+
+{% block content_main %}
+
+    {% if initiative.title %}
+        <h1>{{ initiative.title | safe }}</h1>
+    {% endif %}
+
+    {% if initiative.content %}
+    <section class="initiative_description block block__flush-top">
+        {{ initiative.content | safe }}
+    </section>
+    {% endif %}
+
+    {# Set the filters #}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% set filter_by = ['category', 'range_date', 'tags'] %}
+    {{ filters(filter_by, vars.record_query, vars.records, 'newsroom',
+       { 'expand_label': 'Filter posts' }) }}
+
+    {# Show the posts #}
+    {% import "posts-paginated.html" as posts_paginated with context %}
+    {{ posts_paginated.render(vars.records) }}
+
+
+{% endblock %}

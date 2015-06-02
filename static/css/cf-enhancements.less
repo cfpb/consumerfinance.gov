@@ -761,6 +761,38 @@ tbody {
     }
 }
 
+/* topdoc
+  name: Steps list modifier
+  family: cfgov-cf-enhancements
+  notes:
+    - "Set up a list with 'Step x:' instead of bullets "
+  patterns:
+    - name: Default example
+      markup: |
+        <ol class="list list__steps short-desc">
+            <li class="list-item">Fill out the form</li>
+            <li class="list-item">Generate a PDF</li>
+            <li class="list-item">Email, fax or mail the PDF</li>
+        </ol>
+  tags:
+    - cf-typography
+*/
+
+.list__steps {
+    padding-left: 0;
+    counter-reset: item;
+    list-style: none;
+
+    .list-item {
+        position: relative;
+
+        &::before {
+            content: "Step " counter(item) ": ";
+            counter-increment: item;
+        }
+    }
+}
+
 
 /* topdoc
   name: Full Width Buttons
@@ -836,6 +868,91 @@ textarea {
 
 .warning + .@{cf-forms_input-icon-class} {
     color: @input-warning;
+}
+
+
+/* topdoc
+  name: Long Input
+  family: cf-forms
+  patterns:
+    - name: .input__long
+      markup: |
+        <div class="form-l_col form-l_col-1-2">
+            <label class="form-label-header">
+                First name
+            </label>
+            <input type="text" class="input__long">
+        </div>
+
+      notes:
+        - "An input that fills the space it is given by the layout."
+  tags:
+    - cf-forms
+*/
+
+.input__long {
+    &[type="text"],
+    &[type="search"],
+    &[type="email"],
+    &[type="url"],
+    &[type="tel"],
+    &[type="number"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    &.custom-select {
+        width: 100%;
+        box-sizing: border-box;
+  }
+}
+
+textarea.input__long {
+    width: 100%;
+    box-sizing: border-box;
+    height: 10em;
+}
+
+
+/* topdoc
+  name: Reset all
+  family: cf-core
+  patterns:
+    - name: .u-reset
+      markup: |
+        <fieldset class="u-reset">
+        </fieldset>
+      notes:
+        - "A class to remove any default spacing or borders on an element."
+  tags:
+    - cf-utilities
+*/
+
+.u-reset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* topdoc
+  name: Hide only when JS is active
+  family: cf-core
+  patterns:
+    - name: .u-reset
+      markup: |
+        <fieldset class="js-reveal-with-js-class u-hide-js-only">
+        </fieldset>
+      notes:
+        - "A class to hide only when JS is active."
+  tags:
+    - cf-utilities
+*/
+
+.js-remove-to-reveal {
+  display: none !important;
+  .no-js & {
+        display: block;
+    }
 }
 
 /* topdoc
