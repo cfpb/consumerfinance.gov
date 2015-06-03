@@ -1,43 +1,56 @@
 {% from "macros.html" import format_phone as format_phone %}
-{% set general_inqueries = get_document('contact', 'general-inqueries') %}
+{% set general_inquiries = get_document('contact', 'general-inqueries') %}
 
 <h1 class="h4">
-    {{ general_inqueries.title }}
+    {{ general_inquiries.title }}
 </h1>
 <p class="short-desc">
-    {{ general_inqueries.sitewide_desc }}
+    {{ general_inquiries.sitewide_desc }}
 </p>
-<ul class="list list__icons">
-{%- if general_inqueries.email_0_addr %}
-    <li class="list_item u-break-word">
-        <span class="cf-icon cf-icon-email list_icon"></span>
-        <span class="h5 list_text">Email:</span>
-        <p>
-            <a class="list_link" href="mailto:{{ general_inqueries.email_0_addr }}">
-                {{ general_inqueries.email_0_addr }}
-            </a>
-        </p>
-    </li>
-{%- endif %}
+{%- if general_inquiries.email or general_inquiries.phone or general_inquiries.fax_num %}
+    <ul class="list list__icons">
+    {%- if general_inquiries.email %}
+        {%- for email in general_inquiries.email %}
+            {%- if email.addr %}
+                <li class="list_item u-break-word">
+                {%- if loop.index == 0 %}
+                    <span class="cf-icon cf-icon-email list_icon"></span>
+                {%- endif %}
+                    <span class="h5 list_text">Email:</span>
+                    <p>
+                        <a class="list_link" href="mailto:{{ email.addr }}">
+                            {{ email.addr }}
+                        </a>
+                    </p>
+                </li>
+            {%- endif %}
+        {%- endfor %}
+    {%- endif %}
 
-{%- if general_inqueries.phone_0_num %}
-    <li class="list_item">
-        <span class="cf-icon cf-icon-phone list_icon"></span>
-        <span class="h5 list_text">Phone:</span>
-        <p>
-            <a class="list_link list_link__phone" href="tel:{{ general_inqueries.phone_0_num }}">
-            {{ format_phone(general_inqueries.phone_0_num) }}
-            </a>
-        </p>
-    </li>
-{%- endif %}
-{%- if general_inqueries.fax_num %}
-    <li class="list_item">
-        <span class="cf-icon cf-icon-fax list_icon"></span>
-        <span class="h5 list_text">Fax:</span>
-        <p class="short-desc">
-            {{ format_phone(general_inqueries.fax_num) }}
-        </p>
-    </li>
-{%- endif %}
+    {%- if general_inquiries.phone %}
+        {%- for phone in general_inquiries.phone %}
+            {%- if phone.num %}
+                <li class="list_item">
+                {%- if loop.index == 0 %}
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
+                {%- endif %}
+                    <span class="h5 list_text">Phone:</span>
+                    <p>
+                        <a class="list_link list_link__phone" href="tel:{{ phone.num }}">
+                        {{ format_phone(phone.num) }}
+                        </a>
+                    </p>
+                </li>
+            {%- endif %}
+        {%- endif %}
+    {%- if general_inquiries.fax %}
+        <li class="list_item">
+            <span class="cf-icon cf-icon-fax list_icon"></span>
+            <span class="h5 list_text">Fax:</span>
+            <p class="short-desc">
+                {{ format_phone(general_inquiries.fax.num) if general_inquiries.fax.num }}
+            </p>
+        </li>
+    {%- endif %}
 </ul>
+{%- endif %}

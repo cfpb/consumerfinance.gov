@@ -5,7 +5,7 @@
         "id": {
           "type": "long"
         },
-        "mime_type": {
+      "mime_type": {
           "type": "string"
         },
         "parent": {
@@ -24,6 +24,9 @@
     },
     "author": {
       "properties": {
+        "description": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -58,6 +61,9 @@
     },
     "custom_fields": {
       "properties": {
+        "alt_title": {
+          "type": "string"
+        },
         "cfpb-hud-hca-api-more-info": {
           "type": "string"
         },
@@ -82,6 +88,27 @@
         "link": {
           "type": "string"
         },
+        "og_desc": {
+          "type": "string"
+        },
+        "og_image": {
+          "type": "string"
+        },
+        "og_title": {
+          "type": "string"
+        },
+        "popular_posts": {
+          "type": "string"
+        },
+        "related_hero": {
+          "type": "string"
+        },
+        "twtr_hash": {
+          "type": "string"
+        },
+        "twtr_lang": {
+          "type": "string"
+        },
         "twtr_rel": {
           "type": "string"
         },
@@ -89,6 +116,12 @@
           "type": "string"
         },
         "utm_campaign": {
+          "type": "string"
+        },
+        "utm_content": {
+          "type": "string"
+        },
+        "utm_term": {
           "type": "string"
         },
         "video_response": {
@@ -110,7 +143,8 @@
       "type": "long"
     },
     "modified": {
-      "type": "string"
+      "type": "date",
+      "format": "dateOptionalTime"
     },
     "order": {
       "type": "long"
@@ -118,11 +152,109 @@
     "parent": {
       "type": "long"
     },
+    "relative_url": {
+      "type": "string"
+    },
     "slug": {
       "type": "string"
     },
     "status": {
       "type": "string"
+    },
+    "thumbnail": {
+      "properties": {
+        "alt_text": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "images": {
+          "properties": {
+            "full": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "large": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
+        "size": {
+          "type": "string"
+        }
+      }
     },
     "title": {
       "type": "string"
