@@ -32,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `.nav-secondary_link__disabled` style.
 - Added `.nav-secondary_subitem` class to visually distinguish sub-pages
   from sibling pages in the sidenav.
+- Added JavaScript utilities for checking types and primitives.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
