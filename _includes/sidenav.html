@@ -52,7 +52,7 @@
     <div class="expandable_content">
         <ul class="nav-secondary_list">
         {%- for href, id, caption in items %}
-            <li class="nav-secondary_item">
+            <li class="{{ 'nav-secondary_item' if loop.index == 1 else 'nav-secondary_subitem' }}">
                 <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_item_id }}"
                    href="{{ href|e }}">
                    {{ caption|e }}
