@@ -29,6 +29,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added toplevel navigation items config file for removing hardcoded
   navigation menu items.
 - Added external url redirect page, styles, and JavaScript.
+- Added `.nav-secondary_link__disabled` style.
+- Added `.nav-secondary_subitem` class to visually distinguish sub-pages
+  from sibling pages in the sidenav.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -46,6 +49,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Refactored code for Wordpress updates
 - Initiatives renamed to Sub-pages
 - Relaxed ESLint cyclomatic `complexity` rule to max 4 complexity.
+- Updates megamenu bureau title to "The Bureau" to fit with sitemap direction.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
