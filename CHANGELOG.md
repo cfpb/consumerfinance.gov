@@ -30,7 +30,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   navigation menu items.
 - Added external url redirect page, styles, and JavaScript.
 
-
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
 - Refactored breakpoint-handler module into separate class modules
@@ -46,6 +45,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added custom template for FOIA records page.
 - Refactored code for Wordpress updates
 - Initiatives renamed to Sub-pages
+- Relaxed ESLint cyclomatic `complexity` rule to max 4 complexity.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
