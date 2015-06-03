@@ -4,6 +4,8 @@
 
 'use strict';
 
+var typeCheckers = require( './type-checkers' );
+
 // Based on http://css-tricks.com/snippets/javascript/get-url-variables/ and
 // added optional second argument.
 function getQueryVariable( key, queryString ) {
@@ -89,5 +91,6 @@ module.exports = {
   getQueryVariable:      getQueryVariable,
   replaceQueryVariable:  replaceQueryVariable,
   getQuery:              getQuery,
-  getViewportDimensions: getViewportDimensions
+  getViewportDimensions: getViewportDimensions,
+  typeCheckers:          typeCheckers
 };
