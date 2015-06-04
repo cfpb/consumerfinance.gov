@@ -33,6 +33,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `.nav-secondary_subitem` class to visually distinguish sub-pages
   from sibling pages in the sidenav.
 - Added JavaScript utilities for checking types and primitives.
+- Added `primary_nav` jinja block to `base.html` template.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -52,7 +53,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Relaxed ESLint cyclomatic `complexity` rule to max 4 complexity.
 - Updates megamenu bureau title to "The Bureau" to fit with sitemap direction.
 - Moved Less files to `/src/static/css/` directory.
-- Updated `cf-icons`
+- Updated `cf-icons` to 0.6.0.
+- Moved HTML templates to `/templates/` subdirectory.
+- Breaks header template apart into `header.html`
+  and `primary-nav.html` templates.
+- Moved external site page header to its own template
+  `header-external-site.html`.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
