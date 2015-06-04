@@ -336,3 +336,76 @@
         </div>
   </div>
 {%- endmacro %}
+
+
+{# ==========================================================================
+
+   is_mobile()
+
+   ==========================================================================
+
+   Description:
+
+   Detect mobile browsers
+
+   TODO: Remove this and create a context processor (@app.context_processor)
+         in sheer. This is a hack.
+   ========================================================================== #}
+{% macro is_mobile() -%}
+    {% set MOBILE_USER_AGENTS
+        ='palm|blackberry|nokia|phone|midp|mobi|symbian|chtml|ericsson|minimo|' +
+         'audiovox|motorola|samsung|telit|upg1|windows ce|ucweb|astel|plucker|' +
+         'x320|x240|j2me|sgh|portable|sprint|docomo|kddi|softbank|android|mmp|' +
+         'pdxgw|netfront|xiino|vodafone|portalmmm|sagem|mot-|sie-|ipod|up\\.b|' +
+         'webos|amoi|novarra|cdm|alcatel|pocket|ipad|iphone|mobileexplorer|' +
+         'mobile|zune'
+    %}
+    {% set browser_user_agent = request.headers.get("User-Agent") | lower %}
+    {% set mobile_dict = {'is_mobile': false} %}
+    {% for mobile_user_agent in MOBILE_USER_AGENTS.split('|') %}
+        {% set _ignore = mobile_dict.update({ 'is_mobile' : true })
+                         if browser_user_agent.find(mobile_user_agent) > -1 %}
+    {% endfor %}
+
+    {{ mobile_dict.is_mobile }}
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   notification()
+
+   ==========================================================================
+
+   Description:
+
+   Builds notification markup when given:
+
+   options (optional):         An object used to customize
+                              the notification markup.
+
+   options.type:               Type of the notification to display.
+
+   options.text:               Text to display within the notification markup.
+
+   options.additional_classes: Extra classes added to the notification markup.
+
+   ========================================================================== #}
+{% macro notification(options={}) -%}
+    {% set type  =  options.type if options.type in ['success', 'error', 'warning'] %}
+    {% set icon_lookup  = {
+          'success' : 'approved',
+          'error'   : 'delete',
+          'warning' : 'error'
+        }
+    %}
+    {% set text  =  options.text | default('This is the default alert.') %}
+    {% set notification_type  =  ('cf-notification__' + type) if type %}
+    {% set notification_icon_type  =  (' cf-notification_icon__' + type) if type %}
+    {% set icon_style              =  (' cf-icon-' + icon_lookup[type] + '-round') if type %}
+    {% set additional_classes = options.additional_classes  %}
+    <div class="cf-notification {{ notification_type ~ ' ' ~ additional_classes}} ">
+        <span class="cf-notification_icon cf-icon {{ notification_icon_type ~  icon_style }} "></span>
+        <p class="cf-notification_text">{{ text }}</p>
+    </div>
+{%- endmacro %}
