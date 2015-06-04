@@ -160,9 +160,13 @@
 </div>
 
 <div class="sliding-nav">
-  <div class="sliding-nav_nav">
+    {% block primary_nav %}
+        {% include "templates/primary-nav.html" %}
+    {% endblock primary_nav %}
+
+    <div class="sliding-nav_page">
     {% block header %}
-        {% include "header.html" %}
+        {% include "templates/header.html" %}
     {% endblock header %}
 
     <!-- PRIMARY CONTENT -->
@@ -172,9 +176,9 @@
      <!-- /PRIMARY CONTENT -->
 
     {% block footer %}
-        {% include "footer.html" %}
+        {% include "templates/footer.html" %}
     {% endblock footer %}
-  </div><!-- END .sliding-nav_page -->
+    </div><!-- END .sliding-nav_page -->
 </div><!-- END .sliding-nav -->
 
 {% endblock body %}
