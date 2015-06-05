@@ -58,7 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Breaks header template apart into `header.html`
   and `primary-nav.html` templates.
 - Moved external site page header to its own template
-  `header-external-site.html`.
+  `header-without-nav.html`.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
