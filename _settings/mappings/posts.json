@@ -29,10 +29,12 @@
       }
     },
     "author": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "blog_category": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "categories": {
       "properties": {
@@ -54,7 +56,8 @@
       }
     },
     "category": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "comment_count": {
       "type": "long"
@@ -73,7 +76,8 @@
       "type": "string"
     },
     "display_in_newsroom": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "dsq_needs_sync": {
       "type": "string"
@@ -135,7 +139,8 @@
       "type": "string"
     },
     "tags": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "taxonomy_category": {
       "properties": {
