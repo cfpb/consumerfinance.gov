@@ -33,11 +33,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `.nav-secondary_subitem` class to visually distinguish sub-pages
   from sibling pages in the sidenav.
 - Added JavaScript utilities for checking types and primitives.
-<<<<<<< HEAD
 - Added `primary_nav` jinja block to `base.html` template.
-=======
 - Added FAQ processor and mapping
->>>>>>> Add FAQ processor and mapping
+- Added `use_form` field to sub_pages
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
