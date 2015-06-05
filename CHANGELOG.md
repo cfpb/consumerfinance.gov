@@ -59,10 +59,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed processor name bug
 
 ### Removed
-- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+- Removed `copy:static-legacy` and `grunt-contrib-copy` package.
 - Removed unneeded entries from `exportsOverride` in `bower.json`.
 - Gitignored CF fonts, "chosen" images, and other vendor files from repo,
   which are slated for eventual removal.
+- Removed unused `nav-secondary.html` template.
 
 
 ## 3.0.0-1.1.0 - 2015-05-20
