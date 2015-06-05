@@ -45,6 +45,8 @@ def process_contact(contact):
                 if "fax_desc" in contact["custom_fields"]:
                     contact[name]["desc"] = \
                         contact["custom_fields"]["fax_desc"]
+                if not contact[name]:
+                    del contact[name]
             else:
                 contact[name] = []
                 for i in range(3):
@@ -58,21 +60,23 @@ def process_contact(contact):
                     if "%s_%s_desc" % (name, i) in contact["custom_fields"]:
                         contact[name][i]["desc"] = \
                             contact["custom_fields"]["%s_%s_desc" % (name, i)]
+                    if not contact[name][-1]:
+                        contact[name].pop()
     names = ["sitewide_desc", "attn", "street", "city", "state", "zip_code",
              "addr_desc"]
     for name in names:
         if name in contact["custom_fields"]:
             contact[name] = contact["custom_fields"][name]
 
+    if 'web' and 'web_0' in contact['custom_fields']:
+        del contact['custom_fields']['web_0']
+    elif 'web_0' in contact['custom_fields']:
+        contact['custom_fields']['web'] = contact['custom_fields']['web_0']
     if "web" in contact["custom_fields"]:
         if "url" not in contact["custom_fields"]["web"] or \
                 "label" not in contact["custom_fields"]["web"]:
             contact["web"] = {}
-            for i, field in enumerate(contact["custom_fields"]["web"]):
-                if i == 0:
-                    contact["web"]["url"] = contact["custom_fields"]["web"][i]
-                else:
-                    contact["web"]["label"] = contact["custom_fields"]["web"][i]
+            contact['web']['url'] = contact['custom_fields']['web']
         else:
             contact["web"] = contact["custom_fields"]["web"]
 

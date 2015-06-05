@@ -48,7 +48,8 @@
       "type": "boolean"
     },
     "id": {
-      "type": "long"
+      "type": "long",
+      "index": "not_analyzed"
     },
     "item_date": {
       "type": "string"
@@ -61,7 +62,8 @@
       "type": "long"
     },
     "parent": {
-      "type": "long"
+      "type": "long",
+      "index": "not_analyzed"
     },
     "relative_url": {
       "type": "string"

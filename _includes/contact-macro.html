@@ -18,14 +18,12 @@
     {%- if contact.email or contact.phone or contact.fax or contact.street %}
         <ul class="list list__icons">
         {%- if contact.email %}
-            {%- set first = True %}
             {%- for email in contact.email %}
                 <li class="list_item u-break-word">
-                    {%- if first %}
+                    {%- if loop.index == 1 %}
                         <span class="cf-icon cf-icon-email list_icon"></span>
-                        {%- set first = False %}
+                        <span class="h5 list_text">Email:</span>
                     {%- endif %}
-                    <span class="h5 list_text">Email:</span>
                     {%- if email.addr %}
                         <p>
                             <a class="list_link" href="mailto:{{ contact.email.addr }}">
@@ -40,17 +38,15 @@
             {%- set first = True %}
             {%- for phone in contact.phone %}
                 <li class="list_item">
-                    {%- if first %}
+                    {%- if loop.index == 1 %}
                         <span class="cf-icon cf-icon-phone list_icon"></span>
-                        {%- set first = False %}
+                        <span class="h5 list_text">Phone:</span>
                     {%- endif %}
-                    <span class="h5 list_text">Phone:</span>
                     <p class="short-desc">
                         <a class="list_link list_link__phone" href="tel:{{ phone.num }}">
                             {{ format_phone(phone.num) }}
                         </a>
                         {%- if phone.desc %}
-                            <br>
                             <span class="micro-copy micro-copy__large">
                                 {{ phone.desc }}
                             </span>
