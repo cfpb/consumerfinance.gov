@@ -57,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed an issue where scripts were being initialized out of order
 - Fixed most of the warnings in validation and notification plugins
 - Fixed processor name bug
+- Fixed template/processor bugs while indexing and rendering
 
 ### Removed
 - Removed `copy:static-legacy` and `grunt-contrib-copy` package.

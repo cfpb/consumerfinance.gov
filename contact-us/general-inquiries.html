@@ -13,10 +13,10 @@
         {%- for email in general_inquiries.email %}
             {%- if email.addr %}
                 <li class="list_item u-break-word">
-                {%- if loop.index == 0 %}
+                {%- if loop.index == 1 %}
                     <span class="cf-icon cf-icon-email list_icon"></span>
-                {%- endif %}
                     <span class="h5 list_text">Email:</span>
+                {%- endif %}
                     <p>
                         <a class="list_link" href="mailto:{{ email.addr }}">
                             {{ email.addr }}
@@ -31,10 +31,10 @@
         {%- for phone in general_inquiries.phone %}
             {%- if phone.num %}
                 <li class="list_item">
-                {%- if loop.index == 0 %}
+                {%- if loop.index == 1 %}
                     <span class="cf-icon cf-icon-phone list_icon"></span>
-                {%- endif %}
                     <span class="h5 list_text">Phone:</span>
+                {%- endif %}
                     <p>
                         <a class="list_link list_link__phone" href="tel:{{ phone.num }}">
                         {{ format_phone(phone.num) }}
@@ -42,7 +42,8 @@
                     </p>
                 </li>
             {%- endif %}
-        {%- endif %}
+        {% endfor %}
+    {%- endif %}
     {%- if general_inquiries.fax %}
         <li class="list_item">
             <span class="cf-icon cf-icon-fax list_icon"></span>
