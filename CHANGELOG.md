@@ -70,6 +70,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Minor codefixes on `show-hide-fields.js` along with changing a class name for hiding fields
 - Updated side navigation bar to keep page order at mobile sizes and adds
   "IN THIS SECTION" header text to the navigation bar dropdown menu.
+- Updated processors to use Elasticsearch bulk indexing
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order

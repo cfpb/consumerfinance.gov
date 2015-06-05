@@ -45,4 +45,8 @@ def process_history(item):
             item["section_date_to"] = item["custom_fields"]["section_date_to"]
 
     del item["custom_fields"]
-    return item
+
+    return {"_index": "content",
+            "_type": "history",
+            "_id": item["slug"],
+            "_source": item}

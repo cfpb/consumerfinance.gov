@@ -3,6 +3,7 @@ import json
 import os.path
 import requests
 
+
 def posts_at_url(url):
 
     current_page = 1
@@ -17,6 +18,7 @@ def posts_at_url(url):
         max_page = results["pages"]
         for p in results["posts"]:
             yield p
+
 
 def documents(name, url, **kwargs):
 
@@ -102,4 +104,7 @@ def process_office(post):
 
     del post["custom_fields"]
 
-    return post
+    return {"_index": "content",
+            "_type": "office",
+            "_id": post["slug"],
+            "_source": post}

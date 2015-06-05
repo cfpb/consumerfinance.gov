@@ -2,9 +2,7 @@ import sys
 import json
 import os.path
 import requests
-from string import Template
 
-import dateutil.parser
 
 def posts_at_url(url):
 
@@ -23,10 +21,12 @@ def posts_at_url(url):
             total += 1
             yield p
 
+
 def documents(name, url, **kwargs):
 
     for post in posts_at_url(url):
         yield process_contact(post)
+
 
 def process_contact(contact):
     del contact["comments"]
@@ -82,4 +82,7 @@ def process_contact(contact):
 
     del contact["custom_fields"]
 
-    return contact
+    return {"_index": "content",
+            "_type": "contact",
+            "_id": contact["slug"],
+            "_source": contact}
