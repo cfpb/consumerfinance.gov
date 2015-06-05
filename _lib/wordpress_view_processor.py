@@ -1,7 +1,6 @@
 import sys
 import json
 import os.path
-from string import Template
 import requests
 
 
@@ -81,4 +80,7 @@ def process_view(post):
 
     del post["custom_fields"]
 
-    return post
+    return {"_index": "content",
+            "_type": "views",
+            "_id": post["slug"],
+            "_source": post}

@@ -31,4 +31,7 @@ def process_post(page):
     del page["comments"]
     page["_id"] = page["id"]
 
-    return page
+    return {"_index": "content",
+            "_type": "pages",
+            "_id": page["id"],
+            "_source": page}

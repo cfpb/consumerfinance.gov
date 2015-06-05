@@ -3,6 +3,7 @@ import json
 import os.path
 import requests
 
+
 def posts_at_url(url):
 
     current_page = 1
@@ -18,10 +19,12 @@ def posts_at_url(url):
         for p in results["posts"]:
             yield p
 
+
 def documents(name, url, **kwargs):
 
     for post in posts_at_url(url):
         yield process_orgmember(post)
+
 
 def process_orgmember(member):
     del member["comments"]
@@ -43,4 +46,8 @@ def process_orgmember(member):
                            ["titles_0", "titles_1"]
                             if member["custom_fields"].get(title)]
     del member["custom_fields"]
-    return member
+
+    return {"_index": "content",
+            "_type": "orgmember",
+            "_id": member["slug"],
+            "_source": member}
