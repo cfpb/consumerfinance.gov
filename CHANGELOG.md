@@ -52,6 +52,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Relaxed ESLint cyclomatic `complexity` rule to max 4 complexity.
 - Updates megamenu bureau title to "The Bureau" to fit with sitemap direction.
 - Moved Less files to `/src/static/css/` directory.
+- Updated `cf-icons`
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
