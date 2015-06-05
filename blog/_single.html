@@ -24,7 +24,7 @@
 {% block content_main %}
     {% import "article.html" as article with context %}
     {{ article.render(post, vars.path) }}
-    {% include "comments.html" %}
+    {% include "templates/comments.html" %}
 {% endblock %}
 
 {% block content_sidebar %}
