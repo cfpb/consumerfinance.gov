@@ -38,7 +38,7 @@ def process_sub_page(post):
         if name in post["custom_fields"]:
             post[name] = post["custom_fields"][name]
     if "related_office" in post["custom_fields"]:
-        if type(post["custom_fields"]["related_office"]) is str:
+        if isinstance(post["custom_fields"]["related_office"], basestring):
             post["related_office"] = post["custom_fields"]["related_office"]
         else:
             post["related_office"] = post["custom_fields"]["related_office"][0]

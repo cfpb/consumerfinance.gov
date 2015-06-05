@@ -48,7 +48,7 @@ def process_post(post):
             post[name] = post["custom_fields"][name]
 
     if "related_hero" in post["custom_fields"]:
-        if type(post["custom_fields"]["related_hero"]) is str:
+        if isinstance(post["custom_fields"]["related_hero"], basestring):
             post["related_hero"] = post["custom_fields"]["related_hero"]
         else:
             post["related_hero"] = post["custom_fields"]["related_hero"][0]
