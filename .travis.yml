@@ -4,14 +4,6 @@ python:
   - "2.7"
   - "3.3"
 
-env:
-  global:
-    - secure: NV5XM/xM7k4Qupdw1EJNOEuqU3aiPRgyI1j2C1KYdN/fT9AoVUEnmbFruOfPflqgyutJP6SlYtbYvoDau/BsD1Xqb9YSd+I5EgBzrJ7o7FIkuHB1hH8PXYDKRqCsSMUPW+h6K2h1wL5fizkLN9VAGWNfRAhkityu5qprvPzEd/4=
-    - secure: WGVk3/WczG1JaDqAS9wTU8pbpt548s9NkuWRS7AVHk+uNqO7lwfUesPSUU+U4DYwwxsX8KwpZ3+TiWtR+A/jUgk917rVTPtTpPflHacekxS2WTuKiMnXTXgqb3+rKX8/dcld9jj+ivwKUp65iVNgZ34kyzYNyWGwjeUqKSGKph8=
-
-addons:
-  sauce_connect: true
-
 services:
   - elasticsearch
 
