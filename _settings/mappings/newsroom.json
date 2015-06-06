@@ -4,10 +4,12 @@
       "type": "string"
     },
     "author": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "category": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "comment_count": {
       "type": "long"
@@ -60,7 +62,8 @@
       "type": "string"
     },
     "tags": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "taxonomy_cfpb_newsroom_cat_taxonomy": {
       "properties": {

@@ -29,6 +29,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added toplevel navigation items config file for removing hardcoded
   navigation menu items.
 - Added external url redirect page, styles, and JavaScript.
+- Added `.nav-secondary_link__disabled` style.
+- Added `.nav-secondary_subitem` class to visually distinguish sub-pages
+  from sibling pages in the sidenav.
+- Added JavaScript utilities for checking types and primitives.
+- Added `primary_nav` jinja block to `base.html` template.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -46,17 +51,29 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Refactored code for Wordpress updates
 - Initiatives renamed to Sub-pages
 - Relaxed ESLint cyclomatic `complexity` rule to max 4 complexity.
+- Updates megamenu bureau title to "The Bureau" to fit with sitemap direction.
+- Moved Less files to `/src/static/css/` directory.
+- Updated `cf-icons` to 0.6.0.
+- Moved HTML templates to `/templates/` subdirectory.
+- Breaks header template apart into `header.html`
+  and `primary-nav.html` templates.
+- Moved external site page header to its own template
+  `header-without-nav.html`.
+- Minor codefixes on `show-hide-fields.js` along with changing a class name for hiding fields
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
 - Fixed most of the warnings in validation and notification plugins
 - Fixed processor name bug
+- Fixed template/processor bugs while indexing and rendering
+- Fixed FOIA pages from the template/processor changes
 
 ### Removed
-- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+- Removed `copy:static-legacy` and `grunt-contrib-copy` package.
 - Removed unneeded entries from `exportsOverride` in `bower.json`.
 - Gitignored CF fonts, "chosen" images, and other vendor files from repo,
   which are slated for eventual removal.
+- Removed unused `nav-secondary.html` template.
 
 
 ## 3.0.0-1.1.0 - 2015-05-20

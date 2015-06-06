@@ -33,8 +33,11 @@ def process_view(post):
 
     # limit popular posts to five items
     if "popular_posts" in custom_fields:
-        popular_posts = [slug for slug in custom_fields["popular_posts"][:5]]
-        post["popular_posts"] = popular_posts
+        if isinstance(custom_fields["popular_posts"], basestring):
+            post["popular_posts"] = [custom_fields["popular_posts"]]
+        else:
+            popular_posts = [slug for slug in custom_fields["popular_posts"][:5]]
+            post["popular_posts"] = popular_posts
 
     # convert related links into a proper list
     if "related_links" in post["custom_fields"]:
@@ -44,13 +47,16 @@ def process_view(post):
         for x in range(5):
             key = "related_links_%s" % x
             if key in custom_fields:
-                related.append({"url": post["custom_fields"][key][0],
-                                "label": post["custom_fields"][key][1]})
+                if isinstance(custom_fields[key], basestring):
+                    related.append({"url": post["custom_fields"][key]})
+                else:
+                    related.append({"url": post["custom_fields"][key][0],
+                                    "label": post["custom_fields"][key][1]})
         post["related_links"] = related
 
     # append the hero information
     if "related_hero" in custom_fields:
-        if type(custom_fields["related_hero"]) is str:
+        if isinstance(custom_fields["related_hero"], basestring):
             hero_id = custom_fields["related_hero"]
         else:
             hero_id = custom_fields["related_hero"][0]

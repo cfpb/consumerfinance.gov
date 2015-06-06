@@ -7750,12 +7750,20 @@ a.focus .summary_event-date {
   padding: 0;
 }
 
-.nav-secondary_item {
+.nav-secondary_item,
+.nav-secondary_subitem {
   list-style: none;
 }
 
-.nav-secondary_item+.nav-secondary_item {
+.nav-secondary_item+.nav-secondary_item,
+.nav-secondary_item+.nav-secondary_subitem,
+.nav-secondary_subitem+.nav-secondary_item,
+.nav-secondary_subitem+.nav-secondary_subitem {
   margin-top: 10px;
+}
+
+.nav-secondary_subitem {
+  margin-left: 22px;
 }
 
 .nav-secondary_link {
@@ -7847,6 +7855,20 @@ a.focus .summary_event-date {
 
 .nav-secondary_link__button {
   display: none;
+}
+
+.nav-secondary_link__disabled {
+  background-color: #fff;
+  color: #babbbd;
+  cursor: default;
+  cursor: not-allowed;
+}
+
+.nav-secondary_link__disabled:hover,
+.nav-secondary_link__disabled:focus {
+  border-left-color: #fff;
+  color: #babbbd;
+  outline-color: #e3e4e5;
 }
 
 .nav-secondary .cf-icon__green {

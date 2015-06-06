@@ -9,10 +9,12 @@
 </p>
 <ul class="list list__icons">
 {%- if submit_a_complaint.phone %}
+    {%- for phone in submit_a_complaint.phone %}
     <li class="list_item">
+    {% if loop.index == 1 %}
         <span class="cf-icon cf-icon-phone list_icon"></span>
         <span class="h5 list_text">Phone:</span>
-    {%- for phone in submit_a_complaint.phone %}
+    {% endif %}
         <p>
             <a class="list_link list_link__phone" href="tel:{{ phone.num }}">
                 {{ format_phone(phone.num)| replace("2372", "CFPB (2372)") }}

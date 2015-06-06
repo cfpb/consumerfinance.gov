@@ -1,16 +1,16 @@
-{% set initiative = get_document("initiative", "submit-a-request") %}
-{% set path = "/initiatives/" + initiative.slug %}
+{% set sub_page = get_document('sub_page', 'submit-a-request') %}
+{% set path = '/sub-pages/' + sub_page.slug %}
 
-{% extends "layout-side-nav.html" %}
-{% import "_vars-initiatives.html" as vars with context %}
-{% set active_nav_id = initiative.slug %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-sub-pages.html' as vars with context %}
+{% set active_nav_id = sub_page.slug %}
 
-{% set activity_type = "FOIA" %}
-{% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+{% set activity_type = 'FOIA' %}
+{% from 'post-macros.html' import activity_snippets as activity_snippets with context %}
 {% set activities_feed = activity_snippets(activity_type) %}
 
 {% block title -%}
-    {{ initiative.title | safe if initiative.title }}
+    {{ sub_page.title | safe if sub_page.title }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -19,15 +19,15 @@
 
 {% block content_main %}
 
-    {% if initiative.title %}
-        <h1>{{ initiative.title | safe }}</h1>
+    {% if sub_page.title %}
+        <h1>{{ sub_page.title | safe }}</h1>
     {% endif %}
 
-    {% if initiative.content %}
+    {% if sub_page.content %}
     <section class="initiative_description block block__flush-top">
-        {{ initiative.content | safe }}
+        {{ sub_page.content | safe }}
 
-        <!-- Extra Content. Remove once content updates. -->
+        {# TODO: Extra Content. Remove once content updates. #}
         <ol class="list list__steps short-desc">
             <li class="list-item">Fill out the form</li>
             <li class="list-item">Generate a PDF</li>
