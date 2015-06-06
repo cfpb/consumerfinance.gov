@@ -25,7 +25,7 @@
                         <!-- <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span> -->
                         <a class="list_link jump-link jump-link__right"
                            href="{{ link.url }}">
-                           {{ link.label }}
+                            {{ link.label if link.label else link.url }}
                        </a>
                     </li>
                 {% endfor %}

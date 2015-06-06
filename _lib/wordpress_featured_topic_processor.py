@@ -42,8 +42,11 @@ def process_post(post):
         for x in range(10):
             key = "links_%s" % x
             if key in post["custom_fields"]:
-                links.append({"url": post["custom_fields"][key][0],
-                              "label": post["custom_fields"][key][1]})
+                if isinstance(post["custom_fields"][key], basestring):
+                    links.append({"url": post["custom_fields"][key]})
+                else:
+                    links.append({"url": post["custom_fields"][key][0],
+                                  "label": post["custom_fields"][key][1]})
         post["links"] = links
 
     del post["custom_fields"]

@@ -3,6 +3,12 @@
    nav-secondary
    ========================================================================== */
 
+// .nav-secondary_link__disabled
+@nav-secondary_link__disabled-text:            @gray-50;
+@nav-secondary_link__disabled-bg:              @white;
+@nav-secondary_link__disabled-outline:         @gray-20;
+@nav-secondary_link__disabled-border:          @nav-secondary_link__disabled-bg;
+
 /* topdoc
   name: Secondary navigation
   family: cfgov-nav-secondary
@@ -66,6 +72,16 @@
         - "The inline style is for demonstration purposes only and is needed
            because the modifier hides the element at larger screen size.
            Please do not use it in production."
+    - name: disabled link modifier
+      markup: |
+        <a class="nav-secondary_link nav-secondary_link__disabled">
+            Disabled nav link
+        </a>
+      codenotes:
+        - ".nav-secondary_link__disabled"
+      notes:
+        - "Gives the link disabled link styles,
+           for when there is no href value, for instance."
     - name: Secondary nav mixed with cf-expandable
       markup: |
         <nav class="nav-secondary expandable">
@@ -128,14 +144,14 @@
 */
 
 .nav-secondary {
-    margin-bottom: unit(30px / @base-font-size-px, em);
+    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
 
     &_list {
         margin: 0;
         padding: 0;
     }
 
-    &_item {
+    &_item, &_subitem {
         list-style: none;
 
         .respond-to-min(801px, {
@@ -143,6 +159,13 @@
                 margin-top: 10px;
             }
         });
+    }
+
+    &_subitem {
+      .respond-to-min(801px, {
+        // Gutter width minus optical offset.
+        margin-left: @grid_gutter-width - 8px;
+      });
     }
 
     &_link {
@@ -205,6 +228,20 @@
             .respond-to-min(801px, {
                 display: none;
             });
+        }
+
+        &__disabled {
+          background-color: @nav-secondary_link__disabled-bg;
+          color: @nav-secondary_link__disabled-text;
+          cursor: default; // Fallback for IE/Opera.
+          cursor: not-allowed;
+
+            &:hover,
+            &:focus {
+                border-left-color: @nav-secondary_link__disabled-border;
+                color: @nav-secondary_link__disabled-text;
+                outline-color: @nav-secondary_link__disabled-outline;
+            }
         }
     }
 

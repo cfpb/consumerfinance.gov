@@ -157,7 +157,7 @@ module.exports = function(grunt) {
           sourceMapURL: 'main.css.map',
         },
         files: {
-          '<%= loc.dist %>/static/css/main.css': ['static/css/main.less']
+          '<%= loc.dist %>/static/css/main.css': ['<%= loc.src %>/static/css/main.less']
         }
       }
     },
@@ -306,15 +306,15 @@ module.exports = function(grunt) {
      */
     watch: {
       all: {
-        files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js', 'Gruntfile.js'],
+        files: ['<%= loc.src %>/static/css/*.less', '<%= loc.src %>/static/js/**/*.js', 'Gruntfile.js'],
         tasks: ['default']
       },
       cssjs: {
-        files: ['static/css/*.less', '<%= loc.src %>/static/js/**/*.js'],
+        files: ['<%= loc.src %>/static/css/*.less', '<%= loc.src %>/static/js/**/*.js'],
         tasks: ['css', 'js']
       },
       css: {
-        files: ['static/css/*.less'],
+        files: ['<%= loc.src %>/static/css/*.less'],
         tasks: ['css']
       },
       js: {
@@ -361,7 +361,7 @@ module.exports = function(grunt) {
       var key = families[i];
       topdoc[key] = {
         options: {
-          source: 'static/css/',
+          source: '<%= loc.src %>/static/css/',
           destination: 'docs/' + key + '/',
           template: 'node_modules/cf-component-demo/docs/',
           templateData: {

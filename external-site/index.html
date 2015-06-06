@@ -1,8 +1,8 @@
-{% extends "layout-full.html"  %}
-{% set request_host = 'http://' + request.host -%}
-{% set request_referrer = request.referrer or request_host -%}
+{% extends "layout-full.html" %}
+{% set request_host = 'http://' + request.host %}
+{% set request_referrer = request.referrer or request_host %}
 
-{% set request_url_param = request.args.get('ext_url') or '' -%}
+{% set request_url_param = request.args.get('ext_url') or '' %}
 {% set external_url = request_url_param or request_host %}
 
 {# TODO: Feature is disabled. Turn on when sanitized_domains is implemented.
@@ -28,32 +28,16 @@
     External Site
 {%- endblock %}
 
+{% block primary_nav -%}
+    {# No primary navigation needed on this page. #}
+{%- endblock %}
+
 {% block header -%}
-    </div>
-    <div class='sliding-nav_page'>
-    <header class="header
-                   wrapper
-                   wrapper__match-content"
-            role="banner">
-        <a href="/">
-            <img class="header_logo u-js-only"
-                 src="/static/img/logo_sm-exec.svg"
-                 onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
-                 alt="Consumer Financial Protection Bureau"
-                 width="237"
-                 height="50">
-            <noscript>
-                <img class="header_logo logo__no-js"
-                     src="/static/img/logo_sm-exec.png"
-                     alt="Consumer Financial Protection Bureau"
-                     width="237"
-                     height="50">
-            </noscript>
-        </a>
-    </header>
+    {% include "templates/header-without-nav.html" %}
 {%- endblock %}
 
 {% block footer -%}
+    {# No footer needed on this page. #}
 {%- endblock %}
 
 {% block content_modifiers -%}
@@ -70,7 +54,7 @@
             informative and enjoyable.
         </p>
         <p class="short-desc short-desc__large u-js-only">
-            The new page will reload in: <span class="external-site_reload-container"
+            We’ll take you to the page in: <span class="external-site_reload-container"
                                                data-url="{{ external_url }}">
                                          </span>
         </p>
