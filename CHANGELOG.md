@@ -59,12 +59,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and `primary-nav.html` templates.
 - Moved external site page header to its own template
   `header-without-nav.html`.
+- Minor codefixes on `show-hide-fields.js` along with changing a class name for hiding fields
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
 - Fixed most of the warnings in validation and notification plugins
 - Fixed processor name bug
 - Fixed template/processor bugs while indexing and rendering
+- Fixed FOIA pages from the template/processor changes
 
 ### Removed
 - Removed `copy:static-legacy` and `grunt-contrib-copy` package.

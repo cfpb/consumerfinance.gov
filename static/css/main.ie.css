@@ -5168,11 +5168,11 @@ textarea.input__long {
   padding: 0;
 }
 
-.js-remove-to-reveal {
+.js-is-hidden {
   display: none !important;
 }
 
-.no-js .js-remove-to-reveal {
+.no-js .js-is-hidden {
   display: block;
 }
 
