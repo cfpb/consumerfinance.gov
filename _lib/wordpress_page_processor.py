@@ -11,12 +11,12 @@ def posts_at_url(url):
 
     while current_page <= max_page:
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={"page": current_page, "count": "-1"})
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
         results = json.loads(resp.content)
         current_page += 1
-        max_page = results["pages"]
+        max_page = results['pages']
 
-        for p in results["posts"]:
+        for p in results['posts']:
             yield p
 
 
@@ -28,10 +28,10 @@ def documents(name, url, **kwargs):
 
 def process_post(page):
 
-    del page["comments"]
-    page["_id"] = page["id"]
+    del page['comments']
+    page['_id'] = page['id']
 
-    return {"_index": "content",
-            "_type": "pages",
-            "_id": page["id"],
-            "_source": page}
+    return {'_index': 'content',
+            '_type': 'pages',
+            '_id': page['id'],
+            '_source': page}

@@ -12,12 +12,12 @@ def posts_at_url(url):
     while current_page <= max_page:
 
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={"page": current_page, "count": "-1"})
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
         results = json.loads(resp.content)
         current_page += 1
-        max_page = results["pages"]
+        max_page = results['pages']
         total = 0
-        for p in results["posts"]:
+        for p in results['posts']:
             total += 1
             yield p
 
@@ -29,29 +29,29 @@ def documents(name, url, **kwargs):
 
 
 def process_post(post):
-    post["_id"] = post["slug"]
-    post["author"] = [post["author"]["name"]]
-    names = ["og_title", "og_image", "og_desc", "twtr_text", "twtr_lang",
-             "twtr_rel", "twtr_hash", "utm_campaign", "utm_term",
-             "utm_content", "links"]
+    post['_id'] = post['slug']
+    post['author'] = [post['author']['name']]
+    names = ['og_title', 'og_image', 'og_desc', 'twtr_text', 'twtr_lang',
+             'twtr_rel', 'twtr_hash', 'utm_campaign', 'utm_term',
+             'utm_content', 'links']
     for name in names:
-        if name in post["custom_fields"]:
-            post[name] = post["custom_fields"][name]
-    if "links" not in post["custom_fields"]:
+        if name in post['custom_fields']:
+            post[name] = post['custom_fields'][name]
+    if 'links' not in post['custom_fields']:
         links = []
         for x in range(10):
-            key = "links_%s" % x
-            if key in post["custom_fields"]:
-                if isinstance(post["custom_fields"][key], basestring):
-                    links.append({"url": post["custom_fields"][key]})
+            key = 'links_%s' % x
+            if key in post['custom_fields']:
+                if isinstance(post['custom_fields'][key], basestring):
+                    links.append({'url': post['custom_fields'][key]})
                 else:
-                    links.append({"url": post["custom_fields"][key][0],
-                                  "label": post["custom_fields"][key][1]})
-        post["links"] = links
+                    links.append({'url': post['custom_fields'][key][0],
+                                  'label': post['custom_fields'][key][1]})
+        post['links'] = links
 
-    del post["custom_fields"]
+    del post['custom_fields']
 
-    return {"_index": "content",
-            "_type": "featured_topic",
-            "_id": post["slug"],
-            "_source": post}
+    return {'_index': 'content',
+            '_type': 'featured_topic',
+            '_id': post['slug'],
+            '_source': post}
