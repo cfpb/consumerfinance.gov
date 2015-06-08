@@ -16,11 +16,11 @@ def posts_at_url(url):
     while current_page <= max_page:
 
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={"page": current_page, "count": str(count)})
+        resp = requests.get(url, params={'page': current_page, 'count': str(count)})
         results = json.loads(resp.content)
         current_page += 1
-        max_page = int(results["count"]) / count + 1
-        for p in results["results"]:
+        max_page = int(results['count']) / count + 1
+        for p in results['results']:
             yield p
 
 
@@ -31,17 +31,17 @@ def documents(name, url, **kwargs):
 
 
 def process_event(event):
-    event["_id"] = event["id"]
-    event["date"] = event["dtstart"]
-    dt = dateutil.parser.parse(event["dtstart"])
-    event["day"] = datetime.date(dt.year, dt.month, dt.day)
-    if event["description"]:
-        if event["description"].strip() == "":
-            del event["description"]
+    event['_id'] = event['id']
+    event['date'] = event['dtstart']
+    dt = dateutil.parser.parse(event['dtstart'])
+    event['day'] = datetime.date(dt.year, dt.month, dt.day)
+    if event['description']:
+        if event['description'].strip() == '':
+            del event['description']
         else:
-            event["description"] = event["description"].strip()
+            event['description'] = event['description'].strip()
 
-    return {"_index": "content",
-            "_type": "calendar_event",
-            "_id": event["id"],
-            "_source": event}
+    return {'_index': 'content',
+            '_type': 'calendar_event',
+            '_id': event['id'],
+            '_source': event}

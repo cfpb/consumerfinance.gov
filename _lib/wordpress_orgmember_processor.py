@@ -12,11 +12,11 @@ def posts_at_url(url):
     while current_page <= max_page:
 
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={"page": current_page, "count": "-1"})
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
         results = json.loads(resp.content)
         current_page += 1
-        max_page = results["pages"]
-        for p in results["posts"]:
+        max_page = results['pages']
+        for p in results['posts']:
             yield p
 
 
@@ -27,27 +27,27 @@ def documents(name, url, **kwargs):
 
 
 def process_orgmember(member):
-    del member["comments"]
-    member["_id"] = member["slug"]
-    if member["parent"] != 0:
-        member["has_parent"] = True
+    del member['comments']
+    member['_id'] = member['slug']
+    if member['parent'] != 0:
+        member['has_parent'] = True
     else:
-        member["has_parent"] = False
-    if member["taxonomy_orgmember_cat"]:
-        member["category"] = member["taxonomy_orgmember_cat"][0]["title"].replace("&amp;", "&")
-    if member["custom_fields"].get("name"):
-        member["name"] = member["custom_fields"].get("name")
+        member['has_parent'] = False
+    if member['taxonomy_orgmember_cat']:
+        member['category'] = member['taxonomy_orgmember_cat'][0]['title'].replace('&amp;', '&')
+    if member['custom_fields'].get('name'):
+        member['name'] = member['custom_fields'].get('name')
     else:
-        member["name"] = ""
-    if member["custom_fields"].get("titles"):
-        member["titles"] = member["custom_fields"].get("titles")
+        member['name'] = ''
+    if member['custom_fields'].get('titles'):
+        member['titles'] = member['custom_fields'].get('titles')
     else:
-        member["titles"] = [member["custom_fields"].get(title) for title in
-                           ["titles_0", "titles_1"]
-                            if member["custom_fields"].get(title)]
-    del member["custom_fields"]
+        member['titles'] = [member['custom_fields'].get(title) for title in
+                           ['titles_0', 'titles_1']
+                            if member['custom_fields'].get(title)]
+    del member['custom_fields']
 
-    return {"_index": "content",
-            "_type": "orgmember",
-            "_id": member["slug"],
-            "_source": member}
+    return {'_index': 'content',
+            '_type': 'orgmember',
+            '_id': member['slug'],
+            '_source': member}
