@@ -63,5 +63,10 @@
     "url": "$WORDPRESS/api/get_posts/?post_type=featured_topic",
     "processor": "wordpress_featured_topic_processor",
     "mappings": "_settings/mappings/featured_topic.json"
+  },
+  "faq": {
+    "url": "$WORDPRESS/api/get_posts/?post_type=faq",
+    "processor": "wordpress_faq_processor",
+    "mappings": "_settings/mappings/faq.json"
   }
 }
