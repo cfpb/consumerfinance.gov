@@ -75,6 +75,10 @@
     "parent": {
       "type": "long"
     },
+    "related_faq": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
     "related_links": {
       "properties": {
         "label": {

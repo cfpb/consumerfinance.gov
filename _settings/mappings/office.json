@@ -74,10 +74,16 @@
       "type": "long"
     },
     "related_contact": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "related_faq": {
+      "type": "string",
+      "index": "not_analyzed"
     },
     "related_hero": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "relative_url": {
       "type": "string"

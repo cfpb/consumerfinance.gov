@@ -36,6 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `primary_nav` jinja block to `base.html` template.
 - Added FAQ processor and mapping
 - Added `use_form` field to sub_pages
+ - Added `related_faq` field to sub_pages and offices
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
