@@ -3,7 +3,7 @@
     "tests": [
         {
             "macro_name": "category_icon",
-            "arguments": ["announcements & updates", ""],
+            "arguments": ["at the cfpb", ""],
             "assertions": [
                 {
                     "selector": ".cf-icon-bullhorn",
@@ -13,10 +13,10 @@
         },
         {
             "macro_name": "category_icon",
-            "arguments": ["innovation & data", ""],
+            "arguments": ["data, research & reports", ""],
             "assertions": [
                 {
-                    "selector": ".cf-icon-lightbulb",
+                    "selector": ".cf-icon-chart",
                     "assertion": "exists"
                 }
             ]
