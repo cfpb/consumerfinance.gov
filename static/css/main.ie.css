@@ -7904,24 +7904,90 @@ a.focus .summary_event-date {
   margin-bottom: 1.875em;
 }
 
+.nav-secondary .inset-divider {
+  margin: 0 15px 15px;
+  border: 0;
+  height: 1px;
+  background-color: #e3e4e5;
+}
+
+.nav-secondary .inset-divider {
+  display: none;
+}
+
 .nav-secondary_list {
   margin: 0;
   padding: 0;
 }
 
 .nav-secondary_item,
-.nav-secondary_subitem {
+.nav-secondary_item__child {
   list-style: none;
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.nav-secondary_item em,
+.nav-secondary_item__child em,
+.nav-secondary_item i,
+.nav-secondary_item__child i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .nav-secondary_item em,
+.lt-ie9 .nav-secondary_item__child em,
+.lt-ie9 .nav-secondary_item i,
+.lt-ie9 .nav-secondary_item__child i {
+  font-style: normal !important;
+}
+
+.nav-secondary_item strong,
+.nav-secondary_item__child strong,
+.nav-secondary_item b,
+.nav-secondary_item__child b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .nav-secondary_item strong,
+.lt-ie9 .nav-secondary_item__child strong,
+.lt-ie9 .nav-secondary_item b,
+.lt-ie9 .nav-secondary_item__child b {
+  font-weight: normal !important;
 }
 
 .nav-secondary_item+.nav-secondary_item,
-.nav-secondary_item+.nav-secondary_subitem,
-.nav-secondary_subitem+.nav-secondary_item,
-.nav-secondary_subitem+.nav-secondary_subitem {
+.nav-secondary_item+.nav-secondary_item__child,
+.nav-secondary_item__child+.nav-secondary_item,
+.nav-secondary_item__child+.nav-secondary_item__child {
   margin-top: 10px;
 }
 
-.nav-secondary_subitem {
+.nav-secondary_item__parent {
+  margin-top: 0;
+  margin-bottom: 1.16666667em;
+  font-size: 1.125em;
+  line-height: 1.22222222;
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lt-ie9 .nav-secondary_item__parent {
+  font-weight: normal !important;
+}
+
+.lt-ie9 .nav-secondary_item__parent {
+  font-weight: normal !important;
+}
+
+.nav-secondary_item__child {
   margin-left: 22px;
 }
 
@@ -7930,16 +7996,13 @@ a.focus .summary_event-date {
   padding: .27777778em .83333333em;
   border-left-style: solid;
   border-left-width: 5px;
-  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
-  font-style: normal;
-  font-weight: 500;
   font-size: 1.125em;
   color: #0072ce;
   border-color: transparent;
 }
 
-.lt-ie9 .nav-secondary_link {
-  font-weight: normal !important;
+.lt-ie8 .nav-secondary_link {
+  display: inline;
 }
 
 .nav-secondary_link:visited,
@@ -7969,6 +8032,7 @@ a.focus .summary_event-date {
 .nav-secondary_link__current {
   color: #101820;
   border-color: #2cb34a;
+  cursor: default;
 }
 
 .nav-secondary_link__current:visited,
@@ -8024,6 +8088,8 @@ a.focus .summary_event-date {
 }
 
 .nav-secondary_link__disabled:hover,
+.nav-secondary_link__disabled:visited,
+.nav-secondary_link__disabled:active,
 .nav-secondary_link__disabled:focus {
   border-left-color: #fff;
   color: #babbbd;
@@ -8036,6 +8102,11 @@ a.focus .summary_event-date {
 
 .nav-secondary .expandable_header {
   overflow: visible;
+}
+
+.nav-secondary .expandable_header .nav-secondary_link {
+  border-left: none;
+  margin: 0;
 }
 
 .nav-secondary .expandable_content {

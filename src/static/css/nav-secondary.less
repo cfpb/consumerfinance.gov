@@ -9,6 +9,10 @@
 @nav-secondary_link__disabled-outline:         @gray-20;
 @nav-secondary_link__disabled-border:          @nav-secondary_link__disabled-bg;
 
+// TODO: Refactor these variable to use existing CF font size variables.
+@font-size-small: 16px;
+@font-size-large: 18px;
+
 /* topdoc
   name: Secondary navigation
   family: cfgov-nav-secondary
@@ -146,13 +150,30 @@
 .nav-secondary {
     margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
 
+    .respond-to-max(800px, {
+        border-bottom: 1px solid @gray-20;
+    });
+
+    // Inset horizontal rule between "IN THIS SECTION" text and page links.
+    & .inset-divider {
+      margin: 0 @grid_gutter-width / 2 @grid_gutter-width / 2;
+      border: 0;
+      height: 1px;
+      background-color: @gray-20;
+
+      // Only shown on tablet/mobile sizes.
+      .respond-to-min(801px, {
+        display: none;
+      });
+    }
+
     &_list {
         margin: 0;
         padding: 0;
     }
-
-    &_item, &_subitem {
+    &_item, &_item__child {
         list-style: none;
+        .webfont-regular();
 
         .respond-to-min(801px, {
             & + & {
@@ -161,31 +182,34 @@
         });
     }
 
-    &_subitem {
-      .respond-to-min(801px, {
+    &_item__parent {
+        .h4();
+        .webfont-medium();
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    &_item__child {
         // Gutter width minus optical offset.
         margin-left: @grid_gutter-width - 8px;
-      });
     }
 
     &_link {
-        @font-size-small: 16px;
-        @font-size-large: 18px;
+        .u-inline-block();
+        padding: unit(5px / @font-size-large, em)
+                 unit(15px / @font-size-large, em);
+        border-left-style: solid;
+        border-left-width: 5px;
+        font-size: unit(@font-size-large / @base-font-size-px, em);
+        .u-link__colors(@pacific, @pacific, @black, @black, @black,
+                        transparent, transparent, @green, @green, @green);
 
         .respond-to-max(800px, {
             display: block;
-            // width: 100%; // Needed to override button styles
-            padding: unit((@grid_gutter-width / 2) / @font-size-small, em)
-                     unit(@grid_gutter-width / @font-size-small, em);
-            border-bottom-style: solid;
-            border-width: 0; // Needed to override button styles
-            border-bottom-width: 1px;
-            background: @gray-10;
-            .webfont-medium();
+            padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
             font-size: unit(@font-size-small / @base-font-size-px, em);
             .u-link__colors(@darkgray, @darkgray, @darkgray, @darkgray, @darkgray,
-                            @gray-20, @gray-20, @gray-20, @gray-20, @gray-20);
-            text-align: left; // Needed to override button styles
+                            transparent, transparent, @green, @green, @green);
         });
 
         .respond-to-max(600px, {
@@ -193,26 +217,14 @@
             padding-right: unit((@grid_gutter-width / 2) / @font-size-small, em);
         });
 
-        .respond-to-min(801px, {
-            display: inline-block;
-            padding: unit(5px / @font-size-large, em)
-                     unit(15px / @font-size-large, em);
-            border-left-style: solid;
-            border-left-width: 5px;
-            .webfont-medium();
-            font-size: unit(@font-size-large / @base-font-size-px, em);
-            .u-link__colors(@pacific, @pacific, @black, @black, @black,
-                            transparent, transparent, @green, @green, @green);
+        .respond-to-max(800px, {
+            margin: 0 @grid_gutter-width / 2;
         });
 
         &__current {
-            .respond-to-max(800px, {
-                display: none;
-            });
-            .respond-to-min(801px, {
-                .u-link__colors(@black, @black, @black, @black, @black,
-                                @green, @green, @green, @green, @green);
-            });
+            .u-link__colors(@black, @black, @black, @black, @black,
+                            @green, @green, @green, @green, @green);
+            cursor: default;
         }
 
         &__button {
@@ -231,17 +243,28 @@
         }
 
         &__disabled {
-          background-color: @nav-secondary_link__disabled-bg;
-          color: @nav-secondary_link__disabled-text;
-          cursor: default; // Fallback for IE/Opera.
-          cursor: not-allowed;
+            background-color: @nav-secondary_link__disabled-bg;
+            color: @nav-secondary_link__disabled-text;
+            cursor: default; // Fallback for IE/Opera.
+            cursor: not-allowed;
 
             &:hover,
+            &:visited,
+            &:active,
             &:focus {
                 border-left-color: @nav-secondary_link__disabled-border;
                 color: @nav-secondary_link__disabled-text;
                 outline-color: @nav-secondary_link__disabled-outline;
             }
+        }
+    }
+
+    // Border below "IN THIS SECTION" link on mobile.
+    .nav-secondary_item {
+        &:last-child {
+            .respond-to-max(800px, {
+                padding-bottom: @grid_gutter-width / 2;
+            });
         }
     }
 
@@ -255,6 +278,12 @@
     // instead so we don't have to do this here.
     & .expandable_header {
         overflow: visible;
+
+        // Override base style for the header "IN THIS SECTION" link.
+        & .nav-secondary_link {
+            border-left: none;
+            margin: 0;
+        }
     }
 
     // Overrides the 1px padding used to prevent margin collapse. It's noticeable

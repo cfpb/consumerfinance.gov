@@ -24,20 +24,16 @@
 
 <nav class="nav-secondary expandable {{ additional_classes }}">
     <h1 class="u-visually-hidden">
-{%- for href, id, caption in items %}
-    {% if id == 'index' %}
-        {{ caption|e }} navigation
-    {% endif %}
-{%- endfor %}
+    {%- for href, id, caption in items %}
+        {% if id == 'index' %}
+            {{ caption|e }} navigation
+        {% endif %}
+    {%- endfor %}
     </h1>
     <div class="expandable_header">
         <button class="expandable_target nav-secondary_link nav-secondary_link__button">
             <span class="expandable_header-left">
-        {%- for href, id, caption in items %}
-            {% if id == active_item_id %}
-                {{ caption|e }}
-            {% endif %}
-        {%- endfor %}
+              In this section
             </span>
             <span class="expandable_header-right">
                 <span class="expandable_cue-open">
@@ -50,13 +46,23 @@
         </button>
     </div>
     <div class="expandable_content">
+        <hr class="inset-divider" />
         <ul class="nav-secondary_list">
         {%- for href, id, caption in items %}
-            <li class="{{ 'nav-secondary_item' if loop.index == 1 else 'nav-secondary_subitem' }}">
-                <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_item_id }}"
-                   href="{{ href|e }}">
+            {# TODO: logic around loop.index needs to be updated
+                     so a parent item can appear before first item. #}
+            <li class="nav-secondary_item
+                       {{- ' nav-secondary_item__parent' if loop.index == 1 else
+                       ' nav-secondary_item__child' -}}">
+                {%- if id == active_item_id %}
+                <a class="nav-secondary_link nav-secondary_link__current">
+                  {{ caption|e }}
+                </a>
+                {%- else %}
+                <a class="nav-secondary_link" href="{{ href|e }}">
                    {{ caption|e }}
-               </a>
+                </a>
+                {%- endif %}
             </li>
         {%- endfor %}
         </ul>
