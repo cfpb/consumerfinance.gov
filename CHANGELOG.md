@@ -30,13 +30,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   navigation menu items.
 - Added external url redirect page, styles, and JavaScript.
 - Added `.nav-secondary_link__disabled` style.
-- Added `.nav-secondary_subitem` class to visually distinguish sub-pages
+- Added `.nav-secondary_item__child` class to visually distinguish sub-pages
   from sibling pages in the sidenav.
+- Added `.nav-secondary_item__parent` class to visually distinguish browse
+  pages from the subpages below them in the sidenav.
 - Added JavaScript utilities for checking types and primitives.
 - Added `primary_nav` jinja block to `base.html` template.
 - Added FAQ processor and mapping
 - Added `use_form` field to sub_pages
- - Added `related_faq` field to sub_pages and offices
+- Added `related_faq` field to sub_pages and offices
+- Added `inset-divider` class for providing an inset horizontal rule
+  independent of the list or list item widths within the side navigation bar.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -64,6 +68,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved external site page header to its own template
   `header-without-nav.html`.
 - Minor codefixes on `show-hide-fields.js` along with changing a class name for hiding fields
+- Updated side navigation bar to keep page order at mobile sizes and adds
+  "IN THIS SECTION" header text to the navigation bar dropdown menu.
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
@@ -71,6 +77,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed processor name bug
 - Fixed template/processor bugs while indexing and rendering
 - Fixed FOIA pages from the template/processor changes
+- Fixed missing states from `.nav-secondary_link__disabled` class for
+  visited and active links.
 
 ### Removed
 - Removed `copy:static-legacy` and `grunt-contrib-copy` package.
