@@ -147,6 +147,9 @@
     "use_filtered_feed": {
       "type": "string"
     },
+    "use_form": {
+      "type": "string"
+    },
     "utm_campaign": {
       "type": "string"
     },
