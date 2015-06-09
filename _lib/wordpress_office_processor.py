@@ -91,7 +91,7 @@ def process_office(post):
         if name in custom_fields:
             post[name] = custom_fields[name]
 
-    for related in ["related_hero", "related_contact"]:
+    for related in ["related_hero", "related_contact", 'related_faq']:
         if related in custom_fields:
             if isinstance(custom_fields[related], basestring):
                 post[related] = custom_fields[related]

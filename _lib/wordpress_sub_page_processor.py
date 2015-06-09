@@ -29,26 +29,28 @@ def process_sub_page(post):
 
     del post['comments']
     post['_id'] = post['slug']
+    custom_fields = post['custom_fields']
 
     names = ['og_title', 'og_image', 'og_desc', 'twtr_text', 'twtr_lang',
              'twtr_rel', 'twtr_hash', 'utm_campaign', 'utm_term',
              'utm_content', 'show_in_office', 'use_filtered_feed', 'use_form',
              'body_content', 'related_links']
     for name in names:
-        if name in post['custom_fields']:
-            post[name] = post['custom_fields'][name]
-    if 'related_office' in post['custom_fields']:
-        if isinstance(post['custom_fields']['related_office'], basestring):
-            post['related_office'] = post['custom_fields']['related_office']
-        else:
-            post['related_office'] = post['custom_fields']['related_office'][0]
+        if name in custom_fields:
+            post[name] = custom_fields[name]
+    for related in ['related_office', 'related_faq']:
+        if related in custom_fields:
+            if isinstance(custom_fields[related], basestring):
+                post[related] = custom_fields[related]
+            else:
+                post[related] = custom_fields[related][0]
     if 'related_links' not in post:
         related = []
         for x in range(5):
             key = 'related_links_%s' % x
-            if key in post['custom_fields']:
-                related.append({'url': post['custom_fields'][key][0],
-                                'label': post['custom_fields'][key][1]})
+            if key in custom_fields:
+                related.append({'url': custom_fields[key][0],
+                                'label': custom_fields[key][1]})
         if related:
             post['related_links'] = related
     del post['custom_fields']
