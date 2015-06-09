@@ -33,7 +33,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `.nav-secondary_subitem` class to visually distinguish sub-pages
   from sibling pages in the sidenav.
 - Added JavaScript utilities for checking types and primitives.
+<<<<<<< HEAD
 - Added `primary_nav` jinja block to `base.html` template.
+=======
+- Added FAQ processor and mapping
+>>>>>>> Add FAQ processor and mapping
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -54,6 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updates megamenu bureau title to "The Bureau" to fit with sitemap direction.
 - Moved Less files to `/src/static/css/` directory.
 - Updated `cf-icons` to 0.6.0.
+- Update processors.py for FAQ
 - Moved HTML templates to `/templates/` subdirectory.
 - Breaks header template apart into `header.html`
   and `primary-nav.html` templates.

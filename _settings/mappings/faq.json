@@ -1,0 +1,144 @@
+{
+  "properties": {
+    "author": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "faq": {
+      "properties": {
+        "answer": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        }
+      }
+    },
+    "id": {
+      "type": "long",
+      "index": "not_analyzed"
+    },
+    "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long",
+      "index": "not_analyzed"
+    },
+    "relative_url": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "taxonomy_fj_tag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
+      "type": "string"
+    }
+  }
+}
