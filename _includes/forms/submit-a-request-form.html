@@ -1,43 +1,4 @@
-{% set sub_page = get_document('sub_page', 'submit-a-request') %}
-{% set path = '/sub-pages/' + sub_page.slug %}
-
-{% extends 'layout-side-nav.html' %}
-{% import '_vars-sub-pages.html' as vars with context %}
-{% set active_nav_id = sub_page.slug %}
-
-{% set activity_type = 'FOIA' %}
-{% from 'post-macros.html' import activity_snippets as activity_snippets with context %}
-{% set activities_feed = activity_snippets(activity_type) %}
-
-{% block title -%}
-    {{ sub_page.title | safe if sub_page.title }}
-{%- endblock %}
-
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
-{% block content_main %}
-
-    {% if sub_page.title %}
-        <h1>{{ sub_page.title | safe }}</h1>
-    {% endif %}
-
-    {% if sub_page.content %}
-    <section class="initiative_description block block__flush-top">
-        {{ sub_page.content | safe }}
-
-        {# TODO: Extra Content. Remove once content updates. #}
-        <ol class="list list__steps short-desc">
-            <li class="list-item">Fill out the form</li>
-            <li class="list-item">Generate a PDF</li>
-            <li class="list-item">Email, fax or mail the PDF</li>
-        </ol>
-    </section>
-    {% endif %}
-
-    <!-- Start Form Module. -->
-    <section class="block
+<section class="block
                     block__bg
                     block__border
                     block__flush-sides">
@@ -408,25 +369,3 @@
             </li>
         </ul>
     </section>
-
-    {% if activities_feed %}
-    <aside class="block
-                  block__flush-sides
-                  block__bg
-                  u-mb0
-                  u-mt0">
-        <section class="office_activities">
-            <h1 class="header-slug">
-                <span class="header-slug_inner">
-                    Latest Office Activities
-                </span>
-            </h1>
-            {{ activities_feed }}
-            <a class="jump-link jump-link__right" href="/activity-log/">
-                View all of our activity
-            </a>
-        </section>
-    </aside>
-    {% endif %}
-
-{% endblock %}
