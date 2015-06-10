@@ -139,6 +139,23 @@ function isFunction( value ) {
   return toString.call( value ) === '[object Function]';
 }
 
+/**
+ * @name isEmpty
+ * @kind function
+ *
+ * @description
+ * Determines if a reference is empty.
+ *
+ * @param {*} value Reference to check.
+ * @returns {boolean} True if `value` is empty.
+ */
+function isEmpty( value ) {
+  return isUndefined( value ) ||
+         value === null ||
+         isString( value ) && value.length <= 0
+         ? true : false;
+}
+
 
 // Expose public methods.
 module.exports = {
@@ -149,5 +166,6 @@ module.exports = {
   isNumber:    isNumber,
   isDate:      isDate,
   isArray:     isArray,
-  isFunction:  isFunction
+  isFunction:  isFunction,
+  isEmpty:     isEmpty
 };

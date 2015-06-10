@@ -413,58 +413,7 @@
 }) -%}
 {%- endif -%}
 
-<div class="expandable expandable__filters">
-    <div class="expandable_header expandable_header__spaced">
-    {% if options.show_current_filters %}
-        <div class="expandable_header-right u-hide-on-mobile">
-    {% else %}
-        <div class="u-hide-on-mobile">
-    {% endif %}
-            <span class="expandable_target">
-                <button class="btn btn__secondary">
-                    {{ options.expand_label }}
-                    <span class="expandable_cue-open">
-                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
-                    </span>
-                </button>
-            </span>
-        </div>
-    {% if options.show_current_filters %}
-        {{ active_filters(posts, filters, options) }}
-        <div class="expandable_header-right u-show-on-mobile">
-    {% else %}
-        <div class="u-show-on-mobile">
-    {% endif %}
-            <span class="expandable_target">
-                <button class="btn btn__secondary">
-                    {{ options.expand_label }}
-                    <span class="expandable_cue-open">
-                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
-                    </span>
-                    <span class="expandable_cue-close">
-                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
-                    </span>
-                </button>
-            </span>
-        </div>
-    </div>
-    <div class="expandable_content padded-container">
-        <div class="padded-container_body">
-            {{ filters_form(filters, query, doc_type, options) }}
-        </div>
-    </div>
-</div><!-- END .expandable -->
-
-{% endmacro %}
-
-
-{# A helper macro for filters()
-   ========================================================================== #}
-{% macro active_filters(posts, filters, options) %}
-
+{#- Determine the active filters. -#}
 {%- set active_filters = [] -%}
 {%- set active_date_filters = [] -%}
 
@@ -488,46 +437,81 @@
 
 {%- set active_filters_total = active_filters|length + active_date_filters|length -%}
 
-{%- if active_filters_total > 0 -%}
-    <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
-        {%- if options.show_filters_label -%}
-        <li class="list_item filtered-by_header">
-        {%- if posts|list|length > 0 -%}
-            {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
-        {%- else -%}
-            No results for
-        {%- endif -%}
-        </li>
-        {%- endif %}
-    {%- for filter in active_filters %}
-        <li class="list_item filtered-by_filter">
-            {{ 'Blog' if filter == 'post' else filter }}
-        {%- if not loop.last -%}
-            ,
-        {%- elif active_date_filters|length > 0 -%}
-            ,
-        {%- endif %}
-        </li>
-    {% endfor %}
-    {%- if active_date_filters|length > 0 -%}
-        <li class="list_item filtered-by_filter">
-        {%- for filter in active_date_filters %}
-            {{ filter|date("%B %Y") }}
-            {{ '&ndash;'|safe if not loop.last }}
-        {%- endfor -%}
-        </li>
-    {%- endif %}
-    </ul>
-{%- else -%}
-    {% if options.show_unfiltered_count and options.show_filters_label %}
-    <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
-        <li class="list_item">
-            <span class="filtered-by_header">
-                {{ posts.total }} results
+{%- set filter_dict = {
+    'filters': filters,
+    'active_filters_total': active_filters_total
+} -%}
+
+{%- from 'macros.html' import is_mobile -%}
+
+{% set is_expanded = active_filters_total > 0
+                     and options.show_current_filters
+                     and is_mobile().find('False') > -1
+%}
+
+<div class="expandable
+            expandable__filters
+            expandable__padded
+            {{ 'expandable__expanded' if is_expanded }}
+            js-post-filter">
+    <button class="expandable_header expandable_target">
+        <span class="expandable_header-left expandable_label">
+            {{ options.expand_label }}
+        </span>
+        <span class="expandable_header-right expandable_link">
+            <span class="expandable_cue-open">
+                Show
+              <span class="cf-icon cf-icon-plus-round"></span>
             </span>
-        </li>
-    </ul>
-    {% endif %}
+            <span class="expandable_cue-close">
+                Hide
+                <span class="cf-icon cf-icon-minus-round"></span>
+            </span>
+        </span>
+    </button>
+    <div class="expandable_content">
+       {{ filters_form(filters, query, doc_type, options) }}
+    </div>
+</div>
+
+{%- if options.show_current_filters -%}
+    {{ active_filters_helper(posts, filter_dict, options) }}
+{%- endif -%}
+
+{% endmacro %}
+
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro active_filters_helper(posts, filter_dict, options) %}
+{%- set filters = filter_dict.filters -%}
+{%- set active_filters_total = filter_dict.active_filters_total -%}
+{% from 'macros.html' import notification %}
+
+{%- if active_filters_total > 0 and options.show_filters_label -%}
+    <div class="filtered-by">
+        {%- if posts|list|length > 0 -%}
+            {% set text =  posts.total | string
+                        + ' filtered result'
+                        + ('s' if posts.total > 1 else '') %}
+            {% set type = 'success' %}
+        {%- else -%}
+            {% macro _no_resuls_text (posts, filter_dict, options) %}
+                Sorry, there were no results based
+                on your filter selections.
+                <p class="short-desc u-mt15">Please clear the filter or
+                  change your selections and try again.
+                </p>
+            {% endmacro %}
+            {% set text = _no_resuls_text() %}
+            {% set type = 'warning' %}
+        {%- endif -%}
+
+        {{ notification({
+            'text': text,
+            'type': type
+        }) }}
+    </div>
 {%- endif -%}
 
 {% endmacro %}
@@ -537,7 +521,7 @@
    ========================================================================== #}
 {% macro filters_form(filters, query, doc_type, options) %}
 
-<form class="js-validate-filters {{ options.additional_classes }}"
+<form class="{{ options.additional_classes }}"
       method="get"
 {%- if options.action != '/' %}
       action="{{ options.action }}">
@@ -675,118 +659,39 @@
                 "From" date input
                 =================
             #}
-
-            {# No-JS date input #}
             {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
-            <div class="form-l_col form-l_col-1-2 js-filter_range-date-wrapper">
+            {% set from_date_formatted = from_date | date('%m/%d/%Y') if from_date %}
+            <div class="form-l_col form-l_col-1-2">
                 <label for="{{ options.id_range_date_gte }}">
-                    From:
+                    From <span class="date_label">(YYYY-MM)</span>:
                 </label>
                 <input class="js-filter_range-date js-filter_range-date__gte"
                        id="{{ options.id_range_date_gte }}"
                        name="filter_range_date_gte"
                        type="text"
-                       value="{{ from_date if from_date }}"
+                       value="{{ from_date_formatted if from_date_formatted }}"
                        placeholder="YYYY-MM">
             </div>
-
-            {# JS date input #}
-            <div class="form-l_col form-l_col-1-2 input-group js-filter_range-date-replacement"
-                 style="display:none;">
-                <label for="{{ options.id_from_month }}">
-                    From:
-                </label>
-                <div class="input-group_item custom-select">
-                    <select class="form-input-month js-filter_month"
-                            id="{{ options.id_from_month }}">
-                        <option value="">Month</option>
-                        <option value="01">Jan</option>
-                        <option value="02">Feb</option>
-                        <option value="03">Mar</option>
-                        <option value="04">Apr</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">Jul</option>
-                        <option value="08">Aug</option>
-                        <option value="09">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                </div>
-                <div class="input-group_item custom-select">
-                    <select class="form-input_year js-filter_year"
-                            id="{{ options.id_from_year }}">
-                        <option value="">Year</option>
-                    {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {%- endfor -%}
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                </div>
-            </div>
-
             {#
                 ===============
                 "To" date input
                 ===============
             #}
-
-            {# No-JS date input #}
             {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
-            <div class="form-l_col form-l_col-1-2 js-filter_range-date-wrapper">
+            {% set to_date_formatted = to_date | date('%m/%d/%Y') if to_date %}
+            <div class="form-l_col form-l_col-1-2">
                 <label for="{{ options.id_range_date_lte }}">
-                    To:
+                    To <span class="date_label">(YYYY-MM)</span>:
                 </label>
                 <input class="js-filter_range-date js-filter_range-date__lte"
                        id="{{ options.id_range_date_lte }}"
                        name="filter_range_date_lte"
                        type="text"
-                       value="{{ to_date if to_date }}"
+                       value="{{ to_date_formatted if to_date_formatted }}"
                        placeholder="YYYY-MM">
             </div>
-
-            {# JS date input #}
-            <div class="form-l_col form-l_col-1-2 input-group js-filter_range-date-replacement"
-                 style="display:none;">
-                <label for="{{ options.id_to_month }}">
-                    To:
-                </label>
-                <div class="custom-select input-group_item">
-                    <select class="form-input-month js-filter_month"
-                            id="{{ options.id_to_month }}">
-                        <option value="">Month</option>
-                        <option value="01">Jan</option>
-                        <option value="02">Feb</option>
-                        <option value="03">Mar</option>
-                        <option value="04">Apr</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">Jul</option>
-                        <option value="08">Aug</option>
-                        <option value="09">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                </div>
-                <div class="custom-select input-group_item">
-                    <select class="form-input_year js-filter_year"
-                            id="{{ options.id_to_year }}">
-                        <option value="">Year</option>
-                    {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {%- endfor %}
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                </div>
-            </div>
-
           </div>
         </div>
-
     {% endif %}
 {% endfor %}
     </div> <!-- END .form-l__flush -->
@@ -794,7 +699,7 @@
     <div class="form-actions form-actions__right-on-med">
         <input class="btn btn__warning btn__link form-actions_item js-form_clear"
                type="button"
-               value="Clear filters">
+               value="Reset filters">
         <input class="btn form-actions_item"
                type="submit"
                value="{{ options.submit_label }}">
@@ -802,6 +707,7 @@
 
 </form>
 {% endmacro %}
+
 
 {# A helper macro for filters()
    ========================================================================== #}
