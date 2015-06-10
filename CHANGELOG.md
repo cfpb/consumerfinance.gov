@@ -86,6 +86,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Gitignored CF fonts, "chosen" images, and other vendor files from repo,
   which are slated for eventual removal.
 - Removed unused `nav-secondary.html` template.
+- Removed unused `cf_inputSplit.js` js module.
 
 
 ## 3.0.0-1.1.0 - 2015-05-20
