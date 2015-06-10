@@ -15,7 +15,7 @@ $( document ).ready( function() {
   // Native-Browserify modules.
   require( '../modules/beta-banner-state' ).init();
   require( '../modules/secondary-nav-toggle' ).init();
-  require( '../modules/post-filters-form-validation' ).init();
+  require( '../modules/post-filter' ).init();
   require( '../modules/init-chosen' ).init();
   require( '../modules/slide-push-menu' ).init();
   require( '../modules/form-validation' ).init();

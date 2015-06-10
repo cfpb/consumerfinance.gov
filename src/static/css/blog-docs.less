@@ -422,6 +422,66 @@
     - cfgov-blog-docs
 */
 
+@gutter__em: unit(@grid_gutter-width / @base-font-size-px, em);
+@gutter-half__em: @gutter__em/2;
+
+.expandable__filters {
+    border: 1px solid @gray-50;
+    margin: unit(45px / @base-font-size-px, em) 0 @gutter__em 0;
+
+    &.expandable__padded, .expandable_content {
+        background:  @gray-5;
+    }
+
+    .expandable_header {
+      padding: @gutter__em/3 @gutter__em;
+
+      .respond-to-max(@mobile-max {
+        padding: @gutter__em/3 @gutter-half__em;
+      });
+    }
+    .expandable_header-left {
+      width: auto;
+      margin-top: 0;
+      float: left;
+    }
+
+    .expandable_header-right {
+      width: auto;
+      margin-top: 0;
+      float: right;
+    }
+
+    .expandable_content {
+        margin: 0 @gutter__em @gutter__em;
+
+        .respond-to-max(@mobile-max {
+            margin: 0 @gutter-half__em @gutter-half__em;
+        });
+    }
+
+    .chosen-select {
+      width: 100%;
+    }
+
+    .lt-ie9 {
+        .date_label {
+          .u-inline-block();
+        }
+    }
+
+    .date_label {
+        display: none;
+    }
+}
+
+.filtered-by {
+    .cf-notification  {
+        display: block;
+        margin: @gutter__em 0 @gutter__em * 2;
+    }
+}
+
 
 /* topdoc
   name: Insets
