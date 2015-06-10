@@ -34,7 +34,6 @@ $( document ).ready( function() {
   require( '../modules/external-site-redirect.js' ).init();
 
   // Page-specific modules.
-  require( './blog/index.js' );
   require( './contact-us/index.js' ).init();
   require( './index.js' ).init();
   require( './the-bureau/index.js' ).init();
