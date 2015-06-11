@@ -28,6 +28,10 @@
     </section>
     {% endif %}
 
+    {% if sub_page.use_form == "on" %}
+        {%- include "forms/" + sub_page.slug + "-form.html" ignore missing %}
+    {% endif %}
+
     {% if sub_pages and sub_pages.total %}
     <section class="block
                     block__padded-top
