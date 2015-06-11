@@ -8,7 +8,7 @@
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom content_main__sub_page
+    {{ super() }} content__flush-bottom content_main__sub-page
 {%- endblock %}
 
 {% block content_main %}
@@ -21,7 +21,7 @@
     {% endif %}
 
     {% if sub_page.content %}
-    <section class="initiative_description
+    <section class="sub-page_content
                     block
                     block__flush-top">
         {{ sub_page.content | safe }}
@@ -36,7 +36,7 @@
         <div class="content-l content-l__main">
             {% for page in sub_pages %}
             <!-- TODO: link header styles -->
-            <div class="initiative_topic
+            <div class="sub-page_topic
                         block__sub
                         block__flush-top
                         {{ 'office_col' if vars.sub_pages.result_dict|length > 1 else 'content-l_col-1' -}}">
