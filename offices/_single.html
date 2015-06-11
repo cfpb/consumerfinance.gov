@@ -18,57 +18,63 @@
     {% if office.title %}
         <h1>{{ office.title | safe }}</h1>
     {% endif %}
+
     {% if office.intro.text %}
-        <section class="block block__flush-top content-l content-l__main content-l__large-gutters">
-            {% set intro = office.intro %}
-            {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
-            <section class="office_intro content-l_col
-                            {% if show_subscription -%}
-                                content-l_col-1-2
-                            {% else -%}
-                                content-l_col-1
-                            {%- endif %}
-                            ">
-                <p class="h3">{{ intro.text | safe if intro.text }}</p>
-            </section>
-            {% if show_subscription %}
-                <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                    <p class="h3 u-show-on-mobile">Stay informed</p>
-                    <p class="short-desc">Stay up to date with our email newsletter</p>
-                    {% from "macros.html" import subscribe as subscribe with context %}
-                    {{ subscribe(intro.govdelivery_code) }}
-                </section>
-            {% endif %}
+    <section class="block block__flush-top content-l content-l__main content-l__large-gutters">
+        {% set intro = office.intro %}
+        {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
+        <section class="office_intro content-l_col
+                        {% if show_subscription -%}
+                            content-l_col-1-2
+                        {% else -%}
+                            content-l_col-1
+                        {%- endif %}
+                        ">
+            <p class="h3">{{ intro.text | safe if intro.text }}</p>
         </section>
+        {% if show_subscription %}
+            <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <p class="h3 u-show-on-mobile">Stay informed</p>
+                <p class="short-desc">Stay up to date with our email newsletter</p>
+                {% from "macros.html" import subscribe as subscribe with context %}
+                {{ subscribe(intro.govdelivery_code) }}
+            </section>
+        {% endif %}
+    </section>
     {% endif %}
 
-    {% if office.top_story %}
+    {% if office.top_story.head %}
     {% set top_story = office.top_story %}
-        <section class="office_featured block block__padded-top block__border-top">
-            {% if top_story.head %}
-            <h1 class="h3">{{ top_story.head | safe }}</h1>
-            {% endif %}
-            <div class="content-l content-l__main content-l__large-gutters">
-                {% if top_story.desc %}
-                <div class="content-l_col content-l_col-1-2">
-                    <p class="short-desc">{{ top_story.desc | safe }}</p>
-                </div>
-                {% endif %}
-                {% if top_story.links %}
-                <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                    <ul class="list__links">
-                    {% for link in top_story.links %}
-                        <li class="list_item">
-                            <a class="jump-link jump-link__right list_link" href="{{ link.url }}">
-                                {{link.label}}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+    <section class="office_featured block block__padded-top block__border-top">
+        {% if top_story.head %}
+        <h1 class="h3">{{ top_story.head | safe }}</h1>
+        {% endif %}
+        <div class="content-l content-l__main content-l__large-gutters">
+            {% if top_story.desc %}
+            <div class="content-l_col
+                        {% if top_story.links -%}
+                        content-l_col-1-2
+                        {% else -%}
+                        content-l_col-1
+                        {% endif -%}">
+                <p class="short-desc">{{ top_story.desc | safe }}</p>
             </div>
-        </section>
+            {% endif %}
+            {% if top_story.links %}
+            <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <ul class="list__links">
+                {% for link in top_story.links %}
+                    <li class="list_item">
+                        <a class="jump-link jump-link__right list_link" href="{{ link.url }}">
+                            {{link.label}}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </section>
     {% endif %}
     {% if office.resources %}
     <section class="office_resources block block__padded-top block__border-top">
@@ -105,23 +111,20 @@
     {% endif %}
 
     {% for page in vars.sub_pages if page.show_in_office == "on" %}
-        {% if loop.first %}
-        <section class="office_sub_pages block block__sub block__padded-top block__border-top">
-            <h1 class="h2">
-                Our Work
-            </h1>
-            <div class="content-l content-l__main content-l__large-gutters expandables-group">
-        {% endif %}
+    {% if loop.first %}
+    <section class="office_sub_pages block block__sub block__padded-top block__border-top">
+        <h1 class="h2">
+            Our Work
+        </h1>
+        <div class="content-l content-l__main content-l__large-gutters expandables-group">
+    {% endif %}
             <div class="office_initiative
                         expandable
                         expandable__expanded
                         expandable__mobile-only
                         content-l_col
-                        {% if loop.length > 1 -%}
-                            content-l_col-1
-                        {% else -%}
-                            content-l_col-1-2
-                        {%- endif %}
+                        {# TODO: When we upgrade to Jinja2 2.8 we can use loop.length to conditionally set this to one column or two. #}
+                        content-l_col-1-2
                         ">
                 <button class="expandable_header expandable_target u-show-on-mobile">
                     {% if page.short_title or page.title %}
@@ -153,20 +156,20 @@
                     </h2>
                     {% endif %}
                     {% if page.excerpt %}
-                        <p class="short-desc">
-                            {{ page.excerpt | safe }}
-                        </p>
+                    <p class="short-desc">
+                        {{ page.excerpt | safe }}
+                    </p>
                     {% endif %}
                     {% if page.slug %}
-                        <a class="jump-link jump-link__right" href="{{ page.permalink }}">
-                            Read more
-                        </a>
+                    <a class="jump-link jump-link__right" href="{{ page.permalink }}">
+                        Read more
+                    </a>
                     {% endif %}
                 </div>
             </div><!-- END .expandable -->
         {% if loop.last %}
-            </div>
-        </section>
+        </div>
+    </section>
         {% endif %}
     {% endfor %}
 
@@ -174,7 +177,6 @@
                 block
                 block__bg
                 block__flush-sides">
-
         {% if activities_feed %}
         <section class="office_activities">
             <h1 class="header-slug">
