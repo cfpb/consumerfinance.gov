@@ -25,6 +25,10 @@
     </section>
     {% endif %}
 
+    {% if sub_page.use_form == "on" %}
+        {%- include "forms/" + sub_page.slug + "-form.html" ignore missing %}
+    {% endif %}
+
     {% if vars.sub_pages %}
     <section class="block block__padded-top block__border-top block__flush-bottom">
         <div class="content-l content-l__main">
