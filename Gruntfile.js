@@ -314,7 +314,7 @@ module.exports = function(grunt) {
         tasks: ['css', 'js']
       },
       css: {
-        files: ['<%= loc.src %>/static/css/*.less'],
+        files: ['<%= loc.src %>/static/css/**/*.less'],
         tasks: ['css']
       },
       js: {
