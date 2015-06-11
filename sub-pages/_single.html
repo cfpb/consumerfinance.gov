@@ -1,13 +1,14 @@
 {% extends "layout-side-nav.html" %}
 {% import "_vars-sub-pages.html" as vars with context %}
 {% set active_nav_id = sub_page.slug %}
+{% set sub_pages = vars.sub_pages %}
 
 {% block title -%}
     {{ sub_page.title | safe if sub_page.title }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
+    {{ super() }} content__flush-bottom content_main__sub_page
 {%- endblock %}
 
 {% block content_main %}
@@ -20,17 +21,25 @@
     {% endif %}
 
     {% if sub_page.content %}
-    <section class="initiative_description block block__flush-top">
+    <section class="initiative_description
+                    block
+                    block__flush-top">
         {{ sub_page.content | safe }}
     </section>
     {% endif %}
 
-    {% if vars.sub_pages %}
-    <section class="block block__padded-top block__border-top block__flush-bottom">
+    {% if sub_pages and sub_pages.total %}
+    <section class="block
+                    block__padded-top
+                    block__border-top
+                    block__flush-bottom
+                    block__border-bottom">
         <div class="content-l content-l__main">
-            {% for page in vars.sub_pages %}
+            {% for page in sub_pages %}
             <!-- TODO: link header styles -->
-            <div class="initiative_topic block__sub block__flush-top
+            <div class="initiative_topic
+                        block__sub
+                        block__flush-top
                         {{ 'office_col' if vars.sub_pages.result_dict|length > 1 else 'content-l_col-1' -}}">
 
                 {% if page.title %}
@@ -63,8 +72,20 @@
     </section>
     {% endif %}
 
+    {% if sub_page.body_content %}
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        {{ sub_page.body_content }}
+    </section>
+    {% endif %}
+
     {% if activities_feed %}
-    <aside class="block block__flush-sides block__bg u-mb0 u-mt0">
+    <aside class="block
+                  block__flush-sides
+                  block__bg
+                  u-mb0
+                  u-mt0">
         <section class="office_activities">
             <h1 class="header-slug">
                 <span class="header-slug_inner">
