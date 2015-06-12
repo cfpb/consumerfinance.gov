@@ -41,7 +41,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `related_faq` field to sub_pages and offices
 - Added `inset-divider` class for providing an inset horizontal rule
   independent of the list or list item widths within the side navigation bar.
-- Added `preview_text` and `short_title` fields to sub_pages
+- Added `preview_text` and `short_title` fields to sub_pages.
+- Added `templates/activities-feed.html` HTML template for the activity feed
+  area on the offices and sub_pages.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -72,6 +74,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated side navigation bar to keep page order at mobile sizes and adds
   "IN THIS SECTION" header text to the navigation bar dropdown menu.
 - Updated processors to use Elasticsearch bulk indexing
+- Office and sub-pages activity feed title to "Latest Activities"
+  and contacts to "Contact Information."
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
