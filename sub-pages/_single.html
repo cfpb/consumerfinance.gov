@@ -90,12 +90,7 @@
                   u-mb0
                   u-mt0">
         <section class="office_activities">
-            <h1 class="header-slug">
-                <span class="header-slug_inner">
-                    Activities
-                </span>
-            </h1>
-            {{ activities_feed }}
+            {% include "templates/activities-feed.html" %}
         </section>
     </aside>
     {% endif %}
