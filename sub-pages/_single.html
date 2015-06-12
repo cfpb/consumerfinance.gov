@@ -28,8 +28,8 @@
     </section>
     {% endif %}
 
-    {% if sub_page.use_form == "on" %}
-        {%- include "forms/" + sub_page.slug + "-form.html" ignore missing %}
+    {% if sub_page.use_form %}
+        {%- include "templates/forms/" + sub_page.slug + "-form.html" ignore missing %}
     {% endif %}
 
     {% if sub_pages and sub_pages.total %}

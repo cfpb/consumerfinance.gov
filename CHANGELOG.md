@@ -44,6 +44,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `preview_text` and `short_title` fields to sub_pages.
 - Added `templates/activities-feed.html` HTML template for the activity feed
   area on the offices and sub_pages.
+- Added Plain Writing Feedback form.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.

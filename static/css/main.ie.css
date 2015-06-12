@@ -11227,6 +11227,14 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
+.plain-writing-feedback .plain-writing-feedback_step {
+  text-align: center;
+}
+
+.plain-writing-feedback #plain-writing-feedback_state {
+  width: 100%;
+}
+
 .press-section+.press-section {
   padding-top: 1.875em;
   border-top: 1px solid #babbbd;
