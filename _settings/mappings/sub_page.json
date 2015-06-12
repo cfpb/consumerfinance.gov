@@ -75,6 +75,9 @@
     "parent": {
       "type": "long"
     },
+    "preview_text": {
+      "type": "string"
+    },
     "related_faq": {
       "type": "string",
       "index": "not_analyzed"
@@ -94,6 +97,9 @@
       "index": "not_analyzed"
     },
     "relative_url": {
+      "type": "string"
+    },
+    "short_title": {
       "type": "string"
     },
     "show_in_office": {
