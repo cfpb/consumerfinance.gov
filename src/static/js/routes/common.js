@@ -15,7 +15,7 @@ $( document ).ready( function() {
   // Native-Browserify modules.
   require( '../modules/beta-banner-state' ).init();
   require( '../modules/secondary-nav-toggle' ).init();
-  require( '../modules/post-filters-form-validation' ).init();
+  require( '../modules/post-filter' ).init();
   require( '../modules/init-chosen' ).init();
   require( '../modules/slide-push-menu' ).init();
   require( '../modules/form-validation' ).init();
@@ -29,9 +29,11 @@ $( document ).ready( function() {
   require( '../modules/footer-button' ).init();
   require( '../modules/youtube' ).init();
   require( '../modules/pagination-validation.js' ).init();
+  require( '../modules/show-hide-fields.js' ).init();
+  require( '../modules/external-site.js' ).init();
+  require( '../modules/external-site-redirect.js' ).init();
 
   // Page-specific modules.
-  require( './blog/index.js' );
   require( './contact-us/index.js' ).init();
   require( './index.js' ).init();
   require( './the-bureau/index.js' ).init();

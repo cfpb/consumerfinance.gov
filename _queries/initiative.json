@@ -1,7 +1,0 @@
-{
-  "name": "Initiative",
-  "query": {
-    "doc_type": "initiative",
-    "size": 6
-  }
-}

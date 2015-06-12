@@ -4,9 +4,9 @@
     "type":      "contact",
     "permalink": true
   },
-  "initiative": {
-    "url":       "/initiatives/<id>/",
-    "type":      "initiative",
+  "sub_page": {
+    "url":       "/sub-pages/<id>/",
+    "type":      "sub_page",
     "permalink": true
   },
   "office": {
