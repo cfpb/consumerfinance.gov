@@ -13,8 +13,8 @@
 
 {% block content_main %}
 
-    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
-    {% set activities_feed = activity_snippets(tag, activity_type) %}
+    {% import "macros/activity-snippets.html" as activity_snippets with context %}
+    {% set activities_feed = activity_snippets.render(tag, activity_type) %}
 
     {% if sub_page.title %}
     <h1>{{ sub_page.title | safe }}</h1>
