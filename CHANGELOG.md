@@ -41,6 +41,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `related_faq` field to sub_pages and offices
 - Added `inset-divider` class for providing an inset horizontal rule
   independent of the list or list item widths within the side navigation bar.
+- Added `preview_text` and `short_title` fields to sub_pages
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
