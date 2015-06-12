@@ -24,6 +24,26 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `grunt watch:js` task for completeness.
 - Added vendor directory variable to `main.less`.
 - Added warning for concat:cf-less Grunt task when sourcefiles are missing.
+- Added form for Submit a request FOIA page
+- Added styles, JavaScript for hiding and showing additional fields in forms
+- Added toplevel navigation items config file for removing hardcoded
+  navigation menu items.
+- Added external url redirect page, styles, and JavaScript.
+- Added `.nav-secondary_link__disabled` style.
+- Added `.nav-secondary_item__child` class to visually distinguish sub-pages
+  from sibling pages in the sidenav.
+- Added `.nav-secondary_item__parent` class to visually distinguish browse
+  pages from the subpages below them in the sidenav.
+- Added JavaScript utilities for checking types and primitives.
+- Added `primary_nav` jinja block to `base.html` template.
+- Added FAQ processor and mapping
+- Added `use_form` field to sub_pages
+- Added `related_faq` field to sub_pages and offices
+- Added `inset-divider` class for providing an inset horizontal rule
+  independent of the list or list item widths within the side navigation bar.
+- Added `preview_text` and `short_title` fields to sub_pages.
+- Added `templates/activities-feed.html` HTML template for the activity feed
+  area on the offices and sub_pages.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -35,16 +55,44 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed to using `jit-grunt` in place of `load-grunt-tasks`.
 - Updated contact us filter to use new notifications
   (replacing type-and-filter messaging with cf_notifier)
+- Replaced placeholder Activity Feed on FOIA faq page with actual Activity Feed
+- Sped up notification animations
+- Added custom template for FOIA records page.
+- Refactored code for Wordpress updates
+- Initiatives renamed to Sub-pages
+- Relaxed ESLint cyclomatic `complexity` rule to max 4 complexity.
+- Updates megamenu bureau title to "The Bureau" to fit with sitemap direction.
+- Moved Less files to `/src/static/css/` directory.
+- Updated `cf-icons` to 0.6.0.
+- Update processors.py for FAQ
+- Moved HTML templates to `/templates/` subdirectory.
+- Breaks header template apart into `header.html`
+  and `primary-nav.html` templates.
+- Moved external site page header to its own template
+  `header-without-nav.html`.
+- Minor codefixes on `show-hide-fields.js` along with changing a class name for hiding fields
+- Updated side navigation bar to keep page order at mobile sizes and adds
+  "IN THIS SECTION" header text to the navigation bar dropdown menu.
+- Updated processors to use Elasticsearch bulk indexing
+- Office and sub-pages activity feed title to "Latest Activities"
+  and contacts to "Contact Information."
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
 - Fixed most of the warnings in validation and notification plugins
+- Fixed processor name bug
+- Fixed template/processor bugs while indexing and rendering
+- Fixed FOIA pages from the template/processor changes
+- Fixed missing states from `.nav-secondary_link__disabled` class for
+  visited and active links.
 
 ### Removed
-- Removes `copy:static-legacy` and `grunt-contrib-copy` package.
+- Removed `copy:static-legacy` and `grunt-contrib-copy` package.
 - Removed unneeded entries from `exportsOverride` in `bower.json`.
 - Gitignored CF fonts, "chosen" images, and other vendor files from repo,
   which are slated for eventual removal.
+- Removed unused `nav-secondary.html` template.
+- Removed unused `cf_inputSplit.js` js module.
 
 
 ## 3.0.0-1.1.0 - 2015-05-20

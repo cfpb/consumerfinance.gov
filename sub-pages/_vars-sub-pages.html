@@ -1,0 +1,18 @@
+{% set query = queries.sub_page %}
+{% set sub_pages = query.search_with_url_arguments(size=6, filter_has_parent=true, filter_parent=sub_page.id) %}
+{% set nav_sub_pages = query.search_with_url_arguments(size=15, filter_related_office=sub_page.related_office, filter_has_parent=false) %}
+{% set office = get_document('office', sub_page.related_office) %}
+
+{% set path = '/sub_pages/' %}
+{% set nav_items =
+    [(office.permalink, office.slug, office.title)]
+-%}
+
+{% for page in nav_sub_pages %}
+    {%- set _ignore = nav_items.append((page.permalink, page.slug, page.title|safe)) -%}
+{% endfor %}
+
+{# This to fake data for records sub-pages #}
+{# TODO: Update _queries/records.json when we have real record posts #}
+{% set record_query = queries.records %}
+{% set records = record_query.search_with_url_arguments(size=10) %}

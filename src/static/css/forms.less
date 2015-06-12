@@ -630,6 +630,20 @@
     });
 }
 
+.form-l-inset {
+    // The default margin between two columns is 30px.
+    // The following rules shrink it to 5px for the insets
+    border-right-width: 2.5px;
+    + .form-l-inset { border-left-width: 2.5px; }
+    &:last-child { border-right-width: 15px; }
+
+    .form-l-inset_container {
+      padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
+               unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+      background: @gray-20;
+    }
+
+}
 
 /* topdoc
   name: EOF

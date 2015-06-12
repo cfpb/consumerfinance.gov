@@ -18,9 +18,11 @@
 
 </form>
 
-<form class="js-validate-filters" method="get">
-
+<form class="js-validate_form-not-empty" method="get">
     <div class="form-l form-l__float form-l__flush">
+
+
+
 
         <div class="form-l_col form-l_col-1-3">
             <div class="form-group required-check-group">
@@ -44,92 +46,32 @@
                 Date range
             </label>
 
-            <div class="form-l_col form-l_col-1-2 js-filter_range-date-wrapper" style="display: none;">
-                <label for="filter_range-date-gte">
-                    From:
+
+
+            <div class="form-l_col form-l_col-1-2">
+                <label for="download-filter_range-date-gte">
+                    From <span class="date_label">(YYYY-MM)</span>:
                 </label>
-                <input class="js-filter_range-date js-filter_range-date__gte" id="filter_range-date-gte" name="filter_range_date_gte" type="text" value="" placeholder="YYYY-MM">
+                <input class="js-filter_range-date js-filter_range-date__gte" id="download-filter_range-date-gte" name="filter_range_date_gte" type="text" value="" placeholder="mm/dd/yyyy">
             </div>
 
-            <div class="form-l_col form-l_col-1-2 input-group js-filter_range-date-replacement" style="">
-                <label for="filter_from-month">
-                    From:
-                </label>
-                <div class="input-group_item custom-select is-enabled">
-                    <select class="form-input-month js-filter_month custom-select_select" id="filter_from-month" style="opacity: 0;">
-                        <option value="">Month</option>
-                        <option value="01">Jan</option>
-                        <option value="02">Feb</option>
-                        <option value="03">Mar</option>
-                        <option value="04">Apr</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">Jul</option>
-                        <option value="08">Aug</option>
-                        <option value="09">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                <span class="custom-select_text custom-select_placeholder">Month</span></div>
-                <div class="input-group_item custom-select is-enabled">
-                    <select class="form-input_year js-filter_year custom-select_select" id="filter_from-year" style="opacity: 0;">
-                        <option value="" selected="selected">Year</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option></select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                <span class="custom-select_text custom-select_placeholder">Year</span></div>
-            </div>
 
-            <div class="form-l_col form-l_col-1-2 js-filter_range-date-wrapper" style="display: none;">
-                <label for="filter_range-date-lte">
-                    To:
-                </label>
-                <input class="js-filter_range-date js-filter_range-date__lte" id="filter_range-date-lte" name="filter_range_date_lte" type="text" value="" placeholder="YYYY-MM">
-            </div>
 
-            <div class="form-l_col form-l_col-1-2 input-group js-filter_range-date-replacement" style="">
-                <label for="filter_to-month">
-                    To:
+            <div class="form-l_col form-l_col-1-2">
+                <label for="download-filter_range-date-lte">
+                    To <span class="date_label">(YYYY-MM)</span>:
                 </label>
-                <div class="custom-select input-group_item is-enabled">
-                    <select class="form-input-month js-filter_month custom-select_select" id="filter_to-month" style="opacity: 0;">
-                        <option value="">Month</option>
-                        <option value="01">Jan</option>
-                        <option value="02">Feb</option>
-                        <option value="03">Mar</option>
-                        <option value="04">Apr</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">Jul</option>
-                        <option value="08">Aug</option>
-                        <option value="09">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                <span class="custom-select_text custom-select_placeholder">Month</span></div>
-                <div class="custom-select input-group_item is-enabled">
-                    <select class="form-input_year js-filter_year custom-select_select" id="filter_to-year" style="opacity: 0;">
-                        <option value="" selected="selected">Year</option>
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                <span class="custom-select_text custom-select_placeholder">Year</span></div>
+                <input class="js-filter_range-date js-filter_range-date__lte" id="download-filter_range-date-lte" name="filter_range_date_lte" type="text" value="" placeholder="mm/dd/yyyy">
             </div>
-
           </div>
         </div>
+
 
     </div> <!-- END .form-l__flush -->
 
     <div class="form-actions form-actions__right-on-med">
-        <input class="btn btn__warning btn__link form-actions_item js-form_clear" type="button" value="Clear filters">
-        <input class="btn form-actions_item" type="submit" value="Apply filters">
+        <input class="btn btn__warning btn__link form-actions_item js-form_clear" type="button" value="Reset filters">
+        <input class="btn form-actions_item" type="submit" value="Download PDF">
     </div>
 
 </form>
