@@ -44,6 +44,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `preview_text` and `short_title` fields to sub_pages.
 - Added `templates/activities-feed.html` HTML template for the activity feed
   area on the offices and sub_pages.
+- Added `cfpb_report` activity type to activities feed macro.
+- Added breadcrumbs macro and temporarily set breadcrumbs for all office sub-pages.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.

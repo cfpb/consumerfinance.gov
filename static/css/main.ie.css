@@ -5284,6 +5284,10 @@ textarea.input__long {
   display: block;
 }
 
+.content__half-top-on-desk {
+  padding-top: 20px;
+}
+
 .cf-notification {
   display: none;
   position: relative;
