@@ -41,4 +41,7 @@ def process_post(post):
 
     del post['custom_fields']
 
-    return post
+    return {'_index': 'content',
+            '_type': 'faq',
+            '_id': post['slug'],
+            '_source': post}
