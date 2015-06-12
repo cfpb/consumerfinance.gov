@@ -44,6 +44,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `preview_text` and `short_title` fields to sub_pages.
 - Added `templates/activities-feed.html` HTML template for the activity feed
   area on the offices and sub_pages.
+- Added `cfpb_report` activity type to activities feed macro.
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -76,6 +77,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated processors to use Elasticsearch bulk indexing
 - Office and sub-pages activity feed title to "Latest Activities"
   and contacts to "Contact Information."
+- Moved `activity_snippets` macro from `post-macros.html` to `macros/activity-snippet.html`
+  and adds render method.
+- Made `activity_snippet` macro private.
+- Moved `category_icon` macro from `post-macros.html` to `macros/category-icon.html`
+  and adds render method.
+- Moved `string_length` macro from `macros.html` to `macros/util/text.html`.
+
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order

@@ -2,33 +2,15 @@
     "file": "post-macros.html",
     "tests": [
         {
-            "macro_name": "category_icon",
-            "arguments": ["at the cfpb", ""],
-            "assertions": [
-                {
-                    "selector": ".cf-icon-bullhorn",
-                    "assertion": "exists"
-                }
-            ]
-        },
-        {
-            "macro_name": "category_icon",
-            "arguments": ["data, research & reports", ""],
-            "assertions": [
-                {
-                    "selector": ".cf-icon-chart",
-                    "assertion": "exists"
-                }
-            ]
-        },
-        {
             "test_name": "post summary",
             "macro_name": "post_summary",
             "arguments": [
-                    {"title": "Test Post",
-                     "dek": "A dek",
-                     "excerpt": "An excerpt",
-                     "author": ["Me"]}
+                {
+                    "title": "Test Post",
+                    "dek": "A dek",
+                    "excerpt": "An excerpt",
+                    "author": ["Me"]
+                }
             ],
             "assertions": [
                 {
