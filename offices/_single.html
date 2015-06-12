@@ -13,8 +13,7 @@
 
     {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
     {% import "contact-macro.html" as contact_macro %}
-    {% set activities_feed = activity_snippets(activity_type) %}
-
+    {% set activities_feed = activity_snippets( office.tags if office.tags ) %}
     {% if office.title %}
         <h1>{{ office.title | safe }}</h1>
     {% endif %}
@@ -162,7 +161,7 @@
                     {% endif %}
                     {% if page.slug %}
                     <a class="jump-link jump-link__right" href="{{ page.permalink }}">
-                        Read more
+                        {{ page.preview_text or 'Read more' }}
                     </a>
                     {% endif %}
                 </div>
