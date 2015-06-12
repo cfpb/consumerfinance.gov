@@ -38,5 +38,3 @@ JSONTestCaseLoader(tests_path, CFGovTestCase, globals())
 # Run the tests if we're executed
 if __name__ == '__main__':
     unittest.main()
-
-
