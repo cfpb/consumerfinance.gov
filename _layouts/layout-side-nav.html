@@ -28,9 +28,11 @@
 {# Extra classes needed for .content_sidebar #}
 {% block content_sidebar_modifiers -%}
     content__flush-all-on-small
+    {{ "content__half-top-on-desk" if breadcrumb_items | length > 0 }}
 {%- endblock %}
 
 {# Extra classes needed for .content_main #}
 {% block content_main_modifiers -%}
     content__flush-top-on-small
+    {{ "content__half-top-on-desk" if breadcrumb_items | length > 0 }}
 {%- endblock %}
