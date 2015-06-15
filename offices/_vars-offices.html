@@ -2,7 +2,8 @@
 {% set query = queries.sub_page %}
 {% set sub_pages = query.search_with_url_arguments(size=15, filter_has_parent="false", filter_related_office=office.slug) %}
 
-{% set nav_items = [(office.permalink, 'index', office.title)] -%}
+{% set child_pages = [] %}
 {% for page in sub_pages %}
-    {%- set _ignore = nav_items.append((page.permalink, page.slug, page.title|safe)) -%}
+    {%- set _ignore = child_pages.append((page.permalink, page.slug, page.title|safe)) -%}
 {% endfor %}
+{% set nav_items = [(office.permalink, 'index', office.title, child_pages)] -%}
