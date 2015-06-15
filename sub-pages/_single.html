@@ -5,6 +5,9 @@
 {% set breadcrumb_items = [(vars.office.permalink, vars.office.slug, vars.office.title)] %}
 
 
+{% set display_activity_slugs = ["plain-writing-act"] %}
+{% set display_activity_flag = sub_page.slug in display_activity_slugs %}
+
 {% block title -%}
     {{ sub_page.title | safe if sub_page.title }}
 {%- endblock %}
@@ -86,7 +89,7 @@
     </section>
     {% endif %}
 
-    {% if activities_feed %}
+    {% if activities_feed and display_activity_flag == true %}
     <aside class="block
                   block__flush-sides
                   block__bg
@@ -97,5 +100,8 @@
         </section>
     </aside>
     {% endif %}
+
+    {% set office = vars.office %}
+    {% include "templates/office-contact.html" %}
 
 {% endblock %}

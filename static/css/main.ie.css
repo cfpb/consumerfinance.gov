@@ -11267,6 +11267,10 @@ a.focus .summary_event-date {
   margin-bottom: 1.875em;
 }
 
+.office .office_activities+.office_contact {
+  padding-bottom: 0;
+}
+
 .initiative_description p:first-child {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
