@@ -46,6 +46,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   area on the offices and sub_pages.
 - Added `cfpb_report` activity type to activities feed macro.
 - Added breadcrumbs macro and temporarily set breadcrumbs for all office sub-pages.
+- Added download icons to `privacy-impact-assessments-pias`
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
