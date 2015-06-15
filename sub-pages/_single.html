@@ -14,7 +14,6 @@
 {%- endblock %}
 
 {% block content_main %}
-
     {% import "macros/activity-snippets.html" as activity_snippets with context %}
     {% set activities_feed = activity_snippets.render(tag, activity_type) %}
 
@@ -78,7 +77,9 @@
     {% endif %}
 
     {% if sub_page.body_content %}
-    <section class="block
+    <section class="sub-page_content
+                    sub-page_{{sub_page.slug}}
+                    block
                     block__padded-top
                     block__border-top">
         {{ sub_page.body_content }}
