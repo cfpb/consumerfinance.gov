@@ -956,6 +956,26 @@ textarea.input__long {
 }
 
 /* topdoc
+  name: Half top padding
+  family: cf-layout
+  patterns:
+    -name: .content__half-top-on-desk
+    markup: |
+      <aside class="content_sidebar content__half-top-on-desk">
+        <!-- sidebar components -->
+      </aside>
+      <div class="content_main content__half-top-on-desk">
+        <!-- main content components -->
+      </div>
+  tags: cf-layout
+*/
+.content__half-top-on-desk {
+    .respond-to-min(800px, {
+        padding-top: 20px;
+    });
+}
+
+/* topdoc
     name: EOF
     eof: true
 */
