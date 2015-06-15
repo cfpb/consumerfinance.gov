@@ -11,9 +11,9 @@
 
 {% block content_main %}
 
-    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+    {% import "macros/activity-snippets.html" as activity_snippets with context %}
     {% import "contact-macro.html" as contact_macro %}
-    {% set activities_feed = activity_snippets(activity_type) %}
+    {% set activities_feed = activity_snippets.render( office.tags if office.tags ) %}
 
     {% if office.title %}
         <h1>{{ office.title | safe }}</h1>
@@ -162,7 +162,7 @@
                     {% endif %}
                     {% if page.slug %}
                     <a class="jump-link jump-link__right" href="{{ page.permalink }}">
-                        Read more
+                        {{ page.preview_text or 'Read more' }}
                     </a>
                     {% endif %}
                 </div>
@@ -187,8 +187,7 @@
         </section>
         {% endif %}
 
-        {% if office.related_contact %}
-        {% set contact = get_document('contact', office.related_contact) %}
+        {% set contact = get_document('contact', office.related_contact) if office.related_contact %}
         {% if contact %}
         <section class="office_content block u-mb0">
             <h1 class="header-slug">
@@ -203,7 +202,6 @@
             </div>
             {{ contact_macro.render( contact, 'block block__flush-top' ) }}
         </section>
-        {% endif %}
         {% endif %}
 
     </div>
