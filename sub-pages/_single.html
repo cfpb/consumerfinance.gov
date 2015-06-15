@@ -2,6 +2,8 @@
 {% import "_vars-sub-pages.html" as vars with context %}
 {% set active_nav_id = sub_page.slug %}
 {% set sub_pages = vars.sub_pages %}
+{% set breadcrumb_items = [(vars.office.permalink, vars.office.slug, vars.office.title)] %}
+
 
 {% block title -%}
     {{ sub_page.title | safe if sub_page.title }}
