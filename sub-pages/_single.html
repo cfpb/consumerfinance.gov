@@ -13,7 +13,7 @@
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom content_main__sub-page
+    {{ super() }} content__flush-bottom sub-page
 {%- endblock %}
 
 {% block content_main %}
@@ -92,7 +92,7 @@
     </section>
     {% endif %}
 
-    {% if activities_feed %}
+    {% if activities_feed and display_activity_flag == true %}
     <section class="office_activities
                     block
                     block__flush-sides
@@ -105,6 +105,15 @@
             View all of our activities
         </a>
     </section>
+    {% endif %}
+
+     {% if sub_page.related_faq %}
+        {% set related_faq = get_document('faq', sub_page.related_faq) %}
+        {% import "macros/expandable.html" as expandable with context %}
+        {{ expandable.render(
+                related_faq.faq, 'question', 'answer', {"title": "FAQS"}
+           ) if related_faq.faq
+        }}
     {% endif %}
 
     {% set office = vars.office %}

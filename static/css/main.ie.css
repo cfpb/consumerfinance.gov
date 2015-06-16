@@ -11679,6 +11679,40 @@ a.focus .summary_event-date {
   text-align: right;
 }
 
+.sub-page_frequently-asked-questions {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: .73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.sub-page_frequently-asked-questions em,
+.sub-page_frequently-asked-questions i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions em,
+.lt-ie9 .sub-page_frequently-asked-questions i {
+  font-style: normal !important;
+}
+
+.sub-page_frequently-asked-questions strong,
+.sub-page_frequently-asked-questions b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions strong,
+.lt-ie9 .sub-page_frequently-asked-questions b {
+  font-weight: normal !important;
+}
+
 .demo-placeholder {
   display: inline-block;
   padding: .57142857em .85714286em;
