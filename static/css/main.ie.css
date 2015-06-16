@@ -11267,6 +11267,36 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
+.office {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.office em,
+.office i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .office em,
+.lt-ie9 .office i {
+  font-style: normal !important;
+}
+
+.office strong,
+.office b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .office strong,
+.lt-ie9 .office b {
+  font-weight: normal !important;
+}
+
 .office_initiatives .expandable.content-l_col {
   margin-bottom: 1.875em;
 }
@@ -11561,6 +11591,36 @@ a.focus .summary_event-date {
 
 .lt-ie9 .contact-person__director .contact-person_name strong,
 .lt-ie9 .contact-person__director .contact-person_name b {
+  font-weight: normal !important;
+}
+
+.sub-page {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sub-page em,
+.sub-page i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page em,
+.lt-ie9 .sub-page i {
+  font-style: normal !important;
+}
+
+.sub-page strong,
+.sub-page b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page strong,
+.lt-ie9 .sub-page b {
   font-weight: normal !important;
 }
 
