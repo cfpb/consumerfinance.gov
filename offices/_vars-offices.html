@@ -1,8 +1,12 @@
 {% set path = '/offices/' %}
-{% set query = queries.sub_page %}
-{% set sub_pages = query.search_with_url_arguments(size=15, filter_has_parent="false", filter_related_office=office.slug) %}
+{% set sub_pages = [] %}
+{% for slug in office.related_sub_pages %}
+    {% set _ignore = sub_pages.append(get_document('sub_page', slug)) %}
+{% endfor %}
 
-{% set nav_items = [(office.permalink, 'index', office.title)] -%}
-{% for page in sub_pages %}
-    {%- set _ignore = nav_items.append((page.permalink, page.slug, page.title|safe)) -%}
+{% set title = office.short_title|safe if office.short_title else office.title|safe %}
+{% set nav_items = [(office.permalink, 'index', title)] -%}
+{% for page in sub_pages|sort(attribute='order') %}
+    {% set title = page.short_title|safe if page.short_title else page.title|safe %}
+    {%- set _ignore = nav_items.append((page.permalink, page.slug, title)) -%}
 {% endfor %}
