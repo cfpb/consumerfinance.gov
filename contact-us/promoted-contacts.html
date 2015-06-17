@@ -11,14 +11,14 @@
         <h1 class="h5">
             {{ accessibility_feedback.title }}
         </h1>
-    {%- if accessibility_feedback.sitewide_desc != 'none' %}
+    {%- if accessibility_feedback.sitewide_desc %}
         <p>
             {{ accessibility_feedback.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if accessibility_feedback.web_addr %}
-        <a class="jump-link" href="{{ accessibility_feedback.web_addr }}">
-            {{ accessibility_feedback.web_desc if accessibility_feedback.web_desc else accessibility_feedback.web_addr }}
+    {%- if accessibility_feedback.web.url %}
+        <a class="jump-link" href="{{ accessibility_feedback.web.url }}">
+            {{ accessibility_feedback.web.label if accessibility_feedback.web.label else accessibility_feedback.web.url }}
         </a>
     {%- endif %}
     </section>
@@ -27,30 +27,42 @@
         <h1 class="h5">
             {{ whistleblowers.title }}
         </h1>
-    {%- if whistleblowers.sitewide_desc != 'none' %}
+    {%- if whistleblowers.sitewide_desc %}
         <p>
             {{ whistleblowers.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if whistleblowers.email_addr or whistleblowers.phone_num %}
+    {%- if whistleblowers.email or whistleblowers.phone %}
         <ul class="list list__icons">
-        {%- if whistleblowers.email_addr %}
-            <li class="list_item u-break-word">
-                <span class="cf-icon cf-icon-email list_icon"></span>
-                <span class="list_text">
-                    <a class="list_link" href="mailto:{{ whistleblowers.email_addr }}">
-                        {{ whistleblowers.email_addr }}
-                    </a>
-                </span>
-            </li>
+        {%- if whistleblowers.email %}
+            {%- for email in whistleblowers.email %}
+                {%- if email.addr %}
+                <li class="list_item u-break-word">
+                {%- if loop.index == 0 %}
+                    <span class="cf-icon cf-icon-email list_icon"></span>
+                {%- endif %}
+                    <span class="list_text">
+                        <a class="list_link" href="mailto:{{ email.addr }}">
+                            {{ email.addr }}
+                        </a>
+                    </span>
+                </li>
+                {%- endif %}
+            {%- endfor %}
         {%- endif %}
-        {%- if whistleblowers.phone_num %}
-            <li class="list_item">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="short-desc list_text">
-                    {{ format_phone(whistleblowers.phone_num) }}
-                </span>
-            </li>
+        {%- if whistleblowers.phone %}
+            {%- for phone in whistleblowers.phone %}
+                {%- if phone.num %}
+                <li class="list_item">
+                {%- if loop.index == 0 %}
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
+                {%- endif %}
+                    <span class="short-desc list_text">
+                        {{ format_phone(phone.num) }}
+                    </span>
+                </li>
+                {%- endif %}
+            {%- endfor %}
         {%- endif %}
         </ul>
     {%- endif %}
@@ -60,21 +72,27 @@
         <h1 class="h5">
             {{ tribal_consultation.title }}
         </h1>
-    {%- if tribal_consultation.sitewide_desc != 'none' %}
+    {%- if tribal_consultation.sitewide_desc %}
         <p>
             {{ tribal_consultation.sitewide_desc }}
         </p>
     {%- endif %}
-    {%- if tribal_consultation.email_addr %}
+    {%- if tribal_consultation.email %}
         <ul class="list list__icons">
+        {%- for email in tribal_consultation.email %}
+            {%- if email.addr %}
             <li class="list_item u-break-word">
+            {%- if loop.index == 0 %}
                 <span class="cf-icon cf-icon-email list_icon"></span>
+            {%- endif %}
                 <span class="list_text">
-                    <a class="list_link" href="mailto:{{ tribal_consultation.email_addr }}">
-                        {{ tribal_consultation.email_addr }}
+                    <a class="list_link" href="mailto:{{ email.addr }}">
+                        {{ email.addr }}
                     </a>
                 </span>
             </li>
+            {%- endif %}
+        {%- endfor %}
         </ul>
     {%- endif %}
     </section>

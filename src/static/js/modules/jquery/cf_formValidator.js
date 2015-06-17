@@ -26,10 +26,11 @@ var _validator = {
   },
 
   /**
-   * Checks wether the passed input should be skipped for the passed test type
-   * @param   {object}  elem The input we're testing
-   * @param   {string}  type The test type we're checking for
-   * @returns {boolean}      Wether this input should be tested for the type
+   * Checks whether the passed input should be skipped
+   * for the passed test type.
+   * @param   {object}  elem The input we're testing.
+   * @param   {string}  type The test type we're checking for.
+   * @returns {boolean}      Whether this input should be tested for the type.
    */
   _skipType: function( elem, type ) {
     var typeAttr = elem.attr( 'type' );
@@ -43,9 +44,9 @@ var _validator = {
   },
 
   /**
-   * Validate an individual input for each of the set types
-   * @param   {object} elem The jQuery object of the input
-   * @returns {object}      The status of each of the tested types
+   * Validate an individual input for each of the set types.
+   * @param   {object} elem The jQuery object of the input.
+   * @returns {object}      The status of each of the tested types.
   */
   _validateTypes: function( elem ) {
     var status = {};
@@ -67,9 +68,9 @@ var _validator = {
   },
 
   /**
-   * Returns  the formatted validation of the tested input
-   * @param   {object} elem The input we're testing
-   * @returns {object}      The formatted validation object of the tested input
+   * @param   {object} elem The input we're testing.
+   * @returns {object}      The formatted validation object
+   *                        of the tested input.
    */
   _validateInput: function( elem ) {
     return {
@@ -81,9 +82,9 @@ var _validator = {
   },
 
   /**
-   * Returns  the formatted validation of the tested check group
-   * @param   {object} elem The check group we're testing
-   * @returns {object}      The formatted validation object of the tested input
+   * @param   {object} elem The check group we're testing.
+   * @returns {object}      The formatted validation object
+   *                        of the tested check group.
    */
   _validateCheckGroup: function( elem ) {
     return {
@@ -97,9 +98,10 @@ var _validator = {
   },
 
   /**
-   * Validate the fields of our form
-   * @param   {object} fields  The list of input fields we're testing
-   * @returns {object}         The tested list of fields broken into valid and invalid blocks
+   * Validate the fields of our form.
+   * @param   {object} fields  The list of input fields we're testing.
+   * @returns {object}         The tested list of fields broken into valid
+   *                           and invalid blocks.
   */
   _validateFields: function( fields ) {
     var checkgroups = {};
@@ -113,10 +115,10 @@ var _validator = {
       var failed = false;
       var field;
 
-      // if it's a button elem or type is button or submit, skip it
+      // If it's a button elem or type is button or submit, skip it.
       if ( $input.is( 'button, :button, :submit' ) ) {
         return;
-      // if it's a checkbox test the entire check group
+      // If it's a checkbox test the entire check group.
       } else if ( $input.is( ':checkbox' ) ) {
         var name = $input.attr( 'name' );
         var $group = $input.closest( '.form-group' );
@@ -145,7 +147,7 @@ var _validator = {
     return validatedFields;
   },
 
-  // Listen for cf_formValidator submit event
+  // Listen for cf_formValidator submit event.
   _initSubmitListener: function() {
     _validator.elem.on( 'submit.cf_formValidator', function( event ) {
       var $submitted = $( this );
@@ -160,7 +162,7 @@ var _validator = {
     } );
   },
 
-  // Remove cf_formValidator submit listeners
+  // Remove cf_formValidator submit listeners.
   _rmSubmitListener: function() {
     _validator.elem.off( 'submit.cf_formValidator' );
   },

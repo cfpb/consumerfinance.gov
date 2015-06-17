@@ -1,5 +1,8 @@
 {
   "properties": {
+    "alt_title": {
+      "type": "string"
+    },
     "attachments": {
       "properties": {
         "caption": {
@@ -8,7 +11,7 @@
         "id": {
           "type": "long"
         },
-        "mime_type": {
+      "mime_type": {
           "type": "string"
         },
         "parent": {
@@ -65,34 +68,21 @@
     "content": {
       "type": "string"
     },
-    "custom_fields": {
-      "properties": {
-        "display_in_newsroom": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "dsq_needs_sync": {
-          "type": "string"
-        },
-        "dsq_thread_id": {
-          "type": "string"
-        },
-        "og_desc": {
-          "type": "string"
-        },
-        "og_title": {
-          "type": "string"
-        },
-        "twtr_rel": {
-          "type": "string"
-        }
-      }
-    },
     "date": {
       "type": "date",
       "format": "dateOptionalTime"
     },
     "dek": {
+      "type": "string"
+    },
+    "display_in_newsroom": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "dsq_needs_sync": {
+      "type": "string"
+    },
+    "dsq_thread_id": {
       "type": "string"
     },
     "excerpt": {
@@ -102,6 +92,16 @@
       "type": "long"
     },
     "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
       "type": "string"
     },
     "order": {
@@ -109,6 +109,28 @@
     },
     "parent": {
       "type": "long"
+    },
+    "popular_posts": {
+      "type": "string"
+    },
+    "related_hero": {
+      "type": "string"
+    },
+    "related_links": {
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "relative_url": {
+      "type": "string"
+    },
+    "show_featured_image_in_post": {
+      "type": "string"
     },
     "slug": {
       "type": "string"
@@ -157,9 +179,6 @@
     },
     "taxonomy_fj_category": {
       "properties": {
-        "description": {
-          "type": "string"
-        },
         "id": {
           "type": "long"
         },
@@ -211,6 +230,94 @@
     },
     "thumbnail": {
       "properties": {
+        "alt_text": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "images": {
+          "properties": {
+            "full": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "large": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
         "size": {
           "type": "string"
         }
@@ -222,13 +329,31 @@
     "title_plain": {
       "type": "string"
     },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
     "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
       "type": "string"
     },
     "type": {
       "type": "string"
     },
     "url": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
       "type": "string"
     }
   }

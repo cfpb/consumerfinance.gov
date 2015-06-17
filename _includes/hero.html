@@ -1,6 +1,6 @@
 {% macro render(hero) %}
 
-{% from "post-macros.html" import category_icon as category_icon %}
+{% import "macros/category-icon.html" as category_icon %}
 
 {% if hero['related_posts'] %}
     {% set related_post = get_document('posts', hero['related_posts'][0]) %}
@@ -20,7 +20,7 @@
             <article class="hero_preview">
                 {% if related_post %}
                 <span class="category-slug">
-                    {{ category_icon(related_post.category.0, 'category-slug_icon') }}
+                    {{ category_icon.render(related_post.category.0, 'category-slug_icon') }}
                     <span class="u-visually-hidden">Category:</span>
                     {{- related_post.category.0 -}}
                 </span>

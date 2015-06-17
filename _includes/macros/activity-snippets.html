@@ -1,0 +1,117 @@
+
+
+{# ==========================================================================
+
+   activity_snippets()
+
+   ==========================================================================
+
+   Description:
+
+   List a bunch of activity snippets when given:
+
+   tag:            A tag to use in the query.
+
+   activity_types: An array of activity types.
+                   Possible values: posts, op-ed, press release, speech, testimony
+
+   ========================================================================== #}
+
+{% macro render(tag, activity_types=['posts', 'op-ed', 'press release', 'speech', 'testimony', 'cfpb_report']) %}
+    {% from 'macros/util/text.html' import string_length as string_length %}
+    <div class="content-l content-l__large-gutters">
+    {% for activity_type in activity_types %}
+        {% set activity = _activity_snippet(activity_type, tag, 2) %}
+        {% if string_length(activity)|int > 0 %}
+            <div class="content-l_col content-l_col-1-2">
+                {{ activity }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   _activity_snippet()
+
+   ==========================================================================
+
+   Description:
+
+   Private method to list titles of recent document type posts when given:
+
+   doctype:     The document type you wish to display.
+                Note that newsroom is not a supported document tpye in this
+                macro. Use newsroom categories instead.
+
+   querystring: The elastic search query you'd like to make.
+                Example: 'category:"Press Release" AND tags:Students'.
+                Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+
+   quantity:    The number of results you want to display.
+
+   ========================================================================== #}
+
+{% macro _activity_snippet(activity_type, tags, quantity) %}
+    {% import 'macros/category-icon.html' as category_icon %}
+    {% if activity_type|lower == 'posts' %}
+        {% set doc_type = activity_type %}
+        {% set icon = category_icon.render('blog') %}
+        {% set header = 'Blog' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_tags=tags) %}
+    {% elif activity_type|lower == 'op-ed' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon.render(activity_type) %}
+        {% set header = 'Op-Ed' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Op-Ed', filter_tags=tags) %}
+    {% elif activity_type|lower == 'press release' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon.render(activity_type) %}
+        {% set header = 'Press Release' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Press Release', filter_tags=tags) %}
+    {% elif activity_type|lower == 'speech' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon.render(activity_type) %}
+        {% set header = 'Speech' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Speech', filter_tags=tags) %}
+    {% elif activity_type|lower == 'testimony' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon.render(activity_type) %}
+        {% set header = 'Testimony' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Testimony', filter_tags=tags) %}
+    {% elif activity_type|lower == 'cfpb_report' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon.render(activity_type) %}
+        {% set header = 'Reports' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_category='Reports', filter_tags=tags) %}
+    {% else %}
+        {% set doc_type = 'posts' %}
+        {% set icon = category_icon.render('blog') %}
+        {% set header = 'Feed' %}
+        {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,
+            filter_tags=tags) %}
+    {% endif %}
+    {% if feed.total > 0 %}
+    <aside class="activity">
+        <h1 class="h4">{{ icon }} {{ header }}</h1>
+        <ul class="list list__unstyled list__spaced list__links">
+        {% for item in feed %}
+            <li class="list_item">
+                <a class="list_link jump-link jump-link__right"
+                   href="{{ item.permalink }}">
+                    {{ item.title|safe }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </aside>
+    {% endif %}
+{% endmacro %}

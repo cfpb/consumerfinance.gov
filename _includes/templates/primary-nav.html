@@ -1,0 +1,40 @@
+{% import "nav-items-toplevel.html" as vars with context %}
+<div class="sliding-nav_nav">
+    <nav class="primary-nav">
+        <ul class="primary-nav_top-level-list
+                   wrapper
+                   list__unstyled
+                   list__horizontal
+                   list-expanding">
+            {%- for top_level, first_level in vars.nav_items_toplevel %}
+            <li class="list_item list-expanding_list-item">
+                {%- if first_level|length > 0 %}
+                {# TODO: Make this a <button>, it is not a real link. #}
+                <a class="list_link list-expanding_trigger" href="#">
+                    {{ top_level }}
+                </a>
+                <div class="desktop-menu_full-wrapper">
+                    <div class="desktop-menu_full-wrapper_decoration">
+                        <ul class="wrapper
+                                   list__unstyled
+                                   list__horizontal
+                                   desktop-menu_horizontal-list
+                                   list-expanding list-expanding_child-list">
+                            {%- for href, id, caption in first_level %}
+                            <li class="list_item list-expanding_list-item">
+                                <a class="list_link" href="{{ href|e }}">{{ caption|e }}</a>
+                            </li>
+                            {%- endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {%- else %}
+                <a class="list_link list_link__disabled">
+                    {{ top_level }}
+                </a>
+                {%- endif %}
+            </li>
+            {%- endfor %}
+        </ul><!-- END .primary-nav_top-level-list -->
+    </nav><!-- END .primary-nav -->
+</div><!-- END .sliding-nav_nav -->
