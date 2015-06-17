@@ -1,5 +1,8 @@
 {
   "properties": {
+    "alt_title": {
+      "type": "string"
+    },
     "author": {
       "type": "string",
       "index": "not_analyzed"
@@ -17,13 +20,6 @@
     "content": {
       "type": "string"
     },
-    "custom_fields": {
-      "properties": {
-        "og_image": {
-          "type": "string"
-        }
-      }
-    },
     "date": {
       "type": "date",
       "format": "dateOptionalTime"
@@ -38,6 +34,16 @@
       "type": "long"
     },
     "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
       "type": "string"
     },
     "order": {
@@ -45,6 +51,9 @@
     },
     "parent": {
       "type": "long"
+    },
+    "relative_url": {
+      "type": "string"
     },
     "slug": {
       "type": "string"
@@ -129,10 +138,31 @@
     "title_plain": {
       "type": "string"
     },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
+      "type": "string"
+    },
     "type": {
       "type": "string"
     },
     "url": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
       "type": "string"
     }
   }

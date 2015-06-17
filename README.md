@@ -64,9 +64,9 @@ git checkout refresh  # Branch for our staging-stable server.
 
 #### Updating all dependencies
 
-`setup.sh` will install any updated dependencies and rebuild the site's assets.
-Each time you fetch from the upstream repository (this repo),
-you should install and update dependencies by running `./setup.sh`.
+Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
+This setup script will remove and re-install the project dependencies
+and rebuild the site's JavaScript and CSS assets.
 
 
 ### 2. Run Elasticsearch

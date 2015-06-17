@@ -56,7 +56,7 @@
    ========================================================================== #}
 
 {% macro event_hero(post) %}
-  {% from "post-macros.html" import category_icon as category_icon %}
+  {% import "macros/category-icon.html" as category_icon %}
   <section class="content_hero hero">
     <div class="hero_wrapper">
         <!-- TODO replace link with link to event -->
@@ -64,7 +64,7 @@
             <article class="hero_preview">
                 <span class="category-slug">
                     <!-- TODO replace temp category with post category. -->
-                    {{ category_icon('Announcements & updates', 'category-slug_icon') }}
+                    {{ category_icon.render('Announcements & updates', 'category-slug_icon') }}
                     <span class="u-visually-hidden">Category:</span>
                     {{ 'Event Category Name' }}
                 </span>
