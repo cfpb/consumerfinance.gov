@@ -7359,32 +7359,36 @@ a.focus .summary_event-date {
 }
 
 .activity .list_link {
-  color: #101820;
-  border-color: #101820;
+  color: #0072ce;
+  border-color: #0072ce;
 }
 
 .activity .list_link:visited,
 .activity .list_link.visited {
-  border-color: #101820;
-  color: #101820;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:hover,
 .activity .list_link.hover {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #7fb8e6;
+  color: #7fb8e6;
 }
 
 .activity .list_link:focus,
 .activity .list_link.focus {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:active,
 .activity .list_link.active {
-  border-color: #101820;
-  color: #101820;
+  border-color: #002d72;
+  color: #002d72;
+}
+
+.activity .date {
+  white-space: nowrap;
 }
 
 .activity .list_link:after {
@@ -7392,33 +7396,33 @@ a.focus .summary_event-date {
 }
 
 .activity .list_link {
-  color: #101820;
-  border-color: #101820;
+  color: #0072ce;
+  border-color: #0072ce;
   border-bottom-width: 0 !important;
 }
 
 .activity .list_link:visited,
 .activity .list_link.visited {
-  border-color: #101820;
-  color: #101820;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:hover,
 .activity .list_link.hover {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #7fb8e6;
+  color: #7fb8e6;
 }
 
 .activity .list_link:focus,
 .activity .list_link.focus {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:active,
 .activity .list_link.active {
-  border-color: #101820;
-  color: #101820;
+  border-color: #002d72;
+  color: #002d72;
 }
 
 .featured-topic {
@@ -11267,10 +11271,6 @@ a.focus .summary_event-date {
   margin-bottom: 1.875em;
 }
 
-.office .office_activities+.office_contact {
-  padding-bottom: 0;
-}
-
 .initiative_description p:first-child {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
@@ -11303,6 +11303,10 @@ a.focus .summary_event-date {
 .lt-ie9 .initiative_description p:first-child strong,
 .lt-ie9 .initiative_description p:first-child b {
   font-weight: normal !important;
+}
+
+.office_activities+.office_contact {
+  padding-top: 0;
 }
 
 .press-section+.press-section {

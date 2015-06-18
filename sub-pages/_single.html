@@ -17,8 +17,11 @@
 {%- endblock %}
 
 {% block content_main %}
+
     {% import "macros/activity-snippets.html" as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(tag, activity_type) %}
+    {% set activities_feed = activity_snippets.render(sub_page.tags if sub_page.tags, include_date_flag=true)
+                             if display_activity_flag
+    %}
 
     {% if sub_page.title %}
     <h1>{{ sub_page.title | safe }}</h1>
@@ -89,16 +92,19 @@
     </section>
     {% endif %}
 
-    {% if activities_feed and display_activity_flag == true %}
-    <aside class="block
-                  block__flush-sides
-                  block__bg
-                  u-mb0
-                  u-mt0">
-        <section class="office_activities">
-            {% include "templates/activities-feed.html" %}
-        </section>
-    </aside>
+    {% if activities_feed %}
+    <section class="office_activities
+                    block
+                    block__flush-sides
+                    block__bg
+                    u-mb0
+                    u-mt0">
+        {% include 'templates/activities-feed.html' %}
+        <a class="jump-link jump-link__right"
+           href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
+            View all of our activities
+        </a>
+    </section>
     {% endif %}
 
     {% set office = vars.office %}
