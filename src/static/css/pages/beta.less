@@ -74,7 +74,7 @@
         right: @grid_gutter-width / 2;
     });
 
-    .respond-to-min(801px, {
+    .respond-to-min(800px, {
         // At this width, the wrapper gains `position: relative`,
         // so the button position has to be adjusted accordingly.
         top: -12px;
@@ -92,7 +92,7 @@
     background-size: 1176px;
     text-align: center;
 
-    .respond-to-min(601px, {
+    .respond-to-min(600px, {
         min-height: 520px;
         padding: @grid_gutter-width;
         background-image: url('/static/img/beta-illustration_lg.png');
@@ -104,20 +104,20 @@
         background-size: 1838px;
     });
 
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .respond-to-dpi(2, {
         // Retina-specific stuff here.
         background-image: url('/static/img/beta-illustration_sm@2x.png');
 
-        @media (min-width: 601px) {
+        .respond-to-min(600px, {
             background-image: url('/static/img/beta-illustration_lg@2x.png');
-        }
-    }
+        });
+    });
 }
 
 .beta-hero_title {
     .h2();
 
-    .respond-to-min(601px, {
+    .respond-to-min(600px, {
         .superheader();
     });
 }
@@ -127,7 +127,7 @@
     max-width: 32em;
     margin: 0 auto 1em;
 
-    .respond-to-min(601px, {
+    .respond-to-min(600px, {
         .h2();
         // Override the property set in .h2().
         margin-bottom: 1em;
