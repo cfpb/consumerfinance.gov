@@ -13,7 +13,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased - unreleased
+## Unreleased
+
+### Added
+
+### Removed
+
+### Changed
+
+## 3.0.0-1.2.0 - 2015-06-19
 
 ### Added
 - Added `setup.sh` script for bootstrapping the project.
