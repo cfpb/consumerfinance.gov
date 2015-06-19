@@ -64,16 +64,9 @@ git checkout refresh  # Branch for our staging-stable server.
 
 #### Updating all dependencies
 
-Each time you fetch from the upstream repository (this repo),
-you should install and update dependencies with npm and `grunt vendor`,
-and then run `grunt` to rebuild all the site's assets:
-
-```bash
-npm install
-npm update
-grunt vendor
-grunt
-```
+Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
+This setup script will remove and re-install the project dependencies
+and rebuild the site's JavaScript and CSS assets.
 
 
 ### 2. Run Elasticsearch
@@ -149,6 +142,9 @@ there are two available sub-tasks:*
 ``` bash
 # Watch & compile CSS only
 $ grunt watch:css
+
+# Watch & compile JS only
+$ grunt watch:js
 
 # Watch & compile CSS & JS only
 $ grunt watch:cssjs

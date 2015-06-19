@@ -1,0 +1,44 @@
+{#
+  /* ==========================================================================
+    Command-line utilities used to find the external urls :
+    TODO: Combine into one bash or awk script.
+          Needs to run in Sheer.
+   ========================================================================== */
+
+    // Find the external-urls in your local cfgov-refesh repo.
+    find . -name '*.html' ! -path './src/*' ! -path './node_modules/*' ! -path './_tests/*' \
+    -exec cat {} \; \
+    | perl -ne 'if (/href=\\?.https?:\/\/(?:www\.)?(?!.*gov)([^"|\/|\{}]*)/g) { print $1 . ",\n" }' \
+    | sort -u
+
+    // Find the external-urls in your local Elasticsearch instance.
+    curl -XGET 'http://localhost:9200/content/_search?format=yaml' -d '{
+    "fields" :["content"],
+    "size" :1000000,
+    "query": {
+        "query_string": {
+            "fields" :["content"],
+            "query" : "\"a href\""
+        }
+      }
+    }'\
+    | perl -ne 'if (/href=\\?.https?:\/\/(?:www\.)?(?!.*gov)([^"|\/|\{}]*)/g) { print $1 . ",\n" }' \
+    | sort -u
+
+{% set sanitized_domains = [
+  'api.addthis.com',
+  'cfpb.github.io',
+  'disqus.com',
+  'facebook.com',
+  'flickr.com',
+  'get.adobe.com',
+  'google.com',
+  'linkedin.com',
+  'twitter.com',
+  'youtube.com',
+]
+
+%}
+
+#}
+

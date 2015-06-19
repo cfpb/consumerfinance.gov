@@ -11,7 +11,14 @@
 
 {% block css -%}
     {{ super() }}
-    <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
+    {# TODO: Resolve slick font issue.
+             For the slick stylesheet to pick up its font and img reference the
+             fonts and images found at /src/vendor/slick-carousel/slick/ should
+             be included in same directory as slick.css.
+             However, including the slick fonts makes the dots on the
+             /the-bureau/ page at mobile sizes enormous.
+    #}
+    <link rel="stylesheet" href="/static/css/slick.css">
 {%- endblock %}
 
 {% block hero -%}
@@ -55,7 +62,7 @@
 
 {% block content_main %}
 
-    <h1>Our mission</h1>
+    <h1>The Bureau</h1>
     <p class="h3">We work to make markets for consumer financial products and services work
     for Americans. We arm people with the information they need to make smart financial
     decisions, and we protect them from unfair, deceptive, and abusive practices.</p>

@@ -2,11 +2,14 @@
 
 var $ = require( 'jquery' );
 
+// TODO: Require History.js when it is needed.
+// var History = require( 'history' );
+
 function init() {
 
   $.fn.cf_pagination = function( userSettings ) {
 
-    // Todo: Modify the URL using https://github.com/browserstate/history.js
+    // TODO: Modify the URL using https://github.com/browserstate/history.js
     function submit( e, callback ) {
       var action = getAjaxAction( e );
 
