@@ -1,0 +1,27 @@
+/* ==========================================================================
+   cfgov-refresh
+   Contact us page.
+   ========================================================================== */
+
+.helpful-terms {
+    &_header {
+        .h5();
+        margin-right: unit(6px / @font-size, em);
+        vertical-align: middle;
+    }
+
+    &_list {
+        .respond-to-min(600px, {
+            .list__horizontal();
+
+            display: inline-block;
+        });
+    }
+}
+
+.contact-us-map {
+    max-width: 330px;
+    .respond-to-range(600px, 801px, {
+        float: right;
+    });
+}

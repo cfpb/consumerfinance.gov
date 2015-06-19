@@ -2,18 +2,17 @@ import sys
 import json
 import os.path
 import requests
-import dateutil.parser
 
 
 def posts_at_url(url):
-    
+
     current_page = 1
     max_page = sys.maxint
 
     while current_page <= max_page:
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={'page':current_page, 'count': '-1'})
-        results = json.loads(resp.content) 
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
+        results = json.loads(resp.content)
         current_page += 1
         max_page = results['pages']
         for p in results['posts']:
@@ -35,19 +34,19 @@ def process_history(item):
         # This is an individual history point
         item['has_parent'] = True
         if item['custom_fields'].get('item_date'):
-            item['item_date'] = item['custom_fields']['item_date'][0]
+            item['item_date'] = item['custom_fields']['item_date']
     else:
         # This is history section
         item['has_parent'] = False
         if item['custom_fields'].get('section_date_from'):
             item['section_date_from'] = \
-                item['custom_fields']['section_date_from'][0]
+                item['custom_fields']['section_date_from']
         if item['custom_fields'].get('section_date_to'):
-            item['section_date_to'] = \
-                item['custom_fields']['section_date_to'][0]
+            item['section_date_to'] = item['custom_fields']['section_date_to']
 
-    dt = dateutil.parser.parse(item['date'])
-    dt_string = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
-    item['date'] = dt_string
+    del item['custom_fields']
 
-    return item
+    return {'_index': 'content',
+            '_type': 'history',
+            '_id': item['slug'],
+            '_source': item}

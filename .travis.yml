@@ -1,0 +1,33 @@
+language: python
+
+python:
+  - "2.7"
+
+services:
+  - elasticsearch
+
+install:
+  # Python test requirements
+  - pip install virtualenv virtualenvwrapper
+  - pip install autoenv
+  - git clone https://github.com/cfpb/sheer
+  - pip install -e sheer
+  - pip install -r sheer/requirements.txt
+  - cp .env_SAMPLE .env
+  - sheer index
+  - pip install -r _tests/macro_testing/requirements.txt
+
+  # JavaScript test requirements
+  - sudo add-apt-repository -y ppa:chris-lea/node.js
+  - sudo apt-get -y update
+  - sudo apt-get -y install nodejs
+  - sudo npm install -g grunt-cli
+  - sudo npm install -g bower
+  - sudo npm install
+
+script:
+  # Run tests for JavaScript
+  - grunt test
+
+  - cd _tests/macro_testing
+  - python test_macros.py

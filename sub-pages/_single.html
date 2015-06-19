@@ -1,0 +1,107 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-sub-pages.html" as vars with context %}
+{% set active_nav_id = sub_page.slug %}
+{% set sub_pages = vars.sub_pages %}
+{% set breadcrumb_items = [(vars.office.permalink, vars.office.slug, vars.office.title)] %}
+
+
+{% set display_activity_slugs = ["plain-writing-act"] %}
+{% set display_activity_flag = sub_page.slug in display_activity_slugs %}
+
+{% block title -%}
+    {{ sub_page.title | safe if sub_page.title }}
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom content_main__sub-page
+{%- endblock %}
+
+{% block content_main %}
+    {% import "macros/activity-snippets.html" as activity_snippets with context %}
+    {% set activities_feed = activity_snippets.render(tag, activity_type) %}
+
+    {% if sub_page.title %}
+    <h1>{{ sub_page.title | safe }}</h1>
+    {% endif %}
+
+    {% if sub_page.content %}
+    <section class="sub-page_content
+                    block
+                    block__flush-top">
+        {{ sub_page.content | safe }}
+    </section>
+    {% endif %}
+
+    {% if sub_page.use_form %}
+        {%- include "templates/forms/" + sub_page.slug + "-form.html" ignore missing %}
+    {% endif %}
+
+    {% if sub_pages and sub_pages.total %}
+    <section class="block
+                    block__padded-top
+                    block__border-top
+                    block__flush-bottom">
+        <div class="content-l content-l__main">
+            {% for page in sub_pages %}
+            <!-- TODO: link header styles -->
+            <div class="sub-page_topic
+                        block__sub
+                        block__flush-top
+                        {{ 'office_col' if vars.sub_pages.result_dict|length > 1 else 'content-l_col-1' -}}">
+
+                {% if page.title %}
+                <h2 class="h3">
+                    {{ page.title | safe }}
+                </h2>
+                {% endif %}
+
+                {% if page.content %}
+                <p class="short-desc">
+                    {{ page.content | safe }}
+                </p>
+                {% endif %}
+
+                {% if page.related_links %}
+                <ul class="list__links">
+                {% for link in page.related_links %}
+                    <li class="list_item">
+                        <a class="jump-link jump-link__right list_link" href="{{link.url}}">
+                            {{ link.label }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% if sub_page.body_content %}
+    <section class="sub-page_content
+                    sub-page_{{sub_page.slug}}
+                    block
+                    block__padded-top
+                    block__border-top">
+        {{ sub_page.body_content }}
+    </section>
+    {% endif %}
+
+    {% if activities_feed and display_activity_flag == true %}
+    <aside class="block
+                  block__flush-sides
+                  block__bg
+                  u-mb0
+                  u-mt0">
+        <section class="office_activities">
+            {% include "templates/activities-feed.html" %}
+        </section>
+    </aside>
+    {% endif %}
+
+    {% set office = vars.office %}
+    {% include "templates/office-contact.html" %}
+
+{% endblock %}

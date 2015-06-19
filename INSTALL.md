@@ -148,11 +148,10 @@ cd cfgov-refresh
 Next, install dependencies with:
 
 ```bash
-npm install
-grunt vendor
+./setup.sh
 ```
 
-> **NOTE**: After installing dependencies, rebuild all the site’s assets by running `grunt`.
+> **NOTE**: To re-install and rebuild all the site’s assets run `./setup.sh` again.
 See the usage section [updating all the project dependencies](README.md#updating-all-dependencies).
 
 

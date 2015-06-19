@@ -1,6 +1,6 @@
 {% macro render(posts, user_options) %}
 
-{% import "macros.html" as macros %}
+{% from "macros.html" import format_time as format_time %}
 
 {% set options = {
     'time_col_classes': 'u-w25pct',
@@ -25,9 +25,9 @@
             {%- if event.all_day %}
                 All day
             {%- else %}
-                {{ macros.format_time(event.dtstart) }}
+                {{ format_time(event.dtstart) }}
                 &ndash;
-                {{ macros.format_time(event.dtend) }}
+                {{ format_time(event.dtend) }}
             {%- endif %}
             </td>
             <td class="{{ options.name_col_classes }}">

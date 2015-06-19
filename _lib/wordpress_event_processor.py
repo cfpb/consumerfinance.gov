@@ -16,7 +16,7 @@ def posts_at_url(url):
 
     while current_page <= max_page:
         url = os.path.expandvars(url)
-        resp = requests.get(url, params={'page':current_page, 'count': '-1'})
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
         results = json.loads(resp.content)
         current_page += 1
         max_page = results['pages']
@@ -39,7 +39,7 @@ def process_event(event):
     """
 
     ## First some helper functions
-    format_datetime = lambda d: dateutil.parser.parse(d).strftime('%Y-%m-%dT%H:%M:%SZ')
+    format_datetime = lambda d: dateutil.parser.parse(d).strftime("%Y-%m-%dT%H:%M:%SZ")
     get_custom_field = lambda f, d=[]: event['custom_fields'].get(f, d)
     get_custom_field_member = lambda f, i=0, d='': event['custom_fields'].get(f)[i] \
                                                    if len(event['custom_fields'].get(f, [])) > i \
@@ -108,5 +108,7 @@ def process_event(event):
     event['reservation']['desc'] = get_custom_field_member('event_information_reservation_desc', d='')
     event['reservation']['contact_info'] = get_custom_field_member('event_information_reservation_contact_info', d='')
 
-    return event
-
+    return {'_index': 'content',
+            '_type': 'events',
+            '_id': event['slug'],
+            '_source': event}

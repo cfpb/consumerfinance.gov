@@ -1,0 +1,45 @@
+/* ==========================================================================
+   cfgov-refresh
+   Third-Party links pages at /external-site/.
+   ========================================================================== */
+
+.external-site_container {
+    .webfont-regular();
+
+    .content_bar {
+        background: @gray-50;
+        height: 1px;
+    }
+
+    .padded-container {
+        background-color: @white;
+    }
+}
+
+.external-site_text {
+    .webfont-medium();
+}
+
+.external-site_back-btn {
+    &:link,
+    &:visited {
+        background-color: @darkgray;
+    }
+
+    &:hover {
+        background-color: lighten(@darkgray, 10%);
+    }
+}
+
+.external-site_back-btn, .external-site_proceed-btn {
+    min-width: 180px;
+    margin: 0
+            unit(@grid_gutter-width  / @base-font-size-px, em)
+            unit(@grid_gutter-width  / @base-font-size-px, em)
+            0;
+    text-align: center;
+}
+
+.external-site_reload-duration {
+    .h2();
+}
