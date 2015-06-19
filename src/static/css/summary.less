@@ -54,7 +54,7 @@
         .h3();
         // Eyeballed to 20px from the baseline.
         margin-bottom: unit(10px / @font-size, em);
-        .respond-to-min(600px, {
+        .respond-to-min(@tablet-min, {
             .h2();
             // Eyeballed to 20px from the baseline.
             margin-bottom: unit(9px / @font-size, em);
@@ -133,7 +133,7 @@
     margin-top: unit(20px / @base-font-size-px, em);
 }
 
-.respond-to-min(600px, {
+.respond-to-min(@tablet-min, {
     .summary_cols {
         .grid_nested-col-group();
     }
@@ -189,7 +189,7 @@
     .h2();
     // Eyeballed to 30px from the baseline.
     margin-bottom: unit(16px / @font-size, em);
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         .h1();
         // Eyeballed to 25px from the baseline.
         margin-bottom: unit(11px / @font-size, em);

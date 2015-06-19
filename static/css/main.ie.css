@@ -16130,6 +16130,11 @@ a.focus .summary_event-date {
 
 .nav-secondary {
   margin-bottom: 1.875em;
+  border-bottom: 1px solid #e3e4e5;
+}
+
+.nav-secondary {
+  border-bottom: 0;
 }
 
 .nav-secondary .inset-divider {
@@ -17383,6 +17388,7 @@ a.focus .summary_event-date {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  font-size: 0.875em;
   -webkit-transition: padding 0.2s ease-out;
   transition: padding 0.2s ease-out;
 }
@@ -17413,6 +17419,10 @@ a.focus .summary_event-date {
 
 .beta-banner.expandable__expanded {
   padding: 30px 0;
+}
+
+.beta-banner {
+  font-size: 1em;
 }
 
 .beta-banner_head {
@@ -17728,6 +17738,13 @@ a.focus .summary_event-date {
 .progress-charts_chart {
   width: 100px;
   height: 100px;
+  margin-right: 1em;
+  float: left;
+}
+
+.progress-charts_chart {
+  margin-right: auto;
+  float: none;
 }
 
 .chart-bg {

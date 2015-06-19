@@ -195,7 +195,7 @@
 */
 
 .tags {
-    @bp: 480px;
+    @bp: @tablet-min;
 
     .respond-to-min(@bp, {
         position: relative;
@@ -620,7 +620,7 @@
 .meta-header_right {
     display: block;
     margin-bottom: 0;
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         .u-right();
         display: inline-block;
     });

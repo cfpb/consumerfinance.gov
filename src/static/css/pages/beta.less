@@ -8,14 +8,15 @@
     margin-bottom: 0;
     background: @gold-20;
     .webfont-regular();
+    font-size: 0.875em;
     transition: padding 0.2s ease-out;
 
     &.expandable__expanded {
         padding: @grid_gutter-width 0;
     }
 
-    .respond-to-max(599px, {
-        font-size: 0.875em;
+    .respond-to-min(@tablet-min, {
+        font-size: 1em;
     });
 }
 
@@ -45,13 +46,7 @@
         unit( 14px / @btn-font-size, em );
     margin-top: @grid_gutter-width / 2;
 
-    .respond-to-max(480px, {
-        .cf-icon-delete {
-            display: none;
-        }
-    });
-
-    .respond-to-min(481px, {
+    .respond-to-min(@tablet-min, {
         .btn__link();
         width: auto;
         padding: @grid_gutter-width / 2;
@@ -64,17 +59,17 @@
         text-transform: lowercase;
     });
 
-    .respond-to-max(599px, {
+    .respond-to-max(@mobile-max, {
         // Prevent double-shrinkage.
         font-size: 1em;
     });
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         // Adjust to match increasing side margins.
         right: @grid_gutter-width / 2;
     });
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         // At this width, the wrapper gains `position: relative`,
         // so the button position has to be adjusted accordingly.
         top: -12px;
@@ -92,7 +87,7 @@
     background-size: 1176px;
     text-align: center;
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         min-height: 520px;
         padding: @grid_gutter-width;
         background-image: url('/static/img/beta-illustration_lg.png');
@@ -108,7 +103,7 @@
         // Retina-specific stuff here.
         background-image: url('/static/img/beta-illustration_sm@2x.png');
 
-        .respond-to-min(600px, {
+        .respond-to-min(@tablet-min, {
             background-image: url('/static/img/beta-illustration_lg@2x.png');
         });
     });
@@ -117,7 +112,7 @@
 .beta-hero_title {
     .h2();
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         .superheader();
     });
 }
@@ -127,7 +122,7 @@
     max-width: 32em;
     margin: 0 auto 1em;
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         .h2();
         // Override the property set in .h2().
         margin-bottom: 1em;
@@ -145,7 +140,7 @@
     background-size: cover;
     .u-clearfix();
 
-    .respond-to-min(480px, {
+    .respond-to-min(@tablet-min, {
         .u-w33pct();
         height: 150px;
         padding: 0 1em;
@@ -161,10 +156,12 @@
 .progress-charts_chart {
     width: 100px;
     height: 100px;
+    margin-right: 1em;
+    float: left;
 
-    .respond-to-max(479px, {
-        margin-right: 1em;
-        float: left;
+    .respond-to-min(@tablet-min, {
+        margin-right: auto;
+        float: none;
     });
 }
 
@@ -185,7 +182,7 @@
 .chart-name {
     .h5();
 
-    .respond-to-max(479px, {
+    .respond-to-max(@mobile-max, {
         position: relative;
         // Half height of graph (50px) - half of line-height (11px).
         top: 39px;
