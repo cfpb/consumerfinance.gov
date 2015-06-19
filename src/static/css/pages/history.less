@@ -10,7 +10,7 @@
 .history-section-expandable_header {
     background: @gray-10;
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         padding-right: @grid_gutter-width;
         padding-left: @grid_gutter-width;
     });
@@ -25,7 +25,7 @@
         margin-top: 0;
     }
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         margin-right: -@grid_gutter-width;
         padding: 0 @grid_gutter-width @grid_gutter-width;
         margin-left: -@grid_gutter-width;

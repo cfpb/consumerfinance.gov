@@ -21,7 +21,7 @@
 .contact-person {
     .webfont-regular();
     margin-bottom: unit(30px / @base-font-size-px, em);
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         margin-bottom: unit(10px / @base-font-size-px, em);
     });
 }
@@ -47,7 +47,7 @@
     }
 }
 
-.respond-to-min(768px, {
+.respond-to-min(@tablet-min, {
     .press-section_title {
         .h2();
         margin-bottom: unit(30px / @font-size, em);

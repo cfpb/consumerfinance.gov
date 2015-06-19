@@ -10789,7 +10789,7 @@ textarea.input__long {
 .lt-ie9 .list_link {
   font-weight: normal !important;
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .list_link.list_link__phone {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -11606,7 +11606,7 @@ textarea.input__long {
   tags:
     - cfgov-meta
 */
-@media only all and (min-width: 30em) {
+@media only all and (min-width: 37.5em) {
   .tags {
     position: relative;
     padding-left: 4.125em;
@@ -11626,7 +11626,7 @@ textarea.input__long {
 .lt-ie9 .tags_heading {
   font-weight: normal !important;
 }
-@media only all and (min-width: 30em) {
+@media only all and (min-width: 37.5em) {
   .tags_heading {
     position: absolute;
     left: 0;
@@ -11639,7 +11639,7 @@ textarea.input__long {
   border-top: 1px dotted #ffb149;
   list-style-type: none;
 }
-@media only all and (min-width: 30em) {
+@media only all and (min-width: 37.5em) {
   .tags_list {
     border-top: none;
   }
@@ -11648,7 +11648,7 @@ textarea.input__long {
   border-bottom: 1px dotted #ffb149;
   line-height: 1;
 }
-@media only all and (min-width: 30em) {
+@media only all and (min-width: 37.5em) {
   .tags_tag {
     display: inline-block;
     margin-right: 0.9375em;
@@ -11700,12 +11700,12 @@ textarea.input__long {
   border-color: #ffb149;
   color: #75787b;
 }
-@media only all and (max-width: 29.9375em) {
+@media only all and (max-width: 37.4375em) {
   .tags_link {
     border-bottom-width: 0 !important;
   }
 }
-@media only all and (min-width: 30em) {
+@media only all and (min-width: 37.5em) {
   .tags_link {
     padding: 0;
   }
@@ -15416,7 +15416,7 @@ a.focus .summary_event-date {
   margin: 1.875em 0;
   color: #101820;
 }
-@media only all and (min-width: 48.0625em) {
+@media only all and (min-width: 37.5em) {
   .post_inset__right {
     float: right;
     width: 15.625em;
@@ -15424,7 +15424,7 @@ a.focus .summary_event-date {
     margin-left: 1.875em;
   }
 }
-@media only all and (min-width: 37.5em) and (max-width: 50em) {
+@media only all and (min-width: 37.5em) and (max-width: 49.9375em) {
   .popular-stories .list,
   .related-posts .list {
     display: block;
@@ -15928,10 +15928,11 @@ a.focus .summary_event-date {
 */
 .nav-secondary {
   margin-bottom: 1.875em;
+  border-bottom: 1px solid #e3e4e5;
 }
-@media only all and (max-width: 50em) {
+@media only all and (min-width: 50em) {
   .nav-secondary {
-    border-bottom: 1px solid #e3e4e5;
+    border-bottom: 0;
   }
 }
 .nav-secondary .inset-divider {
@@ -16044,7 +16045,7 @@ a.focus .summary_event-date {
   border-color: #2cb34a;
   color: #101820;
 }
-@media only all and (max-width: 50em) {
+@media only all and (max-width: 49.9375em) {
   .nav-secondary_link {
     display: block;
     padding: 0.9375em;
@@ -16073,13 +16074,13 @@ a.focus .summary_event-date {
     color: #43484e;
   }
 }
-@media only all and (max-width: 37.5em) {
+@media only all and (max-width: 37.4375em) {
   .nav-secondary_link {
     padding-left: 0.9375em;
     padding-right: 0.9375em;
   }
 }
-@media only all and (max-width: 50em) {
+@media only all and (max-width: 49.9375em) {
   .nav-secondary_link {
     margin: 0 15px;
   }
@@ -17373,6 +17374,7 @@ a.focus .summary_event-date {
   font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+  font-size: 0.875em;
   -webkit-transition: padding 0.2s ease-out;
   transition: padding 0.2s ease-out;
 }
@@ -17399,9 +17401,9 @@ a.focus .summary_event-date {
 .beta-banner.expandable__expanded {
   padding: 30px 0;
 }
-@media only all and (max-width: 37.4375em) {
+@media only all and (min-width: 37.5em) {
   .beta-banner {
-    font-size: 0.875em;
+    font-size: 1em;
   }
 }
 .beta-banner_head {
@@ -17450,12 +17452,7 @@ a.focus .summary_event-date {
 .beta-banner_btn.active {
   background-color: #43484e;
 }
-@media only all and (max-width: 30em) {
-  .beta-banner_btn .cf-icon-delete {
-    display: none;
-  }
-}
-@media only all and (min-width: 30.0625em) {
+@media only all and (min-width: 37.5em) {
   .beta-banner_btn {
     padding: 0;
     border-bottom: 1px dotted #0072ce;
@@ -17781,7 +17778,7 @@ a.focus .summary_event-date {
 .lt-ie8 .progress-charts_container {
   zoom: 1;
 }
-@media only all and (min-width: 30em) {
+@media only all and (min-width: 37.5em) {
   .progress-charts_container {
     width: 33.33333333%;
     height: 150px;
@@ -17798,11 +17795,13 @@ a.focus .summary_event-date {
 .progress-charts_chart {
   width: 100px;
   height: 100px;
+  margin-right: 1em;
+  float: left;
 }
-@media only all and (max-width: 29.9375em) {
+@media only all and (min-width: 37.5em) {
   .progress-charts_chart {
-    margin-right: 1em;
-    float: left;
+    margin-right: auto;
+    float: none;
   }
 }
 .chart-bg {
@@ -17831,7 +17830,7 @@ a.focus .summary_event-date {
 .lt-ie9 .chart-name {
   font-weight: normal !important;
 }
-@media only all and (max-width: 29.9375em) {
+@media only all and (max-width: 37.4375em) {
   .chart-name {
     position: relative;
     top: 39px;
@@ -20521,7 +20520,7 @@ a.focus .summary_event-date {
 .lt-ie9 .contact-person__director .contact-person_name {
   font-weight: normal !important;
 }
-@media only all and (min-width: 48em) {
+@media only all and (min-width: 37.5em) {
   .press-section_title {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -20627,7 +20626,7 @@ a.focus .summary_event-date {
     font-weight: normal !important;
   }
 }
-@media only all and (min-width: 48em) and only all and (max-width: 37.4375em) {
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
   .press-section_title {
     font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-style: normal;
@@ -20658,7 +20657,7 @@ a.focus .summary_event-date {
     font-weight: normal !important;
   }
 }
-@media only all and (min-width: 48em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) and only all and (max-width: 37.4375em) {
   .press-section_title {
     margin-top: 0;
     margin-bottom: 1.16666667em;
@@ -20672,7 +20671,7 @@ a.focus .summary_event-date {
     font-weight: normal !important;
   }
 }
-@media only all and (min-width: 48em) and only all and (max-width: 37.4375em) {
+@media only all and (min-width: 37.5em) and only all and (max-width: 37.4375em) {
   .contact-person__director .contact-person_name {
     margin-top: 0;
     margin-bottom: 1.16666667em;
