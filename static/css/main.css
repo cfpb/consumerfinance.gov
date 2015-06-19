@@ -20005,7 +20005,7 @@ a.focus .summary_event-date {
 .contact-us-map {
   max-width: 330px;
 }
-@media only all and (min-width: 37.5em) and (max-width: 50.0625em) {
+@media only all and (min-width: 37.5em) and (max-width: 50em) {
   .contact-us-map {
     float: right;
   }
