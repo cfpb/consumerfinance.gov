@@ -31,4 +31,8 @@
     {%- include "contact-list.html" %}
 {% endblock %}
 
-
+{% block content_sidebar %}
+    {%- include "mailing-addresses.html" %}
+    <div class="content_line"></div>
+    {%- include "promoted-contacts.html" %}
+{% endblock %}

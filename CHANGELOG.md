@@ -104,6 +104,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed FOIA pages from the template/processor changes
 - Fixed missing states from `.nav-secondary_link__disabled` class for
   visited and active links.
+- Fixed missing sidebar
 
 ### Removed
 - Removed `copy:static-legacy` and `grunt-contrib-copy` package.
