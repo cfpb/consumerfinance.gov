@@ -1,0 +1,22 @@
+{% set contact = get_document('contact', office.related_contact) if office.related_contact %}
+{% if contact %}
+    {% import "contact-macro.html" as contact_macro %}
+    <section class="office_contact
+                    block
+                    block__flush-sides
+                    block__bg
+                    u-mb0
+                    u-mt0">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Contact Information
+            </span>
+        </h1>
+        <div class="content-l content-l__main content-l__large-gutters">
+            <div class="content-l_col content-l_col-1">
+                <h2 class="h5">{{ contact.title }}</h2>
+            </div>
+        </div>
+        {{ contact_macro.render( contact, 'block block__flush-top block__flush-bottom' ) }}
+    </section>
+{% endif %}

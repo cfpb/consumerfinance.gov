@@ -2,3 +2,28 @@
    cfgov-refresh
    Sub-Pages pages at /sub-pages/*.
    ========================================================================== */
+
+.sub-page {
+    .webfont-regular();
+}
+
+.sub-page_privacy-impact-assessments-pias {
+    .webfont-medium();
+
+    a {
+        .jump-link();
+
+        &:after {
+            .cf-icon();
+            display: inline-block;
+            width: 1em;
+            content: @cf-icon-download;
+            color: @pacific;
+            text-align: right;
+        }
+    }
+}
+
+.sub-page_frequently-asked-questions {
+    .h2();
+}

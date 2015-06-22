@@ -2,19 +2,26 @@
 {% import "_vars-sub-pages.html" as vars with context %}
 {% set active_nav_id = sub_page.slug %}
 {% set sub_pages = vars.sub_pages %}
+{% set breadcrumb_items = [(vars.office.permalink, vars.office.slug, vars.office.title)] %}
+
+
+{% set display_activity_slugs = ["plain-writing-act"] %}
+{% set display_activity_flag = sub_page.slug in display_activity_slugs %}
 
 {% block title -%}
     {{ sub_page.title | safe if sub_page.title }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom content_main__sub-page
+    {{ super() }} content__flush-bottom sub-page
 {%- endblock %}
 
 {% block content_main %}
 
     {% import "macros/activity-snippets.html" as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(tag, activity_type) %}
+    {% set activities_feed = activity_snippets.render(sub_page.tags if sub_page.tags, include_date_flag=true)
+                             if display_activity_flag
+    %}
 
     {% if sub_page.title %}
     <h1>{{ sub_page.title | safe }}</h1>
@@ -26,10 +33,6 @@
                     block__flush-top">
         {{ sub_page.content | safe }}
     </section>
-    {% endif %}
-
-    {% if sub_page.use_form == "on" %}
-        {%- include "forms/" + sub_page.slug + "-form.html" ignore missing %}
     {% endif %}
 
     {% if sub_pages and sub_pages.total %}
@@ -76,23 +79,51 @@
     {% endif %}
 
     {% if sub_page.body_content %}
-    <section class="block
+    <section class="sub-page_content
+                    sub-page_{{sub_page.slug}}
+                    block
                     block__padded-top
                     block__border-top">
-        {{ sub_page.body_content }}
+        {% set content = { 'markup' : sub_page.body_content } %}
+        {% for form_name in vars.forms %}
+            {% set form_token = '[' + form_name + ']' %}
+            {% if (sub_page.body_content).find(form_token) > -1 %}
+                {% import 'templates/forms/' + form_name | lower  + '.html' as form %}
+                {% set _ignore = content.update(
+                    { 'markup' : sub_page.body_content | replace(form_token, form) }
+                )%}
+            {% endif %}
+        {% endfor %}
+
+        {{ content.markup | safe}}
     </section>
     {% endif %}
 
-    {% if activities_feed %}
-    <aside class="block
-                  block__flush-sides
-                  block__bg
-                  u-mb0
-                  u-mt0">
-        <section class="office_activities">
-            {% include "templates/activities-feed.html" %}
-        </section>
-    </aside>
+    {% if activities_feed and display_activity_flag == true %}
+    <section class="office_activities
+                    block
+                    block__flush-sides
+                    block__bg
+                    u-mb0
+                    u-mt0">
+        {% include 'templates/activities-feed.html' %}
+        <a class="jump-link jump-link__right"
+           href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
+            View all of our activities
+        </a>
+    </section>
     {% endif %}
+
+    {% if sub_page.related_faq %}
+        {% set related_faq = get_document('faq', sub_page.related_faq) %}
+        {% import "macros/expandable.html" as expandable with context %}
+        {{ expandable.render(
+                related_faq.faq, 'question', 'answer', {"title": "FAQS"}
+           ) if related_faq.faq
+        }}
+    {% endif %}
+
+    {% set office = vars.office %}
+    {% include "templates/office-contact.html" %}
 
 {% endblock %}
