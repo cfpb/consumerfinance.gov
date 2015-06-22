@@ -1,5 +1,4 @@
 
-
 {# ==========================================================================
 
    activity_snippets()
@@ -10,18 +9,27 @@
 
    List a bunch of activity snippets when given:
 
-   tag:            A tag to use in the query.
+   tag:                 A tag to use in the query.
 
-   activity_types: An array of activity types.
-                   Possible values: posts, op-ed, press release, speech, testimony
+   activity_types:      An array of activity types.
+
+                        Possible values: posts, op-ed, press release,
+                                         speech, testimony
+
+   include_date_flag:   Boolean indicating whether to
+                        display the date of the activity.
 
    ========================================================================== #}
 
-{% macro render(tag, activity_types=['posts', 'op-ed', 'press release', 'speech', 'testimony', 'cfpb_report']) %}
+{% macro render(tag,
+                activity_types=['posts', 'op-ed', 'press release', 'speech', 'testimony'],
+                include_date_flag=false
+               )
+%}
     {% from 'macros/util/text.html' import string_length as string_length %}
     <div class="content-l content-l__large-gutters">
     {% for activity_type in activity_types %}
-        {% set activity = _activity_snippet(activity_type, tag, 2) %}
+        {% set activity = _activity_snippet(activity_type, tag, 2, include_date_flag) %}
         {% if string_length(activity)|int > 0 %}
             <div class="content-l_col content-l_col-1-2">
                 {{ activity }}
@@ -40,21 +48,24 @@
 
    Description:
 
-   Private method to list titles of recent document type posts when given:
+   List titles of recent document type posts when given:
 
-   doctype:     The document type you wish to display.
-                Note that newsroom is not a supported document tpye in this
-                macro. Use newsroom categories instead.
+   doctype:           The document type you wish to display.
+                      Note that newsroom is not a supported document tpye in this
+                      macro. Use newsroom categories instead.
 
-   querystring: The elastic search query you'd like to make.
-                Example: 'category:"Press Release" AND tags:Students'.
-                Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+   querystring:       The elastic search query you'd like to make.
+                      Example: 'category:"Press Release" AND tags:Students'.
+                      Reference: http://www.elasticsearch.org/guide/en/elasticsearch
+                                 /reference/current/query-dsl-query-string-query.html
 
-   quantity:    The number of results you want to display.
+   quantity:          The number of results you want to display.
+
+   include_date_flag: Boolean indicating whether to display the date of the activity.
 
    ========================================================================== #}
 
-{% macro _activity_snippet(activity_type, tags, quantity) %}
+{% macro _activity_snippet(activity_type, tags, quantity, include_date_flag=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
     {% if activity_type|lower == 'posts' %}
         {% set doc_type = activity_type %}
@@ -107,7 +118,12 @@
             <li class="list_item">
                 <a class="list_link jump-link jump-link__right"
                    href="{{ item.permalink }}">
-                    {{ item.title|safe }}
+                    {{ item.title | safe  }}
+                    {%- if item.date and include_date_flag -%}
+                        <span class='date'>
+                            {{ ' - ' + item.date | date('%b %d, %Y') }}
+                        </span>
+                    {%- endif -%}
                 </a>
             </li>
         {% endfor %}

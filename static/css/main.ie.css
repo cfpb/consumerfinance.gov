@@ -7363,32 +7363,36 @@ a.focus .summary_event-date {
 }
 
 .activity .list_link {
-  color: #101820;
-  border-color: #101820;
+  color: #0072ce;
+  border-color: #0072ce;
 }
 
 .activity .list_link:visited,
 .activity .list_link.visited {
-  border-color: #101820;
-  color: #101820;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:hover,
 .activity .list_link.hover {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #7fb8e6;
+  color: #7fb8e6;
 }
 
 .activity .list_link:focus,
 .activity .list_link.focus {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:active,
 .activity .list_link.active {
-  border-color: #101820;
-  color: #101820;
+  border-color: #002d72;
+  color: #002d72;
+}
+
+.activity .date {
+  white-space: nowrap;
 }
 
 .activity .list_link:after {
@@ -7396,33 +7400,33 @@ a.focus .summary_event-date {
 }
 
 .activity .list_link {
-  color: #101820;
-  border-color: #101820;
+  color: #0072ce;
+  border-color: #0072ce;
   border-bottom-width: 0 !important;
 }
 
 .activity .list_link:visited,
 .activity .list_link.visited {
-  border-color: #101820;
-  color: #101820;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:hover,
 .activity .list_link.hover {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #7fb8e6;
+  color: #7fb8e6;
 }
 
 .activity .list_link:focus,
 .activity .list_link.focus {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:active,
 .activity .list_link.active {
-  border-color: #101820;
-  color: #101820;
+  border-color: #002d72;
+  color: #002d72;
 }
 
 .featured-topic {
@@ -11268,6 +11272,36 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
+.office {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.office em,
+.office i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .office em,
+.lt-ie9 .office i {
+  font-style: normal !important;
+}
+
+.office strong,
+.office b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .office strong,
+.lt-ie9 .office b {
+  font-weight: normal !important;
+}
+
 .office_initiatives .expandable.content-l_col {
   margin-bottom: 1.875em;
 }
@@ -11304,6 +11338,10 @@ a.focus .summary_event-date {
 .lt-ie9 .initiative_description p:first-child strong,
 .lt-ie9 .initiative_description p:first-child b {
   font-weight: normal !important;
+}
+
+.office_activities+.office_contact {
+  padding-top: 0;
 }
 
 .press-section+.press-section {
@@ -11558,6 +11596,185 @@ a.focus .summary_event-date {
 
 .lt-ie9 .contact-person__director .contact-person_name strong,
 .lt-ie9 .contact-person__director .contact-person_name b {
+  font-weight: normal !important;
+}
+
+.sub-page {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sub-page em,
+.sub-page i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page em,
+.lt-ie9 .sub-page i {
+  font-style: normal !important;
+}
+
+.sub-page strong,
+.sub-page b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page strong,
+.lt-ie9 .sub-page b {
+  font-weight: normal !important;
+}
+
+.sub-page_privacy-impact-assessments-pias {
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .sub-page_privacy-impact-assessments-pias {
+  font-weight: normal !important;
+}
+
+.sub-page_privacy-impact-assessments-pias a {
+  font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+  border-bottom-width: 0;
+  position: relative;
+}
+
+.lt-ie9 .sub-page_privacy-impact-assessments-pias a {
+  font-weight: normal !important;
+}
+
+.sub-page_privacy-impact-assessments-pias a_text {
+  border-bottom-width: 1px;
+  border-bottom-style: inherit;
+}
+
+.sub-page_privacy-impact-assessments-pias a:before,
+.sub-page_privacy-impact-assessments-pias a:after {
+  font-family: 'CFPB Minicons';
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+
+.sub-page_privacy-impact-assessments-pias a__download:after,
+.sub-page_privacy-impact-assessments-pias a__download.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e406";
+}
+
+.sub-page_privacy-impact-assessments-pias a__email:after,
+.sub-page_privacy-impact-assessments-pias a__email.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e302";
+}
+
+.sub-page_privacy-impact-assessments-pias a__external-link:after,
+.sub-page_privacy-impact-assessments-pias a__external-link.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e610";
+}
+
+.sub-page_privacy-impact-assessments-pias a__fax:after,
+.sub-page_privacy-impact-assessments-pias a__fax.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e310";
+}
+
+.sub-page_privacy-impact-assessments-pias a__left:after,
+.sub-page_privacy-impact-assessments-pias a__left.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e000";
+}
+
+.sub-page_privacy-impact-assessments-pias a__mail:after,
+.sub-page_privacy-impact-assessments-pias a__mail.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e304";
+}
+
+.sub-page_privacy-impact-assessments-pias a__pdf:after,
+.sub-page_privacy-impact-assessments-pias a__pdf.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e402";
+}
+
+.sub-page_privacy-impact-assessments-pias a__pdf:after,
+.sub-page_privacy-impact-assessments-pias a__pdf.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e402";
+}
+
+.sub-page_privacy-impact-assessments-pias a__phone:after,
+.sub-page_privacy-impact-assessments-pias a__phone.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e306";
+}
+
+.sub-page_privacy-impact-assessments-pias a__right:after,
+.sub-page_privacy-impact-assessments-pias a__right.sub-page_privacy-impact-assessments-pias a__before:before {
+  content: "\e002";
+}
+
+.sub-page_privacy-impact-assessments-pias a__before:after {
+  content: '';
+}
+
+.sub-page_privacy-impact-assessments-pias a__no-wrap {
+  white-space: nowrap;
+}
+
+.sub-page_privacy-impact-assessments-pias a__large {
+  font-size: 1.125em;
+}
+
+.sub-page_privacy-impact-assessments-pias a:after {
+  font-family: 'CFPB Minicons';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  width: 1em;
+  content: "\e406";
+  color: #0072ce;
+  text-align: right;
+}
+
+.sub-page_frequently-asked-questions {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: .73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.sub-page_frequently-asked-questions em,
+.sub-page_frequently-asked-questions i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions em,
+.lt-ie9 .sub-page_frequently-asked-questions i {
+  font-style: normal !important;
+}
+
+.sub-page_frequently-asked-questions strong,
+.sub-page_frequently-asked-questions b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions strong,
+.lt-ie9 .sub-page_frequently-asked-questions b {
   font-weight: normal !important;
 }
 
