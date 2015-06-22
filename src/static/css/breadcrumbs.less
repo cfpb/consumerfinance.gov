@@ -1,0 +1,30 @@
+.breadcrumbs {
+  .webfont-regular();
+  .grid_column(1,1);
+
+  font-size: 14px;
+  padding-top: 30px;
+  overflow-x: auto;
+  white-space:nowrap;
+
+  &:before {
+    content: @cf-icon-left;
+    font-family: 'CFPB Minicons';
+    color: @pacific;
+  }
+
+  .respond-to-max(800px, {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  });
+
+  &_link {
+    padding-left: 4px;
+
+    &:not(:last-child):after {
+      content: ' /';
+      color: @text;
+      padding-left: 4px;
+    }
+  }
+}

@@ -13,7 +13,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased - unreleased
+## Unreleased
+
+### Added
+
+### Removed
+
+### Changed
+
+## 3.0.0-1.2.0 - 2015-06-19
 
 ### Added
 - Added `setup.sh` script for bootstrapping the project.
@@ -44,7 +52,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `preview_text` and `short_title` fields to sub_pages.
 - Added `templates/activities-feed.html` HTML template for the activity feed
   area on the offices and sub_pages.
+- Added Plain Writing Feedback form.
 - Added `cfpb_report` activity type to activities feed macro.
+- Added breadcrumbs macro and temporarily set breadcrumbs for all office sub-pages.
+- Added download icons to `privacy-impact-assessments-pias`
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -93,6 +104,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed FOIA pages from the template/processor changes
 - Fixed missing states from `.nav-secondary_link__disabled` class for
   visited and active links.
+- Fixed missing sidebar
 
 ### Removed
 - Removed `copy:static-legacy` and `grunt-contrib-copy` package.
