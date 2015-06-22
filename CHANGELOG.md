@@ -21,6 +21,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Fixed background and border on secondary navigation
+
 ## 3.0.0-1.2.0 - 2015-06-19
 
 ### Added
