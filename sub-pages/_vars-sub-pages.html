@@ -15,3 +15,9 @@
 {# TODO: Update _queries/records.json when we have real record posts #}
 {% set record_query = queries.records %}
 {% set records = record_query.search_with_url_arguments(size=10) %}
+
+{# Forms for sub-pages #}
+{% set forms = ['Amending-and-correcting-records-under-the-Privacy-Act-form',
+                'File-a-Privacy-Complaint-form',
+                'Submit-a-Request-form',
+                'Plain-Writing-Feedback-form'] %}
