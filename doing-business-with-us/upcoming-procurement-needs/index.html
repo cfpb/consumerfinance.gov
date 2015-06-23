@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-doing-business-with-us.html" as vars with context %}
+{% import "doing-business-with-us/_vars-doing-business-with-us.html" as vars with context %}
 {%- set active_nav_id = 'upcoming-procurement-needs' -%}
 
 {% block title -%}
@@ -34,6 +34,6 @@
     {% set page = get_document('pages', '36601') %}
     {{ page.content | safe }}
 
-    {% include "_process-smbiz-footer.html" %}
+    {% include "doing-business-with-us/_process-smbiz-footer.html" %}
 
 {% endblock %}

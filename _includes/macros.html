@@ -166,11 +166,11 @@
    ========================================================================== #}
 
 {% macro format_address(contact) %}
-    {{ contact.street if contact.street }}<br>
-    {{ contact.street_2 + '<br>'|safe if contact.street_2 }}
-    {{ contact.city + ',' if contact.city }}
-    {{ (contact.state + '&nbsp;')|safe if contact.state }}
-    {{ contact.zip_code if contact.zip_code }}
+    {{ contact.street if contact.street else '' }}<br>
+    {{ contact.street_2 + '<br>'|safe if contact.street_2 else '' }}
+    {{ contact.city + ',' if contact.city else '' }}
+    {{ (contact.state + '&nbsp;')|safe if contact.state else '' }}
+    {{ contact.zip_code if contact.zip_code else '' }}
 {% endmacro %}
 
 {# Format time to: `XX:XX a.m. &ndash; XX:XX p.m.` when given a date object #}
