@@ -149,7 +149,7 @@ module.exports = function(grunt) {
             grunt.log.writeln( 'Processing ' + source );
             return grunt.file.expand( config.loc.lib + '/*' ).concat([])
           },
-          compress: false,
+          compress: true,
           sourceMap: true,
           // Where the sourcemap file is generated and located.
           sourceMapFilename: '<%= loc.dist %>/static/css/main.css.map',
