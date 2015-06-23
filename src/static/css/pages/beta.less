@@ -69,9 +69,10 @@
         right: @grid_gutter-width / 2;
     });
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(801px, {
         // At this width, the wrapper gains `position: relative`,
         // so the button position has to be adjusted accordingly.
+        // This number depends on something in cf-layout
         top: -12px;
     });
 }

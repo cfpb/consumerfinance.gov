@@ -5,13 +5,9 @@
 
 .org-chart {
 
-    .respond-to-min(600px, {
-        width: 530px;
+    .respond-to-min(@tablet-min, {
+        width: 90%;
         margin: 0 auto;
-    });
-
-    .respond-to-min(1024px, {
-        width: 660px;
     });
 
     &_root {
@@ -35,7 +31,7 @@
 
         /* :before pseudo element's left border draws a centered vertical line
            down from .org-chart_root to .org-chart_branches.*/
-        .respond-to-min(600px, {
+        .respond-to-min(@tablet-min, {
             position: relative;
 
             &:before{
@@ -92,7 +88,7 @@
         });
 
         &_name {
-            .respond-to-min(600px, {
+            .respond-to-min(@tablet-min, {
                 .h4();
                 margin-bottom: unit(15px / @font-size, em);
                 text-align: center;
@@ -107,23 +103,20 @@
         background: @gray-10;
         border-color: @gray-20;
         border-style: solid;
-        border-width: 1px 0 0 0;
+        border-width: 1px 0 1px 0;
 
-        .respond-to-max(599px, {
-            border-width: 1px 0 1px 0;
+        .respond-to-min(@tablet-min {
+            border-width: 1px 0 0 0;
         });
     }
 
     &_node {
         width: 100%;
+        margin-bottom: -1px;
 
-        .respond-to-min(600px, {
+        .respond-to-min(@tablet-min, {
             position: relative;
             margin-bottom: @grid_gutter-width / 2;
-        });
-
-        .respond-to-max(599px, {
-            margin-bottom: -1px;
         });
 
         // nested .org-chart_node blocks have different background color & borders.
@@ -131,20 +124,18 @@
             border-top: 5px solid @pacific-50;
 
             .org-chart_node {
-                .respond-to-min(600px, {
+                .respond-to-min(@tablet-min, {
                     margin-bottom: 0px;
                 });
             }
 
             .org-chart_role {
-                .respond-to-min(600px, {
+                border-width: 1px 0 1px 0;
+
+                .respond-to-min(@tablet-min, {
                     background: @pacific-20;
                     border-color: #E5F1FA;
                     border-width: 0 0 1px 0;
-                });
-
-                .respond-to-max(599px, {
-                    border-width: 1px 0 1px 0;
                 });
             }
         }
@@ -176,7 +167,7 @@
     .content-show,
     .content-hide {
 
-        .respond-to-max(599px, {
+        .respond-to-max(@mobile-max, {
             .cf-icon,
             &:before,
             &:after {
@@ -217,7 +208,7 @@
     top: 20px;
     z-index: 10;
 
-    .respond-to-max(599px, {
+    .respond-to-max(@mobile-max, {
         height: 30px;
         top: 50%;
         margin-top: -@base-font-size-px/2;
