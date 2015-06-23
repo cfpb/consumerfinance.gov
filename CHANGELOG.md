@@ -13,7 +13,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased - unreleased
+## Unreleased
+
+### Added
+
+### Removed
+
+### Changed
+
+- Fixed background and border on secondary navigation
+
+## 3.0.0-1.2.0 - 2015-06-19
 
 ### Added
 - Added `setup.sh` script for bootstrapping the project.
@@ -96,6 +106,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed FOIA pages from the template/processor changes
 - Fixed missing states from `.nav-secondary_link__disabled` class for
   visited and active links.
+- Fixed missing sidebar
 
 ### Removed
 - Removed `copy:static-legacy` and `grunt-contrib-copy` package.
