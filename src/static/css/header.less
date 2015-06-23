@@ -48,13 +48,15 @@
 */
 
 .header_logo {
-    margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
+    width: 190px;
+    height: 40px;
+    margin: 10px;
     vertical-align: middle; // removes typical inline vertical whitespace
 
-    .respond-to-max(800px, {
-        width: 190px;
-        height: 40px;
-        margin: 10px;
+    .respond-to-min(@desktop-min, {
+        margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
+        height: 50px;
+        width: 237px;
     });
 }
 
@@ -69,7 +71,7 @@
 .header_misc {
     display: none;
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         display: block;
         // magic number for top margin aligns text baseline with logo baseline
         margin: 52px
@@ -133,7 +135,7 @@
 /* Sliding nav for portrait tablets and smaller
    ========================================================================== */
 
-.respond-to-max(799px, {
+.respond-to-max(@tablet-max, {
 
     html,
     body {
@@ -332,7 +334,7 @@
 /* Horizontal mega menu for landscape tablets and larger
    ========================================================================== */
 
-.respond-to-min(800px, {
+.respond-to-min(@desktop-min, {
 
     .sliding-nav {
         position: relative;
@@ -444,21 +446,8 @@
     }
 
 });
-//TODO: Look at these
-/*.respond-to-range(800px, 814px, {
-    .primary-nav_header-space {
-        // Magic number - dependent on height of horizontal navbar.
-        padding-bottom: 78px;
-    }
 
-    .primary-nav_top-level-list > .list_item > .list_link {
-        max-width: 130px;
-        text-align: center;
-    }
-
-});*/
-//TODO
-.respond-to-min(1024px, {
+.respond-to-min(1200px, {
     .primary-nav_top-level-list > .list_item > .list_link {
         // Margin on link for larger hit area.
         margin: 0 (@grid_gutter-width / 2);
