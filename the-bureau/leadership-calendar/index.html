@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% import "the-bureau/_vars-the-bureau.html" as vars with context %}
 {% set active_nav_id = 'leadership-calendar' %}
 
 {% block title -%}
@@ -16,8 +16,8 @@
 
 {% block content_main %}
 
-    {% import "leadership-calendar-table.html" as calendar %}
-    {% from "macros.html" import share as share %}
+    {% import "leadership-calendar-table.html" as calendar with context %}
+    {% from "macros.html" import share as share with context %}
     {% from "post-macros.html" import filters as filters with context %}
     {% from "post-macros.html" import pagination as pagination with context %}
 

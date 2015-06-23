@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% import "the-bureau/_vars-the-bureau.html" as vars with context %}
 
 {% block title -%}
     The Bureau
@@ -23,7 +23,7 @@
 
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
-        {% from "macros.html" import YouTube %}
+        {% from "macros.html" import YouTube with context %}
         {% call YouTube({
             'video_id' : 'en0Iq8II4fA',
             'image_res' : 'max'

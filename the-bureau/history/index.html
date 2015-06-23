@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% import "the-bureau/_vars-the-bureau.html" as vars with context %}
 {% set active_nav_id = 'history' %}
 
 {% block title -%}
@@ -12,8 +12,8 @@
 
 {% block content_main %}
 
-    {% import "post-macros.html" as post_macros %}
-    {% from "macros.html" import share as share %}
+    {% import "post-macros.html" as post_macros  with context %}
+    {% from "macros.html" import share as share with context %}
 
     {% set query = queries.history %}
 

@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-newsroom.html" as vars with context %}
+{% import "newsroom/_vars-newsroom.html" as vars with context %}
 
 {% block title -%}
     Newsroom
@@ -18,7 +18,7 @@
     <h1 class="u-mb30">Newsroom</h1>
 
     {# Get the latest Featured Topic #}
-    {% import "featured-topic.html" as featured_topics %}
+    {% import "newsroom/featured-topic.html" as featured_topics with context %}
     {{ featured_topics.render(queries.featured_topic.search_with_url_arguments(size=1)) }}
 
     {# Set the filters #}

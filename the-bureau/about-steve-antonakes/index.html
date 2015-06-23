@@ -1,5 +1,5 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% import "the-bureau/_vars-the-bureau.html" as vars with context %}
 {% set active_nav_id = 'about-steve-antonakes' %}
 
 {% block title -%}
@@ -12,7 +12,7 @@
 
 {% block content_main %}
 
-	{% from "macros.html" import share as share %}
+	{% from "macros.html" import share as share with context %}
 
     <div class="block u-mt0">
         <h1>
