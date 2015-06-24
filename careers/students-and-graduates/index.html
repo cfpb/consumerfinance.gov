@@ -1,5 +1,6 @@
 {% extends "layout-side-nav.html" %}
-{% import "_vars-jobs.html" as vars with context %}
+{% import "_vars-careers.html" as vars with context %}
+{%- set active_nav_id = 'students-and-graduates' -%}
 
 {% block title -%}
     Students and Graduates
@@ -33,7 +34,7 @@
                         block__border-top
                         u-mb0">
             <div class="media_image-container media_image-container__wide-margin">
-                <img class="media_image u-centered-on-mobile" src="../../static/img/educate.png">
+                <img class="media_image u-centered-on-mobile" src="../../static/img/gavel-round.png">
             </div>
             <div class="media_body u-centered-on-mobile">
                 <h2 class="h3">Brandeis Honor Attorney Program</h2>
@@ -54,7 +55,7 @@
                         block__border-top
                         u-mb0">
             <div class="media_image-container media_image-container__wide-margin">
-                <img class="media_image u-centered-on-mobile" src="../../static/img/enforce.png">
+                <img class="media_image u-centered-on-mobile" src="../../static/img/computer-round.png">
             </div>
             <div class="media_body u-centered-on-mobile">
                 <h2 class="h3">CFPB Summer Internship</h2>
@@ -77,7 +78,7 @@
                         block__border-top
                         u-mb0">
             <div class="media_image-container media_image-container__wide-margin">
-                <img class="media_image u-centered-on-mobile" src="../../static/img/empower.png">
+                <img class="media_image u-centered-on-mobile" src="../../static/img/charts-round.png">
             </div>
             <div class="media_body u-centered-on-mobile">
                 <h2 class="h3">Director's Financial Analyst</h2>
@@ -97,7 +98,7 @@
                         block__border-top
                         u-mb0">
             <div class="media_image-container media_image-container__wide-margin">
-                <img class="media_image u-centered-on-mobile" src="../../static/img/empower.png">
+                <img class="media_image u-centered-on-mobile" src="../../static/img/white-house-round.png">
             </div>
             <div class="media_body u-centered-on-mobile">
                 <h2 class="h3">Presidential Management Fellow</h2>
@@ -111,68 +112,79 @@
                     to flourish into problem solvers, strategic thinkers, and future leaders.
                 </p>
                 <p class="short-desc">
-                    <a href="http://www.pmf.gov/">Here's how to apply to be a Presidential Management Fellow</a>
+                    <a href="http://www.pmf.gov/" class="jump-link jump-link__right">
+                        Here's how to apply to be a Presidential Management Fellow
+                    </a>
                 </p>
             </div>
         </section>
 
         <div class="block
                     block__padded-top
-                    block__border-top">
+                    block__border-top
+                    content-l">
             <section class="content-l_col-1-2">
                 <h2 class="h3">Job Application Process</h2>
-                <p>
+                <p class="short-desc">
                     The application can be tricky.
                     We can help.
                     Learn how the application process works.
                 </p>
-                <p>
-                    <a href="#">Learn about job application process</a>
+                <p class="short-desc">
+                    <a href="#" class="jump-link jump-link__right">
+                        Learn about job application process
+                    </a>
                 </p>
             </section>
             <section class="content-l_col-1-2">
                 <h2 class="h3">Working at the CFPB</h2>
-                <p>
+                <p class="short-desc">
                     Help us continue to grow
                     and develop our 21st century agency.
                     The work you do will directly impact the lives of consumers
                 </p>
-                <p>
-                    <a href="#">Learn what it's like to work at the CFPB</a>
+                <p class="short-desc">
+                    <a href="#" class="jump-link jump-link__right">
+                        Learn what it's like to work at the CFPB
+                    </a>
+                </p>
             </section>
         </div>
         <div class="block
                     block__padded-top
-                    block__border-top">
+                    block__border-top
+                    content-l">
             <section class="content-l_col-1-2">
                 <h2 class="h3">Follow us on LinkedIn</h2>
-                <p>
+                <p class="short-desc">
                     The CFPB is one of the most searched for agencies
                     in the federal government.
                     Connect with us to stay updated on the work
                     we do and new opportunities to be a part of it.
                 </p>
-                <p>
-                    <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau">
+                <p class="short-desc">
+                    <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+                       class="jump-link jump-link__right">
                         Go to our LinkedIn
                     </a>
                 </p>
             </section>
             <section class="content-l_col-1-2">
                 <h2 class="h3">Provide Us With Feedback</h2>
-                <p>
+                <p class="short-desc">
                     We take pride in our feedback-centered culture
                     that helps us recruit great people.
                     If you have any feedback, or any specific questions,
                     let us know at <a href="#">jobs@consumerfinance.gov</a>
+                </p>
             </section>
         </div>
     </section>
 
     {# Footer #}
     <aside>
-        <div class="block u-mb0 block__flush-sides block__bg">
-            <div class="content-l content-l__main">
+        <div class="block u-mb0 u-mt0 block__flush-sides block__bg">
+            <div class="">
                     <!-- TODO: Add Office of Civil Rights url -->
                     {%- import "related-links.html" as related_links -%}
                     {{- related_links.render([
