@@ -96,6 +96,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `category_icon` macro from `post-macros.html` to `macros/category-icon.html`
   and adds render method.
 - Moved `string_length` macro from `macros.html` to `macros/util/text.html`.
+- Events processor/mapping/queries for new Event type structure
 
 
 ### Fixed

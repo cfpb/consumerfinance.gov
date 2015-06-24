@@ -1,0 +1,471 @@
+{
+  "properties": {
+    "agenda": {
+      "properties": {
+        "beginning_time": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "ending_time": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "location": {
+          "type": "string"
+        },
+        "speakers": {
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "archive": {
+      "properties": {
+        "flickr": {
+          "type": "string"
+        },
+        "image": {
+          "properties": {
+            "id": {
+              "type": "long"
+            },
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "speech_transcript": {
+          "properties": {
+            "id": {
+              "type": "long"
+            },
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "summary": {
+          "type": "string"
+        },
+        "video_transcript": {
+          "properties": {
+            "id": {
+              "type": "long"
+            },
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "youtube": {
+          "type": "string"
+        }
+      }
+    },
+    "attachments": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "images": {
+          "properties": {
+            "consumer-stories": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "full": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "large": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "medium": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
+      "mime_type": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "beginning_time": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "ending_time": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "future": {
+      "properties": {
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "id": {
+      "type": "long"
+    },
+    "live": {
+      "properties": {
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "live_stream": {
+      "properties": {
+        "date": {
+          "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "timezone": {
+          "type": "string"
+        }
+      }
+    },
+    "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "og_desc": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "og_title": {
+      "type": "string"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "relative_url": {
+      "type": "string"
+    },
+    "rsvp": {
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "email_body": {
+          "type": "string"
+        },
+        "email_subject": {
+          "type": "string"
+        }
+      }
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "string"
+    },
+    "taxonomy_beginning_time": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        }
+      }
+    },
+    "taxonomy_ending_time": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        }
+      }
+    },
+    "taxonomy_fj_tag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "taxonomy_live_stream_available_time": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "post_count": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        }
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "twtr_hash": {
+      "type": "string"
+    },
+    "twtr_lang": {
+      "type": "string"
+    },
+    "twtr_rel": {
+      "type": "string"
+    },
+    "twtr_text": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "utm_campaign": {
+      "type": "string"
+    },
+    "utm_content": {
+      "type": "string"
+    },
+    "utm_term": {
+      "type": "string"
+    },
+    "venue": {
+      "properties": {
+        "address": {
+          "properties": {
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "suite": {
+              "type": "string"
+            },
+            "zip_code": {
+              "type": "string"
+            }
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
