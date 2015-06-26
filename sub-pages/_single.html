@@ -50,7 +50,7 @@
 
                 {% if page.short_title or page.title %}
                 <h2 class="h3">
-                    {{ page.short_title | safe if page.short_title else page.title | safe }}
+                    {{ (page.short_title or page.title) | safe }}
                 </h2>
                 {% endif %}
 
