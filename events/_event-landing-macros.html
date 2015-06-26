@@ -24,7 +24,7 @@
           <div class="media">
             <a class="media_image-container post-summary-image" href="{{ post.permalink }}">
                   <div class="post-summary-image_container">
-                      {{ event_post_macros.event_location_image(post) }}
+                      {{ event_post_macros.event_location_image(post.venue.address) }}
                   </div>
               </a>
               <div class="media_body media_body__event">
