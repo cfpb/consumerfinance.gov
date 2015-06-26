@@ -29,33 +29,35 @@
 <article class="post post__event">
     <header>
         <h1 class="post_heading">
-            {{ post.title|safe }}
+            {{ event.title|safe }}
         </h1>
-    {% if post.dek %}
         <p class="post_dek">
-            {{ post.dek|safe }}
+        {% if (request.url_rule.endpoint != 'event_archive') %}
+            {{ event.future.summary | striptags }}
+        {% else %}
+            {{ event.archive.summary | striptags }}
+        {% endif %}
         </p>
-    {% endif %}
         <div class="modification-date date u-right">
             <span>Updated</span>
             <time datetime="{{ post.modified|date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
-                {%- set update_date = post.modified |date("%m/%d/%Y") -%}
+                {%- set update_date = event.modified |date("%m/%d/%Y") -%}
                 {{ update_date[1:] if update_date[0] == '0' else update_date }}
             </time>
         </div>
-        {{ share(post.title, true, {
+        {{ share(event.title, true, {
            'text':     post.twtr_text,
            'related':  post.twtr_rel,
            'language': post.twtr_lang,
            'hashtags': post.twtr_hash
         }) }}
-    {% if post.thumbnail.images %}
+    {% if event.thumbnail.images %}
         <img class="post_featured-img"
-             src="{{ post.thumbnail.images.full.url }}"
-             alt="{{ post.thumbnail.alt_text }}">
+             src="{{ event.thumbnail.images.full.url }}"
+             alt="{{ event.thumbnail.alt_text }}">
     {% endif %}
     {% from "_event-post-macros.html" import event_venue as event_venue %}
-    {{ event_venue(post) }}
+    {{ event_venue(event) }}
     </header>
     <div class="post_body">
         {% if (request.url_rule.endpoint != 'event_archive') %}
@@ -70,9 +72,10 @@
                           <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn"><span class="btn_icon__left cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
                       </p>
                     </div>
+                    {% if (event.live_stream) %}
                     <div class="event-status_livestream">
                       <p>
-                          {# TODO Change to livestream icon when that's added to cf-icons. #}
+                          <!-- TODO Change to livestream icon when that's added to cf-icons. -->
                           <span class="cf-icon cf-icon-livestream"></span>
                           <strong>Available on Live stream.</strong>
                       </p>
@@ -80,23 +83,22 @@
                           <span class="event-meta_description event-meta_description__block">
                               Video link available:
                           </span>
-                          <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
-                              <span class="event-meta_date">1/21/2014</span>
-                              <span class="event-meta_time">2:30 PM CST</span>
-                          </time>
+                          {% from "_event-post-macros.html" import event_meta_datetime as event_meta_datetime %}
+                          {{ event_meta_datetime(event.beginning_time) }}
                       </p>
                     </div>
+                    {% endif %}
                 </div>
             </aside>
         {% endif %}
-      {{ post.content|safe }}
+        {{ event.content | safe }}
     </div>
-{% if post.tags|length %}
+    {% if event.tags|length %}
     <footer>
         {%- import "tags.html" as tags %}
-        {{ tags.render(post.tags, path) }}
+        {{ tags.render(event.tags, path) }}
     </footer>
-{% endif %}
+    {% endif %}
 </article>
 
 {% endmacro %}

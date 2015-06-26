@@ -61,8 +61,8 @@
 
    ========================================================================== #}
 
-{% macro event_location_image(post, options={}) %}
-    {%- set location = (options.location or post.location)
+{% macro event_location_image(address, options={}) %}
+    {%- set location = (options.location or address.city + ' ' + address.state)
                        | default('Washington DC', true)
                        | urlencode -%}
     {%- set scale = '&scale=' + options.scale | default('2') -%}
@@ -99,8 +99,8 @@
 
 {% macro event_meta(post, address_format='{city}, {state}', datetime_format={})%}
     <div class="event-meta h-event">
-        {{ event_meta_address(post, address_format) }}
-        {{ event_meta_datetime(post.date, datetime_format) }}
+        {{ event_meta_address(post.venue, address_format) }}
+        {{ event_meta_datetime(post.beginning_time, datetime_format) }}
     </div>
 {% endmacro %}
 
@@ -123,12 +123,12 @@
 
    ========================================================================== #}
 
-{% macro event_meta_address(post, address_format='{city}, {state}') %}
-    {%- set city  =  post.city   | default('Washington', true) -%}
-    {%- set state =  post.state  | default('DC', true) -%}
-    {%- set street = post.street | default('1275 First St NE', true) -%}
-    {%- set venue  = post.venue  | default('CFPB', true) -%}
-    {%- set zip    = post.zip    | default('20002', true) -%}
+{% macro event_meta_address(venue, address_format='{city}, {state}') %}
+    {%- set city   =  venue.address.city    | default('Washington', true) -%}
+    {%- set state  =  venue.address.state   | default('DC', true) -%}
+    {%- set street = venue.address.street   | default('1275 First St NE', true) -%}
+    {%- set name   = venue.name             | default('CFPB', true) -%}
+    {%- set zip    = venue.address.zip_code | default('20002', true) -%}
 
     <p class="event-meta_address h-adr">
         {%- macro _city() %}
@@ -144,7 +144,7 @@
         {% endmacro -%}
 
         {% macro _venue() %}
-            <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+            <span class="event-meta_venue p-extended-address">{{ name }}</span>
         {% endmacro %}
 
         {% macro _zip() %}
@@ -183,7 +183,7 @@
 
 {% macro event_meta_datetime(date, datetime_format={}) %}
     {%- set date_format =  datetime_format.date_format | default('%b %d, %Y', true)   -%}
-    {%- set time_format =  datetime_format.time_format | default('%I:%M %p %Z', true) -%}
+    {%- set time_format =  datetime_format.time_format | default('%I:%M %p', true) -%}
 
     <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%dT%H:%M:%S%z') }}">
         <span class="event-meta_date">{{ date | date(date_format) }}</span>
@@ -213,7 +213,7 @@
 {%- import "tags.html" as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
-            {{ calendar_icon(post.date) }}
+            {{ calendar_icon(post.beginning_time) }}
             <div class="summary-meta_container">
                 <h1 class="summary_heading">{{ post.title|safe }}</h1>
                 {{ event_meta(post, datetime_format={
@@ -222,10 +222,10 @@
             </div>
         </header>
         <p class="summary_text">
-            {% if post.dek %}
-                {{ post.dek|striptags }}
+            {% if (request.url_rule.endpoint != 'event_archive') %}
+                {{ post.future.summary | striptags }}
             {% else %}
-                {{ post.excerpt|striptags }}
+                {{ post.archive.summary | striptags }}
             {% endif %}
         </p>
     </a>
@@ -250,7 +250,8 @@
    ========================================================================== #}
 
 {% macro event_venue(post) %}
-    {%- set city =  post.city  | default('Washington, DC') -%}
+    {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
+                    | default('Washington, DC') -%}
 
 
     <section class="event-venue">
@@ -258,7 +259,7 @@
             <h2 class="event-venue_heading">{{ city }}</h2>
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
-                    {{ event_meta_address(post,
+                    {{ event_meta_address(post.venue,
                         address_format ='{venue} {street} {city}, {state} {zip}'
                     ) }}
                 </div>
@@ -266,7 +267,7 @@
                     {% if (request.url_rule.endpoint == 'event_archive') %}
                         Video Replay will be<br> available shortly
                     {% else %}
-                        {{ event_meta_datetime(post.date) }}
+                        {{ event_meta_datetime(post.beginning_time) }}
                         <!-- TDOD: Replace with real download link -->
                         <a class="event-calendar_download jump-link jump-link__download" href="#">
                             <span class="jump_link_text">Download .ics</span>
@@ -281,7 +282,7 @@
                     {# TODO Replace image URL with actual post url #}
                     <img src="http://upload.wikimedia.org/wikipedia/commons/9/94/Large.mc.arp.750pix.jpg" />
                 {% else %}
-                    {{ event_location_image(post, {
+                    {{ event_location_image(post.venue.address, {
                         'zoom': '12',
                         'scale': '2',
                         'size': '640x320'

@@ -9936,7 +9936,7 @@ a.focus .summary_event-date {
 }
 
 .event-meta_time:before {
-  content: "\2014";
+  content: "@";
   margin-right: .2em;
 }
 
