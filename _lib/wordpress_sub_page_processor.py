@@ -38,12 +38,11 @@ def process_sub_page(post):
     for name in names:
         if name in custom_fields:
             post[name] = custom_fields[name]
-    for related in ['related_office', 'related_faq']:
-        if related in custom_fields:
-            if isinstance(custom_fields[related], basestring):
-                post[related] = custom_fields[related]
-            else:
-                post[related] = custom_fields[related][0]
+    if 'related_faq' in custom_fields:
+        if isinstance(custom_fields['related_faq'], basestring):
+            post['related_faq'] = custom_fields['related_faq']
+        else:
+            post['related_faq'] = custom_fields['related_faq'][0]
     if 'related_links' not in post:
         related = []
         for x in range(5):

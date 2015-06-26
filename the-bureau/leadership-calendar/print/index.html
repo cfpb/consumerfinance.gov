@@ -27,7 +27,7 @@
             <div class="content_main">
                 <div class="print-header">
                     {% set query = queries.calendar_event -%}
-                    {%- set posts = query.search_with_url_arguments(size=20000) -%}
+                    {%- set posts = query.search(size=20000) -%}
                     <h1 class="superheader">Leadership Calendar</h1>
                     {{ active_filters(posts, ['calendar', 'range_date'], {
                         'show_filters_label': false, 'show_unfiltered_count': true
