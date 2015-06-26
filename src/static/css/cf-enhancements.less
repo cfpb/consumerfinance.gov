@@ -986,6 +986,32 @@ textarea.input__long {
     }
 }
 
+
+/* topdoc
+  name: Disabled link
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <a class="u-link__disabled">
+          This link is disabled.
+        </div>
+      codenotes:
+        - .u-link__disabled;
+      notes:
+        - "Use this as a general class to give links disabled styling.
+           Sets the color,
+           removes the border and sets the cursor to not-allowed"
+  tags:
+    - cf-core
+*/
+.u-link__disabled {
+  color: @gray-50 !important;
+  border: none !important;
+  cursor: not-allowed !important;
+}
+
+
 /* topdoc
   name: Half top padding
   family: cf-layout
@@ -1009,6 +1035,7 @@ textarea.input__long {
         }
     });
 }
+
 
 /* topdoc
     name: EOF
