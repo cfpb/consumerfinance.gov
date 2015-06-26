@@ -73,6 +73,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated email sharing to use mailto: link instead of addthis network
   (removes need for the external privacy notification and consolidates
   email patterns) in share macro
+- Updated primary navigation to match new mega menu design.
 
 ### Removed
 - Removed `list_link__disabled` class.

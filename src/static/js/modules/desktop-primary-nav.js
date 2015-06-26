@@ -10,7 +10,7 @@ var $ = require( 'jquery' );
 function init() {
   var $desktopMenu = $( '.primary-nav' ),
       $desktopMenuTrigger = $( '.primary-nav_top-level-list > li' ),
-      $desktopMenuChild = $( '.desktop-menu_full-wrapper' ),
+      $subNavs = $( '.sub-nav_wrapper' ),
       mouseIsInsideMenu = false,
       mouseIsInsideMenuItem = false,
       aMenuItemWasOpened = false,
@@ -21,8 +21,8 @@ function init() {
     isSmall = $( '.sliding-nav_trigger' ).is( ':visible' );
   } );
 
-  // Add aria-expanded
-  $desktopMenuChild.attr( 'aria-expanded', 'false' );
+  // Set default state for all sub-navs.
+  $subNavs.attr( 'aria-expanded', 'false' );
 
   $desktopMenu.mouseleave( function() {
     // Update the mouse and menu state
@@ -33,14 +33,23 @@ function init() {
     $desktopMenu.addClass( 'has-transition' );
   } );
 
+  $desktopMenuTrigger.click( function() {
+    if ( !isSmall ) {
+      var $subNav = $( this ).find( '.sub-nav_wrapper' );
+      var isExpanded = $subNav.attr( 'aria-expanded' ) === 'true';
+      $subNav.attr( 'aria-expanded', !isExpanded );
+    }
+  } );
+
   $desktopMenuTrigger.mouseenter( function() {
 
     if ( !isSmall ) {
+      var $subNav = $( this ).find( '.sub-nav_wrapper' );
       // Update aria-expanded
-      $( this ).find( '.desktop-menu_full-wrapper' ).attr( 'aria-expanded', 'true' );
+      $subNav.attr( 'aria-expanded', 'true' );
 
       // Show the child list, previously hidden by default for the mobile menu.
-      $( '.list-expanding_child-list' ).show();
+      $subNav.find( '.list-expanding_child-list' ).css('display', 'inline-block');
 
       if ( aMenuItemWasOpened === false ) {
         $desktopMenu.addClass( 'has-transition' );
@@ -71,7 +80,7 @@ function init() {
       }, 100 );
 
       // Update aria-expanded
-      $desktopMenuChild.attr( 'aria-expanded', 'false' );
+      $( this ).find( '.sub-nav_wrapper' ).attr( 'aria-expanded', 'false' );
     }
   } );
 }
