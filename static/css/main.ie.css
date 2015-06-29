@@ -5227,6 +5227,14 @@ tbody tr {
   border: 1px solid #babbbd;
 }
 
+.block__border-left {
+  border-left: 1px solid #babbbd;
+}
+
+.block__border-right {
+  border-right: 1px solid #babbbd;
+}
+
 input[type="text"].warning,
 input[type="search"].warning,
 input[type="email"].warning,
@@ -11009,6 +11017,14 @@ a.focus .summary_event-date {
 
 .contact-us-map {
   max-width: 330px;
+}
+
+.students-and-graduates .media_image {
+  width: 130px;
+}
+
+.students-and-graduates .media_image {
+  width: 150px;
 }
 
 .history-section-expandable {
