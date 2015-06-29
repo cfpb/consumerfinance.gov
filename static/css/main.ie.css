@@ -7979,6 +7979,11 @@ a.focus .summary_event-date {
   margin-top: 10px;
 }
 
+.nav-secondary_item+.nav-secondary_item,
+.nav-secondary_item__child {
+  margin-top: 10px;
+}
+
 .nav-secondary_item__parent {
   margin-top: 0;
   margin-bottom: 1.16666667em;
