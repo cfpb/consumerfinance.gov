@@ -4,5 +4,14 @@
     "doc_type": "events",
     "size": 10,
     "sort": "beginning_time:asc"
-  }
+  },
+  "filters": [
+    {
+    "range" : {
+        "ending_time" : {
+          "gt": "now"
+        }
+      }
+    }
+  ]
 }

@@ -309,6 +309,7 @@
    ========================================================================== #}
 
 {% macro event_agenda(post) %}
+  {% if post.agenda %}
   {% set options = {
       'time_col_classes': 'u-w25pct',
       'agenda_col_classes': 'u-w25pct',
@@ -332,18 +333,18 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {{ block.dtstart }}
+                    {# date() isn't working with either of these strings #}
+                    {{ block.beginning_time }}
                     &ndash;
-                    {{ block.dtend }}
+                    {{ block.ending_time }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
-                    {{ block.summary }}
+                    {{ block.desc }}
                 </td>
                 <td class="{{ options.location_col_classes }}" data-label="Location">
-                    {{ block.location.street }}<br>
-                    {{ block.location.city }},
-                    {{ block.location.state }}
-                    {{ block.location.zip }}
+                  {% if block.location %}
+                    {{ block.location}}
+                  {% endif %}
                 </td>
                 <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
                     {% for speaker in block.speakers %}
@@ -359,4 +360,5 @@
         </tbody>
     </table>
   </div>
+  {% endif %}
 {% endmacro %}
