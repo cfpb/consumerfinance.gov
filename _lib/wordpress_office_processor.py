@@ -88,7 +88,7 @@ def process_office(post):
     # add other custom fields
     names = ['og_title', 'og_image', 'og_desc', 'twtr_text', 'twtr_lang',
              'twtr_rel', 'twtr_hash', 'utm_campaign', 'utm_term',
-             'utm_content', 'short_title']
+             'utm_content', 'short_title', 'related_sub_pages']
     for name in names:
         if name in custom_fields:
             post[name] = custom_fields[name]
