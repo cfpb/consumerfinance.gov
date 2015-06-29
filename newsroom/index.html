@@ -19,7 +19,7 @@
 
     {# Get the latest Featured Topic #}
     {% import "featured-topic.html" as featured_topics %}
-    {{ featured_topics.render(queries.featured_topic.search_with_url_arguments(size=1)) }}
+    {{ featured_topics.render(queries.featured_topic.search(size=1)) }}
 
     {# Set the filters #}
     {% from "post-macros.html" import filters as filters with context %}
