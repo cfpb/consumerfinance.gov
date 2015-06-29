@@ -72,12 +72,12 @@
                             {{ category }}
                         </button>
                     </li>
-                {% set parents = queries.orgmember.search_with_url_arguments(
+                {% set parents = queries.orgmember.search(
                    filter_has_parent='false', filter_category=category) %}
                 {% for parent in parents %}
                     {% set par_loop = loop %}
                     <li class="org-chart_node expandable">
-                        {% set children = queries.orgmember.search_with_url_arguments(
+                        {% set children = queries.orgmember.search(
                            filter_parent=parent.id) %}
                     {% if children|list|length %}
                         <button class="org-chart_role expandable_target expandable_header content-show"

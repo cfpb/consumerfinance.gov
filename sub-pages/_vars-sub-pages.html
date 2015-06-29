@@ -1,21 +1,34 @@
+{# Get subpages and the related office #}
 {% set query = queries.sub_page %}
-{% set sub_pages = query.search_with_url_arguments(size=6, filter_has_parent=true, filter_parent=sub_page.id) %}
-{% set nav_sub_pages = query.search_with_url_arguments(size=15, filter_related_office=sub_page.related_office, filter_has_parent=false) %}
-{% set office = get_document('office', sub_page.related_office) %}
+{% set sub_pages = query.search(use_url_arguments=False, size=6, filter_has_parent=true, filter_parent=sub_page.id) %}
+{% set office_query = queries.office %}
+{% set offices = office_query.search(use_url_arguments=False, size=1, filter_related_sub_pages=sub_page.slug) %}
+{% set office_list = offices|list %}
+{% set office = office_list[0] %}
 
+{# Get set the correct title #}
+{% set title = (office.short_title or office.title) | safe %}
+
+{# Set up the navigation #}
 {% set path = '/sub_pages/' %}
-{% set nav_items =
-    [(office.permalink, office.slug, office.title)]
--%}
-
-{% for page in nav_sub_pages %}
-    {%- set _ignore = nav_items.append((page.permalink, page.slug, page.title|safe)) -%}
+{% set nav_items = [] -%}
+{% set nav_sub_pages = [] -%}
+{% set breadcrumb_items = [] -%}
+{% set _ignore = breadcrumb_items.append((office.permalink, office.slug, office.title)) %}
+{% for slug in office.related_sub_pages %}
+    {% set _ignore = nav_sub_pages.append(get_document('sub_page', slug)) %}
+{% endfor %}
+{% set _ignore = nav_items.append((office.permalink, office.slug, title)) -%}
+{% for page in nav_sub_pages|sort(attribute='order') %}
+    {% set title = page.short_title|safe if page.short_title else page.title|safe %}
+    {%- set _ignore = nav_items.append((page.permalink, page.slug, title)) -%}
 {% endfor %}
 
+{# Get the records for latest activities #}
 {# This to fake data for records sub-pages #}
 {# TODO: Update _queries/records.json when we have real record posts #}
 {% set record_query = queries.records %}
-{% set records = record_query.search_with_url_arguments(size=10) %}
+{% set records = record_query.search(size=10) %}
 
 {# Forms for sub-pages #}
 {% set forms = ['Amending-and-correcting-records-under-the-Privacy-Act-form',

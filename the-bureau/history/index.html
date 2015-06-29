@@ -29,7 +29,7 @@
         {{ share(self.title(), true) }}
     </div>
 
-	{% set sections = query.search_with_url_arguments(filter_has_parent='false') -%}
+	{% set sections = query.search(filter_has_parent='false') -%}
 
 {% for section in sections %}
 
@@ -54,7 +54,7 @@
             <div class="expandable_content history-section-expandable_content">
                 <div class="history-timeline">
     {# Run a query for the first item in this section to get the starting year. #}
-    {% set first = query.search_with_url_arguments(filter_parent=section.id,
+    {% set first = query.search(filter_parent=section.id,
                                                    size=1) %}
     {# Using this history_vars dictionary instead of a simple variable lets us
        share the value between the different scopes created by the foor loops.
@@ -65,7 +65,7 @@
     {% endfor %}
                     <h2 class="history-year">{{ history_vars.current_year }}</h2>
                     <ol class="history-list">
-    {% set histories = query.search_with_url_arguments(filter_parent=section.id) %}
+    {% set histories = query.search(filter_parent=section.id) %}
     {% for history in histories %}
         {% if history.date|date("%Y")|int < history_vars.current_year %}
             {% if history_vars.update({'current_year': history.date|date("%Y")|int}) %} {% endif %}

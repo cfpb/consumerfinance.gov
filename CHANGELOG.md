@@ -21,7 +21,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
-- Fixed background and border on secondary navigation
+- Fixed background and border on secondary navigation.
+- Moved `link_list__disabled` class to global context.
+- Related Links now disable styles links with empty URLs.
 
 ## 3.0.0-1.2.0 - 2015-06-19
 
@@ -58,6 +60,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `cfpb_report` activity type to activities feed macro.
 - Added breadcrumbs macro and temporarily set breadcrumbs for all office sub-pages.
 - Added download icons to `privacy-impact-assessments-pias`
+- Added `short_title` to Office/Subpage
+- Added ordering to the navigation on Office/Subpage
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -96,6 +100,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `category_icon` macro from `post-macros.html` to `macros/category-icon.html`
   and adds render method.
 - Moved `string_length` macro from `macros.html` to `macros/util/text.html`.
+- Events processor/mapping/queries for new Event type structure
+- Changed the way navigation works for Office/Subpage
 
 
 ### Fixed

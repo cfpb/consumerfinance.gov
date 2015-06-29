@@ -46,7 +46,7 @@
     <div class="block u-mt0">
 
     {% set query = queries.calendar_event %}
-    {% set posts = query.search_with_url_arguments(size=20) %}
+    {% set posts = query.search(size=20) %}
 
         {{ filters(
             ['calendar', 'range_date'], query, posts, 'calendar_event',
@@ -84,11 +84,12 @@
     </section>
 
     <aside class="block u-mb0 block__flush-sides block__bg">
+        {# TODO: Add FOIA and Open government URLs. #}
         {%- import "related-links.html" as related_links -%}
         {{- related_links.render([
-            [ 'http://www.consumerfinance.gov/foia/',
+            [ '',
               'Read more about FOIA' ],
-            [ 'http://www.consumerfinance.gov/open/',
+            [ '',
               'Open government' ],
             [ vars.path + 'history/',
               'About our history' ]
