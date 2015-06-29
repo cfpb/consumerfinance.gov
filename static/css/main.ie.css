@@ -11019,6 +11019,14 @@ a.focus .summary_event-date {
   max-width: 330px;
 }
 
+.students-and-graduates .media_image {
+  width: 130px;
+}
+
+.students-and-graduates .media_image {
+  width: 150px;
+}
+
 .history-section-expandable {
   -webkit-transition: 0.5s all;
   transition: 0.5s all;
