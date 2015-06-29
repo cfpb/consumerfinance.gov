@@ -48,7 +48,11 @@
     margin-bottom: unit(30px / @base-font-size-px, em);
 
     .list_link {
-        .u-link__colors(@black, @pacific-80);
+        .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
+    }
+
+    .date {
+        white-space: nowrap;
     }
 
     .respond-to-min(@tablet-min, {
@@ -58,12 +62,11 @@
             }
         }
         .list_link {
-            .u-link__colors(@black, @pacific-80);
+            .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
             .u-link__no-border();
         }
     });
 }
-
 
 /* topdoc
   name: EOF
