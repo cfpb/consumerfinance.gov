@@ -26,7 +26,7 @@
     {{ article.render(event, vars.path) }}
 
     {% from "_event-post-macros.html" import event_agenda as event_agenda %}
-    {#{{ event_agenda(event) }}#}
+    {{ event_agenda(event) }}
 
     <div class="event-footer">
         <p class="event-footer_banner">
