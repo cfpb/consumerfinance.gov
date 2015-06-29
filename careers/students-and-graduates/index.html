@@ -10,13 +10,14 @@
 
 {%- endblock %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
+{% block content_modifiers -%}
+    {{ super() }}
+    careers-students-and-graduates
 {%- endblock %}
 
 {% block content_main %}
 
-    <section class="media block block__flush-top block__sub">
+    <section class="block block__flush-top block__sub">
 
             <h1>Students and graduates</h1>
             <p class="h3">
@@ -26,16 +27,16 @@
             </p>
     </section>
 
-    <section class="students-and-graduates">
+    <section>
 
         <section class="media
                         block
                         block__padded-top
                         block__border-top
-                        u-mb0">
+                        block__flush-bottom">
             <div class="media_image-container media_image-container__wide-margin">
                 <img class="u-hide-on-mobile"
-                     src="../../static/img/gavel-round.png">
+                     src="/static/img/gavel-round.png">
             </div>
             <div class="media_body">
                 <h2>Brandeis Honor Attorney Program</h2>
@@ -54,10 +55,10 @@
                         block
                         block__padded-top
                         block__border-top
-                        u-mb0">
+                        block__flush-bottom">
             <div class="media_image-container media_image-container__wide-margin">
                 <img class="u-hide-on-mobile"
-                     src="../../static/img/computer-round.png">
+                     src="/static/img/computer-round.png">
             </div>
             <div class="media_body">
                 <h2>CFPB Summer Internship</h2>
@@ -78,10 +79,10 @@
                         block
                         block__padded-top
                         block__border-top
-                        u-mb0">
+                        block__flush-bottom">
             <div class="media_image-container media_image-container__wide-margin">
                 <img class="u-hide-on-mobile"
-                     src="../../static/img/charts-round.png">
+                     src="/static/img/charts-round.png">
             </div>
             <div class="media_body">
                 <h2>Director's Financial Analyst</h2>
@@ -99,10 +100,10 @@
                         block
                         block__padded-top
                         block__border-top
-                        u-mb0">
+                        block__flush-bottom">
             <div class="media_image-container media_image-container__wide-margin">
                 <img class="u-hide-on-mobile"
-                     src="../../static/img/white-house-round.png">
+                     src="/static/img/white-house-round.png">
             </div>
             <div class="media_body">
                 <h2>Presidential Management Fellow</h2>
@@ -116,7 +117,7 @@
                     to flourish into problem solvers, strategic thinkers, and future leaders.
                 </p>
                 <p class="short-desc">
-                    <a href="http://www.pmf.gov/" class="jump-link jump-link__right">
+                    <a href="http://www.pmf.gov/" class="jump-link jump-link__external-link">
                         Here's how to apply to be a Presidential Management Fellow
                     </a>
                 </p>
@@ -132,11 +133,11 @@
                 <p class="short-desc">
                     The application can be tricky.
                     We can help.
-                    Learn how the application process works.
+                    Learn how it works.
                 </p>
                 <p class="short-desc">
                     <a href="#" class="jump-link jump-link__right">
-                        Learn about job application process
+                        Learn how the application process works
                     </a>
                 </p>
             </section>
@@ -159,7 +160,10 @@
                     block__border-top
                     content-l">
             <section class="content-l_col-1-2">
-                <h2 class="h3">Follow us on LinkedIn</h2>
+                <h2 class="h3">
+                    <span class="cf-icon cf-icon-linkedin-square"></span>
+                    Follow us on LinkedIn
+                </h2>
                 <p class="short-desc">
                     The CFPB is one of the most searched for agencies
                     in the federal government.
@@ -168,7 +172,7 @@
                 </p>
                 <p class="short-desc">
                     <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
-                       class="jump-link jump-link__right">
+                       class="jump-link jump-link__external-link">
                         Go to our LinkedIn
                     </a>
                 </p>
@@ -188,9 +192,9 @@
                     <ul class="list list__icons">
                         <li class="list_item">
                             <span class="cf-icon cf-icon-email list_icon"></span>
-                            <span class="h5 list_text">Email:</span>
+                            <span class="h5 list_text">Email</span>
                             <p><a href="mailto:jobs@consumerfinance.gov"
-                               class="jump-link jump-link__right">
+                               class="jump-link">
                                 jobs@consumerfinance.gov
                             </a></p>
                         </li>
@@ -202,17 +206,21 @@
 
     {# Footer #}
     <aside>
-        <div class="block u-mb0 u-mt0 block__flush-sides block__bg">
+        <div class="block
+                    block__flush-sides
+                    block__flush-bottom
+                    block__flush-top
+                    block__bg">
             <div class="">
-                    <!-- TODO: Add Office of Civil Rights url -->
+                    {# Add Office of Civil Rights URL #}
                     {%- import "related-links.html" as related_links -%}
                     {{- related_links.render([
                         [ '/blog/',
                           'CFPB Blog' ],
                         [ '/newsroom/',
                           'Newsroom' ],
-                        [ '/equal-employment-opportunity/',
-                          'Equal Employment Opportunity' ]
+                        [ '',
+                          'Office of Civil Rights' ]
                     ]) -}}
             </div>
         </div>

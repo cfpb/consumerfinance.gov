@@ -11020,6 +11020,10 @@ a.focus .summary_event-date {
 }
 
 .students-and-graduates .media_image {
+  width: 130px;
+}
+
+.students-and-graduates .media_image {
   width: 150px;
 }
 
