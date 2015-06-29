@@ -1,0 +1,229 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-careers.html" as vars with context %}
+{%- set active_nav_id = 'students-and-graduates' -%}
+
+{% block title -%}
+    Students and Graduates
+{%- endblock %}
+
+{% block desc -%}
+
+{%- endblock %}
+
+{% block content_modifiers -%}
+    {{ super() }}
+    careers-students-and-graduates
+{%- endblock %}
+
+{% block content_main %}
+
+    <section class="block block__flush-top block__sub">
+
+            <h1>Students and graduates</h1>
+            <p class="h3">
+                The CFPB is committed to creating and sustaining
+                a new generation of leaders.
+                There are many opportunities for you to make an immediate impact.
+            </p>
+    </section>
+
+    <section>
+
+        <section class="media
+                        block
+                        block__padded-top
+                        block__border-top
+                        block__flush-bottom">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="u-hide-on-mobile"
+                     src="/static/img/gavel-round.png">
+            </div>
+            <div class="media_body">
+                <h2>Brandeis Honor Attorney Program</h2>
+                <h3 class="h5">Look for applications here starting Summer 2015</h3>
+                <p class="short-desc">
+                    A two-year fellowship that provides law students
+                    and recent law school graduates
+                    early, substantive opportunities to use and develop
+                    their legal skills
+                    and make a difference in the lives of American consumers.
+                </p>
+            </div>
+        </section>
+
+        <section class="media
+                        block
+                        block__padded-top
+                        block__border-top
+                        block__flush-bottom">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="u-hide-on-mobile"
+                     src="/static/img/computer-round.png">
+            </div>
+            <div class="media_body">
+                <h2>CFPB Summer Internship</h2>
+                <h3 class="h5">Look for applications here starting Fall 2015</h3>
+                <p class="short-desc">
+                    A twelve-week, paid summer internship program
+                    for high-potential students to assist
+                    in a variety of operational and mission-oriented projects.
+                    Students receive on-the-job training in the technical aspects
+                    of the organization's work.
+                    The students' interests, knowledge, and academic background
+                    play a large role in determining assignments.
+                </p>
+            </div>
+        </section>
+
+        <section class="media
+                        block
+                        block__padded-top
+                        block__border-top
+                        block__flush-bottom">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="u-hide-on-mobile"
+                     src="/static/img/charts-round.png">
+            </div>
+            <div class="media_body">
+                <h2>Director's Financial Analyst</h2>
+                <h3 class="h5">Look for applications here starting Fall 2015</h3>
+                <p class="short-desc">
+                    Our highly selective, two-year rotational program.
+                    We seek out a small group of talented college graduates
+                    and challenge them to use their analytical skills
+                    to make financial markets work better for all.
+                </p>
+            </div>
+        </section>
+
+        <section class="media
+                        block
+                        block__padded-top
+                        block__border-top
+                        block__flush-bottom">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="u-hide-on-mobile"
+                     src="/static/img/white-house-round.png">
+            </div>
+            <div class="media_body">
+                <h2>Presidential Management Fellow</h2>
+                <h3 class="h5">Applications due by XX/XX/XXXX</h3>
+                <p class="short-desc">
+                    The Federal government's flagship leadership development program
+                    at the entry level for advanced degree candidates.
+                    The two-year appointment provides a fast-paced opportunity
+                    to gain experience and develop talents.
+                    Fellows will be challenged with opportunities
+                    to flourish into problem solvers, strategic thinkers, and future leaders.
+                </p>
+                <p class="short-desc">
+                    <a href="http://www.pmf.gov/" class="jump-link jump-link__external-link">
+                        Here's how to apply to be a Presidential Management Fellow
+                    </a>
+                </p>
+            </div>
+        </section>
+
+        <div class="block
+                    block__padded-top
+                    block__border-top
+                    content-l">
+            <section class="content-l_col-1-2">
+                <h2 class="h3">Job Application Process</h2>
+                <p class="short-desc">
+                    The application can be tricky.
+                    We can help.
+                    Learn how it works.
+                </p>
+                <p class="short-desc">
+                    <a href="#" class="jump-link jump-link__right">
+                        Learn how the application process works
+                    </a>
+                </p>
+            </section>
+            <section class="content-l_col-1-2">
+                <h2 class="h3">Working at the CFPB</h2>
+                <p class="short-desc">
+                    Help us continue to grow
+                    and develop our 21st century agency.
+                    The work you do will directly impact the lives of consumers
+                </p>
+                <p class="short-desc">
+                    <a href="#" class="jump-link jump-link__right">
+                        Learn what it's like to work at the CFPB
+                    </a>
+                </p>
+            </section>
+        </div>
+        <div class="block
+                    block__padded-top
+                    block__border-top
+                    content-l">
+            <section class="content-l_col-1-2">
+                <h2 class="h3">
+                    <span class="cf-icon cf-icon-linkedin-square"></span>
+                    Follow us on LinkedIn
+                </h2>
+                <p class="short-desc">
+                    The CFPB is one of the most searched for agencies
+                    in the federal government.
+                    Connect with us to stay updated on the work
+                    we do and new opportunities to be a part of it.
+                </p>
+                <p class="short-desc">
+                    <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+                       class="jump-link jump-link__external-link">
+                        Go to our LinkedIn
+                    </a>
+                </p>
+            </section>
+            <section class="content-l_col-1-2">
+                <h2 class="h3">Provide Us With Feedback</h2>
+                <p class="short-desc">
+                    {# TODO: Have Content look at this paragraph
+                    and the weird link break. #}
+
+                    We take pride in our feedback-centered culture
+                    that helps us recruit great people.
+                    If you have any feedback, or any specific questions,
+                    let us know at:
+                </p>
+                <p class="short-desc">
+                    <ul class="list list__icons">
+                        <li class="list_item">
+                            <span class="cf-icon cf-icon-email list_icon"></span>
+                            <span class="h5 list_text">Email</span>
+                            <p><a href="mailto:jobs@consumerfinance.gov"
+                               class="jump-link">
+                                jobs@consumerfinance.gov
+                            </a></p>
+                        </li>
+                    </ul>
+                </p>
+            </section>
+        </div>
+    </section>
+
+    {# Footer #}
+    <aside>
+        <div class="block
+                    block__flush-sides
+                    block__flush-bottom
+                    block__flush-top
+                    block__bg">
+            <div class="">
+                    {# Add Office of Civil Rights URL #}
+                    {%- import "related-links.html" as related_links -%}
+                    {{- related_links.render([
+                        [ '/blog/',
+                          'CFPB Blog' ],
+                        [ '/newsroom/',
+                          'Newsroom' ],
+                        [ '',
+                          'Office of Civil Rights' ]
+                    ]) -}}
+            </div>
+        </div>
+    </aside>
+
+{% endblock %}
