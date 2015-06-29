@@ -84,7 +84,7 @@
                               Video link available:
                           </span>
                           {% from "_event-post-macros.html" import event_meta_datetime as event_meta_datetime %}
-                          {{ event_meta_datetime(event.beginning_time) }}
+                          {{ event_meta_datetime(event.live_stream.date) }}
                       </p>
                     </div>
                     {% endif %}

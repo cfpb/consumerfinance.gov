@@ -253,7 +253,6 @@
     {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
                     | default('Washington, DC') -%}
 
-
     <section class="event-venue">
         <header class="event-venue_header">
             <h2 class="event-venue_heading">{{ city }}</h2>
@@ -333,10 +332,9 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {# date() isn't working with either of these strings #}
-                    {{ block.beginning_time }}
+                    {{ block.beginning_time | date('%I:%M %p') }}
                     &ndash;
-                    {{ block.ending_time }}
+                    {{ block.ending_time | date('%I:%M %p') }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                     {{ block.desc }}
