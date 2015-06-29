@@ -184,6 +184,15 @@
         });
     }
 
+    &_item {
+        .respond-to-min(801px, {
+            & + &,
+            &__child {
+              margin-top: 10px;
+            }
+        });
+    }
+
     &_item__parent {
         .h4();
         .webfont-medium();
