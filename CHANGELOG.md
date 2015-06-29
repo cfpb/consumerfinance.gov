@@ -72,6 +72,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added download icons to `privacy-impact-assessments-pias`
 - Added `short_title` to Office/Subpage
 - Added ordering to the navigation on Office/Subpage
+- Added script to index all links on our site
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
