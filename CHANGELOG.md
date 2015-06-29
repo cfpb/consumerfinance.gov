@@ -25,9 +25,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `media_image__100` and `media_image__130-to-150` classes for responsive
   image sizes on mobile carousel.
 - Added `u-link__disabled` utility class for styling disabled links.
-
-### Removed
-- Removed `list_link__disabled` class.
+- Added `/careers/working-at-cfpb/` page.
+- Added block templates for current openings, job app process,
+  linkedin info, and provide feedback link.
+- Added `.content-l_col__before-inset-divider` CF enhancement
+  for a column divider in cf-layout that has a gap between the
+  top of the divider and the top border.
+- Added `MobileCarousel.js` module for instantiating the slick carousel
+  and added associated `js-mobile-carousel` class as a hook.
+  Also added `mobile-carousel` for CSS.
+- Added `the-bureau` page wrapper class.
+- Added `media-stack` CSS block for stacked media objects.
 
 ### Changed
 - Fixed background and border on secondary navigation.
@@ -36,8 +44,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Events processor/mapping/queries for new Event type structure.
 - Changed the way navigation works for Office/Subpage.
 - Updated grunt-eslint to version 16.0.0 and updated ESLint config to latest.
+- Moved modules that can be instantiated through the `new` keyword
+  to a `classes` subdirectory.
+- Moved page-sniffing JS code to page scripts for the-bureau
+  and working with the CFPB pages.
+- Moved carousel to a macro and implemented on the-bureau
+  and working at the CFPB pages.
 
 ### Removed
+- Removed `list_link__disabled` class.
 
 ### Fixed
 

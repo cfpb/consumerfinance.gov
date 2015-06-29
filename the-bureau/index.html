@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="/static/css/slick.css">
 {%- endblock %}
 
+{% block content_modifiers -%}
+    {{ super() }}
+    the-bureau
+{%- endblock %}
+
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
         {% from "macros.html" import YouTube %}
@@ -72,53 +77,37 @@
     companies, complaints from consumers, and our own investigations—and when we find
     unfair, deceptive, or abusive practices, we take action. We also:</p>
 
-    <section class="bureau-mission">
-
-        <div class="bureau-mission_section">
-            <section class="media bureau-mission_media">
-                <div class="media_image-container media_image-container__wide-margin">
-                    <img class="media_image u-centered-on-mobile" src="../static/img/educate.png">
-                </div>
-                <div class="media_body u-centered-on-mobile">
-                    <h1 class="h3">Educate</h1>
-                    <p class="short-desc">We work with financial companies to help them
-                    understand how to follow our rules. We write reports about the state
-                    of the market. We answer common consumer questions and create toolkits
-                    so people know what their next step should be.</p>
-                </div>
-            </section>
-        </div>
-
-        <div class="bureau-mission_section">
-            <section class="media bureau-mission_media">
-                <div class="media_image-container media_image-container__wide-margin">
-                    <img class="media_image u-centered-on-mobile" src="../static/img/enforce.png">
-                </div>
-                <div class="media_body u-centered-on-mobile">
-                    <h1 class="h3">Enforce</h1>
-                    <p class="short-desc">We take action against bad actors who hurt
-                    people in the financial services marketplace, returning billions of
-                    dollars to consumers.</p>
-                </div>
-            </section>
-        </div>
-
-        <div class="bureau-mission_section">
-            <section class="media bureau-mission_media">
-                <div class="media_image-container media_image-container__wide-margin">
-                    <img class="media_image u-centered-on-mobile" src="../static/img/empower.png">
-                </div>
-                <div class="media_body u-centered-on-mobile">
-                    <h1 class="h3">Empower</h1>
-                    <p class="short-desc">We create tools that let consumers take greater
-                    control of their options. We create opportunities for entrepreneurs,
-                    experts, advocates, and the financial industry to innovate in
-                    consumer-friendly ways.</p>
-                </div>
-            </section>
-        </div>
-
-    </section><!-- END .bureau-mission -->
+    {% import "macros/mobile-carousel.html" as mobile_carousel %}
+    {{ mobile_carousel.render({
+        'image_sizes_class': 'media_image__130-to-150',
+        'image_base_url':    '/static/img/',
+        'data': [{
+            'image_filename': 'educate.png',
+            'title':          'Educate',
+            'desc':      'We work with financial companies to help them
+                          understand how to follow our rules.
+                          We write reports about the state of the market.
+                          We answer common consumer questions and create
+                          toolkits so people know what their next step
+                          should be.'
+            }, {
+            'image_filename': 'enforce.png',
+            'title':          'Enforce',
+            'desc':      'We take action against bad actors who hurt
+                          people in the financial services marketplace,
+                          returning billions of
+                          dollars to consumers.'
+            }, {
+            'image_filename': 'empower.png',
+            'title':          'Empower',
+            'desc':      'We create tools that let consumers take greater
+                          control of their options. We create opportunities
+                          for entrepreneurs, experts, advocates,
+                          and the financial industry to innovate in
+                          consumer-friendly ways.'
+            }]
+        })
+    }}
 
     <section class="u-mb0
                     u-mt0
