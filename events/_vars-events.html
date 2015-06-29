@@ -164,5 +164,5 @@
 {% else %}
     {% set query = queries.events %}
 {% endif %}
-{% set events = query.search_with_url_arguments(size=10) %}
+{% set events = query.search(size=10) %}
 
