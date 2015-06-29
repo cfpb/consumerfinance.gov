@@ -291,7 +291,7 @@
     'active_filters_total': active_filters_total
 } -%}
 
-{%- from 'macros.html' import is_mobile -%}
+{%- from 'macros.html' import is_mobile with context -%}
 
 {% set is_expanded = active_filters_total > 0
                      and options.show_current_filters
@@ -335,7 +335,7 @@
 {% macro active_filters_helper(posts, filter_dict, options) %}
 {%- set filters = filter_dict.filters -%}
 {%- set active_filters_total = filter_dict.active_filters_total -%}
-{% from 'macros.html' import notification %}
+{% from 'macros.html' import notification with context %}
 
 {%- if active_filters_total > 0 and options.show_filters_label -%}
     <div class="filtered-by">
@@ -518,7 +518,7 @@
                        id="{{ options.id_range_date_gte }}"
                        name="filter_range_date_gte"
                        type="text"
-                       value="{{ from_date_formatted if from_date_formatted }}"
+                       value="{{ from_date_formatted if from_date_formatted else ''}}"
                        placeholder="YYYY-MM">
             </div>
             {#
@@ -536,7 +536,7 @@
                        id="{{ options.id_range_date_lte }}"
                        name="filter_range_date_lte"
                        type="text"
-                       value="{{ to_date_formatted if to_date_formatted }}"
+                       value="{{ to_date_formatted if to_date_formatted else ''}}"
                        placeholder="YYYY-MM">
             </div>
           </div>
