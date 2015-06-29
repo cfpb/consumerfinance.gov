@@ -148,14 +148,12 @@
 */
 
 .nav-secondary {
-    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-    border-bottom: 1px solid @gray-20;
 
-    .respond-to-min(@desktop-min, {
-        border-bottom: 0;
+    .respond-to-max(@desktop-min, {
         background-color: @gray-10;
         border-top: 1px solid @gray-20;
         border-bottom: 1px solid @gray-20;
+        margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
     });
 
     // Inset horizontal rule between "IN THIS SECTION" text and page links.

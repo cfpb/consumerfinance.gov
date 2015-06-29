@@ -7921,18 +7921,6 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
-.nav-secondary {
-  margin-bottom: 1.875em;
-  border-bottom: 1px solid #e3e4e5;
-}
-
-.nav-secondary {
-  border-bottom: 0;
-  background-color: #f1f2f2;
-  border-top: 1px solid #e3e4e5;
-  border-bottom: 1px solid #e3e4e5;
-}
-
 .nav-secondary .inset-divider {
   margin: 0 15px 15px;
   border: 0;
