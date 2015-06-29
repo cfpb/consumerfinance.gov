@@ -13,14 +13,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 3.0.0-1.2.1 - 2015-06-29
 
 ### Added
 
 - Added `block__border-left` and `block__border-right` CF enhancements.
 
 ### Removed
-
+- Event processor to fix indexing error
 ### Changed
 
 - Fixed background and border on secondary navigation.
