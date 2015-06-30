@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed background and border on secondary navigation.
 - Moved `link_list__disabled` class to global context.
 - Related Links now disable styles links with empty URLs.
+- Updated secondary navigation to use true parent/child relationships
 
 ### Removed
 
