@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block content_main %}
-    {% set contacts = vars.query.search_with_url_arguments(size=100) %}
+    {% set contacts = vars.query.search(size=100) %}
     {%- include "contact-list.html" %}
 {% endblock %}
 

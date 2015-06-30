@@ -819,11 +819,40 @@ tbody {
     });
 }
 
+
 /* topdoc
   name: Block
   family: cf-layout
-  notes:
-    - ".block__border builds on .block to add borders on all sides."
+    - name: Border modifier
+      markup: |
+        Main content...
+        <div class="block block__border">
+            Content block with borders on all sides.
+        </div>
+      codenotes:
+        - .block.block__border
+      notes:
+        - "Adds border on all sides to .block."
+    - name: Border-left modifier
+      markup: |
+        Main content...
+        <div class="block block__border-left">
+            Content block with left border.
+        </div>
+      codenotes:
+        - .block.block__border-left
+      notes:
+        - "Adds left border to .block."
+    - name: Border-right modifier
+      markup: |
+        Main content...
+        <div class="block block__border-right">
+            Content block with right border.
+        </div>
+      codenotes:
+        - .block.block__border-right
+      notes:
+        - "Adds right border to .block."
   tags:
     - cf-layout
 */
@@ -832,13 +861,15 @@ tbody {
   &__border {
     border: 1px solid @block__border;
   }
+
+  &__border-left {
+    border-left: 1px solid @block__border;
+  }
+
+  &__border-right {
+    border-right: 1px solid @block__border;
+  }
 }
-
-
-/* topdoc
-    name: EOF
-    eof: true
-*/
 
 
 /* topdoc
@@ -972,6 +1003,10 @@ textarea.input__long {
 .content__half-top-on-desk {
     .respond-to-min(800px, {
         padding-top: 20px;
+
+        &:after {
+          top: 20px !important;
+        }
     });
 }
 

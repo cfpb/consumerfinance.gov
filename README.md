@@ -218,7 +218,7 @@ For any kind of repeating content, this is the basic process:
 
   ```jinja
   {% set query = queries.posts %}
-  {% set posts = query.search_with_url_arguments(size=10) %}
+  {% set posts = query.search(size=10) %}
   ```
 
 2. If you want to display the repeating content within a template,
@@ -287,7 +287,7 @@ Sometimes you'll want to create queries in your templates to filter the data.
 The two main ways of injecting filters into your data are in the URL's query
 string and within the template code itself.
 
-We have a handy function `search_with_url_arguments()` that:
+We have a handy function `search()` that:
 
 1. Pulls in filters from the URL query string.
 2. Allows you to add additional filters by passing them in as arguments to the function.
@@ -308,7 +308,7 @@ An example of Term is:
 `filter_[field]=[value]`
 
 When you go to a URL such as http://localhost:7000/blog/?filter_category=Op-Ed
-and you use `search_with_url_arguments()`,
+and you use `search()`,
 the queryset returned will only include objects with a category of 'Op-Ed'.
 
 An example of Range is:
@@ -319,7 +319,7 @@ An example of Range is:
 
 Continuing with the example above, if you go to a URL such as
 `http://localhost:7000/blog/?filter_range_date_gte=2014-01`
-and you use `search_with_url_arguments()`,
+and you use `search()`,
 you'll get a queryset of objects where the 'date' field is in January, 2014, or later.
 
 URL query string filters are convenient for many of the filtered queries you'll need to run,
@@ -327,23 +327,23 @@ but often there are cases where you'll need more flexibility.
 
 #### More complex filters
 
-By default, `search_with_url_arguments()` uses the default query parameters
+By default, `search()` uses the default query parameters
 defined in the `_queries/object-name.json` file,
 then mixes them in with any additional arguments
 from the URL query string in addition to what is passed into the function itself.
 
-When using `search_with_url_arguments()`, you can also pass in filters with the same `filter_` syntax as above.
+When using `search()`, you can also pass in filters with the same `filter_` syntax as above.
 
 For example:
 
-`search_with_url_arguments(filter_category='Op-Ed')`
+`search(filter_category='Op-Ed')`
 
 Multiple term filters on the same field will be combined in an OR clause, while
 term filters of different fields will be combined in an AND clause.
 
 For example:
 
-`search_with_url_arguments(filter_tag='Students', filter_tag='Finance', filter_author='Batman')`
+`search(filter_tag='Students', filter_tag='Finance', filter_author='Batman')`
 
 This will return documents that have the tag Students OR Finance, AND have an author of Batman.
 
