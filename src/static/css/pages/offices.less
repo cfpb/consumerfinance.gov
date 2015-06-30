@@ -1,5 +1,7 @@
 .office {
 
+    .webfont-regular();
+
     .content-l_col__before-divider.content-l_col-1-2 {
         .respond-to-max(599px {
             margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -32,14 +34,14 @@
             });
         }
     }
-
-    .office_activities + .office_contact {
-        padding-bottom: 0;
-    }
 }
 
 .initiative {
     &_description p:first-child {
         .h3();
     }
+}
+
+.office_activities + .office_contact {
+    padding-top: 0;
 }

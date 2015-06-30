@@ -5227,6 +5227,14 @@ tbody tr {
   border: 1px solid #babbbd;
 }
 
+.block__border-left {
+  border-left: 1px solid #babbbd;
+}
+
+.block__border-right {
+  border-right: 1px solid #babbbd;
+}
+
 input[type="text"].warning,
 input[type="search"].warning,
 input[type="email"].warning,
@@ -5286,6 +5294,10 @@ textarea.input__long {
 
 .content__half-top-on-desk {
   padding-top: 20px;
+}
+
+.content__half-top-on-desk:after {
+  top: 20px !important;
 }
 
 .cf-notification {
@@ -5664,6 +5676,11 @@ textarea.input__long {
 .list_link.list_link__phone.active {
   border-color: #101820;
   color: #101820;
+}
+
+.list_link__disabled {
+  color: #babbbd !important;
+  border: none !important;
 }
 
 .list__unstyled {
@@ -7359,32 +7376,36 @@ a.focus .summary_event-date {
 }
 
 .activity .list_link {
-  color: #101820;
-  border-color: #101820;
+  color: #0072ce;
+  border-color: #0072ce;
 }
 
 .activity .list_link:visited,
 .activity .list_link.visited {
-  border-color: #101820;
-  color: #101820;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:hover,
 .activity .list_link.hover {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #7fb8e6;
+  color: #7fb8e6;
 }
 
 .activity .list_link:focus,
 .activity .list_link.focus {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:active,
 .activity .list_link.active {
-  border-color: #101820;
-  color: #101820;
+  border-color: #002d72;
+  color: #002d72;
+}
+
+.activity .date {
+  white-space: nowrap;
 }
 
 .activity .list_link:after {
@@ -7392,33 +7413,33 @@ a.focus .summary_event-date {
 }
 
 .activity .list_link {
-  color: #101820;
-  border-color: #101820;
+  color: #0072ce;
+  border-color: #0072ce;
   border-bottom-width: 0 !important;
 }
 
 .activity .list_link:visited,
 .activity .list_link.visited {
-  border-color: #101820;
-  color: #101820;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:hover,
 .activity .list_link.hover {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #7fb8e6;
+  color: #7fb8e6;
 }
 
 .activity .list_link:focus,
 .activity .list_link.focus {
-  border-color: #328ed8;
-  color: #328ed8;
+  border-color: #0072ce;
+  color: #0072ce;
 }
 
 .activity .list_link:active,
 .activity .list_link.active {
-  border-color: #101820;
-  color: #101820;
+  border-color: #002d72;
+  color: #002d72;
 }
 
 .featured-topic {
@@ -7971,6 +7992,11 @@ a.focus .summary_event-date {
   margin-top: 10px;
 }
 
+.nav-secondary_item+.nav-secondary_item,
+.nav-secondary_item__child {
+  margin-top: 10px;
+}
+
 .nav-secondary_item__parent {
   margin-top: 0;
   margin-bottom: 1.16666667em;
@@ -7992,12 +8018,13 @@ a.focus .summary_event-date {
 }
 
 .nav-secondary_item__child {
-  margin-left: 22px;
+  margin-left: 17px;
 }
 
 .nav-secondary_link {
   display: inline-block;
-  padding: .27777778em .83333333em;
+  margin-left: -0.83333333em;
+  padding: .27777778em .55555556em;
   border-left-style: solid;
   border-left-width: 5px;
   font-size: 1.125em;
@@ -8278,11 +8305,6 @@ a.focus .summary_event-date {
 .lt-ie9 .primary-nav_top-level-list>.list_item>.list_link strong,
 .lt-ie9 .primary-nav_top-level-list>.list_item>.list_link b {
   font-weight: normal !important;
-}
-
-.primary-nav_top-level-list>.list_item>.list_link__disabled {
-  color: #babbbd !important;
-  border: none !important;
 }
 
 .desktop-menu_horizontal-list .list_link {
@@ -11007,6 +11029,14 @@ a.focus .summary_event-date {
   max-width: 330px;
 }
 
+.students-and-graduates .media_image {
+  width: 130px;
+}
+
+.students-and-graduates .media_image {
+  width: 150px;
+}
+
 .history-section-expandable {
   -webkit-transition: 0.5s all;
   transition: 0.5s all;
@@ -11263,12 +11293,38 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
-.office_initiatives .expandable.content-l_col {
-  margin-bottom: 1.875em;
+.office {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
 }
 
-.office .office_activities+.office_contact {
-  padding-bottom: 0;
+.office em,
+.office i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .office em,
+.lt-ie9 .office i {
+  font-style: normal !important;
+}
+
+.office strong,
+.office b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .office strong,
+.lt-ie9 .office b {
+  font-weight: normal !important;
+}
+
+.office_initiatives .expandable.content-l_col {
+  margin-bottom: 1.875em;
 }
 
 .initiative_description p:first-child {
@@ -11303,6 +11359,10 @@ a.focus .summary_event-date {
 .lt-ie9 .initiative_description p:first-child strong,
 .lt-ie9 .initiative_description p:first-child b {
   font-weight: normal !important;
+}
+
+.office_activities+.office_contact {
+  padding-top: 0;
 }
 
 .press-section+.press-section {
@@ -11560,6 +11620,36 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
+.sub-page {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sub-page em,
+.sub-page i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page em,
+.lt-ie9 .sub-page i {
+  font-style: normal !important;
+}
+
+.sub-page strong,
+.sub-page b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page strong,
+.lt-ie9 .sub-page b {
+  font-weight: normal !important;
+}
+
 .sub-page_privacy-impact-assessments-pias {
   font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
   font-style: normal;
@@ -11673,6 +11763,40 @@ a.focus .summary_event-date {
   content: "\e406";
   color: #0072ce;
   text-align: right;
+}
+
+.sub-page_frequently-asked-questions {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: .73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.sub-page_frequently-asked-questions em,
+.sub-page_frequently-asked-questions i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions em,
+.lt-ie9 .sub-page_frequently-asked-questions i {
+  font-style: normal !important;
+}
+
+.sub-page_frequently-asked-questions strong,
+.sub-page_frequently-asked-questions b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions strong,
+.lt-ie9 .sub-page_frequently-asked-questions b {
+  font-weight: normal !important;
 }
 
 .demo-placeholder {

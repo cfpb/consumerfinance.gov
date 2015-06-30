@@ -64,8 +64,12 @@
    ========================================================================== #}
 
 {%- macro link_template(link) %}
+{% if link[0] == '' %}
+<a class="list_link jump-link jump-link__right list_link__disabled">
+{% else %}
 <a class="list_link jump-link jump-link__right"
    href="{{ link[0] }}">
+{% endif %}
     {{ link[1] }}
 </a>
 {% endmacro -%}
