@@ -44,7 +44,7 @@
         display: none;
     }
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         padding-bottom: @grid_gutter-width;
     });
 }
@@ -59,14 +59,14 @@
         margin-left: 0;
     }
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         background-image: linear-gradient(to bottom, @black 1px, transparent 1px);
         background-position: 10px 0;
         background-repeat: repeat-y;
         background-size: 5px 2px;
     });
 
-    .respond-to-min(1200px, {
+    .respond-to-min(@wall-min, {
         background-position: 50% 0;
     });
 }
@@ -80,12 +80,12 @@
     color: @white;
     text-align: center;
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         // Enough width for four characters.
         width: 3em;
     });
 
-    .respond-to-min(1200px, {
+    .respond-to-min(@wall-min, {
         clear: both;
         margin-right: auto;
         margin-left: auto;
@@ -101,7 +101,7 @@
     position: absolute;
     right: unit(10px / @btn-font-size, em);
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         right: unit(25px / @btn-font-size, em);
     });
 }
@@ -148,7 +148,7 @@
     background: white;
     .webfont-regular();
 
-    .respond-to-min(800px, {
+    .respond-to-min(@desktop-min, {
         margin-left: 49px;
         .history-item__right();
 
@@ -183,7 +183,7 @@
         }
     });
 
-    .respond-to-min(1200px, {
+    .respond-to-min(@wall-min, {
         width: 387px;
         float: right;
         margin-top: 3em;

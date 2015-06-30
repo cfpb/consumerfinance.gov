@@ -9233,7 +9233,7 @@ a.focus .summary_event-date {
 }
 
 .beta-banner_btn {
-  top: -12px;
+  top: -0.75em;
 }
 
 .beta-hero {
@@ -9415,13 +9415,6 @@ a.focus .summary_event-date {
 .progress-charts_chart {
   width: 100px;
   height: 100px;
-  margin-right: 1em;
-  float: left;
-}
-
-.progress-charts_chart {
-  margin-right: auto;
-  float: none;
 }
 
 .chart-bg {
