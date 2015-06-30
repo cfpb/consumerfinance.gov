@@ -10,7 +10,7 @@
    Create nav markup when given:
 
    items:               An array of tuples used to display nav items.
-                        format: (href, id, caption)
+                        format: (href, id, caption, children)
 
    active_item_id:      A string indicating the id of the nav item
                         to be activated.
@@ -23,17 +23,11 @@
 {% macro render(items, active_item_id, additional_classes) %}
 
 <nav class="nav-secondary expandable {{ additional_classes }}">
-    <h1 class="u-visually-hidden">
-    {%- for href, id, caption in items %}
-        {% if id == 'index' %}
-            {{ caption|e }} navigation
-        {% endif %}
-    {%- endfor %}
-    </h1>
-    <div class="expandable_header">
+    <h2 class="u-visually-hidden">Section navigation</h2>
+    <div class="expandable_header nav-secondary_header">
         <button class="expandable_target nav-secondary_link nav-secondary_link__button">
             <span class="expandable_header-left">
-              In this section
+                In this section
             </span>
             <span class="expandable_header-right">
                 <span class="expandable_cue-open">
@@ -45,24 +39,38 @@
             </span>
         </button>
     </div>
-    <div class="expandable_content">
-        <hr class="inset-divider" />
+    <div class="expandable_content nav-secondary_content">
         <ul class="nav-secondary_list">
-        {%- for href, id, caption in items %}
-            {# TODO: logic around loop.index needs to be updated
-                     so a parent item can appear before first item. #}
-            <li class="nav-secondary_item
-                       {{- ' nav-secondary_item__parent' if loop.index == 1 else
-                       ' nav-secondary_item__child' -}}">
+        {%- for item in items %}
+            {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
+            <li class="nav-secondary_item nav-secondary_item__parent">
                 {%- if id == active_item_id %}
-                <a class="nav-secondary_link nav-secondary_link__current">
-                  {{ caption|e }}
-                </a>
-                {%- else %}
-                <a class="nav-secondary_link" href="{{ href|e }}">
-                   {{ caption|e }}
-                </a>
-                {%- endif %}
+                    <a class="nav-secondary_link nav-secondary_link__current">
+                        {{ caption|e }}
+                    </a>
+                {%- else -%}
+                    <a class="nav-secondary_link" href="{{ href|e }}">
+                        {{ caption|e }}
+                    </a>
+                {% endif -%}
+            {%- if children -%}
+                {% set children = children[0] %}
+                <ul class="nav-secondary_list">
+                {%- for href, id, caption in children %}
+                    <li class="nav-secondary_item nav-secondary_item__child">
+                    {%- if id == active_item_id %}
+                        <a class="nav-secondary_link nav-secondary_link__current">
+                            {{ caption|e }}
+                        </a>
+                    {%- else -%}
+                        <a class="nav-secondary_link" href="{{ href|e }}">
+                            {{ caption|e }}
+                        </a>
+                    {% endif -%}
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif %}
             </li>
         {%- endfor %}
         </ul>
