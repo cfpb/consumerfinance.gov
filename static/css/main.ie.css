@@ -5884,6 +5884,18 @@ textarea.input__long {
   display: block;
 }
 
+.media_image__100 {
+  width: 100px;
+}
+
+.media_image__130-to-150 {
+  width: 130px;
+}
+
+.media_image__130-to-150 {
+  width: 150px;
+}
+
 .media_body {
   display: table-cell;
   width: 10000px;
