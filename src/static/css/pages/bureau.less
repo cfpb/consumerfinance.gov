@@ -30,7 +30,7 @@
 
     .media_image {
         width: 120px;
-        .respond-to-max(@desktop-min, {
+        .respond-to-max(@tablet-max, {
             width: 80px;
         });
     }
@@ -93,15 +93,13 @@
     }
 
     &_image {
-        width: 250px;
 
-        .respond-to-max(@mobile-max, {
-            width: 100%;
-            max-width: 100%;
+        .respond-to-range(@tablet-min, @tablet-max, {
+            width: 215px;
         });
 
-        .respond-to-range(@tablet-min, 768px, {
-            width: 215px;
+        .respond-to-min(@desktop-min, {
+            width: 250px;
         });
     }
 }
