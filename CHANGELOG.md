@@ -13,13 +13,20 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## 3.0.0-1.2.1 - 2015-06-29
+## Unreleased
 
 ### Added
 
+### Changed
+
+### Removed
+
+### Fixed
+
+## 3.0.0-1.2.1 - 2015-06-29
+
 ### Removed
 - Event processor to fix indexing error
-### Changed
 
 ## 3.0.0-1.2.0 - 2015-06-19
 
