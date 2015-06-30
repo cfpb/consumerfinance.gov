@@ -19,9 +19,9 @@
 {% macro calendar_icon(calendar_date, additional_classes) %}
     <time class="calendar-icon {{ additional_classes }}"
         data-month="{{ calendar_date | date('%b') }}"
-        data-day="{{ calendar_date | date('%d') }}"
+        data-day="{{ calendar_date | date('%-d') }}"
         datetime="{{ calendar_date }}">
-        <span class="u-visually-hidden">{{ calendar_date | date('%b %d, %Y') }}</span>
+        <span class="u-visually-hidden">{{ calendar_date | date('%b %-d, %Y') }}</span>
     </time>
 {% endmacro %}
 
@@ -182,12 +182,12 @@
    ========================================================================== #}
 
 {% macro event_meta_datetime(date, datetime_format={}) %}
-    {%- set date_format =  datetime_format.date_format | default('%b %d, %Y', true)   -%}
-    {%- set time_format =  datetime_format.time_format | default('%I:%M %p', true) -%}
+    {%- set date_format =  datetime_format.date_format | default('%b %-d, %Y', true)   -%}
+    {%- set time_format =  datetime_format.time_format | default('%-I:%M %p %Z', true) -%}
 
-    <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%dT%H:%M:%S%z') }}">
-        <span class="event-meta_date">{{ date | date(date_format) }}</span>
-        <span class="event-meta_time">{{ date | date(time_format) }}</span>
+    <time class="event-meta_datetime dt-start" datetime="{{ date.date | date('%Y-%m-%-dT%H:%M:%S%z') }}">
+        <span class="event-meta_date">{{ date.date | date(date_format) }}</span>
+        <span class="event-meta_time">{{ date.date | date(time_format, date.timezone) }}</span>
     </time>
 {% endmacro %}
 
@@ -213,11 +213,11 @@
 {%- import "tags.html" as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
-            {{ calendar_icon(post.beginning_time) }}
+            {{ calendar_icon(post.beginning_time.date) }}
             <div class="summary-meta_container">
                 <h1 class="summary_heading">{{ post.title|safe }}</h1>
                 {{ event_meta(post, datetime_format={
-                    'date_format' : '%m/%d/%y'
+                    'date_format' : '%m/%-d/%y'
                 }) }}
             </div>
         </header>
@@ -332,9 +332,9 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {{ block.beginning_time | date('%I:%M %p') }}
+                    {{ block.beginning_time.date | date("%-I:%M %p %Z", block.beginning_time.timezone) }}
                     &ndash;
-                    {{ block.ending_time | date('%I:%M %p') }}
+                    {{ block.ending_time.date | date("%-I:%M %p %Z", block.ending_time.timezone) }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                     {{ block.desc }}
