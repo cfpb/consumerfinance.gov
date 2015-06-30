@@ -3,12 +3,12 @@
   "query": {
     "doc_type": "events",
     "size": 10,
-    "sort": "beginning_time:asc"
+    "sort": "beginning_time.date:asc"
   },
   "filters": [
     {
     "range" : {
-        "ending_time" : {
+        "ending_time.date" : {
           "gt": "now"
         }
       }

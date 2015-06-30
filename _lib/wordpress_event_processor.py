@@ -59,23 +59,17 @@ def process_event(event):
             event[field] = custom_fields[field]
 
     if 'taxonomy_beginning_time' in event and event['taxonomy_beginning_time']:
-            event['beginning_time'] = \
-                event['taxonomy_beginning_time'][0]['title']
+        event['beginning_time'] = {}
+        event['beginning_time']['date'] = \
+            event['taxonomy_beginning_time'][0]['title']
+        event['beginning_time']['timezone'] = \
+            event['taxonomy_beginning_time'][0]['description']
     if 'taxonomy_ending_time' in event and event['taxonomy_ending_time']:
-            event['ending_time'] = \
-                event['taxonomy_ending_time'][0]['title']
-
-    if 'agenda' in event:
-        for agenda in event['agenda']:
-            if 'beginning_time' in agenda and \
-                    'date' in agenda['beginning_time']:
-                agenda['beginning_time'] = agenda['beginning_time']['date']
-            if 'ending_time' in agenda and 'date' in agenda['ending_time']:
-                agenda['ending_time'] = agenda['ending_time']['date']
-
-    if 'live_stream' in event:
-        if event['live_stream'] and 'date' in event['live_stream']:
-            event['live_stream'] = event['live_stream']['date']
+        event['ending_time'] = {}
+        event['ending_time']['date'] = \
+            event['taxonomy_ending_time'][0]['title']
+        event['ending_time']['timezone'] = \
+            event['taxonomy_ending_time'][0]['description']
 
     # Delete taxonomy data and custom fields
     del event['custom_fields']
