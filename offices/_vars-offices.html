@@ -4,9 +4,10 @@
     {% set _ignore = sub_pages.append(get_document('sub_page', slug)) %}
 {% endfor %}
 
-{% set title = office.short_title|safe if office.short_title else office.title|safe %}
-{% set nav_items = [(office.permalink, 'index', title)] -%}
-{% for page in sub_pages|sort(attribute='order') %}
-    {% set title = page.short_title|safe if page.short_title else page.title|safe %}
-    {%- set _ignore = nav_items.append((page.permalink, page.slug, title)) -%}
+{% set office_title = office.short_title|safe if office.short_title else office.title|safe %}
+{% set child_pages = [] %}
+{% for page in sub_pages %}
+    {% set child_title = page.short_title|safe if page.short_title else page.title|safe %}
+    {%- set _ignore = child_pages.append((page.permalink, page.slug, child_title)) -%}
 {% endfor %}
+{% set nav_items = [(office.permalink, 'index', office_title, child_pages)] -%}

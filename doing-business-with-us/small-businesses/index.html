@@ -14,15 +14,6 @@
     {{ super() }} content__flush-bottom
 {% endblock %}
 
-{% block content_sidebar %}
-    {% import "sidenav.html" as sidenav %}
-    {{ sidenav.render(
-        vars.nav_items,
-        active_nav_id,
-        'nav__small-business'
-    ) }}
-{% endblock %}
-
 {% block content_main %}
 
     <h1>Small Businesses & Minorities</h1>
