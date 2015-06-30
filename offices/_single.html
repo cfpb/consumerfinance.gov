@@ -128,7 +128,7 @@
     </section>
     {% endif %}
 
-    {% for page in vars.sub_pages if page.show_in_office == "on" %}
+    {% for page in vars.sub_pages|sort(attribute='order') if page.show_in_office == "on" %}
     {% if loop.first %}
     <section class="office_sub_pages
                     block
@@ -155,11 +155,7 @@
                 <button class="expandable_header expandable_target u-show-on-mobile">
                     {% if page.short_title or page.title %}
                     <span class="expandable_header-left expandable_label">
-                        {% if page.short_title %}
-                            {{ page.short_title | safe }}
-                        {% elif page.title %}
-                            {{ page.title | safe }}
-                        {% endif %}
+                        {{ (page.short_title or page.title) | safe }}
                     </span>
                     {% endif %}
                     <span class="expandable_header-right expandable_link">
@@ -174,11 +170,7 @@
                 <div class="expandable_content">
                     {% if page.short_title or page.title %}
                     <h2 class="h4 u-hide-on-mobile">
-                        {% if page.short_title %}
-                            {{ page.short_title | safe }}
-                        {% elif page.title %}
-                            {{ page.title | safe }}
-                        {% endif %}
+                        {{ (page.short_title or page.title) | safe }}
                     </h2>
                     {% endif %}
                     {% if page.excerpt %}
