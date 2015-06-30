@@ -8,6 +8,6 @@
 {% set child_pages = [] %}
 {% for page in sub_pages %}
     {% set child_title = page.short_title|safe if page.short_title else page.title|safe %}
-    {%- set _ignore = child_pages.append(page.permalink, page.slug, child_title) -%}
+    {%- set _ignore = child_pages.append((page.permalink, page.slug, child_title)) -%}
 {% endfor %}
 {% set nav_items = [(office.permalink, 'index', office_title, child_pages)] -%}
