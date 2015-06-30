@@ -1,8 +1,17 @@
 {
   "name": "CFPB Events Archive",
   "query": {
-    "doc_type": "events_archive",
+    "doc_type": "events",
     "size": 10,
     "sort": "date:desc"
-  }
+  },
+  "filters": [
+    {
+    "range" : {
+        "ending_time" : {
+          "lte": "now"
+        }
+      }
+    }
+  ]
 }
