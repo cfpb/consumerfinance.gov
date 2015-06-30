@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 - Added `block__border-left` and `block__border-right` CF enhancements.
+- Added `students-and-graduates` page to careers section
 
 ### Changed
 
