@@ -62,7 +62,7 @@
    ========================================================================== #}
 
 {% macro event_location_image(address, options={}) %}
-    {%- set location = (options.location or address.city + ' ' + address.state)
+    {%- set location = (options.location or address.city + ' ' + address.state if address.city and address.state)
                        | default('Washington DC', true)
                        | urlencode -%}
     {%- set scale = '&scale=' + options.scale | default('2') -%}
