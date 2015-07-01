@@ -22,6 +22,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `short_title` to Office/Subpage.
 - Added ordering to the navigation on Office/Subpage.
 - Added script to index all links on our site.
+- Added `media_image__100` and `media_image__130-to-150` classes for responsive
+  image sizes on mobile carousel.
 
 ### Changed
 
