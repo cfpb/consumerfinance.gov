@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `short_title` to Office/Subpage.
 - Added ordering to the navigation on Office/Subpage.
 - Added script to index all links on our site.
+- Added initial browser test with instructions for testing and adding more
 
 ### Changed
 
