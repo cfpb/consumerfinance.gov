@@ -11827,11 +11827,13 @@ a.focus .summary_event-date {
   text-align: right;
 }
 
+.sub-page_information-quality-guidelines ul li,
 .sub-page_our-open-government-activities ul li {
   color: #101820;
   list-style: none;
 }
 
+.sub-page_information-quality-guidelines ul li:before,
 .sub-page_our-open-government-activities ul li:before {
   position: relative;
   top: .1em;
@@ -11842,6 +11844,7 @@ a.focus .summary_event-date {
   font-size: 1.5em;
 }
 
+.sub-page_information-quality-guidelines li,
 .sub-page_our-open-government-activities li {
   margin-bottom: 1em;
 }
