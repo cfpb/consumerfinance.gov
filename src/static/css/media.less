@@ -82,6 +82,42 @@
       notes:
         - "Increased right (or left, when used with .media_image-container__right modifier),
            margin on .media_image-container."
+
+    - name: .media_image__100 modifier
+      markup: |
+        <article class="media">
+            <div class="media_image-container">
+                <img class="media_image media_image__100" src="http://placekitten.com/100/100">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Makes an image that is 100x100 pixels."
+
+    - name: .media_image__130-to-150 modifier
+      markup: |
+        <article class="media">
+            <div class="media_image-container">
+                <img class="media_image media_image__130-to-150" src="http://placekitten.com/150/150">
+            </div>
+            <div class="media_body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      notes:
+        - "Makes an image that has two responsive sizes, 130x130 pixels and 150x150 pixels."
   tags:
     - cfgov-media
 */
@@ -135,6 +171,18 @@
     &_image {
         display: block;
     }
+
+    &_image__100 {
+        width: 100px;
+    }
+
+    &_image__130-to-150 {
+        width: 130px;
+        .respond-to-min(800px, {
+            width: 150px;
+        });
+    }
+
 
     &_body {
         .respond-to-max(599px {
