@@ -36,6 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   Also added `mobile-carousel` for CSS.
 - Added `the-bureau` page wrapper class.
 - Added `media-stack` CSS block for stacked media objects.
+- Added fixes for `open-government` pages.
 
 ### Changed
 - Fixed background and border on secondary navigation.
