@@ -26,8 +26,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   image sizes on mobile carousel.
 - Added `u-link__disabled` utility class for styling disabled links.
 - Added `/careers/working-at-cfpb/` page.
-- Added block templates for current openings, job app process,
-  linkedin info, and provide feedback link.
+- Added block templates for LinkedIn info, provide feedback link,
+  and career page summaries.
 - Added `.content-l_col__before-inset-divider` CF enhancement
   for a column divider in cf-layout that has a gap between the
   top of the divider and the top border.
