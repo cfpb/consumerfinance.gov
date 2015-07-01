@@ -9,6 +9,7 @@ var $ = require( 'jquery' );
 var dateRangeFormatter = require( './util/date-range-formatter' );
 
 function init() {
+
   /**
   * Create the jQuery PostFilter plugin.
   * @param {Object} options Object used to customize PostFilter.

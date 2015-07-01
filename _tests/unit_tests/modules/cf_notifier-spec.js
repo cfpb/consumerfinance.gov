@@ -1,6 +1,6 @@
 'use strict';
 var chai = require( 'chai' );
-var sinon = require( 'sinon' );
+require( 'sinon' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 
@@ -8,7 +8,7 @@ describe( 'CFNotifier', function() {
   var $, $form;
 
   jsdom( {
-    file: '_tests/unit_tests/fixtures/forms.html',
+    file:    '_tests/unit_tests/fixtures/forms.html',
     console: false
   } );
 
