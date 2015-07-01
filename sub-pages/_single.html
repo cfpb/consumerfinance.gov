@@ -2,7 +2,7 @@
 {% import "_vars-sub-pages.html" as vars with context %}
 {% set active_nav_id = sub_page.slug %}
 {% set sub_pages = vars.sub_pages %}
-{% set breadcrumb_items = [(vars.office.permalink, vars.office.slug, vars.office.title)] %}
+{% set breadcrumb_items = vars.breadcrumb_items %}
 
 
 {% set display_activity_slugs = ["plain-writing-act"] %}
@@ -41,16 +41,16 @@
                     block__border-top
                     block__flush-bottom">
         <div class="content-l content-l__main">
-            {% for page in sub_pages %}
+            {% for page in sub_pages|sort(attribute='order') %}
             <!-- TODO: link header styles -->
             <div class="sub-page_topic
                         block__sub
                         block__flush-top
                         {{ 'office_col' if vars.sub_pages.result_dict|length > 1 else 'content-l_col-1' -}}">
 
-                {% if page.title %}
+                {% if page.short_title or page.title %}
                 <h2 class="h3">
-                    {{ page.title | safe }}
+                    {{ (page.short_title or page.title) | safe }}
                 </h2>
                 {% endif %}
 

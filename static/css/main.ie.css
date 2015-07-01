@@ -5227,6 +5227,14 @@ tbody tr {
   border: 1px solid #babbbd;
 }
 
+.block__border-left {
+  border-left: 1px solid #babbbd;
+}
+
+.block__border-right {
+  border-right: 1px solid #babbbd;
+}
+
 input[type="text"].warning,
 input[type="search"].warning,
 input[type="email"].warning,
@@ -5286,6 +5294,10 @@ textarea.input__long {
 
 .content__half-top-on-desk {
   padding-top: 20px;
+}
+
+.content__half-top-on-desk:after {
+  top: 20px !important;
 }
 
 .cf-notification {
@@ -5664,6 +5676,11 @@ textarea.input__long {
 .list_link.list_link__phone.active {
   border-color: #101820;
   color: #101820;
+}
+
+.list_link__disabled {
+  color: #babbbd !important;
+  border: none !important;
 }
 
 .list__unstyled {
@@ -7975,6 +7992,11 @@ a.focus .summary_event-date {
   margin-top: 10px;
 }
 
+.nav-secondary_item+.nav-secondary_item,
+.nav-secondary_item__child {
+  margin-top: 10px;
+}
+
 .nav-secondary_item__parent {
   margin-top: 0;
   margin-bottom: 1.16666667em;
@@ -7996,12 +8018,13 @@ a.focus .summary_event-date {
 }
 
 .nav-secondary_item__child {
-  margin-left: 22px;
+  margin-left: 17px;
 }
 
 .nav-secondary_link {
   display: inline-block;
-  padding: .27777778em .83333333em;
+  margin-left: -0.83333333em;
+  padding: .27777778em .55555556em;
   border-left-style: solid;
   border-left-width: 5px;
   font-size: 1.125em;
@@ -8282,11 +8305,6 @@ a.focus .summary_event-date {
 .lt-ie9 .primary-nav_top-level-list>.list_item>.list_link strong,
 .lt-ie9 .primary-nav_top-level-list>.list_item>.list_link b {
   font-weight: normal !important;
-}
-
-.primary-nav_top-level-list>.list_item>.list_link__disabled {
-  color: #babbbd !important;
-  border: none !important;
 }
 
 .desktop-menu_horizontal-list .list_link {
@@ -11009,6 +11027,14 @@ a.focus .summary_event-date {
 
 .contact-us-map {
   max-width: 330px;
+}
+
+.students-and-graduates .media_image {
+  width: 130px;
+}
+
+.students-and-graduates .media_image {
+  width: 150px;
 }
 
 .history-section-expandable {

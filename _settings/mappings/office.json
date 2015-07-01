@@ -85,6 +85,10 @@
       "type": "string",
       "index": "not_analyzed"
     },
+    "related_sub_pages": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
     "relative_url": {
       "type": "string"
     },
@@ -115,7 +119,8 @@
       "type": "string"
     },
     "slug": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "status": {
       "type": "string"
