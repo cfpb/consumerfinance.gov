@@ -21,6 +21,7 @@
     {% if office.intro.text %}
     <section class="block
                     block__flush-top
+                    block__flush-bottom
                     content-l
                     content-l__main
                     content-l__large-gutters">
@@ -195,10 +196,10 @@
     {% if activities_feed %}
     <section class="office_activities
                     block
-                    block__flush-sides
                     block__bg
-                    u-mb0
-                    u-mt0">
+                    block__flush-sides
+                    block__flush-top
+                    block__flush-bottom">
         {% include 'templates/activities-feed.html' %}
         <a class="jump-link jump-link__right"
            href="/activity-log/{{ ('?filter_tags=' ~ office.tags | join('&') ) if office.tags }}">
