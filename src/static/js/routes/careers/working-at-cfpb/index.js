@@ -1,16 +1,16 @@
 /* ==========================================================================
-   Bureau structure.
-   Scripts for `/the-bureau/`.
+   Working at the CFPB page.
+   Scripts for `/careers/working-at-cfpb/`.
    ========================================================================== */
 
 'use strict';
 
-var MobileCarousel = require( '../../modules/classes/MobileCarousel' );
+var MobileCarousel = require( '../../../modules/classes/MobileCarousel' );
 
 function init() {
 
   // TODO: Remove this when per-page JS is introduced.
-  if ( document.querySelectorAll( '.the-bureau' ).length === 0 ) {
+  if ( document.querySelectorAll( '.careers-working-at-cfpb' ).length === 0 ) {
     return;
   }
 

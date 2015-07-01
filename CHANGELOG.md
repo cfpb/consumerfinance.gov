@@ -16,23 +16,44 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - Added `block__border-left` and `block__border-right` CF enhancements.
 - Added `students-and-graduates` page to careers section.
 - Added `short_title` to Office/Subpage.
 - Added ordering to the navigation on Office/Subpage.
 - Added script to index all links on our site.
+- Added initial browser test with instructions for testing and adding more
+- Added `media_image__100` and `media_image__130-to-150` classes for responsive
+  image sizes on mobile carousel.
+- Added `u-link__disabled` utility class for styling disabled links.
+- Added `/careers/working-at-cfpb/` page.
+- Added block templates for current openings, job app process,
+  linkedin info, and provide feedback link.
+- Added `.content-l_col__before-inset-divider` CF enhancement
+  for a column divider in cf-layout that has a gap between the
+  top of the divider and the top border.
+- Added `MobileCarousel.js` module for instantiating the slick carousel
+  and added associated `js-mobile-carousel` class as a hook.
+  Also added `mobile-carousel` for CSS.
+- Added `the-bureau` page wrapper class.
+- Added `media-stack` CSS block for stacked media objects.
+- Added fixes for `open-government` pages.
 
 ### Changed
-
 - Fixed background and border on secondary navigation.
-- Moved `link_list__disabled` class to global context.
 - Related Links now disable styles links with empty URLs.
 - Updated secondary navigation to use true parent/child relationships.
 - Events processor/mapping/queries for new Event type structure.
 - Changed the way navigation works for Office/Subpage.
+- Updated grunt-eslint to version 16.0.0 and updated ESLint config to latest.
+- Moved modules that can be instantiated through the `new` keyword
+  to a `classes` subdirectory.
+- Moved page-sniffing JS code to page scripts for the-bureau
+  and working with the CFPB pages.
+- Moved carousel to a macro and implemented on the-bureau
+  and working at the CFPB pages.
 
 ### Removed
+- Removed `list_link__disabled` class.
 
 ### Fixed
 
