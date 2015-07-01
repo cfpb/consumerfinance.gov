@@ -6,8 +6,12 @@
 // Size of play button image;
 @play-btn-size__px: 73px;
 
-.bureau-mission {
-    margin-bottom: unit(45px / @base-font-size-px, em);
+// Override general slick carousel overrides defined in mobile-carousel.less.
+// Removes bottom border, because the-bureau has a bordered block below
+// its carousel.
+.the-bureau .mobile-carousel.slick-slider {
+    border-bottom: none;
+    padding-bottom: 0;
 
     .respond-to-min(1024px, {
         margin-top: unit(60px / @base-font-size-px, em);
@@ -33,6 +37,16 @@
         .respond-to-max(@tablet-max, {
             width: 80px;
         });
+    }
+
+    .slick-prev,
+    .slick-next {
+        // TODO:
+        // The top value relies on the height
+        // of the carousel slide image, which may vary.
+        // This overrides the default top of 140px set
+        // in mobile-carousel.less.
+        top: 150px;
     }
 }
 
@@ -101,76 +115,6 @@
         .respond-to-min(@desktop-min, {
             width: 250px;
         });
-    }
-}
-
-.slick-slider {
-    margin-top: 45px;
-
-    .slick-dots {
-        bottom: 0;
-        top: -25px;
-
-        li {
-            margin: 0px;
-
-            button {
-                &:before {
-                    color: @gray-50;
-                    font-size: 40px;
-                    opacity: 1;
-                }
-
-                &:hover:before {
-                    color: @gray;
-                }
-            }
-
-        }
-
-        li.slick-active {
-            button:before {
-                opacity: 1;
-                color: @gray;
-            }
-        }
-    }
-
-    .slick-prev {
-        left: 10%;
-
-        &:before {
-            // cf-icon-left.
-            content: "\e000";
-        }
-    }
-
-    .slick-next {
-        right: 10%;
-
-        &:before {
-            // cf-icon-right.
-            content: "\e002";
-        }
-    }
-
-    .slick-prev,
-    .slick-next {
-        height: 30px;
-        width: 30px;
-        top: 75px;
-        z-index: 1000;
-
-        &:hover:before {
-            color: @gray-50;
-        }
-
-        &:before {
-            color: @gray-20;
-            opacity: 1;
-            font-size: 30px;
-            .cf-icon();
-        }
     }
 }
 
