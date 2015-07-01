@@ -27,8 +27,8 @@ function init() {
   return $( '.youtube-player_container' ).createYouTube();
 }
 
-// TODO Move YouTube "class" to its own YouTube.js module.
 /**
+* TODO: Move YouTube "class" to its own YouTube.js module.
 * YouTube constructor.
 * @class
 * @param {HTMLElement} element DOM Element.
