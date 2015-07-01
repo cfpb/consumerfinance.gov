@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated secondary navigation to use true parent/child relationships.
 - Events processor/mapping/queries for new Event type structure.
 - Changed the way navigation works for Office/Subpage.
+- Updated grunt-eslint to version 16.0.0 and updated ESLint config to latest.
 
 ### Removed
 
