@@ -3,40 +3,16 @@
    Sub-Pages pages at /sub-pages/*.
    ========================================================================== */
 
-.green-bullets {
-    li {
-        color: @black;
-        list-style: none;
-    }
-
-    li:before {
-        position: relative;
-        top: .1em;
-        margin-left: -1em;
-        padding-right: .3em;
-
-        color: @green;
-        //Square bullet point
-        content: "▪ ";
-        font-size: 1.5em;
-
-
-    }
-}
-
-
 .sub-page {
     .webfont-regular();
 
-    a[href $='.pdf'] {
-        &:after {
-            .cf-icon();
-            display: inline-block;
-            width: 1em;
-            content: @cf-icon-download;
-            color: @pacific;
-            text-align: right;
-        }
+    a[href $='.pdf']:after {
+        .cf-icon();
+        .u-inline-block();
+        width: 1em;
+        content: @cf-icon-download;
+        color: @pacific;
+        text-align: right;
     }
 }
 
@@ -56,7 +32,7 @@
 
         &:after {
             .cf-icon();
-            display: inline-block;
+            .u-inline-block();
             width: 1em;
             content: @cf-icon-download;
             color: @pacific;
@@ -66,12 +42,11 @@
 }
 
 // open-government office
+
 .sub-page_information-quality-guidelines,
 .sub-page_our-open-government-activities {
     ul {
-        .green-bullets();
-    }
-    li {
-        margin-bottom: 1em;
+        .list__branded();
+        .list__spaced();
     }
 }
