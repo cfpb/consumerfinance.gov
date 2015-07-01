@@ -25,9 +25,12 @@ var _propPrefix;
  * }
  */
 function BreakpointHandler( opts ) {
-  // TODO: Throw error if opts.breakpoint, opts.type, opts.enter,
-  // and opts.leave are absent.
-  opts = opts || {};
+  if ( !opts ||
+       !opts.breakpoint ||
+       !opts.enter ||
+       !opts.leave) {
+    throw new Error( 'BreakpointHandler constructor requires arguments!' );
+  }
 
   this.match = false;
   this.breakpoint = opts.breakpoint;
