@@ -11780,6 +11780,57 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
+.sub-page a[href$='.pdf']:after {
+  font-family: 'CFPB Minicons';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  width: 1em;
+  content: "\e406";
+  color: #0072ce;
+  text-align: right;
+}
+
+.lt-ie8 .sub-page a[href$='.pdf']:after {
+  display: inline;
+}
+
+.sub-page_frequently-asked-questions {
+  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: .73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+}
+
+.sub-page_frequently-asked-questions em,
+.sub-page_frequently-asked-questions i {
+  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions em,
+.lt-ie9 .sub-page_frequently-asked-questions i {
+  font-style: normal !important;
+}
+
+.sub-page_frequently-asked-questions strong,
+.sub-page_frequently-asked-questions b {
+  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .sub-page_frequently-asked-questions strong,
+.lt-ie9 .sub-page_frequently-asked-questions b {
+  font-weight: normal !important;
+}
+
 .sub-page_privacy-impact-assessments-pias {
   font-family: "AvenirNextLTW01-Medium",Arial,sans-serif;
   font-style: normal;
@@ -11895,38 +11946,30 @@ a.focus .summary_event-date {
   text-align: right;
 }
 
-.sub-page_frequently-asked-questions {
-  font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: .73076923em;
-  font-size: 1.625em;
-  line-height: 1.26923077;
+.lt-ie8 .sub-page_privacy-impact-assessments-pias a:after {
+  display: inline;
 }
 
-.sub-page_frequently-asked-questions em,
-.sub-page_frequently-asked-questions i {
-  font-family: "AvenirNextLTW01-Italic",Arial,sans-serif;
-  font-style: italic;
-  font-weight: normal;
+.sub-page_information-quality-guidelines ul li,
+.sub-page_our-open-government-activities ul li {
+  position: relative;
+  list-style-type: none;
+  padding-bottom: .75em;
 }
 
-.lt-ie9 .sub-page_frequently-asked-questions em,
-.lt-ie9 .sub-page_frequently-asked-questions i {
-  font-style: normal !important;
+.sub-page_information-quality-guidelines ul li:before,
+.sub-page_our-open-government-activities ul li:before {
+  content: "\25AA";
+  position: absolute;
+  color: #2cb34a;
+  font-size: 1.375em;
+  line-height: 1;
+  left: -0.86363636em;
 }
 
-.sub-page_frequently-asked-questions strong,
-.sub-page_frequently-asked-questions b {
-  font-family: "AvenirNextLTW01-Demi",Arial,sans-serif;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.lt-ie9 .sub-page_frequently-asked-questions strong,
-.lt-ie9 .sub-page_frequently-asked-questions b {
-  font-weight: normal !important;
+.sub-page_information-quality-guidelines ul .list_item+.list_item,
+.sub-page_our-open-government-activities ul .list_item+.list_item {
+  margin-top: 1.5em;
 }
 
 .demo-placeholder {
