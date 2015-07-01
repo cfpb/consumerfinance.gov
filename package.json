@@ -4,7 +4,7 @@
     "url": "http://github.com/cfpb/cfgov-refresh.git"
   },
   "devDependencies": {
-    "browserify-shim": "^3.8.6",
+    "browserify-shim": "^3.8.9",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "chai": "^2.3.0",
     "grunt": "~0.4.5",
