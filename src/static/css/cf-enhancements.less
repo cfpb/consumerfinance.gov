@@ -809,7 +809,7 @@ tbody {
 
 .btn__full {
 
-    .respond-to-max(599px , {
+    .respond-to-max(@mobile-max , {
         display: block;
         width: 100%;
 
@@ -1026,7 +1026,9 @@ textarea.input__long {
   tags: cf-layout
 */
 .content__half-top-on-desk {
-    .respond-to-min(800px, {
+    // A new breakpoint needs to be added to Capital Framework
+    // before we port this
+    .respond-to-min(@desktop-min, {
         padding-top: 20px;
 
         &:after {

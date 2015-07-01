@@ -13,14 +13,14 @@
     background-color: @white;
 
     .respond-to-max(1025px, {
-        .stack-col(content-l_col-1-2);   
+        .stack-col(content-l_col-1-2);
     });
 }
 
 .error_copy_container {
     .grid_column(6);
 
-    .respond-to-max(799px, {
+    .respond-to-max(@tablet-max, {
         .grid_column(12);
     });
 }
@@ -31,10 +31,10 @@
     .superheader {
         .webfont-regular();
 
-        .respond-to-max(799px, {
+        .respond-to-max(@tablet-max, {
             .h1();
         });
-    }   
+    }
 }
 
 .error_main {
@@ -44,24 +44,24 @@
     &__404 {
         .content_wrapper {
             background: transparent url('/static/img/plug.png') no-repeat top right;
-            
-            .respond-to-max(799px, {
+
+            .respond-to-max(@tablet-max, {
                 background: none;
             });
         }
     }
 
-    &__500 {   
+    &__500 {
             @background-image-size__px: 757px;
             @background-image-offset-x__px: @background-image-size__px - 150px;
 
             background: @darkgray url('/static/img/server-rack.png') no-repeat @background-image-size__px 60px;
 
-            .respond-to-max(799px, {
+            .respond-to-max(@tablet-max, {
                 background-image: none;
             });
 
-            .respond-to-range(800px, 1024px, {
+            .respond-to-range(@desktop-min, 1024px, {
                 background-position: @background-image-offset-x__px 60px;
             });
     }
