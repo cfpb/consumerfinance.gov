@@ -280,7 +280,7 @@ module.exports = function(grunt) {
         },
         src: [
             '<%= loc.src %>/static/js/**/*.js',
-            '<%= loc.test %>/unit_tests/*.js'
+            '<%= loc.test %>/unit_tests/**/*.js'
         ]
       }
     },
