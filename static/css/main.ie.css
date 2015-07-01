@@ -11626,12 +11626,13 @@ a.focus .summary_event-date {
 }
 
 .green-bullets li:before {
+  position: relative;
+  top: .1em;
+  margin-left: -1em;
+  padding-right: .3em;
   color: #2cb34a;
   content: "▪ ";
   font-size: 1.5em;
-  padding-right: .25em;
-  position: relative;
-  top: .1em;
 }
 
 .sub-page {
@@ -11832,12 +11833,13 @@ a.focus .summary_event-date {
 }
 
 .sub-page_our-open-government-activities ul li:before {
+  position: relative;
+  top: .1em;
+  margin-left: -1em;
+  padding-right: .3em;
   color: #2cb34a;
   content: "▪ ";
   font-size: 1.5em;
-  padding-right: .25em;
-  position: relative;
-  top: .1em;
 }
 
 .sub-page_our-open-government-activities li {
