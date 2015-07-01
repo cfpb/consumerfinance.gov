@@ -46,9 +46,6 @@ function ContentSlider( elem, slideCount ) {
 }
 
 ContentSlider.prototype.init = function() {
-  // TODO: Remove this line when per-page JS is implemented.
-  if ( !_isSlickAvailableOn( this ) ) return;
-
   var self = this;
   this.$container.height( $( this.slickObj.$slides[0] ).height() );
   this.$container.on( 'click.slider', '.content-show', $.proxy( this.slideInContent, this ) );
@@ -81,8 +78,6 @@ ContentSlider.prototype.slideOutContent = function( e ) {
 };
 
 ContentSlider.prototype.destroy = function() {
-  // TODO: Remove this line when per-page JS is implemented.
-  if ( !_isSlickAvailableOn( this ) ) return;
 
   // Remove all but permanent slides.
   while ( this.slickObj.$slides.length > this.slideCount ) {
@@ -93,12 +88,5 @@ ContentSlider.prototype.destroy = function() {
   this.$container.off( 'click.slider' );
   this.$container.unslick();
 };
-
-// TODO: This is used on at least `/the-bureau/bureau-structure/`,
-// when page-specific JS is implemented the `this.slickObj` check for
-// existence can be removed.
-function _isSlickAvailableOn(target) {
-  return target.slickObj === null ? false : true;
-}
 
 module.exports = ContentSlider;

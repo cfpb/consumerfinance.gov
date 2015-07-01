@@ -1,0 +1,22 @@
+/* ==========================================================================
+   cfgov-refresh
+   Career pages at /careers/.
+   ========================================================================== */
+
+// TODO: Consolidate site-wide media_image responsive sizes into one class.
+.students-and-graduates .media_image {
+    width: 130px;
+    .respond-to-min(800px, {
+        width: 150px;
+    });
+}
+
+.careers-working-at-cfpb {
+    .content_hero {
+        min-height: 300px;
+    }
+    .content_hero,
+    .hero_wrapper {
+        padding: 0;
+    }
+}
