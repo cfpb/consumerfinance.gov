@@ -3,9 +3,46 @@
    Sub-Pages pages at /sub-pages/*.
    ========================================================================== */
 
+.green-bullets {
+    li {
+        color: @black;
+        list-style: none;
+    }
+
+    li:before {
+        color: @green;
+        //Square bullet point
+        content: "▪ ";
+        font-size: 1.5em;
+        padding-right: .25em;
+        position: relative;
+        top:.1em;
+    }
+}
+
+
 .sub-page {
     .webfont-regular();
+
+    a[href $='.pdf'] {
+        &:after {
+            .cf-icon();
+            display: inline-block;
+            width: 1em;
+            content: @cf-icon-download;
+            color: @pacific;
+            text-align: right;
+        }
+    }
 }
+
+// cfpb-ombudsman office
+
+.sub-page_frequently-asked-questions {
+    .h2();
+}
+
+// privacy office
 
 .sub-page_privacy-impact-assessments-pias {
     .webfont-medium();
@@ -24,6 +61,13 @@
     }
 }
 
-.sub-page_frequently-asked-questions {
-    .h2();
+// open-government office
+
+.sub-page_our-open-government-activities {
+    ul {
+        .green-bullets();
+    }
+    li {
+        margin-bottom: 1em;
+    }
 }
