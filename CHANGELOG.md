@@ -16,7 +16,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - Added `block__border-left` and `block__border-right` CF enhancements.
 - Added `students-and-graduates` page to careers section.
 - Added `short_title` to Office/Subpage.
@@ -25,11 +24,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added initial browser test with instructions for testing and adding more
 - Added `media_image__100` and `media_image__130-to-150` classes for responsive
   image sizes on mobile carousel.
+- Added `u-link__disabled` utility class for styling disabled links.
+
+### Removed
+- Removed `list_link__disabled` class.
 
 ### Changed
-
 - Fixed background and border on secondary navigation.
-- Moved `link_list__disabled` class to global context.
 - Related Links now disable styles links with empty URLs.
 - Updated secondary navigation to use true parent/child relationships.
 - Events processor/mapping/queries for new Event type structure.

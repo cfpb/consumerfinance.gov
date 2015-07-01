@@ -55,14 +55,6 @@
                 font-size: unit(22px / @base-font-size-px, em);
             });
         }
-
-        .list_link.list_link__disabled {
-            border-bottom: 1px dotted;
-
-            .respond-to-min(800px, {
-                .u-link__no-border();
-            });
-        }
     }
 
     &_list {
@@ -70,10 +62,6 @@
 
         .list_link {
             .u-link__colors(@darkgray);
-            border-bottom: 1px dotted;
-        }
-
-        .list_link.list_link__disabled {
             border-bottom: 1px dotted;
         }
     }
@@ -109,10 +97,6 @@
             .webfont-regular();
             .u-link__colors(@black);
             .u-link__hover-border();
-
-            &.list_link__disabled:hover {
-                .u-link__no-border();
-            }
         }
 
     }
@@ -239,11 +223,6 @@
             });
         }
     }
-
-    .list_link__disabled {
-        .u-link__colors(@gray-50);
-    }
-
 }
 
 
