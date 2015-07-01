@@ -8018,10 +8018,6 @@ a.focus .summary_event-date {
   font-weight: normal !important;
 }
 
-.nav-secondary {
-  margin-bottom: 1.875em;
-}
-
 .nav-secondary .inset-divider {
   margin: 0 15px 15px;
   border: 0;
@@ -8238,8 +8234,16 @@ a.focus .summary_event-date {
 }
 
 .header_logo {
-  margin: 30px 0 1.25em 0;
+  width: 190px;
+  height: 40px;
+  margin: 10px;
   vertical-align: middle;
+}
+
+.header_logo {
+  margin: 30px 0 1.25em 0;
+  height: 50px;
+  width: 237px;
 }
 
 .header_logo__no-js {
@@ -8595,6 +8599,10 @@ a.focus .summary_event-date {
 }
 
 .footer_share-icon-list {
+  margin-bottom: 0;
+}
+
+.footer_share-icon-list {
   margin-top: 0;
   position: absolute;
   top: -9px;
@@ -8696,6 +8704,19 @@ a.focus .summary_event-date {
 .footer_nav-list .list_link:focus,
 .footer_nav-list .list_link.focus {
   border-bottom-width: 1px !important;
+}
+
+.footer_nav-list .list_link {
+  margin-right: 1.36363636em;
+  font-size: 1.25em;
+}
+
+.footer_nav-list .list_link.list_link__disabled {
+  border-bottom: 1px dotted;
+}
+
+.footer_nav-list .list_link.list_link__disabled {
+  border-bottom-width: 0 !important;
 }
 
 .footer_list {
@@ -9189,6 +9210,7 @@ a.focus .summary_event-date {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;
   font-weight: normal;
+  font-size: 0.875em;
   -webkit-transition: padding .2s ease-out;
   transition: padding .2s ease-out;
 }
@@ -9219,6 +9241,10 @@ a.focus .summary_event-date {
 
 .beta-banner.expandable__expanded {
   padding: 30px 0;
+}
+
+.beta-banner {
+  font-size: 1em;
 }
 
 .beta-banner_head {
@@ -9352,7 +9378,7 @@ a.focus .summary_event-date {
 }
 
 .beta-banner_btn {
-  top: -12px;
+  top: -0.75em;
 }
 
 .beta-hero {
@@ -9377,6 +9403,10 @@ a.focus .summary_event-date {
 
 .beta-hero {
   background-image: url('/static/img/beta-illustration_sm@2x.png');
+}
+
+.beta-hero {
+  background-image: url('/static/img/beta-illustration_lg@2x.png');
 }
 
 .beta-hero_title {
@@ -10560,6 +10590,23 @@ a.focus .summary_event-date {
   padding-bottom: 0;
 }
 
+.the-bureau .mobile-carousel.slick-slider_media .image-container {
+  margin-left: 10px;
+}
+
+.the-bureau .mobile-carousel.slick-slider_section {
+  margin-top: 1.875em;
+}
+
+.the-bureau .mobile-carousel.slick-slider_section+.the-bureau .mobile-carousel.slick-slider_section {
+  border-top: 1px solid #babbbd;
+  padding-top: 1.875em;
+}
+
+.the-bureau .mobile-carousel.slick-slider .media_image {
+  width: 120px;
+}
+
 .the-bureau .mobile-carousel.slick-slider .slick-prev,
 .the-bureau .mobile-carousel.slick-slider .slick-next {
   top: 150px;
@@ -10597,6 +10644,29 @@ a.focus .summary_event-date {
 .lt-ie9 .bureau-functions_list strong,
 .lt-ie9 .bureau-functions_list b {
   font-weight: normal !important;
+}
+
+.bureau-functions_list {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .bureau-functions_list {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .bureau-functions_list {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/static/js/boxsizing.htc');
 }
 
 .bureau-functions .expandable {
@@ -10758,7 +10828,7 @@ a.focus .summary_event-date {
 
 .youtube-player_actions-container {
   margin: 1.875em 0 0 1.875em;
-  width: 150px;
+  width: 130px;
 }
 
 .youtube-player_share-actions .cf-icon {
@@ -10782,7 +10852,7 @@ a.focus .summary_event-date {
 }
 
 .org-chart {
-  width: 530px;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -10896,11 +10966,16 @@ a.focus .summary_event-date {
   background: #f1f2f2;
   border-color: #e3e4e5;
   border-style: solid;
+  border-width: 1px 0 1px 0;
+}
+
+.org-chart_role {
   border-width: 1px 0 0 0;
 }
 
 .org-chart_node {
   width: 100%;
+  margin-bottom: -1px;
 }
 
 .org-chart_node {
@@ -10914,6 +10989,10 @@ a.focus .summary_event-date {
 
 .org-chart_node .org-chart_nodes .org-chart_node {
   margin-bottom: 0px;
+}
+
+.org-chart_node .org-chart_nodes .org-chart_role {
+  border-width: 1px 0 1px 0;
 }
 
 .org-chart_node .org-chart_nodes .org-chart_role {

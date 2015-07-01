@@ -11,7 +11,7 @@
 }
 
 .block__business-step {
-    .respond-to-min(899px, {
+    .respond-to-min(@desktop-min, {
         margin-bottom: 0;
         padding-bottom: 0;
         border-bottom: none;
@@ -19,7 +19,7 @@
 }
 
 .block__business-step_container {
-    .respond-to-max(899px, {
+    .respond-to-max(@tablet-max, {
         // Adjusting padding to offest line height.
         padding: unit((@grid_gutter-width - 7px)/ @base-font-size-px, em) @padding @padding;
         margin-top: 0;

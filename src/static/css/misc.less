@@ -321,7 +321,7 @@
         font-size: unit(18px / @base-font-size-px, em);
     }
 
-    .respond-to-max(599px, {
+    .respond-to-max(@mobile-max, {
         .block-link();
 
         &:after {
@@ -462,13 +462,13 @@
     display: block;
     margin: 0 0 @gutter;
 
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         float: left;
         margin-right: @gutter;
     });
 
     &__right {
-        .respond-to-min(600px, {
+        .respond-to-min(@tablet-min, {
             float: right;
             margin-right: 0;
             margin-left: @gutter;
@@ -533,7 +533,7 @@
 */
 
 .rwd-crop {
-    .respond-to-max(599px, {
+    .respond-to-max(@mobile-max, {
         position: relative;
         width: 100%;
         height: 0;
@@ -784,7 +784,8 @@
         background: fade(@white, 90%);
         padding: @grid_gutter-width @grid_gutter-width @grid_gutter-width + 10px;
     }
-
+    // This breakpoint is related to the images on /events/.
+    // When we look at events again, we might want to standardize this
     .respond-to-min(660px, {
         padding-top: unit(30px / @base-font-size-px, em);
 
