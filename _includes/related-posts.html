@@ -1,7 +1,7 @@
 
 {% macro render(post, doc_types='posts,newsroom', quantity=5, header='Related posts') %}
 
-{% from "macros.html" import slugify as slugify %}
+{% from "macros/util/format.html" import slugify as slugify %}
 
 <div class="{{ slugify(header) }}">
     <h1 class="header-slug">
@@ -19,7 +19,7 @@
                 </a>
             </h4>
             <p class="short-desc u-mb0">
-                <!-- TODO: Use real content description -->
+                {# TODO: Use real content description #}
             </p>
             <p class="date">
                 {{ similar.date| date('%m/%d/%y') }}
