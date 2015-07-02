@@ -3,11 +3,11 @@
 {%- set active_nav_id = 'application-process' -%}
 
 {% block title -%}
-    Application Process
+    Job Application Process
 {%- endblock %}
 
 {% block desc -%}
-
+    {# TODO: Add page meta description. #}
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -20,7 +20,7 @@
         {% call YouTube({
             'video_id' : 'XCbZnTIeTOY',
             'image_res' : 'max',
-            'image_url': '../../static/img/applying-video-screenshot.png'
+            'image_url': '/static/img/applying-video-screenshot.png'
             })
         %}
         <div class="hero_wrapper hide-on_yt-playing">
@@ -36,7 +36,7 @@
                             We protect American consumers. Allow us to introduce ourselves.
                         </p>
                         <footer class="summary_footer">
-                            <a class="jump-link jump-link__right" href="/history/">
+                            <a class="jump-link jump-link__right" href="/the-bureau/history/">
                                 <span class="icon-link_text">See the history of the CFPB</span>
                             </a>
                         </footer>
@@ -55,7 +55,8 @@
                 Applying for a federal job can take some time and patience.
                 It is a process that prioritizes both fairness to all applicants
                 and getting the best qualified candidates.
-                Watch the video above (or read the transcript)
+                {# TODO: Update this link when we get a transcript. #}
+                Watch the video above <a href="">(or read the transcript)</a>
                 for an overview of how it works.
             </p>
             <p class="short-desc">
@@ -69,6 +70,7 @@
 
     <section class="job-applications-interfaces">
         <h2>Different interfaces you may have to use</h2>
+        {# TODO: Create a shaded expandable style that works with expandable__mobile-only here #}
         <div class="expandable
                     expandable__expanded
                     expandable__mobile-only
@@ -103,13 +105,13 @@
                         </p>
                     </div>
                 </div>
-            </div><!-- END .expandable -->
-        </div><!-- END .bureau-functions -->
+            </div><!-- END .expandable_content -->
+        </div><!-- END .expandable -->
 
         <div class="expandable
-                        expandable__expanded
-                        expandable__mobile-only
-                        u-mb0">
+                    expandable__expanded
+                    expandable__mobile-only
+                    u-mb0">
             <button class="expandable_header
                            expandable_header__jump-link
                            expandable_target
@@ -142,8 +144,8 @@
                         </p>
                     </div>
                 </div>
-            </div><!-- END .expandable -->
-        </div><!-- END .bureau-functions -->
+            </div><!-- END .expandable_content -->
+        </div><!-- END .expandable -->
         <div class="expandable
                     expandable__expanded
                     expandable__mobile-only
@@ -181,8 +183,8 @@
                             </p>
                         </div>
                     </div>
-                </div><!-- END .expandable -->
-            </div><!-- END .bureau-functions -->
+                </div><!-- END .expandable_content -->
+            </div><!-- END .expandable -->
     </section>
 
     <section class="block
@@ -279,7 +281,7 @@
             {% include "_template-working-at-cfpb.html" %}
         </section>
         <section class="content-l_col content-l_col-1-2">
-            {% include "_template-job-app-process.html" %}
+            {% include "_template-students-and-graduates.html" %}
         </section>
     </div>
 
