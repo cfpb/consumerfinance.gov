@@ -56,7 +56,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed `list_link__disabled` class.
 
 ### Fixed
-
+- Office/Subpage navigation links on beta
+- Ordering of subpages in the nav on Office page
 
 ## 3.0.0-1.2.1 - 2015-06-29
 
