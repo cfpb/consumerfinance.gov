@@ -58,6 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed `list_link__disabled` class.
 
 ### Fixed
+- Fixed contact-us templates to make them private.
 
 ## 3.0.0-1.2.2 - 2015-07-02
 
