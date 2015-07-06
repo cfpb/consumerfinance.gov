@@ -28,12 +28,13 @@ function init() {
     leave:      _destroySlider
   };
 
-  var handler = new BreakpointHandler( bpSettings );
+  new BreakpointHandler( bpSettings ); // eslint-disable-line
   var _slider;
 
   function _createSlider() {
     // Close any open expandables.
-    $( '.org-chart' ).find( '.expandable__expanded .expandable_target' ).click();
+    $( '.org-chart' )
+      .find( '.expandable__expanded .expandable_target' ).click();
     // Hide org chart branches.
     $( '.org-chart_branches' ).hide();
     // Show content slider & mobile nav links.
