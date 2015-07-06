@@ -10,6 +10,11 @@
     {# TODO: Add page meta description. #}
 {%- endblock %}
 
+{% block content_modifiers -%}
+    {{ super() }}
+    careers-application-process
+{%- endblock %}
+
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
