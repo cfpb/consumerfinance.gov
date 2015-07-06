@@ -14,7 +14,8 @@ function init() {
     return;
   }
 
-  var mobileCarousel = new MobileCarousel();
+  // MobileCarousel with 599px breakpoint.
+  var mobileCarousel = new MobileCarousel( 599 );
   mobileCarousel.enableOn( '.js-mobile-carousel' );
 }
 
