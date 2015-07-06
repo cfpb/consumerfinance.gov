@@ -27,7 +27,11 @@
         margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
         .list__horizontal();
 
-        .respond-to-min(768px, {
+        .respond-to-min(@tablet-min,{
+            margin-bottom: 0;
+        });
+
+        .respond-to-min(@desktop-min, {
             margin-top: 0;
             position: absolute;
             // Aligns with the baseline of .footer_nav-list text.
@@ -43,23 +47,23 @@
             font-size: unit(18px / @base-font-size-px, em);
             .u-link__colors(@black);
 
-            .respond-to-min(768px, {
+            .respond-to-min(@tablet-min, {
                 margin-right: 1em;
 
                 .webfont-regular();
                 .u-link__hover-border();
             });
 
-            .respond-to-min(1200px, {
+            .respond-to-min(@desktop-min, {
                 margin-right: unit(@grid_gutter-width / 22px, em);
-                font-size: unit(22px / @base-font-size-px, em);
+                font-size: unit(20px / @base-font-size-px, em);
             });
         }
 
         .list_link.list_link__disabled {
             border-bottom: 1px dotted;
 
-            .respond-to-min(800px, {
+            .respond-to-min(@desktop-min, {
                 .u-link__no-border();
             });
         }
@@ -72,16 +76,12 @@
             .u-link__colors(@darkgray);
             border-bottom: 1px dotted;
         }
-
-        .list_link.list_link__disabled {
-            border-bottom: 1px dotted;
-        }
     }
 
     &_long-list {
         .list__unstyled();
 
-        .respond-to-max(479px, {
+        .respond-to-max(@mobile-max, {
             margin-bottom: unit(10px / @base-font-size-px, em);
             .list__spaced();
 
@@ -90,7 +90,7 @@
             }
         });
 
-        .respond-to-min(480px, {
+        .respond-to-min(@tablet-min, {
             .list__horizontal();
 
             &:first-child {
@@ -99,7 +99,7 @@
         });
 
         .list_item {
-            .respond-to-min(480px, {
+            .respond-to-min(@tablet-min, {
                 margin-right: @grid_gutter-width - 4px;
                 margin-bottom: unit(10px / @base-font-size-px, em);
             });
@@ -109,10 +109,6 @@
             .webfont-regular();
             .u-link__colors(@black);
             .u-link__hover-border();
-
-            &.list_link__disabled:hover {
-                .u-link__no-border();
-            }
         }
 
     }
@@ -139,7 +135,7 @@
             margin-bottom: 0;
         }
 
-        .respond-to-min(768px, {
+        .respond-to-min(@tablet-min, {
             padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
             margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
             border-bottom: 1px solid @gray-50;
@@ -164,7 +160,7 @@
             margin: 0;
         }
 
-        .respond-to-range(768px, 1199px,{
+        .respond-to-min(@tablet-min {
             .grid_column(8);
             border-right: 1px solid @gray-50;
 
@@ -173,24 +169,10 @@
             }
         });
 
-        .respond-to-min(1200px, {
-            .list__horizontal();
-            padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-            margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-            border-bottom: 1px solid @gray-50;
-
-            .footer_col, .footer_list {
-                display: inline;
-            }
-
-            .list_item {
-                margin-right: 2em;
-            }
-        });
     }
 
     &-middle-right {
-        .respond-to-range(768px, 1199px,{
+        .respond-to-min(@tablet-min {
             .grid_column(4);
 
             .footer_list {
@@ -198,28 +180,14 @@
                 padding-right: @grid_gutter-width;
             }
         });
-
-        .respond-to-min(1200px, {
-            .list__horizontal();
-            float: left;
-            width: 50%;
-
-            .list_item {
-                margin-right: 2em;
-            }
-        });
     }
 
     &-post {
-        .respond-to-range(768px, 1199px, {
+        .respond-to-min(@tablet-min {
             padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
             margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
             border-top: 1px solid @gray-50;
 
-        });
-
-        .respond-to-min(1200px, {
-            float: right;
         });
 
         .footer_official-website {
@@ -239,11 +207,6 @@
             });
         }
     }
-
-    .list_link__disabled {
-        .u-link__colors(@gray-50);
-    }
-
 }
 
 

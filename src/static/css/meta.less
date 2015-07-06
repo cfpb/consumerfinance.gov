@@ -195,9 +195,7 @@
 */
 
 .tags {
-    @bp: 480px;
-
-    .respond-to-min(@bp, {
+    .respond-to-min(@tablet-min, {
         position: relative;
         // 58px here comes from the .tags_heading width.
         padding-left: unit((58px + 8px) / @base-font-size-px, em);
@@ -209,7 +207,7 @@
         margin: 0 0 unit(16px / @font-size, em);
         color: @black;
 
-        .respond-to-min(@bp, {
+        .respond-to-min(@tablet-min, {
             position: absolute;
             left: 0;
             width: unit(58px / @font-size, em);
@@ -222,7 +220,7 @@
         border-top: 1px dotted @gold-80;
         list-style-type: none;
 
-        .respond-to-min(@bp, {
+        .respond-to-min(@tablet-min, {
             border-top: none;
         });
     }
@@ -231,7 +229,7 @@
         border-bottom: 1px dotted @gold-80;
         line-height: 1;
 
-        .respond-to-min(@bp, {
+        .respond-to-min(@tablet-min, {
             .u-inline-block();
             margin-right: unit(15px / @base-font-size-px, em);
             // Eyeballed to be 15px of vertical space between each.
@@ -255,11 +253,11 @@
         .u-link__colors(@gray, @gray, @gray, @gray, @gray,
                         @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
 
-        .respond-to-max((@bp - 1), {
+        .respond-to-max(@tablet-max, {
             .u-link__no-border();
         });
 
-        .respond-to-min(@bp, {
+        .respond-to-min(@tablet-min, {
             padding: 0;
         });
     }
@@ -620,7 +618,7 @@
 .meta-header_right {
     display: block;
     margin-bottom: 0;
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         .u-right();
         display: inline-block;
     });

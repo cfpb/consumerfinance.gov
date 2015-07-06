@@ -271,7 +271,7 @@
 
 .press-information {
     margin-top: unit(60px / @base-font-size-px, em);
-    .respond-to-min(600px, {
+    .respond-to-min(@tablet-min, {
         .grid_column(7, @grid_total-columns);
         .grid_nested-col-group();
     });

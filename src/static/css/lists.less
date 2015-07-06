@@ -49,16 +49,11 @@
     .webfont-medium();
 
     &.list_link__phone {
-        .respond-to-min(768px, {
+        .respond-to-min(@tablet-min, {
             .webfont-regular();
             .u-link__colors(@black);
             .u-link__no-border;
         });
-    }
-
-    &__disabled {
-        color: @gray-50 !important;
-        border: none !important;
     }
 }
 
@@ -286,7 +281,7 @@
     .list_item {
         margin-bottom: unit(10px / @base-font-size-px, em);
 
-        .respond-to-max(599px, {
+        .respond-to-max(@mobile-max, {
             margin-bottom: -1px;
         });
     }
@@ -296,7 +291,7 @@
     }
 
     .list_link {
-        .respond-to-max(599px, {
+        .respond-to-max(@mobile-max, {
             .block-link();
 
             &.icon-link:after {
