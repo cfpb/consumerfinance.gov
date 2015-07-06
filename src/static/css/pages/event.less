@@ -220,7 +220,7 @@
 .event-footer {
     .webfont-regular();
 
-    .respond-to-max(599px, {
+    .respond-to-max(@mobile-max, {
         a {
             display: block;
         }
@@ -241,7 +241,7 @@
 
         background-color: @gray-5;
 
-        .respond-to-min(600px, {
+        .respond-to-min(@tablet-min, {
             border-bottom: 1px solid @gray-50;
         });
     }
@@ -252,7 +252,7 @@
         padding-right: 20px;
         margin-bottom: 10px;
 
-        .respond-to-max(599px, {
+        .respond-to-max(@mobile-max, {
             display: block;
         });
     }

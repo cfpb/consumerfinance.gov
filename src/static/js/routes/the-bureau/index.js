@@ -5,36 +5,17 @@
 
 'use strict';
 
-var $ = require( 'jquery' );
-require( 'slick' );
-
-var BreakpointHandler = require( '../../modules/BreakpointHandler' );
-var MobileOnlyExpandable = require( '../../modules/MobileOnlyExpandable' );
+var MobileCarousel = require( '../../modules/classes/MobileCarousel' );
 
 function init() {
-  if ( !$( 'html' ).hasClass( 'lt-ie9' ) ) {
-    var bureauMissionDom = $( '.bureau-mission' );
-    var handler = new BreakpointHandler( {
-      breakpoint: 599,
-      type:       'max',
-      enter:      _enterBreakpoint,
-      leave:      _leaveBreakpoint
-    } );
 
-    $( '.expandable__mobile-only' ).each( function() {
-      handler = new MobileOnlyExpandable( $( this ), 599 );
-    } );
+  // TODO: Remove this when per-page JS is introduced.
+  if ( document.querySelectorAll( '.the-bureau' ).length === 0 ) {
+    return;
   }
 
-  function _enterBreakpoint() {
-    bureauMissionDom.slick( {
-      dots: true
-    } );
-  }
-
-  function _leaveBreakpoint() {
-    bureauMissionDom.unslick();
-  }
+  var mobileCarousel = new MobileCarousel();
+  mobileCarousel.enableOn( '.js-mobile-carousel' );
 }
 
 module.exports = { init: init };
