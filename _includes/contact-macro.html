@@ -22,7 +22,7 @@
                 <li class="list_item u-break-word">
                     {%- if loop.index == 1 %}
                         <span class="cf-icon cf-icon-email list_icon"></span>
-                        <span class="h5 list_text">Email:</span>
+                        <span class="h5 list_text">Email</span>
                     {%- endif %}
                     {%- if email.addr %}
                         <p>
@@ -40,7 +40,7 @@
                 <li class="list_item">
                     {%- if loop.index == 1 %}
                         <span class="cf-icon cf-icon-phone list_icon"></span>
-                        <span class="h5 list_text">Phone:</span>
+                        <span class="h5 list_text">Phone</span>
                     {%- endif %}
                     <p class="short-desc">
                         <a class="list_link list_link__phone" href="tel:{{ phone.num }}">
@@ -58,7 +58,7 @@
         {%- if contact.fax %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-fax list_icon"></span>
-                <span class="h5 list_text">Fax:</span>
+                <span class="h5 list_text">Fax</span>
                 <p class="short-desc">
                     {{ format_phone(contact.fax.num) if contact.fax.num }}
                 </p>
@@ -67,7 +67,7 @@
         {%- if contact.street %}
             <li class="list_item">
                 <span class="cf-icon cf-icon-mail list_icon"></span>
-                <span class="h5 list_text">Mailing Address:</span>
+                <span class="h5 list_text">Mailing Address</span>
                 <p class="short-desc">
                     Consumer Financial Protection Bureau<br>
                     {{ contact.attn if contact.attn }}<br>
