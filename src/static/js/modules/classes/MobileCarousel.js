@@ -7,15 +7,16 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 var BreakpointHandler = require( './BreakpointHandler' );
-var MobileOnlyExpandable = require( './MobileOnlyExpandable' );
 
 /**
 * MobileCarousel
 * @class
+* @param {number} breakpointPx The pixel breakpoint to enable the
+*   mobile carousel at.
 */
-function MobileCarousel() {
+function MobileCarousel( breakpointPx ) {
   // Initialization can happen here, like an `init` method.
-  var _breakpointPx = 599;
+  var _breakpointPx = breakpointPx;
   var _targetDom;
 
   function _enterBreakpoint() {
@@ -48,12 +49,7 @@ function MobileCarousel() {
       enter:      _enterBreakpoint,
       leave:      _leaveBreakpoint
     };
-
-    var handler = new BreakpointHandler( bpOptions );
-
-    $( '.expandable__mobile-only' ).each( function() {
-      handler = new MobileOnlyExpandable( $( this ), _breakpointPx );
-    } );
+    new BreakpointHandler( bpOptions ); // eslint-disable-line
 
     return this;
   }
