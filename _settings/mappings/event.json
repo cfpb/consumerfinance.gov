@@ -3,15 +3,29 @@
     "agenda": {
       "properties": {
         "beginning_time": {
-          "type": "date",
-          "format": "dateOptionalTime"
+          "properties": {
+            "date": {
+              "type": "date",
+            "format": "dateOptionalTime"
+            },
+            "timezone": {
+              "type": "string"
+            }
+          }
         },
         "desc": {
           "type": "string"
         },
         "ending_time": {
-          "type": "date",
-          "format": "dateOptionalTime"
+          "properties": {
+            "date": {
+              "type": "date",
+            "format": "dateOptionalTime"
+            },
+            "timezone": {
+              "type": "string"
+            }
+          }
         },
         "location": {
           "type": "string"
@@ -206,7 +220,7 @@
             }
           }
         },
-      "mime_type": {
+        "mime_type": {
           "type": "string"
         },
         "parent": {
@@ -252,8 +266,15 @@
       }
     },
     "beginning_time": {
-      "type": "date",
-      "format": "dateOptionalTime"
+      "properties": {
+        "date": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "timezone": {
+          "type": "string"
+        }
+      }
     },
     "comment_count": {
       "type": "long"
@@ -261,17 +282,58 @@
     "comment_status": {
       "type": "string"
     },
+    "content": {
+      "type": "string"
+    },
     "date": {
       "type": "date",
       "format": "dateOptionalTime"
     },
     "ending_time": {
-      "type": "date",
-      "format": "dateOptionalTime"
+      "properties": {
+        "date": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "timezone": {
+          "type": "string"
+        }
+      }
+    },
+    "excerpt": {
+      "type": "string"
     },
     "future": {
       "properties": {
         "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "ics": {
+      "properties": {
+        "dtend": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "dtstamp": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "dtstart": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "ending_tzinfo": {
+          "type": "string"
+        },
+        "starting_tzinfo": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "uid": {
           "type": "string"
         }
       }
@@ -288,11 +350,21 @@
     },
     "live_stream": {
       "properties": {
-        "date": {
-          "type": "date",
-            "format": "dateOptionalTime"
+        "available": {
+          "type": "string"
         },
-        "timezone": {
+        "date": {
+          "properties": {
+            "date": {
+              "type": "date",
+              "format": "dateOptionalTime"
+            },
+            "timezone": {
+              "type": "string"
+            }
+          }
+        },
+        "url": {
           "type": "string"
         }
       }
@@ -301,14 +373,39 @@
       "type": "date",
       "format": "dateOptionalTime"
     },
-    "og_desc": {
-      "type": "string"
-    },
-    "og_image": {
-      "type": "string"
-    },
-    "og_title": {
-      "type": "string"
+    "open_graph": {
+      "properties": {
+        "og_desc": {
+          "type": "string"
+        },
+        "og_image": {
+          "type": "string"
+        },
+        "og_title": {
+          "type": "string"
+        },
+        "twtr_hash": {
+          "type": "string"
+        },
+        "twtr_lang": {
+          "type": "string"
+        },
+        "twtr_rel": {
+          "type": "string"
+        },
+        "twtr_text": {
+          "type": "string"
+        },
+        "utm_campaign": {
+          "type": "string"
+        },
+        "utm_content": {
+          "type": "string"
+        },
+        "utm_term": {
+          "type": "string"
+        }
+      }
     },
     "order": {
       "type": "long"
@@ -341,104 +438,16 @@
     "tags": {
       "type": "string"
     },
-    "taxonomy_beginning_time": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "date",
-          "format": "dateOptionalTime"
-        }
-      }
-    },
-    "taxonomy_ending_time": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "date",
-          "format": "dateOptionalTime"
-        }
-      }
-    },
-    "taxonomy_fj_tag": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "taxonomy_live_stream_available_time": {
-      "properties": {
-        "id": {
-          "type": "long"
-        },
-        "post_count": {
-          "type": "long"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "title": {
-          "type": "date",
-          "format": "dateOptionalTime"
-        }
-      }
-    },
     "title": {
       "type": "string"
     },
     "title_plain": {
       "type": "string"
     },
-    "twtr_hash": {
-      "type": "string"
-    },
-    "twtr_lang": {
-      "type": "string"
-    },
-    "twtr_rel": {
-      "type": "string"
-    },
-    "twtr_text": {
-      "type": "string"
-    },
     "type": {
       "type": "string"
     },
     "url": {
-      "type": "string"
-    },
-    "utm_campaign": {
-      "type": "string"
-    },
-    "utm_content": {
-      "type": "string"
-    },
-    "utm_term": {
       "type": "string"
     },
     "venue": {
