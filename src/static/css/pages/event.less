@@ -8,8 +8,10 @@
    ========================================================================== */
 
 .post__event {
-    padding-right: unit(30px / @base-font-size-px, em);
-    margin-right: unit(30px  / @base-font-size-px, em);
+    .respond-to-min(@desktop-min, {
+        padding-right: unit(30px / @base-font-size-px, em);
+        margin-right: unit(30px  / @base-font-size-px, em);
+    });
 }
 
 

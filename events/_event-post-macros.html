@@ -61,18 +61,19 @@
 
    ========================================================================== #}
 
-{% macro event_location_image(address, options={}) %}
-    {%- set location = (options.location or address.city + ' ' + address.state if address.city and address.state)
-                       | default('Washington DC', true)
-                       | urlencode -%}
-    {%- set scale = '&scale=' + options.scale | default('2') -%}
-    {%- set size =  '&size='  + options.size  | default('276x155') -%}
-    {%- set zoom =  '&zoom='  + options.zoom  | default('12') -%}
-    {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
+{% macro event_location_image(options={}) %}
+    {% from "macros/util/format.html" import location_image_url as location_image_url %}
 
     <img class="{{ options.additional_classes }}"
-        src="{{ url ~ location ~ size ~ zoom ~ scale }}"
-        alt="Google Maps image of {{ location }}">
+        src="{{ location_image_url({
+                        'location': options.location
+                                    | default('New York, NY', true)
+                                    | urlencode,
+                        'zoom':     options.zoom  | default('12'),
+                        'scale':    options.scale | default('2'),
+                        'size':     options.size  | default('276x155')
+                    }) }}"
+        alt="Google Maps image of {{ options.location }}">
 {% endmacro %}
 
 
@@ -213,14 +214,12 @@
 {%- import "tags.html" as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
-            {{ post.beginning_time.date }}
-            {# timestamps are mis-formatted causing an error with replace() #}
-            {#{{ calendar_icon(post.beginning_time.date) }}#}
+            {{ calendar_icon(post.beginning_time.date) }}
             <div class="summary-meta_container">
                 <h1 class="summary_heading">{{ post.title|safe }}</h1>
-                {#{{ event_meta(post, datetime_format={
+                {{ event_meta(post, datetime_format={
                     'date_format' : '%m/%-d/%y'
-                }) }}#}
+                }) }}
             </div>
         </header>
         <p class="summary_text">
@@ -283,7 +282,8 @@
                     {# TODO Replace image URL with actual post url #}
                     <img src="http://upload.wikimedia.org/wikipedia/commons/9/94/Large.mc.arp.750pix.jpg" />
                 {% else %}
-                    {{ event_location_image(post.venue.address, {
+                    {{ event_location_image({
+                        'location': city,
                         'zoom': '12',
                         'scale': '2',
                         'size': '640x320'

@@ -1,0 +1,23 @@
+{# ==========================================================================
+
+   location_image_url()
+
+   ==========================================================================
+
+   Description:
+
+   Produces a Google Maps image url when given:
+
+   number: A ten-digit string, no spaces.
+
+   ========================================================================== #}
+
+{% macro location_image_url(options={}) %}
+    {%- set location = options.location
+                       | default('Washington, DC', true) -%}
+    {%- set scale = '&scale=' + options.scale | default('2') -%}
+    {%- set size =  '&size='  + options.size  | default('276x155') -%}
+    {%- set zoom =  '&zoom='  + options.zoom  | default('12') -%}
+    {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
+    {{ url ~ location ~ size ~ zoom ~ scale }}
+{% endmacro %}
