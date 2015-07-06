@@ -11,7 +11,9 @@
 
 {% if ('/events/archive/' in request.path.lower()) %}
     {% set query = queries.events_archive %}
+    {% set events = query.search() %}
 {% else %}
     {% set query = queries.events %}
+    {% set events = query.search(size=10) %}
+    {% set hero = query.search(size=1) %}
 {% endif %}
-{% set events = query.search() %}
