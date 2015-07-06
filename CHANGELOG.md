@@ -52,6 +52,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and working with the CFPB pages.
 - Moved carousel to a macro and implemented on the-bureau
   and working at the CFPB pages.
+- Moved MobileOnlyExpandable initialization out of MobileCarousel.
 
 ### Removed
 - Removed `list_link__disabled` class.
