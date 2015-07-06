@@ -213,12 +213,14 @@
 {%- import "tags.html" as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
-            {{ calendar_icon(post.beginning_time.date) }}
+            {{ post.beginning_time.date }}
+            {# timestamps are mis-formatted causing an error with replace() #}
+            {#{{ calendar_icon(post.beginning_time.date) }}#}
             <div class="summary-meta_container">
                 <h1 class="summary_heading">{{ post.title|safe }}</h1>
-                {{ event_meta(post, datetime_format={
+                {#{{ event_meta(post, datetime_format={
                     'date_format' : '%m/%-d/%y'
-                }) }}
+                }) }}#}
             </div>
         </header>
         <p class="summary_text">
