@@ -7,7 +7,7 @@
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
                 <div class="wrapper">
-                {%- import "breadcrumbs.html" as breadcrumbs -%}
+                {%- import "breadcrumbs.html" as breadcrumbs with context -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
             {% endif %}

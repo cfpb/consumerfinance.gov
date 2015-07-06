@@ -1,5 +1,5 @@
 {% extends "layout-2-1-bleedbar.html" %}
-{% import "_vars-contact-us.html" as vars with context %}
+{% import "contact-us/_vars-contact-us.html" as vars with context %}
 
 {% block title -%}
     Contact us
@@ -15,10 +15,10 @@
             <h1>Contact us</h1>
             <div class="content-l content-l__full">
                 <section class="content-l_col content-l_col-1-2">
-                    {% include "submit-a-complaint.html" %}
+                    {% include "contact-us/submit-a-complaint.html" %}
                 </section>
                 <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                    {% include "general-inquiries.html" %}
+                    {% include "contact-us/general-inquiries.html" %}
                 </section>
             </div>
         </section>
@@ -28,11 +28,11 @@
 
 {% block content_main %}
     {% set contacts = vars.query.search(size=100) %}
-    {%- include "contact-list.html" %}
+    {%- include "contact-us/contact-list.html" %}
 {% endblock %}
 
 {% block content_sidebar %}
-    {%- include "mailing-addresses.html" %}
+    {%- include "contact-us/mailing-addresses.html" %}
     <div class="content_line"></div>
-    {%- include "promoted-contacts.html" %}
+    {%- include "contact-us/promoted-contacts.html" %}
 {% endblock %}
