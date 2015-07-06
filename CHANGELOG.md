@@ -56,6 +56,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and working at the CFPB pages.
 - Moved MobileOnlyExpandable initialization out of MobileCarousel.
 - Converted excerpts HTML to articles from sections in the careers section.
+- Breaks `macros.html` apart into files in the /macros/ directory.
 
 ### Removed
 - Removed `list_link__disabled` class.

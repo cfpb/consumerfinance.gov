@@ -291,7 +291,7 @@
     'active_filters_total': active_filters_total
 } -%}
 
-{%- from 'macros.html' import is_mobile -%}
+{%- import 'macros/util/is-mobile.html' as is_mobile -%}
 
 {% set is_expanded = active_filters_total > 0
                      and options.show_current_filters
@@ -335,7 +335,7 @@
 {% macro active_filters_helper(posts, filter_dict, options) %}
 {%- set filters = filter_dict.filters -%}
 {%- set active_filters_total = filter_dict.active_filters_total -%}
-{% from 'macros.html' import notification %}
+{% import 'macros/notification.html' as notification %}
 
 {%- if active_filters_total > 0 and options.show_filters_label -%}
     <div class="filtered-by">
@@ -356,7 +356,7 @@
             {% set type = 'warning' %}
         {%- endif -%}
 
-        {{ notification({
+        {{ notification.render({
             'text': text,
             'type': type
         }) }}
