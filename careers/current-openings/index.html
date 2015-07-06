@@ -1,0 +1,116 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-careers.html" as vars with context %}
+{%- set active_nav_id = 'current-openings' -%}
+
+{% block title -%}
+    Current Openings
+{%- endblock %}
+
+{% block desc -%}
+    Information on careers at the CFPB.
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    {# TODO: Resolve slick font issue.
+             For the slick stylesheet to pick up its font and img reference the
+             fonts and images found at /src/vendor/slick-carousel/slick/ should
+             be included in same directory as slick.css.
+             However, including the slick fonts makes the dots on the
+             /the-bureau/ page at mobile sizes enormous.
+    #}
+    <link rel="stylesheet" href="/static/css/slick.css">
+{%- endblock %}
+
+{% block content_modifiers -%}
+    {{ super() }}
+    careers-all-current-openings
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }}
+    content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {% import "_macro-table-current-openings.html" as table_current_openings %}
+
+    <section class="block
+                    block__flush-top
+                    block__sub">
+            <h1>Current Openings</h1>
+            <p class="h3">
+                Find the position that’s right for you.
+                See positions by title, location, or closing date.
+                We recommend applying at least a full day before the closing date,
+                in case you have issues or questions you need answered.
+            </p>
+            <p class="short-desc">
+                This vision can only come from the people who are working
+                toward it.
+                Creating this kind of market takes a dedication to service,
+                leadership and innovation.
+            </p>
+    </section>
+
+    <div class="block
+                block__flush-top">
+        {# TODO: This is mock data for the table.
+           Replace with actual data from the Django API. #}
+        {% set joblist = {
+        'list': [
+            {
+                'title': 'Sr. Designer',
+                'closing': 'August 23, 2015',
+                'location': 'DC',
+                'slug': '#'
+            },
+            {
+                'title': 'Design Director',
+                'closing': 'August 23, 2015',
+                'location': 'DC',
+                'slug': '#'
+            },
+            {
+                'title': 'Front End Web Designer',
+                'closing': 'August 23, 2015',
+                'location': 'NY',
+                'slug': '#'
+            },
+            {
+                'title': 'Assistant Director, Procurement',
+                'closing': 'July 8, 2015',
+                'location': 'NY',
+                'slug': '#'
+            },
+            {
+                'title': 'Data Quality Analyst of Consumer Engagement',
+                'closing': 'July 10, 2015',
+                'location': 'IL',
+                'slug': '#'
+            },
+        ]} %}
+
+        {{ table_current_openings.render(joblist) }}
+    </div>
+
+    <div class="block
+                block__padded-top
+                block__border-top
+                content-l">
+        <article class="content-l_col content-l_col-1-2">
+            {% include "_template-job-app-process.html" %}
+        </article>
+        <article class="content-l_col content-l_col-1-2">
+            {% include "_template-working-at-cfpb.html" %}
+        </article>
+    </div>
+
+    {% include "_template-block-social.html" %}
+
+    <aside>
+        {% include "_template-careers-related-links.html" %}
+    </aside>
+
+{% endblock %}

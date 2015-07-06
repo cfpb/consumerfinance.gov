@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `media-stack` CSS block for stacked media objects.
 - Added fixes for `open-government` pages.
 - Support in Event processor for ICS file generator
+- Added `careers/current-openings` page.
 
 ### Changed
 - Fixed background and border on secondary navigation.
@@ -53,6 +54,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved carousel to a macro and implemented on the-bureau
   and working at the CFPB pages.
 - Moved MobileOnlyExpandable initialization out of MobileCarousel.
+- Converted excerpts HTML to articles from sections in the careers section.
 
 ### Removed
 - Removed `list_link__disabled` class.
