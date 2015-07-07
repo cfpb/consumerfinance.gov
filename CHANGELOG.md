@@ -40,6 +40,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `careers/application-process` page.
 - Support in Event processor for ICS file generator
 - Added `careers/current-openings` page.
+- Added `/transcripts/` folder and transcript for job application video
 
 ### Changed
 - Fixed background and border on secondary navigation.
