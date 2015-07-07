@@ -42,8 +42,8 @@
                             content-l_col__before-divider">
                 <p class="h3 u-show-on-mobile">Stay informed</p>
                 <p class="short-desc">Stay up to date with our email newsletter</p>
-                {% from "macros.html" import subscribe as subscribe with context %}
-                {{ subscribe(intro.govdelivery_code) }}
+                {% import "macros/subscribe.html" as subscribe with context %}
+                {{ subscribe.render(intro.govdelivery_code) }}
             </section>
         {% endif %}
     </section>
