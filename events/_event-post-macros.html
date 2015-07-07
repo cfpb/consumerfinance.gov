@@ -36,17 +36,15 @@
 
    Create HTML image when given:
 
-   post: A post from a query result.
-
-   options (optional):         An object to use for customizing an event location image using
-                               Google Maps.
+   options (optional):         An object to use for customizing an event
+                               location image using Google Maps.
 
    options.additional_classes: Extra classes you wish to add to the image, space separated.
 
    options.location:           A location as either a comma-separated {latitude,longitude}
                                pair (e.g. "40.714728,-73.998672") or a string address
                                (e.g. "city hall, new york, ny").
-                               Defaults to 'Washington DC'.
+                               Defaults to 'Washington, DC'.
 
    options.scale:              Affects the number of pixels that are returned.
                                Accepted values are 1, 2 and 4.
@@ -67,7 +65,7 @@
     <img class="{{ options.additional_classes }}"
         src="{{ location_image_url({
                         'location': options.location
-                                    | default('New York, NY', true)
+                                    | default('Washington, DC', true)
                                     | urlencode,
                         'zoom':     options.zoom  | default('12'),
                         'scale':    options.scale | default('2'),
