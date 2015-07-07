@@ -48,7 +48,7 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block u-mt0">
+    <section class="block block__flush-top">
         {% import "related-posts.html" as related_posts with context %}
         {{ related_posts.render(event) }}
     </section>
@@ -58,7 +58,7 @@
                 Stay informed
             </span>
         </h1>
-        <div class="block block__sub u-mt0">
+        <div class="block block__sub block__flush-top">
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
