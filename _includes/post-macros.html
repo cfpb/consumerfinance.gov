@@ -345,14 +345,14 @@
                         + ('s' if posts.total > 1 else '') %}
             {% set type = 'success' %}
         {%- else -%}
-            {% macro _no_resuls_text (posts, filter_dict, options) %}
+            {% macro _no_results_text (posts, filter_dict, options) %}
                 Sorry, there were no results based
                 on your filter selections.
                 <p class="short-desc u-mt15">Please clear the filter or
                   change your selections and try again.
                 </p>
             {% endmacro %}
-            {% set text = _no_resuls_text() %}
+            {% set text = _no_results_text() %}
             {% set type = 'warning' %}
         {%- endif -%}
 
