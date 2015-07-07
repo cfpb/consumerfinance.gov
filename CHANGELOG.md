@@ -37,6 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `the-bureau` page wrapper class.
 - Added `media-stack` CSS block for stacked media objects.
 - Added fixes for `open-government` pages.
+- Added `careers/application-process` page.
 - Support in Event processor for ICS file generator
 - Added `careers/current-openings` page.
 
