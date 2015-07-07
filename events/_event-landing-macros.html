@@ -59,9 +59,8 @@
 
    ========================================================================== #}
 
-{% macro event_hero(posts) %}
+{% macro event_hero(post) %}
     {% import "macros/category-icon.html" as category_icon %}
-    {% for post in posts %}
     {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
                     | default('Washington, DC') -%}
     <section class="content_hero hero">
@@ -116,5 +115,4 @@
             </div>
         </div>
     </section><!-- END .content_hero -->
-    {% endfor %}
 {% endmacro %}
