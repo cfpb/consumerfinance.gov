@@ -47,8 +47,8 @@
         <h1>Upcoming events</h1>
         <div class='block block__flush-bottom block__padded-top'>
             {% from "_event-landing-macros.html" import event_preview as event_preview %}
-            {% for post in vars.events %}
-                {{ event_preview(post) }}
+            {% for n in range(1, vars.events_list | length) %}
+                {{ event_preview(vars.events_list[n]) }}
             {% endfor %}
          </div>
     </section>
