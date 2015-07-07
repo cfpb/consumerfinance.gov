@@ -1,10 +1,10 @@
-var careers_studentsAndGraduates = require( '../../page_objects/page_careers-students-and-graduates.js' );
+var Careers_StudentsAndGraduates = require( '../../page_objects/page_careers-students-and-graduates.js' );
 
-describe( 'Beta The Bureau Page', function() {
+describe( 'Beta: Careers/Student-and-graduates', function() {
   var page;
 
   beforeEach( function() {
-    page = new careers_studentsAndGraduates();
+    page = new Careers_StudentsAndGraduates();
     page.get();
   } );
 
@@ -14,6 +14,7 @@ describe( 'Beta The Bureau Page', function() {
 
   it( 'should have 4 opportunities for students and graduates', function() {
     expect( page.opportunities.count() ).toEqual( 4 );
-    expect( page.opportunities.getText() ).toInclude( 'Presidential Management Fellow' );
+    expect( page.opportunities.getText() ).toContain( 'Presidential Management Fellow' );
   } );
+
 } );
