@@ -5,7 +5,24 @@
 
 .sub-page {
     .webfont-regular();
+
+    a[href $='.pdf']:after {
+        .cf-icon();
+        .u-inline-block();
+        width: 1em;
+        content: @cf-icon-download;
+        color: @pacific;
+        text-align: right;
+    }
 }
+
+// cfpb-ombudsman office
+
+.sub-page_frequently-asked-questions {
+    .h2();
+}
+
+// privacy office
 
 .sub-page_privacy-impact-assessments-pias {
     .webfont-medium();
@@ -15,7 +32,7 @@
 
         &:after {
             .cf-icon();
-            display: inline-block;
+            .u-inline-block();
             width: 1em;
             content: @cf-icon-download;
             color: @pacific;
@@ -24,6 +41,12 @@
     }
 }
 
-.sub-page_frequently-asked-questions {
-    .h2();
+// open-government office
+
+.sub-page_information-quality-guidelines,
+.sub-page_our-open-government-activities {
+    ul {
+        .list__branded();
+        .list__spaced();
+    }
 }

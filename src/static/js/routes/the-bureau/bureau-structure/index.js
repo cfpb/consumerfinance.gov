@@ -8,25 +8,33 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 
-var ContentSlider = require( '../../../modules/ContentSlider' );
-var BreakpointHandler = require( '../../../modules/BreakpointHandler' );
+var ContentSlider = require( '../../../modules/classes/ContentSlider' );
+var BreakpointHandler = require( '../../../modules/classes/BreakpointHandler' );
 
 function init() {
-  if ( !$( 'html' ).hasClass( 'lt-ie9' ) ) {
-    var settings = {
-      breakpoint: 599,
-      type:       'max',
-      enter:      _createSlider,
-      leave:      _destroySlider
-    };
-
-    var handler = new BreakpointHandler( settings );
+  if ( $( 'html' ).hasClass( 'lt-ie9' ) ) {
+    return;
   }
 
+  // TODO: Remove this when per-page JS is introduced.
+  if ( document.querySelectorAll( '#content-slider' ).length === 0 ) {
+    return;
+  }
+
+  var bpSettings = {
+    breakpoint: 599,
+    type:       'max',
+    enter:      _createSlider,
+    leave:      _destroySlider
+  };
+
+  new BreakpointHandler( bpSettings ); // eslint-disable-line
   var _slider;
+
   function _createSlider() {
     // Close any open expandables.
-    $( '.org-chart' ).find( '.expandable__expanded .expandable_target' ).click();
+    $( '.org-chart' )
+      .find( '.expandable__expanded .expandable_target' ).click();
     // Hide org chart branches.
     $( '.org-chart_branches' ).hide();
     // Show content slider & mobile nav links.

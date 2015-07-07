@@ -16,24 +16,69 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - Added `block__border-left` and `block__border-right` CF enhancements.
+- Added `students-and-graduates` page to careers section.
+- Added `short_title` to Office/Subpage.
+- Added ordering to the navigation on Office/Subpage.
+- Added script to index all links on our site.
+- Added initial browser test with instructions for testing and adding more
+- Added `media_image__100` and `media_image__130-to-150` classes for responsive
+  image sizes on mobile carousel.
+- Added `u-link__disabled` utility class for styling disabled links.
+- Added `/careers/working-at-cfpb/` page.
+- Added block templates for LinkedIn info, provide feedback link,
+  and career page summaries.
+- Added `.content-l_col__before-inset-divider` CF enhancement
+  for a column divider in cf-layout that has a gap between the
+  top of the divider and the top border.
+- Added `MobileCarousel.js` module for instantiating the slick carousel
+  and added associated `js-mobile-carousel` class as a hook.
+  Also added `mobile-carousel` for CSS.
+- Added `the-bureau` page wrapper class.
+- Added `media-stack` CSS block for stacked media objects.
+- Added fixes for `open-government` pages.
+- Support in Event processor for ICS file generator
+- Added `careers/current-openings` page.
 
 ### Changed
-
 - Fixed background and border on secondary navigation.
-- Moved `link_list__disabled` class to global context.
 - Related Links now disable styles links with empty URLs.
-- Updated secondary navigation to use true parent/child relationships
+- Updated secondary navigation to use true parent/child relationships.
+- Events processor/mapping/queries for new Event type structure.
+- Changed the way navigation works for Office/Subpage.
+- Updated grunt-eslint to version 16.0.0 and updated ESLint config to latest.
+- Moved modules that can be instantiated through the `new` keyword
+  to a `classes` subdirectory.
+- Moved page-sniffing JS code to page scripts for the-bureau
+  and working with the CFPB pages.
+- Moved carousel to a macro and implemented on the-bureau
+  and working at the CFPB pages.
+- Moved MobileOnlyExpandable initialization out of MobileCarousel.
+- Converted excerpts HTML to articles from sections in the careers section.
+
+### Removed
+- Removed `list_link__disabled` class.
+
+### Fixed
+- Fixed contact-us templates to make them private.
+
+## 3.0.0-1.2.2 - 2015-07-02
+
+### Added
+
+### Changed
 
 ### Removed
 
 ### Fixed
+- Office/Subpage navigation links on beta
+- Ordering of subpages in the nav on Office page
 
 ## 3.0.0-1.2.1 - 2015-06-29
 
 ### Removed
 - Event processor to fix indexing error
+
 
 ## 3.0.0-1.2.0 - 2015-06-19
 
@@ -70,9 +115,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `cfpb_report` activity type to activities feed macro.
 - Added breadcrumbs macro and temporarily set breadcrumbs for all office sub-pages.
 - Added download icons to `privacy-impact-assessments-pias`
-- Added `short_title` to Office/Subpage
-- Added ordering to the navigation on Office/Subpage
-- Added script to index all links on our site
 
 ### Changed
 - Relaxed ESLint `key-spacing` rule to warning.
@@ -111,9 +153,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `category_icon` macro from `post-macros.html` to `macros/category-icon.html`
   and adds render method.
 - Moved `string_length` macro from `macros.html` to `macros/util/text.html`.
-- Events processor/mapping/queries for new Event type structure
-- Changed the way navigation works for Office/Subpage
-
 
 ### Fixed
 - Fixed an issue where scripts were being initialized out of order
