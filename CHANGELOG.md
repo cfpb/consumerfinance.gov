@@ -28,9 +28,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `/careers/working-at-cfpb/` page.
 - Added block templates for LinkedIn info, provide feedback link,
   and career page summaries.
-- Added `.content-l_col__before-inset-divider` CF enhancement
-  for a column divider in cf-layout that has a gap between the
-  top of the divider and the top border.
 - Added `MobileCarousel.js` module for instantiating the slick carousel
   and added associated `js-mobile-carousel` class as a hook.
   Also added `mobile-carousel` for CSS.
@@ -42,6 +39,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `careers/current-openings` page.
 - Added `/transcripts/` folder and transcript for job application video
 - Added Google Maps image utility macro
+- Added `careers/` landing page.
 
 ### Changed
 - Fixed background and border on secondary navigation.

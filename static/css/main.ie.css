@@ -5310,66 +5310,6 @@ textarea.input__long {
   margin-top: 0;
 }
 
-.content-l_col__before-inset-divider.content-l_col-1-2 {
-  border-left-width: 30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-2:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  display: block;
-  background-color: #babbbd;
-  margin-left: -30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-2:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  display: block;
-  background-color: #babbbd;
-  margin-left: -30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-2:before {
-  top: 30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-3 {
-  border-left-width: 30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-3:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  display: block;
-  background-color: #babbbd;
-  margin-left: -30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-3:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  display: block;
-  background-color: #babbbd;
-  margin-left: -30px;
-}
-
-.content-l_col__before-inset-divider.content-l_col-1-3:before {
-  top: 30px;
-}
-
 .cf-notification {
   display: none;
   position: relative;
