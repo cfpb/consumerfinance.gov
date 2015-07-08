@@ -18,25 +18,29 @@
    ========================================================================== #}
 
 {% macro event_preview(post, media_object=true) %}
-  {% import "_event-post-macros.html" as event_post_macros with context %}
-  <article class="post-preview post-preview__event">
-      {% if media_object %}
-          <div class="media">
-            <a class="media_image-container post-summary-image" href="{{ post.permalink }}">
-                  <div class="post-summary-image_container">
-                      {{ event_post_macros.event_location_image(post) }}
-                  </div>
-              </a>
-              <div class="media_body media_body__event">
-                  {{ event_post_macros.post_summary(post) }}
-              </div>
-          </div>
-      {% else %}
-          <div class="media_body media_body__event">
-            {{ event_post_macros.post_summary(post) }}
-          </div>
-      {% endif %}
-  </article>
+    {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
+                    | default('Washington, DC') -%}
+    {% import "_event-post-macros.html" as event_post_macros with context %}
+    <article class="post-preview post-preview__event">
+        {% if media_object %}
+            <div class="media">
+                <a class="media_image-container post-summary-image" href="{{ post.permalink }}">
+                    <div class="post-summary-image_container">
+                        {{ event_post_macros.event_location_image({
+                            'location': city
+                        }) }}
+                    </div>
+                </a>
+                <div class="media_body media_body__event">
+                    {{ event_post_macros.post_summary(post) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="media_body media_body__event">
+              {{ event_post_macros.post_summary(post) }}
+            </div>
+        {% endif %}
+    </article>
 {% endmacro %}
 
 
@@ -56,52 +60,59 @@
    ========================================================================== #}
 
 {% macro event_hero(post) %}
-  {% import "macros/category-icon.html" as category_icon %}
-  <section class="content_hero hero">
-    <div class="hero_wrapper">
-        <!-- TODO replace link with link to event -->
-        <a href="#" class="hero_card hero_card__events">
-            <article class="hero_preview">
-                <span class="category-slug">
-                    <!-- TODO replace temp category with post category. -->
-                    {{ category_icon.render('Announcements & updates', 'category-slug_icon') }}
-                    <span class="u-visually-hidden">Category:</span>
-                    {{ 'Event Category Name' }}
-                </span>
-                <div class="summary">
-                    <header class="summary_header">
-                        <h1 class="summary_heading">
-                            <!-- TODO replace temp title with post title. -->
-                            {{ 'Event Title Here, could possibly break two lines' }}
-                        </h1>
-                    </header>
-                    <p class="summary_text">
-                        <!-- TODO replace temp summary with post summary. -->
-                        {{ 'Include a short summary to give users a quick
-                        overview of the event. Should be less than 200 characters in length.' }}
-                    </p>
-                    <footer class="summary_footer">
-                        <time class="summary_event-date event-meta_datetime dt-start">
-                            <!-- TODO replace temp date/time with post date/time. -->
-                            <span class="event-meta_date">{{ '1/21/2014' }}</span>
-                            <span class="event-meta_time">{{ '2:30 PM CST' }}</span>
-                        </time>
-                    </footer>
-                </div>
-            </article>
-        </a>
-    </div>
-    <div class="hero_img-container hero_img-container__small">
-        <!-- TODO replace background-image with actual image. -->
-        <div class="hero_img"
-             style="background-image:url({{ 'http://placehold.it/660x300.jpg' }});">
+    {% import "macros/category-icon.html" as category_icon %}
+    {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
+                    | default('Washington, DC') -%}
+    <section class="content_hero hero">
+        <div class="hero_wrapper">
+            <a href="{{ post.permalink }}"
+               class="hero_card hero_card__events">
+                <article class="hero_preview">
+                    {% if post.categories %}
+                    <span class="category-slug">
+                        {# TODO replace temp category with post category. #}
+                        {{ category_icon.render('Announcements & updates', 'category-slug_icon') }}
+                        <span class="u-visually-hidden">Category:</span>
+                        {{ 'Event Category Name' }}
+                    </span>
+                    {% endif %}
+                    <div class="summary">
+                        <header class="summary_header">
+                            <h1 class="summary_heading">
+                                {{ post.title }}
+                            </h1>
+                        </header>
+                        <p class="summary_text">
+                            {{ post.future.summary | striptags }}
+                        </p>
+                        <footer class="summary_footer">
+                            {% from "_event-post-macros.html" import event_meta_datetime as event_meta_datetime %}
+                            {{ event_meta_datetime(post.beginning_time, '%m/%-d/%y') }}
+                        </footer>
+                    </div>
+                </article>
+            </a>
         </div>
-    </div>
-    <div class="hero_img-container hero_img-container__large">
-        <!-- TODO replace background-image with actual image. -->
-        <div class="hero_img"
-             style="background-image:url({{ 'http://placehold.it/1200x300.jpg ' }});">
+        <div class="hero_img-container hero_img-container__small">
+            {% from "macros/util/format.html" import location_image_url as location_image_url %}
+            <div class="hero_img"
+                 style="background-image:url({{ location_image_url({
+                        'location': city | urlencode,
+                        'zoom': '12',
+                        'scale': '2',
+                        'size': '660x300'
+                    }) }});">
+            </div>
         </div>
-    </div>
-</section><!-- END .content_hero -->
+        <div class="hero_img-container hero_img-container__large">
+            <div class="hero_img"
+                 style="background-image:url({{ location_image_url({
+                        'location': city | urlencode,
+                        'zoom': '12',
+                        'scale': '2',
+                        'size': '1200x300'
+                    }) }});">
+            </div>
+        </div>
+    </section><!-- END .content_hero -->
 {% endmacro %}

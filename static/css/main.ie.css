@@ -6773,7 +6773,7 @@ a.category-slug.active {
   display: block;
   height: 100%;
   line-height: 1;
-  background-position: center bottom;
+  background-position: center center;
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   background-size: cover;
@@ -10111,7 +10111,7 @@ a.focus .summary_event-date {
 }
 
 .event-meta_time:before {
-  content: "\2014";
+  content: "@";
   margin-right: .2em;
 }
 

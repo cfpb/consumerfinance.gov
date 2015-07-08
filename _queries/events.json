@@ -3,6 +3,15 @@
   "query": {
     "doc_type": "events",
     "size": 10,
-    "sort": "date:desc"
-  }
+    "sort": "beginning_time.date:asc"
+  },
+  "filters": [
+    {
+    "range" : {
+        "ending_time.date" : {
+          "gt": "now"
+        }
+      }
+    }
+  ]
 }
