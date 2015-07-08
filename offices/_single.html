@@ -27,7 +27,7 @@
                     content-l__large-gutters">
         {% set intro = office.intro %}
         {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
-        <section class="office_intro content-l_col
+        <section class="content-l_col
                         {% if show_subscription -%}
                             content-l_col-1-2
                         {% else -%}
@@ -51,8 +51,7 @@
 
     {% if office.top_story.head %}
     {% set top_story = office.top_story %}
-    <section class="office_featured
-                    block
+    <section class="block
                     block__padded-top
                     block__border-top">
         {% if top_story.head %}
@@ -90,16 +89,14 @@
     </section>
     {% endif %}
     {% if office.resources %}
-    <section class="office_resources
-                    block
+    <section class="block
                     block__padded-top
                     block__border-top">
         <h1 class="h2">
             {{ resource_title }}
         </h1>
         {% for resource in office.resources %}
-            <div class="media office_resource
-                        block__sub">
+            <div class="media block__sub">
                 {% if resource.icon %}
                 <div class="media_image-container
                             media_image-container__wide-margin">
@@ -129,73 +126,13 @@
     </section>
     {% endif %}
 
-    {% for page in vars.sub_pages|sort(attribute='order') if page.show_in_office == "on" %}
-    {% if loop.first %}
-    <section class="office_sub_pages
-                    block
-                    block__sub
-                    block__padded-top
-                    block__border-top">
-        <h1 class="h2">
-            Our Work
-        </h1>
-        <div class="content-l
-                    content-l__main
-                    content-l__large-gutters
-                    expandables-group">
+    {% if vars.sub_pages %}
+        {% import "macros/sub_pages.html" as sub_pages_macro with context %}
+        {{ sub_pages_macro.render( vars.sub_pages ) }}
     {% endif %}
-            <div class="office_initiative
-                        expandable
-                        expandable__expanded
-                        expandable__mobile-only
-                        content-l_col
-                        {# TODO: When we upgrade to Jinja2 2.8 we can use loop.length
-                                 to conditionally set this to one column or two. #}
-                        content-l_col-1-2
-                        ">
-                <button class="expandable_header expandable_target u-show-on-mobile">
-                    {% if page.short_title or page.title %}
-                    <span class="expandable_header-left expandable_label">
-                        {{ (page.short_title or page.title) | safe }}
-                    </span>
-                    {% endif %}
-                    <span class="expandable_header-right expandable_link">
-                        <span class="expandable_cue-open">
-                            <span class="cf-icon cf-icon-plus-round"></span>
-                        </span>
-                        <span class="expandable_cue-close">
-                            <span class="cf-icon cf-icon-minus-round"></span>
-                        </span>
-                    </span>
-                </button>
-                <div class="expandable_content">
-                    {% if page.short_title or page.title %}
-                    <h2 class="h4 u-hide-on-mobile">
-                        {{ (page.short_title or page.title) | safe }}
-                    </h2>
-                    {% endif %}
-                    {% if page.excerpt %}
-                    <p class="short-desc">
-                        {{ page.excerpt | safe }}
-                    </p>
-                    {% endif %}
-                    {% if page.slug %}
-                    <a class="jump-link jump-link__right" href="{{ page.permalink }}">
-                        {{ page.preview_text or 'Read more' }}
-                    </a>
-                    {% endif %}
-                </div>
-            </div><!-- END .expandable -->
-        {% if loop.last %}
-        </div>
-    </section>
-        {% endif %}
-    {% endfor %}
-
 
     {% if activities_feed %}
-    <section class="office_activities
-                    block
+    <section class="block
                     block__bg
                     block__flush-sides
                     block__flush-top

@@ -28,60 +28,15 @@
     {% endif %}
 
     {% if sub_page.content %}
-    <section class="sub-page_content
-                    block
+    <section class="block
                     block__flush-top
                     block__flush-bottom">
         {{ sub_page.content | safe }}
     </section>
     {% endif %}
 
-    {% if sub_pages and sub_pages.total %}
-    <section class="block
-                    block__padded-top
-                    block__border-top
-                    block__flush-bottom">
-        <div class="content-l content-l__main">
-            {% for page in sub_pages|sort(attribute='order') %}
-            <!-- TODO: link header styles -->
-            <div class="sub-page_topic
-                        block__sub
-                        block__flush-top
-                        {{ 'office_col' if vars.sub_pages.result_dict|length > 1 else 'content-l_col-1' -}}">
-
-                {% if page.short_title or page.title %}
-                <h2 class="h3">
-                    {{ (page.short_title or page.title) | safe }}
-                </h2>
-                {% endif %}
-
-                {% if page.content %}
-                <p class="short-desc">
-                    {{ page.content | safe }}
-                </p>
-                {% endif %}
-
-                {% if page.related_links %}
-                <ul class="list__links">
-                {% for link in page.related_links %}
-                    <li class="list_item">
-                        <a class="jump-link jump-link__right list_link" href="{{link.url}}">
-                            {{ link.label }}
-                        </a>
-                    </li>
-                {% endfor %}
-                </ul>
-                {% endif %}
-
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    {% endif %}
-
     {% if sub_page.body_content %}
-    <section class="sub-page_content
-                    sub-page_{{sub_page.slug}}
+    <section class="sub-page_{{sub_page.slug}}
                     block
                     block__padded-top
                     block__border-top">
@@ -100,9 +55,22 @@
     </section>
     {% endif %}
 
+    {% if sub_pages and sub_pages.total %}
+        {% import "macros/sub_pages.html" as sub_pages_macro with context %}
+        {{ sub_pages_macro.render( vars.sub_pages ) }}
+    {% endif %}
+
+    {% if sub_page.related_faq %}
+        {% set related_faq = get_document('faq', sub_page.related_faq) %}
+        {% import "macros/expandable.html" as expandable with context %}
+        {{ expandable.render(
+                related_faq.faq, 'question', 'answer', {"title": "FAQS"}
+           ) if related_faq.faq
+        }}
+    {% endif %}
+
     {% if activities_feed and display_activity_flag == true %}
-    <section class="office_activities
-                    block
+    <section class="block
                     block__flush-sides
                     block__bg
                     u-mb0
@@ -113,15 +81,6 @@
             View all of our activities
         </a>
     </section>
-    {% endif %}
-
-    {% if sub_page.related_faq %}
-        {% set related_faq = get_document('faq', sub_page.related_faq) %}
-        {% import "macros/expandable.html" as expandable with context %}
-        {{ expandable.render(
-                related_faq.faq, 'question', 'answer', {"title": "FAQS"}
-           ) if related_faq.faq
-        }}
     {% endif %}
 
     {% set office = vars.office %}
