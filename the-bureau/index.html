@@ -28,8 +28,8 @@
 
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
-        {% from "macros.html" import YouTube %}
-        {% call YouTube({
+        {% import "macros/youtube.html" as YouTube %}
+        {% call YouTube.render({
             'video_id' : 'en0Iq8II4fA',
             'image_res' : 'max'
             })
