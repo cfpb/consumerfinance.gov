@@ -37,6 +37,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `the-bureau` page wrapper class.
 - Added `media-stack` CSS block for stacked media objects.
 - Added fixes for `open-government` pages.
+- Added `careers/application-process` page.
+- Support in Event processor for ICS file generator
+- Added `careers/current-openings` page.
+- Added `/transcripts/` folder and transcript for job application video
 
 ### Changed
 - Fixed background and border on secondary navigation.
@@ -51,11 +55,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and working with the CFPB pages.
 - Moved carousel to a macro and implemented on the-bureau
   and working at the CFPB pages.
+- Moved MobileOnlyExpandable initialization out of MobileCarousel.
+- Converted excerpts HTML to articles from sections in the careers section.
+- Breaks `macros.html` apart into files in the /macros/ directory.
 
 ### Removed
 - Removed `list_link__disabled` class.
 
 ### Fixed
+- Fixed contact-us templates to make them private.
 
 ## 3.0.0-1.2.2 - 2015-07-02
 

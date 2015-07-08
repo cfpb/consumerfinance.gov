@@ -1,0 +1,31 @@
+{# ==========================================================================
+
+   is_mobile()
+
+   ==========================================================================
+
+   Description:
+
+   Detect mobile browsers
+
+   TODO: Remove this and create a context processor (@app.context_processor)
+         in sheer. This is a hack.
+   ========================================================================== #}
+{% macro is_mobile() -%}
+    {% set MOBILE_USER_AGENTS
+        ='palm|blackberry|nokia|phone|midp|mobi|symbian|chtml|ericsson|minimo|' +
+         'audiovox|motorola|samsung|telit|upg1|windows ce|ucweb|astel|plucker|' +
+         'x320|x240|j2me|sgh|portable|sprint|docomo|kddi|softbank|android|mmp|' +
+         'pdxgw|netfront|xiino|vodafone|portalmmm|sagem|mot-|sie-|ipod|up\\.b|' +
+         'webos|amoi|novarra|cdm|alcatel|pocket|ipad|iphone|mobileexplorer|' +
+         'mobile|zune'
+    %}
+    {% set browser_user_agent = request.headers.get("User-Agent") | lower %}
+    {% set mobile_dict = {'is_mobile': false} %}
+    {% for mobile_user_agent in MOBILE_USER_AGENTS.split('|') %}
+        {% set _ignore = mobile_dict.update({ 'is_mobile' : true })
+                         if browser_user_agent.find(mobile_user_agent) > -1 %}
+    {% endfor %}
+
+    {{ mobile_dict.is_mobile }}
+{%- endmacro %}

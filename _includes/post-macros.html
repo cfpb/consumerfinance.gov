@@ -291,7 +291,7 @@
     'active_filters_total': active_filters_total
 } -%}
 
-{%- from 'macros.html' import is_mobile -%}
+{%- import 'macros/util/is-mobile.html' as is_mobile -%}
 
 {% set is_expanded = active_filters_total > 0
                      and options.show_current_filters
@@ -335,7 +335,7 @@
 {% macro active_filters_helper(posts, filter_dict, options) %}
 {%- set filters = filter_dict.filters -%}
 {%- set active_filters_total = filter_dict.active_filters_total -%}
-{% from 'macros.html' import notification %}
+{% import 'macros/notification.html' as notification %}
 
 {%- if active_filters_total > 0 and options.show_filters_label -%}
     <div class="filtered-by">
@@ -345,18 +345,18 @@
                         + ('s' if posts.total > 1 else '') %}
             {% set type = 'success' %}
         {%- else -%}
-            {% macro _no_resuls_text (posts, filter_dict, options) %}
+            {% macro _no_results_text (posts, filter_dict, options) %}
                 Sorry, there were no results based
                 on your filter selections.
                 <p class="short-desc u-mt15">Please clear the filter or
                   change your selections and try again.
                 </p>
             {% endmacro %}
-            {% set text = _no_resuls_text() %}
+            {% set text = _no_results_text() %}
             {% set type = 'warning' %}
         {%- endif -%}
 
-        {{ notification({
+        {{ notification.render({
             'text': text,
             'type': type
         }) }}
