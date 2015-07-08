@@ -1,6 +1,6 @@
 {% macro render(posts, user_options) %}
 
-{% from "macros.html" import format_time as format_time %}
+{% from "macros/util/format.html" import format_time as format_time %}
 
 {% set options = {
     'time_col_classes': 'u-w25pct',

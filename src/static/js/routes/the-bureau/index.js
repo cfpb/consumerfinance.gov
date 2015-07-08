@@ -5,7 +5,9 @@
 
 'use strict';
 
+var $ = require( 'jquery' );
 var MobileCarousel = require( '../../modules/classes/MobileCarousel' );
+var MobileOnlyExpandable = require( '../../modules/classes/MobileOnlyExpandable' );
 
 function init() {
 
@@ -14,8 +16,13 @@ function init() {
     return;
   }
 
-  var mobileCarousel = new MobileCarousel();
+  var breakpointPx = 599;
+  var mobileCarousel = new MobileCarousel( breakpointPx );
   mobileCarousel.enableOn( '.js-mobile-carousel' );
+
+  $( '.expandable__mobile-only' ).each( function() {
+    new MobileOnlyExpandable( $( this ), breakpointPx ); // eslint-disable-line
+  } );
 }
 
 module.exports = { init: init };

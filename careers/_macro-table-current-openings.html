@@ -1,0 +1,52 @@
+{# ==========================================================================
+
+   table-current-openings.render()
+
+   ==========================================================================
+
+   Description:
+
+   Build a current jobs table given:
+
+   joblist: An object containing a list of job descriptions.
+
+   ========================================================================== #}
+
+{% macro render(joblist) %}
+
+{% from "macros/util/format.html" import format_time as format_time %}
+
+<table class="u-w100pct block u-mt0 simple-table">
+    <thead>
+        <tr>
+            <th>
+                TITLE
+            </th>
+            <th>
+                POSTING CLOSES
+            </th>
+            <th>
+                LOCATION
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {# TODO: Individual jobs need to link to their jobs detail page. #}
+    {% for job in joblist.list %}
+        <tr>
+            <td>
+                {{ job.title }}
+            </td>
+            <td data-label="Posting Closes">
+                {{ job.closing | date('%b %d, %Y') }}
+            </td>
+            <td data-label="Location">
+                {{ job.location }}
+            </td>
+        </tr>
+        </a>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endmacro %}
