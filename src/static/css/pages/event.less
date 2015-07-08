@@ -8,8 +8,10 @@
    ========================================================================== */
 
 .post__event {
-    padding-right: unit(30px / @base-font-size-px, em);
-    margin-right: unit(30px  / @base-font-size-px, em);
+    .respond-to-min(@desktop-min, {
+        padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
+        margin-right: unit(@grid_gutter-width  / @base-font-size-px, em);
+    });
 }
 
 
@@ -117,7 +119,7 @@
 
 // Adding "at" symbol before time.
 .event-meta_time:before {
-    content: "\2014";
+    content: "@";
     margin-right: .2em;
 }
 
