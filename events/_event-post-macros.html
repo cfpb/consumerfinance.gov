@@ -19,9 +19,9 @@
 {% macro calendar_icon(calendar_date, additional_classes) %}
     <time class="calendar-icon {{ additional_classes }}"
         data-month="{{ calendar_date | date('%b') }}"
-        data-day="{{ calendar_date | date('%d') }}"
+        data-day="{{ calendar_date | date('%-d') }}"
         datetime="{{ calendar_date }}">
-        <span class="u-visually-hidden">{{ calendar_date | date('%b %d, %Y') }}</span>
+        <span class="u-visually-hidden">{{ calendar_date | date('%b %-d, %Y') }}</span>
     </time>
 {% endmacro %}
 
@@ -36,17 +36,15 @@
 
    Create HTML image when given:
 
-   post: A post from a query result.
-
-   options (optional):         An object to use for customizing an event location image using
-                               Google Maps.
+   options (optional):         An object to use for customizing an event
+                               location image using Google Maps.
 
    options.additional_classes: Extra classes you wish to add to the image, space separated.
 
    options.location:           A location as either a comma-separated {latitude,longitude}
                                pair (e.g. "40.714728,-73.998672") or a string address
                                (e.g. "city hall, new york, ny").
-                               Defaults to 'Washington DC'.
+                               Defaults to 'Washington, DC'.
 
    options.scale:              Affects the number of pixels that are returned.
                                Accepted values are 1, 2 and 4.
@@ -61,18 +59,19 @@
 
    ========================================================================== #}
 
-{% macro event_location_image(post, options={}) %}
-    {%- set location = (options.location or post.location)
-                       | default('Washington DC', true)
-                       | urlencode -%}
-    {%- set scale = '&scale=' + options.scale | default('2') -%}
-    {%- set size =  '&size='  + options.size  | default('276x155') -%}
-    {%- set zoom =  '&zoom='  + options.zoom  | default('12') -%}
-    {%- set url = 'https://maps.googleapis.com/maps/api/staticmap?center=' -%}
+{% macro event_location_image(options={}) %}
+    {% from "macros/util/format.html" import location_image_url as location_image_url %}
 
     <img class="{{ options.additional_classes }}"
-        src="{{ url ~ location ~ size ~ zoom ~ scale }}"
-        alt="Google Maps image of {{ location }}">
+        src="{{ location_image_url({
+                        'location': options.location
+                                    | default('Washington, DC', true)
+                                    | urlencode,
+                        'zoom':     options.zoom  | default('12'),
+                        'scale':    options.scale | default('2'),
+                        'size':     options.size  | default('276x155')
+                    }) }}"
+        alt="Google Maps image of {{ options.location }}">
 {% endmacro %}
 
 
@@ -99,8 +98,8 @@
 
 {% macro event_meta(post, address_format='{city}, {state}', datetime_format={})%}
     <div class="event-meta h-event">
-        {{ event_meta_address(post, address_format) }}
-        {{ event_meta_datetime(post.date, datetime_format) }}
+        {{ event_meta_address(post.venue, address_format) }}
+        {{ event_meta_datetime(post.beginning_time, datetime_format) }}
     </div>
 {% endmacro %}
 
@@ -123,12 +122,12 @@
 
    ========================================================================== #}
 
-{% macro event_meta_address(post, address_format='{city}, {state}') %}
-    {%- set city  =  post.city   | default('Washington', true) -%}
-    {%- set state =  post.state  | default('DC', true) -%}
-    {%- set street = post.street | default('1275 First St NE', true) -%}
-    {%- set venue  = post.venue  | default('CFPB', true) -%}
-    {%- set zip    = post.zip    | default('20002', true) -%}
+{% macro event_meta_address(venue, address_format='{city}, {state}') %}
+    {%- set city   =  venue.address.city    | default('Washington', true) -%}
+    {%- set state  =  venue.address.state   | default('DC', true) -%}
+    {%- set street = venue.address.street   | default('1275 First St NE', true) -%}
+    {%- set name   = venue.name             | default('CFPB', true) -%}
+    {%- set zip    = venue.address.zip_code | default('20002', true) -%}
 
     <p class="event-meta_address h-adr">
         {%- macro _city() %}
@@ -144,7 +143,7 @@
         {% endmacro -%}
 
         {% macro _venue() %}
-            <span class="event-meta_venue p-extended-address">{{ venue }}</span>
+            <span class="event-meta_venue p-extended-address">{{ name }}</span>
         {% endmacro %}
 
         {% macro _zip() %}
@@ -182,12 +181,12 @@
    ========================================================================== #}
 
 {% macro event_meta_datetime(date, datetime_format={}) %}
-    {%- set date_format =  datetime_format.date_format | default('%b %d, %Y', true)   -%}
-    {%- set time_format =  datetime_format.time_format | default('%I:%M %p %Z', true) -%}
+    {%- set date_format =  datetime_format.date_format | default('%b %-d, %Y', true)   -%}
+    {%- set time_format =  datetime_format.time_format | default('%-I:%M %p %Z', true) -%}
 
-    <time class="event-meta_datetime dt-start" datetime="{{ date | date('%Y-%m-%dT%H:%M:%S%z') }}">
-        <span class="event-meta_date">{{ date | date(date_format) }}</span>
-        <span class="event-meta_time">{{ date | date(time_format) }}</span>
+    <time class="event-meta_datetime dt-start" datetime="{{ date.date | date('%Y-%m-%-dT%H:%M:%S%z') }}">
+        <span class="event-meta_date">{{ date.date | date(date_format) }}</span>
+        <span class="event-meta_time">{{ date.date | date(time_format, date.timezone) }}</span>
     </time>
 {% endmacro %}
 
@@ -213,19 +212,19 @@
 {%- import "tags.html" as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
-            {{ calendar_icon(post.date) }}
+            {{ calendar_icon(post.beginning_time.date) }}
             <div class="summary-meta_container">
                 <h1 class="summary_heading">{{ post.title|safe }}</h1>
                 {{ event_meta(post, datetime_format={
-                    'date_format' : '%m/%d/%y'
+                    'date_format' : '%m/%-d/%y'
                 }) }}
             </div>
         </header>
         <p class="summary_text">
-            {% if post.dek %}
-                {{ post.dek|striptags }}
+            {% if (request.url_rule.endpoint != 'event_archive') %}
+                {{ post.future.summary | striptags }}
             {% else %}
-                {{ post.excerpt|striptags }}
+                {{ post.archive.summary | striptags }}
             {% endif %}
         </p>
     </a>
@@ -250,15 +249,15 @@
    ========================================================================== #}
 
 {% macro event_venue(post) %}
-    {%- set city =  post.city  | default('Washington, DC') -%}
-
+    {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
+                    | default('Washington, DC') -%}
 
     <section class="event-venue">
         <header class="event-venue_header">
             <h2 class="event-venue_heading">{{ city }}</h2>
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
-                    {{ event_meta_address(post,
+                    {{ event_meta_address(post.venue,
                         address_format ='{venue} {street} {city}, {state} {zip}'
                     ) }}
                 </div>
@@ -266,7 +265,7 @@
                     {% if (request.url_rule.endpoint == 'event_archive') %}
                         Video Replay will be<br> available shortly
                     {% else %}
-                        {{ event_meta_datetime(post.date) }}
+                        {{ event_meta_datetime(post.beginning_time) }}
                         <!-- TDOD: Replace with real download link -->
                         <a class="event-calendar_download jump-link jump-link__download" href="#">
                             <span class="jump_link_text">Download .ics</span>
@@ -281,7 +280,8 @@
                     {# TODO Replace image URL with actual post url #}
                     <img src="http://upload.wikimedia.org/wikipedia/commons/9/94/Large.mc.arp.750pix.jpg" />
                 {% else %}
-                    {{ event_location_image(post, {
+                    {{ event_location_image({
+                        'location': city,
                         'zoom': '12',
                         'scale': '2',
                         'size': '640x320'
@@ -308,6 +308,7 @@
    ========================================================================== #}
 
 {% macro event_agenda(post) %}
+  {% if post.agenda %}
   {% set options = {
       'time_col_classes': 'u-w25pct',
       'agenda_col_classes': 'u-w25pct',
@@ -331,18 +332,17 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {{ block.dtstart }}
+                    {{ block.beginning_time.date | date("%-I:%M %p %Z", block.beginning_time.timezone) }}
                     &ndash;
-                    {{ block.dtend }}
+                    {{ block.ending_time.date | date("%-I:%M %p %Z", block.ending_time.timezone) }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
-                    {{ block.summary }}
+                    {{ block.desc }}
                 </td>
                 <td class="{{ options.location_col_classes }}" data-label="Location">
-                    {{ block.location.street }}<br>
-                    {{ block.location.city }},
-                    {{ block.location.state }}
-                    {{ block.location.zip }}
+                  {% if block.location %}
+                    {{ block.location}}
+                  {% endif %}
                 </td>
                 <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
                     {% for speaker in block.speakers %}
@@ -358,4 +358,5 @@
         </tbody>
     </table>
   </div>
+  {% endif %}
 {% endmacro %}

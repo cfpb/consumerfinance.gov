@@ -71,25 +71,6 @@ def process_event(event):
         event['ending_time']['timezone'] = \
             event['taxonomy_ending_time'][0]['description']
 
-    # Create ICS data dictionary
-    event['ics'] = {}
-    if 'title' in event:
-        event['ics']['summary'] = event['title']
-    if 'venue' in event:
-        if 'city' and 'state' in event['venue']:
-            event['ics']['location'] = "%s, %s" % (event['venue']['city'],
-                                                   event['venue']['state'])
-    if 'beginning_time' in event:
-        event['ics']['dtstart'] = event['beginning_time']['date']
-        event['ics']['starting_tzinfo'] = event['beginning_time']['timezone']
-    if 'ending_time' in event:
-        event['ics']['dtend'] = event['ending_time']['date']
-        event['ics']['ending_tzinfo'] = event['ending_time']['timezone']
-    ics_dict = {'date': 'dtstamp', 'relative_url': 'uid'}
-    for wp_field, ics_field in ics_dict.items():
-        if wp_field in event and event[wp_field]:
-            event['ics'][ics_field] = event[wp_field]
-
     # Delete taxonomy data and custom fields
     del event['custom_fields']
     for key, value in event.items():

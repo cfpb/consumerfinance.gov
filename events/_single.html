@@ -2,11 +2,11 @@
 {% import "_vars-events.html" as vars with context %}
 
 {% block title -%}
-    {{ vars.mock_event.title }} {# TODO Replace mock data #}
+    {{ event.title }}
 {%- endblock %}
 
 {% block desc -%}
-    {{ vars.mock_event.excerpt|striptags }} {# TODO Replace mock data #}
+    {{ event.excerpt|striptags }}
 {%- endblock %}
 
 {% block og_type -%}
@@ -23,11 +23,10 @@
 
 {% block content_main %}
     {% import "_event.html" as article with context %}
-
-    {{ article.render(vars.mock_event, vars.path) }}
+    {{ article.render(event, vars.path) }}
 
     {% from "_event-post-macros.html" import event_agenda as event_agenda %}
-    {{ event_agenda(vars.mock_event) }}
+    {{ event_agenda(event) }}
 
     <div class="event-footer">
         <p class="event-footer_banner">
