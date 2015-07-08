@@ -66,6 +66,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed contact-us templates to make them private.
+- Fixed macro import issue for filters.
 
 ## 3.0.0-1.2.2 - 2015-07-02
 
