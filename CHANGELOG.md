@@ -63,6 +63,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 - Removed `list_link__disabled` class.
+- Removed is_mobile macro and logic from filter.
 
 ### Fixed
 - Fixed contact-us templates to make them private.
