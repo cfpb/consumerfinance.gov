@@ -1039,6 +1039,21 @@ textarea.input__long {
 
 
 /* topdoc
+  name: Code styles
+  family: cf-layout
+  notes:
+    - "Removes top margin on 1-column layouts."
+  tags:
+    - cf-layout
+*/
+.content-l_col {
+    &.content-l_col-1 + &.content-l_col-1 {
+        margin-top: 0;
+    }
+}
+
+
+/* topdoc
   name: Inset divider
   family: cf-layout
   patterns:
