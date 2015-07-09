@@ -21,8 +21,8 @@
 
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
-        {% from "macros.html" import YouTube %}
-        {% call YouTube({
+        {% import "macros/youtube.html" as YouTube %}
+        {% call YouTube.render({
             'video_id' : 'XCbZnTIeTOY',
             'image_res' : 'max',
             'image_url': '/static/img/applying-video-screenshot.png'
