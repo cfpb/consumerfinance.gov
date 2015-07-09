@@ -67,6 +67,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed contact-us templates to make them private.
+- Fixed issue displaying grandchild pages on sub-pages.
 
 
 ## 3.0.0-1.2.2 - 2015-07-02
