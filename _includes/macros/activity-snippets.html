@@ -9,21 +9,25 @@
 
    List a bunch of activity snippets when given:
 
-   tag:                 A tag to use in the query.
+   tag:               A tag to use in the query.
 
-   activity_types:      An array of activity types.
+   activity_types:    An array of activity types.
 
-                        Possible values: posts, op-ed, press release,
+                      Possible values: posts, op-ed, press release,
                                          speech, testimony
 
-   include_date_flag:   Boolean indicating whether to
-                        display the date of the activity.
+   include_date_flag: Boolean indicating whether to
+                      display the date of the activity.
+
+   number_columns:    Number of columns.
+                      Default is 1.
 
    ========================================================================== #}
 
 {% macro render(tag,
                 activity_types=['posts', 'op-ed', 'press release', 'speech', 'testimony'],
-                include_date_flag=false
+                include_date_flag=false,
+                number_columns=1
                )
 %}
     {% from 'macros/util/text.html' import string_length as string_length %}
@@ -31,7 +35,7 @@
     {% for activity_type in activity_types %}
         {% set activity = _activity_snippet(activity_type, tag, 2, include_date_flag) %}
         {% if string_length(activity)|int > 0 %}
-            <div class="content-l_col content-l_col-1-2">
+            <div class="content-l_col {{ 'content-l_col-1' ~ ('-' ~ number_columns if number_columns > 1) }}">
                 {{ activity }}
             </div>
         {% endif %}
