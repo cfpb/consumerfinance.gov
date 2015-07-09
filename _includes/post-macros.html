@@ -291,8 +291,8 @@
     'active_filters_total': active_filters_total
 } -%}
 
-{%- import 'macros/util/is-mobile.html' as is_mobile -%}
 
+{%- from 'macros/util/is-mobile.html' import is_mobile -%}
 {% set is_expanded = active_filters_total > 0
                      and options.show_current_filters
                      and is_mobile().find('False') > -1

@@ -393,7 +393,6 @@ tbody {
 
 
 
-
 /* topdoc
   name: cf-grid column dividers
   family: cfgov-cf-enhancements
@@ -858,17 +857,17 @@ tbody {
 */
 @block__border: #BABBBD; // Gray 50%
 .block {
-  &__border {
-    border: 1px solid @block__border;
-  }
+    &__border {
+        border: 1px solid @block__border;
+    }
 
-  &__border-left {
-    border-left: 1px solid @block__border;
-  }
+    &__border-left {
+        border-left: 1px solid @block__border;
+    }
 
-  &__border-right {
-    border-right: 1px solid @block__border;
-  }
+    &__border-right {
+        border-right: 1px solid @block__border;
+    }
 }
 
 
@@ -979,8 +978,8 @@ textarea.input__long {
 */
 
 .js-is-hidden {
-  display: none !important;
-  .no-js & {
+    display: none !important;
+    .no-js & {
         display: block;
     }
 }
@@ -1005,9 +1004,9 @@ textarea.input__long {
     - cf-core
 */
 .u-link__disabled {
-  color: @gray-50 !important;
-  border: none !important;
-  cursor: not-allowed !important;
+    color: @gray-50 !important;
+    border: none !important;
+    cursor: not-allowed !important;
 }
 
 
@@ -1015,14 +1014,14 @@ textarea.input__long {
   name: Half top padding
   family: cf-layout
   patterns:
-    -name: .content__half-top-on-desk
-    markup: |
-      <aside class="content_sidebar content__half-top-on-desk">
-        <!-- sidebar components -->
-      </aside>
-      <div class="content_main content__half-top-on-desk">
-        <!-- main content components -->
-      </div>
+    - name: .content__half-top-on-desk
+      markup: |
+        <aside class="content_sidebar content__half-top-on-desk">
+          <!-- sidebar components -->
+        </aside>
+        <div class="content_main content__half-top-on-desk">
+          <!-- main content components -->
+        </div>
   tags: cf-layout
 */
 .content__half-top-on-desk {
@@ -1032,69 +1031,26 @@ textarea.input__long {
         padding-top: 20px;
 
         &:after {
-          top: 20px !important;
+            top: 20px !important;
         }
     });
 }
 
 
 /* topdoc
-  name: Inset divider
+  name: Code styles
   family: cf-layout
-  patterns:
-    - name: .content-l_col__before-inset-divider (modifier)
-      markup: |
-        <div class="content-l content-l__large-gutters">
-            <div class="content-l_col content-l_col-1-2">
-                <img src="http://placekitten.com/600/320" alt="Placeholder image">
-                <br>
-                Half-width column (spans 6/12 columns)
-            </div>
-            <div class="content-l_col content-l_col-1-2 content-l_col__before-inset-divider">
-                <img src="http://placekitten.com/600/320" alt="Placeholder image">
-                <br>
-                Half-width column (spans 6/12 columns)
-            </div>
-        </div>
-        <br>
-        <!-- Starting a new .content-l so that the dividers from
-             .content-l_col.content-l_col-1-2.content-l_col__before-inset-divider
-             won't overlap the .content-l_col-1-3 columns. -->
-        <div class="content-l content-l__large-gutters">
-            <div class="content-l_col content-l_col-1-3">
-                Third-width column (spans 4/12 columns)
-            </div>
-            <div class="content-l_col content-l_col-1-3 content-l_col__before-inset-divider">
-                Third-width column (spans 4/12 columns)
-            </div>
-            <div class="content-l_col content-l_col-1-3 content-l_col__before-inset-divider">
-                Third-width column (spans 4/12 columns)
-            </div>
-        </div>
-      codenotes:
-        - .content-l_col__before-inset-divider
-      notes:
-        - "A border between columns with a gap at the top."
+  notes:
+    - "Removes top margin on 1-column layouts."
   tags:
     - cf-layout
 */
-.content-l_col__before-inset-divider.content-l_col-1-2 {
-    .respond-to-min(@tablet-min, {
-        .grid_column__left-divider();
-        &:before {
-          top: @grid_gutter-width;
-        }
-     });
+.content-l_col {
+    &.content-l_col-1 + &.content-l_col-1 {
+        margin-top: 0;
+    }
 }
 
-.content-l_col__before-inset-divider.content-l_col-1-3 {
-    .respond-to-min(@tablet-min, {
-        .grid_column__left-divider();
-        &:before {
-          top: @grid_gutter-width;
-        }
-    });
-}
 
 /* topdoc
     name: EOF
