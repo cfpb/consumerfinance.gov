@@ -5306,6 +5306,10 @@ textarea.input__long {
   top: 20px !important;
 }
 
+.content-l_col.content-l_col-1+.content-l_col.content-l_col-1 {
+  margin-top: 0;
+}
+
 .content-l_col__before-inset-divider.content-l_col-1-2 {
   border-left-width: 30px;
 }
