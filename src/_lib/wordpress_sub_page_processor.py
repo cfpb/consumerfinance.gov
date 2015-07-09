@@ -62,7 +62,6 @@ def process_sub_page(post):
     else:
         post['has_parent'] = False
 
-    return {'_index': 'content',
-            '_type': 'sub_page',
+    return {'_type': 'sub_page',
             '_id': post['slug'],
             '_source': post}
