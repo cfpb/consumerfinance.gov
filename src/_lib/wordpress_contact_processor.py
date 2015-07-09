@@ -82,7 +82,6 @@ def process_contact(contact):
 
     del contact['custom_fields']
 
-    return {'_index': 'content',
-            '_type': 'contact',
+    return {'_type': 'contact',
             '_id': contact['slug'],
             '_source': contact}

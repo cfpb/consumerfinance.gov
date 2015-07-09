@@ -80,7 +80,6 @@ def process_view(post):
 
     del post['custom_fields']
 
-    return {'_index': 'content',
-            '_type': 'views',
+    return {'_type': 'views',
             '_id': post['slug'],
             '_source': post}
