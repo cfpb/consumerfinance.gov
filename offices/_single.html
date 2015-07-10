@@ -128,7 +128,7 @@
 
     {% if vars.sub_pages %}
         {% import "macros/sub_pages.html" as sub_pages_macro with context %}
-        {{ sub_pages_macro.render( vars.sub_pages ) }}
+        {{ sub_pages_macro.render( vars.sub_pages, 'Our Work') }}
     {% endif %}
 
     {% if activities_feed %}

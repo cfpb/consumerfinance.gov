@@ -11774,6 +11774,11 @@ a.focus .summary_event-date {
   display: inline;
 }
 
+.sub-page__grandchild,
+.sub-page__grandchild+.content_sidebar {
+  padding-top: 30px;
+}
+
 .sub-page_frequently-asked-questions {
   font-family: "AvenirNextLTW01-Regular",Arial,sans-serif;
   font-style: normal;

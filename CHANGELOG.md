@@ -42,6 +42,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `careers/` landing page.
 - Added options for toggling each network icon in share macro
 - Added LinkedIn sharing (toggled off by default) in share macro
+- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
+- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
 
 ### Changed
 - Fixed background and border on secondary navigation.

@@ -1,0 +1,10 @@
+{% set query = queries.sub_page %}
+{% set sub_pages = query.search(use_url_arguments=False, size=6, filter_has_parent=true, filter_parent=sub_page.id) %}
+
+{% set parent_sub_pages = query.search(use_url_arguments=False, size=1, filter_id=sub_page.parent) %}
+{% set parent_sub_page_list = parent_sub_pages | list %}
+{% set parent_sub_page = parent_sub_page_list[0] %}
+
+{% set offices = queries.office.search(use_url_arguments=False, size=1, filter_related_sub_pages=parent_sub_page.slug) %}
+{% set office_list = offices|list %}
+{% set office = office_list[0] %}
