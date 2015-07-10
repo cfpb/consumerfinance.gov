@@ -1,10 +1,12 @@
-var Careers_StudentsAndGraduates = require( '../../page_objects/page_careers-students-and-graduates.js' );
+'use strict';
+
+var StudentsAndGraduates = require( '../../page_objects/page_careers-students-and-graduates.js' );
 
 describe( 'Beta: Careers/Student-and-graduates', function() {
   var page;
 
   beforeEach( function() {
-    page = new Careers_StudentsAndGraduates();
+    page = new StudentsAndGraduates();
     page.get();
   } );
 

@@ -1,4 +1,6 @@
-function careers_studentsAndGraduates() {
+'use strict';
+
+function StudentsAndGraduates() {
   this.get = function() {
     browser.get( '/careers/students-and-graduates/' );
   };
@@ -7,4 +9,4 @@ function careers_studentsAndGraduates() {
   this.opportunities = element.all( by.css( '.careers-students-and-graduates .content_main .media h2' ) );
 }
 
-module.exports = careers_studentsAndGraduates;
+module.exports = StudentsAndGraduates;
