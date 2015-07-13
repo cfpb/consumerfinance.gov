@@ -73,7 +73,9 @@
 */
 
 .share__align-right {
-    text-align: right;
+    .respond-to-min(@tablet-min, {
+        text-align: right;
+    });
 }
 
 /* topdoc

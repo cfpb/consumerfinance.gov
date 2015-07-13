@@ -23,6 +23,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `grunt clean` and `grunt copy` tasks.
 - Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
+- Created initial career posting template.
+- Created 1/4 and 3/4 layout columns.
+- Added DL styles to cf-enhancements.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -32,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `browserify-shims.js` to `/config/` directory.
 - Upgraded Travis to container-based infrastructure
 - Updated Offices pages to change activity feed logic.
+- Updated block-bg padding in cf-enhancements based on JJames feedback.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.

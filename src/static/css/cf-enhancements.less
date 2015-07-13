@@ -1116,6 +1116,93 @@ textarea.input__long {
 
 
 /* topdoc
+  name: Base styles for definition lists
+  family: cf-core
+  notes:
+    - "Sets the term and definition in-line to each other but broken into rows"
+  tags:
+    - cf-core
+*/
+dt {
+    .h5();
+    .u-inline-block();
+
+    margin-bottom: 0.5em;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+}
+
+dd {
+    .webfont-regular();
+
+    display: inline;
+
+    margin-left: 0.2em;
+
+    &:after {
+        display: block;
+
+        content: '';
+    }
+}
+
+
+/* topdoc
+  name: Remove margin from last-children
+  family: cf-core
+  notes:
+    - "Remove margin bottom for items that close out a block to ensure the
+      60px margin on the block is concistent"
+  tags:
+    - cf-core
+*/
+
+ul:last-child,
+.list__links .list_item:last-child {
+    margin-bottom: 0;
+}
+
+
+/* topdoc
+  name: Update block__bg padding
+  family: cf-layout
+  notes:
+    - "Updates the padding in block__bg to match feedback from Justin James"
+  tags:
+    - cf-layout
+*/
+
+.block__bg {
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+
+
+/* topdoc
+  name: Add 1/4 and 3/4 columns
+  family: cf-layout
+  notes:
+    - "Temporary addition until latest cf-layout is included in the project"
+  tags:
+    - cf-layout
+*/
+
+.content-l_col-1-4 {
+    .respond-to-min(@tablet-min, {
+        .grid_column(3);
+    });
+}
+
+.content-l_col-3-4 {
+    .respond-to-min(@tablet-min, {
+        margin-top: 0 !important;
+        .grid_column(9);
+    });
+}
+
+/* topdoc
     name: EOF
     eof: true
 */
