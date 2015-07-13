@@ -13,7 +13,19 @@
 
 .careers-working-at-cfpb {
     .content_hero {
-        min-height: 300px;
+        background-color: @white;
+        /* TODO: This breakpoint is set to the small image width,
+                 so that a gap does not open below the image. */
+        .respond-to-min(660px, {
+            min-height: 300px;
+        });
+
+        .hero_img-container__small > .hero_img {
+            background-image: url('/static/img/hero-working-at-cfpb-660x300.png');
+        }
+        .hero_img-container__large > .hero_img {
+            background-image: url('/static/img/hero-working-at-cfpb-1200x300.png');
+        }
     }
     .content_hero,
     .hero_wrapper {

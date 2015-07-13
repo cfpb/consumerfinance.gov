@@ -60,6 +60,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated events templates to match new data and processor.
 - Updated percentages based on recent updates.
 - Updated activities_snippet macro to make column markup dynamic.
+- Replaced placeholder images on /careers/working-at-cfpb/
 
 ### Removed
 - Removed `list_link__disabled` class.
