@@ -9157,6 +9157,17 @@ a.focus .summary_event-date {
   margin-top: 1.875em;
 }
 
+.share__horizontal .share_heading,
+.share__horizontal .share_items {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+.share__align-right {
+  text-align: right;
+}
+
 .beta-banner {
   padding: 15px 0;
   margin-bottom: 0;

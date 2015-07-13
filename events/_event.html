@@ -24,7 +24,7 @@
 
 {% macro render(post, path) %}
 
-{% from "macros/util/share.html" import share as share %}
+{% import "macros/share.html" as share %}
 
 <article class="post post__event">
     <header>
@@ -45,11 +45,15 @@
                 {{ update_date[1:] if update_date[0] == '0' else update_date }}
             </time>
         </div>
-        {{ share(event.title, true, {
-           'text':     post.twtr_text,
-           'related':  post.twtr_rel,
-           'language': post.twtr_lang,
-           'hashtags': post.twtr_hash
+        {{ share.render({
+            'title': event.title,
+            'hide_heading': true,
+            'twitter_options': {
+                'text':     post.twtr_text,
+                'related':  post.twtr_rel,
+                'language': post.twtr_lang,
+                'hashtags': post.twtr_hash
+            }
         }) }}
     {% if event.thumbnail.images %}
         <img class="post_featured-img"

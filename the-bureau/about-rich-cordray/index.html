@@ -12,7 +12,7 @@
 
 {% block content_main %}
 
-	{% from "macros/util/share.html" import share as share %}
+	{% import "macros/share.html" as share %}
 
     <div class="block u-mt0">
         <h1>
@@ -41,7 +41,10 @@
         <p>
             Mr. Cordray lives in Grove City, Ohio with his wife Peggy – a Professor at Capital University Law School in Columbus – and twin children Danny and Holly.
         </p>
-        {{ share(self.title(), true) }}
+        {{ share.render({
+            'title': self.title(),
+            'hide_heading': true
+        }) }}
     </div>
 
     <section class="block
