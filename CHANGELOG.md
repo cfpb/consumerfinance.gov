@@ -61,6 +61,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated percentages based on recent updates.
 - Updated activities_snippet macro to make column markup dynamic.
 - Replaced placeholder images on /careers/working-at-cfpb/
+- Updated footer to add offices links.
 
 ### Removed
 - Removed `list_link__disabled` class.
