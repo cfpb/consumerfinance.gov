@@ -11124,7 +11124,19 @@ a.focus .summary_event-date {
 }
 
 .careers-working-at-cfpb .content_hero {
+  background-color: #fff;
+}
+
+.careers-working-at-cfpb .content_hero {
   min-height: 300px;
+}
+
+.careers-working-at-cfpb .content_hero .hero_img-container__small>.hero_img {
+  background-image: url('/static/img/hero-working-at-cfpb-660x300.png');
+}
+
+.careers-working-at-cfpb .content_hero .hero_img-container__large>.hero_img {
+  background-image: url('/static/img/hero-working-at-cfpb-1200x300.png');
 }
 
 .careers-working-at-cfpb .content_hero,
