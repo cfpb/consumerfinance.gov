@@ -5302,6 +5302,10 @@ textarea.input__long {
   display: block;
 }
 
+.u-hidden {
+  display: none;
+}
+
 .u-link__disabled {
   color: #babbbd !important;
   border: none !important;

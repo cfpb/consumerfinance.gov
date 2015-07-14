@@ -11,40 +11,28 @@
 {# Set the percentage complete for each section HERE.
    These values will propagate everywhere they are needed on the page.
    When completing a section, uncomment the `background: #2CB34A;` line in the CSS below. #}
-{% set pct = {
-    'consumer_guides': '0%',
-    'submit_a_complaint': '0%',
-    'data_and_research': '0%',
-    'policy_and_compliance': '0%',
-    'about': '80%',
-} %}
-
-{% block css scoped -%}
-    {{ super() }}
-    <style>
-        /* These heights control the height of the "bar charts" in the non-SVG fallback. */
-        #consumer-guides .bar-chart {
-            height: {{ pct.consumer_guides }};
-            /* background: #2CB34A; */
-        }
-        #submit-a-complaint .bar-chart {
-            height: {{ pct.submit_a_complaint }};
-            /* background: #2CB34A; */
-        }
-        #data-and-research .bar-chart {
-            height: {{ pct.data_and_research }};
-            /* background: #2CB34A; */
-        }
-        #policy-and-compliance .bar-chart {
-            height: {{ pct.policy_and_compliance }};
-            /* background: #2CB34A; */
-        }
-        #about .bar-chart {
-            height: {{ pct.about }};
-            /* background: #2CB34A; */
-        }
-    </style>
-{%- endblock %}
+{% set progress_charts = [
+    {
+        'name': 'Consumer Guides',
+        'value': '0%'
+    },
+    {
+        'name': 'Submit a Complaint',
+        'value': '0%'
+    },
+    {
+        'name': 'Data & Research',
+        'value': '0%'
+    },
+    {
+        'name': 'Policy & Compliance',
+        'value': '0%'
+    },
+    {
+        'name': 'About',
+        'value': '80%'
+    }
+] %}
 
 {% block content %}
 
@@ -67,56 +55,25 @@
                 <p class="short-desc">
                     We’re redesigning and reorganizing, section by section,
                     so you can find the information you need quickly and easily, on any device.
-                    These charts tell you how much of each section we've published in the new format.
                 </p>
-
-                <div class="progress-charts">
-                    <div class="progress-charts_container" id="consumer-guides">
-                        <canvas class="progress-charts_chart">
-                            <div class="chart-bg">
-                                <div class="bar-chart"></div>
-                            </div>
-                        </canvas>
-                        <h3 class="chart-name">Consumer Guides</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.consumer_guides }}</div>
+                <section class="project-progress u-hidden">
+                    <p class="short-desc">
+                        These charts tell you how much of each section we've published in the new format.
+                    </p>
+                    <div class="progress-charts">
+                        {% for chart in progress_charts %}
+                        <div class="progress-charts_container">
+                            <canvas class="progress-charts_chart">
+                                <div class="chart-bg">
+                                    <div class="bar-chart" style="height: {{ chart.value }};"></div>
+                                </div>
+                            </canvas>
+                            <h3 class="chart-name">{{ chart.name }}</h3>
+                            <div class="chart-value u-visually-hidden">{{ chart.value }}</div>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="progress-charts_container" id="submit-a-complaint">
-                        <canvas class="progress-charts_chart">
-                            <div class="chart-bg">
-                                <div class="bar-chart"></div>
-                            </div>
-                        </canvas>
-                        <h3 class="chart-name">Submit a Complaint</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.submit_a_complaint }}</div>
-                    </div>
-                    <div class="progress-charts_container" id="data-and-research">
-                        <canvas class="progress-charts_chart">
-                            <div class="chart-bg">
-                                <div class="bar-chart"></div>
-                            </div>
-                        </canvas>
-                        <h3 class="chart-name">Data & Research</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.data_and_research }}</div>
-                    </div>
-                    <div class="progress-charts_container" id="policy-and-compliance">
-                        <canvas class="progress-charts_chart">
-                            <div class="chart-bg">
-                                <div class="bar-chart"></div>
-                            </div>
-                        </canvas>
-                        <h3 class="chart-name">Policy & Compliance</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.policy_and_compliance }}</div>
-                    </div>
-                    <div class="progress-charts_container" id="about">
-                        <canvas class="progress-charts_chart">
-                            <div class="chart-bg">
-                                <div class="bar-chart"></div>
-                            </div>
-                        </canvas>
-                        <h3 class="chart-name">About</h3>
-                        <div class="chart-value u-visually-hidden">{{ pct.about }}</div>
-                    </div>
-                </div>
+                </section>
 
                 <div class="block
                             block__padded-top
