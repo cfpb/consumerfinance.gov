@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+var environment = require('./environment.js');
 
 exports.config = {
   framework: 'jasmine2',
@@ -7,23 +7,22 @@ exports.config = {
     'browserName': 'chrome',
     'name': 'flapjack-browser-tests'
   },
-  
+
   sauceUser: process.env.SAUCE_USER,
   sauceKey: process.env.SAUCE_KEY,
 
   onPrepare: function() {
-    return browser.ignoreSynchronization = true;
-
+    browser.ignoreSynchronization = true;
 
     var jasmineReporters = require('jasmine-reporters');
     var mkdirp = require('mkdirp');
-    var SpecReporter = require('jasmine-spec-reporter');
+    var jasmineSpecReporter = require('jasmine-spec-reporter');
 
     // add jasmine spec reporter
-    jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
+    jasmine.getEnv().addReporter(new jasmineSpecReporter({displayStacktrace: true}));
 
     // var folderName = (new Date()).toString().split(' ').splice(1, 4).join('-');
-    var newFolder = "reports/"
+    var newFolder = "reports/";
 
     mkdirp(newFolder, function( err ) {
       if (err) {
