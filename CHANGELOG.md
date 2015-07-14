@@ -44,6 +44,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added LinkedIn sharing (toggled off by default) in share macro
 - Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
 - Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
+- Added `u-hidden` utility class for fully hiding an element.
 
 ### Changed
 - Fixed background and border on secondary navigation.
@@ -75,6 +76,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - Removed `list_link__disabled` class.
 - Removed is_mobile macro and logic from filter.
+- Removed requestAnimationFrame polyfill.
 
 ### Fixed
 - Fixed contact-us templates to make them private.

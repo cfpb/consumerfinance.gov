@@ -13,6 +13,5 @@ module.exports = {
       jquery: 'jQuery',
     }
   },
-  chosen: { exports: 'chosen' },
-  requestNextAnimationFrame: { exports: 'requestNextAnimationFrame' }
+  chosen: { exports: 'chosen' }
 };
