@@ -17,7 +17,7 @@
    ========================================================================== #}
 
 {% macro render(options) -%}
-    {% from "macros/util/share.html" import share as share %}
+    {% import "macros/share.html" as share %}
     {% set image_res = options.image_res | default('default') %}
     {% set image_res_options = {
           'default' : 'default.jpg',
@@ -48,11 +48,11 @@
                         close
                     </a>
                 </div>
-                {{ share(share_options = {
-                   'text': 'SHARE THIS VIDEO',
+                {{ share.render({
+                    'title': 'About the CFPB',
+                    'heading': 'Share this video',
                     'additional_classes': 'youtube-player_share-actions'
-                   })
-                }}
+                }) }}
             </div>
         </div>
         <div class="youtube-player_image-container hide-on_yt-playing">
