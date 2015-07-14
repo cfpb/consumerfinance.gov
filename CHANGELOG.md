@@ -40,6 +40,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `/transcripts/` folder and transcript for job application video
 - Added Google Maps image utility macro
 - Added `careers/` landing page.
+- Added options for toggling each network icon in share macro
+- Added LinkedIn sharing (toggled off by default) in share macro
 
 ### Changed
 - Fixed background and border on secondary navigation.
@@ -60,6 +62,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated events templates to match new data and processor.
 - Updated percentages based on recent updates.
 - Updated activities_snippet macro to make column markup dynamic.
+- Replaced placeholder images on /careers/working-at-cfpb/
+- Updated footer to add offices links.
+- Moved the disperate arguments into one main options argument with
+  key: val pairs for each option in share macro
+- Updated email sharing to use mailto: link instead of addthis network
+  (removes need for the external privacy notification and consolidates
+  email patterns) in share macro
 
 ### Removed
 - Removed `list_link__disabled` class.

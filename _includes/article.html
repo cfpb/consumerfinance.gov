@@ -25,7 +25,7 @@
 
 {% macro render(post, path) %}
 
-{% from "macros/util/share.html" import share as share %}
+{% import "macros/share.html" as share %}
 
 <article class="post">
     <header>
@@ -65,11 +65,15 @@
                 {{ post.date|date("%b %d, %Y") }}
             </span>
         </div>
-        {{ share(post.title, true, {
-           'text':     post.twtr_text,
-           'related':  post.twtr_rel,
-           'language': post.twtr_lang,
-           'hashtags': post.twtr_hash
+        {{ share.render({
+            'title': post.title,
+            'hide_heading': true,
+            'twitter_options': {
+                'text':     post.twtr_text,
+                'related':  post.twtr_rel,
+                'language': post.twtr_lang,
+                'hashtags': post.twtr_hash
+            }
         }) }}
     {% if post.thumbnail.images %}
         <img class="post_featured-img"

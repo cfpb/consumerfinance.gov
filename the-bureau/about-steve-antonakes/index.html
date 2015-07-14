@@ -12,7 +12,7 @@
 
 {% block content_main %}
 
-	{% from "macros/util/share.html" import share as share %}
+	{% import "macros/share.html" as share %}
 
     <div class="block u-mt0">
         <h1>
@@ -39,7 +39,10 @@
         <p>
             Mr. Antonakes received a Bachelor of Arts degree from Penn State University, a Masters of Business Administration from Salem State University, and a Doctorate of Philosophy in Law and Public Policy from Northeastern University.
         </p>
-        {{ share(self.title(), true) }}
+        {{ share.render({
+            'title': self.title(),
+            'hide_heading': true
+        }) }}
     </div>
 
     <section class="block block__padded-top block__padded-bottom block__border-top">

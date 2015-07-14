@@ -34,18 +34,11 @@
 
 {% block hero -%}
     <section class="content_hero hero">
-        <div class="hero_wrapper">
         <div class="hero_img-container hero_img-container__small">
-            {# TODO: Replace placeholder div with image #}
-            <div class="hero_img"
-                 style="width:660px;height:300px;background-image:url({{ 'http://placehold.it/660x300.jpg' }});">
-            </div>
+            <div class="hero_img"></div>
         </div>
         <div class="hero_img-container hero_img-container__large">
-            {# TODO: Replace placeholder div with image. #}
-            <div class="hero_img"
-                 style="width:1200px;height:300px;background-image:url({{ 'http://placehold.it/1200x300.jpg ' }});">
-            </div>
+            <div class="hero_img"></div>
         </div>
     </section>
 {%- endblock %}
@@ -129,16 +122,17 @@
     <div class="block
                 block__padded-top
                 block__border-top
+                block__flush-bottom
                 content-l">
-        <article class="content-l_col content-l_col-1-3">
+        <section class="content-l_col content-l_col-1-3">
             {% include "_template-current-openings.html" %}
-        </article>
-        <article class="content-l_col content-l_col-1-3">
+        </section>
+        <section class="content-l_col content-l_col-1-3">
             {% include "_template-job-app-process.html" %}
-        </article>
-        <article class="content-l_col content-l_col-1-3">
+        </section>
+        <section class="content-l_col content-l_col-1-3">
             {% include "_template-students-and-graduates.html" %}
-        </article>
+        </section>
     </div>
 
     {% include "_template-block-social.html" %}
