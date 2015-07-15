@@ -1,0 +1,8 @@
+{
+  "name": "Careers",
+  "query": {
+    "doc_type": "career",
+    "size": 100,
+    "sort": "title"
+  }
+}
