@@ -54,30 +54,20 @@ src/vendor
 *.pyc
 .env
 
+# Built assets #
+################
+dist/
+
 # Floobits stuff #
 ##################
 .floo*
 
 # Topdoc stuff #
 ##################
+docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
 # Testing stuff #
 ##################
-_tests/unit_test_coverage/
-
-# TODO: Remove these ignores when /dist/ directory exists. #
-#       These files are committed in the repo as well and  #
-#       should be deleted from the repo when removed here. #
-##################
-static/fonts/cf-icons.eot
-static/fonts/cf-icons.svg
-static/fonts/cf-icons.ttf
-static/fonts/cf-icons.woff
-static/img/chosen-sprite.png
-static/img/chosen-sprite@2x.png
-static/img/ajax-loader.gif
-static/js/boxsizing.htc
-static/js/html5shiv-printshiv.min.js
-static/css/slick.css
-static/css/slick.css.map
+test/macro_tests/src/
+test/unit_test_coverage/

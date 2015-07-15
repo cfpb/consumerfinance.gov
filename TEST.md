@@ -1,6 +1,8 @@
+# Browser Tests
+
 ## Quick start:
 
-_Note: If you haven't, make sure to install Protractor globally with `npm install protractor@2.1.0 -g`._
+_Note: If you haven’t, make sure to install Protractor globally with `npm install protractor@2.1.0 -g`._
 
 __Update Selenium Server binaries:__
 
@@ -14,9 +16,10 @@ __Start Selenium Server:__
 webdriver-manager start
 ```
 
-__Open a new tab and cd to this directory, then tell protractor to start the tests:__
+__Open a new tab and cd to the test directory, then tell protractor to start the tests:__
 
 ```sh
+cd test/browser_tests
 protractor conf.js
 ```
 
@@ -51,7 +54,7 @@ module.exports = TheBureauPage;
 
 ## Tests
 
-Tests are organized into suites. Common tests are in the `/shared` directory and any non-standard test should be added to an existing additional suite or placed into a new suite directory. An example shared suite for our the-bureau example page above would be:
+Tests are organized into suites. Common tests are in the `test/browser_tests/spec_suites/shared` directory and any non-standard test should be added to an existing additional suite or placed into a new suite directory. An example shared suite for our the-bureau example page above would be:
 
 ```js
 var TheBureauPage = require( '../../page_objects/page_the-bureau.js' );
@@ -84,7 +87,7 @@ describe( 'Beta The Bureau Page', function() {
 
 ## Important note:
 
-Protractor was created by the Angular team to do end-to-end testing of angular sites. It extends the selenium api and makes certain allowences for angularjs. To make it work correctly with non-angular sites you MUST include the following bit of code in your conf.js file.
+Protractor was created by the Angular team to do end-to-end testing of angular sites. It extends the Selenium API and makes certain allowences for AngularJS. To make it work correctly with non-Angular sites you MUST include the following bit of code in your conf.js file.
 
 ```js
   beforeEach(function() {
@@ -93,3 +96,56 @@ Protractor was created by the Angular team to do end-to-end testing of angular s
 ```
 
 Enjoy! :relieved:
+
+
+# Template Macro Tests
+
+## Running MacroPolo Tests
+
+From within the `/test/macro_tests/` directory:
+
+1. Install the requirements: `pip install -r requirements.txt`.
+2. Run the test runner: `python test_macros.py`.
+
+## Writing Tests
+
+Please see [Macro Polo](https://github.com/cfpb/macropolo) for
+documentation about writing tests.
+
+
+# Content Processor Tests
+
+Test the Sheer content processors that bring content into Elasticsearch
+for cfgov-refresh.
+
+## Running
+
+From within the `/test/processor_tests/` directory:
+
+1. Install the requirements: `pip install -r requirements.txt`.
+2. Run the test runner: `python test_processors.py`.
+
+## Writing
+
+Tests are written using Python's [`unittest`](https://docs.python.org/2/library/unittest.html) (`unittest2` in Python 2.6).
+
+The tests use JSON files to mock HTTP request's (`request.get()`) response content.
+
+An example:
+
+```python
+class WordpressPostProcessorTestCase(unittest.TestCase):
+    @mock.patch('requests.get')
+    def test_post(self, mock_requests_get):
+        mock_response = mock.Mock()
+        mock_response.content = open(os.path.join(os.path.dirname(__file__),
+                                    'test_wordpress_post_processor_post.json')).read()
+        mock_requests_get.return_value = mock_response
+
+        name = 'post'
+        url = 'http://mockmockmock/api/get_posts/'
+
+        documents = list(wordpress_post_processor.documents(name, url))
+
+        # ... make assertions about resulting document ...
+```

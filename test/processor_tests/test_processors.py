@@ -3,7 +3,7 @@
 # For testing processors, we have to add the _lib directory to the system path
 # before they'll import.
 import os, sys
-sys.path.append(os.path.join(os.pardir, os.pardir, "_lib"))
+sys.path.append(os.path.join(os.pardir, os.pardir, "src/_lib"))
 
 # Create a test suite and run it.
 # XXX: We could use nose here, and indeed one could easily run nosetests on the

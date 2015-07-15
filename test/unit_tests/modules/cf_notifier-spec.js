@@ -8,7 +8,7 @@ describe( 'CFNotifier', function() {
   var $, $form;
 
   jsdom( {
-    file:    '_tests/unit_tests/fixtures/forms.html',
+    file:    'test/unit_tests/fixtures/forms.html',
     console: false
   } );
 

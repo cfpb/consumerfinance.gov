@@ -97,6 +97,9 @@ To do this, run the following:
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
+# cd into the /dist/ directory.
+cd ./dist
+
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
 sheer index
@@ -152,21 +155,7 @@ $ grunt watch:cssjs
 
 ## How to test the software
 
-To run browser tests, you'll need to perform the following steps:
-
-1. Install chromedriver:
-  - Mac: `brew install chromedriver`
-  - Manual (Linux/Mac): Download the latest
-    [Chromedriver](http://chromedriver.storage.googleapis.com/index.html)
-    binary and put it somewhere on your path (e.g. `/path/to/your/venv/bin`)
-2. In `_tests/browser_testing/features/`, copy `example-environment.cfg` to
-`environment.cfg` and change the `chrome_driver` path to the proper path
-for your webdriver binary.  If you installed via homebrew,
-you can find the path with `brew info chromedriver`, which will give you
-the chromedriver directory. Use this path, but include the chromedriver name at the end to target the executable, something like `/path/to/homebrew/bin/chromedriver`.
-3. `pip install -r _tests/browser_testing/requirements.txt`
-4. `cd _tests/browser_testing/`
-5. Start the tests: `behave`
+Follow the instructions in [TEST](TEST.md).
 
 ## Getting help
 
