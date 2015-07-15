@@ -73,6 +73,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   (removes need for the external privacy notification and consolidates
   email patterns) in share macro
 - Updated primary navigation to match new mega menu design.
+- Upgraded Travis to container-based infrastructure
 
 ### Removed
 - Removed `list_link__disabled` class.
