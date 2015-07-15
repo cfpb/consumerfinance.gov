@@ -17,10 +17,10 @@ $( document ).ready( function() {
   require( '../modules/secondary-nav-toggle' ).init();
   require( '../modules/post-filter' ).init();
   require( '../modules/init-chosen' ).init();
-  require( '../modules/slide-push-menu' ).init();
+  require( '../modules/mobile-primary-nav.js' ).init();
+  require( '../modules/desktop-primary-nav.js' ).init();
   require( '../modules/form-validation' ).init();
   require( '../modules/reveal-on-focus' ).init();
-  require( '../modules/desktop-menu-transitions' ).init();
   require( '../modules/scroll-on-history-collapse' ).init();
   require( '../modules/clear-form-buttons' ).init();
   require( '../modules/jquery/cf_pagination' ).init();
