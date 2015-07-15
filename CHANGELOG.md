@@ -45,6 +45,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
 - Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
 - Added `u-hidden` utility class for fully hiding an element.
+- Careers processor/mapping/query
 
 ### Changed
 - Fixed background and border on secondary navigation.
