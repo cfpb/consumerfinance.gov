@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-1.3.0 - 2015-07-16
+
+### Added
 - Added `block__border-left` and `block__border-right` CF enhancements.
 - Added `students-and-graduates` page to careers section.
 - Added `short_title` to Office/Subpage.
