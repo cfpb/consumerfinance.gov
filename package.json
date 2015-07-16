@@ -13,7 +13,9 @@
     "grunt-bower-task": "~0.4.0",
     "grunt-browserify": "^3.8.0",
     "grunt-concurrent": "~1.0.0",
+    "grunt-contrib-clean": "latest",
     "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-copy": "latest",
     "grunt-contrib-less": "~0.11.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-eslint": "^16.0.0",
@@ -48,7 +50,7 @@
     "string_score": "./src/vendor/string_score/string_score.js",
     "validate": "./src/vendor/validate/validate.js"
   },
-  "browserify-shim": "./_settings/browserify-shims.js",
+  "browserify-shim": "./config/browserify-shims.js",
   "dependencies": {
     "dateformat": "^1.0.11",
     "handlebars": "^3.0.3"

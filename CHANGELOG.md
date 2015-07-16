@@ -16,6 +16,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+- Upgraded Travis to container-based infrastructure
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-1.3.0 - 2015-07-16
+
+### Added
 - Added `block__border-left` and `block__border-right` CF enhancements.
 - Added `students-and-graduates` page to careers section.
 - Added `short_title` to Office/Subpage.
@@ -45,6 +57,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
 - Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
 - Added `u-hidden` utility class for fully hiding an element.
+- Added `TEST.md` readme file for testing instructions.
+- Added `grunt clean` and `grunt copy` tasks.
+- Added `grunt clean` step to `setup.sh`.
 
 ### Changed
 - Fixed background and border on secondary navigation.
@@ -73,16 +88,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   (removes need for the external privacy notification and consolidates
   email patterns) in share macro
 - Updated primary navigation to match new mega menu design.
-- Upgraded Travis to container-based infrastructure
+- Changed project architecture to having `/src/` and `/dist/` directory.
+- Changed `/_tests/` directory name to `/test/`.
+- Changed `/_tests/macro_testing` directory name to `/test/macro_tests`.
+- Moved `browserify-shims.js` to `/config/` directory.
 
 ### Removed
 - Removed `list_link__disabled` class.
 - Removed is_mobile macro and logic from filter.
 - Removed requestAnimationFrame polyfill.
+- Removed `_tests/browser_tests/README.md`, `_tests/macro_testing/README.md`, `_tests/processor_tests/README.md`.
+- Removed `grunt vendor` from `setup.sh`.
 
 ### Fixed
 - Fixed contact-us templates to make them private.
 - Fixed issue displaying grandchild pages on sub-pages.
+- Fixed issue on IE11 when using the dates to filter caused
+  by toString method.
+- Event tag filtering on archive page
 
 
 ## 3.0.0-1.2.2 - 2015-07-02

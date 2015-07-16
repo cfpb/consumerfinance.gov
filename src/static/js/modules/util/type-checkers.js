@@ -10,6 +10,8 @@
 
 'use strict';
 
+var _toString = Object.prototype.toString;
+
 /**
  * @name isUndefined
  * @kind function
@@ -69,7 +71,7 @@ function isObject( value ) {
  * @returns {boolean} True if `value` is a `String`.
  */
 function isString( value ) {
-  return toString.call( value ) === '[object String]';
+  return _toString.call( value ) === '[object String]';
 }
 
 
@@ -91,7 +93,7 @@ function isString( value ) {
  * @returns {boolean} True if `value` is a `Number`.
  */
 function isNumber( value ) {
-  return toString.call( value ) === '[object Number]';
+  return _toString.call( value ) === '[object Number]';
 }
 
 
@@ -106,7 +108,7 @@ function isNumber( value ) {
  * @returns {boolean} True if `value` is a `Date`.
  */
 function isDate( value ) {
-  return toString.call( value ) === '[object Date]';
+  return _toString.call( value ) === '[object Date]';
 }
 
 
@@ -121,7 +123,7 @@ function isDate( value ) {
  * @returns {boolean} True if `value` is an `Array`.
  */
 var isArray = Array.isArray || function isArray( value ) {
-  return toString.call( value ) === '[object Array]';
+  return _toString.call( value ) === '[object Array]';
 };
 
 
@@ -136,7 +138,7 @@ var isArray = Array.isArray || function isArray( value ) {
  * @returns {boolean} True if `value` is a `Function`.
  */
 function isFunction( value ) {
-  return toString.call( value ) === '[object Function]';
+  return _toString.call( value ) === '[object Function]';
 }
 
 /**

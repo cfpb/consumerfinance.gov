@@ -22,7 +22,7 @@ install:
   - pip install -r sheer/requirements.txt
   - cp .env_SAMPLE .env
   - sheer index
-  - pip install -r _tests/macro_testing/requirements.txt
+  - pip install -r test/macro_tests/requirements.txt
 
   # JavaScript test requirements
   - npm install -g grunt-cli
@@ -34,5 +34,5 @@ script:
   # Run tests for JavaScript
   - grunt test
 
-  - cd _tests/macro_testing
+  - cd test/macro_tests
   - python test_macros.py

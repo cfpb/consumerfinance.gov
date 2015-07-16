@@ -24,10 +24,17 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
 
     def search_exceptions(self):
         """
-        Return a list of a subdirectory names that should not be searched
+        Return a list of subdirectory names that should not be searched
         for templates.
         """
-        return ['_defaults', '_lib', '_queries', '_settings', '_tests']
+        return [
+            'src/_defaults',
+            'src/_lib',
+            'src/_queries',
+            'src/_settings',
+            'test',
+            'config'
+        ]
 
 
 # Create CFGovTestCase subclasses for all JSON tests.
