@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block u-mt0">
+    <section class="block block__flush-top">
         {% import "related-posts.html" as related_posts with context %}
         {{ related_posts.render(newsroom, 'posts,newsroom', 5) }}
     </section>
