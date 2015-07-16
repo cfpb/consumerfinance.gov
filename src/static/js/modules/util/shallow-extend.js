@@ -12,7 +12,7 @@
 */
 
 function _isPlainObject( object ) {
-  return toString.call( object ) === '[object Object]';
+  return Object.prototype.toString.call( object ) === '[object Object]';
 }
 
 /**
