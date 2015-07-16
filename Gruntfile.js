@@ -285,10 +285,11 @@ module.exports = function(grunt) {
             expand: true,
             cwd: '<%= loc.src %>',
             src: [
-              // HTML + Templates.
+              // HTML, templates, and config.
               '**/*.html',
               '_*/*',
               'static-legacy/**/*',
+              'robots.txt',
               '!vendor/**/*.html'
             ],
             dest: '<%= loc.dist %>'
