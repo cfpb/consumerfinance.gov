@@ -32,9 +32,9 @@ module.exports = function(grunt) {
      */
     loc: {
       src:  './src',
-      dist: '.',
+      dist: './dist',
       lib:  grunt.file.readJSON('./.bowerrc').directory,
-      test: './_tests'
+      test: './test'
     },
 
     /**
@@ -267,6 +267,94 @@ module.exports = function(grunt) {
     },
 
     /**
+     * Clean: https://github.com/gruntjs/grunt-contrib-clean
+     *
+     * Clean files and folders
+     */
+    clean: ['dist'],
+
+    /**
+     * Copy: https://github.com/gruntjs/grunt-contrib-copy
+     *
+     * Copy files and folders.
+     */
+    copy: {
+      main: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= loc.src %>',
+            src: [
+              // HTML + Templates.
+              '**/*.html',
+              '_*/*',
+              'static-legacy/**/*',
+              '!vendor/**/*.html'
+            ],
+            dest: '<%= loc.dist %>'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              // JSON.
+              '<%= loc.src %>/_settings/mappings/*'
+            ],
+            dest: '<%= loc.dist %>/_settings/mappings/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              // CSS.
+              '<%= loc.src %>/static/css/pdfreactor-fonts.css'
+            ],
+            dest: '<%= loc.dist %>/static/css/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              // JavaScript.
+              '<%= loc.lib %>/box-sizing-polyfill/boxsizing.htc',
+              '<%= loc.lib %>/html5shiv/dist/html5shiv-printshiv.min.js'
+            ],
+            dest: '<%= loc.dist %>/static/js/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              // Images.
+              '<%= loc.src %>/static/img/**/*'
+            ],
+            dest: '<%= loc.dist %>/static/img/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              // Fonts.
+              '<%= loc.lib %>/cf-icons/src/fonts/*'
+            ],
+            dest: '<%= loc.dist %>/static/fonts/'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              // Fonts - PDFReactor.
+              // TODO: See how to combine this with the above,
+              //       while preserving the /pdfreactor/ directory.
+              '<%= loc.src %>/static/fonts/pdfreactor/*'
+            ],
+            dest: '<%= loc.dist %>/static/fonts/pdfreactor'
+          },
+        ]
+      }
+    },
+
+    /**
      * Lint the JavaScript.
      */
     lintjs: {
@@ -346,6 +434,8 @@ module.exports = function(grunt) {
   };
 
   /**
+   * TODO: /docs/ directory is not currently in use. This task will likely
+   *       need to be updated in the future.
    * Creates a dynamic Topdoc options object.
    * To add more subtasks add an item to the config.topdoc_families array.
    * For example if you created a new component with the family name of
@@ -361,7 +451,7 @@ module.exports = function(grunt) {
       var key = families[i];
       topdoc[key] = {
         options: {
-          source: '<%= loc.src %>/static/css/',
+          source: '<%= loc.dist %>/static/css/',
           destination: 'docs/' + key + '/',
           template: 'node_modules/cf-component-demo/docs/',
           templateData: {
@@ -417,6 +507,6 @@ module.exports = function(grunt) {
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);
   });
-  grunt.registerTask('build', ['test', 'css', 'js']);
+  grunt.registerTask('build', ['vendor', 'test', 'css', 'js', 'copy']);
   grunt.registerTask('default', ['build']);
 };

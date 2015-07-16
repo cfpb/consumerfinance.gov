@@ -14,7 +14,7 @@ curl -XDELETE $ES_HOST/$ES_INDEX/$ES_DOC_TYPE
 # Create mapping
 curl -XPUT $ES_HOST/$ES_INDEX/_mapping/$ES_DOC_TYPE -d '{"link":{"properties":{"url":{"type":"string"}}}}'
 
-FILESYSTEM="$(find . -name '*.html' ! -path './src/*' ! -path './node_modules/*' ! -path './_tests/*' -exec cat {} \;)"
+FILESYSTEM="$(find . -name '*.html' ! -path './src/*' ! -path './node_modules/*' ! -path './test/*' -exec cat {} \;)"
 ELASTICSEARCH="$(curl -XPOST "http://$ES_HOST/$ES_INDEX/_search?format=yaml" -d '{"size" :1000000, "query": { "query_string": { "query" : "\"a href\"" } } }')"
 
 # We need this to run some commands with sudo if on a server, but not locally
