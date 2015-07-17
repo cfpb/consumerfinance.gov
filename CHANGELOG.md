@@ -45,6 +45,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   by toString method.
 - Event tag filtering on archive page
 - Added browser tests to linting task
+- Fixed MobileOnlyExpandable error on office page.
 
 ## 3.0.0-1.3.0 - 2015-07-16
 
