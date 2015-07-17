@@ -1,8 +1,10 @@
 'use strict';
 
-var StudentsAndGraduates = require( '../../page_objects/page_careers-students-and-graduates.js' );
+var StudentsAndGraduates = require(
+    '../../page_objects/page_careers-students-and-graduates.js'
+  );
 
-describe( 'Beta: Careers/Student-and-graduates', function() {
+describe( 'Careers/Student-and-graduates', function() {
   var page;
 
   beforeEach( function() {

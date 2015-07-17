@@ -42,7 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue on IE11 when using the dates to filter caused
   by toString method.
 - Event tag filtering on archive page
-
+- Added browser tests to linting task
 
 ## 3.0.0-1.3.0 - 2015-07-16
 

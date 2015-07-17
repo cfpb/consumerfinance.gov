@@ -1,3 +1,5 @@
+'use strict';
+
 function TheBureauPage() {
   this.get = function() {
     browser.get( '/the-bureau/' );
