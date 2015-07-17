@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `grunt clean` and `grunt copy` tasks.
 - Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
+- Added `newsroom` type to Activity Snippets
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
