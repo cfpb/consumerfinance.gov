@@ -6,5 +6,8 @@ set -e
 TEST_DIR="test/"*
 for d in $TEST_DIR
 do
-  $d'/run.sh';
+  if [ "$d" != "test/unit_test_coverage" ];
+    then
+      $d"/run.sh";
+  fi
 done
