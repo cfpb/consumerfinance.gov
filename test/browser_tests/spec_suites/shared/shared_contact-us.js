@@ -1,6 +1,8 @@
+'use strict';
+
 var ContactUsPage = require( '../../page_objects/page_contact-us.js' );
 
-describe( 'Beta Contact Page', function() {
+describe( 'Contact Us Page', function() {
   var phoneClass = 'list_link__phone';
 
   var page;

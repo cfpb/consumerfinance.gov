@@ -1,3 +1,5 @@
+'use strict';
+
 var ContactUsPage = require( '../../page_objects/page_contact-us.js' );
 
 describe( 'Beta Contact Page', function() {
