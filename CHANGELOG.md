@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed `/_tests/macro_testing` directory name to `/test/macro_tests`.
 - Moved `browserify-shims.js` to `/config/` directory.
 - Upgraded Travis to container-based infrastructure
+- Updated Offices pages to change activity feed logic.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.

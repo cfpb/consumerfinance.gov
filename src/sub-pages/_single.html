@@ -1,10 +1,9 @@
 {% extends "layout-side-nav.html" %}
 {% import "_vars-sub-pages.html" as vars with context %}
+
 {% set active_nav_id = sub_page.slug %}
 {% set sub_pages = vars.sub_pages %}
 {% set breadcrumb_items = vars.breadcrumb_items %}
-
-
 {% set display_activity_slugs = ["plain-writing-act", "court-orders-settlements", "civil-penalty-fund"] %}
 {% set display_activity_flag = sub_page.slug in display_activity_slugs %}
 
@@ -18,41 +17,36 @@
 
 {% block content_main %}
 
-    {% import "macros/activity-snippets.html" as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(sub_page.tags if sub_page.tags, include_date_flag=true, number_columns=2)
-                             if display_activity_flag
-    %}
-
     {% if sub_page.title %}
-        <h1>{{ sub_page.title | safe }}</h1>
+    <h1>{{ sub_page.title | safe }}</h1>
     {% endif %}
 
     {% if sub_page.content %}
-        <section class="block
-                        block__flush-top
-                        block__flush-bottom">
-            {{ sub_page.content | safe }}
-        </section>
+    <section class="block
+                    block__flush-top
+                    block__flush-bottom">
+        {{ sub_page.content | safe }}
+    </section>
     {% endif %}
 
     {% if sub_page.body_content %}
-        <section class="sub-page_{{sub_page.slug}}
-                        block
-                        block__padded-top
-                        block__border-top">
-            {% set content = { 'markup' : sub_page.body_content } %}
-            {% for form_name in vars.forms %}
-                {% set form_token = '[' + form_name + ']' %}
-                {% if (sub_page.body_content).find(form_token) > -1 %}
-                    {% import 'templates/forms/' + form_name | lower  + '.html' as form %}
-                    {% set _ignore = content.update(
-                        { 'markup' : sub_page.body_content | replace(form_token, form) }
-                    )%}
-                {% endif %}
-            {% endfor %}
+    <section class="sub-page_{{sub_page.slug}}
+                    block
+                    block__padded-top
+                    block__border-top">
+        {% set content = { 'markup' : sub_page.body_content } %}
+        {% for form_name in vars.forms %}
+            {% set form_token = '[' + form_name + ']' %}
+            {% if (sub_page.body_content).find(form_token) > -1 %}
+                {% import 'templates/forms/' + form_name | lower  + '.html' as form %}
+                {% set _ignore = content.update(
+                    { 'markup' : sub_page.body_content | replace(form_token, form) }
+                )%}
+            {% endif %}
+        {% endfor %}
 
-            {{ content.markup | safe}}
-        </section>
+        {{ content.markup | safe}}
+    </section>
     {% endif %}
 
     {% if sub_pages and sub_pages.total %}
@@ -69,18 +63,20 @@
         }}
     {% endif %}
 
-    {% if activities_feed and display_activity_flag == true %}
-        <section class="block
-                        block__flush-sides
-                        block__bg
-                        block__flush-top
-                        block__flush-bottom">
-            {% include 'templates/activities-feed.html' %}
-            <a class="jump-link jump-link__right"
-               href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
-                View all of our activities
-            </a>
-        </section>
+    {% if sub_page.tags and display_activity_flag == true %}
+    {% import "macros/activity-snippets.html" as activity_snippets with context %}
+    {% set activities_feed = activity_snippets.render(sub_page.tags, include_date_flag=true, number_columns=2)%}
+    <section class="block
+                    block__flush-sides
+                    block__bg
+                    block__flush-top
+                    block__flush-bottom">
+        {% include 'templates/activities-feed.html' %}
+        <a class="jump-link jump-link__right"
+           href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
+            View all of our activities
+        </a>
+    </section>
     {% endif %}
 
     {% set office = vars.office %}

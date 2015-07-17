@@ -11,11 +11,8 @@
 
 {% block content_main %}
 
-    {% import "macros/activity-snippets.html" as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(office.tags if office.tags, include_date_flag=true, number_columns=2) %}
-
     {% if office.title %}
-        <h1>{{ office.title | safe }}</h1>
+    <h1>{{ office.title | safe }}</h1>
     {% endif %}
 
     {% if office.intro.text %}
@@ -27,7 +24,7 @@
                     content-l__large-gutters">
         {% set intro = office.intro %}
         {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
-        <section class="content-l_col
+        <div class="content-l_col
                         {% if show_subscription -%}
                             content-l_col-1-2
                         {% else -%}
@@ -35,16 +32,16 @@
                         {%- endif %}
                         ">
             <p class="h3">{{ intro.text | safe if intro.text }}</p>
-        </section>
+        </div>
         {% if show_subscription %}
-            <section class="content-l_col
-                            content-l_col-1-2
-                            content-l_col__before-divider">
-                <p class="h3 u-show-on-mobile">Stay informed</p>
-                <p class="short-desc">Stay up to date with our email newsletter</p>
-                {% import "macros/subscribe.html" as subscribe with context %}
-                {{ subscribe.render(intro.govdelivery_code) }}
-            </section>
+        <div class="content-l_col
+                        content-l_col-1-2
+                        content-l_col__before-divider">
+            <p class="h3 u-show-on-mobile">Stay informed</p>
+            <p class="short-desc">Stay up to date with our email newsletter</p>
+            {% import "macros/subscribe.html" as subscribe with context %}
+            {{ subscribe.render(intro.govdelivery_code) }}
+        </div>
         {% endif %}
     </section>
     {% endif %}
@@ -88,6 +85,7 @@
         </div>
     </section>
     {% endif %}
+
     {% if office.resources %}
     <section class="block
                     block__padded-top
@@ -96,32 +94,30 @@
             {{ resource_title }}
         </h1>
         {% for resource in office.resources %}
-            <div class="media block__sub">
-                {% if resource.icon %}
-                <div class="media_image-container
-                            media_image-container__wide-margin">
-                    <img class="media_image u-centered-on-mobile"
-                         width="150"
-                         src="{{resource.icon}}">
-                </div>
-                {% endif %}
-                <div class="media_body">
-                    {% if resource.title %}
-                    <h2 class="h3">{{ resource.title | safe }}</h2>
-                    {% endif %}
-
-                    {% if resource.desc %}
-                    <p class="short-desc">{{ resource.desc | safe }}</p>
-                    {% endif %}
-
-                    {% if resource.link %}
-                    <a class="jump-link jump-link__right"
-                       href="{{ resource.link.url if resource.link }}">
-                          {{ resource.link.label }}
-                    </a>
-                    {% endif %}
-                </div>
+        <div class="media block__sub">
+            {% if resource.icon %}
+            <div class="media_image-container
+                        media_image-container__wide-margin">
+                <img class="media_image u-centered-on-mobile"
+                     width="150"
+                     src="{{resource.icon}}">
             </div>
+            {% endif %}
+            <div class="media_body">
+                {% if resource.title %}
+                <h2 class="h3">{{ resource.title | safe }}</h2>
+                {% endif %}
+                {% if resource.desc %}
+                <p class="short-desc">{{ resource.desc | safe }}</p>
+                {% endif %}
+                {% if resource.link %}
+                <a class="jump-link jump-link__right"
+                   href="{{ resource.link.url if resource.link }}">
+                      {{ resource.link.label }}
+                </a>
+                {% endif %}
+            </div>
+        </div>
         {% endfor %}
     </section>
     {% endif %}
@@ -131,7 +127,9 @@
         {{ sub_pages_macro.render( vars.sub_pages, 'Our Work') }}
     {% endif %}
 
-    {% if activities_feed %}
+    {% if office.tags %}
+    {% import "macros/activity-snippets.html" as activity_snippets with context %}
+    {% set activities_feed = activity_snippets.render(office.tags, include_date_flag=true, number_columns=2) %}
     <section class="block
                     block__bg
                     block__flush-sides

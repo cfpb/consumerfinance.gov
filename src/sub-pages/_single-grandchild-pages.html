@@ -2,8 +2,8 @@
 {% extends "layout-2-1-bleedbar.html" %}
 
 {% set _breadcrumb_items = [('/offices/' + vars.office.slug + '/', vars.office.slug, vars.office.title),
-                           ('/sub-pages/' + vars.parent_sub_page.slug + '/',
-                             vars.parent_sub_page.slug, vars.parent_sub_page.title)]
+                            ('/sub-pages/' + vars.parent_sub_page.slug + '/',
+                            vars.parent_sub_page.slug, vars.parent_sub_page.title)]
 %}
 
 {% block pre_content_main -%}
@@ -23,23 +23,23 @@
 
 {% block content_main %}
     {% if sub_page.title %}
-        <h1>{{ sub_page.title | safe }}</h1>
+    <h1>{{ sub_page.title | safe }}</h1>
     {% endif %}
 
     {% if sub_page.content %}
-        <section class="block
-                        block__flush-top
-                        block__flush-bottom">
-            {{ sub_page.content | safe }}
-        </section>
+    <section class="block
+                    block__flush-top
+                    block__flush-bottom">
+        {{ sub_page.content | safe }}
+    </section>
     {% endif %}
 
     {% if sub_page.body_content %}
-        <section class="block
-                        block__padded-top
-                        block__border-top">
-            {{ sub_page.body_content | safe}}
-        </section>
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        {{ sub_page.body_content | safe}}
+    </section>
     {% endif %}
 
     {% if vars.sub_pages %}
@@ -59,17 +59,17 @@
 
 
 {% block content_sidebar %}
+    {% if sub_page.tags %}
     {% import "macros/activity-snippets.html" as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(sub_page.tags if sub_page.tags, include_date_flag=true, number_columns=1)%}
-    {% if activities_feed %}
-        <section class="block
-                        block__flush-top
-                        block__left-border">
-            {% include 'templates/activities-feed.html' %}
-            <a class="jump-link jump-link__right"
-               href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
-                View all of our activities
-            </a>
-        </section>
+    {% set activities_feed = activity_snippets.render(sub_page.tags, include_date_flag=true, number_columns=1)%}
+    <section class="block
+                    block__flush-top
+                    block__left-border">
+        {% include 'templates/activities-feed.html' %}
+        <a class="jump-link jump-link__right"
+           href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
+            View all of our activities
+        </a>
+    </section>
     {% endif %}
 {% endblock %}
