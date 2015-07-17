@@ -58,7 +58,6 @@ author or the affirmer.
   MIT License.
 - [box-sizing Polyfill](http://github.com/Schepp/box-sizing-polyfill) by
   Christian Schepp Schaefer is licensed under LGPL 3.0.
-- requestNextAnimationFrame by David Geary is licensed under the MIT License.
 - [Slick](http://kenwheeler.github.io/slick/) by Ken Wheeler is licensed under
   the MIT License.
 - [Chosen](https://github.com/harvesthq/chosen) by Patrick Filler for Harvest is
@@ -69,4 +68,3 @@ author or the affirmer.
   Smith is licensed under the BSD License.
 - [String Scoring Algorithm](https://github.com/joshaven/string_score) by
   Joshaven Potter is licensed under the MIT License.
-  
