@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `TEST.md` readme file for testing instructions.
 - Added `grunt clean` and `grunt copy` tasks.
 - Added `grunt clean` step to `setup.sh`.
+- Added `map` and `filter` array polyfills.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
