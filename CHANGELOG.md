@@ -23,6 +23,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `grunt clean` and `grunt copy` tasks.
 - Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
+- Added `about-us` page and tests
+- Added `newsroom` type to Activity Snippets
 - Created initial career posting template.
 - Created 1/4 and 3/4 layout columns.
 - Added DL styles to cf-enhancements.
