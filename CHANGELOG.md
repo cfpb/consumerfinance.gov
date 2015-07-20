@@ -36,6 +36,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Upgraded Travis to container-based infrastructure
 - Updated Offices pages to change activity feed logic.
 - Updated block-bg padding in cf-enhancements based on JJames feedback.
+- Updated Offices sub pages to display related documents.
+- Updated Offices sub pages to always display activity feed.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
