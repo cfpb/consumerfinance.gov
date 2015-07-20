@@ -32,7 +32,10 @@
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
     "time-grunt": "~1.0.0",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "jasmine-reporters": "^2.0.7",
+    "jasmine-spec-reporter": "^2.4.0",
+    "mkdirp": "^0.5.1"
   },
   "browserify": {
     "transform": [
