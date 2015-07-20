@@ -32,6 +32,12 @@ def process_career(career):
     for salary in ['salary_' + m for m in ['max', 'min']
                    if career['salary_' + m]]:
         career[salary] = float(career[salary])
+    if 'applicant_types' in career:
+        for ap_types in career['applicant_types']:
+            if 'application_type' in ap_types:
+                ap_types['application_type']['name'] = \
+                    ap_types['application_type']['applicant_type']
+                del ap_types['application_type']['applicant_type']
     return {'_type': 'career',
             '_id': career['id'],
             '_source': career}

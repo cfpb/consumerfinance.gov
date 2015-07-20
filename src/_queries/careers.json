@@ -3,6 +3,15 @@
   "query": {
     "doc_type": "career",
     "size": 100,
-    "sort": "title"
-  }
+    "sort": "close_date:asc"
+  },
+  "filters": [
+    {
+    "range" : {
+        "close_date" : {
+          "gte": "now"
+        }
+      }
+    }
+  ]
 }

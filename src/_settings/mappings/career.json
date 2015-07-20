@@ -13,14 +13,14 @@
             "active": {
               "type": "boolean"
             },
-            "applicant_type": {
-              "type": "string"
-            },
             "description": {
               "type": "string"
             },
             "id": {
               "type": "long"
+            },
+            "name": {
+              "type": "string"
             },
             "slug": {
               "type": "string"
