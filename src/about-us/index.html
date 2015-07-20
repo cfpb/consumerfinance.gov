@@ -7,9 +7,7 @@
 
 {% block content_main %}
     <section class="block
-                    block__flush-top
-                    block__border-bottom
-                    block__padded-bottom">
+                    block__flush-top">
         <h1>About Us</h1>
         <p class="h3">
             We're a new government agency created
@@ -40,14 +38,14 @@
             </li>
         </ul>
     </section>
-    <div class="content-l
-                block
-                block__border-bottom
-                block__flush-top">
-        <section class="content-l_col-1-2
-                        block
-                        block__flush-top">
-            <h2>CFPB Leadership</h2>
+    <div class="content-l">
+        {# The extra div is to prevent border tapering from combining block__border and content-l classes #}
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>CFPB Leadership</h2>
                 <div class="media bureau-bio u-mb30">
                     <div class="media_image-container">
                         <img class="media_image" src="/static/img/cordray_round_360.jpg">
@@ -75,43 +73,46 @@
                 <a class="jump-link jump-link__right" href="/the-bureau/bureau-structure/">
                     Organizational structure and leadership
                 </a>
-        </section>
-        <section class="content-l_col-1-2
-                        block
-                        block__flush-top">
-            <h2>Strategy & Budget</h2>
-            <p>
-                We work for the American public.
-                We publish our strategy and budget
-                so you can understand our priorities.
-            </p>
-            <ul class="list list__links">
-                <li class="list_item">
-                    <a href="/budget/strategic-plan/" class="list_link">
-                        Our strategic plan
-                    </a>
-                </li>
-                <li class="list_item">
-                    <a href="/budget/financial-report/" class="list_link">
-                        Financial reports and updates
-                    </a>
-                </li>
-                <li class="list_item">
-                    <a href="/budget/" class="list_link">
-                        Learn more about our strategy and budget
-                    </a>
-                </li>
-            </ul>
-        </section>
+            </section>
+        </div>
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>Strategy & Budget</h2>
+                <p>
+                    We work for the American public.
+                    We publish our strategy and budget
+                    so you can understand our priorities.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a href="/budget/strategic-plan/" class="list_link">
+                            Our strategic plan
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/budget/financial-report/" class="list_link">
+                            Financial reports and updates
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/budget/" class="list_link">
+                            Learn more about our strategy and budget
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
     </div>
-    <div class="content-l
-                block
-                block__flush-top
-                block__flush-bottom">
-        <section class="content-l_col-1-2
-                        block
-                        block__flush-top">
-            <h2>Engage in our Work</h2>
+    <div class="content-l">
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>Engage in our Work</h2>
                 <p>
                     We actively seek opportunities to collaborate
                     with subject matter experts, innovators,
@@ -120,53 +121,61 @@
                     and build effective programs in support of our mission.
                 </p>
                 <ul class="list list__links">
-                <li class="list_item">
-                    {# TODO: Add link in next sprint #}
-                    <a class="list_link u-link__disabled">Advisory groups</a>
-                </li>
-                <li class="list_item">
-                    {# TODO: Add link in next sprint #}
-                    <a class="list_link u-link__disabled">Project Catalyst</a>
-                </li>
-                <li class="list_item">
-                    <a href="/doing-business-with-us/" class="list_link">
-                        Procurement opportunities
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <section class="content-l_col-1-2
-                        block
-                        block__flush-top">
-            <h2>Careers</h2>
-            <p>
-                We are always looking for leaders
-                who want to do meaningful work for consumers.
-                And we strive to create a workplace
-                that supports and develops them.
-            </p>
-            <ul class="list list__links">
-                <li class="list_item">
-                    <a href="/careers/working-at-cfpb/" class="list_link">
-                        See what it's like to work at the CFPB
-                    </a>
-                </li>
-                <li class="list_item">
-                    <a href="/careers/current-openings/" class="list_link">
-                        See current job opportunities
-                    </a>
-                </li>
-            </ul>
-        </section>
+                    <li class="list_item">
+                        {# TODO: Add link in next sprint #}
+                        <a class="list_link u-link__disabled">Advisory groups</a>
+                    </li>
+                    <li class="list_item">
+                        {# TODO: Add link in next sprint #}
+                        <a class="list_link u-link__disabled">Project Catalyst</a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/doing-business-with-us/" class="list_link">
+                            Procurement opportunities
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>Careers</h2>
+                <p>
+                    We are always looking for leaders
+                    who want to do meaningful work for consumers.
+                    And we strive to create a workplace
+                    that supports and develops them.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a href="/careers/working-at-cfpb/" class="list_link">
+                            See what it's like to work at the CFPB
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/careers/current-openings/" class="list_link">
+                            See current job opportunities
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
     </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}
+
     {# TODO Add Events to the Activity Snippets #}
-    <section>
-        {% import "macros/activity-snippets.html" as activity_snippets with context %}
-        {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'],include_date_flag=true) %}
-        {% include 'templates/activities-feed.html' %}
-    </section>
+
+    {% import "macros/activity-snippets.html" as activity_snippets with context %}
+    {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'],include_date_flag=true) %}
+    {% include 'templates/activities-feed.html' %}
+    <a class="jump-link jump-link__right"
+       href="/activity-log/">
+        View all of our activities
+    </a>
 
 {%- endblock %}
