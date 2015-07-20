@@ -51,7 +51,6 @@ def process_post(post):
 
     del post['custom_fields']
 
-    return {'_index': 'content',
-            '_type': 'featured_topic',
+    return {'_type': 'featured_topic',
             '_id': post['slug'],
             '_source': post}

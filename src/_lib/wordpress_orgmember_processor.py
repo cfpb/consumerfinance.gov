@@ -47,7 +47,6 @@ def process_orgmember(member):
                             if member['custom_fields'].get(title)]
     del member['custom_fields']
 
-    return {'_index': 'content',
-            '_type': 'orgmember',
+    return {'_type': 'orgmember',
             '_id': member['slug'],
             '_source': member}
