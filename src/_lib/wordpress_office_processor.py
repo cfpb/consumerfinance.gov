@@ -104,7 +104,6 @@ def process_office(post):
 
     del post['custom_fields']
 
-    return {'_index': 'content',
-            '_type': 'office',
+    return {'_type': 'office',
             '_id': post['slug'],
             '_source': post}

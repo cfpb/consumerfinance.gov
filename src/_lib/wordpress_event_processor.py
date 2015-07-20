@@ -98,7 +98,6 @@ def process_event(event):
 
     event = OrderedDict(sorted(event.items(), key=lambda k: k[0]))
 
-    return {'_index': 'content',
-            '_type': 'events',
+    return {'_type': 'events',
             '_id': event['slug'],
             '_source': event}

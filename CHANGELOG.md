@@ -25,6 +25,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `map` and `filter` array polyfills.
 - Added `about-us` page
 - Added `newsroom` type to Activity Snippets
+- Created initial career posting template.
+- Created 1/4 and 3/4 layout columns.
+- Added DL styles to cf-enhancements.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -34,6 +37,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `browserify-shims.js` to `/config/` directory.
 - Upgraded Travis to container-based infrastructure
 - Updated Offices pages to change activity feed logic.
+- Updated block-bg padding in cf-enhancements based on JJames feedback.
+- Updated Offices sub pages to display related documents.
+- Updated Offices sub pages to always display activity feed.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
@@ -45,6 +51,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   by toString method.
 - Event tag filtering on archive page
 - Added browser tests to linting task
+- Fixed MobileOnlyExpandable error on office page.
 
 ## 3.0.0-1.3.0 - 2015-07-16
 

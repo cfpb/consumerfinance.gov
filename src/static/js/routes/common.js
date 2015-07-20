@@ -40,4 +40,5 @@ $( document ).ready( function() {
   require( './careers/application-process/index.js' ).init();
   require( './the-bureau/index.js' ).init();
   require( './the-bureau/bureau-structure/index.js' ).init();
+  require( './offices/index.js' ).init();
 } );
