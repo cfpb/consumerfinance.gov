@@ -65,7 +65,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the existing missions browser test to be stronger
 - Updated the browser test specs in conf.js because the shared spec was being
   fired on the desktop test, even though those tests had already been run in
-  Chrome. Now the desktop test only runs the desktop spec
+  Chrome. Now the desktop test only runs the desktop spec.
+- Separated `grunt test` task from `grunt build`
+  and made default task test + build.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
