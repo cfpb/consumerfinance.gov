@@ -41,6 +41,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated block-bg padding in cf-enhancements based on JJames feedback.
 - Updated Offices sub pages to display related documents.
 - Updated Offices sub pages to always display activity feed.
+- Updated Expandable macro to update design and add FAQ options.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
