@@ -1,40 +1,43 @@
-var environment = require('./environment.js');
+'use strict';
 
 exports.config = {
-  framework: 'jasmine2',
-  specs: ['spec_suites/shared/*.js'],
+  framework:    'jasmine2',
+  specs:        [ 'spec_suites/shared/*.js' ],
   capabilities: {
-    'browserName': 'chrome',
-    'name': 'flapjack-browser-tests'
+    browserName: 'chrome',
+    name:        'flapjack-browser-tests'
   },
 
   sauceUser: process.env.SAUCE_USER,
-  sauceKey: process.env.SAUCE_KEY,
+  sauceKey:  process.env.SAUCE_KEY,
 
   onPrepare: function() {
     browser.ignoreSynchronization = true;
 
-    var jasmineReporters = require('jasmine-reporters');
-    var mkdirp = require('mkdirp');
-    var jasmineSpecReporter = require('jasmine-spec-reporter');
+    var JasmineReporters = require( 'jasmine-reporters' );
+    var mkdirp = require( 'mkdirp' );
+    var JasmineSpecReporter = require( 'jasmine-spec-reporter' );
 
     // add jasmine spec reporter
-    jasmine.getEnv().addReporter(new jasmineSpecReporter({displayStacktrace: true}));
+    jasmine.getEnv().addReporter(
+      new JasmineSpecReporter( { displayStacktrace: true } )
+    );
 
-    // var folderName = (new Date()).toString().split(' ').splice(1, 4).join('-');
-    var newFolder = "reports/";
+    var newFolder = 'reports/';
 
-    mkdirp(newFolder, function( err ) {
-      if (err) {
-        console.error(err);
+    mkdirp( newFolder, function( err ) {
+      if ( err ) {
+        console.error( err );
       } else {
-        var jUnitXmlReporter = new jasmineReporters.JUnitXmlReporter(
-          {consolidateAll: true,
-            savePath: newFolder,
-            filePrefix: 'test-results'}
+        var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter(
+          {
+            consolidateAll: true,
+            savePath:       newFolder,
+            filePrefix:     'test-results'
+          }
         );
-        jasmine.getEnv().addReporter(jUnitXmlReporter);
+        jasmine.getEnv().addReporter( jUnitXmlReporter );
       }
-    });
+    } );
   }
 };
