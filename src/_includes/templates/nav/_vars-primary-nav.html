@@ -10,13 +10,13 @@
 
 {% import "templates/nav/about-us-media.html" as about_us_media %}
 
-{% set nav_tbd =  ('TBD Content', '', '', []) %}
+{% set nav_tbd =  ('TBD Content', '#', '', '', []) %}
 {% set sub_nav_tbd =  ('', '', 'TBD Content') %}
 {% set nav_items = [
     nav_tbd,
     nav_tbd,
     nav_tbd,
-    ('About', 'About Overview', about_us_media , [
+    ('About', '/about-us/',  'About Overview', about_us_media , [
         (
             ('/the-bureau/', 'the-bureau', 'The Bureau'),
             ('/budget/', 'budget', 'Budget and Strategy'),

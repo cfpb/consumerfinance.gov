@@ -5,7 +5,7 @@
                list__unstyled
                list__horizontal
                list-expanding">
-        {%- for nav_title, sub_nav_title, sub_nav_media, sub_nav_items in vars.nav_items %}
+        {%- for nav_title, sub_nav_landing, sub_nav_title, sub_nav_media, sub_nav_items in vars.nav_items %}
             <li class="list_item list-expanding_list-item">
                 {%- if sub_nav_items|length > 0 %}
                     {# TODO: Make this a <button>, it is not a real link. #}
@@ -13,7 +13,7 @@
                         {{ nav_title }}
                     </a>
                     {% import 'macros/sub-nav.html' as sub_nav %}
-                    {{ sub_nav.render(sub_nav_title, sub_nav_items, sub_nav_media) }}
+                    {{ sub_nav.render(sub_nav_title, sub_nav_landing, sub_nav_items, sub_nav_media) }}
                 {%- else %}
                   <a class="list_link u-link__disabled">
                       {{ nav_title }}
