@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Created initial career posting template.
 - Created 1/4 and 3/4 layout columns.
 - Added DL styles to cf-enhancements.
+- Added `offices/project-catalyst`.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.

@@ -6,7 +6,9 @@
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom office
+    {{ super() }}
+    content__flush-bottom
+    office
 {%- endblock %}
 
 {% block content_main %}
@@ -16,22 +18,20 @@
     {% endif %}
 
     {% if office.intro.text %}
+    {% set intro = office.intro %}
+    {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
     <section class="block
                     block__flush-top
                     block__flush-bottom
                     content-l
                     content-l__main
                     content-l__large-gutters">
-        {% set intro = office.intro %}
-        {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
         <div class="content-l_col
-                        {% if show_subscription -%}
-                            content-l_col-1-2
-                        {% else -%}
-                            content-l_col-1
-                        {%- endif %}
-                        ">
-            <div class="h3">{{ intro.text | safe }}</div>
+                    {{ 'content-l_col-1-1' if show_subscription else 'content-l_col-1' }}
+                    ">
+            {# Note this is a div to accommodate paragraph markup
+               coming from the CMS for the intro.text content. #}
+            <div class="office_intro-text">{{ intro.text | safe }}</div>
         </div>
         {% if show_subscription %}
         <div class="content-l_col
@@ -52,7 +52,7 @@
                     block__padded-top
                     block__border-top">
         {% if top_story.head %}
-        <h1 class="h3">{{ top_story.head | safe }}</h1>
+        <h2>{{ top_story.head | safe }}</h2>
         {% endif %}
         <div class="content-l
                     content-l__main
@@ -73,11 +73,11 @@
                         content-l_col__before-divider">
                 <ul class="list__links">
                 {% for link in top_story.links %}
-                <li class="list_item">
-                    <a class="jump-link jump-link__right list_link" href="{{ link.url }}">
-                        {{link.label}}
-                    </a>
-                </li>
+                    <li class="list_item">
+                        <a class="jump-link jump-link__right list_link" href="{{ link.url }}">
+                            {{link.label}}
+                        </a>
+                    </li>
                 {% endfor %}
                 </ul>
             </div>
@@ -90,6 +90,7 @@
     <section class="block
                     block__padded-top
                     block__border-top">
+        {# Heading added for screenreaders to have a section title. #}
         <h2 class="u-visually-hidden">
             Resources
         </h2>
@@ -100,19 +101,21 @@
                         media_image-container__wide-margin">
                 <img class="media_image u-centered-on-mobile"
                      width="150"
-                     src="{{resource.icon}}">
+                     src="{{ resource.icon }}">
             </div>
             {% endif %}
             <div class="media_body">
                 {% if resource.title %}
-                <h2 class="h3">{{ resource.title | safe }}</h2>
+                <h2>{{ resource.title | safe }}</h2>
                 {% endif %}
+
                 {% if resource.desc %}
                 <p class="short-desc">{{ resource.desc | safe }}</p>
                 {% endif %}
+
                 {% if resource.link %}
                 <a class="jump-link jump-link__right"
-                   href="{{ resource.link.url if resource.link }}">
+                   href="{{ resource.link.url }}">
                       {{ resource.link.label }}
                 </a>
                 {% endif %}
@@ -125,6 +128,14 @@
     {% if vars.sub_pages %}
         {% import "macros/sub_pages.html" as sub_pages_macro with context %}
         {{ sub_pages_macro.render( vars.sub_pages, 'Our Work') }}
+    {% endif %}
+
+    {% if office.content %}
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        {{ office.content }}
+    </section>
     {% endif %}
 
     {% if office.tags %}
