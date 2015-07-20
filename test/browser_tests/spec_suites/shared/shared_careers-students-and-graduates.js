@@ -18,7 +18,8 @@ describe( 'Careers/Student-and-graduates', function() {
 
   it( 'should have 4 opportunities for students and graduates', function() {
     expect( page.opportunities.count() ).toEqual( 4 );
-    expect( page.opportunities.getText() ).toContain( 'Presidential Management Fellow' );
+    expect( page.opportunities.getText() )
+      .toContain( 'Presidential Management Fellow' );
   } );
 
 } );

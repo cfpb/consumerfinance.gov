@@ -37,6 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `event-listener.js` and `query-selector.js` polyfills for IE8.
 - Added `@tr-border` variable to `cf-enhancements.less`
   for simple-table border color.
+- Added tests for events and event archive landing pages
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -56,11 +57,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated all careers images to 2x size and have the same markup structure.
 - Updated event macros to use Sheer 'when' function in order to
   display content based on state.
-- Tied careers data into single template and renamed to `_single.html`.
+- Tied careers data into single template and renamed to _single.html
 - Replaced career pages mock jobs data with data from the jobs API.
 - Made jobs list table on /careers/current-openings/ have linkable rows.
 - Adds eslint ignore lines for polyfills, which will not be changing.
 - Moved CF table color overrides to `cf-theme-overrides.less`.
+- Updated the existing missions browser test to be stronger
+- Updated the browser test specs in conf.js because the shared spec was being
+  fired on the desktop test, even though those tests had already been run in
+  Chrome. Now the desktop test only runs the desktop spec
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
@@ -76,6 +81,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added browser tests to linting task
 - Fixed MobileOnlyExpandable error on office page.
 - Normalized use of jinja quotes to single quote
+- Fixed existing linting errors and warnings in browser tests
 
 ## 3.0.0-2.0.0 - 2015-07-24
 
