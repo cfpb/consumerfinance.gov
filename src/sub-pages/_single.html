@@ -4,8 +4,6 @@
 {% set active_nav_id = sub_page.slug %}
 {% set sub_pages = vars.sub_pages %}
 {% set breadcrumb_items = vars.breadcrumb_items %}
-{% set display_activity_slugs = ["plain-writing-act", "court-orders-settlements", "civil-penalty-fund"] %}
-{% set display_activity_flag = sub_page.slug in display_activity_slugs %}
 
 {% block title -%}
     {{ sub_page.title | safe if sub_page.title }}
@@ -29,11 +27,25 @@
     </section>
     {% endif %}
 
-    {% if sub_page.body_content %}
+    {% if sub_page.body_content or sub_page.related_links %}
     <section class="sub-page_{{sub_page.slug}}
                     block
                     block__padded-top
                     block__border-top">
+
+        {% if sub_page.related_links %}
+        <section class="block
+                        block__flush-top
+                        block_padded-bottom">
+            <h3>Related Documents</h3>
+            {% for link in sub_page.related_links %}
+            <p>
+                <a href="{{link.url}}">{{ link.label }}</a>
+            </p>
+            {% endfor %}
+        </section>
+        {% endif %}
+
         {% set content = { 'markup' : sub_page.body_content } %}
         {% for form_name in vars.forms %}
             {% set form_token = '[' + form_name + ']' %}
@@ -63,7 +75,7 @@
         }}
     {% endif %}
 
-    {% if sub_page.tags and display_activity_flag == true %}
+    {% if sub_page.tags %}
     {% import "macros/activity-snippets.html" as activity_snippets with context %}
     {% set activities_feed = activity_snippets.render(sub_page.tags, include_date_flag=true, number_columns=2)%}
     <section class="block
