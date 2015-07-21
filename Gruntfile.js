@@ -410,6 +410,10 @@ module.exports = function(grunt) {
       js: {
         files: ['<%= loc.src %>/static/js/**/*.js'],
         tasks: ['js']
+      },
+      jinja2: {
+        files: ['<%= loc.src %>/**/*.html'],  
+        tasks: ['copy']
       }
     },
 
