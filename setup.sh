@@ -49,8 +49,8 @@ install(){
 # Run tasks to build the project for distribution.
 build(){
   echo 'Building project...'
-  grunt clean
-  grunt
+  gulp clean
+  gulp build
 }
 
 init

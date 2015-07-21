@@ -39,6 +39,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   for simple-table border color.
 - Added tests for events and event archive landing pages
 - Transitioned Capital Framework dependency to v1.0.0 in bower.json.
+- Added gulp and the required npm plugins
+- Added gulp config file to lay out configs for each task
+- Added gulp tasks split up into their own files
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -71,6 +74,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and made default task test + build.
 - Site's "About" text to "About Us".
 - Replaced FOIA Records with Coming Soon heading
+- Updated setup.sh to use gulp
+- Updated travis to use gulp tasks
+- Updated main.less to use the paths option in less compiler
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
@@ -78,6 +84,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed `grunt vendor` from `setup.sh`.
 - Removed unused CSS on `office.less`
 - Removed `/events/archive/_single.html`
+- Removed Grunt plugins from package.json
+- Removed the Gruntfile to make sure we've covered everything
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused

@@ -25,14 +25,15 @@ install:
   - pip install -r test/macro_tests/requirements.txt
 
   # JavaScript test requirements
-  - npm install -g grunt-cli
+  - npm install -g gulp
   - npm install -g bower
   - npm install -g protractor
   - npm install
 
 script:
   # Run tests for JavaScript
-  - grunt test
-
-  - cd test/macro_tests
-  - python test_macros.py
+  - gulp lint:gulp
+  - gulp lint:src
+  - gulp test:unit
+  - gulp test:macro
+  - gulp test:processor
