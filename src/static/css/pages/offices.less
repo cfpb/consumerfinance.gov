@@ -11,6 +11,17 @@
         });
     }
 
+    // NOTE: This is to accommodate the variety of content that can be
+    //       delivered to the custom_fields > intro_text field in the CMS.
+    &_intro-text {
+        p {
+            .h3();
+        }
+        ul {
+            .list__branded();
+        }
+    }
+
     &_initiatives {
         .expandables-group {
             .respond-to-max(@mobile-max, {
