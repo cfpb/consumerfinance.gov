@@ -69,7 +69,7 @@
         {% import "macros/activity-snippets.html" as activity_snippets with context %}
         {% set activities_feed = activity_snippets.render(sub_page.tags, include_date_flag=true, number_columns=1)%}
         {% include 'templates/activities-feed.html' %}
-        <a class="jump-link jump-link__right"
+        <a class="jump-link jump-link__underline"
            href="/activity-log/{{ ('?filter_tags=' ~ sub_page.tags | join('&') ) if sub_page.tags }}">
             View all of our activities
         </a>

@@ -74,14 +74,14 @@
                               <ul class="list__links">
                                   {% for link in page.related_links %}
                                       <li class="list_item">
-                                          <a class="jump-link jump-link__right list_link" href="{{link.url}}">
+                                          <a class="list_link" href="{{link.url}}">
                                               {{ link.label }}
                                           </a>
                                       </li>
                                   {% endfor %}
                               </ul>
                           {% elif is_office_page or not page.related_links %}
-                              <a class="jump-link jump-link__right" href="{{ page.permalink }}">
+                              <a class="jump-link jump-link__underline" href="{{ page.permalink }}">
                                   {{ page.preview_text or 'Read more' }}
                               </a>
                           {% endif %}

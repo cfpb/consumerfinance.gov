@@ -126,7 +126,7 @@
         <ul class="list list__unstyled list__spaced list__links">
         {% for item in feed %}
             <li class="list_item">
-                <a class="list_link jump-link jump-link__right"
+                <a class="list_link"
                    href="{{ item.permalink }}">
                     {{ item.title | safe  }}
                     {%- if item.date and include_date_flag -%}
