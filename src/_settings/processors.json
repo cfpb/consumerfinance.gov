@@ -4,6 +4,11 @@
     "processor": "django_calendar_event_processor",
     "mappings": "_settings/mappings/calendar_event.json"
   },
+  "careers": {
+    "url": "$WORDPRESS/jobs/jobs.json",
+    "processor": "django_career_processor",
+    "mappings": "_settings/mappings/career.json"
+  },
   "contact": {
     "url": "$WORDPRESS/api/get_posts/?post_type=contact",
     "processor": "wordpress_contact_processor",

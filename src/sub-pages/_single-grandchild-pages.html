@@ -12,9 +12,11 @@
 {% endblock -%}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-                  sub-page
-                  sub-page__grandchild
+    {{ super() }}
+    sub-page
+    sub-page__grandchild
+    sub-page_{{sub_page.slug}}
+    content__flush-bottom
 {%- endblock %}
 
 {% block title -%}

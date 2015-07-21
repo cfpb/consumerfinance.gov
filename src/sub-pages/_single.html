@@ -10,7 +10,10 @@
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom sub-page
+    {{ super() }}
+    sub-page
+    sub-page_{{sub_page.slug}}
+    content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
@@ -22,16 +25,17 @@
     {% if sub_page.content %}
     <section class="block
                     block__flush-top
-                    block__flush-bottom">
+                    block__flush-bottom
+                    sub-page_content">
         {{ sub_page.content | safe }}
     </section>
     {% endif %}
 
     {% if sub_page.body_content or sub_page.related_links %}
-    <section class="sub-page_{{sub_page.slug}}
-                    block
+    <section class="block
                     block__padded-top
-                    block__border-top">
+                    block__border-top
+                    sub-page_content-markup">
 
         {% if sub_page.related_links %}
         <section class="block
