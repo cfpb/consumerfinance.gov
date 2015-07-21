@@ -29,7 +29,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Created 1/4 and 3/4 layout columns.
 - Added DL styles to cf-enhancements.
 - Added `offices/project-catalyst`.
-- Careers processor/mapping/query
+- Careers processor/mapping/query.
+- Added `office_[office slug]` class to offices template.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -43,6 +44,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Offices sub pages to display related documents.
 - Updated Offices sub pages to always display activity feed.
 - Updated Expandable macro to update design and add FAQ options.
+- Moved `sub-page_[sub-page slug]` class to main content area of sub_pages template.
+- Styled unordered lists as branded lists in the `office_intro-text`,
+  `sub-page_content`, and `sub-page_content-markup` class areas.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
@@ -55,6 +59,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Event tag filtering on archive page
 - Added browser tests to linting task
 - Fixed MobileOnlyExpandable error on office page.
+
 
 ## 3.0.0-1.3.0 - 2015-07-16
 
