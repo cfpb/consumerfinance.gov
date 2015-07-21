@@ -15,7 +15,7 @@
 {% block content_main %}
 
     {% if office.title %}
-    <h1>{{ office.title | safe }}</h1>
+    <h1 class="qa-main-title">{{ office.title | safe }}</h1>
     {% endif %}
 
     {% if office.intro.text %}
@@ -37,7 +37,8 @@
         {% if show_subscription %}
         <div class="content-l_col
                         content-l_col-1-2
-                        content-l_col__before-divider">
+                        content-l_col__before-divider
+                        qa-subscription">
             <p class="h3 u-show-on-mobile">Stay informed</p>
             <p class="short-desc">Stay up to date with our email newsletter</p>
             {% import 'macros/subscribe.html' as subscribe with context %}
@@ -53,7 +54,7 @@
                     block__padded-top
                     block__border-top">
         {% if top_story.head %}
-        <h2>{{ top_story.head | safe }}</h2>
+        <h2 class="qa-top-story-head">{{ top_story.head | safe }}</h2>
         {% endif %}
         <div class="content-l
                     content-l__main
@@ -65,7 +66,10 @@
                         {% else -%}
                         content-l_col-1
                         {% endif -%}">
-                <p class="short-desc">{{ top_story.desc | safe }}</p>
+                <div class="short-desc
+                          qa-top-story-desc">
+                    {{ top_story.desc | safe }}
+                </div>
             </div>
             {% endif %}
             {% if top_story.links %}
@@ -75,7 +79,7 @@
                 <ul class="list__links">
                 {% for link in top_story.links %}
                     <li class="list_item">
-                        <a class="list_link" href="{{ link.url }}">
+                        <a class="jump-link qa-top-story-link" href="{{ link.url }}">
                             {{link.label}}
                         </a>
                     </li>
@@ -100,22 +104,30 @@
             {% if resource.icon %}
             <div class="media_image-container
                         media_image-container__wide-margin">
-                <img class="media_image u-centered-on-mobile"
-                     width="150"
+                <img class="media_image
+                            media_image__150
+                            u-centered-on-mobile
+                            qa-resource-img"
                      src="{{ resource.icon }}">
             </div>
             {% endif %}
             <div class="media_body">
                 {% if resource.title %}
-                <h2>{{ resource.title | safe }}</h2>
+                <h2 class="qa-resource-title">
+                    {{ resource.title | safe }}
+                </h2>
                 {% endif %}
 
                 {% if resource.desc %}
-                <p class="short-desc">{{ resource.desc | safe }}</p>
+                <p class="short-desc qa-resource-desc">
+                    {{ resource.desc | safe }}
+                </p>
                 {% endif %}
 
                 {% if resource.link %}
-                <a class="jump-link jump-link__underline"
+                <a class="jump-link
+                          jump-link__underline
+                          qa-resource-link"
                    href="{{ resource.link.url }}">
                       {{ resource.link.label }}
                 </a>
@@ -134,7 +146,8 @@
     {% if office.content %}
     <section class="block
                     block__padded-top
-                    block__border-top">
+                    block__border-top
+                    qa-office-content">
         {{ office.content }}
     </section>
     {% endif %}
@@ -144,7 +157,8 @@
                     block__bg
                     block__flush-sides
                     block__flush-top
-                    block__flush-bottom">
+                    block__flush-bottom
+                    qa-office-tags">
         {% import 'macros/activity-snippets.html' as activity_snippets with context %}
         {% set activities_feed = activity_snippets.render(office.tags, include_date_flag=true, number_columns=2) %}
         {% include 'templates/activities-feed.html' %}
