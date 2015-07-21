@@ -4,7 +4,16 @@
    ========================================================================== */
 
 .sub-page {
+
     .webfont-regular();
+
+    &_content,
+    &_content-markup {
+        // Make all lists in the content area of the sub-pages branded lists.
+        ul {
+            .list__branded();
+        }
+    }
 
     a[href $='.pdf']:after {
         .cf-icon();
@@ -19,12 +28,6 @@
 .sub-page__grandchild,
 .sub-page__grandchild + .content_sidebar {
     padding-top: @grid_gutter-width;
-}
-
-// cfpb-ombudsman office
-
-.sub-page_frequently-asked-questions {
-    .h2();
 }
 
 // privacy office
@@ -43,15 +46,5 @@
             color: @pacific;
             text-align: right;
         }
-    }
-}
-
-// open-government office
-
-.sub-page_information-quality-guidelines,
-.sub-page_our-open-government-activities {
-    ul {
-        .list__branded();
-        .list__spaced();
     }
 }
