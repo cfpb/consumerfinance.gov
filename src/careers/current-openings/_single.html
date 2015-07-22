@@ -1,14 +1,14 @@
 {% extends "layout-side-nav.html" %}
 {% import "_vars-careers.html" as vars with context %}
-{%- set active_nav_id = 'current-openings' -%}
 
 {% block title -%}
-    {# TODO: Add real page meta title. #}
-    Test Opening
+    {{ career.title }}
 {%- endblock %}
 
 {% block desc -%}
-    {# TODO: Add page meta description. #}
+    {# TODO: Update admin to include excerpt #}
+    {{ career.excerpt | striptags }}
+    }
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -23,23 +23,33 @@
     <section class="block
                     block__flush-top
                     block__sub">
-        {# TODO: Add real page details. #}
-        <h1>Test Opening Title</h1>
-        <dl class="u-mb0">
+        <h1>{{ career.title }}</h1>
+        {# TODO: Discuss careers with multiple grades #}
+        {% set grade = career.grades[0] %}
+        <dl>
             <dt>Expiration Date:</dt>
-            <dd>Month XX, XXXX</dd>
+            <dd>
+                <time datetime="{{ career.close_date | date('%Y-%m-%-dT%H:%M:%S%z') }}">
+                    {{ career.close_date | date('%b %-d, %Y') }}
+                </time>
+            </dd>
             <dt>Region:</dt>
-            <dd>Headquarters</dd>
+            <dd>{{ career.locations[0].region_long }}</dd>
             <dt>Grade:</dt>
-            <dd><strong>(33)</strong> $XX,XXX - $XXX,XXX</dd>
+            <dd>
+                <strong>({{ grade.grade }})</strong>
+                ${{ '{:,d}'.format( grade.salary_min ) }}–${{ '{:,d}'.format( grade.salary_max ) }}
+            </dd>
         </dl>
         <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
-                <a href="#" class="btn">Interested in applying?</a>
+                <a href="#interested" class="btn">
+                    Interested in applying?
+                </a>
             </div>
             <div class="content-l_col content-l_col-1-2">
             {{ share.render({
-                'title': 'Test Opening Title',
+                'title': career.title,
                 'heading': 'Share this job',
                 'hide_heading': false,
                 'show_linkedin': true,
@@ -54,8 +64,10 @@
                 block__padded-top
                 block__border-top">
         <h2>Job Description</h2>
-        <p>Lorem ipsum...place description text here</p>
+        {{ career.description }}
 
+        {# TODO: Discuss how to break duties and departments out of
+        the description
         <h2>Duties</h2>
         <h3>As a test opening, you will:</h3>
         <ul class="list__branded">
@@ -66,6 +78,7 @@
 
         <h2>Departments</h2>
         <p>Multiple offices</p>
+        #}
     </section>
 
     <section class="block
@@ -73,7 +86,7 @@
                 block__border-top">
         <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
-                <h2 class="u-mb0">Interested in Applying?</h2>
+                <h2 class="u-mb0" id="interested">Interested in Applying?</h2>
             </div>
             <div class="content-l_col content-l_col-1-2">
                 {{ share.render({
@@ -81,7 +94,8 @@
                     'heading': 'Share this job',
                     'hide_heading': false,
                     'show_linkedin': true,
-                    'additional_classes': 'share__horizontal share__align-right'
+                    'additional_classes':
+                        'share__horizontal share__align-right'
                 }) }}
             </div>
         </div>
@@ -91,32 +105,39 @@
                     block__sub">
             <h3>Before you apply</h3>
             <p class="short-desc">
-                Lorem impsum...replace with application info paragraph
+                {# TODO: Replace with real content #}
             </p>
 
             <ul class="list list__links">
                 <li class="list_item">
-                    <a class="jump-link" href="#">
+                    <a class="jump-link"
+                       href="/careers/working-at-cfpb/">
                         Learn about working @ CFPB
                     </a>
                 </li>
                 <li class="list_item">
-                    <a class="jump-link" href="#">
+                    <a class="jump-link"
+                       href="/careers/application-process/">
                         Learn about the application process
                     </a>
                 </li>
             </ul>
         </div>
         <div class="block block__flush-top">
-            <h4>Open to All Citizens (Excepted service - Permanent)</h4>
-            <p class="short-desc">Applications will be accepted from U.S. citizens....</p>
+            {% set applicant_type = career.applicant_types[0] %}
+            <h4>{{ applicant_type.application_type.name }}</h4>
+            <p class="short-desc">{{ applicant_type.application_type.description | striptags }}</p>
             <div class="content-l">
                 <div class="content-l_col content-l_col-1-4">
-                    <a class="btn" href="#">Apply now</a>
+                    <a class="btn" href="{{ applicant_type.usajobs_url }}">Apply now</a>
                 </div>
                 <div class="content-l_col content-l_col-3-4">
-                    <h4 class="u-mb0">You are about to leave consumerfinance.gov.</h4>
-                    <p class="short-desc">To finish the application, you must go to USAJobs.gov.</p>
+                    <h4 class="u-mb0">
+                        You are about to leave consumerfinance.gov.
+                        </h4>
+                    <p class="short-desc">
+                        To finish the application, you must go to USAJobs.gov.
+                    </p>
                 </div>
             </div>
         </div>
