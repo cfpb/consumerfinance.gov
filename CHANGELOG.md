@@ -52,7 +52,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed requestAnimationFrame polyfill.
 - Removed `_tests/browser_tests/README.md`, `_tests/macro_testing/README.md`, `_tests/processor_tests/README.md`.
 - Removed `grunt vendor` from `setup.sh`.
-- Removed unused CSS
+- Removed unused CSS on `office.less`
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused
