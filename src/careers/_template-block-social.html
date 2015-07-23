@@ -1,13 +1,25 @@
 <div class="block
-            block__padded-top
             block__border-top
-            content-l">
-    <section class="content-l_col
-                    content-l_col-1-2">
-        {% include "_template-linkedin.html" %}
-    </section>
-    <section class="content-l_col
-                    content-l_col-1-2">
-        {% include "_template-provide-feedback.html" %}
-    </section>
+            ">
+    {# This extra div is to keep the horizontal lines size consistent #}
+    <div class="content-l">
+        <section class="content-l_col
+                        content-l_col-1-2
+                        block
+                        block__padded-top
+                        block__padded-bottom
+                        block__flush-top
+                        block__flush-bottom">
+            {% include "_template-linkedin.html" %}
+        </section>
+        <section class="content-l_col
+                        content-l_col-1-2
+                        block
+                        block__padded-top
+                        block__padded-bottom
+                        block__flush-top
+                        block__flush-bottom">
+            {% include "_template-provide-feedback.html" %}
+        </section>
+    </div>
 </div>
