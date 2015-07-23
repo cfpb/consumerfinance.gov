@@ -129,16 +129,29 @@
     </section>
 
     <div class="block
-                block__padded-top
                 block__border-top
-                block__flush-bottom
-                content-l">
-        <section class="content-l_col content-l_col-1-2">
-            {% include '_template-job-app-process.html' %}
-        </section>
-        <section class="content-l_col content-l_col-1-2">
-            {% include '_template-working-at-cfpb.html' %}
-        </section>
+                block__flush-bottom">
+        <div class="content-l">
+        {# This extra div is to keep the horizontal lines size consistent #}
+            <section class="content-l_col
+                            content-l_col-1-2
+                            block
+                            block__padded-top
+                            block__padded-bottom
+                            block__flush-top
+                            block__flush-bottom">
+                {% include '_template-job-app-process.html' %}
+            </section>
+            <section class="content-l_col
+                            content-l_col-1-2
+                            block
+                            block__padded-top
+                            block__padded-bottom
+                            block__flush-top
+                            ">
+                {% include '_template-working-at-cfpb.html' %}
+            </section>
+        </div>
     </div>
 
     {% include '_template-block-social.html' %}
