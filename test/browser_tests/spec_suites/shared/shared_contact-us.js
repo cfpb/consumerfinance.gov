@@ -34,12 +34,16 @@ describe( 'Contact Us Page', function() {
 
     expect( complaintLink.getText() ).toBeDefined();
     expect( complaintLink.getAttribute( 'href' ) ).toMatch( '/complaint/' );
-    expect( complaintLink.getAttribute( 'class' ) ).toMatch( 'jump-link__right' );
+    expect( complaintLink.getAttribute( 'class' ) ).toMatch(
+      'jump-link__underline'
+    );
   } );
 
   it( 'should include General Inquiries contact details', function() {
     expect( page.giEmail.getText() ).toBeDefined();
-    expect( page.giEmail.getAttribute( 'href' ) ).toBe( 'mailto:info@consumerfinance.gov' );
+    expect( page.giEmail.getAttribute( 'href' ) ).toBe(
+      'mailto:info@consumerfinance.gov'
+    );
     expect( page.giPhone.getText() ).toBeDefined();
     expect( page.giPhone.getAttribute( 'href' ) ).toBe( 'tel:2024357000' );
     expect( page.giPhone.getAttribute( 'class' ) ).toMatch( phoneClass );
