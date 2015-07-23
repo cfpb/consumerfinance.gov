@@ -4,6 +4,11 @@
     "type":      "contact",
     "permalink": true
   },
+  "career": {
+    "url":       "/careers/<id>/",
+    "type":      "career",
+    "permalink": true
+  },
   "sub_page": {
     "url":       "/sub-pages/<id>/",
     "type":      "sub_page",

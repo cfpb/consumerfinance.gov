@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `offices/project-catalyst`.
 - Careers processor/mapping/query.
 - Added `office_[office slug]` class to offices template.
+- Careers to the lookups.py
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
