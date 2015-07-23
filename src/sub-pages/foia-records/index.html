@@ -30,7 +30,7 @@
        { 'expand_label': 'Filter posts' }) }}
 
     {# Show the posts #}
-    {% import "posts-paginated.html" as posts_paginated with context %}
+    {% import 'posts-paginated.html' as posts_paginated with context %}
     {{ posts_paginated.render(vars.records) }}
 
 

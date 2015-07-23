@@ -24,7 +24,7 @@
 
 {% macro render(post, path) %}
 
-{% import "macros/share.html" as share %}
+{% import 'macros/share.html' as share %}
 
 <article class="post post__event">
     <header>
@@ -41,7 +41,7 @@
         <div class="modification-date date u-right">
             <span>Updated</span>
             <time datetime="{{ post.modified|date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
-                {%- set update_date = event.modified |date("%m/%d/%Y") -%}
+                {%- set update_date = event.modified |date('%m/%d/%Y') -%}
                 {{ update_date[1:] if update_date[0] == '0' else update_date }}
             </time>
         </div>
@@ -60,7 +60,7 @@
              src="{{ event.thumbnail.images.full.url }}"
              alt="{{ event.thumbnail.alt_text }}">
     {% endif %}
-    {% from "_event-post-macros.html" import event_venue as event_venue %}
+    {% from '_event-post-macros.html' import event_venue as event_venue %}
     {{ event_venue(event) }}
     </header>
     <div class="post_body">
@@ -87,7 +87,7 @@
                           <span class="event-meta_description event-meta_description__block">
                               Video link available:
                           </span>
-                          {% from "_event-post-macros.html" import event_meta_datetime as event_meta_datetime %}
+                          {% from '_event-post-macros.html' import event_meta_datetime as event_meta_datetime %}
                           {{ event_meta_datetime(event.live_stream.date) }}
                       </p>
                     </div>
@@ -99,7 +99,7 @@
     </div>
     {% if event.tags|length %}
     <footer>
-        {%- import "tags.html" as tags %}
+        {%- import 'tags.html' as tags %}
         {{ tags.render(event.tags, path) }}
     </footer>
     {% endif %}

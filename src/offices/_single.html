@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-offices.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-offices.html' as vars with context %}
 
 {% block title -%}
     {{ office.title | safe if office.title }}
@@ -40,7 +40,7 @@
                         content-l_col__before-divider">
             <p class="h3 u-show-on-mobile">Stay informed</p>
             <p class="short-desc">Stay up to date with our email newsletter</p>
-            {% import "macros/subscribe.html" as subscribe with context %}
+            {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render(intro.govdelivery_code) }}
         </div>
         {% endif %}
@@ -127,7 +127,7 @@
     {% endif %}
 
     {% if vars.sub_pages %}
-        {% import "macros/sub_pages.html" as sub_pages_macro with context %}
+        {% import 'macros/sub_pages.html' as sub_pages_macro with context %}
         {{ sub_pages_macro.render( vars.sub_pages, 'Our Work') }}
     {% endif %}
 
@@ -145,7 +145,7 @@
                     block__flush-sides
                     block__flush-top
                     block__flush-bottom">
-        {% import "macros/activity-snippets.html" as activity_snippets with context %}
+        {% import 'macros/activity-snippets.html' as activity_snippets with context %}
         {% set activities_feed = activity_snippets.render(office.tags, include_date_flag=true, number_columns=2) %}
         {% include 'templates/activities-feed.html' %}
         <a class="jump-link jump-link__underline"
@@ -155,6 +155,6 @@
     </section>
     {% endif %}
 
-    {% include "templates/office-contact.html" %}
+    {% include 'templates/office-contact.html' %}
 
 {% endblock %}

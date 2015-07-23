@@ -1,6 +1,6 @@
 {% macro render(hero) %}
 
-{% import "macros/category-icon.html" as category_icon %}
+{% import 'macros/category-icon.html' as category_icon %}
 
 {% if hero['related_posts'] %}
     {% set related_post = get_document('posts', hero['related_posts'][0]) %}

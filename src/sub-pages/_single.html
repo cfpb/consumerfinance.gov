@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-sub-pages.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-sub-pages.html' as vars with context %}
 
 {% set active_nav_id = sub_page.slug %}
 {% set sub_pages = vars.sub_pages %}
@@ -66,7 +66,7 @@
     {% endif %}
 
     {% if sub_pages and sub_pages.total %}
-        {% import "macros/sub_pages.html" as sub_pages_macro with context %}
+        {% import 'macros/sub_pages.html' as sub_pages_macro with context %}
         {{ sub_pages_macro.render( vars.sub_pages, 'Our Work' ) }}
     {% endif %}
 
@@ -77,9 +77,9 @@
         {% set faq_title = vars.office.title if sub_page.slug == 'frequently-asked-questions'
                                              else sub_page.title
         %}
-        {% import "macros/expandable.html" as expandable with context %}
+        {% import 'macros/expandable.html' as expandable with context %}
         {{ expandable.render(
-                related_faq.faq, 'question', 'answer', {"faq_title": faq_title}
+                related_faq.faq, 'question', 'answer', {'faq_title': faq_title}
            ) if related_faq.faq
         }}
     </section>
@@ -91,7 +91,7 @@
                     block__bg
                     block__flush-top
                     block__flush-bottom">
-        {% import "macros/activity-snippets.html" as activity_snippets with context %}
+        {% import 'macros/activity-snippets.html' as activity_snippets with context %}
         {% set activities_feed = activity_snippets.render(sub_page.tags, include_date_flag=true, number_columns=2)%}
         {% include 'templates/activities-feed.html' %}
         <a class="jump-link jump-link__underline"
@@ -102,6 +102,6 @@
     {% endif %}
 
     {% set office = vars.office %}
-    {% include "templates/office-contact.html" %}
+    {% include 'templates/office-contact.html' %}
 
 {% endblock %}

@@ -22,7 +22,7 @@
    ========================================================================== #}
 
 {%- macro render(category, path, classes, use_blog_category=False) %}
-{%- import "macros/category-icon.html" as category_icon -%}
+{%- import 'macros/category-icon.html' as category_icon -%}
 {%- if use_blog_category %}
     {% set filter_path = path + '?filter_blog_category=' + category|urlencode|replace('%20', '+') %}
 {%- else -%}

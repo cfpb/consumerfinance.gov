@@ -1,5 +1,5 @@
-{% extends "layout-2-1-bleedbar.html" %}
-{% import "_vars-events.html" as vars with context %}
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import '_vars-events.html' as vars with context %}
 
 {% block title -%}
     {{ event.title }}
@@ -22,10 +22,10 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% import "_event.html" as article with context %}
+    {% import '_event.html' as article with context %}
     {{ article.render(event, vars.path) }}
 
-    {% from "_event-post-macros.html" import event_agenda as event_agenda %}
+    {% from '_event-post-macros.html' import event_agenda as event_agenda %}
     {{ event_agenda(event) }}
 
     <div class="event-footer">
@@ -49,7 +49,7 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% import "related-posts.html" as related_posts with context %}
+        {% import 'related-posts.html' as related_posts with context %}
         {{ related_posts.render(event) }}
     </section>
     <section class="block">
@@ -62,16 +62,16 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
-            {% import "macros/subscribe.html" as subscribe with context %}
+            {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render('USCFPB_93') }}
         </div>
         <div class="block block__sub">
-            {% import "rss.html" as rss %}
+            {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
         </div>
     </section>
     <section class="block">
-        {%- import "related-links.html" as related_links -%}
+        {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
             [
                 '/the-bureau/',

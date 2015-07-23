@@ -1,5 +1,5 @@
-{% extends "layout-full.html" %}
-{% import "_vars-activity-log.html" as vars with context %}
+{% extends 'layout-full.html' %}
+{% import '_vars-activity-log.html' as vars with context %}
 
 {% block title -%}
     Activity Log
@@ -12,9 +12,9 @@
 {% block content_main %}
 
     {% set archives = vars.query.search(size=30) %}
-    {% from "post-macros.html" import filters as filters with context %}
-    {% import "macros/category-icon.html" as category_icon %}
-    {% from "post-macros.html" import pagination as pagination with context %}
+    {% from 'post-macros.html' import filters as filters with context %}
+    {% import 'macros/category-icon.html' as category_icon %}
+    {% from 'post-macros.html' import pagination as pagination with context %}
 
     <h1>Activity Log</h1>
     <p class="h3">
@@ -57,7 +57,7 @@
                         </a>
                     </td>
                     <td class="u-w15pct">
-                        {{ item.date|date("%b %d, %Y") }}
+                        {{ item.date|date('%b %d, %Y') }}
                     </td>
                 </tr>
             {%- endfor %}

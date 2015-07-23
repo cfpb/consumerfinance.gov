@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-events.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-events.html' as vars with context %}
 {% set active_nav_id = 'archive' %}
 
 {% block title -%}
@@ -25,18 +25,18 @@
         </div>
 
         {# Set the filters #}
-        {% from "post-macros.html" import filters as filters with context %}
+        {% from 'post-macros.html' import filters as filters with context %}
         {% set filter_by = ['range_date', 'tags'] %}
         {{ filters(filter_by, vars.query, vars.events, 'events',
            { 'expand_label': 'Filter posts' }) }}
 
         <div>
-            {% from "_event-landing-macros.html" import event_preview as event_preview %}
+            {% from '_event-landing-macros.html' import event_preview as event_preview %}
             {% for post in vars.events %}
                 {{ event_preview(post, false) }}
             {% endfor %}
 
-            {% from "post-macros.html" import pagination as pagination with context %}
+            {% from 'post-macros.html' import pagination as pagination with context %}
             {{ pagination(vars.events, [
                 'tags',
                 'range_date_gte',
@@ -63,16 +63,16 @@
                         <p class="short-desc">
                             Subscribe to our email newsletter. We will update you on new event updates.
                         </p>
-                        {% import "macros/subscribe.html" as subscribe with context %}
+                        {% import 'macros/subscribe.html' as subscribe with context %}
                         {{ subscribe.render('USCFPB_93') }}
                     </div>
                     <div>
-                        {% import "rss.html" as rss %}
+                        {% import 'rss.html' as rss %}
                         {{ rss.render(vars.rss_path) }}
                     </div>
                 </section>
                 <section class="content-l_col content-l_col-1-2">
-                    {%- import "related-links.html" as related_links -%}
+                    {%- import 'related-links.html' as related_links -%}
                     {{- related_links.render([
                         [
                             '/newsroom/',

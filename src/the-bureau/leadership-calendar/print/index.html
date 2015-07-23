@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title -%}
     Leadership calendar
@@ -10,7 +10,7 @@
 
 {% block css %}
     {{ super() }}
-    {% import "pdfreactor-footer.html" as pdfreactor_footer %}
+    {% import 'pdfreactor-footer.html' as pdfreactor_footer %}
     {{ pdfreactor_footer.render('consumerfinance.gov/the-bureau/leadership-calendar') }}
 {% endblock %}
 
@@ -19,8 +19,8 @@
 
 {% block body %}
 
-    {% from "post-macros.html" import active_filters as active_filters with context %}
-    {% import "leadership-calendar-table.html" as calendar %}
+    {% from 'post-macros.html' import active_filters as active_filters with context %}
+    {% import 'leadership-calendar-table.html' as calendar %}
 
     <main class="content print" id="main" role="main">
         <div class="content_wrapper">

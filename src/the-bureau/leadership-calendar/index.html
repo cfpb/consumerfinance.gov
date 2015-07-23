@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'leadership-calendar' %}
 
 {% block title -%}
@@ -16,10 +16,10 @@
 
 {% block content_main %}
 
-    {% import "leadership-calendar-table.html" as calendar %}
-    {% import "macros/share.html" as share %}
-    {% from "post-macros.html" import filters as filters with context %}
-    {% from "post-macros.html" import pagination as pagination with context %}
+    {% import 'leadership-calendar-table.html' as calendar %}
+    {% import 'macros/share.html' as share %}
+    {% from 'post-macros.html' import filters as filters with context %}
+    {% from 'post-macros.html' import pagination as pagination with context %}
 
     <div class="block
                 block__flush-top
@@ -94,7 +94,7 @@
                   block__flush-sides
                   block__bg">
         {# TODO: Add FOIA and Open government URLs. #}
-        {%- import "related-links.html" as related_links -%}
+        {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
             [ '',
               'Read more about FOIA' ],

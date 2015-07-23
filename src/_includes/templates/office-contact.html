@@ -1,6 +1,6 @@
 {% set contact = get_document('contact', office.related_contact) if office.related_contact %}
 {% if contact %}
-    {% import "contact-macro.html" as contact_macro %}
+    {% import 'contact-macro.html' as contact_macro %}
     <section class="office_contact
                     block
                     block__flush-sides
