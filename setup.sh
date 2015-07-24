@@ -43,7 +43,7 @@ install(){
 # Run tasks to build the project for distribution.
 build(){
   echo 'Building project...'
-  grunt vendor
+  grunt clean
   grunt build
 }
 

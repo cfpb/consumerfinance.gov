@@ -15,7 +15,7 @@ install:
   - pip install -r sheer/requirements.txt
   - cp .env_SAMPLE .env
   - sheer index
-  - pip install -r _tests/macro_testing/requirements.txt
+  - pip install -r test/macro_tests/requirements.txt
 
   # JavaScript test requirements
   - sudo add-apt-repository -y ppa:chris-lea/node.js
@@ -30,5 +30,5 @@ script:
   # Run tests for JavaScript
   - grunt test
 
-  - cd _tests/macro_testing
+  - cd test/macro_tests
   - python test_macros.py
