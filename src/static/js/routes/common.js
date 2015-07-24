@@ -37,6 +37,7 @@ $( document ).ready( function() {
   require( './contact-us/index.js' ).init();
   require( './index.js' ).init();
   require( './careers/working-at-cfpb/index.js' ).init();
+  require( './careers/current-openings/index.js' ).init();
   require( './careers/application-process/index.js' ).init();
   require( './the-bureau/index.js' ).init();
   require( './the-bureau/bureau-structure/index.js' ).init();

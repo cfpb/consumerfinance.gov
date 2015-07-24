@@ -10,8 +10,8 @@
 'use strict';
 
 if ( !Array.prototype.forEach ) {
-
-  Array.prototype.forEach = function( callback, thisArg ) {
+  // Ignore complexity eslint offense for polyfill.
+  Array.prototype.forEach = function( callback, thisArg ) { //eslint-disable-line
 
     var T, k;
 

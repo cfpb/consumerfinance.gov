@@ -246,12 +246,11 @@
   tags:
     - cfgov-cf-enhancements
 */
-
+@tr-border: @gray-50;
 th,
 td {
     padding: unit(10px / @base-font-size-px, em)
              unit(10px / @base-font-size-px, em);
-    background: @white;
     vertical-align: top;
 
     // Needed to override styles from cf-core.
@@ -265,14 +264,14 @@ thead th {
 }
 
 tbody {
-    border-top: 1px solid @gray-50;
+    border-top: 1px solid @tr-border;
 
     th {
         .webfont-medium();
     }
 
     tr {
-        border-bottom: 1px solid @gray-50;
+        border-bottom: 1px solid @tr-border;
     }
 }
 
@@ -321,6 +320,8 @@ tbody {
                 <tr>
                     <th>Column 1</th>
                     <th>Column 2</th>
+                    <th>Column 3</th>
+                    <th>Column 4</th>
                 </tr>
             </thead>
             <tbody>
@@ -344,10 +345,56 @@ tbody {
                 </tr>
             </tbody>
         </table>
+    - name: simple-table__row-links (modifier)
+      markup: |
+        <table class="simple-table simple-table__row-links">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#">Lorem ipsum dolor.</a></td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td><a href="#">Lorem ipsum dolor.</a></td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+      codenotes:
+        - |
+          .simple-table.simple-table__row-links
+      notes:
+        - "Modifier that makes rows appear to be hoverable links.
+           Used in coordination with simple-table-row-links.js."
+    tags:
   tags:
     - cfgov-cf-enhancements
 */
+@td-bg-mobile: @gray-5;
+@tr-link-color: @white;
+@tr-link-bg-hover: @pacific-80;
 .simple-table {
+
+    &__row-links {
+      .respond-to-min(960px, {
+          tr:hover {
+              td {
+                  background: @tr-link-bg-hover;
+                  color: @tr-link-color;
+                  cursor: pointer;
+              }
+              a {
+                  color: @tr-link-color;
+              }
+          }
+      });
+    }
+
     .respond-to-max(959px, {
 
         font-size: 14px;
@@ -367,7 +414,7 @@ tbody {
         td:first-child {
             .h4();
 
-            background-color: @gray-5;
+            background-color: @td-bg-mobile;
             margin-bottom: 10px;
         }
 
@@ -390,8 +437,6 @@ tbody {
         }
     });
 }
-
-
 
 
 /* topdoc
