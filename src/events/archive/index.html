@@ -27,9 +27,7 @@
         {# Set the filters #}
         {% from "post-macros.html" import filters as filters with context %}
         {% set filter_by = ['range_date', 'tags'] %}
-        {{ filters(filter_by, vars.query, vars.events, 'events',
-           { 'expand_label': 'Filter posts' }) }}
-
+        {{ filters(filter_by, vars.query, vars.events, 'events', { 'expand_label': 'Filter posts' }) }}
         <div>
             {% from "_event-landing-macros.html" import event_preview as event_preview %}
             {% for post in vars.events %}
