@@ -32,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Careers processor/mapping/query.
 - Added `office_[office slug]` class to offices template.
 - Careers to the lookups.py
+- Added `media_image__150` modifier for 150 pixel wide images.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -48,6 +49,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `sub-page_[sub-page slug]` class to main content area of sub_pages template.
 - Styled unordered lists as branded lists in the `office_intro-text`,
   `sub-page_content`, and `sub-page_content-markup` class areas.
+- Updated all careers images to 2x size and have the same markup structure.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
