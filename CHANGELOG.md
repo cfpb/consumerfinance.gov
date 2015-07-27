@@ -33,6 +33,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `office_[office slug]` class to offices template.
 - Careers to the lookups.py
 - Added `media_image__150` modifier for 150 pixel wide images.
+- Added `simple-table-row-links.js` for making tables with linkable rows.
+- Added `event-listener.js` and `query-selector.js` polyfills for IE8.
+- Added `@tr-border` variable to `cf-enhancements.less`
+  for simple-table border color.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -52,7 +56,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated all careers images to 2x size and have the same markup structure.
 - Updated event macros to use Sheer 'when' function in order to
   display content based on state.
-- Tied careers data into single template and renamed to _single.html
+- Tied careers data into single template and renamed to `_single.html`.
+- Replaced career pages mock jobs data with data from the jobs API.
+- Made jobs list table on /careers/current-openings/ have linkable rows.
+- Adds eslint ignore lines for polyfills, which will not be changing.
+- Moved CF table color overrides to `cf-theme-overrides.less`.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
