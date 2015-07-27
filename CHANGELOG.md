@@ -52,6 +52,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated all careers images to 2x size and have the same markup structure.
 - Updated event macros to use Sheer 'when' function in order to
   display content based on state.
+- Tied careers data into single template and renamed to _single.html
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
