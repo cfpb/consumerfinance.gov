@@ -54,14 +54,13 @@
                 <ul class="list list__unstyled">
                     {% for career in vars.careers %}
                     <li class="list_item">
-                        <a class="list_link" href="{{ career.permalink }}">{{ career.title }}</a>
-                        <p class="summary_text">
-                            <small>
-                                CLOSING
-                                <time datetime="{{ career.close_date | date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
-                                    {{ career.close_date | date('%b %-d, %Y') }}
-                                </time>
-                            </small>
+                        <a class="list_link"
+                            href="{{ career.permalink }}">{{ career.title }}</a>
+                        <p class="date">
+                            CLOSING
+                            <time datetime="{{ career.close_date | date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
+                                {{ career.close_date | date('%b %-d, %Y') }}
+                            </time>
                         </p>
                     </li>
                     {% endfor %}
