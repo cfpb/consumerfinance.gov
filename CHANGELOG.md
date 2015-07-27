@@ -50,12 +50,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Styled unordered lists as branded lists in the `office_intro-text`,
   `sub-page_content`, and `sub-page_content-markup` class areas.
 - Updated all careers images to 2x size and have the same markup structure.
+- Updated event macros to use Sheer 'when' function in order to
+  display content based on state.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
 - Removed `_tests/browser_tests/README.md`, `_tests/macro_testing/README.md`, `_tests/processor_tests/README.md`.
 - Removed `grunt vendor` from `setup.sh`.
 - Removed unused CSS on `office.less`
+- Removed `/events/archive/_single.html`
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused
