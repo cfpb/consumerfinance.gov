@@ -31,6 +31,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `offices/project-catalyst`.
 - Careers processor/mapping/query.
 - Added `office_[office slug]` class to offices template.
+- Careers to the lookups.py
+- Added `media_image__150` modifier for 150 pixel wide images.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -47,11 +49,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved `sub-page_[sub-page slug]` class to main content area of sub_pages template.
 - Styled unordered lists as branded lists in the `office_intro-text`,
   `sub-page_content`, and `sub-page_content-markup` class areas.
+- Updated all careers images to 2x size and have the same markup structure.
+- Updated event macros to use Sheer 'when' function in order to
+  display content based on state.
+- Tied careers data into single template and renamed to _single.html
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
 - Removed `_tests/browser_tests/README.md`, `_tests/macro_testing/README.md`, `_tests/processor_tests/README.md`.
 - Removed `grunt vendor` from `setup.sh`.
+- Removed unused CSS on `office.less`
+- Removed `/events/archive/_single.html`
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused
@@ -60,6 +68,35 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added browser tests to linting task
 - Fixed MobileOnlyExpandable error on office page.
 - Normalized use of jinja quotes to single quote
+
+## 3.0.0-2.0.0 - 2015-07-24
+
+### Added
+- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
+- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
+- Added `u-hidden` utility class for fully hiding an element.
+- Added `TEST.md` readme file for testing instructions.
+- Added `grunt clean` and `grunt copy` tasks.
+- Added `grunt clean` step to `setup.sh`.
+
+### Changed
+- Updated primary navigation to match new mega menu design.
+- Changed project architecture to having `/src/` and `/dist/` directory.
+- Changed `/_tests/` directory name to `/test/`.
+- Changed `/_tests/macro_testing` directory name to `/test/macro_tests`.
+- Moved `browserify-shims.js` to `/config/` directory.
+
+### Removed
+- Removed requestAnimationFrame polyfill.
+- Removed `_tests/browser_tests/README.md`,
+  `_tests/macro_testing/README.md`, `_tests/processor_tests/README.md`.
+- Removed `grunt vendor` from `setup.sh`.
+
+### Fixed
+- Fixed issue on IE11 when using the dates to filter caused
+  by toString method.
+- Event tag filtering on archive page
+
 
 ## 3.0.0-1.3.0 - 2015-07-16
 
