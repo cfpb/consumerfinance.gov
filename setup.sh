@@ -37,7 +37,7 @@ clear(){
 install(){
   echo 'Installing project dependencies...'
   npm install
-  bower install
+  bower install --config.interactive=false
 }
 
 # Run tasks to build the project for distribution.
