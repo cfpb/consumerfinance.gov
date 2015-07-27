@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-privacy-policy.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-privacy-policy.html' as vars with context %}
 
 {# TODO: Remove and replace with Privacy View #}
 {% set view = get_document('views', 'newsroom') %}
@@ -41,7 +41,7 @@
                     related_content">
             <div class="content-l content-l__main">
                 <section class="block block__flush-top content-l_col content-l_col-1-2">
-                    {% import "related-links.html" as related_links %}
+                    {% import 'related-links.html' as related_links %}
                     {{ related_links.render(view.related_links) }}
                 </section>
             </div>

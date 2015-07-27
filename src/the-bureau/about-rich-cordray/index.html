@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'about-rich-cordray' %}
 
 {% block title -%}
@@ -12,7 +12,7 @@
 
 {% block content_main %}
 
-	{% import "macros/share.html" as share %}
+	{% import 'macros/share.html' as share %}
 
     <div class="block block__flush-top">
         <h1>
@@ -188,7 +188,7 @@
         </div>
 
         <section class="block u-mb0">
-            {%- import "related-links.html" as related_links %}
+            {%- import 'related-links.html' as related_links %}
             {{ related_links.render([
                 [ vars.path + 'about-steve-antonakes/',
                   'Learn about Deputy Director Steven Antonkes' ],

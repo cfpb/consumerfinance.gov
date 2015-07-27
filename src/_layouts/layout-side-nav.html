@@ -1,4 +1,4 @@
-{% extends "layout-1-3.html" %}
+{% extends 'layout-1-3.html' %}
 
 {#
     docs/sheer-layouts/layout-side-nav/
@@ -12,27 +12,27 @@
 
 {# Set default value for nav_items array. #}
 {% set nav_items = [(
-    "/docs/sheer-layouts/layout-side-nav/",
-    "",
-    "Please review the instructions in _layouts/layout-side-nav.html for setting up the side nav."
+    '/docs/sheer-layouts/layout-side-nav/',
+    '',
+    'Please review the instructions in _layouts/layout-side-nav.html for setting up the side nav.'
 )] %}
 
-{% set active_nav_id = active_nav_id|default("index") -%}
+{% set active_nav_id = active_nav_id|default('index') -%}
 
 {# Adding the side nav macro #}
 {% block content_sidebar %}
-    {% import "sidenav.html" as sidenav %}
+    {% import 'sidenav.html' as sidenav %}
     {{ sidenav.render(vars.nav_items, active_nav_id) }}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}
 {% block content_sidebar_modifiers -%}
     content__flush-all-on-small
-    {{ "content__half-top-on-desk" if breadcrumb_items | length > 0 }}
+    {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 }}
 {%- endblock %}
 
 {# Extra classes needed for .content_main #}
 {% block content_main_modifiers -%}
     content__flush-top-on-small
-    {{ "content__half-top-on-desk" if breadcrumb_items | length > 0 }}
+    {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 }}
 {%- endblock %}

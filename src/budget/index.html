@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-budget.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-budget.html' as vars with context %}
 
 {% block title -%}
     Budget and Strategy
@@ -113,7 +113,7 @@
                 </section>
                 <section class="u-mb20 content-l_col content-l_col-1-2">
                     {# TODO: Add Civil Penalty Fund URL. #}
-                    {%- import "related-links.html" as related_links -%}
+                    {%- import 'related-links.html' as related_links -%}
                     {{- related_links.render([
                         [ '/the-bureau/',
                           'About the CFPB' ],

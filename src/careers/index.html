@@ -1,5 +1,5 @@
-{% extends "layout-2-1-bleedbar.html" %}
-{% import "_vars-careers.html" as vars with context %}
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import '_vars-careers.html' as vars with context %}
 
 {% block title -%}
     Careers at the CFPB
@@ -140,19 +140,19 @@
         </div>
     </div>
 
-    {% include "_template-block-social.html" %}
+    {% include '_template-block-social.html' %}
 
 {% endblock %}
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% import "macros/activity-snippets.html" as activity_snippets with context %}
+        {% import 'macros/activity-snippets.html' as activity_snippets with context %}
         {% set activities_feed = activity_snippets.render(tags, ['blog'],include_date_flag=true) %}
         {% include 'templates/activities-feed.html' %}
     </section>
     <section class="block">
         {# TODO: Add OCR URL. #}
-        {%- import "related-links.html" as related_links -%}
+        {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
             [ '/blog/',
               'CFPB Blog' ],

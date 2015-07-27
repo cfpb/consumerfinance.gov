@@ -67,7 +67,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Event tag filtering on archive page
 - Added browser tests to linting task
 - Fixed MobileOnlyExpandable error on office page.
-
+- Normalized use of jinja quotes to single quote
 
 ## 3.0.0-2.0.0 - 2015-07-24
 

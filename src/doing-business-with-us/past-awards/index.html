@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-doing-business-with-us.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-doing-business-with-us.html' as vars with context %}
 {%- set active_nav_id = 'past-awards' -%}
 
 {% block title -%}
@@ -31,7 +31,7 @@
         {% set page = get_document('pages', '36603') %}
         {{ page.content | safe }}
 
-        {% include "_process-smbiz-footer.html" %}
+        {% include '_process-smbiz-footer.html' %}
     </div>
 
 {% endblock %}

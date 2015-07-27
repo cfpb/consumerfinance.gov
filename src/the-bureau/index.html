@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 
 {% block title -%}
     The Bureau
@@ -28,7 +28,7 @@
 
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
-        {% import "macros/youtube.html" as YouTube %}
+        {% import 'macros/youtube.html' as YouTube %}
         {% call YouTube.render({
             'video_id' : 'en0Iq8II4fA',
             'image_res' : 'max'
@@ -77,7 +77,7 @@
     companies, complaints from consumers, and our own investigations—and when we find
     unfair, deceptive, or abusive practices, we take action. We also:</p>
 
-    {% import "macros/mobile-carousel.html" as mobile_carousel %}
+    {% import 'macros/mobile-carousel.html' as mobile_carousel %}
     {{ mobile_carousel.render({
         'image_sizes_class': 'media_image__130-to-150',
         'image_base_url':    '/static/img/',

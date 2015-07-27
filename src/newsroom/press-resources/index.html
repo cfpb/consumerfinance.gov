@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-newsroom.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-newsroom.html' as vars with context %}
 {% set active_nav_id = 'press-resources' %}
 
 {% block title -%}
@@ -208,16 +208,16 @@
                     <p class="short-desc">
                         Subscribe to get our press releases by email.
                     </p>
-                    {% import "macros/subscribe.html" as subscribe with context %}
+                    {% import 'macros/subscribe.html' as subscribe with context %}
                     {{ subscribe.render('USCFPB_23') }}
                 </div>
                 <div class="block block__sub">
-                    {% import "rss.html" as rss %}
+                    {% import 'rss.html' as rss %}
                     {{ rss.render(vars.rss_path) }}
                 </div>
             </section>
             <section class="content-l_col content-l_col-1-2">
-                {% include "templates/upcoming-events.html" %}
+                {% include 'templates/upcoming-events.html' %}
             </section>
         </div><!-- END .content-l -->
     </aside><!-- END .block -->

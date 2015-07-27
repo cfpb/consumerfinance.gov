@@ -17,7 +17,7 @@
    ========================================================================== #}
 
 {% macro render(options) -%}
-    {% import "macros/share.html" as share %}
+    {% import 'macros/share.html' as share %}
     {% set image_res = options.image_res | default('default') %}
     {% set image_res_options = {
           'default' : 'default.jpg',

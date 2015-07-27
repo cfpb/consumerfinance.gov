@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-newsroom.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-newsroom.html' as vars with context %}
 
 {% block title -%}
     Newsroom
@@ -18,17 +18,17 @@
     <h1 class="u-mb30">Newsroom</h1>
 
     {# Get the latest Featured Topic #}
-    {% import "featured-topic.html" as featured_topics %}
+    {% import 'featured-topic.html' as featured_topics %}
     {{ featured_topics.render(queries.featured_topic.search(size=1)) }}
 
     {# Set the filters #}
-    {% from "post-macros.html" import filters as filters with context %}
+    {% from 'post-macros.html' import filters as filters with context %}
     {% set filter_by = ['category', 'tags', 'author', 'range_date'] %}
     {{ filters(filter_by, vars.query, vars.newsrooms, 'newsroom',
        { 'expand_label': 'Filter posts' }) }}
 
     {# Show the posts #}
-    {% import "posts-paginated.html" as posts_paginated with context %}
+    {% import 'posts-paginated.html' as posts_paginated with context %}
     {{ posts_paginated.render(vars.newsrooms) }}
 
     {# Footer #}
@@ -44,11 +44,11 @@
                     <p class="short-desc">
                         Subscribe to get our press releases by email.
                     </p>
-                    {% import "macros/subscribe.html" as subscribe with context %}
+                    {% import 'macros/subscribe.html' as subscribe with context %}
                     {{ subscribe.render('USCFPB_23') }}
                 </div>
                 <div class="block__sub content-l_col content-l_col-1-2">
-                    {% import "rss.html" as rss %}
+                    {% import 'rss.html' as rss %}
                     {{ rss.render(vars.rss_path) }}
                 </div>
             </div>
@@ -64,7 +64,7 @@
                                 block__flush-top
                                 content-l_col
                                 content-l_col-1-2">
-                    {% import "related-links.html" as related_links %}
+                    {% import 'related-links.html' as related_links %}
                     {{- related_links.render([
                         [
                             '/blog/',
@@ -77,7 +77,7 @@
                     ]) -}}
                 </section>
                 <section class="block content-l_col content-l_col-1-2">
-                    {% include "templates/upcoming-events.html" %}
+                    {% include 'templates/upcoming-events.html' %}
                 </section>
             </div>
         </div>

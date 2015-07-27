@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-events.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-events.html' as vars with context %}
 
 {# This sets the related links in the footer
 {% set view = get_document('views', 'newsroom') %}
@@ -25,13 +25,13 @@
 
 {% block hero %}
     {% if vars.events.current_page == 1 %}
-        {% import "sidenav.html" as sidenav %}
+        {% import 'sidenav.html' as sidenav %}
         {{ sidenav.render(
             vars.nav_items,
             'index',
             'u-show-on-mobile u-mb0'
         ) }}
-        {% from "_event-landing-macros.html" import event_hero as event_hero %}
+        {% from '_event-landing-macros.html' import event_hero as event_hero %}
         {{ event_hero(vars.hero) }}
     {% endif %}
 {% endblock %}
@@ -46,7 +46,7 @@
     <section class="media block block__flush-bottom block__flush-top">
         <h1>Upcoming events</h1>
         <div class='block block__flush-bottom block__padded-top'>
-            {% from "_event-landing-macros.html" import event_preview as event_preview %}
+            {% from '_event-landing-macros.html' import event_preview as event_preview %}
             {% for n in range(1, vars.events_list | length) %}
                 {{ event_preview(vars.events_list[n]) }}
             {% endfor %}
@@ -73,16 +73,16 @@
                         <p class="short-desc">
                             Subscribe to our email newsletter. We will update you on new event updates.
                         </p>
-                        {% import "macros/subscribe.html" as subscribe with context %}
+                        {% import 'macros/subscribe.html' as subscribe with context %}
                         {{ subscribe.render('USCFPB_93') }}
                     </div>
                     <div>
-                        {% import "rss.html" as rss %}
+                        {% import 'rss.html' as rss %}
                         {{ rss.render(vars.rss_path) }}
                     </div>
                 </section>
                 <section class="content-l_col content-l_col-1-2">
-                    {%- import "related-links.html" as related_links -%}
+                    {%- import 'related-links.html' as related_links -%}
                     {{- related_links.render([
                         [
                             '/newsroom/',

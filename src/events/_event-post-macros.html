@@ -60,7 +60,7 @@
    ========================================================================== #}
 
 {% macro event_location_image(options={}) %}
-    {% from "macros/util/format.html" import location_image_url as location_image_url %}
+    {% from 'macros/util/format.html' import location_image_url as location_image_url %}
 
     <img class="{{ options.additional_classes }}"
          src="{{ location_image_url({
@@ -212,7 +212,7 @@
 
 {% macro post_summary(post, path, event_state) %}
 
-{%- import "tags.html" as tags %}
+{%- import 'tags.html' as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
             {{ calendar_icon(post.beginning_time.date) }}
@@ -341,9 +341,9 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {{ block.beginning_time.date | date("%-I:%M %p %Z", block.beginning_time.timezone) }}
+                    {{ block.beginning_time.date | date('%-I:%M %p %Z', block.beginning_time.timezone) }}
                     &ndash;
-                    {{ block.ending_time.date | date("%-I:%M %p %Z", block.ending_time.timezone) }}
+                    {{ block.ending_time.date | date('%-I:%M %p %Z', block.ending_time.timezone) }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                     {{ block.desc }}

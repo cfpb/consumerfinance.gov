@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-careers.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-careers.html' as vars with context %}
 {%- set active_nav_id = 'application-process' -%}
 
 {% block title -%}
@@ -21,7 +21,7 @@
 
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
-        {% import "macros/youtube.html" as YouTube %}
+        {% import 'macros/youtube.html' as YouTube %}
         {% call YouTube.render({
             'video_id' : 'XCbZnTIeTOY',
             'image_res' : 'max',
@@ -286,7 +286,7 @@
                             block__flush-top
                             block__padded-bottom
                             block__flush-bottom">
-                {% include "_template-current-openings.html" %}
+                {% include '_template-current-openings.html' %}
             </section>
             <section class="content-l_col
                             content-l_col-1-3
@@ -295,7 +295,7 @@
                             block__flush-top
                             block__padded-bottom
                             block__flush-bottom">
-                {% include "_template-working-at-cfpb.html" %}
+                {% include '_template-working-at-cfpb.html' %}
             </section>
             <section class="content-l_col
                             content-l_col-1-3
@@ -304,15 +304,15 @@
                             block__flush-top
                             block__padded-bottom
                             block__flush-bottom">
-                {% include "_template-students-and-graduates.html" %}
+                {% include '_template-students-and-graduates.html' %}
             </section>
         </div>
     </div>
 
-    {% include "_template-block-social.html" %}
+    {% include '_template-block-social.html' %}
 
     <aside>
-        {% include "./_template-careers-related-links.html" %}
+        {% include './_template-careers-related-links.html' %}
     </aside>
 
 {% endblock %}
