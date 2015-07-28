@@ -34,8 +34,7 @@
     {% if sub_page.body_content or sub_page.related_links %}
     <section class="block
                     block__padded-top
-                    block__border-top
-                    sub-page_content-markup">
+                    block__border-top">
 
         {% if sub_page.related_links %}
         <section class="block
@@ -61,7 +60,9 @@
             {% endif %}
         {% endfor %}
 
-        {{ content.markup | safe}}
+        <div class="sub-page_content-markup">
+            {{ content.markup | safe}}
+        </div>
     </section>
     {% endif %}
 
