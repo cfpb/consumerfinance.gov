@@ -262,36 +262,9 @@
 }) -%}
 {%- endif -%}
 
-{#- Determine the active filters. -#}
-{%- set active_filters = [] -%}
-{%- set active_date_filters = [] -%}
-
-{# This is a hack. `_ignore` is a variable we will never use but we can use
-   its var expression as a means to write the expression needed to update
-   `active_date_filters`. #}
-{%- for filter in filters %}
-    {%- if filter == 'range_date' -%}
-        {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_gte')) %}
-        {# Only show one date if the start & end range values are the same. #}
-        {%- if selected_filters_for_field('range_date_gte') != selected_filters_for_field('range_date_lte') -%}
-          {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
-        {%- endif -%}
-    {%- elif filter == 'activity_category' -%}
-        {% set _ignore = active_filters.extend(selected_filters_for_field('type')) %}
-        {% set _ignore = active_filters.extend(selected_filters_for_field('category')) %}
-    {%- else -%}
-        {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
-    {%- endif -%}
-{% endfor -%}
-
-{%- set active_filters_total = active_filters|length + active_date_filters|length -%}
-
-{%- set filter_dict = {
-    'filters': filters,
-    'active_filters_total': active_filters_total
-} -%}
-
-{% set is_expanded = active_filters_total > 0
+{%- import 'macros/active-filters.html' as active_filters with context %}
+{% set active_filters_markup = active_filters.render(posts, filters, user_options) %}
+{% set is_expanded = active_filters_markup | trim | length > 0
                      and options.show_current_filters
 %}
 
@@ -321,43 +294,7 @@
 </div>
 
 {%- if options.show_current_filters -%}
-    {{ active_filters_helper(posts, filter_dict, options) }}
-{%- endif -%}
-
-{% endmacro %}
-
-
-{# A helper macro for filters()
-   ========================================================================== #}
-{% macro active_filters_helper(posts, filter_dict, options) %}
-{%- set filters = filter_dict.filters -%}
-{%- set active_filters_total = filter_dict.active_filters_total -%}
-{% import 'macros/notification.html' as notification %}
-
-{%- if active_filters_total > 0 and options.show_filters_label -%}
-    <div class="filtered-by">
-        {%- if posts|list|length > 0 -%}
-            {% set text =  posts.total | string
-                        + ' filtered result'
-                        + ('s' if posts.total > 1 else '') %}
-            {% set type = 'success' %}
-        {%- else -%}
-            {% macro _no_results_text (posts, filter_dict, options) %}
-                Sorry, there were no results based
-                on your filter selections.
-                <p class="short-desc u-mt15">Please clear the filter or
-                  change your selections and try again.
-                </p>
-            {% endmacro %}
-            {% set text = _no_results_text() %}
-            {% set type = 'warning' %}
-        {%- endif -%}
-
-        {{ notification.render({
-            'text': text,
-            'type': type
-        }) }}
-    </div>
+{{ active_filters_markup }}
 {%- endif -%}
 
 {% endmacro %}
