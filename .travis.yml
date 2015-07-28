@@ -8,7 +8,13 @@ sudo: false
 services:
   - elasticsearch
 
+env:
+  global:
+    - secure: iatphL7QjdBmREm4YdJ+luQpOKqnxaxpCTwFuFxC/u2P3bnlyDoEvdazsY3Q6ZrhxL/PkV3G+OX75djIXhAe0o+J/1YC2+fmL9i6P5OnXT765liT9s6gpJfhw7Xqw8smaSlxPBCgYbrP2W02B8bJedSVRpFhjEoELQgdIjwLb+U=
+    - secure: LbOyop6UQfpqVNICc/ah5xJ2OsU+lNjJFMc84n+d/D7bpOZXgLng1LK2kDiRl8yzC5/BFlyt2fSWOsRmdnaL/4e18hRmJ0MWHL7IvdNVLVYw69wo9MQsa3+o4uDLShH6mr4rNAASzSoOZV87aa96zapLIHPAlLJbiZzD8MV7uXk=
+
 addons:
+  sauce_connect: true
   apt:
     package:
       - nodejs
@@ -21,7 +27,6 @@ install:
   - pip install -e sheer
   - pip install -r sheer/requirements.txt
   - cp .env_SAMPLE .env
-  - sheer index
   - pip install -r test/macro_tests/requirements.txt
 
   # JavaScript test requirements
@@ -29,10 +34,22 @@ install:
   - npm install -g bower
   - npm install -g protractor
   - npm install
+  - bower install --config.interactive=false
+  - grunt clean
+  - grunt build
+
+before_script:
+  - sheer index
+  - cd dist/ && sheer serve &
+  - sleep 30
+  - webdriver-manager update
+  - webdriver-manager start &
+  - sleep 10
 
 script:
   # Run tests for JavaScript
   - grunt test
 
-  - cd test/macro_tests
-  - python test_macros.py
+  - python test/macro_tests/test_macros.py
+
+  - protractor test/browser_tests/travis_conf.js
