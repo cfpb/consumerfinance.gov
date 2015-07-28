@@ -39,15 +39,12 @@ install:
   - grunt clean
   - grunt build
 
-before_script:
-  - cd dist/
-  - sheer serve &
-  - sleep 10
 
 script:
   # Run tests for JavaScript
   - grunt test
 
   - python test/macro_tests/test_macros.py
-
-  - protractor /test/browser_tests/jenkins_conf.js
+  - cd dist/ && sheer serve &
+  - sleep 10
+  - protractor ../test/browser_tests/jenkins_conf.js
