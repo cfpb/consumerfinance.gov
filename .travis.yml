@@ -34,5 +34,8 @@ script:
   # Run tests for JavaScript
   - grunt test
 
-  - cd test/macro_tests
-  - python test_macros.py
+  - python test/macro_tests/test_macros.py
+
+  - sheer serve &
+  - sleep 10
+  - protractor test/browser_tests/jenkins_conf.js
