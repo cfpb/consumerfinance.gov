@@ -1,5 +1,7 @@
 'use strict';
 
+var env = require( './environment.js' );
+
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
@@ -11,5 +13,13 @@ exports.config = {
     'name': 'cfgov-refresh test'
   },
 
-  specs: ['spec_suites/shared/*.js']
+  specs: ['spec_suites/shared/*.js'],
+
+  baseUrl: env.baseUrl,
+
+  onPrepare: function() {
+    browser.ignoreSynchronization = true;
+    return;
+  }
+
 };
