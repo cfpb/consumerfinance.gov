@@ -34,10 +34,13 @@ install:
   - npm install -g grunt-cli
   - npm install -g bower
   - npm install -g protractor
-  - sh /setup.sh
+  - npm install
+  - bower install --config.interactive=false
+  - grunt clean
+  - grunt build
 
 before_script:
-  - cd /dist/
+  - cd dist/
   - sheer serve
   - sleep 10
 
