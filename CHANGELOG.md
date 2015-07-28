@@ -82,6 +82,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed MobileOnlyExpandable error on office page.
 - Normalized use of jinja quotes to single quote
 - Fixed existing linting errors and warnings in browser tests
+- Fixed issue with active filters on`/the-bureau/leadership-calendar/print/` page.
 
 ## 3.0.0-2.0.0 - 2015-07-24
 
