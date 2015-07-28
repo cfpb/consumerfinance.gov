@@ -41,9 +41,10 @@ install:
 
 before_script:
   - cd dist/ && sheer serve &
-  - sleep 10
+  - sleep 30
   - webdriver-manager update
   - webdriver-manager start &
+  - sleep 10
 
 script:
   # Run tests for JavaScript
