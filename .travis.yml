@@ -34,7 +34,7 @@ install:
   - npm install -g grunt-cli
   - npm install -g bower
   - npm install -g protractor
-  - ./setup.sh
+  - sh /setup.sh
 
 before_script:
   - cd /dist/
