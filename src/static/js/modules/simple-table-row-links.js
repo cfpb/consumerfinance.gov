@@ -12,7 +12,7 @@ function init() {
   var tables = document.querySelectorAll( '.simple-table__row-links' );
 
   for ( var i = tables.length - 1; i >= 0; i-- ) {
-    tables[i].addEventListener( 'mousedown', _tableClicked, false );
+    tables[i].addEventListener( 'click', _tableClicked, false );
   }
 }
 
