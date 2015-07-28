@@ -514,5 +514,5 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerTask('build', ['vendor', 'css', 'js', 'copy']);
-  grunt.registerTask('default', ['test', 'build']);
+  grunt.registerTask('default', ['build', 'test']);
 };
