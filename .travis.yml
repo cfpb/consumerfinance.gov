@@ -47,4 +47,4 @@ script:
   - python test/macro_tests/test_macros.py
   - cd dist/ && sheer serve &
   - sleep 10
-  - protractor ../test/browser_tests/jenkins_conf.js
+  - protractor ../test/browser_tests/travis_conf.js
