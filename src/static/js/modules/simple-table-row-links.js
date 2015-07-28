@@ -24,7 +24,7 @@ function init() {
 function _tableClicked( event ) {
   var target = event.target;
   var tagName;
-  while ( target.tagName !== 'TR') {
+  while ( target.tagName !== 'TR' ) {
     tagName = target.tagName;
     if ( tagName === 'TH' || tagName === 'A' ) {
       return;

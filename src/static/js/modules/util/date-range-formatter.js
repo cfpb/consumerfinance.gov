@@ -15,10 +15,10 @@ var _defaults = {
       fillRangeEndDate:   new Date(),
       fillRangeFlag:      true,
       sortRangeFlag:      true,
-      dateRange: {
+      dateRange:          {
         startDate: '',
         endDate:   '',
-        isValid: true
+        isValid:   true
       }
     };
 

@@ -7,7 +7,8 @@
 
 var $ = require( 'jquery' );
 var MobileCarousel = require( '../../modules/classes/MobileCarousel' );
-var MobileOnlyExpandable = require( '../../modules/classes/MobileOnlyExpandable' );
+var MobileOnlyExpandable =
+  require( '../../modules/classes/MobileOnlyExpandable' );
 
 function init() {
 

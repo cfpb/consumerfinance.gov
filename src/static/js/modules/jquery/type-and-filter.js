@@ -36,10 +36,15 @@ function init() {
           $input:                  $(),
           $items:                  $(),
           allMessage:              'Showing all {{ count }}.',
-          filteredMessageSingular: 'There is 1 result for "{{ term }}".',
-          filteredMessageMultiple: 'There are {{ count }} results for "{{ term }}"',
-          minTermMessage:          'The search term "{{ term }}" is not long enough. <span class="short-desc">Please use a minimum of 3 characters.</span>',
-          clickCallback:           function( e ) {}
+          filteredMessageSingular:
+            'There is 1 result for "{{ term }}".',
+          filteredMessageMultiple:
+            'There are {{ count }} results for "{{ term }}"',
+          minTermMessage:
+            'The search term "{{ term }}" is not long enough. ' +
+            '<span class="short-desc">' +
+            'Please use a minimum of 3 characters.</span>',
+          clickCallback: function( e ) {}
         }, userSettings ),
         $this = $( this ),
         $form = settings.$form,
@@ -92,8 +97,10 @@ function init() {
             $this.trigger( 'search' );
           } else {
             $form.trigger( 'cf_notifier:notify', {
-              message: settings.minTermMessage.replace( /{{[\s]*term[\s]*}}/, $input.val() ),
-              state: 'error',
+              message:
+                settings.minTermMessage
+                  .replace( /{{[\s]*term[\s]*}}/, $input.val() ),
+              state:          'error',
               insertLocation: 'appendTo'
             } );
             $input.addClass( 'error' );
@@ -116,8 +123,8 @@ function init() {
           message = message.replace( /{{[\s]*count[\s]*}}/, resultsCount );
 
           $form.trigger( 'cf_notifier:notify', {
-            message: message,
-            state:   state,
+            message:        message,
+            state:          state,
             insertLocation: 'appendTo'
           } );
         } )
@@ -130,7 +137,8 @@ function init() {
             .focus();
           $items.show();
           resultsCount = $items.filter( ':visible' ).length;
-          var message = settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
+          var message =
+            settings.allMessage.replace( /{{[\s]*count[\s]*}}/, resultsCount );
           $form.trigger( 'cf_notifier:clear' );
         } )
         // Remove the validation class during these two events.
@@ -203,7 +211,6 @@ function init() {
     // Loop through each word
     $.each( words, function( index, value ) {
       var matchScore = value.score( searchTerm, settings.fuzziness );
-      // console.log( 'searchTerm:', searchTerm, ' | word:', value, ' | score:', matchScore );
       if ( matchScore >= settings.threshold ) {
         match = true;
         // Return false to break out of the $.each loop.

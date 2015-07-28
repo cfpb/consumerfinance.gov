@@ -28,7 +28,7 @@ function BreakpointHandler( opts ) {
   if ( !opts ||
        !opts.breakpoint ||
        !opts.enter ||
-       !opts.leave) {
+       !opts.leave ) {
     throw new Error( 'BreakpointHandler constructor requires arguments!' );
   }
 

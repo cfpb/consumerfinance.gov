@@ -7,7 +7,11 @@ function init() {
   $.fn.customSelect = function( userSettings ) {
 
     function getSelectedOptionText( $customSelect ) {
-      return $customSelect.find( 'option[value="' + $customSelect.find( '.custom-select_select' ).val() + '"]' ).text();
+      return $customSelect.find(
+        'option[value="' +
+        $customSelect.find( '.custom-select_select' ).val() +
+        '"]'
+      ).text();
     }
 
     function updateSelectText( $customSelect ) {
@@ -33,7 +37,8 @@ function init() {
           }, userSettings ),
           changeCallback = settings.clickCallback,
           $this = $( this ),
-          $select = $( this ).find( 'select' ).addClass( 'custom-select_select' ),
+          $select = $( this ).find( 'select' )
+            .addClass( 'custom-select_select' ),
           $text = $this.append( '<span class="custom-select_text"></span>' );
 
         // Add a class to activate the styling

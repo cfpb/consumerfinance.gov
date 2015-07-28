@@ -7,8 +7,11 @@
 var $ = require( 'jquery' );
 var handlebars = require( 'handlebars' );
 
-var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }}" style="display: none;">' +
-  '<span class="cf-notification_icon cf-notification_icon__{{ state }} cf-icon cf-icon-{{ icon }}-round"></span>' +
+var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }}" ' +
+                             'style="display: none;">' +
+  '<span class="cf-notification_icon ' +
+               'cf-notification_icon__{{ state }} ' +
+               'cf-icon cf-icon-{{ icon }}-round"></span>' +
   '<p class="cf-notification_text">{{{ message }}}</p>' +
   '</div>';
 
@@ -16,7 +19,7 @@ var _notifier = {
   defaults: {
     message:        'There was an error with your submission',
     state:          'error',
-    duration:        200,
+    duration:       200,
     easing:         'swing',
     template:       _notifierTemplate,
     insertLocation: 'prependTo',
@@ -164,7 +167,9 @@ function init() {
       method = _notifier.init;
       options = arguments;
     } else {
-      $.error( 'Method "' + method + '"" does not exist in the cf__notifier plugin' );
+      $.error(
+        'Method "' + method + '"" does not exist in the cf__notifier plugin'
+      );
       return this;
     }
 
