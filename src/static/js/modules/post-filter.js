@@ -98,7 +98,8 @@ PostFilter.prototype = {
   },
 
   onSubmit: function( e ) {
-    var dateRange = dateRangeFormatter.format( this.$gte.val(), this.$lte.val() );
+    var dateRange =
+      dateRangeFormatter.format( this.$gte.val(), this.$lte.val() );
     if ( dateRange && dateRange.isValid ) {
       this.$gte.val( dateRange.startDate );
       this.$lte.val( dateRange.endDate );

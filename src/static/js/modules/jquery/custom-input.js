@@ -29,12 +29,16 @@ function init() {
 
         // Wrap the label text for extra styling
         label.html( '' );
-        label.append( '<span class="custom-input_text">' + labelText + '</span>' );
+        label.append(
+          '<span class="custom-input_text">' + labelText + '</span>'
+        );
         label.append( input );
 
         // Add a simple element to act as our new visual input.
         // This will give us complete styling control.
-        label.append( '<span class="custom-input_' + input.attr( 'type' ) + '"></span>' );
+        label.append(
+          '<span class="custom-input_' + input.attr( 'type' ) + '"></span>'
+        );
 
         // Backfill support for :hover on certain elements.
         label.hover(
@@ -56,7 +60,10 @@ function init() {
         input.on( 'updateState', function() {
           if ( input.is( '[type=radio]' ) ) {
             $( '[name="' + input.attr( 'name' ) + '"]' ).each( function() {
-              mirrorCheckedStateWithClasses( $( this ), $( this ).parents( '.custom-input_label' ) );
+              mirrorCheckedStateWithClasses(
+                $( this ),
+                $( this ).parents( '.custom-input_label' )
+              );
             } );
           } else {
             mirrorCheckedStateWithClasses( input, label );
@@ -76,7 +83,9 @@ function init() {
             label.addClass( 'is-checkedFocus' );
           }
         } )
-        .on( 'blur', function() { label.removeClass( 'is-focused is-checkedFocused' ); } );
+        .on( 'blur', function() {
+          label.removeClass( 'is-focused is-checkedFocused' );
+        } );
       }
     } );
   };

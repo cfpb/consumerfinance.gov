@@ -5,12 +5,15 @@
 'use strict';
 
 var $ = require( 'jquery' );
-var MobileOnlyExpandable = require( '../../../modules/classes/MobileOnlyExpandable' );
+var MobileOnlyExpandable =
+  require( '../../../modules/classes/MobileOnlyExpandable' );
 
 function init() {
 
   // TODO: Remove this when per-page JS is introduced.
-  if ( document.querySelectorAll( '.careers-application-process' ).length === 0 ) {
+  if (
+    document.querySelectorAll( '.careers-application-process' ).length === 0
+  ) {
     return;
   }
 

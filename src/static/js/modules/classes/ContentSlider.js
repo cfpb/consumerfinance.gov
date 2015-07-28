@@ -38,7 +38,8 @@ function ContentSlider( elem, slideCount ) {
       // When slide is changed, animate height of container to accommodate
       // new slide's height.
       var slide = slider.$slides[targetInd];
-      slider.$slider.animate( { height: $( slide ).height() + 'px' }, self.speed );
+      slider.$slider
+        .animate( { height: $( slide ).height() + 'px' }, self.speed );
     }
   } );
   this.slickObj = this.$container.getSlick();
@@ -46,16 +47,22 @@ function ContentSlider( elem, slideCount ) {
 }
 
 ContentSlider.prototype.init = function() {
-  var self = this;
   this.$container.height( $( this.slickObj.$slides[0] ).height() );
-  this.$container.on( 'click.slider', '.content-show', $.proxy( this.slideInContent, this ) );
-  this.$container.on( 'click.slider', '.content-hide', $.proxy( this.slideOutContent, this ) );
+  this.$container.on(
+    'click.slider',
+    '.content-show',
+    $.proxy( this.slideInContent, this )
+  );
+  this.$container.on(
+    'click.slider',
+    '.content-hide',
+    $.proxy( this.slideOutContent, this )
+  );
 };
 
 ContentSlider.prototype.slideInContent = function( e ) {
   e.preventDefault();
   var contents,
-      self = this,
       $div = $( '<div>' ),
       $node = $( $( e.currentTarget ).data( 'content' ) );
   if ( $node.length ) {

@@ -5,7 +5,8 @@
 'use strict';
 
 var $ = require( 'jquery' );
-var MobileOnlyExpandable = require( '../../modules/classes/MobileOnlyExpandable' );
+var MobileOnlyExpandable =
+  require( '../../modules/classes/MobileOnlyExpandable' );
 
 function init() {
 
