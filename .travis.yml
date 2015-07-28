@@ -27,7 +27,6 @@ install:
   - pip install -e sheer
   - pip install -r sheer/requirements.txt
   - cp .env_SAMPLE .env
-  - sheer index
   - pip install -r test/macro_tests/requirements.txt
 
   # JavaScript test requirements
@@ -40,6 +39,7 @@ install:
   - grunt build
 
 before_script:
+  - sheer index
   - cd dist/ && sheer serve &
   - sleep 30
   - webdriver-manager update
