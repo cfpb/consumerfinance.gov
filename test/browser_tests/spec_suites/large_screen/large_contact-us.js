@@ -16,7 +16,9 @@ describe( 'Beta Contact Page', function() {
 
   it( 'should include 48 individual offices in alpha order', function() {
     expect( page.offices.count() ).toEqual( 48 );
-    expect( page.firstOfficeLabel.getText() ).toMatch( 'Academic Research Council' );
-    expect( page.lastOfficeLabel.getText() ).toMatch( 'Your Money, Your Goals Toolkit' );
+    expect( page.firstOfficeLabel.getText() )
+      .toMatch( 'Academic Research Council' );
+    expect( page.lastOfficeLabel.getText() )
+      .toMatch( 'Your Money, Your Goals Toolkit' );
   } );
 } );

@@ -21,7 +21,8 @@ describe( 'Contact Us Page', function() {
     var secondPhone = page.complaintPhone.last();
 
     expect( page.complaintPhone.count() ).toEqual( 2 );
-    expect( page.complaintPhone.getAttribute( 'class' ) ).toMatch( phoneClass );
+    expect( page.complaintPhone.getAttribute( 'class' ) )
+      .toMatch( phoneClass );
     expect( firstPhone.getText() ).toBe( '(855) 411-CFPB (2372)' );
     expect( firstPhone.getAttribute( 'href' ) ).toBe( 'tel:8554112372' );
     expect( secondPhone.getText() ).toBe( '(855) 729-CFPB (2372) TTY' );
@@ -34,16 +35,14 @@ describe( 'Contact Us Page', function() {
 
     expect( complaintLink.getText() ).toBeDefined();
     expect( complaintLink.getAttribute( 'href' ) ).toMatch( '/complaint/' );
-    expect( complaintLink.getAttribute( 'class' ) ).toMatch(
-      'jump-link__underline'
-    );
+    expect( complaintLink.getAttribute( 'class' ) )
+      .toMatch( 'jump-link__underline' );
   } );
 
   it( 'should include General Inquiries contact details', function() {
     expect( page.giEmail.getText() ).toBeDefined();
-    expect( page.giEmail.getAttribute( 'href' ) ).toBe(
-      'mailto:info@consumerfinance.gov'
-    );
+    expect( page.giEmail.getAttribute( 'href' ) )
+      .toBe( 'mailto:info@consumerfinance.gov' );
     expect( page.giPhone.getText() ).toBeDefined();
     expect( page.giPhone.getAttribute( 'href' ) ).toBe( 'tel:2024357000' );
     expect( page.giPhone.getAttribute( 'class' ) ).toMatch( phoneClass );

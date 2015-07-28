@@ -18,10 +18,22 @@ describe( 'The Bureau Page', function() {
 
   it( 'should include 3 bureau missions, Educate, Enforce, Empower',
     function() {
-      expect( page.missions.count() ).toEqual( 3 );
-      expect( page.missions.getText() ).toEqual['Educate',
-                                                'Enforce',
-                                                'Empower'];
+      expect( page.missions ).toEqual(
+        [
+          {
+            index: 0,
+            text:  'Educate'
+          },
+          {
+            index: 1,
+            text:  'Enforce'
+          },
+          {
+            index: 2,
+            text:  'Empower'
+          }
+        ]
+      );
     }
   );
 } );
