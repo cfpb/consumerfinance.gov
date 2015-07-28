@@ -41,7 +41,7 @@ install:
 
 before_script:
   - cd dist/
-  - sheer serve
+  - sheer serve &
   - sleep 10
 
 script:
