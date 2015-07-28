@@ -39,12 +39,16 @@ install:
   - grunt clean
   - grunt build
 
+before_script:
+  - cd dist/ && sheer serve &
+  - sleep 10
+  - webdriver-manager update
+  - webdriver-manager start &
 
 script:
   # Run tests for JavaScript
   - grunt test
 
   - python test/macro_tests/test_macros.py
-  - cd dist/ && sheer serve &
-  - sleep 10
-  - protractor ../test/browser_tests/travis_conf.js
+
+  - protractor test/browser_tests/travis_conf.js
