@@ -42,7 +42,9 @@ function init() {
     } );
 
     function togglePressedVal( jqueryObject ) {
-      var toggledPressedVal = toggleBoolean( jqueryObject.attr( 'aria-pressed' ) );
+      var toggledPressedVal = toggleBoolean(
+        jqueryObject.attr( 'aria-pressed' )
+      );
       jqueryObject.attr( 'aria-pressed', toggledPressedVal );
     }
 

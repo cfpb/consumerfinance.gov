@@ -31,22 +31,22 @@
    ========================================================================== #}
 
 {% macro share_twitter_url(options) %}
-    {% set _share_twitter_url = "http://twitter.com/intent/tweet" %}
-    {% set _share_twitter_url = _share_twitter_url + "?url=" + request.url|urlencode %}
-    {% set _share_twitter_url = _share_twitter_url + "&amp;via=CFPB" %}
+    {% set _share_twitter_url = 'http://twitter.com/intent/tweet' %}
+    {% set _share_twitter_url = _share_twitter_url + '?url=' + request.url|urlencode %}
+    {% set _share_twitter_url = _share_twitter_url + '&amp;via=CFPB' %}
     {% if options %}
         {# If this is a options object, check for custom fields having been set #}
         {% if options.text %}
-            {% set _share_twitter_url = _share_twitter_url + "&amp;text=" + options.text|urlencode + "%20--" %}
+            {% set _share_twitter_url = _share_twitter_url + '&amp;text=' + options.text|urlencode + '%20--' %}
         {% endif %}
         {% if options.related %}
-            {% set _share_twitter_url = _share_twitter_url + "&amp;related=" + options.related %}
+            {% set _share_twitter_url = _share_twitter_url + '&amp;related=' + options.related %}
         {% endif %}
         {% if options.language %}
-            {% set _share_twitter_url = _share_twitter_url + "&amp;lang=" + options.language %}
+            {% set _share_twitter_url = _share_twitter_url + '&amp;lang=' + options.language %}
         {% endif %}
         {% if options.hashtags %}
-            {% set _share_twitter_url = _share_twitter_url + "&amp;hashtags=" + options.hashtags %}
+            {% set _share_twitter_url = _share_twitter_url + '&amp;hashtags=' + options.hashtags %}
         {% endif %}
     {% endif %}
     {{ _share_twitter_url }}

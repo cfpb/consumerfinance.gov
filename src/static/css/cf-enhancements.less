@@ -246,12 +246,11 @@
   tags:
     - cfgov-cf-enhancements
 */
-
+@tr-border: @gray-50;
 th,
 td {
     padding: unit(10px / @base-font-size-px, em)
              unit(10px / @base-font-size-px, em);
-    background: @white;
     vertical-align: top;
 
     // Needed to override styles from cf-core.
@@ -265,14 +264,14 @@ thead th {
 }
 
 tbody {
-    border-top: 1px solid @gray-50;
+    border-top: 1px solid @tr-border;
 
     th {
         .webfont-medium();
     }
 
     tr {
-        border-bottom: 1px solid @gray-50;
+        border-bottom: 1px solid @tr-border;
     }
 }
 
@@ -321,6 +320,8 @@ tbody {
                 <tr>
                     <th>Column 1</th>
                     <th>Column 2</th>
+                    <th>Column 3</th>
+                    <th>Column 4</th>
                 </tr>
             </thead>
             <tbody>
@@ -344,10 +345,56 @@ tbody {
                 </tr>
             </tbody>
         </table>
+    - name: simple-table__row-links (modifier)
+      markup: |
+        <table class="simple-table simple-table__row-links">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#">Lorem ipsum dolor.</a></td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td><a href="#">Lorem ipsum dolor.</a></td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+      codenotes:
+        - |
+          .simple-table.simple-table__row-links
+      notes:
+        - "Modifier that makes rows appear to be hoverable links.
+           Used in coordination with simple-table-row-links.js."
+    tags:
   tags:
     - cfgov-cf-enhancements
 */
+@td-bg-mobile: @gray-5;
+@tr-link-color: @white;
+@tr-link-bg-hover: @pacific-80;
 .simple-table {
+
+    &__row-links {
+      .respond-to-min(960px, {
+          tr:hover {
+              td {
+                  background: @tr-link-bg-hover;
+                  color: @tr-link-color;
+                  cursor: pointer;
+              }
+              a {
+                  color: @tr-link-color;
+              }
+          }
+      });
+    }
+
     .respond-to-max(959px, {
 
         font-size: 14px;
@@ -367,7 +414,7 @@ tbody {
         td:first-child {
             .h4();
 
-            background-color: @gray-5;
+            background-color: @td-bg-mobile;
             margin-bottom: 10px;
         }
 
@@ -390,8 +437,6 @@ tbody {
         }
     });
 }
-
-
 
 
 /* topdoc
@@ -1114,6 +1159,93 @@ textarea.input__long {
     }
 }
 
+
+/* topdoc
+  name: Base styles for definition lists
+  family: cf-core
+  notes:
+    - "Sets the term and definition in-line to each other but broken into rows"
+  tags:
+    - cf-core
+*/
+dt {
+    .h5();
+    .u-inline-block();
+
+    margin-bottom: 0.5em;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+}
+
+dd {
+    .webfont-regular();
+
+    display: inline;
+
+    margin-left: 0.2em;
+
+    &:after {
+        display: block;
+
+        content: '';
+    }
+}
+
+
+/* topdoc
+  name: Remove margin from last-children
+  family: cf-core
+  notes:
+    - "Remove margin bottom for items that close out a block to ensure the
+      60px margin on the block is concistent"
+  tags:
+    - cf-core
+*/
+
+ul:last-child,
+.list__links .list_item:last-child {
+    margin-bottom: 0;
+}
+
+
+/* topdoc
+  name: Update block__bg padding
+  family: cf-layout
+  notes:
+    - "Updates the padding in block__bg to match feedback from Justin James"
+  tags:
+    - cf-layout
+*/
+
+.block__bg {
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+
+
+/* topdoc
+  name: Add 1/4 and 3/4 columns
+  family: cf-layout
+  notes:
+    - "Temporary addition until latest cf-layout is included in the project"
+  tags:
+    - cf-layout
+*/
+
+.content-l_col-1-4 {
+    .respond-to-min(@tablet-min, {
+        .grid_column(3);
+    });
+}
+
+.content-l_col-3-4 {
+    .respond-to-min(@tablet-min, {
+        margin-top: 0 !important;
+        .grid_column(9);
+    });
+}
 
 /* topdoc
     name: EOF

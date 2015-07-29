@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-events.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-events.html' as vars with context %}
 {% set active_nav_id = 'request-a-speaker' %}
 
 {% block title -%}
@@ -38,6 +38,6 @@
         you if we require additional information.</p>
     </section>
 
-    {%- include "_faq.html" %}
+    {%- include '_faq.html' %}
 
 {% endblock %}

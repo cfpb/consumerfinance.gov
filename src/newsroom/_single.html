@@ -1,5 +1,5 @@
-{% extends "layout-2-1-bleedbar.html" %}
-{% import "_vars-newsroom.html" as vars with context %}
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import '_vars-newsroom.html' as vars with context %}
 
 {% block title -%}
     {{ newsroom.title }}
@@ -22,7 +22,7 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% import "article.html" as article with context %}
+    {% import 'article.html' as article with context %}
     {{ article.render(newsroom, vars.path) }}
     <aside class="press-information">
         <h1 class="header-slug">
@@ -40,8 +40,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block u-mt0">
-        {% import "related-posts.html" as related_posts with context %}
+    <section class="block block__flush-top">
+        {% import 'related-posts.html' as related_posts with context %}
         {{ related_posts.render(newsroom, 'posts,newsroom', 5) }}
     </section>
     <section class="block stay-informed">
@@ -54,11 +54,11 @@
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new newsroom updates.
             </p>
-            {% import "macros/subscribe.html" as subscribe with context %}
+            {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render('USCFPB_23') }}
         </div>
         <div class="block__sub">
-            {% import "rss.html" as rss %}
+            {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
         </div>
     </section>

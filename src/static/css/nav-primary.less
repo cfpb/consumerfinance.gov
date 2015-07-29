@@ -71,6 +71,11 @@
     .webfont-regular();
 }
 
+.sub-nav_title {
+    .webfont-regular();
+    font-size: 1em;
+    color: @pacific;
+}
 
 /* Sliding nav for portrait tablets and smaller
    ========================================================================== */
@@ -100,6 +105,14 @@
     .sub-nav_menu-list .list_link {
         // Override standard visited link color.
         .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
+    }
+
+    .sub-nav_title {
+        margin-bottom: 0;
+
+        a {
+            background: @gray-10 !important;
+        }
     }
 
     .primary-nav_top-level-list.list-expanding {
@@ -421,11 +434,7 @@
         .grid_column(4);
     }
 
-    .sub-nav_title {
-        .webfont-regular();
-        font-size: 1em;
-        color: @pacific;
-    }
+
 
 });
 

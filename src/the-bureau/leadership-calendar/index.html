@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'leadership-calendar' %}
 
 {% block title -%}
@@ -16,12 +16,15 @@
 
 {% block content_main %}
 
-    {% import "leadership-calendar-table.html" as calendar %}
-    {% import "macros/share.html" as share %}
-    {% from "post-macros.html" import filters as filters with context %}
-    {% from "post-macros.html" import pagination as pagination with context %}
+    {% import 'leadership-calendar-table.html' as calendar %}
+    {% import 'macros/share.html' as share %}
+    {% from 'post-macros.html' import filters as filters with context %}
+    {% from 'post-macros.html' import pagination as pagination with context %}
 
-    <div class="block u-mt0 block__padded-bottom block__border-bottom">
+    <div class="block
+                block__flush-top
+                block__padded-bottom
+                block__border-bottom">
         <h1>Leadership Calendar</h1>
         <p class="h3">
             At the Consumer Financial Protection Bureau, we are committed to letting you
@@ -46,7 +49,7 @@
 
     <div id="pagination_content"></div>
 
-    <div class="block u-mt0">
+    <div class="block block__flush-top">
 
     {% set query = queries.calendar_event %}
     {% set posts = query.search(size=20) %}
@@ -86,9 +89,12 @@
         ) }}
     </section>
 
-    <aside class="block u-mb0 block__flush-sides block__bg">
+    <aside class="block
+                  block__flush-bottom
+                  block__flush-sides
+                  block__bg">
         {# TODO: Add FOIA and Open government URLs. #}
-        {%- import "related-links.html" as related_links -%}
+        {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
             [ '',
               'Read more about FOIA' ],

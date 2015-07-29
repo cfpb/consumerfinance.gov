@@ -8,26 +8,45 @@
 
    Builds Expandable markup when given:
 
-   items                     : An array of expandable items.
+   items                      : An array of expandable items.
 
-   header_key                : A string used to denote the header dictionary key.
+   header_key                 : A string used to denote the header dictionary key.
 
-   content_key               : A string used to denote the content dictionary key.
+   content_key                : A string used to denote the content dictionary key.
 
-   options (optional)        : An object used to customize
-                               the expandable markup.
+   options (optional)         : An object used to customize
+                                the expandable markup.
 
-   options.title             : Title to use for expandable markup.
+   options.title              : A string to use for expandable title.
 
-   options.additional_classes: Extra classes added to the expandable markup.
+   options.additional_classes : Extra classes added to the expandable markup.
+
+   options.faq_description    : A string to use for FAQ description.
+
+   options.faq_title          : A string to use for FAQ title.
 
    ========================================================================== #}
 {% macro render(items=[], header_key='', content_key='', options={}) -%}
-    {% set title = options.title | default('&nbsp;') | safe %}
+    {% if options.faq_title or options.faq_description %}
+    <div class="u-js-only">
+        {% if options.faq_title %}
+        <h2>
+            Frequently asked questions about {{ options.faq_title | safe }}
+        </h2>
+        {% endif %}
+        {% if options.faq_description %}
+        <p class="short-desc">
+            {{ options.faq_description | safe }}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
     <div class="expandable-group {{ options.additional_classes }}">
+        {% if options.title %}
         <div class="expandable-group_header">
-            {{ title }}
+            {{ options.title | safe }}
         </div>
+        {% endif %}
         <div class="expandable-group_items">
             {% for item in items %}
                 <div class="expandable expandable__padded">

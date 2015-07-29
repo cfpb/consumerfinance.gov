@@ -39,7 +39,7 @@ function MobileCarousel( breakpointPx ) {
     }
 
     _targetDom = $( selector );
-    if ( !selector || !_targetDom) {
+    if ( !selector || !_targetDom ) {
       throw new Error( 'MobileCarousel.enableOn requires a valid selector!' );
     }
 

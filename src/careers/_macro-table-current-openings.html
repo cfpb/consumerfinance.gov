@@ -8,15 +8,16 @@
 
    Build a current jobs table given:
 
-   joblist: An object containing a list of job descriptions.
+   careers: An object containing a list of job postings.
 
    ========================================================================== #}
 
-{% macro render(joblist) %}
-
-{% from "macros/util/format.html" import format_time as format_time %}
-
-<table class="u-w100pct block u-mt0 simple-table">
+{% macro render(careers) %}
+<table class="u-w100pct
+              block
+              block__flush-top
+              simple-table
+              simple-table__row-links">
     <thead>
         <tr>
             <th>
@@ -31,22 +32,27 @@
         </tr>
     </thead>
     <tbody>
-    {# TODO: Individual jobs need to link to their jobs detail page. #}
-    {% for job in joblist.list %}
+    {% for career in careers %}
         <tr>
             <td>
-                {{ job.title }}
+                <a href="{{ career.permalink }}">{{ career.title }}</a>
             </td>
             <td data-label="Posting Closes">
-                {{ job.closing | date('%b %d, %Y') }}
+                <time datetime="{{ career.close_date | date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
+                    {{ career.close_date | date('%b %-d, %Y') }}
+                </time>
             </td>
             <td data-label="Location">
-                {{ job.location }}
+                {% for location in career.locations %}
+                    {% if loop.index == 1 %}
+                        {{ location.region }}
+                    {% else %}
+                        , {{ location.region }}
+                    {% endif %}
+                {% endfor %}
             </td>
         </tr>
-        </a>
     {% endfor %}
     </tbody>
 </table>
-
 {% endmacro %}

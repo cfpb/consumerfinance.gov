@@ -41,7 +41,6 @@ def process_event(event):
         else:
             event['description'] = event['description'].strip()
 
-    return {'_index': 'content',
-            '_type': 'calendar_event',
+    return {'_type': 'calendar_event',
             '_id': event['id'],
             '_source': event}

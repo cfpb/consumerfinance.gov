@@ -18,7 +18,7 @@
     {% endif %}
 
     {% if sub_page.content %}
-    <section class="initiative_description block block__flush-top">
+    <section class="sub-page_content block block__flush-top">
         {{ sub_page.content | safe }}
     </section>
     {% endif %}
@@ -30,7 +30,7 @@
        { 'expand_label': 'Filter posts' }) }}
 
     {# Show the posts #}
-    {% import "posts-paginated.html" as posts_paginated with context %}
+    {% import 'posts-paginated.html' as posts_paginated with context %}
     {{ posts_paginated.render(vars.records) }}
 
 

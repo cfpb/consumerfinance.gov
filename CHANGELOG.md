@@ -16,12 +16,75 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
+- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
+- Added `u-hidden` utility class for fully hiding an element.
+- Added `TEST.md` readme file for testing instructions.
+- Added `grunt clean` and `grunt copy` tasks.
+- Added `grunt clean` step to `setup.sh`.
+- Added `map` and `filter` array polyfills.
+- Added `about-us` page and tests
+- Added `newsroom` type to Activity Snippets
+- Created initial career posting template.
+- Created 1/4 and 3/4 layout columns.
+- Added DL styles to cf-enhancements.
+- Added `offices/project-catalyst`.
+- Careers processor/mapping/query.
+- Added `office_[office slug]` class to offices template.
+- Careers to the lookups.py
+- Added `media_image__150` modifier for 150 pixel wide images.
+- Added `simple-table-row-links.js` for making tables with linkable rows.
+- Added `event-listener.js` and `query-selector.js` polyfills for IE8.
+- Added `@tr-border` variable to `cf-enhancements.less`
+  for simple-table border color.
+- Added tests for events and event archive landing pages
 
 ### Changed
+- Updated primary navigation to match new mega menu design.
+- Changed project architecture to having `/src/` and `/dist/` directory.
+- Changed `/_tests/` directory name to `/test/`.
+- Changed `/_tests/macro_testing` directory name to `/test/macro_tests`.
+- Moved `browserify-shims.js` to `/config/` directory.
+- Upgraded Travis to container-based infrastructure
+- Updated Offices pages to change activity feed logic.
+- Updated block-bg padding in cf-enhancements based on JJames feedback.
+- Updated Offices sub pages to display related documents.
+- Updated Offices sub pages to always display activity feed.
+- Updated Expandable macro to update design and add FAQ options.
+- Moved `sub-page_[sub-page slug]` class to main content area of sub_pages template.
+- Styled unordered lists as branded lists in the `office_intro-text`,
+  `sub-page_content`, and `sub-page_content-markup` class areas.
+- Updated all careers images to 2x size and have the same markup structure.
+- Updated event macros to use Sheer 'when' function in order to
+  display content based on state.
+- Tied careers data into single template and renamed to _single.html
+- Replaced career pages mock jobs data with data from the jobs API.
+- Made jobs list table on /careers/current-openings/ have linkable rows.
+- Adds eslint ignore lines for polyfills, which will not be changing.
+- Moved CF table color overrides to `cf-theme-overrides.less`.
+- Updated the existing missions browser test to be stronger
+- Updated the browser test specs in conf.js because the shared spec was being
+  fired on the desktop test, even though those tests had already been run in
+  Chrome. Now the desktop test only runs the desktop spec.
+- Separated `grunt test` task from `grunt build`
+  and made default task test + build.
 
 ### Removed
+- Removed requestAnimationFrame polyfill.
+- Removed `_tests/browser_tests/README.md`, `_tests/macro_testing/README.md`, `_tests/processor_tests/README.md`.
+- Removed `grunt vendor` from `setup.sh`.
+- Removed unused CSS on `office.less`
+- Removed `/events/archive/_single.html`
 
 ### Fixed
+- Fixed issue on IE11 when using the dates to filter caused
+  by toString method.
+- Event tag filtering on archive page
+- Added browser tests to linting task
+- Fixed MobileOnlyExpandable error on office page.
+- Normalized use of jinja quotes to single quote
+- Fixed a large chunk of the existing linting errors and warnings
+- Fixed issue with active filters on`/the-bureau/leadership-calendar/print/` page.
 
 
 ## 3.0.0-2.0.0 - 2015-07-24

@@ -25,8 +25,11 @@ function _navSecondaryToggle() {
 
 // Tests whether or not the secondary nav should be toggled.
 function _navSecondaryToggleTest() {
-  var isSmall = $( '.nav-secondary .nav-secondary_link__button' ).is( ':visible' ),
-    isExpanded = $( '.nav-secondary .expandable_content' ).attr( 'aria-expanded' ) === 'true';
+  var isSmall =
+    $( '.nav-secondary .nav-secondary_link__button' ).is( ':visible' );
+  var isExpanded =
+    $( '.nav-secondary .expandable_content' )
+      .attr( 'aria-expanded' ) === 'true';
   return isSmall && isExpanded || !isSmall && !isExpanded;
 }
 

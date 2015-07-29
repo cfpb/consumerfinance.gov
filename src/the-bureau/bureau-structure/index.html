@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'bureau-structure' %}
 
 {% block title -%}
@@ -24,7 +24,7 @@
 
 {% block content_main %}
 
-    {% import "role-macro.html" as role_macro with context %}
+    {% import 'role-macro.html' as role_macro with context %}
 
     <div class="org-chart">
 

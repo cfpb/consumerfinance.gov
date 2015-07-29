@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-newsroom.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-newsroom.html' as vars with context %}
 {% set active_nav_id = 'press-resources' %}
 
 {% block title -%}
@@ -134,7 +134,7 @@
                 <h1 class="contact-person_name">Richard Cordray</h1>
                 <ul class="list list__links">
                     <li class="list_item">
-                        <a class="list_link jump-link"
+                        <a class="list_link"
                            href="/the-bureau/about-rich-cordray/">
                             Biography
                         </a>
@@ -142,13 +142,13 @@
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
                            href="/static/img/201402_cfpb_photo_richard-cordray_high-res.jpg">
-                            High-res portrait
+                            <span class="jump-link_text">High-res portrait</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
                            href="/static/img/201402_cfpb_photo_richard-cordray_low-res.jpg">
-                            Low-res portrait
+                            <span class="jump-link_text">Low-res portrait</span>
                         </a>
                     </li>
                 </ul>
@@ -171,13 +171,13 @@
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
                            href="/static/img/201405_cfpb_photo_steve-antonakes_high-res.jpg">
-                            High-res portrait
+                            <span class="jump-link_text">High-res portrait</span>
                         </a>
                     </li>
                     <li class="list_item">
                         <a class="list_link jump-link jump-link__download"
                            href="/static/img/201405_cfpb_photo_steve-antonakes_low-res.jpg">
-                            Low-res portrait
+                            <span class="jump-link_text">Low-res portrait</span>
                         </a>
                     </li>
                 </ul>
@@ -185,17 +185,17 @@
 
         </div><!-- END .content-l -->
 
-        <a class="jump-link jump-link__large"
+        <a class="jump-link jump-link__large jump-link__underline"
            href="/the-bureau/bureau-structure/">
             Find out more about our leadership
         </a>
 
     </section><!-- END .press-section.press-photos-bios -->
 
-    <aside class="u-mb0
-                  block
+    <aside class="block
                   block__bg
                   block__flush-sides
+                  block__flush-bottom
                   ">
         <div class="content-l content-l__main">
             <section class="content-l_col content-l_col-1-2">
@@ -204,20 +204,20 @@
                         Stay informed
                     </span>
                 </h1>
-                <div class="block block__sub u-mt0">
+                <div class="block block__sub block__flush-top">
                     <p class="short-desc">
                         Subscribe to get our press releases by email.
                     </p>
-                    {% import "macros/subscribe.html" as subscribe with context %}
+                    {% import 'macros/subscribe.html' as subscribe with context %}
                     {{ subscribe.render('USCFPB_23') }}
                 </div>
                 <div class="block block__sub">
-                    {% import "rss.html" as rss %}
+                    {% import 'rss.html' as rss %}
                     {{ rss.render(vars.rss_path) }}
                 </div>
             </section>
             <section class="content-l_col content-l_col-1-2">
-                {% include "templates/upcoming-events.html" %}
+                {% include 'templates/upcoming-events.html' %}
             </section>
         </div><!-- END .content-l -->
     </aside><!-- END .block -->

@@ -369,7 +369,8 @@ module.exports = function(grunt) {
         },
         src: [
             '<%= loc.src %>/static/js/**/*.js',
-            '<%= loc.test %>/unit_tests/**/*.js'
+            '<%= loc.test %>/unit_tests/**/*.js',
+            '<%= loc.test %>/browser_tests/**/*.js'
         ]
       }
     },
@@ -409,6 +410,10 @@ module.exports = function(grunt) {
       js: {
         files: ['<%= loc.src %>/static/js/**/*.js'],
         tasks: ['js']
+      },
+      jinja2: {
+        files: ['<%= loc.src %>/**/*.html'],  
+        tasks: ['copy']
       }
     },
 
@@ -503,11 +508,11 @@ module.exports = function(grunt) {
                                 'string-replace:slick-carousel', 'concat:cf-less']);
   grunt.registerTask('css', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('js', ['browserify:build', 'usebanner:js']);
-  grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){
     grunt.config.set(this.target, this.data);
     grunt.task.run(this.target);
   });
-  grunt.registerTask('build', ['vendor', 'test', 'css', 'js', 'copy']);
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('test', ['lintjs', 'mocha_istanbul']);
+  grunt.registerTask('build', ['vendor', 'css', 'js', 'copy']);
+  grunt.registerTask('default', ['test', 'build']);
 };

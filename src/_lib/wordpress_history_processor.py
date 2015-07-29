@@ -46,7 +46,6 @@ def process_history(item):
 
     del item['custom_fields']
 
-    return {'_index': 'content',
-            '_type': 'history',
+    return {'_type': 'history',
             '_id': item['slug'],
             '_source': item}

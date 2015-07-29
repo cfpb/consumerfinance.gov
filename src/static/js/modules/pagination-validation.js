@@ -31,7 +31,8 @@ function init() {
       if ( formIsValid === false ) {
 
         if ( typeof $placeHolder === 'undefined' ) {
-          $placeHolder = $( '<div class=\'cf-notification__pagination-ctr\'></div>' );
+          $placeHolder =
+            $( '<div class=\'cf-notification__pagination-ctr\'></div>' );
           $form.parents( 'nav.pagination' ).after( $placeHolder );
           $( $placeHolder ).cf_notifier();
         }

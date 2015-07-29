@@ -16,7 +16,7 @@
 
        {% block css %}
            {{ super() }}
-           {% import "pdfreactor-footer.html" as pdfreactor_footer %}
+           {% import 'pdfreactor-footer.html' as pdfreactor_footer %}
            {{ pdfreactor_footer.render('My footer message here') }}
        {% endblock %}
 
@@ -37,7 +37,7 @@
         @bottom-center {
             {# Linkbreaks within xhtml() cause syntax errors so we need to keep it
                 on one line using `replace()`. -#}
-            content: xhtml('{{ print_footer(footer_text)|replace("\n", "") }}');
+            content: xhtml('{{ print_footer(footer_text)|replace('\n', '') }}');
         }
     }
 
