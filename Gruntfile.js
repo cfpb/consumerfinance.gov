@@ -119,23 +119,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Concat: https://github.com/gruntjs/grunt-contrib-concat
-     *
-     * Concatenate cf-* Less files prior to compiling them.
-     */
-    concat: {
-      'cf-less': {
-        src: [
-          '<%= loc.lib %>/cf-*/*.less',
-          '!<%= loc.lib %>/cf-core/*.less',
-          '<%= loc.lib %>/cf-core/cf-core.less'
-        ],
-        dest: '<%= loc.lib %>/capital-framework/capital-framework.less',
-        nonull: true
-      }
-    },
-
-    /**
      * Less: https://github.com/gruntjs/grunt-contrib-less
      *
      * Compile Less files to CSS.
@@ -505,7 +488,7 @@ module.exports = function(grunt) {
    * Create custom task aliases and combinations.
    */
   grunt.registerTask('vendor', ['bower:process', 'string-replace:chosen',
-                                'string-replace:slick-carousel', 'concat:cf-less']);
+                                'string-replace:slick-carousel']);
   grunt.registerTask('css', ['less', 'autoprefixer', 'legacssy', 'usebanner:css']);
   grunt.registerTask('js', ['browserify:build', 'usebanner:js']);
   grunt.registerMultiTask('lintjs', 'Lint the JavaScript', function(){

@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `@tr-border` variable to `cf-enhancements.less`
   for simple-table border color.
 - Added tests for events and event archive landing pages
+- Transitioned Capital Framework dependency to v1.0.0 in bower.json.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.

@@ -590,6 +590,12 @@ tbody {
   text-align: right;
 }
 
+.expandable__mobile-only .expandable_header {
+  .respond-to-min(@tablet-min, {
+    display: none;
+  });
+}
+
 // TODO: After merging into cf-expandables, this variable can be removed.
 @expandable-group-divider: darken(#895983, 15%);
 // TODO: If/when `border-bottom` is removed from `.expandable-group_header`
