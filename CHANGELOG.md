@@ -87,6 +87,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Normalized use of jinja quotes to single quote
 - Fixed a large chunk of the existing linting errors and warnings
 - Fixed issue with active filters on`/the-bureau/leadership-calendar/print/` page.
+- Fixed margins on site footer
 
 
 ## 3.0.0-2.0.0 - 2015-07-24
