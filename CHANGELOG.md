@@ -70,6 +70,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Separated `grunt test` task from `grunt build`
   and made default task test + build.
 - Site's "About" text to "About Us".
+- Replaced FOIA Records with Coming Soon heading
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
