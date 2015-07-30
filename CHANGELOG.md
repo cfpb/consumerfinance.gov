@@ -69,6 +69,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   Chrome. Now the desktop test only runs the desktop spec.
 - Separated `grunt test` task from `grunt build`
   and made default task test + build.
+- Site's "About" text to "About Us".
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
