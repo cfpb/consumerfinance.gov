@@ -25,8 +25,8 @@ init(){
   fi
 }
 
-# Clear project dependencies.
-clear(){
+# Clean project dependencies.
+clean(){
   # If the node and bower directories already exist,
   # clear them so we know we're working with a clean
   # slate of the dependencies listed in package.json
@@ -54,6 +54,6 @@ build(){
 }
 
 init
-clear
+clean
 install
 build
