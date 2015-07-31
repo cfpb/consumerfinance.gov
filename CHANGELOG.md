@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added gulp and the required npm plugins
 - Added gulp config file to lay out configs for each task
 - Added gulp tasks split up into their own files
+- Adds integration tests for `/offices/*` pages accessible through site's menu.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
