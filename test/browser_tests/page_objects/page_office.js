@@ -3,13 +3,13 @@
 function OfficePage() {
   this.get = function( officePage ) {
     var examplePages = {
-        CFPBOmbudsman:              '/offices/cfpb-ombudsman/',
-        FOIARequests:               '/offices/foia-requests/',
-        OpenGovernment:             '/offices/open-government/',
-        PaymentsToHarmedConsumer:   '/offices/payments-to-harmed-consumers/',
-        PlainWriting:               '/offices/plain-writing/',
-        Privacy:                    '/offices/privacy/',
-        ProjectCatalyst:            '/offices/project-catalyst/'
+        CFPBOmbudsman:            '/offices/cfpb-ombudsman/',
+        FOIARequests:             '/offices/foia-requests/',
+        OpenGovernment:           '/offices/open-government/',
+        PaymentsToHarmedConsumer: '/offices/payments-to-harmed-consumers/',
+        PlainWriting:             '/offices/plain-writing/',
+        Privacy:                  '/offices/privacy/',
+        ProjectCatalyst:          '/offices/project-catalyst/'
     };
 
     browser.get( examplePages[officePage] );
@@ -21,7 +21,7 @@ function OfficePage() {
 
   this.introText = element( by.css( '.office_intro-text' ) );
 
-  this.subscription = element( by.css( '.qa-subscription') );
+  this.subscription = element( by.css( '.qa-subscription' ) );
 
   this.topStoryHead = element( by.css( '.qa-top-story-head' ) );
 
