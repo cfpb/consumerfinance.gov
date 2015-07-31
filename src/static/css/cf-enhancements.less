@@ -768,11 +768,6 @@ tbody {
         .list__links();
         .list__icons();
 
-        // TODO: Check if `left` could be used instead,
-        // like what is done with the jump-links.
-        // Optical offset for left-aligning list with text.
-        margin-left: unit( 2px / @base-font-size-px, em );
-
         li {
             .list__links .list_item();
             .list__icons .list_item();
@@ -789,11 +784,13 @@ tbody {
                 .list__icons .list_text();
             }
 
-            &:before {
+            &:after {
                 .cf-icon();
-                .list__icons .list_icon();
-                content: "\e406";
+                content: @cf-icon-download;
                 color: @pacific;
+                // Offset to address lack of space between text and icon
+                width: 1em;
+                text-align: right;
             }
         }
 
