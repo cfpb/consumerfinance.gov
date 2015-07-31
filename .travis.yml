@@ -35,5 +35,6 @@ script:
   - gulp lint:gulp
   - gulp lint:src
   - gulp test:unit
+  - gulp test:coveralls
   - gulp test:macro
   - gulp test:processor

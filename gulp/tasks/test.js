@@ -31,6 +31,12 @@ gulp.task( 'test:unit', function( cb ) {
     } );
 } );
 
+// This task will only run on Travis
+gulp.task( 'test:coveralls', function () {
+  gulp.src( config.tests + '/unit_test_coverage/lcov.info' )
+    .pipe( $.coveralls() );
+} );
+
 gulp.task( 'test:browser', function() {
   gulp.src( config.tests + '/browser_tests/spec_suites/*.js' )
     .pipe( protractor( {
