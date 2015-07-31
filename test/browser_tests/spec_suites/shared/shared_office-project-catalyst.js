@@ -37,7 +37,8 @@ describe( 'The Project Catalyst Page', function() {
   it( 'should include top story link', function() {
     expect( page.topStoryLink.getText() ).toContain( 'Email us at' );
     expect( page.topStoryLink.getAttribute( 'href' ) )
-      .toBe( 'mailto:ProjectCatalyst@cfpb.gov?subject=I%27ve%20got%20an%20idea...' );
+      .toBe( 'mailto:ProjectCatalyst@cfpb.gov' +
+             '?subject=I%27ve%20got%20an%20idea...' );
   } );
 
   it( 'should NOT have resource image', function() {
