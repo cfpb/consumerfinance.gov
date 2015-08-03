@@ -2,14 +2,16 @@
 
 function OfficePage() {
   this.get = function( officePage ) {
+    var baseUrl = '/offices/';
     var examplePages = {
-        CFPBOmbudsman:            '/offices/cfpb-ombudsman/',
-        FOIARequests:             '/offices/foia-requests/',
-        OpenGovernment:           '/offices/open-government/',
-        PaymentsToHarmedConsumer: '/offices/payments-to-harmed-consumers/',
-        PlainWriting:             '/offices/plain-writing/',
-        Privacy:                  '/offices/privacy/',
-        ProjectCatalyst:          '/offices/project-catalyst/'
+        Accessibility:            baseUrl + 'accessibility/',
+        CFPBOmbudsman:            baseUrl + 'cfpb-ombudsman/',
+        FOIARequests:             baseUrl + 'foia-requests/',
+        OpenGovernment:           baseUrl + 'open-government/',
+        PaymentsToHarmedConsumer: baseUrl + 'payments-to-harmed-consumers/',
+        PlainWriting:             baseUrl + 'plain-writing/',
+        Privacy:                  baseUrl + 'privacy/',
+        ProjectCatalyst:          baseUrl + 'project-catalyst/'
     };
 
     browser.get( examplePages[officePage] );
