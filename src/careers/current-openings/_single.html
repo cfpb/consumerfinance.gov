@@ -6,7 +6,7 @@
 {%- endblock %}
 
 {% block desc -%}
-    {# TODO: Update admin to include excerpt #}
+    {# TODO: Update admin to include excerpt. #}
     {{ career.excerpt | striptags }}
     }
 {%- endblock %}
@@ -24,7 +24,7 @@
                     block__flush-top
                     block__sub">
         <h1>{{ career.title }}</h1>
-        {# TODO: Discuss careers with multiple grades #}
+        {# TODO: Discuss careers with multiple grades. #}
         {% set grade = career.grades[0] %}
         <dl>
             <dt>Expiration Date:</dt>
@@ -61,13 +61,13 @@
     </section>
 
     <section class="block
-                block__padded-top
-                block__border-top">
+                    block__padded-top
+                    block__border-top">
         <h2>Job Description</h2>
         {{ career.description }}
 
         {# TODO: Discuss how to break duties and departments out of
-        the description
+                 the description.
         <h2>Duties</h2>
         <h3>As a test opening, you will:</h3>
         <ul class="list__branded">
@@ -82,8 +82,8 @@
     </section>
 
     <section class="block
-                block__padded-top
-                block__border-top">
+                    block__padded-top
+                    block__border-top">
         <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
                 <h2 class="u-mb0" id="interested">Interested in Applying?</h2>
@@ -105,7 +105,7 @@
                     block__sub">
             <h3>Before you apply</h3>
             <p class="short-desc">
-                {# TODO: Replace with real content #}
+                {# TODO: Replace with real content. #}
             </p>
 
             <ul class="list list__links">
@@ -134,7 +134,7 @@
                 <div class="content-l_col content-l_col-3-4">
                     <h4 class="u-mb0">
                         You are about to leave consumerfinance.gov.
-                        </h4>
+                    </h4>
                     <p class="short-desc">
                         To finish the application, you must go to USAJobs.gov.
                     </p>
