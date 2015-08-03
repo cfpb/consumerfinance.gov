@@ -28,17 +28,14 @@
                     content-l__main
                     content-l__large-gutters">
         <div class="content-l_col
-                    {{ 'content-l_col-1-1' if show_subscription else 'content-l_col-1' }}
-                    ">
-            {# Note this is a div to accommodate paragraph markup
-               coming from the CMS for the intro.text content. #}
+                    {{ 'content-l_col-1-1' if show_subscription else 'content-l_col-1' }}">
             <div class="office_intro-text">{{ intro.text | safe }}</div>
         </div>
         {% if show_subscription %}
         <div class="content-l_col
-                        content-l_col-1-2
-                        content-l_col__before-divider
-                        qa-subscription">
+                    content-l_col-1-2
+                    content-l_col__before-divider
+                    qa-subscription">
             <p class="h3 u-show-on-mobile">Stay informed</p>
             <p class="short-desc">Stay up to date with our email newsletter</p>
             {% import 'macros/subscribe.html' as subscribe with context %}
