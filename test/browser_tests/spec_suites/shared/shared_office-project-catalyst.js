@@ -72,5 +72,9 @@ describe( 'The Project Catalyst Page', function() {
 
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
+    expect( page.officeContactEmail.getText() )
+      .toBe( 'CFPB_ProjectCatalyst@consumerfinance.gov' );
+    expect( page.officeContactEmail.getAttribute( 'href' ) )
+      .toBe( 'mailto:CFPB_ProjectCatalyst@consumerfinance.gov' );
   } );
 } );

@@ -46,6 +46,8 @@ function OfficePage() {
   this.officeTags = element( by.css( '.qa-office-tags h1' ) );
 
   this.officeContact = element( by.css( '.office_contact' ) );
+
+  this.officeContactEmail = element( by.css( '.office_contact a[href^="mailto:"]' ) );
 }
 
 module.exports = OfficePage;

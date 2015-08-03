@@ -68,5 +68,9 @@ describe( 'The Privacy Office Page', function() {
 
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
+    expect( page.officeContactEmail.getText() )
+      .toBe( 'privacy@consumerfinance.gov' );
+    expect( page.officeContactEmail.getAttribute( 'href' ) )
+      .toBe( 'mailto:privacy@consumerfinance.gov' );
   } );
 } );
