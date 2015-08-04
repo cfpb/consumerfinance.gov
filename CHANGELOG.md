@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added acceptance tests for `/sub-pages/*`.
 - Added `activities-block` shared template for activity feed
   on offices and sub-pages.
+- Added accessibility complaint form.
 
 ### Changed
 - Site's "About" text to "About Us".
