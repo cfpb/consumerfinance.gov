@@ -45,6 +45,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added acceptance tests for `/offices/*` pages accessible through site's menu.
 - Added Accessibility page to footer and adds Accessibility page tests.
 - Added form to submit EEO complaint
+- Added acceptance tests for `/sub-pages/*`.
+- Added `activities-block` shared template for activity feed
+  on offices and sub-pages.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -89,7 +92,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed unused CSS on `office.less`
 - Removed `/events/archive/_single.html`
 - Removed Grunt plugins from package.json
-- Removed the Gruntfile to make sure we've covered everything
+- Removed the Gruntfile.
+- Removed homepage progress charts and related content and JS.
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused

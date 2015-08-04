@@ -62,8 +62,8 @@ describe( 'The Plain Writing Page', function() {
     expect( page.officeContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should have office tags', function() {
-    expect( page.officeTags.isPresent() ).toBe( true );
+  it( 'should have tags', function() {
+    expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
   it( 'should have office contacts', function() {

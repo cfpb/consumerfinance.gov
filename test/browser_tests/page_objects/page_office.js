@@ -1,7 +1,7 @@
 'use strict';
 
 function OfficePage() {
-  this.get = function( officePage ) {
+  this.get = function( page ) {
     var baseUrl = '/offices/';
     var examplePages = {
         Accessibility:            baseUrl + 'accessibility/',
@@ -14,7 +14,7 @@ function OfficePage() {
         ProjectCatalyst:          baseUrl + 'project-catalyst/'
     };
 
-    browser.get( examplePages[officePage] );
+    browser.get( examplePages[page] );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };
@@ -43,7 +43,7 @@ function OfficePage() {
 
   this.officeContent = element( by.css( '.qa-office-content h2' ) );
 
-  this.officeTags = element( by.css( '.qa-office-tags h1' ) );
+  this.contentTags = element( by.css( '.qa-tags' ) );
 
   this.officeContact = element( by.css( '.office_contact' ) );
 

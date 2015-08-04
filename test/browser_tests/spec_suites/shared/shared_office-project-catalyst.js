@@ -66,8 +66,8 @@ describe( 'The Project Catalyst Page', function() {
       .toBe( 'How we’ll handle your information' );
   } );
 
-  it( 'should have office tags', function() {
-    expect( page.officeTags.isPresent() ).toBe( true );
+  it( 'should have tags', function() {
+    expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
   it( 'should have office contacts', function() {
