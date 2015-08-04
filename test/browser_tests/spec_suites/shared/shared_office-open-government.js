@@ -62,8 +62,8 @@ describe( 'The Open Government Office Page', function() {
     expect( page.officeContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should have office tags', function() {
-    expect( page.officeTags.isPresent() ).toBe( true );
+  it( 'should have tags', function() {
+    expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
   it( 'should NOT have office contacts', function() {

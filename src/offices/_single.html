@@ -150,20 +150,8 @@
     {% endif %}
 
     {% if office.tags %}
-    <section class="block
-                    block__bg
-                    block__flush-sides
-                    block__flush-top
-                    block__flush-bottom
-                    qa-office-tags">
-        {% import 'macros/activity-snippets.html' as activity_snippets with context %}
-        {% set activities_feed = activity_snippets.render(office.tags, include_date_flag=true, number_columns=2) %}
-        {% include 'templates/activities-feed.html' %}
-        <a class="jump-link jump-link__underline"
-           href="/activity-log/{{ ('?filter_tags=' ~ office.tags | join('&') ) if office.tags }}">
-            View all of our activities
-        </a>
-    </section>
+        {% import 'macros/activities-block.html' as activities_block with context %}
+        {{ activities_block.render(office.tags) }}
     {% endif %}
 
     {% include 'templates/office-contact.html' %}

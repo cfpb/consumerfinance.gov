@@ -62,8 +62,8 @@ describe( 'The Accessibility Office Page', function() {
     expect( page.officeContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have office tags', function() {
-    expect( page.officeTags.isPresent() ).toBe( false );
+  it( 'should NOT have tags', function() {
+    expect( page.contentTags.isPresent() ).toBe( false );
   } );
 
   it( 'should have office contacts', function() {
