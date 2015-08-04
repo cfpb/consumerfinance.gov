@@ -35,7 +35,6 @@ $( document ).ready( function() {
 
   // Page-specific modules.
   require( './contact-us/index.js' ).init();
-  require( './index.js' ).init();
   require( './careers/working-at-cfpb/index.js' ).init();
   require( './careers/current-openings/index.js' ).init();
   require( './careers/application-process/index.js' ).init();

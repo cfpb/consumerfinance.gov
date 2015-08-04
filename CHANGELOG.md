@@ -88,7 +88,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed unused CSS on `office.less`
 - Removed `/events/archive/_single.html`
 - Removed Grunt plugins from package.json
-- Removed the Gruntfile to make sure we've covered everything
+- Removed the Gruntfile.
+- Removed homepage progress charts and related content and JS.
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused
