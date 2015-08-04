@@ -44,6 +44,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added gulp tasks split up into their own files
 - Added acceptance tests for `/offices/*` pages accessible through site's menu.
 - Added Accessibility page to footer and adds Accessibility page tests.
+- Added acceptance tests for `/sub-pages/*`.
+- Added `activities-block` shared template for activity feed
+  on offices and sub-pages.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
