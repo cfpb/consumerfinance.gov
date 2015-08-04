@@ -42,7 +42,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added gulp and the required npm plugins
 - Added gulp config file to lay out configs for each task
 - Added gulp tasks split up into their own files
-- Adds integration tests for `/offices/*` pages accessible through site's menu.
+- Added acceptance tests for `/offices/*` pages accessible through site's menu.
+- Added Accessibility page to footer and adds Accessibility page tests.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -77,7 +78,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaced FOIA Records with Coming Soon heading
 - Updated setup.sh to use gulp
 - Updated travis to use gulp tasks
-- Updated main.less to use the paths option in less compiler
+- Updated main.less to use the paths option in less compiler.
+- Moves and renames contact-macro to contact-layout in macros directory.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
@@ -97,8 +99,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Normalized use of jinja quotes to single quote
 - Fixed a large chunk of the existing linting errors and warnings
 - Fixed issue with active filters on`/the-bureau/leadership-calendar/print/` page.
+<<<<<<< HEAD
 - Fixed margins on site footer
 - Switched the two forms under Privacy to their correct positions
+=======
+- Fixed margins on site footer.
+- Fixed incorrect email href reference on offices contact email link.
+>>>>>>> c75f0735681d019a362f5ab4b91f4b1e28376595
 
 
 ## 3.0.0-2.0.0 - 2015-07-24

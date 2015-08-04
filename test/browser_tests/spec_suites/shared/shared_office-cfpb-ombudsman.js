@@ -62,11 +62,15 @@ describe( 'The CFPB Ombudsman Office Page', function() {
     expect( page.officeContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have office tags', function() {
-    expect( page.officeTags.isPresent() ).toBe( false );
+  it( 'should have office tags', function() {
+    expect( page.officeTags.isPresent() ).toBe( true );
   } );
 
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
+    expect( page.officeContactEmail.getText() )
+      .toBe( 'CFPBOmbudsman@consumerfinance.gov' );
+    expect( page.officeContactEmail.getAttribute( 'href' ) )
+      .toBe( 'mailto:CFPBOmbudsman@consumerfinance.gov' );
   } );
 } );

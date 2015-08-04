@@ -68,5 +68,9 @@ describe( 'The Plain Writing Page', function() {
 
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
+    expect( page.officeContactEmail.getText() )
+      .toBe( 'CFPB_Plain_Writing_Act@consumerfinance.gov' );
+    expect( page.officeContactEmail.getAttribute( 'href' ) )
+      .toBe( 'mailto:CFPB_Plain_Writing_Act@consumerfinance.gov' );
   } );
 } );

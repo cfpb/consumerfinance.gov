@@ -2,24 +2,24 @@
 
 var Office = require( '../../page_objects/page_office.js' );
 
-describe( 'The Privacy Office Page', function() {
+describe( 'The Accessibility Office Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'Privacy' );
+    page.get( 'Accessibility' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Privacy' );
+    expect( page.pageTitle() ).toBe( 'Accessibility' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Privacy' );
+    expect( page.mainTitle.getText() ).toBe( 'Accessibility' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'information (PII)' );
+    expect( page.introText.getText() ).toContain( 'Rehabilitation Act' );
   } );
 
   it( 'should NOT include subscription', function() {
@@ -54,7 +54,7 @@ describe( 'The Privacy Office Page', function() {
     expect( page.resourceLink.isPresent() ).toBe( false );
   } );
 
-  it( 'should have subpages', function() {
+  it( 'should NOT have subpages', function() {
     expect( page.subpages.isPresent() ).toBe( true );
   } );
 
@@ -62,15 +62,15 @@ describe( 'The Privacy Office Page', function() {
     expect( page.officeContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should have office tags', function() {
-    expect( page.officeTags.isPresent() ).toBe( true );
+  it( 'should NOT have office tags', function() {
+    expect( page.officeTags.isPresent() ).toBe( false );
   } );
 
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'privacy@consumerfinance.gov' );
+      .toBe( 'CFPB_Accessibility@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:privacy@consumerfinance.gov' );
+      .toBe( 'mailto:CFPB_Accessibility@consumerfinance.gov' );
   } );
 } );
