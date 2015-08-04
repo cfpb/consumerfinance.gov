@@ -79,7 +79,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated setup.sh to use gulp
 - Updated travis to use gulp tasks
 - Updated main.less to use the paths option in less compiler.
-- Moves and renames contact-macro to contact-layout in macros directory.
+- Moved and renamed contact-macro to contact-layout in macros directory.
+- Moved filters macro from `post-macros.html` to `/macros/filter.html`.
+- Makes filters macro helpers private.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
