@@ -1,0 +1,160 @@
+    <section class="block
+                    block__bg
+                    block__border
+                    block__flush-sides">
+        <form class="form-l js-validate-filters">
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header" for="eeo_first-name">
+                    First name*
+                </label>
+                <input class="input__long"
+                       id="eeo_first-name"
+                       required
+                       type="text">
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header" for="eeo_last-name">
+                    Last name*
+                </label>
+                <input class="input__long"
+                       id="eeo_last-name"
+                       required
+                       type="text">
+            </div>
+
+            <div class="form-l_col form-l_col-1">
+                <label class="form-label-header"
+                       for="eeo_address1">
+                    Address 1*
+                </label>
+                <input class="input__long"
+                       id="eeo_address1"
+                       type="text"
+                       required>
+            </div>
+
+            <div class="form-l_col form-l_col-1">
+                <label class="form-label-header"
+                       for="eeo_address2">
+                    Address 2
+                </label>
+                <input class="input__long"
+                       id="eeo_address2"
+                       type="text">
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header"
+                       for="eeo_city">
+                    City*
+                </label>
+                <input class="input__long"
+                       id="eeo_city"
+                       type="text"
+                       required>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header"
+                           for="eeo_state">
+                        State*
+                    </label>
+                    <div class="custom-select">
+                        <select class="custom-select_select"
+                                data-placeholder="Select the FOIA request category"
+                                id="eeo_state"
+                                required>
+                            <option value="">Please select</option>
+                            {# TODO: Add States #}
+                            <option value="State">States to be added</option>
+                        </select>
+                        <span class="custom-select_icon
+                                     cf-icon
+                                     cf-icon-down"></span>
+                    </div>
+                </div>
+                <div class="form-l_col form-l_col-1-2">
+                    <label class="form-label-header" for="eeo_zip">
+                        Zip code*
+                    </label>
+                    <input class="input__long"
+                           id="eeo_zip"
+                           type="text"
+                           required>
+                </div>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header" for="eeo_telephone">
+                    Telephone Number*
+                </label>
+                <input class="input__long"
+                       id="eeo_telephone"
+                       type="text"
+                       required>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header" for="eeo_fax">
+                    Fax Number
+                </label>
+                <input class="input__long"
+                       id="eeo_fax"
+                       type="text"
+                       required>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header" for="eeo_email">
+                    Email Address*
+                </label>
+                <input class="input__long"
+                       id="eeo_email"
+                       type="text"
+                       required>
+            </div>
+
+            <div class="form-l_col form-l_col-1-2">
+                <label class="form-label-header" for="contact-time">
+                    Best time to reach you
+                </label>
+                <div class="custom-select">
+                    <select class="custom-select_select"
+                            data-placeholder="Select Time"
+                            id="contact-time">
+                          <option value="">Select time</option>
+                          {# TODO: Add additional times. #}
+                          <option>8:00 a.m</option>
+                     </select>
+                     <span class="custom-select_icon
+                                  cf-icon
+                                  cf-icon-down"></span>
+                </div>
+            </div>
+
+            <div class="form-l_col form-l_col-1">
+                <label for="eeo_complaint-desc">
+                    <span class="form-label-header">
+                        Nature of discrimination
+                    </span>
+                </label>
+                <textarea class="input__long"
+                          id="eeo_complaint-desc"
+                          required>
+                </textarea>
+            </div>
+
+            <div class="form-actions form-actions__right-on-med ">
+                <input class="btn form-actions_item"
+                       type="submit"
+                       value="Generate PDF">
+                <a href="#" class="btn btn__link form-actions_item">
+                    Sample Letter
+                    <span class="cf-icon cf-icon-pdf"></span>
+                </a>
+            </div>
+
+        </form>
+    </section>
