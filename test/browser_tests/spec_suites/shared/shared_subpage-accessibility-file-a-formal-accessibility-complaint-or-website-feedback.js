@@ -25,8 +25,8 @@ describe( "The Accessibility Office's " +
     expect( page.relatedLink.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT include a form', function() {
-    expect( page.contentForm.isPresent() ).toBe( false );
+  it( 'should include a form', function() {
+    expect( page.contentForm.isPresent() ).toBe( true );
   } );
 
   it( 'should include content markup', function() {
