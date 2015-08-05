@@ -1,5 +1,5 @@
-{% extends "layout-2-1-bleedbar.html" %}
-{% import "_vars-blog.html" as vars with context %}
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import '_vars-blog.html' as vars with context %}
 
 {% block title -%}
     {{ post.title }}
@@ -22,14 +22,14 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% import "article.html" as article with context %}
+    {% import 'article.html' as article with context %}
     {{ article.render(post, vars.path) }}
-    {% include "templates/comments.html" %}
+    {% include 'templates/comments.html' %}
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block u-mt0">
-        {% import "related-posts.html" as related_posts with context %}
+    <section class="block block__flush-top">
+        {% import 'related-posts.html' as related_posts with context %}
         {{ related_posts.render(post) }}
     </section>
     <section class="block">
@@ -38,15 +38,15 @@
                 Stay informed
             </span>
         </h1>
-        <div class="block block__sub u-mt0">
+        <div class="block block__sub block__flush-top">
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
-            {% import "macros/subscribe.html" as subscribe with context %}
+            {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render('USCFPB_91') }}
         </div>
         <div class="block block__sub">
-            {% import "rss.html" as rss %}
+            {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
         </div>
     </section>

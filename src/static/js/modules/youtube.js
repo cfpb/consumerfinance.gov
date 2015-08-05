@@ -11,11 +11,13 @@ var utilities = require( './util/utilities' );
 var _viewportWidth = utilities.getViewportDimensions().width;
 
 function init() {
+
   /**
   * Create the jQuery YouTube plugin.
   * @param {object} options Object used to customize YouTube.
   * @returns {object} jQuery element.
   */
+
   $.fn.createYouTube = function( options ) {
     options = $.extend( true, {}, this.data(), options );
 

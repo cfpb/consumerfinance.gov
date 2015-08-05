@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-careers.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-careers.html' as vars with context %}
 {%- set active_nav_id = 'students-and-graduates' -%}
 
 {% block title -%}
@@ -38,8 +38,8 @@
                     block__border-top
                     block__flush-bottom">
         <div class="media_image-container media_image-container__wide-margin">
-            <img class="u-hide-on-mobile"
-                 src="/static/img/gavel-round.png">
+            <img class="media_image media_image__150 u-hide-on-mobile"
+                 src="/static/img/gavel-round-300x300.png">
         </div>
         <div class="media_body">
             <h2>Brandeis Honor Attorney Program</h2>
@@ -60,8 +60,8 @@
                     block__border-top
                     block__flush-bottom">
         <div class="media_image-container media_image-container__wide-margin">
-            <img class="u-hide-on-mobile"
-                 src="/static/img/computer-round.png">
+            <img class="media_image media_image__150 u-hide-on-mobile"
+                 src="/static/img/computer-and-cup-round-300x300.png">
         </div>
         <div class="media_body">
             <h2>CFPB Summer Internship</h2>
@@ -84,8 +84,8 @@
                     block__border-top
                     block__flush-bottom">
         <div class="media_image-container media_image-container__wide-margin">
-            <img class="u-hide-on-mobile"
-                 src="/static/img/charts-round.png">
+            <img class="media_image media_image__150 u-hide-on-mobile"
+                 src="/static/img/bar-graph-round-300x300.png">
         </div>
         <div class="media_body">
             <h2>Director’s Financial Analyst</h2>
@@ -105,8 +105,8 @@
                     block__border-top
                     block__flush-bottom">
         <div class="media_image-container media_image-container__wide-margin">
-            <img class="u-hide-on-mobile"
-                 src="/static/img/white-house-round.png">
+            <img class="media_image media_image__150 u-hide-on-mobile"
+                 src="/static/img/white-house-round-300x300.png">
         </div>
         <div class="media_body">
             <h2>Presidential Management Fellow</h2>
@@ -129,22 +129,35 @@
     </section>
 
     <div class="block
-                block__padded-top
                 block__border-top
-                block__flush-bottom
-                content-l">
-        <section class="content-l_col content-l_col-1-2">
-            {% include "_template-job-app-process.html" %}
-        </section>
-        <section class="content-l_col content-l_col-1-2">
-            {% include "_template-working-at-cfpb.html" %}
-        </section>
+                block__flush-bottom">
+        <div class="content-l">
+        {# This extra div is to keep the horizontal lines size consistent #}
+            <section class="content-l_col
+                            content-l_col-1-2
+                            block
+                            block__padded-top
+                            block__padded-bottom
+                            block__flush-top
+                            block__flush-bottom">
+                {% include '_template-job-app-process.html' %}
+            </section>
+            <section class="content-l_col
+                            content-l_col-1-2
+                            block
+                            block__padded-top
+                            block__padded-bottom
+                            block__flush-top
+                            ">
+                {% include '_template-working-at-cfpb.html' %}
+            </section>
+        </div>
     </div>
 
-    {% include "_template-block-social.html" %}
+    {% include '_template-block-social.html' %}
 
     <aside>
-        {% include "./_template-careers-related-links.html" %}
+        {% include './_template-careers-related-links.html' %}
     </aside>
 
 {% endblock %}

@@ -13,7 +13,8 @@ function init() {
       $slidingNavTrigger = $( '.sliding-nav_trigger' ),
       $slidingNavNav = $( '.sliding-nav_nav' ),
       $slidingNavPage = $( '.sliding-nav_page' ),
-      $slidingNavPageOverlay = $( '.sliding-nav_page-overlay' );
+      $slidingNavPageOverlay = $( '.sliding-nav_page-overlay' ),
+      subNavItemsSelector = '.list-expanding_child-list, .sub-nav_title';
 
   $slidingNavTrigger.click( function( e ) {
     e.preventDefault();
@@ -53,17 +54,17 @@ function init() {
   $( '.list-expanding_trigger' ).cfpbAriaButton();
   $( '.list-expanding_trigger' ).click( function( e ) {
     e.preventDefault();
-    $( this ).next().find( '.list-expanding_child-list' ).slideToggle( 100 );
+    $( this ).next().find( subNavItemsSelector ).slideToggle( 100 );
   } );
   $( '.list-expanding_trigger' ).keyup( function( e ) {
     // Space key pressed.
     if ( e.which === 32 ) {
       e.preventDefault();
-      $( this ).next().find( '.list-expanding_child-list' ).slideToggle( 100 );
+      $( this ).next().find( subNavItemsSelector ).slideToggle( 100 );
     }
   } );
   // Hide the child lists initially.
-  $( '.list-expanding_child-list' ).hide();
+  $( subNavItemsSelector ).hide();
 }
 
 // Expose public methods.

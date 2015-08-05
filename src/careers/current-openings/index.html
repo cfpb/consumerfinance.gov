@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-careers.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-careers.html' as vars with context %}
 {%- set active_nav_id = 'current-openings' -%}
 
 {% block title -%}
@@ -24,7 +24,7 @@
 
 {% block content_modifiers -%}
     {{ super() }}
-    careers-all-current-openings
+    careers-current-openings
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -34,7 +34,7 @@
 
 {% block content_main %}
 
-    {% import "_macro-table-current-openings.html" as table_current_openings %}
+    {% import '_macro-table-current-openings.html' as table_current_openings %}
 
     <section class="block
                     block__flush-top
@@ -56,62 +56,39 @@
 
     <div class="block
                 block__flush-top">
-        {# TODO: This is mock data for the table.
-           Replace with actual data from the Django API. #}
-        {% set joblist = {
-        'list': [
-            {
-                'title': 'Sr. Designer',
-                'closing': 'August 23, 2015',
-                'location': 'DC',
-                'slug': '#'
-            },
-            {
-                'title': 'Design Director',
-                'closing': 'August 23, 2015',
-                'location': 'DC',
-                'slug': '#'
-            },
-            {
-                'title': 'Front End Web Designer',
-                'closing': 'August 23, 2015',
-                'location': 'NY',
-                'slug': '#'
-            },
-            {
-                'title': 'Assistant Director, Procurement',
-                'closing': 'July 8, 2015',
-                'location': 'NY',
-                'slug': '#'
-            },
-            {
-                'title': 'Data Quality Analyst of Consumer Engagement',
-                'closing': 'July 10, 2015',
-                'location': 'IL',
-                'slug': '#'
-            },
-        ]} %}
-
-        {{ table_current_openings.render(joblist) }}
+        {{ table_current_openings.render(vars.careers) }}
     </div>
 
     <div class="block
-                block__padded-top
                 block__border-top
-                block__flush-bottom
-                content-l">
-        <section class="content-l_col content-l_col-1-2">
-            {% include "_template-job-app-process.html" %}
-        </section>
-        <section class="content-l_col content-l_col-1-2">
-            {% include "_template-working-at-cfpb.html" %}
-        </section>
+                block__flush-bottom">
+        {# This extra div is to keep the horizontal lines size consistent #}
+        <div class="content-l">
+            <section class="content-l_col
+                            content-l_col-1-2
+                            block
+                            block__padded-top
+                            block__padded-bottom
+                            block__flush-top
+                            block__flush-bottom">
+                {% include '_template-job-app-process.html' %}
+            </section>
+            <section class="content-l_col
+                            content-l_col-1-2
+                            block
+                            block__padded-top
+                            block__padded-bottom
+                            block__flush-top
+                            block__flush-bottom">
+                {% include '_template-working-at-cfpb.html' %}
+            </section>
+        </div>
     </div>
 
-    {% include "_template-block-social.html" %}
+    {% include '_template-block-social.html' %}
 
     <aside>
-        {% include "_template-careers-related-links.html" %}
+        {% include '_template-careers-related-links.html' %}
     </aside>
 
 {% endblock %}

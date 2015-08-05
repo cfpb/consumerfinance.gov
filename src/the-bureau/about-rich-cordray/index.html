@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'about-rich-cordray' %}
 
 {% block title -%}
@@ -12,9 +12,9 @@
 
 {% block content_main %}
 
-	{% import "macros/share.html" as share %}
+	{% import 'macros/share.html' as share %}
 
-    <div class="block u-mt0">
+    <div class="block block__flush-top">
         <h1>
             Director Richard Cordray
         </h1>
@@ -63,13 +63,13 @@
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__download"
                                    href="/static/img/201402_cfpb_photo_richard-cordray_high-res.jpg">
-                                    High-res photo
+                                    <span class="jump-link_text">High-res photo</span>
                                 </a>
                             </li>
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__download"
                                    href="201410_cfpb_bio_cordray.pdf">
-                                    Biography
+                                    <span class="jump-link_text">Biography</span>
                                 </a>
                             </li>
                         </ul>
@@ -107,7 +107,7 @@
                     <p class="short-desc">
                         Get the latest CFPB news, including speeches, testimony, and op-eds by the director.
                     </p>
-                    <a class="jump-link jump-link__right"
+                    <a class="jump-link jump-link__underline"
                        href="/newsroom/?filter_author=Richard+Cordray">
                         See how our director is making headlines
                     </a>
@@ -120,7 +120,8 @@
                     <p class="short-desc">
                         Read blogs written by the director on a variety of consumer financial topics.
                     </p>
-                    <a href="/blog/?filter_author=Richard+Cordray" class="jump-link jump-link__right">
+                    <a href="/blog/?filter_author=Richard+Cordray"
+                       class="jump-link jump-link__underline">
                         Browse blogs by the director
                     </a>
                 </div>
@@ -132,7 +133,7 @@
                     <p class="short-desc">
                         See how the director spends his time working for consumers.
                     </p>
-                    <a class="jump-link jump-link__right"
+                    <a class="jump-link jump-link__underline"
                        href="{{ vars.path + 'leadership-calendar/' }}">
                         View the director’s public calendar
                     </a>
@@ -160,7 +161,9 @@
                     </p>
                     <a class="jump-link jump-link__external-link"
                        href="https://www.youtube.com/user/cfpbvideo/search?query=Cordray%27s+Corner">
-                        View Cordray’s Corner videos on YouTube
+                        <span class="jump-link_text">
+                            View Cordray’s Corner videos on YouTube
+                        </span>
                     </a>
                 </section>
                 <section class="content-l_col
@@ -176,7 +179,7 @@
                         In January of 2012, President Barack Obama appointed Richard Cordray to be the first
                         Director of the CFPB.
                     </p>
-                    <a class="jump-link jump-link__right"
+                    <a class="jump-link jump-link__underline"
                        href="{{ vars.path + 'history/' }}">
                         Learn more about our history
                     </a>
@@ -185,7 +188,7 @@
         </div>
 
         <section class="block u-mb0">
-            {%- import "related-links.html" as related_links %}
+            {%- import 'related-links.html' as related_links %}
             {{ related_links.render([
                 [ vars.path + 'about-steve-antonakes/',
                   'Learn about Deputy Director Steven Antonkes' ],

@@ -1,7 +1,7 @@
 
 {% macro render(posts) %}
 
-{% import "post-macros.html" as post_macros with context %}
+{% import 'post-macros.html' as post_macros with context %}
 
 <div id="pagination_content">
 
@@ -17,7 +17,7 @@
         {% set category = post.category %}
         {% set use_blog_category = False %}
     {% endif -%}
-    {%- import "category-slug.html" as category_slug %}
+    {%- import 'category-slug.html' as category_slug %}
 
     <article class="post-preview">
         <div class="meta-header">

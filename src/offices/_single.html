@@ -1,50 +1,48 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-offices.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-offices.html' as vars with context %}
 
 {% block title -%}
     {{ office.title | safe if office.title }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom office
+    {{ super() }}
+    content__flush-bottom
+    office
+    office_{{office.slug}}
 {%- endblock %}
 
 {% block content_main %}
 
-    {% import "macros/activity-snippets.html" as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(office.tags if office.tags, include_date_flag=true, number_columns=2) %}
-
     {% if office.title %}
-        <h1>{{ office.title | safe }}</h1>
+    <h1>{{ office.title | safe }}</h1>
     {% endif %}
 
     {% if office.intro.text %}
+    {% set intro = office.intro %}
+    {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
     <section class="block
                     block__flush-top
                     block__flush-bottom
                     content-l
                     content-l__main
                     content-l__large-gutters">
-        {% set intro = office.intro %}
-        {% set show_subscription = intro.subscribe_form and intro.govdelivery_code %}
-        <section class="content-l_col
-                        {% if show_subscription -%}
-                            content-l_col-1-2
-                        {% else -%}
-                            content-l_col-1
-                        {%- endif %}
-                        ">
-            <p class="h3">{{ intro.text | safe if intro.text }}</p>
-        </section>
+        <div class="content-l_col
+                    {{ 'content-l_col-1-1' if show_subscription else 'content-l_col-1' }}
+                    ">
+            {# Note this is a div to accommodate paragraph markup
+               coming from the CMS for the intro.text content. #}
+            <div class="office_intro-text">{{ intro.text | safe }}</div>
+        </div>
         {% if show_subscription %}
-            <section class="content-l_col
-                            content-l_col-1-2
-                            content-l_col__before-divider">
-                <p class="h3 u-show-on-mobile">Stay informed</p>
-                <p class="short-desc">Stay up to date with our email newsletter</p>
-                {% import "macros/subscribe.html" as subscribe with context %}
-                {{ subscribe.render(intro.govdelivery_code) }}
-            </section>
+        <div class="content-l_col
+                        content-l_col-1-2
+                        content-l_col__before-divider">
+            <p class="h3 u-show-on-mobile">Stay informed</p>
+            <p class="short-desc">Stay up to date with our email newsletter</p>
+            {% import 'macros/subscribe.html' as subscribe with context %}
+            {{ subscribe.render(intro.govdelivery_code) }}
+        </div>
         {% endif %}
     </section>
     {% endif %}
@@ -55,7 +53,7 @@
                     block__padded-top
                     block__border-top">
         {% if top_story.head %}
-        <h1 class="h3">{{ top_story.head | safe }}</h1>
+        <h2>{{ top_story.head | safe }}</h2>
         {% endif %}
         <div class="content-l
                     content-l__main
@@ -77,7 +75,7 @@
                 <ul class="list__links">
                 {% for link in top_story.links %}
                     <li class="list_item">
-                        <a class="jump-link jump-link__right list_link" href="{{ link.url }}">
+                        <a class="list_link" href="{{ link.url }}">
                             {{link.label}}
                         </a>
                     </li>
@@ -88,77 +86,75 @@
         </div>
     </section>
     {% endif %}
+
     {% if office.resources %}
     <section class="block
                     block__padded-top
                     block__border-top">
-        <h1 class="h2">
-            {{ resource_title }}
-        </h1>
+        {# Heading added for screenreaders to have a section title. #}
+        <h2 class="u-visually-hidden">
+            Resources
+        </h2>
         {% for resource in office.resources %}
-            <div class="media block__sub">
-                {% if resource.icon %}
-                <div class="media_image-container
-                            media_image-container__wide-margin">
-                    <img class="media_image u-centered-on-mobile"
-                         width="150"
-                         src="{{resource.icon}}">
-                </div>
-                {% endif %}
-                <div class="media_body">
-                    {% if resource.title %}
-                    <h2 class="h3">{{ resource.title | safe }}</h2>
-                    {% endif %}
-
-                    {% if resource.desc %}
-                    <p class="short-desc">{{ resource.desc | safe }}</p>
-                    {% endif %}
-
-                    {% if resource.link %}
-                    <a class="jump-link jump-link__right"
-                       href="{{ resource.link.url if resource.link }}">
-                          {{ resource.link.label }}
-                    </a>
-                    {% endif %}
-                </div>
+        <div class="media block__sub">
+            {% if resource.icon %}
+            <div class="media_image-container
+                        media_image-container__wide-margin">
+                <img class="media_image u-centered-on-mobile"
+                     width="150"
+                     src="{{ resource.icon }}">
             </div>
+            {% endif %}
+            <div class="media_body">
+                {% if resource.title %}
+                <h2>{{ resource.title | safe }}</h2>
+                {% endif %}
+
+                {% if resource.desc %}
+                <p class="short-desc">{{ resource.desc | safe }}</p>
+                {% endif %}
+
+                {% if resource.link %}
+                <a class="jump-link jump-link__underline"
+                   href="{{ resource.link.url }}">
+                      {{ resource.link.label }}
+                </a>
+                {% endif %}
+            </div>
+        </div>
         {% endfor %}
     </section>
     {% endif %}
 
     {% if vars.sub_pages %}
-        {% import "macros/sub_pages.html" as sub_pages_macro with context %}
+        {% import 'macros/sub_pages.html' as sub_pages_macro with context %}
         {{ sub_pages_macro.render( vars.sub_pages, 'Our Work') }}
     {% endif %}
 
-    {% if activities_feed %}
+    {% if office.content %}
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        {{ office.content }}
+    </section>
+    {% endif %}
+
+    {% if office.tags %}
     <section class="block
                     block__bg
                     block__flush-sides
                     block__flush-top
                     block__flush-bottom">
+        {% import 'macros/activity-snippets.html' as activity_snippets with context %}
+        {% set activities_feed = activity_snippets.render(office.tags, include_date_flag=true, number_columns=2) %}
         {% include 'templates/activities-feed.html' %}
-        <a class="jump-link jump-link__right"
+        <a class="jump-link jump-link__underline"
            href="/activity-log/{{ ('?filter_tags=' ~ office.tags | join('&') ) if office.tags }}">
             View all of our activities
         </a>
     </section>
     {% endif %}
 
-    {% include "templates/office-contact.html" %}
+    {% include 'templates/office-contact.html' %}
 
-{% endblock %}
-
-{% block javascript %}
-    {{ super() }}
-    <!-- TODO: Move this to a Browserify module. -->
-    <script>
-        $('document').ready(function () {
-            if (!$('html').hasClass('lt-ie9')) {
-                $('.expandable__mobile-only').each(function (i) {
-                    new MobileOnlyExpandable($(this), 599);
-                });
-            }
-        });
-    </script>
 {% endblock %}

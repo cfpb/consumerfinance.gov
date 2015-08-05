@@ -16,7 +16,10 @@ function loadScript( url, callback ) {
   // Handle Internet Explorer
   if ( script.readyState ) {
     script.onreadystatechange = function() {
-      if ( script.readyState === 'loaded' || script.readyState === 'complete' ) {
+      if (
+        script.readyState === 'loaded' ||
+        script.readyState === 'complete'
+      ) {
         script.onreadystatechange = null;
         if ( callback ) callback();
       }

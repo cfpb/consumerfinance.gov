@@ -1,5 +1,5 @@
-{% extends "layout-side-nav.html" %}
-{% import "_vars-the-bureau.html" as vars with context %}
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'history' %}
 
 {% block title -%}
@@ -12,12 +12,12 @@
 
 {% block content_main %}
 
-    {% import "post-macros.html" as post_macros %}
-    {% import "macros/share.html" as share %}
+    {% import 'post-macros.html' as post_macros %}
+    {% import 'macros/share.html' as share %}
 
     {% set query = queries.history %}
 
-    <div class="block u-mt0">
+    <div class="block block__flush-top">
         <h1>
             The history of the Consumer Financial Protection Bureau
         </h1>
@@ -64,14 +64,14 @@
        See: http://stackoverflow.com/a/16746185/279566 #}
     {% set history_vars = {'current_year': 9999} %}
     {% for history in first %}
-        {% if history_vars.update({'current_year': history.date|date("%Y")|int}) %} {% endif %}
+        {% if history_vars.update({'current_year': history.date|date('%Y')|int}) %} {% endif %}
     {% endfor %}
                     <h2 class="history-year">{{ history_vars.current_year }}</h2>
                     <ol class="history-list">
     {% set histories = query.search(filter_parent=section.id) %}
     {% for history in histories %}
-        {% if history.date|date("%Y")|int < history_vars.current_year %}
-            {% if history_vars.update({'current_year': history.date|date("%Y")|int}) %} {% endif %}
+        {% if history.date|date('%Y')|int < history_vars.current_year %}
+            {% if history_vars.update({'current_year': history.date|date('%Y')|int}) %} {% endif %}
                     </ol>
                     <h2 class="history-year">{{ history_vars.current_year }}</h2>
                     <ol class="history-list">
@@ -91,7 +91,7 @@
                                 <h3 class="expandable_header-left history-item_title">
                                     <span class="history-item_date">
                                         {{ history.item_date if history.item_date
-                                           else history.date|date("%b %d, %Y") }}
+                                           else history.date|date('%b %d, %Y') }}
                                     </span>
                                     {{ history.title|safe }}
                                 </h3>

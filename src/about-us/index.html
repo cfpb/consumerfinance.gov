@@ -1,0 +1,189 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    About Us
+{%- endblock %}
+
+
+{% block content_main %}
+    <section class="block
+                    block__flush-top">
+        <h1>About Us</h1>
+        <p class="h3">
+            We're a new government agency created
+            after the financial crisis of 2008.
+            We write and enforce rules to ensure that markets for
+            consumer financial products and services are fair and open,
+            and to make financial information easier to understand.
+            We also build tools and resources that help arm consumers
+            with the information they need,
+            and empower consumers to make the best financial decisions.
+        </p>
+        <ul class="list list__links">
+            <li class="list_item">
+                <a href="/the-bureau/" class="list_link">
+                    Learn more about the Bureau
+                </a>
+            </li>
+            <li class="list_item">
+                {# TODO: Add link to Consumer Guides #}
+                <a class="list_link u-link__disabled">
+                    Find resources and tools for consumers
+                </a>
+            </li>
+            <li class="list_item">
+                <a href="/offices/payments-to-harmed-consumers/"
+                   class="list_link">
+                    Find out about our work to protect consumers
+                </a>
+            </li>
+        </ul>
+    </section>
+    <div class="content-l">
+        {# The extra div is to prevent border tapering from combining block__border and content-l classes #}
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>CFPB Leadership</h2>
+                <div class="media bureau-bio u-mb30">
+                    <div class="media_image-container">
+                        <img class="media_image"
+                             src="/static/img/cordray_round_360.jpg"
+                             alt="Richard Cordray">
+                    </div>
+                    <div class="media_body">
+                        <span class="h6">Director</span>
+                        <h3 class="h2 bureau-bio_name">Richard Cordray</h3>
+                        <a class="jump-link jump-link__underline"
+                           href="/the-bureau/about-rich-cordray">
+                            Cordray's bio
+                        </a>
+                    </div>
+                </div>
+                <div class="media bureau-bio u-mb30">
+                    <div class="media_image-container">
+                        <img class="media_image"
+                             src="/static/img/antonakes_round_360.jpg"
+                             alt="Steve Antonakes">
+                    </div>
+                    <div class="media_body">
+                        <span class="h6">Deputy Director</span>
+                        <h3 class="h2 bureau-bio_name">Steve Antonakes</h3>
+                        <a class="jump-link jump-link__underline"
+                           href="/the-bureau/about-steve-antonakes">
+                            Antonakes's bio
+                        </a>
+                    </div>
+                </div>
+                <a class="jump-link jump-link__underline"
+                   href="/the-bureau/bureau-structure/">
+                    Organizational structure and leadership
+                </a>
+            </section>
+        </div>
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>Strategy & Budget</h2>
+                <p>
+                    We work for the American public.
+                    We publish our strategy and budget
+                    so you can understand our priorities.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a href="/budget/strategic-plan/" class="list_link">
+                            Read our strategic plan
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/budget/financial-report/" class="list_link">
+                            Browse our financial reports and updates
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/budget/" class="list_link">
+                            Learn more about our strategy and budget
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+    <div class="content-l">
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>Engage in our Work</h2>
+                <p>
+                    We actively seek opportunities to collaborate
+                    with subject matter experts, innovators,
+                    and third-party vendors to help inform our policy work,
+                    stay on top of emerging trends,
+                    and build effective programs in support of our mission.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        {# TODO: Add link in next sprint #}
+                        <a class="list_link u-link__disabled">Advisory groups</a>
+                    </li>
+                    <li class="list_item">
+                        {# TODO: Add link in next sprint #}
+                        <a class="list_link u-link__disabled">Project Catalyst</a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/doing-business-with-us/" class="list_link">
+                            Procurement opportunities
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="content-l_col-1-2">
+            <section class="block
+                        block__border-top
+                        block__padded-top
+                        block__flush-bottom">
+                <h2>Careers</h2>
+                <p>
+                    We are always looking for leaders
+                    who want to do meaningful work for consumers.
+                    And we strive to create a workplace
+                    that supports and develops them.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a href="/careers/working-at-cfpb/" class="list_link">
+                            See what it's like to work at the CFPB
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="/careers/current-openings/" class="list_link">
+                            See current job opportunities
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+
+    {# TODO Add Events to the Activity Snippets #}
+
+    {% import 'macros/activity-snippets.html' as activity_snippets with context %}
+    {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'],include_date_flag=true) %}
+    {% include 'templates/activities-feed.html' %}
+    <a class="jump-link jump-link__underline"
+       href="/activity-log/">
+        View all of our activities
+    </a>
+
+{%- endblock %}

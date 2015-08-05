@@ -1,6 +1,6 @@
 {% macro render(posts, user_options) %}
 
-{% from "macros/util/format.html" import format_time as format_time %}
+{% from 'macros/util/format.html' import format_time as format_time %}
 
 {% set options = {
     'time_col_classes': 'u-w25pct',
@@ -10,7 +10,7 @@
 {% set _ignore = options.update(user_options) %}
 
 {% for days in posts|groupby('day')|reverse %}
-<table class="u-w100pct block u-mt0">
+<table class="u-w100pct block block__flush-top">
     <thead>
         <tr>
             <th colspan="3">

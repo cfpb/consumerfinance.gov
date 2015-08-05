@@ -20,7 +20,7 @@
 {% macro event_preview(post, media_object=true) %}
     {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
                     | default('Washington, DC') -%}
-    {% import "_event-post-macros.html" as event_post_macros with context %}
+    {% import '_event-post-macros.html' as event_post_macros with context %}
     <article class="post-preview post-preview__event">
         {% if media_object %}
             <div class="media">
@@ -60,7 +60,7 @@
    ========================================================================== #}
 
 {% macro event_hero(post) %}
-    {% import "macros/category-icon.html" as category_icon %}
+    {% import 'macros/category-icon.html' as category_icon %}
     {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
                     | default('Washington, DC') -%}
     <section class="content_hero hero">
@@ -86,7 +86,7 @@
                             {{ post.future.summary | striptags }}
                         </p>
                         <footer class="summary_footer">
-                            {% from "_event-post-macros.html" import event_meta_datetime as event_meta_datetime %}
+                            {% from '_event-post-macros.html' import event_meta_datetime as event_meta_datetime %}
                             {{ event_meta_datetime(post.beginning_time, '%m/%-d/%y') }}
                         </footer>
                     </div>
@@ -94,7 +94,7 @@
             </a>
         </div>
         <div class="hero_img-container hero_img-container__small">
-            {% from "macros/util/format.html" import location_image_url as location_image_url %}
+            {% from 'macros/util/format.html' import location_image_url as location_image_url %}
             <div class="hero_img"
                  style="background-image:url({{ location_image_url({
                         'location': city | urlencode,

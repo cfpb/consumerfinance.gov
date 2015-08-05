@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title -%}
     Leadership calendar
@@ -10,7 +10,7 @@
 
 {% block css %}
     {{ super() }}
-    {% import "pdfreactor-footer.html" as pdfreactor_footer %}
+    {% import 'pdfreactor-footer.html' as pdfreactor_footer %}
     {{ pdfreactor_footer.render('consumerfinance.gov/the-bureau/leadership-calendar') }}
 {% endblock %}
 
@@ -19,8 +19,8 @@
 
 {% block body %}
 
-    {% from "post-macros.html" import active_filters as active_filters with context %}
-    {% import "leadership-calendar-table.html" as calendar %}
+    {% import 'macros/active-filters.html' as active_filters with context %}
+    {% import 'leadership-calendar-table.html' as calendar %}
 
     <main class="content print" id="main" role="main">
         <div class="content_wrapper">
@@ -29,8 +29,10 @@
                     {% set query = queries.calendar_event -%}
                     {%- set posts = query.search(size=20000) -%}
                     <h1 class="superheader">Leadership Calendar</h1>
-                    {{ active_filters(posts, ['calendar', 'range_date'], {
-                        'show_filters_label': false, 'show_unfiltered_count': true
+                    {{ active_filters.render(posts, ['calendar', 'range_date'], {
+                        'show_filters_label': false,
+                        'show_unfiltered_count': true,
+                        'use_list'  : true
                     }) }}
                 </div>
                 {{ calendar.render(posts, {

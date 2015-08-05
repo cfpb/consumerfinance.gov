@@ -1,4 +1,4 @@
-{% extends "layout-full.html" %}
+{% extends 'layout-full.html' %}
 {% set request_host = 'http://' + request.host %}
 {% set request_referrer = request.referrer or request_host %}
 
@@ -18,7 +18,7 @@
 {%- endblock %}
 
 {% block header -%}
-    {% include "templates/header-without-nav.html" %}
+    {% include 'templates/header-without-nav.html' %}
 {%- endblock %}
 
 {% block footer -%}

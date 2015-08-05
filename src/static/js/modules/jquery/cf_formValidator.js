@@ -5,7 +5,7 @@
 'use strict';
 
 var $ = require( 'jquery' );
-require( '../polyfill/array-foreach-polyfill' );
+require( '../polyfill/array-polyfills' );
 var _validate = require( 'validate' );
 
 var _validator = {
@@ -196,7 +196,9 @@ function init() {
       method = _validator.init;
       options = arguments;
     } else {
-      $.error( 'Method "' + method + '" does not exist in the cf_formValidator plugin' );
+      $.error(
+        'Method "' + method + '" does not exist in the cf_formValidator plugin'
+      );
       return this;
     }
 

@@ -60,10 +60,10 @@
    ========================================================================== #}
 
 {% macro event_location_image(options={}) %}
-    {% from "macros/util/format.html" import location_image_url as location_image_url %}
+    {% from 'macros/util/format.html' import location_image_url as location_image_url %}
 
     <img class="{{ options.additional_classes }}"
-        src="{{ location_image_url({
+         src="{{ location_image_url({
                         'location': options.location
                                     | default('Washington, DC', true)
                                     | urlencode,
@@ -71,7 +71,7 @@
                         'scale':    options.scale | default('2'),
                         'size':     options.size  | default('276x155')
                     }) }}"
-        alt="Google Maps image of {{ options.location }}">
+         alt="Google Maps image of {{ options.location }}">
 {% endmacro %}
 
 
@@ -205,11 +205,14 @@
 
    path: The path to which post filters are applied.
 
+   event_state: A string indicating the state of the event.
+                Possible values: past, present, future.
+
    ========================================================================== #}
 
-{% macro post_summary(post, path) %}
+{% macro post_summary(post, path, event_state) %}
 
-{%- import "tags.html" as tags %}
+{%- import 'tags.html' as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
             {{ calendar_icon(post.beginning_time.date) }}
@@ -221,10 +224,10 @@
             </div>
         </header>
         <p class="summary_text">
-            {% if (request.url_rule.endpoint != 'event_archive') %}
-                {{ post.future.summary | striptags }}
-            {% else %}
+            {% if (event_state == 'past') %}
                 {{ post.archive.summary | striptags }}
+            {% else %}
+                {{ post.future.summary | striptags }}
             {% endif %}
         </p>
     </a>
@@ -246,9 +249,12 @@
 
    post: A post from a query result.
 
+   event_state: A string indicating the state of the event.
+                Possible values: past, present, future.
+
    ========================================================================== #}
 
-{% macro event_venue(post) %}
+{% macro event_venue(post, event_state) %}
     {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
                     | default('Washington, DC') -%}
 
@@ -262,7 +268,7 @@
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
-                    {% if (request.url_rule.endpoint == 'event_archive') %}
+                    {% if (event_state == 'past') %}
                         Video Replay will be<br> available shortly
                     {% else %}
                         {{ event_meta_datetime(post.beginning_time) }}
@@ -276,9 +282,9 @@
         </header>
         <footer>
             <figure class="event-media_container">
-                {% if (request.url_rule.endpoint == 'event_archive') %}
-                    {# TODO Replace image URL with actual post url #}
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/9/94/Large.mc.arp.750pix.jpg" />
+                {# TODO Replace image URL with actual post url based on event states #}
+                {% if (event_state == 'past')  %}
+                    <img src="https://placeholdit.imgix.net/~text?C3%97350&w=700&h=350" />
                 {% else %}
                     {{ event_location_image({
                         'location': city,
@@ -319,7 +325,10 @@
               block__padded-top
               block__border-top">
     <h2>Agenda</h2>
-    <table class="u-w100pct block u-mt0 simple-table">
+    <table class="u-w100pct
+                  block
+                  block__flush-top
+                  simple-table">
         <thead>
             <tr>
                 <th class="{{ options.time_col_classes }}">Time</th>
@@ -332,9 +341,9 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {{ block.beginning_time.date | date("%-I:%M %p %Z", block.beginning_time.timezone) }}
+                    {{ block.beginning_time.date | date('%-I:%M %p %Z', block.beginning_time.timezone) }}
                     &ndash;
-                    {{ block.ending_time.date | date("%-I:%M %p %Z", block.ending_time.timezone) }}
+                    {{ block.ending_time.date | date('%-I:%M %p %Z', block.ending_time.timezone) }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                     {{ block.desc }}

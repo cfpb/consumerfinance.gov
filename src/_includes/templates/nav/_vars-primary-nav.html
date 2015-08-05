@@ -8,22 +8,22 @@
           sub-navigation items {{ array of tuples }}
 #}
 
-{% import "templates/nav/about-us-media.html" as about_us_media %}
+{% import 'templates/nav/about-us-media.html' as about_us_media %}
 
-{% set nav_tbd =  ('TBD Content', '', '', []) %}
+{% set nav_tbd =  ('TBD Content', '#', '', '', []) %}
 {% set sub_nav_tbd =  ('', '', 'TBD Content') %}
 {% set nav_items = [
     nav_tbd,
     nav_tbd,
     nav_tbd,
-    ('About', 'About Overview', about_us_media , [
+    ('About', '/about-us/',  'About Overview', about_us_media , [
         (
             ('/the-bureau/', 'the-bureau', 'The Bureau'),
             ('/budget/', 'budget', 'Budget and Strategy'),
             ('/offices/payments-to-harmed-consumers/',
              'payments-to-harmed-consumers',
              'Payments to Harmed<br>Consumers'),
-            sub_nav_tbd
+            ('/offices/cfpb-ombudsman/', 'cfpb-ombudsman', 'CFPB Ombudsman')
         ),
         (
             ('/blog/', 'blog', 'Blog'),
@@ -34,7 +34,8 @@
         (
             ('/careers/', 'careers', 'Careers'),
             ('/doing-business-with-us/', 'doing-business-with-us', 'Doing Business With Us'),
-            ('/offices/cfpb-ombudsman/', 'cfpb-ombudsman', 'CFPB Ombudsman'),
+            ('/offices/advisory-groups/', 'advisory-groups', 'Advisory Groups'),
+            ('/offices/project-catalyst/', 'project-catalyst', 'Project Catalyst'),
             ('/contact-us/', 'contact-us', 'Contact Us')
         )
     ])

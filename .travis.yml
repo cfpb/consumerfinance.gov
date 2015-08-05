@@ -3,8 +3,15 @@ language: python
 python:
   - "2.7"
 
+sudo: false
+
 services:
   - elasticsearch
+
+addons:
+  apt:
+    package:
+      - nodejs
 
 install:
   # Python test requirements
@@ -18,13 +25,10 @@ install:
   - pip install -r test/macro_tests/requirements.txt
 
   # JavaScript test requirements
-  - sudo add-apt-repository -y ppa:chris-lea/node.js
-  - sudo apt-get -y update
-  - sudo apt-get -y install nodejs
-  - sudo npm install -g grunt-cli
-  - sudo npm install -g bower
-  - sudo npm install -g protractor
-  - sudo npm install
+  - npm install -g grunt-cli
+  - npm install -g bower
+  - npm install -g protractor
+  - npm install
 
 script:
   # Run tests for JavaScript

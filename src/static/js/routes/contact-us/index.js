@@ -22,13 +22,15 @@ function init() {
 
   // Hide the contact list header if there are zero results.
   $( '.type-and-filter' ).on( 'attemptSearch', function() {
-    var resultsCount = $( '.js-type-and-filter_item' ).filter( ':visible' ).length;
+    var resultsCount =
+      $( '.js-type-and-filter_item' ).filter( ':visible' ).length;
     $( '#contact-list_header' ).toggle( resultsCount > 0 );
   } );
 
   // Clicking on a helpful term should trigger a filter.
   $( '.js-helpful-term' ).on( 'click', function() {
-    $( '.js-type-and-filter_input' ).val( $( this ).text() ).trigger( 'valChange' );
+    $( '.js-type-and-filter_input' )
+      .val( $( this ).text() ).trigger( 'valChange' );
   } );
 }
 

@@ -1,9 +1,12 @@
-{% from "macros/util/format.html" import format_address as format_address %}
-{% import "_vars-contact-us.html" as vars with context %}
+{% from 'macros/util/format.html' import format_address as format_address %}
+{% import '_vars-contact-us.html' as vars with context %}
 {% set administrative_offices = vars.administrative_offices %}
 {% set consumer_contact_center = vars.consumer_contact_center  %}
 
-<section class="block u-mt0 content-l content-l__sidebar">
+<section class="block
+                block__flush-top
+                content-l
+                content-l__sidebar">
 
     <h1 class="h3 content-l_col content-l_col-1-2">
         Mailing addresses

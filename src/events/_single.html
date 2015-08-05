@@ -1,5 +1,6 @@
-{% extends "layout-2-1-bleedbar.html" %}
-{% import "_vars-events.html" as vars with context %}
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import '_vars-events.html' as vars with context %}
+{% set event_state = when( event.beginning_time.date, event.ending_time.date ) %}
 
 {% block title -%}
     {{ event.title }}
@@ -22,17 +23,21 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% import "_event.html" as article with context %}
-    {{ article.render(event, vars.path) }}
+    {% import '_event.html' as article with context %}
+    {{ article.render(event, vars.path, event_state) }}
 
-    {% from "_event-post-macros.html" import event_agenda as event_agenda %}
+    {% from '_event-post-macros.html' import event_agenda as event_agenda %}
     {{ event_agenda(event) }}
 
     <div class="event-footer">
+        {% if event_state != 'past' %}
         <p class="event-footer_banner">
             <span class="event-footer_banner-message h4">This event requires an RSVP. Reserve your spot here: </span>
-            <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn"><span class="btn_icon__left cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
+            <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn">
+                <span class="btn_icon__left cf-icon cf-icon-email-social"></span>
+                 reserve@cfpb.gov</a>
         </p>
+        {% endif %}
         <div class="content-l">
             <section class="content-l_col content-l_col-1-2 event-footer_col">
                 <h3 class="h4 u-mb5">Downloads</h3>
@@ -48,8 +53,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block u-mt0">
-        {% import "related-posts.html" as related_posts with context %}
+    <section class="block block__flush-top">
+        {% import 'related-posts.html' as related_posts with context %}
         {{ related_posts.render(event) }}
     </section>
     <section class="block">
@@ -58,20 +63,20 @@
                 Stay informed
             </span>
         </h1>
-        <div class="block block__sub u-mt0">
+        <div class="block block__sub block__flush-top">
             <p class="short-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
-            {% import "macros/subscribe.html" as subscribe with context %}
+            {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render('USCFPB_93') }}
         </div>
         <div class="block block__sub">
-            {% import "rss.html" as rss %}
+            {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
         </div>
     </section>
     <section class="block">
-        {%- import "related-links.html" as related_links -%}
+        {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
             [
                 '/the-bureau/',

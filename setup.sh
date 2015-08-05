@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# ==========================================================================
+# Setup script for installing project dependencies.
+# NOTE: Run this script while in the project root directory.
+#       It will not run correctly when run from another directory.
+# ==========================================================================
+
 # Set script to exit on any errors.
 set -e
 
@@ -37,14 +43,14 @@ clear(){
 install(){
   echo 'Installing project dependencies...'
   npm install
-  bower install
+  bower install --config.interactive=false
 }
 
 # Run tasks to build the project for distribution.
 build(){
   echo 'Building project...'
   grunt clean
-  grunt build
+  grunt
 }
 
 init

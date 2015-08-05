@@ -37,5 +37,7 @@
     <span class="{{ additional_classes }}"></span>
     {%- elif category|lower == 'blog' -%}
     <span class="{{ additional_classes }} cf-icon cf-icon-speech-bubble"></span>
+    {%- elif category|lower == 'newsroom' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-newspaper"></span>
     {%- endif -%}
 {% endmacro %}
