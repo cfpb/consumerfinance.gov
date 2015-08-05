@@ -2,117 +2,115 @@
                     block__bg
                     block__border
                     block__flush-sides">
-        <form class="form-l js-validate-filters">
+        <form class="form-l js-validate-filters" id="eeo-form">
             <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="eeo_first-name">
+                <label class="form-label-header" for="eeo-form_first-name">
                     First name*
                 </label>
                 <input class="input__long"
-                       id="eeo_first-name"
-                       required
-                       type="text">
+                       id="eeo-form_first-name"
+                       type="text"
+                       required>
             </div>
 
             <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="eeo_last-name">
+                <label class="form-label-header" for="eeo-form_last-name">
                     Last name*
                 </label>
                 <input class="input__long"
-                       id="eeo_last-name"
-                       required
-                       type="text">
+                       id="eeo-form_last-name"
+                       type="text"
+                       required>
             </div>
 
             <div class="form-l_col form-l_col-1">
                 <label class="form-label-header"
-                       for="eeo_address1">
+                       for="eeo-form_address1">
                     Address 1*
                 </label>
                 <input class="input__long"
-                       id="eeo_address1"
+                       id="eeo-form_address1"
                        type="text"
                        required>
             </div>
 
             <div class="form-l_col form-l_col-1">
                 <label class="form-label-header"
-                       for="eeo_address2">
+                       for="eeo-form_address2">
                     Address 2
                 </label>
                 <input class="input__long"
-                       id="eeo_address2"
+                       id="eeo-form_address2"
                        type="text">
             </div>
 
-            <div class="form-l_col form-l_col-1-2">
+            <div class="form-l_col form-l_col-1-3">
                 <label class="form-label-header"
-                       for="eeo_city">
+                       for="eeo-form_city">
                     City*
                 </label>
                 <input class="input__long"
-                       id="eeo_city"
+                       id="eeo-form_city"
                        type="text"
                        required>
             </div>
 
-            <div class="form-l_col form-l_col-1-2">
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header"
-                           for="eeo_state">
-                        State*
-                    </label>
-                    <div class="custom-select">
-                        <select class="custom-select_select"
-                                data-placeholder="Select the FOIA request category"
-                                id="eeo_state"
-                                required>
-                            <option value="">Please select</option>
-                            {# TODO: Add States #}
-                            <option value="State">States to be added</option>
-                        </select>
-                        <span class="custom-select_icon
-                                     cf-icon
-                                     cf-icon-down"></span>
-                    </div>
-                </div>
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header" for="eeo_zip">
-                        Zip code*
-                    </label>
-                    <input class="input__long"
-                           id="eeo_zip"
-                           type="text"
-                           required>
+            <div class="form-l_col form-l_col-1-3">
+                <label class="form-label-header"
+                       for="eeo-form_state">
+                    State*
+                </label>
+                <div class="custom-select">
+                    <select class="custom-select_select"
+                            data-placeholder="Select the FOIA request category"
+                            id="eeo-form_state"
+                            required>
+                        <option value="">Please select</option>
+                        {# TODO: Add States #}
+                        <option value="State">States to be added</option>
+                    </select>
+                    <span class="custom-select_icon
+                                 cf-icon
+                                 cf-icon-down"></span>
                 </div>
             </div>
+            <div class="form-l_col form-l_col-1-3">
+                <label class="form-label-header" for="eeo-form_zip">
+                    Zip code*
+                </label>
+                <input class="input__long"
+                       id="eeo-form_zip"
+                       type="text"
+                       required>
+            </div>
+
 
             <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="eeo_telephone">
+                <label class="form-label-header" for="eeo-form_telephone">
                     Telephone Number*
                 </label>
                 <input class="input__long"
-                       id="eeo_telephone"
-                       type="text"
+                       id="eeo-form_telephone"
+                       type="tel"
                        required>
             </div>
 
             <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="eeo_fax">
+                <label class="form-label-header" for="eeo-form_fax">
                     Fax Number
                 </label>
                 <input class="input__long"
-                       id="eeo_fax"
-                       type="text"
-                       required>
+                       id="eeo-form_fax"
+                       type="tel">
             </div>
 
             <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="eeo_email">
+                <label class="form-label-header" for="eeo-form_email">
                     Email Address*
                 </label>
                 <input class="input__long"
-                       id="eeo_email"
-                       type="text"
+                       id="eeo-form_email"
+                       type="email"
                        required>
             </div>
 
@@ -135,13 +133,13 @@
             </div>
 
             <div class="form-l_col form-l_col-1">
-                <label for="eeo_complaint-desc">
+                <label for="eeo-form_complaint-desc">
                     <span class="form-label-header">
-                        Nature of discrimination
+                        Nature of discrimination*
                     </span>
                 </label>
                 <textarea class="input__long"
-                          id="eeo_complaint-desc"
+                          id="eeo-form_complaint-desc"
                           required>
                 </textarea>
             </div>
