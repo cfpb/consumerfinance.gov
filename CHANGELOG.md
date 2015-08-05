@@ -95,6 +95,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed Grunt plugins from package.json
 - Removed the Gruntfile.
 - Removed homepage progress charts and related content and JS.
+- Removed 80px to 120px sizing for the isocon sizes on the-bureau page.
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused
@@ -105,13 +106,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Normalized use of jinja quotes to single quote
 - Fixed a large chunk of the existing linting errors and warnings
 - Fixed issue with active filters on`/the-bureau/leadership-calendar/print/` page.
-<<<<<<< HEAD
-- Fixed margins on site footer
-- Switched the two forms under Privacy to their correct positions
-=======
 - Fixed margins on site footer.
+- Switched the two forms under Privacy to their correct positions
 - Fixed incorrect email href reference on offices contact email link.
->>>>>>> c75f0735681d019a362f5ab4b91f4b1e28376595
 
 
 ## 3.0.0-2.0.0 - 2015-07-24
