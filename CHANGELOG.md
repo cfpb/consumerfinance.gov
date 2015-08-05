@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-2.1.0 - 2015-08-05
+
+### Added
 - Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
 - Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
 - Added `u-hidden` utility class for fully hiding an element.
