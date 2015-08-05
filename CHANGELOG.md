@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `activities-block` shared template for activity feed
   on offices and sub-pages.
 - Added accessibility complaint form.
+- Added "File an EEO Issue" form.
 
 ### Changed
 - Site's "About" text to "About Us".
