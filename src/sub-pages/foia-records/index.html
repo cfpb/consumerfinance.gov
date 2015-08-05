@@ -28,9 +28,9 @@
 
     {# Set the filters #}
     {# TODO: Uncomment when we have real records
-    {% from 'post-macros.html' import filters as filters with context %}
+    {% import 'macros/filters.html' as filters with context %}
     {% set filter_by = ['category', 'range_date', 'tags'] %}
-    {{ filters(filter_by, vars.record_query, vars.records, 'newsroom',
+    {{ filters.render(filter_by, vars.record_query, vars.records, 'newsroom',
        { 'expand_label': 'Filter posts' }) }}
     #}
 
