@@ -4,6 +4,7 @@ env:
 rules:
   no-unused-expressions: 0
   no-process-env: 0
+  max-nested-callbacks: 0
 globals:
   by: true
   browser: true
