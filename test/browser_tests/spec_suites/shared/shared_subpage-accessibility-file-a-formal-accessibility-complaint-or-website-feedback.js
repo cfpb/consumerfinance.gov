@@ -41,10 +41,6 @@ describe( "The Accessibility Office's " +
     expect( page.relatedFAQ.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have related FAQ', function() {
-    expect( page.relatedFAQ.isPresent() ).toBe( false );
-  } );
-
   it( 'should NOT have tags', function() {
     expect( page.contentTags.isPresent() ).toBe( false );
   } );
