@@ -7,6 +7,7 @@ function OfficePage() {
         Accessibility:            baseUrl + 'accessibility/',
         CFPBOmbudsman:            baseUrl + 'cfpb-ombudsman/',
         FOIARequests:             baseUrl + 'foia-requests/',
+        OfficeOfCivilRights:      baseUrl + 'office-of-civil-rights/',
         OpenGovernment:           baseUrl + 'open-government/',
         PaymentsToHarmedConsumer: baseUrl + 'payments-to-harmed-consumers/',
         PlainWriting:             baseUrl + 'plain-writing/',
