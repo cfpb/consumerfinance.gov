@@ -115,13 +115,13 @@
             </div>
 
             <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="contact-time">
+                <label class="form-label-header" for="eeo-form_contact-time">
                     Best time to reach you
                 </label>
                 <div class="custom-select">
                     <select class="custom-select_select"
                             data-placeholder="Select Time"
-                            id="contact-time">
+                            id="eeo-form_contact-time">
                           <option value="">Select time</option>
                           {# TODO: Add additional times. #}
                           <option>8:00 a.m</option>
@@ -144,7 +144,10 @@
                 </textarea>
             </div>
 
-            <div class="form-actions form-actions__right-on-med ">
+            <div class="form-actions
+                        form-actions__right-on-med
+                        form-l_col
+                        form-l_col-1">
                 <input class="btn form-actions_item"
                        type="submit"
                        value="Generate PDF">

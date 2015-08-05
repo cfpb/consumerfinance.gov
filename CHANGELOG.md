@@ -16,6 +16,43 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Transitioned Capital Framework dependency to v1.0.0 in bower.json.
+- Added gulp and the required npm plugins
+- Added gulp config file to lay out configs for each task
+- Added gulp tasks split up into their own files
+- Added acceptance tests for `/offices/*` pages accessible through site's menu.
+- Added Accessibility page to footer and adds Accessibility page tests.
+- Added acceptance tests for `/sub-pages/*`.
+- Added `activities-block` shared template for activity feed
+  on offices and sub-pages.
+- Added accessibility complaint form.
+- Added "File an EEO Issue" form.
+
+### Changed
+- Site's "About" text to "About Us".
+- Replaced FOIA Records with Coming Soon heading
+- Updated setup.sh to use gulp
+- Updated travis to use gulp tasks
+- Updated main.less to use the paths option in less compiler.
+- Moved and renamed contact-macro to contact-layout in macros directory.
+- Moved filters macro from `post-macros.html` to `/macros/filter.html`.
+- Makes filters macro helpers private.
+
+### Removed
+- Removed Grunt plugins from package.json
+- Removed the Gruntfile.
+- Removed homepage progress charts and related content and JS.
+- Removed 80px to 120px sizing for the isocon sizes on the-bureau page.
+
+### Fixed
+- Fixed margins on site footer.
+- Switched the two forms under Privacy to their correct positions
+- Fixed incorrect email href reference on offices contact email link.
+
+
+## 3.0.0-2.1.0 - 2015-08-05
+
+### Added
 - Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
 - Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
 - Added `u-hidden` utility class for fully hiding an element.
@@ -38,16 +75,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `@tr-border` variable to `cf-enhancements.less`
   for simple-table border color.
 - Added tests for events and event archive landing pages
-- Transitioned Capital Framework dependency to v1.0.0 in bower.json.
-- Added gulp and the required npm plugins
-- Added gulp config file to lay out configs for each task
-- Added gulp tasks split up into their own files
-- Added acceptance tests for `/offices/*` pages accessible through site's menu.
-- Added Accessibility page to footer and adds Accessibility page tests.
-- Added form to submit EEO complaint
-- Added acceptance tests for `/sub-pages/*`.
-- Added `activities-block` shared template for activity feed
-  on offices and sub-pages.
 
 ### Changed
 - Updated primary navigation to match new mega menu design.
@@ -78,12 +105,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   Chrome. Now the desktop test only runs the desktop spec.
 - Separated `grunt test` task from `grunt build`
   and made default task test + build.
-- Site's "About" text to "About Us".
-- Replaced FOIA Records with Coming Soon heading
-- Updated setup.sh to use gulp
-- Updated travis to use gulp tasks
-- Updated main.less to use the paths option in less compiler.
-- Moves and renames contact-macro to contact-layout in macros directory.
 
 ### Removed
 - Removed requestAnimationFrame polyfill.
@@ -91,9 +112,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed `grunt vendor` from `setup.sh`.
 - Removed unused CSS on `office.less`
 - Removed `/events/archive/_single.html`
-- Removed Grunt plugins from package.json
-- Removed the Gruntfile.
-- Removed homepage progress charts and related content and JS.
 
 ### Fixed
 - Fixed issue on IE11 when using the dates to filter caused
@@ -104,13 +122,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Normalized use of jinja quotes to single quote
 - Fixed a large chunk of the existing linting errors and warnings
 - Fixed issue with active filters on`/the-bureau/leadership-calendar/print/` page.
-<<<<<<< HEAD
-- Fixed margins on site footer
-- Switched the two forms under Privacy to their correct positions
-=======
-- Fixed margins on site footer.
-- Fixed incorrect email href reference on offices contact email link.
->>>>>>> c75f0735681d019a362f5ab4b91f4b1e28376595
 
 
 ## 3.0.0-2.0.0 - 2015-07-24

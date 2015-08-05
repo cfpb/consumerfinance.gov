@@ -35,8 +35,8 @@
     <h1>Blog</h1>
 
     {% set filter_by = ['blog_category', 'tags', 'author', 'range_date'] %}
-    {% from 'post-macros.html' import filters as filters with context %}
-    {{ filters(filter_by, vars.query, vars.posts, 'posts',
+    {% import 'macros/filters.html' as filters with context %}
+    {{ filters.render(filter_by, vars.query, vars.posts, 'posts',
        { 'expand_label': 'Filter posts' }) }}
     {% import 'posts-paginated.html' as posts_paginated with context %}
     {{ posts_paginated.render(vars.posts) }}
