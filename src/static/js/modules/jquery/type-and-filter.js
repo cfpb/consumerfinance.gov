@@ -4,15 +4,6 @@
  * Filters a list as you type using fuzzy or strict search for matching.
  * Fuzzy search depends on git://github.com/joshaven/string_score#0.1.20
  *
- * Bonus material:
- * Example of triggering a search via query string
- * if ( getQueryVariable('filterby') ) {
- *   // Set the input value equal to the query from the url.
- *   $('input').val(getQueryVariable('filterby'));
- *   // Trigger the attemptSearch event in the plugin.
- *   $('.type-and-filter').trigger('attemptSearch');
- * }
- *
  * A public domain work of the Consumer Financial Protection Bureau
  */
 
