@@ -11,18 +11,25 @@ set -e
 
 # Initialize project dependency directories.
 init(){
+  ENVVAR_SAMPLE=.env_SAMPLE
+  ENVVAR=.env
   NODE_DIR=node_modules
   BOWER_DIR=bower_components
 
+  # Copy sample environment variables, if not already done.
+  if [ ! -f $ENVVAR ]; then
+    echo 'Setting default environment variables...'
+    cp -a $ENVVAR_SAMPLE $ENVVAR
+  fi
+
   if [ -f .bowerrc ]; then
     # Get the "directory" line from .bowerrc
-    BOWER_DIR=$(grep "directory" .bowerrc)
-    # Strip off the first part of that line.
-    BOWER_DIR=${BOWER_DIR/\"directory\"\: \"/}
-    # Strip off the final " from the line.
-    BOWER_DIR="${BOWER_DIR%?}"
-    echo 'Bower components directory:' $BOWER_DIR
+    BOWER_DIR=$(grep "directory" .bowerrc | cut -d '"' -f 4)
   fi
+
+  echo 'Environment variables:' $ENVVAR
+  echo 'npm components directory:' $NODE_DIR
+  echo 'Bower components directory:' $BOWER_DIR
 }
 
 # Clean project dependencies.
@@ -44,6 +51,17 @@ install(){
   echo 'Installing project dependencies...'
   npm install
   bower install --config.interactive=false
+
+  # Update test dependencies.
+
+  # Protractor.
+  ./$NODE_DIR/protractor/bin/webdriver-manager update
+
+  # Macro Polo.
+  pip install -r ./test/macro_tests/requirements.txt
+
+  # Processors.
+  pip install -r ./test/processor_tests/requirements.txt
 }
 
 # Run tasks to build the project for distribution.

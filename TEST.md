@@ -2,34 +2,62 @@
 
 ## Quick start:
 
-_Note: If you haven’t, make sure to install Protractor globally with `npm install protractor@2.1.0 -g`._
-
-__Update Selenium Server binaries:__
-
-```sh
-webdriver-manager update
-```
-
-__Start Selenium Server:__
+Open a new Terminal window or tab and change to the project directory,
+then tell gulp to start the tests:
 
 ```sh
-webdriver-manager start
+gulp build
+gulp test:acceptance
 ```
 
-__Open a new tab and cd to the test directory, then tell protractor to start the tests:__
+If you want to test a server other than your local instance,
+edit the `HTTP_HOST` and `HTTP_PORT` values in your `.env` file
+and reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
 
-```sh
-cd test/browser_tests
-protractor conf.js
-```
+## Sauce Connect - send tests to the cloud
 
-If you want to test a server other than your local instance (assuming port 7000 is your local CFGov server) use the `--baseUrl` flag. Ex:
+Sauce Labs can be used to run tests remotely in the cloud.
 
-```sh
-protractor conf.js --baseUrl=http://beta.consumerfinance.gov
-# or
-protractor conf.js --baseUrl=http://localhost:8000
-```
+1. Log into [http://saucelabs.com/account](Log into http://saucelabs.com/account).
+2. [Download Sauce Connect](https://docs.saucelabs.com/reference/sauce-connect/#basic-setup)
+3. Open a new Terminal window or tab and navigate to the downloaded SauceConnect folder.
+   If you place the folder in your Application's folder this might look like:
+
+   ```
+   cd /Users/<YOUR MAC OSX USERNAME>/Applications/SauceConnect
+   ```
+4. Copy step 3 from the the SauceLabs
+   [Basic Setup instructions](https://docs.saucelabs.com/reference/sauce-connect/#basic-setup)
+   and run that in your Terminal window.
+   Once you see `Sauce Connect is up` in the Terminal,
+   that means the tunnel has successfully been established
+   > The Terminal command should already have your Sauce username and access key filled in.
+     If it doesn't, make sure you're logged in.
+5. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
+   and `SAUCE_SELENIUM_URL` values in your `.env` file.
+   The access key can be found in lower-left on the Sauce Labs
+   [account profile page](https://saucelabs.com/account/profile).
+6. Reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
+7. Run the tests with `gulp test:acceptance`.
+   > Note: If you want to temporarily disable testing on Sauce Labs,
+   run the command as: `gulp test:acceptance --sauce=false`.
+8. Monitor progress of the tests
+   on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
+
+> Note: If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
+  while running a test, it likely means that Sauce Connect is not running.
+  See step 4 above.
+
+## Manual test configuration
+
+A number of command-line arguments can be set to test particular configurations:
+
+ - `--specs`: Choose a particular spec suite to run. For example, `gulp test:acceptance --specs=shared_contact-us.js`.
+ - `--windowSize`: Set the window size in pixels in `w,h` format. For example, `gulp test:acceptance --windowSize=900,400`.
+ - `--browserName`: Set the browser to run. For example, `gulp test:acceptance --browserName=firefox`.
+ - `--version`: Set the browser version to run. For example, `gulp test:acceptance --version='44.0'`.
+ - `--platform`: Set the OS platform to run. For example, `gulp test:acceptance --platform='osx 10.10'`.
+ - `--sauce`: Whether to run on Sauce Labs or not. For example, `gulp test:acceptance --sauce=false`.
 
 ## Pages
 
@@ -100,12 +128,11 @@ Enjoy! :relieved:
 
 # Template Macro Tests
 
+Test the Jinja2 templates.
+
 ## Running MacroPolo Tests
 
-From within the `/test/macro_tests/` directory:
-
-1. Install the requirements: `pip install -r requirements.txt`.
-2. Run the test runner: `python test_macros.py`.
+From within the root project directory run `gulp test:unit:macro`.
 
 ## Writing Tests
 
@@ -120,10 +147,7 @@ for cfgov-refresh.
 
 ## Running
 
-From within the `/test/processor_tests/` directory:
-
-1. Install the requirements: `pip install -r requirements.txt`.
-2. Run the test runner: `python test_processors.py`.
+From within the root project directory run `gulp test:unit:processor`.
 
 ## Writing
 

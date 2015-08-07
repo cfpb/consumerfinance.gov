@@ -1,26 +1,26 @@
 'use strict';
 
-var SubPage = require( '../../page_objects/page_sub-pages.js' );
+var SubPage = require( '../page_objects/page_sub-pages.js' );
 
 describe( "The Office of Civil Rights' " +
-          'Diversity Policy Sub-Page', function() {
+          'Equal Employment Opportunity Policy Sub-Page', function() {
   var page;
 
   beforeEach( function() {
     page = new SubPage();
-    page.get( 'DiversityPolicy' );
+    page.get( 'EEOPolicyAndReports' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Diversity & Inclusion Statement' );
+    expect( page.pageTitle() ).toBe( 'Equal Employment Opportunity Policy' );
   } );
 
-  it( 'should include page content', function() {
-    expect( page.pageContent.getText() ).toContain( 'Respect for diversity' );
+  it( 'should NOT include page content', function() {
+    expect( page.pageContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT include related link', function() {
-    expect( page.relatedLink.isPresent() ).toBe( false );
+  it( 'should include related links', function() {
+    expect( page.relatedLink.isPresent() ).toBe( true );
   } );
 
   it( 'should NOT include a form', function() {
@@ -39,8 +39,8 @@ describe( "The Office of Civil Rights' " +
     expect( page.relatedFAQ.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have tags', function() {
-    expect( page.contentTags.isPresent() ).toBe( false );
+  it( 'should have tags', function() {
+    expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
   it( 'should have office contacts', function() {

@@ -1,6 +1,6 @@
 'use strict';
 
-var TheBureauPage = require( '../../page_objects/page_the-bureau.js' );
+var TheBureauPage = require( '../page_objects/page_the-bureau.js' );
 
 describe( 'The Bureau Page', function() {
   var page;

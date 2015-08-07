@@ -1,6 +1,6 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
 describe( 'The Project Catalyst Page', function() {
   var page;

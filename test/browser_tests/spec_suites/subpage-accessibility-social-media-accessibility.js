@@ -1,6 +1,6 @@
 'use strict';
 
-var SubPage = require( '../../page_objects/page_sub-pages.js' );
+var SubPage = require( '../page_objects/page_sub-pages.js' );
 
 describe( "The Accessibility Office's " +
           'Social Media Accessibility Sub-Page', function() {

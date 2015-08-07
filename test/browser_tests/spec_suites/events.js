@@ -1,6 +1,6 @@
 'use strict';
 
-var events = require( '../../page_objects/page_events.js' );
+var events = require( '../page_objects/page_events.js' );
 var EventsPage = events.EventsPage;
 var ArchivePage = events.ArchivePage;
 

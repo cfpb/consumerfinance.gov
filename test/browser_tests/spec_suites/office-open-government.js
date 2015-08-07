@@ -1,25 +1,25 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
-describe( 'The Privacy Office Page', function() {
+describe( 'The Open Government Office Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'Privacy' );
+    page.get( 'OpenGovernment' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Privacy' );
+    expect( page.pageTitle() ).toBe( 'Open Government' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Privacy' );
+    expect( page.mainTitle.getText() ).toBe( 'Open Government' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'information (PII)' );
+    expect( page.introText.getText() ).toContain( 'Our mission' );
   } );
 
   it( 'should NOT include subscription', function() {
@@ -66,11 +66,7 @@ describe( 'The Privacy Office Page', function() {
     expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
-  it( 'should have office contacts', function() {
-    expect( page.officeContact.isPresent() ).toBe( true );
-    expect( page.officeContactEmail.getText() )
-      .toBe( 'privacy@consumerfinance.gov' );
-    expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:privacy@consumerfinance.gov' );
+  it( 'should NOT have office contacts', function() {
+    expect( page.officeContact.isPresent() ).toBe( false );
   } );
 } );

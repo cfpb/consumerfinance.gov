@@ -1,32 +1,186 @@
 'use strict';
 
-var env = require( './environment.js' );
+var environment = require( './environment.js' );
+var defaultSuites = require( './default-suites.js' );
 
-exports.config = {
-  multiCapabilities: [
-    {
-      browserName: 'chrome',
-      specs:       [ 'spec_suites/shared/*.js' ]
-    },
-    {
-      browserName: 'firefox',
-      specs:       [ 'spec_suites/shared/*.js' ]
-    },
-    // Large Screen only tests
-    {
-      browserName:   'chrome',
-      specs:         [ 'spec_suites/large_screen/*.js' ],
-      chromeOptions: {
-        args: [ '--lang=en',
-                '--window-size=1200,900' ]
+/**
+ * Check whether a parameter value is set.
+ * @param {string} param The value of a parameter.
+ * @returns {Boolean} Whether a parameter value is undefined or not,
+ *   meaining whether it has been set on the command-line or not.
+ */
+function _paramIsSet( param ) {
+  return typeof param !== 'undefined';
+}
+
+/**
+ * Choose the suite based on what command-line flags are passed.
+ * @param {object} params Set of parameters from the command-line.
+ * @param {Array} capabilities List of multiCapabilities objects.
+ * @returns {Array} List of multiCapabilities objects.
+ */
+function _chooseSuite( params, capabilities ) {
+
+  // If any of the browser/platform flags are passed,
+  // set the capabilities to use the essential suite.
+  // This way setting the browser, for instance, won't run several
+  // concurrent times.
+  if ( _paramIsSet( params.browserName ) ||
+       _paramIsSet( params.version ) ||
+       _paramIsSet( params.platform ) ) {
+    capabilities = defaultSuites.essential;
+  }
+
+  return capabilities;
+}
+
+/**
+ * Check that Sauce Labs credentials are set in the .env file.
+ * @returns {Boolean} True if all the Sauce credentials
+ *   are not undefined or an empty string, false otherwise.
+ */
+function _isSauceCredentialSet() {
+  var sauceSeleniumUrl = process.env.SAUCE_SELENIUM_URL;
+  var sauceUsername = process.env.SAUCE_USERNAME;
+  var sauceAccessKey = process.env.SAUCE_ACCESS_KEY;
+
+  return typeof sauceSeleniumUrl !== 'undefined' &&
+         sauceSeleniumUrl !== '' &&
+         typeof sauceUsername !== 'undefined' &&
+         sauceUsername !== '' &&
+         typeof sauceAccessKey !== 'undefined' &&
+         sauceAccessKey !== '';
+}
+
+/**
+ * Params that need to be passed to protractor config.
+ * @param {object} params Set of parameters from the command-line.
+ * @returns {object} Parsed parameters from the command-line,
+ *   which are only applicable to protractor.
+ */
+function _retrieveProtractorParams( params ) { // eslint-disable-line complexity, no-inline-comments, max-len
+  var parsedParams = {};
+
+  if ( _paramIsSet( params.specs ) ) {
+    parsedParams.specs = environment.specsBasePath + params.specs;
+  }
+
+  if ( _paramIsSet( params.browserName ) ) {
+    parsedParams.browserName = params.browserName;
+  }
+
+  if ( _paramIsSet( params.version ) ) {
+    parsedParams.version = params.version;
+  }
+
+  if ( _paramIsSet( params.platform ) ) {
+    parsedParams.platform = params.platform;
+  }
+
+  return parsedParams;
+}
+
+/**
+ * Copy parameters into multiCapabilities array.
+ * @param {object} params Set of parameters from the command-line.
+ * @param {Array} capabilities List of multiCapabilities objects.
+ * @returns {Array} List of multiCapabilities objects
+ *   with injected params from the command-line and a test name field.
+ */
+function _copyParameters( params, capabilities ) { // eslint-disable-line complexity, no-inline-comments, max-len
+  var newCapabilities = [];
+  var injectParams = _retrieveProtractorParams( params );
+  var capability;
+  for ( var i = 0, len = capabilities.length; i < len; i++ ) {
+    capability = capabilities[i];
+    for ( var p in injectParams ) {
+      if ( injectParams.hasOwnProperty( p ) ) {
+        capability[p] = injectParams[p];
       }
     }
-  ],
+    capability.name = environment.testName +
+                      ' ' + capability.specs +
+                      ', running ' +
+                      capability.browserName +
+                      ( capability.version.length > 0 ?
+                        ' ' + capability.version : '' ) +
+                      ' on ' + capability.platform +
+                      ' at ' +
+                      ( params.windowSize ?
+                        params.windowSize :
+                        environment.windowWidthPx + ',' +
+                        environment.windowHeightPx ) + 'px';
+    newCapabilities.push( capability );
+  }
 
-  baseUrl: env.baseUrl,
+  return newCapabilities;
+}
+
+var config = {
+  baseUrl: environment.baseUrl,
+
+  getMultiCapabilities: function() {
+    var params = this.params;
+    var capabilities = defaultSuites.essential;
+
+    // If --sauce=true flag was passed, configure Sauce Labs credentials.
+    if ( ( typeof params.sauce === 'undefined' || params.sauce === 'true' ) &&
+         _isSauceCredentialSet() ) {
+      capabilities = defaultSuites.full;
+    } else {
+      delete config.sauceSeleniumAddress;
+      delete config.sauceUser;
+      delete config.sauceKey;
+    }
+
+    var newCapabilities = _copyParameters( params,
+                                           _chooseSuite( params,
+                                                         capabilities ) );
+    if ( newCapabilities.length !== 0 ) {
+      capabilities = newCapabilities;
+    }
+
+    return capabilities;
+  },
 
   onPrepare: function() {
     browser.ignoreSynchronization = true;
+
+    // If --windowSize=w,h flag was passed, set window dimensions.
+    // Otherwise, use default values from the test settings.
+    var windowSize = browser.params.windowSize;
+    var windowWidthPx;
+    var windowHeightPx;
+    if ( typeof windowSize !== 'undefined' ) {
+      var windowSizeArray = windowSize.split( ',' );
+      windowWidthPx = Number( windowSizeArray[0] );
+      windowHeightPx = Number( windowSizeArray[1] );
+    } else {
+      windowWidthPx = environment.windowWidthPx;
+      windowHeightPx = environment.windowHeightPx;
+    }
+
+    browser.driver.manage().window().setSize(
+      windowWidthPx,
+      windowHeightPx
+    );
+
+    // Set default windowSize parameter equal to the value in settings.js.
+    browser.params.windowSize = String( windowWidthPx ) +
+                                ',' + String( windowHeightPx );
+
+    browser.getProcessedConfig().then( function( cf ) {
+      console.log( 'Executing...', cf.capabilities.name ); // eslint-disable-line no-console, no-inline-comments, max-len
+    } );
     return;
   }
 };
+
+// Set Sauce Labs credientials from .env file.
+if ( _isSauceCredentialSet() ) {
+  config.sauceSeleniumAddress = process.env.SAUCE_SELENIUM_URL;
+  config.sauceUser = process.env.SAUCE_USERNAME;
+  config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+}
+
+exports.config = config;
