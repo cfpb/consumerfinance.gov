@@ -35,10 +35,12 @@
             {{ event.title|safe }}
         </h1>
         <p class="post_dek">
-        {% if (event_state == 'past')  %}
-          {{ event.archive.summary | striptags }}
-        {% else %}
-          {{ event.future.summary | striptags }}
+        {% if (event_state == 'past') %}
+            {{ post.archive.summary | striptags }}
+        {% elif (event_state == 'present') %}
+            {{ post.live.summary | striptags }}
+        {% elif (event_state == 'future') %}
+            {{ post.future.summary | striptags }}
         {% endif %}
         </p>
         <div class="modification-date date u-right">

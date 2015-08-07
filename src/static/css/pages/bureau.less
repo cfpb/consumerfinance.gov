@@ -3,9 +3,6 @@
    Bureau mission page at /the-bureau/.
    ========================================================================== */
 
-// Size of play button image;
-@play-btn-size__px: 73px;
-
 // Override general slick carousel overrides defined in mobile-carousel.less.
 // Removes bottom border, because the-bureau has a bordered block below
 // its carousel.
@@ -112,7 +109,6 @@
 }
 
 // Used to help center video container
-@share-width__px: 130px;
 @gutter__em: unit(@grid_gutter-width  / @base-font-size-px, em);
 @gutter-half__em: @gutter__em / 2;
 
@@ -127,7 +123,7 @@
         });
     }
 
-    .youtube-player_image {
+    .video-player_image {
         width: @grid_wrapper-width;
 
         // Optical adjustment for beautification purposes.
@@ -149,152 +145,4 @@
         display: block;
         margin: @gutter-half__em 0;
     };
-}
-
-#youtube-player {
-    float: left;
-
-    .respond-to-min(1024px, {
-        padding-left: @share-width__px;
-    });
-
-    .respond-to-max(@tablet-max, {
-        .u-flexible-container_inner();
-    });
-}
-
-.youtube-player_container {
-    background: @white;
-    overflow: hidden;
-}
-
-.youtube-player_container.yt-playing {
-    background-color: #000;
-
-    .hide-on_yt-playing {
-        display: none;
-    }
-
-    .show-on_yt-playing {
-        display: block;
-    }
-
-    .youtube-player_video-container {
-        display: table;
-
-        .respond-to-max(@tablet-max, {
-            display: block;
-        });
-    }
-
-    .respond-to-max(@mobile-max, {
-        margin-top: 0;
-    });
-}
-
-.youtube-player_iframe-container {
-    float: left;
-
-    .respond-to-max(@tablet-max, {
-        .u-flexible-container();
-        width: 100%;
-    });
-}
-
-.youtube-player_image {
-    margin: 0 auto;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.youtube-player_image-container {
-
-    .respond-to-max(@mobile-max, {
-        .u-flexible-container();
-    });
-}
-
-.youtube-player_play-btn {
-    height: @play-btn-size__px;
-    width: @play-btn-size__px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background: url('/static/img/youtube-play-btn.png') no-repeat;
-    z-index: 10;
-    transform: translate(-50%, -50%);
-}
-
-.lt-ie9 {
-    .youtube-player_play-btn {
-        margin-left: -1 * @play-btn-size__px;
-    }
-}
-
-.youtube-player_actions-container {
-    float: left;
-    color: @white;
-
-    h1 {
-        margin: @gutter__em 0 @gutter-half__em 0;
-    }
-
-    .respond-to-max(@tablet-max, {
-        .grid_wrapper();
-        margin: @gutter-half__em 0;
-        padding: 0;
-        width: 100%;
-    });
-
-    .respond-to-min(@desktop-min, {
-        margin: @gutter__em 0 0 @gutter__em;
-        width: @share-width__px;
-    });
-}
-
-.youtube-player_share-actions {
-    .h5, .post_share {
-        .respond-to-max(@tablet-max, {
-            display: inline-block;
-            margin: 0 0 0 @gutter-half__em;
-            vertical-align: text-top;
-        });
-    }
-
-    // Adding white background to the share icons
-    // without overlap.
-    .cf-icon {
-        background: @white;
-        height: 20px;
-        width: 22px;
-
-        &:before {
-            position: relative;
-            top: -3px;
-        }
-    }
-
-    .share-icon {
-        color: @pacific;
-    }
-
-    .respond-to-max(@tablet-max, {
-        .grid_column(3, 5);
-        text-align: right;
-    });
-}
-
-.youtube-player_video-container {
-    display: none;
-    margin: auto;
-}
-
-.youtube-player_video-actions {
-
-    .respond-to-max(@tablet-max, {
-        .grid_column(2, 5)
-    });
 }

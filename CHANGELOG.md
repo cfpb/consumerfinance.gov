@@ -19,11 +19,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Favicon
 
 ### Changed
+- Updated Video Code to make it usable on Events pages.
 
 ### Removed
 
 ### Fixed
-
+- Fixed issue with logic displaying the Event summary state.
 
 ## 3.0.0-2.3.0 - 2015-08-27
 
