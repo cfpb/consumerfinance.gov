@@ -1,8 +1,6 @@
 'use strict';
 var chai = require( 'chai' );
-var sinon = require( 'sinon' );
 var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
 var typeCheckers = require(
   '../../../../src/static/js/modules/util/type-checkers.js'
 );
@@ -11,16 +9,16 @@ var undefinedVar;
 var blankVar = '';
 var aString = 'bar';
 var aNum = 42;
-var aDate = new Date(2011, 7, 21);
-var aFunction = function() {
-  return true
+var aDate = new Date( 2011, 7, 21 );
+function aFunction() {
+  return true;
 }
 var anObject = {
   a: '1',
   b: '2',
   c: '3'
-}
-var anArray = [1,2,3];
+};
+var anArray = [ 1, 2, 3 ];
 
 describe( 'TypeCheckers isUndefined', function() {
   it( 'should identify undefined variables', function() {
@@ -46,7 +44,6 @@ describe( 'TypeCheckers isDefined', function() {
   } );
 
   it( 'should NOT return true for undefined variables', function() {
-    var foo;
     expect( typeCheckers.isDefined( undefinedVar ) ).to.be.false;
   } );
 } );
@@ -74,12 +71,12 @@ describe( 'TypeCheckers isString', function() {
 describe( 'TypeCheckers isNumber', function() {
   it( 'should return true for numbers', function() {
     expect( typeCheckers.isNumber( aNum ) ).to.be.true;
-  });
+  } );
 
   it( 'should return false for strings', function() {
     expect( typeCheckers.isNumber( aString ) ).to.be.false;
     expect( typeCheckers.isNumber( '42' ) ).to.be.false;
-  });
+  } );
 } );
 
 describe( 'TypeCheckers isDate', function() {
