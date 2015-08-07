@@ -42,7 +42,7 @@ gulp.task( 'test:browser', function() {
     .pipe( protractor( {
         configFile:          config.tests + '/browser_tests/conf.js',
         autoStartStopServer: true
-    } ) )
+      } ) )
     .on( 'error', function( e ) { throw e; } );
 } );
 

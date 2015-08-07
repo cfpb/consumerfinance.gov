@@ -6,7 +6,7 @@
 
 var $ = require( 'jquery' );
 
-$( document ).ready( function() {
+$( document ).ready( function() { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   // Shimmed-Browserify modules (other than jQuery).
   require( 'jquery-easing' );

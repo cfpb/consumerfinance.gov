@@ -97,4 +97,4 @@ module.exports = {
     getItem:        getItem,
     removeItem:     removeItem,
     setSessionType: setSessionType
-};
+  };

@@ -71,7 +71,7 @@ function init() {
           $( this ).trigger( 'updateState' );
           changeCallback( {
               select: $select
-          } );
+            } );
         } )
         .on( 'focus', function() {
           $this.addClass( 'is-focused' );

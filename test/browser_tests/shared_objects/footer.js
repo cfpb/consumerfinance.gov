@@ -13,7 +13,9 @@ function Footer() {
   ) );
   this.post = this.footer.element( by.css( '.footer-post' ) );
   this.shareList = this.footer.element( by.css( '.footer_share-icon-list' ) );
-  this.officialWebsite = this.footer.element( by.css( '.footer_official-website' ) );
+  this.officialWebsite = this.footer.element(
+    by.css( '.footer_official-website' )
+  );
 }
 
 module.exports = Footer;

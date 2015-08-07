@@ -8,13 +8,13 @@
 var $ = require( 'jquery' );
 
 function init() {
-  var $desktopMenu = $( '.primary-nav' ),
-      $desktopMenuTrigger = $( '.primary-nav_top-level-list > li' ),
-      $subNavs = $( '.sub-nav_wrapper' ),
-      mouseIsInsideMenu = false,
-      mouseIsInsideMenuItem = false,
-      aMenuItemWasOpened = false,
-      isSmall = $( '.sliding-nav_trigger' ).is( ':visible' );
+  var $desktopMenu = $( '.primary-nav' );
+  var $desktopMenuTrigger = $( '.primary-nav_top-level-list > li' );
+  var $subNavs = $( '.sub-nav_wrapper' );
+  var mouseIsInsideMenu = false;
+  var mouseIsInsideMenuItem = false;
+  var aMenuItemWasOpened = false;
+  var isSmall = $( '.sliding-nav_trigger' ).is( ':visible' );
 
   // On window resize, set the isSmall variable again.
   $( window ).resize( function() {

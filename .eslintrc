@@ -427,7 +427,7 @@ rules:
 
   # Enforce return after a callback.
   # callback, cb, and next are possible callback function names.
-  callback-return :
+  callback-return:
     - 2
     -
       - callback

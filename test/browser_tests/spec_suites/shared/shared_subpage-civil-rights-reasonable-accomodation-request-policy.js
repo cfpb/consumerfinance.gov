@@ -12,7 +12,8 @@ describe( "The Office of Civil Rights' " +
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Reasonable Accommodation Request Policy' );
+    expect( page.pageTitle() )
+      .toBe( 'Reasonable Accommodation Request Policy' );
   } );
 
   it( 'should include page content', function() {
