@@ -37,12 +37,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved and renamed contact-macro to contact-layout in macros directory.
 - Moved filters macro from `post-macros.html` to `/macros/filter.html`.
 - Makes filters macro helpers private.
+- Moved getViewportDimensions out of utilities.js and into own module.
 
 ### Removed
 - Removed Grunt plugins from package.json
 - Removed the Gruntfile.
 - Removed homepage progress charts and related content and JS.
 - Removed 80px to 120px sizing for the isocon sizes on the-bureau page.
+- Removed cf-pagination and other unused JS.
 
 ### Fixed
 - Fixed margins on site footer.
