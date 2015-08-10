@@ -45,6 +45,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and `.list__links` to `cf-enhancements.less`.
 - Converted time elements to use time template.
 - Broke apart format macros into topical macros.
+- Updated legacy code to remove old jQuery dependency and
+  unnecessary code.
 
 ### Removed
 - Removed Grunt plugins from package.json
