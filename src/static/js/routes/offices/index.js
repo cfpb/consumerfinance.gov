@@ -15,11 +15,8 @@ function init() {
     return;
   }
 
-  var breakpointPx = 599;
-
   $( '.expandable__mobile-only' ).each( function() {
-    // ESLint no-new rule ignored
-    new MobileOnlyExpandable( $( this ), breakpointPx ); // eslint-disable-line
+    new MobileOnlyExpandable( $( this ) ); // eslint-disable-line no-new, no-inline-comments, max-len
   } );
 }
 
