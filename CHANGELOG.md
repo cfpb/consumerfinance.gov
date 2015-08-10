@@ -37,9 +37,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated main.less to use the paths option in less compiler.
 - Moved and renamed contact-macro to contact-layout in macros directory.
 - Moved filters macro from `post-macros.html` to `/macros/filter.html`.
-- Makes filters macro helpers private.
+- Made filters macro helpers private.
 - Moved getViewportDimensions out of utilities.js and into own module.
 - Updated ESLint to v1.0.0.
+- Moved `.meta-header`, `.jump-link`,
+  and `.list__links` to `cf-enhancements.less`.
 
 ### Removed
 - Removed Grunt plugins from package.json
@@ -47,6 +49,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed homepage progress charts and related content and JS.
 - Removed 80px to 120px sizing for the isocon sizes on the-bureau page.
 - Removed cf-pagination and other unused JS.
+- Removed styles from codebase that have already been migrated
+  to cf-typography.
 
 ### Fixed
 - Fixed margins on site footer.
