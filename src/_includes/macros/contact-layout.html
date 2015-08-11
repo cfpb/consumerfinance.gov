@@ -1,7 +1,7 @@
 {# Display a contact's data in two column format #}
 {% macro render(contact, classes) %}
 
-{% from 'macros/util/format.html' import format_phone as format_phone %}
+{% from 'macros/util/format/contact.html' import format_phone as format_phone %}
 
 <div class="content-l content-l__large-gutters{{ ' ' + classes if classes else '' }}">
     <div class="content-l_col content-l_col-1-2">

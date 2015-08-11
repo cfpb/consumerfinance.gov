@@ -1,0 +1,47 @@
+{# ==========================================================================
+
+   time.render()
+
+   ==========================================================================
+
+   Description:
+
+   Renders a time element with a standard datetime format when given:
+
+   datetime:             A date timestamp to format.
+
+   show_only (optional): Object of fields to show.
+                         Default is true for 'date', 'time', and 'timezone'.
+
+   timezone (optional):  Timezone string value. Default is 'America/New_York'.
+
+   ========================================================================== #}
+
+{% macro render(datetime,
+                show_only={'date':true, 'time':true, 'timezone':true},
+                timezone='America/New_York') %}
+{% from 'macros/util/format/datetime.html' import format_datetime as format_datetime %}
+{% from 'macros/util/format/datetime.html' import format_date as format_date %}
+{% from 'macros/util/format/datetime.html' import format_time as format_time %}
+<span class="datetime">
+    {% if show_only.date == true  %}
+    <time class="datetime_date" datetime="{{ format_datetime(datetime) }}">
+      {{ format_date(datetime) }}
+    </time>
+    {% endif %}
+
+    {% if show_only.date == true and show_only.time == true %}
+    <span class="datetime_divider">@</span>
+    {% endif %}
+
+    {% if show_only.time == true %}
+    <time class="datetime_time" datetime="{{ format_datetime(datetime) }}">
+        {% if show_only.timezone == true %}
+        {{ format_time(datetime, timezone) }}
+        {% else %}
+        {{ format_time(datetime) }}
+        {% endif %}
+    </time>
+    {% endif %}
+</span>
+{% endmacro %}

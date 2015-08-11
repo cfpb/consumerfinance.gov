@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added accessibility complaint form.
 - Added "File an EEO Issue" form.
 - Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
+- Added time macro.
 
 ### Changed
 - Site's "About" text to "About Us".
@@ -42,6 +43,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated ESLint to v1.0.0.
 - Moved `.meta-header`, `.jump-link`,
   and `.list__links` to `cf-enhancements.less`.
+- Converted time elements to use time template.
+- Broke apart format macros into topical macros.
 
 ### Removed
 - Removed Grunt plugins from package.json
