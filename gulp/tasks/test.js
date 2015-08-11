@@ -40,9 +40,9 @@ gulp.task( 'test:coveralls', function () {
 gulp.task( 'test:browser', function() {
   gulp.src( config.tests + '/browser_tests/spec_suites/*.js' )
     .pipe( protractor( {
-        configFile:          config.tests + '/browser_tests/conf.js',
-        autoStartStopServer: true
-      } ) )
+      configFile:          config.tests + '/browser_tests/conf.js',
+      autoStartStopServer: true
+    } ) )
     .on( 'error', function( e ) { throw e; } );
 } );
 
