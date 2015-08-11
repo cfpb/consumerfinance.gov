@@ -139,7 +139,7 @@ open a terminal and run:
 $ gulp watch
 ```
 
-*There's no longer a need to run each file type on it's own because the watch task only runs for the tasks for files that have changed
+**NOTE:** The watch task only runs for the tasks for files that have changed.
 
 ## How to test the software
 
