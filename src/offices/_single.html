@@ -148,12 +148,16 @@
         {{ office.content }}
     </section>
     {% endif %}
+    <div class="block
+                block__flush-sides
+                block__flush-bottom
+                block__border-top
+                block__border-right">
+        {% if office.tags %}
+            {% import 'macros/activities-block.html' as activities_block with context %}
+            {{ activities_block.render(office.tags) }}
+        {% endif %}
 
-    {% if office.tags %}
-        {% import 'macros/activities-block.html' as activities_block with context %}
-        {{ activities_block.render(office.tags) }}
-    {% endif %}
-
-    {% include 'templates/office-contact.html' %}
-
+        {% include 'templates/office-contact.html' %}
+    </div>
 {% endblock %}
