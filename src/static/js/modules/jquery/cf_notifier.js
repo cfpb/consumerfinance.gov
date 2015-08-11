@@ -58,16 +58,16 @@ var _notifier = {
   _clearExisting: function( callback ) {
     var settings = _notifier.settings;
     $( _notifier.existing ).slideUp( {
-        duration: settings.duration,
-        easing:   settings.easing,
-        complete: function() {
-          $( this ).remove();
-          _notifier.existing = false;
-          if ( callback ) {
-            return callback();
-          }
+      duration: settings.duration,
+      easing:   settings.easing,
+      complete: function() {
+        $( this ).remove();
+        _notifier.existing = false;
+        if ( callback ) {
+          return callback();
         }
-      } );
+      }
+    } );
   },
 
   // Create a notification
