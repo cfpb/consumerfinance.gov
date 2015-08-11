@@ -58,9 +58,8 @@
                             href="{{ career.permalink }}">{{ career.title }}</a>
                         <p class="date">
                             CLOSING
-                            <time datetime="{{ career.close_date | date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
-                                {{ career.close_date | date('%b %-d, %Y') }}
-                            </time>
+                            {% import 'macros/time.html' as time %}
+                            {{ time.render(career.close_date, {'date':true}) }}
                         </p>
                     </li>
                     {% endfor %}

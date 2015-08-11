@@ -1,5 +1,6 @@
 {% extends 'layout-full.html' %}
 {% import '_vars-activity-log.html' as vars with context %}
+{% import 'macros/time.html' as time %}
 
 {% block title -%}
     Activity Log
@@ -57,7 +58,7 @@
                         </a>
                     </td>
                     <td class="u-w15pct">
-                        {{ item.date|date('%b %d, %Y') }}
+                        {{ time.render(item.date, {'date':true}) }}
                     </td>
                 </tr>
             {%- endfor %}

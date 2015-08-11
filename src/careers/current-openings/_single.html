@@ -1,5 +1,5 @@
 {% extends 'layout-side-nav.html' %}
-{% import "_vars-careers.html" as vars with context %}
+{% import '_vars-careers.html' as vars with context %}
 
 {% block title -%}
     {{ career.title }}
@@ -29,9 +29,8 @@
         <dl>
             <dt>Expiration Date:</dt>
             <dd>
-                <time datetime="{{ career.close_date | date('%Y-%m-%-dT%H:%M:%S%z') }}">
-                    {{ career.close_date | date('%b %-d, %Y') }}
-                </time>
+                {% import 'macros/time.html' as time %}
+                {{ time.render(career.close_date, {'date':true}) }}
             </dd>
             <dt>Region:</dt>
             <dd>{{ career.locations[0].region_long }}</dd>
