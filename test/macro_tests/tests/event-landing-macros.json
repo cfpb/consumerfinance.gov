@@ -1,0 +1,66 @@
+{
+    "file": "_event-landing-macros.html",
+    "tests": [
+        {
+            "macro_name": "event_preview",
+            "skip": false,
+            "context": {
+                "request": {
+                    "url_rule": "foo"
+                }
+            },
+            "template_macros": {
+                "_event-post-macros.html":{
+                    "post_summary()": "YAY",
+                    "event_location_image(options={})": "foo"
+                }
+            },
+            "arguments": [
+                {
+                    "title": "Test Post",
+                    "dek": "A dek",
+                    "excerpt": "An excerpt",
+                    "author": ["Me"],
+                    "date": "2014-10-28",
+                    "beginning_time": {
+                        "date": "2014-10-28T10:00:00-04:00",
+                        "timezone": "America/Detroit"
+                    },
+                    "venue":
+                        {
+                            "address":
+                                {
+                                    "city": "New York",
+                                    "state": "NY"
+                                }
+
+                        },
+                    "future": "future"
+                 }
+            ],
+            "assertions": [
+                {
+                    "selector": ".summary_heading",
+                    "index": 0,
+                    "assertion": "in",
+                    "value": "Test Post"
+                },
+                {
+                    "selector": ".calendar-icon span",
+                    "index": 0,
+                    "value": "u-visually-hidden",
+                    "assertion": "equal",
+                    "attribute": "class"
+                },
+                {
+                    "selector": ".calendar-icon span",
+                    "index": 0,
+                    "value": "Oct 28, 2014",
+                    "assertion": "in"
+                }
+
+            ]
+        }
+    ]
+}
+

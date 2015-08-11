@@ -3,3 +3,4 @@ env:
   mocha: true
 rules:
   no-unused-expressions: 0
+  dot-notation: 0

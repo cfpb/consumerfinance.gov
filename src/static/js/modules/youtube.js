@@ -7,8 +7,8 @@
 
 var $ = require( 'jquery' );
 var jsLoader = require( './util/js-loader' );
-var utilities = require( './util/utilities' );
-var _viewportWidth = utilities.getViewportDimensions().width;
+var viewport = require( './util/get-viewport-dimensions' );
+var _viewportWidth = viewport.getViewportDimensions().width;
 
 function init() {
 

@@ -8,13 +8,13 @@ require( './jquery/cfpb-aria-button' ).init();
 var $ = require( 'jquery' );
 
 function init() {
-  var $body = $( 'body' ),
-      $slidingNav = $( '.sliding-nav' ),
-      $slidingNavTrigger = $( '.sliding-nav_trigger' ),
-      $slidingNavNav = $( '.sliding-nav_nav' ),
-      $slidingNavPage = $( '.sliding-nav_page' ),
-      $slidingNavPageOverlay = $( '.sliding-nav_page-overlay' ),
-      subNavItemsSelector = '.list-expanding_child-list, .sub-nav_title';
+  var $body = $( 'body' );
+  var $slidingNav = $( '.sliding-nav' );
+  var $slidingNavTrigger = $( '.sliding-nav_trigger' );
+  var $slidingNavNav = $( '.sliding-nav_nav' );
+  var $slidingNavPage = $( '.sliding-nav_page' );
+  var $slidingNavPageOverlay = $( '.sliding-nav_page-overlay' );
+  var subNavItemsSelector = '.list-expanding_child-list, .sub-nav_title';
 
   $slidingNavTrigger.click( function( e ) {
     e.preventDefault();

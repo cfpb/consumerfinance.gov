@@ -1,4 +1,4 @@
-{% import 'contact-macro.html' as contact_macro %}
+{% import 'macros/contact-layout.html' as contact_layout %}
 
 <div class="type-and-filter">
 
@@ -22,7 +22,8 @@
                                btn
                                btn__super
                                btn__link
-                               btn__secondary" type="reset">
+                               btn__secondary"
+                        type="reset">
                     Clear
                     <span class="cf-icon cf-icon-delete"></span>
                 </button>
@@ -57,12 +58,12 @@
                 expandable-group
                 contact-list"
          data-accordion="true"
-         id ="contact-list">
+         id="contact-list">
         <div class="expandable-group_header"
              id ="contact-list_header">
             Office name
         </div>
-    {%- for contact in contacts|sort(attribute='title') %}
+    {%- for contact in contacts | sort(attribute='title') %}
         <article class="js-type-and-filter_item expandable expandable__padded">
             <button class="expandable_header expandable_target">
                 <span class="expandable_header-left expandable_label">
@@ -80,7 +81,7 @@
                 </span>
             </button>
             <div class="expandable_content">
-                {{ contact_macro.render(contact) }}
+                {{ contact_layout.render(contact) }}
             </div><!-- END .expandable_content -->
         </article><!-- END .expandable -->
     {%- endfor %}

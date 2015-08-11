@@ -21,13 +21,17 @@ function loadScript( url, callback ) {
         script.readyState === 'complete'
       ) {
         script.onreadystatechange = null;
-        if ( callback ) callback();
+        if ( callback ) {
+          return callback();
+        }
       }
     };
   // Other browsers.
   } else {
     script.onload = function() {
-      if ( callback ) callback();
+      if ( callback ) {
+        return callback();
+      }
     };
   }
 

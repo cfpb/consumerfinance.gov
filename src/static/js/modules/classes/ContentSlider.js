@@ -62,9 +62,9 @@ ContentSlider.prototype.init = function() {
 
 ContentSlider.prototype.slideInContent = function( e ) {
   e.preventDefault();
-  var contents,
-      $div = $( '<div>' ),
-      $node = $( $( e.currentTarget ).data( 'content' ) );
+  var contents;
+  var $div = $( '<div>' );
+  var $node = $( $( e.currentTarget ).data( 'content' ) );
   if ( $node.length ) {
     // TODO: Move content instead of cloning; use ids instead of classes.
     contents = $node.first().clone().show().appendTo( $div );

@@ -25,8 +25,8 @@ init(){
   fi
 }
 
-# Clear project dependencies.
-clear(){
+# Clean project dependencies.
+clean(){
   # If the node and bower directories already exist,
   # clear them so we know we're working with a clean
   # slate of the dependencies listed in package.json
@@ -49,11 +49,11 @@ install(){
 # Run tasks to build the project for distribution.
 build(){
   echo 'Building project...'
-  grunt clean
-  grunt
+  gulp clean
+  gulp build
 }
 
 init
-clear
+clean
 install
 build

@@ -28,7 +28,7 @@ exports.config = {
 
     mkdirp( newFolder, function( err ) {
       if ( err ) {
-        console.error( err );
+        console.error( err ); // eslint-disable-line no-console, no-inline-comments, max-len
       } else {
         var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter(
           {

@@ -17,8 +17,10 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
         # Get the cfgov-refresh root dir, ../../../
         # PLEASE NOTE: This presumes that the file containing the test always
         # lives three levels above the cfgov-refresh root.
-        root_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ),
-                                                os.pardir, os.pardir))
+        root_dir = os.path.abspath(os.path.join(
+            os.path.dirname(__file__),
+            os.pardir, os.pardir,
+            'src'))
         return root_dir
 
 

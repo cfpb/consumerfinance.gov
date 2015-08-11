@@ -16,12 +16,42 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Transitioned Capital Framework dependency to v1.0.0 in bower.json.
+- Added gulp and the required npm plugins
+- Added gulp config file to lay out configs for each task
+- Added gulp tasks split up into their own files
+- Added acceptance tests for `/offices/*` pages accessible through site's menu.
+- Added Accessibility page to footer and adds Accessibility page tests.
+- Added acceptance tests for `/sub-pages/*`.
+- Added `activities-block` shared template for activity feed
+  on offices and sub-pages.
+- Added accessibility complaint form.
+- Added "File an EEO Issue" form.
+- Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
 
 ### Changed
+- Site's "About" text to "About Us".
+- Replaced FOIA Records with Coming Soon heading
+- Updated setup.sh to use gulp
+- Updated travis to use gulp tasks
+- Updated main.less to use the paths option in less compiler.
+- Moved and renamed contact-macro to contact-layout in macros directory.
+- Moved filters macro from `post-macros.html` to `/macros/filter.html`.
+- Makes filters macro helpers private.
+- Moved getViewportDimensions out of utilities.js and into own module.
+- Updated ESLint to v1.0.0.
 
 ### Removed
+- Removed Grunt plugins from package.json
+- Removed the Gruntfile.
+- Removed homepage progress charts and related content and JS.
+- Removed 80px to 120px sizing for the isocon sizes on the-bureau page.
+- Removed cf-pagination and other unused JS.
 
 ### Fixed
+- Fixed margins on site footer.
+- Switched the two forms under Privacy to their correct positions
+- Fixed incorrect email href reference on offices contact email link.
 
 
 ## 3.0.0-2.1.0 - 2015-08-05
