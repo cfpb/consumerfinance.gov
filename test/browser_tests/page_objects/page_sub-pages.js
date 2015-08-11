@@ -4,28 +4,28 @@ function SubPage() {
   this.get = function( page ) {
     var baseUrl = '/sub-pages/';
     var examplePages = {
-        // Accessibility
-        SubmitAnAccommodationRequest:
-          baseUrl + 'submit-an-accommodation-request/',
-        SocialMediaAccessibility:
-          baseUrl + 'social-media-accessibility/',
-        FileAFormalAccessibilityComplaintOrWebsiteFeedback:
-          baseUrl +
-          'file-a-formal-accessibility-complaint-or-website-feedback/',
-        // Office of Civil Rights
-        DiversityPolicy:
-          baseUrl + 'diversity-inclusion-statement/',
-        EEOPolicyAndReports:
-          baseUrl + 'equal-employment-opportunity-policy/',
-        NoFEARAct:
-          baseUrl + 'no-fear-act/',
-        RaiseAnEEOIssue:
-          baseUrl + 'raise-an-eeo-issue/',
-        ReasonableAccommodationRequestPolicy:
-          baseUrl + 'reasonable-accommodation-request-policy/',
-        Whistleblowers:
-          baseUrl + 'whistleblowers/'
-      };
+      // Accessibility
+      SubmitAnAccommodationRequest:
+        baseUrl + 'submit-an-accommodation-request/',
+      SocialMediaAccessibility:
+        baseUrl + 'social-media-accessibility/',
+      FileAFormalAccessibilityComplaintOrWebsiteFeedback:
+        baseUrl +
+        'file-a-formal-accessibility-complaint-or-website-feedback/',
+      // Office of Civil Rights
+      DiversityPolicy:
+        baseUrl + 'diversity-inclusion-statement/',
+      EEOPolicyAndReports:
+        baseUrl + 'equal-employment-opportunity-policy/',
+      NoFEARAct:
+        baseUrl + 'no-fear-act/',
+      RaiseAnEEOIssue:
+        baseUrl + 'raise-an-eeo-issue/',
+      ReasonableAccommodationRequestPolicy:
+        baseUrl + 'reasonable-accommodation-request-policy/',
+      Whistleblowers:
+        baseUrl + 'whistleblowers/'
+    };
 
     browser.get( examplePages[page] );
   };

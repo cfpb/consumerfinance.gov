@@ -8,6 +8,8 @@ describe( 'The Footer Component', function() {
   var _footerLinkLookup =
   { '/offices/accessibility/':
       'accessibility',
+    '/offices/office-of-civil-rights/':
+      'office of civil rights',
     '/careers/':
       'careers',
     '/offices/foia-requests/':
