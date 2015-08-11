@@ -16,12 +16,14 @@ ecmaFeatures:
   octalLiterals: false
   regexUFlag: false
   regexYFlag: false
+  restParams: true
   spread: false
   superInFunctions: false
   templateStrings: false
   unicodeCodePointEscapes: false
   globalReturn: false
   jsx: true
+  experimentalObjectRestSpread: false
 
 parser: espree
 
@@ -32,13 +34,16 @@ env:
   amd: true
   mocha: false
   jasmine: false
-  phantomjs: true
+  phantomjs: false
+  qunit: false
   jquery: false
   prototypejs: false
   shelljs: false
   meteor: false
   mongo: false
   applescript: false
+  serviceworker: true
+  embertest: false
   es6: false
 
 globals:
@@ -125,10 +130,6 @@ rules:
 
   # Disallows multiple spaces in a regular expression literal.
   no-regex-spaces: 2
-
-  # Disallows reserved words being used as object literal keys.
-  # Unneeded in ECMAScript 5+ environments.
-  no-reserved-keys: 2
 
   # Disallows sparse arrays.
   # Array values should be explicitly defined.
@@ -238,8 +239,19 @@ rules:
   # Disallows use of leading or trailing decimal points in numeric literals.
   no-floating-decimal: 2
 
+  # Disallow the type conversions with shorter notations.
+  no-implicit-coercion:
+    - 1
+    -
+      boolean: true
+      number: true
+      string: true
+
   # Disallows use of eval()-like methods.
   no-implied-eval: 2
+
+  # Disallow this keyword outside of classes or class-like objects.
+  no-invalid-this: 0
 
   # Disallows usage of __iterator__ property.
   no-iterator: 2
@@ -284,7 +296,10 @@ rules:
   no-octal: 2
 
   # Disallow reassignment of function parameters.
-  no-param-reassign: 0
+  no-param-reassign:
+    - 0
+    -
+      props: false
 
   # Disallows use of process.env.
   # Only applicable to Node.js.
@@ -315,6 +330,9 @@ rules:
 
   # Disallows usage of expressions in statement position.
   no-unused-expressions: 2
+
+  # Disallow unnecessary .call() and .apply().
+  no-useless-call: 2
 
   # Disallows use of void operator.
   no-void: 2
@@ -407,6 +425,15 @@ rules:
 
   # Rules for NODE.JS.
 
+  # Enforce return after a callback.
+  # callback, cb, and next are possible callback function names.
+  callback-return:
+    - 2
+    -
+      - callback
+      - cb
+      - next
+
   # Enforce error handling in callbacks.
   # Matches any string that contains err or Err (err, error, anyError, an_err).
   handle-callback-err:
@@ -492,12 +519,22 @@ rules:
     - 1
     - declaration
 
+  # Enforces min/max identifier lengths (variable names, property names etc.).
+  id-length:
+    - 0
+    -
+      min: 3
+      max: 10
+      exceptions:
+        - i
+
   # Set a specific tab width for your code.
   indent:
     - 2
     - 2
     -
-      indentSwitchCase: false
+      SwitchCase: 1
+      VariableDeclarator: 1
 
   # Enforce spacing between keys and values in object literal properties.
   key-spacing:
@@ -629,6 +666,13 @@ rules:
     - single
     - avoid-escape
 
+  # Require identifiers to match the provided regular expression.
+  id-match:
+    - 0
+    - '^[a-z]+([A-Z][a-z]+)*$'
+    -
+      properties: false
+
   # Disallows space before semicolon.
   semi-spacing:
     - 2
@@ -700,6 +744,16 @@ rules:
   # Rules for ECMASCRIPT 6.
   # These rules are only relevant to ES6 environments.
 
+  # Require parens in arrow function arguments.
+  arrow-parens: 2
+
+  # Require space before/after arrow function's arrow.
+  arrow-spacing:
+    - 2
+    -
+      before: true
+      after: true
+
   # Verify super() callings in constructors.
   constructor-super: 2
 
@@ -709,6 +763,12 @@ rules:
     -
       before: true
       after: false
+
+  # Disallow modifying variables of class declarations.
+  no-class-assign: 2
+
+  # Disallow modifying variables that are declared using const.
+  no-const-assign: 2
 
   # Disallow to use this/super before super() calling in constructors.
   no-this-before-super: 2
@@ -724,6 +784,17 @@ rules:
 
   # Suggest using of const declaration for variables that are never modified.
   prefer-const: 1
+
+  # Suggest using the spread operator instead of .apply().
+  # Should not be enabled in ES3/5 environments.
+  prefer-spread: 0
+
+  # Suggest using Reflect methods where applicable.
+  # Should not be enabled in ES3/5 environments.
+  prefer-reflect: 0
+
+  # Disallow generator functions that do not have yield.
+  require-yield: 1
 
 
   # Rules for LEGACY SUPPORT.

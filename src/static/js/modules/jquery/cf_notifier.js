@@ -7,7 +7,8 @@
 var $ = require( 'jquery' );
 var handlebars = require( 'handlebars' );
 
-var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }}" ' +
+var _notifierTemplate = '<div class="cf-notification ' +
+                                    'cf-notification__{{ state }}" ' +
                              'style="display: none;">' +
   '<span class="cf-notification_icon ' +
                'cf-notification_icon__{{ state }} ' +
@@ -63,10 +64,10 @@ var _notifier = {
           $( this ).remove();
           _notifier.existing = false;
           if ( callback ) {
-            callback();
+            return callback();
           }
         }
-    } );
+      } );
   },
 
   // Create a notification

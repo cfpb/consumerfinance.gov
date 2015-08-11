@@ -11,8 +11,8 @@ var $ = require( 'jquery' );
 
 function init() {
   $( '.js-form_clear' ).on( 'click', function() {
-    var $this = $( this ),
-        $form = $this.parents( 'form' );
+    var $this = $( this );
+    var $form = $this.parents( 'form' );
 
     // Clear text inputs
     $form.find( 'input[type="text"]' ).val( '' );

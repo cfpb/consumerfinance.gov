@@ -13,7 +13,7 @@ function OfficePage() {
         PlainWriting:             baseUrl + 'plain-writing/',
         Privacy:                  baseUrl + 'privacy/',
         ProjectCatalyst:          baseUrl + 'project-catalyst/'
-    };
+      };
 
     browser.get( examplePages[page] );
   };
@@ -48,7 +48,9 @@ function OfficePage() {
 
   this.officeContact = element( by.css( '.office_contact' ) );
 
-  this.officeContactEmail = element( by.css( '.office_contact a[href^="mailto:"]' ) );
+  this.officeContactEmail = element(
+    by.css( '.office_contact a[href^="mailto:"]' )
+  );
 }
 
 module.exports = OfficePage;

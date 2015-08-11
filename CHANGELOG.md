@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved filters macro from `post-macros.html` to `/macros/filter.html`.
 - Makes filters macro helpers private.
 - Moved getViewportDimensions out of utilities.js and into own module.
+- Updated ESLint to v1.0.0.
 
 ### Removed
 - Removed Grunt plugins from package.json

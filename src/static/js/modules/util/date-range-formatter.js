@@ -10,17 +10,17 @@ var _uTc = require( './type-checkers' );
 var _isDate = _uTc.isDate;
 
 var _defaults = {
-      dateFormat:         'yyyy-mm-dd',
-      fillRangeStartDate: new Date( '01/01/2011' ),
-      fillRangeEndDate:   new Date(),
-      fillRangeFlag:      true,
-      sortRangeFlag:      true,
-      dateRange:          {
-        startDate: '',
-        endDate:   '',
-        isValid:   true
-      }
-    };
+  dateFormat:         'yyyy-mm-dd',
+  fillRangeStartDate: new Date( '01/01/2011' ),
+  fillRangeEndDate:   new Date(),
+  fillRangeFlag:      true,
+  sortRangeFlag:      true,
+  dateRange:          {
+    startDate: '',
+    endDate:   '',
+    isValid:   true
+  }
+};
 
 var _properties = {};
 
@@ -127,9 +127,9 @@ function _fillDateRange( startDate, endDate ) {
 */
 function _formatDateRange( startDate, endDate, dateFormat ) {
   return [
-          _dateFormat( startDate, dateFormat ),
-          _dateFormat( endDate, dateFormat )
-         ];
+    _dateFormat( startDate, dateFormat ),
+    _dateFormat( endDate, dateFormat )
+  ];
 }
 
 /**

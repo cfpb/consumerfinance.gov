@@ -17,7 +17,7 @@
     "gulp-changed": "^1.2.1",
     "gulp-concat": "^2.6.0",
     "gulp-coveralls": "^0.1.4",
-    "gulp-eslint": "^0.15.0",
+    "gulp-eslint": "^1.0.0",
     "gulp-header": "^1.2.2",
     "gulp-imagemin": "^2.3.0",
     "gulp-istanbul": "^0.10.0",

@@ -10,7 +10,8 @@ function SubPage() {
         SocialMediaAccessibility:
           baseUrl + 'social-media-accessibility/',
         FileAFormalAccessibilityComplaintOrWebsiteFeedback:
-          baseUrl + 'file-a-formal-accessibility-complaint-or-website-feedback/',
+          baseUrl +
+          'file-a-formal-accessibility-complaint-or-website-feedback/',
         // Office of Civil Rights
         DiversityPolicy:
           baseUrl + 'diversity-inclusion-statement/',
@@ -24,7 +25,7 @@ function SubPage() {
           baseUrl + 'reasonable-accommodation-request-policy/',
         Whistleblowers:
           baseUrl + 'whistleblowers/'
-    };
+      };
 
     browser.get( examplePages[page] );
   };
@@ -47,7 +48,9 @@ function SubPage() {
 
   this.officeContact = element( by.css( '.office_contact' ) );
 
-  this.officeContactEmail = element( by.css( '.office_contact a[href^="mailto:"]' ) );
+  this.officeContactEmail = element(
+    by.css( '.office_contact a[href^="mailto:"]'
+  ) );
 }
 
 module.exports = SubPage;
