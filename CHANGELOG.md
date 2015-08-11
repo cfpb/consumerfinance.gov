@@ -27,6 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   on offices and sub-pages.
 - Added accessibility complaint form.
 - Added "File an EEO Issue" form.
+- Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
 
 ### Changed
 - Site's "About" text to "About Us".
