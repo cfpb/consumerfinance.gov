@@ -88,6 +88,7 @@ module.exports = {
         loc.src + '/**/*.pdf',
         loc.src + '/_*/**/*',
         loc.src + '/robots.txt',
+        loc.src + '/favicon.ico',
         '!' + loc.lib + '/**/*.html'
       ],
       dest: loc.dist
