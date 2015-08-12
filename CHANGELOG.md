@@ -61,6 +61,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed margins on site footer.
 - Switched the two forms under Privacy to their correct positions
 - Fixed incorrect email href reference on offices contact email link.
+- Fixed borders on sub-footers across the website
 
 
 ## 3.0.0-2.1.0 - 2015-08-05
