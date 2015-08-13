@@ -1,8 +1,16 @@
 {% extends 'content-base.html' %}
 
+{% block pre_content scoped -%}
+  {% if breadcrumb_items | length > 0 %}
+      <div class="content_wrapper">
+      {%- import 'breadcrumbs.html' as breadcrumbs -%}
+      {{ breadcrumbs.render(breadcrumb_items) }}
+      </div>
+  {% endif %}
+{%- endblock %}
+
 {% block body_content scoped %}
 <div class="wrapper content_wrapper">
-	{% block pre_content_main scoped -%}{%- endblock %}
     <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
         <section>
             {% block content_main scoped -%}{%- endblock %}
