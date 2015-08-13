@@ -47,6 +47,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Broke apart format macros into topical macros.
 - Updated legacy code to remove old jQuery dependency and
   unnecessary code.
+- Updated copy on `about-us` page
 
 ### Removed
 - Removed Grunt plugins from package.json
