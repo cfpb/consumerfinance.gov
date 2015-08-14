@@ -57,7 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   constants to `.env_SAMPLE`.
 - Moved aggregate `gulp lint` task to bottom of file to avoid duplicate
   lint task entries in `gulp --tasks`.
-- Renamed `gulp lint:src` to `gulp lint:js` to future-proof type of linting.
+- Renamed `gulp lint:src` to `gulp lint:styles` to future-proof type of linting.
 - Renamed `gulp test:macro` to `gulp test:unit:macro`.
 - Renamed `gulp test:processor` to `gulp test:unit:processor`.
 - Renamed `gulp test:browser` to `gulp test:acceptance:browser`.
@@ -84,6 +84,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed incorrect email href reference on offices contact email link.
 - Fixed borders on sub-footers across the website
 - Fixed 'Return to top' button width on footer
+- Fixed default gulp task
 
 
 ## 3.0.0-2.1.0 - 2015-08-05
