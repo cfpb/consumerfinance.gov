@@ -14,27 +14,21 @@ addons:
       - nodejs
 
 install:
-  # Python test requirements
+  # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
   - git clone https://github.com/cfpb/sheer
   - pip install -e sheer
   - pip install -r sheer/requirements.txt
-  - cp .env_SAMPLE .env
-  - sheer index
-  - pip install -r test/macro_tests/requirements.txt
-
-  # JavaScript test requirements
   - npm install -g gulp
   - npm install -g bower
-  - npm install -g protractor
-  - npm install
+
+  # Project initialization.
+  - sheer index
+  - chmod +x ./setup.sh
+  - ./setup.sh
 
 script:
-  # Run tests for JavaScript
-  - gulp lint:gulp
-  - gulp lint:src
+  - gulp lint
   - gulp test:unit
   - gulp test:coveralls
-  - gulp test:macro
-  - gulp test:processor

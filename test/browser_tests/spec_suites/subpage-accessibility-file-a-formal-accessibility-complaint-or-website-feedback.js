@@ -1,30 +1,32 @@
 'use strict';
 
-var SubPage = require( '../../page_objects/page_sub-pages.js' );
+var SubPage = require( '../page_objects/page_sub-pages.js' );
 
-describe( "The Office of Civil Rights' " +
-          'No FEAR Act Sub-Page', function() {
+describe( "The Accessibility Office's " +
+          'File A Formal Accessibility Complaint ' +
+          'Or Website Feedback Sub-Page', function() {
   var page;
 
   beforeEach( function() {
     page = new SubPage();
-    page.get( 'NoFEARAct' );
+    page.get( 'FileAFormalAccessibilityComplaintOrWebsiteFeedback' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'No FEAR Act' );
+    expect( page.pageTitle() )
+      .toBe( 'File a Formal Accessibility Complaint or Website Feedback' );
   } );
 
   it( 'should include page content', function() {
-    expect( page.pageContent.getText() ).toContain( 'The No FEAR Act' );
+    expect( page.pageContent.getText() ).toContain( 'accessible as possible' );
   } );
 
   it( 'should NOT include related link', function() {
     expect( page.relatedLink.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT include a form', function() {
-    expect( page.contentForm.isPresent() ).toBe( false );
+  it( 'should include a form', function() {
+    expect( page.contentForm.isPresent() ).toBe( true );
   } );
 
   it( 'should include content markup', function() {
@@ -46,8 +48,8 @@ describe( "The Office of Civil Rights' " +
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPB_EEO@consumerfinance.gov' );
+      .toBe( 'CFPB_Accessibility@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPB_EEO@consumerfinance.gov' );
+      .toBe( 'mailto:CFPB_Accessibility@consumerfinance.gov' );
   } );
 } );

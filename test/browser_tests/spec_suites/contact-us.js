@@ -1,8 +1,9 @@
 'use strict';
 
-var ContactUsPage = require( '../../page_objects/page_contact-us.js' );
+var ContactUsPage = require( '../page_objects/page_contact-us.js' );
 
 describe( 'Contact Us Page', function() {
+
   var phoneClass = 'list_link__phone';
 
   var page;
@@ -29,7 +30,6 @@ describe( 'Contact Us Page', function() {
     expect( secondPhone.getAttribute( 'href' ) ).toBe( 'tel:8557292372' );
   } );
 
-// This hasn't been released to beta yet and should fail when testing that url
   it( 'should link to Submit a Complaint page', function() {
     var complaintLink = element( by.partialLinkText( 'Submit a complaint' ) );
 
@@ -48,3 +48,32 @@ describe( 'Contact Us Page', function() {
     expect( page.giPhone.getAttribute( 'class' ) ).toMatch( phoneClass );
   } );
 } );
+
+// ----------------------------------------------------------------
+// Size-sensitive tests - these tests require a certain screensize.
+// ----------------------------------------------------------------
+var windowSize = browser.params.windowSize;
+
+// TODO: Use breakpoints settings file to set window size.
+if ( typeof windowSize !== 'undefined' && windowSize === '1200,900' ) {
+  describe( 'Large Contact Us Page', function() {
+    var page;
+
+    beforeEach( function() {
+      page = new ContactUsPage();
+      page.get();
+    } );
+
+    it( 'should properly load in a browser', function() {
+      expect( page.pageTitle() ).toBe( 'Contact us' );
+    } );
+
+    it( 'should include 48 individual offices in alpha order', function() {
+      expect( page.offices.count() ).toEqual( 48 );
+      expect( page.firstOfficeLabel.getText() )
+        .toMatch( 'Academic Research Council' );
+      expect( page.lastOfficeLabel.getText() )
+        .toMatch( 'Your Money, Your Goals Toolkit' );
+    } );
+  } );
+}

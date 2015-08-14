@@ -1,25 +1,25 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
-describe( 'The Payments to Harmed Consumers Office Page', function() {
+describe( 'The Office of Civil Rights Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'PaymentsToHarmedConsumer' );
+    page.get( 'OfficeOfCivilRights' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Payments to Harmed Consumers' );
+    expect( page.pageTitle() ).toBe( 'Office of Civil Rights' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Payments to Harmed Consumers' );
+    expect( page.mainTitle.getText() ).toBe( 'Office of Civil Rights' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'Congress has authorized' );
+    expect( page.introText.getText() ).toContain( 'Office of Civil Rights' );
   } );
 
   it( 'should NOT include subscription', function() {
@@ -66,7 +66,11 @@ describe( 'The Payments to Harmed Consumers Office Page', function() {
     expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
-  it( 'should NOT have office contacts', function() {
-    expect( page.officeContact.isPresent() ).toBe( false );
+  it( 'should have office contacts', function() {
+    expect( page.officeContact.isPresent() ).toBe( true );
+    expect( page.officeContactEmail.getText() )
+      .toBe( 'CFPB_EEO@consumerfinance.gov' );
+    expect( page.officeContactEmail.getAttribute( 'href' ) )
+      .toBe( 'mailto:CFPB_EEO@consumerfinance.gov' );
   } );
 } );

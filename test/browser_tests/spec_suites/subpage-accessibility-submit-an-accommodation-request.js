@@ -1,32 +1,30 @@
 'use strict';
 
-var SubPage = require( '../../page_objects/page_sub-pages.js' );
+var SubPage = require( '../page_objects/page_sub-pages.js' );
 
-describe( "The Office of Civil Rights' " +
-          'Raise an EEO Issue Sub-Page', function() {
+describe( "The Accessibility Office's " +
+          'Submit An Accommodation Request Sub-Page', function() {
   var page;
 
   beforeEach( function() {
     page = new SubPage();
-    page.get( 'RaiseAnEEOIssue' );
+    page.get( 'SubmitAnAccommodationRequest' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Raise an EEO Issue' );
+    expect( page.pageTitle() ).toBe( 'Submit an Accommodation Request' );
   } );
 
   it( 'should include page content', function() {
-    expect( page.pageContent.getText() ).toContain(
-      'If you believe you have been discriminated'
-    );
+    expect( page.pageContent.getText() ).toContain( 'CFPB seeks to ensure' );
   } );
 
-  it( 'should NOT include related links', function() {
+  it( 'should NOT include related link', function() {
     expect( page.relatedLink.isPresent() ).toBe( false );
   } );
 
-  it( 'should include a form', function() {
-    expect( page.contentForm.isPresent() ).toBe( true );
+  it( 'should NOT include a form', function() {
+    expect( page.contentForm.isPresent() ).toBe( false );
   } );
 
   it( 'should include content markup', function() {
@@ -48,8 +46,8 @@ describe( "The Office of Civil Rights' " +
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPB_EEO@consumerfinance.gov' );
+      .toBe( 'CFPB_Accessibility@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPB_EEO@consumerfinance.gov' );
+      .toBe( 'mailto:CFPB_Accessibility@consumerfinance.gov' );
   } );
 } );

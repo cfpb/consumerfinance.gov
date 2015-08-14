@@ -11,8 +11,10 @@ function EventsPage() {
   this.hero = {
     maps:    element.all( by.css( '.hero .hero_img' ) ),
     heading: this.heroElem.element( by.css( '.summary_heading' ) ),
-    date:    this.heroElem.element( by.css( '.summary_footer .datetime_date' ) ),
-    time:    this.heroElem.element( by.css( '.summary_footer .datetime_time' ) )
+    date:    this.heroElem
+              .element( by.css( '.summary_footer .datetime_date' ) ),
+    time: this.heroElem
+              .element( by.css( '.summary_footer .datetime_time' ) )
   };
   this.events = element.all( by.css( '.post-preview__event' ) );
   this.eventElem = this.events.first();

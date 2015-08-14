@@ -1,25 +1,25 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
-describe( 'The Accessibility Office Page', function() {
+describe( 'The Payments to Harmed Consumers Office Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'Accessibility' );
+    page.get( 'PaymentsToHarmedConsumer' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Accessibility' );
+    expect( page.pageTitle() ).toBe( 'Payments to Harmed Consumers' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Accessibility' );
+    expect( page.mainTitle.getText() ).toBe( 'Payments to Harmed Consumers' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'Rehabilitation Act' );
+    expect( page.introText.getText() ).toContain( 'Congress has authorized' );
   } );
 
   it( 'should NOT include subscription', function() {
@@ -54,7 +54,7 @@ describe( 'The Accessibility Office Page', function() {
     expect( page.resourceLink.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have subpages', function() {
+  it( 'should have subpages', function() {
     expect( page.subpages.isPresent() ).toBe( true );
   } );
 
@@ -62,15 +62,11 @@ describe( 'The Accessibility Office Page', function() {
     expect( page.officeContent.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have tags', function() {
-    expect( page.contentTags.isPresent() ).toBe( false );
+  it( 'should have tags', function() {
+    expect( page.contentTags.isPresent() ).toBe( true );
   } );
 
-  it( 'should have office contacts', function() {
-    expect( page.officeContact.isPresent() ).toBe( true );
-    expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPB_Accessibility@consumerfinance.gov' );
-    expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPB_Accessibility@consumerfinance.gov' );
+  it( 'should NOT have office contacts', function() {
+    expect( page.officeContact.isPresent() ).toBe( false );
   } );
 } );

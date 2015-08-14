@@ -1,25 +1,25 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
-describe( 'The Plain Writing Page', function() {
+describe( 'The Office of FOIA Requests Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'PlainWriting' );
+    page.get( 'FOIARequests' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Plain Writing' );
+    expect( page.pageTitle() ).toBe( 'FOIA Requests' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Plain Writing' );
+    expect( page.mainTitle.getText() ).toBe( 'FOIA Requests' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'adopted plain language' );
+    expect( page.introText.getText() ).toContain( 'Freedom of Information' );
   } );
 
   it( 'should NOT include subscription', function() {
@@ -42,12 +42,12 @@ describe( 'The Plain Writing Page', function() {
     expect( page.resourceImg.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT have resource title', function() {
-    expect( page.resourceTitle.isPresent() ).toBe( false );
+  it( 'should have resource title', function() {
+    expect( page.resourceTitle.getText() ).toBe( 'Expected timeframe' );
   } );
 
-  it( 'should NOT have resource description', function() {
-    expect( page.resourceDesc.isPresent() ).toBe( false );
+  it( 'should have resource description', function() {
+    expect( page.resourceDesc.getText() ).toContain( 'Processing time' );
   } );
 
   it( 'should NOT have resource link', function() {
@@ -69,8 +69,8 @@ describe( 'The Plain Writing Page', function() {
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPB_Plain_Writing_Act@consumerfinance.gov' );
+      .toBe( 'FOIA@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPB_Plain_Writing_Act@consumerfinance.gov' );
+      .toBe( 'mailto:FOIA@consumerfinance.gov' );
   } );
 } );

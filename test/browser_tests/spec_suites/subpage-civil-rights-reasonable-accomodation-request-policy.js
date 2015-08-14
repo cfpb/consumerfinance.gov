@@ -1,26 +1,29 @@
 'use strict';
 
-var SubPage = require( '../../page_objects/page_sub-pages.js' );
+var SubPage = require( '../page_objects/page_sub-pages.js' );
 
-describe( "The Accessibility Office's " +
-          'Submit An Accommodation Request Sub-Page', function() {
+describe( "The Office of Civil Rights' " +
+          'Reasonable Accomodation Request Policy Sub-Page', function() {
   var page;
 
   beforeEach( function() {
     page = new SubPage();
-    page.get( 'SubmitAnAccommodationRequest' );
+    page.get( 'ReasonableAccommodationRequestPolicy' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Submit an Accommodation Request' );
+    expect( page.pageTitle() )
+      .toBe( 'Reasonable Accommodation Request Policy' );
   } );
 
   it( 'should include page content', function() {
-    expect( page.pageContent.getText() ).toContain( 'CFPB seeks to ensure' );
+    expect( page.pageContent.getText() ).toContain(
+      'ensure equal access and employment opportunities'
+    );
   } );
 
-  it( 'should NOT include related link', function() {
-    expect( page.relatedLink.isPresent() ).toBe( false );
+  it( 'should include related links', function() {
+    expect( page.relatedLink.isPresent() ).toBe( true );
   } );
 
   it( 'should NOT include a form', function() {
@@ -46,8 +49,8 @@ describe( "The Accessibility Office's " +
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPB_Accessibility@consumerfinance.gov' );
+      .toBe( 'CFPB_EEO@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPB_Accessibility@consumerfinance.gov' );
+      .toBe( 'mailto:CFPB_EEO@consumerfinance.gov' );
   } );
 } );

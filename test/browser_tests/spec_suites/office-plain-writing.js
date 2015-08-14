@@ -1,37 +1,37 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
-describe( 'The CFPB Ombudsman Office Page', function() {
+describe( 'The Plain Writing Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'CFPBOmbudsman' );
+    page.get( 'PlainWriting' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'CFPB Ombudsman' );
+    expect( page.pageTitle() ).toBe( 'Plain Writing' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'CFPB Ombudsman' );
+    expect( page.mainTitle.getText() ).toBe( 'Plain Writing' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'CFPB Ombudsman' );
+    expect( page.introText.getText() ).toContain( 'adopted plain language' );
   } );
 
   it( 'should NOT include subscription', function() {
     expect( page.subscription.isPresent() ).toBe( false );
   } );
 
-  it( 'should include top story head', function() {
-    expect( page.topStoryHead.getText() ).toBe( 'Our Role' );
+  it( 'should NOT include top story head', function() {
+    expect( page.topStoryHead.isPresent() ).toBe( false );
   } );
 
   it( 'should NOT include top story description', function() {
-    expect( page.topStoryDesc.getText() ).toContain( 'ombudsman principles' );
+    expect( page.topStoryDesc.isPresent() ).toBe( false );
   } );
 
   it( 'should NOT include top story link', function() {
@@ -69,8 +69,8 @@ describe( 'The CFPB Ombudsman Office Page', function() {
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPBOmbudsman@consumerfinance.gov' );
+      .toBe( 'CFPB_Plain_Writing_Act@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPBOmbudsman@consumerfinance.gov' );
+      .toBe( 'mailto:CFPB_Plain_Writing_Act@consumerfinance.gov' );
   } );
 } );

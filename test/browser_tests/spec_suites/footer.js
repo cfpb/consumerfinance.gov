@@ -1,6 +1,6 @@
 'use strict';
 
-var Footer = require( '../../shared_objects/footer.js' );
+var Footer = require( '../shared_objects/footer.js' );
 
 describe( 'The Footer Component', function() {
   var _sharedObject;

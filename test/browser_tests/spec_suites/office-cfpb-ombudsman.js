@@ -1,37 +1,37 @@
 'use strict';
 
-var Office = require( '../../page_objects/page_office.js' );
+var Office = require( '../page_objects/page_office.js' );
 
-describe( 'The Office of Civil Rights Page', function() {
+describe( 'The CFPB Ombudsman Office Page', function() {
   var page;
 
   beforeEach( function() {
     page = new Office();
-    page.get( 'OfficeOfCivilRights' );
+    page.get( 'CFPBOmbudsman' );
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Office of Civil Rights' );
+    expect( page.pageTitle() ).toBe( 'CFPB Ombudsman' );
   } );
 
   it( 'should include main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Office of Civil Rights' );
+    expect( page.mainTitle.getText() ).toBe( 'CFPB Ombudsman' );
   } );
 
   it( 'should include intro text', function() {
-    expect( page.introText.getText() ).toContain( 'Office of Civil Rights' );
+    expect( page.introText.getText() ).toContain( 'CFPB Ombudsman' );
   } );
 
   it( 'should NOT include subscription', function() {
     expect( page.subscription.isPresent() ).toBe( false );
   } );
 
-  it( 'should NOT include top story head', function() {
-    expect( page.topStoryHead.isPresent() ).toBe( false );
+  it( 'should include top story head', function() {
+    expect( page.topStoryHead.getText() ).toBe( 'Our Role' );
   } );
 
   it( 'should NOT include top story description', function() {
-    expect( page.topStoryDesc.isPresent() ).toBe( false );
+    expect( page.topStoryDesc.getText() ).toContain( 'ombudsman principles' );
   } );
 
   it( 'should NOT include top story link', function() {
@@ -69,8 +69,8 @@ describe( 'The Office of Civil Rights Page', function() {
   it( 'should have office contacts', function() {
     expect( page.officeContact.isPresent() ).toBe( true );
     expect( page.officeContactEmail.getText() )
-      .toBe( 'CFPB_EEO@consumerfinance.gov' );
+      .toBe( 'CFPBOmbudsman@consumerfinance.gov' );
     expect( page.officeContactEmail.getAttribute( 'href' ) )
-      .toBe( 'mailto:CFPB_EEO@consumerfinance.gov' );
+      .toBe( 'mailto:CFPBOmbudsman@consumerfinance.gov' );
   } );
 } );

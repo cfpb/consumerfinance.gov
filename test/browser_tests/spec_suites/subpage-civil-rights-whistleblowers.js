@@ -1,6 +1,6 @@
 'use strict';
 
-var SubPage = require( '../../page_objects/page_sub-pages.js' );
+var SubPage = require( '../page_objects/page_sub-pages.js' );
 
 describe( "The Office of Civil Rights' " +
           'Whistleblowers Sub-Page', function() {

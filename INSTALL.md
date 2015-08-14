@@ -111,7 +111,9 @@ pip install git+git://github.com/rosskarchner/govdelivery
 
 > **NOTE:** GovDelivery is a third-party web service that powers our subscription forms.
   Users may decide to swap this tool out for another third-party service.
-  The application will function but throw an error if the above GovDelivery values are not set.
+  The application will function but throw an error
+  if the GovDelivery environment variables are not set
+  in the [Project Configuration](https://github.com/cfpb/cfgov-refresh/blob/flapjack/INSTALL.md#4-project-configuration).
 
 
 ## 2. Front-end setup
@@ -157,23 +159,29 @@ See the usage section [updating all the project dependencies](README.md#updating
 
 ## 4. Project configuration
 
-The project uses a number of environment variables. The project uses a WordPress API URL
-to pull in content and GovDelivery for running the subscription forms:
+The project uses a number of environment variables.
+The `setup.sh` script will create a `.env` file for you
+from the `.env_SAMPLE` file found in the repository,
+if you don't already have one.
 
-- `WORDPRESS` (URL to WordPress install)
-- `GOVDELIVERY_BASE_URL`
-- `GOVDELIVERY_ACCOUNT_CODE` (GovDelivery account variable)
-- `GOVDELIVERY_USER` (GovDelivery account variable)
-- `GOVDELIVERY_PASSWORD` (GovDelivery account variable)
-- `SUBSCRIPTION_SUCCESS_URL` (Forwarding location on subscription success)
+Inside the `.env` file you can customize the project environment configuration.
 
-To set these permenantly, copy the `.env-SAMPLE` file and un-comment each variable after
-adding your own values. `WORDPRESS` is the only one that’s absolutely necessary to run the site.
+If you would like to manually copy the environment settings,
+copy the `.env-SAMPLE` file and un-comment each variable after
+adding your own values.
+`WORDPRESS` is the only one that’s absolutely necessary to run the site.
 ```bash
-cp .env_SAMPLE .env && open .env
+cp -a .env_SAMPLE .env && open .env
 ```
 
-If you need to test this project without Autoenv, you can set each of these with:
+Then load the environment variables with:
+```bash
+. ./.env
+```
+
+If you need to test this project without Autoenv,
+you can set each environment variable
+by directly setting its value from the command-line with:
 ```
 export [CONSTANTNAME]=[CONSTANTVALUE]
 ```

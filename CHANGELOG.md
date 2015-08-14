@@ -29,6 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added "File an EEO Issue" form.
 - Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
 - Added time macro.
+- Added `gulp test:unit` and `gulp test:acceptance` tasks for test stages.
 
 ### Changed
 - Site's "About" text to "About Us".
@@ -48,6 +49,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated legacy code to remove old jQuery dependency and
   unnecessary code.
 - Updated copy on `about-us` page
+- Added copying of `.env_SAMPLE` to `.env` part of `setup.sh`.
+- Moved console output messages to the end of the `setup.sh` `init` method.
+- Organized `.env_SAMPLE` and made `.env` executable on its own.
+- Added `HTTP_HOST`, `HTTP_PORT`, `SELENIUM_URL`, `SAUCE_USERNAME`,
+  `SAUCE_ACCESS_KEY`, `SAUCE_SELENIUM_URL`, and `VIRTUAL_ENV`
+  constants to `.env_SAMPLE`.
+- Moved aggregate `gulp lint` task to bottom of file to avoid duplicate
+  lint task entries in `gulp --tasks`.
+- Renamed `gulp lint:src` to `gulp lint:js` to future-proof type of linting.
+- Renamed `gulp test:macro` to `gulp test:unit:macro`.
+- Renamed `gulp test:processor` to `gulp test:unit:processor`.
+- Renamed `gulp test:browser` to `gulp test:acceptance:browser`.
+- Edited `INSTALL.md` to accommodate changes in `.env_SAMPLE`.
+- Edited Protractor configuration to include browser groups,
+  which by default only run the essentials locally, but the full suite
+  (including legacy browsers) on Sauce Labs when Sauce credentials are present.
+- Updated test instructions to use the gulp test subtasks.
+- Updated Travis CI settings to use `setup.sh`.
 
 ### Removed
 - Removed Grunt plugins from package.json
