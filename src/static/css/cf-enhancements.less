@@ -1427,7 +1427,7 @@ textarea.input__long {
 */
 
 .u-hidden {
-  display: none;
+    display: none;
 }
 
 
@@ -1443,9 +1443,10 @@ textarea.input__long {
       codenotes:
         - .u-link__disabled;
       notes:
-        - "Use this as a general class to give links disabled styling.
-           Sets the color,
-           removes the border and sets the cursor to not-allowed"
+        - "Use this as a general class to give links
+           or button links disabled styling.
+           Sets the color, background-color,
+           removes the border, and sets the cursor to not-allowed."
   tags:
     - cf-core
 */
@@ -1453,6 +1454,10 @@ textarea.input__long {
     color: @gray-50 !important;
     border: none !important;
     cursor: not-allowed !important;
+
+    &.btn {
+        background-color: @gray-20 !important;
+    }
 }
 
 

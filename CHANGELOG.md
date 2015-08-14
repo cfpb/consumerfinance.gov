@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
 - Added time macro.
 - Added `gulp test:unit` and `gulp test:acceptance` tasks for test stages.
+- Added support for link buttons to disabled link utility class.
 
 ### Changed
 - Site's "About" text to "About Us".
