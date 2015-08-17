@@ -12,10 +12,10 @@
         rather than the normal 'category' #}
     {%- if vars.path == '/blog/' %}
         {% set category = post.blog_category %}
-        {% set use_blog_category = True %}
+        {% set use_blog_category = true %}
     {% elif post.category %}
         {% set category = post.category %}
-        {% set use_blog_category = False %}
+        {% set use_blog_category = false %}
     {% endif -%}
     {%- import 'category-slug.html' as category_slug %}
 
