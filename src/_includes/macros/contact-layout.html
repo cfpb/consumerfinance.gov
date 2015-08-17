@@ -35,7 +35,6 @@
             {%- endfor %}
         {%- endif %}
         {%- if contact.phone %}
-            {%- set first = True %}
             {%- for phone in contact.phone %}
                 <li class="list_item">
                     {%- if loop.index == 1 %}
