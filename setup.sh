@@ -59,9 +59,6 @@ install(){
 
   # Macro Polo.
   pip install -r ./test/macro_tests/requirements.txt
-
-  # Processors.
-  pip install -r ./test/processor_tests/requirements.txt
 }
 
 # Run tasks to build the project for distribution.

@@ -44,16 +44,6 @@ gulp.task( 'test:unit:macro', function( cb ) {
   );
 } );
 
-gulp.task( 'test:unit:processor', function( cb ) {
-  exec( 'python ' + config.tests + '/processor_tests/test_processors.py',
-    function( err, stdout, stderr ) {
-      $.util.log( stdout );
-      $.util.log( stderr );
-      cb( err );
-    }
-  );
-} );
-
 /**
  * Retrieve a reference path to a binary.
  * @param {string} binaryName The name of the binary to retrieve.
@@ -145,8 +135,7 @@ gulp.task( 'test',
 gulp.task( 'test:unit',
   [
     'test:unit:js',
-    'test:unit:macro',
-    'test:unit:processor'
+    'test:unit:macro'
   ]
 );
 

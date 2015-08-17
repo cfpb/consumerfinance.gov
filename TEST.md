@@ -138,38 +138,3 @@ From within the root project directory run `gulp test:unit:macro`.
 
 Please see [Macro Polo](https://github.com/cfpb/macropolo) for
 documentation about writing tests.
-
-
-# Content Processor Tests
-
-Test the Sheer content processors that bring content into Elasticsearch
-for cfgov-refresh.
-
-## Running
-
-From within the root project directory run `gulp test:unit:processor`.
-
-## Writing
-
-Tests are written using Python's [`unittest`](https://docs.python.org/2/library/unittest.html) (`unittest2` in Python 2.6).
-
-The tests use JSON files to mock HTTP request's (`request.get()`) response content.
-
-An example:
-
-```python
-class WordpressPostProcessorTestCase(unittest.TestCase):
-    @mock.patch('requests.get')
-    def test_post(self, mock_requests_get):
-        mock_response = mock.Mock()
-        mock_response.content = open(os.path.join(os.path.dirname(__file__),
-                                    'test_wordpress_post_processor_post.json')).read()
-        mock_requests_get.return_value = mock_response
-
-        name = 'post'
-        url = 'http://mockmockmock/api/get_posts/'
-
-        documents = list(wordpress_post_processor.documents(name, url))
-
-        # ... make assertions about resulting document ...
-```
