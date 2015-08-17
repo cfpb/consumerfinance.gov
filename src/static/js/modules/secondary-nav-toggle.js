@@ -4,33 +4,33 @@
    ========================================================================== */
 
 'use strict';
-
-var $ = require( 'jquery' );
+var View = require( './classes/View' );
+var BreakpointHandler = require( './classes/BreakpointHandler' );
+var getViewportDimensions = require( './util/get-viewport-dimensions' );
 
 function init() {
-  // Call this right away to test if we need to expand the nav.
-  _navSecondaryToggle();
 
-  // Then on window resize check to see when we need to toggle the nav.
-  $( window ).resize( function() {
-    _navSecondaryToggle();
+  var breakpointHandler = new BreakpointHandler( {
+    breakpoint: 599,
+    type:       'max',
+    enter:      _toggleNav,
+    leave:      _toggleNav
   } );
+
+  _toggleNav( getViewportDimensions.width );
+
 }
 
-function _navSecondaryToggle() {
-  if ( _navSecondaryToggleTest() ) {
-    $( '.nav-secondary .expandable_target' ).trigger( 'click' );
+function _toggleNav( width ) {
+  var navExpandableView = View.getInstance( '.nav-secondary' );
+
+  if ( !navExpandableView ) return;
+
+  if ( width < 599 ) {
+    navExpandableView.collapse( 0 );
+  } else {
+    navExpandableView.expand( 0 );
   }
-}
-
-// Tests whether or not the secondary nav should be toggled.
-function _navSecondaryToggleTest() {
-  var isSmall =
-    $( '.nav-secondary .nav-secondary_link__button' ).is( ':visible' );
-  var isExpanded =
-    $( '.nav-secondary .expandable_content' )
-      .attr( 'aria-expanded' ) === 'true';
-  return isSmall && isExpanded || !isSmall && !isExpanded;
 }
 
 // Expose public methods.

@@ -4,3 +4,4 @@ rules:
     - 1
     - exceptions:
       - Array
+      - Function
