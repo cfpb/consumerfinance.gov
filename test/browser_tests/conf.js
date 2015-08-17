@@ -16,10 +16,9 @@ function _paramIsSet( param ) {
 /**
  * Choose the suite based on what command-line flags are passed.
  * @param {object} params Set of parameters from the command-line.
- * @param {Array} capabilities List of multiCapabilities objects.
  * @returns {Array} List of multiCapabilities objects.
  */
-function _chooseSuite( params, capabilities ) {
+function _chooseSuite( params ) {
 
 
   var paramsAreNotSet = !_paramIsSet( params.browserName ) &&
@@ -35,7 +34,7 @@ function _chooseSuite( params, capabilities ) {
   // no browser/platform flags are passed, in which case use the full suite.
   // This will make it so that setting the browser/platform flags
   // won't launch several identical browsers performing the same tests.
-  capabilities = defaultSuites.essential;
+  var capabilities = defaultSuites.essential;
   if ( paramsAreNotSet && useSauceCredentials ) {
     capabilities = defaultSuites.full;
   }
@@ -139,7 +138,7 @@ var config = {
       delete config.sauceKey;
     }
 
-    var suite = _chooseSuite( params, capabilities );
+    var suite = _chooseSuite( params );
     var capabilities = _copyParameters( params, suite );
     return capabilities;
   },

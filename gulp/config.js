@@ -85,6 +85,7 @@ module.exports = {
     files: {
       src: [
         loc.src + '/**/*.html',
+        loc.src + '/**/*.pdf',
         loc.src + '/_*/**/*',
         loc.src + '/robots.txt',
         '!' + loc.lib + '/**/*.html'
