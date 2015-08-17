@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added time macro.
 - Added `gulp test:unit` and `gulp test:acceptance` tasks for test stages.
 - Added support for link buttons to disabled link utility class.
+- Added `breakpoints-config.js` config file to use for responsive JS.
 
 ### Changed
 - Site's "About" text to "About Us".
@@ -68,6 +69,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   (including legacy browsers) on Sauce Labs when Sauce credentials are present.
 - Updated test instructions to use the gulp test subtasks.
 - Updated Travis CI settings to use `setup.sh`.
+- Updated files to use `breakpoints-config.js`.
 
 ### Removed
 - Removed Grunt plugins from package.json

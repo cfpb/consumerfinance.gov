@@ -10,6 +10,7 @@ var MobileCarousel = require( '../../modules/classes/MobileCarousel' );
 var MobileOnlyExpandable =
   require( '../../modules/classes/MobileOnlyExpandable' );
 
+
 function init() {
 
   // TODO: Remove this when per-page JS is introduced.
@@ -17,12 +18,11 @@ function init() {
     return;
   }
 
-  var breakpointPx = 599;
-  var mobileCarousel = new MobileCarousel( breakpointPx );
+  var mobileCarousel = new MobileCarousel();
   mobileCarousel.enableOn( '.js-mobile-carousel' );
 
   $( '.expandable__mobile-only' ).each( function() {
-    new MobileOnlyExpandable( $( this ), breakpointPx ); // eslint-disable-line
+    new MobileOnlyExpandable( $( this ) ); // eslint-disable-line no-new, no-inline-comments, max-len
   } );
 }
 

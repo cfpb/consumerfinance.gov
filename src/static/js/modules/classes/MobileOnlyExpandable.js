@@ -3,6 +3,7 @@
 var $ = require( 'jquery' );
 var jQuery = $;
 var BreakpointHandler = require( './BreakpointHandler' );
+var breakpointsConfig = require( '../../config/breakpoints-config' );
 
 /**
  * MobileOnlyExpandable
@@ -20,7 +21,7 @@ var BreakpointHandler = require( './BreakpointHandler' );
 function MobileOnlyExpandable( elem, breakpoint ) {
   this.expandable = elem;
   this.expandableTarget = this.expandable.children( '.expandable_target' );
-  this.breakpoint = breakpoint;
+  this.breakpoint = breakpoint || breakpointsConfig.mobile.max;
 
   // Make sure we have necessary elements before proceeding.
   if ( this.expandable instanceof jQuery &&
