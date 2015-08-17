@@ -4,10 +4,8 @@ var gulp = require( 'gulp' );
 
 gulp.task( 'default',
   [
-    'lint:src',
+    'lint:scripts',
     'test:unit',
-    'test:macro',
-    'test:processor',
     'build'
   ]
 );
