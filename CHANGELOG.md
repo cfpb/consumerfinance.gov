@@ -81,6 +81,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed styles from codebase that have already been migrated
   to cf-typography.
 - Removed duplicate Privacy Policy
+- Removed processor tests due to them being outdated.
 
 ### Fixed
 - Fixed margins on site footer.
