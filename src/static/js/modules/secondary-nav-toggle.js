@@ -6,6 +6,7 @@
 'use strict';
 
 var $ = require( 'jquery' );
+var getBreakpointState = require( './util/breakpoint-state' ).get;
 
 function init() {
   // Call this right away to test if we need to expand the nav.
@@ -25,11 +26,12 @@ function _navSecondaryToggle() {
 
 // Tests whether or not the secondary nav should be toggled.
 function _navSecondaryToggleTest() {
-  var isSmall =
-    $( '.nav-secondary .nav-secondary_link__button' ).is( ':visible' );
+  var breakpointState = getBreakpointState();
+  var isSmall = breakpointState.isMobile || breakpointState.isTablet;
+
   var isExpanded =
     $( '.nav-secondary .expandable_content' )
-      .attr( 'aria-expanded' ) === 'true';
+    .attr( 'aria-expanded' ) === 'true';
   return isSmall && isExpanded || !isSmall && !isExpanded;
 }
 

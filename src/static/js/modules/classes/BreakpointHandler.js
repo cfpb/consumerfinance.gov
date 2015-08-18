@@ -1,6 +1,8 @@
 'use strict';
 
 var $ = require( 'jquery' );
+var getBreakpointState = require( '../util/breakpoint-state' ).get;
+var _breakpointsConfig = require( '../../config/breakpoints-config' );
 
 // Used for checking browser capabilities.
 // TODO: Check what browsers this is necessary for and
@@ -32,11 +34,16 @@ function BreakpointHandler( opts ) {
     throw new Error( 'BreakpointHandler constructor requires arguments!' );
   }
 
+  var breakpoint = opts.breakpoint;
+  var type = opts.type || 'max';
+
   this.match = false;
-  this.breakpoint = opts.breakpoint;
+  this.type = type;
+  this.breakpoint = _breakpointsConfig[breakpoint] &&
+                    _breakpointsConfig[breakpoint][type] ||
+                    breakpoint;
   this.enter = opts.enter;
   this.leave = opts.leave;
-  this.type = opts.type || 'max';
 
   _init( this );
 }
@@ -70,10 +77,12 @@ function watchWindowResize() {
 function handleViewportChange() {
   var width = _viewportEl[_propPrefix + 'Width'];
   var match = this.testBreakpoint( width );
+  var breakpointState;
 
   if ( match !== this.match ) {
-    if ( match && this.enter ) this.enter();
-    else if ( this.leave ) this.leave();
+    breakpointState = getBreakpointState( width );
+    if ( match && this.enter ) this.enter( breakpointState );
+    else if ( this.leave ) this.leave( breakpointState );
   }
 
   this.match = match;
@@ -92,5 +101,6 @@ function testBreakpoint( width ) {
 BreakpointHandler.prototype.watchWindowResize = watchWindowResize;
 BreakpointHandler.prototype.handleViewportChange = handleViewportChange;
 BreakpointHandler.prototype.testBreakpoint = testBreakpoint;
+BreakpointHandler.getBreakpointState = getBreakpointState;
 
 module.exports = BreakpointHandler;

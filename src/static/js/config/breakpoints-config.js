@@ -5,6 +5,7 @@
 
 module.exports = {
   mobile: {
+    min: 0,
     max: 599
   },
   tablet: {
