@@ -71,6 +71,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Travis CI settings to use `setup.sh`.
 - Updated files to use `breakpoints-config.js`.
 - Made `/the-bureau/bureau-structure/role-macro.html` private.
+- Updated `gulp clean` to leave the `dist` directory and remove the inner
+  contents
 
 ### Removed
 - Removed Grunt plugins from package.json
