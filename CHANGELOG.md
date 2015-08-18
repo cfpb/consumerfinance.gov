@@ -73,6 +73,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Made `/the-bureau/bureau-structure/role-macro.html` private.
 - Updated `gulp clean` to leave the `dist` directory and remove the inner
   contents
+- Use `HTTP_PORT` environment variable for port in `gulp watch`, if available.
 
 ### Removed
 - Removed Grunt plugins from package.json
