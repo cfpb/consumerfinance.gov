@@ -6,10 +6,6 @@
 // Used to set padding to 30px
 @padding: unit(@grid_gutter-width / @base-font-size-px, em);
 
-.business_page-content {
-    .list__download();
-}
-
 .block__business-step {
     .respond-to-min(@desktop-min, {
         margin-bottom: 0;
@@ -38,4 +34,8 @@
         });
         top: @base-font-size-px;
     }
+}
+
+.business_page-content{
+    .list__download();
 }

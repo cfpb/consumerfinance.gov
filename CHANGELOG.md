@@ -93,6 +93,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed borders on sub-footers across the website
 - Fixed 'Return to top' button width on footer
 - Fixed default gulp task
+- Fixed icon links to match CFPB Design Manual
 
 
 ## 3.0.0-2.1.0 - 2015-08-05
