@@ -24,7 +24,7 @@
 
 {% block content_main %}
 
-    {% import 'role-macro.html' as role_macro with context %}
+    {% import '_macro-role.html' as role with context %}
 
     <div class="org-chart">
 
@@ -79,7 +79,7 @@
                     <li class="org-chart_node expandable">
                         {% set children = queries.orgmember.search(
                            filter_parent=parent.id) %}
-                    {% if children|list|length %}
+                    {% if children | list | length %}
                         <button class="org-chart_role expandable_target expandable_header content-show"
                                 data-content=".nodes{{ cat_loop.index }}_{{ par_loop.index }}">
                             <span class="node_expander">
@@ -95,7 +95,7 @@
                                     <span class="cf-icon cf-icon-right"></span>
                                 </span>
                             </span>
-                            {{ role_macro.display_role(parent) }}
+                            {{ role.render(parent) }}
                         </button>
                         <ul class="org-chart_nodes
                                    expandable_content
@@ -103,20 +103,20 @@
                                    nodes{{ cat_loop.index }}_{{ par_loop.index }}">
                             <li>
                                 <button class="jump-link jump-link__before jump-link__left content-hide">
-                                    {{ role_macro.display_role(parent) }}
+                                    {{ role.render(parent) }}
                                 </button>
                             </li>
                         {% for child in children %}
                             <li class="org-chart_node">
                                 <div class="org-chart_role">
-                                    {{ role_macro.display_role(child) }}
+                                    {{ role.render(child) }}
                                 </div>
                             </li>
                         {% endfor %}
                         </ul>
                     {% else %}
                         <div class="org-chart_role">
-                            {{ role_macro.display_role(parent) }}
+                            {{ role.render(parent) }}
                         </div>
                     {% endif %}
                     </li>
