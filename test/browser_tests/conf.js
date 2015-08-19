@@ -134,9 +134,8 @@ var config = {
       delete config.sauceKey;
     }
 
-    var capabilities = _copyParameters( params,
-                                        _chooseSuite( params,
-                                                      capabilities ) );
+    var suite = _chooseSuite( params, capabilities );
+    var capabilities = _copyParameters( params, suite );
     return capabilities;
   },
 
