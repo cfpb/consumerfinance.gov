@@ -4,3 +4,4 @@ env:
 rules:
   no-unused-expressions: 0
   dot-notation: 0
+  no-new: 0
