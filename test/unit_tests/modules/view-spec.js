@@ -31,8 +31,6 @@ function runTest() {
     beforeEach( function() {
       viewInstance = new View();
       viewInstancewithEl = new View( { el: document.createElement( 'div' ) } );
-
-      console.log( viewInstance );
     } );
 
     context( 'has a constructor and it', function() {
