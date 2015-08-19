@@ -8,13 +8,12 @@ var fs = require( 'fs' );
 var loc = {
   src:  './src',
   dist: './dist',
-  lib:  JSON.parse( fs.readFileSync( './.bowerrc' ) ).directory, // eslint-disable-line
+  lib:  JSON.parse( fs.readFileSync( './.bowerrc' ) ).directory, // eslint-disable-line no-sync, no-inline-comments, max-len
   test: './test'
 };
-// var _imgDir = loc.src + '/assets/img';
 
 module.exports = {
-  pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line
+  pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
   banner:
       '/*!\n' +
       ' *               ad$$               $$\n' +
@@ -57,8 +56,8 @@ module.exports = {
     dest:     loc.dist + '/static/css',
     settings: {
       paths: [
-        loc.src + '/vendor',
-        loc.src + '/vendor/cf-typography/src'
+        loc.lib,
+        loc.lib + '/cf-typography/src'
       ],
       compress: true
     }
@@ -88,7 +87,7 @@ module.exports = {
         loc.src + '/**/*.html',
         loc.src + '/_*/**/*',
         loc.src + '/robots.txt',
-        '!' + loc.src + '/vendor/**/*.html'
+        '!' + loc.lib + '/**/*.html'
       ],
       dest: loc.dist
     },

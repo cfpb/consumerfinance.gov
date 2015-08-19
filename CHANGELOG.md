@@ -74,6 +74,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp clean` to leave the `dist` directory and remove the inner
   contents
 - Use `HTTP_PORT` environment variable for port in `gulp watch`, if available.
+- Removed "optional" text from privacy complaint form
+  and added `*` to designate required fields.
 
 ### Removed
 - Removed Grunt plugins from package.json
