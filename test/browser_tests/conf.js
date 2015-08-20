@@ -21,14 +21,23 @@ function _paramIsSet( param ) {
  */
 function _chooseSuite( params, capabilities ) {
 
-  // If any of the browser/platform flags are passed,
-  // set the capabilities to use the essential suite.
-  // This way setting the browser, for instance, won't run several
-  // concurrent times.
-  if ( _paramIsSet( params.browserName ) ||
-       _paramIsSet( params.version ) ||
-       _paramIsSet( params.platform ) ) {
-    capabilities = defaultSuites.essential;
+
+  var paramsAreNotSet = !_paramIsSet( params.browserName ) &&
+                        !_paramIsSet( params.version ) &&
+                        !_paramIsSet( params.platform );
+
+  var useSauceCredentials = ( !_paramIsSet( params.sauce ) ||
+                              params.sauce === 'true' ) &&
+                            _isSauceCredentialSet();
+
+  // Set the capabilities to use the essential suite,
+  // unless Sauce Labs credentials are set and
+  // no browser/platform flags are passed, in which case use the full suite.
+  // This will make it so that setting the browser/platform flags
+  // won't launch several identical browsers performing the same tests.
+  capabilities = defaultSuites.essential;
+  if ( paramsAreNotSet && useSauceCredentials ) {
+    capabilities = defaultSuites.full;
   }
 
   return capabilities;
@@ -102,7 +111,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
                       ' ' + capability.specs +
                       ', running ' +
                       capability.browserName +
-                      ( capability.version.length > 0 ?
+                      ( String( capability.version ).length > 0 ?
                         ' ' + capability.version : '' ) +
                       ' on ' + capability.platform +
                       ' at ' +
@@ -121,25 +130,17 @@ var config = {
 
   getMultiCapabilities: function() {
     var params = this.params;
-    var capabilities = defaultSuites.essential;
 
-    // If --sauce=true flag was passed, configure Sauce Labs credentials.
-    if ( ( typeof params.sauce === 'undefined' || params.sauce === 'true' ) &&
-         _isSauceCredentialSet() ) {
-      capabilities = defaultSuites.full;
-    } else {
+    // If Sauce Labs credentials or --sauce flag is not set or is not true,
+    // delete Sauce credentials on the config object.
+    if ( !_isSauceCredentialSet() || params.sauce === 'false' ) {
       delete config.sauceSeleniumAddress;
       delete config.sauceUser;
       delete config.sauceKey;
     }
 
-    var newCapabilities = _copyParameters( params,
-                                           _chooseSuite( params,
-                                                         capabilities ) );
-    if ( newCapabilities.length !== 0 ) {
-      capabilities = newCapabilities;
-    }
-
+    var suite = _chooseSuite( params, capabilities );
+    var capabilities = _copyParameters( params, suite );
     return capabilities;
   },
 
