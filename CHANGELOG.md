@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-2.2.0 - 2015-08-18
+
+### Added
 - Transitioned Capital Framework dependency to v1.0.0 in bower.json.
 - Added gulp and the required npm plugins
 - Added gulp config file to lay out configs for each task
