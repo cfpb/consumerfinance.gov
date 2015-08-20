@@ -20,6 +20,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `gulp test:unit` and `gulp test:acceptance` tasks for test stages.
 - Added support for link buttons to disabled link utility class.
 - Added `breakpoints-config.js` config file to use for responsive JS.
+- Added breadcrumbs to blog, newsroom, careers, business, bureau
+  and budget pages
 
 ### Changed
 - Moved `.meta-header`, `.jump-link`,
@@ -83,6 +85,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added accessibility complaint form.
 - Added "File an EEO Issue" form.
 - Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
+- Added time macro.
 
 ### Changed
 - Site's "About" text to "About Us".

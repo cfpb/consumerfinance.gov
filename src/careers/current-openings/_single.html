@@ -1,5 +1,9 @@
 {% extends 'layout-side-nav.html' %}
 {% import '_vars-careers.html' as vars with context %}
+{% set breadcrumb_items = [(vars.path, vars.path, 'Careers'),
+                            (vars.path + 'current-openings/',
+                            'current-openings', 'Current Openings')]
+%}
 
 {% block title -%}
     {{ career.title }}
