@@ -301,6 +301,9 @@
     // instead so we don't have to do this here.
     & .expandable_content {
         padding: 0;
+        .respond-to-min(@desktop-min, {
+            display: block;
+        });
     }
 }
 

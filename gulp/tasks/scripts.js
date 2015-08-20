@@ -18,6 +18,10 @@ var handleErrors = require( '../utils/handleErrors' );
 var source = require( 'vinyl-source-stream' );
 var config = require( '../config' ).scripts;
 var _ = require( 'lodash' );
+var hbsfy = require( 'hbsfy' ).configure( {
+  extensions: [ 'hbs' ]
+} );
+
 
 function browserifyTask( devMode ) {
 
@@ -38,6 +42,8 @@ function browserifyTask( devMode ) {
       bundleLogger.start( bundleConfig.outputName );
 
       return b
+        .transform( hbsfy )
+
         .bundle()
         // Report compile errors
         .on( 'error', handleErrors )

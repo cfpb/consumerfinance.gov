@@ -10,7 +10,8 @@ $( document ).ready( function() { // eslint-disable-line max-statements, no-inli
 
   // Shimmed-Browserify modules (other than jQuery).
   require( 'jquery-easing' );
-  require( 'cf-expandables' );
+  require( '../modules/expandable/ExpandableView.js' ).init();
+
 
   // Native-Browserify modules.
   require( '../modules/beta-banner-state' ).init();
@@ -31,6 +32,7 @@ $( document ).ready( function() { // eslint-disable-line max-statements, no-inli
   require( '../modules/show-hide-fields.js' ).init();
   require( '../modules/external-site.js' ).init();
   require( '../modules/external-site-redirect.js' ).init();
+
 
   // Page-specific modules.
   require( './contact-us/index.js' ).init();

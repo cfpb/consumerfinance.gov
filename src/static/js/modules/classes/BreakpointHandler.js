@@ -72,8 +72,8 @@ function handleViewportChange() {
   var match = this.testBreakpoint( width );
 
   if ( match !== this.match ) {
-    if ( match && this.enter ) this.enter();
-    else if ( this.leave ) this.leave();
+    if ( match && this.enter ) this.enter( width );
+    else if ( this.leave ) this.leave( width );
   }
 
   this.match = match;
