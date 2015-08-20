@@ -3,7 +3,7 @@ var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 var sinon = require( 'sinon' );
-var View = exports.View =  require( './../fixtures/View.js' );
+var View = exports.View = require( './../fixtures/View.js' );
 var glob = require( 'glob' );
 
 runTest();
