@@ -15,6 +15,7 @@ $( document ).ready( function() { // eslint-disable-line max-statements, no-inli
   // Native-Browserify modules.
   require( '../modules/beta-banner-state' ).init();
   require( '../modules/secondary-nav-toggle' ).init();
+  require( '../modules/skip-nav').init();
   require( '../modules/post-filter' ).init();
   require( '../modules/init-chosen' ).init();
   require( '../modules/mobile-primary-nav.js' ).init();
