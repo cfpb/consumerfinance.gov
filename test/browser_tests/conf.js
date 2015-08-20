@@ -21,17 +21,22 @@ function _paramIsSet( param ) {
  */
 function _chooseSuite( params, capabilities ) {
 
-  // If any of the browser/platform flags are passed,
-  // set the capabilities to use the essential suite.
-  // This way setting the browser, for instance, won't run several
-  // concurrent times.
+
+  var paramsAreNotSet = !_paramIsSet( params.browserName ) &&
+                        !_paramIsSet( params.version ) &&
+                        !_paramIsSet( params.platform );
+
+  var useSauceCredentials = ( !_paramIsSet( params.sauce ) ||
+                              params.sauce === 'true' ) &&
+                            _isSauceCredentialSet();
+
+  // Set the capabilities to use the essential suite,
+  // unless Sauce Labs credentials are set and
+  // no browser/platform flags are passed, in which case use the full suite.
+  // This will make it so that setting the browser/platform flags
+  // won't launch several identical browsers performing the same tests.
   capabilities = defaultSuites.essential;
-  if ( !_paramIsSet( params.browserName ) &&
-       !_paramIsSet( params.version ) &&
-       !_paramIsSet( params.platform ) &&
-       ( typeof params.sauce === 'undefined' ||
-                params.sauce === 'true' ) &&
-       _isSauceCredentialSet() ) {
+  if ( paramsAreNotSet && useSauceCredentials ) {
     capabilities = defaultSuites.full;
   }
 
