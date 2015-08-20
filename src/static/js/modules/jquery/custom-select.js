@@ -70,7 +70,7 @@ function init() {
         .on( 'change', function() {
           $( this ).trigger( 'updateState' );
           changeCallback( {
-              select: $select
+            select: $select
           } );
         } )
         .on( 'focus', function() {

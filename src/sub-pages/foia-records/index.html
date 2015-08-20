@@ -23,15 +23,22 @@
     </section>
     {% endif %}
 
+    {# TODO: remove when we have real records #}
+    <h4>FOIA records content coming soon</h4>
+
     {# Set the filters #}
-    {% from 'post-macros.html' import filters as filters with context %}
+    {# TODO: Uncomment when we have real records
+    {% import 'macros/filters.html' as filters with context %}
     {% set filter_by = ['category', 'range_date', 'tags'] %}
-    {{ filters(filter_by, vars.record_query, vars.records, 'newsroom',
+    {{ filters.render(filter_by, vars.record_query, vars.records, 'newsroom',
        { 'expand_label': 'Filter posts' }) }}
+    #}
 
     {# Show the posts #}
+    {# TODO: Uncomment when we have real records
     {% import 'posts-paginated.html' as posts_paginated with context %}
     {{ posts_paginated.render(vars.records) }}
+    #}
 
 
 {% endblock %}

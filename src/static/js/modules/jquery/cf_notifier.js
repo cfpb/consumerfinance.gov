@@ -7,7 +7,8 @@
 var $ = require( 'jquery' );
 var handlebars = require( 'handlebars' );
 
-var _notifierTemplate = '<div class="cf-notification cf-notification__{{ state }}" ' +
+var _notifierTemplate = '<div class="cf-notification ' +
+                                    'cf-notification__{{ state }}" ' +
                              'style="display: none;">' +
   '<span class="cf-notification_icon ' +
                'cf-notification_icon__{{ state }} ' +
@@ -57,15 +58,15 @@ var _notifier = {
   _clearExisting: function( callback ) {
     var settings = _notifier.settings;
     $( _notifier.existing ).slideUp( {
-        duration: settings.duration,
-        easing:   settings.easing,
-        complete: function() {
-          $( this ).remove();
-          _notifier.existing = false;
-          if ( callback ) {
-            callback();
-          }
+      duration: settings.duration,
+      easing:   settings.easing,
+      complete: function() {
+        $( this ).remove();
+        _notifier.existing = false;
+        if ( callback ) {
+          return callback();
         }
+      }
     } );
   },
 

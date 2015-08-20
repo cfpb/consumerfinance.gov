@@ -47,8 +47,8 @@ These will be used for:
     Run an Elasticsearch instance.
  3. **Sheer web server**.
     Run the web server.
- 4. **Grunt watch**.
-    Run the Grunt watch task for watching for changes to content.
+ 4. **Gulp watch**.
+    Run the Gulp watch task for watching for changes to content.
 
 What follows are the specific steps for each of these tabs.
 
@@ -130,28 +130,16 @@ Error importing package flask_pdfreactor
 Error importing package flask_eventics
 ```
 
-### 4. Launch the Grunt watch task
+### 4. Launch the Gulp watch task
 
 To watch for changes in the source code and automatically update the running site,
 open a terminal and run:
 
 ```
-$ grunt watch
+$ gulp watch
 ```
 
-*Alternatively, if you don't want to run the full watch task,
-there are two available sub-tasks:*
-
-``` bash
-# Watch & compile CSS only
-$ grunt watch:css
-
-# Watch & compile JS only
-$ grunt watch:js
-
-# Watch & compile CSS & JS only
-$ grunt watch:cssjs
-```
+*There's no longer a need to run each file type on it's own because the watch task only runs for the tasks for files that have changed
 
 ## How to test the software
 

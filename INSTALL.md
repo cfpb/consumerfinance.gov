@@ -118,7 +118,7 @@ pip install git+git://github.com/rosskarchner/govdelivery
 
 The cfgov-refresh front-end currently uses the following frameworks / tools:
 
-- [Grunt](http://gruntjs.com): task management for pulling in assets,
+- [Gulp](http://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Bower](http://bower.io): Package manager for front-end dependencies.
 - [Less](http://lesscss.org): CSS pre-processor.
@@ -129,10 +129,10 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
   [start here](https://cfpb.github.io/capital-framework/getting-started).
 
 1. Install [Node.js](http://nodejs.org) however you’d like.
-2. Install [Grunt](http://gruntjs.com) and [Bower](http://bower.io):
+2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
 
 ```bash
-npm install -g grunt-cli bower
+npm install -g gulp bower
 ```
 
 ## 3. Clone project and install dependencies

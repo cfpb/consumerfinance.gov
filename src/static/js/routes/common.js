@@ -6,7 +6,7 @@
 
 var $ = require( 'jquery' );
 
-$( document ).ready( function() {
+$( document ).ready( function() { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   // Shimmed-Browserify modules (other than jQuery).
   require( 'jquery-easing' );
@@ -23,7 +23,6 @@ $( document ).ready( function() {
   require( '../modules/reveal-on-focus' ).init();
   require( '../modules/scroll-on-history-collapse' ).init();
   require( '../modules/clear-form-buttons' ).init();
-  require( '../modules/jquery/cf_pagination' ).init();
   require( '../modules/jquery/custom-input' ).init();
   require( '../modules/jquery/custom-select' ).init();
   require( '../modules/footer-button' ).init();
@@ -35,7 +34,6 @@ $( document ).ready( function() {
 
   // Page-specific modules.
   require( './contact-us/index.js' ).init();
-  require( './index.js' ).init();
   require( './careers/working-at-cfpb/index.js' ).init();
   require( './careers/current-openings/index.js' ).init();
   require( './careers/application-process/index.js' ).init();

@@ -12,6 +12,7 @@
                    required
                    type="text">
         </div>
+
         <div class="form-l_col form-l_col-1-2">
             <label class="form-label-header" for="last-name">
                 Last name
@@ -21,6 +22,7 @@
                    required
                    type="text">
         </div>
+
         <div class="form-l_col form-l_col-1">
             <label class="form-label-header"
                    for="organization-address">
@@ -31,6 +33,7 @@
                    type="text"
                    required>
         </div>
+
         <div class="form-l_col form-l_col-1-2">
             <label class="form-label-header"
                    for="organization-city">
@@ -41,6 +44,7 @@
                    type="text"
                    required>
         </div>
+
         <div class="form-l_col form-l_col-1-2">
             <div class="form-l_col form-l_col-1-2">
                 <label class="form-label-header"
@@ -49,7 +53,7 @@
                 </label>
                 <div class="custom-select">
                     <select class="custom-select_select"
-                            data-placeholder="Select State"
+                            data-placeholder="Select state"
                             id="organization-state"
                             required>
                         <option value="">Select state</option>
@@ -92,7 +96,7 @@
                         data-placeholder="Select Time"
                         id="contact-time">
                       <option value="">Select time</option>
-                        {# TODO: Add additional times. #}
+                      {# TODO: Add additional times. #}
                       <option>8:00 a.m</option>
                  </select>
                  <span class="custom-select_icon
@@ -100,7 +104,7 @@
                                  cf-icon-down"></span>
             </div>
         </div>
-       <div class="form-l_col form-l_col-1-2">
+        <div class="form-l_col form-l_col-1-2">
             <label for="fax-number">
                 <span class="form-label-header">
                     Fax number
@@ -137,38 +141,27 @@
                    required>
         </div>
         <div class="form-l_col form-l_col-1">
-           <label for="request-desc">
-                <span class="form-label-header" for="request-desc">
-                    Information to amend
-                </span>
-                <br>
-                <span class="micro-copy micro-copy__large">
-                    Be as specific as possible and explain why you believe that the information in
-                    question is not accurate, relevant, timely, or complete. Please note that a
-                    requester bears the burden of proving by the preponderance of the
-                    evidence that information is not accurate, relevant, timely, or complete.
-                </span>
+            <label class="form-label-header" for="complaint-desc">
+                Description of complaint
             </label>
             <textarea class="input__long"
-                      id="request-desc"
-                      placeholder="Describe your complaint"
+                      id="complaint-desc"
                       required>
             </textarea>
         </div>
         <div class="form-l_col form-l_col-1">
-            <label for="request-information-location">
-                <span class="form-label-header">Location of information</span>
+            <label for="complaint-summary">
+                <span class="form-label-header">
+                    Summary to resolve complaint
+                </span>
                 <br>
                 <span class="micro-copy micro-copy__large">
-                    Identify the System of Records where you believe the information is located.
-                    View a
-                    <a href="../system-of-records-notices-sorns/">
-                        complete list of our Systems of Records
-                    </a>.
+                    Summarize the steps taken, if any, by you or the CFPB to
+                    resolve this complaint.
                 </span>
             </label>
             <textarea class="input__long"
-                      id="request-information-location"
+                      id="complaint-summary"
                       required>
             </textarea>
         </div>
@@ -181,5 +174,6 @@
                 <span class="cf-icon cf-icon-pdf"></span>
             </a>
         </div>
+
     </form>
 </section>

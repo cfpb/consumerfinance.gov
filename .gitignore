@@ -6,12 +6,11 @@
 *.exe
 *.o
 *.so
-_site/
 
 # Packages #
 ############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
+# It's better to unpack these files and commit the raw source
+# git has its own built-in compression methods.
 *.7z
 *.dmg
 *.gz
@@ -38,36 +37,38 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-# Grunt.js #
-############
+# Environment vars #
+####################
+.env
+
+# npm packages #
+####################
 node_modules/
-.grunt/
 
 # Bower packages #
 ##################
 bower_components/
 src/vendor
 
-# Sheer stuff #
-###############
+# Sheer #
+#########
 *.swp
 *.pyc
-.env
 
 # Built assets #
 ################
 dist/
 
-# Floobits stuff #
-##################
+# Floobits #
+############
 .floo*
 
-# Topdoc stuff #
-##################
+# Topdoc #
+##########
 docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
-# Testing stuff #
-##################
+# Testing #
+###########
 test/macro_tests/src/
 test/unit_test_coverage/

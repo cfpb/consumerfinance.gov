@@ -43,9 +43,9 @@
         {# The extra div is to prevent border tapering from combining block__border and content-l classes #}
         <div class="content-l_col-1-2">
             <section class="block
-                        block__border-top
-                        block__padded-top
-                        block__flush-bottom">
+                            block__border-top
+                            block__padded-top
+                            block__flush-bottom">
                 <h2>CFPB Leadership</h2>
                 <div class="media bureau-bio u-mb30">
                     <div class="media_image-container">
@@ -55,10 +55,10 @@
                     </div>
                     <div class="media_body">
                         <span class="h6">Director</span>
-                        <h3 class="h2 bureau-bio_name">Richard Cordray</h3>
+                        <h2 class="bureau-bio_name">Richard Cordray</h2>
                         <a class="jump-link jump-link__underline"
                            href="/the-bureau/about-rich-cordray">
-                            Cordray's bio
+                            Cordray’s bio
                         </a>
                     </div>
                 </div>
@@ -70,10 +70,10 @@
                     </div>
                     <div class="media_body">
                         <span class="h6">Deputy Director</span>
-                        <h3 class="h2 bureau-bio_name">Steve Antonakes</h3>
+                        <h2 class="bureau-bio_name">Steve Antonakes</h2>
                         <a class="jump-link jump-link__underline"
                            href="/the-bureau/about-steve-antonakes">
-                            Antonakes's bio
+                            Antonakes’s bio
                         </a>
                     </div>
                 </div>
@@ -85,9 +85,9 @@
         </div>
         <div class="content-l_col-1-2">
             <section class="block
-                        block__border-top
-                        block__padded-top
-                        block__flush-bottom">
+                            block__border-top
+                            block__padded-top
+                            block__flush-bottom">
                 <h2>Strategy & Budget</h2>
                 <p>
                     We work for the American public.
@@ -117,9 +117,9 @@
     <div class="content-l">
         <div class="content-l_col-1-2">
             <section class="block
-                        block__border-top
-                        block__padded-top
-                        block__flush-bottom">
+                            block__border-top
+                            block__padded-top
+                            block__flush-bottom">
                 <h2>Engage in our Work</h2>
                 <p>
                     We actively seek opportunities to collaborate
@@ -130,12 +130,14 @@
                 </p>
                 <ul class="list list__links">
                     <li class="list_item">
-                        {# TODO: Add link in next sprint #}
-                        <a class="list_link u-link__disabled">Advisory groups</a>
+                        <a href="/offices/advisory-groups/" class="list_link">
+                            Advisory groups
+                        </a>
                     </li>
                     <li class="list_item">
-                        {# TODO: Add link in next sprint #}
-                        <a class="list_link u-link__disabled">Project Catalyst</a>
+                        <a href="/offices/project-catalyst/" class="list_link">
+                            Project Catalyst
+                        </a>
                     </li>
                     <li class="list_item">
                         <a href="/doing-business-with-us/" class="list_link">
@@ -147,9 +149,9 @@
         </div>
         <div class="content-l_col-1-2">
             <section class="block
-                        block__border-top
-                        block__padded-top
-                        block__flush-bottom">
+                            block__border-top
+                            block__padded-top
+                            block__flush-bottom">
                 <h2>Careers</h2>
                 <p>
                     We are always looking for leaders
@@ -160,7 +162,7 @@
                 <ul class="list list__links">
                     <li class="list_item">
                         <a href="/careers/working-at-cfpb/" class="list_link">
-                            See what it's like to work at the CFPB
+                            See what it’s like to work at the CFPB
                         </a>
                     </li>
                     <li class="list_item">
@@ -179,7 +181,7 @@
     {# TODO Add Events to the Activity Snippets #}
 
     {% import 'macros/activity-snippets.html' as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'],include_date_flag=true) %}
+    {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'], include_date_flag=true) %}
     {% include 'templates/activities-feed.html' %}
     <a class="jump-link jump-link__underline"
        href="/activity-log/">

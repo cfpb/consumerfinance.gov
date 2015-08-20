@@ -93,8 +93,8 @@ function _sessionOrLocal( sessionOnly ) {
 
 // Expose public methods.
 module.exports = {
-    setItem:        setItem,
-    getItem:        getItem,
-    removeItem:     removeItem,
-    setSessionType: setSessionType
+  setItem:        setItem,
+  getItem:        getItem,
+  removeItem:     removeItem,
+  setSessionType: setSessionType
 };
