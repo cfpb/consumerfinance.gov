@@ -5,7 +5,7 @@
 'use strict';
 
 var _dateFormat = require( 'dateformat' );
-var _extend = require( './shallow-extend' ).extend;
+var _assign = require( './assign' ).assign;
 var _uTc = require( './type-checkers' );
 var _isDate = _uTc.isDate;
 
@@ -31,7 +31,7 @@ var _properties = {};
 * @returns {object} An object with startDate and endDate properties.
 */
 function format( startDate, endDate, options ) {
-  _extend( _properties, _defaults, options || {} );
+  _assign( _properties, _defaults, options || {} );
   var dateRange = _properties.dateRange;
   var steps = [];
   var stepsResult;

@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added breadcrumbs to blog, newsroom, careers, business, bureau
   and budget pages
 - Added Meredith Fuchs to Leadership calendar filter.
+- Added unit test for `assign` utility.
 
 ### Changed
 - Moved `.meta-header`, `.jump-link`,
@@ -61,6 +62,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `/about-rich-cordray/` URL to `/about-director/`.
 - Updated `/about-meredith-fuchs/` URL to `/about-deputy-director/`.
 - Normalized director and deputy director photos to be format `NAME-WxH.jpg`.
+- Changed name of `shallow-extend` utility to 'assign'.
 
 ### Removed
 - Removed styles from codebase that have already been migrated
