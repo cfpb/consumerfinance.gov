@@ -286,7 +286,7 @@
 
    Description:
 
-   Create an event agenda table when given
+   Create an event agenda table when given:
 
    post: A post from a query result.
 
@@ -300,6 +300,7 @@
       'location_col_classes': 'u-w25pct',
       'speaker_col_classes': 'u-w25pct',
   } %}
+
   <div class="block
               block__padded-top
               block__border-top">
@@ -352,4 +353,137 @@
     </table>
   </div>
   {% endif %}
+{% endmacro %}
+
+{# ==========================================================================
+
+   event_mailto_button()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event mailto button when given:
+
+   event: An event from a query result.
+
+   ========================================================================== #}
+
+{% macro event_mailto_button( event ) %}
+{% if event.rsvp %}
+    {% set rsvp = {
+          'contact': event.rsvp.contact | list | last,
+          'subject': event.rsvp.email_subject,
+          'body'   : event.rsvp.email_body | striptags
+      }
+    %}
+{% else %}
+    {% set rsvp = {
+          'contact': 'reserve@cfpb.gov',
+          'subject': 'Event RSVP',
+          'body'   : 'To RSVP, please fill in your first and last
+                     name below and send this email.%0D%0A%0D%0A
+                     First name:%0D%0A
+                     Last name:'
+      }
+    %}
+{% endif %}
+<a href="mailto:{{rsvp.contact}}?subject={{rsvp.subject}}&body={{rsvp.body}}"
+   class="btn">
+   <span class="btn_icon__left cf-icon cf-icon-email-social"></span>
+      {{ rsvp.contact | safe }}
+</a>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   event_media()
+
+   ==========================================================================
+
+   Description:
+
+   Create event archive media markup when given:
+
+   event: An event from a query result.
+
+   TODO: Replace lorem ipsum and placeholder image.
+
+   ========================================================================== #}
+
+{% macro event_media( event ) %}
+
+{% set col_classes = 'content-l_col
+                      content-l_col-1-2
+                      block
+                      block__padded-top
+                      block__flush-top
+                      block__flush-bottom'
+%}
+
+<div class="block block__border-top">
+    <div class="event-archive_media-container
+                content-l
+                content-l__large-gutters">
+        <section class="{{ col_classes }} block__padded-bottom">
+            <h4>Photography</h4>
+            <p class="u-flexible-container">
+                <img class="u-flexible-container_inner"
+                     src='https://placeholdit.imgix.net/~text?&w=360&h=202'>
+            </p>
+            <p class="speech_link-container">
+                <a href="#" class="jump-link
+                                   jump-link__external-link
+                                   jump-link__underline
+                                   u-link__disabled">
+                    See the album for the Event
+                </a>
+            </p>
+        </section>
+        <section class="{{ col_classes }}">
+            {% if event.archive.video_transcript %}
+            <section class="block block__flush-top">
+                <h4>Speech text</h4>
+                <p class="short-desc">
+                    Curae natoque in aptent sagittis,
+                    montes amet quis mattis tempus
+                    nullam, primis sit libero diam arcu nascetur,
+                    per sociis quisque nostra. Mus litora dignissim
+                    mattis, est cum montes elit, dictum sociosqu
+                    cras condimentum, pellentesque lacus arcu hac.
+                </p>
+                <p>
+                    <a href="{{ event.archive.speech_transcript.url }}"
+                       class="jump-link
+                              jump-link__underline">
+                       Download speech
+                       <span class="cf-icon cf-icon-pdf"></span>
+                    </a>
+                </p>
+            </section>
+            {% endif %}
+
+            {% if  event.archive.video_transcript %}
+            <section class="block block__flush-bottom">
+                <h4>Video transcript</h4>
+                <p class="short-desc">
+                    Curae natoque in aptent sagittis,
+                    montes amet quis mattis tempus
+                    nullam, primis sit libero diam arcu nascetur,
+                    per sociis quisque nostra. Mus litora dignissim
+                </p>
+                <p>
+                    <a href="{{ event.archive.video_transcript.url }}"
+                       class="jump-link
+                              jump-link__underline">
+                       Download transcript
+                       <span class="cf-icon cf-icon-pdf"></span>
+                    </a>
+                </p>
+            </section>
+            {% endif %}
+        </section>
+    </div>
+</div>
 {% endmacro %}
