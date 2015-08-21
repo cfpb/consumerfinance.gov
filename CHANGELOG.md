@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `breakpoints-config.js` config file to use for responsive JS.
 - Added breadcrumbs to blog, newsroom, careers, business, bureau
   and budget pages
+- Added Meredith Fuchs to Leadership calendar filter.
 
 ### Changed
 - Moved `.meta-header`, `.jump-link`,
@@ -56,6 +57,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Use `HTTP_PORT` environment variable for port in `gulp watch`, if available.
 - Removed "optional" text from privacy complaint form
   and added `*` to designate required fields.
+- Updated Deputy Director information to Meredith Fuchs.
+- Updated `/about-rich-cordray/` URL to `/about-director/`.
+- Updated `/about-meredith-fuchs/` URL to `/about-deputy-director/`.
+- Normalized director and deputy director photos to be format `NAME-WxH.jpg`.
 
 ### Removed
 - Removed styles from codebase that have already been migrated
@@ -68,6 +73,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed 'Return to top' button width on footer
 - Fixed default gulp task
 - Fixed icon links to match CFPB Design Manual
+- Fixed gulp copy task that was missing copying PDFs in subdirectories.
 
 
 ## 3.0.0-2.2.0 - 2015-08-18
