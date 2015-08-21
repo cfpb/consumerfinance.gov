@@ -28,10 +28,6 @@
 {% macro render(post, path, event_state) %}
 
 {% import 'macros/share.html' as share %}
-<script>
-   console.log( {{ event.json_compatible() | tojson }} );
-</script>
-
 <article class="post post__event">
     <header>
         <h1 class="post_heading">
