@@ -17,9 +17,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added Favicon
+- New and improved primary nav (both look and interaction)
+- Added expanded-state utility for getting/setting aria-expanded
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
+
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
