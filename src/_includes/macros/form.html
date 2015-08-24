@@ -1,0 +1,173 @@
+{# ==========================================================================
+
+   form.textField()
+
+   ==========================================================================
+
+   Description:
+
+   Builds form text field
+
+   label: Name of the field. String.
+
+   type: Type of field.
+          Possible fields: text, tel, fieldset
+
+   size: 1-2
+
+   required: optional (false)
+
+   ========================================================================== #}
+
+{% macro textField(label, type, size, required=false, disabled=false) -%}
+  {% from 'macros/util/format/url.html' import slugify as slugify %}
+  {% set id_slug = slugify( label ) %}
+  <div class="form-l_col form-l_col-{{size}}">
+    <label class="form-label-header" for="form_{{ id_slug }}">
+      {{ label }}
+      {%- if required -%}
+        * <span class="u-visually-hidden">Required</span>
+      {%- endif -%}
+    </label>
+    <input class="input__long"
+           id="form_{{ id_slug }}"
+           type="{{ type }}"
+           {%- if required -%}required=""{%- endif -%}
+           {%- if disabled -%}disabled=""{%- endif -%}>
+  </div>
+{%- endmacro %}
+
+{# ==========================================================================
+
+   form.textBox()
+
+   ==========================================================================
+
+   Description:
+
+   Builds form text field
+
+   label: Name of the field.
+
+   helperText:
+
+   required: optional (false)
+
+   disabled: optional (false)
+
+   ========================================================================== #}
+
+{% macro textBox(label, required=false, disabled=false) -%}
+  {% from 'macros/util/format/url.html' import slugify as slugify %}
+  {% set id_slug = slugify( label ) %}
+  <div class="form-l_col form-l_col-1">
+    <label for="form_{{ id_slug }}">
+      <span class="form-label-header">{{ label }}</span>
+      {%- if required -%}
+        * <span class="u-visually-hidden">Required</span>
+      {%- endif -%}
+    </label>
+    <textarea class="input__long"
+              id="form_{{ id_slug }}"
+              {%- if required -%}required=""{%- endif -%}
+              {%- if disabled -%}disabled=""{%- endif -%}></textarea>
+  </div>
+{%- endmacro %}
+
+{# ==========================================================================
+
+   form.select()
+
+   ==========================================================================
+
+   Description:
+
+   Builds form text field
+
+   label: Name of the field.
+
+   size:
+
+   required: optional (false)
+
+   disabled: optional (false)
+
+   ========================================================================== #}
+
+{% macro select(label, size, placeholder, fields, required=false, disabled=false) -%}
+  {% from 'macros/util/format/url.html' import slugify as slugify %}
+  {% set id_slug = slugify( label ) %}
+
+  <div class="form-l_col form-l_col-{{ size }}">
+      <label class="form-label-header"
+             for="form_{{ id_slug }}">
+          {{ label }}
+          {%- if required -%}
+            * <span class="u-visually-hidden">Required</span>
+          {%- endif -%}
+      </label>
+      <div class="custom-select">
+          <select class="custom-select_select"
+                  data-placeholder="{{ placeholder }}"
+                  id="form_{{ id_slug }}"
+                  {%- if required -%}required=""{%- endif -%}
+                  {%- if disabled -%}disabled=""{%- endif -%}>
+              <option value="">{{ placeholder }}</option>
+              {% for field in fields %}
+              <option value="{{ slugify(field) }}">{{ field }}</option>
+              {% endfor %}
+          </select>
+          <span class="custom-select_icon cf-icon cf-icon-down"></span>
+      </div>
+  </div>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   form.radio()
+
+   ==========================================================================
+
+   Description:
+
+   Builds form text field
+
+   label: Name of the field.
+
+   size:
+
+   required: optional (false)
+
+   disabled: optional (false)
+
+   ========================================================================== #}
+
+{% macro radio(legend, size, fields, required=false, disabled=false) -%}
+  {% from 'macros/util/format/url.html' import slugify as slugify %}
+  {% set id_slug = slugify( legend ) %}
+
+  <fieldset class="u-reset">
+      <div class="form-l_col
+                  form-l_col-1
+                  u-mb0">
+          <legend class="form-label-header">
+              {{ legend }}
+          </legend>
+      </div>
+      {% for field in fields %}
+      <div class="form-l_col
+                  form-l_col-{{ size }}
+                  form-l-inset">
+          <div class="form-l-inset_container">
+              <label>
+                  <input class="custom-input"
+                         type="radio"
+                         name="form_{{ id_slug }}">
+                  {{ field }}
+              </label>
+          </div>
+      </div>
+      {% endfor %}
+  </fieldset>
+{%- endmacro %}
