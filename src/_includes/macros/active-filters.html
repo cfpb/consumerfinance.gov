@@ -78,9 +78,7 @@
     {%- for filter in active_filters %}
         <li class="list_item filtered-by_filter">
             {{ 'Blog' if filter == 'post' else filter }}
-        {%- if not loop.last -%}
-            ,
-        {%- elif active_date_filters | length > 0 -%}
+        {%- if not loop.last or active_date_filters | length > 0 -%}
             ,
         {%- endif %}
         </li>
@@ -97,7 +95,7 @@
     {% if options.show_unfiltered_count and options.show_filters_label %}
         <li class="list_item">
             <span class="filtered-by_header">
-                {{ posts.total }} results
+                {{ posts.total }} result{{ 's' if posts.total > 1 }}
             </span>
         </li>
     {% endif %}

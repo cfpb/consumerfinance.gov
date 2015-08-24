@@ -74,6 +74,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed default gulp task
 - Fixed icon links to match CFPB Design Manual
 - Fixed gulp copy task that was missing copying PDFs in subdirectories.
+- Fixed issues with active filter logic.
 
 
 ## 3.0.0-2.2.0 - 2015-08-18
