@@ -8,7 +8,7 @@
 
    Format a time for displaying in the format of:
 
-    HH:MM AM ZZZ
+       HH:MM AM ZZZ
 
    When given:
 
@@ -21,7 +21,8 @@
    ========================================================================== #}
 
 {% macro format_time(datetime, timezone) %}
-    {% set parse_timezone = 'US/Eastern' if timezone == '' else timezone %}
+    {% set parse_timezone = 'America/New_York'
+                            if timezone == '' else timezone %}
     {% if parse_timezone is defined %}
     {{- datetime | date('%I:%M %p %Z', parse_timezone) -}}
     {% else %}
@@ -40,7 +41,7 @@
 
    Format a date for displaying in the format of:
 
-    MMM DD, YYYY
+      MMM DD, YYYY
 
    When given:
 
@@ -64,7 +65,7 @@
 
    Format a date for datetime metadata in the format of:
 
-    YYYY-MM-DDTHH:MM:SS.MMMM
+       YYYY-MM-DDTHH:MM:SS.MMMM
 
    When given:
 
