@@ -1,5 +1,9 @@
 # cfgov-refresh
 
+[![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=flapjack)](https://travis-ci.org/cfpb/cfgov-refresh?branch=flapjack)
+[![Coverage Status](https://coveralls.io/repos/cfpb/cfgov-refresh/badge.png?branch=flapjack)](https://coveralls.io/r/cfpb/cfgov-refresh?branch=flapjack)
+[![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
+
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
 This project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
