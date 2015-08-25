@@ -4,14 +4,14 @@ var sinon = require( 'sinon' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 
-describe( 'The skipNav function', function() {
-  var $, skipNav, sandbox;
+describe( 'The focusTarget function', function() {
+  var $, focusTarget, sandbox;
 
   jsdom();
 
   before( function() {
     $ = require( 'jquery' );
-    skipNav = require( '../../../src/static/js/modules/skip-nav.js' );
+    focusTarget = require( '../../../src/static/js/modules/focus-target.js' );
     sandbox = sinon.sandbox.create();
   } );
 
@@ -37,19 +37,11 @@ describe( 'The skipNav function', function() {
   } );
 
   it( 'should trigger attr function when clicked', function() {
-    skipNav.init();
+    focusTarget.init();
     var attrSpy = sandbox.spy( $.prototype, 'attr' );
 
     $( '#skip-nav' ).trigger( 'click' );
     expect( attrSpy.called ).to.be.ok;
-  } );
-
-  it( 'should remove handlers when item is removed', function() {
-    skipNav.init();
-    var attrSpy = sinon.spy( $.prototype, 'attr' );
-    $( '#skip-nav' ).remove();
-    $( '#skip-nav' ).trigger( 'click' );
-    expect( attrSpy.called ).to.not.be.ok;
   } );
 
 } );
