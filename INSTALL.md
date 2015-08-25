@@ -111,7 +111,7 @@ pip install git+git://github.com/rosskarchner/govdelivery
 
 > **NOTE:** GovDelivery is a third-party web service that powers our subscription forms.
   Users may decide to swap this tool out for another third-party service.
-  The application will function but throw an error
+  The application will throw an error
   if the GovDelivery environment variables are not set
   in the [Project Configuration](https://github.com/cfpb/cfgov-refresh/blob/flapjack/INSTALL.md#4-project-configuration).
 
@@ -167,9 +167,8 @@ if you don't already have one.
 Inside the `.env` file you can customize the project environment configuration.
 
 If you would like to manually copy the environment settings,
-copy the `.env-SAMPLE` file and un-comment each variable after
+copy the `.env_SAMPLE` file and un-comment each variable after
 adding your own values.
-`WORDPRESS` is the only one that’s absolutely necessary to run the site.
 ```bash
 cp -a .env_SAMPLE .env && open .env
 ```

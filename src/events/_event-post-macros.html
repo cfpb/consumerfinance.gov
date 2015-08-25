@@ -252,7 +252,10 @@
                         {% import 'macros/time.html' as time %}
                         {{ time.render(post.beginning_time.date) }}
                         {# TODO: Replace with real download link #}
-                        <a class="event-calendar_download jump-link jump-link__download" href="#">
+                        <a class="event-calendar_download
+                                  jump-link
+                                  jump-link__download
+                                  u-link__disabled">
                             <span class="jump_link_text">Download .ics</span>
                         </a>
                     {% endif %}

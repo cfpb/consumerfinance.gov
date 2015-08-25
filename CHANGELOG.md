@@ -63,6 +63,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `/about-meredith-fuchs/` URL to `/about-deputy-director/`.
 - Normalized director and deputy director photos to be format `NAME-WxH.jpg`.
 - Changed name of `shallow-extend` utility to 'assign'.
+- Superscripts `st` in `21st` on About Us page.
 
 ### Removed
 - Removed styles from codebase that have already been migrated
@@ -94,7 +95,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added accessibility complaint form.
 - Added "File an EEO Issue" form.
 - Added `/offices/office-of-civil-rights/` page, tests, and link in footer.
-- Added time macro.
 
 ### Changed
 - Site's "About" text to "About Us".
