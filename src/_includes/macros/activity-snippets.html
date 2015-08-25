@@ -131,9 +131,9 @@
                     {{ item.title | safe  }}
                     {%- if include_date_flag and item.date -%}
                         <span class="date">
-                          &ndash;
-                          {% import 'macros/time.html' as time %}
-                          {{ time.render(item.date, {'date':true}) }}
+                            &ndash;
+                            {% import 'macros/time.html' as time %}
+                            {{ time.render(item.date, {'date':true}) }}
                         </span>
                     {%- endif -%}
                 </a>

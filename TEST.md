@@ -31,6 +31,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
    and run that in your Terminal window.
    Once you see `Sauce Connect is up` in the Terminal,
    that means the tunnel has successfully been established
+
    > The Terminal command should already have your Sauce username and access key filled in.
      If it doesn't, make sure you're logged in.
 5. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
