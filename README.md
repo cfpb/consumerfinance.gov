@@ -139,7 +139,24 @@ open a terminal and run:
 $ gulp watch
 ```
 
-*There's no longer a need to run each file type on it's own because the watch task only runs for the tasks for files that have changed
+**NOTE:** The watch task only runs for the tasks for files that have changed.
+
+#### Available Gulp Tasks
+In addition to `gulp watch`, there are a number of other important gulp tasks,
+particularly `gulp build` and `gulp test`,
+which will build the project and test it, respectively.
+Using the `gulp --tasks` command you can view all available tasks.
+The important ones are listed below:
+
+```
+gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
+gulp clean           # Remove the contents of the production /dist/ directory.
+gulp lint            # Lint the scripts and build files.
+gulp test            # Run linting, unit and acceptance tests (see below).
+gulp test:unit       # Run only unit tests on source code.
+gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
+gulp watch           # Watch for changes in the source and launch and auto-update a browser instance.
+```
 
 ## How to test the software
 

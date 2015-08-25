@@ -17,11 +17,12 @@
                     {{ pop_post.title|safe }}
                 </a>
             </h4>
-            <p class="short-desc u-mb0">
-                <!-- TODO: Use real content description -->
-            </p>
+            {# <p class="short-desc u-mb0">
+                 TODO: Use real content description
+            </p> #}
             <p class="date">
-                {{ pop_post.date| date('%m/%d/%y') }}
+                {% import 'macros/time.html' as time %}
+                {{ time.render(pop_post.date, {'date':true}) }}
             </p>
         </li>
     {% endfor %}

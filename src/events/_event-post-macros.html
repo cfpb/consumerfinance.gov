@@ -60,7 +60,7 @@
    ========================================================================== #}
 
 {% macro event_location_image(options={}) %}
-    {% from 'macros/util/format.html' import location_image_url as location_image_url %}
+    {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
     <img class="{{ options.additional_classes }}"
          src="{{ location_image_url({
@@ -96,10 +96,16 @@
 
    ========================================================================== #}
 
-{% macro event_meta(post, address_format='{city}, {state}', datetime_format={})%}
+{% macro event_meta(post,
+                    address_format='{city}, {state}',
+                    datetime_format={}) %}
+{% import 'macros/time.html' as time %}
     <div class="event-meta h-event">
         {{ event_meta_address(post.venue, address_format) }}
-        {{ event_meta_datetime(post.beginning_time, datetime_format) }}
+        {{ time.render(post.beginning_time.date,
+                       {'date':true, 'time':true, 'timezone':true},
+                       post.beginning_time.timezone)
+        }}
     </div>
 {% endmacro %}
 
@@ -160,34 +166,6 @@
             }) | safe
         }}
     </p>
-{% endmacro %}
-
-
-{# ==========================================================================
-
-   event_meta_datetime()
-
-   ==========================================================================
-
-   Description:
-
-   Create HTML event meta date/time markup when given:
-
-   date:                        A post date from a query result.
-
-   datetime_format (optional):  An object to use for customizing event-meta time and
-                                date formats.
-
-   ========================================================================== #}
-
-{% macro event_meta_datetime(date, datetime_format={}) %}
-    {%- set date_format =  datetime_format.date_format | default('%b %-d, %Y', true)   -%}
-    {%- set time_format =  datetime_format.time_format | default('%-I:%M %p %Z', true) -%}
-
-    <time class="event-meta_datetime dt-start" datetime="{{ date.date | date('%Y-%m-%-dT%H:%M:%S%z') }}">
-        <span class="event-meta_date">{{ date.date | date(date_format) }}</span>
-        <span class="event-meta_time">{{ date.date | date(time_format, date.timezone) }}</span>
-    </time>
 {% endmacro %}
 
 
@@ -271,9 +249,13 @@
                     {% if (event_state == 'past') %}
                         Video Replay will be<br> available shortly
                     {% else %}
-                        {{ event_meta_datetime(post.beginning_time) }}
-                        <!-- TDOD: Replace with real download link -->
-                        <a class="event-calendar_download jump-link jump-link__download" href="#">
+                        {% import 'macros/time.html' as time %}
+                        {{ time.render(post.beginning_time.date) }}
+                        {# TODO: Replace with real download link #}
+                        <a class="event-calendar_download
+                                  jump-link
+                                  jump-link__download
+                                  u-link__disabled">
                             <span class="jump_link_text">Download .ics</span>
                         </a>
                     {% endif %}
@@ -341,9 +323,14 @@
         {% for block in post.agenda %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
-                    {{ block.beginning_time.date | date('%-I:%M %p %Z', block.beginning_time.timezone) }}
+                    {% import 'macros/time.html' as time %}
+                    {{ time.render(block.beginning_time.date,
+                                   {'time':true, 'timezone':true},
+                                   block.beginning_time.timezone) }}
                     &ndash;
-                    {{ block.ending_time.date | date('%-I:%M %p %Z', block.ending_time.timezone) }}
+                    {{ time.render(block.ending_time.date,
+                                   {'time':true, 'timezone':true},
+                                   block.ending_time.timezone) }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                     {{ block.desc }}

@@ -172,11 +172,8 @@
 
 <form class="{{ options.additional_classes }}"
       method="get"
-{%- if options.action != '/' %}
-      action="{{ options.action }}">
-{%- else -%}
+      {{ "action=" ~ options.action if options.action != '/' }}
       >
-{% endif %}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
@@ -221,23 +218,21 @@
 
     {# Calendar filters #}
     {% elif filter == 'calendar' %}
+    {% set directors_list = ['Richard Cordray',
+                             'Meredith Fuchs',
+                             'Steve Antonakes',
+                             'Raj Date',
+                             'Elizabeth Warren'] %}
         <div class="form-l_col form-l_col-1-3">
             <div class="form-group required-check-group">
                 <label class="form-label-header">
                     Calendars
                 </label>
+                {% for director in directors_list %}
                 <label class="form-group_item">
-                    {{ _filter_checkbox('calendar', 'Richard Cordray')|safe }}
+                    {{ _filter_checkbox('calendar', director) | safe }}
                 </label>
-                <label class="form-group_item">
-                    {{ _filter_checkbox('calendar', 'Steve Antonakes')|safe }}
-                </label>
-                <label class="form-group_item">
-                    {{ _filter_checkbox('calendar', 'Raj Date')|safe }}
-                </label>
-                <label class="form-group_item">
-                    {{ _filter_checkbox('calendar', 'Elizabeth Warren')|safe }}
-                </label>
+                {% endfor %}
             </div>
         </div>
 
@@ -360,12 +355,12 @@
 
 {# A helper macro for filters()
    ========================================================================== #}
-{% macro _filter_checkbox(field, value, label, checked=false) %}
+{% macro _filter_checkbox(field, value, label) %}
     <input class="custom-input"
            type="checkbox"
            name="filter_{{ field }}"
            value="{{ value }}"
-           {%- if is_filter_selected(field, value) or checked %}
+           {%- if is_filter_selected(field, value) %}
            checked
            {%- endif -%}
            >

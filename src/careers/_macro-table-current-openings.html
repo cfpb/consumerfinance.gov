@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   table-current-openings.render()
+   table_current_openings.render()
 
    ==========================================================================
 
@@ -13,6 +13,8 @@
    ========================================================================== #}
 
 {% macro render(careers) %}
+{% import 'macros/time.html' as time %}
+
 <table class="u-w100pct
               block
               block__flush-top
@@ -38,9 +40,7 @@
                 <a href="{{ career.permalink }}">{{ career.title }}</a>
             </td>
             <td data-label="Posting Closes">
-                <time datetime="{{ career.close_date | date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
-                    {{ career.close_date | date('%b %-d, %Y') }}
-                </time>
+                {{ time.render(career.close_date, {'date':true}) }}
             </td>
             <td data-label="Location">
                 {% for location in career.locations %}

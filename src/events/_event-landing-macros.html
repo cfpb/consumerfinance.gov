@@ -11,9 +11,9 @@
    post: A post from a query result.
 
    media_object (optional):
-            The optional boolean flag to wrap the block in a media object
-            and include a map image.
-            Defaults to true.
+         The optional boolean flag to wrap the block in a media object
+         and include a map image.
+         Defaults to true.
 
    ========================================================================== #}
 
@@ -86,15 +86,18 @@
                             {{ post.future.summary | striptags }}
                         </p>
                         <footer class="summary_footer">
-                            {% from '_event-post-macros.html' import event_meta_datetime as event_meta_datetime %}
-                            {{ event_meta_datetime(post.beginning_time, '%m/%-d/%y') }}
+                            {% import 'macros/time.html' as time %}
+                            {{ time.render(post.beginning_time.date,
+                                           {'date':true, 'time':true, 'timezone':true},
+                                           post.beginning_time.timezone)
+                            }}
                         </footer>
                     </div>
                 </article>
             </a>
         </div>
         <div class="hero_img-container hero_img-container__small">
-            {% from 'macros/util/format.html' import location_image_url as location_image_url %}
+            {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
             <div class="hero_img"
                  style="background-image:url({{ location_image_url({
                         'location': city | urlencode,

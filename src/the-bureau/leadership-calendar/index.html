@@ -1,6 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 {% import '_vars-the-bureau.html' as vars with context %}
 {% set active_nav_id = 'leadership-calendar' %}
+{% set breadcrumb_items = vars.breadcrumb_items %}
 
 {% block title -%}
     Leadership calendar
@@ -32,7 +33,7 @@
             with a view into the workday of the CFPB’s senior leadership.
         </p>
         <p>
-            Richard Cordray is the Director of the CFPB. Steve Antonakes is the Deputy Director.
+            Richard Cordray is the Director of the CFPB. Meredith Fuchs is the Deputy Director.
             We post their calendars online, typically on a monthly basis, after reviewing it to determine
             whether any information contained therein must or should be withheld from public disclosure
             in accordance with the Freedom of Information Act. We update the calendar
@@ -92,7 +93,9 @@
     <aside class="block
                   block__flush-bottom
                   block__flush-sides
-                  block__bg">
+                  block__bg
+                  block__border-top
+                  block__border-right">
         {# TODO: Add FOIA and Open government URLs. #}
         {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([

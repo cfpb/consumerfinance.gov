@@ -1,6 +1,6 @@
 {% macro render(posts, user_options) %}
 
-{% from 'macros/util/format.html' import format_time as format_time %}
+{% import 'macros/time.html' as time %}
 
 {% set options = {
     'time_col_classes': 'u-w25pct',
@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th colspan="3">
-                {{ days.grouper|date('%b %d, %Y') }}
+                {{ time.render(days.grouper, {'date':true}) }}
             </th>
         </tr>
     </thead>
@@ -25,9 +25,9 @@
             {%- if event.all_day %}
                 All day
             {%- else %}
-                {{ format_time(event.dtstart) }}
+                {{ time.render(event.dtstart, {'time':true}) }}
                 &ndash;
-                {{ format_time(event.dtend) }}
+                {{ time.render(event.dtend, {'time':true}) }}
             {%- endif %}
             </td>
             <td class="{{ options.name_col_classes }}">
