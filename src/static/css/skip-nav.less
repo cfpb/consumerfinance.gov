@@ -1,24 +1,29 @@
+/* ==========================================================================
+   cfgov-refresh
+   skip-nav
+   ========================================================================== */
+
+/* topdoc
+  name: CF.gov skip navigation button
+  family: cfgov-header
+  tags:
+    - cfgov-header
+*/
+
 #skip-nav {
-    padding: 10px;
-    border: 2px solid @green;
-    border-top: 0;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
     position: absolute;
-    top: -50px;
-    left: 10px;
-    color: @pacific;
+    top: unit(-@grid_gutter-width / @base-font-size-px, em);
+    left: unit(@grid_gutter-width / @base-font-size-px, em);
     background: transparent;
-    transition: top 1s ease, background .5s linear;
-    z-index: 100;
-    .h5;
+    transition: transform 1s ease, background .5s linear;
+    z-index: 10;
 }
 
 #skip-nav:focus {
+    .btn;
+    .btn__super;
     position: absolute;
     top: 0;
-    background: @white;
     outline: 0;
-    -webkit-transition: top .1s ease, background .2s linear;
-    transition: top .1s ease, background .2s linear;
+    transition: transform .1s ease, background .2s linear;
 }
