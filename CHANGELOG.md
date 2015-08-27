@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-2.3.0 - 2015-08-27
+
+### Added
 - Added time macro.
 - Added `gulp test:unit` and `gulp test:acceptance` tasks for test stages.
 - Added support for link buttons to disabled link utility class.
