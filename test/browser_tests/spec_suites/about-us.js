@@ -7,7 +7,7 @@ var AboutUs = require(
 describe( 'About Landing Page', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new AboutUs();
     page.get();
   } );

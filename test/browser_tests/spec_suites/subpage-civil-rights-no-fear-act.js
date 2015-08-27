@@ -6,7 +6,7 @@ describe( "The Office of Civil Rights' " +
           'No FEAR Act Sub-Page', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new SubPage();
     page.get( 'NoFEARAct' );
   } );

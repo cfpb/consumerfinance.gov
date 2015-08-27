@@ -7,7 +7,7 @@ var StudentsAndGraduates = require(
 describe( 'Careers/Student-and-graduates', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new StudentsAndGraduates();
     page.get();
   } );

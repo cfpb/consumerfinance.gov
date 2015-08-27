@@ -126,6 +126,10 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 
 var config = {
   baseUrl: environment.baseUrl,
+  framework: 'jasmine2',
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 60000
+  },
 
   getMultiCapabilities: function() {
     var params = this.params;
