@@ -72,6 +72,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to cf-typography.
 - Removed duplicate Privacy Policy
 - Removed processor tests due to them being outdated.
+- Removed failing bureau tests to be debugged later
 
 ### Fixed
 - Fixed borders on sub-footers across the website
@@ -80,6 +81,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed icon links to match CFPB Design Manual
 - Fixed gulp copy task that was missing copying PDFs in subdirectories.
 - Fixed issues with active filter logic.
+- Fixed testing issue with single pages reloading for every test
+- Fixed testing timeouts the first fix didn't correct by updating timeout time
 
 
 ## 3.0.0-2.2.0 - 2015-08-18

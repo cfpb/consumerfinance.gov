@@ -44,7 +44,7 @@ describe( 'The Footer Component', function() {
       'tbd content'
   };
 
-  beforeEach( function() {
+  beforeAll( function() {
     _sharedObject = new Footer();
     _sharedObject.get();
   } );

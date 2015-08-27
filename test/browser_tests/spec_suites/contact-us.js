@@ -8,7 +8,7 @@ describe( 'Contact Us Page', function() {
 
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new ContactUsPage();
     page.get();
   } );

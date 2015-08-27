@@ -8,7 +8,7 @@ describe( 'Events Landing page', function() {
   var googleAPI = 'https://maps.googleapis.com/maps/api/staticmap?';
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new EventsPage();
     page.get();
   } );

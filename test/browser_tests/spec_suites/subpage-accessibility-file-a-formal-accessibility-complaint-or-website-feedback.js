@@ -7,7 +7,7 @@ describe( "The Accessibility Office's " +
           'Or Website Feedback Sub-Page', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new SubPage();
     page.get( 'FileAFormalAccessibilityComplaintOrWebsiteFeedback' );
   } );

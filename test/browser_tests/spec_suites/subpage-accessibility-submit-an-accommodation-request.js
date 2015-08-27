@@ -6,7 +6,7 @@ describe( "The Accessibility Office's " +
           'Submit An Accommodation Request Sub-Page', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new SubPage();
     page.get( 'SubmitAnAccommodationRequest' );
   } );
