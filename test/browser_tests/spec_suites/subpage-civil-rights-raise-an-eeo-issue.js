@@ -6,7 +6,7 @@ describe( "The Office of Civil Rights' " +
           'Raise an EEO Issue Sub-Page', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new SubPage();
     page.get( 'RaiseAnEEOIssue' );
   } );

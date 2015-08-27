@@ -5,7 +5,7 @@ var Office = require( '../page_objects/page_office.js' );
 describe( 'The Privacy Office Page', function() {
   var page;
 
-  beforeEach( function() {
+  beforeAll( function() {
     page = new Office();
     page.get( 'Privacy' );
   } );
