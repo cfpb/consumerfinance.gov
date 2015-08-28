@@ -29,6 +29,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Django-Sheerlike integration
 - Added Acceptance tests for `the-bureau` pages.
 - Added test utility to retreive QA elements.
+- Added ARIA state utility to enable decorating dom elements with ARIA states.
+- Added `Object.defineProperty` polyfill.
+- Added unit test for `aria-state.js`.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
