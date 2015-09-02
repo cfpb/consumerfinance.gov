@@ -15,6 +15,7 @@
 }
 
 
+
 /* Event-Post-Preview
    ========================================================================== */
 
@@ -252,4 +253,26 @@
             display: block;
         });
     }
+}
+
+
+/* Event-Archive-Media
+   ========================================================================== */
+
+.event-archive_media-container {
+
+    .respond-to-max(@mobile-max, {
+        .speech_link-container {
+            margin-bottom: 0;
+        }
+    });
+
+    .respond-to-min(@tablet-min, {
+        display: flex;
+
+        .speech_link-container {
+            position: absolute;
+            bottom: 0;
+        }
+    });
 }
