@@ -1,3 +1,5 @@
+{% import 'macros/util/format/datetime.html' as dt %}
+
 {# ==========================================================================
 
    time.render()
@@ -20,13 +22,10 @@
 {% macro render(datetime,
                 show_only={'date':true, 'time':true, 'timezone':true},
                 timezone='America/New_York') %}
-{% from 'macros/util/format/datetime.html' import format_datetime as format_datetime %}
-{% from 'macros/util/format/datetime.html' import format_date as format_date %}
-{% from 'macros/util/format/datetime.html' import format_time as format_time %}
 <span class="datetime">
     {% if show_only.date == true  %}
-    <time class="datetime_date" datetime="{{ format_datetime(datetime) }}">
-      {{ format_date(datetime) }}
+    <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
+      {{ dt.format_date(datetime) }}
     </time>
     {% endif %}
 
@@ -35,11 +34,11 @@
     {% endif %}
 
     {% if show_only.time == true %}
-    <time class="datetime_time" datetime="{{ format_datetime(datetime) }}">
+    <time class="datetime_time" datetime="{{ dt.format_datetime(datetime) }}">
         {% if show_only.timezone == true %}
-        {{ format_time(datetime, timezone) }}
+        {{ dt.format_time(datetime, timezone) }}
         {% else %}
-        {{ format_time(datetime) }}
+        {{ dt.format_time(datetime) }}
         {% endif %}
     </time>
     {% endif %}
