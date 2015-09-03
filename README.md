@@ -4,10 +4,10 @@
 [![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
 
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
-This project includes the front-end assets and build tools,
+This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Sheer](https://github.com/cfpb/sheer) configurations for loading content from the
-WordPress and Django back-ends through Elasticsearch.
+and [Sheer-Like](https://github.com/cfpb/django-sheerlike) configurations for loading content from the
+WordPress and back-ends through Elasticsearch.
 
 **Technology stack**:
 - Mac OSX.
@@ -33,7 +33,15 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 
 ## Installation
 
-Follow the instructions in [INSTALL](INSTALL.md).
+Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
+Clone this project’s repository and switch to its directory with:
+
+```bash
+git clone git@github.com:cfpb/cfgov-refresh.git
+cd cfgov-refresh
+```
+
+Then follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
@@ -48,8 +56,10 @@ These will be used for:
     Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
     Run an Elasticsearch instance.
- 3. **Sheer web server**.
-    Run the web server.
+    **Sheer Index**
+    Load indexes into ES.
+ 3. **Start django server**.
+    Start Django Server
  4. **Gulp watch**.
     Run the Gulp watch task for watching for changes to content.
 
@@ -91,24 +101,22 @@ proper path to its configuration file. For example, it may look like:
 elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
-### 3. Launch Sheer to serve the site
-
-To work on the app you will need Sheer running to compile the templates.
+### 3. Load Indexes & Launch Site
 To do this, run the following:
 
 ```bash
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
-# cd into the /dist/ directory.
-cd ./dist
+# cd into the /cfgov/v1/jinja2/v1/ directory.
+cd cfgov/v1/jinja2/v1
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
 sheer index
 
-# Start sheer.
-sheer serve --debug
+# From the Project root, start server.
+python cfgov/manage.py runserver
 ```
 
 To view the site browse to: <http://localhost:7000>

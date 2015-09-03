@@ -76,7 +76,7 @@ Sheer GitHub project to wherever you keep your projects (not inside cfgov-refres
 git clone https://github.com/cfpb/sheer.git
 ```
 
-Create a virtualenv for Sheer, which you’ll name `cfgov-refresh`:
+Go back to the cfgov-refresh directory and workon a virtualenv, which you’ll name `cfgov-refresh`:
 ```bash
 mkvirtualenv cfgov-refresh
 ```
@@ -137,15 +137,7 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 npm install -g gulp bower
 ```
 
-## 3. Clone project and install dependencies
-
-Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
-Clone this project’s repository and switch to it’s directory with:
-
-```bash
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-```
+## 3. Install dependencies
 
 Next, install dependencies with:
 
