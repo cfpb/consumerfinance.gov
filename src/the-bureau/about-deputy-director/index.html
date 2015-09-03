@@ -15,15 +15,15 @@
 
 	{% import 'macros/share.html' as share %}
 
-    <div class="block block__flush-top">
-        <h1>
+    <div class="block block__flush-top" data-qa-hook="director-bio">
+        <h1 data-qa-hook="director-bio-title">
             Deputy Director Meredith Fuchs
         </h1>
-        <p class="h3">
+        <p class="h3" data-qa-hook="director-bio-summary">
             Meredith Fuchs currently serves as the Acting Deputy Director
             as well as the General Counsel at the Consumer Financial Protection Bureau (CFPB).
         </p>
-        <figure class="media float-media rwd-crop">
+        <figure class="media float-media rwd-crop" data-qa-hook="director-bio-image">
             <img class="media_image media_image__150 rwd-crop_item"
                  src="/static/img/deputy-director-fuchs-300x400.jpg"
                  alt="Portrait of Deputy Director Meredith Fuchs">
@@ -61,7 +61,7 @@
                              src="/static/img/deputy-director-fuchs-round-200x200.jpg"
                              alt="Portrait of Deputy Director Meredith Fuchs">
                     </div>
-                    <div class="media_body">
+                    <div class="media_body" data-qa-hook="director-media-downloads">
                         <h2 class="h4 u-mb5">
                             Downloads
                         </h2>
@@ -82,7 +82,8 @@
                     </div>
                 </div>
             </div>
-            <div class="content-l_col content-l_col-1-2">
+            <div class="content-l_col content-l_col-1-2"
+                 data-qa-hook="director-speaking-info">
                 <h2 class="h4 u-mb5">
                     Request the deputy director’s speaking info
                 </h2>
@@ -97,7 +98,8 @@
 
     <aside>
 
-        <section class="block block__padded-top block__border-top">
+        <section class="block block__padded-top block__border-top"
+                 data-qa-hook="director-more-info">
             <h2>
                 More information about Meredith Fuchs
             </h2>

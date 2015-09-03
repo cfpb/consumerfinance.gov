@@ -27,6 +27,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Django Server
 - Django related urls to access links
 - Django-Sheerlike integration
+- Added Acceptance tests for `the-bureau` pages.
+- Added test utility to retreive QA elements.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.

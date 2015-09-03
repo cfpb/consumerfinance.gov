@@ -25,9 +25,10 @@
     <div class="block
                 block__flush-top
                 block__padded-bottom
-                block__border-bottom">
+                block__border-bottom"
+         data-qa-hook="leadership-calendar-intro">
         <h1>Leadership Calendar</h1>
-        <p class="h3">
+        <p class="h3" data-qa-hook="leadership-calendar-summary">
             At the Consumer Financial Protection Bureau, we are committed to letting you
             know how we’re working for you every day by, among other things, providing you
             with a view into the workday of the CFPB’s senior leadership.
@@ -50,7 +51,7 @@
 
     <div id="pagination_content"></div>
 
-    <div class="block block__flush-top">
+    <div class="block block__flush-top" data-qa-hook="leadership-calendar-filter">
 
     {% set query = queries.calendar_event %}
     {% set posts = query.search(size=20) %}
