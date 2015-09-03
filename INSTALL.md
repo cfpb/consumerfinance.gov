@@ -76,7 +76,7 @@ Sheer GitHub project to wherever you keep your projects (not inside cfgov-refres
 git clone https://github.com/cfpb/sheer.git
 ```
 
-Create a virtualenv for Sheer, which you’ll name `cfgov-refresh`:
+Go back to the cfgov-refresh directory and Create a virtualenv, which you’ll name `cfgov-refresh`:
 ```bash
 mkvirtualenv cfgov-refresh
 ```
