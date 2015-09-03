@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 
 ### Removed
+- Disables tests for landing page events, since we don't currently have events.
 
 ### Fixed
 
