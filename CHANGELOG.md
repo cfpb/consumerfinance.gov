@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Video Code to make it usable on Events pages.
 - Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
 - Updated Meredith Fuchs bio and images.
+- Added indent rules for `var`, `let`, and `const` in ESLint config file.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
