@@ -25,12 +25,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
 - Updated Meredith Fuchs bio and images.
 - Added indent rules for `var`, `let`, and `const` in ESLint config file.
+- Replaced old Grunt legaccsy plugin with Gulp mq-remove plugin
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
+- Fixed missing IE only stylesheet for older systems/browsers
+
 
 ## 3.0.0-2.3.0 - 2015-08-27
 
