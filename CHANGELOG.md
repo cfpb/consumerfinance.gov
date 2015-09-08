@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Updated Video Code to make it usable on Events pages.
 - Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
+- Updated Meredith Fuchs bio and images.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
