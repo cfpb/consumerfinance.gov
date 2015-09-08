@@ -33,13 +33,13 @@ function init() {
     return $( this ).each( function() {
       if ( $( this ).has( 'select' ) ) {
         var settings = $.extend( {
-            clickCallback: function( e ) {}
-          }, userSettings ),
-          changeCallback = settings.clickCallback,
-          $this = $( this ),
-          $select = $( this ).find( 'select' )
-            .addClass( 'custom-select_select' ),
-          $text = $this.append( '<span class="custom-select_text"></span>' );
+              clickCallback: function( e ) {}
+            }, userSettings ),
+            changeCallback = settings.clickCallback,
+            $this = $( this ),
+            $select = $( this ).find( 'select' )
+              .addClass( 'custom-select_select' ),
+            $text = $this.append( '<span class="custom-select_text"></span>' );
 
         // Add a class to activate the styling
         $this.addClass( 'is-enabled' );
