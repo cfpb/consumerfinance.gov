@@ -9,7 +9,7 @@ var config = require( '../config' ).test;
 var minimist = require( 'minimist' );
 var path = require( 'path' );
 
-gulp.task( 'test:unit:js', function( cb ) {
+gulp.task( 'test:unit:scripts', function( cb ) {
   gulp.src( config.src )
     .pipe( $.istanbul( {
       includeUntested: true
@@ -134,7 +134,7 @@ gulp.task( 'test',
 
 gulp.task( 'test:unit',
   [
-    'test:unit:js',
+    'test:unit:scripts',
     'test:unit:macro'
   ]
 );

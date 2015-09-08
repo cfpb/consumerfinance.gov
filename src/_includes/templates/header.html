@@ -1,11 +1,8 @@
 <header class="header
-               wrapper
-               wrapper__match-content
-               primary-nav_header-space"
+               wrapper"
         role="banner">
 
-    <button class="sliding-nav_trigger" id="trigger">
-        <span class="cf-icon cf-icon-menu"></span>
+    <button class="primary-nav_trigger js-primary-nav_trigger">
         <span class="u-visually-hidden">Menu</span>
     </button>
 
@@ -34,4 +31,7 @@
     </div>
     #}
 
+    {% block primary_nav %}
+        {% include 'templates/nav/primary-nav.html' %}
+    {% endblock primary_nav %}
 </header>

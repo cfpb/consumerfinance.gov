@@ -3,9 +3,6 @@
    Bureau mission page at /the-bureau/.
    ========================================================================== */
 
-// Size of play button image;
-@play-btn-size__px: 73px;
-
 // Override general slick carousel overrides defined in mobile-carousel.less.
 // Removes bottom border, because the-bureau has a bordered block below
 // its carousel.
@@ -112,7 +109,6 @@
 }
 
 // Used to help center video container
-@share-width__px: 130px;
 @gutter__em: unit(@grid_gutter-width  / @base-font-size-px, em);
 @gutter-half__em: @gutter__em / 2;
 
@@ -127,7 +123,7 @@
         });
     }
 
-    .youtube-player_image {
+    .video-player_image {
         width: @grid_wrapper-width;
 
         // Optical adjustment for beautification purposes.
@@ -224,7 +220,7 @@
     left: 50%;
     top: 50%;
     background: url('/static/img/youtube-play-btn.png') no-repeat;
-    z-index: 10;
+    z-index: 1;
     transform: translate(-50%, -50%);
 }
 

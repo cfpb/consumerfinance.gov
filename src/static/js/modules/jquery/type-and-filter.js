@@ -16,35 +16,35 @@ function init() {
   $.fn.typeAndFilter = function( userSettings ) {
     return $( this ).each( function() {
       var settings = $.extend( {
-          minLength:               3,
-          fuzzy:                   true,
-          fuzziness:               0.5,
-          threshold:               0.35,
-          keyup:                   false,
-          $form:                   $(),
-          $button:                 $(),
-          $clear:                  $(),
-          $input:                  $(),
-          $items:                  $(),
-          allMessage:              'Showing all {{ count }}.',
-          filteredMessageSingular:
-            'There is 1 result for "{{ term }}".',
-          filteredMessageMultiple:
-            'There are {{ count }} results for "{{ term }}"',
-          minTermMessage:
-            'The search term "{{ term }}" is not long enough. ' +
-            '<span class="short-desc">' +
-            'Please use a minimum of 3 characters.</span>',
-          clickCallback: function( e ) {}
-        }, userSettings ),
-        $this = $( this ),
-        $form = settings.$form,
-        $button = settings.$button,
-        $input = settings.$input,
-        $items = settings.$items,
-        $clear = settings.$clear,
-        searchTerm,
-        resultsCount;
+            minLength:               3,
+            fuzzy:                   true,
+            fuzziness:               0.5,
+            threshold:               0.35,
+            keyup:                   false,
+            $form:                   $(),
+            $button:                 $(),
+            $clear:                  $(),
+            $input:                  $(),
+            $items:                  $(),
+            allMessage:              'Showing all {{ count }}.',
+            filteredMessageSingular:
+              'There is 1 result for "{{ term }}".',
+            filteredMessageMultiple:
+              'There are {{ count }} results for "{{ term }}"',
+            minTermMessage:
+              'The search term "{{ term }}" is not long enough. ' +
+              '<span class="short-desc">' +
+              'Please use a minimum of 3 characters.</span>',
+            clickCallback: function( e ) {}
+          }, userSettings ),
+          $this = $( this ),
+          $form = settings.$form,
+          $button = settings.$button,
+          $input = settings.$input,
+          $items = settings.$items,
+          $clear = settings.$clear,
+          searchTerm,
+          resultsCount;
       // Only proceed if we have both the search input and enough items
       // to filter.
       if ( $input.length === 0 && $items.length < 2 ) {
@@ -194,11 +194,11 @@ function init() {
 
   $.fn.typeAndFilter.fuzzySearch = function( text, searchTerm, options ) {
     var match = false,
-      settings = $.extend( {
-        fuzziness: 0.5,
-        threshold: 0.35
-      }, options ),
-      words = text.split( ' ' );
+        settings = $.extend( {
+          fuzziness: 0.5,
+          threshold: 0.35
+        }, options ),
+        words = text.split( ' ' );
     // Loop through each word
     $.each( words, function( index, value ) {
       var matchScore = value.score( searchTerm, settings.fuzziness );
@@ -221,13 +221,13 @@ function init() {
     // Loop through each item, if it contains matching text then show it,
     // if it doesn't then hide it.
     var terms = searchTerm.split( ' ' ),
-      itemsLength = $items.length,
-      termsLength = terms.length;
+        itemsLength = $items.length,
+        termsLength = terms.length;
     for ( var i = 0; i < itemsLength; i++ ) {
       for ( var j = 0; j < termsLength; j++ ) {
         var match,
-          $this = $items.eq( i ),
-          itemText = $.fn.typeAndFilter.scrubText( $this.text() );
+            $this = $items.eq( i ),
+            itemText = $.fn.typeAndFilter.scrubText( $this.text() );
         // Choose which search to use.
         if ( fuzzy ) {
           match = $.fn.typeAndFilter.fuzzySearch( itemText, terms[j], options );

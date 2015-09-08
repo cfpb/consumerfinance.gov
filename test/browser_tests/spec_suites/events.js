@@ -18,7 +18,7 @@ describe( 'Events Landing page', function() {
   } );
 
   it( 'should include a hero', function() {
-    expect( page.heroElem.isPresent() ).toBeTruthy();
+    expect( page.heroElem.isPresent() ).toBe( true );
     expect( page.hero.maps.count() ).toEqual( 2 );
     expect( page.hero.maps.get( 0 ).getAttribute( 'style' ) )
       .toContain( googleAPI );
@@ -29,18 +29,18 @@ describe( 'Events Landing page', function() {
     expect( page.hero.time.getText() ).toBeDefined();
   } );
 
-  it( 'should include at least one event', function() {
+  xit( 'should include at least one event', function() {
     expect( page.events.count() ).toBeGreaterThan( 0 );
   } );
 
-  it( 'should include all event meta data', function() {
+  xit( 'should include all event meta data', function() {
     expect( page.first.map.getAttribute( 'src' ) ).toContain( googleAPI );
     expect( page.first.heading.getText() ).toBeDefined();
     expect( page.first.city.getText() ).toBeDefined();
     expect( page.first.state.getText() ).toBeDefined();
     expect( page.first.date.getText() ).toBeDefined();
     expect( page.first.time.getText() ).toBeDefined();
-    expect( page.first.tags ).toBeTruthy();
+    expect( page.first.tags ).toBe( true );
   } );
 } );
 
@@ -67,6 +67,6 @@ describe( 'Events Archive page', function() {
     expect( page.first.state.getText() ).toBeDefined();
     expect( page.first.date.getText() ).toBeDefined();
     expect( page.first.time.getText() ).toBeDefined();
-    expect( page.first.tags ).toBeTruthy();
+    expect( page.first.tags.isPresent() ).toBe( true );
   } );
 } );
