@@ -121,8 +121,8 @@
             filter_tags=tags) %}
     {% endif %}
     {% if feed.total > 0 %}
-    <aside class="activity">
-        <h1 class="h4">{{ icon }} {{ header }}</h1>
+    <div class="activity">
+        <h3 class="h4">{{ icon }} {{ header }}</h3>
         <ul class="list list__unstyled list__spaced list__links">
         {% for item in feed %}
             <li class="list_item">
@@ -140,6 +140,6 @@
             </li>
         {% endfor %}
         </ul>
-    </aside>
+    </div>
     {% endif %}
 {% endmacro %}

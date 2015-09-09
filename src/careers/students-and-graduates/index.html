@@ -23,7 +23,7 @@
 
 {% block content_main %}
 
-    <section class="block block__flush-top block__sub">
+    <div class="block block__flush-top block__sub">
 
             <h1>Students and Recent Graduates</h1>
             <p class="h3">
@@ -31,7 +31,7 @@
                 a new generation of leaders.
                 There are many opportunities for you to make an immediate impact.
             </p>
-    </section>
+    </div>
 
     <section class="media
                     block
@@ -128,36 +128,34 @@
             </p>
         </div>
     </section>
-
-    <div class="block
-                block__border-top
-                block__flush-bottom">
-        <div class="content-l">
-        {# This extra div is to keep the horizontal lines size consistent #}
-            <section class="content-l_col
-                            content-l_col-1-2
-                            block
-                            block__padded-top
-                            block__padded-bottom
-                            block__flush-top
-                            block__flush-bottom">
-                {% include '_template-job-app-process.html' %}
-            </section>
-            <section class="content-l_col
-                            content-l_col-1-2
-                            block
-                            block__padded-top
-                            block__padded-bottom
-                            block__flush-top
-                            ">
-                {% include '_template-working-at-cfpb.html' %}
-            </section>
-        </div>
-    </div>
-
-    {% include '_template-block-social.html' %}
-
     <aside>
+        <div class="block
+                    block__border-top
+                    block__flush-bottom">
+            <div class="content-l">
+            {# This extra div is to keep the horizontal lines size consistent #}
+                <section class="content-l_col
+                                content-l_col-1-2
+                                block
+                                block__padded-top
+                                block__padded-bottom
+                                block__flush-top
+                                block__flush-bottom">
+                    {% include '_template-job-app-process.html' %}
+                </section>
+                <section class="content-l_col
+                                content-l_col-1-2
+                                block
+                                block__padded-top
+                                block__padded-bottom
+                                block__flush-top">
+                    {% include '_template-working-at-cfpb.html' %}
+                </section>
+            </div>
+        </div>
+
+        {% include '_template-block-social.html' %}
+
         {% include './_template-careers-related-links.html' %}
     </aside>
 

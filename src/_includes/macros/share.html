@@ -107,14 +107,14 @@
     } %}
   {% set _ignore = settings.update(options) %}
 
-    <aside class="share
+    <div class="share
                  {{ settings.additional_classes
                  if settings.additional_classes }}">
-        <h1 class="h6 share_heading
+        <span class="h6 share_heading
                   {{'u-visually-hidden'
                   if settings.hide_heading}}">
             {{ settings.heading }}
-        </h1>
+        </span>
         <ul class="list__horizontal share_items">
             {% if settings.show_email %}
             <li class="list_item">
@@ -156,5 +156,5 @@
             </li>
             {% endif %}
         </ul>
-    </aside>
+    </div>
 {% endmacro %}
