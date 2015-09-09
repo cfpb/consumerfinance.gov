@@ -27,6 +27,7 @@ _build/
 *.log
 *.sql
 *.sqlite
+*.sqlite3
 
 # OS generated files #
 ######################
@@ -72,7 +73,7 @@ node_modules/
 bower_components/
 .grunt/
 src/vendor/
-dist/
+cfgov/v1/jinja2/v1/*
 
 # Floobits #
 ############
@@ -101,3 +102,6 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+
+# IDE Specifc #
+*.idea

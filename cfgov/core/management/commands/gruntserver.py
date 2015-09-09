@@ -28,7 +28,7 @@ class Command(StaticfilesRunserverCommand):
                 stdin=subprocess.PIPE,
                 stdout=self.stdout,
                 stderr=self.stderr,
-                cwd = settings.CFGOV_REFRESH,
+                cwd = settings.SITE_ROOT,
             )
 
             self.grunt_processes.append(sub)

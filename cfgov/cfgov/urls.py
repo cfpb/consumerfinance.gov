@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from flapjack.views import LeadershipCalendarPDFView, EventICSView
+from v1.views import LeadershipCalendarPDFView, EventICSView
 
 
 urlpatterns = [
