@@ -1,0 +1,29 @@
+/* ==========================================================================
+   cfgov-refresh
+   skip-nav
+   ========================================================================== */
+
+/* topdoc
+  name: CF.gov skip navigation button
+  family: cfgov-header
+  tags:
+    - cfgov-header
+*/
+
+#skip-nav {
+    position: absolute;
+    top: unit(-@grid_gutter-width / @base-font-size-px, em);
+    left: unit(@grid_gutter-width / @base-font-size-px, em);
+    background: transparent;
+    transition: transform 1s ease, background .5s linear;
+    z-index: 10;
+}
+
+#skip-nav:focus {
+    .btn;
+    .btn__super;
+    position: absolute;
+    top: 0;
+    outline: 0;
+    transition: transform .1s ease, background .2s linear;
+}

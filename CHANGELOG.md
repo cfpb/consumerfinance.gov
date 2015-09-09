@@ -24,6 +24,78 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 3.0.0-2.3.0 - 2015-08-27
+
+### Added
+- Added time macro.
+- Added `gulp test:unit` and `gulp test:acceptance` tasks for test stages.
+- Added support for link buttons to disabled link utility class.
+- Added `breakpoints-config.js` config file to use for responsive JS.
+- Added breadcrumbs to blog, newsroom, careers, business, bureau
+  and budget pages
+- Added Meredith Fuchs to Leadership calendar filter.
+- Added unit test for `assign` utility.
+- Added `get-breakpoint-state.js` to add support for responsive JS.
+
+### Changed
+- Moved `.meta-header`, `.jump-link`,
+  and `.list__links` to `cf-enhancements.less`.
+- Converted time elements to use time template.
+- Broke apart format macros into topical macros.
+- Updated legacy code to remove old jQuery dependency and
+  unnecessary code.
+- Updated copy on `about-us` page
+- Added copying of `.env_SAMPLE` to `.env` part of `setup.sh`.
+- Moved console output messages to the end of the `setup.sh` `init` method.
+- Organized `.env_SAMPLE` and made `.env` executable on its own.
+- Added `HTTP_HOST`, `HTTP_PORT`, `SELENIUM_URL`, `SAUCE_USERNAME`,
+  `SAUCE_ACCESS_KEY`, `SAUCE_SELENIUM_URL`, and `VIRTUAL_ENV`
+  constants to `.env_SAMPLE`.
+- Moved aggregate `gulp lint` task to bottom of file to avoid duplicate
+  lint task entries in `gulp --tasks`.
+- Renamed `gulp lint:src` to `gulp lint:scripts` to future-proof type of linting.
+- Renamed `gulp test:macro` to `gulp test:unit:macro`.
+- Renamed `gulp test:processor` to `gulp test:unit:processor`.
+- Renamed `gulp test:browser` to `gulp test:acceptance:browser`.
+- Edited `INSTALL.md` to accommodate changes in `.env_SAMPLE`.
+- Edited Protractor configuration to include browser groups,
+  which by default only run the essentials locally, but the full suite
+  (including legacy browsers) on Sauce Labs when Sauce credentials are present.
+- Updated test instructions to use the gulp test subtasks.
+- Updated Travis CI settings to use `setup.sh`.
+- Updated files to use `breakpoints-config.js`.
+- Made `/the-bureau/bureau-structure/role-macro.html` private.
+- Updated `gulp clean` to leave the `dist` directory and remove the inner
+  contents
+- Use `HTTP_PORT` environment variable for port in `gulp watch`, if available.
+- Removed "optional" text from privacy complaint form
+  and added `*` to designate required fields.
+- Updated Deputy Director information to Meredith Fuchs.
+- Updated `/about-rich-cordray/` URL to `/about-director/`.
+- Updated `/about-meredith-fuchs/` URL to `/about-deputy-director/`.
+- Normalized director and deputy director photos to be format `NAME-WxH.jpg`.
+- Changed name of `shallow-extend` utility to 'assign'.
+- Superscripts `st` in `21st` on About Us page.
+- Updated `BreakpointHandler.js` to support usage of `breakpoints-config.js`.
+
+### Removed
+- Removed styles from codebase that have already been migrated
+  to cf-typography.
+- Removed duplicate Privacy Policy
+- Removed processor tests due to them being outdated.
+- Removed failing bureau tests to be debugged later
+
+### Fixed
+- Fixed borders on sub-footers across the website
+- Fixed 'Return to top' button width on footer
+- Fixed default gulp task
+- Fixed icon links to match CFPB Design Manual
+- Fixed gulp copy task that was missing copying PDFs in subdirectories.
+- Fixed issues with active filter logic.
+- Fixed testing issue with single pages reloading for every test
+- Fixed testing timeouts the first fix didn't correct by updating timeout time
+
+
 ## 3.0.0-2.2.0 - 2015-08-18
 
 ### Added
@@ -48,7 +120,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated main.less to use the paths option in less compiler.
 - Moved and renamed contact-macro to contact-layout in macros directory.
 - Moved filters macro from `post-macros.html` to `/macros/filter.html`.
-- Makes filters macro helpers private.
+- Made filters macro helpers private.
 - Moved getViewportDimensions out of utilities.js and into own module.
 - Updated ESLint to v1.0.0.
 

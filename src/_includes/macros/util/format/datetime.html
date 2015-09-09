@@ -1,0 +1,78 @@
+{# ==========================================================================
+
+   format_time()
+
+   ==========================================================================
+
+   Description:
+
+   Format a time for displaying in the format of:
+
+       HH:MM AM ZZZ
+
+   When given:
+
+   datetime: A datetime object.
+
+   timezone (optional): Whether to include the timezone or not.
+                        Provide '' to default to 'America/New_York',
+                        otherwise provide actual timezone.
+
+   ========================================================================== #}
+
+{% macro format_time(datetime, timezone) %}
+    {% set parse_timezone = 'America/New_York'
+                            if timezone == '' else timezone %}
+    {% if parse_timezone is defined %}
+    {{- datetime | date('%I:%M %p %Z', parse_timezone) -}}
+    {% else %}
+    {{- datetime | date('%I:%M %p') -}}
+    {% endif %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   format_date()
+
+   ==========================================================================
+
+   Description:
+
+   Format a date for displaying in the format of:
+
+      MMM DD, YYYY
+
+   When given:
+
+   datetime: A datetime object.
+
+   ========================================================================== #}
+
+{% macro format_date(datetime) %}
+    {{- datetime | date('%b') | upper -}}
+    {{- ' ' + datetime | date('%d, %Y') -}}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   format_datetime()
+
+   ==========================================================================
+
+   Description:
+
+   Format a date for datetime metadata in the format of:
+
+       YYYY-MM-DDTHH:MM:SS.MMMM
+
+   When given:
+
+   datetime: A datetime object.
+
+   ========================================================================== #}
+
+{% macro format_datetime(datetime) %}
+    {{- datetime | date('%Y-%m-%dT%H:%M:%S.%f%z') -}}
+{% endmacro %}

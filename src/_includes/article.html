@@ -31,7 +31,7 @@
     <header>
         {%- import 'category-slug.html' as category_slug %}
         {% if path == '/blog/' and post.blog_category.0 %}
-            {% set use_blog_category = True %}
+            {% set use_blog_category = true %}
             {{ category_slug.render(post.blog_category.0,
                                     path,
                                     'post_slug',
@@ -61,8 +61,9 @@
                 &ndash;
             </span>
         {% endif %}
-            <span class="post_date date">
-                {{ post.date|date("%b %d, %Y") }}
+            <span class="date">
+                {% import 'macros/time.html' as time %}
+                {{ time.render(post.date, {'date':true}) }}
             </span>
         </div>
         {{ share.render({

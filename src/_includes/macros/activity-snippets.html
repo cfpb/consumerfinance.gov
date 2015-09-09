@@ -129,9 +129,11 @@
                 <a class="list_link"
                    href="{{ item.permalink }}">
                     {{ item.title | safe  }}
-                    {%- if item.date and include_date_flag -%}
+                    {%- if include_date_flag and item.date -%}
                         <span class="date">
-                            {{ ' - ' + item.date | date('%b %d, %Y') }}
+                            &ndash;
+                            {% import 'macros/time.html' as time %}
+                            {{ time.render(item.date, {'date':true}) }}
                         </span>
                     {%- endif -%}
                 </a>

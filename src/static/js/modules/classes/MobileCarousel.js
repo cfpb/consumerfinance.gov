@@ -7,6 +7,7 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 var BreakpointHandler = require( './BreakpointHandler' );
+var breakpointsConfig = require( '../../config/breakpoints-config' );
 
 /**
 * MobileCarousel
@@ -16,7 +17,7 @@ var BreakpointHandler = require( './BreakpointHandler' );
 */
 function MobileCarousel( breakpointPx ) {
   // Initialization can happen here, like an `init` method.
-  var _breakpointPx = breakpointPx;
+  var _breakpointPx = breakpointPx || breakpointsConfig.mobile.max;
   var _targetDom;
 
   function _enterBreakpoint() {

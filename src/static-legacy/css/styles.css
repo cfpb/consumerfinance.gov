@@ -19,9 +19,9 @@ html {overflow-y: scroll;}
 blockquote, q {quotes:
  none;}
 
-blockquote:before, 
-blockquote:after, 
-q:before, 
+blockquote:before,
+blockquote:after,
+q:before,
 q:after {
 	content: ''; content: none;
 }
@@ -64,7 +64,7 @@ small {font-size: 85%;}
 
 strong, th {font-weight: bold;}
 
-td, td img {vertical-align: top;} 
+td, td img {vertical-align: top;}
 
 /* Make sure sup and sub don't screw with your line-heights
 	gist.github.com/413930 */
@@ -77,9 +77,9 @@ pre, code, kbd, samp {font-family: monospace, sans-serif;}
 
 /* hand cursor on clickable elements */
 .clickable,
-label, 
-input[type=button], 
-input[type=submit], 
+label,
+input[type=button],
+input[type=submit],
 button {cursor: pointer;}
 
 /* Webkit browsers add a 2px margin outside the chrome of form elements */
@@ -95,12 +95,12 @@ button {width: auto; overflow: visible;}
 .ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
 
 /* let's clear some floats */
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.clearfix:after { clear: both; }  
-.clearfix { 
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after { clear: both; }
+.clearfix {
 		/* IE7 hack to mimic inline-block on block elements */
     *display: inline;
-    *zoom: 1; }  
+    *zoom: 1; }
 
 /* Hide from both screenreaders and browsers: h5bp.com/u */
 .cfpb_hide {
@@ -233,7 +233,7 @@ a {
 	border-bottom: 1px dotted #4d819a;
 }
 
-blockquote { 
+blockquote {
 	background-color: #e5dfd6;
 	padding: 1em 3.0em 0.5em;
 	font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
@@ -377,7 +377,7 @@ tr.alt {
 		color: #333;
 		background-color: #fff;
 	}
-	
+
 	#header #logo {
 		margin-top: 0.5em;
 	}
@@ -502,7 +502,7 @@ article header {
 }
 
 #subnav nav {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -532,25 +532,25 @@ article header {
 		color: #333;
 		border: none;
 	}
-	
+
 	.js #subnav nav h4 {
 		display: none;
 	}
-	
+
 	#subnav nav ul {
 		margin: 1em 0;
 		width: 13em;
 		padding: 0;
 		list-style-type: none;
 	}
-	
+
 	.js #subnav nav {
 		position: absolute;
 		top: 10.25em;
 		display: none;
 		border-top: none;
 	}
-	
+
 		#subnav nav ul li {
 			border-bottom: 1px solid #afafb3;
 			padding: 0.5em;
@@ -558,28 +558,28 @@ article header {
 			-moz-column-break-inside: avoid;
 			column-break-inside: avoid;
 		}
-		
+
 		#subnav nav ul li:last-child {
 			border-bottom: none;
 		}
-		
+
 		#subnav nav ul li h5 {
 			margin: 0;
 		}
-		
+
 		#subnav nav ul li p {
 			margin: 0;
 			font-size: 0.8333em;
 			color: #626263;
 		}
-		
+
 		/*#subnav nav ul li ul {
 			-webkit-column-count: 1 !important;
 			-moz-column-count: 1 !important;
 			column-count: 1 !important;
 			width: 13em !important;
 		}*/
-		
+
 		#subnav nav ul li ul li {
 			border-bottom: none;
 			padding: 0;
@@ -587,7 +587,7 @@ article header {
 			font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 			word-wrap: normal;
 		}
-		
+
 		#subnav .close {
 			font-size: 0.625em;
 			font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
@@ -595,7 +595,7 @@ article header {
 			text-align: right;
 			padding-bottom: 1em;
 		}
-		
+
 		#subnav a:hover,
 		#subnav a:focus {
 			background-color: inherit;
@@ -609,7 +609,7 @@ article header {
 }
 
 	#footer > div > a {
-		display: inline-block; 
+		display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -619,7 +619,7 @@ article header {
 
 	#footer > div > nav {
 		border-left: 1px solid #afafb3;
-		display: inline-block; 
+		display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -635,18 +635,18 @@ article header {
 		padding: 0;
 		margin: 0 auto;
 	}
-	
+
 	#footer > div > a:link {
 		padding: 0;
 		border: none;
 	}
-	
+
 	#footer > div > nav > ul {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	#footer > div > nav > ul li {
 		margin: 0.75em 0 0;
 	}
@@ -660,14 +660,14 @@ article ol {
 }
 
 .next-posts {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
 }
 .prev-posts {
 	width:10em;
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -690,7 +690,7 @@ article ol {
 /***** COMPLAINT *****/ /*Once we go full responsive, most of this will be unecessary.*/
 
 #complaints div {
-display: inline-block; 
+display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -709,7 +709,7 @@ margin-top: 48px;
 
 #rnstatus {
 width: 66.15082%;
-display: inline-block; 
+display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -719,7 +719,7 @@ margin-right: 2.04918%;
 
 #rnpwd {
 width: 31.8%;
-display: inline-block; 
+display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -797,7 +797,7 @@ margin-right: 20px;
 }
 
 .readmore {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -805,7 +805,7 @@ margin-right: 20px;
 }
 
 .navigation {
-	margin-bottom: 1em;	
+	margin-bottom: 1em;
 }
 
 header .meta a {
@@ -827,7 +827,7 @@ header .meta a {
 	.share h3 {
 		margin: 0 0 3px;
 	}
-	
+
 	.share a {
 		border: none;
 		padding: 0 2px;
@@ -844,7 +844,7 @@ header .meta a {
 }
 	article footer .share.mini {
 	float:none;
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -880,7 +880,7 @@ header .meta a {
 	  	top: 1px;
 	  	left: -3px;
 	}
-	
+
 	.lt-ie8 .single button {
 		line-height: 1.6;
 		top: 4px;
@@ -897,19 +897,19 @@ header .meta a {
 
 
 	.bread ul, .bread li {
-		display: inline-block; 
+		display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
 		vertical-align: top;
 		padding: 0;
 	}
-	
+
 	.bread li:before{
 		content: ' > ';
-		
+
 	}
-	
+
 	.bread li:first-child:before {
 		content: none;
 	}
@@ -946,8 +946,6 @@ ul.children:before { content: ' > '; }
 		content: none;
 	}
 
-	
-	
 .inf {
 	position: relative;
 }
@@ -961,7 +959,7 @@ ul.children:before { content: ' > '; }
 		color: #444;
 		font-family: "AvenirNextLTW01-Regular", Verdana, sans-serif;
 	}
-	
+
 	.inf > input {
 		position: relative;
 		z-index: 20;
@@ -970,9 +968,9 @@ ul.children:before { content: ' > '; }
 		-webkit-transition: background 700ms ease;
 		-moz-transition: background 700ms ease;
 		transition: background 700ms ease;
-	
+
 	}
-	
+
 	.inf .filled {
 		background: #fff;
 	}
@@ -1027,7 +1025,7 @@ ul.children:before { content: ' > '; }
 }
 
 .bottom > ul > li {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1077,7 +1075,7 @@ ul.children:before { content: ' > '; }
 }
 
 .two-col > .col {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1097,7 +1095,7 @@ ul.children:before { content: ' > '; }
 }
 
 .three-col > .col {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1116,7 +1114,7 @@ ul.children:before { content: ' > '; }
 }
 
 .twothirds-col > .col {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1171,7 +1169,7 @@ ul.children:before { content: ' > '; }
 		color: #fff;
 		border-color: #fff;
 	}
-	
+
 	.archivebug a:hover,
 	.archivebug a:focus,
 	.warning a:hover,
@@ -1191,14 +1189,14 @@ ul.children:before { content: ' > '; }
 		color: #333;
 		border-color: #333;
 	}
-	
+
 	.note a:hover,
 	.note a:focus {
 		background-color: transparent;
-	}	
+	}
 
 a.print {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1214,7 +1212,7 @@ a.print {
 #listing { width: 100%; }
 
 .post #listing {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1264,7 +1262,7 @@ border-bottom: 1px dotted #4D819A;
 
 .post #sidebar {
 	width: 204px; /* FPO */
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -1286,7 +1284,7 @@ border-bottom: 1px dotted #4D819A;
 
 /* Unhides items for blog posts */
 .post #listing { width: 708px } /*FPO*/
-.post #sidebar { display:inline-block; 
+.post #sidebar { display:inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1; }
@@ -1337,21 +1335,21 @@ border-bottom: 1px dotted #4D819A;
 
 .archive.author #maincontent{ margin:auto; overflow: hidden;}
 .archive.author #listing{ width:710px; float: left;  }
-.archive.author #sidebar{ 
+.archive.author #sidebar{
 	width: 204px;
-	display: inline-block; 
+	display: inline-block;
 	*display: inline;
 	*zoom: 1;
 	vertical-align: top;
-	margin: 0 0 0 24px; 
-	padding: 1em 17px; 
+	margin: 0 0 0 24px;
+	padding: 1em 17px;
 	background: url(../img/diagonal_texture.png);
 	border: 1px solid #EEE; float: left;
 }*/
 
 .pagetitle { margin-bottom: 1em; }
 
-.pagetitle h1 a, .pagetitle h3 a { 
+.pagetitle h1 a, .pagetitle h3 a {
 	color: #333;
 	border: none
 }
@@ -1410,7 +1408,7 @@ section.newsroom {
 	margin: 0 0 3em;
 	clear: both;
 	overflow: hidden;
-}		
+}
 
 	section.news{
 		width: 620px;
@@ -1421,7 +1419,7 @@ section.newsroom {
 		}
 
 			section.news span.meta{display: block;}
-			
+
 		.news hr{border: none; background: none;}
 		.news hr.PostClass{border-bottom: 1px dotted #AFAFB3; margin: 2em 0;}
 
@@ -1434,19 +1432,18 @@ section.newsroom {
 		margin-top: 1em;
 		}
 
-		
 			.sidebar article{
 				margin-left: 20px;
 			}
 
 
-			.sidebar section{ 
-				border-bottom: 1px dotted #AFAFB3; 
+			.sidebar section{
+				border-bottom: 1px dotted #AFAFB3;
 			}
-				.sidebar section:last-child{ 
-					border: none; 
+				.sidebar section:last-child{
+					border: none;
 				}
-			
+
 			.sidebar div#expandable{
     			height:160px;
     			overflow:hidden;
@@ -1468,7 +1465,7 @@ section.newsroom {
 
 	#archive nav ul ul{
 		margin-left: 13px;
-	}		
+	}
 
 	#archive .yearheader{cursor: pointer;}
 
@@ -1480,7 +1477,7 @@ section.newsroom {
 		padding-bottom: 10px;
 		margin-bottom: 10px;
 	}
-		
+
 .newsroomtopic nav ul{
 	margin: 0px;
 	padding: 0px;
@@ -1554,8 +1551,8 @@ section.newsroom {
     color:#fff;
 }
 
-.tagtopic a{ 
-	border: 0px; 
+.tagtopic a{
+	border: 0px;
 	color:#202020;}
 
 .newsroomSignup{
@@ -1563,14 +1560,13 @@ section.newsroom {
 	padding: 10px 15px;
 	clear:both;
 	margin-bottom: 20px;
-	
 }
 	.cfpb_newsroom button {
-	
+
 	 border-radius: 0.35em;
 	 left:-1px;
 	 margin-top: 10px;
-	}	
+	}
 	.newsroomSignup legend h4{font-size: 17px; padding-bottom: 3px;}
 
 	.sidebar > section.stayconnected a{font-size: 14px;}
@@ -1588,7 +1584,7 @@ section.newsroom {
 	text-align: center;
 	font-size: 14px;
 	padding: 0 10px;
-	
+
 }
 
 
@@ -1682,7 +1678,7 @@ a:focus {
 		background-color: transparent;
 		border: none;
 	}
-	
+
 		.share a:hover img,
 		.share a:focus img {
 			-webkit-transform: scale(1.1);
@@ -1699,7 +1695,7 @@ input:focus {
 		background: #fff;
 		background: rgba(255,255,255,0.85);
 	}
-	
+
 button:hover,
 button:focus {
 	cursor: pointer;
@@ -1854,10 +1850,9 @@ aside#reginfo .reg_meta_item {
 
 /* ACCORDION */
 
-.report .accordion, .report .accordion a, .report .accordion h3, .report .accordion p  { 
+.report .accordion, .report .accordion a, .report .accordion h3, .report .accordion p  {
 	margin:0;
-	padding:0; 
-	
+	padding:0;
 }
 
 .report .accordion {
@@ -1880,7 +1875,7 @@ aside#reginfo .reg_meta_item {
 }
 
 .report .accordion h3 a:hover, .report .accordion h3 a:focus {
-	background: none;	
+	background: none;
 	/* Over-ride the default backgroud color. Note: IE needs a color for the over-ride to work, "none" does not work"*/
 	background-color: transparent;
 	text-decoration: none;
@@ -1888,24 +1883,24 @@ aside#reginfo .reg_meta_item {
 
 .report .accordion h3 {
 	cursor:pointer;
-	background-color: #000;    
+	background-color: #000;
 	background-image: url(../img/arrow_small_white_right.png);
 	background-repeat: no-repeat;
 	background-position: 6px center;
 	color: #fff;
 	display: block;
-	margin-bottom: 1em;  
+	margin-bottom: 1em;
 	padding: 3px 6px 3px 24px;
 }
 
 .report .accordion-group.active h3{
-	background-color: #50b948;    
+	background-color: #50b948;
 	background-image: url(../img/arrow_small_white_bottom.png);
 	background-repeat: no-repeat;
 	background-position: 6px center;
 	color: #fff;
 	display: block;
-	margin-bottom: 1em;  
+	margin-bottom: 1em;
 	padding: 3px 6px 3px 24px;
 }
 
@@ -1915,7 +1910,7 @@ aside#reginfo .reg_meta_item {
 	display: inline-block;
 }
 
-.report .accordion div {         
+.report .accordion div {
 	padding: 0 6px;
 }
 
@@ -1960,7 +1955,7 @@ aside#reginfo .reg_meta_item {
 }
 
 /* TABS */
-.report .tabset { 
+.report .tabset {
 	margin: 0 0 1em;
 }
 .report h3 + .report .tabset {
@@ -1969,7 +1964,7 @@ aside#reginfo .reg_meta_item {
 .report ul.tabs {
 	border-bottom: 4px solid #50b948;
 	height: 30px;
-	margin: 0; 
+	margin: 0;
 	padding: 0;
 }
 
@@ -1988,15 +1983,13 @@ aside#reginfo .reg_meta_item {
 	}
 
 	.report .tabs li a {
-		
-		position: relative; 
-		display: block; 
+		position: relative;
+		display: block;
 		float: left;
 		top: 0;
 
 		margin-right: 4px;
 		padding: 8px 20px 7px 20px;
-		
 		background-color: #C5E4BF;
 
 		color: #212121;
@@ -2014,7 +2007,7 @@ aside#reginfo .reg_meta_item {
 	}
 
 	.report .tabs li a:hover {
-		background-color: #A9DC93; 
+		background-color: #A9DC93;
 		color: #212121;
 	}
 	.report .tabs li a.active:hover {
@@ -2034,7 +2027,6 @@ aside#reginfo .reg_meta_item {
 .report .tabcontent > div {
 	clear: both;
 	min-height: 10px;
-	
 }
 /* END TABS */
 
@@ -2193,11 +2185,12 @@ aside#reginfo .reg_meta_item {
 }
 
 /* nav */
-.report nav.fixed {
+
+.report nav {
 	position:relative;
 }
 
-.report nav.fixed > div {
+.report nav > div {
 	margin:0 0 0 -20px;
 	padding-left:1.6%;
 	position:fixed;
@@ -2545,7 +2538,7 @@ aside#reginfo .reg_meta_item {
 	padding: 1em 0;
 }
 
-/* Flexible iFrame for Map 
+/* Flexible iFrame for Map
    http://niklausgerber.com/blog/responsive-google-or-bing-maps/
 */
 .flex_container {
@@ -2556,8 +2549,8 @@ aside#reginfo .reg_meta_item {
     overflow: hidden;
 }
 
-.flex_container iframe,   
-.flex_containe object,  
+.flex_container iframe,
+.flex_containe object,
 .flex_containe embed {
     position: absolute;
     top: 0;
@@ -2816,7 +2809,7 @@ body.page-template-page-mortgage-php {
 
 /* Grid */
 .page-template-page-mortgage-php .two-col > .col {
-	display: inline-block; 
+	display: inline-block;
 	/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -2831,7 +2824,7 @@ body.page-template-page-mortgage-php {
 }
 
 .page-template-page-mortgage-php .three-col > .col {
-	display: inline-block; 
+	display: inline-block;
 	/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -2845,7 +2838,7 @@ body.page-template-page-mortgage-php {
 }
 
 .page-template-page-mortgage-php .twothirds-col > .col {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -2860,7 +2853,7 @@ body.page-template-page-mortgage-php {
 }
 
 .page-template-page-mortgage-php .onethird-col > .col {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -3048,7 +3041,7 @@ body.page-template-page-mortgage-php {
 }
 
 #remit .twothirds-col-r > .col {
-	display: inline-block; 
+	display: inline-block;
 	/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -3063,7 +3056,7 @@ body.page-template-page-mortgage-php {
 }
 
 #remit .twothirds-col-l > .col {
-	display: inline-block; 
+	display: inline-block;
 	/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -3078,7 +3071,7 @@ body.page-template-page-mortgage-php {
 }
 
 #remit .wide.twothirds-col-r > .col {
-	display: inline-block; 
+	display: inline-block;
 	/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -3093,7 +3086,7 @@ body.page-template-page-mortgage-php {
 }
 
 #remit .wide.twothirds-col-l > .col {
-	display: inline-block; 
+	display: inline-block;
 	/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
@@ -3139,10 +3132,10 @@ div.callout {
 	list-style-type: none;
 	vertical-align: top;
 }
-#remit #languages h1 small { 
+#remit #languages h1 small {
 	color: #999;
-	font-size:50%; 
-	margin-left:0.5em; 
+	font-size:50%;
+	margin-left:0.5em;
 	text-transform: none;
 	font-weight: 100;
 }
@@ -3223,7 +3216,7 @@ div.callout {
 	padding-left: 24px;
 	background: transparent url("../img/us_flag_small.png") left center no-repeat;
 }
-	
+
 aside#reginfo {
 display: inline-block;
 width: 256px;

@@ -18,7 +18,7 @@ function init() {
   }
 
   $( '.expandable__mobile-only' ).each( function() {
-    new MobileOnlyExpandable( $( this ), 599 ); // eslint-disable-line
+    new MobileOnlyExpandable( $( this ) ); // eslint-disable-line no-new, no-inline-comments, max-len
   } );
 }
 

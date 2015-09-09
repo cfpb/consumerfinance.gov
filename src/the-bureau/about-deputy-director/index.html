@@ -1,0 +1,167 @@
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-the-bureau.html' as vars with context %}
+{% set active_nav_id = 'about-deputy-director' %}
+{% set breadcrumb_items = vars.breadcrumb_items %}
+
+{% block title -%}
+    About Meredith Fuchs
+{%- endblock %}
+
+{% block desc -%}
+    About Meredith Fuchs
+{%- endblock %}
+
+{% block content_main %}
+
+	{% import 'macros/share.html' as share %}
+
+    <div class="block block__flush-top">
+        <h1>
+            Deputy Director Meredith Fuchs
+        </h1>
+        <p class="h3">
+            Meredith Fuchs currently serves as the Acting Deputy Director
+            as well as the General Counsel at the Consumer Financial Protection Bureau (CFPB).
+        </p>
+        <figure class="media float-media rwd-crop">
+            <img class="media_image media_image__150 rwd-crop_item"
+                 src="/static/img/deputy-director-fuchs-300x400.jpg"
+                 alt="Portrait of Deputy Director Meredith Fuchs">
+        </figure>
+        <p>
+            Meredith Fuchs, who is serving as Acting Deputy Director,
+            is also the General Counsel of the CFPB.
+            She joined the Bureau in 2011 as Principal Deputy General Counsel
+            before serving as Chief of Staff to CFPB Director Richard Cordray.
+        </p>
+        <p>
+            Prior to joining the CFPB,
+            she served as Chief Investigative Counsel
+            of the United States House of Representatives Committee on Energy and Commerce.
+            Previously, Ms. Fuchs held positions as Vice President
+            and General Counsel of the National Security Archive at George Washington University,
+            a litigation partner in private practice,
+            the Supreme Court Assistance Project Fellow at the Public Citizen Litigation Group,
+            and an officer on the D.C. Bar Board of Governors.
+            She is the recipient of the American Library Association’s James Madison Award.
+            Ms. Fuchs served as a law clerk for Judge Patricia M. Wald on the D.C. Circuit Court of Appeals
+            and Judge Paul L. Friedman on the United States District Court for the District of Columbia.
+        </p>
+        <p>
+            She is a graduate of the New York University School of Law
+            and the London School of Economics and Political Science.
+        </p>
+        {{ share.render({
+            'title': self.title(),
+            'hide_heading': true
+        }) }}
+    </div>
+
+    <section class="block block__padded-top block__padded-bottom block__border-top">
+        <div class="content-l content-l__main">
+            <div class="content-l_col content-l_col-1-2">
+                <div class="media">
+                    <div class="media_image-container media_image-container__wide-margin">
+                        <img class="media_image media_image__100"
+                             src="/static/img/deputy-director-fuchs-round-200x200.jpg"
+                             alt="Portrait of Deputy Director Meredith Fuchs">
+                    </div>
+                    <div class="media_body">
+                        <h1 class="h4 u-mb5">
+                            Downloads
+                        </h1>
+                        <ul class="list list__links">
+                            {# TODO: Add a high-res photo when available. #}
+                            <li class="list_item">
+                                <a class="list_link jump-link jump-link__download
+                                          u-link__disabled">
+                                    <span class="jump-link_text">High-res portrait</span>
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link jump-link jump-link__download"
+                                   href="/static/img/deputy-director-fuchs-300x400.jpg">
+                                    <span class="jump-link_text">Low-res portrait</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <h1 class="h4 u-mb5">
+                    Request the deputy director’s speaking info
+                </h1>
+                <a class="styled-link"
+                   href="mailto:externalaffairs@cfpb.gov">
+                    <span class="cf-icon cf-icon-email"></span>
+                    externalaffairs@cfpb.gov
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <aside>
+
+        <section class="block block__padded-top block__border-top">
+            <h1 class="h2">
+                More information about Meredith Fuchs
+            </h1>
+            <div class="content-l content-l__main">
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Newsroom
+                    </h2>
+                    <p class="short-desc">
+                        Get the latest CFPB news, including speeches, testimony and op-eds by the assistant director.
+                    </p>
+                    <a class="jump-link jump-link__underline"
+                       href="/newsroom/?filter_author=Meredith+Fuchs">
+                        See how our deputy director is making headlines
+                    </a>
+                </div>
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Blogs
+                    </h2>
+                    <p class="short-desc">
+                        Read blogs written by the deputy director on a variety of consumer financial topics.
+                    </p>
+                    <a class="jump-link jump-link__underline"
+                       href="/blog/?filter_author=Meredith+Fuchs">
+                        Browse blogs by the deputy director
+                    </a>
+                </div>
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Calendar
+                    </h2>
+                    <p class="short-desc">
+                        See how the deputy director spends his time working for consumers.
+                    </p>
+                    {# TODO: Add calendar link when there's content available
+                             {{ vars.path + 'leadership-calendar/?filter_calendar=Meredith+Fuchs' }}
+                    #}
+                    <a class="jump-link jump-link__underline u-link__disabled">
+                        View the deputy director’s public calendar
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="block block__flush-bottom">
+            {%- import 'related-links.html' as related_links -%}
+            {{- related_links.render([
+                [ vars.path + 'about-director/',
+                  'Learn about Director Richard Cordray' ],
+                [ vars.path + 'bureau-structure/',
+                  'Bureau organizational structure' ],
+            ]) -}}
+        </section>
+
+    </aside>
+
+{% endblock %}
