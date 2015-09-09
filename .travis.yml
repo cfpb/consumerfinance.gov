@@ -18,6 +18,9 @@ install:
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
   - pip install tox
+  - git clone https://github.com/cfpb/sheer
+  - pip install -e sheer
+  - pip install -r sheer/requirements.txt
   - npm install -g gulp
   - npm install -g bower
 
