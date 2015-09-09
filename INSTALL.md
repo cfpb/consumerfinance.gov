@@ -11,6 +11,25 @@ to create a local environment for your server:
 pip install virtualenv virtualenvwrapper
 ```
 
+### Server Setup
+Go back to the cfgov-refresh directory and Create a virtualenv, which you’ll name `cfgov-refresh`:
+```bash
+mkvirtualenv cfgov-refresh
+```
+
+The new virtualenv will activate right away. To activate it later on
+(say, in a new terminal session) use the command `workon cfgov-refresh`.
+You’ll know you have a virtual environment activated if you see the name of it in
+parentheses before your terminal prompt. Ex:
+```bash
+(cfgov-refresh)$
+```
+
+Install required dependencies
+```bash
+pip install -r requirements/base.txt
+```
+
 ### Autoenv module
 
 [Install Autoenv](https://github.com/kennethreitz/autoenv#install) however you’d like.
@@ -68,39 +87,6 @@ If you need to find this info again later, you can run:
 brew info elasticsearch
 ```
 
-### Sheer
-
-To [install Sheer](https://github.com/cfpb/sheer#installation), start by cloning the
-Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
-```bash
-git clone https://github.com/cfpb/sheer.git
-```
-
-Go back to the cfgov-refresh directory and Create a virtualenv, which you’ll name `cfgov-refresh`:
-```bash
-mkvirtualenv cfgov-refresh
-```
-
-The new virtualenv will activate right away. To activate it later on
-(say, in a new terminal session) use the command `workon cfgov-refresh`.
-You’ll know you have a virtual environment activated if you see the name of it in
-parentheses before your terminal prompt. Ex:
-```bash
-(cfgov-refresh)$
-```
-
-Install Sheer into the virtualenv with the `-e` flag (which allows you to make changes to
-Sheer itself). The path to Sheer is the root directory of the GitHub repository you
-cloned earlier, which will likely be `../sheer`:
-```bash
-pip install -e ~/path/to/sheer
-```
-
-Install Sheer’s Python requirements:
-```bash
-pip install -r ~/path/to/sheer/requirements.txt
-```
-
 ### GovDelivery
 
 Install the following GovDelivery dependencies into your virtual environment:
@@ -137,15 +123,7 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 npm install -g gulp bower
 ```
 
-## 3. Clone project and install dependencies
-
-Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
-Clone this project’s repository and switch to it’s directory with:
-
-```bash
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-```
+## 3. Install dependencies
 
 Next, install dependencies with:
 

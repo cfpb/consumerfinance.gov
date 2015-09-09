@@ -4,10 +4,10 @@
 [![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
 
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
-This project includes the front-end assets and build tools,
+This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
 and [Sheer](https://github.com/cfpb/sheer) configurations for loading content from the
-WordPress and Django back-ends through Elasticsearch.
+WordPress and back-ends through Elasticsearch.
 
 **Technology stack**:
 - Mac OSX.
@@ -23,9 +23,6 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 ![Screenshot of cfgov-refresh](screenshot.png)
 
 ## Dependencies
-- [Sheer](https://github.com/cfpb/sheer):
-  Web server used to serve the pages using [Jinja templates](http://jinja.pocoo.org).
-  Sheer is a Jekyll-inspired, Elasticsearch-powered, CMS-less publishing tool.
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and npm (Node Package Manager):
@@ -33,7 +30,15 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 
 ## Installation
 
-Follow the instructions in [INSTALL](INSTALL.md).
+Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
+Clone this project’s repository and switch to it’s directory with:
+
+```bash
+git clone git@github.com:cfpb/cfgov-refresh.git
+cd cfgov-refresh
+```
+
+Then follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
@@ -48,8 +53,8 @@ These will be used for:
     Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
     Run an Elasticsearch instance.
- 3. **Sheer web server**.
-    Run the web server.
+ 3. **Start django server**.
+    Start Django Server
  4. **Gulp watch**.
     Run the Gulp watch task for watching for changes to content.
 
@@ -91,9 +96,7 @@ proper path to its configuration file. For example, it may look like:
 elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
-### 3. Launch Sheer to serve the site
-
-To work on the app you will need Sheer running to compile the templates.
+### 3. Launch Site
 To do this, run the following:
 
 ```bash
@@ -107,8 +110,8 @@ cd ./dist
 # **This requires the constants in INSTALL - Configuration to be set**
 sheer index
 
-# Start sheer.
-sheer serve --debug
+# Start server.
+python cfgov/manage.py runserver
 ```
 
 To view the site browse to: <http://localhost:7000>
