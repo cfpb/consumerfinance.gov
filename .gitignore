@@ -6,6 +6,8 @@
 *.exe
 *.o
 *.so
+_site/
+_build/
 
 # Packages #
 ############
@@ -50,13 +52,26 @@ node_modules/
 bower_components/
 src/vendor
 
-# Sheer #
-#########
+# Vim swap files #
+##################
 *.swp
-*.pyc
 
-# Built assets #
-################
+# Python #
+#################
+*.pyc
+*.egg-info/
+__pycache__/
+*.py[cod]
+.env
+*.eggs/
+*.egg/
+
+# Front-End #
+#############
+node_modules/
+bower_components/
+.grunt/
+src/vendor/
 dist/
 
 # Floobits #
@@ -68,7 +83,21 @@ dist/
 docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
+# Django #
+#################
+*.egg-info
+.installed.cfg
+
 # Testing #
 ###########
 test/macro_tests/src/
 test/unit_test_coverage/
+
+# Unit test / coverage reports
+#################
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml

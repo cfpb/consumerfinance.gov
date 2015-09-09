@@ -1,0 +1,8 @@
+unipath>=1.1,<=2.0
+django>=1.8,<=1.9
+git+https://github.com/cfpb/django-sheerlike.git#egg=sheerlike
+six==1.9.0
+python-dateutil==2.4.2
+requests
+git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
+icalendar==3.9.0
