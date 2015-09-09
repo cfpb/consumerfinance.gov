@@ -28,7 +28,7 @@ class GovDeliverySubscribeTest(TestCase):
 
     def test_missing_gd_code(self):
         response = self.client.post(reverse('govdelivery'),
-                                    {'email': 'fake@email.com'})
+                                    {'email': 'fake@example.com'})
         self.assertEquals(urlparse(response['Location']).path,
                           reverse('govdelivery:user_error'))
 
@@ -52,8 +52,8 @@ class GovDeliverySubscribeTest(TestCase):
         mock_gd.return_value.status_code = 200
         response = self.client.post(reverse('govdelivery'),
                                     {'code': 'FAKE_CODE',
-                                     'email': 'fake@email.com'})
-        mock_gd.assert_called_with('fake@email.com',
+                                     'email': 'fake@example.com'})
+        mock_gd.assert_called_with('fake@example.com',
                                    ['FAKE_CODE'])
         self.assertEquals(urlparse(response['Location']).path,
                           reverse('govdelivery:success'))
@@ -64,9 +64,9 @@ class GovDeliverySubscribeTest(TestCase):
         mock_gd.return_value.status_code = 200
         response = self.client.post(reverse('govdelivery'),
                                     {'code': 'FAKE_CODE',
-                                     'email': 'fake@email.com'},
+                                     'email': 'fake@example.com'},
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        mock_gd.assert_called_with('fake@email.com',
+        mock_gd.assert_called_with('fake@example.com',
                                    ['FAKE_CODE'])
         self.assertEqual(response.content.decode('utf-8'),
                          json.dumps({'result': 'pass'}))
@@ -77,8 +77,8 @@ class GovDeliverySubscribeTest(TestCase):
         mock_gd.return_value.status_code = 500
         response = self.client.post(reverse('govdelivery'),
                                     {'code': 'FAKE_CODE',
-                                     'email': 'fake@email.com'})
-        mock_gd.assert_called_with('fake@email.com',
+                                     'email': 'fake@example.com'})
+        mock_gd.assert_called_with('fake@example.com',
                                    ['FAKE_CODE'])
         self.assertEquals(urlparse(response['Location']).path,
                           reverse('govdelivery:server_error'))
@@ -93,10 +93,10 @@ class GovDeliverySubscribeTest(TestCase):
         mock_set_topics.return_value.status_code = 200
         response = self.client.post(reverse('govdelivery'),
                                     {'code': 'FAKE_CODE',
-                                     'email': 'fake@email.com',
+                                     'email': 'fake@example.com',
                                      'questionid_batman': 'robin',
                                      'questionid_hello': 'goodbye'})
-        calls = [call('fake@email.com', 'batman', 'robin'),
-                 call('fake@email.com', 'hello', 'goodbye')]
+        calls = [call('fake@example.com', 'batman', 'robin'),
+                 call('fake@example.com', 'hello', 'goodbye')]
         mock_set_answers.assert_has_calls(calls, any_order=True)
         self.assertEqual(mock_set_answers.call_count, 2)

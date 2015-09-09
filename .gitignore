@@ -89,13 +89,10 @@ docs/*/pdfreactor-fonts.html
 *.egg-info
 .installed.cfg
 
-# Testing #
-###########
-test/macro_tests/src/
-test/unit_test_coverage/
-
 # Unit test / coverage reports
 #################
+test/macro_tests/src/
+test/unit_test_coverage/
 htmlcov/
 .tox/
 .coverage
@@ -103,5 +100,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-# IDE Specifc #
+# IDE Specifc
+############
 *.idea

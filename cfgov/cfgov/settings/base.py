@@ -2,9 +2,6 @@ import os
 from unipath import Path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE_ROOT = Path(__file__).ancestor(5).child('cfgov-refresh')
-GRUNT_WATCH = []
-
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
 # Application definition

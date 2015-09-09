@@ -9,8 +9,7 @@ from django.core.exceptions import ImproperlyConfigured
 from pytz import timezone
 from dateutil.parser import parse
 
-# PDFreactor's python wrapper doesn't support python 3, so neither can we for
-# now.
+## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
 if six.PY2:
     from core.lib.PDFreactor import *
 

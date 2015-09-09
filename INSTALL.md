@@ -101,12 +101,6 @@ Install Sheer’s Python requirements:
 pip install -r ~/path/to/sheer/requirements.txt
 ```
 
-### Server Setup
-Install required dependencies
-```bash
-pip install -r requirements/base.txt
-```
-
 ### GovDelivery
 
 Install the following GovDelivery dependencies into your virtual environment:

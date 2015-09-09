@@ -34,7 +34,7 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 ## Installation
 
 Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
-Clone this project’s repository and switch to it’s directory with:
+Clone this project’s repository and switch to its directory with:
 
 ```bash
 git clone git@github.com:cfpb/cfgov-refresh.git
@@ -108,7 +108,7 @@ To do this, run the following:
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
-# cd into the /dist/ directory.
+# cd into the /cfgov/v1/jinja2/v1/ directory.
 cd cfgov/v1/jinja2/v1
 
 # Index the latest content from the API output from a WordPress and Django back-end.
