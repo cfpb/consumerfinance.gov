@@ -23,6 +23,9 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 ![Screenshot of cfgov-refresh](screenshot.png)
 
 ## Dependencies
+- [Sheer](https://github.com/cfpb/sheer):
+  Web server used to serve the pages using [Jinja templates](http://jinja.pocoo.org).
+  Sheer is a Jekyll-inspired, Elasticsearch-powered, CMS-less publishing tool.
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and npm (Node Package Manager):
@@ -53,6 +56,8 @@ These will be used for:
     Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
     Run an Elasticsearch instance.
+    **Sheer Index**
+    Load indexes into ES.
  3. **Start django server**.
     Start Django Server
  4. **Gulp watch**.
@@ -96,7 +101,7 @@ proper path to its configuration file. For example, it may look like:
 elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
-### 3. Launch Site
+### 3. Load Indexes & Launch Site
 To do this, run the following:
 
 ```bash
@@ -104,13 +109,13 @@ To do this, run the following:
 workon cfgov-refresh
 
 # cd into the /dist/ directory.
-cd ./dist
+cd cfgov/v1/jinja2/v1
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
 sheer index
 
-# Start server.
+# Start server from project root
 python cfgov/manage.py runserver
 ```
 
