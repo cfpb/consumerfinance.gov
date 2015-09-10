@@ -20,6 +20,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New and improved primary nav (both look and interaction)
 - Added expanded-state utility for getting/setting aria-expanded
 - Added Acceptance tests for the `activity-log` page.
+- Added webpack module loader for per-page JavaScript.
+- Added script manifest for passing page-specific script
+  paths to runtime page-script loader.
+- Added external-site page-specific script.
+- Added `config/environment.js` for project JS path configuration.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -30,9 +35,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ability for acceptance --specs test flag to accept list of test files.
 - Changes `big_radio` macro to `radio_big` and `checkbox_bg` to `checkbox_big`.
 - Updated the primary nav to move focus as user enters and leaves nav levels
+- Moved handlebars from npm to bower.
+- Added jQuery CDN with fallback to head to satisfy GTM requirements.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
+- Removed unused exportsOverride section,
+  which was an artifact of the grunt bower task.
+- Removed browserify, watchify, and browserify-shim dependencies.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
