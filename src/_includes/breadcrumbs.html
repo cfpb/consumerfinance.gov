@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   render()
+   breadcrumbs.render()
 
    ==========================================================================
 
@@ -8,11 +8,11 @@
 
    Create breadcrumb markup when given:
 
-   items:               An array of tuples used to display nav items.
-                        format: (href, id, caption)
+   items:              An array of tuples used to display nav items.
+                       format: (href, id, caption)
 
-   additional_classes:  Extra classes you wish to add to the nav,
-                        space separated.
+   additional_classes: Extra classes you wish to add to the nav,
+                       space separated.
 
    ========================================================================== #}
 
@@ -20,7 +20,7 @@
 <nav class="breadcrumbs {{ additional_classes }}">
     {% for href, id, caption in items %}
     <a class="breadcrumbs_link" href="{{ href }}">
-        {{ caption|e }}
+        {{ caption | e }}
     </a>
     {% endfor %}
 </nav>

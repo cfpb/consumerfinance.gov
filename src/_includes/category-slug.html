@@ -1,7 +1,7 @@
 
 {# ==========================================================================
 
-   render()
+   category_slug.render()
 
    ==========================================================================
 
@@ -9,19 +9,24 @@
 
    Render a category slug when given:
 
-   category:           A simple string.
+   category:          A simple string.
 
-   path:               The path to which the filter applies. For example, if the
-                       slug is used on a blog article then path should be
-                       '/blog/'. Remember to leverage vars.path instead of
-                       using the literal string '/blog/'. Path is used to create
-                       the filtered URL: {{ path }}?filter_category={{ category }}
+   path:              The path to which the filter applies.
+                      For example, if the slug is used on a blog article
+                      then path should be '/blog/'.
+                      Remember to leverage vars.path instead of
+                      using the literal string '/blog/'.
+                      Path is used to create the filtered URL:
+                      {{ path }}?filter_category={{ category }}
 
-   classes:            An optional, space separated list of class names.
+   classes:           An optional, space separated list of class names.
+
+   use_blog_category: Whether to use the blog category filter or not.
+                      Defaults to false.
 
    ========================================================================== #}
 
-{%- macro render(category, path, classes, use_blog_category=False) %}
+{%- macro render(category, path, classes, use_blog_category=false) %}
 {%- import 'macros/category-icon.html' as category_icon -%}
 {%- if use_blog_category %}
     {% set filter_path = path + '?filter_blog_category=' + category|urlencode|replace('%20', '+') %}
