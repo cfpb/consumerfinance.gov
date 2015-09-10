@@ -1,3 +1,5 @@
+{% import 'macros/util/form.html' as form %}
+{% import 'macros/util/common-form-fields.html' as form_field %}
 <section class="block
                 block__bg
                 block__border
@@ -11,183 +13,46 @@
           <h2>Form to file your accessibility complaint</h2>
         </div>
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="accessibility-form_first-name">
-                First name*
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_first-name"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('First Name', 'text', '1-2', true) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="accessibility-form_last-name">
-                Last name*
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_last-name"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('Last Name', 'text', '1-2', true) }}
 
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header"
-                   for="accessibility-form_requestor-address-1">
-                Address 1*
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_requestor-address-1"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('Address 1', 'text', '1', true) }}
 
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header"
-                   for="accessibility-form_requestor-address-2">
-                Address 2
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_requestor-address-2"
-                   type="text">
-        </div>
+        {{ form.input('Address 2', 'text', '1', false) }}
 
-        <div class="form-l_col form-l_col-1-3">
-            <label class="form-label-header"
-                   for="accessibility-form_requestor-city">
-                City*
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_requestor-city"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('City', 'text', '1-3', true) }}
 
-        <div class="form-l_col form-l_col-1-3">
-            <label class="form-label-header"
-                   for="accessibility-form_requestor-state">
-                State*
-            </label>
-            <div class="custom-select">
-                <select class="custom-select_select"
-                        data-placeholder="Select state"
-                        id="accessibility-form_requestor-state"
-                        required>
-                    <option value="">Select state</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    {# TODO: Add all states to select list. #}
-                    <option value="Other">Other States to be added</option>
-                </select>
-                <span class="custom-select_icon
-                             cf-icon
-                             cf-icon-down"></span>
-            </div>
-        </div>
-        <div class="form-l_col form-l_col-1-3">
-            <label class="form-label-header"
-                   for="accessibility-form_requestor-zip">
-                Zip code*
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_requestor-zip"
-                   type="text"
-                   required>
-        </div>
+        {{ form_field.state('1-3', true)}}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="accessibility-form_telephone-number">
-                Telephone number*
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_telephone-number"
-                   type="tel"
-                   required>
-        </div>
+        {{ form.input('Zip code', 'text', '1-3', true) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="accessibility-form_fax-number">
-                Fax number
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_fax-number"
-                   type="tel">
-        </div>
+        {{ form.input('Telephone number', 'tel', '1-2', true) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="accessibility-form_email-address">
-                Email address
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_email-address"
-                   type="email">
-        </div>
+        {{ form.input('Fax number', 'tel', '1-2', false) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="accessibility-form_contact-time">
-                Best time to reach you
-            </label>
-            <div class="custom-select">
-                <select class="custom-select_select"
-                        data-placeholder="Select Time"
-                        id="accessibility-form_contact-time">
-                      <option value="">Select time</option>
-                      {# TODO: Add additional times. #}
-                      <option>8:00 a.m</option>
-                 </select>
-                 <span class="custom-select_icon
-                              cf-icon
-                              cf-icon-down"></span>
-            </div>
-        </div>
+        {{ form.input('Email address', 'email', '1-2', false) }}
 
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header"
-                   for="accessibility-form_complaint-desc">
-                Nature of the accessibility problem*
-            </label>
-            <textarea class="input__long"
-                      id="accessibility-form_complaint-desc"
-                      required>
-            </textarea>
-        </div>
+        {# TODO: Add additional times to form select below. #}
 
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header"
-                   for="accessibility-form_address-request-material">
-                Web address (URL) of requested material
-            </label>
-            <input class="input__long"
-                   id="accessibility-form_address-request-material"
-                   type="url">
-        </div>
+        {{ form.select('Best time to reach you',
+                       'Select time',
+                       ['8:00 a.m'],
+                       '1-2'
+                      ) }}
 
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header"
-                   for="accessibility-form_preferred-format">
-                Preferred format*
-            </label>
-            <div class="custom-select">
-                <select class="custom-select_select"
-                        data-placeholder="Select Time"
-                        id="accessibility-form_preferred-format"
-                        required>
-                      <option value="">Select format</option>
-                      {# TODO: Add additional formats. #}
-                      <option>PDF</option>
-                 </select>
-                 <span class="custom-select_icon
-                              cf-icon
-                              cf-icon-down"></span>
-            </div>
-        </div>
+        {{ form.textarea('Nature of the accessibility problem', false, true) }}
+
+        {{ form.input('Web address (URL) of requested material', 'url', '1', false) }}
+
+        {# TODO: Add additional formats to form select below. #}
+
+        {{ form.select('Preferred format',
+                       'Select format',
+                       ['PDF'],
+                       '1',
+                       true
+                      ) }}
 
         <div class="form-l_col
                     form-l_col-1
