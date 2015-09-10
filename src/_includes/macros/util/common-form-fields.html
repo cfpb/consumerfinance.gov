@@ -127,8 +127,8 @@
                    id="form_date-picker-ending-date"
                    placeholder="mm/dd/yyyy"
                    type="text"
-                   {%- if required -%}required{%- endif -%}
-                   {%- if disabled -%}disabled{%- endif -%}>
+                   {{ 'required' if required }}
+                   {{ 'disabled' if disabled }}>
         </div>
     </fieldset>
 {% endmacro %}
