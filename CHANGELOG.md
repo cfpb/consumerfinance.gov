@@ -33,7 +33,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
-- Fixed missing IE only stylesheet for older systems/browsers
+- Fixed missing IE only stylesheet for older systems/browsers.
+- Fixed skip-navigation link for keyboard navigation.
 
 
 ## 3.0.0-2.3.0 - 2015-08-27
