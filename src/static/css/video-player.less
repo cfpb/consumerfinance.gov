@@ -14,18 +14,17 @@
     - cfgov-video-player
 */
 
-// Variable used to set the size of the play button
+// Variable used to set the size of the play button.
 @play-btn-size__px: 73px;
 
-// Variable used to set the play button image
+// Variable used to set the play button image.
 @play-btn-url: '/static/img/video-play-btn.png';
 
-
-// Variable used to help center the video container
+// Variable used to help center the video container.
 @share-width__px: 130px;
 
-// Variables used for gutters
-@gutter__em: unit(@grid_gutter-width  / @base-font-size-px, em);
+// Variables used for gutters.
+@gutter__em: unit(@grid_gutter-width / @base-font-size-px, em);
 @gutter-half__em: @gutter__em / 2;
 
 .video-player {
@@ -34,6 +33,7 @@
 }
 
 .video-player.video-playing {
+    // @black not used because it's not totally black.
     background-color: #000;
 
     .hide-on_video-playing {
@@ -49,6 +49,7 @@
 
 .video-player_image-container {
     position: relative;
+    // @black not used because it's not totally black.
     background-color: #000;
     text-align: center;
 

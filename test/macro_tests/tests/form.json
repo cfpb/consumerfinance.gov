@@ -63,7 +63,7 @@
             ]
         },
         {
-            "macro_name": "big_radio",
+            "macro_name": "radio_big",
             "arguments": [
                 {
                     "legend": "Test",

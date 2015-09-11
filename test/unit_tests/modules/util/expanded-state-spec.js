@@ -38,7 +38,7 @@ describe( 'Event States', function() {
     expect( es.get.isOneExpanded( testExpandedDivs ) ).to.be.true;
   } );
 
-  it( 'should return false if at least one isn\'t expanded', function() {
+  it( 'should return false if at least one isn’t expanded', function() {
     var testClosedDivs = $( [] ).add( divClosed ).add( divClosed );
 
     expect( es.get.isOneExpanded( testClosedDivs ) ).to.be.false;

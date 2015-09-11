@@ -11,10 +11,10 @@
    label:       Name of the field.
 
    type:        Type of field. Will default to text, but can change to other
-                types to take advantage of HTML5 validation
+                types to take advantage of HTML5 validation.
                 Possible fields: text, tel, email, url, number, date.
 
-   size:        The size of the field. Defaults to full-width.
+   size:        The size of the field. Defaults to 1 (full-width).
                 Possible options: 1, 1-2, 1-3
 
    required:    Whether the field is required. Defaults to false.
@@ -36,8 +36,7 @@
                id="form_{{ id_slug }}"
                type="{{ type }}"
                {{ 'required' if required }}
-               {{ 'disabled' if disabled }}
-               >
+               {{ 'disabled' if disabled }}>
     </div>
 {%- endmacro %}
 
@@ -47,11 +46,11 @@
 
    ==========================================================================
 
-   Description: Builds form textarea field
+   Description: Builds form textarea field.
 
    label:       Name of the field.
 
-   helperText:  String for helper text
+   helperText:  String for helper text. Defaults to false.
 
    required:    Whether the field is required. Defaults to false.
 
@@ -92,7 +91,7 @@
 
    fields:        An array of all the fields to select.
 
-   size:          The size of the field. Defaults to full-width.
+   size:          The size of the field. Defaults to 1 (full-width).
                   Possible options: 1, 1-2, 1-3
 
    required:      Whether the field is required. Defaults to false.
@@ -102,7 +101,6 @@
    ========================================================================== #}
 
 {% macro select(label, placeholder, fields, size='1', required=false, disabled=false) -%}
-    {% from 'macros/util/format/url.html' import slugify as slugify %}
     {% set id_slug = slugify( label ) %}
 
     <div class="form-l_col form-l_col-{{ size }}">
@@ -132,15 +130,17 @@
 
 {# ==========================================================================
 
-   form.big_radio()
+   form.radio_big()
 
    ==========================================================================
 
    Description: Builds radio button fields with a large hit target.
 
-   label:       Name of the field.
+   legend:      Name of the field.
 
-   size:        The size of the fields. Defaults to full-width.
+   fields:      An array of all the radio button labels.
+
+   size:        The size of the fields. Defaults to 1-2.
                 Possible options: 1, 1-2, 1-3
 
    required:    Whether the field is required. Defaults to false.
@@ -149,7 +149,7 @@
 
    ========================================================================== #}
 
-{% macro big_radio(legend, fields, size='1-2', required=false, disabled=false) -%}
+{% macro radio_big(legend, fields, size='1-2', required=false, disabled=false) -%}
   {% set id_slug = slugify( legend ) %}
   <fieldset class="u-reset">
       <div class="form-l_col
@@ -181,15 +181,17 @@
 
 {# ==========================================================================
 
-   form.big_checkbox()
+   form.checkbox_big()
 
    ==========================================================================
 
    Description: Builds checkboxes fields with a large hit target.
 
-   label:       Name of the field.
+   legend:      Name of the field.
 
-   size:        The size of the field. Defaults to full-width.
+   fields:      An array of all the checkbox labels.
+
+   size:        The size of the field. Defaults to 1-2.
                 Possible options: 1, 1-2, 1-3
 
    required:    Whether the field is required. Defaults to false.
@@ -198,7 +200,7 @@
 
    ========================================================================== #}
 
-{% macro checkbox_bg(legend, fields, size='1-2', required=false, disabled=false) -%}
+{% macro checkbox_big(legend, fields, size='1-2', required=false, disabled=false) -%}
   {% set id_slug = slugify( legend ) %}
   <fieldset class="u-reset">
       <div class="form-l_col
