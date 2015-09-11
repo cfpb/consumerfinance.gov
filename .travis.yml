@@ -11,7 +11,7 @@ services:
 addons:
   apt:
     package:
-      - nodejs
+      - nodejs-0.12
 
 install:
   # Project configuration requirements.

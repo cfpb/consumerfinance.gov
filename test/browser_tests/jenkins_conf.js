@@ -31,11 +31,11 @@ exports.config = {
         console.error( err ); // eslint-disable-line no-console, no-inline-comments, max-len
       } else {
         var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter(
-          {
-            consolidateAll: true,
-            savePath:       newFolder,
-            filePrefix:     'test-results'
-          }
+            {
+              consolidateAll: true,
+              savePath:       newFolder,
+              filePrefix:     'test-results'
+            }
         );
         jasmine.getEnv().addReporter( jUnitXmlReporter );
       }

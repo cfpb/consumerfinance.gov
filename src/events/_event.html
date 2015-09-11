@@ -9,19 +9,19 @@
 
    Render an article when given:
 
-   post:               The Sheer document that is available to a _single.html
-                       template. For example in events/_single.html the variable
-                       `event` is available and represents the event for the
-                       `_single` page.
+   post:        The Sheer document that is available to a _single.html
+                template. For example in events/_single.html the variable
+                `event` is available and represents the event for the
+                `_single` page.
 
-   path:               The path to which post filters are applies. For example,
-                       if the post is an event post then path should be '/events/'.
-                       Remember to leverage vars.path instead of using the
-                       literal string '/events/'. Path is used to create the
-                       filtered URL: {{ path }}?filter_tags={{ tag }}
+   path:        The path to which post filters are applies. For example,
+                if the post is an event post then path should be '/events/'.
+                Remember to leverage vars.path instead of using the
+                literal string '/events/'. Path is used to create the
+                filtered URL: {{ path }}?filter_tags={{ tag }}
 
-   event_state:        A string indicating the state of the event.
-                       Possible values: past, present, future.
+   event_state: A string indicating the state of the event.
+                Possible values: past, present, future.
 
    ========================================================================== #}
 
@@ -35,10 +35,12 @@
             {{ event.title|safe }}
         </h1>
         <p class="post_dek">
-        {% if (event_state == 'past')  %}
-          {{ event.archive.summary | striptags }}
-        {% else %}
-          {{ event.future.summary | striptags }}
+        {% if (event_state == 'past') %}
+            {{ post.archive.summary | striptags }}
+        {% elif (event_state == 'present') %}
+            {{ post.live.summary | striptags }}
+        {% elif (event_state == 'future') %}
+            {{ post.future.summary | striptags }}
         {% endif %}
         </p>
         <div class="modification-date date u-right">

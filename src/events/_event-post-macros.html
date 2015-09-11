@@ -11,8 +11,8 @@
 
    calendar_date:      A valid date.
 
-   additional_classes: Extra classes you wish to add to the icon, space
-                       separated.
+   additional_classes: Extra classes you wish to add to the icon,
+                       space separated.
 
    ========================================================================== #}
 
@@ -39,10 +39,13 @@
    options (optional):         An object to use for customizing an event
                                location image using Google Maps.
 
-   options.additional_classes: Extra classes you wish to add to the image, space separated.
+   options.additional_classes: Extra classes you wish to add to the image,
+                               space separated.
 
-   options.location:           A location as either a comma-separated {latitude,longitude}
-                               pair (e.g. "40.714728,-73.998672") or a string address
+   options.location:           A location as either a comma-separated
+                               {latitude,longitude} pair
+                               (e.g. "40.714728,-73.998672")
+                               or a string address
                                (e.g. "city hall, new york, ny").
                                Defaults to 'Washington, DC'.
 
@@ -85,14 +88,15 @@
 
    Create HTML event meta markup when given:
 
-   post:                        A post from a query result.
+   post:                       A post from a query result.
 
-   address_format (optional):   A python string format to display
-                                address information
-                                (e.g. '{venue} - {city}, {state}').
+   address_format (optional):  A python string format to display
+                               address information
+                               (e.g. '{venue} - {city}, {state}').
+                               Defaults to '{city}, {state}'.
 
-   datetime_format (optional):  An object to use for customizing event-meta
-                                time and date formats.
+   datetime_format (optional): An object to use for customizing event-meta
+                               time and date formats.
 
    ========================================================================== #}
 
@@ -120,11 +124,12 @@
 
    Create HTML event meta address markup when given:
 
-   post                     : A post date from a query result.
+   venue:                     A post date from a query result.
 
    address_format (optional): A python string format to display to
                               address information
                               (e.g. '{venue} - {city}, {state}').
+                              Defaults to '{city}, {state}'.
 
    ========================================================================== #}
 
@@ -189,7 +194,6 @@
    ========================================================================== #}
 
 {% macro post_summary(post, path, event_state) %}
-
 {%- import 'tags.html' as tags %}
     <a href="{{ post.permalink }}">
         <header class="summary_header">
@@ -202,11 +206,13 @@
             </div>
         </header>
         <p class="summary_text">
-            {% if (event_state == 'past') %}
-                {{ post.archive.summary | striptags }}
-            {% else %}
-                {{ post.future.summary | striptags }}
-            {% endif %}
+        {% if (event_state == 'past') %}
+            {{ post.archive.summary | striptags }}
+        {% elif (event_state == 'present') %}
+            {{ post.live.summary | striptags }}
+        {% elif (event_state == 'future') %}
+            {{ post.future.summary | striptags }}
+        {% endif %}
         </p>
     </a>
     <footer>
@@ -235,7 +241,6 @@
 {% macro event_venue(post, event_state) %}
     {%- set city =  post.venue.address.city + ', ' + post.venue.address.state
                     | default('Washington, DC') -%}
-
     <section class="event-venue">
         <header class="event-venue_header">
             <h2 class="event-venue_heading">{{ city }}</h2>
@@ -246,35 +251,54 @@
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
-                    {% if (event_state == 'past') %}
-                        Video Replay will be<br> available shortly
-                    {% else %}
-                        {% import 'macros/time.html' as time %}
-                        {{ time.render(post.beginning_time.date) }}
-                        {# TODO: Replace with real download link #}
-                        <a class="event-calendar_download
-                                  jump-link
-                                  jump-link__download
-                                  u-link__disabled">
-                            <span class="jump_link_text">Download .ics</span>
-                        </a>
+                {% if (event_state == 'past' and post.archive.youtube is not defined) %}
+                    Video Replay will be<br> available shortly
+                {% else %}
+                    {% import 'macros/time.html' as time %}
+                    {{ time.render(post.beginning_time.date) }}
+
+                    {# TODO: Replace with real download link #}
+                    {% if event_state == 'future' %}
+                    <a class="event-calendar_download
+                              jump-link
+                              jump-link__download
+                              u-link__disabled">
+                        <span class="jump_link_text">Download .ics</span>
+                    </a>
                     {% endif %}
+                {% endif %}
                 </div>
           </div>
         </header>
         <footer>
             <figure class="event-media_container">
-                {# TODO Replace image URL with actual post url based on event states #}
-                {% if (event_state == 'past')  %}
-                    <img src="https://placeholdit.imgix.net/~text?C3%97350&w=700&h=350" />
-                {% else %}
-                    {{ event_location_image({
-                        'location': city,
-                        'zoom': '12',
-                        'scale': '2',
-                        'size': '640x320'
-                    }) }}
-                {% endif %}
+            {# TODO: Add code for live streaming Event and determine image property name #}
+            {% if (event_state == 'past' and post.archive.youtube is defined) %}
+                {% import 'macros/video-player.html' as video_player %}
+                {% set video_id   = post.archive.youtube.split('=') | last %}
+                {% set image_url  = post.attachments[1].url.replace('content.', '') %}
+                {{ video_player.render({
+                      'button_pos': 'bottomRight',
+                      'image': {
+                          'url': image_url,
+                      },
+                      'video': {
+                          'id': video_id
+                      }
+                   })
+                }}
+            {% elif event_state == 'past' %}
+                {# TODO: Replace placeholder image with appropriate image #}
+                <img src="https://placeholdit.imgix.net/~text?C3%97350&w=700&h=350"
+                     alt="Video placeholder image" />
+            {% else %}
+                {{ event_location_image({
+                    'location': city,
+                    'zoom': '12',
+                    'scale': '2',
+                    'size': '640x320'
+                }) }}
+            {% endif %}
             </figure>
         </footer>
     </section>
@@ -341,13 +365,22 @@
                   {% endif %}
                 </td>
                 <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
-                    {% for speaker in block.speakers %}
-                        {%- if speaker.url -%}
-                            <a href="{{ speaker.url }}">{{ speaker.name }}, {{ speaker.position }}</a>{{ ';' if loop.index < loop.length }}
-                        {% else %}
-                            {{ speaker.name }}, {{ speaker.position }}{{ ';' if loop.index < loop.length }}
-                        {%- endif -%}
-                    {% endfor %}
+                {% for speaker in block.speakers %}
+                    {%- if speaker.url -%}
+                    <a href="{{ speaker.url }}">
+                    {{ speaker.name
+                       ~ ( ', ' if speaker.name.find(',') == -1 )
+                       ~ speaker.position
+                    }}
+                    </a>
+                    {%- else -%}
+                    {{ speaker.name
+                       ~ ( ', ' if speaker.name.find(',') == -1 )
+                       ~ speaker.position
+                    }}
+                    {%- endif -%}
+                    {{ '; ' if loop.index < loop.length }}
+                {%- endfor -%}
                 </td>
             </tr>
         {% endfor %}

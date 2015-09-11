@@ -1,164 +1,47 @@
+{% import 'macros/util/form.html' as form %}
+{% import 'macros/util/common-form-fields.html' as form_field %}
+
 <section class="block
                 block__bg
                 block__border
                 block__flush-sides">
     <form class="form-l js-validate-filters">
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header" for="first-name">
-                First name*
-            </label>
-            <input class="input__long"
-                   id="first-name"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('First Name', 'text', '1-2', true) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header" for="last-name">
-                Last name*
-            </label>
-            <input class="input__long"
-                   id="last-name"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('Last Name', 'text', '1-2', true) }}
 
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header"
-                   for="organization-address">
-                Address*
-            </label>
-            <input class="input__long"
-                   id="organization-address"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('Address 1', 'text', '1', true) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="organization-city">
-                City*
-            </label>
-            <input class="input__long"
-                   id="organization-city"
-                   type="text"
-                   required>
-        </div>
+        {{ form.input('Address 2', 'text', '1', false) }}
 
-        <div class="form-l_col form-l_col-1-2">
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header"
-                       for="organization-state">
-                    State*
-                </label>
-                <div class="custom-select">
-                    <select class="custom-select_select"
-                            data-placeholder="Select state"
-                            id="organization-state"
-                            required>
-                        <option value="">Select state</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        {# TODO: Add all states to select list. #}
-                        <option value="Other">Other States to be added</option>
-                    </select>
-                    <span class="custom-select_icon
-                                 cf-icon
-                                 cf-icon-down"></span>
-                </div>
-            </div>
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header" for="organization-zip">
-                    Zip code*
-                </label>
-                <input class="input__long"
-                       id="organization-zip"
-                       type="text"
-                       required>
-            </div>
-        </div>
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header" for="telephone-number">
-                Telephone number*
-            </label>
-            <input class="input__long"
-                   id="telephone_number"
-                   type="number"
-                   required>
-        </div>
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header" for="contact-time">
-                Best time to reach you
-            </label>
-            <div class="custom-select">
-                <select class="custom-select_select"
-                        data-placeholder="Select Time"
-                        id="contact-time">
-                      <option value="">Select time</option>
-                      {# TODO: Add additional times. #}
-                      <option>8:00 a.m</option>
-                 </select>
-                 <span class="custom-select_icon
-                              cf-icon
-                              cf-icon-down"></span>
-            </div>
-        </div>
-        <div class="form-l_col form-l_col-1-2">
-            <label for="fax-number">
-                <span class="form-label-header">
-                    Fax number
-                </span>
-            </label>
-            <input class="input__long"
-                   id="fax-number"
-                   type="text">
-        </div>
-        <div class="form-l_col form-l_col-1-2">
-            <label for="email-address">
-                <span class="form-label-header">
-                    Email address
-                </span>
-            </label>
-            <input class="input__long"
-                   id="email-address"
-                   type="text">
-        </div>
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header"
-                   for="request-date">
-                Request date*
-            </label>
-            <input class="input__long"
-                   id="request-date"
-                   type="text"
-                   required>
-        </div>
-        <div class="form-l_col form-l_col-1">
-            <label class="form-label-header" for="complaint-desc">
-                Description of complaint*
-            </label>
-            <textarea class="input__long"
-                      id="complaint-desc"
-                      required>
-            </textarea>
-        </div>
-        <div class="form-l_col form-l_col-1">
-            <label for="complaint-summary">
-                <span class="form-label-header">
-                    Summary to resolve complaint*
-                </span>
-                <br>
-                <span class="micro-copy micro-copy__large">
-                    Summarize the steps taken, if any, by you or the CFPB to
-                    resolve this complaint.
-                </span>
-            </label>
-            <textarea class="input__long"
-                      id="complaint-summary"
-                      required>
-            </textarea>
-        </div>
+        {{ form.input('City', 'text', '1-3', true) }}
+
+        {{ form_field.state('1-3', true) }}
+
+        {{ form.input('Zip code', 'text', '1-3', true) }}
+
+        {{ form.input('Telephone number', 'tel', '1-2', true) }}
+
+        {# TODO: Add additional times to form select below. #}
+
+        {{ form.select('Best time to reach you',
+                       'Select time',
+                       ['8:00 a.m'],
+                       '1-2'
+                      ) }}
+
+        {{ form.input('Fax number', 'tel', '1-2', false) }}
+
+        {{ form.input('Email address', 'email', '1-2', false) }}
+
+        {{ form.input('Request date', 'text', '1-2', true) }}
+
+        {{ form.textarea('Description of complaint', false, true) }}
+
+        {{ form.textarea('Summary to resolve complaint',
+                         'Summarize the steps taken, if any,
+                          by you or the CFPB to resolve this complaint.',
+                          true) }}
         <div class="form-actions form-actions__right-on-med">
             <input class="btn form-actions_item"
                    type="submit"

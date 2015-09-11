@@ -17,12 +17,12 @@ function init() {
     return $( this ).each( function() {
       if ( $( this ).is( '[type=checkbox],[type=radio]' ) ) {
         var settings = $.extend( {
-            clickCallback: function( e ) {}
-          }, userSettings ),
-          clickCallback = settings.clickCallback,
-          input = $( this ).addClass( 'custom-input_input' ),
-          label = input.parents( 'label' ).addClass( 'custom-input_label' ),
-          labelText = label.text();
+              clickCallback: function( e ) {}
+            }, userSettings ),
+            clickCallback = settings.clickCallback,
+            input = $( this ).addClass( 'custom-input_input' ),
+            label = input.parents( 'label' ).addClass( 'custom-input_label' ),
+            labelText = label.text();
 
         // Add a class to activate the styling
         label.addClass( 'is-enabled' );
