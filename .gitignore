@@ -72,7 +72,21 @@ __pycache__/
 node_modules/
 bower_components/
 .grunt/
-vendor/**/*
+vendor/
+**/static/dist/**
+cfgov/v1/jinja2/v1/capital-framework/
+cfgov/v1/jinja2/v1/cf-buttons/
+cfgov/v1/jinja2/v1/cf-core/
+cfgov/v1/jinja2/v1/cf-expandables/
+cfgov/v1/jinja2/v1/cf-forms/
+cfgov/v1/jinja2/v1/cf-grid/
+cfgov/v1/jinja2/v1/cf-icons/
+cfgov/v1/jinja2/v1/cf-layout/
+cfgov/v1/jinja2/v1/cf-pagination/
+cfgov/v1/jinja2/v1/cf-typography/
+cfgov/v1/jinja2/v1/chosen/
+cfgov/v1/jinja2/v1/history.js/
+cfgov/v1/jinja2/v1/string_score/
 
 # Floobits #
 ############

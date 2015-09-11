@@ -6,8 +6,9 @@ var fs = require( 'fs' );
  * Set up file paths
  */
 var loc = {
-  src:  './src',
-  dist: './cfgov/v1/jinja2/v1',
+  v1:  './cfgov/v1/preprocessed',
+  templates: './cfgov/v1/jinja2/v1',
+  dist: './cfgov/v1/static',
   lib:  JSON.parse( fs.readFileSync( './.bowerrc' ) ).directory, // eslint-disable-line no-sync, no-inline-comments, max-len
   test: './test'
 };
@@ -34,7 +35,7 @@ module.exports = {
       ' */\n',
   lint: {
     src: [
-      loc.src + '/static/js/**/*.js',
+      loc.v1 + '/js/**/*.js',
       loc.test + '/unit_tests/**/*.js',
       loc.test + '/browser_tests/**/*.js'
     ],
@@ -44,16 +45,16 @@ module.exports = {
     ]
   },
   test: {
-    src:   loc.src + '/static/js/**/*.js',
+    src:   loc.v1 + '/js/**/*.js',
     tests: loc.test
   },
   clean: {
     dest: loc.dist
   },
   styles: {
-    cwd:      loc.src + '/static/css',
+    cwd:      loc.v1 + '/css',
     src:      '/main.less',
-    dest:     loc.dist + '/static/css',
+    dest:     loc.dist + '/css',
     settings: {
       paths: [
         loc.lib,
@@ -65,8 +66,8 @@ module.exports = {
   scripts: {
     bundleConfigs: [
       {
-        entries:    loc.src + '/static/js/routes/common.js',
-        dest:       loc.dist + '/static/js/routes',
+        entries:    loc.v1 + '/js/routes/common.js',
+        dest:       loc.dist + '/js/routes',
         outputName: 'common.min.js',
         require:    [
           'jquery',
@@ -78,40 +79,29 @@ module.exports = {
     ]
   },
   images: {
-    src:  loc.src + '/static/img/**',
-    dest: loc.dist + '/static/img'
+    src:  loc.v1 + '/img/**',
+    dest: loc.dist + '/img'
   },
   copy: {
     files: {
-      src: [
-        loc.src + '/**/*.html',
-        loc.src + '/**/*.pdf',
-        loc.src + '/_*/**/*',
-        loc.src + '/robots.txt',
-        loc.src + '/favicon.ico',
-        '!' + loc.lib + '/**/*.html'
-      ],
-      dest: loc.dist
-    },
-    legacy: {
-      src:  loc.src + '/static-legacy/**/*',
-      dest: loc.dist + '/static-legacy'
+      src: '!' + loc.lib + '/**/*.html',
+      dest: loc.templates
     },
     icons: {
       src:  loc.lib + '/cf-icons/src/fonts/*',
-      dest: loc.dist + '/static/fonts/'
+      dest: loc.dist + '/fonts/'
     },
     vendorfonts: {
-      src:  loc.src + '/static/fonts/pdfreactor/*',
-      dest: loc.dist + '/static/fonts/pdfreactor'
+      src:  loc.v1 + '/fonts/pdfreactor/*',
+      dest: loc.dist + '/fonts/pdfreactor'
     },
     vendorcss: {
       src: [
         loc.lib + '/slick-carousel/slick/slick.css',
         loc.lib + '/slick-carousel/slick/slick.css.map',
-        loc.src + '/static/css/pdfreactor-fonts.css'
+        loc.v1 + '/css/pdfreactor-fonts.css'
       ],
-      dest: loc.dist + '/static/css'
+      dest: loc.dist + '/css'
     },
     vendorimg: {
       src: [
@@ -119,14 +109,14 @@ module.exports = {
         loc.lib + '/chosen/chosen-sprite.png',
         loc.lib + '/chosen/chosen-sprite@2x.png'
       ],
-      dest: loc.dist + '/static/img'
+      dest: loc.dist + '/img'
     },
     vendorjs: {
       src: [
         loc.lib + '/box-sizing-polyfill/boxsizing.htc',
         loc.lib + '/html5shiv/dist/html5shiv-printshiv.min.js'
       ],
-      dest: loc.dist + '/static/js/'
+      dest: loc.dist + '/js/'
     }
   }
 };
