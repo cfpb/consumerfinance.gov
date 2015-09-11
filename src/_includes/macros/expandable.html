@@ -8,22 +8,24 @@
 
    Builds Expandable markup when given:
 
-   items                      : An array of expandable items.
+   items:                      An array of expandable items.
+                               Default is an empty array.
 
-   header_key                 : A string used to denote the header dictionary key.
+   header_key:                 A string used to denote the header dictionary key.
+                               Default is an empty string.
 
-   content_key                : A string used to denote the content dictionary key.
+   content_key:                A string used to denote the content dictionary key.
+                               Default is an empty string.
 
-   options (optional)         : An object used to customize
-                                the expandable markup.
+   options (optional):         An object used to customize the expandable markup.
 
-   options.title              : A string to use for expandable title.
+   options.title:              A string to use for expandable title.
 
-   options.additional_classes : Extra classes added to the expandable markup.
+   options.additional_classes: Extra classes added to the expandable markup.
 
-   options.faq_description    : A string to use for FAQ description.
+   options.faq_description:    A string to use for FAQ description.
 
-   options.faq_title          : A string to use for FAQ title.
+   options.faq_title:          A string to use for FAQ title.
 
    ========================================================================== #}
 {% macro render(items=[], header_key='', content_key='', options={}) -%}
