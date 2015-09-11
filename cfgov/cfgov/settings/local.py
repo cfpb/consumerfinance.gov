@@ -1,5 +1,4 @@
 from .base import *
-import v1
 
 DEBUG = True
 
