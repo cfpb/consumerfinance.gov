@@ -13,9 +13,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sheerlike',
-    'v1',
     'core',
+     'v1',
+    'sheerlike',
 )
 
 MIDDLEWARE_CLASSES = (
