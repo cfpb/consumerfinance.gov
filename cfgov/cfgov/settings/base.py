@@ -15,8 +15,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'v1',
     'core',
+     'v1',
     'sheerlike',
 )
 

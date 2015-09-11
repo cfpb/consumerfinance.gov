@@ -62,15 +62,16 @@
         {% block og_article_author %}{% endblock %}
     <!-- End of Open Graph properties -->
 
-    <!-- Explicit favicon link needed for testing. Remove for production. -->
+    {# TODO: Explicit favicon link needed for testing. Remove for production. #}
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
 <!--
     ======
     STYLES
     ======
-    The number of stylesheets here must be kept to a minimum. Unless adding a significant amount of CSS that is
-    specific to a single page or section of the site, all new styles should be added to src/static/css/main.less.
+    The number of stylesheets here must be kept to a minimum.
+    Unless adding a significant amount of CSS that is specific to a single page or section of the site,
+    all new styles should be added to src/static/css/main.less.
 -->
 
 {% block css %}
@@ -108,10 +109,10 @@
     =========
 -->
     <!-- CLASSIC ANALYTICS -->
-    <!-- TODO: Remove Google Analytics code snippet once GTM is stable.
+    {# TODO: Remove Google Analytics code snippet once GTM is stable.
          We are double tagging with classic analytics and tag manager
          so that we can test any differences between the two.
-         See: https://github.com/cfpb/cfgov-refresh/issues/496 -->
+         See: https://github.com/cfpb/cfgov-refresh/issues/496 #}
     <script>
         var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -167,8 +168,8 @@
 
 <!-- PRIMARY CONTENT -->
 {% block content %}
-    This will be replaced in templates that extend this template
-    and override "content".
+    {# This will be replaced in templates that extend this template
+    and override "content". #}
 {% endblock content %}
  <!-- /PRIMARY CONTENT -->
 

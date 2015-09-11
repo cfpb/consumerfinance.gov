@@ -6,7 +6,7 @@
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Sheer](https://github.com/cfpb/sheer) configurations for loading content from the
+and [Sheer-Like](https://github.com/cfpb/django-sheerlike) configurations for loading content from the
 WordPress and back-ends through Elasticsearch.
 
 **Technology stack**:
@@ -115,7 +115,7 @@ cd cfgov/v1/jinja2/v1
 # **This requires the constants in INSTALL - Configuration to be set**
 sheer index
 
-# Start server from project root
+# From the Project root, start server.
 python cfgov/manage.py runserver
 ```
 

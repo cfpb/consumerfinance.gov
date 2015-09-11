@@ -1,7 +1,7 @@
 
 {# ==========================================================================
 
-   render()
+   tags.render()
 
    ==========================================================================
 
@@ -9,23 +9,23 @@
 
    Render a tags list when given:
 
-   tags:               An array of tags. "Tags" are simple strings.
-                       Example tag: 'Featured'
-                       Example tags: ['Featured', 'Mortgages']
+   tags:          An array of tags. "Tags" are simple strings.
+                  Example tag: 'Featured'
+                  Example tags: ['Featured', 'Mortgages']
 
-   path:               The path to which the filter applies. For example, if the
-                       tags are used on a blog article then path should be
-                       '/blog/'. Remember to leverage vars.path instead of
-                       using the literal string '/blog/'. Path is used to
-                       create the filtered URL: {{ path }}?filter_tags={{ tag }}.
+   path:          The path to which the filter applies. For example, if the
+                  tags are used on a blog article then path should be
+                  '/blog/'. Remember to leverage vars.path instead of
+                  using the literal string '/blog/'. Path is used to
+                  create the filtered URL: {{ path }}?filter_tags={{ tag }}.
 
-   hide_heading:       The optional boolean flag to hide the tags_heading element.
-                       Defaults to false.
-                       Adds class 'tags__hide-heading' if true value passed.
+   hide_heading:  The optional boolean flag to hide the tags_heading element.
+                  Adds class 'tags__hide-heading' if true value passed.
+                  Defaults to false.
 
-   display_block       The optional boolean flag to display the tags list as block.
-                       Defaults to false. Adds class 'tags__block-list' if true
-                       value passed.
+   display_block: The optional boolean flag to display the tags list as block.
+                  Adds class 'tags__block-list' if true value passed.
+                  Defaults to false.
 
    ========================================================================== #}
 
