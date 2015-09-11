@@ -4,6 +4,7 @@
     "url": "http://github.com/cfpb/cfgov-refresh.git"
   },
   "devDependencies": {
+    "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "^2.8.0",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "chai": "^2.3.0",

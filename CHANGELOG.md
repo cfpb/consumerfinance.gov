@@ -21,8 +21,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added expanded-state utility for getting/setting aria-expanded
 - Added Acceptance tests for the `activity-log` page.
 - Added webpack module loader for per-page JavaScript.
-- Added script manifest for passing page-specific script
-  paths to runtime page-script loader.
 - Added external-site page-specific script.
 - Added `config/environment.js` for project JS path configuration.
 

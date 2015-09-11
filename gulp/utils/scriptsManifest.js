@@ -1,12 +1,11 @@
 /* ==========================================================================
-   Provides utilities for writing out a manifest of per-page JS files
-   for consumption by a dynamic script loader.
+   Provides utilities for returning a list of per-page JS files
+   for consumption by a script loader.
    ========================================================================== */
 
 'use strict';
 
 var fs = require( 'fs' );
-var mkdirp = require( 'mkdirp' );
 
 var _sourcePathCache = {};
 
@@ -61,20 +60,6 @@ function getDirectoryMap( dir ) {
   return cache;
 }
 
-/**
- * Write a JavaScripts route manifest file to disk.
- * @param {string} filePath Path to the manifest file.
- * @param {string} filename The manifest file name.
- * @param {string} dir Path of the scripts directory to traverse and write.
- */
-function writeScriptsManifest( filePath, filename, dir ) {
-  mkdirp( filePath, function( err ) {
-    if ( err ) { throw err; }
-    fs.writeFileSync( filePath + '/' + filename, JSON.stringify( getDirectoryMap( dir ) ) ); // eslint-disable-line no-sync, no-inline-comments, max-len
-  } );
-}
-
 module.exports = {
-  getDirectoryMap:      getDirectoryMap,
-  writeScriptsManifest: writeScriptsManifest
+  getDirectoryMap: getDirectoryMap
 };

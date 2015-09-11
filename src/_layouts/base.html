@@ -192,21 +192,30 @@
     BODY SCRIPTS
     ============
     The number of scripts here must be kept to a minimum.
-    common.js = Site-wide JavaScript.
-    index.js = Page-specific JavaScript.
 -->
+
 {% block javascript %}
-{# TODO: Check for the existance of a page
-         or template-level JavaScript file on the server-side
-         so as to make the routes manifest unnecessary. #}
-{% set js_route = request.path[1:] + 'index.js' %}
-<script id="page-javascript" type="application/json">
-{
-    "url": "{{ js_route }}",
-    "routes": {% include('static/js/routes-manifest.json') %}
-}
+
+{# Include site-wide JavaScript. #}
+<script type='text/javascript'>
+    {% include '/static/js/routes/common.js' %}
 </script>
-<script src='/static/js/routes/common.js'></script>
+
+{# Include template and page-specific JavaScript. #}
+{% macro page_template_js() %}
+    {# Check and include template-level JavaScript. #}
+    {% include '/static/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+
+    {# Check and include page-level JavaScript. #}
+    {% include '/static/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+{% endmacro %}
+{% set js_source = page_template_js() | trim %}
+{% if js_source | length > 0 %}
+<script type='text/javascript'>
+    {{ js_source }}
+</script>
+{% endif %}
+
 {% endblock javascript %}
 
 </body>
