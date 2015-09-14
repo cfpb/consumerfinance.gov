@@ -68,7 +68,13 @@ If you need to find this info again later, you can run:
 brew info elasticsearch
 ```
 
-### Sheer
+### Sheer-like & Sheer
+#### NOTE: Ensure you install sheer-like first to avoid version conflicts with dependencies
+To [install Sheer-like](https://github.com/cfpb/django-sheerlike/blob/master/README.rst), start by cloning the
+Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
+```bash
+git clone https://github.com/cfpb/django-sheerlike.git
+```
 
 To [install Sheer](https://github.com/cfpb/sheer#installation), start by cloning the
 Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
@@ -89,15 +95,20 @@ parentheses before your terminal prompt. Ex:
 (cfgov-refresh)$
 ```
 
-Install Sheer into the virtualenv with the `-e` flag (which allows you to make changes to
-Sheer itself). The path to Sheer is the root directory of the GitHub repository you
-cloned earlier, which will likely be `../sheer`:
+Install Sheer-like into the virtualenv with the `-e` flag (which allows you to make changes to
+Sheer itself). The path to Sheer-like is the root directory of the GitHub repository you
+cloned earlier, which will likely be `../django-sheerlike`:
 ```bash
-pip install -e ~/path/to/sheer
+pip install -e ~/path/to/django-sheerlike
+```
+Install Sheer-likes’s Python requirements:
+```bash
+pip install -r ~/path/to/django-sheerlike/requirements.txt
 ```
 
-Install Sheer’s Python requirements:
+Install Sheer in the same fashion as sheer-like:
 ```bash
+pip install -e ~/path/to/sheer
 pip install -r ~/path/to/sheer/requirements.txt
 ```
 
