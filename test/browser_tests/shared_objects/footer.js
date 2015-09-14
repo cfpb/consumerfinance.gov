@@ -1,8 +1,8 @@
 'use strict';
 
-function Footer() {
+function Footer( url ) {
   this.get = function() {
-    browser.get( '/' );
+    browser.get( url || '/' );
   };
 
   this.footer = element( by.css( '.footer' ) );
