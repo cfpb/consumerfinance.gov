@@ -67,7 +67,14 @@
         {% endfor %}
 
         <div class="sub-page_content-markup">
-            {{ content.markup | safe}}
+            {%- set content = sub_page.body_content | safe %}
+            {%- for form_name in vars.forms %}
+                {%- set form_token = '[' + form_name + ']' %}
+                {%- if (sub_page.body_content).find(form_token) > -1 %}
+                    {%- import '_includes/templates/forms/' + form_name | lower  + '.html' as form %}
+                    {{ content | replace(form_token, form|safe)}}
+                {%- endif %}
+            {% endfor %}
         </div>
     </section>
     {% endif %}
