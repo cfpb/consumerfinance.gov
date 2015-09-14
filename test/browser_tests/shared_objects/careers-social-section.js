@@ -1,6 +1,7 @@
 'use strict';
 
 var _getQAelement = require( '../util/QAelement' ).get;
+
 var _socialSection = _getQAelement( 'social-section' );
 
 var careersSocialSection = {

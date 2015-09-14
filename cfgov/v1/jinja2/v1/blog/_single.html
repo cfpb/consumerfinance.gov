@@ -33,7 +33,7 @@
         {% import 'related-posts.html' as related_posts with context %}
         {{ related_posts.render(post) }}
     </section>
-    <section class="block">
+    <section class="block" data-qa-hook="stay-informed-section">
         <h2 class="header-slug">
             <span class="header-slug_inner">
                 Stay informed
@@ -46,7 +46,7 @@
             {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render('USCFPB_91') }}
         </div>
-        <div class="block block__sub">
+        <div class="block block__sub" data-qa-hook="rss-subscribe-section">
             {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
         </div>
