@@ -172,6 +172,36 @@ urlpatterns = [
         namespace='govdelivery')),
 
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
+
+    url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
+
+    url(r'^careers/', include([
+        url(r'^$', TemplateView.as_view(template_name='careers/index.html'),
+            name='careers'),
+
+        url(r'^(?P<doc_id>[\w-]+)/$',
+            SheerTemplateView.as_view(doc_type='careers',
+                                      local_name='careers',
+                                      default_template='careers/_single.html'), name='career'),
+
+        url(r'^current-openings/$', SheerTemplateView.as_view(template_name='current-openings/index.html'),
+            name='current-openings'),
+        url(r'^students-and-graduates/$', SheerTemplateView.as_view(template_name='students-and-graduates/index.html'),
+            name='students-and-graduates'),
+
+        url(r'^working-at-cfpb/$', SheerTemplateView.as_view(template_name='working-at-cfpb/index.html'),
+            name='working-at-cfpb'),
+
+    ],
+        namespace='careers')),
+
+    url(r'^transcripts/', include([
+        url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$', SheerTemplateView.as_view(
+            template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),
+            name='how-to-apply-for-a-federal-job-with-the-cfpb'),
+    ],
+        namespace='transcripts')),
+
 ]
 
 from sheerlike import register_permalink
@@ -180,4 +210,5 @@ register_permalink('posts', 'blog:detail')
 register_permalink('newsroom', 'newsroom:detail')
 register_permalink('office', 'offices:detail')
 register_permalink('sub_page', 'sub_page:detail')
-register_permalink('events', 'event_archive')
+register_permalink('events', 'events:event')
+register_permalink('career', 'careers:career')
