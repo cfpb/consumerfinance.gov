@@ -7,7 +7,7 @@ var fs = require( 'fs' );
  */
 var loc = {
   src:  './src',
-  dist: './dist',
+  dist: './cfgov/v1/jinja2/v1',
   lib:  JSON.parse( fs.readFileSync( './.bowerrc' ) ).directory, // eslint-disable-line no-sync, no-inline-comments, max-len
   test: './test'
 };

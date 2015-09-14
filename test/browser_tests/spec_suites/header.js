@@ -13,7 +13,7 @@ describe( 'The Header Component', function() {
       var sheets = document.styleSheets;
       var hrefs = [];
 
-      for( i = 0; i < sheets.length; i++ ) {
+      for ( var i = 0; i < sheets.length; i++ ) {
         hrefs.push( sheets[i].href );
       }
 
@@ -23,12 +23,12 @@ describe( 'The Header Component', function() {
     }
 
     browser.executeScript( getStylesheets ).then(
-      function ( styleSheets ) {
+      function( styleSheets ) {
         browser.styleSheets = styleSheets;
       }
     );
 
-    browser.getCapabilities().then( function ( cap ) {
+    browser.getCapabilities().then( function( cap ) {
       browser.name = cap.caps_.browserName;
       browser.version = cap.caps_.version;
     } );

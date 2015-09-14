@@ -17,7 +17,7 @@ describe( 'Get Event States', function() {
 
   beforeEach( function() {
     //  Adding a simplified version of the thing we want to test.
-    //  Then calling the jQuery to test after
+    //  Then calling jQuery to test after.
     $( 'body' ).html(
       '<div class="js-primary-nav">' +
         '<div class="js-primary-nav_trigger"></div>' +

@@ -70,7 +70,11 @@ function _retrieveProtractorParams( params ) { // eslint-disable-line complexity
   var parsedParams = {};
 
   if ( _paramIsSet( params.specs ) ) {
-    parsedParams.specs = environment.specsBasePath + params.specs;
+    var specsArray = params.specs.split( ',' );
+    for ( var i = 0, len = specsArray.length; i < len; i++ ) {
+      specsArray[i] = environment.specsBasePath + specsArray[i];
+    }
+    parsedParams.specs = specsArray;
   }
 
   if ( _paramIsSet( params.browserName ) ) {

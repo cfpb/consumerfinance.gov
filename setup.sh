@@ -59,6 +59,9 @@ install(){
 
   # Macro Polo.
   pip install -r ./test/macro_tests/requirements.txt
+
+  # Django Server
+  pip install -r ./requirements/base.txt
 }
 
 # Run tasks to build the project for distribution.

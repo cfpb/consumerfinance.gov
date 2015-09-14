@@ -1,84 +1,25 @@
+{% import 'macros/util/form.html' as form %}
+{% import 'macros/util/common-form-fields.html' as form_field %}
     <section class="block
                     block__bg
                     block__border
                     block__flush-sides">
         <form class="form-l js-validate-filters">
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header"
-                       for="plain-writing-fb_first-name">
-                    First name
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_first-name"
-                       required
-                       type="text">
-            </div>
 
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header"
-                       for="plain-writing-fb_last-name">
-                    Last name
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_last-name"
-                       required
-                       type="text">
-            </div>
 
-            <div class="form-l_col form-l_col-1">
-                <label class="form-label-header"
-                       for="plain-writing-fb_organization-address">
-                    Address
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_organization-address"
-                       type="text"
-                       required>
-            </div>
+            {{ form.input('First Name', 'text', '1-2', true) }}
 
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header"
-                       for="plain-writing-fb_organization-city">
-                    City
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_organization-city"
-                       type="text"
-                       required>
-            </div>
+            {{ form.input('Last Name', 'text', '1-2', true) }}
 
-            <div class="form-l_col form-l_col-1-2">
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header"
-                           for="plain-writing-fb_organization-state">
-                        State
-                    </label>
-                    <div class="custom-select">
-                        <select class="custom-select_select"
-                                data-placeholder="State"
-                                id="plain-writing-fb_organization-state"
-                                required>
-                            <option value="">Please select</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="Other">Other States to be added</option>
-                        </select>
-                        <span class="custom-select_icon
-                                     cf-icon
-                                     cf-icon-down"></span>
-                    </div>
-                </div>
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header" for="plain-writing-fb_organization-zip">
-                        Zip code
-                    </label>
-                    <input class="input__long"
-                           id="plain-writing-fb_organization-zip"
-                           type="text"
-                           required>
-                </div>
-            </div>
+            {{ form.input('Address 1', 'text', '1', true) }}
+
+            {{ form.input('Address 2', 'text', '1', false) }}
+
+            {{ form.input('City', 'text', '1-3', true) }}
+
+            {{ form_field.state('1-3', true)}}
+
+            {{ form.input('Zip code', 'text', '1-3', true) }}
 
             <div class="form-l_col form-l_col-1">
                 <label class="form-label-header"
@@ -91,33 +32,9 @@
                        type="text">
             </div>
 
+            {{ form.textarea('Plain writing feedback', false, true) }}
 
-            <div class="form-l_col form-l_col-1">
-                <label class="form-label-header"
-                       for="plain-writing-fb_request-desc">
-                    Plain writing feedback
-                </label>
-                <textarea class="input__long"
-                          id="plain-writing-fb_request-desc"
-                          required>
-                </textarea>
-            </div>
-
-            <div class="form-l_col form-l_col-1"
-                 id="plain-writing-fb-fee-waiver-justify">
-                <label>
-                    <span class="form-label-header">
-                        URL with plain writing issue
-                    </span>
-                    <span class="micro-text">
-                        (Optional)
-                    </span>
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_starting-date"
-                       placeholder="http://www.consumerfinance.gov/"
-                       type="text">
-            </div>
+            {{ form.input('URL with plain writing issue', 'url', '1') }}
 
             <div class="form-actions form-actions__right-on-med">
                 <input class="btn form-actions_item"

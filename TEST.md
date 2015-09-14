@@ -53,12 +53,20 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 A number of command-line arguments can be set to test particular configurations:
 
- - `--specs`: Choose a particular spec suite to run. For example, `gulp test:acceptance --specs=shared_contact-us.js`.
- - `--windowSize`: Set the window size in pixels in `w,h` format. For example, `gulp test:acceptance --windowSize=900,400`.
- - `--browserName`: Set the browser to run. For example, `gulp test:acceptance --browserName=firefox`.
- - `--version`: Set the browser version to run. For example, `gulp test:acceptance --version='44.0'`.
- - `--platform`: Set the OS platform to run. For example, `gulp test:acceptance --platform='osx 10.10'`.
- - `--sauce`: Whether to run on Sauce Labs or not. For example, `gulp test:acceptance --sauce=false`.
+ - `--specs`: Choose a particular spec suite to run.
+   For example, `gulp test:acceptance --specs=contact-us.js`.
+   Multiple tests can be run by passing in a comma-separated list of test suite filenames.
+   For example, `gulp test:acceptance --specs=contact-us.js,about-us.js`.
+ - `--windowSize`: Set the window size in pixels in `w,h` format.
+   For example, `gulp test:acceptance --windowSize=900,400`.
+ - `--browserName`: Set the browser to run.
+   For example, `gulp test:acceptance --browserName=firefox`.
+ - `--version`: Set the browser version to run.
+   For example, `gulp test:acceptance --version='44.0'`.
+ - `--platform`: Set the OS platform to run.
+   For example, `gulp test:acceptance --platform='osx 10.10'`.
+ - `--sauce`: Whether to run on Sauce Labs or not.
+   For example, `gulp test:acceptance --sauce=false`.
 
 ## Pages
 

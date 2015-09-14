@@ -1,0 +1,134 @@
+{# ==========================================================================
+
+   common_form_fields.state()
+
+   ==========================================================================
+
+   Description: Returns a select box with all 50 states and DC.
+
+   legend:      Name of the field.
+
+   size:        The size of the fields. Defaults to 1-3.
+                Possible options: 1, 1-2, 1-3
+
+   required:    Whether the field is required. Defaults to false.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   ========================================================================== #}
+
+{% macro state(size='1-3', required=false, disabled=false) %}
+    {% from 'macros/util/form.html' import select as select %}
+    {{ select('State',
+              'Select state',
+              [ 'Alabama',
+                'Alaska',
+                'Arizona',
+                'Arkansas',
+                'California',
+                'Colorado',
+                'Connecticut',
+                'Delaware',
+                'District of Columbia',
+                'Florida',
+                'Georgia',
+                'Hawaii',
+                'Idaho',
+                'Illinois',
+                'Indiana',
+                'Iowa',
+                'Kansas',
+                'Kentucky',
+                'Louisiana',
+                'Maine',
+                'Maryland',
+                'Massachusetts',
+                'Michigan',
+                'Minnesota',
+                'Mississippi',
+                'Missouri',
+                'Montana',
+                'Nebraska',
+                'Nevada',
+                'New Hampshire',
+                'New Jersey',
+                'New Mexico',
+                'New York',
+                'North Carolina',
+                'North Dakota',
+                'Ohio',
+                'Oklahoma',
+                'Oregon',
+                'Pennsylvania',
+                'Rhode Island',
+                'South Carolina',
+                'South Dakota',
+                'Tennessee',
+                'Texas',
+                'Utah',
+                'Vermont',
+                'Virginia',
+                'Washington',
+                'West Virginia',
+                'Wisconsin',
+                'Wyoming'
+              ],
+              size,
+              required,
+              disabled) }}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   common_form_fields.date_picker()
+
+   ==========================================================================
+
+   Description: Returns a date picker.
+
+   legend:      Name of the field.
+
+   required:    Whether the field is required. Defaults to false.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   ========================================================================== #}
+
+{% macro date_picker(legend='Enter Date Range', required=false, disabled=false) %}
+    <fieldset class="u-reset">
+        <div class="form-l_col
+                    form-l_col-1
+                    u-mb0">
+            <legend class="form-label-header">
+                {{ legend }}
+            </legend>
+        </div>
+        <div class="form-l_col form-l_col-1-2">
+            <label class="micro-copy micro-copy__large"
+                   for="form_date-picker-starting-date">
+                From:
+            </label>
+            <input class="input__long"
+                   id="form_date-picker-starting-date"
+                   placeholder="mm/dd/yyyy"
+                   type="text"
+                   {{ 'required' if required }}
+                   {{ 'disabled' if disabled }}>
+        </div>
+        <div class="form-l_col
+                    form-l_col-1-2
+                    input__long">
+            <label class="micro-copy micro-copy__large"
+                   for="form_date-picker-ending-date">
+                To:
+            </label>
+            <input class="input__long"
+                   id="form_date-picker-ending-date"
+                   placeholder="mm/dd/yyyy"
+                   type="text"
+                   {{ 'required' if required }}
+                   {{ 'disabled' if disabled }}
+        </div>
+    </fieldset>
+{% endmacro %}
