@@ -202,16 +202,17 @@
             display: block;
             position: absolute;
             width: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             top: 0;
             bottom: 0;
+            z-index: 4;
         }
     }
 
     .header {
         position: relative;
         z-index: 10;
-        background-color: #fff;
+        background-color: @white;
     }
 
     .primary-nav {
@@ -254,7 +255,6 @@
 
             &:after {
                 .cf-icon();
-
 
                 position: absolute;
                 right: 0;
@@ -348,8 +348,8 @@
 
         left: 0;
 
-        // Kick off the GPU
-        transform: translate3d(0,0,0);
+        // Kick off the GPU.
+        transform: translate3d(0, 0, 0);
 
         // Expand the menu by looking for aria attributes.
         // This will help us to keep our eye on a11y.

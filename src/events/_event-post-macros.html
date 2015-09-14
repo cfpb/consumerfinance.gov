@@ -11,8 +11,8 @@
 
    calendar_date:      A valid date.
 
-   additional_classes: Extra classes you wish to add to the icon, space
-                       separated.
+   additional_classes: Extra classes you wish to add to the icon,
+                       space separated.
 
    ========================================================================== #}
 
@@ -39,10 +39,13 @@
    options (optional):         An object to use for customizing an event
                                location image using Google Maps.
 
-   options.additional_classes: Extra classes you wish to add to the image, space separated.
+   options.additional_classes: Extra classes you wish to add to the image,
+                               space separated.
 
-   options.location:           A location as either a comma-separated {latitude,longitude}
-                               pair (e.g. "40.714728,-73.998672") or a string address
+   options.location:           A location as either a comma-separated
+                               {latitude,longitude} pair
+                               (e.g. "40.714728,-73.998672")
+                               or a string address
                                (e.g. "city hall, new york, ny").
                                Defaults to 'Washington, DC'.
 
@@ -85,14 +88,15 @@
 
    Create HTML event meta markup when given:
 
-   post:                        A post from a query result.
+   post:                       A post from a query result.
 
-   address_format (optional):   A python string format to display
-                                address information
-                                (e.g. '{venue} - {city}, {state}').
+   address_format (optional):  A python string format to display
+                               address information
+                               (e.g. '{venue} - {city}, {state}').
+                               Defaults to '{city}, {state}'.
 
-   datetime_format (optional):  An object to use for customizing event-meta
-                                time and date formats.
+   datetime_format (optional): An object to use for customizing event-meta
+                               time and date formats.
 
    ========================================================================== #}
 
@@ -120,11 +124,12 @@
 
    Create HTML event meta address markup when given:
 
-   post                     : A post date from a query result.
+   venue:                     A post date from a query result.
 
    address_format (optional): A python string format to display to
                               address information
                               (e.g. '{venue} - {city}, {state}').
+                              Defaults to '{city}, {state}'.
 
    ========================================================================== #}
 
@@ -253,12 +258,11 @@
                     {{ time.render(post.beginning_time.date) }}
 
                     {# TODO: Replace with real download link #}
+                    {% if event_state == 'future' %}
                     <a class="event-calendar_download
                               jump-link
                               jump-link__download
                               u-link__disabled">
-                    {% if event_state == 'future' %}
-                    <a class="event-calendar_download jump-link jump-link__download" href="#">
                         <span class="jump_link_text">Download .ics</span>
                     </a>
                     {% endif %}
@@ -269,17 +273,17 @@
         <footer>
             <figure class="event-media_container">
             {# TODO: Add code for live streaming Event and determine image property name #}
-            {% if (event_state == 'past' and post.archive.youtube is defined)  %}
+            {% if (event_state == 'past' and post.archive.youtube is defined) %}
                 {% import 'macros/video-player.html' as video_player %}
                 {% set video_id   = post.archive.youtube.split('=') | last %}
-                {% set image_url  = post.attachments[1].url.replace('content.','') %}
+                {% set image_url  = post.attachments[1].url.replace('content.', '') %}
                 {{ video_player.render({
-                      'button_pos' : 'bottomRight',
-                      'image' : {
-                          'url' : image_url,
+                      'button_pos': 'bottomRight',
+                      'image': {
+                          'url': image_url,
                       },
-                      'video' : {
-                          'id' : video_id
+                      'video': {
+                          'id': video_id
                       }
                    })
                 }}
