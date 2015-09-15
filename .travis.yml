@@ -20,7 +20,7 @@ install:
   - pip install tox
   - git clone https://github.com/cfpb/django-sheerlike
   - pip install -e django-sheerlike
-  - pip install -r django-sheerlike/requirements/base.txt
+  - pip install -r django-sheerlike/requirements.txt
   - git clone https://github.com/cfpb/sheer
   - pip install -e sheer
   - pip install -r sheer/requirements.txt

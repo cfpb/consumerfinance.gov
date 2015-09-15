@@ -17,8 +17,8 @@
     {% import 'macros/category-icon.html' as category_icon %}
     {% from 'post-macros.html' import pagination as pagination with context %}
 
-    <h1>Activity Log</h1>
-    <p class="h3">
+    <h1 data-qa-hook="main-title">Activity Log</h1>
+    <p class="h3" data-qa-hook="main-summary">
         Find the latest CFPB activities and publications here. Use the filters
         below to browse by date, specific topics, or types of posts.
     </p>
@@ -32,7 +32,7 @@
                 { 'expand_label': 'Filter activities' }
             ) }}
 
-        <table class="u-w100pct">
+        <table class="u-w100pct" data-qa-hook="filter-results">
             <tbody>
             {%- for item in archives %}
                 <tr>

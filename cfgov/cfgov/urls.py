@@ -9,6 +9,56 @@ from v1.views import LeadershipCalendarPDFView, EventICSView
 urlpatterns = [
     url(r'^$', SheerTemplateView.as_view(), name='home'),
 
+    url(r'^docs/', include([
+        url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
+
+        url(r'^sheer-layouts/', include([
+            url(r'^$', SheerTemplateView.as_view(template_name='sheer-layouts/index.html'), name='index'),
+            url(r'^jinja-content-blocks/$',
+                SheerTemplateView.as_view(template_name='sheer-layouts/jinja-content-blocks/index.html'),
+                name='jinja-content-blocks'),
+            url(r'^content-base/$', SheerTemplateView.as_view(template_name='sheer-layouts/content-base/index.html'),
+                name='content-base'),
+            url(r'^content-base-main-first/$',
+                SheerTemplateView.as_view(template_name='sheer-layouts/content-base-main-first/index.html'),
+                name='content-base-main-first'),
+            url(r'^content-base-sidebar-first/$',
+                SheerTemplateView.as_view(template_name='sheer-layouts/content-base-sidebar-first/index.html'),
+                name='content-base-sidebar-first'),
+            url(r'^layout-1-3/$', SheerTemplateView.as_view(template_name='sheer-layouts/layout-1-3/index.html'),
+                name='layout-1-3'),
+            url(r'^layout-side-nav/$',
+                SheerTemplateView.as_view(template_name='sheer-layouts/layout-side-nav/index.html'),
+                name='layout-side-nav'),
+            url(r'^layout-2-1/$', SheerTemplateView.as_view(template_name='sheer-layouts/layout-2-1/index.html'),
+                name='layout-2-1'),
+            url(r'^layout-2-1-bleedbar/$',
+                SheerTemplateView.as_view(template_name='sheer-layouts/layout-2-1-bleedbar/index.html'),
+                name='layout-2-1-bleedbar'),
+            url(r'^hero/$', SheerTemplateView.as_view(template_name='sheer-layouts/hero/index.html'),
+                name='hero'),
+        ],
+            namespace='sheer-layouts')),
+
+        url(r'^blog-docs/$', SheerTemplateView.as_view(template_name='blog-docs/index.html'), name='blog-docs'),
+        url(r'^cf-enhancements/$', SheerTemplateView.as_view(template_name='cf-enhancements/index.html'),
+            name='cf-enhancements'),
+        url(r'^forms/$', SheerTemplateView.as_view(template_name='forms/index.html'), name='doc-forms'),
+        url(r'^header/$', SheerTemplateView.as_view(template_name='header/index.html'), name='doc-header'),
+        url(r'^lists/$', SheerTemplateView.as_view(template_name='lists/index.html'), name='doc-lists'),
+        url(r'^media/$', SheerTemplateView.as_view(template_name='media/index.html'), name='doc-media'),
+        url(r'^media-object/$', SheerTemplateView.as_view(template_name='media/index.html'), name='doc-media-object'),
+        url(r'^meta/$', SheerTemplateView.as_view(template_name='meta/index.html'), name='doc-meta'),
+        url(r'^misc/$', SheerTemplateView.as_view(template_name='misc/index.html'), name='doc-misc'),
+        url(r'^nav-secondary/$', SheerTemplateView.as_view(template_name='nav-secondary/index.html'),
+            name='nav-secondary'),
+        url(r'^post/$', SheerTemplateView.as_view(template_name='post/index.html'), name='doc-post'),
+        url(r'^print/$', SheerTemplateView.as_view(template_name='print/index.html'), name='doc-print'),
+        url(r'^summary/$', SheerTemplateView.as_view(template_name='summary/index.html'), name='doc-summary'),
+
+    ],
+        namespace='docs')),
+
     url(r'^blog/', include([
         url(r'^$', TemplateView.as_view(template_name='blog/index.html'),
             name='index'),
@@ -122,6 +172,35 @@ urlpatterns = [
         namespace='govdelivery')),
 
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
+
+    url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
+
+    url(r'^careers/', include([
+        url(r'^$', TemplateView.as_view(template_name='careers/index.html'),
+            name='careers'),
+
+        url(r'^(?P<doc_id>[\w-]+)/$',
+            SheerTemplateView.as_view(doc_type='careers',
+                                      local_name='careers',
+                                      default_template='careers/_single.html'), name='career'),
+
+        url(r'^current-openings/$', SheerTemplateView.as_view(template_name='current-openings/index.html'),
+            name='current-openings'),
+        url(r'^students-and-graduates/$', SheerTemplateView.as_view(template_name='students-and-graduates/index.html'),
+            name='students-and-graduates'),
+
+        url(r'^working-at-cfpb/$', SheerTemplateView.as_view(template_name='working-at-cfpb/index.html'),
+            name='working-at-cfpb'),
+
+    ],
+        namespace='careers')),
+
+    url(r'^transcripts/', include([
+        url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$', SheerTemplateView.as_view(
+            template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),
+            name='how-to-apply-for-a-federal-job-with-the-cfpb'),
+    ],
+        namespace='transcripts')),
 ]
 
 from sheerlike import register_permalink
@@ -130,4 +209,5 @@ register_permalink('posts', 'blog:detail')
 register_permalink('newsroom', 'newsroom:detail')
 register_permalink('office', 'offices:detail')
 register_permalink('sub_page', 'sub_page:detail')
-register_permalink('events', 'event_archive')
+register_permalink('events', 'events:event')
+register_permalink('career', 'careers:career')
