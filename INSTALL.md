@@ -69,7 +69,7 @@ brew info elasticsearch
 ```
 
 ### Sheer-like & Sheer
-#### NOTE: Ensure you install sheer-like first to avoid version conflicts with dependencies
+#### NOTE: Ensure you install Sheer-like first to avoid version conflicts with dependencies.
 To [install Sheer-like](https://github.com/cfpb/django-sheerlike/blob/master/README.rst), start by cloning the
 Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
 ```bash
