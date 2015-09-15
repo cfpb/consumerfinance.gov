@@ -34,6 +34,17 @@
 
         <table class="u-w100pct" data-qa-hook="filter-results">
             <tbody>
+                <tr class="u-visually-hidden">
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Date published
+                    </th>
+                </tr>
             {%- for item in archives %}
                 <tr>
                     <td class="u-w20pct">
@@ -52,9 +63,9 @@
                     </td>
                     <td class="u-w65pct">
                         <a href="{{ item.permalink }}">
-                            <h4 class="u-mb0">
+                            <span class="h4 u-mb0">
                                 {{ item.title }}
-                            </h4>
+                            </span>
                         </a>
                     </td>
                     <td class="u-w15pct">

@@ -69,9 +69,9 @@
     {{ pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
 
     <section class="block block__padded-top block__border-top">
-        <h1 class="h2">
+        <h2>
             Download a copy
-        </h1>
+        </h2>
         <p>
             Choose the names and dates for which you want to see the calendar. Appointments are
             only available for months when someone was serving in Bureau leadership. We’ll
@@ -96,12 +96,11 @@
                   block__bg
                   block__border-top
                   block__border-right">
-        {# TODO: Add FOIA and Open government URLs. #}
         {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
-            [ '',
+            [ '/offices/foia-requests/',
               'Read more about FOIA' ],
-            [ '',
+            [ '/offices/open-government/',
               'Open government' ],
             [ vars.path + 'history/',
               'About our history' ]

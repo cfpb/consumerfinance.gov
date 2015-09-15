@@ -26,9 +26,9 @@
                             qa-subpage
                             {{ 'block__border-bottom' if is_office_page == false }}">
                   {% if title %}
-                      <h1 class="h2">
+                      <h2>
                           {{ title }}
-                      </h1>
+                      </h2>
                   {% endif %}
                   <div class="content-l
                               content-l__main
@@ -65,9 +65,9 @@
                       </button>
                       <div class="expandable_content">
                           {% if expandable_title %}
-                              <h2 class="h4 u-hide-on-mobile">
+                              <h3 class="h4 u-hide-on-mobile">
                                   {{ expandable_title | safe }}
-                              </h2>
+                              </h3>
                           {% endif %}
                           {% if page.excerpt %}
                               <p class="short-desc">
