@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added webpack module loader for per-page JavaScript.
 - Added external-site page-specific script.
 - Added `config/environment.js` for project JS path configuration.
+- Added filesystem helper to gulp utilities for retrieving a binary executable.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
