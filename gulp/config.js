@@ -1,16 +1,7 @@
 'use strict';
 
 var fs = require( 'fs' );
-
-/**
- * Set up file paths
- */
-var loc = {
-  src:  './src',
-  dist: './dist',
-  lib:  JSON.parse( fs.readFileSync( './.bowerrc' ) ).directory, // eslint-disable-line no-sync, no-inline-comments, max-len
-  test: './test'
-};
+var paths = require( '../config/environment' ).paths;
 
 module.exports = {
   pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
@@ -34,9 +25,9 @@ module.exports = {
       ' */\n',
   lint: {
     src: [
-      loc.src + '/static/js/**/*.js',
-      loc.test + '/unit_tests/**/*.js',
-      loc.test + '/browser_tests/**/*.js'
+      paths.src + '/static/js/**/*.js',
+      paths.test + '/unit_tests/**/*.js',
+      paths.test + '/browser_tests/**/*.js'
     ],
     gulp: [
       'gulpfile.js',
@@ -44,89 +35,75 @@ module.exports = {
     ]
   },
   test: {
-    src:   loc.src + '/static/js/**/*.js',
-    tests: loc.test
+    src:   paths.src + '/static/js/**/*.js',
+    tests: paths.test
   },
   clean: {
-    dest: loc.dist
+    dest: paths.dist
   },
   styles: {
-    cwd:      loc.src + '/static/css',
+    cwd:      paths.src + '/static/css',
     src:      '/main.less',
-    dest:     loc.dist + '/static/css',
+    dest:     paths.dist + '/static/css',
     settings: {
       paths: [
-        loc.lib,
-        loc.lib + '/cf-typography/src'
+        paths.lib,
+        paths.lib + '/cf-typography/src'
       ],
       compress: true
     }
   },
-  scripts: {
-    bundleConfigs: [
-      {
-        entries:    loc.src + '/static/js/routes/common.js',
-        dest:       loc.dist + '/static/js/routes',
-        outputName: 'common.min.js',
-        require:    [
-          'jquery',
-          'jquery-easing',
-          'cf-expandables',
-          'chosen'
-        ]
-      }
-    ]
-  },
   images: {
-    src:  loc.src + '/static/img/**',
-    dest: loc.dist + '/static/img'
+    src:  paths.src + '/static/img/**',
+    dest: paths.dist + '/static/img'
   },
   copy: {
     files: {
       src: [
-        loc.src + '/**/*.html',
-        loc.src + '/**/*.pdf',
-        loc.src + '/_*/**/*',
-        loc.src + '/robots.txt',
-        loc.src + '/favicon.ico',
-        '!' + loc.lib + '/**/*.html'
+        paths.src + '/**/*.html',
+        paths.src + '/**/*.pdf',
+        paths.src + '/_*/**/*',
+        paths.src + '/robots.txt',
+        paths.src + '/favicon.ico',
+        '!' + paths.lib + '/**/*.html'
       ],
-      dest: loc.dist
+      dest: paths.dist
     },
     legacy: {
-      src:  loc.src + '/static-legacy/**/*',
-      dest: loc.dist + '/static-legacy'
+      src:  paths.src + '/static-legacy/**/*',
+      dest: paths.dist + '/static-legacy'
     },
     icons: {
-      src:  loc.lib + '/cf-icons/src/fonts/*',
-      dest: loc.dist + '/static/fonts/'
+      src:  paths.lib + '/cf-icons/src/fonts/*',
+      dest: paths.dist + '/static/fonts/'
     },
     vendorfonts: {
-      src:  loc.src + '/static/fonts/pdfreactor/*',
-      dest: loc.dist + '/static/fonts/pdfreactor'
+      src:  paths.src + '/static/fonts/pdfreactor/*',
+      dest: paths.dist + '/static/fonts/pdfreactor'
     },
     vendorcss: {
       src: [
-        loc.lib + '/slick-carousel/slick/slick.css',
-        loc.lib + '/slick-carousel/slick/slick.css.map',
-        loc.src + '/static/css/pdfreactor-fonts.css'
+        paths.lib + '/slick-carousel/slick/slick.css',
+        paths.lib + '/slick-carousel/slick/slick.css.map',
+        paths.src + '/static/css/pdfreactor-fonts.css'
       ],
-      dest: loc.dist + '/static/css'
+      dest: paths.dist + '/static/css'
     },
     vendorimg: {
       src: [
-        loc.lib + '/slick-carousel/slick/ajax-loader.gif',
-        loc.lib + '/chosen/chosen-sprite.png',
-        loc.lib + '/chosen/chosen-sprite@2x.png'
+        paths.lib + '/slick-carousel/slick/ajax-loader.gif',
+        paths.lib + '/chosen/chosen-sprite.png',
+        paths.lib + '/chosen/chosen-sprite@2x.png'
       ],
-      dest: loc.dist + '/static/img'
+      dest: paths.dist + '/static/img'
     },
     vendorjs: {
       src: [
-        loc.lib + '/box-sizing-polyfill/boxsizing.htc',
-        loc.lib + '/html5shiv/dist/html5shiv-printshiv.min.js'
+        paths.lib + '/jquery/dist/jquery.min.js',
+        paths.lib + '/box-sizing-polyfill/boxsizing.htc',
+        paths.lib + '/html5shiv/dist/html5shiv-printshiv.min.js'
       ],
-      dest: loc.dist + '/static/js/'
+      dest: paths.dist + '/static/js/'
     }
   }
 };

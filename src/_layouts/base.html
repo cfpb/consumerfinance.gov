@@ -99,6 +99,14 @@
         docElement.className = docElement.className.replace( /(^|\s)no-js(\s|$)/, '$1$2' );
     </script>
 
+    {# TODO: jQuery CDN is provided in the head to satisfy
+             Google Tag Manager (GTM) requirements.
+             Ideally GTM would handle its own dependency management
+             and initializing jQuery could be moved to the footer. #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>if (!window.jQuery) { document.write('<script src="/static/js/jquery.min.js"><\/script>'); }
+    </script>
+
 </head>
 
 <body>
@@ -110,9 +118,9 @@
 -->
     <!-- CLASSIC ANALYTICS -->
     {# TODO: Remove Google Analytics code snippet once GTM is stable.
-         We are double tagging with classic analytics and tag manager
-         so that we can test any differences between the two.
-         See: https://github.com/cfpb/cfgov-refresh/issues/496 #}
+             We are double tagging with classic analytics and tag manager
+             so that we can test any differences between the two.
+             See: https://github.com/cfpb/cfgov-refresh/issues/496 #}
     <script>
         var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -184,10 +192,30 @@
     BODY SCRIPTS
     ============
     The number of scripts here must be kept to a minimum.
-    common.min.js = Application-wide JavaScript.
 -->
+
 {% block javascript %}
-<script src="{{ url_for('static', filename='js/routes/common.min.js') }}"></script>
+
+{# Include site-wide JavaScript. #}
+<script type='text/javascript'>
+    {% include '/static/js/routes/common.js' %}
+</script>
+
+{# Include template and page-specific JavaScript. #}
+{% macro page_template_js() %}
+    {# Check and include template-level JavaScript. #}
+    {% include '/static/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+
+    {# Check and include page-level JavaScript. #}
+    {% include '/static/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+{% endmacro %}
+{% set js_source = page_template_js() | trim %}
+{% if js_source | length > 0 %}
+<script type='text/javascript'>
+    {{ js_source }}
+</script>
+{% endif %}
+
 {% endblock javascript %}
 
 </body>

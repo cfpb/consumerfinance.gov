@@ -1,7 +1,8 @@
 /* ==========================================================================
-   Scripts for `/careers/application-process/.
+   Bureau structure.
+   Scripts for `/external-site/`.
    ========================================================================== */
 
 'use strict';
 
-require( '../../../modules/init-mobile-only-expandables' ).init();
+require( '../../modules/external-site.js' ).init();
