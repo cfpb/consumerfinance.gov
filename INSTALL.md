@@ -156,6 +156,11 @@ Next, install dependencies with:
 ./setup.sh
 ```
 
+**Note** to install dependencies for local development use:
+```bash
+./setup.sh local
+```
+
 > **NOTE**: To re-install and rebuild all the site’s assets run `./setup.sh` again.
 See the usage section [updating all the project dependencies](README.md#updating-all-dependencies).
 
@@ -168,6 +173,8 @@ from the `.env_SAMPLE` file found in the repository,
 if you don't already have one.
 
 Inside the `.env` file you can customize the project environment configuration.
+
+**For local development ensure you change the 'DJANGO_ENV' variable to 'local'**
 
 If you would like to manually copy the environment settings,
 copy the `.env_SAMPLE` file and un-comment each variable after
