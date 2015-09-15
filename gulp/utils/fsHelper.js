@@ -18,4 +18,4 @@ function getBinary( binaryName ) {
 
 module.exports = {
   getBinary: getBinary
-}
+};
