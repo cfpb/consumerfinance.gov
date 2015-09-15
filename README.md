@@ -138,11 +138,13 @@ Error importing package flask_eventics
 To watch for changes in the source code and automatically update the running site,
 open a terminal and run:
 
-```
-$ gulp watch
+``` bash
+gulp build
+gulp watch
 ```
 
 **NOTE:** The watch task only runs for the tasks for files that have changed.
+Also, you must run `gulp build` at least once before watching.
 
 #### Available Gulp Tasks
 In addition to `gulp watch`, there are a number of other important gulp tasks,
