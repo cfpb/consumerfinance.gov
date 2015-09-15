@@ -55,19 +55,19 @@
         </section>
         {% endif %}
 
-        {% set content = { 'markup' : sub_page.body_content|safe } %}
+        {% set content = { 'markup' : sub_page.body_content | safe } %}
         {% for form_name in vars.forms %}
             {% set form_token = '[' + form_name + ']' %}
             {% if (sub_page.body_content).find(form_token) > -1 %}
                 {% import 'templates/forms/' + form_name | lower  + '.html' as form %}
                 {% set _ignore = content.update(
-                    { 'markup' : content.markup | replace(form_token, form|safe) }
+                    { 'markup' : content.markup | replace(form_token, form | safe) }
                 )%}
             {% endif %}
         {% endfor %}
 
         <div class="sub-page_content-markup">
-            {{ content.markup | safe}}
+            {{ content.markup }}
         </div>
 
     </section>
