@@ -7,6 +7,22 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Application definition
 
 INSTALLED_APPS = (
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
+
+    'modelcluster',
+    'compressor',
+    'taggit',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -14,7 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-     'v1',
+    'v1',
     'sheerlike',
 )
 
@@ -33,10 +49,18 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'cfgov.urls'
 
 TEMPLATES = [
-{
+    {
+        'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'OPTIONS':{
-            'environment':'sheerlike.environment'
+        'OPTIONS': {
+            'environment': 'v1.environment'
+        }
+    },
+    {
+        'NAME': 'sheerlike-env',
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'OPTIONS': {
+            'environment': 'sheerlike.environment'
         }
     },
     {
@@ -50,7 +74,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-        },
+        }
     }
 ]
 
@@ -86,8 +110,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
 
 ALLOWED_HOSTS = ['*']
+
+# Wagtail settings
+
+WAGTAIL_SITE_NAME = "v1"
 
 # Sheer related settings
 

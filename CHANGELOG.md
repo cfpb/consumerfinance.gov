@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Django Server
 - Django related urls to access links
 - Django-Sheerlike integration
+- Wagtail CMS
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
