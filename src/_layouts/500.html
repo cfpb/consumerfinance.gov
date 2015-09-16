@@ -43,6 +43,9 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ url_for('static', filename='js/routes/common.js') }}"></script>
+{# Include site-wide JavaScript. #}
+<script type='text/javascript'>
+    {% include '/static/js/routes/common.js' %}
+</script>
 {% endblock javascript %}
 
