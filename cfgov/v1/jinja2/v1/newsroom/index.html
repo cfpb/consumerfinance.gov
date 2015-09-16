@@ -15,7 +15,7 @@
 
 {% block content_main %}
 
-    <h1 class="u-mb30">Newsroom</h1>
+    <h1 class="u-mb30" data-qa-hook="main-title">Newsroom</h1>
 
     {# Get the latest Featured Topic #}
     {% import 'featured-topic.html' as featured_topics %}
@@ -33,7 +33,7 @@
 
     {# Footer #}
     <aside>
-        <section class="block">
+        <section class="block" data-qa-hook="stay-informed-section">
             <h2 class="header-slug">
                 <span class="header-slug_inner">
                     Stay informed
@@ -47,7 +47,8 @@
                     {% import 'macros/subscribe.html' as subscribe with context %}
                     {{ subscribe.render('USCFPB_23') }}
                 </div>
-                <div class="block__sub content-l_col content-l_col-1-2">
+                <div class="block__sub content-l_col content-l_col-1-2"
+                     data-qa-hook="rss-subscribe-section">
                     {% import 'rss.html' as rss %}
                     {{ rss.render(vars.rss_path) }}
                 </div>

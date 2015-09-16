@@ -52,6 +52,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - A temporary blog page template for testing
 - Added `block__flush` to cf-enhancements to remove margin from all sides.
 - Added Acceptance tests for `blog` pages.
+- Added Acceptance tests for `newsroom` pages.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
