@@ -40,4 +40,5 @@ script:
 
 env:
   - TOXENV=py27
+  - DJANGO_ENV=test
 
