@@ -110,9 +110,9 @@
             {% endif %}
             <div class="media_body">
                 {% if resource.title %}
-                <h2 class="qa-resource-title">
+                <h3 class="h2 qa-resource-title">
                     {{ resource.title | safe }}
-                </h2>
+                </h3>
                 {% endif %}
 
                 {% if resource.desc %}
@@ -145,19 +145,21 @@
                     block__padded-top
                     block__border-top
                     qa-office-content">
-        {{ office.content | safe}}
+        {{ office.content | safe }}
     </section>
     {% endif %}
-    <div class="block
-                block__flush-sides
-                block__flush-bottom
-                block__border-top
-                block__border-right">
-        {% if office.tags %}
-            {% import 'macros/activities-block.html' as activities_block with context %}
-            {{ activities_block.render(office.tags) }}
-        {% endif %}
+    <aside>
+        <div class="block
+                    block__flush-sides
+                    block__flush-bottom
+                    block__border-top
+                    block__border-right">
+            {% if office.tags %}
+                {% import 'macros/activities-block.html' as activities_block with context %}
+                {{ activities_block.render(office.tags) }}
+            {% endif %}
 
-        {% include 'templates/office-contact.html' %}
-    </div>
+            {% include 'templates/office-contact.html' %}
+        </div>
+    </aside>
 {% endblock %}

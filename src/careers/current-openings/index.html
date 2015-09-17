@@ -37,9 +37,9 @@
 
     {% import '_macro-table-current-openings.html' as table_current_openings %}
 
-    <section class="block
-                    block__flush-top
-                    block__sub">
+    <div class="block
+                block__flush-top
+                block__sub">
             <h1>Current Openings</h1>
             <p class="h3">
                 Find the position that’s right for you.
@@ -53,42 +53,41 @@
                 Creating this kind of market takes a dedication to service,
                 leadership and innovation.
             </p>
-    </section>
+    </div>
 
     <div class="block
                 block__flush-top">
         {{ table_current_openings.render(vars.careers) }}
     </div>
-
-    <div class="block
-                block__border-top
-                block__flush-bottom">
-        {# This extra div is to keep the horizontal lines size consistent #}
-        <div class="content-l">
-            <section class="content-l_col
-                            content-l_col-1-2
-                            block
-                            block__padded-top
-                            block__padded-bottom
-                            block__flush-top
-                            block__flush-bottom">
-                {% include '_template-job-app-process.html' %}
-            </section>
-            <section class="content-l_col
-                            content-l_col-1-2
-                            block
-                            block__padded-top
-                            block__padded-bottom
-                            block__flush-top
-                            block__flush-bottom">
-                {% include '_template-working-at-cfpb.html' %}
-            </section>
-        </div>
-    </div>
-
-    {% include '_template-block-social.html' %}
-
     <aside>
+        <div class="block
+                    block__border-top
+                    block__flush-bottom">
+            {# This extra div is to keep the horizontal lines size consistent #}
+            <div class="content-l">
+                <section class="content-l_col
+                                content-l_col-1-2
+                                block
+                                block__padded-top
+                                block__padded-bottom
+                                block__flush-top
+                                block__flush-bottom">
+                    {% include '_template-job-app-process.html' %}
+                </section>
+                <section class="content-l_col
+                                content-l_col-1-2
+                                block
+                                block__padded-top
+                                block__padded-bottom
+                                block__flush-top
+                                block__flush-bottom">
+                    {% include '_template-working-at-cfpb.html' %}
+                </section>
+            </div>
+        </div>
+
+        {% include '_template-block-social.html' %}
+
         {% include '_template-careers-related-links.html' %}
     </aside>
 

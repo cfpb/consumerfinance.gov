@@ -40,7 +40,7 @@
     <section class="block block__padded-top block__border-top">
         <div class="content-l content-l__main">
             <div class="content-l_col content-l_col-2-3">
-                <h1 class="h2">{{ section.title|safe }}</h1>
+                <h2>{{ section.title|safe }}</h2>
                 <p class="short-desc">
                     {{ section.section_date_from }} &ndash; {{ section.section_date_to }}
                 </p>
@@ -67,14 +67,14 @@
     {% for history in first %}
         {% if history_vars.update({'current_year': history.date|date('%Y')|int}) %} {% endif %}
     {% endfor %}
-                    <h2 class="history-year">{{ history_vars.current_year }}</h2>
+                    <h3 class="history-year">{{ history_vars.current_year }}</h3>
                     <ol class="history-list">
     {% set histories = query.search(filter_parent=section.id) %}
     {% for history in histories %}
         {% if history.date|date('%Y')|int < history_vars.current_year %}
             {% if history_vars.update({'current_year': history.date|date('%Y')|int}) %} {% endif %}
                     </ol>
-                    <h2 class="history-year">{{ history_vars.current_year }}</h2>
+                    <h3 class="history-year">{{ history_vars.current_year }}</h3>
                     <ol class="history-list">
         {% endif %}
                         <li class="history-item expandable expandable__padded">
@@ -89,13 +89,13 @@
                                         <span class="cf-icon cf-icon-minus-round"></span>
                                     </span>
                                 </span>
-                                <h3 class="expandable_header-left history-item_title">
+                                <h4 class="expandable_header-left history-item_title">
                                     <span class="history-item_date">
                                         {{ history.item_date if history.item_date
                                            else history.date|date('%b %d, %Y') }}
                                     </span>
                                     {{ history.title|safe }}
-                                </h3>
+                                </h4>
                             </button>
                             <div class="expandable_content">
                             {% if history.thumbnail.images %}

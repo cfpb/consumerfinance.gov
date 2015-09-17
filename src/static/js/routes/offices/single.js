@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Scripts for `/careers/application-process/.
+   Scripts for `/offices/*` pages.
    ========================================================================== */
 
 'use strict';
 
-require( '../../../modules/init-mobile-only-expandables' ).init();
+require( '../../modules/init-mobile-only-expandables' ).init();

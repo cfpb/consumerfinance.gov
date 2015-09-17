@@ -6,7 +6,7 @@
 
 
 {% block content_main %}
-    <section class="block
+    <div class="block
                     block__flush-top">
         <h1>About Us</h1>
         <p class="h3">
@@ -36,7 +36,7 @@
                 </a>
             </li>
         </ul>
-    </section>
+    </div>
     <div class="content-l">
         {# The extra div is to prevent border tapering from combining block__border and content-l classes #}
         <div class="content-l_col-1-2">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="media_body">
                         <span class="h6">Director</span>
-                        <h2 class="bureau-bio_name">Richard Cordray</h2>
+                        <h3 class="bureau-bio_name">Richard Cordray</h3>
                         <a class="jump-link jump-link__underline"
                            href="/the-bureau/about-director/">
                             Cordray’s bio
@@ -70,7 +70,7 @@
                     </div>
                     <div class="media_body">
                         <span class="h6">Deputy Director</span>
-                        <h2 class="bureau-bio_name">Meredith Fuchs</h2>
+                        <h3 class="bureau-bio_name">Meredith Fuchs</h3>
                         <a class="jump-link jump-link__underline"
                            href="/the-bureau/about-deputy-director/">
                             Fuchs’s bio
@@ -173,15 +173,15 @@
 {% endblock %}
 
 {% block content_sidebar scoped -%}
+    <aside>
+        {# TODO Add Events to the Activity Snippets #}
 
-    {# TODO Add Events to the Activity Snippets #}
-
-    {% import 'macros/activity-snippets.html' as activity_snippets with context %}
-    {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'], include_date_flag=true) %}
-    {% include 'templates/activities-feed.html' %}
-    <a class="jump-link jump-link__underline"
-       href="/activity-log/">
-        View all of our activities
-    </a>
-
+        {% import 'macros/activity-snippets.html' as activity_snippets with context %}
+        {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'], include_date_flag=true) %}
+        {% include 'templates/activities-feed.html' %}
+        <a class="jump-link jump-link__underline"
+           href="/activity-log/">
+            View all of our activities
+        </a>
+    </aside>
 {%- endblock %}

@@ -1,6 +1,5 @@
 import os
 from unipath import Path
-import v1
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
@@ -92,6 +91,6 @@ ALLOWED_HOSTS = ['*']
 
 # Sheer related settings
 
-SHEER_SITES = [os.path.dirname(v1.__file__) + '/jinja2/v1', Path(__file__).ancestor(4).child('docs')]
+SHEER_SITES = [Path(os.path.dirname(__file__)).ancestor(2) + '/v1/jinja2/v1', Path(__file__).ancestor(4).child('docs')]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST') + ':' + os.environ.get('ES_PORT')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX')

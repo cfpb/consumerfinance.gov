@@ -15,9 +15,17 @@ function init() {
   var $subNavs = $( '.js-sub-nav' );
   var $subBack = $( '.js-sub-nav_back' );
 
-  /* TODO: Add Unit Tests */
   $primaryTrigger.on( 'click', function() {
-    es.set.toggleExpandedState( $primaryNav );
+    if ( es.get.isThisExpanded( $primaryNav ) ) {
+      es.set.toggleExpandedState( $primaryNav, 'false', function() {
+        $primaryTrigger.focus();
+      } );
+    } else {
+      es.set.toggleExpandedState( $primaryNav, 'true', function() {
+        $primaryLink[0].focus();
+      } );
+    }
+
     es.set.toggleExpandedState( $primaryTrigger );
     es.set.toggleExpandedState( $( 'body' ) );
   } );
@@ -28,16 +36,26 @@ function init() {
     var $this = $( this );
     var $thisSubNav = $this.siblings( '.js-sub-nav' );
     var $otherSubNavs = $subNavs.not( $thisSubNav );
+    var $firstLink = $thisSubNav.find( 'a' )[0];
 
     if ( es.get.isOneExpanded( $otherSubNavs ) ) {
       es.set.toggleExpandedState( $primaryLink, 'false' );
       es.set.toggleExpandedState(
         $otherSubNavs,
         'false',
-        es.set.toggleExpandedState( $thisSubNav )
+        function() {
+          es.set.toggleExpandedState( $thisSubNav );
+          $firstLink.focus();
+        }
       );
+    } else if ( es.get.isThisExpanded( $thisSubNav ) ) {
+      es.set.toggleExpandedState( $thisSubNav, 'false', function() {
+        $this.focus();
+      } );
     } else {
-      es.set.toggleExpandedState( $thisSubNav );
+      es.set.toggleExpandedState( $thisSubNav, null, function() {
+        $firstLink.focus();
+      } );
     }
 
     es.set.toggleExpandedState( $this );
@@ -45,9 +63,13 @@ function init() {
 
   $subBack.on( 'click', function() {
     var $thisSubNav = $( this ).closest( '.js-sub-nav' );
-
+    var $thisPrimaryLink = $( this )
+                           .closest( '.js-primary-nav_item' )
+                           .find( '.js-primary-nav_link' );
     es.set.toggleExpandedState( $primaryLink, 'false' );
-    es.set.toggleExpandedState( $thisSubNav, 'false' );
+    es.set.toggleExpandedState( $thisSubNav, 'false', function() {
+      $thisPrimaryLink.focus();
+    } );
   } );
 
 /*
