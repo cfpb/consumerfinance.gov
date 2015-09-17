@@ -18,11 +18,12 @@
 
     {% set query = queries.history %}
 
-    <div class="block block__flush-top">
-        <h1>
+    <div class="block block__flush-top"
+         data-qa-hook="history-intro">
+        <h1 data-qa-hook="history-title">
             The history of the Consumer Financial Protection Bureau
         </h1>
-        <p class="h3">
+        <p class="h3" data-qa-hook="history-summary">
             Richard Cordray serves as the first Director of the
             Consumer Financial Protection Bureau.
             He previously led the Bureau’s Enforcement Division.
@@ -37,7 +38,8 @@
 
 {% for section in sections %}
 
-    <section class="block block__padded-top block__border-top">
+    <section class="block block__padded-top block__border-top"
+             data-qa-hook="history-section">
         <div class="content-l content-l__main">
             <div class="content-l_col content-l_col-2-3">
                 <h2>{{ section.title|safe }}</h2>

@@ -15,16 +15,16 @@
 
 	{% import 'macros/share.html' as share %}
 
-    <div class="block block__flush-top">
-        <h1>
+    <div class="block block__flush-top" data-qa-hook="director-bio">
+        <h1 data-qa-hook="director-bio-title">
             Director Richard Cordray
         </h1>
-        <p class="h3">
+        <p class="h3" data-qa-hook="director-bio-summary">
             Richard Cordray serves as the first Director of the
             Consumer Financial Protection Bureau. He previously
             led the Bureau’s Enforcement Division.
         </p>
-        <figure class="media float-media rwd-crop">
+        <figure class="media float-media rwd-crop" data-qa-hook="director-bio-image">
             <img class="media_image media_image__150 rwd-crop_item"
                  src="/static/img/director-cordray-300x400.jpg"
                  alt="Portrait of Director Richard Cordray">
@@ -89,7 +89,7 @@
                              src="/static/img/director-cordray-round-200x200.jpg"
                              alt="Portrait of Director Richard Cordray">
                     </div>
-                    <div class="media_body">
+                    <div class="media_body" data-qa-hook="director-media-downloads">
                         <h2 class="h4 u-mb5">
                             Downloads
                         </h2>
@@ -117,7 +117,8 @@
                 </div>
             </div>
             <div class="content-l_col
-                        content-l_col-1-2">
+                        content-l_col-1-2"
+                 data-qa-hook="director-speaking-info">
                 <h2 class="h4 u-mb5">
                     Request the director’s speaking info
                 </h2>
@@ -134,7 +135,8 @@
 
         <section class="block
                         block__padded-top
-                        block__border-top">
+                        block__border-top"
+                 data-qa-hook="director-more-info">
             <h2>
                 More information about Richard Cordray
             </h2>
@@ -184,7 +186,8 @@
         <div class="block
                     block__padded-top
                     block__border-top">
-            <div class="content-l content-l__main content-l__large-gutters">
+            <div class="content-l content-l__main content-l__large-gutters"
+                 data-qa-hook="director-corner">
                 <section class="content-l_col content-l_col-1-2">
                     <h2>
                         Cordray’s Corner
@@ -208,7 +211,8 @@
                 </section>
                 <section class="content-l_col
                                 content-l_col-1-2
-                                content-l_col__before-divider">
+                                content-l_col__before-divider"
+                         data-qa-hook="director-history">
                     <h2>
                         CFPB history
                     </h2>
