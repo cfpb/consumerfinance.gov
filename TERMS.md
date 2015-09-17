@@ -68,3 +68,4 @@ author or the affirmer.
   Smith is licensed under the BSD License.
 - [String Scoring Algorithm](https://github.com/joshaven/string_score) by
   Joshaven Potter is licensed under the MIT License.
+- [PDFreactor v6.3](http://www.pdfreactor.com/) by realObjects.

@@ -6,7 +6,7 @@
 
 var paths = {
   src:  './src',
-  dist: './dist',
+  dist: './cfgov/v1/jinja2/v1',
   lib:  './src/vendor',
   test: './test'
 };
