@@ -154,8 +154,8 @@ function isFunction( value ) {
 function isEmpty( value ) {
   return isUndefined( value ) ||
          value === null ||
-         isString( value ) && value.length <= 0
-         ? true : false;
+         isString( value ) &&
+         value.length <= 0 ? true : false;
 }
 
 

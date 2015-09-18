@@ -26,12 +26,12 @@
 {% block content_main %}
 
     {% import '_macro-role.html' as role with context %}
-
+    <h1 class="u-visually-hidden">Bureau Structure</h1>
     <div class="org-chart">
 
         <div class="media org-chart_root">
             <img class="media_image media_image__150" src="/static/img/director-cordray-round-300x300.jpg">
-            <h1 class="h2 u-mb0">Richard Cordray</h1>
+            <p class="h2 u-mb0">Richard Cordray</p>
             <h2 class="h4">Director</h2>
         </div>
 
@@ -131,7 +131,8 @@
 
     <aside class="block block__padded-top block__padded-bottom block__border-top">
         <div class="content-l content-l__main">
-            <div class="content-l_col content-l_col-1-2">
+            <div class="content-l_col content-l_col-1-2"
+                 data-qa-hook="org-chart-download-info">
                 <h2 class="h3">Download a copy</h2>
                 <p>
                     Download a printable, PDF copy of this organizational chart. This version
@@ -143,7 +144,8 @@
                     Download PDF
                 </a>
             </div>
-            <div class="content-l_col content-l_col-1-2">
+            <div class="content-l_col content-l_col-1-2"
+                 data-qa-hook="org-chart-speaking-info">
                 <h2 class="h3">Request speaking info</h2>
                 <p>
                     Ask a CFPB employee to be involved in a forum, publication, discussion, or
@@ -157,5 +159,5 @@
                 </span>
             </div>
         </div>
-
+    </aside>
 {% endblock %}

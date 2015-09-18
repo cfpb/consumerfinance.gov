@@ -1,9 +1,9 @@
 {% from 'macros/util/format/contact.html' import format_phone as format_phone %}
 {% set submit_a_complaint = get_document('contact', 'submit-a-complaint') %}
 
-<h1 class="h4">
+<h2 class="h4">
     {{ submit_a_complaint.title }}
-</h1>
+</h2>
 <p class="short-desc">
     {{ submit_a_complaint.sitewide_desc }}
 </p>

@@ -68,7 +68,13 @@ If you need to find this info again later, you can run:
 brew info elasticsearch
 ```
 
-### Sheer
+### Sheer-like & Sheer
+#### NOTE: Ensure you install Sheer-like first to avoid version conflicts with dependencies.
+To [install Sheer-like](https://github.com/cfpb/django-sheerlike/blob/master/README.rst), start by cloning the
+Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
+```bash
+git clone https://github.com/cfpb/django-sheerlike.git
+```
 
 To [install Sheer](https://github.com/cfpb/sheer#installation), start by cloning the
 Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
@@ -76,7 +82,7 @@ Sheer GitHub project to wherever you keep your projects (not inside cfgov-refres
 git clone https://github.com/cfpb/sheer.git
 ```
 
-Go back to the cfgov-refresh directory and Create a virtualenv, which you’ll name `cfgov-refresh`:
+Go back to the cfgov-refresh directory and workon a virtualenv, which you’ll name `cfgov-refresh`:
 ```bash
 mkvirtualenv cfgov-refresh
 ```
@@ -89,15 +95,20 @@ parentheses before your terminal prompt. Ex:
 (cfgov-refresh)$
 ```
 
-Install Sheer into the virtualenv with the `-e` flag (which allows you to make changes to
-Sheer itself). The path to Sheer is the root directory of the GitHub repository you
-cloned earlier, which will likely be `../sheer`:
+Install Sheer-like into the virtualenv with the `-e` flag (which allows you to make changes to
+Sheer itself). The path to Sheer-like is the root directory of the GitHub repository you
+cloned earlier, which will likely be `../django-sheerlike`:
 ```bash
-pip install -e ~/path/to/sheer
+pip install -e ~/path/to/django-sheerlike
+```
+Install Sheer-likes’s Python requirements:
+```bash
+pip install -r ~/path/to/django-sheerlike/requirements.txt
 ```
 
-Install Sheer’s Python requirements:
+Install Sheer in the same fashion as sheer-like:
 ```bash
+pip install -e ~/path/to/sheer
 pip install -r ~/path/to/sheer/requirements.txt
 ```
 
@@ -137,20 +148,17 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 npm install -g gulp bower
 ```
 
-## 3. Clone project and install dependencies
-
-Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
-Clone this project’s repository and switch to it’s directory with:
-
-```bash
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-```
+## 3. Install dependencies
 
 Next, install dependencies with:
 
 ```bash
 ./setup.sh
+```
+
+**Note** to install dependencies for local development use:
+```bash
+./setup.sh local
 ```
 
 > **NOTE**: To re-install and rebuild all the site’s assets run `./setup.sh` again.
@@ -165,6 +173,8 @@ from the `.env_SAMPLE` file found in the repository,
 if you don't already have one.
 
 Inside the `.env` file you can customize the project environment configuration.
+
+**For local development ensure you change the 'DJANGO_ENV' variable to 'local'**
 
 If you would like to manually copy the environment settings,
 copy the `.env_SAMPLE` file and un-comment each variable after
