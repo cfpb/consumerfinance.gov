@@ -11,7 +11,11 @@
  * @returns {string} - An absolute URL.
  */
 function _getAbsoluteUrl( url ) {
-  return url.indexOf( 'http' ) > -1 ? url : browser.baseUrl + url;
+  if ( url ) {
+    url = url.indexOf( 'http' ) > -1 ? url : browser.baseUrl + url;
+  }
+
+  return url;
 }
 
 /**
