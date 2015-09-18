@@ -26,7 +26,7 @@
    ========================================================================== #}
 
 {% macro render(options={}) -%}
-    {% import 'macros/share.html' as share %}
+    {% import 'macros/share.html' as share with context %}
     {% set video_player = options.video.player | default('youtube') %}
     {% set video_id     = options.video.id     | default('') %}
     {% set video_url    = options.video.url    | default('/') %}

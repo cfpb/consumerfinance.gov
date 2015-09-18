@@ -46,6 +46,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added jQuery CDN with fallback to head to satisfy GTM requirements.
 - Changes the location of the /dist folder to cfgov/v1/jinja2/v1
 - Server port is now at 8000
+- Importing macros that use the request object to use `with context`
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.

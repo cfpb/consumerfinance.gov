@@ -18,7 +18,7 @@
 {% block content_main %}
 
     {% import 'leadership-calendar-table.html' as calendar %}
-    {% import 'macros/share.html' as share %}
+    {% import 'macros/share.html' as share with context %}
     {% import 'macros/filters.html' as filters with context %}
     {% from 'post-macros.html' import pagination as pagination with context %}
 
