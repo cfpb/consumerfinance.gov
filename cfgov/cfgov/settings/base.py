@@ -1,6 +1,7 @@
 import os
 from unipath import Path
 
+DEBUG=True
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
