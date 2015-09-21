@@ -8,11 +8,6 @@ sudo: false
 services:
   - elasticsearch
 
-addons:
-  apt:
-    package:
-      - nodejs-0.12
-
 install:
   # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
@@ -24,6 +19,9 @@ install:
   - git clone https://github.com/cfpb/sheer
   - pip install -e sheer
   - pip install -r sheer/requirements.txt
+  - npm install nvm
+  - nvm install 4.1.0
+  - nvm use 4.1.0
   - npm install -g gulp
   - npm install -g bower
 

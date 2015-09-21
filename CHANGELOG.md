@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added unit test for `aria-state.js`.
 - Wagtail CMS
 - Added `gulp test:a11y` accessibility testing using node-wcag.
+- Added node 4.1.0 engine requirement in `package.json`.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -51,6 +52,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Dep Dir title to include "Acting"
 - included with context flag for macros that make a call to request object
 - Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
+- Updated jsdom from `3.1.2` to `6.5.1`.
+- Updated mocha-jsdom from `0.3.0` to `1.0.0`.
+- Updated istanbul from `0.3.13` to `0.3.20`.
+- Updated TravisCI node version to `4.1.0`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
