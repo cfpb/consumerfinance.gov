@@ -127,7 +127,9 @@
     z-index: 10;
 
     transition: transform 0.2s ease-in,
-                max-height 0.2s ease-in;
+                max-height 0.2s ease-in,
+                visibility 0s 0.5s;
+    visibility: hidden;
 
     &[aria-expanded="true"] {
         transition: transform 0.25s ease-out,
@@ -222,14 +224,17 @@
         transform: translateX(-100%);
         z-index: 10;
 
-        border-top: 1px solid @gray-50;
-        transition: transform 0.2s ease-in;
         background-color: @gray-10;
+        border-top: 1px solid @gray-50;
+        transition: transform 0.2s ease-in,
+                    visibility 0s 0.5s;
+        visibility: hidden;
 
         &[aria-expanded="true"] {
             transform: translateY(0);
             transition: transform 0.25s ease-out;
             box-shadow: 5px 0 0 @gray-50;
+            visibility: visible;
         }
 
         &_trigger {
@@ -276,6 +281,7 @@
 
         &[aria-expanded="true"] {
             transform: translateX(100%);
+            visibility: visible;
         }
 
         &_btn__back {
@@ -360,6 +366,7 @@
 
             border-top: 1px solid @gray-50;
             border-bottom: 4px solid @gray-50;
+            visibility: visible;
         }
 
         &_title {

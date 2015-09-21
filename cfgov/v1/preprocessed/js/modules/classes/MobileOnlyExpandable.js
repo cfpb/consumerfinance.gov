@@ -19,20 +19,22 @@ var breakpointsConfig = require( '../../config/breakpoints-config' );
  * @param {number} breakpoint Mobile max-width value.
  */
 function MobileOnlyExpandable( elem, breakpoint ) {
+
   this.expandable = elem;
   this.expandableTarget = this.expandable.children( '.expandable_target' );
-  this.breakpoint = breakpoint || breakpointsConfig.mobile.max;
 
   // Make sure we have necessary elements before proceeding.
-  if ( this.expandable instanceof jQuery &&
-       this.expandableTarget instanceof jQuery ) {
-    this.breakpointHandler = new BreakpointHandler( {
-      breakpoint: this.breakpoint,
-      type:       'max',
-      enter:      $.proxy( this.closeExpandable, this ),
-      leave:      $.proxy( this.openExpandable, this )
-    } );
+  if ( this.expandable.constructor !== jQuery &&
+       this.expandableTarget.constructor !== jQuery ) {
+    return;
   }
+
+  new BreakpointHandler( { // eslint-disable-line no-new, no-inline-comments
+    breakpoint: breakpoint || breakpointsConfig.mobile.max,
+    type:       'max',
+    enter:      $.proxy( this.closeExpandable, this ),
+    leave:      $.proxy( this.openExpandable, this )
+  } );
 }
 
 function closeExpandable() {

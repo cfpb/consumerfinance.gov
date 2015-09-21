@@ -15,15 +15,15 @@
 
 	{% import 'macros/share.html' as share %}
 
-    <div class="block block__flush-top">
-        <h1>
+    <div class="block block__flush-top" data-qa-hook="director-bio">
+        <h1 data-qa-hook="director-bio-title">
             Deputy Director Meredith Fuchs
         </h1>
-        <p class="h3">
+        <p class="h3" data-qa-hook="director-bio-summary">
             Meredith Fuchs currently serves as the Acting Deputy Director
             as well as the General Counsel at the Consumer Financial Protection Bureau (CFPB).
         </p>
-        <figure class="media float-media rwd-crop">
+        <figure class="media float-media rwd-crop" data-qa-hook="director-bio-image">
             <img class="media_image media_image__150 rwd-crop_item"
                  src="/static/img/deputy-director-fuchs-300x400.jpg"
                  alt="Portrait of Deputy Director Meredith Fuchs">
@@ -61,10 +61,10 @@
                              src="/static/img/deputy-director-fuchs-round-200x200.jpg"
                              alt="Portrait of Deputy Director Meredith Fuchs">
                     </div>
-                    <div class="media_body">
-                        <h1 class="h4 u-mb5">
+                    <div class="media_body" data-qa-hook="director-media-downloads">
+                        <h2 class="h4 u-mb5">
                             Downloads
-                        </h1>
+                        </h2>
                         <ul class="list list__links">
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__download"
@@ -82,10 +82,11 @@
                     </div>
                 </div>
             </div>
-            <div class="content-l_col content-l_col-1-2">
-                <h1 class="h4 u-mb5">
+            <div class="content-l_col content-l_col-1-2"
+                 data-qa-hook="director-speaking-info">
+                <h2 class="h4 u-mb5">
                     Request the deputy director’s speaking info
-                </h1>
+                </h2>
                 <a class="styled-link"
                    href="mailto:externalaffairs@cfpb.gov">
                     <span class="cf-icon cf-icon-email"></span>
@@ -97,16 +98,17 @@
 
     <aside>
 
-        <section class="block block__padded-top block__border-top">
-            <h1 class="h2">
+        <section class="block block__padded-top block__border-top"
+                 data-qa-hook="director-more-info">
+            <h2>
                 More information about Meredith Fuchs
-            </h1>
+            </h2>
             <div class="content-l content-l__main">
                 <div class="content-l_col content-l_col-1-3">
-                    <h2 class="h5">
+                    <h3 class="h5">
                         <span class="cf-icon cf-icon-newspaper"></span>
                         Newsroom
-                    </h2>
+                    </h3>
                     <p class="short-desc">
                         Get the latest CFPB news, including speeches, testimony and op-eds by the assistant director.
                     </p>
@@ -116,10 +118,10 @@
                     </a>
                 </div>
                 <div class="content-l_col content-l_col-1-3">
-                    <h2 class="h5">
+                    <h3 class="h5">
                         <span class="cf-icon cf-icon-newspaper"></span>
                         Blogs
-                    </h2>
+                    </h3>
                     <p class="short-desc">
                         Read blogs written by the deputy director on a variety of consumer financial topics.
                     </p>
@@ -129,10 +131,10 @@
                     </a>
                 </div>
                 <div class="content-l_col content-l_col-1-3">
-                    <h2 class="h5">
+                    <h3 class="h5">
                         <span class="cf-icon cf-icon-newspaper"></span>
                         Calendar
-                    </h2>
+                    </h3>
                     <p class="short-desc">
                         See how the deputy director spends his time working for consumers.
                     </p>

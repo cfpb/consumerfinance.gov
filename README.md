@@ -119,38 +119,29 @@ sheer index
 python cfgov/manage.py runserver
 ```
 
-To view the site browse to: <http://localhost:7000>
+To view the site browse to: <http://localhost:8000>
 
 To view the project layout docs and pattern library,
-browse to <http://localhost:7000/docs>
+browse to <http://localhost:8000/docs>
 
 To view the indexed content you can use a tool called
 [elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
 
-**Using a different port:** If you want to run Sheer at a different port than 7000,
-serve Sheer with the `--port` argument,
-e.g. to run on port 7001 use `sheer serve --port 7001 --debug`.
-
-**NOTE:** You may see the following errors when running Sheer. This is expected.
-```bash
-Error importing package flask_pdfreactor
-Error importing package flask_eventics
-INFO:werkzeug: * Running on http://0.0.0.0:7000/
-INFO:werkzeug: * Restarting with reloader
-Error importing package flask_pdfreactor
-Error importing package flask_eventics
-```
+**Using a different port:** If you want to run the server at a different port
+than 8000 use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
 
 ### 4. Launch the Gulp watch task
 
 To watch for changes in the source code and automatically update the running site,
 open a terminal and run:
 
-```
-$ gulp watch
+``` bash
+gulp build
+gulp watch
 ```
 
 **NOTE:** The watch task only runs for the tasks for files that have changed.
+Also, you must run `gulp build` at least once before watching.
 
 #### Available Gulp Tasks
 In addition to `gulp watch`, there are a number of other important gulp tasks,
@@ -195,12 +186,11 @@ which is the front-end pattern library used in this project.
 <!-- Perhaps we want to split this out into a separate page? -->
 ### Simple static template setup
 
-By default, Sheer will render pages at their natural paths in the project's file structure.
-For example, going to <http://localhost:7000/the-bureau/index.html>
-(or <http://localhost:7000/the-bureau/>) renders `/the-bureau/index.html`
-as processed by the [Jinja2](http://jinja.pocoo.org/docs) templating engine.
-**NOTE:** This page does not automatically show any content indexed by Sheer;
-it simply outputs the static HTML written into the template.
+By default, Django will render pages with accordance to the url pattern defined
+for it. For example, going to <http://localhost:8000/the-bureau/index.html>
+(or <http://localhost:8000/the-bureau/>) renders `/the-bureau/index.html` from
+the `v1` app folder's jinja2 templates folder as processed by the [Jinja2](http://jinja.pocoo.org/docs)
+templating engine.
 
 ### Outputting indexed content in a Sheer template
 
@@ -261,15 +251,6 @@ here's how it's done:
 {{ page.content | safe }}
 ```
 
-This example pulls a WordPress page into a template.
-We use the page post type (i.e., the built-in "Page" entries in WordPress)
-when all or most of a page's content can be edited in WordPress.
-
-**NOTE:** When accessing a WordPress page,
-you must use the numeric ID to identify the page you want to get,
-as multiple pages can have the same slug.
-(This is also true of any custom post type that is hierarchical.)
-
 The `get_document` method can be used to retrieve a single item of any post type
 for display within a template.
 In the below example from `contact-us/promoted-contacts.html`,
@@ -312,7 +293,7 @@ An example of Term is:
 
 `filter_[field]=[value]`
 
-When you go to a URL such as http://localhost:7000/blog/?filter_category=Op-Ed
+When you go to a URL such as http://localhost:8000/blog/?filter_category=Op-Ed
 and you use `search()`,
 the queryset returned will only include objects with a category of 'Op-Ed'.
 
@@ -323,7 +304,7 @@ An example of Range is:
 `filter_range_[field]_[operator]=[value]`
 
 Continuing with the example above, if you go to a URL such as
-`http://localhost:7000/blog/?filter_range_date_gte=2014-01`
+`http://localhost:8000/blog/?filter_range_date_gte=2014-01`
 and you use `search()`,
 you'll get a queryset of objects where the 'date' field is in January, 2014, or later.
 

@@ -3,9 +3,7 @@
 *.com
 *.class
 *.dll
-*.exe
 *.o
-*.so
 _site/
 _build/
 
@@ -24,7 +22,6 @@ _build/
 
 # Logs and databases #
 ######################
-*.log
 *.sql
 *.sqlite
 *.sqlite3
@@ -60,10 +57,7 @@ src/vendor
 # Python #
 #################
 *.pyc
-*.egg-info/
 __pycache__/
-*.py[cod]
-.env
 *.eggs/
 *.egg/
 

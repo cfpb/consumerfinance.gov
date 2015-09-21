@@ -2,7 +2,9 @@
 {% import 'macros/sub-nav.html' as sub_nav %}
 <nav class="primary-nav
             js-primary-nav"
-     aria-expanded="false">
+     aria-expanded="false"
+     aria-label="main navigation"
+     role="navigation">
     <ul class="list
                list__unstyled
                primary-nav_menu-list">
@@ -11,7 +13,7 @@
                 sub_nav_title,
                 sub_nav_media,
                 sub_nav_items in vars.nav_items %}
-            <li class="list_item primary-nav_item">
+            <li class="list_item primary-nav_item js-primary-nav_item">
                 {%- if sub_nav_items | length > 0 %}
                     {# TODO: Make this a button, it is not a real link. #}
                     <a class="list_link

@@ -8,6 +8,7 @@ var spawn = childProcess.spawn;
 var config = require( '../config' ).test;
 var minimist = require( 'minimist' );
 var path = require( 'path' );
+var fsHelper = require( '../utils/fsHelper' );
 
 gulp.task( 'test:unit:scripts', function( cb ) {
   gulp.src( config.src )
@@ -43,20 +44,6 @@ gulp.task( 'test:unit:macro', function( cb ) {
     }
   );
 } );
-
-/**
- * Retrieve a reference path to a binary.
- * @param {string} binaryName The name of the binary to retrieve.
- * @returns {string} Path to the binary to run.
- */
-function _getBinary( binaryName ) {
-  var winExt = ( /^win/ ).test( process.platform ) ? '.cmd' : '';
-  var pkgPath = require.resolve( 'protractor' );
-  var protractorDir = path.resolve(
-    path.join( path.dirname( pkgPath ), '..', 'bin' )
-  );
-  return path.join( protractorDir, '/' + binaryName + winExt );
-}
 
 /**
  * Add a command-line flag to a list of Protractor parameters, if present.
@@ -110,7 +97,7 @@ function _getProtractorParams() {
 
 gulp.task( 'test:acceptance:browser', function() {
   spawn(
-    _getBinary( 'protractor' ),
+    fsHelper.getBinary( 'protractor' ),
     _getProtractorParams(),
     { stdio: 'inherit' } )
       .once( 'close', function() {

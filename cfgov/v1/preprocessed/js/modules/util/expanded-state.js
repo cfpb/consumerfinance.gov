@@ -47,13 +47,16 @@ function isOneExpanded( $elems ) {
  *                         passed callback.
  */
 function toggleExpandedState( $elem, state, cb, delay ) {
+  var navTimeout;
+
   delay = delay || 300;
   state = state || !isThisExpanded( $elem );
-  clearTimeout( navTimeOut );
 
   $elem.attr( 'aria-expanded', state );
 
   if ( cb ) {
+    clearTimeout( navTimeOut );
+
     navTimeOut = setTimeout( function() {
       return cb();
     }, delay );
