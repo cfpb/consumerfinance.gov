@@ -44,6 +44,7 @@ Thumbs.db
 # npm packages #
 ####################
 node_modules/
+npm-debug.log
 
 # Bower packages #
 ##################
