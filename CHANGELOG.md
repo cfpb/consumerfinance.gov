@@ -32,6 +32,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ARIA state utility to enable decorating dom elements with ARIA states.
 - Added `Object.defineProperty` polyfill.
 - Added unit test for `aria-state.js`.
+- Django Server
+- Django related urls to access links
+- Django-Sheerlike integration
+- Wagtail CMS
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
