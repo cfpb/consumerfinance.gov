@@ -1,4 +1,5 @@
 'use strict';
+
 var chai = require( 'chai' );
 require( 'sinon' );
 var expect = chai.expect;

@@ -6,13 +6,22 @@ var config = require( '../config' ).lint;
 var handleErrors = require( '../utils/handleErrors' );
 
 /**
- * Lints the gulpfile for errors
+ * Generic lint a script source.
+ * @param {string} src The path to the source JavaScript.
+ * @returns {Object} An output stream from gulp.
  */
-gulp.task( 'lint:build', function() {
-  return gulp.src( config.gulp )
+function _genericLint( src ) {
+  return gulp.src( src )
     .pipe( $.eslint() )
     .pipe( $.eslint.format() )
     .on( 'error', handleErrors );
+}
+
+/**
+ * Lints the gulpfile for errors
+ */
+gulp.task( 'lint:build', function() {
+  return _genericLint( config.gulp );
 } );
 
 
@@ -20,10 +29,7 @@ gulp.task( 'lint:build', function() {
  * Lints the source js files for errors
  */
 gulp.task( 'lint:scripts', function() {
-  return gulp.src( config.src )
-    .pipe( $.eslint() )
-    .pipe( $.eslint.format() )
-    .on( 'error', handleErrors );
+  return _genericLint( config.src );
 } );
 
 /**

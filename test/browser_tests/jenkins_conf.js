@@ -1,5 +1,9 @@
 'use strict';
 
+var JasmineReporters = require( 'jasmine-reporters' );
+var JasmineSpecReporter = require( 'jasmine-spec-reporter' );
+var mkdirp = require( 'mkdirp' );
+
 exports.config = {
   framework:    'jasmine2',
   specs:        [ 'spec_suites/*.js' ],
@@ -14,10 +18,6 @@ exports.config = {
 
   onPrepare: function() {
     browser.ignoreSynchronization = true;
-
-    var JasmineReporters = require( 'jasmine-reporters' );
-    var mkdirp = require( 'mkdirp' );
-    var JasmineSpecReporter = require( 'jasmine-spec-reporter' );
 
     // add jasmine spec reporter
     jasmine.getEnv().addReporter(
