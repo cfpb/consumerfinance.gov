@@ -19,7 +19,7 @@ function init() {
     // Futher explanation can be viewed
     // at https://regex101.com/r/xT7sL5/2.
     var externalURLArray =
-        ( /(https?:\/\/(?:www\.)?(?!.*gov)(?!localhost).*)/g )
+        ( /(https?:\/\/(?:www\.)?(?!.*gov)(?!(?!content\.)localhost).*)/g )
         .exec( url );
 
     if ( $.isArray( externalURLArray ) ) {

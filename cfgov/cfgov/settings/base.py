@@ -45,24 +45,30 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
 
 TEMPLATES = [
     {
-        'NAME': 'wagtail-env',
+        'NAME': 'sheerlike-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'v1.environment'
+            'environment': 'sheerlike.environment'
         }
     },
     {
-        'NAME': 'sheerlike-env',
+        'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [Path(os.path.dirname(__file__)).ancestor(2) + '/v1/jinja2/v1'],
+        'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'sheerlike.environment'
+            'environment': 'v1.environment'
         }
     },
     {
@@ -134,6 +140,7 @@ ALLOWED_HOSTS = ['*']
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "v1"
+STAGING_HOSTNAME = "content.localhost"
 
 # Sheer related settings
 

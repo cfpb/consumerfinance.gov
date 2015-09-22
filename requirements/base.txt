@@ -6,4 +6,4 @@ python-dateutil==2.1
 requests==2.7.0
 git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
 icalendar==3.9.0
-wagtail==1.1
+-e git+git://github.com/kurtw/wagtail.git@dual-wield-site#egg=wagtail
