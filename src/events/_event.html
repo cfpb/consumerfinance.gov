@@ -27,7 +27,7 @@
 
 {% macro render(post, path, event_state) %}
 
-{% import 'macros/share.html' as share %}
+{% import 'macros/share.html' as share with context %}
 
 <article class="post post__event">
     <header>
