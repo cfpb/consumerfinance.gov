@@ -39,7 +39,8 @@
 
     <div class="block
                 block__flush-top
-                block__sub">
+                block__sub"
+         data-qa-hook="intro-section">
             <h1>Current Openings</h1>
             <p class="h3">
                 Find the position that’s right for you.
@@ -56,13 +57,15 @@
     </div>
 
     <div class="block
-                block__flush-top">
+                block__flush-top"
+         data-qa-hook="job-openings-section">
         {{ table_current_openings.render(vars.careers) }}
     </div>
     <aside>
         <div class="block
                     block__border-top
-                    block__flush-bottom">
+                    block__flush-bottom"
+             data-qa-hook="info-section">
             {# This extra div is to keep the horizontal lines size consistent #}
             <div class="content-l">
                 <section class="content-l_col
