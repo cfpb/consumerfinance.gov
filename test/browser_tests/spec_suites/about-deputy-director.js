@@ -37,7 +37,7 @@ describe( 'The About Deputy Director Page', function() {
   it( 'should include the Deputy Director’s title',
     function() {
       expect( page.directorTitle.getText() )
-      .toEqual( 'Deputy Director Meredith Fuchs' );
+      .toEqual( 'Deputy Director Meredith Fuchs (Acting)' );
     }
   );
 
