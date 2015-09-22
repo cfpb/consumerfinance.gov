@@ -32,9 +32,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added ARIA state utility to enable decorating dom elements with ARIA states.
 - Added `Object.defineProperty` polyfill.
 - Added unit test for `aria-state.js`.
-- Django Server
-- Django related urls to access links
-- Django-Sheerlike integration
 - Wagtail CMS
 
 ### Changed
@@ -51,6 +48,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes the location of the /dist folder to cfgov/v1/jinja2/v1
 - Server port is now at 8000
 - Updated Dep Dir title to include "Acting"
+- included with context flag for macros that make a call to request object
+
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
