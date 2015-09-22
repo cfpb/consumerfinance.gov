@@ -11,14 +11,14 @@ var scriptsManifest = require( '../gulp/utils/scriptsManifest' );
 var webpack = require( 'webpack' );
 
 // Constants.
-var JS_ROUTES_PATH = '/static/js/routes';
+var JS_ROUTES_PATH = '/js/routes';
 var COMMON_BUNDLE_NAME = 'common.js';
 
 module.exports = {
   // jQuery is exported in the global space in the head.
   externals: { jquery: "jQuery" },
-  context: __dirname + '/../' + paths.src + JS_ROUTES_PATH,
-  entry: scriptsManifest.getDirectoryMap( paths.src + JS_ROUTES_PATH ),
+  context: __dirname + '/../' + paths.preproccesed + JS_ROUTES_PATH,
+  entry: scriptsManifest.getDirectoryMap( paths.preproccesed + JS_ROUTES_PATH ),
   output: {
     path: path.join(__dirname, 'js'),
     filename: '[name]'

@@ -67,19 +67,6 @@ node_modules/
 bower_components/
 .grunt/
 vendor/
-**/jinja2/v1/capital-framework/
-**/jinja2/v1/cf-buttons/
-**/jinja2/v1/cf-core/
-**/jinja2/v1/cf-expandables/
-**/jinja2/v1/cf-forms/
-**/jinja2/v1/cf-grid/
-**/jinja2/v1/cf-icons/
-**/jinja2/v1/cf-layout/
-**/jinja2/v1/cf-pagination/
-**/jinja2/v1/cf-typography/
-**/jinja2/v1/chosen/
-**/jinja2/v1/history.js/
-**/jinja2/v1/string_score/
 
 # Floobits #
 ############
@@ -106,6 +93,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+macropolo
 
 # IDE Specifc
 ############
