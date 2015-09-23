@@ -36,10 +36,13 @@
                     {%- for href, id, caption in sub_nav_item %}
                         <li class="list_item sub-nav_item">
                             <a class="list_link
-                                      {{ 'list_link__current' if href == request.path else '' }}
-                                      {{ 'u-link__disabled' if href == '' else '' }}
+                                      {{ 'list_link__current' if
+                                          href == request.path }}
+                                      {{ 'u-link__disabled' if
+                                          href == '' }}
                                       sub-nav_link"
-                               {{ 'href=' + href | e if href != '' else '' }}>
+                               {{ 'href=' + href | e if
+                                   href != '' }}>
                                 {{ caption | safe }}
                              </a>
                         </li>

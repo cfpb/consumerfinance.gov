@@ -2,7 +2,7 @@
 {% import '_vars-offices.html' as vars with context %}
 
 {% block title -%}
-    {{ office.title | safe if office.title else '' }}
+    {{ office.title | safe if office.title }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}

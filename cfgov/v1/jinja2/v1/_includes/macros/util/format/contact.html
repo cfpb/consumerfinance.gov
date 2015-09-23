@@ -47,7 +47,7 @@
    ========================================================================== #}
 
 {% macro format_address(contact) %}
-    {{ contact.street if contact.street else '' }}<br>
+    {{ contact.street if contact.street }}<br>
     {{ contact.street_2 + '<br>' | safe if contact.street_2 else '' }}
     {{ contact.city + ',' if contact.city else '' }}
     {{ contact.state + '&nbsp;' | safe if contact.state else '' }}

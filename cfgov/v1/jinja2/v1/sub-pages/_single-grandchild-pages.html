@@ -20,7 +20,7 @@
 {%- endblock %}
 
 {% block title -%}
-    {{ sub_page.title | safe if sub_page.title else '' }}
+    {{ sub_page.title | safe if sub_page.title }}
 {%- endblock %}
 
 {% block content_main %}
