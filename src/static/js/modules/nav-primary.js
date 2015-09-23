@@ -22,7 +22,7 @@ function init() {
       } );
     } else {
       es.set.toggleExpandedState( $primaryNav, 'true', function() {
-        $primaryLink[0].focus();
+        $primaryLink.first().focus();
       } );
     }
 
@@ -36,7 +36,7 @@ function init() {
     var $this = $( this );
     var $thisSubNav = $this.siblings( '.js-sub-nav' );
     var $otherSubNavs = $subNavs.not( $thisSubNav );
-    var $firstLink = $thisSubNav.find( 'a' )[0];
+    var firstLink = $thisSubNav.find( 'a' ).first();
 
     if ( es.get.isOneExpanded( $otherSubNavs ) ) {
       es.set.toggleExpandedState( $primaryLink, 'false' );
@@ -45,7 +45,7 @@ function init() {
         'false',
         function() {
           es.set.toggleExpandedState( $thisSubNav );
-          $firstLink.focus();
+          firstLink.focus();
         }
       );
     } else if ( es.get.isThisExpanded( $thisSubNav ) ) {
@@ -54,7 +54,7 @@ function init() {
       } );
     } else {
       es.set.toggleExpandedState( $thisSubNav, null, function() {
-        $firstLink.focus();
+        firstLink.focus();
       } );
     }
 
