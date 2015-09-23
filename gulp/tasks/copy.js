@@ -22,14 +22,6 @@ function _genericCopy( src, dest ) {
     } ) );
 }
 
-gulp.task( 'copy:files', function() {
-  return _genericCopy( config.files.src, config.files.dest );
-} );
-
-gulp.task( 'copy:legacy', function() {
-  return _genericCopy( config.legacy.src, config.legacy.dest );
-} );
-
 gulp.task( 'copy:icons', function() {
   return _genericCopy( config.icons.src, config.icons.dest );
 } );
@@ -44,7 +36,7 @@ gulp.task( 'copy:vendorcss', function() {
     .on( 'error', handleErrors )
     .pipe( $.replace(
       /url\(".\/ajax-loader.gif"\)/ig,
-      'url("/static/img/ajax-loader.gif")'
+      'url("/img/ajax-loader.gif")'
     ) )
     .pipe( gulp.dest( config.vendorcss.dest ) )
     .pipe( browserSync.reload( {
@@ -62,8 +54,6 @@ gulp.task( 'copy:vendorjs', function() {
 
 gulp.task( 'copy',
   [
-    'copy:files',
-    'copy:legacy',
     'copy:icons',
     'copy:vendorfonts',
     'copy:vendorcss',

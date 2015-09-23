@@ -25,7 +25,7 @@ module.exports = {
       ' */\n',
   lint: {
     src: [
-      paths.src + '/static/js/**/*.js',
+      paths.preproccesed + '/js/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
@@ -35,16 +35,16 @@ module.exports = {
     ]
   },
   test: {
-    src:   paths.src + '/static/js/**/*.js',
+    src:   paths.preproccesed + '/js/**/*.js',
     tests: paths.test
   },
   clean: {
-    dest: paths.dist
+    dest: paths.processed
   },
   styles: {
-    cwd:      paths.src + '/static/css',
+    cwd:      paths.preproccesed + '/css',
     src:      '/main.less',
-    dest:     paths.dist + '/static/css',
+    dest:     paths.processed + '/css',
     settings: {
       paths: [
         paths.lib,
@@ -54,40 +54,25 @@ module.exports = {
     }
   },
   images: {
-    src:  paths.src + '/static/img/**',
-    dest: paths.dist + '/static/img'
+    src:  paths.preproccesed + '/img/**',
+    dest: paths.processed + '/img'
   },
   copy: {
-    files: {
-      src: [
-        paths.src + '/**/*.html',
-        paths.src + '/**/*.pdf',
-        paths.src + '/_*/**/*',
-        paths.src + '/robots.txt',
-        paths.src + '/favicon.ico',
-        '!' + paths.lib + '/**/*.html'
-      ],
-      dest: paths.dist
-    },
-    legacy: {
-      src:  paths.src + '/static-legacy/**/*',
-      dest: paths.dist + '/static-legacy'
-    },
     icons: {
       src:  paths.lib + '/cf-icons/src/fonts/*',
-      dest: paths.dist + '/static/fonts/'
+      dest: paths.processed + '/fonts/'
     },
     vendorfonts: {
-      src:  paths.src + '/static/fonts/pdfreactor/*',
-      dest: paths.dist + '/static/fonts/pdfreactor'
+      src:  paths.preproccesed + '/fonts/pdfreactor/*',
+      dest: paths.processed + '/fonts/pdfreactor'
     },
     vendorcss: {
       src: [
         paths.lib + '/slick-carousel/slick/slick.css',
         paths.lib + '/slick-carousel/slick/slick.css.map',
-        paths.src + '/static/css/pdfreactor-fonts.css'
+        paths.preproccesed + '/css/pdfreactor-fonts.css'
       ],
-      dest: paths.dist + '/static/css'
+      dest: paths.processed + '/css'
     },
     vendorimg: {
       src: [
@@ -95,7 +80,7 @@ module.exports = {
         paths.lib + '/chosen/chosen-sprite.png',
         paths.lib + '/chosen/chosen-sprite@2x.png'
       ],
-      dest: paths.dist + '/static/img'
+      dest: paths.processed + '/img'
     },
     vendorjs: {
       src: [
@@ -103,7 +88,7 @@ module.exports = {
         paths.lib + '/box-sizing-polyfill/boxsizing.htc',
         paths.lib + '/html5shiv/dist/html5shiv-printshiv.min.js'
       ],
-      dest: paths.dist + '/static/js/'
+      dest: paths.processed + '/js/'
     }
   }
 };
