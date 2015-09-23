@@ -22,10 +22,10 @@ var paths = require( '../../config/environment' ).paths;
 function webpackTask( watch ) {
   webpackConfig.watch = watch || false;
 
-  return gulp.src( './src/static/js/routes/common.js' )
+  return gulp.src( paths.preproccesed + '/js/routes/common.js' )
     .pipe( webpackStream( webpackConfig ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.dist + '/static/js/routes/' ) )
+    .pipe( gulp.dest( paths.processed + '/js/routes/' ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );

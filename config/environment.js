@@ -5,9 +5,10 @@
 'use strict';
 
 var paths = {
-  src:  './src',
-  dist: './cfgov/v1/jinja2/v1',
-  lib:  './src/vendor',
+  preproccesed:  './cfgov/v1/preprocessed',
+  processed: './cfgov/v1/static',
+  vendor_dist: './cfgov/v1/jinja2/v1',
+  lib:  './vendor',
   test: './test'
 };
 

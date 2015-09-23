@@ -56,14 +56,14 @@
   },
   "browser": {
     "dateformat": "./node_modules/dateformat/lib/dateformat.js",
-    "handlebars": "./src/vendor/handlebars/handlebars.min.js",
-    "history": "./src/vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
+    "handlebars": "./vendor/handlebars/handlebars.min.js",
+    "history": "./vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "jquery-easing": "./src/vendor/jquery.easing/js/jquery.easing.js",
-    "cf-expandables": "./src/vendor/cf-expandables/src/js/cf-expandables.js",
-    "chosen": "./src/vendor/chosen/chosen.jquery.js",
-    "slick": "./src/vendor/slick-carousel/slick/slick.js",
-    "string_score": "./src/vendor/string_score/string_score.js",
-    "validate": "./src/vendor/validate/validate.js"
+    "jquery-easing": "./vendor/jquery.easing/js/jquery.easing.js",
+    "cf-expandables": "./vendor/cf-expandables/src/js/cf-expandables.js",
+    "chosen": "./vendor/chosen/chosen.jquery.js",
+    "slick": "./vendor/slick-carousel/slick/slick.js",
+    "string_score": "./vendor/string_score/string_score.js",
+    "validate": "./vendor/validate/validate.js"
   }
 }
