@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added unit test for `aria-state.js`.
 - Wagtail CMS
 - Added `gulp test:a11y` accessibility testing using node-wcag.
+- runserver.sh script to collectstatic files and run the server
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -51,12 +52,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Dep Dir title to include "Acting"
 - included with context flag for macros that make a call to request object
 - Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
+- Vendor related files now sit at the root project location
+- Moved templates to reside in v1 app project jinja2 directory
+- Added ability to use django static & url functionality in jinja2 templates. 
+  [More Information] (https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
 - Removed unused exportsOverride section,
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
+- Removed src directory
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.

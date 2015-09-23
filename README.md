@@ -116,7 +116,7 @@ cd cfgov/v1/jinja2/v1
 sheer index
 
 # From the Project root, start server.
-python cfgov/manage.py runserver
+./runserver.sh
 ```
 
 To view the site browse to: <http://localhost:8000>
