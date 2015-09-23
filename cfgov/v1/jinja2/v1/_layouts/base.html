@@ -71,12 +71,12 @@
     ======
     The number of stylesheets here must be kept to a minimum.
     Unless adding a significant amount of CSS that is specific to a single page or section of the site,
-    all new styles should be added to src/static/css/main.less.
+    all new styles should be added to cfgov/v1/preprocessed/css/main.less.
 -->
 
 {% block css %}
-<!--[if lt IE 9]>      <link rel="stylesheet" href="/static/css/main.ie.css"> <![endif]-->
-<!--[if gt IE 8]><!--> <link rel="stylesheet" href="/static/css/main.css"> <!--<![endif]-->
+<!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('css/main.ie.css') }}"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('css/main.css') }}"> <!--<![endif]-->
 {% endblock css %}
 
 <!--
@@ -90,7 +90,7 @@
 -->
 
 <!--[if lt IE 9]>
-    <script src="/static/js/html5shiv-printshiv.min.js"></script>
+    <script src="{{ static('js/html5shiv-printshiv.min.js') }}"></script>
 <![endif]-->
 
     <script>
@@ -104,7 +104,7 @@
              Ideally GTM would handle its own dependency management
              and initializing jQuery could be moved to the footer. #}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>if (!window.jQuery) { document.write('<script src="/static/js/jquery.min.js"><\/script>'); }
+    <script>if (!window.jQuery) { document.write('<script src="{{ static('js/jquery.min.js') }}"><\/script>'); }
     </script>
 
 </head>
@@ -198,16 +198,16 @@
 
 {# Include site-wide JavaScript. #}
 <script type='text/javascript'>
-    {% include '/static/js/routes/common.js' %}
+    {% include '/js/routes/common.js' %}
 </script>
 
 {# Include template and page-specific JavaScript. #}
 {% macro page_template_js() %}
     {# Check and include template-level JavaScript. #}
-    {% include '/static/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+    {% include '/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
 
     {# Check and include page-level JavaScript. #}
-    {% include '/static/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+    {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}
