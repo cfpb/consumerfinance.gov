@@ -66,8 +66,8 @@ __pycache__/
 #############
 node_modules/
 bower_components/
-src/vendor/
-cfgov/v1/jinja2/v1/*
+.grunt/
+vendor/
 
 # Floobits #
 ############
@@ -82,6 +82,7 @@ docs/*/pdfreactor-fonts.html
 #################
 *.egg-info
 .installed.cfg
+static/
 
 # Unit test / coverage reports
 #################
@@ -93,6 +94,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+macropolo
 
 # IDE Specifc
 ############
