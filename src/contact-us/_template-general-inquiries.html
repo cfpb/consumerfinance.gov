@@ -49,7 +49,7 @@
             <span class="cf-icon cf-icon-fax list_icon"></span>
             <span class="h5 list_text">Fax</span>
             <p class="short-desc">
-                {{ format_phone(general_inquiries.fax.num) if general_inquiries.fax.num }}
+                {{ format_phone(general_inquiries.fax.num) if general_inquiries.fax.num else '' }}
             </p>
         </li>
     {%- endif %}

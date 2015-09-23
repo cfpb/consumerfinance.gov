@@ -40,10 +40,10 @@
          data-video-id="{{ video_id }}"
          data-width="{{ options.video.width }}"
          data-height="{{ options.video.height }}">
-        {{ caller() | safe if caller }}
+        {{ caller() | safe if caller else '' }}
         <div class="video-player_video-container
                     show-on_video-playing
-                    {{ 'video-player_video-container__flexible' if is_flexible }}">
+                    {{ 'video-player_video-container__flexible' if is_flexible else '' }}">
             <div class='video-player_iframe-container'>
                 <div id='{{ video_player }}_video-player' class='video-player_video'></div>
             </div>
