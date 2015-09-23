@@ -43,6 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `properties` attribute of `id-length` rule.
 - Added `keywords`, `unnecessary`, and `numbers` attributes
   to `quote-props` rules.
+- runserver.sh script to collectstatic files and run the server
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -66,12 +67,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated istanbul from `0.3.13` to `0.3.20`.
 - Updated TravisCI node version to `4.1.0`.
 - Updated ESLint configuration from `1.0.0` to `1.5.1`.
+- Vendor related files now sit at the root project location
+- Moved templates to reside in v1 app project jinja2 directory
+- Added ability to use django static & url functionality in jinja2 templates. 
+  [More Information] (https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
 - Removed unused exportsOverride section,
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
+- Removed src directory
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.

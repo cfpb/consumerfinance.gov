@@ -66,7 +66,6 @@ __pycache__/
 #############
 node_modules/
 bower_components/
-.grunt/
 vendor/
 
 # Floobits #
@@ -94,7 +93,6 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-macropolo
 
 # IDE Specifc
 ############
