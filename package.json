@@ -48,7 +48,8 @@
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
     "webpack": "^1.12.0",
-    "webpack-stream": "^2.1.0"
+    "webpack-stream": "^2.1.0",
+    "wcag": "^0.2.2"
   },
   "browser": {
     "dateformat": "./node_modules/dateformat/lib/dateformat.js",
