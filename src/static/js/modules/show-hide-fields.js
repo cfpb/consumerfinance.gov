@@ -19,7 +19,7 @@ var $ = require( 'jquery' );
 
 /**
  * Show or hide additional fields from data-* attribute.
- * @param {Object} jQuery DOM object reference.
+ * @param {Object} input jQuery DOM object reference.
  */
 function _toggleAdditionalFields( input ) {
   var additionalFields = $( input ).attr( 'data-additional-fields' );
