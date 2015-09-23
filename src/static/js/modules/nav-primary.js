@@ -8,6 +8,9 @@
 var $ = require( 'jquery' );
 var es = require( './util/expanded-state.js' );
 
+/**
+ * Set up DOM references and event handlers.
+ */
 function init() {
   var $primaryNav = $( '.js-primary-nav' );
   var $primaryTrigger = $( '.js-primary-nav_trigger' );

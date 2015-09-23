@@ -8,6 +8,9 @@
 'use strict';
 var $ = require( 'jquery' );
 
+/**
+ * Set up event handler for links and determine if link is external or not.
+ */
 function init() {
   $( '#main, footer' ).on( 'click', 'a', function( e ) {
 

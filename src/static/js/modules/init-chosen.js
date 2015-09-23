@@ -7,6 +7,9 @@
 var $ = require( 'jquery' );
 require( 'chosen' );
 
+/**
+ * Initialize chosen jquery plugin.
+ */
 function init() {
   $( '.chosen-select' ).chosen( {
     width:           '100%',

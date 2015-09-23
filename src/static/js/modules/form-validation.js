@@ -9,6 +9,11 @@ var $ = require( 'jquery' );
 require( './jquery/cf_formValidator' ).init();
 require( './jquery/cf_notifier' ).init();
 
+/**
+ * @param {string} type The type of message to return.
+ * @param {string} label Text to inject into the message.
+ * @returns {string} The message with injected label, if applicable.
+ */
 function _createMessage( type, label ) {
   var message = {
     required:   'Please fill out the ' + label + ' field.',

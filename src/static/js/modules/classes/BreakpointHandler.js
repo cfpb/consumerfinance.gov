@@ -67,6 +67,9 @@ function _init( self ) {
   self.watchWindowResize();
 }
 
+/**
+ * Add event listener for changes in the viewport size.
+ */
 function watchWindowResize() {
   var self = this;
   $( window ).bind( 'resize', function() {
@@ -74,6 +77,9 @@ function watchWindowResize() {
   } );
 }
 
+/**
+ * Test the viewport size and set whether the test passes on the instance.
+ */
 function handleViewportChange() {
   var width = _viewportEl[_propPrefix + 'Width'];
   var match = this.testBreakpoint( width );
@@ -88,6 +94,11 @@ function handleViewportChange() {
   this.match = match;
 }
 
+/**
+ * @param {number} width The viewport width to test.
+ * @returns {boolean}
+ *   Whether viewport width is within the expected breakpoint.
+ */
 function testBreakpoint( width ) {
   var bp = {
     max:   width <= this.breakpoint,
