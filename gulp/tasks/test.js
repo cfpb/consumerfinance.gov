@@ -2,6 +2,7 @@
 
 var gulp = require( 'gulp' );
 var $ = require( 'gulp-load-plugins' )();
+var sitespeedio = require('gulp-sitespeedio');
 var childProcess = require( 'child_process' );
 var exec = childProcess.exec;
 var spawn = childProcess.spawn;
@@ -93,6 +94,48 @@ function _getProtractorParams() {
   return params;
 }
 
+/**
+ * Processes environment variables to find homepage URL
+ * where the site is running.
+ * @returns {string} URL of website homepage.
+ */
+
+function _getSiteUrl() {
+  var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  return 'http://' + host + ':' + port;
+}
+
+gulp.task( 'test:perf', sitespeedio( {
+  url: _getSiteUrl(),
+  depth: 1,
+  html: true,
+  resultBaseDir: config.tests + '/perf_test_results/',
+  showFailedOnly: true,
+  skipTest: 'jsnumreq,' +
+            'ycompress,' +
+            'ydns,' +
+            'yfavicon,' +
+            'thirdpartyasyncjs,' +
+            'syncjsinhead,' +
+            'avoidfont,' +
+            'expiresmod,' +
+            'longexpirehead,' +
+            'textcontent,' +
+            'thirdpartyversions,' +
+            'ycdn,' +
+            'connectionclose,'+
+            'ycookiefree,'+
+            'yexpressions,'+
+            'inlinecsswhenfewrequest,'+
+            'nodnslookupswhenfewrequests',
+  budget: {
+    rules: {
+      default: 90
+    }
+  }
+} ) );
+
 gulp.task( 'test:acceptance:browser', function() {
   spawn(
     fsHelper.getBinary( 'protractor' ),
@@ -166,11 +209,5 @@ gulp.task( 'test:unit',
   [
     'test:unit:scripts',
     'test:unit:macro'
-  ]
-);
-
-gulp.task( 'test:acceptance',
-  [
-    'test:acceptance:browser'
   ]
 );

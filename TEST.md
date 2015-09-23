@@ -148,6 +148,15 @@ From within the root project directory run `gulp test:unit:macro`.
 Please see [Macro Polo](https://github.com/cfpb/macropolo) for
 documentation about writing tests.
 
+# Performance Testing
+
+To audit if the site complies with performance best practices and guidelines,
+run `gulp test:perf`.
+
+The audit will run against [sitespeed.io performance rules](https://www.sitespeed.io/rules/)
+and crawl the website from the homepage.
+You can adjust the settings to skip rules and change the crawling depth
+by editing `/gulp/tasks/test.js`.
 
 # Accessibility Testing
 
