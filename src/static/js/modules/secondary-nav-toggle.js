@@ -8,6 +8,9 @@
 var $ = require( 'jquery' );
 var getBreakpointState = require( './util/breakpoint-state' ).get;
 
+/**
+ * Check if nav needs to be toggled or not, on load and window resize.
+ */
 function init() {
   // Call this right away to test if we need to expand the nav.
   _navSecondaryToggle();

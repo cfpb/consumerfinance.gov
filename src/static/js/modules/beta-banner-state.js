@@ -30,11 +30,20 @@ function init() {
   }
 }
 
+/**
+ * Run when the beta in-progress banner has been clicked.
+ * @returns {boolean} always returns false.
+ */
 function _betaBannerClicked() {
   _toggleStorage();
   return false;
 }
 
+/**
+ * Toggle the boolean value stored in a web storage.
+ * @returns {boolean} Returns value stored in the web storage,
+ *   either true or false.
+ */
 function _toggleStorage() {
   var value = _storage.getItem( _key );
   if ( value === 'false' ) {

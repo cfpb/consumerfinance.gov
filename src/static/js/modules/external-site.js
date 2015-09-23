@@ -8,8 +8,10 @@
 var $ = require( 'jquery' );
 var handlebars = require( 'handlebars' );
 
-// Instantiate ExternalSite class
-// if external-site_container present on page.
+/**
+ * Instantiate ExternalSite class
+ * if external-site CSS class is present on page.
+ */
 function init() {
   var $externalSiteContainer = $( '.external-site_container' );
   if ( $externalSiteContainer.length ) {
