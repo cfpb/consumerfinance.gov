@@ -1,9 +1,9 @@
 from django.db import models
 from django.http import Http404
 
-from cfgov.settings.base import STAGING_HOSTNAME
+from cfgov.settings import STAGING_HOSTNAME
 
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
 from wagtail.wagtailcore.url_routing import RouteResult
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class V1Page(Page):
-    is_sharable = models.BooleanField(default=False)
+    shared = models.BooleanField(default=False)
 
     # This is used solely for subclassing page's we want to make at the CFPB
     is_creatable = False
@@ -25,7 +25,7 @@ class V1Page(Page):
                 return _("expired")
             elif self.approved_schedule:
                 return _("scheduled")
-            elif self.is_sharable:
+            elif self.shared:
                 return _("shared")
             else:
                 return _("draft")
@@ -71,11 +71,41 @@ class V1Page(Page):
 
         else:
             # request is for this very page
-            if self.live or self.is_sharable and request.site.hostname == STAGING_HOSTNAME:
+            if self.live or self.shared and request.site.hostname == STAGING_HOSTNAME:
                 return RouteResult(self)
             else:
-                print "here"
                 raise Http404
+
+    def permissions_for_user(self, user):
+        """
+        Return a V1PagePermissionsTester object defining what actions the user can perform on this page
+        """
+        user_perms = V1UserPagePermissionsProxy(user)
+        return user_perms.for_page(self)
+
+
+class V1PagePermissionTester(PagePermissionTester):
+    def can_unshare(self):
+        if not self.user.is_active:
+            print "gets there"
+            return False
+        if not self.page.shared or self.page_is_root:
+            return False
+
+        # Must check publish in self.permissions because `share` cannot be added
+        return self.user.is_superuser or ('publish' in self.permissions)
+
+    def can_share(self):
+        print "gets here"
+        return super(V1PagePermissionTester, self).can_share(self)
+
+
+class V1UserPagePermissionsProxy(UserPagePermissionsProxy):
+    def for_page(self, page):
+        """Return a V1PagePermissionTester object that can be used to query
+            whether this user has permission to perform specific tasks on the
+            given page."""
+        return V1PagePermissionTester(self, page)
 
 
 class BlogPage(V1Page):

@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailimages', '0008_image_created_at_index'),
-        ('wagtailcore', '0020_add_share_option_group_perms'),
+        ('wagtailcore', '0019_verbose_names_cleanup'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='V1Page',
             fields=[
                 ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('is_sharable', models.BooleanField(default=False)),
+                ('shared', models.BooleanField(default=False)),
             ],
             options={
                 'abstract': False,

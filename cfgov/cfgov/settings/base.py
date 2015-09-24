@@ -8,6 +8,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Application definition
 
 INSTALLED_APPS = (
+    'v1',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -31,7 +32,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'v1',
     'sheerlike',
 )
 
@@ -55,6 +55,19 @@ ROOT_URLCONF = 'cfgov.urls'
 
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        }
+    },
+    {
         'NAME': 'sheerlike-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'APP_DIRS': True,
@@ -71,19 +84,6 @@ TEMPLATES = [
             'environment': 'v1.environment'
         }
     },
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        }
-    }
 ]
 
 WSGI_APPLICATION = 'cfgov.wsgi.application'
@@ -140,7 +140,6 @@ ALLOWED_HOSTS = ['*']
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "v1"
-STAGING_HOSTNAME = "content.localhost"
 
 # Sheer related settings
 

@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, EventICSView
+from v1.views import LeadershipCalendarPDFView, EventICSView, unshare
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -13,6 +13,7 @@ from wagtail.wagtailcore import urls as wagtail_urls
 
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
+    url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     # url(r'^search/$', 'search.views.search', name='search'),
