@@ -77,6 +77,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed unused exportsOverride section,
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
+- Removed bad CF Notifier tests.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
