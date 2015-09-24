@@ -43,6 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `properties` attribute of `id-length` rule.
 - Added `keywords`, `unnecessary`, and `numbers` attributes
   to `quote-props` rules.
+- Added testing for web-storage-proxy.js
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -66,6 +67,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated istanbul from `0.3.13` to `0.3.20`.
 - Updated TravisCI node version to `4.1.0`.
 - Updated ESLint configuration from `1.0.0` to `1.5.1`.
+- Refactored web-storage-proxy.js to be less complex and make it testable
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
