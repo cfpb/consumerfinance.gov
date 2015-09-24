@@ -55,7 +55,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'v1.jinja2.environment'
+            'environment': 'v1.environment'
         }
     },
     {
