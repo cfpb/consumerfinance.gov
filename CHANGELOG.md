@@ -59,6 +59,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Server port is now at 8000
 - Updated Dep Dir title to include "Acting"
 - included with context flag for macros that make a call to request object
+- Updated Jinja2 shorthand if statements to include an empty else case.
 - Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
 - Updated jsdom from `3.1.2` to `6.5.1`.
 - Updated mocha-jsdom from `0.3.0` to `1.0.0`.

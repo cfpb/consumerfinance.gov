@@ -8,7 +8,7 @@
 
 
 {% block title -%}
-    {{ sub_page.title | safe if sub_page.title }}
+    {{ sub_page.title | safe if sub_page.title else '' }}
 {%- endblock %}
 
 {% block content_main %}
