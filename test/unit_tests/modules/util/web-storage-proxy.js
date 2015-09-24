@@ -12,7 +12,7 @@ describe( 'web-storage-proxy', function() {
 
   before( function() {
     webStorageProxy =
-      require( '../../../../src/static/js/modules/util/web-storage-proxy.js' );
+      require( '../../../../cfgov/v1/preprocessed/js/modules/util/web-storage-proxy.js' );
     setItem = webStorageProxy.setItem;
     getItem = webStorageProxy.getItem;
     removeItem = webStorageProxy.removeItem;
