@@ -68,6 +68,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated TravisCI node version to `4.1.0`.
 - Updated ESLint configuration from `1.0.0` to `1.5.1`.
 - Refactored web-storage-proxy.js to be less complex and make it testable
+- Updated del from `1.2.0` to `2.0.0`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
