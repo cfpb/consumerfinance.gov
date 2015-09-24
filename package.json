@@ -10,7 +10,7 @@
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "^2.8.0",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
-    "chai": "^2.3.0",
+    "chai": "^3.3.0",
     "dateformat": "^1.0.11",
     "del": "^2.0.0",
     "gulp": "^3.9.0",
@@ -49,7 +49,7 @@
     "protractor": "^2.2.0",
     "require-dir": "^0.3.0",
     "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
+    "sinon-chai": "^2.8.0",
     "webpack": "^1.12.0",
     "webpack-stream": "^2.1.0",
     "wcag": "^0.2.2"
