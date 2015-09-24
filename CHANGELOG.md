@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaced old Grunt legaccsy plugin with Gulp mq-remove plugin
 - Added ability for acceptance --specs test flag to accept list of test files.
 - Changes `big_radio` macro to `radio_big` and `checkbox_bg` to `checkbox_big`.
+- Updated Dep Dir title to include "Acting"
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
