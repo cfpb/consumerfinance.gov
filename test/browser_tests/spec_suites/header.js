@@ -35,40 +35,34 @@ describe( 'The Header Component', function() {
   } );
 
   it( 'should load the stylesheet', function() {
-      var stylesheet = browser.baseUrl + '/static/css';
+    var stylesheet = browser.baseUrl + '/static/css';
 
-      if ( browser.name === 'internet explorer' && browser.version === '8' ) {
-        stylesheet += '/main.ie.css';
-      } else {
-        stylesheet += '/main.css';
-      }
-
-      expect( browser.styleSheets ).toContain( stylesheet );
+    if ( browser.name === 'internet explorer' && browser.version === '8' ) {
+      stylesheet += '/main.ie.css';
+    } else {
+      stylesheet += '/main.css';
     }
-  );
+
+    expect( browser.styleSheets ).toContain( stylesheet );
+  } );
 
   it( 'should properly load in a browser', function() {
-      expect( _sharedObject.header.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.header.isPresent() ).toBe( true );
+  } );
 
   it( 'should include the logo', function() {
-      expect( _sharedObject.logo.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.logo.isPresent() ).toBe( true );
+  } );
 
   it( 'should include navList', function() {
-      expect( _sharedObject.navList.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.navList.isPresent() ).toBe( true );
+  } );
 
   it( 'should include four Primary Nav Links', function() {
-      expect( _sharedObject.primaryLinks.count() ).toEqual( 4 );
-    }
-  );
+    expect( _sharedObject.primaryLinks.count() ).toEqual( 4 );
+  } );
 
   it( 'should include multiple Sub Nav Links', function() {
-      expect( _sharedObject.subLinks.count() ).toBeGreaterThan( 1 );
-    }
-  );
+    expect( _sharedObject.subLinks.count() ).toBeGreaterThan( 1 );
+  } );
 } );

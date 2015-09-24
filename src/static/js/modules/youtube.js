@@ -8,6 +8,10 @@
 var $ = require( 'jquery' );
 var jsLoader = require( './util/js-loader' );
 
+/**
+ * Set up jQuery plugin initialization.
+ * @returns {Object} jQuery object.
+ */
 function init() {
 
   /**
@@ -15,7 +19,6 @@ function init() {
   * @param {object} options Object used to customize YouTube.
   * @returns {object} jQuery element.
   */
-
   $.fn.createYouTube = function( options ) {
     options = $.extend( true, {}, this.data(), options );
 

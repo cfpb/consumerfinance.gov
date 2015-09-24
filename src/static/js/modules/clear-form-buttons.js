@@ -9,6 +9,9 @@
 
 var $ = require( 'jquery' );
 
+/**
+ * Set up DOM references, attributes, and event handlers.
+ */
 function init() {
   $( '.js-form_clear' ).on( 'click', function() {
     var $this = $( this );

@@ -6,6 +6,10 @@
 
 var $ = require( 'jquery' );
 
+/**
+ * Set up DOM references and event handlers
+ * for scrolling up when collapsing history sections.
+ */
 function init() {
   var $historySectionExpandable = $( '.history-section-expandable' );
   $historySectionExpandable.find( '.expandable_target' )

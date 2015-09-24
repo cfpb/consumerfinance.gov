@@ -38,7 +38,7 @@ function assign( destination ) {
         var value = source[key];
         if ( _isPlainObject( value ) ) {
           assign( destination[key] = {}, value );
-        }else {
+        } else {
           destination[key] = source[key];
         }
       }

@@ -17,6 +17,10 @@
 
 var $ = require( 'jquery' );
 
+/**
+ * Show or hide additional fields from data-* attribute.
+ * @param {Object} input jQuery DOM object reference.
+ */
 function _toggleAdditionalFields( input ) {
   var additionalFields = $( input ).attr( 'data-additional-fields' );
 
@@ -34,8 +38,10 @@ function _toggleAdditionalFields( input ) {
   }
 }
 
+/**
+ * Show or hide additional fields when any radio button in fieldset changes.
+ */
 function init() {
-  // Show or hide additional fields when any radio button in fieldset changes
   $( '.js-additional-field' ).on( 'change', function() {
     var showField = $( this ).find( '.js-additional-field_trigger' );
     _toggleAdditionalFields( showField );

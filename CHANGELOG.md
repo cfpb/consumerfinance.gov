@@ -35,6 +35,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail CMS
 - Added `gulp test:a11y` accessibility testing using node-wcag.
 - Added node 4.1.0 engine requirement in `package.json`.
+- Added `commonjs`, `jest`, `protractor` environments.
+- Added new ESLint `no-useless-concat`, `global-require`,
+  `jsx-quotes`, `no-restricted-syntax`, `block-spacing`, `require-jsdoc`,
+  `space-before-keywords`, `no-dupe-class-members`, `prefer-arrow-callback`,
+  and `prefer-template` rules.
+- Added `properties` attribute of `id-length` rule.
+- Added `keywords`, `unnecessary`, and `numbers` attributes
+  to `quote-props` rules.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -57,6 +65,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated mocha-jsdom from `0.3.0` to `1.0.0`.
 - Updated istanbul from `0.3.13` to `0.3.20`.
 - Updated TravisCI node version to `4.1.0`.
+- Updated ESLint configuration from `1.0.0` to `1.5.1`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.

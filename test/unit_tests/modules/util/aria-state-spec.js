@@ -35,16 +35,16 @@ describe( 'ARIA state', function() {
 
   it( 'should define the correct ARIA state property and attribute',
     function() {
-    ariaState.define( 'invalid', element, obj );
-    expect( obj.hasOwnProperty( 'isInvalid' ) ).to.be.true;
-    expect( element.getAttribute( 'aria-invalid' ) === 'false' ).to.be.true;
+      ariaState.define( 'invalid', element, obj );
+      expect( obj.hasOwnProperty( 'isInvalid' ) ).to.be.true;
+      expect( element.getAttribute( 'aria-invalid' ) === 'false' ).to.be.true;
 
-    this.isGrabbed = true;
-    ariaState.define( 'grabbed', element, this );
-    expect( this.hasOwnProperty( 'isGrabbed' ) ).to.be.true;
-    expect( element.getAttribute( 'aria-grabbed' ) === 'true' ).to.be.true;
-    delete this.isGrabbed;
-  } );
+      this.isGrabbed = true;
+      ariaState.define( 'grabbed', element, this );
+      expect( this.hasOwnProperty( 'isGrabbed' ) ).to.be.true;
+      expect( element.getAttribute( 'aria-grabbed' ) === 'true' ).to.be.true;
+      delete this.isGrabbed;
+    } );
 
   it( 'should change the ARIA state after state property changes', function() {
     var state = ariaState.create( 'hidden', element );

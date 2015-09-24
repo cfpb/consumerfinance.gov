@@ -8,6 +8,10 @@
 var $ = require( 'jquery' );
 var dateRangeFormatter = require( './util/date-range-formatter' );
 
+/**
+ * Set up jQuery plugin initialization.
+ * @returns {Object} jQuery object.
+ */
 function init() {
 
   /**

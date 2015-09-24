@@ -12,6 +12,9 @@
 
 var $ = require( 'jquery' );
 
+/**
+ * Parse links to handle webkit bug with keyboard focus.
+ */
 function init() {
   $( 'a[href^="#"]' ).click( function() {
     var anchor = $( this ).attr( 'href' );
