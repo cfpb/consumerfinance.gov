@@ -15,7 +15,7 @@ describe( 'CFNotifier', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    require( '../../../cfgov/v1//preprocessed/js/modules/jquery/cf_notifier.js' ).init();
+    require( '../../../cfgov/v1/preprocessed/js/modules/jquery/cf_notifier.js' ).init();
     $form = $( '#email-subscribe-form' );
     $form.cf_notifier();
   } );
