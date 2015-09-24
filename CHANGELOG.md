@@ -33,17 +33,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `Object.defineProperty` polyfill.
 - Added unit test for `aria-state.js`.
 - Wagtail CMS
-- Added `gulp test:a11y` accessibility testing using node-wcag.
-- Added node 4.1.0 engine requirement in `package.json`.
-- Added `commonjs`, `jest`, `protractor` environments.
-- Added new ESLint `no-useless-concat`, `global-require`,
-  `jsx-quotes`, `no-restricted-syntax`, `block-spacing`, `require-jsdoc`,
-  `space-before-keywords`, `no-dupe-class-members`, `prefer-arrow-callback`,
-  and `prefer-template` rules.
-- Added `properties` attribute of `id-length` rule.
-- Added `keywords`, `unnecessary`, and `numbers` attributes
-  to `quote-props` rules.
-- Added testing for web-storage-proxy.js
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -60,17 +49,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Server port is now at 8000
 - Updated Dep Dir title to include "Acting"
 - included with context flag for macros that make a call to request object
-- Updated Jinja2 shorthand if statements to include an empty else case.
-- Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
-- Updated jsdom from `3.1.2` to `6.5.1`.
-- Updated mocha-jsdom from `0.3.0` to `1.0.0`.
-- Updated istanbul from `0.3.13` to `0.3.20`.
-- Updated TravisCI node version to `4.1.0`.
-- Updated ESLint configuration from `1.0.0` to `1.5.1`.
-- Refactored web-storage-proxy.js to be less complex and make it testable
-- Updated del from `1.2.0` to `2.0.0`.
-- Updated chai from `2.3.0` to `3.3.0`.
-- Updated sinon-chai from `2.7.0` to `2.8.0`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
@@ -86,7 +64,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed instructions for gulp watch
 - New way to run the server documented in the INSTALL.MD
 - New way to define url routing, no longer automatically set by file path
-
+- Fixed heading structure throughout website
 
 ## 3.0.0-2.3.0 - 2015-08-27
 
