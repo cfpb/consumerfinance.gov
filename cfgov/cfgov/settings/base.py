@@ -2,7 +2,7 @@ import os
 from unipath import Path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
 # Application definition
@@ -30,8 +30,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
     'v1',
+    'core',
     'sheerlike',
 )
 
@@ -45,29 +45,18 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
 
 TEMPLATES = [
     {
-        'NAME': 'wagtail-env',
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'environment': 'v1.environment'
-        }
-    },
-    {
-        'NAME': 'sheerlike-env',
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'OPTIONS': {
-            'environment': 'sheerlike.environment'
-        }
-    },
-    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [PROJECT_ROOT + '/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +66,15 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         }
-    }
+    },
+    {
+        'NAME': 'wagtail-env',
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'v1.environment'
+        }
+    },
 ]
 
 WSGI_APPLICATION = 'cfgov.wsgi.application'

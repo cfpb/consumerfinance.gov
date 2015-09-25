@@ -1,4 +1,10 @@
 from core.services import PDFGeneratorView, ICSView
+from wagtail.wagtailcore.models import Page
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import PermissionDenied
+from wagtail.wagtailadmin import messages
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
 
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
@@ -26,3 +32,24 @@ class EventICSView(ICSView):
     event_organizer_addr_keyname = 'organizer_email'
     event_location_keyname = 'location'
     event_status_keyname = 'status'
+
+
+def unshare(request, page_id):
+    page = get_object_or_404(Page, id=page_id).specific
+    if not page.permissions_for_user(request.user).can_unshare():
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        page.shared = False
+        page.save_revision(user=request.user, submitted_for_moderation=False)
+        page.save()
+
+        messages.success(request, _("Page '{0}' unshared.").format(page.title), buttons=[
+            messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
+        ])
+
+        return redirect('wagtailadmin_explore', page.get_parent().id)
+
+    return render(request, 'wagtailadmin/pages/confirm_unshare.html', {
+        'page': page,
+    })
