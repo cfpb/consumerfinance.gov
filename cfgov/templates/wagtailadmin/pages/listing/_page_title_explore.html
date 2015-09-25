@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load share %}
 
 {# The title field for a page in the page listing, when in 'explore' mode #}
 
@@ -32,7 +33,11 @@
     {% if page_perms.can_delete and 'delete' not in hide_actions|default:'' %}
         <li><a href="{% url 'wagtailadmin_pages:delete' page.id %}" class="button button-small button-secondary">{% trans 'Delete' %}</a></li>
     {% endif %}
-    {% if page.shared and page_perms.can_share_pages and 'share' not in hide_actions|default:'' %}
+    {% if page_perms.can_share_pages %}
+        okay
+    {% endif %}
+    {% v1page_permissions page as v1page_perms %}
+    {% if page|is_shared and v1page_perms.can_unshare and 'share' not in hide_actions|default:'' %}
         <li><a href="{% url 'unshare' page.id %}" class="button button-small button-secondary">{% trans 'Unshare' %}</a></li>
     {% endif %}
     {% if page_perms.can_unpublish and 'unpublish' not in hide_actions|default:'' %}
