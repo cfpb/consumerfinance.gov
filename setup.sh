@@ -77,5 +77,5 @@ build(){
 
 init
 clean
-install
+install $1
 build
