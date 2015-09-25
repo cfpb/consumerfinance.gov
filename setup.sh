@@ -54,11 +54,14 @@ install(){
 
   # Update test dependencies.
 
-  # Protractor.
+  # Protractor - JavaScript acceptance testing.
   ./$NODE_DIR/protractor/bin/webdriver-manager update
 
-  # Macro Polo.
+  # Macro Polo - Jinja template unit testing.
   pip install -r ./test/macro_tests/requirements.txt
+
+  # Tox - Django server unit testing.
+  pip install tox
 
   # Django Server
   if [ -z "$1" ]; then
