@@ -1,33 +1,31 @@
 'use strict';
 
-var Blog = require(
-    '../page_objects/page_blog.js'
+var Newsroom = require(
+    '../page_objects/page_newsroom.js'
   );
 
-describe( 'The Blog Page', function() {
+describe( 'The Newsroom Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new Blog();
+    page = new Newsroom();
     page.get();
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Blog' );
+    expect( page.pageTitle() ).toBe( 'Newsroom' );
   } );
 
   it( 'should include a main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Blog' );
+    expect( page.mainTitle.getText() ).toBe( 'Newsroom' );
   } );
 
-  it( 'should include a content sidebar', function() {
-    expect( page.contentSidebar.isPresent() ).toBe( true );
+  it( 'should have a side nav', function() {
+    expect( page.sideNav.isPresent() ).toBe( true );
   } );
 
-  it( 'might include Popular Stories in the sidebar', function() {
-    if ( page.popularStories ) {
-      expect( page.popularStoriesTitle.getText() ).toBe( 'POPULAR STORIES' );
-    }
+  it( 'should include a featured topic', function() {
+    expect( page.featuredTopic.isPresent() ).toBe( true );
   } );
 
   it( 'should include a Stay Informed section in the sidebar', function() {
@@ -38,11 +36,11 @@ describe( 'The Blog Page', function() {
     expect( page.stayInformedSectionTitle.getText() ).toBe( 'STAY INFORMED' );
   } );
 
-  it( 'should include an Email Subscribe form', function() {
+  it( 'should include a Email Subscribe form', function() {
     expect( page.emailSubscribeForm.isPresent() ).toBe( true );
   } );
 
-  it( 'should include an Email Subscribe label', function() {
+  it( 'should include a Email Subscribe label', function() {
     expect( page.emailFormLabel.getText() ).toBe( 'Email address' );
   } );
 
@@ -52,27 +50,27 @@ describe( 'The Blog Page', function() {
     .toBe( 'example@mail.com' );
   } );
 
-  it( 'should include an Email Subscribe hidden field', function() {
+  it( 'should include a Email Subscribe hidden field', function() {
     expect( page.emailFormHiddenField.getAttribute( 'value' ) )
-    .toBe( 'USCFPB_91' );
+    .toBe( 'USCFPB_23' );
     expect( page.emailFormHiddenField.getAttribute( 'name' ) )
     .toBe( 'code' );
   } );
 
-  it( 'should include an Email Subscribe button', function() {
+  it( 'should include a Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
     .toBe( 'Sign up' );
   } );
 
-  it( 'should include an Email Subscribe description', function() {
+  it( 'should include a Email Subscribe description', function() {
     expect( page.emailFormDescription.isPresent() ).toBe( true );
   } );
 
-  it( 'should include an RSS Subscribe section', function() {
+  it( 'should include a RSS Subscribe section', function() {
     expect( page.rssSubscribeSection.isPresent() ).toBe( true );
   } );
 
-  it( 'should include an RSS Subscribe button', function() {
+  it( 'should include a RSS Subscribe button', function() {
     expect( page.rssSubscribeBtn.getText() ).toContain( 'Subscribe to RSS' );
   } );
 

@@ -26,7 +26,7 @@ function ApplicationProcess() {
   this.introSectionLink = this.introSection.element( by.css( 'a' ) );
 
   this.jobApplicationsInterfaces =
-  element.all( by.css( '.job-applications-interfaces .expandable' ) );
+  element.all( by.css( '.job-applications-interfaces .media' ) );
 
   this.ethicsLink = element( by.css( 'a[href="mailto:EthicsHelp@cfpb.gov"' ) );
 
