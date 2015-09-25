@@ -28,7 +28,6 @@ def share_the_page(request, page):
 
 @hooks.register('before_serve_page')
 def check_request_site(page, request, serve_args, serve_kwargs):
-    print settings.STAGING_HOSTNAME
     if request.site.hostname == settings.STAGING_HOSTNAME:
         if isinstance(page, V1Page):
             if not page.shared:
