@@ -83,6 +83,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
 - Removed src directory
+- Removed bad CF Notifier tests.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
@@ -91,7 +92,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed instructions for gulp watch
 - New way to run the server documented in the INSTALL.MD
 - New way to define url routing, no longer automatically set by file path
-
+- Fixed heading structure throughout website
 
 ## 3.0.0-2.3.0 - 2015-08-27
 
