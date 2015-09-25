@@ -50,6 +50,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Backend for Staging vs Production publishing
 - Django template tags
 - A temporary blog page template for testing
+- Added `block__flush` to cf-enhancements to remove margin from all sides.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.

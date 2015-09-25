@@ -1229,10 +1229,40 @@ tbody {
         - .block.block__border-right
       notes:
         - "Adds right border to .block."
+    - name: Flush modifier
+      markup: |
+        <main class="content content__1-3" role="main">
+            <div class="content_wrapper">
+                <aside class="content_sidebar">
+                    Section navigation
+                </aside>
+                <section class="content_main">
+                    Main content...
+                    <aside class="block block__flush">
+                        Content block with no margins.
+                    </aside>
+                </section>
+            </div>
+        </main>
+      codenotes:
+        - .block.block__flush
+      notes:
+        - "Removes the side, top, and bottom margin from .block."
+    - name: Background modifier
+      markup: |
+        Main content...
+        <div class="block block__bg">
+            Content block with a background
+        </div>
+      codenotes:
+        - .block.block__bg
+      notes:
+        - "Adds a background color and padding to .block."
+        - "Setup to have 30px padding on top and 60px on bottom, in ems."
   tags:
     - cf-layout
 */
-@block__border: #BABBBD; // Gray 50%
+@block__border: @gray-50;
 .block {
     &__border {
         border: 1px solid @block__border;
@@ -1245,7 +1275,30 @@ tbody {
     &__border-right {
         border-right: 1px solid @block__border;
     }
+
+    &__flush {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        margin-right: -(@grid_gutter-width / 2);
+        margin-left: -(@grid_gutter-width / 2);
+        .respond-to-min(600px, {
+            margin-right: -@grid_gutter-width;
+            margin-left: -@grid_gutter-width;
+        });
+    }
+
+    &__bg {
+        padding: unit(@grid_gutter-width / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+        padding-bottom: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
+        background: @block__bg;
+        .respond-to-min(600px, {
+            padding: unit(45 / @base-font-size-px, em)
+                     unit(@grid_gutter-width / @base-font-size-px, em);
+        });
+    }
 }
+
 
 /* topdoc
   name: Block
@@ -1540,21 +1593,6 @@ dd {
 ul:last-child,
 .list__links .list_item:last-child {
     margin-bottom: 0;
-}
-
-
-/* topdoc
-  name: Update block__bg padding
-  family: cf-layout
-  notes:
-    - "Updates the padding in block__bg to match feedback from Justin James"
-  tags:
-    - cf-layout
-*/
-
-.block__bg {
-    padding-top: 30px;
-    padding-bottom: 60px;
 }
 
 
