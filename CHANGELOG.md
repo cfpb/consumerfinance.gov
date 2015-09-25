@@ -93,6 +93,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed src directory
 - Removed bad CF Notifier tests.
 - Removed Ombudsman from nav for beta freeze.
+- Removed unnecessary mobile-only expandables
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
