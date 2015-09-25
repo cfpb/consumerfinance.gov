@@ -71,7 +71,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated ESLint configuration from `1.0.0` to `1.5.1`.
 - Vendor related files now sit at the root project location
 - Moved templates to reside in v1 app project jinja2 directory
-- Added ability to use django static & url functionality in jinja2 templates. 
+- Added ability to use django static & url functionality in jinja2 templates.
   [More Information] (https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
 - Refactored web-storage-proxy.js to be less complex and make it testable
 - Updated del from `1.2.0` to `2.0.0`.
@@ -85,6 +85,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed browserify, watchify, and browserify-shim dependencies.
 - Removed src directory
 - Removed bad CF Notifier tests.
+- Removed Ombudsman from nav for beta freeze.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
