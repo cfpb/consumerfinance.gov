@@ -32,7 +32,7 @@
 
 {% block content_main %}
 
-    <h1>Blog</h1>
+    <h1 data-qa-hook="main-title">Blog</h1>
 
     {% set filter_by = ['blog_category', 'tags', 'author', 'range_date'] %}
     {% import 'macros/filters.html' as filters with context %}
@@ -49,7 +49,7 @@
             {{ popular_stories.render(view.popular_posts) }}
         {% endif %}
     </section>
-    <section class="block">
+    <section class="block" data-qa-hook="stay-informed-section">
         <h2 class="header-slug">
             <span class="header-slug_inner">
                 Stay informed
@@ -62,7 +62,7 @@
             {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render('USCFPB_91') }}
         </div>
-        <div class="block block__sub">
+        <div class="block block__sub" data-qa-hook="rss-subscribe-section">
             {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
         </div>
