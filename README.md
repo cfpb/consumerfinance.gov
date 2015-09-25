@@ -116,7 +116,12 @@ cd cfgov/v1/jinja2/v1
 sheer index
 
 # From the Project root, start server.
-python cfgov/manage.py runserver
+./runserver.sh
+
+# **Note**
+# If prompted to migrate database changes, stop the server ctrl+c and run these commands
+python cfgov/manage.py migrate
+./runserver.sh
 ```
 
 To view the site browse to: <http://localhost:8000>
@@ -184,6 +189,12 @@ which is the front-end pattern library used in this project.
 
 ## Working with the templates
 <!-- Perhaps we want to split this out into a separate page? -->
+### Front-End Template/Asset Locations ###
+
+**Templates** that are served by the django server: ```cfgov\v1\jinja2\v1 ```
+
+**Static assets** prior to processing (minifying etc.): ```cfgov\v1\preprocessed```. *note after a gulp build they are copied over to the ```cfgov\v1\static``` location ready to be served by django.*
+
 ### Simple static template setup
 
 By default, Django will render pages with accordance to the url pattern defined

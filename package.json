@@ -10,9 +10,9 @@
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "^2.8.0",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
-    "chai": "^2.3.0",
+    "chai": "^3.3.0",
     "dateformat": "^1.0.11",
-    "del": "^1.2.0",
+    "del": "^2.0.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-changed": "^1.2.1",
@@ -49,21 +49,21 @@
     "protractor": "^2.2.0",
     "require-dir": "^0.3.0",
     "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
+    "sinon-chai": "^2.8.0",
     "webpack": "^1.12.0",
     "webpack-stream": "^2.1.0",
     "wcag": "^0.2.2"
   },
   "browser": {
     "dateformat": "./node_modules/dateformat/lib/dateformat.js",
-    "handlebars": "./src/vendor/handlebars/handlebars.min.js",
-    "history": "./src/vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
+    "handlebars": "./vendor/handlebars/handlebars.min.js",
+    "history": "./vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "jquery-easing": "./src/vendor/jquery.easing/js/jquery.easing.js",
-    "cf-expandables": "./src/vendor/cf-expandables/src/js/cf-expandables.js",
-    "chosen": "./src/vendor/chosen/chosen.jquery.js",
-    "slick": "./src/vendor/slick-carousel/slick/slick.js",
-    "string_score": "./src/vendor/string_score/string_score.js",
-    "validate": "./src/vendor/validate/validate.js"
+    "jquery-easing": "./vendor/jquery.easing/js/jquery.easing.js",
+    "cf-expandables": "./vendor/cf-expandables/src/js/cf-expandables.js",
+    "chosen": "./vendor/chosen/chosen.jquery.js",
+    "slick": "./vendor/slick-carousel/slick/slick.js",
+    "string_score": "./vendor/string_score/string_score.js",
+    "validate": "./vendor/validate/validate.js"
   }
 }

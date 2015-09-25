@@ -3,9 +3,9 @@ var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 var getBreakpointState =
-require( '../../../../src/static/js/modules/util/breakpoint-state.js' ).get;
+require( '../../../../cfgov/v1/preprocessed/js/modules/util/breakpoint-state.js' ).get;
 var breakpointConfig =
-require( '../../../../src/static/js/config/breakpoints-config.js' );
+require( '../../../../cfgov/v1/preprocessed/js/config/breakpoints-config.js' );
 
 var breakpointState;
 var configKeys;

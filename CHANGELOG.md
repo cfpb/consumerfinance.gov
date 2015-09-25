@@ -43,6 +43,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `properties` attribute of `id-length` rule.
 - Added `keywords`, `unnecessary`, and `numbers` attributes
   to `quote-props` rules.
+- runserver.sh script to collectstatic files and run the server
+- Added testing for web-storage-proxy.js
+- Added Acceptance tests for `careers` pages.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -66,12 +69,23 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated istanbul from `0.3.13` to `0.3.20`.
 - Updated TravisCI node version to `4.1.0`.
 - Updated ESLint configuration from `1.0.0` to `1.5.1`.
+- Vendor related files now sit at the root project location
+- Moved templates to reside in v1 app project jinja2 directory
+- Added ability to use django static & url functionality in jinja2 templates.
+  [More Information] (https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
+- Refactored web-storage-proxy.js to be less complex and make it testable
+- Updated del from `1.2.0` to `2.0.0`.
+- Updated chai from `2.3.0` to `3.3.0`.
+- Updated sinon-chai from `2.7.0` to `2.8.0`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
 - Removed unused exportsOverride section,
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
+- Removed src directory
+- Removed bad CF Notifier tests.
+- Removed Ombudsman from nav for beta freeze.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
@@ -80,7 +94,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed instructions for gulp watch
 - New way to run the server documented in the INSTALL.MD
 - New way to define url routing, no longer automatically set by file path
-
+- Fixed heading structure throughout website
 
 ## 3.0.0-2.3.0 - 2015-08-27
 

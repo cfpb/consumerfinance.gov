@@ -1,0 +1,154 @@
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-budget.html' as vars with context %}
+
+{% block title -%}
+    Budget and Strategy
+{%- endblock %}
+
+{% block desc -%}
+
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    <section class="media block block__flush-top block__sub">
+        <div class="media_image-container
+                    media_image-container__wide-margin
+                    media_image-container__right">
+            <img class="media_image" src="">
+        </div>
+        <div class="media_body">
+            <h1>Budget and strategy</h1>
+            <p class="h3">
+                The mission of the CFPB is to make consumer finance rules more effective,
+                to consistently and fairly enforce those rules,
+                and to empower consumers to take more control over their economic lives.
+                Our vision is a consumer finance marketplace:
+            </p>
+            <ul class="h3 list list__branded">
+                <li>
+                    where customers can see prices
+                    and risks up front and where they can easily make product comparisons;
+                </li>
+                <li>
+                    in which no one can build a business model around unfair,
+                    deceptive, or abusive practices;
+                </li>
+                <li>
+                    that works for American consumers, responsible providers,
+                    and the economy as a whole.
+                </li>
+            </ul>
+            <p class="h3">
+                We publish our budget, strategy,
+                and regular updates to provide transparency
+                and to hold ourselves accountable to the public.
+            <p>
+        </div>
+    </section>
+
+    <section class="block block__sub block__padded-top block__border-top">
+
+        <div class="content-l content-l__main content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Strategic plan</h2>
+                <p class="short-desc">
+                    In compliance with federal law,
+                    we publish a five-year strategy for pursuing our mission and vision.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link"
+                           href="/budget/strategic-plan/">
+                            Review the CFPB’s strategic plan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Performance plans and reports</h2>
+                <p class="short-desc">
+                    Every year, we measure our performance against our strategic
+                    plan and explain how we will continue to make progress.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link"
+                           href="/budget/performance-plan-report/">
+                            See our performance plans and reports
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-l content-l__main content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Financial reports and updates</h2>
+                <p class="short-desc">
+                    Our budget describes what it takes to execute our plan.
+                    We detail the budget in annual reports and quarterly updates.
+                </p>
+                <a class="jump-link jump-link__underline"
+                   href="/budget/financial-report/">
+                    Review our financial reports and updates
+                </a>
+            </div>
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Funding requests</h2>
+                <p class="short-desc">
+                    We receive funding from the Federal Reserve Board.
+                    We publish all our funding requests and the Fed’s replies.
+                </p>
+                <a class="jump-link jump-link__underline"
+                   href="/budget/funding-request/">
+                    Review our funding requests
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {# Footer #}
+    <aside>
+        <div class="block
+                    block__flush-bottom
+                    block__flush-sides
+                    block__bg
+                    block__border-top
+                    block__border-right">
+            <div class="content-l content-l__main">
+                <section class="content-l_col content-l_col-1-2">
+                    <h2 class="header-slug">
+                        <span class="header-slug_inner">
+                            Doing business with the CFPB
+                        </span>
+                    </h2>
+                    <p class="short-desc">
+                        We work with vendors who can help us achieve our mission. We publish
+                        information about both existing and future procurements.
+                    </p>
+                    <a class="jump-link jump-link__underline"
+                       href="/doing-business-with-us/">
+                        Learn more about opportunities to work with the CFPB
+                    </a>
+                </section>
+                <section class="u-mb20 content-l_col content-l_col-1-2">
+                    {# TODO: Add Civil Penalty Fund URL. #}
+                    {%- import 'related-links.html' as related_links -%}
+                    {{- related_links.render([
+                        [ '/the-bureau/',
+                          'About the CFPB' ],
+                        [ '/blog/',
+                          'The blog' ],
+                        [ '',
+                          'Civil Penalty Fund' ]
+                    ]) -}}
+                </section>
+            </div>
+        </div>
+    </aside>
+
+{% endblock %}

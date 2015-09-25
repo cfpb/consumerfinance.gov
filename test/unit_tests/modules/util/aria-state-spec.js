@@ -3,7 +3,7 @@ var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 var ariaState =
-require( '../../../../src/static/js/modules/util/aria-state.js' );
+require( '../../../../cfgov/v1/preprocessed/js/modules/util/aria-state.js' );
 var element;
 var obj;
 
