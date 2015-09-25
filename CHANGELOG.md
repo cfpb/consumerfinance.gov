@@ -46,6 +46,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - runserver.sh script to collectstatic files and run the server
 - Added testing for web-storage-proxy.js
 - Added Acceptance tests for `careers` pages.
+- V1Page model
+- Backend for Staging vs Production publishing
+- Django template tags
+- A temporary blog page template for testing
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -77,6 +81,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated del from `1.2.0` to `2.0.0`.
 - Updated chai from `2.3.0` to `3.3.0`.
 - Updated sinon-chai from `2.7.0` to `2.8.0`.
+- Settings file and template loaders
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
