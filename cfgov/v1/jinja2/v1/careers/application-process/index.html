@@ -63,7 +63,8 @@
 {%- endblock %}
 
 {% block content_main %}
-    <section class="block block__flush-top block__sub">
+    <section class="block block__flush-top block__sub"
+             data-qa-hook="intro-section">
             <h1>Job Application Process</h1>
             <p class="h3">
                 Applying for a federal job can take some time and patience.
@@ -285,7 +286,8 @@
     <aside>
         <div class="block
                     block__border-top
-                    block__flush-bottom">
+                    block__flush-bottom"
+             data-qa-hook="info-section">
             {# This extra div is to keep the horizontal lines size consistent #}
             <div class="content-l">
                 <section class="content-l_col
