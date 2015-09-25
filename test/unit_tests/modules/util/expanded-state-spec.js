@@ -12,7 +12,7 @@ describe( 'Event States', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    es = require( '../../../../src/static/js/modules/util/expanded-state.js' );
+    es = require( '../../../../cfgov/v1/preprocessed/js/modules/util/expanded-state.js' );
     sandbox = sinon.sandbox.create();
   } );
 

@@ -16,11 +16,11 @@ gulp.task( 'styles:modern', function() {
     .on( 'error', handleErrors )
     .pipe( $.replace(
       /url\('chosen-sprite.png'\)/ig,
-      'url("/static/img/chosen-sprite.png")'
+      'url("/img/chosen-sprite.png")'
     ) )
     .pipe( $.replace(
       /url\('chosen-sprite@2x.png'\)/ig,
-      'url("/static/img/chosen-sprite@2x.png")'
+      'url("/img/chosen-sprite@2x.png")'
     ) )
     .pipe( $.autoprefixer( {
       browsers: [ 'last 2 version' ]
@@ -39,11 +39,11 @@ gulp.task( 'styles:ie', function() {
     .on( 'error', handleErrors )
     .pipe( $.replace(
       /url\('chosen-sprite.png'\)/ig,
-      'url("/static/img/chosen-sprite.png")'
+      'url("/img/chosen-sprite.png")'
     ) )
     .pipe( $.replace(
       /url\('chosen-sprite@2x.png'\)/ig,
-      'url("/static/img/chosen-sprite@2x.png")'
+      'url("/img/chosen-sprite@2x.png")'
     ) )
     .pipe( $.autoprefixer( {
       browsers: [ 'IE 7', 'IE 8' ]

@@ -10,6 +10,7 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
     A MacroTestCase subclass for cfgov-refresh.
     """
 
+
     def search_root(self):
         """
         Return the root of the search path for templates.
@@ -17,12 +18,14 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
         # Get the cfgov-refresh root dir, ../../../
         # PLEASE NOTE: This presumes that the file containing the test always
         # lives three levels above the cfgov-refresh root.
-        root_dir = os.path.abspath(os.path.join(
+
+        templates = os.path.abspath(os.path.join(
             os.path.dirname(__file__),
             os.pardir,
             os.pardir,
-            'src'))
-        return root_dir
+            'cfgov/v1/jinja2/v1'))
+
+        return templates
 
 
     def search_exceptions(self):
@@ -30,11 +33,12 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
         Return a list of subdirectory names that should not be searched
         for templates.
         """
+        templates = 'cfgov/v1/jinja2/v1'
         return [
-            'src/_defaults',
-            'src/_lib',
-            'src/_queries',
-            'src/_settings',
+            templates + '/_defaults',
+            templates + '/_lib',
+            templates + '/_queries',
+            templates + '/_settings',
             'test',
             'config'
         ]

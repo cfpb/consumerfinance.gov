@@ -33,6 +33,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `Object.defineProperty` polyfill.
 - Added unit test for `aria-state.js`.
 - Wagtail CMS
+- Added `gulp test:a11y` accessibility testing using node-wcag.
+- Added node 4.1.0 engine requirement in `package.json`.
+- Added `commonjs`, `jest`, `protractor` environments.
+- Added new ESLint `no-useless-concat`, `global-require`,
+  `jsx-quotes`, `no-restricted-syntax`, `block-spacing`, `require-jsdoc`,
+  `space-before-keywords`, `no-dupe-class-members`, `prefer-arrow-callback`,
+  and `prefer-template` rules.
+- Added `properties` attribute of `id-length` rule.
+- Added `keywords`, `unnecessary`, and `numbers` attributes
+  to `quote-props` rules.
+- runserver.sh script to collectstatic files and run the server
+- Added testing for web-storage-proxy.js
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -49,12 +61,28 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Server port is now at 8000
 - Updated Dep Dir title to include "Acting"
 - included with context flag for macros that make a call to request object
+- Updated Jinja2 shorthand if statements to include an empty else case.
+- Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
+- Updated jsdom from `3.1.2` to `6.5.1`.
+- Updated mocha-jsdom from `0.3.0` to `1.0.0`.
+- Updated istanbul from `0.3.13` to `0.3.20`.
+- Updated TravisCI node version to `4.1.0`.
+- Updated ESLint configuration from `1.0.0` to `1.5.1`.
+- Vendor related files now sit at the root project location
+- Moved templates to reside in v1 app project jinja2 directory
+- Added ability to use django static & url functionality in jinja2 templates. 
+  [More Information] (https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
+- Refactored web-storage-proxy.js to be less complex and make it testable
+- Updated del from `1.2.0` to `2.0.0`.
+- Updated chai from `2.3.0` to `3.3.0`.
+- Updated sinon-chai from `2.7.0` to `2.8.0`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
 - Removed unused exportsOverride section,
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
+- Removed src directory
 - Removed bad CF Notifier tests.
 
 ### Fixed

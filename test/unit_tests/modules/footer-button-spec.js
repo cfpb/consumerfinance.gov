@@ -12,7 +12,7 @@ describe( 'The Footer Return-to-Top Button', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    footerButton = require( '../../../src/static/js/modules/footer-button.js' );
+    footerButton = require( '../../../cfgov/v1/preprocessed/js/modules/footer-button.js' );
     sandbox = sinon.sandbox.create();
   } );
 
