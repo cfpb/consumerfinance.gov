@@ -104,6 +104,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New way to define url routing, no longer automatically set by file path
 - Fixed heading structure throughout website
 - Fixed setup.sh to use argument correctly
+- Fixed title for Small & Minority Businesses
 
 ## 3.0.0-2.3.0 - 2015-08-27
 
