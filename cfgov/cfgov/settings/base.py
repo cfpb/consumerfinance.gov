@@ -2,13 +2,12 @@ import os
 from unipath import Path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
 # Application definition
 
 INSTALLED_APPS = (
-    'v1',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -31,6 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'v1',
     'core',
     'sheerlike',
 )
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'cfgov.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [PROJECT_ROOT + '/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,7 +78,6 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [Path(os.path.dirname(__file__)).ancestor(2) + '/v1/jinja2/v1'],
         'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.environment'

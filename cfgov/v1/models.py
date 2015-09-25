@@ -1,7 +1,6 @@
 from django.db import models
 from django.http import Http404
-
-from cfgov.settings import STAGING_HOSTNAME
+from django.conf import settings
 
 from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
 from wagtail.wagtailcore.url_routing import RouteResult
@@ -71,7 +70,7 @@ class V1Page(Page):
 
         else:
             # request is for this very page
-            if self.live or self.shared and request.site.hostname == STAGING_HOSTNAME:
+            if self.live or self.shared and request.site.hostname == settings.STAGING_HOSTNAME:
                 return RouteResult(self)
             else:
                 raise Http404
@@ -87,17 +86,21 @@ class V1Page(Page):
 class V1PagePermissionTester(PagePermissionTester):
     def can_unshare(self):
         if not self.user.is_active:
-            print "gets there"
             return False
         if not self.page.shared or self.page_is_root:
             return False
 
-        # Must check publish in self.permissions because `share` cannot be added
-        return self.user.is_superuser or ('publish' in self.permissions)
+        # Must check edit in self.permissions because `share` cannot be added
+        return self.user.is_superuser or ('edit' in self.permissions)
 
     def can_share(self):
-        print "gets here"
-        return super(V1PagePermissionTester, self).can_share(self)
+        if not self.user.is_active:
+            return False
+        if self.page_is_root:
+            return False
+
+        # Must check edit in self.permissions because `share` cannot be added
+        return self.user.is_superuser or ('edit' in self.permissions)
 
 
 class V1UserPagePermissionsProxy(UserPagePermissionsProxy):
