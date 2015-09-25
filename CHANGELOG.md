@@ -77,12 +77,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Vendor related files now sit at the root project location
 - Moved templates to reside in v1 app project jinja2 directory
 - Added ability to use django static & url functionality in jinja2 templates.
-  [More Information] (https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
+  [More Information](https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
 - Refactored web-storage-proxy.js to be less complex and make it testable
 - Updated del from `1.2.0` to `2.0.0`.
 - Updated chai from `2.3.0` to `3.3.0`.
 - Updated sinon-chai from `2.7.0` to `2.8.0`.
 - Settings file and template loaders
+- Updated gulp-autoprefixer from `2.3.1` to `3.0.2`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
