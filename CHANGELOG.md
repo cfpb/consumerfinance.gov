@@ -32,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
+- Removed Ombudsman from nav for beta freeze.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
