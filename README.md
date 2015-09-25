@@ -117,6 +117,11 @@ sheer index
 
 # From the Project root, start server.
 ./runserver.sh
+
+# **Note**
+# If prompted to migrate database changes, stop the server ctrl+c and run these commands
+python cfgov/manage.py migrate
+./runserver.sh
 ```
 
 To view the site browse to: <http://localhost:8000>

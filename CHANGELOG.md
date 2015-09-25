@@ -45,6 +45,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to `quote-props` rules.
 - runserver.sh script to collectstatic files and run the server
 - Added testing for web-storage-proxy.js
+- Added Acceptance tests for `careers` pages.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
