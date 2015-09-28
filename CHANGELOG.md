@@ -88,6 +88,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated sinon-chai from `2.7.0` to `2.8.0`.
 - Settings file and template loaders
 - Updated gulp-autoprefixer from `2.3.1` to `3.0.2`.
+- Added pixel dimensions to Cordrary corner video image.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
@@ -98,6 +99,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed bad CF Notifier tests.
 - Removed Ombudsman from nav for beta freeze.
 - Removed unnecessary mobile-only expandables
+- Removed link from Cordray's corner image `/the-bureau/about-director/`.
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
