@@ -100,6 +100,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed Ombudsman from nav for beta freeze.
 - Removed unnecessary mobile-only expandables
 - Removed link from Cordray's corner image `/the-bureau/about-director/`.
+- Removed extra Google Analytics code
 
 ### Fixed
 - Fixed issue with logic displaying the Event summary state.
