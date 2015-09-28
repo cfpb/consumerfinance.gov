@@ -55,6 +55,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Acceptance tests for `newsroom` pages.
 - Added Acceptance tests for `doing-business-with-us` pages.
 - Added Acceptance tests for `budget` pages.
+- Added atomic landing page template prototypes.
+- Added `/organisms/` and `/molecules/` directories to includes directory.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
