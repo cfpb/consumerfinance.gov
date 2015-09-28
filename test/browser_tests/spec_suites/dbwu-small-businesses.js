@@ -26,7 +26,7 @@ describe( 'The Small Businesses Page', function() {
   } );
 
   it( 'should have a breadcrumb', function() {
-    expect( page.breadcrumb.getText() ).toBe( 'Doing Business with us' );
+    expect( page.breadcrumb.getText() ).toBe( 'Doing Business with Us' );
   } );
 
   it( 'should have a main title', function() {
