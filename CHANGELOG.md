@@ -91,6 +91,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added pixel dimensions to Cordrary corner video image.
 - Added JS in `./config` directory to `gulp lint:build` task
   and merged that and gulp config together in `config.build`.
+- addressed security concerns about query data validation in calendar filter pdf generation,
+  and added an option to filters to allow post requests
+- fixed url routing for rendering directory cordrays pdf
+- explicitly stated jinja2 to autoescape in templates
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
