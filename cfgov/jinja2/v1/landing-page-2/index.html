@@ -14,7 +14,23 @@
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
         <h1>Landing Page Prototype</h1>
-        {{ image_and_text_50_50.render() }}
+
+
+    </div>
+    <div class="content-l">
+        <div class="content-l_col-1-2">
+                {{ image_and_text_50_50.render({
+                                'title' : 'Image and Text 50-50',
+                                'image_path': 'http://placehold.it/1600x900',
+                                'image_alt': 'This is a placeholder image',
+                                'is_widescreen': true,
+                                'description': 'When image conveys critical information and text is supporting it --
+                                i.e. chart, excerpt from document',
+                                'is_button' : true,
+                                'link': 'http://www.google.com',
+                                'link_text' : 'Visit Google'
+                                }) }}
+        </div>
     </div>
 {% endblock %}
 
