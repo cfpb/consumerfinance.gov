@@ -5,7 +5,8 @@ from django.core.exceptions import PermissionDenied
 from wagtail.wagtailadmin import messages
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-
+from django.conf import settings
+from django.http import HttpResponse
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
     render_url = 'http://localhost/the-bureau/leadership-calendar/print/'
@@ -32,6 +33,12 @@ class EventICSView(ICSView):
     event_organizer_addr_keyname = 'organizer_email'
     event_location_keyname = 'location'
     event_status_keyname = 'status'
+
+
+def renderDirectoryPDF(request):
+    pdf = open(settings.V1_TEMPLATE_ROOT + '/the-bureau/about-director/201410_cfpb_bio_cordray.pdf', 'rb').read()
+
+    return HttpResponse(pdf, content_type='application/pdf')
 
 
 def unshare(request, page_id):

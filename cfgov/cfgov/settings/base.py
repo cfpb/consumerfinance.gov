@@ -4,6 +4,7 @@ from unipath import Path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
+V1_TEMPLATE_ROOT = PROJECT_ROOT + '/v1/jinja2/v1'
 
 # Application definition
 
@@ -123,7 +124,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Used to include directories not traditionally found app-specific 'static' directories
 STATICFILES_DIRS = (
-    ("legacy", Path(os.path.dirname(__file__)).ancestor(2) + "/v1/static-legacy"),
+    ("legacy", PROJECT_ROOT + "/v1/static-legacy"),
 )
 
 ALLOWED_HOSTS = ['*']
@@ -134,7 +135,6 @@ WAGTAIL_SITE_NAME = "v1"
 
 # Sheer related settings
 
-SHEER_SITES = [Path(os.path.dirname(__file__)).ancestor(2) + '/v1/jinja2/v1',
-               Path(__file__).ancestor(4).child('docs'), STATIC_ROOT]
+SHEER_SITES = [V1_TEMPLATE_ROOT, Path(__file__).ancestor(4).child('docs'), STATIC_ROOT]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
