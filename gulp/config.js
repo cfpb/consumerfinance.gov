@@ -29,7 +29,8 @@ module.exports = {
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
-    gulp: [
+    build: [
+      'config/**/*.js',
       'gulpfile.js',
       'gulp/**/*.js'
     ]

@@ -5,12 +5,12 @@
 'use strict';
 
 var paths = {
-  preproccesed:  './cfgov/v1/preprocessed',
-  processed: './cfgov/v1/static',
-  lib:  './vendor',
-  test: './test'
+  preproccesed: './cfgov/v1/preprocessed',
+  processed:    './cfgov/v1/static',
+  lib:          './vendor',
+  test:         './test'
 };
 
 module.exports = {
   paths: paths
-}
+};

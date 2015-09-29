@@ -21,7 +21,7 @@ function _genericLint( src ) {
  * Lints the gulpfile for errors
  */
 gulp.task( 'lint:build', function() {
-  return _genericLint( config.gulp );
+  return _genericLint( config.build );
 } );
 
 
