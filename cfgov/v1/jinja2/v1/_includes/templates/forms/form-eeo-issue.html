@@ -1,0 +1,52 @@
+{% import 'macros/util/form.html' as form %}
+{% import 'macros/util/common-form-fields.html' as form_field %}
+    <section class="block
+                    block__bg
+                    block__border
+                    block__flush-sides">
+        <form class="form-l js-validate-filters" id="eeo-form">
+            {{ form.input('First Name', 'text', '1-2', true) }}
+
+            {{ form.input('Last Name', 'text', '1-2', true) }}
+
+            {{ form.input('Address 1', 'text', '1', true) }}
+
+            {{ form.input('Address 2', 'text', '1', false) }}
+
+            {{ form.input('City', 'text', '1-3', true) }}
+
+            {{ form_field.state('1-3', true) }}
+
+            {{ form.input('Zip code', 'text', '1-3', true) }}
+
+            {{ form.input('Telephone number', 'tel', '1-2', true) }}
+
+            {{ form.input('Fax number', 'tel', '1-2', false) }}
+
+            {{ form.input('Email address', 'email', '1-2', true) }}
+
+            {# TODO: Add additional times to form select below. #}
+
+            {{ form.select('Best time to reach you',
+                           'Select time',
+                           ['8:00 a.m'],
+                           '1-2'
+                          )}}
+
+            {{ form.textarea('Nature of discrimination', false, true) }}
+
+            <div class="form-actions
+                        form-actions__right-on-med
+                        form-l_col
+                        form-l_col-1">
+                <input class="btn form-actions_item"
+                       type="submit"
+                       value="Generate PDF">
+                <a class="btn btn__link form-actions_item u-link__disabled">
+                    Sample Letter
+                    <span class="cf-icon cf-icon-pdf"></span>
+                </a>
+            </div>
+
+        </form>
+    </section>

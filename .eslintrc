@@ -30,11 +30,14 @@ parser: espree
 env:
   browser: true
   node: true
+  commonjs: false
   worker: false
   amd: true
   mocha: false
   jasmine: false
+  jest: false
   phantomjs: false
+  protractor: false
   qunit: false
   jquery: false
   prototypejs: false
@@ -337,6 +340,9 @@ rules:
   # Disallows use of void operator.
   no-void: 2
 
+  # Disallow unnecessary concatenation of literals or template literals.
+  no-useless-concat: 2
+
   # Disallows use of configurable warning terms in comments, e. g. TODO.
   no-warning-comments:
     - 1
@@ -434,6 +440,9 @@ rules:
       - cb
       - next
 
+  # Disallow require() outside of the top-level module scope.
+  global-require: 2
+
   # Enforce error handling in callbacks.
   # Matches any string that contains err or Err (err, error, anyError, an_err).
   handle-callback-err:
@@ -468,6 +477,11 @@ rules:
   # Enforce spacing inside array brackets.
   array-bracket-spacing:
     - 1
+    - always
+
+  # Enforce spacing inside single line blocks.
+  block-spacing:
+    - 2
     - always
 
   # Enforce one true brace style.
@@ -525,6 +539,7 @@ rules:
     -
       min: 3
       max: 10
+      properties: never
       exceptions:
         - i
 
@@ -534,7 +549,15 @@ rules:
     - 2
     -
       SwitchCase: 1
-      VariableDeclarator: 1
+      VariableDeclarator:
+        var: 2
+        let: 2
+        const: 3
+
+  # Enforce whether double or single quotes should be used in JSX attributes.
+  jsx-quotes:
+    - 2
+    - prefer-single
 
   # Enforce spacing between keys and values in object literal properties.
   key-spacing:
@@ -610,6 +633,11 @@ rules:
   # Disallows use of the Object constructor.
   no-new-object: 2
 
+  # Disallow use of certain syntax in code.
+  no-restricted-syntax:
+    - 1
+    - WithStatement
+
   # Disallows space between function identifier and invocation.
   no-spaced-func: 2
 
@@ -659,12 +687,20 @@ rules:
   quote-props:
     - 1
     - as-needed
+    -
+      keywords: true
+      unnecessary: true
+      numbers: true
 
   # Specifies whether double or single quotes should be used.
   quotes:
     - 2
     - single
     - avoid-escape
+
+  # Require JSDoc comment.
+  require-jsdoc:
+    - 1
 
   # Require identifiers to match the provided regular expression.
   id-match:
@@ -690,6 +726,11 @@ rules:
 
   # Requires a space after certain keywords.
   space-after-keywords:
+    - 2
+    - always
+
+  # Requires a space before certain keywords.
+  space-before-keywords:
     - 2
     - always
 
@@ -770,6 +811,9 @@ rules:
   # Disallow modifying variables that are declared using const.
   no-const-assign: 2
 
+  # Disallow duplicate name in class members.
+  no-dupe-class-members: 2
+
   # Disallow to use this/super before super() calling in constructors.
   no-this-before-super: 2
 
@@ -782,6 +826,10 @@ rules:
     - 0
     - always
 
+  # Suggest using arrow functions as callbacks.
+  # Should not be enabled in ES3/5 environments.
+  prefer-arrow-callback: 0
+
   # Suggest using of const declaration for variables that are never modified.
   prefer-const: 1
 
@@ -792,6 +840,10 @@ rules:
   # Suggest using Reflect methods where applicable.
   # Should not be enabled in ES3/5 environments.
   prefer-reflect: 0
+
+  # Suggest using template literals instead of strings concatenation.
+  # Should not be enabled in ES3/5 environments.
+  prefer-template: 0
 
   # Disallow generator functions that do not have yield.
   require-yield: 1

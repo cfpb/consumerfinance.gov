@@ -16,13 +16,104 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added Favicon
+- New and improved primary nav (both look and interaction)
+- Added expanded-state utility for getting/setting aria-expanded
+- Added Acceptance tests for the `activity-log` page.
+- Added webpack module loader for per-page JavaScript.
+- Added external-site page-specific script.
+- Added `config/environment.js` for project JS path configuration.
+- Added filesystem helper to gulp utilities for retrieving a binary executable.
+- Django Server
+- Django related urls to access links
+- Django-Sheerlike integration
+- Added Acceptance tests for `the-bureau` pages.
+- Added test utility to retreive QA elements.
+- Added ARIA state utility to enable decorating dom elements with ARIA states.
+- Added `Object.defineProperty` polyfill.
+- Added unit test for `aria-state.js`.
+- Wagtail CMS
+- Added `gulp test:a11y` accessibility testing using node-wcag.
+- Added node 4.1.0 engine requirement in `package.json`.
+- Added `commonjs`, `jest`, `protractor` environments.
+- Added new ESLint `no-useless-concat`, `global-require`,
+  `jsx-quotes`, `no-restricted-syntax`, `block-spacing`, `require-jsdoc`,
+  `space-before-keywords`, `no-dupe-class-members`, `prefer-arrow-callback`,
+  and `prefer-template` rules.
+- Added `properties` attribute of `id-length` rule.
+- Added `keywords`, `unnecessary`, and `numbers` attributes
+  to `quote-props` rules.
+- runserver.sh script to collectstatic files and run the server
+- Added testing for web-storage-proxy.js
+- Added Acceptance tests for `careers` pages.
+- V1Page model
+- Backend for Staging vs Production publishing
+- Django template tags
+- A temporary blog page template for testing
+- Added `block__flush` to cf-enhancements to remove margin from all sides.
+- Added Acceptance tests for `blog` pages.
+- Added Acceptance tests for `newsroom` pages.
+- Added Acceptance tests for `doing-business-with-us` pages.
+- Added Acceptance tests for `budget` pages.
 
 ### Changed
+- Updated Video Code to make it usable on Events pages.
+- Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
+- Updated Meredith Fuchs bio and images.
+- Added indent rules for `var`, `let`, and `const` in ESLint config file.
+- Replaced old Grunt legaccsy plugin with Gulp mq-remove plugin
+- Added ability for acceptance --specs test flag to accept list of test files.
+- Changes `big_radio` macro to `radio_big` and `checkbox_bg` to `checkbox_big`.
+- Updated the primary nav to move focus as user enters and leaves nav levels
+- Moved handlebars from npm to bower.
+- Added jQuery CDN with fallback to head to satisfy GTM requirements.
+- Changes the location of the /dist folder to cfgov/v1/jinja2/v1
+- Server port is now at 8000
+- Updated Dep Dir title to include "Acting"
+- included with context flag for macros that make a call to request object
+- Updated Jinja2 shorthand if statements to include an empty else case.
+- Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
+- Updated jsdom from `3.1.2` to `6.5.1`.
+- Updated mocha-jsdom from `0.3.0` to `1.0.0`.
+- Updated istanbul from `0.3.13` to `0.3.20`.
+- Updated TravisCI node version to `4.1.0`.
+- Updated ESLint configuration from `1.0.0` to `1.5.1`.
+- Vendor related files now sit at the root project location
+- Moved templates to reside in v1 app project jinja2 directory
+- Added ability to use django static & url functionality in jinja2 templates.
+  [More Information](https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
+- Refactored web-storage-proxy.js to be less complex and make it testable
+- Updated del from `1.2.0` to `2.0.0`.
+- Updated chai from `2.3.0` to `3.3.0`.
+- Updated sinon-chai from `2.7.0` to `2.8.0`.
+- Settings file and template loaders
+- Updated gulp-autoprefixer from `2.3.1` to `3.0.2`.
+- Added pixel dimensions to Cordrary corner video image.
+- Added JS in `./config` directory to `gulp lint:build` task
+  and merged that and gulp config together in `config.build`.
 
 ### Removed
+- Disables tests for landing page events, since we don't currently have events.
+- Removed unused exportsOverride section,
+  which was an artifact of the grunt bower task.
+- Removed browserify, watchify, and browserify-shim dependencies.
+- Removed src directory
+- Removed bad CF Notifier tests.
+- Removed Ombudsman from nav for beta freeze.
+- Removed unnecessary mobile-only expandables
+- Removed link from Cordray's corner image `/the-bureau/about-director/`.
+- Removed extra Google Analytics code
 
 ### Fixed
-
+- Fixed issue with logic displaying the Event summary state.
+- Fixed missing IE only stylesheet for older systems/browsers.
+- Fixed skip-navigation link for keyboard navigation.
+- Fixed instructions for gulp watch
+- New way to run the server documented in the INSTALL.MD
+- New way to define url routing, no longer automatically set by file path
+- Fixed heading structure throughout website
+- Fixed setup.sh to use argument correctly
+- Fixed title for Small & Minority Businesses
 
 ## 3.0.0-2.3.0 - 2015-08-27
 

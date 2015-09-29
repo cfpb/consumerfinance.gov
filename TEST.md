@@ -53,12 +53,20 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 A number of command-line arguments can be set to test particular configurations:
 
- - `--specs`: Choose a particular spec suite to run. For example, `gulp test:acceptance --specs=shared_contact-us.js`.
- - `--windowSize`: Set the window size in pixels in `w,h` format. For example, `gulp test:acceptance --windowSize=900,400`.
- - `--browserName`: Set the browser to run. For example, `gulp test:acceptance --browserName=firefox`.
- - `--version`: Set the browser version to run. For example, `gulp test:acceptance --version='44.0'`.
- - `--platform`: Set the OS platform to run. For example, `gulp test:acceptance --platform='osx 10.10'`.
- - `--sauce`: Whether to run on Sauce Labs or not. For example, `gulp test:acceptance --sauce=false`.
+ - `--specs`: Choose a particular spec suite to run.
+   For example, `gulp test:acceptance --specs=contact-us.js`.
+   Multiple tests can be run by passing in a comma-separated list of test suite filenames.
+   For example, `gulp test:acceptance --specs=contact-us.js,about-us.js`.
+ - `--windowSize`: Set the window size in pixels in `w,h` format.
+   For example, `gulp test:acceptance --windowSize=900,400`.
+ - `--browserName`: Set the browser to run.
+   For example, `gulp test:acceptance --browserName=firefox`.
+ - `--version`: Set the browser version to run.
+   For example, `gulp test:acceptance --version='44.0'`.
+ - `--platform`: Set the OS platform to run.
+   For example, `gulp test:acceptance --platform='osx 10.10'`.
+ - `--sauce`: Whether to run on Sauce Labs or not.
+   For example, `gulp test:acceptance --sauce=false`.
 
 ## Pages
 
@@ -139,3 +147,15 @@ From within the root project directory run `gulp test:unit:macro`.
 
 Please see [Macro Polo](https://github.com/cfpb/macropolo) for
 documentation about writing tests.
+
+
+# Accessibility Testing
+
+To audit a page's WCAG and Section 508 accessibility:
+  1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
+     Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
+  2. Reload your `.env` with `. ./.env` while in the project root directory.
+  3. Run `gulp test:a11y` to run an audit on the homepage.
+  4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
+     For example, `gulp test:a11y --u=contact-us`
+     or `gulp test:a11y --u=the-bureau/bureau-structure/`.

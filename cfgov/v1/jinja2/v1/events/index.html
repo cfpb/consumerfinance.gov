@@ -1,0 +1,104 @@
+{% extends 'layout-side-nav.html' %}
+{% import '_vars-events.html' as vars with context %}
+
+{# This sets the related links in the footer
+{% set view = get_document('views', 'newsroom') %}
+#}
+
+{% block title -%}
+    Upcoming Events
+{%- endblock %}
+
+{% block desc -%}
+    Events description...
+{%- endblock %}
+
+{% block content_sidebar_modifiers %}
+    {{ super() }}
+    {% if show_hero %}
+        u-hide-on-mobile
+    {% endif %}
+{% endblock %}
+
+
+{# Only show the hero when we are on the first page of paginated results #}
+
+{% block hero %}
+    {% if vars.events.current_page == 1 %}
+        {% import 'sidenav.html' as sidenav %}
+        {{ sidenav.render(
+            vars.nav_items,
+            'index',
+            'u-show-on-mobile u-mb0'
+        ) }}
+        {% from '_event-landing-macros.html' import event_hero as event_hero %}
+        {{ event_hero(vars.hero) }}
+    {% endif %}
+{% endblock %}
+
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    <section class="media block block__flush-bottom block__flush-top">
+        <h1>Upcoming events</h1>
+        <div class='block block__flush-bottom block__padded-top'>
+            {% from '_event-landing-macros.html' import event_preview as event_preview %}
+            {% for n in range(1, vars.events_list | length) %}
+                {{ event_preview(vars.events_list[n]) }}
+            {% endfor %}
+         </div>
+    </section>
+
+    <aside>
+        <div class="u-mb0
+                    block
+                    block__bg
+                    block__flush-sides
+                    block__border-top
+                    block__border-right
+                    ">
+            <div class="content-l content-l__main">
+                <section class="u-mb20 content-l_col content-l_col-1-2">
+                    <div class="u-mb30">
+                        <h2 class="header-slug">
+                            <span class="header-slug_inner">
+                                Stay informed
+                            </span>
+                        </h2>
+                        <p class="short-desc">
+                            Subscribe to our email newsletter. We will update you on new event updates.
+                        </p>
+                        {% import 'macros/subscribe.html' as subscribe with context %}
+                        {{ subscribe.render('USCFPB_93') }}
+                    </div>
+                    <div>
+                        {% import 'rss.html' as rss %}
+                        {{ rss.render(vars.rss_path) }}
+                    </div>
+                </section>
+                <section class="content-l_col content-l_col-1-2">
+                    {%- import 'related-links.html' as related_links -%}
+                    {{- related_links.render([
+                        [
+                            '/newsroom/',
+                            'Newsroom'
+                        ],
+                        [
+                            '/the-bureau/',
+                            'About us'
+                        ],
+                        [
+                            '/blog/',
+                            'The blog'
+                        ]
+                    ]) -}}
+                </section>
+            </div>
+        </div>
+    </aside>
+
+{% endblock %}

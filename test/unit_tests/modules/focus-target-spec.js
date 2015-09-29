@@ -1,4 +1,5 @@
 'use strict';
+
 var chai = require( 'chai' );
 var sinon = require( 'sinon' );
 var expect = chai.expect;
@@ -11,7 +12,7 @@ describe( 'The focusTarget function', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    focusTarget = require( '../../../src/static/js/modules/focus-target.js' );
+    focusTarget = require( '../../../cfgov/v1/preprocessed/js/modules/focus-target.js' );
     sandbox = sinon.sandbox.create();
   } );
 

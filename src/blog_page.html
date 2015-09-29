@@ -1,0 +1,23 @@
+{% extends '_layouts/layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    {{ page.title }}
+{%- endblock %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    <h1>TEST PAGE</h1>
+    <h2>{{ page.title | safe }}</h2>
+    {{ page.body | safe }}
+{% endblock %}

@@ -1,0 +1,55 @@
+{# ==========================================================================
+
+   format_phone()
+
+   ==========================================================================
+
+   Description:
+
+   Formats a phone number to:
+
+       (XXX) XXX-XXXX
+
+   When given:
+
+   number: A ten-digit string, no spaces.
+
+   ========================================================================== #}
+
+{% macro format_phone(number) %}
+    {%- for char in number -%}
+        {{- '(' if loop.index == 1 else '' -}}
+        {{ char }}
+        {{- ') ' if loop.index == 3 else '' -}}
+        {{- '-' if loop.index == 6 else '' -}}
+    {%- endfor %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   format_address()
+
+   ==========================================================================
+
+   Description:
+
+   Formats address to:
+
+       Line 1
+       Line 2 City, State Zip
+
+   When given:
+
+   contact: A contact document object that contains street, street_2, city,
+            state, and zip_code fields.
+
+   ========================================================================== #}
+
+{% macro format_address(contact) %}
+    {{ contact.street if contact.street else '' }}<br>
+    {{ contact.street_2 + '<br>' | safe if contact.street_2 else '' }}
+    {{ contact.city + ',' if contact.city else '' }}
+    {{ contact.state + '&nbsp;' | safe if contact.state else '' }}
+    {{ contact.zip_code if contact.zip_code else '' }}
+{% endmacro %}

@@ -6,10 +6,10 @@ var childProcess = require( 'child_process' );
 var exec = childProcess.exec;
 var spawn = childProcess.spawn;
 var config = require( '../config' ).test;
+var fsHelper = require( '../utils/fsHelper' );
 var minimist = require( 'minimist' );
-var path = require( 'path' );
 
-gulp.task( 'test:unit:js', function( cb ) {
+gulp.task( 'test:unit:scripts', function( cb ) {
   gulp.src( config.src )
     .pipe( $.istanbul( {
       includeUntested: true
@@ -45,20 +45,6 @@ gulp.task( 'test:unit:macro', function( cb ) {
 } );
 
 /**
- * Retrieve a reference path to a binary.
- * @param {string} binaryName The name of the binary to retrieve.
- * @returns {string} Path to the binary to run.
- */
-function _getBinary( binaryName ) {
-  var winExt = ( /^win/ ).test( process.platform ) ? '.cmd' : '';
-  var pkgPath = require.resolve( 'protractor' );
-  var protractorDir = path.resolve(
-    path.join( path.dirname( pkgPath ), '..', 'bin' )
-  );
-  return path.join( protractorDir, '/' + binaryName + winExt );
-}
-
-/**
  * Add a command-line flag to a list of Protractor parameters, if present.
  * @param {object} protractorParams Parameters to pass to Protractor binary.
  * @param {object} commandLineParams Parameters passed
@@ -85,8 +71,7 @@ function _getProtractorParams() {
   var params = [ 'test/browser_tests/conf.js' ];
   var commandLineParams = minimist( process.argv.slice( 2 ) );
 
-  // If --specs=path/to/js flag is added on the command-line,
-  // pass the value to protractor to override the default specs to run.
+  // If --sauce=false flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
 
   // If --specs=path/to/js flag is added on the command-line,
@@ -110,12 +95,57 @@ function _getProtractorParams() {
 
 gulp.task( 'test:acceptance:browser', function() {
   spawn(
-    _getBinary( 'protractor' ),
+    fsHelper.getBinary( 'protractor' ),
     _getProtractorParams(),
-    { stdio: 'inherit' } )
-      .once( 'close', function() {
-        $.util.log( 'Protractor tests done!' );
-      } );
+    { stdio: 'inherit' }
+  )
+    .once( 'close', function() {
+      $.util.log( 'Protractor tests done!' );
+    } );
+} );
+
+/**
+ * Processes command-line and environment variables
+ * for passing to the wcag executable.
+ * The URL host, port, and AChecker web API ID come from
+ * environment variables, while the URL path comes
+ * from the command-line `--u=` flag.
+ * @returns {Array} Array of command-line arguments for wcag binary.
+ */
+function _getWCAGParams() {
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var checkerId = process.env.ACHECKER_ID || ''; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var urlPath = _parsePath( commandLineParams.u );
+  var url = host + ':' + port + urlPath;
+  $.util.log( 'WCAG tests checking URL: http://' + url );
+  return [ '--u=' + url, '--id=' + checkerId ];
+}
+
+/**
+ * Process a path and set it to an empty string if it's undefined
+ * and add a leading slash if one is not present.
+ * @param {string} urlPath The unprocessed path.
+ * @returns {string} The processed path.
+ */
+function _parsePath( urlPath ) {
+  urlPath = urlPath || '';
+  if ( urlPath.charAt( 0 ) !== '/' ) {
+    urlPath = '/' + urlPath;
+  }
+  return urlPath;
+}
+
+gulp.task( 'test:a11y', function() {
+  spawn(
+    fsHelper.getBinary( 'wcag', '.bin' ),
+    _getWCAGParams(),
+    { stdio: 'inherit' }
+  )
+    .once( 'close', function() {
+      $.util.log( 'WCAG tests done!' );
+    } );
 } );
 
 // This task will only run on Travis
@@ -134,7 +164,7 @@ gulp.task( 'test',
 
 gulp.task( 'test:unit',
   [
-    'test:unit:js',
+    'test:unit:scripts',
     'test:unit:macro'
   ]
 );

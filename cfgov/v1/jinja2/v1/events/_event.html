@@ -1,0 +1,114 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render an article when given:
+
+   post:        The Sheer document that is available to a _single.html
+                template. For example in events/_single.html the variable
+                `event` is available and represents the event for the
+                `_single` page.
+
+   path:        The path to which post filters are applies. For example,
+                if the post is an event post then path should be '/events/'.
+                Remember to leverage vars.path instead of using the
+                literal string '/events/'. Path is used to create the
+                filtered URL: {{ path }}?filter_tags={{ tag }}
+
+   event_state: A string indicating the state of the event.
+                Possible values: past, present, future.
+
+   ========================================================================== #}
+
+{% macro render(post, path, event_state) %}
+
+{% import 'macros/share.html' as share with context %}
+
+<article class="post post__event">
+    <header>
+        <h1 class="post_heading">
+            {{ event.title|safe }}
+        </h1>
+        <p class="post_dek">
+        {% if (event_state == 'past') %}
+            {{ post.archive.summary | striptags }}
+        {% elif (event_state == 'present') %}
+            {{ post.live.summary | striptags }}
+        {% elif (event_state == 'future') %}
+            {{ post.future.summary | striptags }}
+        {% endif %}
+        </p>
+        <div class="modification-date date u-right">
+            <span>Updated</span>
+            {% import 'macros/time.html' as time %}
+            {{ time.render(event.modified, {'date':true} ) }}
+        </div>
+        {{ share.render({
+            'title': event.title,
+            'hide_heading': true,
+            'twitter_options': {
+                'text':     post.twtr_text,
+                'related':  post.twtr_rel,
+                'language': post.twtr_lang,
+                'hashtags': post.twtr_hash
+            }
+        }) }}
+    {% if event.thumbnail.images %}
+        <img class="post_featured-img"
+             src="{{ event.thumbnail.images.full.url }}"
+             alt="{{ event.thumbnail.alt_text }}">
+    {% endif %}
+    {% from '_event-post-macros.html' import event_venue as event_venue %}
+    {{ event_venue(event, event_state) }}
+    </header>
+    <div class="post_body">
+        {% if (event_state != 'past') %}
+        <aside class="post_inset post_inset__right line-container event-status">
+            <div class="line-container_body">
+                <h1 class="u-visually-hidden">Event reservation and viewing details</h1>
+                <div class="event-status_rsvp">
+                  <p>
+                      <strong>This event requires an RSVP.</strong>
+                  </p>
+                  <p>
+                      <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:"
+                         class="btn">
+                          <span class="btn_icon__left cf-icon cf-icon-email-social"></span>
+                           reserve@cfpb.gov
+                      </a>
+                  </p>
+                </div>
+                {% if (event.live_stream) %}
+                <div class="event-status_livestream">
+                  <p>
+                      <span class="cf-icon cf-icon-livestream"></span>
+                      <strong>Available on Live stream.</strong>
+                  </p>
+                  <p class="event-meta">
+                      <span class="event-meta_description event-meta_description__block">
+                          Video link available:
+                      </span>
+                      {% from '_event-post-macros.html' import event_meta_datetime as event_meta_datetime %}
+                      {{ event_meta_datetime(event.live_stream.date) }}
+                  </p>
+                </div>
+                {% endif %}
+            </div>
+        </aside>
+        {% endif %}
+        {{ event.content | safe }}
+    </div>
+    {% if event.tags|length %}
+    <footer>
+        {%- import 'tags.html' as tags %}
+        {{ tags.render(event.tags, path) }}
+    </footer>
+    {% endif %}
+</article>
+
+{% endmacro %}

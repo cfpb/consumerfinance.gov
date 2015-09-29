@@ -70,7 +70,11 @@ function _retrieveProtractorParams( params ) { // eslint-disable-line complexity
   var parsedParams = {};
 
   if ( _paramIsSet( params.specs ) ) {
-    parsedParams.specs = environment.specsBasePath + params.specs;
+    var specsArray = params.specs.split( ',' );
+    for ( var i = 0, len = specsArray.length; i < len; i++ ) {
+      specsArray[i] = environment.specsBasePath + specsArray[i];
+    }
+    parsedParams.specs = specsArray;
   }
 
   if ( _paramIsSet( params.browserName ) ) {
@@ -125,8 +129,8 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 }
 
 var config = {
-  baseUrl: environment.baseUrl,
-  framework: 'jasmine2',
+  baseUrl:         environment.baseUrl,
+  framework:       'jasmine2',
   jasmineNodeOpts: {
     defaultTimeoutInterval: 60000
   },
