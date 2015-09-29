@@ -42,6 +42,9 @@ module.exports = {
   clean: {
     dest: paths.processed
   },
+  scripts: {
+    src: paths.preproccesed + '/js/**/*.js'
+  },
   styles: {
     cwd:      paths.preproccesed + '/css',
     src:      '/main.less',

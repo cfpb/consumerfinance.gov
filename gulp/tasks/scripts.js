@@ -14,14 +14,7 @@ var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
 var paths = require( '../../config/environment' ).paths;
 
-/**
- * Use webpack to bundle JavaScript.
- * @param {boolean} watch Whether to run with the watch flag or not.
- * @returns {Object} Returns a stream from gulp.
- */
-function webpackTask( watch ) {
-  webpackConfig.watch = watch || false;
-
+gulp.task( 'scripts', function() {
   return gulp.src( paths.preproccesed + '/js/routes/common.js' )
     .pipe( webpackStream( webpackConfig ) )
     .on( 'error', handleErrors )
@@ -29,14 +22,4 @@ function webpackTask( watch ) {
     .pipe( browserSync.reload( {
       stream: true
     } ) );
-}
-
-gulp.task( 'scripts', function() {
-  return webpackTask();
 } );
-
-// Exporting the task so we can call it directly in our watch task,
-// with the 'watch' option.
-module.exports = {
-  webpackTask: webpackTask
-};
