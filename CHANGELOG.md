@@ -57,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Acceptance tests for `budget` pages.
 - Added atomic landing page template prototypes.
 - Added `/organisms/` and `/molecules/` directories to includes directory.
+- Added `gulp test:perf` task to test for performance rules.
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
