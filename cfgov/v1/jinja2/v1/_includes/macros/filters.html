@@ -99,6 +99,7 @@
     'action':                   '/',
     'expand_label':             'Filter',
     'submit_label':             'Apply filters',
+    'form_method':              'get',
     'show_current_filters':     true,
     'show_unfiltered_count':    false,
     'show_filters_label':       true,
@@ -171,9 +172,10 @@
 {% macro _filters_form(filters, query, doc_type, options) %}
 
 <form class="{{ options.additional_classes }}"
-      method="get"
+      method="{{ options.form_method }}"
       {{ "action=" ~ options.action if options.action != '/' }}
       >
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 

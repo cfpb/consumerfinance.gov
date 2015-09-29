@@ -113,7 +113,7 @@ urlpatterns = [
             LeadershipCalendarPDFView.as_view(),
             name='leadership-calendar-pdf'),
         url(r'^leadership-calendar/print/$',
-            SheerTemplateView.as_view(),
+            SheerTemplateView.as_view(template_name='the-bureau/leadership-calendar/print/index.html'),
             name='leadership-calendar-print')],
         namespace='the-bureau')),
 
