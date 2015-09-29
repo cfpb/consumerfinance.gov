@@ -47,10 +47,7 @@ module.exports = {
     src:      '/main.less',
     dest:     paths.processed + '/css',
     settings: {
-      paths: [
-        paths.lib,
-        paths.lib + '/cf-typography/src'
-      ],
+      paths:    [ paths.lib ],
       compress: true
     }
   },
