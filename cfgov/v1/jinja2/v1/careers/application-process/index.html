@@ -26,13 +26,13 @@
         {% import 'macros/video-player.html' as video_player %}
         {%
             call video_player.render({
-                'image' : {
-                    'url' : '/static/img/applying-video-screenshot.png'
+                'image': {
+                    'url': '/static/img/applying-video-screenshot.png'
                 },
-                'video' : {
-                    'id'    : 'XCbZnTIeTOY',
-                    'url'   : 'https://www.youtube.com/watch?v=XCbZnTIeTOY',
-                    'width' : '640',
+                'video': {
+                    'id':     'XCbZnTIeTOY',
+                    'url':    'https://www.youtube.com/watch?v=XCbZnTIeTOY',
+                    'width':  '640',
                     'height': '410'
                 }
             })
@@ -70,8 +70,10 @@
                 Applying for a federal job can take some time and patience.
                 It is a process that prioritizes both fairness to all applicants
                 and getting the best qualified candidates.
-                {# TODO: Update this link when we get a transcript. #}
-                Watch the video above <a href="/transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/">(or read the transcript)</a>
+                Watch the video above
+                <a href="/transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/">
+                    (or read the transcript)
+                </a>
                 for an overview of how it works.
             </p>
             <p class="short-desc">

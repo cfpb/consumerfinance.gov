@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 class V1Page(Page):
     shared = models.BooleanField(default=False)
 
-    # This is used solely for subclassing page's we want to make at the CFPB
+    # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
     @property
@@ -45,8 +45,8 @@ class V1Page(Page):
         sharable_pages = Page.objects.none()
 
         for perm in self.permissions.filter(permission_type='share'):
-            # user has share permission on any subpage of perm.page
-            # (including perm.page itself)
+            # User has share permission on any subpage of perm.page
+            # (including perm.page itself).
             sharable_pages |= Page.objects.descendant_of(perm.page, inclusive=True)
 
         return sharable_pages
@@ -57,7 +57,7 @@ class V1Page(Page):
 
     def route(self, request, path_components):
         if path_components:
-            # request is for a child of this page
+            # Request is for a child of this page.
             child_slug = path_components[0]
             remaining_components = path_components[1:]
 
@@ -69,7 +69,7 @@ class V1Page(Page):
             return subpage.specific.route(request, remaining_components)
 
         else:
-            # request is for this very page
+            # Request is for this very page.
             if self.live or self.shared and request.site.hostname == settings.STAGING_HOSTNAME:
                 return RouteResult(self)
             else:
@@ -90,7 +90,7 @@ class V1PagePermissionTester(PagePermissionTester):
         if not self.page.shared or self.page_is_root:
             return False
 
-        # Must check edit in self.permissions because `share` cannot be added
+        # Must check edit in self.permissions because `share` cannot be added.
         return self.user.is_superuser or ('edit' in self.permissions)
 
     def can_share(self):
@@ -99,7 +99,7 @@ class V1PagePermissionTester(PagePermissionTester):
         if self.page_is_root:
             return False
 
-        # Must check edit in self.permissions because `share` cannot be added
+        # Must check edit in self.permissions because `share` cannot be added.
         return self.user.is_superuser or ('edit' in self.permissions)
 
 

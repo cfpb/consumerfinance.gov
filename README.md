@@ -6,10 +6,10 @@
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Sheer-Like](https://github.com/cfpb/django-sheerlike) configurations for loading content from the
+and [Sheer-like](https://github.com/cfpb/django-sheerlike) configurations for loading content from the
 WordPress and back-ends through Elasticsearch.
 
-**Technology stack**:
+**Technology stack:**
 - Mac OSX.
 - [Homebrew](http://brew.sh) - package manager for installing system
   software on Mac OSX.
@@ -55,11 +55,9 @@ These will be used for:
  1. **Git operations**.
     Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
-    Run an Elasticsearch instance.
-    **Sheer Index**
-    Load indexes into ES.
- 3. **Start django server**.
-    Start Django Server
+    Run an Elasticsearch (ES) instance.
+    Running `sheer index` will load indexes into ES.
+ 3. **Django server**. Start and run the web server.
  4. **Gulp watch**.
     Run the Gulp watch task for watching for changes to content.
 
@@ -77,14 +75,15 @@ git checkout refresh  # Branch for our staging-stable server.
 
 #### Updating all dependencies
 
-Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
+Each time you fetch from the upstream repository (this repo), run `./setup.sh`
+(or `./setup.sh local` for local development).
 This setup script will remove and re-install the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
 
 ### 2. Run Elasticsearch
 
-> Note: This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd`
+> **NOTE:** This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd`
 option when [installing Elasticsearch](INSTALL.md#elasticsearch).
 
 To launch Elasticsearch, first find out where your Elasticsearch config file is located.
@@ -145,8 +144,8 @@ gulp build
 gulp watch
 ```
 
-**NOTE:** The watch task only runs for the tasks for files that have changed.
-Also, you must run `gulp build` at least once before watching.
+> **NOTE:** The watch task only runs for the tasks for files that have changed.
+  Also, you must run `gulp build` at least once before watching.
 
 #### Available Gulp Tasks
 In addition to `gulp watch`, there are a number of other important gulp tasks,
@@ -191,15 +190,17 @@ which is the front-end pattern library used in this project.
 <!-- Perhaps we want to split this out into a separate page? -->
 ### Front-End Template/Asset Locations ###
 
-**Templates** that are served by the django server: ```cfgov\v1\jinja2\v1 ```
+**Templates** that are served by the Django server: `cfgov\v1\jinja2\v1`
 
-**Static assets** prior to processing (minifying etc.): ```cfgov\v1\preprocessed```. *note after a gulp build they are copied over to the ```cfgov\v1\static``` location ready to be served by django.*
+**Static assets** prior to processing (minifying etc.): `cfgov\v1\preprocessed`.
+*Note, after a `gulp build` they are copied over to the `cfgov\v1\static` location,
+ready to be served by Django.*
 
 ### Simple static template setup
 
-By default, Django will render pages with accordance to the url pattern defined
-for it. For example, going to <http://localhost:8000/the-bureau/index.html>
-(or <http://localhost:8000/the-bureau/>) renders `/the-bureau/index.html` from
+By default, Django will render pages with accordance to the URL pattern defined
+for it. For example, going to `http://localhost:8000/the-bureau/index.html`
+(or `http://localhost:8000/the-bureau/`) renders `/the-bureau/index.html` from
 the `v1` app folder's jinja2 templates folder as processed by the [Jinja2](http://jinja.pocoo.org/docs)
 templating engine.
 

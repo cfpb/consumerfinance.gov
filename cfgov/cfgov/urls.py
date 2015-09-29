@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^$', SheerTemplateView.as_view(), name='home'),
