@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-2.4.0 - 2015-09-29
+
+### Added
 - Added Favicon
 - New and improved primary nav (both look and interaction)
 - Added expanded-state utility for getting/setting aria-expanded
