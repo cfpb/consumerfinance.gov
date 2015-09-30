@@ -2,6 +2,7 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/hero.html' as hero %}
+{% import 'organisms/well.html' as well %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
@@ -9,10 +10,9 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block
-                block__flush-top">
-        {# TODO: Add main molecules and organisms. #}
-        {{ hero.render() }}
+    {# TODO: Add main molecules and organisms. #}
+    <div class="block">
+        {{ well.render( 'landing-page-1/_template-prototype-well-content.html' ) }}
     </div>
 {% endblock %}
 

@@ -57,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `gulp test:perf` task to test for performance rules.
 - MYSQL backend to project settings & a database creation script
 - Added `gulp test:unit:server` for running Django unit tests via gulp.
+- Added templates and CSS for the Well organism.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -94,6 +95,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes `quote-props` rule attribute to `consistent-as-needed`.
 - Added href URL to primary nav top-level menu link.
 - Changed DB backend from sqlite ==> MYSQL.
+- Changed DB backend from sqlite ==> MYSQL
+- Made grey wells on `/doing-business-with-us/`
+  and `/the-bureau/` use the Well organism.
+- Updated Doing Business with Us test to use
+  `data-qa-hook="opportunity-well"` hook.
 
 ### Removed
 - Removed unused exportsOverride section,

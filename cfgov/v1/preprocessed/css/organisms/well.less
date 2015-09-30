@@ -1,0 +1,57 @@
+
+/* topdoc
+  name: Theme variables
+  family: cf-layout
+  notes:
+    - "The following color and sizing variables are exposed,
+       allowing you to easily override them before compiling."
+  patterns:
+  - name: Colors
+    codenotes:
+      - |
+        @o-well_bg
+        @o-well_border
+  tags:
+  - less
+*/
+@o-well_bg: @gray-5;
+@o-well_border: @gray-50;
+
+
+/* topdoc
+  name: Well (Grey Well)
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-well">
+            <h2>Grey Well</h2>
+            <p>Well's content</p>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-well
+  tags:
+    - cfgov-organisms
+*/
+
+.o-well {
+  background-color: @o-well_bg;
+  border: 1px solid @o-well_border;
+  padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+  padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+  padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+  padding-bottom: unit( ( @grid_gutter-width * 2 )  / @base-font-size-px, em );
+
+  .respond-to-min(600px, {
+    padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+  } );
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

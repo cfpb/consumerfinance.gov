@@ -1,0 +1,22 @@
+
+{# ==========================================================================
+
+   o_well.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a grey well organism.
+   See [GHE]/flapjack/Modules-V1/wiki/Well
+
+   template: Template URL for content to include.
+
+   ========================================================================== #}
+
+{% macro render(template) %}
+{% import template as content %}
+<div class='o-well'>
+  {{ content }}
+</div>
+{% endmacro %}
