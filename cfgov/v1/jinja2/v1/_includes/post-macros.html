@@ -15,13 +15,13 @@
 
 {% macro post_summary(post) %}
     <header class="summary_header">
-        <h2 class="summary_heading">{{ post.title|safe }}</h2>
+        <h2 class="summary_heading">{{ post.title | safe }}</h2>
     </header>
     <p class="summary_text summary_text__max">
     {% if post.dek %}
-        {{ post.dek|striptags }}
+        {{ post.dek | striptags }}
     {% else %}
-        {{ post.excerpt|striptags }}
+        {{ post.excerpt | striptags }}
     {% endif %}
     </p>
     {% if post.author.0 %}
