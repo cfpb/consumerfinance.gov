@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.conf import settings
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^$', SheerTemplateView.as_view(), name='home'),
@@ -214,9 +216,15 @@ urlpatterns = [
             name='how-to-apply-for-a-federal-job-with-the-cfpb'),
     ],
         namespace='transcripts')),
-
-    url(r'', include(wagtail_urls)),
 ]
+
+# TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
+if settings.DEBUG :
+    urlpatterns.append(url(r'^landing-page-1/$', SheerTemplateView.as_view(template_name='landing-page-1/index.html'), name='landing-page-1'))
+    urlpatterns.append(url(r'^landing-page-2/$', SheerTemplateView.as_view(template_name='landing-page-2/index.html'), name='landing-page-2'))
+
+# Catch remaining URL patterns that did not match a route thus far.
+urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
 

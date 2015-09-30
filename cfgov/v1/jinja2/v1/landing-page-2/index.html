@@ -1,0 +1,25 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'organisms/image-and-text-50-50.html' as image_and_text_50_50 %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {# TODO: Add main molecules and organisms. #}
+        <h1>Landing Page Prototype</h1>
+        {{ image_and_text_50_50.render() }}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+    </aside>
+{%- endblock %}

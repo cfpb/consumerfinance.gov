@@ -122,16 +122,17 @@ STATICFILES_FINDERS = (
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-# Used to include directories not traditionally found app-specific 'static' directories
+# Used to include directories not traditionally found,
+# app-specific 'static' directories.
 STATICFILES_DIRS = (
-    ("legacy", PROJECT_ROOT + "/v1/static-legacy"),
+    ('legacy', PROJECT_ROOT + '/v1/static-legacy'),
 )
 
 ALLOWED_HOSTS = ['*']
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "v1"
+WAGTAIL_SITE_NAME = 'v1'
 
 # Sheer related settings
 

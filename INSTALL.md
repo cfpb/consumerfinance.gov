@@ -106,7 +106,7 @@ Install Sheer-likes’s Python requirements:
 pip install -r ~/path/to/django-sheerlike/requirements.txt
 ```
 
-Install Sheer in the same fashion as sheer-like:
+Install Sheer in the same fashion as Sheer-like:
 ```bash
 pip install -e ~/path/to/sheer
 pip install -r ~/path/to/sheer/requirements.txt
@@ -156,13 +156,14 @@ Next, install dependencies with:
 ./setup.sh
 ```
 
-**Note** to install dependencies for local development use:
-```bash
-./setup.sh local
-```
-
-> **NOTE**: To re-install and rebuild all the site’s assets run `./setup.sh` again.
-See the usage section [updating all the project dependencies](README.md#updating-all-dependencies).
+> **NOTE:**
+  To install dependencies for local development use:
+  ```bash
+  ./setup.sh local
+  ```
+  To re-install and rebuild all the site’s assets run `./setup.sh local` again.
+  See the usage section
+  [updating all the project dependencies](README.md#updating-all-dependencies).
 
 
 ## 4. Project configuration
@@ -174,7 +175,8 @@ if you don't already have one.
 
 Inside the `.env` file you can customize the project environment configuration.
 
-**For local development ensure you change the 'DJANGO_ENV' variable to 'local'**
+> **NOTE:**
+  For local development ensure you change the `DJANGO_ENV` variable to `local`.
 
 If you would like to manually copy the environment settings,
 copy the `.env_SAMPLE` file and un-comment each variable after
