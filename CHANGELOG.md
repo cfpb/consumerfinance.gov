@@ -101,6 +101,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes `align: value` attribute in ESLint `key-spacing` rule
   to individual mode with `mode: minimum` option set.
 - Changes `quote-props` rule attribute to `consistent-as-needed`.
+- Added href URL to primary nav top-level menu link.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
