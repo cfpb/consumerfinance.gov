@@ -69,17 +69,18 @@ brew info elasticsearch
 ```
 
 ### MYSQL Database
-Ensure your databse is running.
+Ensure your database is running.
 ```
 mysql.server start
 ```
 
-Then run mysql creation script from root directory
+Then run mysql creation script from root directory:
 ```
 ./create-mysql-db.sh
 ```
 If you would like to have a custom db setup then you can pass in the necessary args.
-*NOTE* be sure to update your local settings `local.py` to account for these changes.
+> **NOTE** be sure to update your local settings `local.py` to account for these changes.
+
 ```
 ./create-mysql-db.sh <dbname> <username> <password>
 ```
@@ -87,7 +88,8 @@ If you would like to have a custom db setup then you can pass in the necessary a
 
 
 ### Sheer-like & Sheer
-#### NOTE: Ensure you install Sheer-like first to avoid version conflicts with dependencies.
+> **NOTE** Ensure you install Sheer-like first to avoid version conflicts with dependencies.
+
 To [install Sheer-like](https://github.com/cfpb/django-sheerlike/blob/master/README.rst), start by cloning the
 Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
 ```bash

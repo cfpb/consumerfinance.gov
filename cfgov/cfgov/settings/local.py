@@ -10,7 +10,7 @@ DATABASES = {
         'NAME': os.environ.get('MYSQL_NAME'),
         'USER': os.environ.get('MYSQL_USER'),
         'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': '',  # Set to empty string for localhost
-        'PORT': '',  # Set to empty string for default
+        'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
+        'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
     },
 }
