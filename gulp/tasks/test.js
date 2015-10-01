@@ -2,7 +2,7 @@
 
 var gulp = require( 'gulp' );
 var $ = require( 'gulp-load-plugins' )();
-var sitespeedio = require('gulp-sitespeedio');
+var sitespeedio = require( 'gulp-sitespeedio' );
 var childProcess = require( 'child_process' );
 var exec = childProcess.exec;
 var spawn = childProcess.spawn;
@@ -124,14 +124,14 @@ gulp.task( 'test:perf', sitespeedio( {
             'textcontent,' +
             'thirdpartyversions,' +
             'ycdn,' +
-            'connectionclose,'+
-            'ycookiefree,'+
-            'yexpressions,'+
-            'inlinecsswhenfewrequest,'+
+            'connectionclose,' +
+            'ycookiefree,' +
+            'yexpressions,' +
+            'inlinecsswhenfewrequest,' +
             'nodnslookupswhenfewrequests',
   budget: {
     rules: {
-      default: 90
+      'default': 90
     }
   }
 } ) );
@@ -146,6 +146,12 @@ gulp.task( 'test:acceptance:browser', function() {
       $.util.log( 'Protractor tests done!' );
     } );
 } );
+
+gulp.task( 'test:acceptance',
+  [
+    'test:acceptance:browser'
+  ]
+);
 
 /**
  * Processes command-line and environment variables

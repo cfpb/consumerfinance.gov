@@ -563,9 +563,9 @@ rules:
   key-spacing:
     - 1
     -
-      align: value
       beforeColon: false
       afterColon: true
+      mode: minimum
 
   # Enforces empty lines around comments.
   lines-around-comment:

@@ -98,6 +98,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and added an option to filters to allow post requests
 - fixed url routing for rendering directory cordrays pdf
 - explicitly stated jinja2 to autoescape in templates
+- Changes `align: value` attribute in ESLint `key-spacing` rule
+  to individual mode with `mode: minimum` option set.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
