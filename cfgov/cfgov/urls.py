@@ -5,7 +5,7 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, EventICSView, unshare
+from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -111,11 +111,13 @@ urlpatterns = [
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
             name='page'),
+        url(r'^about-director/201410_cfpb_bio_cordray.pdf$',
+            renderDirectoryPDF, name='cordray_pdf'),
         url(r'^leadership-calendar/pdf/$',
             LeadershipCalendarPDFView.as_view(),
             name='leadership-calendar-pdf'),
         url(r'^leadership-calendar/print/$',
-            SheerTemplateView.as_view(),
+            SheerTemplateView.as_view(template_name='the-bureau/leadership-calendar/print/index.html'),
             name='leadership-calendar-print')],
         namespace='the-bureau')),
 

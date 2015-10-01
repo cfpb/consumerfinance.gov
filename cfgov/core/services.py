@@ -8,6 +8,7 @@ from django.http import HttpResponse, Http404
 from django.core.exceptions import ImproperlyConfigured
 from pytz import timezone
 from dateutil.parser import parse
+from v1.forms import CalenderPDFFilterForm
 
 ## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
 if six.PY2:
@@ -41,7 +42,7 @@ class PDFGeneratorView(View):
                 "'filename' or an implementation of 'get_filename()'")
         return self.filename
 
-    def generate_pdf(self):
+    def generate_pdf(self, query_opts):
         if self.license is None:
             raise Exception("PDFGeneratorView requires a license")
         pdf_reactor = PDFreactor()
@@ -51,11 +52,14 @@ class PDFGeneratorView(View):
         pdf_reactor.setAddTags(True)
         pdf_reactor.setAddBookmarks(True)
         pdf_reactor.addUserStyleSheet('', '', '', self.get_stylesheet_url())
-        query_string = self.request.GET.urlencode()
-        result = \
-            pdf_reactor.renderDocumentFromURL('{0}?{1}'.format(
+        url = '{0}?filter_calendar={1}&filter_range_date_gte={2}&filter_range_date_lte={3}'.format(
                 self.get_render_url(),
-                query_string))
+                query_opts['filter_calendar'],
+                query_opts['filter_range_date_gte'],
+                query_opts['filter_range_date_lte'])
+
+        result = pdf_reactor.renderDocumentFromURL(url)
+
         # Check if successful
         if result is None:
             # Not successful, return 500
@@ -68,8 +72,18 @@ class PDFGeneratorView(View):
                 self.get_filename())
             return response
 
-    def get(self, *args, **kwargs):
-        return self.generate_pdf()
+    def post(self, request):
+        form = CalenderPDFFilterForm(request.POST)
+        if form.is_valid():
+            query_opts = {
+                'filter_calendar': form.cleaned_data['filter_calendar'],
+                'filter_range_date_gte': form.cleaned_data['filter_range_date_gte'],
+                'filter_range_date_lte': form.cleaned_data['filter_range_date_lte']
+            }
+
+            return self.generate_pdf(query_opts)
+        else:
+            return Exception('Error query values are not in expected format')
 
 
 class ICSView(ContextMixin, View):
