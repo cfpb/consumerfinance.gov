@@ -18,7 +18,7 @@ function DoingBusinessWithUs() {
 
   this.mainSummaryContactLink = this.mainSummary.element( by.css( 'a' ) );
 
-  this.businessOpportunitySection = _getQAElement( 'opportunity-well' );
+  this.businessOpportunitySection = _getQAElement( 'business-opportunities' );
 
   this.businessOpportunitySectionTitle =
   this.businessOpportunitySection.element( by.css( 'h2' ) );
