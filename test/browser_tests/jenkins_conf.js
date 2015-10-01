@@ -8,8 +8,8 @@ exports.config = {
   framework:    'jasmine2',
   specs:        [ 'spec_suites/*.js' ],
   capabilities: {
-    browserName:         'chrome',
-    name:                'flapjack-browser-tests ' + process.env.SITE_DESC,
+    'browserName':       'chrome',
+    'name':              'flapjack-browser-tests ' + process.env.SITE_DESC,
     'tunnel-identifier': process.env.SAUCE_TUNNEL
   },
 

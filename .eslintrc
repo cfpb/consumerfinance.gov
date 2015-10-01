@@ -686,7 +686,7 @@ rules:
   # Requires quotes around object literal property names.
   quote-props:
     - 1
-    - as-needed
+    - consistent-as-needed
     -
       keywords: true
       unnecessary: true

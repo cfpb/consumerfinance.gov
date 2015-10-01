@@ -96,6 +96,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and merged that and gulp config together in `config.build`.
 - Changes `align: value` attribute in ESLint `key-spacing` rule
   to individual mode with `mode: minimum` option set.
+- Changes `quote-props` rule attribute to `consistent-as-needed`.
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.
