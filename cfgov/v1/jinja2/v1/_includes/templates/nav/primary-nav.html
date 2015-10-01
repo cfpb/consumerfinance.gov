@@ -15,11 +15,10 @@
                 sub_nav_items in vars.nav_items %}
             <li class="list_item primary-nav_item js-primary-nav_item">
                 {%- if sub_nav_items | length > 0 %}
-                    {# TODO: Make this a button, it is not a real link. #}
                     <a class="list_link
                               primary-nav_link
                               js-primary-nav_link"
-                       href="#">
+                       href="{{ sub_nav_landing }}">
                         {{ nav_title }}
                     </a>
                     {{ sub_nav.render(sub_nav_title, sub_nav_landing, sub_nav_items, sub_nav_media) }}
