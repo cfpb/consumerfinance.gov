@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         wp_type = options['wp_type']
-        wagtail_type = options['wagtail_type']
+        wagtail_type = options['wagtail_type'].lower()
         parent_page_slug = options['parent_page_slug']
         username = options['username']
         password = options['password']
