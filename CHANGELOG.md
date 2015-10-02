@@ -95,8 +95,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes `quote-props` rule attribute to `consistent-as-needed`.
 - Added href URL to primary nav top-level menu link.
 - Changed DB backend from sqlite ==> MYSQL.
-- Changed DB backend from sqlite ==> MYSQL
-- Made grey wells on `/doing-business-with-us/`
+- Made gray wells on `/doing-business-with-us/`
   and `/the-bureau/` use the Well organism.
 - Updated Doing Business with Us test to use
   `data-qa-hook="opportunity-well"` hook.
