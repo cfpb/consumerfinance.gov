@@ -1,14 +1,17 @@
 from django.db import models
 from django.http import Http404
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+
+from localflavor.us.models import USStateField
 
 from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
-from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, FieldRowPanel, TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-
-from django.utils.translation import ugettext_lazy as _
+from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.url_routing import RouteResult
 
 
 class V1Page(Page):
@@ -111,6 +114,123 @@ class V1UserPagePermissionsProxy(UserPagePermissionsProxy):
         return V1PagePermissionTester(self, page)
 
 
+class AgendaItemBlock(blocks.StructBlock):
+    start_dt = blocks.DateTimeBlock(required=False, format='%Y-%m-%d %H:%M')
+    end_dt = blocks.DateTimeBlock(required=False, format='%Y-%m-%d %H:%M')
+    description = blocks.CharBlock(max_length=100, required=False)
+    location = blocks.CharBlock(max_length=100, required=False)
+    speakers = blocks.ListBlock(blocks.StructBlock([
+        ('name', blocks.CharBlock(required=False)),
+        ('url', blocks.URLBlock(required=False)),
+        ], icon='user', required=False)
+    )
+
+    class Meta:
+        icon = 'date'
+
+
+class EventPage(V1Page):
+    # General content fields
+    body = RichTextField(blank=True)
+    archive_body = RichTextField(blank=True)
+    live_body = RichTextField(blank=True)
+    future_body = RichTextField(blank=True)
+    start_dt = models.DateField("Starts", blank=True, null=True)
+    end_dt = models.DateField("Ends", blank=True, null=True)
+    future_body = RichTextField(blank=True)
+    archive_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    video_transcript = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    speech_transcript = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    flickr_url = models.URLField("Flikr URL", blank=True)
+    youtube_url = models.URLField("Youtube URL", blank=True)
+    live_stream_availability = models.BooleanField("Streaming?", default=False, blank=True)
+    live_stream_url = models.URLField("URL", blank=True)
+    live_stream_date = models.DateField("Go Live Date", blank=True, null=True)
+    # Venue content fields
+    venue_name = models.CharField(max_length=100, blank=True)
+    venue_street = models.CharField(max_length=100, blank=True)
+    venue_suite = models.CharField(max_length=100, blank=True)
+    venue_city = models.CharField(max_length=100, blank=True)
+    venue_state = USStateField(blank=True)
+    venue_zip = models.IntegerField(blank=True, null=True)
+    agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
+
+    # General content tab
+    content_panels = V1Page.content_panels + [
+        FieldPanel('body', classname="full"),
+        FieldRowPanel([
+            FieldPanel('start_dt', classname="col6"),
+            FieldPanel('end_dt', classname="col6"),
+        ]),
+        MultiFieldPanel([
+            FieldPanel('archive_body', classname="full"),
+            ImageChooserPanel('archive_image'),
+            DocumentChooserPanel('video_transcript'),
+            DocumentChooserPanel('speech_transcript'),
+            FieldPanel('flickr_url'),
+            FieldPanel('youtube_url'),
+        ], heading='Archive Information'),
+        FieldPanel('live_body', classname="full"),
+        FieldPanel('future_body', classname="full"),
+        MultiFieldPanel([
+            FieldPanel('live_stream_availability'),
+            FieldPanel('live_stream_url'),
+            FieldPanel('live_stream_date'),
+        ], heading='Live Stream Information'),
+    ]
+    # Venue content tab
+    venue_panels = [
+        FieldPanel('venue_name'),
+        MultiFieldPanel([
+            FieldPanel('venue_street'),
+            FieldPanel('venue_suite'),
+            FieldPanel('venue_city'),
+            FieldPanel('venue_state'),
+            FieldPanel('venue_zip'),
+        ], heading='Venue Address'),
+    ]
+    # Agenda content tab
+    agenda_panels = [
+        StreamFieldPanel('agenda_items'),
+    ]
+    # Promotion panels
+    promote_panels = [
+        MultiFieldPanel(V1Page.promote_panels, "Common page configuration"),
+    ]
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(venue_panels, heading='Venue Information'),
+        ObjectList(agenda_panels, heading='Agenda Information'),
+        ObjectList(V1Page.promote_panels, heading='Promote'),
+        ObjectList(V1Page.settings_panels, heading='Settings', classname="settings"),
+    ])
+
+    parent_page_types = ['v1.EventLandingPage']
+
+
+class EventLandingPage(V1Page):
+    subpage_types = ['EventPage']
+
+
 class BlogPage(V1Page):
     body = RichTextField()
     date = models.DateField("Post date")
@@ -122,12 +242,12 @@ class BlogPage(V1Page):
         related_name='+'
     )
 
-    content_panels = Page.content_panels + [
+    content_panels = V1Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('body', classname="full"),
     ]
 
     promote_panels = [
-        MultiFieldPanel(Page.promote_panels, "Common page configuration"),
+        MultiFieldPanel(V1Page.promote_panels, "Common page configuration"),
         ImageChooserPanel('feed_image'),
     ]
