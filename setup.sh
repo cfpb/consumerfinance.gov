@@ -73,6 +73,7 @@ build(){
   echo 'Building project...'
   gulp clean
   gulp build
+  dbsetup
 }
 
 # Setup MYSQL Server
@@ -94,4 +95,3 @@ init
 clean
 install $1
 build
-dbsetup
