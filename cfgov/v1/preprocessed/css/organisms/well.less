@@ -1,7 +1,7 @@
 
 /* topdoc
   name: Theme variables
-  family: cf-layout
+  family: cfgov-organisms
   notes:
     - "The following color and sizing variables are exposed,
        allowing you to easily override them before compiling."
@@ -19,13 +19,13 @@
 
 
 /* topdoc
-  name: Well (Grey Well)
+  name: Well (Gray Well)
   family: cfgov-organisms
   patterns:
     - name: Default example
       markup: |
         <div class="o-well">
-            <h2>Grey Well</h2>
+            <h2>Gray Well</h2>
             <p>Well's content</p>
         </div>
       codenotes:
@@ -38,17 +38,17 @@
 */
 
 .o-well {
-  background-color: @o-well_bg;
-  border: 1px solid @o-well_border;
-  padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-  padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-  padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-  padding-bottom: unit( ( @grid_gutter-width * 2 )  / @base-font-size-px, em );
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    padding-bottom: unit( ( @grid_gutter-width * 2 )  / @base-font-size-px, em );
+    padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    border: 1px solid @o-well_border;
+    background-color: @o-well_bg;
 
-  .respond-to-min(600px, {
-    padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
-    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
-  } );
+    .respond-to-min( @tablet-min, {
+        padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+    } );
 }
 
 /* topdoc
