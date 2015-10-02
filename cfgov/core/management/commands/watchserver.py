@@ -10,7 +10,6 @@ from django.contrib.staticfiles.management.commands.runserver import Command\
 
 # Inspired by:
 # https://lincolnloop.com/blog/simplifying-your-django-frontend-tasks-grunt/
-# Extended to potentially support multiple grunt-watched directories.
 
 class Command(StaticfilesRunserverCommand):
 
@@ -19,7 +18,7 @@ class Command(StaticfilesRunserverCommand):
         return super(Command, self).inner_run(*args, **options)
 
     def start_gulp(self):
-        self.stdout.write('>>> Starting grunt in %s' % dir)
+        self.stdout.write('>>> Starting gulp in %s' % dir)
         sub = subprocess.Popen(
             'gulp watch',
             shell=True,
@@ -33,7 +32,7 @@ class Command(StaticfilesRunserverCommand):
         self.stdout.write('>>> Gulp process on pid {0}'.format(sub.pid))
 
         def kill_gulp_process(sub):
-            self.stdout.write('>>> Closing grunt process %s' % sub.pid)
+            self.stdout.write('>>> Closing gulp process %s' % sub.pid)
             os.kill(sub.pid, signal.SIGTERM)
 
         atexit.register(kill_gulp_process, self.gulp_process)
