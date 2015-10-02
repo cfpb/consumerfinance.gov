@@ -13,10 +13,10 @@ describe( 'The focusTarget function', function() {
   before( function() {
     $ = require( 'jquery' );
     focusTarget = require( '../../../cfgov/v1/preprocessed/js/modules/focus-target.js' );
-    sandbox = sinon.sandbox.create();
   } );
 
   beforeEach( function() {
+    sandbox = sinon.sandbox.create();
     // Adding a simplified version of the thing we want to test.
     // Then calling the jQuery to test after
     $( 'body' ).html( $( '<a id="skip-nav"' +
