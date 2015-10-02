@@ -58,6 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added atomic landing page template prototypes.
 - Added `/organisms/` and `/molecules/` directories to includes directory.
 - Added `gulp test:perf` task to test for performance rules.
+- MYSQL backend to project settings & a database creation script
 
 ### Changed
 - Updated Video Code to make it usable on Events pages.
@@ -102,6 +103,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to individual mode with `mode: minimum` option set.
 - Changes `quote-props` rule attribute to `consistent-as-needed`.
 - Added href URL to primary nav top-level menu link.
+- Changed DB backend from sqlite ==> MYSQL  
 
 ### Removed
 - Disables tests for landing page events, since we don't currently have events.

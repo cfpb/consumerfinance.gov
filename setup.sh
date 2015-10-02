@@ -73,6 +73,22 @@ build(){
   echo 'Building project...'
   gulp clean
   gulp build
+  dbsetup
+}
+
+# Setup MYSQL Server
+dbsetup(){
+  if which mysql.server; then
+    if mysql.server status; then
+      ./create-mysql-db.sh
+    else
+      mysql.server start
+      ./create-mysql-db.sh
+    fi
+  else
+    echo 'Please install MYSQL Server'
+    exit
+  fi
 }
 
 init
