@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import PermissionDenied, ValidationError, ObjectDoesNotExist
 from django.contrib.messages.api import MessageFailure
 
-from wagtail.wagtailadmin.views.pages import create
+from wagtail.wagtailadmin.views.pages import create, edit
 from wagtail.wagtailcore.models import Page
 
 
@@ -27,6 +27,7 @@ class Command(BaseCommand):
         parser.add_argument('-u', '--username', action='store', required=True)
         parser.add_argument('-p', '--password', action='store', required=True)
         parser.add_argument('--app', action='store', default='v1')
+        parser.add_argument('--overwrite', action='store_true')
 
     def handle(self, *args, **options):
         wp_type = options['wp_type']
@@ -35,6 +36,7 @@ class Command(BaseCommand):
         username = options['username']
         password = options['password']
         app = options['app']
+        overwrite = options['overwrite']
 
         sheer_sites = settings.SHEER_SITES
         sheer_libs = [Path(s).child('_lib') for s in sheer_sites]
@@ -66,9 +68,11 @@ class Command(BaseCommand):
                                   % wp_type)
             results = {
                 'migrated': 0,
+                'overwritten': 0,
                 'existed': 0,
                 'errors': 0,
                 'migrated_slugs': [],
+                'overwritten_slugs': [],
                 'existed_slugs': [],
                 'errors_slugs': [],
             }
@@ -76,7 +80,7 @@ class Command(BaseCommand):
                 # Map the document to the given model name
                 results = migrate(doc['_source'], username, password,
                                   parent_page_slug, wagtail_type_module, app,
-                                  wagtail_type, results)
+                                  overwrite, wagtail_type, results)
 
             for state in ['migrated', 'existed', 'errors']:
                 print "%s %s" % (results[state], state)
@@ -87,7 +91,7 @@ class Command(BaseCommand):
             raise CommandError('could not find a processor for %s' % wp_type)
 
 
-def migrate(doc, username, password, parent_page_slug, module, app, wagtail_type, results):
+def migrate(doc, username, password, parent_page_slug, module, app, overwrite, wagtail_type, results):
     request = HttpRequest()
     user = authenticate(username=username, password=password)
     if user:
@@ -99,11 +103,14 @@ def migrate(doc, username, password, parent_page_slug, module, app, wagtail_type
         # the authentication system was unable to verify the username and password
         raise ValidationError("The username and password were incorrect.")
 
-    ### Check to see if the post already exists. We don't want WP data overwriting anything
-    if Page.objects.filter(slug=doc.get('slug')).exists():
+    ### Check to see if the post already exists. We don't want WP data overwriting
+    ### unless the --overwrite option is set.
+    wagtail_page = Page.objects.filter(slug=doc.get('slug'))[0]
+    if wagtail_page:
         results['existed'] += 1
         results['existed_slugs'].append(doc.get('slug'))
-        return results
+        if not overwrite:
+            return results
 
     ### Get parent. If parent doesn't exist, then raise DoesNotExist
     try:
@@ -115,14 +122,22 @@ def migrate(doc, username, password, parent_page_slug, module, app, wagtail_type
     request.POST = module.convert(doc)
     request.POST['action-publish'] = u'Publish on WWW'
 
-    try:  # Create the page. Since we aren't hitting the middleware we have to catch the MessageFailure exception
-        create(request, app, wagtail_type, parent.id)
+    # Create the page or overwrite the existing one. Since we aren't hitting
+    # the middleware we have to catch the MessageFailure exception.
+    try:
+        if overwrite and wagtail_page:
+            edit(request, wagtail_page.id)
+        else:
+            create(request, app, wagtail_type, parent.id)
     except MessageFailure:
         if 'messages.error' in traceback.format_exc():
             print 'Couldn\'t save page with slug: %s' % doc.get('slug')
             results['errors'] += 1
             results['errors_slugs'].append(doc.get('slug'))
             return results
+        if overwrite:
+            results['overwritten'] += 1
+            results['overwritten_slugs'].append(doc.get('slug'))
         results['migrated'] += 1
         results['migrated_slugs'].append(doc.get('slug'))
         return results
