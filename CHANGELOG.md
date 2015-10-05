@@ -16,9 +16,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-- Added Favicon
-- New and improved primary nav (both look and interaction)
-- Added expanded-state utility for getting/setting aria-expanded
 - Added Acceptance tests for the `activity-log` page.
 - Added webpack module loader for per-page JavaScript.
 - Added external-site page-specific script.
@@ -62,19 +59,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `gulp test:unit:server` for running Django unit tests via gulp.
 
 ### Changed
-- Updated Video Code to make it usable on Events pages.
-- Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
-- Updated Meredith Fuchs bio and images.
-- Added indent rules for `var`, `let`, and `const` in ESLint config file.
-- Replaced old Grunt legaccsy plugin with Gulp mq-remove plugin
-- Added ability for acceptance --specs test flag to accept list of test files.
-- Changes `big_radio` macro to `radio_big` and `checkbox_bg` to `checkbox_big`.
 - Updated the primary nav to move focus as user enters and leaves nav levels
 - Moved handlebars from npm to bower.
 - Added jQuery CDN with fallback to head to satisfy GTM requirements.
 - Changes the location of the /dist folder to cfgov/v1/jinja2/v1
 - Server port is now at 8000
-- Updated Dep Dir title to include "Acting"
 - included with context flag for macros that make a call to request object
 - Updated Jinja2 shorthand if statements to include an empty else case.
 - Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
@@ -107,27 +96,49 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed DB backend from sqlite ==> MYSQL.
 
 ### Removed
-- Disables tests for landing page events, since we don't currently have events.
 - Removed unused exportsOverride section,
   which was an artifact of the grunt bower task.
 - Removed browserify, watchify, and browserify-shim dependencies.
 - Removed src directory
 - Removed bad CF Notifier tests.
-- Removed Ombudsman from nav for beta freeze.
 - Removed unnecessary mobile-only expandables
 - Removed link from Cordray's corner image `/the-bureau/about-director/`.
 - Removed extra Google Analytics code
 
 ### Fixed
-- Fixed issue with logic displaying the Event summary state.
-- Fixed missing IE only stylesheet for older systems/browsers.
-- Fixed skip-navigation link for keyboard navigation.
 - Fixed instructions for gulp watch
 - New way to run the server documented in the INSTALL.MD
 - New way to define url routing, no longer automatically set by file path
 - Fixed heading structure throughout website
 - Fixed setup.sh to use argument correctly
 - Fixed title for Small & Minority Businesses
+
+
+## 3.0.0-2.4.0 - 2015-09-29
+
+### Added
+- Added Favicon
+- New and improved primary nav (both look and interaction)
+- Added expanded-state utility for getting/setting aria-expanded
+
+### Changed
+- Updated Video Code to make it usable on Events pages.
+- Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
+- Updated Meredith Fuchs bio and images.
+- Added indent rules for `var`, `let`, and `const` in ESLint config file.
+- Replaced old Grunt legaccsy plugin with Gulp mq-remove plugin
+- Added ability for acceptance --specs test flag to accept list of test files.
+- Changes `big_radio` macro to `radio_big` and `checkbox_bg` to `checkbox_big`.
+- Updated Dep Dir title to include "Acting"
+
+### Removed
+- Disables tests for landing page events, since we don't currently have events.
+- Removed Ombudsman from nav for beta freeze.
+
+### Fixed
+- Fixed issue with logic displaying the Event summary state.
+- Fixed missing IE only stylesheet for older systems/browsers.
+- Fixed skip-navigation link for keyboard navigation.
 
 
 ## 3.0.0-2.3.0 - 2015-08-27
