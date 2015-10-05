@@ -10,10 +10,11 @@ def convert(doc):
     }
     times = {'beginning_time': 'start_dt', 'ending_time': 'end_dt'}
     for t in times:
-        time = doc.get(t['0'], u'').get('date', u'')
-        if time:
-            dt = dateutil.parser.parse(time)
-            post_dict[t['1']] = dt.strftime('%Y-%m-%d')
+        if doc.get(t[0]):
+            time = doc.get(t[0]).get(t[1], u'')
+            if time:
+                dt = dateutil.parser.parse(time)
+                post_dict[t[1]] = dt.strftime('%Y-%m-%d')
 
     if doc.get('venue'):
         post_dict['venue_name'] = doc['venue'].get('name', u'')
@@ -42,11 +43,12 @@ def convert(doc):
                 post_dict['agenda_items-' + str(i) + '-' + info[0]] = info[1]
             times = {'beginning_time': 'start_dt', 'ending_time': 'end_dt'}
             for t in times:
-                time = doc['agenda'][i].get(t['0'], u'').get('date', u'')
-                if time:
-                    dt = dateutil.parser.parse(time)
-                    post_dict['agenda_items-' + str(i) + '-value-' + t['1']] = \
-                        dt.strftime('%Y-%m-%d %H:%M')
+                if doc['agenda'][i].get(t[0], u''):
+                    time = doc['agenda'][i].get(t[0]).get('date', u'')
+                    if time:
+                        dt = dateutil.parser.parse(time)
+                        post_dict['agenda_items-' + str(i) + '-value-' +
+                                  t[1]] = dt.strftime('%Y-%m-%d %H:%M')
             post_dict['agenda_items-' + str(i) + '-value-description'] = \
                 doc['agenda'][i].get('desc', u'')
             post_dict['agenda_items-' + str(i) + '-value-location'] = \
