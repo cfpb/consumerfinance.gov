@@ -28,13 +28,21 @@
 
 {% block hero -%}
     <section class="content_hero hero hero__bureau">
-        {% import 'macros/youtube.html' as YouTube %}
-        {% call YouTube.render({
-            'video_id' : 'en0Iq8II4fA',
-            'image_res' : 'max'
+        {% import 'macros/video-player.html' as video_player %}
+        {%
+            call video_player.render({
+                'image' : {
+                    'url' : 'https://img.youtube.com/vi/en0Iq8II4fA/maxresdefault.jpg'
+                },
+                'video' : {
+                    'id'    : 'en0Iq8II4fA',
+                    'url'   : 'https://www.youtube.com/watch?v=en0Iq8II4fA',
+                    'width' : '640',
+                    'height': '410'
+                }
             })
         %}
-        <div class="hero_wrapper hide-on_yt-playing">
+        <div class="hero_wrapper hide-on_video-playing">
             <div class="hero_card hero_card__bureau">
                 <article class="hero_preview">
                     <div class="summary">

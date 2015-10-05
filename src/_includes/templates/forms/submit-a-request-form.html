@@ -1,62 +1,20 @@
+{% import 'macros/util/form.html' as form %}
+{% import 'macros/util/common-form-fields.html' as form_field %}
+
     <section class="block
                     block__bg
                     block__border
                     block__flush-sides">
         <form class="form-l js-validate-filters">
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header"
-                       for="foia-request_first-name">
-                    First name
-                </label>
-                <input class="input__long"
-                       id="foia-request_first-name"
-                       required
-                       type="text">
-            </div>
+            {{ form.input('First Name', 'text', '1-2', true) }}
 
-            <div class="form-l_col form-l_col-1-2">
-                <label class="form-label-header"
-                       for="foia-request_last-name">
-                    Last name
-                </label>
-                <input class="input__long"
-                       id="foia-request_last-name"
-                       required
-                       type="text">
-            </div>
-            <fieldset class="u-reset">
-                <div class="form-l_col form-l_col-1 u-mb0">
-                    <legend class="form-label-header">
-                        Document dates
-                    </legend>
-                </div>
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="micro-copy micro-copy__large"
-                           for="foia-request_starting-date">
-                        From:
-                    </label>
-                    <input class="input__long"
-                           id="foia-request_starting-date"
-                           placeholder="mm/dd/yyyy"
-                           type="text">
-                </div>
-                <div class="form-l_col form-l_col-1-2 input__long">
-                    <label class="micro-copy micro-copy__large"
-                           for="foia-request_ending-date">
-                        To:
-                    </label>
-                    <input class="input__long"
-                           id="foia-request_ending-date"
-                           placeholder="mm/dd/yyyy"
-                           type="text">
-                </div>
-            </fieldset>
+            {{ form.input('Last Name', 'text', '1-2', true) }}
+
+            {{ form_field.date_picker('Document dates:') }}
 
             <div class="form-l_col form-l_col-1">
-                <label for="foia-request_request-desc">
-                    <span class="form-label-header">
-                        Request description
-                    </span><br/>
+                <label for="form_requested-info">
+                    <span class="form-label-header">Requested information</span>
                     <span class="micro-copy micro-copy__large">
                         Describe the records you seek from the CFPB.
                         <a href="../foia-faqs" target="_blank">
@@ -65,29 +23,19 @@
                     </span>
                 </label>
                 <textarea class="input__long"
-                          id="foia-request_request-desc"
-                          required>
-                </textarea>
+                          id="form_requested-info"
+                          ></textarea>
             </div>
 
-            <div class="form-l_col form-l_col-1 ">
-                <label class="form-label-header"
-                       for="foia-request_request-fee">
-                    Select a request category
-                </label>
-                <div class="custom-select">
-                    <select class="custom-select_select"
-                            data-placeholder="Select the FOIA request category"
-                            id="foia-request_request-fee">
-                        <option value="">Select the FOIA request category</option>
-                        <option value="Commercial">Commercial</option>
-                        <option value="Media">Media</option>
-                        <option value="Others">Others</option>
-                    </select>
-                    <span class="custom-select_icon cf-icon cf-icon-down"></span>
-                </div>
-            </div>
+            {{ form.select( 'Select a request category',
+                            'Select the FOIA request category',
+                            ['Commercial', 'Media', 'Others'],
+                            '1',
+                            false,
+                            false ) }}
 
+            <div class="js-additional-field">
+            </div>
             <fieldset class="u-reset js-additional-field">
                 <div class="form-l_col
                             form-l_col-1
@@ -133,8 +81,7 @@
                         Describe how the disclosed records would serve a public interest
                     </span>
 
-                    <textarea class="input__long" disabled>
-                    </textarea>
+                    <textarea class="input__long" disabled></textarea>
                 </label>
             </div>
 
@@ -222,68 +169,15 @@
             </fieldset>
 
             <fieldset class="u-reset js-is-hidden" id="foia-request_organization-info">
-                <div class="form-l_col form-l_col-1">
-                    <label class="form-label-header"
-                           for="foia-request_organization-name">
-                        Organization Name
-                    </label>
-                    <input class="input__long"
-                           id="foia-request_organization-info"
-                           type="text"
-                           disabled>
-                </div>
+                {{ form.input('Organization name', 'text', '1', false, true) }}
 
-                <div class="form-l_col form-l_col-1">
-                    <label class="form-label-header"
-                           for="foia-request_organization-address">
-                        Address
-                    </label>
-                    <input class="input__long"
-                           id="foia-request_organization-address"
-                           type="text"
-                           disabled>
-                </div>
+                {{ form.input('Address', 'text', '1', false, true) }}
 
-                <div class="form-l_col form-l_col-1-2">
-                    <label class="form-label-header"
-                           for="foia-request_organization-city">
-                        City
-                    </label>
-                    <input class="input__long"
-                           id="foia-request_organization-city"
-                           type="text"
-                           disabled>
-                </div>
+                {{ form.input('City', 'text', '1-3', false, true) }}
 
-                <div class="form-l_col form-l_col-1-2">
-                    <div class="form-l_col form-l_col-1-2">
-                        <label class="form-label-header"
-                               for="foia-request_organization-state">
-                            State
-                        </label>
-                        <div class="custom-select">
-                            <select class="custom-select_select"
-                                    data-placeholder="Select the FOIA request category"
-                                    id="foia-request_organization-state"
-                                    disabled>
-                                <option value="">Please select</option>
-                                <option value="State">States to be added</option>
-                            </select>
-                            <span class="custom-select_icon
-                                         cf-icon
-                                         cf-icon-down"></span>
-                        </div>
-                    </div>
-                    <div class="form-l_col form-l_col-1-2">
-                        <label class="form-label-header" for="foia-request_organization-zip">
-                            Zip code
-                        </label>
-                        <input class="input__long"
-                               id="foia-request_organization-zip"
-                               type="text"
-                               disabled>
-                    </div>
-                </div>
+                {{ form_field.state('1-3', false, true)}}
+
+                {{ form.input('Zip code', 'text', '1-3', false, true) }}
             </fieldset>
 
             <div class="form-actions form-actions__right-on-med ">

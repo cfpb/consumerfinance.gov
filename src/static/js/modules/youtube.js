@@ -7,8 +7,6 @@
 
 var $ = require( 'jquery' );
 var jsLoader = require( './util/js-loader' );
-var viewport = require( './util/get-viewport-dimensions' );
-var _viewportWidth = viewport.getViewportDimensions().width;
 
 function init() {
 
@@ -26,7 +24,7 @@ function init() {
     } );
   };
 
-  return $( '.youtube-player_container' ).createYouTube();
+  return $( '.video-player__youtube' ).createYouTube();
 }
 
 /**
@@ -50,8 +48,6 @@ YouTube.prototype = {
 
   defaults: {
     playerOptions: {
-      height:     '410',
-      width:      '640',
       videoId:    '',
       playerVars: {
         autoplay:         1,
@@ -100,8 +96,8 @@ YouTube.prototype = {
 
   initUI: function() {
     var ui = this.$element;
-    ui.on( 'click', '.youtube-player_play-btn', this.play );
-    ui.on( 'click', '.youtube-player_close-btn', this.close );
+    ui.on( 'click', '.video-player_play-btn', this.play );
+    ui.on( 'click', '.video-player_close-btn', this.close );
 
     return this;
   },
@@ -120,7 +116,7 @@ YouTube.prototype = {
   initPlayer: function() {
     var YT = window.YT;
     if ( YT && YT.Player ) {
-      new YT.Player( 'youtube-player', this.defaults.playerOptions );
+      new YT.Player( 'youtube_video-player', this.defaults.playerOptions );
       this.playerInitialized = true;
     } else {
       this._embedScript();
@@ -131,7 +127,7 @@ YouTube.prototype = {
 
   onPlayerStateChange: function( event ) {
     if ( event.data === window.YT.PlayerState.ENDED ) {
-      this.$element.removeClass( 'yt-playing' );
+      this.$element.removeClass( 'video-playing' );
     }
 
     return this;
@@ -152,11 +148,7 @@ YouTube.prototype = {
     } else {
       this.initPlayer();
     }
-    this.$element.addClass( 'yt-playing' );
-
-    if ( _viewportWidth <= 800 ) {
-      $( 'html, body' ).animate( { scrollTop: 0 }, 500 );
-    }
+    this.$element.addClass( 'video-playing' );
 
     return this;
   },
@@ -164,7 +156,7 @@ YouTube.prototype = {
   close: function( e ) {
     e.preventDefault();
     this.player.stopVideo();
-    this.$element.removeClass( 'yt-playing' );
+    this.$element.removeClass( 'video-playing' );
 
     return this;
   },

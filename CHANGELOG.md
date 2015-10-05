@@ -24,6 +24,33 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 3.0.0-2.4.0 - 2015-09-29
+
+### Added
+- Added Favicon
+- New and improved primary nav (both look and interaction)
+- Added expanded-state utility for getting/setting aria-expanded
+
+### Changed
+- Updated Video Code to make it usable on Events pages.
+- Changed gulp JS unit testing task from `gulp:unit:js` to `gulp:unit:scripts`
+- Updated Meredith Fuchs bio and images.
+- Added indent rules for `var`, `let`, and `const` in ESLint config file.
+- Replaced old Grunt legaccsy plugin with Gulp mq-remove plugin
+- Added ability for acceptance --specs test flag to accept list of test files.
+- Changes `big_radio` macro to `radio_big` and `checkbox_bg` to `checkbox_big`.
+- Updated Dep Dir title to include "Acting"
+
+### Removed
+- Disables tests for landing page events, since we don't currently have events.
+- Removed Ombudsman from nav for beta freeze.
+
+### Fixed
+- Fixed issue with logic displaying the Event summary state.
+- Fixed missing IE only stylesheet for older systems/browsers.
+- Fixed skip-navigation link for keyboard navigation.
+
+
 ## 3.0.0-2.3.0 - 2015-08-27
 
 ### Added

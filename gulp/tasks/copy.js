@@ -6,44 +6,36 @@ var config = require( '../config' ).copy;
 var handleErrors = require( '../utils/handleErrors' );
 var browserSync = require( 'browser-sync' );
 
-gulp.task( 'copy:files', function() {
-  return gulp.src( config.files.src )
-    .pipe( $.changed( config.files.dest ) )
+/**
+ * Generic copy files flow from source to destination.
+ * @param {string} src The path to the source files.
+ * @param {string} dest The path to destination.
+ * @returns {Object} An output stream from gulp.
+ */
+function _genericCopy( src, dest ) {
+  return gulp.src( src )
+    .pipe( $.changed( dest ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( config.files.dest ) )
+    .pipe( gulp.dest( dest ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
+}
+
+gulp.task( 'copy:files', function() {
+  return _genericCopy( config.files.src, config.files.dest );
 } );
 
 gulp.task( 'copy:legacy', function() {
-  return gulp.src( config.legacy.src )
-    .pipe( $.changed( config.legacy.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( config.legacy.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _genericCopy( config.legacy.src, config.legacy.dest );
 } );
 
 gulp.task( 'copy:icons', function() {
-  return gulp.src( config.icons.src )
-    .pipe( $.changed( config.icons.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( config.icons.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _genericCopy( config.icons.src, config.icons.dest );
 } );
 
 gulp.task( 'copy:vendorfonts', function() {
-  return gulp.src( config.vendorfonts.src )
-    .pipe( $.changed( config.vendorfonts.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( config.vendorfonts.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _genericCopy( config.vendorfonts.src, config.vendorfonts.dest );
 } );
 
 gulp.task( 'copy:vendorcss', function() {
@@ -61,23 +53,11 @@ gulp.task( 'copy:vendorcss', function() {
 } );
 
 gulp.task( 'copy:vendorimg', function() {
-  return gulp.src( config.vendorimg.src )
-    .pipe( $.changed( config.vendorimg.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( config.vendorimg.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _genericCopy( config.vendorimg.src, config.vendorimg.dest );
 } );
 
 gulp.task( 'copy:vendorjs', function() {
-  return gulp.src( config.vendorjs.src )
-    .pipe( $.changed( config.vendorjs.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( config.vendorjs.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _genericCopy( config.vendorjs.src, config.vendorjs.dest );
 } );
 
 gulp.task( 'copy',

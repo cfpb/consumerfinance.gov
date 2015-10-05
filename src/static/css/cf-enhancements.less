@@ -200,9 +200,9 @@
 
 .respond-to-max(@mobile-max {
     .u-centered-on-mobile {
-        text-align: center;
         margin-left: auto;
         margin-right: auto;
+        text-align: center;
     }
 });
 
@@ -413,9 +413,8 @@ tbody {
 
         td:first-child {
             .h4();
-
-            background-color: @td-bg-mobile;
             margin-bottom: 10px;
+            background-color: @td-bg-mobile;
         }
 
         td[data-label] {
@@ -423,16 +422,13 @@ tbody {
 
             &:before {
                 .h6();
-
                 display: block;
-
                 content: attr(data-label);
             }
         }
 
         &_row-heading {
             .h4();
-
             margin-bottom: 0;
         }
     });
@@ -481,11 +477,11 @@ tbody {
 .grid_column__top-divider {
     margin-top: unit((@grid_gutter-width * 2) / @base-font-size-px, em);
     &:before {
-        content: "";
         display: block;
         height: 1px;
         margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
         background-color: @gray-50;
+        content: '';
     }
 }
 
@@ -493,14 +489,14 @@ tbody {
     border-left-width: @grid_gutter-width;
 
     &:before {
-        content: "";
+        display: block;
+        width: 1px;
+        margin-left: -@grid_gutter-width;
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 1px;
-        display: block;
         background-color: @gray-50;
-        margin-left: -@grid_gutter-width;
+        content: '';
     }
 }
 
@@ -746,8 +742,8 @@ tbody {
 
 .list__icons {
     .list_icon__right {
-        text-align: right;
         padding-right: .5em;
+        text-align: right;
     }
 }
 
@@ -786,10 +782,10 @@ tbody {
 
             &:after {
                 .cf-icon();
-                content: @cf-icon-download;
-                color: @pacific;
                 // Offset to address lack of space between text and icon
                 width: 1em;
+                content: @cf-icon-download;
+                color: @pacific;
                 text-align: right;
             }
         }
@@ -969,9 +965,8 @@ tbody {
 
 .jump-link {
     .webfont-medium();
-    font-size: unit(16px / @base-font-size-px, em);
-
     .icon-link();
+    font-size: unit(16px / @base-font-size-px, em);
 
     &__large {
         font-size: unit(18px / @base-font-size-px, em);
@@ -985,8 +980,8 @@ tbody {
         .block-link();
 
         &:after {
-            position: absolute;
             margin-bottom: -0.625em;
+            position: absolute;
             right: 0;
             bottom: 50%;
             text-align: right;
@@ -1449,8 +1444,8 @@ textarea.input__long {
     - cf-core
 */
 .u-link__disabled {
-    color: @gray-50 !important;
     border: none !important;
+    color: @gray-50 !important;
     cursor: not-allowed !important;
 
     &.btn {
@@ -1522,14 +1517,11 @@ dt {
 
 dd {
     .webfont-regular();
-
     display: inline;
-
     margin-left: 0.2em;
 
     &:after {
         display: block;
-
         content: '';
     }
 }
