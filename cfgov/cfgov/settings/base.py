@@ -122,8 +122,8 @@ STATIC_URL = '/static/'
 # Absolute path to the directory static files should be collected to.
 STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'f')
+MEDIA_URL = '/f/'
 
 # List of finder classes that know how to find static files in
 # various locations.
