@@ -1,6 +1,7 @@
 import os
 
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from govdelivery.api import GovDelivery
@@ -11,6 +12,7 @@ ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 REQUIRED_PARAMS = ['email', 'code']
 
 
+@csrf_exempt
 @require_http_methods(['POST'])
 def govdelivery_subscribe(request):
     """
