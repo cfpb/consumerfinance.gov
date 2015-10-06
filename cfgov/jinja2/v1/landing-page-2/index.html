@@ -124,6 +124,9 @@
     {% endif %}
 {% endblock %}
 
+{% block content_sidebar_modifiers -%}
+    o-content-sidebar
+{%- endblock %}
 
 {% block content_sidebar scoped -%}
     {% if use_side_nav_layout == false %}
