@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   image-and-text-50-50.render()
+   image_and_text_50_50.render()
 
    ==========================================================================
 
@@ -20,7 +20,7 @@
    settings.description:  A string for the description under the image
    settings.is_button:    Boolean if the link should be a button. If false/blank,
                           the button will remain a plain link.
-   settings.link:         A string for the URL of the link/button
+   settings.link_url:     A string for the URL of the link/button
    settings.link_text:    A string for the text of the link/button call to action
 
    ========================================================================== #}
@@ -44,14 +44,14 @@
         {{ settings.description }}
     </p>
 
-    {% if settings.link %}
+    {% if settings.link_url %}
     <a class="{% if settings.is_button %}
               btn m-image-text-50-50_btn
               {% else %}
               jump-link jump-link__underline
               {% endif %}
               "
-       href="{{ settings.link }}">
+       href="{{ settings.link_url }}">
         {{ settings.link_text if settings.link_text else 'Learn More' }}
     </a>
     {% endif %}
