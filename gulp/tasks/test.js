@@ -45,6 +45,17 @@ gulp.task( 'test:unit:macro', function( cb ) {
   );
 } );
 
+gulp.task( 'test:unit:server', function() {
+  spawn(
+    'tox',
+    [ 'cfgov/core/tests' ],
+    { stdio: 'inherit' }
+  )
+    .once( 'close', function() {
+      $.util.log( 'Tox tests done!' );
+    } );
+} );
+
 /**
  * Add a command-line flag to a list of Protractor parameters, if present.
  * @param {object} protractorParams Parameters to pass to Protractor binary.
@@ -214,6 +225,7 @@ gulp.task( 'test',
 gulp.task( 'test:unit',
   [
     'test:unit:scripts',
-    'test:unit:macro'
+    'test:unit:macro',
+    'test:unit:server'
   ]
 );

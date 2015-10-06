@@ -12,7 +12,6 @@ install:
   # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
-  - pip install tox
   - git clone https://github.com/cfpb/django-sheerlike
   - pip install -e django-sheerlike
   - pip install -r django-sheerlike/requirements.txt
@@ -34,7 +33,6 @@ script:
   - gulp lint
   - gulp test:unit
   - gulp test:coveralls
-  - tox
 
 env:
   - TOXENV=py27
