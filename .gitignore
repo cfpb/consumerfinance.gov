@@ -82,6 +82,7 @@ docs/*/pdfreactor-fonts.html
 *.egg-info
 .installed.cfg
 static/
+cfgov/static_built/*
 
 # Unit test / coverage reports
 #################
