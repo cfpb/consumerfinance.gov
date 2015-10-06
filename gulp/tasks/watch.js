@@ -7,11 +7,9 @@
 
 var gulp = require( 'gulp' );
 var config = require( '../config' );
-var scripts = require( './scripts' );
 
 gulp.task( 'watch', [ 'browserSync' ], function() {
-  scripts.webpackTask( true );
+  gulp.watch( config.scripts.src, [ 'scripts' ] );
   gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
   gulp.watch( config.images.src, [ 'images' ] );
-  gulp.watch( config.copy.files.src, [ 'copy:files' ] );
 } );

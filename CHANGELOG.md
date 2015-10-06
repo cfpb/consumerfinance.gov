@@ -94,6 +94,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes `quote-props` rule attribute to `consistent-as-needed`.
 - Added href URL to primary nav top-level menu link.
 - Changed DB backend from sqlite ==> MYSQL.
+- Govdelivery subscribe view is now exempt from csrf verification
+- Fixed issue w/ gulp watch task not compiling JS on change
 
 ### Removed
 - Removed unused exportsOverride section,

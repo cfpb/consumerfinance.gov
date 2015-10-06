@@ -1,11 +1,14 @@
 import os
 from unipath import Path
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(BASE_DIR)
-SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
-V1_TEMPLATE_ROOT = PROJECT_ROOT + '/v1/jinja2/v1'
+# Repository root is 4 levels above this file
+REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
+# This is the root of the Django project, 'cfgov'
+PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
+V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
+
+SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Application definition
 
 INSTALLED_APPS = (
@@ -57,7 +60,7 @@ ROOT_URLCONF = 'cfgov.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [PROJECT_ROOT + '/templates'],
+        'DIRS': [PROJECT_ROOT.child('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +74,7 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [PROJECT_ROOT.child('static_built')],
         'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.environment'
@@ -87,8 +91,8 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_NAME'),
-        'USER': os.environ.get('MYSQL_USER'),
+        'NAME': os.environ.get('MYSQL_NAME', 'v1'),
+        'USER': os.environ.get('MYSQL_USER', 'root'),
         'PASSWORD': os.environ.get('MYSQL_PW', ''),
         'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
         'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
@@ -115,7 +119,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Absolute path to the directory static files should be collected to.
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = '/var/www/html/static'
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -129,7 +133,9 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = (
-    ('legacy', PROJECT_ROOT + '/v1/static-legacy'),
+    PROJECT_ROOT.child('static_built'),
+    PROJECT_ROOT.child('static'),
+    ('legacy', PROJECT_ROOT.child('v1','static-legacy')),
 )
 
 ALLOWED_HOSTS = ['*']
@@ -138,8 +144,6 @@ ALLOWED_HOSTS = ['*']
 
 WAGTAIL_SITE_NAME = 'v1'
 
-# Sheer related settings
-
-SHEER_SITES = [V1_TEMPLATE_ROOT, Path(__file__).ancestor(4).child('docs'), STATIC_ROOT]
+SHEER_SITES = [V1_TEMPLATE_ROOT]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')

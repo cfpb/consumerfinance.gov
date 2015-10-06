@@ -12,8 +12,7 @@ set -e
 # Run tasks to build the project for distribution.
 run(){
   echo 'Running Server...'
-  python cfgov/manage.py collectstatic --clear --noinput
-  touch cfgov/static/.gitkeep
+  echo 'note: this now does the same thing as ./cfgov/manage.py runserver'
   python cfgov/manage.py runserver
 }
 

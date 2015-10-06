@@ -2,7 +2,7 @@
 
 var chai = require( 'chai' );
 var expect = chai.expect;
-var assign = require( '../../../../cfgov/v1/preprocessed/js/modules/util/assign.js' )
+var assign = require( '../../../../cfgov/preprocessed/js/modules/util/assign.js' )
              .assign;
 var testObjectA;
 var testObjectB;
