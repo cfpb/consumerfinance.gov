@@ -57,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `gulp test:perf` task to test for performance rules.
 - MYSQL backend to project settings & a database creation script
 - Added `gulp test:unit:server` for running Django unit tests via gulp.
+- Added templates and CSS for the Text Introduction molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
