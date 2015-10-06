@@ -8,25 +8,25 @@
 
    Create a half-width-link-blob molecule when given:
 
-   settings: An object with the following options for settings.
+   settings:         An object with the following options for settings.
 
-    settings.heading: A string containing title of module.
+   settings.heading: A string containing title of module.
 
-    settings.content: A string containing the content  to display below the
-                      heading (typically a paragraph).
+   settings.body:    A string containing the content  to display below the
+                     heading (typically a paragraph).
 
-    settings.links: A tuple of items to create a list of links. Objects include
-                    a url and text to display.
+   settings.links:   A tuple of items to create a list of links. Objects include
+                     a url and text to display.
 
-                    link_url: A string for the URL of the link.
-                    link_text: A string for the text of the link.
+                     link_url: A string for the URL of the link.
+                     link_text: A string for the text of the link.
 
    ========================================================================== #}
 
 {% macro render( settings ) %}
 <div class="m-half-width-link-blob">
     <h2 class="h3">{{ settings.heading }}</h2>
-    <p>{{ settings.content | safe }}</p>
+    <p>{{ settings.body | safe }}</p>
     <ul class="list list__links">
         {% for link in settings.links %}
         <li class="list_item">
