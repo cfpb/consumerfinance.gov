@@ -119,7 +119,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Absolute path to the directory static files should be collected to.
-STATIC_ROOT = os.environ.get('STATIC_ROOT', '')
+STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 
 # List of finder classes that know how to find static files in
 # various locations.
