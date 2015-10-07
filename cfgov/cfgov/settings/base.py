@@ -132,11 +132,11 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built'),
     PROJECT_ROOT.child('static'),
     ('legacy', PROJECT_ROOT.child('v1','static-legacy')),
-)
+]
 
 ALLOWED_HOSTS = ['*']
 
