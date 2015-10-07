@@ -21,7 +21,7 @@ class Command(BaseCommand):
     help = "populate a Django model using a Sheer indexer"
 
     def add_arguments(self, parser):
-        parser.add_argument('wp_type')
+        parser.add_argument('data_type')
         parser.add_argument('wagtail_type')
         parser.add_argument('parent_page_slug')
         parser.add_argument('-u', '--username', action='store', required=True)
@@ -30,7 +30,7 @@ class Command(BaseCommand):
         parser.add_argument('--overwrite', action='store_true')
 
     def handle(self, *args, **options):
-        wp_type = options['wp_type']
+        data_type = options['data_type']
         wagtail_type = options['wagtail_type'].lower()
         parent_page_slug = options['parent_page_slug']
         username = options['username']
@@ -56,16 +56,16 @@ class Command(BaseCommand):
                     config = json.loads(merged_json)
                     processors.update(config)
 
-        if wp_type in processors:
-            mod = import_module(processors[wp_type]['processor'])
-            generator = mod.documents(wp_type, **processors[wp_type])
+        if data_type in processors:
+            mod = import_module(processors[data_type]['processor'])
+            generator = mod.documents(data_type, **processors[data_type])
             try:  # to import the module from the arg: wagtail_type
                 wagtail_type_module = __import__('processors.%s' % wagtail_type,
                                                  globals(), locals(),
-                                                 [wp_type])
+                                                 [data_type])
             except ImportError:
                 raise ImportError("No module found in .helpers for name (%s)"
-                                  % wp_type)
+                                  % data_type)
             results = {
                 'migrated': 0,
                 'overwritten': 0,
@@ -88,7 +88,7 @@ class Command(BaseCommand):
                     for slug in results[state + '_slugs']:
                         print slug
         else:
-            raise CommandError('could not find a processor for %s' % wp_type)
+            raise CommandError('could not find a processor for %s' % data_type)
 
 
 def migrate(doc, username, password, parent_page_slug, module, app, overwrite, wagtail_type, results):

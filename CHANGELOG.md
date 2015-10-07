@@ -43,7 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - runserver.sh script to collectstatic files and run the server
 - Added testing for web-storage-proxy.js
 - Added Acceptance tests for `careers` pages.
-- V1Page model
+- CFPBPage model
 - Backend for Staging vs Production publishing
 - Django template tags
 - A temporary blog page template for testing
