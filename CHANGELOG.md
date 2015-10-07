@@ -58,6 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - MYSQL backend to project settings & a database creation script
 - Added `gulp test:unit:server` for running Django unit tests via gulp.
 - Added templates and CSS for the Text Introduction molecule.
+- Added Unit test for `BreakpointHandler.js`.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -97,6 +98,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed DB backend from sqlite ==> MYSQL.
 - Govdelivery subscribe view is now exempt from csrf verification
 - Fixed issue w/ gulp watch task not compiling JS on change
+- Refactored `BreakpointHandler.js` to remove jQuery dependency and unneeded code.
 
 ### Removed
 - Removed unused exportsOverride section,
