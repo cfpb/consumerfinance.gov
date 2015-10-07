@@ -1,6 +1,6 @@
 unipath>=1.1,<=2.0
 django>=1.8,<=1.9
-git+https://github.com/cfpb/django-sheerlike.git@2d71ef1499ebdb420803abcda8d54397d37a1b2e#egg=sheerlike
+git+https://github.com/cfpb/django-sheerlike.git#egg=sheerlike
 six==1.9.0
 python-dateutil==2.1
 requests==2.7.0
