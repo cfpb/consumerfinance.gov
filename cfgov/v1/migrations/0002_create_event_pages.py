@@ -12,7 +12,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailimages', '0008_image_created_at_index'),
+        ('wagtailredirects', '0002_add_verbose_names'),
+        ('wagtailcore', '0019_verbose_names_cleanup'),
         ('wagtaildocs', '0003_add_verbose_names'),
+        ('wagtailforms', '0002_add_verbose_names'),
         ('v1', '0001_initial'),
     ]
 
@@ -20,17 +23,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EventLandingPage',
             fields=[
-                ('v1page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.V1Page')),
+                ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('v1.v1page',),
+            bases=('v1.cfgovpage',),
         ),
         migrations.CreateModel(
             name='EventPage',
             fields=[
-                ('v1page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.V1Page')),
+                ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
                 ('body', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('archive_body', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('live_body', wagtail.wagtailcore.fields.RichTextField(blank=True)),
@@ -56,6 +59,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=('v1.v1page',),
+            bases=('v1.cfgovpage',),
         ),
     ]

@@ -14,7 +14,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.url_routing import RouteResult
 
 
-class V1Page(Page):
+class CFGOVPage(Page):
     shared = models.BooleanField(default=False)
 
     # This is used solely for subclassing pages we want to make at the CFPB.
@@ -80,13 +80,13 @@ class V1Page(Page):
 
     def permissions_for_user(self, user):
         """
-        Return a V1PagePermissionsTester object defining what actions the user can perform on this page
+        Return a CFGOVPagePermissionTester object defining what actions the user can perform on this page
         """
-        user_perms = V1UserPagePermissionsProxy(user)
+        user_perms = CFGOVUserPagePermissionsProxy(user)
         return user_perms.for_page(self)
 
 
-class V1PagePermissionTester(PagePermissionTester):
+class CFGOVPagePermissionTester(PagePermissionTester):
     def can_unshare(self):
         if not self.user.is_active:
             return False
@@ -106,12 +106,12 @@ class V1PagePermissionTester(PagePermissionTester):
         return self.user.is_superuser or ('edit' in self.permissions)
 
 
-class V1UserPagePermissionsProxy(UserPagePermissionsProxy):
+class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
     def for_page(self, page):
-        """Return a V1PagePermissionTester object that can be used to query
+        """Return a CFGOVPagePermissionTester object that can be used to query
             whether this user has permission to perform specific tasks on the
             given page."""
-        return V1PagePermissionTester(self, page)
+        return CFGOVPagePermissionTester(self, page)
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -129,7 +129,7 @@ class AgendaItemBlock(blocks.StructBlock):
         icon = 'date'
 
 
-class EventPage(V1Page):
+class EventPage(CFGOVPage):
     # General content fields
     body = RichTextField(blank=True)
     archive_body = RichTextField(blank=True)
@@ -174,7 +174,7 @@ class EventPage(V1Page):
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
 
     # General content tab
-    content_panels = V1Page.content_panels + [
+    content_panels = CFGOVPage.content_panels + [
         FieldPanel('body', classname="full"),
         FieldRowPanel([
             FieldPanel('start_dt', classname="col6"),
@@ -213,41 +213,19 @@ class EventPage(V1Page):
     ]
     # Promotion panels
     promote_panels = [
-        MultiFieldPanel(V1Page.promote_panels, "Common page configuration"),
+        MultiFieldPanel(CFGOVPage.promote_panels, "Common page configuration"),
     ]
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(venue_panels, heading='Venue Information'),
         ObjectList(agenda_panels, heading='Agenda Information'),
-        ObjectList(V1Page.promote_panels, heading='Promote'),
-        ObjectList(V1Page.settings_panels, heading='Settings', classname="settings"),
+        ObjectList(CFGOVPage.promote_panels, heading='Promote'),
+        ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
     parent_page_types = ['v1.EventLandingPage']
 
 
-class EventLandingPage(V1Page):
+class EventLandingPage(CFGOVPage):
     subpage_types = ['EventPage']
-
-
-class BlogPage(V1Page):
-    body = RichTextField()
-    date = models.DateField("Post date")
-    feed_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    content_panels = V1Page.content_panels + [
-        FieldPanel('date'),
-        FieldPanel('body', classname="full"),
-    ]
-
-    promote_panels = [
-        MultiFieldPanel(V1Page.promote_panels, "Common page configuration"),
-        ImageChooserPanel('feed_image'),
-    ]

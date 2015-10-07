@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from django.http import HttpRequest
 from django.contrib.auth import authenticate
-from django.core.exceptions import PermissionDenied, ValidationError, ObjectDoesNotExist
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.contrib.messages.api import MessageFailure
 
 from wagtail.wagtailadmin.views.pages import create, edit
@@ -82,7 +82,7 @@ class Command(BaseCommand):
                                   parent_page_slug, wagtail_type_module, app,
                                   overwrite, wagtail_type, results)
 
-            for state in ['migrated', 'existed', 'errors']:
+            for state in ['migrated', 'overwritten', 'existed', 'errors']:
                 print "%s %s" % (results[state], state)
                 if options['verbosity'] > 1:
                     for slug in results[state + '_slugs']:
@@ -103,20 +103,24 @@ def migrate(doc, username, password, parent_page_slug, module, app, overwrite, w
         # the authentication system was unable to verify the username and password
         raise ValidationError("The username and password were incorrect.")
 
-    ### Check to see if the post already exists. We don't want WP data overwriting
-    ### unless the --overwrite option is set.
-    wagtail_page = Page.objects.filter(slug=doc.get('slug'))[0]
+    # Check to see if the post already exists. We don't want WP data overwriting
+    # unless the --overwrite option is set.
+    try:
+        wagtail_page = Page.objects.get(slug=doc.get('slug'))
+    except Page.DoesNotExist:
+        wagtail_page = None
+        pass
     if wagtail_page:
-        results['existed'] += 1
-        results['existed_slugs'].append(doc.get('slug'))
         if not overwrite:
+            results['existed'] += 1
+            results['existed_slugs'].append(doc.get('slug'))
             return results
 
-    ### Get parent. If parent doesn't exist, then raise DoesNotExist
+    # Get parent. If parent doesn't exist, then raise Page.DoesNotExist
     try:
         parent = Page.objects.get(slug=parent_page_slug)
     except:
-        raise ObjectDoesNotExist('Parent page does not exist')
+        raise Page.DoesNotExist('Parent page does not exist')
 
     # Convert the document data into Wagtail readable data then publish it.
     request.POST = module.convert(doc)
@@ -135,9 +139,10 @@ def migrate(doc, username, password, parent_page_slug, module, app, overwrite, w
             results['errors'] += 1
             results['errors_slugs'].append(doc.get('slug'))
             return results
-        if overwrite:
+        if wagtail_page and overwrite:
             results['overwritten'] += 1
             results['overwritten_slugs'].append(doc.get('slug'))
-        results['migrated'] += 1
-        results['migrated_slugs'].append(doc.get('slug'))
+        else:
+            results['migrated'] += 1
+            results['migrated_slugs'].append(doc.get('slug'))
         return results
