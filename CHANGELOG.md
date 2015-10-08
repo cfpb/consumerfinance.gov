@@ -43,7 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - runserver.sh script to collectstatic files and run the server
 - Added testing for web-storage-proxy.js
 - Added Acceptance tests for `careers` pages.
-- V1Page model
+- CFPBPage model
 - Backend for Staging vs Production publishing
 - Django template tags
 - A temporary blog page template for testing
@@ -59,6 +59,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `gulp test:unit:server` for running Django unit tests via gulp.
 - Added templates and CSS for the Text Introduction molecule.
 - Added Unit test for `BreakpointHandler.js`.
+- EventPage and EventLandingPage
+- Management command to convert Wordpress data into Wagtail based Django models
+- Script to convert Event WP data into Wagtail specific POST data for wagtailcore view `create()`
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
