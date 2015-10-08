@@ -222,6 +222,8 @@ urlpatterns = [
 if settings.DEBUG :
     urlpatterns.append(url(r'^landing-page-1/$', SheerTemplateView.as_view(template_name='landing-page-1/index.html'), name='landing-page-1'))
     urlpatterns.append(url(r'^landing-page-2/$', SheerTemplateView.as_view(template_name='landing-page-2/index.html'), name='landing-page-2'))
+    urlpatterns.append(url(r'^sublanding-page-1/$', SheerTemplateView.as_view(template_name='sublanding-page-1/index.html'), name='sublanding-page-1'))
+    urlpatterns.append(url(r'^sublanding-page-2/$', SheerTemplateView.as_view(template_name='sublanding-page-2/index.html'), name='sublanding-page-2'))
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))

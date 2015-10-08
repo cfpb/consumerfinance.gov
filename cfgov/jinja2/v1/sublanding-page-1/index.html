@@ -1,0 +1,36 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/text-introduction.html' as text_introduction %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{#
+    TODO: Add the following molecules
+        - Featured Content module
+        - Full width text field with bullets
+        - Half link blobs
+        - Sidebar with latest activities
+#}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {{ text_introduction.render( {
+            'heading': 'Text Introduction',
+            'intro': 'Content Intro Lorem Ipsum',
+            'body': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            'link_text': 'Placeholder link',
+            'link_url': '#'
+        }, true ) }}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+    </aside>
+{%- endblock %}
