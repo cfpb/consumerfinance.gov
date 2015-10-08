@@ -62,6 +62,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - EventPage and EventLandingPage
 - Management command to convert Wordpress data into Wagtail based Django models
 - Script to convert Event WP data into Wagtail specific POST data for wagtailcore view `create()`
+- Added half-width-link-blob macro and styles
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
