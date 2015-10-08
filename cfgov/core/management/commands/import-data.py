@@ -135,7 +135,6 @@ def migrate(doc, username, password, parent_page_slug, module, app, overwrite, w
             create(request, app, wagtail_type, parent.id)
     except MessageFailure:
         if 'messages.error' in traceback.format_exc():
-            print 'Couldn\'t save page with slug: %s' % doc.get('slug')
             results['errors'] += 1
             results['errors_slugs'].append(doc.get('slug'))
             return results

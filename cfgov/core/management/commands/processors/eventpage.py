@@ -8,13 +8,13 @@ def convert(doc):
         'body':       doc.get('content', u''),
         'flickr_url': doc.get('flickr_url', u''),
     }
-    times = {'beginning_time': 'start_dt', 'ending_time': 'end_dt'}
+    times = [('beginning_time', 'start_dt'), ('ending_time', 'end_dt')]
     for t in times:
         if doc.get(t[0]):
-            time = doc.get(t[0]).get(t[1], u'')
+            time = doc.get(t[0]).get('date', u'')
             if time:
                 dt = dateutil.parser.parse(time)
-                post_dict[t[1]] = dt.strftime('%Y-%m-%d')
+                post_dict[t[1]] = dt.strftime('%Y-%m-%d %H:%M')
 
     if doc.get('venue'):
         post_dict['venue_name'] = doc['venue'].get('name', u'')
@@ -39,9 +39,9 @@ def convert(doc):
     post_dict['agenda_items-count'] = len(doc.get('agenda', u''))
     if doc.get('agenda'):
         for i in range(len(doc.get('agenda', u''))):
-            for info in {'order': i, 'type': 'item', 'deleted': u''}.items():
+            for info in (('order', i), ('type', 'item'), ('deleted', u'')):
                 post_dict['agenda_items-' + str(i) + '-' + info[0]] = info[1]
-            times = {'beginning_time': 'start_dt', 'ending_time': 'end_dt'}
+            times = [('beginning_time', 'start_dt'), ('ending_time', 'end_dt')]
             for t in times:
                 if doc['agenda'][i].get(t[0], u''):
                     time = doc['agenda'][i].get(t[0]).get('date', u'')
