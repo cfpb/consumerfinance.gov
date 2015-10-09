@@ -84,6 +84,10 @@ docs/*/pdfreactor-fonts.html
 .installed.cfg
 static/
 cfgov/static_built/*
+cfgov/f/
+images/
+documents/
+original_images/
 
 # Unit test / coverage reports
 #################

@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='V1Page',
+            name='CFGOVPage',
             fields=[
                 ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('shared', models.BooleanField(default=False)),
@@ -24,18 +24,5 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('wagtailcore.page',),
-        ),
-        migrations.CreateModel(
-            name='BlogPage',
-            fields=[
-                ('v1page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.V1Page')),
-                ('body', wagtail.wagtailcore.fields.RichTextField()),
-                ('date', models.DateField(verbose_name=b'Post date')),
-                ('feed_image', models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='wagtailimages.Image', null=True)),
-            ],
-            options={
-                'abstract': False,
-            },
-            bases=('v1.v1page',),
         ),
     ]
