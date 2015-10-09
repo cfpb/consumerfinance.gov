@@ -1,8 +1,10 @@
 import os
+import sys
 
 import six
 import requests
 import icalendar
+
 from django.views.generic.base import View, ContextMixin
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ImproperlyConfigured
@@ -10,10 +12,17 @@ from pytz import timezone
 from dateutil.parser import parse
 from v1.forms import CalenderPDFFilterForm
 
+
+class PDFReactorNotConfigured(Exception):
+    pass
+
 ## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
 if six.PY2:
-    from core.lib.PDFreactor import *
-
+    try:
+        sys.path.append(os.environ.get('PDFREACTOR_LIB'))
+        from PDFreactor import *
+    except:
+        pass
 
 class PDFGeneratorView(View):
     render_url = None
@@ -45,7 +54,12 @@ class PDFGeneratorView(View):
     def generate_pdf(self, query_opts):
         if self.license is None:
             raise Exception("PDFGeneratorView requires a license")
-        pdf_reactor = PDFreactor()
+
+        try:
+            pdf_reactor = PDFreactor()
+        except:
+            raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
+
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
         pdf_reactor.setLicenseKey(self.license)
         pdf_reactor.setAuthor('CFPB')
