@@ -1,0 +1,45 @@
+/* topdoc
+  name: Bullet Points for full width text
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-full-width-text">
+            <ul>
+              <li>Gray Well</li>
+              <li>Well's content</li>
+            </ul>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-full-width-text
+            ul
+              li
+  tags:
+    - cfgov-organisms
+  notes:
+    - Since content will be entered by content managers,
+      these styles are applied on the ul li elements directly when needed.
+*/
+
+.o-full-width-text {
+    ul {
+        padding-left: 30px;
+
+        li {
+          @font-size: 16px;
+          @offset: unit(15px / @font-size, em);
+          @size: unit(22px / @base-font-size-px, em);
+          .custom-bullet( @text:"\25AA", @color: @black, @offset: @offset, @size: @size );
+          // Spacing has been eyeballed to be 30px.
+          margin-bottom: unit( 21px / @font-size, em );
+        }
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

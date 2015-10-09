@@ -1,0 +1,22 @@
+
+{# ==========================================================================
+
+   full_width_text.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a gray well organism.
+   See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
+
+   template: Template URL for content to include.
+
+   ========================================================================== #}
+
+{% macro render(template) %}
+{% import template as content %}
+<div class="o-full-width-text">
+  {{ content }}
+</div>
+{% endmacro %}
