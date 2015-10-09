@@ -65,6 +65,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added half-width-link-blob macro and styles
 - Added templates and CSS for the Image and Text 25/75 molecule.
 - Added templates and CSS for the Image and Text 50/50 molecule.
+- Added templates and CSS for the Call to Action molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

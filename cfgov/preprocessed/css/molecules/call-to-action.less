@@ -1,0 +1,40 @@
+/* topdoc
+  name: Call to Action
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+          <div class="m-call-to-action">
+              <p class="short-desc">
+              </p>
+              <a class="btn btn__full" href="/">
+              </a>
+          </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-call-to-action
+            .short-desc
+            .btn.btn__full
+  tags:
+    - cfgov-molecules
+*/
+
+.m-call-to-action {
+
+    .respond-to-range(@tablet-min, @tablet-max, {
+        .grid_column(6);
+    });
+
+    .btn {
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em ) * 2;
+        text-align: center;
+    }
+}
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
