@@ -54,11 +54,21 @@ install(){
 
   # Update test dependencies.
 
-  # Protractor.
+  # Protractor - JavaScript acceptance testing.
   ./$NODE_DIR/protractor/bin/webdriver-manager update
 
-  # Macro Polo.
+  # Macro Polo - Jinja template unit testing.
   pip install -r ./test/macro_tests/requirements.txt
+
+  # Tox - Django server unit testing.
+  pip install tox
+
+  # Django Server
+  if [ -z "$1" ]; then
+    pip install -r ./requirements/base.txt
+  else
+    pip install -r ./requirements/$1.txt
+  fi
 }
 
 # Run tasks to build the project for distribution.
@@ -66,9 +76,25 @@ build(){
   echo 'Building project...'
   gulp clean
   gulp build
+  dbsetup
+}
+
+# Setup MYSQL Server
+dbsetup(){
+  if which mysql.server; then
+    if mysql.server status; then
+      ./create-mysql-db.sh
+    else
+      mysql.server start
+      ./create-mysql-db.sh
+    fi
+  else
+    echo 'Please install MYSQL Server'
+    exit
+  fi
 }
 
 init
 clean
-install
+install $1
 build

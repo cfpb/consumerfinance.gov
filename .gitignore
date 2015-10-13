@@ -3,9 +3,10 @@
 *.com
 *.class
 *.dll
-*.exe
 *.o
-*.so
+_site/
+_build/
+cfgov/static_built/*
 
 # Packages #
 ############
@@ -22,9 +23,9 @@
 
 # Logs and databases #
 ######################
-*.log
 *.sql
 *.sqlite
+*.sqlite3
 
 # OS generated files #
 ######################
@@ -44,20 +45,29 @@ Thumbs.db
 # npm packages #
 ####################
 node_modules/
+npm-debug.log
 
 # Bower packages #
 ##################
 bower_components/
 src/vendor
 
-# Sheer #
-#########
+# Vim swap files #
+##################
 *.swp
-*.pyc
 
-# Built assets #
-################
-dist/
+# Python #
+#################
+*.pyc
+__pycache__/
+*.eggs/
+*.egg/
+
+# Front-End #
+#############
+node_modules/
+bower_components/
+vendor/
 
 # Floobits #
 ############
@@ -68,7 +78,29 @@ dist/
 docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
-# Testing #
-###########
+# Django #
+#################
+*.egg-info
+.installed.cfg
+static/
+cfgov/static_built/*
+cfgov/f/
+images/
+documents/
+original_images/
+
+# Unit test / coverage reports
+#################
 test/macro_tests/src/
 test/unit_test_coverage/
+test/perf_test_results/
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# IDE Specifc
+############
+*.idea

@@ -1,0 +1,33 @@
+{% import 'templates/nav/_vars-primary-nav.html' as vars with context %}
+{% import 'macros/sub-nav.html' as sub_nav with context %}
+<nav class="primary-nav
+            js-primary-nav"
+     aria-expanded="false"
+     aria-label="main navigation"
+     role="navigation">
+    <ul class="list
+               list__unstyled
+               primary-nav_menu-list">
+        {%- for nav_title,
+                sub_nav_landing,
+                sub_nav_title,
+                sub_nav_media,
+                sub_nav_items in vars.nav_items %}
+            <li class="list_item primary-nav_item js-primary-nav_item">
+                {%- if sub_nav_items | length > 0 %}
+                    <a class="list_link
+                              primary-nav_link
+                              js-primary-nav_link"
+                       href="{{ sub_nav_landing }}">
+                        {{ nav_title }}
+                    </a>
+                    {{ sub_nav.render(sub_nav_title, sub_nav_landing, sub_nav_items, sub_nav_media) }}
+                {%- else %}
+                  <a class="list_link primary-nav_link u-link__disabled">
+                      {{ nav_title }}
+                  </a>
+                {%- endif %}
+            </li>
+        {%- endfor %}
+    </ul><!-- END .primary-nav_top-level-list -->
+</nav><!-- END .primary-nav -->

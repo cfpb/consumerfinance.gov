@@ -3,9 +3,9 @@ var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 var getBreakpointState =
-require( '../../../../src/static/js/modules/util/breakpoint-state.js' ).get;
+require( '../../../../cfgov/preprocessed/js/modules/util/breakpoint-state.js' ).get;
 var breakpointConfig =
-require( '../../../../src/static/js/config/breakpoints-config.js' );
+require( '../../../../cfgov/preprocessed/js/config/breakpoints-config.js' );
 
 var breakpointState;
 var configKeys;
@@ -31,31 +31,34 @@ describe( 'getBreakpointState', function() {
     .to.be.true;
   } );
 
-  it( 'should return an object with one ' +
-      'state property set to true', function() {
-    var trueValueCount = 0;
+  it(
+    'should return an object with one state property set to true',
+    function() {
 
-    breakpointState = getBreakpointState();
-    for ( var stateKey in breakpointState ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
-      if ( breakpointState[stateKey] === true ) trueValueCount++;
-    }
+      var trueValueCount = 0;
 
-    expect( trueValueCount === 1 ).to.be.true;
-  } );
+      breakpointState = getBreakpointState();
+      for ( var stateKey in breakpointState ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
+        if ( breakpointState[stateKey] === true ) trueValueCount++;
+      }
 
-  it( 'should set the correct state' +
-      'property when passed width', function() {
-    var width;
-    var breakpointStateKey;
+      expect( trueValueCount === 1 ).to.be.true;
+    } );
 
-    for ( var rangeKey in breakpointConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
-      width = breakpointConfig[rangeKey].max || breakpointConfig[rangeKey].min;
-      breakpointState = getBreakpointState( width );
-      breakpointStateKey =
-      'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
+  it(
+    'should set the correct state property when passed width',
+    function() {
+      var width;
+      var breakpointStateKey;
 
-      expect( breakpointState[breakpointStateKey] ).to.be.true;
-    }
-  } );
+      for ( var rangeKey in breakpointConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
+        width = breakpointConfig[rangeKey].max || breakpointConfig[rangeKey].min;
+        breakpointState = getBreakpointState( width );
+        breakpointStateKey =
+        'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
+
+        expect( breakpointState[breakpointStateKey] ).to.be.true;
+      }
+    } );
 
 } );

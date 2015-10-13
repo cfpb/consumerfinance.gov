@@ -1,0 +1,59 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/hero.html' as hero %}
+{% import 'organisms/well.html' as well %}
+{% import 'molecules/half-width-link-blob.html' as link_blob %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {# TODO: Add main molecules and organisms. #}
+        {{ hero.render() }}
+        <div class="block">
+            {{ well.render( 'landing-page-1/_template-prototype-well-content.html' ) }}
+        </div>
+        <div class="o-link-blob-group">
+            {{ link_blob.render({
+                'heading': 'This is an example of a Half Width Link Blob',
+                'content': 'To highlight navigational links and provide
+                            context about what users can expect on the linked
+                            page',
+                'links': [
+                    {
+                        'text': 'This is a Link List molecule inside the blob',
+                        'url': '/some-url/'
+                    },
+                    {
+                        'text': 'This is another Link List molecule inside the
+                                 blob',
+                        'url': '/some-other-url/'
+                    }
+                ]
+            }) }}
+            {{ link_blob.render({
+                'heading': 'This is another example of a Half Width Link Blob',
+                'content': '<strong>Example:</strong> About Us landing page,
+                            sub-page descriptors on "office" pages and
+                            wireframed on Rulemaking landing page.',
+                'links': [
+                    {
+                        'text': 'This is a Link List molecule inside the blob',
+                        'url': '/some-url/'
+                    }
+                ]
+            }) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+    </aside>
+{%- endblock %}

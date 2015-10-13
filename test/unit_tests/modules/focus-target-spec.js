@@ -1,4 +1,5 @@
 'use strict';
+
 var chai = require( 'chai' );
 var sinon = require( 'sinon' );
 var expect = chai.expect;
@@ -11,11 +12,11 @@ describe( 'The focusTarget function', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    focusTarget = require( '../../../src/static/js/modules/focus-target.js' );
-    sandbox = sinon.sandbox.create();
+    focusTarget = require( '../../../cfgov/preprocessed/js/modules/focus-target.js' );
   } );
 
   beforeEach( function() {
+    sandbox = sinon.sandbox.create();
     // Adding a simplified version of the thing we want to test.
     // Then calling the jQuery to test after
     $( 'body' ).html( $( '<a id="skip-nav"' +

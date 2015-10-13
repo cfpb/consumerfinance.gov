@@ -1,8 +1,8 @@
 'use strict';
 
-function Header() {
+function Header( url ) {
   this.get = function() {
-    browser.get( '/' );
+    browser.get( url || '/' );
   };
 
   this.header = element( by.css( '.header' ) );
