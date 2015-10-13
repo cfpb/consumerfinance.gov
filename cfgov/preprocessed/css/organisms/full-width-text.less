@@ -27,14 +27,14 @@
 .o-full-width-text {
     ul {
         padding-left: 30px;
-
         li {
-          @font-size: 16px;
-          @offset: unit(15px / @font-size, em);
-          @size: unit(22px / @base-font-size-px, em);
-          .custom-bullet( @text:"\25AA", @color: @black, @offset: @offset, @size: @size );
-          // Spacing has been eyeballed to be 30px.
-          margin-bottom: unit( 21px / @font-size, em );
+            .custom-bullet( @text:"\25AA",
+                            @color: @black,
+                            @offset: unit(15px / @base-font-size-px, em),
+                            @size: unit(22px / @base-font-size-px, em)
+                          );
+            // Spacing has been eyeballed to be 30px.
+            margin-bottom: unit( 21px / @base-font-size-px, em );
         }
     }
 }
