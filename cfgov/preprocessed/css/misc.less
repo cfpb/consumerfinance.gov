@@ -71,7 +71,7 @@
         margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
     }
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         .expandable_header-right {
             float: none;
             // Eyeballed to 15px
@@ -152,13 +152,13 @@
     display: block;
     margin: 0 0 @gutter;
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         float: left;
         margin-right: @gutter;
     });
 
     &__right {
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             float: right;
             margin-right: 0;
             margin-left: @gutter;
@@ -223,7 +223,7 @@
 */
 
 .rwd-crop {
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         position: relative;
         width: 100%;
         height: 0;

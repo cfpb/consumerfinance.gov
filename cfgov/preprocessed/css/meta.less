@@ -195,7 +195,7 @@
 */
 
 .tags {
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         position: relative;
         // 58px here comes from the .tags_heading width.
         padding-left: unit((58px + 8px) / @base-font-size-px, em);
@@ -207,7 +207,7 @@
         margin: 0 0 unit(16px / @font-size, em);
         color: @black;
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             position: absolute;
             left: 0;
             width: unit(58px / @font-size, em);
@@ -220,7 +220,7 @@
         border-top: 1px dotted @gold-80;
         list-style-type: none;
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             border-top: none;
         });
     }
@@ -229,7 +229,7 @@
         border-bottom: 1px dotted @gold-80;
         line-height: 1;
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             .u-inline-block();
             margin-right: unit(15px / @base-font-size-px, em);
             // Eyeballed to be 15px of vertical space between each.
@@ -253,11 +253,11 @@
         .u-link__colors(@gray, @gray, @gray, @gray, @gray,
                         @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
 
-        .respond-to-max(@mobile-max, {
+        .respond-to-max(@bp-sm-max, {
             .u-link__no-border();
         });
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             padding: 0;
         });
     }

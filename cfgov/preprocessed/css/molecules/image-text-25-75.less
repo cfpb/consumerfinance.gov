@@ -70,7 +70,7 @@
         height: @m-image-text-25-75_img__sm;
         background-size: contain;
 
-        .respond-to-min( @desktop-min, {
+        .respond-to-min( @bp-med-min, {
             width: @m-image-text-25-75_img__lg;
             height: @m-image-text-25-75_img__lg;
         } );
@@ -82,7 +82,7 @@
                                  @grid_gutter-width ) / @base-font-size-px, em );
         } );
 
-        .respond-to-min( @desktop-min, {
+        .respond-to-min( @bp-med-min, {
             margin-left: unit( ( @m-image-text-25-75_img__lg +
                                  @grid_gutter-width ) / @base-font-size-px, em );
         } );

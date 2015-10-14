@@ -11,7 +11,7 @@
     }
 
     &_list {
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             .list__horizontal();
 
             display: inline-block;
@@ -21,7 +21,7 @@
 
 .contact-us-map {
     max-width: 330px;
-    .respond-to-range(@tablet-min, @tablet-max, {
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
         float: right;
     });
 }

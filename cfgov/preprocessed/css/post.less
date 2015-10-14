@@ -377,7 +377,7 @@
     .h2();
     // Eyeballed to 24px.
     margin-bottom: unit(13px / @font-size, em);
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .h1();
         // Eyeballed to 24px.
         margin-bottom: unit(10px / @font-size, em);
@@ -401,7 +401,7 @@
 .post_featured-img {
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         // 20px value eyeballed to 24px.
         margin:
             unit(30px / @base-font-size-px, em)
@@ -450,7 +450,7 @@
     color: @black;
 
     &__right {
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             .u-right();
             width: unit(250px / @base-font-size-px, em);
             margin-top: unit(5px / @base-font-size-px, em);
@@ -462,7 +462,7 @@
 .popular-stories,
 .related-posts {
     .list {
-        .respond-to-range(@tablet-min, @tablet-max, {
+        .respond-to-range(@bp-sm-min, @bp-sm-max, {
             .grid_nested-col-group();
 
             & .list_item {
@@ -494,7 +494,7 @@
             border-bottom: 1px dotted;
         }
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             .h3();
             font-size: unit(16px / @base-font-size-px, em);
         });
@@ -514,7 +514,7 @@
     // Actual image height.
     @img-size-h: 155px;
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         position: relative;
         width: unit(@img-size-h / @base-font-size-px, em);
 

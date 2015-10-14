@@ -149,7 +149,7 @@
 
 .nav-secondary {
 
-    .respond-to-max(@tablet-max, {
+    .respond-to-max(@bp-sm-max, {
         background-color: @gray-10;
         border-top: 1px solid @gray-20;
         border-bottom: 1px solid @gray-20;
@@ -164,7 +164,7 @@
       background-color: @gray-20;
 
       // Only shown on tablet/mobile sizes.
-      .respond-to-min(@desktop-min, {
+      .respond-to-min(@bp-lg-min, {
         display: none;
       });
     }
@@ -177,7 +177,7 @@
         list-style: none;
         .webfont-regular();
 
-        .respond-to-min(@desktop-min, {
+        .respond-to-min(@bp-lg-min, {
             & + & {
                 margin-top: 10px;
             }
@@ -185,7 +185,7 @@
     }
 
     &_item {
-        .respond-to-min(801px, {
+        .respond-to-min(@bp-med-min, {
             & + &,
             &__child {
               margin-top: 10px;
@@ -216,7 +216,7 @@
         .u-link__colors(@pacific, @pacific, @black, @black, @black,
                         transparent, transparent, @green, @green, @green);
 
-        .respond-to-max(@tablet-max, {
+        .respond-to-max(@bp-sm-max, {
             display: block;
             padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
             font-size: unit(@font-size-small / @base-font-size-px, em);
@@ -225,7 +225,7 @@
             margin: 0 @grid_gutter-width / 2;
         });
 
-        .respond-to-max(@mobile-max, {
+        .respond-to-max(@bp-xs-max, {
             padding-left: unit((@grid_gutter-width / 2) / @font-size-small, em);
             padding-right: unit((@grid_gutter-width / 2) / @font-size-small, em);
         });
@@ -246,7 +246,7 @@
                 outline: thin dotted;
             }
 
-            .respond-to-min(@desktop-min, {
+            .respond-to-min(@bp-med-min, {
                 display: none;
             });
         }
@@ -271,7 +271,7 @@
     // Border below "IN THIS SECTION" link on mobile.
     .nav-secondary_item {
         &:last-child {
-            .respond-to-max(@tablet-max, {
+            .respond-to-max(@bp-med-max, {
                 padding-bottom: @grid_gutter-width / 2;
             });
         }

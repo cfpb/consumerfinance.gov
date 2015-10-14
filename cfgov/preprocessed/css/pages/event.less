@@ -8,7 +8,7 @@
    ========================================================================== */
 
 .post__event {
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
         margin-right: unit(@grid_gutter-width  / @base-font-size-px, em);
     });
@@ -24,7 +24,7 @@
 
     .media-object_image-container {
         top: 0;
-        .respond-to-max(@mobile-max {
+        .respond-to-max(@bp-xs-max, {
             display: none;
         });
     }
@@ -55,7 +55,7 @@
             margin-left: .2em;
         }
 
-        .respond-to-max(@mobile-max {
+        .respond-to-max(@bp-xs-max, {
             display: block;
 
             &:after {
@@ -73,7 +73,7 @@
         // Setting margin-top to align with calendar icon.
         margin: -1 * unit(2px / @base-font-size-px, em) 0 0 0;
 
-        .respond-to-max(@mobile-max {
+        .respond-to-max(@bp-xs-max, {
             .h3();
             margin-bottom: 0;
         });
@@ -162,7 +162,7 @@
     padding: 1.5em 1.5em .5em;
     .webfont-regular();
 
-    .respond-to-max(@mobile-max {
+    .respond-to-max(@bp-xs-max, {
         padding: 1.5em;
     });
 
@@ -179,7 +179,7 @@
         text-decoration: none;
         text-transform: none;
 
-        .respond-to-max(@mobile-max {
+        .respond-to-max(@bp-xs-max, {
             margin-top: 1em;
             padding-top: .5em;
         });
@@ -190,7 +190,7 @@
      }
 
     .event-meta_address {
-        .respond-to-max(@mobile-max {
+        .respond-to-max(@bp-xs-max, {
             margin: 0;
         });
     }
@@ -211,7 +211,7 @@
 .event-footer {
     .webfont-regular();
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         a {
             display: block;
         }
@@ -232,7 +232,7 @@
 
         background-color: @gray-5;
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             border-bottom: 1px solid @gray-50;
         });
     }
@@ -243,7 +243,7 @@
         padding-right: 20px;
         margin-bottom: 10px;
 
-        .respond-to-max(@mobile-max, {
+        .respond-to-max(@bp-xs-max, {
             display: block;
         });
     }

@@ -216,7 +216,7 @@
     - cfgov-cf-enhancements
 */
 
-.respond-to-max(@mobile-max {
+.respond-to-max(@bp-xs-max, {
     .u-centered-on-mobile {
         margin-left: auto;
         margin-right: auto;
@@ -293,7 +293,7 @@ tbody {
     }
 }
 
-.respond-to-max(959px {
+.respond-to-max(960px, {
     table {
         width: 100%;
     }
@@ -399,7 +399,7 @@ tbody {
 .simple-table {
 
     &__row-links {
-      .respond-to-min(960px, {
+      .respond-to-min(961px, {
           tr:hover {
               td {
                   background: @tr-link-bg-hover;
@@ -413,7 +413,7 @@ tbody {
       });
     }
 
-    .respond-to-max(959px, {
+    .respond-to-max(960px, {
 
         font-size: 14px;
 
@@ -552,7 +552,7 @@ tbody {
 
 .expandable_header__jump-link {
 
-    .respond-to-max(599px, {
+    .respond-to-max(@bp-xs-max, {
         display: block;
         width: 100%;
         padding: unit(10px / @base-font-size-px, em) 0;
@@ -605,7 +605,7 @@ tbody {
 }
 
 .expandable__mobile-only .expandable_header {
-  .respond-to-min(@tablet-min, {
+  .respond-to-min(@bp-sm-min, {
     display: none;
   });
 }
@@ -814,7 +814,7 @@ tbody {
         // Does not work in IE8.
         :not(:last-child) {
             a {
-                .respond-to-max(599px, {
+                .respond-to-max(@bp-xs-max, {
                     border-bottom: none;
                 });
             }
@@ -919,7 +919,7 @@ tbody {
         border-bottom-width: 1px;
     }
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         .block-link();
 
         &:after {
@@ -1015,7 +1015,7 @@ tbody {
     .list_item {
         margin-bottom: unit(10px / @base-font-size-px, em);
 
-        .respond-to-max(@mobile-max, {
+        .respond-to-max(@bp-xs-max, {
             margin-bottom: -1px;
         });
     }
@@ -1025,7 +1025,7 @@ tbody {
     }
 
     .list_link {
-        .respond-to-max(@mobile-max, {
+        .respond-to-max(@bp-xs-max, {
             .block-link();
 
             &.icon-link:after {
@@ -1104,7 +1104,7 @@ tbody {
     .webfont-medium();
 
     &.list_link__phone {
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             .webfont-regular();
             .u-link__colors(@black);
             .u-link__no-border;
@@ -1128,7 +1128,7 @@ tbody {
 
 .btn__full {
 
-    .respond-to-max(@mobile-max , {
+    .respond-to-max(@bp-xs-max, {
         display: block;
         width: 100%;
 
@@ -1161,7 +1161,7 @@ tbody {
   tags:
     - cf-layout
 */
-.respond-to-min(@desktop-min, {
+.respond-to-min(@bp-med-min, {
     .block {
         &__padded-left {
             padding-left: unit(@grid_gutter-width / @base-font-size-px, em);
@@ -1363,7 +1363,7 @@ textarea.input__long {
 .content__half-top-on-desk {
     // A new breakpoint needs to be added to Capital Framework
     // before we port this
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         padding-top: 20px;
 
         &:after {
@@ -1445,13 +1445,13 @@ ul:last-child,
 */
 
 .content-l_col-1-4 {
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .grid_column(3);
     });
 }
 
 .content-l_col-3-4 {
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         margin-top: 0 !important;
         .grid_column(9);
     });

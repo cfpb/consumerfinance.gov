@@ -135,6 +135,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updates `jsdom` to `7.0.2` from `6.5.1`.
 - Move staging hostname variable from django settings to be an environment variable
 - Uses globally installed Protractor in setup.sh, if available.
+- Updated the existing breakpoint variables and values to the ones released in cf-core v1.2.0
 
 ### Removed
 - Removed unused exportsOverride section,

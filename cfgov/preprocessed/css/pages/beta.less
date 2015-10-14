@@ -17,7 +17,7 @@
         padding: @grid_gutter-width 0;
     }
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         font-size: 1em;
     });
 }
@@ -48,7 +48,7 @@
         unit( 14px / @btn-font-size, em );
     margin-top: @grid_gutter-width / 2;
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .btn__link();
         width: auto;
         padding: @grid_gutter-width / 2;
@@ -61,17 +61,17 @@
         text-transform: lowercase;
     });
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         // Prevent double-shrinkage.
         font-size: 1em;
     });
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         // Adjust to match increasing side margins.
         right: @grid_gutter-width / 2;
     });
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         // At this width, the wrapper gains `position: relative`,
         // so the button position has to be adjusted accordingly.
         top: unit(-12px/@base-font-size-px, em);
@@ -89,14 +89,14 @@
     background-size: 1176px;
     text-align: center;
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         min-height: 520px;
         padding: @grid_gutter-width;
         background-image: url('/static/img/beta-illustration_lg.png');
         background-size: 1470px;
     });
 
-    .respond-to-min(1024px, {
+    .respond-to-min(@bp-lg-min, {
         min-height: 540px;
         background-size: 1838px;
     });
@@ -105,7 +105,7 @@
         // Retina-specific stuff here.
         background-image: url('/static/img/beta-illustration_sm@2x.png');
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             background-image: url('/static/img/beta-illustration_lg@2x.png');
         });
     });
@@ -114,7 +114,7 @@
 .beta-hero_title {
     .h2();
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .superheader();
     });
 }
@@ -124,7 +124,7 @@
     max-width: 32em;
     margin: 0 auto 1em;
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .h2();
         // Override the property set in .h2().
         margin-bottom: 1em;
@@ -142,7 +142,7 @@
     background-size: cover;
     .u-clearfix();
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .u-w33pct();
         height: 150px;
         padding: 0 1em;
@@ -159,7 +159,7 @@
     width: 100px;
     height: 100px;
 
-    .respond-to-max(@mobile-max {
+    .respond-to-max(@bp-xs-max, {
         margin-right: 1em;
         float: left;
     });
@@ -182,7 +182,7 @@
 .chart-name {
     .h5();
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         position: relative;
         // Half height of graph (50px) - half of line-height (11px).
         top: 39px;

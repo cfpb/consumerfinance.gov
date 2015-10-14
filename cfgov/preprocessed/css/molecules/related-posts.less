@@ -76,7 +76,7 @@
 
 .m-related-posts__half-width {
     .m-related-posts_list {
-        .respond-to-min(@tablet-min {
+        .respond-to-min(@bp-sm-min, {
             @list_half-width();
         });
     }
@@ -92,7 +92,7 @@
         }
     }
 
-    .respond-to-range(@tablet-min, @tablet-max, {
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
         @list_half-width();
     });
 }

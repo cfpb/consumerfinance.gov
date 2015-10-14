@@ -20,7 +20,7 @@ function init() {
   }
 
   var bpSettings = {
-    breakpoint: 599,
+    breakpoint: 600,
     type:       'max',
     enter:      _createSlider,
     leave:      _destroySlider
