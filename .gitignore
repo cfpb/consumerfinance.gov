@@ -6,6 +6,7 @@
 *.o
 _site/
 _build/
+cfgov/static_built/*
 
 # Packages #
 ############
@@ -82,6 +83,11 @@ docs/*/pdfreactor-fonts.html
 *.egg-info
 .installed.cfg
 static/
+cfgov/static_built/*
+cfgov/f/
+images/
+documents/
+original_images/
 
 # Unit test / coverage reports
 #################

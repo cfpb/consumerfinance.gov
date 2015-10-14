@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'localflavor',
     'v1',
     'core',
     'sheerlike',
@@ -119,7 +120,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Absolute path to the directory static files should be collected to.
-STATIC_ROOT = '/var/www/html/static'
+STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'f')
+MEDIA_URL = '/f/'
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -132,11 +136,10 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built'),
-    PROJECT_ROOT.child('static'),
     ('legacy', PROJECT_ROOT.child('v1','static-legacy')),
-)
+]
 
 ALLOWED_HOSTS = ['*']
 
@@ -147,7 +150,6 @@ WAGTAIL_SITE_NAME = 'v1'
 SHEER_SITES = [V1_TEMPLATE_ROOT]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
-
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
 SHEER_PROCESSORS= \
@@ -223,3 +225,6 @@ SHEER_PROCESSORS= \
 	"mappings": MAPPINGS.child("faq.json")
       }
     }
+
+# PDFReactor
+PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')

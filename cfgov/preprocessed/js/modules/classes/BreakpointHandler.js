@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require( 'jquery' );
+require( '../polyfill/event-listener.js' );
 var getBreakpointState = require( '../util/breakpoint-state' ).get;
 var _breakpointsConfig = require( '../../config/breakpoints-config' );
 
@@ -27,20 +27,19 @@ var _propPrefix;
  * }
  */
 function BreakpointHandler( opts ) {
-  if ( !opts ||
-       !opts.breakpoint ||
-       !opts.enter ||
-       !opts.leave ) {
+  var hasRequiredArgs =
+  Boolean( opts && opts.breakpoint && opts.enter && opts.leave );
+  var breakpoint;
+
+  if ( hasRequiredArgs === false ) {
     throw new Error( 'BreakpointHandler constructor requires arguments!' );
   }
 
-  var breakpoint = opts.breakpoint;
-  var type = opts.type || 'max';
-
+  breakpoint = opts.breakpoint;
   this.match = false;
-  this.type = type;
+  this.type = opts.type || 'max';
   this.breakpoint = _breakpointsConfig[breakpoint] &&
-                    _breakpointsConfig[breakpoint][type] ||
+                    _breakpointsConfig[breakpoint][this.type] ||
                     breakpoint;
   this.enter = opts.enter;
   this.leave = opts.leave;
@@ -72,7 +71,7 @@ function _init( self ) {
  */
 function watchWindowResize() {
   var self = this;
-  $( window ).bind( 'resize', function() {
+  window.addEventListener( 'resize', function() {
     self.handleViewportChange();
   } );
 }
@@ -112,6 +111,5 @@ function testBreakpoint( width ) {
 BreakpointHandler.prototype.watchWindowResize = watchWindowResize;
 BreakpointHandler.prototype.handleViewportChange = handleViewportChange;
 BreakpointHandler.prototype.testBreakpoint = testBreakpoint;
-BreakpointHandler.getBreakpointState = getBreakpointState;
 
 module.exports = BreakpointHandler;

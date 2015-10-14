@@ -134,6 +134,24 @@ To view the indexed content you can use a tool called
 **Using a different port:** If you want to run the server at a different port
 than 8000 use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
 
+### Load data into Django models
+The Django management command `import-data` will import data from the specified source into the specified model.
+
+`python cfgov/manage.py import-data data_type wagtail_type parent_page_slug -u username -p password`
+- `data_type` is the WP post type defined in the `processors.py` file.
+- `wagtail_type` is the Django model name where the data is going to go.
+- `parent_page_slug` is the slug of the parent page that the pages will exist under.
+- `-u` and `-p` are credentials to an admin account.
+
+Optional parameters:
+- `--app` is the name of the app the Django models from `wagtail_type` exist in.
+It defaults to our app, `v1`
+- `--overwrite` overwrites existing pages in Wagtail based on comparing slugs.
+Be careful when using this as it will overwrite the data in Wagtail with data
+from the source. Default is `False`.
+- `--verbosity` is set to 1 by default. Set it to 2 or higher and expect the
+name of the slugs to appear where appropriate.
+
 ### 4. Launch the Gulp watch task
 
 To watch for changes in the source code and automatically update the running site,

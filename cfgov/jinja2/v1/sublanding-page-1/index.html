@@ -2,12 +2,19 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/text-introduction.html' as text_introduction %}
-{% import 'molecules/image-and-text-50-50.html' as image_and_text_50_50 %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
     Remove when fully implemented elsewhere.
 {%- endblock %}
+
+{#
+    TODO: Add the following molecules
+        - Featured Content module
+        - Full width text field with bullets
+        - Half link blobs
+        - Sidebar with latest activities
+#}
 
 {% block content_main %}
     <div class="block
@@ -19,21 +26,6 @@
             'link_text': 'Placeholder link',
             'link_url': '#'
         }, true ) }}
-    </div>
-    <div class="content-l">
-        <div class="content-l_col-1-2">
-            {{ image_and_text_50_50.render({
-                            'title' : 'Image and Text 50-50',
-                            'image_path': 'http://placehold.it/1600x900',
-                            'image_alt': 'This is a placeholder image',
-                            'is_widescreen': true,
-                            'description': 'When image conveys critical information and text is supporting it --
-                            i.e. chart, excerpt from document',
-                            'is_button' : true,
-                            'link_url': 'http://www.google.com',
-                            'link_text' : 'Visit Google'
-                            }) }}
-        </div>
     </div>
 {% endblock %}
 
