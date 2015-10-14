@@ -1,1 +1,59 @@
-{"properties": {"dtstamp": {"type": "date", "format": "dateOptionalTime"}, "description": {"type": "string"}, "created": {"type": "date", "format": "dateOptionalTime"}, "recurrence_id": {"type": "string"}, "sequence": {"type": "long"}, "all_day": {"type": "boolean"}, "dtend": {"type": "date", "format": "dateOptionalTime"}, "id": {"type": "long"}, "date": {"type": "date", "format": "dateOptionalTime"}, "summary": {"type": "string"}, "location": {"type": "string"}, "active": {"type": "boolean"}, "calendar": {"index": "not_analyzed", "type": "string"}, "dtstart": {"type": "date", "format": "dateOptionalTime"}, "day": {"type": "date", "format": "dateOptionalTime"}, "uid": {"type": "string"}}}
+{
+    "properties": {
+        "dtstamp": {
+            "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "dtstart": {
+            "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "description": {
+            "type": "string"
+        },
+        "recurrence_id": {
+            "type": "string"
+        },
+        "sequence": {
+            "type": "long"
+        },
+        "all_day": {
+            "type": "boolean"
+        },
+        "created": {
+            "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "active": {
+            "type": "boolean"
+        },
+        "location": {
+            "type": "string"
+        },
+        "calendar": {
+            "index": "not_analyzed",
+            "type": "string"
+        },
+        "date": {
+            "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "dtend": {
+            "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "summary": {
+            "type": "string"
+        },
+        "id": {
+            "type": "long"
+        },
+        "day": {
+            "type": "date",
+            "format": "dateOptionalTime"
+        },
+        "uid": {
+            "type": "string"
+        }
+    }
+}
