@@ -4,6 +4,23 @@
    ========================================================================== */
 
 /* topdoc
+  name: Theme variables
+  family: cfgov-molecules
+  notes:
+    - "The following color and sizing variables are exposed,
+       allowing you to easily override them before compiling."
+  patterns:
+  - name: Colors
+    codenotes:
+      - |
+        @m-text-introduction_rule
+  tags:
+  - less
+*/
+@m-image-text-50-50_rule: @horizontal-rule;
+
+
+/* topdoc
   name: Molecule: Image and Text 50-50 molecule
   family: cfgov
   patterns:
@@ -25,7 +42,43 @@
              href="http://cf.gov">
              Go to CF.gov
           </a>
-      </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-image-text-50-50
+            .m-image-text-50-50_widescreen-container
+              img
+            p.short-desc.short-desc__large
+            a.btn.m-image-text-50-50_btn    - name: .m-image-text-50-50__bottom-rule modifier
+      markup: |
+        <div class="m-image-text-50-50 m-image-text-50-50__bottom-rule">
+          <div class="m-image-text-50-50_widescreen-container">
+              <img src="http://placeholdit.com/1600x800"
+                   alt=""
+                   class="m-image-text-50-50_image">
+          </div>
+          <h2>
+              Title
+          </h2>
+          <p class="short-desc short-desc__large">
+              Description
+          </p>
+          <a class="btn m-image-text-50-50_btn"
+             href="http://cf.gov">
+             Go to CF.gov
+          </a>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-image-text-50-50.m-image-text-50-50__bottom-rule
+            .m-image-text-50-50_widescreen-container
+              img
+            p.short-desc.short-desc__large
+            a.btn.m-image-text-50-50_btn
 */
 
 .m-image-text-50-50 {
@@ -69,6 +122,11 @@
             width: 100%;
             text-align: center;
         });
+    }
+
+    &__bottom-rule {
+        border-bottom: 1px solid @m-image-text-50-50_rule;
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 }
 

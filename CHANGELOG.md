@@ -63,6 +63,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Management command to convert Wordpress data into Wagtail based Django models
 - Script to convert Event WP data into Wagtail specific POST data for wagtailcore view `create()`
 - Added half-width-link-blob macro and styles
+- Added templates and CSS for the Image and Text 25/75 molecule.
+- Added templates and CSS for the Image and Text 50/50 molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

@@ -2,37 +2,81 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/text-introduction.html' as text_introduction %}
-{% import 'molecules/image-and-text-50-50.html' as image_and_text_50_50 %}
+{% import 'molecules/image-text-50-50.html' as image_text_50_50 %}
+{% import 'molecules/image-text-25-75.html' as image_text_25_75 %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
     Remove when fully implemented elsewhere.
 {%- endblock %}
 
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
 {% block content_main %}
     <div class="block
                 block__flush-top">
-        {{ text_introduction.render( {
+        {{ text_introduction.render({
             'heading': 'Text Introduction',
             'intro': 'Content Intro Lorem Ipsum',
-            'body': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            'body': lipsumText,
             'link_text': 'Placeholder link',
             'link_url': '#'
-        }, true ) }}
+        }) }}
     </div>
     <div class="content-l">
         <div class="content-l_col-1-2">
-            {{ image_and_text_50_50.render({
-                            'title' : 'Image and Text 50-50',
-                            'image_path': 'http://placehold.it/1600x900',
-                            'image_alt': 'This is a placeholder image',
-                            'is_widescreen': true,
-                            'description': 'When image conveys critical information and text is supporting it --
-                            i.e. chart, excerpt from document',
-                            'is_button' : true,
-                            'link_url': 'http://www.google.com',
-                            'link_text' : 'Visit Google'
-                            }) }}
+            {{ image_text_50_50.render({
+                'title' : 'Image and Text 50-50',
+                'image_path': 'http://placehold.it/1600x900',
+                'image_alt': 'This is a placeholder image',
+                'is_widescreen': true,
+                'description': 'When image conveys critical information and
+                text is supporting it -- i.e. chart, excerpt from document',
+                'is_button' : true,
+                'link_url': 'http://www.google.com',
+                'link_text' : 'Visit Google'
+            }) }}
+        </div>
+
+        <div class="content-l_col-1-2">
+            {{ image_text_50_50.render({
+                'title' : 'Image and Text 50-50',
+                'image_path': 'http://placehold.it/1600x900',
+                'image_alt': 'This is a placeholder image',
+                'is_widescreen': true,
+                'description': 'When image conveys critical information and
+                text is supporting it -- i.e. chart, excerpt from document',
+                'is_button' : true,
+                'link_url': 'http://www.google.com',
+                'link_text' : 'Visit Google'
+            }) }}
+        </div>
+
+        <div class="content-l_col-1">
+
+            {# TODO: Add stacked image and text organism with bottom padding. #}
+            <div style="padding-bottom: 60px;">
+                <h2>Headline for 2/7 organism</h2>
+                {{ image_text_25_75.render({
+                    'image_path': 'http://placehold.it/300x300',
+                    'image_alt': '',
+                    'heading' : 'Placeholder',
+                    'body': lipsumText,
+                    'link_url': '#',
+                    'link_text' : 'Placeholder link'
+                }) }}
+
+                {{ image_text_25_75.render({
+                    'image_path': 'http://placehold.it/300x300',
+                    'image_alt': '',
+                    'heading' : 'Placeholder',
+                    'body': lipsumText,
+                    'link_url': '#',
+                    'link_text' : 'Placeholder link'
+                }) }}
+            </div>
+
         </div>
     </div>
 {% endblock %}
