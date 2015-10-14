@@ -1,0 +1,59 @@
+{
+  "properties": {
+    "active": {
+      "type": "boolean"
+    },
+    "all_day": {
+      "type": "boolean"
+    },
+    "calendar": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "created": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "day": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "description": {
+      "type": "string"
+    },
+    "dtend": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "dtstamp": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "dtstart": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "id": {
+      "type": "long"
+    },
+    "location": {
+      "type": "string"
+    },
+    "recurrence_id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "long"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "uid": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "properties": {
+    "attachments": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+      "mime_type": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "long"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "long"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "comment_count": {
+      "type": "long"
+    },
+    "comment_status": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "custom_fields": {
+      "properties": {
+        "alt_title": {
+          "type": "string"
+        },
+        "cfpb-hud-hca-api-more-info": {
+          "type": "string"
+        },
+        "cfpb-hud-hca-api-print-desc": {
+          "type": "string"
+        },
+        "cfpb-hud-hca-api-print-title": {
+          "type": "string"
+        },
+        "custom_title": {
+          "type": "string"
+        },
+        "dbt_filename": {
+          "type": "string"
+        },
+        "dsq_thread_id": {
+          "type": "string"
+        },
+        "hero": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "og_desc": {
+          "type": "string"
+        },
+        "og_image": {
+          "type": "string"
+        },
+        "og_title": {
+          "type": "string"
+        },
+        "popular_posts": {
+          "type": "string"
+        },
+        "related_hero": {
+          "type": "string"
+        },
+        "twtr_hash": {
+          "type": "string"
+        },
+        "twtr_lang": {
+          "type": "string"
+        },
+        "twtr_rel": {
+          "type": "string"
+        },
+        "twtr_text": {
+          "type": "string"
+        },
+        "utm_campaign": {
+          "type": "string"
+        },
+        "utm_content": {
+          "type": "string"
+        },
+        "utm_term": {
+          "type": "string"
+        },
+        "video_response": {
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "dek": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "id": {
+      "type": "long"
+    },
+    "modified": {
+      "type": "date",
+      "format": "dateOptionalTime"
+    },
+    "order": {
+      "type": "long"
+    },
+    "parent": {
+      "type": "long"
+    },
+    "relative_url": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "properties": {
+        "alt_text": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "images": {
+          "properties": {
+            "full": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "large": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_image_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            },
+            "post_thumbnail_2x": {
+              "properties": {
+                "height": {
+                  "type": "long"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
+        "size": {
+          "type": "string"
+        }
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "title_plain": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
