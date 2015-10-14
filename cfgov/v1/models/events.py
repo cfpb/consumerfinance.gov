@@ -1,122 +1,23 @@
+import datetime
+
 from django.db import models
-from django.http import Http404
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import cached_property
+from django.template.response import TemplateResponse
 
 from localflavor.us.models import USStateField
 
-from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, FieldRowPanel, TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.url_routing import RouteResult
 
-
-class CFGOVPage(Page):
-    shared = models.BooleanField(default=False)
-
-    # This is used solely for subclassing pages we want to make at the CFPB.
-    is_creatable = False
-
-    @property
-    def status_string(self):
-        if not self.live:
-            if self.expired:
-                return _("expired")
-            elif self.approved_schedule:
-                return _("scheduled")
-            elif self.shared:
-                return _("shared")
-            else:
-                return _("draft")
-        else:
-            if self.has_unpublished_changes:
-                return _("live + draft")
-            else:
-                return _("live")
-
-    def sharable_pages(self):
-        """Return a queryset of the pages that this user has permission to share"""
-        # Deal with the trivial cases first...
-        if not self.user.is_active:
-            return Page.objects.none()
-        if self.user.is_superuser:
-            return Page.objects.all()
-
-        sharable_pages = Page.objects.none()
-
-        for perm in self.permissions.filter(permission_type='share'):
-            # User has share permission on any subpage of perm.page
-            # (including perm.page itself).
-            sharable_pages |= Page.objects.descendant_of(perm.page, inclusive=True)
-
-        return sharable_pages
-
-    def can_share_pages(self):
-        """Return True if the user has permission to publish any pages"""
-        return self.sharable_pages().exists()
-
-    def route(self, request, path_components):
-        if path_components:
-            # Request is for a child of this page.
-            child_slug = path_components[0]
-            remaining_components = path_components[1:]
-
-            try:
-                subpage = self.get_children().get(slug=child_slug)
-            except Page.DoesNotExist:
-                raise Http404
-
-            return subpage.specific.route(request, remaining_components)
-
-        else:
-            # Request is for this very page.
-            if self.live or self.shared and request.site.hostname == settings.STAGING_HOSTNAME:
-                return RouteResult(self)
-            else:
-                raise Http404
-
-    def permissions_for_user(self, user):
-        """
-        Return a CFGOVPagePermissionTester object defining what actions the user can perform on this page
-        """
-        user_perms = CFGOVUserPagePermissionsProxy(user)
-        return user_perms.for_page(self)
-
-
-class CFGOVPagePermissionTester(PagePermissionTester):
-    def can_unshare(self):
-        if not self.user.is_active:
-            return False
-        if not self.page.shared or self.page_is_root:
-            return False
-
-        # Must check edit in self.permissions because `share` cannot be added.
-        return self.user.is_superuser or ('edit' in self.permissions)
-
-    def can_share(self):
-        if not self.user.is_active:
-            return False
-        if self.page_is_root:
-            return False
-
-        # Must check edit in self.permissions because `share` cannot be added.
-        return self.user.is_superuser or ('edit' in self.permissions)
-
-
-class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
-    def for_page(self, page):
-        """Return a CFGOVPagePermissionTester object that can be used to query
-            whether this user has permission to perform specific tasks on the
-            given page."""
-        return CFGOVPagePermissionTester(self, page)
+from .base import CFGOVPage
 
 
 class AgendaItemBlock(blocks.StructBlock):
-    start_dt = blocks.DateTimeBlock(required=False, format='%Y-%m-%d %H:%M')
-    end_dt = blocks.DateTimeBlock(required=False, format='%Y-%m-%d %H:%M')
+    start_dt = blocks.DateTimeBlock(label="Start", required=False)
+    end_dt = blocks.DateTimeBlock(label="End", required=False)
     description = blocks.CharBlock(max_length=100, required=False)
     location = blocks.CharBlock(max_length=100, required=False)
     speakers = blocks.ListBlock(blocks.StructBlock([
@@ -135,8 +36,8 @@ class EventPage(CFGOVPage):
     archive_body = RichTextField(blank=True)
     live_body = RichTextField(blank=True)
     future_body = RichTextField(blank=True)
-    start_dt = models.DateField("Starts", blank=True, null=True)
-    end_dt = models.DateField("Ends", blank=True, null=True)
+    start_dt = models.DateTimeField("Start", blank=True, null=True)
+    end_dt = models.DateTimeField("End", blank=True, null=True)
     future_body = RichTextField(blank=True)
     archive_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -213,7 +114,7 @@ class EventPage(CFGOVPage):
     ]
     # Promotion panels
     promote_panels = [
-        MultiFieldPanel(CFGOVPage.promote_panels, "Common page configuration"),
+        MultiFieldPanel(CFGOVPage.promote_panels, "Page configuration"),
     ]
     # Tab handler interface
     edit_handler = TabbedInterface([

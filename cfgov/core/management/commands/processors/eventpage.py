@@ -8,6 +8,16 @@ def convert(doc):
         'body':       doc.get('content', u''),
         'flickr_url': doc.get('flickr_url', u''),
     }
+    tags = ''
+    for tag in doc.get('tags'):
+        if ' ' in tag:
+            tag = '"%s"' % tag
+        tags += tag + ', '
+    if tags:
+        tags = tags[0:-2]
+    post_dict['tags'] = tags
+    post_dict['authors'] = '"%s"' % doc.get('author', {}).get('name', '')
+
     times = [('beginning_time', 'start_dt'), ('ending_time', 'end_dt')]
     for t in times:
         if doc.get(t[0]):
