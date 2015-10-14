@@ -105,6 +105,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Govdelivery subscribe view is now exempt from csrf verification
 - Fixed issue w/ gulp watch task not compiling JS on change
 - Refactored `BreakpointHandler.js` to remove jQuery dependency and unneeded code.
+- Changed from single cf import to individual module imports
 
 ### Removed
 - Removed unused exportsOverride section,
