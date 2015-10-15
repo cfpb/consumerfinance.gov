@@ -178,7 +178,7 @@ SHEER_PROCESSORS= \
 	"url": "$WORDPRESS/api/get_posts/?post_type=sub_page",
 	"processor": "processors.wordpress_sub_page",
 	"mappings": MAPPINGS.child("sub_page.json")
-    },
+      },
       "office": {
 	"url": "$WORDPRESS/api/get_posts/?post_type=office",
 	"processor": "processors.wordpress_office",
