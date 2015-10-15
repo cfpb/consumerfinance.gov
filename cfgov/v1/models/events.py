@@ -7,12 +7,15 @@ from django.template.response import TemplateResponse
 from localflavor.us.models import USStateField
 
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, FieldRowPanel, TabbedInterface, ObjectList, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, \
+    FieldRowPanel, TabbedInterface, ObjectList, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailcore import blocks
 
 from .base import CFGOVPage
+from .molecules import HalfWidthLinkBlob, TextIntroduction, ImageText5050
+from .organisms import Well
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -72,7 +75,13 @@ class EventPage(CFGOVPage):
     venue_city = models.CharField(max_length=100, blank=True)
     venue_state = USStateField(blank=True)
     venue_zip = models.IntegerField(blank=True, null=True)
-    agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
+    agenda_items = StreamField([
+        ('item', AgendaItemBlock()),
+        ('half_width_link_blob', HalfWidthLinkBlob()),
+        ('text_introduction', TextIntroduction()),
+        ('image_text_5050', ImageText5050()),
+        ('well', Well())
+    ], blank=True)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -126,6 +135,13 @@ class EventPage(CFGOVPage):
     ])
 
     parent_page_types = ['v1.EventLandingPage']
+
+    # def get_context(self, request):
+    #     context = super(EventPage, self).get_context(request)
+    #     return context
+
+    def get_template(self, request):
+        return 'wagtail-demo/event/index.html'
 
 
 class EventLandingPage(CFGOVPage):

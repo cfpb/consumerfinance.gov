@@ -1,0 +1,36 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block desc -%}
+    Our vision is a consumer finance marketplace that works for American consumers,
+    responsible providers, and the economy as a whole.
+{%- endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {{ page.body|richtext }}
+    </div>
+
+    <div class="content-l">
+        <div class="content-l_col-1-2">
+            {% for item in page.agenda_items %}
+                {{ item }}
+            {% endfor %}
+
+            {% for item in page.sponsers %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content_main %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+    </aside>
+{%- endblock %}

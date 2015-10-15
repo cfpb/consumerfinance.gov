@@ -14,9 +14,14 @@
 
    ========================================================================== #}
 
-{% macro render(template) %}
-{% import template as content %}
+
 <div class="o-well">
-  {{ content }}
+    {% if value %}
+        {% include value.template_path %}
+    {% else %}
+        {% macro render(template) %}
+            {% import template as content %}
+            {{ content }}
+        {% endmacro %}
+    {% endif %}
 </div>
-{% endmacro %}

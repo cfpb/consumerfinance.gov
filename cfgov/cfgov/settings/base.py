@@ -78,7 +78,11 @@ TEMPLATES = [
         'DIRS': [PROJECT_ROOT.child('static_built')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'v1.environment'
+            'environment': 'v1.environment',
+            'extensions': [
+                'wagtail.wagtailcore.templatetags.jinja2.core',
+                'wagtail.wagtailimages.templatetags.jinja2.images',
+            ],
         }
     },
 ]

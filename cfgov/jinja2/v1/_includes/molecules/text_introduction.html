@@ -1,0 +1,40 @@
+{# ==========================================================================
+
+   text_introduction.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a Text Introduction molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
+
+   settings:
+
+      heading:   Heading text.
+
+      intro:     Body introduction text.
+
+      body:      Body text.
+
+      link_url:  Link URL.
+
+      link_text: Link text.
+
+   has_rule:  Whether there is a bottom gray rule.
+
+   ========================================================================== #}
+
+<div class="m-text-introduction
+            {{ 'm-text-introduction__bottom-rule' if value.has_rule else '' }}">
+   <h1 class='m-text-introduction_heading'>{{ value.heading }}</h1>
+
+   <p class='m-text-introduction_intro'>{{ value.intro }}</p>
+
+   <p class='m-text-introduction_body'>{{ value.body }}</p>
+
+   <div class='m-text-introduction_link-container'>
+      <a class='jump-link' href='{{ value.link_url }}'>{{ value.link_text }}</a>
+   </div>
+
+</div>

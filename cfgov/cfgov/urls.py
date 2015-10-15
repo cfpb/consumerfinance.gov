@@ -136,17 +136,6 @@ urlpatterns = [
             name='index')],
         namespace='contact-us')),
 
-    url(r'^events/', include([
-        url(r'^$', TemplateView.as_view(template_name='events/index.html'),
-            name='events'),
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='events',
-                                      local_name='event',
-                                      default_template='events/_single.html'),
-            name='event'),
-        url(r'^(?P<doc_id>[\w-]+)/ics/$', EventICSView.as_view())],
-        namespace='events')),
-
     url(r'^offices/', include([
         url(r'^(?P<doc_id>[\w-]+)/$',
             SheerTemplateView.as_view(doc_type='office',

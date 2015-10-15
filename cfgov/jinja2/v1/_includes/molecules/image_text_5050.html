@@ -1,0 +1,65 @@
+{# ==========================================================================
+
+   image_and_text_50_50.render()
+
+   ==========================================================================
+
+   Description:
+
+   When image conveys critical information and text is supporting it --
+   i.e. chart, excerpt from document
+
+   See [GHE]/flapjack/Modules-V1/wiki/50-50-Image-&-Text
+
+   value:              An object with the following options for value.
+   value.title:        A string containing title of module
+   value.image_path:   A string containing the url for the image
+   value.image_alt:    A string containing alt text for screenreaders
+   value.is_widescreen: Boolean if the image should be widescreen ratio.
+                          Will be 4:3 ratio by default.
+   value.description:  A string for the description under the image
+   value.is_button:    Boolean if the link should be a button. If false/blank,
+                          the button will remain a plain link.
+   value.link_url:     A string for the URL of the link/button
+   value.link_text:    A string for the text of the link/button call to action
+
+   ========================================================================== #}
+
+<div class="m-image-text-50-50">
+
+    <div class="{{ 'm-image-text-50-50_widescreen-container' if value.is_widescreen
+                    else 'm-image-text-50-50_container'}}">
+
+        {% if value.image %}
+            {{ image(value.image, width-300) }}
+{#            {% image(value.image, "width-300") as photo %}#}
+{#            <img src="{{ photo.url }}"#}
+{#                 alt="{{ photo.alt if photo.alt else '' }}"#}
+{#                 class="m-image-text-50-50_image">#}
+        {% else %}
+            <img src="{{ value.image_path }}"
+                 alt="{{ value.image_alt if value.image_alt else '' }}"
+                 class="m-image-text-50-50_image">
+        {% endif %}
+    </div>
+
+    <h2>
+        {{ value.title }}
+    </h2>
+
+    <p class="short-desc short-desc__large">
+        {{ value.description }}
+    </p>
+
+    {% if value.link_url %}
+    <a class="{% if value.is_button %}
+              btn m-image-text-50-50_btn
+              {% else %}
+              jump-link jump-link__underline
+              {% endif %}
+              "
+       href="{{ value.link_url }}">
+        {{ value.link_text if value.link_text else 'Learn More' }}
+    </a>
+    {% endif %}
+</div>
