@@ -108,6 +108,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Refactored `BreakpointHandler.js` to remove jQuery dependency and unneeded code.
 - Changed from single cf import to individual module imports.
 - Move handlebars dependency to npm from bower.
+- Change Doing Business With Us email to office email
 
 ### Removed
 - Removed unused exportsOverride section,
