@@ -31,7 +31,6 @@
     "cf-typography": "^1.0.0",
     "cf-layout": "^1.0.0",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
-    "handlebars": "^3.0.3",
     "history.js": "~1.8.0",
     "html5shiv": "latest",
     "jquery.easing": "~1.3.0",
