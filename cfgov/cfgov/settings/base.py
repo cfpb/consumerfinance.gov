@@ -151,6 +151,105 @@ SHEER_SITES = [V1_TEMPLATE_ROOT]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
 
-# PDFReactor
+MAPPINGS = PROJECT_ROOT.child('es_mappings')
+SHEER_PROCESSORS= \
+    {
+      "calendar_event": {
+	"url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
+	"processor": "processors.django_calendar_event",
+	"mappings": MAPPINGS.child("calendar_event.json")
+      },
+      "careers": {
+	"url": "$WORDPRESS/jobs/jobs.json",
+	"processor": "processors.django_career",
+	"mappings": MAPPINGS.child("career.json")
+      },
+      "contact": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=contact",
+	"processor": "processors.wordpress_contact",
+	"mappings": MAPPINGS.child("contact.json")
+      },
+      "history": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=history",
+	"processor": "processors.wordpress_history",
+	"mappings": MAPPINGS.child("history.json")
+      },
+      "sub_page": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=sub_page",
+	"processor": "processors.wordpress_sub_page",
+	"mappings": MAPPINGS.child("sub_page.json")
+      },
+      "office": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=office",
+	"processor": "processors.wordpress_office",
+	"mappings": MAPPINGS.child("office.json")
+      },
+      "orgmember": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=orgmember",
+	"processor": "processors.wordpress_orgmember",
+	"mappings": MAPPINGS.child("orgmember.json")
+      },
+      "pages": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=page",
+	"processor": "processors.wordpress_page",
+	"mappings": MAPPINGS.child("pages.json")
+      },
+      "posts": {
+	"url": "$WORDPRESS/api/get_posts/",
+	"processor": "processors.wordpress_post",
+	"mappings": MAPPINGS.child("posts.json")
+      },
+      "events": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=event",
+	"processor": "processors.wordpress_event",
+	"mappings": MAPPINGS.child("events.json")
+      },
+      "newsroom": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
+	"processor": "processors.wordpress_newsroom",
+	"mappings": MAPPINGS.child("newsroom.json")
+      },
+      "views": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=view",
+	"processor": "processors.wordpress_view",
+	"mappings": MAPPINGS.child("views.json")
+      },
+      "featured_topic": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=featured_topic",
+	"processor": "processors.wordpress_featured_topic",
+	"mappings": MAPPINGS.child("featured_topic.json")
+      },
+      "faq": {
+	"url": "$WORDPRESS/api/get_posts/?post_type=faq",
+	"processor": "processors.wordpress_faq",
+	"mappings": MAPPINGS.child("faq.json")
+      }
+    }
 
+SHEER_ELASTICSEARCH_SETTINGS = \
+    {
+      "settings": {
+	"analysis": {
+	  "analyzer": {
+	    "my_edge_ngram_analyzer": {
+	      "tokenizer": "my_edge_ngram_tokenizer"
+	    }
+	  },
+	  "tokenizer": {
+	    "my_edge_ngram_tokenizer": {
+	      "type": "edgeNGram",
+	      "min_gram": "2",
+	      "max_gram": "5",
+	      "token_chars": [
+		"letter",
+		"digit"
+	      ]
+	    }
+	  }
+	}
+      }
+    }
+
+
+# PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')

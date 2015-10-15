@@ -16,6 +16,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
+- Migrated 'sheerlike' project into this codebase
+- Added 'watchserver' manage.py subcommand for running Django dev server and gulp watch together
 - Added Acceptance tests for the `activity-log` page.
 - Added webpack module loader for per-page JavaScript.
 - Added external-site page-specific script.
