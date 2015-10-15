@@ -5,9 +5,7 @@
 
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
-[Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Sheer-like](https://github.com/cfpb/django-sheerlike) configurations for loading content from the
-WordPress and back-ends through Elasticsearch.
+[Jinja templates](http://jinja.pocoo.org) for front-end rendering.
 
 **Technology stack:**
 - Mac OSX.
@@ -23,9 +21,6 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 ![Screenshot of cfgov-refresh](screenshot.png)
 
 ## Dependencies
-- [Sheer](https://github.com/cfpb/sheer):
-  Web server used to serve the pages using [Jinja templates](http://jinja.pocoo.org).
-  Sheer is a Jekyll-inspired, Elasticsearch-powered, CMS-less publishing tool.
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and npm (Node Package Manager):
@@ -56,7 +51,7 @@ These will be used for:
     Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
-    Running `sheer index` will load indexes into ES.
+    Running `cfgov/manage.py sheer_index` will load indexes into ES.
  3. **Django server**. Start and run the web server.
  4. **Gulp watch**.
     Run the Gulp watch task for watching for changes to content.
@@ -107,15 +102,15 @@ To do this, run the following:
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
-# cd into the /cfgov/v1/jinja2/v1/ directory.
-cd cfgov/v1/jinja2/v1
+# cd into the this directory
+cd <whereever you've cloned this repo>
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
-sheer index
+python cfgov/manage.py sheer_index
 
 # From the Project root, start server.
-./runserver.sh
+pythin cfgov/manage.py runserver
 
 # **Note**
 # If prompted to migrate database changes, stop the server ctrl+c and run these commands
@@ -225,7 +220,7 @@ templating engine.
 ### Outputting indexed content in a Sheer template
 
 Most of our content is indexed from the API output of our WordPress back-end.
-This happens when the `sheer index` command is run.
+This happens when the `manage.py sheer_index` command is run.
 
 There are two ways in which we use indexed content:
 repeating items (e.g., blog posts and press releases),
@@ -260,13 +255,6 @@ For any kind of repeating content, this is the basic process:
     {{ post.content }}
   {% endfor %}
   ```
-
-3. If you would like to display each instance of repeating content in a separate
-  page, create a `_single.html` template (in the case of the blog,
-  located at `blog/_single.html`) and a corresponding entry in `_settings/lookups.json`.
-  Sheer will automatically create URLs for every post of that type and render
-  them with the `_single.html` template.
-  This is how separate pages are generated for each blog post.
 
 #### Single content
 
