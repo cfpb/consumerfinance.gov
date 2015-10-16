@@ -69,6 +69,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Image and Text 25/75 molecule.
 - Added templates and CSS for the Image and Text 50/50 molecule.
 - Added templates and CSS for the Call to Action molecule.
+- Added `gulp beep` task for optional alerting when the build process
+  has completed.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
