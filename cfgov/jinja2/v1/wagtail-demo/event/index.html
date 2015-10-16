@@ -18,19 +18,14 @@
     <div class="content-l">
         <div class="content-l_col-1-2">
             {% for item in page.agenda_items %}
-                {{ item }}
+                {{ render_stream_child(item) }}
             {% endfor %}
 
-            {% for item in page.sponsers %}
-                {{ item }}
-            {% endfor %}
+{#            {% for item in page.sponsers %}#}
+{#                {{ render_stream_child(item) }}#}
+{#            {% endfor %}#}
         </div>
     </div>
 
 {% endblock content_main %}
 
-{% block content_sidebar scoped -%}
-    <aside>
-        {# TODO: Add sidebar organisms. #}
-    </aside>
-{%- endblock %}

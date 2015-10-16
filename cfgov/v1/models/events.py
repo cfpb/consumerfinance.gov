@@ -38,6 +38,9 @@ class EventPage(CFGOVPage):
     body = RichTextField(blank=True)
     archive_body = RichTextField(blank=True)
     live_body = RichTextField(blank=True)
+    # sponsers = StreamField([
+    #     ('sponsers', HalfWidthLinkBlob()),
+    # ], blank=True)
     future_body = RichTextField(blank=True)
     start_dt = models.DateTimeField("Start", blank=True, null=True)
     end_dt = models.DateTimeField("End", blank=True, null=True)
@@ -105,6 +108,7 @@ class EventPage(CFGOVPage):
             FieldPanel('live_stream_url'),
             FieldPanel('live_stream_date'),
         ], heading='Live Stream Information'),
+        # StreamFieldPanel('sponsers'),
     ]
     # Venue content tab
     venue_panels = [
@@ -136,9 +140,9 @@ class EventPage(CFGOVPage):
 
     parent_page_types = ['v1.EventLandingPage']
 
-    # def get_context(self, request):
-    #     context = super(EventPage, self).get_context(request)
-    #     return context
+    def get_context(self, request):
+        context = super(EventPage, self).get_context(request)
+        return context
 
     def get_template(self, request):
         return 'wagtail-demo/event/index.html'

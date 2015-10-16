@@ -33,7 +33,7 @@ class ImageText5050(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
-        template = '_includes/molecules/image_text_5050.html',
+        template = '_includes/molecules/image_text_5050.html'
 
 
 class TextIntroduction(blocks.StructBlock):

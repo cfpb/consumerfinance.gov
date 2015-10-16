@@ -31,11 +31,10 @@
                     else 'm-image-text-50-50_container'}}">
 
         {% if value.image %}
-            {{ image(value.image, width-300) }}
-{#            {% image(value.image, "width-300") as photo %}#}
-{#            <img src="{{ photo.url }}"#}
-{#                 alt="{{ photo.alt if photo.alt else '' }}"#}
-{#                 class="m-image-text-50-50_image">#}
+            {% set photo=image(value.image, "width-300") %}
+            <img src="{{ photo.url }}"
+                 alt="{{ photo.alt if photo.alt else '' }}"
+                 class="m-image-text-50-50_image">
         {% else %}
             <img src="{{ value.image_path }}"
                  alt="{{ value.image_alt if value.image_alt else '' }}"
