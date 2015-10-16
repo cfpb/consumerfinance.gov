@@ -102,15 +102,15 @@ To do this, run the following:
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
-# cd into the this directory
-cd <whereever you've cloned this repo>
+# cd into this directory (if you aren't already there)
+cd cfgov-refresh
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
 python cfgov/manage.py sheer_index
 
 # From the Project root, start server.
-pythin cfgov/manage.py runserver
+python cfgov/manage.py runserver
 
 # **Note**
 # If prompted to migrate database changes, stop the server ctrl+c and run these commands

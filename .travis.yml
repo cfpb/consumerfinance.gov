@@ -12,12 +12,6 @@ install:
   # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
-  - git clone https://github.com/cfpb/django-sheerlike
-  - pip install -e django-sheerlike
-  - pip install -r django-sheerlike/requirements.txt
-  - git clone https://github.com/cfpb/sheer
-  - pip install -e sheer
-  - pip install -r sheer/requirements.txt
   - npm install nvm
   - nvm install 4.1.0
   - nvm use 4.1.0
@@ -25,7 +19,8 @@ install:
   - npm install -g bower
 
   # Project initialization.
-  - sheer index
+  - pip install -r requirements/test.txt 
+  - python cfgov/manage.py sheer_index
   - chmod +x ./setup.sh
   - ./setup.sh
 
@@ -35,4 +30,4 @@ script:
   - gulp test:coveralls
 
 env:
-  - TOXENV=py27
+    - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov
