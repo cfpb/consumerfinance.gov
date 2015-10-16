@@ -71,6 +71,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Call to Action molecule.
 - Added `gulp beep` task for optional alerting when the build process
   has completed.
+- Added Molecule/Organism Streamfields  
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -115,6 +116,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move handlebars dependency to npm from bower.
 - Change Doing Business With Us email to office email
 - Updates `gulp-sitespeedio` from `0.0.6` to `0.0.7`.
+- Wagtail version is now the development version 1.2
 
 ### Removed
 - Removed unused exportsOverride section,
