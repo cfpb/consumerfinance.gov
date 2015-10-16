@@ -102,8 +102,8 @@ To do this, run the following:
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
-# cd into this directory
-cd \<wherever you've checked out this repo\>
+# cd into this directory (if you aren't already there)
+cd cfgov-refresh
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
