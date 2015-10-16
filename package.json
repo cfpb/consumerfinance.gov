@@ -54,6 +54,9 @@
     "webpack-stream": "^2.1.0",
     "wcag": "^0.2.2"
   },
+  "optionalDependencies": {
+    "player": "^0.5.1"
+  },
   "browser": {
     "dateformat": "./node_modules/dateformat/lib/dateformat.js",
     "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
