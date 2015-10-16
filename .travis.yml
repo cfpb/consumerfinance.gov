@@ -19,7 +19,6 @@ install:
   - npm install -g bower
 
   # Project initialization.
-  - which python
   - pip install -r requirements/test.txt 
   - python cfgov/manage.py sheer_index
   - chmod +x ./setup.sh
@@ -32,3 +31,4 @@ script:
 
 env:
   - TOXENV=py27
+  - DJANGO_SETTINGS_MODULE=cfgov.settings.test
