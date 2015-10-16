@@ -30,5 +30,4 @@ script:
   - gulp test:coveralls
 
 env:
-  - TOXENV=py27
-  - DJANGO_SETTINGS_MODULE=cfgov.settings.test
+  - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test
