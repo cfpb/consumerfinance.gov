@@ -77,6 +77,7 @@ build(){
   gulp clean
   gulp build
   dbsetup
+  gulp beep
 }
 
 # Setup MYSQL Server
