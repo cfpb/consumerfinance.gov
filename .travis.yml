@@ -19,6 +19,7 @@ install:
   - npm install -g bower
 
   # Project initialization.
+  - pip install -r requirements/test.txt 
   - python cfgov/manage.py sheer_index
   - chmod +x ./setup.sh
   - ./setup.sh
