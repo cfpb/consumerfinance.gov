@@ -114,6 +114,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed from single cf import to individual module imports.
 - Move handlebars dependency to npm from bower.
 - Change Doing Business With Us email to office email
+- Updates `gulp-sitespeedio` from `0.0.6` to `0.0.7`.
 
 ### Removed
 - Removed unused exportsOverride section,
