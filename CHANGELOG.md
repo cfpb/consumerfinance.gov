@@ -75,6 +75,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added wagtail specific demoPage only available in development for displaying moleclues/organisms.
 - Added `license` field to `package.json`.
 - EventArchivePage, EventRequestSpeakerPage, and EventFilterForm.
+- Added templates and CSS for the Full Width Text organism.
+- Added templates and CSS for the Contact Method molecule.
+- Added templates and CSS for the Sidebar Contact Info organism.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
