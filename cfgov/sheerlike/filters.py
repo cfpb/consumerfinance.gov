@@ -93,7 +93,9 @@ def filter_dsl_from_multidict(multidict):
 
 
 def selected_filters_from_multidict(multidict, field):
-    return [k for k in multidict.getlist('filter_' + field) if k]
+
+    return [k for k in multidict.getlist(field) +
+            multidict.getlist('filter_' + field) if k]
 
 
 def selected_filters_for_field(fieldname):

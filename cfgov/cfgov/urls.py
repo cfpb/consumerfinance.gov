@@ -137,17 +137,6 @@ urlpatterns = [
             name='index')],
         namespace='contact-us')),
 
-    url(r'^events/', include([
-        url(r'^$', TemplateView.as_view(template_name='events/index.html'),
-            name='events'),
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='events',
-                                      local_name='event',
-                                      default_template='events/_single.html'),
-            name='event'),
-        url(r'^(?P<doc_id>[\w-]+)/ics/$', EventICSView.as_view())],
-        namespace='events')),
-
     url(r'^offices/', include([
         url(r'^(?P<doc_id>[\w-]+)/$',
             SheerTemplateView.as_view(doc_type='office',
@@ -219,6 +208,9 @@ urlpatterns = [
         namespace='transcripts')),
 ]
 
+# Catch remaining URL patterns that did not match a route thus far.
+urlpatterns.append(url(r'', include(wagtail_urls)))
+
 # TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
 if settings.DEBUG :
     urlpatterns.append(url(r'^landing-page-1/$', SheerTemplateView.as_view(template_name='landing-page-1/index.html'), name='landing-page-1'))
@@ -227,8 +219,6 @@ if settings.DEBUG :
     urlpatterns.append(url(r'^sublanding-page-2/$', SheerTemplateView.as_view(template_name='sublanding-page-2/index.html'), name='sublanding-page-2'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Catch remaining URL patterns that did not match a route thus far.
-urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
 
