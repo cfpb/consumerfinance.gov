@@ -1,7 +1,4 @@
-import datetime
-
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
 
@@ -11,4 +8,4 @@ class Well(blocks.StructBlock):
 
     class Meta:
         icon = 'link'
-        template = '_includes/organisms/well.html'
+        template = 'v1/demo/organisms/well.html'

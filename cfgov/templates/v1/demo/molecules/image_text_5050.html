@@ -1,4 +1,4 @@
-{# ==========================================================================
+<!-- ==========================================================================
 
    image_and_text_50_50.render()
 
@@ -23,21 +23,27 @@
    value.link_url:     A string for the URL of the link/button
    value.link_text:    A string for the text of the link/button call to action
 
-   ========================================================================== #}
+   ========================================================================== -->
+{% load wagtailimages_tags %}
 
 <div class="m-image-text-50-50">
 
-    <div class="{{ 'm-image-text-50-50_widescreen-container' if value.is_widescreen
-                    else 'm-image-text-50-50_container'}}">
+    <div class="{% if value.is_widescreen %}
+              m-image-text-50-50_widescreen-container
+              {% else %}
+              m-image-text-50-50_container
+              {% endif %}">
 
         {% if value.image %}
-            {% set photo=image(value.image, "width-300") %}
+            {% image value.image width-300 as photo %}
             <img src="{{ photo.url }}"
-                 alt="{{ photo.alt if photo.alt else '' }}"
+                 alt="{{ photo.alt }}"
                  class="m-image-text-50-50_image">
         {% else %}
             <img src="{{ value.image_path }}"
-                 alt="{{ value.image_alt if value.image_alt else '' }}"
+                 alt="{% if value.image_alt %}
+              {{ value.image_alt }}
+              {% endif%}"
                  class="m-image-text-50-50_image">
         {% endif %}
     </div>
@@ -58,7 +64,11 @@
               {% endif %}
               "
        href="{{ value.link_url }}">
-        {{ value.link_text if value.link_text else 'Learn More' }}
+       {% if value.link_text %}
+              {{ value.link_text }}
+              {% else %}
+              Learn More
+              {% endif %}
     </a>
     {% endif %}
 </div>

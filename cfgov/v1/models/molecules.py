@@ -7,7 +7,7 @@ from .base import CFGOVPage
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(max_length=100, required=True)
     content = blocks.RichTextBlock(blank=True)
     links = blocks.ListBlock(blocks.StructBlock([
         ('text', blocks.CharBlock(required=False)),
@@ -17,15 +17,15 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
     class Meta:
         icon = 'link'
-        template = '_includes/molecules/half_width_link_blob.html'
+        template = 'v1/demo/molecules/half_width_link_blob.html'
 
 
 class ImageText5050(blocks.StructBlock):
     title = blocks.CharBlock(max_length=100, required=False)
     description = blocks.RichTextBlock(blank=True)
     image = ImageChooserBlock(required=False)
-    image_path = blocks.CharBlock(blank=True)
-    image_alt = blocks.CharBlock(blank=True)
+    image_path = blocks.CharBlock(required=False)
+    image_alt = blocks.CharBlock(required=False)
     is_widescreen = blocks.BooleanBlock(required=False)
     is_button = blocks.BooleanBlock(required=False)
     link_url = blocks.URLBlock(required=False)
@@ -33,12 +33,12 @@ class ImageText5050(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
-        template = '_includes/molecules/image_text_5050.html'
+        template = 'v1/demo/molecules/image_text_5050.html'
 
 
 class TextIntroduction(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
-    intro = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(max_length=100, required=True)
+    intro = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(blank=True)
     link_url = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(max_length=100, required=False)
@@ -46,4 +46,4 @@ class TextIntroduction(blocks.StructBlock):
 
     class Meta:
         icon = 'title'
-        template = '_includes/molecules/text_introduction.html'
+        template = 'v1/demo/molecules/text_introduction.html'

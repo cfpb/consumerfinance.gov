@@ -16,8 +16,5 @@
 
 
 <div class="o-well">
-    {% macro render(template) %}
-        {% import template as content %}
-        {{ content }}
-    {% endmacro %}
+    {% include value.template_path %}
 </div>
