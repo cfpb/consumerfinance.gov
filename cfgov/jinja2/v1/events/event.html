@@ -1,13 +1,13 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 {% import '_vars-events.html' as vars with context %}
-{% set event_state = when( event.beginning_time.date, event.ending_time.date ) %}
+{% set event_state = when(page.start_dt | date('%c'), page.end_dt | date('%c')) %}
 
 {% block title -%}
-    {{ event.title }}
+    {{ page.seo_title }}
 {%- endblock %}
 
 {% block desc -%}
-    {{ event.excerpt|striptags }}
+    {{ page.seo_description }}
 {%- endblock %}
 
 {% block og_type -%}
@@ -23,12 +23,11 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% import '_event.html' as article with context %}
-    {{ article.render(event, vars.path, event_state) }}
-
-    {% from '_event-post-macros.html' import event_agenda as event_agenda %}
-    {{ event_agenda(event) }}
-
+    {% include 'events/_event-detail.html' %}
+    {% if page.agenda_items %}
+        {% from 'events/_macros.html' import event_agenda as event_agenda %}
+        {{ event_agenda(page) }}
+    {% endif %}
     <div class="event-footer">
         {% if event_state != 'past' %}
         <p class="event-footer_banner">
@@ -55,7 +54,8 @@
 {% block content_sidebar %}
     <section class="block block__flush-top">
         {% import 'related-posts.html' as related_posts with context %}
-        {{ related_posts.render(event) }}
+        {% set es_doc = get_document('events', page.slug) %}
+        {{ related_posts.render(es_doc) }}
     </section>
     <section class="block">
         <h1 class="header-slug">

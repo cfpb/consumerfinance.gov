@@ -1,70 +1,41 @@
-
-{# ==========================================================================
-
-   render()
-
-   ==========================================================================
-
-   Description:
-
-   Render an article when given:
-
-   post:        The Sheer document that is available to a _single.html
-                template. For example in events/_single.html the variable
-                `event` is available and represents the event for the
-                `_single` page.
-
-   path:        The path to which post filters are applies. For example,
-                if the post is an event post then path should be '/events/'.
-                Remember to leverage vars.path instead of using the
-                literal string '/events/'. Path is used to create the
-                filtered URL: {{ path }}?filter_tags={{ tag }}
-
-   event_state: A string indicating the state of the event.
-                Possible values: past, present, future.
-
-   ========================================================================== #}
-
-{% macro render(post, path, event_state) %}
-
-{% import 'macros/share.html' as share with context %}
-
 <article class="post post__event">
     <header>
         <h1 class="post_heading">
-            {{ event.title|safe }}
+            {{ page.title | safe }}
         </h1>
         <p class="post_dek">
         {% if (event_state == 'past') %}
-            {{ post.archive.summary | striptags }}
+            {{ page.archive_body | striptags }}
         {% elif (event_state == 'present') %}
-            {{ post.live.summary | striptags }}
+            {{ page.live_body | striptags }}
         {% elif (event_state == 'future') %}
-            {{ post.future.summary | striptags }}
+            {{ page.future_body | striptags }}
         {% endif %}
         </p>
         <div class="modification-date date u-right">
             <span>Updated</span>
             {% import 'macros/time.html' as time %}
-            {{ time.render(event.modified, {'date':true} ) }}
+            {{ time.render(page.latest_revision_created_at, {'date':true}) }}
         </div>
+        {% import 'macros/share.html' as share with context %}
         {{ share.render({
-            'title': event.title,
+            'title': page.title,
             'hide_heading': true,
             'twitter_options': {
-                'text':     post.twtr_text,
-                'related':  post.twtr_rel,
-                'language': post.twtr_lang,
-                'hashtags': post.twtr_hash
+                'text':     page.twtr_text,
+                'related':  page.twtr_rel,
+                'language': page.twtr_lang,
+                'hashtags': page.twtr_hash
             }
         }) }}
-    {% if event.thumbnail.images %}
+    {# Doesn't seem like this ever worked, and it won't work now. #}
+    {# {% if page.thumbnail.images %}
         <img class="post_featured-img"
-             src="{{ event.thumbnail.images.full.url }}"
-             alt="{{ event.thumbnail.alt_text }}">
-    {% endif %}
-    {% from '_event-post-macros.html' import event_venue as event_venue %}
-    {{ event_venue(event, event_state) }}
+             src="{{ page.thumbnail.images.full.url }}"
+             alt="{{ page.thumbnail.alt_text }}">
+    {% endif %} #}
+    {% from 'events/_macros.html' import event_venue as event_venue %}
+    {{ event_venue(page, event_state) }}
     </header>
     <div class="post_body">
         {% if (event_state != 'past') %}
@@ -83,7 +54,7 @@
                       </a>
                   </p>
                 </div>
-                {% if (event.live_stream) %}
+                {% if page.live_stream_availability %}
                 <div class="event-status_livestream">
                   <p>
                       <span class="cf-icon cf-icon-livestream"></span>
@@ -93,22 +64,21 @@
                       <span class="event-meta_description event-meta_description__block">
                           Video link available:
                       </span>
-                      {% from '_event-post-macros.html' import event_meta_datetime as event_meta_datetime %}
-                      {{ event_meta_datetime(event.live_stream.date) }}
+                      {% import 'macros/time.html' as time %}
+                      {{ time.render(page.live_stream_date,
+                                     {'date':true, 'time':true, 'timezone':true}) }}
                   </p>
                 </div>
                 {% endif %}
             </div>
         </aside>
         {% endif %}
-        {{ event.content | safe }}
+        {{ page.body | safe }}
     </div>
-    {% if event.tags|length %}
+    {% if page.tags.names() | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(event.tags, path) }}
+        {{ tags.render(page.tags.names(), path) }}
     </footer>
     {% endif %}
 </article>
-
-{% endmacro %}

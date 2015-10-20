@@ -30,7 +30,6 @@
    ========================================================================== #}
 
 {% macro render(posts, filters, options) %}
-
 {% set active_filters = [] %}
 {% set active_date_filters = [] %}
 {% set use_list = options.use_list or false %}
@@ -69,7 +68,11 @@
     {%- if options.show_filters_label -%}
         <li class="list_item filtered-by_header">
         {%- if posts | list | length > 0 -%}
+          {% if posts.paginator is defined -%}
+            {{ posts.paginator.count }} filtered result{{ 's' if posts.paginator.count > 1 }} for
+          {% else -%}
             {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
+          {% endif -%}
         {%- else -%}
             No results for
         {%- endif -%}
@@ -95,7 +98,11 @@
     {% if options.show_unfiltered_count and options.show_filters_label %}
         <li class="list_item">
             <span class="filtered-by_header">
+              {% if posts.paginator is defined -%}
+                {{ posts.paginator.count }} result{{ 's' if posts.paginator.count > 1 }}
+              {% else -%}
                 {{ posts.total }} result{{ 's' if posts.total > 1 }}
+              {% endif -%}
             </span>
         </li>
     {% endif %}
@@ -108,9 +115,15 @@
    ========================================================================== #}
 {% macro _active_filters_notification() %}
 {%- if posts | list | length > 0 -%}
-    {% set text = posts.total | string
-                  + ' filtered result'
-                  + ('s' if posts.total > 1 else '') %}
+    {% if posts.paginator is defined -%}
+      {% set text = posts.paginator.count | string
+                    + ' filtered result'
+                    + ('s' if posts.paginator.count > 1 else '') %}
+    {% else -%}
+      {% set text = posts.total | string
+                    + ' filtered result'
+                    + ('s' if posts.total > 1 else '') %}
+    {% endif -%}
     {% set type = 'success' %}
 {%- else -%}
     {% macro _no_results_text () %}
