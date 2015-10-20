@@ -14,10 +14,9 @@
 
    ========================================================================== #}
 
-
+{% macro render(template) %}
+{% import template as content %}
 <div class="o-well">
-    {% macro render(template) %}
-        {% import template as content %}
-        {{ content }}
-    {% endmacro %}
+  {{ content }}
 </div>
+{% endmacro %}
