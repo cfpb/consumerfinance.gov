@@ -21,7 +21,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
 
 class ImageText5050(blocks.StructBlock):
-    title = blocks.CharBlock(max_length=100, required=False)
+    title = blocks.CharBlock(max_length=100, required=True)
     description = blocks.RichTextBlock(blank=True)
     image = ImageChooserBlock(required=False)
     image_path = blocks.CharBlock(required=False)
@@ -39,7 +39,7 @@ class ImageText5050(blocks.StructBlock):
 class TextIntroduction(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     intro = blocks.CharBlock(max_length=100, required=True)
-    body = blocks.RichTextBlock(blank=True)
+    body = blocks.RichTextBlock(required=False)
     link_url = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(max_length=100, required=False)
     has_rule = blocks.BooleanBlock(required=False)
