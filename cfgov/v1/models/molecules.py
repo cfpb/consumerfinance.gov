@@ -34,25 +34,28 @@ class ImageText5050(blocks.StructBlock):
     link_text = blocks.CharBlock(max_length=100, required=False)
 
     def clean(self, data):
-        ordered_tuples = data.items()
+        tuples = dict(data.items())
         error_dict = {}
-        if not ordered_tuples[0][1]:
+        if not tuples['title']:
             error_dict['title'] = isRequired('Title')
 
-        if not ordered_tuples[2][1] and not ordered_tuples[3][1] and not ordered_tuples[4][1]:
+        if not tuples['image'] and not tuples['image_path'] and not tuples['image_alt']:
             img_err = ['Please upload or enter an image path']
             error_dict.update({'image': img_err, 'image_path': img_err, 'image_alt': isRequired('Image alt')})
 
-        if ordered_tuples[2][1] and not ordered_tuples[3][1]:
+        if tuples['image'] and tuples['image_path']:
             img_err = ['Please select one method of image rendering']
             error_dict.update({
                 'image': img_err,
                 'image_path': img_err})
 
-        if ordered_tuples[3][1] and not ordered_tuples[4][1]:
+        if tuples['image_path'] and not tuples['image_alt']:
             error_dict.update({'image_alt': isRequired('Image Alt')})
 
-        raise ValidationError("ImageText5050 validation errors", params=error_dict)
+        if error_dict:
+            raise ValidationError("ImageText5050 validation errors", params=error_dict)
+        else:
+            return data
 
     class Meta:
         icon = 'image'
