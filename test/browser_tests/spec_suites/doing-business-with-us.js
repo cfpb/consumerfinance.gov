@@ -34,7 +34,7 @@ describe( 'The Doing Business with Us Page', function() {
 
   it( 'should have a contact link with main summary', function() {
     expect( page.mainSummaryContactLink.getAttribute( 'href' ) )
-    .toBe( 'mailto:david.gragan@cfpb.gov' );
+    .toBe( 'mailto:CFPB_procurement@consumerfinance.gov' );
   } );
 
   it( 'should have a Business Opportunity section', function() {
