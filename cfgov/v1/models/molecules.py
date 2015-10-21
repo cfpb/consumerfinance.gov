@@ -2,9 +2,11 @@ import datetime
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-
+from django.core.exceptions import ValidationError
 from .base import CFGOVPage
 
+def isRequired(field_name):
+    return [str(field_name) + ' is required.']
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
@@ -30,6 +32,27 @@ class ImageText5050(blocks.StructBlock):
     is_button = blocks.BooleanBlock(required=False)
     link_url = blocks.URLBlock(required=False)
     link_text = blocks.CharBlock(max_length=100, required=False)
+
+    def clean(self, data):
+        ordered_tuples = data.items()
+        error_dict = {}
+        if not ordered_tuples[0][1]:
+            error_dict['title'] = isRequired('Title')
+
+        if not ordered_tuples[2][1] and not ordered_tuples[3][1] and not ordered_tuples[4][1]:
+            img_err = ['Please upload or enter an image path']
+            error_dict.update({'image': img_err, 'image_path': img_err, 'image_alt': isRequired('Image alt')})
+
+        if ordered_tuples[2][1] and not ordered_tuples[3][1]:
+            img_err = ['Please select one method of image rendering']
+            error_dict.update({
+                'image': img_err,
+                'image_path': img_err})
+
+        if ordered_tuples[3][1] and not ordered_tuples[4][1]:
+            error_dict.update({'image_alt': isRequired('Image Alt')})
+
+        raise ValidationError("ImageText5050 validation errors", params=error_dict)
 
     class Meta:
         icon = 'image'
