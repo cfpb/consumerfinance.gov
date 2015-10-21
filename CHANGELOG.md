@@ -71,8 +71,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Call to Action molecule.
 - Added `gulp beep` task for optional alerting when the build process
   has completed.
-- Added Molecule/Organism Streamfields  
-- Added wagtail specific demoPage only available in development for displaying moleclues/organisms
+- Added Molecule/Organism Streamfields.
+- Added wagtail specific demoPage only available in development for displaying moleclues/organisms.
+- Added `license` field to `package.json`.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

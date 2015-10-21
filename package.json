@@ -3,6 +3,7 @@
     "type": "git",
     "url": "http://github.com/cfpb/cfgov-refresh.git"
   },
+  "license": "SEE LICENSE IN TERMS.md",
   "engines": {
     "node": ">=4.1.0"
   },
