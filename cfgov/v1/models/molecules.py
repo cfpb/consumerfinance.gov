@@ -34,10 +34,14 @@ class ImageText5050(blocks.StructBlock):
     link_text = blocks.CharBlock(max_length=100, required=False)
 
     def clean(self, data):
-        tuples = dict(data.items())
         error_dict = {}
-        if not tuples['title']:
-            error_dict['title'] = isRequired('Title')
+        try:
+            values = super(ImageText5050, self).clean(data)
+        except ValidationError as e:
+            error_dict.update(e.params)
+            values = data
+
+        tuples = dict(values.items())
 
         if not tuples['image'] and not tuples['image_path'] and not tuples['image_alt']:
             img_err = ['Please upload or enter an image path']
