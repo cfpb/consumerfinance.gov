@@ -1,0 +1,33 @@
+{% extends 'v1/demo/layout/base.html' %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}
+    Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block desc %}
+    Our vision is a consumer finance marketplace that works for American consumers,
+    responsible providers, and the economy as a whole.
+{% endblock %}
+
+{% block content %}
+    <div class="block
+                block__flush-top">
+        {{ self.title }}
+    </div>
+
+    <div class="content-l">
+        <div class="content-l_col-1-2">
+            {% for item in self.molecules %}
+                {{ item }}
+            {% endfor %}
+        </div>
+        <div class="content-l_col-1-2">
+            {% for item in self.organisms %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
+
