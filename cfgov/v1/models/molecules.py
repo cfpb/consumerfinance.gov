@@ -57,7 +57,7 @@ class ImageText5050(blocks.StructBlock):
         if error_dict:
             raise ValidationError("ImageText5050 validation errors", params=error_dict)
         else:
-            return data
+            return block_data
 
     class Meta:
         icon = 'image'
