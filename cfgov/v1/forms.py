@@ -35,6 +35,11 @@ class EventsFilterForm(forms.Form):
     topics = forms.MultipleChoiceField(required=False, choices=[],
                                        widget=SelectMultiple(attrs=tags_select_attrs))
 
+    @property
+    def field_queries(self):
+        return zip(['start_dt__gte', 'end_dt__lte', 'tags__name__in'],
+                   ['from_date', 'to_date', 'topics'])
+
     def __init__(self, *args, **kwargs):
         super(EventsFilterForm, self).__init__(*args, **kwargs)
         if 'topics' in self.fields:

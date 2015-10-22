@@ -72,8 +72,10 @@ TEMPLATES = [
         }
     },
     {
+        'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'DIRS': [PROJECT_ROOT.child('static_built')],
+        'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
         }

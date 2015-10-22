@@ -163,11 +163,10 @@ class EventArchivePage(CFGOVPage):
             # tuples. The ordering of query strings is dependent on the
             # ordering of the form fields in the definition of EventsFilterForm.
             final_query = Q()
-            for field in zip(['start_dt__gte', 'end_dt__lte', 'tags__name__in'],
-                             form.fields):
-                if form.cleaned_data.get(field[1]):
+            for query, field_name in form.field_queries:
+                if form.cleaned_data.get(field_name):
                     final_query &= \
-                        Q((field[0], form.cleaned_data.get(field[1])))
+                        Q((query, form.cleaned_data.get(field_name)))
 
         # List of paginated events to pass to the template
         events_list = EventPage.objects.live().filter(final_query)

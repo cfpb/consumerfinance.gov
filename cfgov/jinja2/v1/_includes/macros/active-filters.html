@@ -52,7 +52,7 @@
 {%- set active_filters_total = active_filters | length + active_date_filters | length -%}
 
 {%- if active_filters_total > 0 and use_list == false -%}
-    {{ _active_filters_notification() }}
+    {{ _active_filters_notification(posts) }}
 {% elif use_list == true %}
     {{ _active_filters_list(active_filters_total, active_filters, active_date_filters, options) }}
 {% endif %}
@@ -113,7 +113,7 @@
 
 {# A helper macro to display the active_filters as a notification.
    ========================================================================== #}
-{% macro _active_filters_notification() %}
+{% macro _active_filters_notification(posts) %}
 {%- if posts | list | length > 0 -%}
     {% if posts.paginator is defined -%}
       {% set text = posts.paginator.count | string

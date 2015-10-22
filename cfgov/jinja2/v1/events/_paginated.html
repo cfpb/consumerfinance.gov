@@ -1,3 +1,5 @@
+{% from '_macros.html' import event_filter_args %}
+
 {%- if events.paginator.num_pages > 1 %}
     <nav class="post-pagination pagination"
          role="navigation"
@@ -5,15 +7,7 @@
          data-ajax-action="posts-paginated.html">
     {%- if events.number > 1 %}
         <a class="btn btn__super pagination_prev"
-           href="?page={{ events.previous_page_number() }}
-                 {%- for filter in filters -%}
-                     {%- set selected_filters = selected_filters_for_field(filter) -%}
-                     {%- for value in selected_filters -%}
-                         {%- if value -%}
-                            &{{ filter }}={{ value }}
-                         {%- endif -%}
-                     {%- endfor -%}
-                 {%- endfor -%}">
+           href="?page={{ events.previous_page_number() ~ event_filter_args(filters) }}">
     {%- else %}
         <a class="btn btn__super btn__disabled pagination_prev">
     {% endif %}
@@ -22,15 +16,7 @@
         </a>
     {%- if events.number < events.paginator.num_pages %}
         <a class="btn btn__super pagination_next"
-           href="?page={{ events.next_page_number() }}
-                 {%- for filter in filters -%}
-                     {%- set selected_filters = selected_filters_for_field(filter) -%}
-                     {%- for value in selected_filters -%}
-                         {%- if value -%}
-                            &{{ filter }}={{ value }}
-                         {%- endif -%}
-                     {%- endfor -%}
-                 {%- endfor -%}">
+           href="?page={{ events.next_page_number() ~ event_filter_args(filters) }}">
     {%- else %}
         <a class="btn btn__super btn__disabled pagination_next">
     {% endif -%}

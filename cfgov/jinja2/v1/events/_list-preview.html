@@ -1,6 +1,6 @@
 {% for event in events|list if events %}
     {%- set city =  event.venue_city + ', ' + event.venue_state
-                        | default('Washington, DC') -%}
+                    | default('Washington, DC') -%}
     <article class="post-preview post-preview__event">
         <div class="media">
             <a class="media_image-container post-summary-image" href="{{ event.url }}">
@@ -19,7 +19,7 @@
                             <span class="u-visually-hidden">{{ event.start_dt | date('%b %-d, %Y') }}</span>
                         </time>
                         <div class="summary-meta_container">
-                            <h1 class="summary_heading">{{ event.title|safe }}</h1>
+                            <h1 class="summary_heading">{{ event.title | safe }}</h1>
                                 <div class="event-meta h-event">
                                 {% from 'events/_macros.html' import event_meta_address %}
                                 {% import 'macros/time.html' as time %}

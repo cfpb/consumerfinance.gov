@@ -245,21 +245,17 @@
                 </td>
                 <td class="{{ options.location_col_classes }}" data-label="Location">
                   {% if bound.location.render() %}
-                    {{ bound.location.render()}}
+                    {{ bound.location.render() }}
                   {% endif %}
                 </td>
                 <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
                 {% for speaker in bound.speakers.value %}
                     {%- if speaker.bound_blocks.url -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">
-                    {{ speaker.bound_blocks.name.render()
-                       ~ ( ', ' if speaker.bound_blocks.name.value.find(',') == -1 else '' )
-                    }}
+                    {{ speaker.bound_blocks.name.render() }}
                     </a>
                     {%- else -%}
-                    {{ speaker.bound_blocks.name.render()
-                       ~ ( ', ' if speaker.bound_blocks.name.value.find(',') == -1 else '' )
-                    }}
+                    {{ speaker.bound_blocks.name.render() }}
                     {%- endif -%}
                     {{ ';' if loop.index < loop.length else '' }}
                 {%- endfor -%}
@@ -269,4 +265,29 @@
         </tbody>
     </table>
   </div>
+{% endmacro %}
+
+{# ==========================================================================
+
+   event_filter_args()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event agenda table when given
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_filter_args(filters) %}
+{%- for filter in filters -%}
+   {%- set selected_filters = selected_filters_for_field(filter) -%}
+   {%- for value in selected_filters -%}
+       {%- if value -%}
+          &{{ filter }}={{ value }}
+       {%- endif -%}
+   {%- endfor -%}
+{%- endfor -%}
 {% endmacro %}

@@ -28,14 +28,8 @@
                 'hashtags': page.twtr_hash
             }
         }) }}
-    {# Doesn't seem like this ever worked, and it won't work now. #}
-    {# {% if page.thumbnail.images %}
-        <img class="post_featured-img"
-             src="{{ page.thumbnail.images.full.url }}"
-             alt="{{ page.thumbnail.alt_text }}">
-    {% endif %} #}
-    {% from 'events/_macros.html' import event_venue as event_venue %}
-    {{ event_venue(page, event_state) }}
+        {% from 'events/_macros.html' import event_venue as event_venue %}
+        {{ event_venue(page, event_state) }}
     </header>
     <div class="post_body">
         {% if (event_state != 'past') %}

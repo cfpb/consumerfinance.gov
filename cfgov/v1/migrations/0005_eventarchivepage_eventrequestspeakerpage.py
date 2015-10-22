@@ -9,10 +9,21 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0004_eventarchivepage'),
+        ('v1', '0004_demopage'),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='EventArchivePage',
+            fields=[
+                ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
+                ('body', models.TextField(blank=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('v1.cfgovpage',),
+        ),
         migrations.CreateModel(
             name='EventRequestSpeakerPage',
             fields=[

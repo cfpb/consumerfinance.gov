@@ -53,11 +53,11 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% import 'related-posts.html' as related_posts with context %}
+        {# {% import 'related-posts.html' as related_posts with context %}
         {% set es_doc = get_document('events', page.slug) %}
         {{ related_posts.render(es_doc) }}
     </section>
-    <section class="block">
+    <section class="block"> #}
         <h1 class="header-slug">
             <span class="header-slug_inner">
                 Stay informed
