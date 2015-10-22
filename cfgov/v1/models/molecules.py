@@ -36,24 +36,22 @@ class ImageText5050(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
         try:
-            values = super(ImageText5050, self).clean(data)
+            block_data = super(ImageText5050, self).clean(data)
         except ValidationError as e:
             error_dict.update(e.params)
-            values = data
+            block_data = data
 
-        tuples = dict(values.items())
-
-        if not tuples['image'] and not tuples['image_path'] and not tuples['image_alt']:
+        if not block_data['image'] and not block_data['image_path'] and not block_data['image_alt']:
             img_err = ['Please upload or enter an image path']
             error_dict.update({'image': img_err, 'image_path': img_err, 'image_alt': isRequired('Image alt')})
 
-        if tuples['image'] and tuples['image_path']:
+        if block_data['image'] and block_data['image_path']:
             img_err = ['Please select one method of image rendering']
             error_dict.update({
                 'image': img_err,
                 'image_path': img_err})
 
-        if tuples['image_path'] and not tuples['image_alt']:
+        if block_data['image_path'] and not block_data['image_alt']:
             error_dict.update({'image_alt': isRequired('Image Alt')})
 
         if error_dict:
