@@ -74,6 +74,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Molecule/Organism Streamfields.
 - Added wagtail specific demoPage only available in development for displaying moleclues/organisms.
 - Added `license` field to `package.json`.
+- Added Molecule/Organism Streamfields  
+- Added wagtail specific demoPage only available in development for displaying moleclues/organisms
+- EventArchivePage, EventRequestSpeakerPage, and EventFilterForm
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -118,6 +121,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move handlebars dependency to npm from bower.
 - Change Doing Business With Us email to office email
 - Updates `gulp-sitespeedio` from `0.0.6` to `0.0.7`.
+- CFGOVPage to include tags and authors
+- Event import script to include grabbing tags and authors
+- Change templates to move logic to Django backend
+- Move Event filter over to a Django form
 
 ### Removed
 - Removed unused exportsOverride section,
