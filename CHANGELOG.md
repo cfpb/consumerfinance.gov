@@ -74,9 +74,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Molecule/Organism Streamfields.
 - Added wagtail specific demoPage only available in development for displaying moleclues/organisms.
 - Added `license` field to `package.json`.
-- Added Molecule/Organism Streamfields  
-- Added wagtail specific demoPage only available in development for displaying moleclues/organisms
-- EventArchivePage, EventRequestSpeakerPage, and EventFilterForm
+- EventArchivePage, EventRequestSpeakerPage, and EventFilterForm.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
