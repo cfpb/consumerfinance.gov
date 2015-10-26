@@ -122,7 +122,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - CFGOVPage to include tags and authors
 - Event import script to include grabbing tags and authors
 - Change templates to move logic to Django backend
-- Move Event filter over to a Django form
+- Move Event filter over to a Django form.
+- Updates `jsdom` to `7.0.2` from `6.5.1`.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -132,7 +133,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed bad CF Notifier tests.
 - Removed unnecessary mobile-only expandables
 - Removed link from Cordray's corner image `/the-bureau/about-director/`.
-- Removed extra Google Analytics code
+- Removed extra Google Analytics code.
+- Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
 
 ### Fixed
 - Fixed instructions for gulp watch
