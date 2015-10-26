@@ -1,0 +1,38 @@
+{% from 'macros/util/format/contact.html' import format_phone as format_phone %}
+
+{# ==========================================================================
+
+   contact_address.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a Contact-Address molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Contact-Address
+
+   address:          An object containing address information.
+   address.label:    A string containing a label for the address.
+   address.title:    A string containing a address name.
+   address.street:   A string containing a street address.
+   address.city:     A string containing a city.
+   address.state:    A string containing a state.
+   address.zip_code: A string containing a zip code.
+
+   ========================================================================== #}
+
+{% macro render(address) %}
+<div class="m-contact-address">
+    {% set icon = 'cf-icon-mail' %}
+    {% set title = address.label %}
+    <span class="cf-icon {{ icon }} list_icon"></span>
+    <span class="h5 list_text">{{ title }}</span>
+    <p class="short-desc">
+        <span>{{ address.title }}</span><br>
+        <span>{{ address.street }}</span><br>
+        <span>{{ address.city }}</span>,
+        <span>{{ address.state }}</span>
+        <span>{{ address.zip_code }}</span>
+    </p>
+</div>
+{% endmacro %}

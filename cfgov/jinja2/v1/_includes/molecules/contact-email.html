@@ -1,0 +1,33 @@
+{% from 'macros/util/format/contact.html' import format_phone as format_phone %}
+
+{# ==========================================================================
+
+   contact_email.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a Contact-Email molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Contact-Email
+
+   emails: An array containing the email addresses.
+
+   ========================================================================== #}
+
+{% macro render(emails) %}
+<div class="m-contact-email">
+    {% set icon = 'cf-icon-email' %}
+    {% set title = 'Email' %}
+
+    <span class="cf-icon {{ icon }} list_icon"></span>
+    <span class="h5 list_text">{{ title }}</span>
+    <p class="short-desc">
+        {% for email in emails %}
+            <a class="list_link" href="mailto:{{ email }}">
+            {{ email }}
+            </a><br>
+        {% endfor %}
+    </p>
+</div>
+{% endmacro %}
