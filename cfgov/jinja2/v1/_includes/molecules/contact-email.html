@@ -1,5 +1,3 @@
-{% from 'macros/util/format/contact.html' import format_phone as format_phone %}
-
 {# ==========================================================================
 
    contact_email.render()
@@ -17,11 +15,8 @@
 
 {% macro render(emails) %}
 <div class="m-contact-email">
-    {% set icon = 'cf-icon-email' %}
-    {% set title = 'Email' %}
-
-    <span class="cf-icon {{ icon }}"></span>
-    <span class="h5">{{ title }}</span>
+    <span class="cf-icon cf-icon-email"></span>
+    <span class="h5">Email</span>
     <p class="short-desc">
         {% for email in emails %}
             <a href="mailto:{{ email }}">

@@ -25,14 +25,14 @@
 <div class="m-contact-phone">
     {% if is_fax == true %}
         {% set icon = 'cf-icon-fax' %}
-        {% set title = 'Fax' %}
+        {% set label = 'Fax' %}
     {% else %}
         {% set icon = 'cf-icon-phone' %}
-        {% set title = 'Phone' %}
+        {% set label = 'Phone' %}
     {% endif %}
 
     <span class="cf-icon {{ icon }}"></span>
-    <span class="h5">{{ title }}</span>
+    <span class="h5">{{ label }}</span>
     <p class="short-desc">
         {% for phone in phones %}
             <span>{{ format_phone(phone.number) }}</span>
