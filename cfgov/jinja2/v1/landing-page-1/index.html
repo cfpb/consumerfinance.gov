@@ -21,8 +21,7 @@
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
 
-        {# TODO: Add stacked image and text organism with bottom padding. #}
-        <div style="padding-bottom: 60px;">
+        <div>
             <h2>Headline for 2/7 organism</h2>
             {{ image_text_25_75.render({
                 'image_path': 'http://placehold.it/300x300',
@@ -31,7 +30,7 @@
                 'body': lipsumText,
                 'link_url': '#',
                 'link_text' : 'Placeholder link'
-            }) }}
+            }, true) }}
 
             {{ image_text_25_75.render({
                 'image_path': 'http://placehold.it/300x300',
@@ -40,7 +39,7 @@
                 'body': lipsumText,
                 'link_url': '#',
                 'link_text' : 'Placeholder link'
-            }) }}
+            }, true) }}
 
             {{ image_text_25_75.render({
                 'image_path': 'http://placehold.it/300x300',
