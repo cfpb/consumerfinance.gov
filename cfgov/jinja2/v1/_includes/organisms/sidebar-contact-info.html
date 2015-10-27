@@ -17,14 +17,18 @@
    contact.emails:           An array containing email addresses.
 
    contact.phones:           An array containing phone number information.
-   contact.phones.number:    An phone number.
+   contact.phones.number:    A phone number.
    contact.phones.vanity:    An associated vanity phone number.
    contact.phones.tty:       An associated TTY/TDD number.
 
    contact.faxes:            An object containing fax numbers.
+   contact.faxes.number:     A fax number.
+   contact.faxes.vanity:     An associated vanity fax number.
+   contact.faxes.tty:        An associated TTY/TDD number.
+                             This value can be used, but is not applicable.
 
    contact.address:          An object containing address information.
-   contact.address.title:    A string containing a address name.
+   contact.address.title:    A string containing an address name.
    contact.address.street:   A string containing a street address.
    contact.address.city:     A string containing a city.
    contact.address.state:    A string containing a state.
@@ -53,7 +57,7 @@
                               contact.address.zip_code) | urlencode %}
         <figure>
             <a href="https://www.google.com/maps/place/{{ map_details }}">
-                <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ administrative_offices_map }}&scale=2" alt="">
+                <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2" alt="">
             </a>
         </figure>
 

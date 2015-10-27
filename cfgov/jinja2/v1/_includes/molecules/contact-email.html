@@ -20,11 +20,11 @@
     {% set icon = 'cf-icon-email' %}
     {% set title = 'Email' %}
 
-    <span class="cf-icon {{ icon }} list_icon"></span>
-    <span class="h5 list_text">{{ title }}</span>
+    <span class="cf-icon {{ icon }}"></span>
+    <span class="h5">{{ title }}</span>
     <p class="short-desc">
         {% for email in emails %}
-            <a class="list_link" href="mailto:{{ email }}">
+            <a href="mailto:{{ email }}">
             {{ email }}
             </a><br>
         {% endfor %}
