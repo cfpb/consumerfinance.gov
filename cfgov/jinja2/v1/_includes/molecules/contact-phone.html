@@ -31,8 +31,8 @@
         {% set title = 'Phone' %}
     {% endif %}
 
-    <span class="cf-icon {{ icon }} list_icon"></span>
-    <span class="h5 list_text">{{ title }}</span>
+    <span class="cf-icon {{ icon }}"></span>
+    <span class="h5">{{ title }}</span>
     <p class="short-desc">
         {% for phone in phones %}
             <span>{{ format_phone(phone.number) }}</span>

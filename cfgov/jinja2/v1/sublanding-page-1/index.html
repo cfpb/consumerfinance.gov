@@ -24,11 +24,11 @@
     <div class="block
                 block__flush-top">
         {{ text_introduction.render({
-            'heading': 'Text Introduction',
-            'intro': 'Content Intro Lorem Ipsum',
-            'body': lipsumText,
+            'heading':   'Text Introduction',
+            'intro':     'Content Intro Lorem Ipsum',
+            'body':      lipsumText,
             'link_text': 'Placeholder link',
-            'link_url': '#'
+            'link_url':  '#'
         }, true ) }}
     </div>
 
@@ -39,9 +39,9 @@
 
 {% block content_sidebar scoped -%}
     {# TODO: Add sidebar organisms. #}
-    {{ sidebar_contact_info.render( {
+    {{ sidebar_contact_info.render({
         'heading': 'Header for text below',
-        'body': lipsumText
+        'body':    lipsumText
     }, {
         'emails':  ['test@example.com'],
         'phones':  [{'number': '1234567899',
