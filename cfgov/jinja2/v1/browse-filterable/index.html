@@ -1,0 +1,34 @@
+{% extends 'layout-side-nav.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/text-introduction.html' as text_introduction %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {# TODO: Add main molecules and organisms. #}
+        {{ text_introduction.render({
+            'heading': 'Text Introduction',
+            'intro': 'Content Intro Lorem Ipsum',
+            'body': lipsumText,
+            'link_text': 'Placeholder link',
+            'link_url': '#'
+        }) }}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+        Breadcrumbs<br>
+        Side Navigation
+    </aside>
+{%- endblock %}

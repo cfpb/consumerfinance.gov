@@ -78,6 +78,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Full Width Text organism.
 - Added templates and CSS for the Contact Method molecule.
 - Added templates and CSS for the Sidebar Contact Info organism.
+- Added `/browse-filterable` template page
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
