@@ -1,5 +1,6 @@
+import os
+
 from django.http import Http404
-from django.conf import settings
 from v1.models import CFGOVPage
 
 from wagtail.wagtailcore import hooks
@@ -28,7 +29,7 @@ def share_the_page(request, page):
 
 @hooks.register('before_serve_page')
 def check_request_site(page, request, serve_args, serve_kwargs):
-    if request.site.hostname == settings.STAGING_HOSTNAME:
+    if request.site.hostname == os.environ.get('STAGING_HOSTNAME'):
         if isinstance(page, CFGOVPage):
             if not page.shared:
                 raise Http404

@@ -1,6 +1,7 @@
+import os
+
 from django.db import models
 from django.http import Http404
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
@@ -99,7 +100,8 @@ class CFGOVPage(Page):
 
         else:
             # Request is for this very page.
-            if self.live or self.shared and request.site.hostname == settings.STAGING_HOSTNAME:
+            if self.live or self.shared and request.site.hostname == \
+                    os.environ.get('STAGING_HOSTNAME'):
                 return RouteResult(self)
             else:
                 raise Http404
