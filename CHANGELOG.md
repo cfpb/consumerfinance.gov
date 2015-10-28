@@ -127,6 +127,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Change templates to move logic to Django backend
 - Move Event filter over to a Django form.
 - Updates `jsdom` to `7.0.2` from `6.5.1`.
+- Move staging hostname variable from django settings to be an environment variable
 
 ### Removed
 - Removed unused exportsOverride section,
