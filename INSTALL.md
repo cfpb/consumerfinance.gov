@@ -195,9 +195,6 @@ if you don't already have one.
 
 Inside the `.env` file you can customize the project environment configuration.
 
-> **NOTE:**
-  For local development ensure you change the `DJANGO_ENV` variable to `local`.
-
 If you would like to manually copy the environment settings,
 copy the `.env_SAMPLE` file and un-comment each variable after
 adding your own values.
