@@ -10,14 +10,11 @@
       - |
         @m-image-text-25-75_img__sm
         @m-image-text-25-75_img__lg
-        @m-image-text-25-75_rule
-
   tags:
   - less
 */
 @m-image-text-25-75_img__sm: 130px;
 @m-image-text-25-75_img__lg: 150px;
-@m-image-text-25-75_rule: @horizontal-rule;
 
 
 /* topdoc
@@ -47,35 +44,12 @@
               .m-image-text-25-75_heading
               p.m-image-text-25-75_body
               a.m-image-text-25-75_link
-    - name: .m-image-text-25-75__bottom-rule modifier
-      markup: |
-        <div class="m-image-text-25-75 m-image-text-25-75__bottom-rule">
-            <div class="m-image-text-25-75_image-container">
-                <img src="image">
-            </div>
-            <div class="m-image-text-25-75_content">
-                <h1 class="m-image-text-25-75_heading">Heading</h1>
-                <p class="m-image-text-25-75_body">Body content</p>
-                <a class="m-image-text-25-75_link">Link</a>
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .m-image-text-25-75.m-image-text-25-75__bottom-rule
-            .m-image-text-25-75_image-container
-              img
-            .m-image-text-25-75_content
-              .m-image-text-25-75_heading
-              p.m-image-text-25-75_body
-              a.m-image-text-25-75_link
   tags:
     - cfgov-molecules
 */
 
 .m-image-text-25-75 {
-    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-bottom: unit( ( @grid_gutter-width * 2 ) / @base-font-size-px, em );
     .u-clearfix();
 
     &_image-container {
@@ -103,8 +77,6 @@
     }
 
     &_content {
-        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-
         .respond-to-min( @tablet-min, {
             margin-left: unit( ( @m-image-text-25-75_img__sm +
                                  @grid_gutter-width ) / @base-font-size-px, em );
@@ -114,10 +86,6 @@
             margin-left: unit( ( @m-image-text-25-75_img__lg +
                                  @grid_gutter-width ) / @base-font-size-px, em );
         } );
-    }
-
-    &__bottom-rule {
-        border-bottom: 1px solid @m-image-text-25-75_rule;
     }
 }
 

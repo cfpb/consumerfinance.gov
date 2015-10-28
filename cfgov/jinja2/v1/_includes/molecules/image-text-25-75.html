@@ -21,14 +21,18 @@
    settings.link_url:   Link URL.
    settings.link_text:  Link text.
 
-   has_rule:            Whether there is a bottom gray rule.
+   has_rule:            Whether there is a top gray rule.
                         Default is false.
 
    ========================================================================== #}
 
 {% macro render(settings, has_rule=false) %}
-<div class="m-image-text-25-75
-            {{ 'm-image-text-25-75__bottom-rule' if has_rule else '' }}">
+<div class="m-image-text-25-75">
+
+    {% if has_rule %}
+        <div class="a-rule-break"></div>
+    {% endif %}
+
     <div class="m-image-text-25-75_image-container">
 
     {# Use a div if this is a decorative image,
