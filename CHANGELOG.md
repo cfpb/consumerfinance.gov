@@ -49,7 +49,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - CFPBPage model
 - Backend for Staging vs Production publishing
 - Django template tags
-- A temporary blog page template for testing
 - Added `block__flush` to cf-enhancements to remove margin from all sides.
 - Added Acceptance tests for `blog` pages.
 - Added Acceptance tests for `newsroom` pages.
