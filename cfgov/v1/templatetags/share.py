@@ -2,7 +2,6 @@ import os
 
 from django import template
 from wagtail.wagtailcore.models import Page
-from django.conf import settings
 
 register = template.Library()
 
@@ -20,7 +19,7 @@ def is_shared(page):
 @register.assignment_tag(takes_context=True)
 def staging_url(context, page):
     url = page.url
-    if settings.STAGING_HOSTNAME not in page.url:
+    if os.environ.get('STAGING_HOSTNAME') not in page.url:
         url = url.replace(context['request'].site.hostname,
                           os.environ.get('STAGING_HOSTNAME'))
     return url
