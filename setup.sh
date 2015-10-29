@@ -109,7 +109,7 @@ dbsetup(){
 }
 
 # Returns 1 if a global command-line program installed, else 0.
-# For example, echo "node: $(program_is_installed node)".
+# For example, echo "node: $(is_installed node)".
 is_installed(){
   # Set to 1 initially.
   local return_=1
