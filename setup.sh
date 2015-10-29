@@ -49,13 +49,26 @@ clean(){
 # Install project dependencies.
 install(){
   echo 'Installing project dependencies...'
+
+  # Copy globally-installed packages.
+  # Protractor - JavaScript acceptance testing.
+  if [ $(program_is_installed protractor) = 0 ]; then
+    echo 'Installing Protractor dependencies locally...'
+    npm install protractor
+    ./$NODE_DIR/protractor/bin/webdriver-manager update
+  else
+    echo 'Global Protractor installed. Copying global install locally...'
+    protractor_symlink=$(command -v protractor)
+    protractor_binary=$(readlink $protractor_symlink)
+    protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
+    mkdir -p ./$NODE_DIR/protractor
+    cp -r $protractor_full_path ./$NODE_DIR/
+  fi
+
   npm install
   bower install --config.interactive=false
 
   # Update test dependencies.
-
-  # Protractor - JavaScript acceptance testing.
-  ./$NODE_DIR/protractor/bin/webdriver-manager update
 
   # Macro Polo - Jinja template unit testing.
   pip install -r ./test/macro_tests/requirements.txt
@@ -80,7 +93,7 @@ build(){
   gulp beep
 }
 
-# Setup MYSQL Server
+# Setup MYSQL Server.
 dbsetup(){
   if which mysql.server; then
     if mysql.server status; then
@@ -93,6 +106,18 @@ dbsetup(){
     echo 'Please install MYSQL Server'
     exit
   fi
+}
+
+# Returns 1 if a global command-line program installed, else 0.
+# For example, echo "node: $(program_is_installed node)".
+program_is_installed(){
+  # Set to 1 initially.
+  local return_=1
+
+  # Set to 0 if program is not found.
+  type $1 >/dev/null 2>&1 || { local return_=0; }
+
+  echo "$return_"
 }
 
 init
