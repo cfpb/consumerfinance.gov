@@ -52,7 +52,7 @@ install(){
 
   # Copy globally-installed packages.
   # Protractor - JavaScript acceptance testing.
-  if [ $(program_is_installed protractor) = 0 ]; then
+  if [ $(is_installed protractor) = 0 ]; then
     echo 'Installing Protractor dependencies locally...'
     npm install protractor
     ./$NODE_DIR/protractor/bin/webdriver-manager update
@@ -95,7 +95,7 @@ build(){
 
 # Setup MYSQL Server.
 dbsetup(){
-  if which mysql.server; then
+  if [ $(is_installed mysql.server) = 1 ]; then
     if mysql.server status; then
       ./create-mysql-db.sh
     else
@@ -103,14 +103,14 @@ dbsetup(){
       ./create-mysql-db.sh
     fi
   else
-    echo 'Please install MYSQL Server'
+    echo 'Please install MYSQL Server.'
     exit
   fi
 }
 
 # Returns 1 if a global command-line program installed, else 0.
 # For example, echo "node: $(program_is_installed node)".
-program_is_installed(){
+is_installed(){
   # Set to 1 initially.
   local return_=1
 
