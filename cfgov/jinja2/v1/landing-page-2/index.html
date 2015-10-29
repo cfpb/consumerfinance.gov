@@ -1,9 +1,16 @@
-{% extends 'layout-2-1-bleedbar.html' %}
+
+{% set use_side_nav_layout = request.GET['layout'] == 'sideNav' or false %}
+{% if use_side_nav_layout %}
+    {% extends 'layout-side-nav.html' %}
+{% else %}
+    {% extends 'layout-2-1-bleedbar.html' %}
+{% endif %}
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/text-introduction.html' as text_introduction %}
 {% import 'molecules/image-text-50-50.html' as image_text_50_50 %}
 {% import 'molecules/image-text-25-75.html' as image_text_25_75 %}
+{% import 'molecules/related-posts.html' as related_posts %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
@@ -12,6 +19,12 @@
 
 {# TODO: Remove lipsumText when and if it is no longer needed. #}
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
+{% block content_main_modifiers -%}
+    {% if use_side_nav_layout == true %}
+    content__flush-bottom
+    {% endif %}
+{%- endblock %}
 
 {% block content_main %}
     <div class="block
@@ -78,10 +91,31 @@
 
         </div>
     </div>
+
+    {% if use_side_nav_layout == true %}
+    <div class='block
+                block__bg
+                block__flush-sides
+                block__flush-bottom
+                block__border-top
+                block__border-right'>
+        {# TODO: Add sidebar organisms. #}
+        {{ related_posts.render({
+            'post':       get_document('posts', 'four-years-working-for-you'),
+            'half_width': true
+        }) }}
+    </div>
+    {% endif %}
 {% endblock %}
 
+
 {% block content_sidebar scoped -%}
+    {% if use_side_nav_layout == false %}
     <aside>
         {# TODO: Add sidebar organisms. #}
+        {{ related_posts.render({
+            'post': get_document('posts', 'four-years-working-for-you')
+        }) }}
     </aside>
+    {% endif %}
 {%- endblock %}

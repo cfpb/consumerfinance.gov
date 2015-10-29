@@ -80,6 +80,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Sidebar Contact Info organism.
 - Added `/browse-filterable` template page
 - Added templates and CSS for the Main Contact Info organism.
+- Added templates and CSS for the Related Posts molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

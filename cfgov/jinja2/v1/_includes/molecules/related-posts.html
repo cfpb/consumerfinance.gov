@@ -1,0 +1,85 @@
+{# ==========================================================================
+
+   related_posts.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup when given:
+
+   settings:            An object used to customize the markup.
+
+   settings.posts:      An array of related posts.
+
+   settings.half_width: A Boolean indicating whether the posts should be
+                        at half width.
+
+   ========================================================================== #}
+
+{% macro render(settings) %}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+{% set defaults = {
+    'search_types': 'posts, newsroom, press release, speech, testimony',
+    'search_size':  5
+} %}
+{% do settings.update(defaults) %}
+{% set posts = settings.posts or
+               more_like_this(settings.post,
+                              search_types=settings.search_types,
+                              search_size=settings.search_size)
+%}
+<div class="m-related-posts
+            {{ 'm-related-posts__half-width'
+               if settings.half_width else '' }}">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            Related Posts
+        </span>
+    </h2>
+    {#% TODO: Add condition to display various related post types %#}
+    {{ _related_posts_list(posts) }}
+</div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   _related_posts_list()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup when given:
+
+   posts:      An array of related posts.
+
+   ========================================================================== #}
+
+{% macro _related_posts_list(posts) %}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+{% import 'macros/time.html' as time %}
+<ul class="m-related-posts_list
+           list list__unstyled
+           list__spaced">
+    {% for post in posts %}
+    <li class="list_item">
+        <h4 class="u-mb5">
+            <a class="list_link"
+               href="{{ post.permalink }}">
+                {{ post.title | safe }}
+            </a>
+        </h4>
+        {% if post.text %}
+        <p class="short-desc">
+            {{ post.text | safe }}
+        </p>
+        {% endif %}
+        <p class="date">
+            {{ time.render(post.date, {'date':true}) }}
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% endmacro %}
