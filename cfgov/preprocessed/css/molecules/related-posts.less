@@ -77,7 +77,9 @@
 
 .m-related-posts__half-width {
     .m-related-posts_list {
-        @list_half-width();
+        .respond-to-min(@tablet-min {
+            @list_half-width();
+        });
     }
 }
 
