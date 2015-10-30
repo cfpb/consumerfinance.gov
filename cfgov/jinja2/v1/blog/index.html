@@ -11,25 +11,6 @@
     The official blog of the Consumer Financial Protection Bureau
 {%- endblock %}
 
-{% block hero %}
-    {# Only show the hero when:
-       1. No filters have been applied
-       2. We are on the first page of paginated results
-       3. A hero exists
-    #}
-    {% import 'hero.html' as hero with context %}
-    {% set active_filters_total =
-       selected_filters_for_field('blog_category')|length +
-       selected_filters_for_field('tags')|length +
-       selected_filters_for_field('author')|length +
-       selected_filters_for_field('range_date_gte')|length +
-       selected_filters_for_field('range_date_lte')|length
-    %}
-    {% if active_filters_total == 0 and vars.posts.current_page == 1 and view.hero %}
-        {{ hero.render(view.hero) }}
-    {% endif %}
-{% endblock %}
-
 {% block content_main %}
 
     <h1 data-qa-hook="main-title">Blog</h1>
