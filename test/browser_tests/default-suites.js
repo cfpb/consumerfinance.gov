@@ -15,7 +15,7 @@ var defaultSuites = {
         specs:       [ environment.specsBasePath + '*.js' ],
         browserName: 'chrome',
         version:     '',
-        platform:    'WINDOWS',
+        platform:    'Windows',
         maxDuration: 10800
       }
   ],
@@ -26,7 +26,7 @@ var defaultSuites = {
         specs:       [ environment.specsBasePath + '*.js' ],
         browserName: 'internet explorer',
         version:     '8.0',
-        platform:    'XP',
+        platform:    'Windows XP',
         maxDuration: 10800
       }
   ],
@@ -37,14 +37,14 @@ var defaultSuites = {
         specs:       [ environment.specsBasePath + '*.js' ],
         browserName: 'firefox',
         version:     '',
-        platform:    'WINDOWS 10',
+        platform:    'Windows 10',
         maxDuration: 10800
       },
       {
         specs:       [ environment.specsBasePath + '*.js' ],
         browserName: 'internet explorer',
         version:     '',
-        platform:    'WINDOWS 10',
+        platform:    'Windows 10',
         maxDuration: 10800
       }
   ]
