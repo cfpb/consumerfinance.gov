@@ -194,10 +194,14 @@
     }
 
     &_item__parent {
-        .h4();
         .webfont-medium();
-        margin-bottom: 0;
+
         padding-bottom: 0;
+        margin-bottom: 0;
+
+        .respond-to-min(@desktop-min, {
+          font-size: 18px;
+        });
     }
 
     &_item__child {
@@ -212,14 +216,12 @@
                  unit(10px / @font-size-large, em);
         border-left-style: solid;
         border-left-width: 5px;
-        font-size: unit(@font-size-large / @base-font-size-px, em);
         .u-link__colors(@pacific, @pacific, @black, @black, @black,
                         transparent, transparent, @green, @green, @green);
 
         .respond-to-max(@tablet-max, {
             display: block;
             padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-            font-size: unit(@font-size-small / @base-font-size-px, em);
             .u-link__colors(@darkgray, @darkgray, @darkgray, @darkgray, @darkgray,
                             transparent, transparent, @green, @green, @green);
             margin: 0 @grid_gutter-width / 2;
