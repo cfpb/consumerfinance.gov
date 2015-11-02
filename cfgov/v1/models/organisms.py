@@ -1,7 +1,5 @@
 from wagtail.wagtailcore import blocks
 
-from .base import CFGOVPage
-
 
 class Well(blocks.StructBlock):
     template_path = blocks.CharBlock(required=True)

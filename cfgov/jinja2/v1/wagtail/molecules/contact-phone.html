@@ -1,0 +1,46 @@
+{# ==========================================================================
+
+   contact_phone
+
+   ==========================================================================
+
+   Description:
+
+   Create a Contact-Phone molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Contact:-Phone
+
+   value:                  An object containing phone number information.
+   value.phones.number:    A phone number.
+   value.phones.vanity:    An associated vanity phone number.
+   value.phones.tty:       An associated TTY/TDD number.
+
+   value.is_fax:           Boolean for phone type.
+                             Is a fax number if value is `true`.
+                             Default is `false`.
+
+   ========================================================================== #}
+
+{% from 'macros/util/format/contact.html' import format_phone as format_phone %}
+<div class="m-contact-phone">
+    {% if value.is_fax %}
+        {% set icon = 'cf-icon-fax' %}
+        {% set label = 'Fax' %}
+    {% else %}
+        {% set icon = 'cf-icon-phone' %}
+        {% set label = 'Phone' %}
+    {% endif %}
+
+    <span class="cf-icon {{ icon }}"></span>
+    <span class="h5">{{ label }}</span>
+    <p class="short-desc">
+        {% for phone in value.phones %}
+            <span>{{ format_phone(phone.number) }}</span>
+            {% if phone.vanity %}
+            | <span>{{ format_phone(phone.vanity) }}</span>
+            {% endif %}
+            {% if phone.tty %}
+                <br>TTY/TDD: {{ format_phone(phone.tty) }}<br>
+            {% endif %}
+        {% endfor %}
+    </p>
+</div>

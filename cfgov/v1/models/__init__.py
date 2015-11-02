@@ -3,5 +3,7 @@ from .base import *
 from .events import *
 from .molecules import *
 from .organisms import *
-if settings.DEBUG :
+from .snippets import *
+
+if settings.DEBUG:
     from .demo import *

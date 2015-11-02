@@ -1,12 +1,14 @@
-import datetime
+from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from django.core.exceptions import ValidationError
-from .base import CFGOVPage
+
+from . import atoms
+
 
 def isRequired(field_name):
     return [str(field_name) + ' is required.']
+
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
@@ -75,3 +77,41 @@ class TextIntroduction(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = 'v1/demo/molecules/text_introduction.html'
+
+
+class ContactAddress(blocks.StructBlock):
+    label = blocks.CharBlock(max_length=50)
+    title = blocks.CharBlock(max_length=100, required=False)
+    street = blocks.CharBlock(max_length=100)
+    city = blocks.CharBlock(max_length=50)
+    state = blocks.CharBlock(max_length=25)
+    zip_code = blocks.CharBlock(max_length=15, required=False)
+
+    class Meta:
+        template = 'v1/wagtail/molecules/contact-address.html'
+        icon = 'mail'
+        label = 'Address'
+
+
+class ContactEmail(blocks.StructBlock):
+    emails = blocks.ListBlock(atoms.Hyperlink(label='Email'))
+
+    class Meta:
+        icon = 'mail'
+        template = 'v1/wagtail/molecules/contact-email.html'
+        label = 'Email'
+
+
+class ContactPhone(blocks.StructBlock):
+    fax = blocks.BooleanBlock(default=False, required=False, label='Fax?')
+    phones = blocks.ListBlock(
+        blocks.StructBlock([
+            ('number', blocks.CharBlock(max_length=15)),
+            ('vanity', blocks.CharBlock(max_length=15, required=False)),
+            ('tty', blocks.CharBlock(max_length=15, required=False)),
+        ]))
+
+    class Meta:
+        icon = 'mail'
+        template = 'v1/wagtail/molecules/contact-phone.html'
+        label = 'Phone'

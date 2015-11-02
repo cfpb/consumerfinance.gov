@@ -82,6 +82,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Related Posts molecule.
 - Added templates for the Hero molecule (CSS is in CF-Layout v1.3.0)
 - Added template for post-preview molecule
+- Added Contact snippet and molecule backends
+- Added temporary folder for converted Jinja2 Wagtail field template files
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -133,6 +135,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updates `jsdom` to `7.0.2` from `6.5.1`.
 - Move staging hostname variable from django settings to be an environment variable
 - Uses globally installed Protractor in setup.sh, if available.
+- Contact molecule templates
 
 ### Removed
 - Removed unused exportsOverride section,
