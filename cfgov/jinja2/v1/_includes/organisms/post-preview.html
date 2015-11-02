@@ -81,7 +81,7 @@
             Comments close {{ time.render(settings.comments_close_date, {'date':true}) }}
             </span>
         {% endif %}
-        {% if settings.post_content %}
+        {% if settings.body %}
             <p class="o-post-preview_description">
                 {{ settings.body | safe }}
             </p>
