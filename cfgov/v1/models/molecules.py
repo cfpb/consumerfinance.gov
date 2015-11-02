@@ -129,3 +129,42 @@ class CallToAction(blocks.StructBlock):
         template = 'v1/wagtail/molecules/call-to-action.html'
         icon = 'grip'
         label = 'Call to Action'
+
+
+class ContactAddress(blocks.StructBlock):
+    label = blocks.CharBlock(max_length=50)
+    title = blocks.CharBlock(max_length=100, required=False)
+    street = blocks.CharBlock(max_length=100)
+    city = blocks.CharBlock(max_length=50)
+    state = blocks.CharBlock(max_length=25)
+    zip_code = blocks.CharBlock(max_length=15, required=False)
+
+    class Meta:
+        template = 'v1/wagtail/molecules/contact-address.html'
+        icon = 'mail'
+        label = 'Address'
+
+
+class ContactEmail(blocks.StructBlock):
+    emails = blocks.ListBlock(atoms.Hyperlink(label='Email'))
+
+    class Meta:
+        icon = 'mail'
+        template = 'v1/wagtail/molecules/contact-email.html'
+        label = 'Email'
+
+
+class ContactPhone(blocks.StructBlock):
+    fax = blocks.BooleanBlock(default=False, required=False,
+                              label='Is this number a fax?')
+    phones = blocks.ListBlock(
+        blocks.StructBlock([
+            ('number', blocks.CharBlock(max_length=15)),
+            ('vanity', blocks.CharBlock(max_length=15, required=False)),
+            ('tty', blocks.CharBlock(max_length=15, required=False)),
+        ]))
+
+    class Meta:
+        icon = 'mail'
+        template = 'v1/wagtail/molecules/contact-phone.html'
+        label = 'Phone'
