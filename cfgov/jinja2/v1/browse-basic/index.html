@@ -1,0 +1,47 @@
+{% extends 'layout-side-nav.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/expandable.html' as expandable %}
+{% import 'organisms/expandable-group.html' as expandable_group %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {% call expandable_group.render("Group Header") %}
+            {% call expandable.render("Expand 1 - initially open", true) %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Expand 2") %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+        {% endcall %}
+
+        {% call expandable_group.render("Accordion-style Group", true) %}
+            {% call expandable.render("Expand 1") %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Expand 2") %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Expand 3") %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+        {% endcall %}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+        Breadcrumbs<br>
+        Side Navigation
+    </aside>
+{%- endblock %}

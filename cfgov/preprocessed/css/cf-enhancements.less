@@ -520,6 +520,74 @@ tbody {
 
 
 /* topdoc
+  name: Hide
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <h1 class="u-hide">
+          Show using JavaScript
+        </h1>
+      codenotes:
+        - .u-hidden;
+      notes:
+        - "Use this class to hide something,
+          perhaps to be shown using JavaScript."
+  tags:
+    - cf-core
+*/
+
+.u-hide {
+  display: none;
+}
+
+
+/* topdoc
+  name: Padded expandable modifier
+  family: cf-expandables
+  patterns:
+  - name: .expandable__padded (modifier)
+    codenotes:
+      - |
+        .expandable__padded
+    notes:
+      - "Adds padding and a background color to .expandable_header and
+         .expandable_content."
+      - "In addition to using the .expandable__padded modifier you also need
+         to make sure you are using .expandable_header."
+  tags:
+  - cf-expandables
+*/
+
+// TODO: remove !important when migrating this to cf-expandables.
+.expandable__padded {
+    .expandable_header {
+        // Includes optical offset eyeballed at 15px.
+        padding: unit(((@grid_gutter-width / 2) - 5px) / @base-font-size-px, em)
+                 unit((@grid_gutter-width / 2) / @base-font-size-px, em) !important;
+    }
+
+    .expandable_content {
+        // Margin collapsing trick for more consistent bottom padding.
+        // Includes optical offset eyeballed at 15px.
+        margin: 0
+                unit(((@grid_gutter-width / 2) - 1px) / @base-font-size-px, em)
+                unit((@grid_gutter-width / 2) / @base-font-size-px, em) !important;
+
+        // The divider between _header and _content.
+        &:before {
+            content: '';
+            display: block;
+            height: 1px;
+            // Includes optical offset eyeballed at 15px.
+            margin-bottom: unit(((@grid_gutter-width / 2) - 1px) / @base-font-size-px, em) !important;
+            background: @expandable__padded-divider;
+        }
+    }
+}
+
+
+/* topdoc
     name: Expandable header modifier
     family: cfgov-cf-enhancements
     patterns:
