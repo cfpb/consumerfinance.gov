@@ -1,3 +1,4 @@
+
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {# Import organisms and molecules used in the template. #}
@@ -6,6 +7,8 @@
 {% import 'molecules/image-text-25-75.html' as image_text_25_75 %}
 {% import 'molecules/call-to-action.html' as call_to_action %}
 {% import 'organisms/well.html' as well %}
+{% import 'organisms/email-signup.html' as email_signup %}
+{% import 'molecules/related-posts.html' as related_posts %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
@@ -102,14 +105,27 @@
     </div>
 {% endblock %}
 
+{% block content_sidebar_modifiers -%}
+    o-content-sidebar
+{%- endblock %}
+
 {% block content_sidebar scoped -%}
     <aside>
         {# TODO: Add sidebar organisms. #}
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Slug Title
+            </span>
+        </h2>
         {{ call_to_action.render( {
           'button': {
               'text': 'Call to Action'
           },
           'text': lipsumText
+        }) }}
+        {{ email_signup.render({
+            'text':     lipsumText,
+            'required': true
         }) }}
     </aside>
 {%- endblock %}

@@ -1,0 +1,52 @@
+{# ==========================================================================
+
+   email_signup.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates an email sign up form when given:
+
+   settings:      An object used to customize the markup.
+
+   settings.text: The text used within the description markup.
+
+   gd_code:       A GovDelivery code for a specified mailing list.
+
+   ========================================================================== #}
+
+{% macro render(settings, gd_code='') %}
+{% import 'molecules/form-field-with-button.html' as form_field_with_button %}
+<form class="o-email-signup"
+      id="{{ settings.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+      action="/subscriptions/new/"
+      method="POST"
+      enctype="application/x-www-form-urlencoded">
+      {% if settings.text %}
+      <p class='short-desc'>
+          {{ settings.text }}
+      </p>
+      {% endif %}
+      {{ form_field_with_button.render( {
+          'field': {
+              'label':       'Email Address',
+              'name':        'o-email-signup_email',
+              'placeholder': 'example@mail.com',
+              'type':        'email',
+              'info':        _privacy_statement(),
+              'required':    true
+          },
+          'btn_text': 'Sign up'
+      } ) }}
+</form>
+{% endmacro %}
+
+
+{% macro _privacy_statement() %}
+<p class="short-desc">
+    The information you provide will permit the Consumer Financial
+    Protection Bureau to process your request or inquiry.
+    <a href="/sub-pages/privacy-policy/">See More</a>
+</p>
+{% endmacro %}
