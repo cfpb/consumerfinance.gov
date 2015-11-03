@@ -1,0 +1,28 @@
+{# ==========================================================================
+
+   expandable_group.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create an Expandable Group organism when given:
+
+   label:        Label you want on the Expandable Group.
+                 Default is an empty string.
+
+   is_accordion: Whether this group is an accordion or not.
+                 Default is false.
+   ========================================================================== #}
+
+{% macro render(label="", is_accordion=false) %}
+<div class="expandable-group" data-accordion="{{ is_accordion }}">
+    {% if label %}
+        <div class="expandable-group_header">{{ label }}</div>
+    {% endif %}
+
+    {# Should be a stack of Expandable instances. #}
+    {{ caller() }}
+</div>
+
+{% endmacro %}

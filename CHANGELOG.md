@@ -84,6 +84,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added template for post-preview molecule
 - Added templates and CSS for the Signup Form organism.
 - Added templates and CSS for the Content Sidebar organism.
+- Added `/browse-basic` template page.
+- Added templates and CSS for Expandable molecule and ExpandableGroup organism.
+- Added `classlist` JS polyfill.
+- Added `u-hide` utility class to hide an element.
+- Added `EventObserver` for adding event broadcaster capability to JS classes.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -135,6 +140,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updates `jsdom` to `7.0.2` from `6.5.1`.
 - Move staging hostname variable from django settings to be an environment variable
 - Uses globally installed Protractor in setup.sh, if available.
+- Reduced padding on expandables per direction of design.
+- Hid cues on expandables when JS is turned off.
 
 ### Removed
 - Removed unused exportsOverride section,
