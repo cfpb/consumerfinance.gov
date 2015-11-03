@@ -16,7 +16,7 @@
   'Getters & setters cannot be defined on this javascript engine';
   var ERR_VALUE_ACCESSORS =
     'A property cannot both have accessors and be writable or have a value';
-  Object.defineProperty = function defineProperty( object, property, // eslint-disable-line max-statements, complexity, max-len
+  Object.defineProperty = function defineProperty( object, property,
     descriptor ) {
     // handle object
     if ( object === null || !( object instanceof Object || typeof object ===

@@ -1,0 +1,2 @@
+# Ignore 3rd-party polyfills.
+cfgov/preprocessed/js/modules/polyfill/**/*.js
