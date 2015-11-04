@@ -91,6 +91,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Call to Action backend and template
 - Added Contact snippet and molecule backends
 - Added temporary folder for converted Jinja2 Wagtail field template files
+- Added templates and CSS for the Adding Sidebar Breakout organism.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
