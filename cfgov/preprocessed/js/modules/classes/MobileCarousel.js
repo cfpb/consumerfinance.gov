@@ -17,7 +17,7 @@ var breakpointsConfig = require( '../../config/breakpoints-config' );
 */
 function MobileCarousel( breakpointPx ) {
   // Initialization can happen here, like an `init` method.
-  var _breakpointPx = breakpointPx || breakpointsConfig.mobile.max;
+  var _breakpointPx = breakpointPx || breakpointsConfig.bpXS.max;
   var _targetDom;
 
   function _enterBreakpoint() {

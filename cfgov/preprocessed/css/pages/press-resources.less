@@ -21,7 +21,7 @@
 .contact-person {
     .webfont-regular();
     margin-bottom: unit(30px / @base-font-size-px, em);
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         margin-bottom: unit(10px / @base-font-size-px, em);
     });
 }
@@ -47,7 +47,7 @@
     }
 }
 
-.respond-to-min(@tablet-min, {
+.respond-to-min(@bp-sm-min, {
     .press-section_title {
         .h2();
         margin-bottom: unit(30px / @font-size, em);
@@ -75,7 +75,7 @@
     }
 });
 
-.respond-to-min(1024px, {
+.respond-to-min(@bp-lg-min, {
     .press-contacts_main-contact-list .list_item,
     .press-contacts .contact-person {
         .grid_column(4);
@@ -92,7 +92,7 @@
     }
 });
 
-.respond-to-min(1200px, {
+.respond-to-min(@bp-xl-min, {
     .contact-person__director  .contact-person_photo {
         width: 180px;
         margin-right: unit(@grid_gutter-width / @base-font-size-px, em);

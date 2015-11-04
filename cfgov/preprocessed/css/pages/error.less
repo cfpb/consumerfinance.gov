@@ -4,7 +4,7 @@
    ========================================================================== */
 
 .btn__error-home {
-    .respond-to-max(@tablet-min, {
+    .respond-to-max(@bp-sm-min, {
         text-align: center;
     });
 }
@@ -12,7 +12,7 @@
 .error_action_container {
     background-color: @white;
 
-    .respond-to-max(1025px, {
+    .respond-to-max(@bp-med-max, {
         .stack-col(content-l_col-1-2);
     });
 }
@@ -20,7 +20,7 @@
 .error_copy_container {
     .grid_column(6);
 
-    .respond-to-max(@tablet-max, {
+    .respond-to-max(@bp-sm-max, {
         .grid_column(12);
     });
 }
@@ -31,7 +31,7 @@
     .superheader {
         .webfont-regular();
 
-        .respond-to-max(@tablet-max, {
+        .respond-to-max(@bp-sm-max, {
             .h1();
         });
     }
@@ -45,7 +45,7 @@
         .content_wrapper {
             background: transparent url('/static/img/plug.png') no-repeat top right;
 
-            .respond-to-max(@tablet-max, {
+            .respond-to-max(@bp-sm-max, {
                 background: none;
             });
         }
@@ -57,11 +57,11 @@
 
             background: @darkgray url('/static/img/server-rack.png') no-repeat @background-image-size__px 60px;
 
-            .respond-to-max(@tablet-max, {
+            .respond-to-max(@bp-sm-max, {
                 background-image: none;
             });
 
-            .respond-to-range(@desktop-min, 1024px, {
+            .respond-to-range(@bp-med-min, @bp-med-max, {
                 background-position: @background-image-offset-x__px 60px;
             });
     }

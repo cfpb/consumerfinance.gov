@@ -30,7 +30,7 @@ function _navSecondaryToggle() {
 // Tests whether or not the secondary nav should be toggled.
 function _navSecondaryToggleTest() {
   var breakpointState = getBreakpointState();
-  var isSmall = breakpointState.isMobile || breakpointState.isTablet;
+  var isSmall = breakpointState.isBpXS || breakpointState.isBpSM;
 
   var isExpanded =
     $( '.nav-secondary .expandable_content' )

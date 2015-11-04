@@ -53,7 +53,7 @@
     background-color: #000;
     text-align: center;
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         .u-flexible-container();
     });
 }
@@ -130,18 +130,18 @@
         color: @pacific;
     }
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         text-align: right;
     });
 }
 
 .video-player_share-actions,
 .video-player_video-actions {
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         margin-top: @gutter-half__em;
     });
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         .grid_column(6);
     });
 }

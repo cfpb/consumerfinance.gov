@@ -40,13 +40,13 @@
     margin-bottom: unit( ( @grid_gutter-width * 2 ) / @base-font-size-px, em );
 
     &_heading {
-        .respond-to-range( @tablet-min, @tablet-max {
+        .respond-to-range( @bp-sm-min, @bp-sm-max {
             .grid_column(12);
         } );
     }
 
     &_column {
-        .respond-to-range( @tablet-min, @tablet-max {
+        .respond-to-range( @bp-sm-min, @bp-sm-max {
             .grid_column(6);
         } );
     }

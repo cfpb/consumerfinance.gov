@@ -53,7 +53,7 @@
     margin: 10px;
     vertical-align: middle; // removes typical inline vertical whitespace
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
         height: 50px;
         width: 237px;
@@ -71,7 +71,7 @@
 .header_misc {
     display: none;
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         display: block;
         // magic number for top margin aligns text baseline with logo baseline
         margin: 52px

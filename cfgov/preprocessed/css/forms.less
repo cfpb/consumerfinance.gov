@@ -506,7 +506,7 @@
     // so we'll need to update the top margin from .form-actions to avoid
     // double margins.
     .form-l + & {
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             margin-top: unit(15px / @base-font-size-px, em);
         });
     }
@@ -517,7 +517,7 @@
 }
 
 .form-actions__right-on-med {
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         text-align: right;
     });
 }

@@ -29,13 +29,13 @@
 
   .webfont-regular();
 
-  .respond-to-max(@mobile-max, {
+  .respond-to-max(@bp-xs-max, {
     & + & {
       margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
   });
 
-  .respond-to-min(@tablet-min, {
+  .respond-to-min(@bp-sm-min, {
     .grid_column(6);
   });
 }

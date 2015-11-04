@@ -21,7 +21,9 @@ describe( 'getBreakpointState', function() {
   it( 'should return an object with properties from config file', function() {
     var breakpointStatekeys =
         Object.keys( breakpointConfig ).map( function( key ) {
-          return key.toLowerCase().replace( 'is', '' );
+          key.replace( 'is', '' );
+          key.charAt( 0 ).toLowerCase() + key.slice( 1 );
+          return key;
         } );
 
     breakpointState = getBreakpointState();

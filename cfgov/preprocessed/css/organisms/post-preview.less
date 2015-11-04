@@ -84,10 +84,10 @@
 .o-post-preview {
     .webfont-regular();
     &_image-container {
-        .respond-to-max(@tablet-max, {
+        .respond-to-max(@bp-sm-max, {
             margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
         });
-        .respond-to-min(@desktop-min, {
+        .respond-to-min(@bp-med-min, {
             .grid_column(4);
         });
     }
@@ -98,7 +98,7 @@
 }
 
 .o-post-preview_image-container + .o-post-preview_content {
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         .grid_column(8);
     });
 }

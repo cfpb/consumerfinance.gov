@@ -17,7 +17,7 @@ function _inBreakpointRange( breakpointRange, width ) {
 
 /**
  * @returns {object} An object literal with Boolean
- * isMobile, isTablet, isDesktop, isWall, isSmall properties.
+ * isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
  * @param {integer} width Current window width.
  */
 function get( width ) {

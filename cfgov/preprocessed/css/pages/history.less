@@ -10,7 +10,7 @@
 .history-section-expandable_header {
     background: @gray-10;
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         padding-right: @grid_gutter-width;
         padding-left: @grid_gutter-width;
     });
@@ -25,7 +25,7 @@
         margin-top: 0;
     }
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         margin-right: -@grid_gutter-width;
         padding: 0 @grid_gutter-width @grid_gutter-width;
         margin-left: -@grid_gutter-width;
@@ -44,7 +44,7 @@
         display: none;
     }
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         padding-bottom: @grid_gutter-width;
     });
 }
@@ -59,14 +59,14 @@
         margin-left: 0;
     }
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         background-image: linear-gradient(to bottom, @black 1px, transparent 1px);
         background-position: 10px 0;
         background-repeat: repeat-y;
         background-size: 5px 2px;
     });
 
-    .respond-to-min(@wall-min, {
+    .respond-to-min(@bp-xl-min, {
         background-position: 50% 0;
     });
 }
@@ -80,12 +80,12 @@
     color: @white;
     text-align: center;
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         // Enough width for four characters.
         width: 3em;
     });
 
-    .respond-to-min(@wall-min, {
+    .respond-to-min(@bp-xl-min, {
         clear: both;
         margin-right: auto;
         margin-left: auto;
@@ -101,7 +101,7 @@
     position: absolute;
     right: unit(10px / @btn-font-size, em);
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         right: unit(25px / @btn-font-size, em);
     });
 }
@@ -148,7 +148,7 @@
     background: white;
     .webfont-regular();
 
-    .respond-to-min(@desktop-min, {
+    .respond-to-min(@bp-med-min, {
         margin-left: 49px;
         .history-item__right();
 
@@ -183,7 +183,7 @@
         }
     });
 
-    .respond-to-min(@wall-min, {
+    .respond-to-min(@bp-xl-min, {
         width: 387px;
         float: right;
         margin-top: 3em;

@@ -195,7 +195,7 @@
 /* Sliding nav for portrait tablets and smaller
    ========================================================================== */
 
-.respond-to-max(@tablet-max, {
+.respond-to-max(@bp-sm-max, {
     body[aria-expanded="true"] {
         position: relative;
 
@@ -317,7 +317,7 @@
 /* Horizontal mega menu for larger devices
    ========================================================================== */
 
-.respond-to-min(@desktop-min, {
+.respond-to-min(@bp-med-min, {
     .primary-nav {
         margin-right: -@grid_gutter-width / 2;
         margin-left: -@grid_gutter-width / 2;
@@ -400,19 +400,19 @@
     }
 });
 
-.respond-to-max(1000px, {
+.respond-to-max(@bp-med-max, {
     .sub-nav_media {
         display: none;
     }
 });
 
-.respond-to-min(1001px, {
+.respond-to-min(@bp-lg-min, {
     .sub-nav_menu {
         .grid_column(8);
     }
 });
 
-.respond-to-min(@wall-min, {
+.respond-to-min(@bp-xl-min, {
     .sub-nav_media {
         padding-right: @grid_gutter-width;
         padding-left: @grid_gutter-width;

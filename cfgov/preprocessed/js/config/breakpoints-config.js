@@ -4,19 +4,23 @@
 // All values are pixel based.
 
 module.exports = {
-  mobile: {
+  bpXS: {
     min: 0,
-    max: 599
+    max: 600
   },
-  tablet: {
-    min: 600,
-    max: 800
+  bpSM: {
+    min: 601,
+    max: 900
   },
-  desktop: {
-    min: 801,
-    max: 1199
+  bpMED: {
+    min: 901,
+    max: 1020
   },
-  wall: {
-    min: 1200
+  bpLG: {
+    min: 1021,
+    max: 1200
+  },
+  bpXL: {
+    min: 1201
   }
 };

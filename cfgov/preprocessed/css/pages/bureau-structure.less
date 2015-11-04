@@ -5,7 +5,7 @@
 
 .org-chart {
 
-    .respond-to-min(@tablet-min, {
+    .respond-to-min(@bp-sm-min, {
         width: 90%;
         margin: 0 auto;
     });
@@ -31,7 +31,7 @@
 
         /* :before pseudo element's left border draws a centered vertical line
            down from .org-chart_root to .org-chart_branches.*/
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             position: relative;
 
             &:before{
@@ -49,7 +49,7 @@
     &_branch {
         /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
            draw lines connecting the branch headers to the line from .org-chart_root. */
-        .respond-to-min(600px, {
+        .respond-to-min(@bp-sm-min, {
             .grid_column(6);
             position: relative;
             padding-top: 45px;
@@ -88,7 +88,7 @@
         });
 
         &_name {
-            .respond-to-min(@tablet-min, {
+            .respond-to-min(@bp-sm-min, {
                 .h4();
                 margin-bottom: unit(15px / @font-size, em);
                 text-align: center;
@@ -105,7 +105,7 @@
         border-style: solid;
         border-width: 1px 0 1px 0;
 
-        .respond-to-min(@tablet-min {
+        .respond-to-min(@bp-sm-min, {
             border-width: 1px 0 0 0;
         });
     }
@@ -114,7 +114,7 @@
         width: 100%;
         margin-bottom: -1px;
 
-        .respond-to-min(@tablet-min, {
+        .respond-to-min(@bp-sm-min, {
             position: relative;
             margin-bottom: @grid_gutter-width / 2;
         });
@@ -124,7 +124,7 @@
             border-top: 5px solid @pacific-50;
 
             .org-chart_node {
-                .respond-to-min(@tablet-min, {
+                .respond-to-min(@bp-sm-min, {
                     margin-bottom: 0px;
                 });
             }
@@ -132,7 +132,7 @@
             .org-chart_role {
                 border-width: 1px 0 1px 0;
 
-                .respond-to-min(@tablet-min, {
+                .respond-to-min(@bp-sm-min, {
                     background: @pacific-20;
                     border-color: #E5F1FA;
                     border-width: 0 0 1px 0;
@@ -167,7 +167,7 @@
     .content-show,
     .content-hide {
 
-        .respond-to-max(@mobile-max, {
+        .respond-to-max(@bp-xs-max, {
             .cf-icon,
             &:before,
             &:after {
@@ -207,7 +207,7 @@
     right: 10px;
     top: 20px;
 
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-xs-max, {
         height: 30px;
         top: 50%;
         margin-top: -@base-font-size-px/2;
