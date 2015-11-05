@@ -84,6 +84,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added template for post-preview molecule
 - Added templates and CSS for the Signup Form organism.
 - Added templates and CSS for the Content Sidebar organism.
+- Adds new file to commands module in the core app called `_helpers.py`
+- Adds ability to import snippets
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -137,6 +139,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Uses globally installed Protractor in setup.sh, if available.
 - Updated the existing breakpoint variables and values to the ones released in cf-core v1.2.0
 - Excludes 3rd-party JS polyfills from linting.
+- Abstracts code into helper class `DataImporter`
+- Modifies command line options to allow specifying arguments for importing pages or snippets
+- Changes the way the processor module is imported so it imports it using the [app] argument
+- Moves the processors module from the core.management.commands module to the v1 app
 
 ### Removed
 - Removed unused exportsOverride section,
