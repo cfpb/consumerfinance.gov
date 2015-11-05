@@ -12,6 +12,10 @@
 {% block content_main %}
     <div class="block
                 block__flush-top">
+        {% call expandable.render("Single Expandable") %}
+            {{ lipsum(1, false, 10, 225) | safe }}
+        {% endcall %}
+
         {% call expandable_group.render("Group Header") %}
             {% call expandable.render("Expand 1 - initially open", true) %}
                 {{ lipsum(1, false, 10, 225) | safe }}
@@ -41,7 +45,6 @@
 {% block content_sidebar scoped -%}
     <aside>
         {# TODO: Add sidebar organisms. #}
-        Breadcrumbs<br>
         Side Navigation
     </aside>
 {%- endblock %}
