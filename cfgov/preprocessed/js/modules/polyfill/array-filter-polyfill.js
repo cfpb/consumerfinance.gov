@@ -10,8 +10,7 @@
 'use strict';
 
 if ( !Array.prototype.filter ) {
-  // Ignore complexity eslint offense for polyfill.
-  Array.prototype.filter = function filter( fun ) { //eslint-disable-line
+  Array.prototype.filter = function filter( fun ) {
 
     if ( typeof this === 'undefined' || this === null ) {
       throw new TypeError();

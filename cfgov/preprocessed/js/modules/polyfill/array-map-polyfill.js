@@ -10,8 +10,7 @@
 'use strict';
 
 if ( !Array.prototype.map ) {
-  // Ignore complexity eslint offense for polyfill.
-  Array.prototype.map = function map( callback, thisArg ) { //eslint-disable-line
+  Array.prototype.map = function map( callback, thisArg ) {
 
     var T, A, k;
 

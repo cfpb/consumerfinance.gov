@@ -136,6 +136,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move staging hostname variable from django settings to be an environment variable
 - Uses globally installed Protractor in setup.sh, if available.
 - Updated the existing breakpoint variables and values to the ones released in cf-core v1.2.0
+- Excludes 3rd-party JS polyfills from linting.
 
 ### Removed
 - Removed unused exportsOverride section,
