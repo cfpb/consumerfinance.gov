@@ -94,7 +94,7 @@
     &_image {
         display: block;
         width: 100%;
-  }
+    }
 }
 
 .o-post-preview_image-container + .o-post-preview_content {
@@ -102,6 +102,17 @@
         .grid_column(8);
     });
 }
+
+.o-post-preview_image-container {
+    position: relative;
+
+    .calendar-icon {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+}
+
 /* topdoc
     name: EOF
     eof: true

@@ -52,11 +52,26 @@
             'heading': 'This is a event post',
             'body': lipsumText,
             'published_date': '20030805T213611',
-            'image_url': 'http://www.placehold.it/160x90',
+            'event_venue': 'The White House',
+            'event_street': '1600 pennsylvania avenue',
+            'event_city': 'Washington',
+            'event_state': 'DC',
+            'event_zip': '20500',
+            'event_start_dt':'20030805T213611',
             'post_category': ['Speech'],
-            'post_tags': ['FOIA', 'Mortgage'],
-            'event_location': 'The White House, Washington, DC',
-            'event_date': '20030805T213611'
+            'post_tags': ['FOIA', 'Mortgage']
+            },
+            '/events/') }}
+    </div>
+    <div class="block">
+        {{ post_preview.render({
+            'heading': 'This is a event livestream post',
+            'body': lipsumText,
+            'published_date': '20030805T213611',
+            'event_stream_link': 'http://www.whitehouse.gov',
+            'event_start_dt':'20030805T213611',
+            'post_category': ['Speech'],
+            'post_tags': ['FOIA', 'Mortgage']
             },
             '/events/') }}
     </div>
