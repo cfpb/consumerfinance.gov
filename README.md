@@ -133,22 +133,59 @@ To view the indexed content you can use a tool called
 than 8000 use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
 
 ### Load data into Django models
-The Django management command `import-data` will import data from the specified source into the specified model.
-
-`python cfgov/manage.py import-data data_type wagtail_type parent_page_slug -u username -p password`
+The Django management command `import-data` will import data from the specified
+source into the specified model.
+```
+usage: manage.py import-data [-h] [--version] [-v {0,1,2,3}] [--settings SETTINGS]
+        [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--parent PARENT] 
+        [--snippet] -u USERNAME -p PASSWORD [--app APP] [--overwrite]
+        data_type wagtail_type
+```
 - `data_type` is the WP post type defined in the `processors.py` file.
 - `wagtail_type` is the Django model name where the data is going to go.
-- `parent_page_slug` is the slug of the parent page that the pages will exist under.
 - `-u` and `-p` are credentials to an admin account.
 
-Optional parameters:
+Required option:
+- `--parent` is the slug of the parent page that the pages will exist
+  under.
+- `--snippet` is a flag that's used to signify that the importing data will be
+  inserted into a Django model, registered as a [Wagtail snippet](http://docs.wagtail.io/en/v1.1/topics/snippets.html).
+  One of these options must be set for the command to run.
+
+Other options:
 - `--app` is the name of the app the Django models from `wagtail_type` exist in.
-It defaults to our app, `v1`
+  It defaults to our app, `v1`.
 - `--overwrite` overwrites existing pages in Wagtail based on comparing slugs.
 Be careful when using this as it will overwrite the data in Wagtail with data
 from the source. Default is `False`.
 - `--verbosity` is set to 1 by default. Set it to 2 or higher and expect the
 name of the slugs to appear where appropriate.
+
+For now, in order for this command to import the data, one of the things it 
+needs is a file for "sheer logic" to use to retrieve the data. For us, the
+processors are already done from our last backend. This part of the command 
+will change as we move away from our dependency on "sheer logic". This is set
+by putting the file in a `processors` module in the top level of the project
+and adding it to the setting SHEER_PROCESSORS.
+
+The command needs a `processors` module in the app that's passed to it, as well
+as a file with the same name as the Django model specified that defines a class
+named `DataConverter` that subclasses either `_helpers.PageDataConverter` or
+`_helpers.SnippetDataConverter` and implements their method(s) explained below:
+- **PageDataConverter**
+ - **convert(self, imported_data)**
+   For converting pages or snippets, the processor file must implement the
+   **convert()** function with one argument. That argument represents the
+   imported data dictionary. That function must take the dictionary and map it
+   to a new one that uses the keys that Wagtail's **create()** and **edit()**
+   admin/snippet view functions expect in the `request.POST` dictionary to
+   actually migrate the data over, and then returns that dictionary where it
+   will be assigned to `request.POST`.
+- **SnippetDataConverter(PageDataConverter)**
+ - **get_existing_snippet()**
+   This also accepts the imported data dictionary. It's used to find an
+   existing snippet given the imported data, returning it if found or `None` if
+   not.
 
 ### 4. Launch the Gulp watch task
 
