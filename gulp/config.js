@@ -6,20 +6,20 @@ var paths = require( '../config/environment' ).paths;
 module.exports = {
   pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
   banner:
-      '/*!\n' +
-      ' *               ad$$               $$\n' +
-      ' *              d$"                 $$\n' +
-      ' *              $$                  $$\n' +
-      ' *   ,adPYba.   $$$$$  $$.,dPYba.   $$.,dPYba.\n' +
-      ' *  aP‘    `$:  $$     $$P‘    `$a  $$P‘    `$a\n' +
-      ' *  $(          $$     $$(      )$  $$(      )$\n' +
-      ' *  "b.    ,$:  $$     $$b.    ,$"  $$b.    ,$"\n' +
-      ' *   `"Ybd$"‘   $$     $$`"YbdP"‘   $$`"YbdP"‘\n' +
-      ' *                     $$\n' +
-      ' *                     $$\n' +
-      ' *                     $$\n' +
+      '/*\n' +
+      ' *            /$$$$$$          /$$        \n' +
+      ' *           /$$__  $$        | $$        \n' +
+      ' *  /$$$$$$$| $$  \\__//$$$$$$ | $$$$$$$  \n' +
+      ' * /$$_____/| $$$$   /$$__  $$| $$__  $$  \n' +
+      ' *| $$      | $$_/  | $$  \\ $$| $$  \\ $$\n' +
+      ' *| $$      | $$    | $$  | $$| $$  | $$  \n' +
+      ' *|  $$$$$$$| $$    | $$$$$$$/| $$$$$$$/  \n' +
+      ' * \\_______/|__/    | $$____/ |_______/  \n' +
+      ' *                 | $$                  \n' +
+      ' *                 | $$                  \n' +
+      ' *                 |__/                  \n' +
       ' *\n' +
-      ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
+      ' *  <%= pkg.name %> - v<%= pkg.version %> \n' +
       ' *  <%= pkg.homepage %>\n' +
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */\n',
