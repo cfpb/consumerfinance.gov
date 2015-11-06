@@ -227,99 +227,18 @@
 
 /* topdoc
   name: Tables
-  family: cfgov-cf-enhancements
+  family: cf-tables
   notes:
-    - "Updated table styling that needs to get ported to cf-core pending Design
-       Manual approval."
-    - "At screens smaller than 960px wide the table cells stack."
-  patterns:
-    - name: Default table
-      markup: |
-        <table>
-            <thead>
-                <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td>Lorem ipsum dolor.</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td>Lorem ipsum dolor.</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td>Lorem ipsum dolor.</td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor.</td>
-                    <td>Lorem ipsum dolor.</td>
-                </tr>
-            </tbody>
-        </table>
+    - Adjustments for cf-tables to allow them to be full-width
   tags:
-    - cfgov-cf-enhancements
+    - cfgov-cf-tables
 */
-@tr-border: @gray-50;
-th,
-td {
-    padding: unit(10px / @base-font-size-px, em)
-             unit(10px / @base-font-size-px, em);
-    vertical-align: top;
 
-    // Needed to override styles from cf-core.
-    tbody > tr:nth-child(odd) > & {
-        background: inherit;
-    }
-}
-
-thead th {
-    .padded-header();
-}
-
-tbody {
-    border-top: 1px solid @tr-border;
-
-    th {
-        .webfont-medium();
-    }
-
-    tr {
-        border-bottom: 1px solid @tr-border;
-    }
-}
-
-.respond-to-max(960px, {
+.respond-to-max(@bp-sm-max, {
     table {
         width: 100%;
     }
-
-    thead {
-        th {
-            box-sizing: border-box;
-            display: block;
-            width: 100% !important;
-        }
-    }
-
-    tbody {
-        th,
-        td {
-            box-sizing: border-box;
-            display: block;
-            width: 100% !important;
-        }
-        th + th,
-        td + td {
-            padding-top: 0;
-        }
-    }
 });
-
 
 /* topdoc
   name: Simple Table
@@ -330,6 +249,8 @@ tbody {
     - Styles first td as if it were the thead
     - Allows any other td to be styled as a heading level 4
     - Adds data-label attr for small td labels above td content
+    - Used in older blog posts to make them responsive.
+      Do not remove unless removed from blog posts.
   patterns:
     - name: Collapsable Table
       markup: |
