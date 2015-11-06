@@ -84,6 +84,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added template for post-preview molecule
 - Added templates and CSS for the Signup Form organism.
 - Added templates and CSS for the Content Sidebar organism.
+- Added instruction to create superuser for admin access.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
