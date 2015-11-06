@@ -17,8 +17,8 @@ var COMMON_BUNDLE_NAME = 'common.js';
 module.exports = {
   // jQuery is exported in the global space in the head.
   externals: { jquery: 'jQuery' },
-  context:   path.join( __dirname, '/../', paths.preproccesed, JS_ROUTES_PATH ),
-  entry:     scriptsManifest.getDirectoryMap( paths.preproccesed +
+  context:   path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
+  entry:     scriptsManifest.getDirectoryMap( paths.unprocessed +
                                               JS_ROUTES_PATH ),
   output: {
     path:     path.join( __dirname, 'js' ),
