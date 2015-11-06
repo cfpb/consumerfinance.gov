@@ -205,7 +205,7 @@ which is the front-end pattern library used in this project.
 
 **Templates** that are served by the Django server: `cfgov\v1\jinja2\v1`
 
-**Static assets** prior to processing (minifying etc.): `cfgov\v1\preprocessed`.
+**Static assets** prior to processing (minifying etc.): `cfgov\v1\unprocessed`.
 *Note, after a `gulp build` they are copied over to the `cfgov\v1\static` location,
 ready to be served by Django.*
 

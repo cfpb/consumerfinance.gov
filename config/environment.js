@@ -5,7 +5,7 @@
 'use strict';
 
 var paths = {
-  preproccesed: './cfgov/preprocessed',
+  unprocessed: './cfgov/unprocessed',
   processed:    './cfgov/static_built',
   lib:          './vendor',
   test:         './test'
