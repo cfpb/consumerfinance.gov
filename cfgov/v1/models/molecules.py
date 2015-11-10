@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
+from . import atoms
+
 
 def isRequired(field_name):
     return [str(field_name) + ' is required.']
@@ -116,3 +118,14 @@ class TextIntroduction(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = 'v1/demo/molecules/text_introduction.html'
+
+
+class CallToAction(blocks.StructBlock):
+    slug = blocks.CharBlock(required=True)
+    paragraph = blocks.RichTextBlock()
+    button = atoms.Hyperlink()
+
+    class Meta:
+        template = 'v1/wagtail/molecules/call-to-action.html'
+        icon = 'grip'
+        label = 'Call to Action'

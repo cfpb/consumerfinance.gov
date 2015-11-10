@@ -88,6 +88,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Adds new file to commands module in the core app called `_helpers.py`
 - Adds ability to import snippets
 - Added ImageText2575 molecule backend model and template
+- Added Call to Action backend and template
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
