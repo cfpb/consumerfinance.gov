@@ -89,6 +89,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Adds ability to import snippets
 - Added ImageText2575 molecule backend model and template
 - Added Call to Action backend and template
+- Added Contact snippet and molecule backends
+- Added temporary folder for converted Jinja2 Wagtail field template files
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -146,6 +148,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Modifies command line options to allow specifying arguments for importing pages or snippets
 - Changes the way the processor module is imported so it imports it using the [app] argument
 - Moves the processors module from the core.management.commands module to the v1 app
+- Contact molecule templates
 
 ### Removed
 - Removed unused exportsOverride section,
