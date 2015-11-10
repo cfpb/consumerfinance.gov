@@ -1,12 +1,12 @@
-import datetime
+from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from django.core.exceptions import ValidationError
-from .base import CFGOVPage
+
 
 def isRequired(field_name):
     return [str(field_name) + ' is required.']
+
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
@@ -62,6 +62,47 @@ class ImageText5050(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = 'v1/demo/molecules/image_text_5050.html'
+
+
+class ImageText2575(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=100, required=True)
+    body = blocks.RichTextBlock(required=True)
+    image = ImageChooserBlock(required=False)
+    image_path = blocks.CharBlock(required=False)
+    image_alt = blocks.CharBlock(required=False)
+    link_url = blocks.URLBlock(required=False)
+    link_text = blocks.CharBlock(max_length=100, required=False)
+    has_rule = blocks.BooleanBlock(required=False)
+
+    def clean(self, data):
+        error_dict = {}
+        try:
+            block_data = super(ImageText5050, self).clean(data)
+        except ValidationError as e:
+            error_dict.update(e.params)
+            block_data = data
+
+        if not block_data['image'] and not block_data['image_path'] and not block_data['image_alt']:
+            img_err = ['Please upload or enter an image path']
+            error_dict.update({'image': img_err, 'image_path': img_err, 'image_alt': isRequired('Image alt')})
+
+        if block_data['image'] and block_data['image_path']:
+            img_err = ['Please select one method of image rendering']
+            error_dict.update({
+                'image': img_err,
+                'image_path': img_err})
+
+        if block_data['image_path'] and not block_data['image_alt']:
+            error_dict.update({'image_alt': isRequired('Image Alt')})
+
+        if error_dict:
+            raise ValidationError("ImageText2575 validation errors", params=error_dict)
+        else:
+            return block_data
+
+    class Meta:
+        icon = 'image'
+        template = 'v1/wagtail/molecules/image_text_2575.html'
 
 
 class TextIntroduction(blocks.StructBlock):
