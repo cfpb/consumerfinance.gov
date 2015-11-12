@@ -1,7 +1,5 @@
 import os
 from unipath import Path
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
