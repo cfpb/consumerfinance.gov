@@ -8,8 +8,8 @@ class DataConverter(SnippetDataConverter):
     def convert(self, doc):
 
         post_dict = {
-            'title': doc.get('title', u''),
-            'slug': doc.get('slug', u''),
+            'title': doc.get('title'),
+            'slug': doc.get('slug'),
             'body': doc.get('content', u''),
         }
         tags = ''
@@ -26,14 +26,12 @@ class DataConverter(SnippetDataConverter):
         stream_index = 0
         phone_index = 0
         if doc.get('fax'):
-            print 'fax'
             if doc.get('fax').get('num'):
                 post_dict = phone_formatter(post_dict, stream_index, phone_index, 'contact_info-', 'on',
                                             doc.get('fax').get('num'))
                 phone_index += 1
 
         if doc.get('phone'):
-            print 'phone: '
             for phone in doc.get('phone'):
                 if stream_index > 0:
                     post_dict = phone_formatter(post_dict, (stream_index - 1), phone_index, 'contact_info-', 'off',
@@ -48,7 +46,6 @@ class DataConverter(SnippetDataConverter):
 
         email_index = 0
         if doc.get('email'):
-            print 'email'
             for email in doc.get('email'):
                 post_dict['contact_info-' + str(stream_index) + '-deleted'] = u''
                 post_dict['contact_info-' + str(stream_index) + '-order'] = str(stream_index)
@@ -98,6 +95,7 @@ class DataConverter(SnippetDataConverter):
 
     def get_existing_snippet(self, doc):
         try:
+            #import pdb; pdb.set_trace()
             return Contact.objects.get(slug=doc.get('slug'))
         except Contact.DoesNotExist:
             return None

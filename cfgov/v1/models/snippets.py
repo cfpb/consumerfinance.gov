@@ -27,6 +27,7 @@ class Contact(models.Model):
 
     panels = [
         FieldPanel('title'),
+        FieldPanel('slug'),
         FieldPanel('body'),
         StreamFieldPanel('contact_info'),
         FieldPanel('web_label'),
