@@ -150,6 +150,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes the way the processor module is imported so it imports it using the [app] argument
 - Moves the processors module from the core.management.commands module to the v1 app
 - Contact molecule templates
+- Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
 
 ### Removed
 - Removed unused exportsOverride section,
