@@ -1,0 +1,122 @@
+{# ==========================================================================
+
+   sidebar_breakout.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates Sidebar Breakout markup when given:
+
+   settings:               An object used to customize the markup.
+
+   settings.heading:       A string containing heading text.
+
+   settings.image:         An object used to customize the image
+                           markup.
+
+   settings.intro.body:    A string containing body text.
+
+   settings.intro.heading: A string containing heading text.
+
+   settings.related_posts: An object used to customize the related posts
+                           markup.
+
+   settings.text_intro:    The text-introduction molecule markup that can
+                           be passed in instead of using the Jinja call
+                           method.
+
+   ========================================================================== #}
+
+{% macro render(settings) %}
+<div class="o-sidebar-breakout
+            content__flush-bottom
+            wrapper">
+    <div class="content_intro">
+        <div class="content-l">
+            <section class="o-sidebar-breakout_col
+                            content-l_col
+                            content-l_col-2-3">
+                {% if caller %}
+                    {{ caller() }}
+                {% else %}
+                    {{ settings.text_intro }}
+                {% endif %}
+            </section>
+            <aside class="o-sidebar-breakout_col
+                          content-l_col
+                          content-l_col-1-3
+                          block
+                          block__flush-top
+                          block__flush-bottom">
+                {{ _sidebar(settings) }}
+            </aside>
+        </div>
+    </div>
+</div>
+<div class="content_line"></div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   _sidebar()
+
+   ==========================================================================
+
+   Description:
+
+   Creates Sidebar Breakout markup when given:
+
+   settings:                An object used to customize the markup.
+
+   settings.heading:        A string containing heading text.
+
+   settings.image.url:      A string containing the url for the image.
+
+   settings.image.is_round: A Boolean indicating whether the image is round.
+
+   settings.intro.heading:  A string containing heading text.
+
+   settings.intro.body:     A string containing body text.
+
+   settings.related_posts:  An object used to customize the related posts
+                            markup.
+
+   ========================================================================== #}
+
+{% macro _sidebar(settings) %}
+<h3 class="o-sidebar-breakout_heading">
+    {{ settings.heading }}
+</h3>
+{% if settings.image %}
+<div class="o-sidebar-breakout_img-container
+            {{ 'o-sidebar-breakout_img-container__round'
+            if settings.image.is_round else '' }}
+            u-centered-on-mobile">
+    <div class="o-sidebar-breakout_img
+                u-centered-on-mobile"
+         style="background-image:url( {{settings.image.url}} )">
+    </div>
+</div>
+{% endif %}
+<div class="o-sidebar-breakout_text-container">
+    {% if settings.image and settings.intro.heading %}
+    <h4 class="o-sidebar-breakout_text-heading">
+         <span class="cf-icon cf-icon-{{ settings.intro.icon }}"></span>
+        {{ settings.intro.heading }}
+    </h4>
+    {% endif %}
+    {% if settings.intro.body %}
+    <p class="o-sidebar-breakout_text-body short-desc">
+        {{ settings.intro.body }}
+    </p>
+    {% endif %}
+    {% import 'molecules/related-posts.html' as related_posts %}
+    {{ related_posts.render({
+        'post':             get_document('posts', settings.related_posts.slug),
+        'hide_header_slug': true,
+        'view_more':        settings.related_posts.view_more
+    }) }}
+</div>
+{% endmacro %}
