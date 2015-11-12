@@ -22,63 +22,6 @@ class DataConverter(SnippetDataConverter):
         post_dict['tags'] = tags
         post_dict['authors'] = '"%s"' % doc.get('author', {}).get('name', '')
 
-        # Stream Fields
-        stream_index = 0
-        phone_index = 0
-        if doc.get('fax'):
-            if doc.get('fax').get('num'):
-                post_dict = phone_formatter(post_dict, stream_index, phone_index, 'contact_info-', 'on',
-                                            doc.get('fax').get('num'))
-                phone_index += 1
-
-        if doc.get('phone'):
-            for phone in doc.get('phone'):
-                if stream_index > 0:
-                    post_dict = phone_formatter(post_dict, (stream_index - 1), phone_index, 'contact_info-', 'off',
-                                                phone.get('num'))
-                else:
-                    post_dict = phone_formatter(post_dict, stream_index, phone_index, 'contact_info-', 'off',
-                                                phone.get('num'))
-                phone_index += 1
-
-        if phone_index > 0:
-            stream_index += 1
-
-        email_index = 0
-        if doc.get('email'):
-            for email in doc.get('email'):
-                post_dict['contact_info-' + str(stream_index) + '-deleted'] = u''
-                post_dict['contact_info-' + str(stream_index) + '-order'] = str(stream_index)
-                post_dict['contact_info-' + str(stream_index) + '-type'] = u'email'
-
-                post_dict['contact_info-' + str(stream_index) + '-value-emails-' + str(email_index) + '-deleted'] = u''
-                post_dict['contact_info-' + str(stream_index) + '-value-emails-' + str(email_index) + '-order'] = u'0'
-                post_dict['contact_info-' + str(stream_index) + '-value-emails-' + str(
-                    email_index) + '-value-href'] = email.get('addr', u'')
-                post_dict['contact_info-' + str(stream_index) + '-value-emails-' + str(
-                    email_index) + '-value-label'] = email.get('desc', u'email')
-                post_dict['contact_info-' + str(stream_index) + '-value-emails-count'] = str((email_index + 1))
-
-                email_index += 1
-
-        if email_index > 0:
-            stream_index += 1
-
-        if doc.get('street'):
-            post_dict['contact_info-' + str(stream_index) + '-deleted'] = u''
-            post_dict['contact_info-' + str(stream_index) + '-order'] = str(stream_index)
-            post_dict['contact_info-' + str(stream_index) + '-type'] = u'address'
-
-            post_dict['contact_info-' + str(stream_index) + '-value-label'] = doc.get('addr_desc', u'')
-            post_dict['contact_info-' + str(stream_index) + '-value-street'] = doc.get('street', u'')
-            post_dict['contact_info-' + str(stream_index) + '-value-city'] = doc.get('city', u'')
-            post_dict['contact_info-' + str(stream_index) + '-value-state'] = doc.get('state', u'')
-            post_dict['contact_info-' + str(stream_index) + '-value-street'] = doc.get('zip_code', u'')
-
-            stream_index += 1
-
-        post_dict['contact_info-count'] = str(stream_index)
-
         if doc.get('web_0'):
             post_dict['web'] = doc.get('web_0', u'')
 
@@ -91,6 +34,49 @@ class DataConverter(SnippetDataConverter):
             if doc.get('web').get('label'):
                 post_dict['web_label'] = doc.get('web').get('label')
 
+        # Stream Fields
+        stream_index = 0
+
+        # ---- Phone -------
+        phone_index = 0
+        if doc.get('fax'):
+            if doc.get('fax').get('num'):
+                post_dict = phone_formatter(post_dict, stream_index, phone_index, 'on', doc.get('fax').get('num'))
+                phone_index += 1
+
+        if doc.get('phone'):
+            for phone in doc.get('phone'):
+                if stream_index > 0:
+                    post_dict = phone_formatter(post_dict, (stream_index - 1), phone_index, 'off', phone.get('num'))
+                else:
+                    post_dict = phone_formatter(post_dict, stream_index, phone_index, 'off', phone.get('num'))
+                phone_index += 1
+
+        if phone_index > 0:
+            stream_index += 1
+
+        # ----- Email -----
+        email_index = 0
+        if doc.get('email'):
+            for email in doc.get('email'):
+                post_dict = email_formatter(post_dict, stream_index, email_index,
+                                            email.get('addr', u''), email.get('desc', u'email'))
+
+                email_index += 1
+
+        if email_index > 0:
+            stream_index += 1
+
+        # ---- Address ----
+        if doc.get('street'):
+            post_dict = street_formatter(post_dict, stream_index,
+                                         doc.get('addr_desc', u''), doc.get('street', u''), doc.get('city', u''),
+                                         doc.get('state', u''), doc.get('zip_code', u''))
+            stream_index += 1
+
+        post_dict['contact_info-count'] = str(stream_index)
+
+
         return post_dict
 
     def get_existing_snippet(self, doc):
@@ -101,7 +87,9 @@ class DataConverter(SnippetDataConverter):
             return None
 
 
-def phone_formatter(dict, index, pindex, stream_group, is_fax, number):
+stream_group = 'contact_info-'
+
+def phone_formatter(dict, index, pindex, is_fax, number):
     dict[stream_group + str(index) + '-deleted'] = u''
     dict[stream_group + str(index) + '-order'] = str(index)
     dict[stream_group + str(index) + '-type'] = u'phone'
@@ -113,5 +101,33 @@ def phone_formatter(dict, index, pindex, stream_group, is_fax, number):
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-tty'] = u''
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-vanity'] = u''
     dict[stream_group + str(index) + '-value-phones-count'] = str((pindex + 1))
+
+    return dict
+
+
+def email_formatter(dict, index, eindex, email, label):
+    dict[stream_group + str(index) + '-deleted'] = u''
+    dict[stream_group + str(index) + '-order'] = str(index)
+    dict[stream_group + str(index) + '-type'] = u'email'
+
+    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-deleted'] = u''
+    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-order'] = u'0'
+    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-value-href'] = email
+    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-value-label'] = label
+    dict[stream_group + str(index) + '-value-emails-count'] = str((eindex + 1))
+
+    return dict
+
+
+def street_formatter(dict, index, label, street, city, state, zip_code):
+    dict[stream_group + str(index) + '-deleted'] = u''
+    dict[stream_group + str(index) + '-order'] = str(index)
+    dict[stream_group + str(index) + '-type'] = u'address'
+
+    dict[stream_group + str(index) + '-value-label'] = label
+    dict[stream_group + str(index) + '-value-street'] = street
+    dict[stream_group + str(index) + '-value-city'] = city
+    dict[stream_group + str(index) + '-value-state'] = state
+    dict[stream_group + str(index) + '-value-zip_code'] = zip_code
 
     return dict
