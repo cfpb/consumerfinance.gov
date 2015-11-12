@@ -76,18 +76,17 @@ class DataConverter(SnippetDataConverter):
 
         post_dict['contact_info-count'] = str(stream_index)
 
-
         return post_dict
 
     def get_existing_snippet(self, doc):
         try:
-            #import pdb; pdb.set_trace()
             return Contact.objects.get(slug=doc.get('slug'))
         except Contact.DoesNotExist:
             return None
 
 
 stream_group = 'contact_info-'
+
 
 def phone_formatter(dict, index, pindex, is_fax, number):
     dict[stream_group + str(index) + '-deleted'] = u''
