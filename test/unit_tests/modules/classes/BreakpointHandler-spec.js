@@ -5,7 +5,7 @@ var jsdom = require( 'mocha-jsdom' );
 var sinon = require( 'sinon' );
 var BreakpointHandler;
 var args;
-var BASE_LOC = '../../../../cfgov/preprocessed/js/';
+var BASE_LOC = '../../../../cfgov/unprocessed/js/';
 
 
 beforeEach( function() {

@@ -78,7 +78,7 @@ install(){
 
   # Django Server
   if [ -z "$1" ]; then
-    pip install -r ./requirements/base.txt
+    pip install -r ./requirements/local.txt
   else
     pip install -r ./requirements/$1.txt
   fi

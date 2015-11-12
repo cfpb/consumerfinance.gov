@@ -116,6 +116,9 @@ python cfgov/manage.py runserver
 # If prompted to migrate database changes, stop the server ctrl+c and run these commands
 python cfgov/manage.py migrate
 ./runserver.sh
+
+# To set up a superuser in order to access the admin
+python cfgov/manage.py createsuperuser
 ```
 
 To view the site browse to: <http://localhost:8000>
@@ -242,7 +245,7 @@ which is the front-end pattern library used in this project.
 
 **Templates** that are served by the Django server: `cfgov\v1\jinja2\v1`
 
-**Static assets** prior to processing (minifying etc.): `cfgov\v1\preprocessed`.
+**Static assets** prior to processing (minifying etc.): `cfgov\v1\unprocessed`.
 *Note, after a `gulp build` they are copied over to the `cfgov\v1\static` location,
 ready to be served by Django.*
 

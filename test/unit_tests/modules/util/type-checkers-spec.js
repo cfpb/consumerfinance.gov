@@ -2,7 +2,7 @@
 var chai = require( 'chai' );
 var expect = chai.expect;
 var typeCheckers = require(
-  '../../../../cfgov/preprocessed/js/modules/util/type-checkers.js'
+  '../../../../cfgov/unprocessed/js/modules/util/type-checkers.js'
 );
 
 var undefinedVar;

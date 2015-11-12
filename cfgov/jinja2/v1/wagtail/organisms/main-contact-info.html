@@ -10,16 +10,15 @@
    See [GHE]/flapjack/Modules-V1/wiki/Contact-Information-(Main-Content-Area)
 
    page.contact:             An object containing contact metadata.
-   page.contact.heading:     A string containing a heading.
+   page.contact.title:       A string containing a title.
    page.contact.body:        A string containing paragraph content.
 
-   page.contact.contact_info:
-                             An object with contact details.
+   page.contact.contact_info: An object with contact details.
 
    ========================================================================== #}
 
 <div class="o-main-contact-info">
-    <h2>{{ page.contact.heading }}</h2>
+    <h2>{{ page.contact.title }}</h2>
     <p>{{ page.contact.body }}</p>
     {% for item in page.contact.contact_info %}
         {{ item }}

@@ -2,7 +2,7 @@
 var chai = require( 'chai' );
 var expect = chai.expect;
 var dateRange = require(
-  '../../../../cfgov/preprocessed/js/modules/util/date-range-formatter.js'
+  '../../../../cfgov/unprocessed/js/modules/util/date-range-formatter.js'
 );
 
 var dateStart = new Date( '01/01/2014' );

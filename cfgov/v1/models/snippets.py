@@ -15,6 +15,7 @@ class Contact(models.Model):
                             help_text=("The name of the snippet as it will appear in URLs " +
                                         "e.g http://domain.com/blog/[my-slug]/"))
     body = RichTextField(blank=True)
+
     contact_info = StreamField([
         ('email', molecules.ContactEmail()),
         ('phone', molecules.ContactPhone()),
@@ -34,3 +35,4 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.title
+

@@ -9,7 +9,6 @@ class DataConverter(PageDataConverter):
             'title':      doc.get('title', u''),
             'slug':       doc.get('slug', u''),
             'body':       doc.get('content', u''),
-            'flickr_url': doc.get('flickr_url', u''),
         }
         tags = ''
         for tag in doc.get('tags'):

@@ -12,7 +12,7 @@ describe( 'Get Event States', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    navPrimary = require( '../../../cfgov/preprocessed/js/modules/nav-primary.js' );
+    navPrimary = require( '../../../cfgov/unprocessed/js/modules/nav-primary.js' );
     sandbox = sinon.sandbox.create();
   } );
 
