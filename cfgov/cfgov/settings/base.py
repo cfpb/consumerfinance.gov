@@ -1,5 +1,7 @@
 import os
 from unipath import Path
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
@@ -28,6 +30,7 @@ INSTALLED_APPS = (
     'compressor',
     'taggit',
 
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',  # This is required by Django Suit to handle left side menu
             ],
         }
     },
@@ -254,3 +258,12 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 # PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
+
+# Django Suit Configurations http://django-suit.readthedocs.org/en/develop/configuration.html
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'CFGov Admin',
+
+    'MENU_ICONS': {
+        'auth': 'icon-lock',
+    }
+}
