@@ -8,8 +8,7 @@ class DataConverter(SnippetDataConverter):
     def convert(self, doc):
 
         post_dict = {
-            'title': doc.get('title'),
-            'slug': doc.get('slug'),
+            'heading': doc.get('title'),
             'body': doc.get('content', u''),
         }
         tags = ''
@@ -21,18 +20,6 @@ class DataConverter(SnippetDataConverter):
             tags = tags[0:-2]
         post_dict['tags'] = tags
         post_dict['authors'] = '"%s"' % doc.get('author', {}).get('name', '')
-
-        if doc.get('web_0'):
-            post_dict['web'] = doc.get('web_0', u'')
-
-        if doc.get('web'):
-            if doc['web'].get('label') and doc['web'].get('url'):
-                post_dict['web_label'] = doc['web'].get('label')
-                post_dict['web_url'] = doc['web'].get('url')
-            if doc.get('web').get('url'):
-                post_dict['web_url'] = doc.get('web').get('url')
-            if doc.get('web').get('label'):
-                post_dict['web_label'] = doc.get('web').get('label')
 
         # Stream Fields
         stream_index = 0
@@ -80,7 +67,7 @@ class DataConverter(SnippetDataConverter):
 
     def get_existing_snippet(self, doc):
         try:
-            return Contact.objects.get(slug=doc.get('slug'))
+            return Contact.objects.get(heading=doc.get('title'))
         except Contact.DoesNotExist:
             return None
 

@@ -9,11 +9,8 @@ from . import molecules
 
 @register_snippet
 class Contact(models.Model):
-    title = models.CharField(verbose_name=('Title'), max_length=255,
-                             help_text=("The snippet title as you'd like it to be seen by the public"))
-    slug = models.SlugField(verbose_name=('Slug'), max_length=255,
-                            help_text=("The name of the snippet as it will appear in URLs " +
-                                        "e.g http://domain.com/blog/[my-slug]/"))
+    heading = models.CharField(verbose_name=('Heading'), max_length=255,
+                               help_text=("The snippet heading"))
     body = RichTextField(blank=True)
 
     contact_info = StreamField([
@@ -22,18 +19,11 @@ class Contact(models.Model):
         ('address', molecules.ContactAddress()),
     ], blank=True)
 
-    web_label = models.CharField(verbose_name=('Website Label'), max_length=255, blank=True)
-    web_url = models.CharField(verbose_name=('Website'), max_length=255, blank=True)
-
     panels = [
-        FieldPanel('title'),
-        FieldPanel('slug'),
+        FieldPanel('heading'),
         FieldPanel('body'),
         StreamFieldPanel('contact_info'),
-        FieldPanel('web_label'),
-        FieldPanel('web_url'),
     ]
 
     def __str__(self):
-        return self.title
-
+        return self.heading
