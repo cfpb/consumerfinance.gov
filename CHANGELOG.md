@@ -96,6 +96,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added cf-tables and tables molecule
 - Landing Page Type
 - Initial Data json file for preloading pages
+- Added `/browse-basic` template page.
+- Added templates and CSS for Expandable molecule and ExpandableGroup organism.
+- Added `classlist` JS polyfill.
+- Added `EventObserver` for adding event broadcaster capability to JS classes.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -162,6 +166,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated protractor from 2.5.1 to 3.0.0.
 - Updated gulp-sitespeedio from 0.0.7 to 0.0.8.
 - Update runserver script to start MYSQL if it isn't running
+- Reduced padding on expandables per direction of design.
+- Hide cues on expandables when JS is turned off.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -326,12 +332,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.0.0-2.1.0 - 2015-08-05
 
 ### Added
-- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
-- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
-- Added `u-hidden` utility class for fully hiding an element.
-- Added `TEST.md` readme file for testing instructions.
-- Added `grunt clean` and `grunt copy` tasks.
-- Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
 - Added `about-us` page and tests
 - Added `newsroom` type to Activity Snippets

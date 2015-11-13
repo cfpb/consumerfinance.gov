@@ -212,6 +212,7 @@ urlpatterns = [
 if settings.DEBUG :
     urlpatterns.append(url(r'^sublanding-page-1/$', SheerTemplateView.as_view(template_name='sublanding-page-1/index.html'), name='sublanding-page-1'))
     urlpatterns.append(url(r'^sublanding-page-2/$', SheerTemplateView.as_view(template_name='sublanding-page-2/index.html'), name='sublanding-page-2'))
+    urlpatterns.append(url(r'^browse-basic/$', SheerTemplateView.as_view(template_name='browse-basic/index.html'), name='browse-basic'))
     urlpatterns.append(url(r'^browse-filterable/$', SheerTemplateView.as_view(template_name='browse-filterable/index.html'), name='browse-filterable'))
     urlpatterns.append(url(r'^learn-page/$', SheerTemplateView.as_view(template_name='learn-page/index.html'), name='learn-page'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
