@@ -3,7 +3,7 @@ from django.db import models
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from . import molecules
 import hashlib
@@ -33,11 +33,12 @@ class Contact(models.Model):
         return self.heading
 
 
-@receiver(post_save, sender=Contact)
+@receiver(pre_save, sender=Contact)
 def set_hash(sender, instance, **kwargs):
     heading = instance.heading
+    instance.hash = hashlib.md5(heading).hexdigest()
+
     if ';;' in instance.heading:
         heading = instance.heading.split(';;')[0]
 
-    Contact.objects.filter(pk=instance.pk).update(heading=heading,
-                                                  hash=hashlib.md5(instance.heading).hexdigest())
+    instance.heading = heading
