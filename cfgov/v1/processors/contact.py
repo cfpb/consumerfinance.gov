@@ -2,24 +2,16 @@ import dateutil
 
 from core.management.commands._helpers import SnippetDataConverter
 from ..models.snippets import Contact
+import hashlib
 
 
 class DataConverter(SnippetDataConverter):
     def convert(self, doc):
 
         post_dict = {
-            'heading': doc.get('title'),
+            'heading': doc.get('title') + ';;' + doc.get('slug'),
             'body': doc.get('content', u''),
         }
-        tags = ''
-        for tag in doc.get('tags'):
-            if ' ' in tag:
-                tag = '"%s"' % tag
-            tags += tag + ', '
-        if tags:
-            tags = tags[0:-2]
-        post_dict['tags'] = tags
-        post_dict['authors'] = '"%s"' % doc.get('author', {}).get('name', '')
 
         # Stream Fields
         stream_index = 0
@@ -57,7 +49,7 @@ class DataConverter(SnippetDataConverter):
         # ---- Address ----
         if doc.get('street'):
             post_dict = street_formatter(post_dict, stream_index,
-                                         doc.get('addr_desc', u''), doc.get('street', u''), doc.get('city', u''),
+                                         doc.get('addr_desc', u'address'), doc.get('street', u''), doc.get('city', u''),
                                          doc.get('state', u''), doc.get('zip_code', u''))
             stream_index += 1
 
@@ -67,7 +59,7 @@ class DataConverter(SnippetDataConverter):
 
     def get_existing_snippet(self, doc):
         try:
-            return Contact.objects.get(heading=doc.get('title'))
+            return Contact.objects.get(hash=hashlib.md5(doc.get('title') + ';;' + doc.get('slug')).hexdigest())
         except Contact.DoesNotExist:
             return None
 
@@ -83,9 +75,9 @@ def phone_formatter(dict, index, pindex, is_fax, number):
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-deleted'] = u''
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-order'] = str(pindex)
     dict[stream_group + str(index) + '-value-fax'] = is_fax
-    dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-number'] = number
-    dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-tty'] = u''
-    dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-vanity'] = u''
+    dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-value-number'] = number
+    dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-value-tty'] = u''
+    dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-value-vanity'] = u''
     dict[stream_group + str(index) + '-value-phones-count'] = str((pindex + 1))
 
     return dict
@@ -109,6 +101,9 @@ def street_formatter(dict, index, label, street, city, state, zip_code):
     dict[stream_group + str(index) + '-deleted'] = u''
     dict[stream_group + str(index) + '-order'] = str(index)
     dict[stream_group + str(index) + '-type'] = u'address'
+
+    if not label:  # Empty string check
+        label = 'address'
 
     dict[stream_group + str(index) + '-value-label'] = label
     dict[stream_group + str(index) + '-value-street'] = street
