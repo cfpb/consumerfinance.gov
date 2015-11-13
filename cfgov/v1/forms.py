@@ -6,10 +6,8 @@ from sheerlike.templates import date_formatter
 
 class CalenderPDFFilterForm(forms.Form):
     filter_calendar = forms.CharField()
-    filter_range_date_gte = forms.DateField(input_formats=['%m/%d/%Y',
-                                                           '%Y-%m-%d'])
-    filter_range_date_lte = forms.DateField(input_formats=['%m/%d/%Y',
-                                                           '%Y-%m-%d'])
+    filter_range_date_gte = forms.DateField()
+    filter_range_date_lte = forms.DateField()
 
     def clean_filter_calendar(self):
         return self.cleaned_data['filter_calendar'].replace(' ', '+')
