@@ -16,37 +16,56 @@
 
    ========================================================================== #}
 
-{% macro render(settings, gd_code='') %}
-{% import 'molecules/form-field-with-button.html' as form_field_with_button %}
+{% if value %}
 <form class="o-email-signup"
-      id="{{ settings.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+      id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
       action="/subscriptions/new/"
       method="POST"
       enctype="application/x-www-form-urlencoded">
-      {% if settings.text %}
-      <p class='short-desc'>
-          {{ settings.text }}
-      </p>
-      {% endif %}
-      {{ form_field_with_button.render( {
-          'field': {
-              'label':       'Email Address',
-              'name':        'o-email-signup_email',
-              'placeholder': 'example@mail.com',
-              'type':        'email',
-              'info':        _privacy_statement(),
-              'required':    true
-          },
-          'btn_text': 'Sign up'
-      } ) }}
+    {% if value.text %}
+        <p class='short-desc'>
+            {{ value.text }}
+        </p>
+    {% endif %}
+    {% for form in value.form_field %}
+        {{ form |safe }}
+    {% endfor %}
 </form>
-{% endmacro %}
+
+{% else %}
+    {% macro render(settings, gd_code='') %}
+        {% import 'molecules/form-field-with-button.html' as form_field_with_button %}
+        <form class="o-email-signup"
+              id="{{ settings.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+              action="/subscriptions/new/"
+              method="POST"
+              enctype="application/x-www-form-urlencoded">
+            {% if settings.text %}
+                <p class='short-desc'>
+                    {{ settings.text }}
+                </p>
+            {% endif %}
+            {{ form_field_with_button.render( {
+                    'field': {
+                    'label':       'Email Address',
+                    'name':        'o-email-signup_email',
+                    'placeholder': 'example@mail.com',
+                    'type':        'email',
+                    'info':        _privacy_statement(),
+                    'required':    true
+                    },
+                    'btn_text': 'Sign up'
+                    } ) }}
+        </form>
+    {% endmacro %}
 
 
-{% macro _privacy_statement() %}
-<p class="short-desc">
-    The information you provide will permit the Consumer Financial
-    Protection Bureau to process your request or inquiry.
-    <a href="/sub-pages/privacy-policy/">See More</a>
-</p>
-{% endmacro %}
+    {% macro _privacy_statement() %}
+        <p class="short-desc">
+            The information you provide will permit the Consumer Financial
+            Protection Bureau to process your request or inquiry.
+            <a href="/sub-pages/privacy-policy/">See More</a>
+        </p>
+    {% endmacro %}
+
+{% endif %}

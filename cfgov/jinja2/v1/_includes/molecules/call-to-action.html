@@ -23,14 +23,14 @@ settings.button.text: The text to display on button.
 <div class="m-call-to-action">
     {% if value %}
          <p class="short-desc">
-                {{ value.text }}
+                {{ value.slug }}
             </p>
             {% if caller %}
                 caller()
             {% else %}
                 <a class="btn btn__full"
                    href="{{ value.button.href or '/' }}">
-                    {{ value.button.text }}
+                    {{ value.button.label }}
                 </a>
             {% endif %}
     {% else %}

@@ -17,16 +17,14 @@ class EmailSignUp(blocks.StructBlock):
     text = blocks.CharBlock(required=True)
     gd_code = blocks.CharBlock(required=False)
 
-    signup = StreamField([
-        ('signup_button', molecules.FormFieldWithButton()),
-    ], blank=True)
+    form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=False)
 
     panels = [
         FieldPanel('text'),
         FieldPanel('gd_code'),
-        StreamFieldPanel('signup'),
+        FieldPanel('form_field'),
     ]
 
     class Meta:
-        icon = 'link'
-        template = 'v1/demo/organisms/email-signup.html'
+        icon = 'mail'
+        template = '_includes/organisms/email-signup.html'

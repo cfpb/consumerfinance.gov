@@ -30,22 +30,22 @@ settings.field.placeholder: The placeholder used for the input.
 {% if value %}
     <div class="m-form-field-with-button">
         <div class="form-group">
-            <label for="{{ value.field_name }}">
-                <b>{{ value.field_label }}</b>
-                {% if value.field_required %}
+            <label for="{{ value.name }}">
+                <b>{{ value.label }}</b>
+                {% if value.required %}
                     (required)
                 {% endif %}
             </label>
-            <input id="{{ (value.field_id or value.field_name) ~
+            <input id="{{ (value.id or value.name) ~
                     '_' ~ range(1, 100) | random }}"
-                   type="{{ value.field_type }}"
-                   name="{{ value.field_name }}"
-                   placeholder="{{ value.field_placeholder }}"
+                   type="{{ value.type }}"
+                   name="{{ value.name }}"
+                   placeholder="{{ value.placeholder }}"
                    class="m-form-field-with-button_field"
-                    {{ value.field_attributes or '' }}>
+                    {{ value.attributes or '' }}>
         </div>
-        {{ settings.field.info or '' }}
-        <input class="btn btn__full" type="submit" value="{{ settings.btn_text }}">
+        {{ value.info or '' }}
+        <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
     </div>
 {% else %}
     {% macro render(settings) %}

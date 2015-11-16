@@ -159,7 +159,6 @@ class Hero(blocks.StructBlock):
         else:
             return block_data
 
-
     class Meta:
         icon = 'image'
         template = '_includes/molecules/hero.html'
@@ -168,22 +167,22 @@ class Hero(blocks.StructBlock):
 class FormFieldWithButton(blocks.StructBlock):
     btn_text = blocks.CharBlock(max_length=100, required=True)
 
-    field_required = blocks.BooleanBlock(required=False)
-    field_id = blocks.CharBlock(max_length=100, required=False)
-    field_info = blocks.CharBlock(max_length=100, required=False)
-    field_label = blocks.CharBlock(max_length=100, required=True)
-    field_name = blocks.CharBlock(max_length=100, required=False)
-    field_placeholder = blocks.CharBlock(max_length=100, required=False)
-    field_attributes = blocks.CharBlock(max_length=100, required=False)
-
+    required = blocks.BooleanBlock(required=False)
+    id = blocks.CharBlock(max_length=100, required=False)
+    info = blocks.RichTextBlock(required=False)
+    label = blocks.CharBlock(max_length=100, required=True)
+    type = blocks.CharBlock(max_length=100, required=True)
+    name = blocks.CharBlock(max_length=100, required=False)
+    placeholder = blocks.CharBlock(max_length=100, required=False)
+    attributes = blocks.CharBlock(max_length=100, required=False)
 
     class Meta:
-        icon = 'image'
+        icon = 'mail'
         template = '_includes/molecules/form-field-with-button.html'
+
 
 class CallToAction(blocks.StructBlock):
     slug = blocks.CharBlock(required=True)
-    paragraph = blocks.RichTextBlock()
     button = atoms.Hyperlink()
 
     class Meta:
