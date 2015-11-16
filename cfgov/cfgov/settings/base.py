@@ -79,6 +79,11 @@ TEMPLATES = [
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
+            'extensions': [
+                'wagtail.wagtailcore.templatetags.jinja2.core',
+                'wagtail.wagtailadmin.templatetags.jinja2.userbar',
+                'wagtail.wagtailimages.templatetags.jinja2.images',
+            ],
         }
     },
 ]
@@ -139,7 +144,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built'),
-    ('legacy', PROJECT_ROOT.child('v1','static-legacy')),
+    ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
 ]
 
 ALLOWED_HOSTS = ['*']

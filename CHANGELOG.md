@@ -152,6 +152,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moves the processors module from the core.management.commands module to the v1 app
 - Contact molecule templates
 - Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
+- Upgrade wagtail to 1.2
 
 ### Removed
 - Removed unused exportsOverride section,
