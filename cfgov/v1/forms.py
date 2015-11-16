@@ -4,19 +4,23 @@ from v1.models.events import EventPage
 from sheerlike.templates import date_formatter
 
 
+class FormDateField(forms.DateField):
+
+    def to_python(self, value):
+        if value:
+            try:
+                value = date_formatter(value)
+            except Exception as e:
+                raise forms.ValidationError(self.error_messages['invalid'])
+        return super(FormDateField, self).to_python(value)
+
 class CalenderPDFFilterForm(forms.Form):
     filter_calendar = forms.CharField()
-    filter_range_date_gte = forms.DateField()
-    filter_range_date_lte = forms.DateField()
+    filter_range_date_gte = FormDateField(required=False)
+    filter_range_date_lte = FormDateField(required=False)
 
     def clean_filter_calendar(self):
         return self.cleaned_data['filter_calendar'].replace(' ', '+')
-
-    def clean_filter_range_date_gte(self):
-        return date_formatter(self.cleaned_data['filter_range_date_gte'])
-
-    def clean_filter_range_date_lte(self):
-        return date_formatter(self.cleaned_data['filter_range_date_lte'])
 
 
 class EventsFilterForm(forms.Form):
