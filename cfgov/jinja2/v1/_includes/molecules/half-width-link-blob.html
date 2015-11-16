@@ -23,19 +23,37 @@
 
    ========================================================================== #}
 
-{% macro render( settings ) %}
-<div class="m-half-width-link-blob">
-    <h2 class="h3">{{ settings.heading }}</h2>
-    <p>{{ settings.body | safe }}</p>
-    <ul class="list list__links">
-        {% for link in settings.links %}
-        <li class="list_item">
-            <a class="list_link" href="{{ link.url }}">
-                {{ link.text }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-{% endmacro %}
+{% if value %}
+    <div class="m-half-width-link-blob">
+        <h2 class="h3">{{ value.heading }}</h2>
+
+        <p>{{ value.body | safe }}</p>
+        <ul class="list list__links">
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class="list_link" href="{{ link.url }}">
+                        {{ link.text }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    {% macro render( settings ) %}
+        <div class="m-half-width-link-blob">
+            <h2 class="h3">{{ settings.heading }}</h2>
+
+            <p>{{ settings.body | safe }}</p>
+            <ul class="list list__links">
+                {% for link in settings.links %}
+                    <li class="list_item">
+                        <a class="list_link" href="{{ link.url }}">
+                            {{ link.text }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endmacro %}
+{% endif %}
 

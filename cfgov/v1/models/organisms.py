@@ -10,7 +10,7 @@ class Well(blocks.StructBlock):
 
     class Meta:
         icon = 'link'
-        template = 'v1/demo/organisms/well.html'
+        template = '_includes/organisms/well.html'
 
 
 class EmailSignUp(blocks.StructBlock):

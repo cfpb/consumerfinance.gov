@@ -31,6 +31,47 @@
 
    ========================================================================== #}
 
+{% if value %}
+    <div class="m-image-text-50-50
+            {{ 'm-image-text-50-50__bottom-rule' if value.has_rule else '' }}">
+
+        <div class="{{ 'm-image-text-50-50_widescreen-container' if value.is_widescreen
+                else 'm-image-text-50-50_container'}}">
+
+            {% if value.image %}
+                {% set photo=image(value.image, 'original') %}
+                <img src="{{ photo.url }}"
+                     alt="{{ photo.alt }}"
+                     class="m-image-text-50-50_image">
+            {% else %}
+                <img src="{{ value.image_path }}"
+                     alt="{{ value.alt_text if value.alt_text else '' }}"
+                     class="m-image-text-50-50_image">
+            {% endif %}
+        </div>
+
+        <h2>
+            {{ value.title }}
+        </h2>
+
+        <p class="short-desc short-desc__large">
+            {{ value.description }}
+        </p>
+
+        {% if value.link_url %}
+            <a class="{% if value.link_is_button %}
+              btn m-image-text-50-50_btn
+              {% else %}
+              jump-link jump-link__underline
+              {% endif %}
+              "
+               href="{{ value.link_url }}">
+                {{ value.link_text if value.link_text else 'Learn More' }}
+            </a>
+        {% endif %}
+    </div>
+
+{% else %}
 {% macro render(settings, has_rule=false) %}
 
 <div class="m-image-text-50-50
@@ -64,3 +105,4 @@
     {% endif %}
 </div>
 {% endmacro %}
+{% endif %}

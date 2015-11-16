@@ -18,26 +18,33 @@
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
 
-        {% for block in page.content %}
-            <div>
-                <h2>Headline for 2/7 organism</h2>
-                {% if block.block_type == 'image_text_25_75' %}
+        <div>
+            <h2>Headline for 2/7 organism</h2>
+        </div>
+
+        <div>
+            {% for block in page.content %}
+                {% if block.block_type == 'image_text_25_75'%}
                     {{ render_stream_child(block) }}
                 {% endif %}
-            </div>
+            {% endfor %}
+        </div>
 
+        {% for block in page.content %}
             {% if block.block_type == 'well' %}
                 <div class="block">
                     {{ render_stream_child(block) }}
                 </div>
             {% endif %}
-
-            {% if block.block_type == 'half_width_link_blob' %}
-                <div class="o-link-blob-group">
-                    {{ render_stream_child(block) }}
-                </div>
-            {% endif %}
         {% endfor %}
+
+        <div class="o-link-blob-group">
+            {% for block in page.content %}
+                {% if block.block_type == 'half_width_link_blob' %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 

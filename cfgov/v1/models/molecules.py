@@ -12,7 +12,7 @@ def isRequired(field_name):
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
-    content = blocks.RichTextBlock(blank=True)
+    body = blocks.RichTextBlock(blank=True)
     links = blocks.ListBlock(blocks.StructBlock([
         ('text', blocks.CharBlock(required=False)),
         ('url', blocks.URLBlock(required=False)),
@@ -21,7 +21,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
     class Meta:
         icon = 'link'
-        template = 'v1/demo/molecules/half_width_link_blob.html'
+        template = '_includes/molecules/half-width-link-blob.html'
 
 
 class ImageText5050(blocks.StructBlock):
@@ -63,7 +63,7 @@ class ImageText5050(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
-        template = 'v1/demo/molecules/image_text_5050.html'
+        template = '_includes/molecules/image-text-50-50.html'
 
 
 class ImageText2575(blocks.StructBlock):
@@ -117,7 +117,7 @@ class TextIntroduction(blocks.StructBlock):
 
     class Meta:
         icon = 'title'
-        template = 'v1/demo/molecules/text_introduction.html'
+        template = '_includes/molecules/text-introduction.html'
 
 
 class Hero(blocks.StructBlock):
