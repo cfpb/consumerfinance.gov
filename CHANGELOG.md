@@ -93,6 +93,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added temporary folder for converted Jinja2 Wagtail field template files
 - Added WP Import Data Contact processor
 - Added templates and CSS for the Adding Sidebar Breakout organism.
+- Landing Page Type
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -153,6 +154,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Contact molecule templates
 - Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
 - Upgrade wagtail to 1.2
+- Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
 
 ### Removed
 - Removed unused exportsOverride section,
