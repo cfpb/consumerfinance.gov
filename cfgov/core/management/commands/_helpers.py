@@ -90,7 +90,8 @@ class Importer:
         # hitting the middleware we have to catch the MessageFailure exception.
         try:
             if self.overwrite and existing:
-                snippets_views.edit(request, existing.id)
+                snippets_views.edit(request, self.app, self.wagtail_type,
+                                    existing.id)
             else:
                 snippets_views.create(request, self.app, self.wagtail_type)
         except MessageFailure:

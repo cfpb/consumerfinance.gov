@@ -3,19 +3,25 @@ from django.db import models
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from . import molecules
+import hashlib
 
 
 @register_snippet
 class Contact(models.Model):
-    heading = models.CharField(max_length=22, blank=False)
+    heading = models.CharField(verbose_name=('Heading'), max_length=255,
+                               help_text=("The snippet heading"))
     body = RichTextField(blank=True)
+
+    hash = models.CharField(max_length=32, editable=False)
+
     contact_info = StreamField([
         ('email', molecules.ContactEmail()),
         ('phone', molecules.ContactPhone()),
         ('address', molecules.ContactAddress()),
-    ])
+    ], blank=True)
 
     panels = [
         FieldPanel('heading'),
@@ -25,3 +31,14 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.heading
+
+
+@receiver(pre_save, sender=Contact)
+def set_hash(sender, instance, **kwargs):
+    heading = instance.heading
+    instance.hash = hashlib.md5(heading).hexdigest()
+
+    if ';;' in instance.heading:
+        heading = instance.heading.split(';;')[0]
+
+    instance.heading = heading
