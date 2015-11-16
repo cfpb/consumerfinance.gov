@@ -29,11 +29,18 @@ class LandingPage(CFGOVPage):
         ('well', organisms.Well())
     ], blank=True)
 
+    sidebar = StreamField([
+        ('call_to_action', molecules.CallToAction()),
+        ('email_signup', organisms.EmailSignUp())
+
+    ], blank=True)
+
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('hero'),
         StreamFieldPanel('introduction'),
         StreamFieldPanel('content'),
+        StreamFieldPanel('sidebar'),
     ]
 
     # Tab handler interface

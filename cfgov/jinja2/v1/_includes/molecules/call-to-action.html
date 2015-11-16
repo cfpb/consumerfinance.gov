@@ -1,36 +1,52 @@
 {# ==========================================================================
 
-   call-to-action.render()
+call-to-action.render()
 
-   ==========================================================================
+==========================================================================
 
-   Description:
+Description:
 
-   Creates a call to action when given:
+Creates a call to action when given:
 
-   settings.text:        The text to include within slug markup.
+settings.text:        The text to include within slug markup.
 
-   settings.button:      Button options to create markup.
+settings.button:      Button options to create markup.
 
-   settings.button.href: A link to a page.
-                         Defaults to '/'.
+settings.button.href: A link to a page.
+Defaults to '/'.
 
-   settings.button.text: The text to display on button.
+settings.button.text: The text to display on button.
 
-   ========================================================================== #}
+========================================================================== #}
 
-{% macro render(settings) %}
+
 <div class="m-call-to-action">
-    <p class="short-desc">
-        {{ settings.text }}
-    </p>
-    {% if caller %}
-        caller()
+    {% if value %}
+         <p class="short-desc">
+                {{ value.text }}
+            </p>
+            {% if caller %}
+                caller()
+            {% else %}
+                <a class="btn btn__full"
+                   href="{{ value.button.href or '/' }}">
+                    {{ value.button.text }}
+                </a>
+            {% endif %}
     {% else %}
-    <a class="btn btn__full"
-       href="{{ settings.button.href or '/' }}">
-        {{ settings.button.text }}
-    </a>
+        {% macro render(settings) %}
+            <p class="short-desc">
+                {{ settings.text }}
+            </p>
+            {% if caller %}
+                caller()
+            {% else %}
+                <a class="btn btn__full"
+                   href="{{ settings.button.href or '/' }}">
+                    {{ settings.button.text }}
+                </a>
+            {% endif %}
+        {% endmacro %}
     {% endif %}
 </div>
-{% endmacro %}
+

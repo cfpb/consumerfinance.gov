@@ -168,19 +168,18 @@ class Hero(blocks.StructBlock):
 class FormFieldWithButton(blocks.StructBlock):
     btn_text = blocks.CharBlock(max_length=100, required=True)
 
-    required = blocks.BooleanBlock(required=False)
-
-
+    field_required = blocks.BooleanBlock(required=False)
     field_id = blocks.CharBlock(max_length=100, required=False)
     field_info = blocks.CharBlock(max_length=100, required=False)
     field_label = blocks.CharBlock(max_length=100, required=True)
     field_name = blocks.CharBlock(max_length=100, required=False)
-    field_palceholder = blocks.CharBlock(max_length=100, required=False)
+    field_placeholder = blocks.CharBlock(max_length=100, required=False)
+    field_attributes = blocks.CharBlock(max_length=100, required=False)
 
 
     class Meta:
         icon = 'image'
-        template = 'v1/demo/molecules/form-field-with-button.html'
+        template = '_includes/molecules/form-field-with-button.html'
 
 class CallToAction(blocks.StructBlock):
     slug = blocks.CharBlock(required=True)
@@ -188,7 +187,7 @@ class CallToAction(blocks.StructBlock):
     button = atoms.Hyperlink()
 
     class Meta:
-        template = 'v1/wagtail/molecules/call-to-action.html'
+        template = '_includes/molecules/call-to-action.html'
         icon = 'grip'
         label = 'Call to Action'
 

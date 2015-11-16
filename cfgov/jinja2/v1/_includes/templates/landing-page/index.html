@@ -55,20 +55,20 @@
 {% block content_sidebar scoped -%}
     <aside>
         {# TODO: Add sidebar organisms. #}
-{#        <h2 class="header-slug">#}
-{#            <span class="header-slug_inner">#}
-{#                Slug Title#}
-{#            </span>#}
-{#        </h2>#}
-{#        {{ call_to_action.render( {#}
-{#          'button': {#}
-{#              'text': 'Call to Action'#}
-{#          },#}
-{#          'text': lipsumText#}
-{#        }) }}#}
-{#        {{ email_signup.render({#}
-{#            'text':     lipsumText,#}
-{#            'required': true#}
-{#        }) }}#}
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Slug Title
+            </span>
+        </h2>
+        {{ call_to_action.render( {
+          'button': {
+              'text': 'Call to Action'
+          },
+          'text': lipsumText
+        }) }}
+        {{ email_signup.render({
+            'text':     lipsumText,
+            'required': true
+        }) }}
     </aside>
 {%- endblock %}

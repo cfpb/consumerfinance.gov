@@ -1,50 +1,72 @@
 {# ==========================================================================
 
-   form_field_with_button.render()
+form_field_with_button.render()
 
-   ==========================================================================
+==========================================================================
 
-   Description:
+Description:
 
-   Creates a form field with text when given:
+Creates a form field with text when given:
 
-   settings:  An object used to customize the markup.
+settings:  An object used to customize the markup.
 
-   settings.btn_text:          The text for the submit button.
+settings.btn_text:          The text for the submit button.
 
-   settings.field.required:    Boolean indicating whether the field is
-                               required.
+settings.field.required:    Boolean indicating whether the field is
+required.
 
-   settings.field.id:          The id for the input.
+settings.field.id:          The id for the input.
 
-   settings.field.info:        The text information to display above the field.
+settings.field.info:        The text information to display above the field.
 
-   settings.field.label:       The label for the input.
+settings.field.label:       The label for the input.
 
-   settings.field.name:        The name for the input.
+settings.field.name:        The name for the input.
 
-   settings.field.placeholder: The placeholder used for the input.
+settings.field.placeholder: The placeholder used for the input.
 
-   ========================================================================== #}
+========================================================================== #}
 
-{% macro render(settings) %}
-<div class="m-form-field-with-button">
-    <div class="form-group">
-        <label for="{{ settings.field.name }}">
-            <b>{{ settings.field.label }}</b>
-            {% if settings.field.required %}
-                (required)
-            {% endif %}
-        </label>
-        <input id="{{ (settings.field.id or settings.field.name) ~
-                   '_' ~ range(1, 100) | random }}"
-               type="{{ settings.field.type }}"
-               name="{{ settings.field.name }}"
-               placeholder="{{ settings.field.placeholder }}"
-               class="m-form-field-with-button_field"
-               {{ settings.field.attributes or '' }}>
+{% if value %}
+    <div class="m-form-field-with-button">
+        <div class="form-group">
+            <label for="{{ value.field_name }}">
+                <b>{{ value.field_label }}</b>
+                {% if value.field_required %}
+                    (required)
+                {% endif %}
+            </label>
+            <input id="{{ (value.field_id or value.field_name) ~
+                    '_' ~ range(1, 100) | random }}"
+                   type="{{ value.field_type }}"
+                   name="{{ value.field_name }}"
+                   placeholder="{{ value.field_placeholder }}"
+                   class="m-form-field-with-button_field"
+                    {{ value.field_attributes or '' }}>
+        </div>
+        {{ settings.field.info or '' }}
+        <input class="btn btn__full" type="submit" value="{{ settings.btn_text }}">
     </div>
-    {{ settings.field.info or '' }}
-    <input class="btn btn__full" type="submit" value="{{ settings.btn_text }}">
-</div>
-{% endmacro %}
+{% else %}
+    {% macro render(settings) %}
+        <div class="m-form-field-with-button">
+            <div class="form-group">
+                <label for="{{ settings.field.name }}">
+                    <b>{{ settings.field.label }}</b>
+                    {% if settings.field.required %}
+                        (required)
+                    {% endif %}
+                </label>
+                <input id="{{ (settings.field.id or settings.field.name) ~
+                        '_' ~ range(1, 100) | random }}"
+                       type="{{ settings.field.type }}"
+                       name="{{ settings.field.name }}"
+                       placeholder="{{ settings.field.placeholder }}"
+                       class="m-form-field-with-button_field"
+                        {{ settings.field.attributes or '' }}>
+            </div>
+            {{ settings.field.info or '' }}
+            <input class="btn btn__full" type="submit" value="{{ settings.btn_text }}">
+        </div>
+    {% endmacro %}
+{% endif %}
