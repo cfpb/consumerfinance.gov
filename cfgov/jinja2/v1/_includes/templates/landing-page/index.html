@@ -1,0 +1,67 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    {{ page.title }}
+{%- endblock %}
+
+{% block hero -%}
+    {% for block in page.hero %}
+        {{ render_stream_child(block) }}
+    {% endfor %}
+{% endblock %}
+
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {# TODO: Add main molecules and organisms. #}
+
+        {% for block in page.content %}
+            <div>
+                <h2>Headline for 2/7 organism</h2>
+                {% if block.block_type == 'image_text_25_75' %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            </div>
+
+            {% if block.block_type == 'well' %}
+                <div class="block">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% endif %}
+
+            {% if block.block_type == 'half_width_link_blob' %}
+                <div class="o-link-blob-group">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-content-sidebar
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+{#        <h2 class="header-slug">#}
+{#            <span class="header-slug_inner">#}
+{#                Slug Title#}
+{#            </span>#}
+{#        </h2>#}
+{#        {{ call_to_action.render( {#}
+{#          'button': {#}
+{#              'text': 'Call to Action'#}
+{#          },#}
+{#          'text': lipsumText#}
+{#        }) }}#}
+{#        {{ email_signup.render({#}
+{#            'text':     lipsumText,#}
+{#            'required': true#}
+{#        }) }}#}
+    </aside>
+{%- endblock %}

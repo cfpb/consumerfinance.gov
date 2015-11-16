@@ -79,7 +79,7 @@ class ImageText2575(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
         try:
-            block_data = super(ImageText5050, self).clean(data)
+            block_data = super(ImageText2575, self).clean(data)
         except ValidationError as e:
             error_dict.update(e.params)
             block_data = data
@@ -104,7 +104,7 @@ class ImageText2575(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
-        template = 'v1/wagtail/molecules/image_text_2575.html'
+        template = '_includes/molecules/image-text-25-75.html'
 
 
 class TextIntroduction(blocks.StructBlock):
@@ -119,6 +119,68 @@ class TextIntroduction(blocks.StructBlock):
         icon = 'title'
         template = 'v1/demo/molecules/text_introduction.html'
 
+
+class Hero(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=100, required=True)
+    body = blocks.RichTextBlock(required=False)
+
+    image = ImageChooserBlock(required=False)
+    image_path = blocks.CharBlock(required=False)
+    image_alt = blocks.CharBlock(required=False)
+
+    background_color = blocks.CharBlock(max_length=100, required=False)
+    link_url = blocks.URLBlock(required=False)
+    link_text = blocks.CharBlock(max_length=100, required=False)
+    is_button = blocks.BooleanBlock(required=False)
+
+    def clean(self, data):
+        error_dict = {}
+        try:
+            block_data = super(Hero, self).clean(data)
+        except ValidationError as e:
+            error_dict.update(e.params)
+            block_data = data
+
+        if not block_data['image'] and not block_data['image_path'] and not block_data['image_alt']:
+            img_err = ['Please upload or enter an image path']
+            error_dict.update({'image': img_err, 'image_path': img_err, 'image_alt': isRequired('Image alt')})
+
+        if block_data['image'] and block_data['image_path']:
+            img_err = ['Please select one method of image rendering']
+            error_dict.update({
+                'image': img_err,
+                'image_path': img_err})
+
+        if block_data['image_path'] and not block_data['image_alt']:
+            error_dict.update({'image_alt': isRequired('Image Alt')})
+
+        if error_dict:
+            raise ValidationError("Hero validation errors", params=error_dict)
+        else:
+            return block_data
+
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/molecules/hero.html'
+
+
+class FormFieldWithButton(blocks.StructBlock):
+    btn_text = blocks.CharBlock(max_length=100, required=True)
+
+    required = blocks.BooleanBlock(required=False)
+
+
+    field_id = blocks.CharBlock(max_length=100, required=False)
+    field_info = blocks.CharBlock(max_length=100, required=False)
+    field_label = blocks.CharBlock(max_length=100, required=True)
+    field_name = blocks.CharBlock(max_length=100, required=False)
+    field_palceholder = blocks.CharBlock(max_length=100, required=False)
+
+
+    class Meta:
+        icon = 'image'
+        template = 'v1/demo/molecules/form-field-with-button.html'
 
 class CallToAction(blocks.StructBlock):
     slug = blocks.CharBlock(required=True)
