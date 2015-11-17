@@ -22,6 +22,15 @@ class CalenderPDFFilterForm(forms.Form):
     def clean_filter_calendar(self):
         return self.cleaned_data['filter_calendar'].replace(' ', '+')
 
+    def clean(self, *args, **kwargs):
+        if {'filter_range_date_lte','filter_range_date_lte'} <= set(self.cleaned_data):
+            date_gte = self.cleaned_data['filter_range_date_gte']
+            date_lte = self.cleaned_data['filter_range_date_lte']
+            if date_gte > date_lte:
+                self.cleaned_data['filter_range_date_gte'] = date_lte
+                self.cleaned_data['filter_range_date_lte'] = date_gte
+        return self.cleaned_data
+
 
 class EventsFilterForm(forms.Form):
     tags_select_attrs = {
