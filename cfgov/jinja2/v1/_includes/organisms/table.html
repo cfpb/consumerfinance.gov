@@ -1,0 +1,44 @@
+
+{# ==========================================================================
+
+   table.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a table.
+   See [GHE]/flapjack/Modules-V1/wiki/Tables
+
+   thead:       An array with the values for each th cell
+                Ex. ['Column 1', 'Column 2', 'Column 3']
+
+   rows:        An array of arrays with values for each cells
+                Ex. [
+                        ['Cell A1', 'Cell A2', 'Cell A3'],
+                        ['Cell B1', 'Cell B2', 'Cell B3'],
+                        ['Cell C1', 'Cell C2', 'Cell C3']
+                    ]
+
+
+   ========================================================================== #}
+
+{% macro render(thead, rows) %}
+<table class="table__stack-on-small table__entry-header-on-small">
+    <thead>
+        <tr>
+            {% for cell in thead %}
+                <th>{{ cell }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for row in rows %}
+        <tr>
+            {% for cell in row %}
+                {% set colcount = loop.index0 %}
+                <td data-label="{{ thead[colcount] }}">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+{% endmacro %}

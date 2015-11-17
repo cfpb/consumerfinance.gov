@@ -3,6 +3,7 @@
 {# Import organisms and molecules used in the template. #}
 {% import 'organisms/main-contact-info.html' as main_contact_info %}
 {% import 'molecules/hero.html' as hero %}
+{% import 'organisms/table.html' as table %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
@@ -49,7 +50,17 @@
                          'tty':    '1234567899'}]
         }) }}
     </div>
-
+    <div class="block">
+        {{ table.render( [
+                            'Column 1', 'Column 2', 'Column 3'
+                          ],
+                          [
+                            ['Cell A1', 'Cell A2', 'Cell A3'],
+                            ['Cell B1', 'Cell B2', 'Cell B3'],
+                            ['Cell C1', 'Cell C2', 'Cell C3']
+                          ]
+        ) }}
+    </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}

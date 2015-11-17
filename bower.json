@@ -30,6 +30,7 @@
     "cf-pagination": "^1.0.0",
     "cf-typography": "^1.0.0",
     "cf-layout": "^2.0.0",
+    "cf-tables": "https://github.com/cfpb/cf-tables/archive/0.1.1.zip",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "history.js": "~1.8.0",
     "html5shiv": "latest",
