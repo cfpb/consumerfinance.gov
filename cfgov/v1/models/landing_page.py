@@ -6,7 +6,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, \
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.wagtailcore.models import Page, PAGE_TEMPLATE_VAR
 
 from .base import CFGOVPage
 from . import molecules
@@ -41,12 +41,6 @@ class LandingPage(CFGOVPage):
         ('well', organisms.Well())
     ], blank=True)
 
-    sidebar = StreamField([
-        ('call_to_action', molecules.CallToAction()),
-        ('email_signup', organisms.EmailSignUp())
-
-    ], blank=True)
-
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('hero'),
@@ -64,8 +58,14 @@ class LandingPage(CFGOVPage):
             FieldPanel('half_width_link_blob_group_header'),
             StreamFieldPanel('half_width_link_blob_content'),
         ], heading='Half Width Link Blob'),
-        StreamFieldPanel('sidebar'),
     ]
+
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
+    ])
 
     def get_context(self, request, *args, **kwargs):
         return {

@@ -73,10 +73,11 @@
            list list__unstyled
            list__spaced">
     {% for post in posts %}
+    {% set post_url = slugurl(post.slug) or '' %}
     <li class="list_item">
         <h4 class="u-mb5">
             <a class="list_link"
-               href="{{ post.relative_url }}">
+               href="{{ post_url if post_url else post.permalink }}">
                 {{ post.title | safe }}
             </a>
         </h4>
@@ -92,10 +93,13 @@
     {% endfor %}
 </ul>
 
-{% if view_more %}
-    {{ _view_more() }}
-{% endif %}
-
+{% for block in page.sidefoot %}
+  {% if 'related_posts' in block.block_type %}
+    {% if block.value.view_more %}
+        {{ _view_more(block) }}
+    {% endif %}
+  {% endif %}
+{% endfor %}
 {% endmacro %}
 
 {# ==========================================================================
@@ -110,12 +114,12 @@
 
    ========================================================================== #}
 
-{% macro _view_more() %}
-{% if page.view_more_url %}
+{% macro _view_more(block) %}
+{% if block.value.view_more.text %}
 <a class="jump-link jump-link__underline"
-   href="{{ page.view_more_url }}">
+   href="{{ block.value.view_more.url }}">
     <span class="jump-link_text">
-        {{ page.view_more_label or 'View More' }}
+        {{ block.value.view_more.text }}
     </span>
 </a>
 {% endif %}

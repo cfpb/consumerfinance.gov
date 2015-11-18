@@ -104,6 +104,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   utility method for checking atomic element DOM nodes.
 - Backend Organisms Full Width Text & Post Preview  
 - Added Related Posts molecule to the CFGOVPage
+- Add Main Contact Info molecule
+- Add Sidefoot Streamfield to CFGOVPage for sidebar/footer content
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -172,11 +174,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update runserver script to start MYSQL if it isn't running
 - Reduced padding on expandables per direction of design.
 - Hide cues on expandables when JS is turned off.
-- Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
-- Split jinja2 template for related posts molecule into separate files for different rendering.
-- Routed landing page type related molecules and organisms
-  to use `jinja2/v1/_includes/` template locations.
 - Updated protractor from 2.5.1 to 3.0.0.
+- Change name of Settings tab to Configuration
+- Move some Promote fields to Configuration tab
+- Change Promote to be Sidebar/Footer
+- Move Related Posts and Email Signup to sidefoot Streamfield in the Sidebar/Footer tab in CFGOVPage
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -188,6 +190,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed link from Cordray's corner image `/the-bureau/about-director/`.
 - Removed extra Google Analytics code.
 - Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
+- Sidebar from LandingPage
 
 ### Fixed
 - Fixed instructions for gulp watch
