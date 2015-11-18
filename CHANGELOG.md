@@ -93,6 +93,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added temporary folder for converted Jinja2 Wagtail field template files
 - Added WP Import Data Contact processor
 - Added templates and CSS for the Adding Sidebar Breakout organism.
+- Added cf-tables and tables molecule
 - Landing Page Type
 
 ### Changed
