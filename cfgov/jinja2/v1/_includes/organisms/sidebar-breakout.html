@@ -112,11 +112,7 @@
         {{ settings.intro.body }}
     </p>
     {% endif %}
-    {% import 'molecules/related-posts.html' as related_posts %}
-    {{ related_posts.render({
-        'post':             get_document('posts', settings.related_posts.slug),
-        'hide_header_slug': true,
-        'view_more':        settings.related_posts.view_more
-    }) }}
+    {% import 'molecules/related-posts.html' as related_posts with context %}
+    {{ related_posts.render(half_width=false, hide_header_slug=true) }}
 </div>
 {% endmacro %}

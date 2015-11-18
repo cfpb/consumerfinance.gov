@@ -96,6 +96,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added cf-tables and tables molecule
 - Landing Page Type
 - Initial Data json file for preloading pages
+- Added Related Posts molecule to the CFGOVPage
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -158,6 +159,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Upgrade wagtail to 1.2
 - Cleaned up and rebuilt the secondary nav to reduce complexity and fix bugs
 - Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
+- Split jinja2 template for related posts molecule into separate files for different rendering.
 
 ### Removed
 - Removed unused exportsOverride section,
