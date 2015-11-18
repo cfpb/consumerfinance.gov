@@ -22,8 +22,9 @@
 
    ========================================================================== #}
 
-<div class="m-call-to-action">
-    {% if value %}
+
+{% if value %}
+    <div class="m-call-to-action">
         {% if value.slug_text %}
             <h2 class="header-slug">
                 <span class="header-slug_inner">
@@ -31,9 +32,11 @@
                 </span>
             </h2>
         {% endif %}
-        <p class="short-desc">
-            {{ value.paragraph_text | safe }}
-        </p>
+        {% if value.paragraph_text %}
+            <p class="short-desc">
+                {{ value.paragraph_text }}
+            </p>
+        {% endif %}
         {% if caller %}
             caller()
         {% else %}
@@ -42,8 +45,10 @@
                 {{ value.button.text }}
             </a>
         {% endif %}
-    {% else %}
-        {% macro render(settings) %}
+    </div>
+{% else %}
+    {% macro render(settings) %}
+        <div class="m-call-to-action">
             {% if settings.slug_text %}
                 <h2 class="header-slug">
                     <span class="header-slug_inner">
@@ -51,9 +56,11 @@
                     </span>
                 </h2>
             {% endif %}
-            <p class="short-desc">
-                {{ settings.paragraph_text }}
-            </p>
+            {% if settings.paragraph_text %}
+                <p class="short-desc">
+                    {{ settings.paragraph_text }}
+                </p>
+            {% endif %}
             {% if caller %}
                 caller()
             {% else %}
@@ -62,6 +69,7 @@
                     {{ settings.button.text }}
                 </a>
             {% endif %}
-        {% endmacro %}
-    {% endif %}
-</div>
+        </div>
+    {% endmacro %}
+{% endif %}
+
