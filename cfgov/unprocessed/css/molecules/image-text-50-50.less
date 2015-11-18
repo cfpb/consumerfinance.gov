@@ -128,6 +128,9 @@
         border-bottom: 1px solid @m-image-text-50-50_rule;
         margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
+    .respond-to-min(@bp-sm-min, {
+        .grid_column(6);
+    });
 }
 
 /* topdoc
