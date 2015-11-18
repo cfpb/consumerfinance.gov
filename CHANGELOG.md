@@ -103,7 +103,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `atomic-checkers.js` and `validateDomElement`
   utility method for checking atomic element DOM nodes.
 - Backend Organisms Full Width Text & Post Preview  
-  
+- Added Related Posts molecule to the CFGOVPage
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -172,6 +172,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update runserver script to start MYSQL if it isn't running
 - Reduced padding on expandables per direction of design.
 - Hide cues on expandables when JS is turned off.
+- Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
+- Split jinja2 template for related posts molecule into separate files for different rendering.
 
 ### Removed
 - Removed unused exportsOverride section,

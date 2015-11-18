@@ -86,6 +86,7 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
+    {{ related_posts.render() }}
     {% for block in page.sidebar %}
         {{ render_stream_child(block) }}
     {% endfor %}
