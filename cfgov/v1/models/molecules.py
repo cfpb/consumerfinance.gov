@@ -21,8 +21,8 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
 
 class ImageText5050(blocks.StructBlock):
-    title = blocks.CharBlock(max_length=100, required=True)
-    description = blocks.RichTextBlock(blank=True)
+    heading = blocks.CharBlock(max_length=100, required=True)
+    body = blocks.RichTextBlock(blank=True)
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False)
     is_button = blocks.BooleanBlock(required=False)
