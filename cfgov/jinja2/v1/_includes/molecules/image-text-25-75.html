@@ -37,8 +37,8 @@
             {# Use a div if this is a decorative image,
             in which case the alt attribute is empty. #}
 
-            {% if value.image %}
-                {% set photo=image(value.image, 'original') %}
+            {% if value.image.upload %}
+                {% set photo=image(value.image.upload, 'original') %}
                 {% if photo.alt == '' %}
                     <div class="m-image-text-25-75_image u-centered-on-mobile"
                          style="background-image:url({{ photo.url }})"></div>
@@ -48,13 +48,13 @@
                          alt="{{ photo.alt }}">
                 {% endif %}
             {% else %}
-                {% if value.image_alt == '' %}
+                {% if value.image.alt == '' %}
                     <div class="m-image-text-25-75_image u-centered-on-mobile"
-                         style="background-image:url({{ value.image_path }})"></div>
+                         style="background-image:url({{ value.image.url }})"></div>
                 {% else %}
                     <img class="m-image-text-25-75_image u-centered-on-mobile"
-                         src="{{ value.image_path }}"
-                         alt="{{ value.image_alt }}">
+                         src="{{ value.image.url }}"
+                         alt="{{ value.image.alt }}">
                 {% endif %}
             {% endif %}
 
@@ -63,8 +63,8 @@
             <h3 class="m-image-text-25-75_heading">{{ value.heading }}</h3>
 
             <p class="m-image-text-25-75_body">{{ value.body }}</p>
-            <a class="jump-link m-image-text-25-75_link" href="{{ value.link_url }}">
-                {{ value.link_text }}
+            <a class="jump-link m-image-text-25-75_link" href="{{ value.link.url }}">
+                {{ value.link.text }}
             </a>
         </div>
     </div>

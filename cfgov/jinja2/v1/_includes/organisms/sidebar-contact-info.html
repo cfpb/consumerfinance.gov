@@ -36,51 +36,94 @@
 
    ========================================================================== #}
 
-{% macro render(content, contact) %}
 {% import 'molecules/contact-email.html' as contact_email %}
 {% import 'molecules/contact-phone.html' as contact_phone %}
 {% import 'molecules/contact-address.html' as contact_address %}
-
-<div class="o-sidebar-contact-info">
-    <div class="o-sidebar-contact-info_heading">
-        <h2 class="header-slug">
+{% if page.contact %}
+    <div class="o-sidebar-contact-info">
+        <div class="o-sidebar-contact-info_heading">
+            <h2 class="header-slug">
             <span class="header-slug_inner">
                 Contact Information
             </span>
-        </h2>
+            </h2>
+        </div>
+
+        <div class="o-sidebar-contact-info_column">
+            {% for block in page.contact.contact_info %}
+                {% if block.block_type == 'address' %}
+                    {% set map_details = (block.value.street + ', ' +
+                    block.value.city + ' ' +
+                    block.value.state + ' ' +
+                    block.value.zip_code) | urlencode %}
+                    <figure>
+                        <a href="https://www.google.com/maps/place/{{ map_details }}">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
+                                 alt="">
+                        </a>
+                    </figure>
+                {% endif %}
+            {% endfor %}
+
+            <h3>{{ page.contact.heading }}</h3>
+
+            <p>{{ page.contact.body |safe }}</p>
+        </div>
+
+        <div class="o-sidebar-contact-info_column">
+            {% if page.contact.contact_info %}
+
+                {% for block in page.contact.contact_info %}
+                    {{ render_stream_child(block) }}
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
+{% else %}
+    {% macro render(content, contact) %}
+        <div class="o-sidebar-contact-info">
+            <div class="o-sidebar-contact-info_heading">
+                <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Contact Information
+            </span>
+                </h2>
+            </div>
 
-    <div class="o-sidebar-contact-info_column">
-        {% set map_details = (contact.address.street + ', ' +
-                              contact.address.city + ' ' +
-                              contact.address.state + ' ' +
-                              contact.address.zip_code) | urlencode %}
-        <figure>
-            <a href="https://www.google.com/maps/place/{{ map_details }}">
-                <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2" alt="">
-            </a>
-        </figure>
+            <div class="o-sidebar-contact-info_column">
+                {% set map_details = (contact.address.street + ', ' +
+                contact.address.city + ' ' +
+                contact.address.state + ' ' +
+                contact.address.zip_code) | urlencode %}
+                <figure>
+                    <a href="https://www.google.com/maps/place/{{ map_details }}">
+                        <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
+                             alt="">
+                    </a>
+                </figure>
 
-        <h3>{{ content.heading }}</h3>
-        <p>{{ content.body }}</p>
-    </div>
+                <h3>{{ content.heading }}</h3>
 
-    <div class="o-sidebar-contact-info_column">
+                <p>{{ content.body }}</p>
+            </div>
 
-        {{ contact_email.render(contact.emails) }}
+            <div class="o-sidebar-contact-info_column">
 
-        {{ contact_phone.render(contact.phones) }}
+                {{ contact_email.render(contact.emails) }}
 
-        {{ contact_phone.render(contact.faxes, true) }}
+                {{ contact_phone.render(contact.phones) }}
 
-        {{ contact_address.render({
-            'label':    'Mailing Address',
-            'title':    contact.address.title,
-            'street':   contact.address.street,
-            'city':     contact.address.city,
-            'state':    contact.address.state,
-            'zip_code': contact.address.zip_code
-        }) }}
-    </div>
-</div>
-{% endmacro %}
+                {{ contact_phone.render(contact.faxes, true) }}
+
+                {{ contact_address.render({
+                        'label':    'Mailing Address',
+                        'title':    contact.address.title,
+                        'street':   contact.address.street,
+                        'city':     contact.address.city,
+                        'state':    contact.address.state,
+                        'zip_code': contact.address.zip_code
+                        }) }}
+            </div>
+        </div>
+    {% endmacro %}
+{% endif %}

@@ -43,22 +43,22 @@
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
             <p class="hero_subhead">{{ value.body |richtext}}</p>
-            {% if value.link_text and value.link_url %}
-                <a href="{{ value.link_url }}"
+            {% if value.link.text and value.link.url %}
+                <a href="{{ value.link.url }}"
                    class="hero_cta
                    {{ 'btn' if value.is_button
                    else '' }}">
-                    {{ value.link_text }}
+                    {{ value.link.text }}
                 </a>
             {% endif %}
         </div>
-        {% if value.image %}
-            {% set photo=image(value.image, 'original') %}
+        {% if value.image.upload %}
+            {% set photo=image(value.image.upload, 'original') %}
             <div class="hero_image"
                  style="background-image: url( {{ photo.url }} );">
         {% else %}
             <div class="hero_image"
-                 style="background-image: url( {{ value.image_path }} );">
+                 style="background-image: url( {{ value.image.url }} );">
         {% endif %}
         </div>
 </section>
