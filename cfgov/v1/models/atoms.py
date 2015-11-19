@@ -57,6 +57,9 @@ class ImageBasic(blocks.StructBlock):
         if data['url'] and not data['alt']:
             error_dict.update({'alt': isRequired('Image Alt')})
 
+        if data['alt'] and not data['url']:
+            error_dict.update({'url': isRequired('Image URL')})
+
         if error_dict:
             raise ValidationError("ImageBasic validation errors", params=error_dict)
         else:
