@@ -19,6 +19,11 @@ class Hyperlink(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
+        try:
+            data = super(Hyperlink, self).clean(data)
+        except ValidationError as e:
+            error_dict.update(e.params)
+
         if self.required:
             if not data['text']:
                 error_dict.update({'text': isRequired('Text')})
@@ -41,6 +46,11 @@ class ImageBasic(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
+        try:
+            data = super(ImageBasic, self).clean(data)
+        except ValidationError as e:
+            error_dict.update(e.params)
+
         if not self.required and not data['upload'] and not data['url'] and not data['alt']:
             return data
 
@@ -53,12 +63,6 @@ class ImageBasic(blocks.StructBlock):
             error_dict.update({
                 'upload': img_err,
                 'url': img_err})
-
-        if data['url'] and not data['alt']:
-            error_dict.update({'alt': isRequired('Image Alt')})
-
-        if data['alt'] and not data['url']:
-            error_dict.update({'url': isRequired('Image URL')})
 
         if error_dict:
             raise ValidationError("ImageBasic validation errors", params=error_dict)
