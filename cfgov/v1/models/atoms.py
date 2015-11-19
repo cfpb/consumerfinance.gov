@@ -61,26 +61,6 @@ class ImageBasic(blocks.StructBlock):
             return data
 
 
-class ImageBasicAlt(ImageBasic):
-    alt = blocks.CharBlock(required=False)
-
-    def clean(self, data):
-        error_dict = {}
-
-        try:
-            data = super(ImageBasicAlt, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-
-        if not self.required and not data['upload']:
-            return data
-
-        if error_dict:
-            raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
-        else:
-            return data
-
-
 class ImageBasicUrl(ImageBasic):
     url = blocks.CharBlock(required=False)
 
@@ -111,32 +91,9 @@ class ImageBasicUrl(ImageBasic):
             return data
 
 
-class ImageBasicUrlAlt(ImageBasic):
-    url = blocks.CharBlock(required=False)
+class ImageBasicAlt(ImageBasic):
     alt = blocks.CharBlock(required=False)
 
-    def clean(self, data):
-        error_dict = {}
 
-        try:
-            data = super(ImageBasicUrlAlt, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-
-        if not self.required and not data['upload'] and not data['url'] and not data['alt']:
-            return data
-
-        if not data['upload'] and not data['url'] and not data['alt']:
-            img_err = ['Please upload or enter an image path']
-            error_dict.update({'upload': img_err, 'url': img_err, 'alt': isRequired('Image alt')})
-
-        if data['upload'] and data['url']:
-            img_err = ['Please select one method of image rendering']
-            error_dict.update({
-                'upload': img_err,
-                'url': img_err})
-
-        if error_dict:
-            raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
-        else:
-            return data
+class ImageBasicUrlAlt(ImageBasicUrl):
+    alt = blocks.CharBlock(required=False)
