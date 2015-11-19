@@ -8,6 +8,9 @@
 
    Creates a call to action when given:
 
+   settings.heading:     A string with the title for the header slug
+                         of the call to action
+
    settings.text:        The text to include within slug markup.
 
    settings.button:      Button options to create markup.
@@ -22,19 +25,33 @@
 
 <div class="m-call-to-action">
     {% if value %}
-         <p class="short-desc">
-                {{ value.slug }}
-            </p>
-            {% if caller %}
-                caller()
-            {% else %}
-                <a class="btn btn__full"
-                   href="{{ value.button.href or '/' }}">
-                    {{ value.button.label }}
-                </a>
-            {% endif %}
+        {% if value.heading %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ value.heading }}
+                </span>
+            </h2>
+        {% endif %}
+        <p class="short-desc">
+            {{ value.slug }}
+        </p>
+        {% if caller %}
+            caller()
+        {% else %}
+            <a class="btn btn__full"
+               href="{{ value.button.href or '/' }}">
+                {{ value.button.label }}
+            </a>
+        {% endif %}
     {% else %}
         {% macro render(settings) %}
+            {% if settings.heading %}
+                <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ settings.heading }}
+        </span>
+                </h2>
+            {% endif %}
             <p class="short-desc">
                 {{ settings.text }}
             </p>
@@ -49,4 +66,3 @@
         {% endmacro %}
     {% endif %}
 </div>
-

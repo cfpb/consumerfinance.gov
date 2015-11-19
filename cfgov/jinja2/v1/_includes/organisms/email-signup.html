@@ -10,6 +10,8 @@
 
    settings:      An object used to customize the markup.
 
+   settings.heading: A string with the title for the header slug
+
    settings.text: The text used within the description markup.
 
    gd_code:       A GovDelivery code for a specified mailing list.
@@ -17,24 +19,37 @@
    ========================================================================== #}
 
 {% if value %}
-<form class="o-email-signup"
-      id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
-      action="/subscriptions/new/"
-      method="POST"
-      enctype="application/x-www-form-urlencoded">
-    {% if value.text %}
-        <p class='short-desc'>
-            {{ value.text }}
-        </p>
+    {% if value.heading %}
+        <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ value.heading }}
+        </span>
+        </h2>
     {% endif %}
-    {% for form in value.form_field %}
-        {{ form |safe }}
-    {% endfor %}
-</form>
-
+    <form class="o-email-signup"
+          id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+          action="/subscriptions/new/"
+          method="POST"
+          enctype="application/x-www-form-urlencoded">
+        {% if value.text %}
+            <p class='short-desc'>
+                {{ value.text }}
+            </p>
+        {% endif %}
+        {% for form in value.form_field %}
+            {{ form |safe }}
+        {% endfor %}
+    </form>
 {% else %}
     {% macro render(settings, gd_code='') %}
         {% import 'molecules/form-field-with-button.html' as form_field_with_button %}
+        {% if settings.heading %}
+            <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ settings.heading }}
+        </span>
+            </h2>
+        {% endif %}
         <form class="o-email-signup"
               id="{{ settings.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
               action="/subscriptions/new/"

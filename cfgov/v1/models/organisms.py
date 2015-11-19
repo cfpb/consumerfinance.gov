@@ -14,6 +14,7 @@ class Well(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=100, required=True)
     text = blocks.CharBlock(required=True)
     gd_code = blocks.CharBlock(required=False)
 

@@ -155,6 +155,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Contact molecule templates
 - Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
 - Upgrade wagtail to 1.2
+- Cleaned up and rebuilt the secondary nav to reduce complexity and fix bugs
 - Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
 
 ### Removed
