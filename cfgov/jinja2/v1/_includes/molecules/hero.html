@@ -56,9 +56,6 @@
             {% set photo=image(value.image.upload, 'original') %}
             <div class="hero_image"
                  style="background-image: url( {{ photo.url }} );">
-        {% else %}
-            <div class="hero_image"
-                 style="background-image: url( {{ value.image.url }} );">
         {% endif %}
         </div>
 </section>

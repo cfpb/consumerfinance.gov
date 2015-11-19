@@ -61,7 +61,7 @@ class Hero(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=False)
 
-    image = atoms.ImageBasicUrl()
+    image = atoms.ImageBasic()
 
     background_color = blocks.CharBlock(max_length=100, required=False)
     link = atoms.Hyperlink()
