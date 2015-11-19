@@ -90,8 +90,8 @@ class FormFieldWithButton(blocks.StructBlock):
 
 
 class CallToAction(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    text = blocks.RichTextBlock(required=True)
+    slug_text = blocks.CharBlock(max_length=100, required=True)
+    paragraph_text = blocks.RichTextBlock(required=True)
     button = atoms.Hyperlink()
 
     class Meta:

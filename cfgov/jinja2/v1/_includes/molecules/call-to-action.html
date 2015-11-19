@@ -25,15 +25,15 @@
 
 <div class="m-call-to-action">
     {% if value %}
-        {% if value.heading %}
+        {% if value.slug_text %}
             <h2 class="header-slug">
                 <span class="header-slug_inner">
-                    {{ value.heading }}
+                    {{ value.slug_text }}
                 </span>
             </h2>
         {% endif %}
         <p class="short-desc">
-            {{ value.text }}
+            {{ value.paragraph_text }}
         </p>
         {% if caller %}
             caller()
