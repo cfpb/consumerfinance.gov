@@ -22,25 +22,25 @@
 
 {% macro render(items, active_item_id, additional_classes) %}
 
-<nav class="nav-secondary expandable {{ additional_classes }}"
+<nav class="nav-secondary expandable {{ additional_classes if additional_classes else '' }}"
      aria-label="Section navigation">
     <div class="expandable_header nav-secondary_header">
-        <button class="expandable_target nav-secondary_link nav-secondary_link__button">
+        <button class="expandable_target nav-secondary_button">
             <span class="expandable_header-left">
                 In this section
             </span>
             <span class="expandable_header-right">
                 <span class="expandable_cue-open">
-                    <span class="cf-icon cf-icon-down cf-icon__green"></span>
+                    <span class="cf-icon cf-icon-down"></span>
                 </span>
                 <span class="expandable_cue-close">
-                    <span class="cf-icon cf-icon-up cf-icon__green"></span>
+                    <span class="cf-icon cf-icon-up"></span>
                 </span>
             </span>
         </button>
     </div>
     <div class="expandable_content nav-secondary_content">
-        <ul class="nav-secondary_list">
+        <ul class="nav-secondary_list nav-secondary_list__parents">
         {%- for item in items %}
             {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
             <li class="nav-secondary_item nav-secondary_item__parent">
@@ -55,9 +55,9 @@
                 {% endif -%}
             {%- if children -%}
                 {% set children = children[0] %}
-                <ul class="nav-secondary_list">
+                <ul class="nav-secondary_list nav-secondary_list__children">
                 {%- for href, id, caption in children %}
-                    <li class="nav-secondary_item nav-secondary_item__child">
+                    <li class="nav-secondary_item">
                     {%- if id == active_item_id %}
                         <a class="nav-secondary_link nav-secondary_link__current">
                             {{ caption|e }}
