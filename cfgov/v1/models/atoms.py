@@ -9,8 +9,24 @@ def isRequired(field_name):
 
 
 class Hyperlink(blocks.StructBlock):
-    text = blocks.CharBlock(max_length=50)
-    url = blocks.CharBlock(default='/')
+    text = blocks.CharBlock(max_length=50, required=False)
+    url = blocks.CharBlock(default='/', required=False)
+
+    def __init__(self, required=True):
+        self.required = required
+        super(Hyperlink, self).__init__()
+
+    def clean(self, data):
+        error_dict = {}
+
+        if self.required:
+            if not data['text']:
+                error_dict.update({'text': isRequired('Text')})
+
+        if error_dict:
+            raise ValidationError("Hyperlink validation errors", params=error_dict)
+        else:
+            return data
 
 
 class ImageBasic(blocks.StructBlock):
@@ -18,28 +34,30 @@ class ImageBasic(blocks.StructBlock):
     url = blocks.CharBlock(required=False)
     alt = blocks.CharBlock(required=False)
 
+    def __init__(self, required=True):
+        self.required = required
+        super(ImageBasic, self).__init__()
+
     def clean(self, data):
         error_dict = {}
-        try:
-            block_data = super(ImageBasic, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-            block_data = data
 
-        if not block_data['upload'] and not block_data['url'] and not block_data['alt']:
+        if not self.required and not data['upload'] and not data['url'] and not data['alt']:
+            return data
+
+        if not data['upload'] and not data['url'] and not data['alt']:
             img_err = ['Please upload or enter an image path']
             error_dict.update({'upload': img_err, 'url': img_err, 'alt': isRequired('Image alt')})
 
-        if block_data['upload'] and block_data['url']:
+        if data['upload'] and data['url']:
             img_err = ['Please select one method of image rendering']
             error_dict.update({
                 'upload': img_err,
                 'url': img_err})
 
-        if block_data['url'] and not block_data['alt']:
+        if data['url'] and not data['alt']:
             error_dict.update({'alt': isRequired('Image Alt')})
 
         if error_dict:
             raise ValidationError("ImageBasic validation errors", params=error_dict)
         else:
-            return block_data
+            return data

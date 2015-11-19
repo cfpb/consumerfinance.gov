@@ -114,7 +114,7 @@ class ContactAddress(blocks.StructBlock):
 
 
 class ContactEmail(blocks.StructBlock):
-    emails = blocks.ListBlock(atoms.Hyperlink(label='Email'))
+    emails = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
         icon = 'mail'
