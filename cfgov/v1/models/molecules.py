@@ -79,7 +79,14 @@ class FormFieldWithButton(blocks.StructBlock):
     id = blocks.CharBlock(max_length=100, required=False)
     info = blocks.RichTextBlock(required=False)
     label = blocks.CharBlock(max_length=100, required=True)
-    type = blocks.CharBlock(max_length=100, required=True)
+    type = blocks.ChoiceBlock(choices=[
+        ('text', 'Text'),
+        ('checkbox', 'Checkbox'),
+        ('email', 'Email'),
+        ('number', 'Number'),
+        ('url', 'URL'),
+        ('radio', 'Radio'),
+    ], icon='cup', required=True)
     name = blocks.CharBlock(max_length=100, required=False)
     placeholder = blocks.CharBlock(max_length=100, required=False)
     attributes = blocks.CharBlock(max_length=100, required=False)
