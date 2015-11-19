@@ -26,7 +26,7 @@ class ImageText5050(blocks.StructBlock):
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False)
     is_button = blocks.BooleanBlock(required=False)
-    link = atoms.Hyperlink()
+    link = atoms.Hyperlink(required=False)
 
     class Meta:
         icon = 'image'
@@ -36,8 +36,8 @@ class ImageText5050(blocks.StructBlock):
 class ImageText2575(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=True)
-    image = atoms.ImageBasic()
-    link = atoms.Hyperlink()
+    image = atoms.ImageBasicAlt()
+    link = atoms.Hyperlink(required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
     class Meta:
@@ -49,7 +49,7 @@ class TextIntroduction(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     intro = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=False)
-    link = atoms.Hyperlink()
+    link = atoms.Hyperlink(required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
     class Meta:
@@ -61,7 +61,7 @@ class Hero(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=False)
 
-    image = atoms.ImageBasic()
+    image = atoms.ImageBasicUrl()
 
     background_color = blocks.CharBlock(max_length=100, required=False)
     link = atoms.Hyperlink()
@@ -91,7 +91,7 @@ class FormFieldWithButton(blocks.StructBlock):
 
 class CallToAction(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
-    slug = blocks.CharBlock(required=True)
+    text = blocks.RichTextBlock(required=True)
     button = atoms.Hyperlink()
 
     class Meta:

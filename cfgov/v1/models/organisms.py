@@ -6,7 +6,7 @@ from . import molecules
 
 
 class Well(blocks.StructBlock):
-    template_path = blocks.CharBlock(required=True)
+    content = blocks.RichTextBlock(required=True)
 
     class Meta:
         icon = 'link'

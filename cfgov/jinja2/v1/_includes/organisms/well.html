@@ -17,7 +17,7 @@
 
 <div class="o-well">
     {% if value %}
-        {% include value.template_path %}
+        {% include value.content %}
     {% else %}
         {% macro render(template) %}
             {% import template as content %}

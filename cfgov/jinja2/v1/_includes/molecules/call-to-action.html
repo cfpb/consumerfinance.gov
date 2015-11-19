@@ -15,7 +15,7 @@
 
    settings.button:      Button options to create markup.
 
-   settings.button.href: A link to a page.
+   settings.button.url: A link to a page.
                          Defaults to '/'.
 
    settings.button.text: The text to display on button.
@@ -33,14 +33,14 @@
             </h2>
         {% endif %}
         <p class="short-desc">
-            {{ value.slug }}
+            {{ value.text }}
         </p>
         {% if caller %}
             caller()
         {% else %}
             <a class="btn btn__full"
-               href="{{ value.button.href or '/' }}">
-                {{ value.button.label }}
+               href="{{ value.button.url or '/' }}">
+                {{ value.button.text }}
             </a>
         {% endif %}
     {% else %}
