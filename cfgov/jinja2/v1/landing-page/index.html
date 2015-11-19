@@ -32,15 +32,22 @@
         {% endfor %}
     </div>
     <div class="o-image-text-50-50-group">
-        {% for block in page.content %}
+        <h2 class="o-image-text-50-50-group__header">
+        {{ page.image_text_50_50_group_header }}
+        </h2>
+
+        {% for block in page.image_text_50_50_content %}
             {% if block.block_type == 'image_text_50_50' %}
                 {{ render_stream_child(block) }}
             {% endif %}
         {% endfor %}
     </div>
     <div class="block">
-        <h2>Headline for 2/7 organism</h2>
-        {% for block in page.content %}
+        <h2 class="o-image-text-25-75-group__header">
+        {{ page.image_text_25_75_group_header }}
+        </h2>
+
+        {% for block in page.image_text_25_75_content %}
             {% if block.block_type == 'image_text_25_75' %}
                 {{ render_stream_child(block) }}
             {% endif %}
@@ -57,7 +64,11 @@
         {% endfor %}
     </div>
     <div class="o-link-blob-group">
-        {% for block in page.content %}
+        <h2 class="o-half-width-link-blob-group__header">
+        {{ page.half_width_link_blob_group_header }}
+        </h2>
+
+        {% for block in page.half_width_link_blob_content %}
             {% if block.block_type == 'half_width_link_blob' %}
                 {{ render_stream_child(block) }}
             {% endif %}
