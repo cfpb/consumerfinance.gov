@@ -57,4 +57,4 @@ class LandingPage(CFGOVPage):
             'request': request,
         }
 
-    template = '_includes/templates/landing-page/index.html'
+    template = 'landing-page/index.html'
