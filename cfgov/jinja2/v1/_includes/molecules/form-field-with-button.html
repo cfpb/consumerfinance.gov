@@ -34,8 +34,7 @@
                     (required)
                 {% endif %}
             </label>
-            <input id="{{ (value.id) ~
-                    '_' ~ range(1, 100) | random }}"
+            <input id="{{ value.id }}"
                    type="{{ value.type }}"
                    placeholder="{{ value.placeholder }}"
                    class="m-form-field-with-button_field"
@@ -54,8 +53,7 @@
                         (required)
                     {% endif %}
                 </label>
-                <input id="{{ (settings.field.id) ~
-                        '_' ~ range(1, 100) | random }}"
+                <input id="{{ settings.field.id }}"
                        type="{{ settings.field.type }}"
                        placeholder="{{ settings.field.placeholder }}"
                        class="m-form-field-with-button_field"
