@@ -24,56 +24,61 @@
 {% endblock %}
 
 {% block content_main %}
-    <div class="block
+    {% if page.introduction %}
+        <div class="block
                  block__flush-top">
-        {# This molecule should always be first #}
-        {% for block in page.introduction %}
-            {{ render_stream_child(block) }}
-        {% endfor %}
-    </div>
-    <div class="o-image-text-50-50-group">
-        <h2 class="o-image-text-50-50-group__header">
-        {{ page.image_text_50_50_group_header }}
-        </h2>
-
-        {% for block in page.image_text_50_50_content %}
-            {% if block.block_type == 'image_text_50_50' %}
+            {# This molecule should always be first #}
+            {% for block in page.introduction %}
                 {{ render_stream_child(block) }}
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="block">
-        <h2 class="o-image-text-25-75-group__header">
-        {{ page.image_text_25_75_group_header }}
-        </h2>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        {% for block in page.image_text_25_75_content %}
-            {% if block.block_type == 'image_text_25_75' %}
+    {% if page.image_text_50_50_content %}
+        <div class="o-image-text-50-50-group">
+            <h2 class="o-image-text-50-50-group__header">
+                {{ page.image_text_50_50_group_header }}
+            </h2>
+
+            {% for block in page.image_text_50_50_content %}
                 {{ render_stream_child(block) }}
-            {% endif %}
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div class="block">
-        {% for block in page.content %}
-            {% if block.block_type == 'well' %}
+    {% if page.image_text_25_75_content %}
+        <div class="block">
+            <h2 class="o-image-text-25-75-group__header">
+                {{ page.image_text_25_75_group_header }}
+            </h2>
+
+            {% for block in page.image_text_25_75_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.wells %}
+        <div class="block">
+            {% for block in page.wells %}
                 <div class="block">
                     {{ render_stream_child(block) }}
                 </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="o-link-blob-group">
-        <h2 class="o-half-width-link-blob-group__header">
-        {{ page.half_width_link_blob_group_header }}
-        </h2>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        {% for block in page.half_width_link_blob_content %}
-            {% if block.block_type == 'half_width_link_blob' %}
+    {% if page.half_width_link_blob_content %}
+        <div class="o-link-blob-group">
+            <h2 class="o-half-width-link-blob-group__header">
+                {{ page.half_width_link_blob_group_header }}
+            </h2>
+
+            {% for block in page.half_width_link_blob_content %}
                 {{ render_stream_child(block) }}
-            {% endif %}
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

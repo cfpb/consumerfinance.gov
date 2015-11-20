@@ -47,7 +47,7 @@ class ImageText2575(blocks.StructBlock):
 
 class TextIntroduction(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
-    intro = blocks.CharBlock(max_length=100, required=True)
+    intro = blocks.CharBlock(max_length=100, required=False)
     body = blocks.RichTextBlock(required=False)
     link = atoms.Hyperlink(required=False)
     has_rule = blocks.BooleanBlock(required=False)
