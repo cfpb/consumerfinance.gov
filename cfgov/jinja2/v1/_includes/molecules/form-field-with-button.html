@@ -63,7 +63,7 @@
                        name="{{ settings.field.name }}"
                        placeholder="{{ settings.field.placeholder }}"
                        class="m-form-field-with-button_field"
-                        {{ settings.field.attributes or '' }}>
+                       {{ "required" if settings.field.required else "" }}>
             </div>
             {{ settings.field.info or '' }}
             <input class="btn btn__full" type="submit" value="{{ settings.btn_text }}">
