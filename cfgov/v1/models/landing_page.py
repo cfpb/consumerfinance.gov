@@ -22,20 +22,20 @@ class LandingPage(CFGOVPage):
         ('text_introduction', molecules.TextIntroduction())
     ], blank=True)
 
-    image_text_25_75_group_header = models.CharField(max_length=100, blank=True)
+    image_text_25_75_group_header = models.CharField(max_length=100, blank=True, verbose_name="Group Header")
     image_text_25_75_content = StreamField([
         ('image_text_25_75', molecules.ImageText2575())
-    ], blank=True)
+    ], blank=True, verbose_name="content")
 
-    image_text_50_50_group_header = models.CharField(max_length=100, blank=True)
+    image_text_50_50_group_header = models.CharField(max_length=100, blank=True, verbose_name="Group Header")
     image_text_50_50_content = StreamField([
         ('image_text_50_50', molecules.ImageText5050())
-    ], blank=True)
+    ], blank=True, verbose_name="content")
 
-    half_width_link_blob_group_header = models.CharField(max_length=100, blank=True)
+    half_width_link_blob_group_header = models.CharField(max_length=100, blank=True, verbose_name="Group Header")
     half_width_link_blob_content = StreamField([
         ('half_width_link_blob', molecules.HalfWidthLinkBlob())
-    ], blank=True)
+    ], blank=True, verbose_name="content")
 
     wells = StreamField([
         ('well', organisms.Well())
