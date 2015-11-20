@@ -8,39 +8,60 @@
 
    Creates a call to action when given:
 
-   settings.heading:     A string with the title for the header slug
-                         of the call to action
+   settings.slug_text:      The text to display within the header slug.
 
-   settings.text:        The text to include within slug markup.
+   settings.paragraph_text: The text to display within the paragraph.
 
-   settings.button:      Button options to create markup.
+   settings.button:         A dictionary containing options used to create
+                            the Button markup.
 
-   settings.button.href: A link to a page.
-                         Defaults to '/'.
+   settings.button.url:     A link to a page.
+                            Defaults to '/'.
 
-   settings.button.text: The text to display on button.
+   settings.button.text:    The text to display on button.
 
    ========================================================================== #}
 
-{% macro render(settings) %}
 <div class="m-call-to-action">
-    {% if settings.heading %}
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
-            {{ settings.heading }}
-        </span>
-    </h2>
-    {% endif %}
-    <p class="short-desc">
-        {{ settings.text }}
-    </p>
-    {% if caller %}
-        caller()
+    {% if value %}
+        {% if value.slug_text %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ value.slug_text }}
+                </span>
+            </h2>
+        {% endif %}
+        <p class="short-desc">
+            {{ value.paragraph_text }}
+        </p>
+        {% if caller %}
+            caller()
+        {% else %}
+            <a class="btn btn__full"
+               href="{{ value.button.url or '/' }}">
+                {{ value.button.text }}
+            </a>
+        {% endif %}
     {% else %}
-    <a class="btn btn__full"
-       href="{{ settings.button.href or '/' }}">
-        {{ settings.button.text }}
-    </a>
+        {% macro render(settings) %}
+            {% if settings.slug_text %}
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        {{ settings.slug_text }}
+                    </span>
+                </h2>
+            {% endif %}
+            <p class="short-desc">
+                {{ settings.paragraph_text }}
+            </p>
+            {% if caller %}
+                caller()
+            {% else %}
+                <a class="btn btn__full"
+                   href="{{ settings.button.url or '/' }}">
+                    {{ settings.button.text }}
+                </a>
+            {% endif %}
+        {% endmacro %}
     {% endif %}
 </div>
-{% endmacro %}

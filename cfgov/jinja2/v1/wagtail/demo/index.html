@@ -1,5 +1,4 @@
-{% extends 'v1/demo/layout/base.html' %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% extends "base.html" %}
 
 {% block title %}
     Consumer Financial Protection Bureau
@@ -13,19 +12,23 @@
 {% block content %}
     <div class="block
                 block__flush-top">
-        {{ self.title }}
+        {{ page.title }}
     </div>
 
     <div class="content-l">
         <div class="content-l_col-1-2">
-            {% for item in self.molecules %}
-                {{ item }}
+            {% for item in page.molecules %}
+                {{ render_stream_child(item) }}
             {% endfor %}
         </div>
         <div class="content-l_col-1-2">
-            {% for item in self.organisms %}
-                {{ item }}
+            {% for item in page.organisms %}
+                {{ render_stream_child(item) }}
             {% endfor %}
+        </div>
+
+        <div class="content-l_col-1-2">
+            {% include '_includes/organisms/main-contact-info.html' %}
         </div>
     </div>
 

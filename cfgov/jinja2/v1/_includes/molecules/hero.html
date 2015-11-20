@@ -34,31 +34,62 @@
 
    ========================================================================== #}
 
-{% macro render( settings, options={} ) %}
-
-{% if settings.heading and settings.body and settings.image_url %}
+{% if value %}
 <section class="hero"
          {{ 'style=background-color:' +
-             options.background_color + ';'
-             if options.background_color else '' }}>
+             value.background_color + ';'
+             if value.background_color else '' }}>
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
-            <h1 class="hero_heading">{{ settings.heading }}</h1>
-            <p class="hero_subhead">{{ settings.body }}</p>
-            {% if options.link_text and options.link_url %}
-                <a href="{{ options.link_url }}"
+            <h1 class="hero_heading">{{ value.heading | safe}}</h1>
+            <p class="hero_subhead">{{ value.body |richtext}}</p>
+            {% if value.link.text and value.link.url %}
+                <a href="{{ value.link.url }}"
                    class="hero_cta
-                   {{ 'btn' if options.is_button
+                   {{ 'btn' if value.is_button
                    else '' }}">
-                    {{ options.link_text }}
+                    {{ value.link.text }}
                 </a>
             {% endif %}
         </div>
-        <div class="hero_image"
-             style="background-image: url( {{ settings.image_url }} );">
+        {% if value.image.upload %}
+            {% set photo=image(value.image.upload, 'original') %}
+            <div class="hero_image"
+                 style="background-image: url( {{ photo.url }} );">
+        {% endif %}
         </div>
-    </div>
 </section>
+
+{% else %}
+    {% macro render( settings, options={} ) %}
+
+        {% if settings.heading and settings.body and settings.image_url %}
+        <section class="hero"
+                 {{ 'style=background-color:' +
+                     options.background_color + ';'
+                     if options.background_color else '' }}>
+            <div class="wrapper hero_wrapper">
+                <div class="hero_text">
+                    <h1 class="hero_heading">{{ settings.heading }}</h1>
+                    <p class="hero_subhead">{{ settings.body }}</p>
+                    {% if options.link_text and options.link_url %}
+                        <a href="{{ options.link_url }}"
+                           class="hero_cta
+                           {{ 'btn' if options.is_button
+                           else '' }}">
+                            {{ options.link_text }}
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="hero_image"
+                     style="background-image: url( {{ settings.image_url }} );">
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    {% endmacro %}
+
 {% endif %}
 
-{% endmacro %}
+
+

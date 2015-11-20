@@ -14,130 +14,71 @@
 {% import 'organisms/email-signup.html' as email_signup %}
 
 {% block title -%}
-    TODO: This is a prototype page for testing landing page layouts.
-    Remove when fully implemented elsewhere.
+    {{ page.title }}
 {%- endblock %}
 
 {% block hero -%}
-    {{ hero.render({
-        'heading':   'This is an example of a Hero Molecule',
-        'body':      'Heroes function as a primary focal point on a page,
-                      often used to introduce a collection of pages by
-                      combining a brief description of the goals of that
-                      section along with a visually impactful graphic.',
-        'image_url': 'http://www.consumerfinance.gov/know-before-you-owe/static/img/kbyo-hero_tablet-2x.png'
-    }, {
-        'background_color': '#d5e7e6',
-        'link_text':        'Hero call to action',
-        'link_url':         '#'
-    }) }}
+    {% for block in page.hero %}
+        {{ render_stream_child(block) }}
+    {% endfor %}
 {% endblock %}
 
-{# TODO: Remove lipsumText when and if it is no longer needed. #}
-{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-
 {% block content_main %}
-     <div class="block
+    {% if page.introduction %}
+        <div class="block
                  block__flush-top">
-        {# This molecule should always be first #}
-        {{ text_introduction.render({
-            'heading':      'Text Introduction',
-            'intro':        'Content Intro Lorem Ipsum',
-            'body':         lipsumText,
-            'link_text':    'Placeholder link',
-            'link_url':     '#'
-        }) }}
-    </div>
-    <div class="o-image-text-50-50-group">
-        {{ image_text_50_50.render({
-                'title' :       'Image and Text 50-50',
-                'image_path':   'http://placehold.it/1600x900',
-                'image_alt':    'This is a placeholder image',
-                'is_widescreen': true,
-                'description':  'When image conveys critical information
-                                and text is supporting it --
-                                i.e. chart, excerpt from document',
-                'is_button' :   true,
-                'link_url':     'http://www.google.com',
-                'link_text' :   'Visit Google'
-            }) }}
-            {{ image_text_50_50.render({
-                'title' :       'Image and Text 50-50',
-                'image_path':   'http://placehold.it/1600x900',
-                'image_alt':    'This is a placeholder image',
-                'is_widescreen': true,
-                'description':  'When image conveys critical information
-                                and text is supporting it --
-                                i.e. chart, excerpt from document',
-                'is_button' :   true,
-                'link_url':     'http://www.google.com',
-                'link_text' :   'Visit Google'
-            }) }}
-    </div>
-    <div class="block">
-        <h2>Headline for 2/7 organism</h2>
-        {{ image_text_25_75.render({
-            'image_path':   'http://placehold.it/300x300',
-            'image_alt':    '',
-            'heading':      'Placeholder',
-            'body':         lipsumText,
-            'link_url':     '#',
-            'link_text':    'Placeholder link'
-        }, true) }}
+            {# This molecule should always be first #}
+            {% for block in page.introduction %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        {{ image_text_25_75.render({
-            'image_path':   'http://placehold.it/300x300',
-            'image_alt':    '',
-            'heading':      'Placeholder',
-            'body':         lipsumText,
-            'link_url':     '#',
-            'link_text':    'Placeholder link'
-        }, true) }}
+    {% if page.image_text_50_50_content %}
+        <div class="o-image-text-50-50-group">
+            <h2 class="o-image-text-50-50-group__header">
+                {{ page.image_text_50_50_group_header }}
+            </h2>
 
-        {{ image_text_25_75.render({
-            'image_path':   'http://placehold.it/300x300',
-            'image_alt':    '',
-            'heading':      'Placeholder',
-            'body':         lipsumText,
-            'link_url':     '#',
-            'link_text':    'Placeholder link'
-        }) }}
-    </div>
+            {% for block in page.image_text_50_50_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div class="block">
-        {{ well.render( 'landing-page/_template-prototype-well-content.html' ) }}
-    </div>
-    <div class="o-link-blob-group">
-        {{ link_blob.render({
-            'heading': 'This is an example of a Half Width Link Blob',
-            'body':    'To highlight navigational links and provide
-                        context about what users can expect on the linked
-                        page',
-            'links': [
-                {
-                    'text': 'This is a Link List molecule inside the blob',
-                    'url':  '/some-url/'
-                },
-                {
-                    'text': 'This is another Link List molecule inside the
-                             blob',
-                    'url':  '/some-other-url/'
-                }
-            ]
-        }) }}
-        {{ link_blob.render({
-            'heading': 'This is another example of a Half Width Link Blob',
-            'body':    '<strong>Example:</strong> About Us landing page,
-                        sub-page descriptors on "office" pages and
-                        wireframed on Rulemaking landing page.',
-            'links': [
-                {
-                    'text': 'This is a Link List molecule inside the blob',
-                    'url':  '/some-url/'
-                }
-            ]
-        }) }}
-    </div>
+    {% if page.image_text_25_75_content %}
+        <div class="block">
+            <h2 class="o-image-text-25-75-group__header">
+                {{ page.image_text_25_75_group_header }}
+            </h2>
+
+            {% for block in page.image_text_25_75_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.wells %}
+        <div class="block">
+            {% for block in page.wells %}
+                <div class="block">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.half_width_link_blob_content %}
+        <div class="o-link-blob-group">
+            <h2 class="o-half-width-link-blob-group__header">
+                {{ page.half_width_link_blob_group_header }}
+            </h2>
+
+            {% for block in page.half_width_link_blob_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
@@ -145,19 +86,7 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {{ related_posts.render({
-        'post':     get_document('posts', 'four-years-working-for-you')
-    }) }}
-    {{ call_to_action.render( {
-      'heading':    'Slug Title',
-      'button': {
-          'text':   'Call to Action'
-      },
-      'text': lipsumText
-    }) }}
-    {{ email_signup.render({
-        'heading':  'Slug Title',
-        'text':     lipsumText,
-        'required': true
-    }) }}
+    {% for block in page.sidebar %}
+        {{ render_stream_child(block) }}
+    {% endfor %}
 {%- endblock %}
