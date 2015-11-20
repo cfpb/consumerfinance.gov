@@ -5,6 +5,8 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from . import atoms
 
+from ..util import id_validator
+
 
 def isRequired(field_name):
     return [str(field_name) + ' is required.']
@@ -76,7 +78,7 @@ class FormFieldWithButton(blocks.StructBlock):
     btn_text = blocks.CharBlock(max_length=100, required=True)
 
     required = blocks.BooleanBlock(required=False)
-    id = blocks.CharBlock(max_length=100, required=False)
+    id = blocks.CharBlock(max_length=100, required=True)
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
     label = blocks.CharBlock(max_length=100, required=True)
     type = blocks.ChoiceBlock(choices=[
@@ -87,8 +89,24 @@ class FormFieldWithButton(blocks.StructBlock):
         ('url', 'URL'),
         ('radio', 'Radio'),
     ], icon='cup', required=True)
-    name = blocks.CharBlock(max_length=100, required=False)
     placeholder = blocks.CharBlock(max_length=100, required=False)
+
+    def clean(self, data):
+        error_dict = {}
+
+        try:
+            data = super(FormFieldWithButton, self).clean(data)
+        except ValidationError as e:
+            error_dict.update(e.params)
+
+        if not id_validator(data['id']):
+            id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
+            error_dict.update({'id': id_err})
+
+        if error_dict:
+            raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
+        else:
+            return data
 
     class Meta:
         icon = 'mail'
