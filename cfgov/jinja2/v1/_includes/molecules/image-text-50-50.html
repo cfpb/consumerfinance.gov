@@ -58,16 +58,20 @@
             {{ value.body }}
         </p>
 
-{#        {% if value.link.url %}#}
-{#            <a class="{% if value.is_button %}#}
-{#              btn m-image-text-50-50_btn#}
-{#              {% else %}#}
-{#              jump-link jump-link__underline#}
-{#              {% endif %}#}
-{#              "#}
-{#               href="{{ value.link.url }}">#}
-{#                {{ value.link.text if value.link.text else 'Learn More' }}#}
-{#            </a>#}
+        {% if value.links %}
+            <ul class="list list__links">
+                {% for link in value.links %}
+                    <li class="list_item">
+                        <a class="{% if value.is_button %}
+                              btn m-image-text-50-50_btn
+                              {% else %}
+                              jump-link jump-link__underline
+                              {% endif %}" href="{{ link.url }}">
+                            {{ link.text if link.text else 'Learn More' }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% endif %}
     </div>
 

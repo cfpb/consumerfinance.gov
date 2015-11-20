@@ -25,7 +25,7 @@ class ImageText5050(blocks.StructBlock):
     body = blocks.RichTextBlock(blank=True)
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
-    is_button = blocks.BooleanBlock(required=False, label="Show link as button")
+    is_button = blocks.BooleanBlock(required=False, label="Show links as button")
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:

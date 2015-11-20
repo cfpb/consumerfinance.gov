@@ -54,9 +54,16 @@
 
             <p class="m-image-text-25-75_body">{{ value.body }}</p>
 
-{#            <a class="jump-link m-image-text-25-75_link" href="{{ value.link.url }}">#}
-{#                {{ value.link.text }}#}
-            </a>
+            <ul class="list list__links">
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class="jump-link m-image-text-25-75_link" href="{{ link.url }}">
+                        {{ link.text }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        </ul>
         </div>
     </div>
 
