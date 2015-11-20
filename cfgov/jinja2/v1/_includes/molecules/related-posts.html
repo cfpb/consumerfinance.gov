@@ -77,12 +77,12 @@
     {% for post in posts %}
     {% set post_url = slugurl(post.slug) or '' %}
     <li class="list_item">
-        <h4 class="u-mb5">
+        <h3 class="h4 u-mb5">
             <a class="list_link"
                href="{{ post_url if post_url else post.permalink }}">
                 {{ post.title | safe }}
             </a>
-        </h4>
+        </h3>
         {% if post.text %}
         <p class="short-desc">
             {{ post.text | safe }}

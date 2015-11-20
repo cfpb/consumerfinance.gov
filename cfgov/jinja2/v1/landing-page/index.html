@@ -119,7 +119,7 @@
 {% block content_sidebar_modifiers -%}
     o-content-sidebar
 {%- endblock %}
-
+{#
 {% block content_sidebar scoped -%}
     {% for block in page.sidefoot %}
         {% if 'related_posts' in block.block_type %}
@@ -137,3 +137,4 @@
         {% endif %}
     {% endfor %}
 {%- endblock %}
+#}

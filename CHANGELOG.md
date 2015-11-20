@@ -193,6 +193,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Finalize Sublanding Page template
 - Fix related post molecule to be used in multiple places
 - Convert Sidefoot paragraph streamfield block to Textblock
+- Updated headings for changes in Capital Framework
 
 ### Removed
 - Removed unused exportsOverride section,
