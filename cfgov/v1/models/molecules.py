@@ -24,9 +24,9 @@ class ImageText5050(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(blank=True)
     image = atoms.ImageBasic()
-    is_widescreen = blocks.BooleanBlock(required=False)
-    is_button = blocks.BooleanBlock(required=False)
-    link = atoms.Hyperlink(required=False)
+    is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
+    is_button = blocks.BooleanBlock(required=False, label="Show link as button")
+    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
         icon = 'image'
@@ -37,7 +37,7 @@ class ImageText2575(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=True)
     image = atoms.ImageBasicAlt()
-    link = atoms.Hyperlink(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
     class Meta:
@@ -77,7 +77,7 @@ class FormFieldWithButton(blocks.StructBlock):
 
     required = blocks.BooleanBlock(required=False)
     id = blocks.CharBlock(max_length=100, required=False)
-    info = blocks.RichTextBlock(required=False)
+    info = blocks.RichTextBlock(required=False, label="Disclaimer")
     label = blocks.CharBlock(max_length=100, required=True)
     type = blocks.ChoiceBlock(choices=[
         ('text', 'Text'),
@@ -89,7 +89,6 @@ class FormFieldWithButton(blocks.StructBlock):
     ], icon='cup', required=True)
     name = blocks.CharBlock(max_length=100, required=False)
     placeholder = blocks.CharBlock(max_length=100, required=False)
-    attributes = blocks.CharBlock(max_length=100, required=False)
 
     class Meta:
         icon = 'mail'

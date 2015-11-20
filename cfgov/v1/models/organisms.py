@@ -9,7 +9,7 @@ class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=True)
 
     class Meta:
-        icon = 'link'
+        icon = 'title'
         template = '_includes/organisms/well.html'
 
 

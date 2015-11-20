@@ -42,7 +42,7 @@
                    name="{{ value.name }}"
                    placeholder="{{ value.placeholder }}"
                    class="m-form-field-with-button_field"
-                    {{ value.attributes or '' }}>
+                    {{ "required" if value.required else "" }}>
         </div>
         {{ value.info or '' }}
         <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
