@@ -46,7 +46,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^2.2.4",
     "mocha-jsdom": "^1.0.0",
-    "protractor": "^2.2.0",
+    "protractor": "^3.0.0",
     "require-dir": "^0.3.0",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.8.0",
