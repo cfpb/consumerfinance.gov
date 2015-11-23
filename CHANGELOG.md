@@ -174,6 +174,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Hide cues on expandables when JS is turned off.
 - Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
 - Split jinja2 template for related posts molecule into separate files for different rendering.
+- Routed landing page type related molecules and organisms
+  to use `jinja2/v1/_includes/` template locations.
+- Updated protractor from 2.5.1 to 3.0.0.
 
 ### Removed
 - Removed unused exportsOverride section,
