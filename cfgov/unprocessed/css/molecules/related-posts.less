@@ -74,6 +74,13 @@
     }
 };
 
+.m-related-posts {
+    padding-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
+    .header-slug {
+        margin-bottom: @margin_half__em * 2;
+    }
+}
+
 .m-related-posts__half-width {
     .m-related-posts_list {
         .respond-to-min(@bp-sm-min, {
@@ -92,13 +99,29 @@
         }
     }
 
+    .list_item .date {
+        margin-bottom:0;
+        margin-top: unit(10px / @base-font-size-px, em);
+    }
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
         @list_half-width();
     });
 }
 
-.m-related-posts {
-    padding-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
+.m-related-posts_list-container {
+    margin-bottom: @margin_half__em * 2;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
+        .grid_column(12);
+        border: 0;
+        .m-related-posts_list {
+            .grid_nested-col-group();
+        }
+    });
 }
 
 /* topdoc

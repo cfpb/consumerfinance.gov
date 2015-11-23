@@ -8,17 +8,25 @@
 
    Creates related posts markup when given:
 
-   is_half_width:       A Boolean indicating whether the posts should be at half
-                              width. Defaults to False.
+   is_half_width:    A Boolean indicating whether the posts should be at half
+                     width. Defaults to False.
 
    hide_header_slug: A Boolean indicating whether the header should be hidden.
-                              Defaults to False.
+                     Defaults to False.
 
    ========================================================================== #}
 
 {% macro render(is_half_width=false, hide_header_slug=false) %}
+{% import 'macros/category-icon.html' as category_icon %}
+{% set title_icon_lookup = {
+    "newsroom" : ("Newsroom","newspaper"),
+    "posts"    : ("Blog", "speech-bubble"),
+    "events"   : ("Events", "speech-bubble")
+  }
+%}
 <div class="m-related-posts
-            {{ 'm-related-posts__half-width' if is_half_width else '' }}">
+            {{'m-related-posts__half-width'
+              if is_half_width else ''}}">
     {% if not hide_header_slug %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
@@ -26,8 +34,21 @@
         </span>
     </h2>
     {% endif %}
-    {#% TODO: Add condition to display various related post types %#}
-    {{ _related_posts_list() }}
+    {% set related_post_types = page.related_posts %}
+    {% if related_post_types | length  > 1 %}
+    {% for post_type, post_type_list in related_post_types.iteritems() %}
+    {% set title, icon = title_icon_lookup[post_type] or ("Blog", "speech-bubble") %}
+    <div class="m-related-posts_list-container">
+        <h3 class="h4">
+             <span class="cf-icon cf-icon-{{icon}}"></span>
+            {{ title }}
+        </h3>
+        {{ _related_posts_list(post_type_list) }}
+    </div>
+    {% endfor %}
+    {% else %}
+        {{ _related_posts_list(related_post_types.values() | first) }}
+    {% endif %}
 </div>
 {% endmacro %}
 
@@ -42,18 +63,20 @@
 
    Creates related posts markup when given:
 
+   posts: A list of dictionaries containing related posts.
+
    ========================================================================== #}
 
-{% macro _related_posts_list() %}
+{% macro _related_posts_list(posts) %}
 {% import 'macros/time.html' as time %}
 <ul class="m-related-posts_list
            list list__unstyled
            list__spaced">
-    {% for post in page.related_posts %}
+    {% for post in posts %}
     <li class="list_item">
         <h4 class="u-mb5">
             <a class="list_link"
-               href="{{ post.permalink }}">
+               href="{{ post.relative_url }}">
                 {{ post.title | safe }}
             </a>
         </h4>
@@ -70,7 +93,7 @@
 </ul>
 
 {% if view_more %}
-  {{ _view_more() }}
+    {{ _view_more() }}
 {% endif %}
 
 {% endmacro %}
