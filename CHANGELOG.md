@@ -95,6 +95,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Adding Sidebar Breakout organism.
 - Added cf-tables and tables molecule
 - Landing Page Type
+- Initial Data json file for preloading pages
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

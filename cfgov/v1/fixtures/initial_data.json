@@ -592,7 +592,7 @@
 {
   "fields": {
     "locked": false,
-    "title": "Welcome to your new Wagtail site!",
+    "title": "V1 Site",
     "numchild": 2,
     "show_in_menus": false,
     "live": true,
