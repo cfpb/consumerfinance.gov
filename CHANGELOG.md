@@ -157,7 +157,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
 - Upgrade wagtail to 1.2
 - Cleaned up and rebuilt the secondary nav to reduce complexity and fix bugs
-- Routed landing page type related molecules and organisms to use jinja2/v1/_includes/ template locations
+- Routed landing page type related molecules and organisms
+  to use `jinja2/v1/_includes/` template locations.
+- Updated protractor from 2.5.1 to 3.0.0.
 
 ### Removed
 - Removed unused exportsOverride section,

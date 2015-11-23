@@ -63,6 +63,7 @@ install(){
     protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
     mkdir -p ./$NODE_DIR/protractor
     cp -r $protractor_full_path ./$NODE_DIR/
+    rm -rf ./$NODE_DIR/protractor/node_modules/
   fi
 
   npm install
