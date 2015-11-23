@@ -90,8 +90,8 @@ def email_formatter(dict, index, eindex, email, label):
 
     dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-deleted'] = u''
     dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-order'] = u'0'
-    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-value-href'] = email
-    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-value-label'] = label
+    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-value-url'] = email
+    dict[stream_group + str(index) + '-value-emails-' + str(eindex) + '-value-text'] = label
     dict[stream_group + str(index) + '-value-emails-count'] = str((eindex + 1))
 
     return dict

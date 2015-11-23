@@ -31,7 +31,7 @@
 
         <p class='m-text-introduction_intro'>{{ value.intro }}</p>
 
-        <p class='m-text-introduction_body'>{{ value.body }}</p>
+        <p class='m-text-introduction_body'>{{ value.body | safe }}</p>
 
         <div class='m-text-introduction_link-container'>
             <a class='jump-link' href='{{ value.link.url }}'>{{ value.link.text }}</a>

@@ -17,7 +17,7 @@
 
 <div class="o-well">
     {% if value %}
-        {{ value.content }}
+        {{ value.content | safe }}
     {% else %}
         {% macro render(template) %}
             {% import template as content %}

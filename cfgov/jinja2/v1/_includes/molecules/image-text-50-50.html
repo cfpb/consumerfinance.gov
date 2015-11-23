@@ -55,7 +55,7 @@
         </h2>
 
         <p class="short-desc short-desc__large">
-            {{ value.body }}
+            {{ value.body | safe }}
         </p>
 
         {% if value.links %}

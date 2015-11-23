@@ -32,7 +32,7 @@
             </h2>
         {% endif %}
         <p class="short-desc">
-            {{ value.paragraph_text }}
+            {{ value.paragraph_text | safe }}
         </p>
         {% if caller %}
             caller()
