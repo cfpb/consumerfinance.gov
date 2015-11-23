@@ -8,18 +8,17 @@
 
    Creates related posts markup when given:
 
-   half_width:       A Boolean indicating whether the posts should be
-                              at half width.
+   is_half_width:       A Boolean indicating whether the posts should be at half
+                              width. Defaults to False.
 
-   hide_header_slug: A Boolean indicating whether the header should be
-                              hidden.
+   hide_header_slug: A Boolean indicating whether the header should be hidden.
+                              Defaults to False.
 
    ========================================================================== #}
 
-{% macro render(half_width=false, hide_header_slug=false) %}
+{% macro render(is_half_width=false, hide_header_slug=false) %}
 <div class="m-related-posts
-            {{ 'm-related-posts__half-width'
-               if settings.half_width else '' }}">
+            {{ 'm-related-posts__half-width' if is_half_width else '' }}">
     {% if not hide_header_slug %}
     <h2 class="header-slug">
         <span class="header-slug_inner">

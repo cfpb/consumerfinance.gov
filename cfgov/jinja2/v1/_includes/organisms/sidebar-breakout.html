@@ -113,6 +113,6 @@
     </p>
     {% endif %}
     {% import 'molecules/related-posts.html' as related_posts with context %}
-    {{ related_posts.render(half_width=false, hide_header_slug=true) }}
+    {{ related_posts.render(is_half_width=false, hide_header_slug=true) }}
 </div>
 {% endmacro %}
