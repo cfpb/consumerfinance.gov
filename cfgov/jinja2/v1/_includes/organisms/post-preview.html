@@ -45,51 +45,53 @@
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
 {% if value %}
+    {% set path = value.post.url_path | replace ('home/', '') %}
     <article class="o-post-preview">
         <div class="meta-header">
-        <span class="date meta-header_right">
-            Published {{ time.render(value.published_date, {'date':true}) }}
-        </span>
-            {% if value.post_category_1 %}
-                {% set use_post_category = true %}
-                {{ category_slug.render(value.post_category_1,
-                        value.path,
-                        'post_slug meta-header_left',
-                        use_post_category) }}
-            {% endif %}
-            {% if value.post_category_2 %}
-                |
-                {{ category_slug.render(value.post_category_2,
-                        value.path,
-                        'post_slug meta-header_left',
-                        use_post_category) }}
-            {% endif %}
-        </div>
-        {% if value.event.start_date %}
-            <div class="o-post-preview_image-container">
-                <time class="calendar-icon"
-                      data-month="{{ value.event.start_date | date('%b') }}"
-                      data-day="{{ value.event.start_date | date('%-d') }}"
-                      datetime="{{ value.event.start_date | date('%c') }}">
-                    <span class="u-visually-hidden">{{ value.event.start_date| date('%b %-d, %Y') }}</span>
-                </time>
-                {% if value.event.stream_link %}
-                    <img class="o-post-preview_image"
-                         src="http://placehold.it/160x90"
-                         alt="Livestream event">
-                {% else %}
-                    <img class="o-post-preview_image"
-                         src="{{ location_image_url({
-                                 'location': value.event.city
-                                 | default('Washington, DC', true)
-                                 | urlencode,
-                                 'zoom':     '12',
-                                 'scale':    '2',
-                                 'size':     '276x155'
-                                 }) }}"
-                         alt="Google Maps image of {{ value.event.venue }}">
+            <span class="date meta-header_right">
+                Published {{ time.render(value.post.cfgovpage.first_published_at, {'date':true}) }}
+            </span>
+            {% for cat in value.post.cfgovpage.categories.all() %}
+                {% if loop.index > 1 %}
+                    |
                 {% endif %}
-            </div>
+                {{ category_slug.render(cat.name,
+                        path,
+                        'post_slug meta-header_left',
+                        true) }}
+            {% endfor %}
+        </div>
+        {% if value.post.cfgovpage.eventpage %}
+            {% set event = value.post.cfgovpage.eventpage  %}
+        {% endif %}
+
+         {% if event %}
+            {% if event.start_dt %}
+                <div class="o-post-preview_image-container">
+                    <time class="calendar-icon"
+                          data-month="{{ event.start_dt | date('%b') }}"
+                          data-day="{{ event.start_dt | date('%-d') }}"
+                          datetime="{{ event.start_dt | date('%c') }}">
+                        <span class="u-visually-hidden">{{ event.start_dt| date('%b %-d, %Y') }}</span>
+                    </time>
+                    {% if event.live_stream_link %}
+                        <img class="o-post-preview_image"
+                             src="http://placehold.it/160x90"
+                             alt="Livestream event">
+                    {% else %}
+                        <img class="o-post-preview_image"
+                             src="{{ location_image_url({
+                                     'location': event.venue_city
+                                     | default('Washington, DC', true)
+                                     | urlencode,
+                                     'zoom':     '12',
+                                     'scale':    '2',
+                                     'size':     '276x155'
+                                     }) }}"
+                             alt="Google Maps image of {{ event.venue_name }}">
+                    {% endif %}
+                </div>
+            {% endif %}
         {% elif value.image.url %}
             <div class="o-post-preview_image-container">
                 <img class="o-post-preview_image"
@@ -101,21 +103,23 @@
             <h3 class="o-post-preview_title">
                 {{ value.heading | safe }}
             </h3>
-            {% if value.event.start_date %}
-                <span class="o-post-preview_subtitle h6">
-            {% if value.event.city and value.event.state %}
-                {{ value.event.city }}, {{ value.event.state }}
+            {% if event %}
+                {% if event.start_dt %}
+                    <span class="o-post-preview_subtitle h6">
+                    {% if event.venue_city and event.venue_state %}
+                        {{ event.venue_city }}, {{ event.venue_state }}
+                    {% endif %}
+                            {{ event.venue_name if event.venue_name else '' }}
+                    {{ 'Livecast' if event.live_stream_url else '' }}
+                     -
+                    {{ time.render(event.start_dt) }}
+                    </span>
+                {% endif %}
             {% endif %}
-                    {{ value.event.venue if value.event.venue else '' }}
-            {{ 'Livecast' if value.event.stream_link else '' }}
-             -
-            {{ time.render(value.event.start_date) }}
-            </span>
-            {% endif %}
-            {% if value.comments_close_date %}
+            {% if value.post.comments_close_date %}
                 <span class="o-post-preview_subtitle h6">
-            Comments close {{ time.render(value.comments_close_date, {'date':true}) }}
-            </span>
+                    Comments close {{ time.render(value.comments_close_date, {'date':true}) }}
+                </span>
             {% endif %}
             {% if value.body %}
                 <p class="o-post-preview_description">
@@ -123,21 +127,27 @@
                 </p>
             {% endif %}
             <div class="post_meta">
-                {% if value.author | length %}
+                {% for author in value.post.cfgovpage.authors.names() %}
                     <span class="o-post-preview_byline">
-                        By <a href="{{ value.path }}?filter_author={{ value.author.0 }}">
-                        {{ value.author.0 }}
-                    </a>
-                        {% if value.author.1 %}
-                            and <a href="{{ value.path }}?filter_author={{ value.author.1 }}">
-                            {{ value.author.1 }}
-                        </a>
+                        {% if loop.index == 1  %}
+                            By <a href="{{ path }}?filter_author={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% elif loop.last == true %}
+                            and <a href="{{ path }}?filter_author={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% else %}
+                            ,<a href="{{ path }}?filter_author={{ author }}">
+                                {{ author }}
+                                </a>
                         {% endif %}
                     </span>
-                {% endif %}
-                {% if value.post_tags | length %}
+                {% endfor %}
+
+                {% if value.post.cfgovpage.tags.names() | length %}
                     {%- import 'tags.html' as tags %}
-                    {{ tags.render(value.post_tags, value.path, true, false) }}
+                    {{ tags.render(value.post.cfgovpage.tags.names(), path, true, false) }}
                 {% endif %}
             </div>
             {% if value.link.url %}

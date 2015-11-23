@@ -4,13 +4,16 @@ from django.db import models
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
+
+from . import ref
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -45,6 +48,7 @@ class CFGOVPage(Page):
         MultiFieldPanel(Page.promote_panels, "Page configuration"),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        InlinePanel('categories', label="Categories", max_num=2),
     ]
 
     @property
@@ -115,6 +119,15 @@ class CFGOVPage(Page):
 
     class Meta:
         app_label = 'v1'
+
+
+class CFGOVPageCategory(Orderable):
+    page = ParentalKey(CFGOVPage, related_name='categories')
+    name = models.CharField(max_length=255, choices=ref.choices)
+
+    panels = [
+        FieldPanel('name'),
+    ]
 
 
 class CFGOVPagePermissionTester(PagePermissionTester):

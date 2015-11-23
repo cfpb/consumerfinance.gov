@@ -67,13 +67,6 @@ class LandingPage(CFGOVPage):
         StreamFieldPanel('sidebar'),
     ]
 
-    # Tab handler interface
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.promote_panels, heading='Promote'),
-        ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
-    ])
-
     def get_context(self, request, *args, **kwargs):
         return {
             PAGE_TEMPLATE_VAR: self,

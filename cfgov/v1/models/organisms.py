@@ -4,7 +4,6 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 
 from . import atoms
 from . import molecules
-from . import ref
 
 
 class Well(blocks.StructBlock):
@@ -26,31 +25,11 @@ class FullWidthText(blocks.StructBlock):
 class PostPreview(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=True)
-    authors = blocks.ListBlock(blocks.CharBlock(required=False))
-    published_date = blocks.DateTimeBlock(required=True)
-
     image = atoms.ImageBasic(required=False)
 
-    post_category_1 = ref.IconCategoryChoiceBlock(required=True)
+    post = blocks.PageChooserBlock(required=True)
 
-    post_category_2 = ref.IconCategoryChoiceBlock(required=False)
-
-    post_tags = blocks.ListBlock(blocks.CharBlock(required=False))
-
-    event = blocks.StructBlock([
-        ('start_date', blocks.CharBlock(required=False)),
-        ('stream_link', blocks.CharBlock(required=False)),
-        ('venue', blocks.CharBlock(required=False)),
-        ('street', blocks.CharBlock(required=False)),
-        ('city', blocks.CharBlock(required=False)),
-        ('state', blocks.CharBlock(required=False)),
-        ('zip', blocks.CharBlock(required=False)),
-    ], )
-
-    comments_close_date = blocks.DateTimeBlock(required=False)
     link = atoms.Hyperlink(required=False)
-
-    path = blocks.CharBlock(max_length=100, label="Internal URL Path")
 
     class Meta:
         icon = 'view'
