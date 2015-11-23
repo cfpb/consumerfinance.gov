@@ -14,12 +14,31 @@
                             'type': 'form',
                             'children': [
                                 {
-                                    'type':     'text',
+                                    'type':     'select',
                                     'label':    'Topics',
                                     'name':     'topics',
                                     'id':       'topics',
+                                    'multiple': true,
                                     'cols':     '1-2',
-                                    'attrs':    { 'placeholder': 'Search for topics' }
+                                    'attrs':    { 'placeholder': 'Search for topics' },
+                                    'opts':     [
+                                        {
+                                            'label': 'Mortgages',
+                                            'value': 'mortgages'
+                                        },
+                                        {
+                                            'label': 'Students',
+                                            'value': 'students'
+                                        },
+                                        {
+                                            'label': 'Financial education',
+                                            'value': 'financial_education'
+                                        },
+                                        {
+                                            'label': 'About the Bureau',
+                                            'value': 'about_the_bureau'
+                                        }
+                                    ]
                                 },
                                 {
                                     'type':     'text',
@@ -116,12 +135,11 @@
                                             checkbox.value) | safe }}
                     {% endfor %}
                 {% elif input.type == 'select' %}
-                    <label class="form-group_item"
-                           {{ 'for=filter_' ~ input.id if input.id else '' }}>
-                    </label>
                     <select {{ 'id=filter_' ~ input.id if input.id else '' }}
-                            {{ 'name=filter_' ~ input.name if input.name else '' }}>
-                    {% for option in input.attrs -%}
+                            {{ 'name=filter_' ~ input.name if input.name else '' }}
+                            {{ 'multiple' if input.multiple else '' }}
+                            placeholder="{{ input.attrs.placeholder if input.attrs and input.attrs.placeholder else '' }}">
+                    {% for option in input.opts -%}
                         {{ _filter_option(option.label, option.value) | safe }}
                     {% endfor %}
                     </select>
@@ -193,12 +211,31 @@
                     'cols':     '2-3',
                     'children': [
                         {
-                            'type':     'text',
+                            'type':     'select',
                             'label':    'Topics',
                             'name':     'topics',
                             'id':       'topics',
+                            'multiple': true,
                             'cols':     '1-2',
-                            'attrs':    { 'placeholder': 'Search for topics' }
+                            'attrs':    { 'placeholder': 'Search for topics' },
+                            'opts':     [
+                                {
+                                    'label': 'Mortgages',
+                                    'value': 'mortgages'
+                                },
+                                {
+                                    'label': 'Students',
+                                    'value': 'students'
+                                },
+                                {
+                                    'label': 'Financial education',
+                                    'value': 'financial_education'
+                                },
+                                {
+                                    'label': 'About the Bureau',
+                                    'value': 'about_the_bureau'
+                                }
+                            ]
                         },
                         {
                             'type':     'text',
