@@ -161,6 +161,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to use `jinja2/v1/_includes/` template locations.
 - Updated protractor from 2.5.1 to 3.0.0.
 - Updated gulp-sitespeedio from 0.0.7 to 0.0.8.
+- Update runserver script to start MYSQL if it isn't running
 
 ### Removed
 - Removed unused exportsOverride section,

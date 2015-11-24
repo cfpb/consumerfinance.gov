@@ -9,11 +9,17 @@
 # Set script to exit on any errors.
 set -e
 
+mysql(){
+  if ! mysql.server status; then
+    mysql.server start
+  fi
+}
+
 # Run tasks to build the project for distribution.
-run(){
-  echo 'Running Server...'
-  echo 'note: this now does the same thing as ./cfgov/manage.py runserver'
+server(){
+  echo 'Starting the Server...'
   python cfgov/manage.py runserver
 }
 
-run
+mysql
+server
