@@ -78,11 +78,7 @@ install(){
   pip install tox
 
   # Django Server
-  if [ -z "$1" ]; then
-    pip install -r ./requirements/local.txt
-  else
-    pip install -r ./requirements/$1.txt
-  fi
+  pip install -r ./requirements/local.txt
 }
 
 # Run tasks to build the project for distribution.
@@ -123,5 +119,5 @@ is_installed(){
 
 init
 clean
-install $1
+install
 build
