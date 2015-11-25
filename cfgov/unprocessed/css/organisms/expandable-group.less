@@ -1,0 +1,58 @@
+/* topdoc
+  name: Expandable groups
+  family: cf-organisms
+  patterns:
+  - name: Standard expandable group
+    markup: |
+      <div class="o-expandable-group">
+          <h3>Expandable group header</h3>
+          <p>Intro text</p>
+          <div class="m-expandable"></div>
+          <div class="m-expandable"></div>
+          <div class="m-expandable"></div>
+      </div>
+    codenotes:
+      - |
+        Pattern structure
+        -----------------
+        .m-expandable-group
+          h3 (optional)
+          p (optional)
+          .expandable
+            [...]
+          .expandable
+            [...]
+          .expandable
+            [...]
+  - name: Accordion-style group
+    markup: |
+      <div class="o-expandable-group o-expandable-group__accordion">
+          <h3>Expandable group header</h3>
+          <p>Intro text</p>
+          <div class="m-expandable"></div>
+          <div class="m-expandable"></div>
+          <div class="m-expandable"></div>
+      </div>
+    notes:
+      - "Accordions can only show one open expandable at a time."
+  tags:
+  - cf-organisms
+*/
+
+.o-expandable-group {
+    .webfont-regular();
+    margin-bottom: unit(30px / @base-font-size-px, em);
+    .m-expandable {
+        padding: 0;
+    }
+}
+
+.o-expandable-group .m-expandable:not(:last-child) .m-expandable_content {
+    border-bottom: none;
+}
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
