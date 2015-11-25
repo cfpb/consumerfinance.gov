@@ -7,6 +7,7 @@ require( '../modules/polyfill/class-list' );
 
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
+var atomicCheckers = require( '../modules/util/atomic-checkers' );
 
 /**
  * Expandable
@@ -30,8 +31,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = element.classList.contains( BASE_CLASS ) ?
-             element : element.querySelector( '.' + BASE_CLASS );
+  var _dom = atomicCheckers.validateDomElement( element, BASE_CLASS, 'Expandable' );
   var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
   var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _contentAnimated =

@@ -100,6 +100,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for Expandable molecule and ExpandableGroup organism.
 - Added `classlist` JS polyfill.
 - Added `EventObserver` for adding event broadcaster capability to JS classes.
+- Added `atomic-checkers.js` and `validateDomElement`
+  utility method for checking atomic element DOM nodes.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

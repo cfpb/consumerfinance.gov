@@ -5,7 +5,9 @@ require( '../modules/polyfill/query-selector' );
 require( '../modules/polyfill/event-listener' );
 require( '../modules/polyfill/class-list' );
 
+// Required modules.
 var Expandable = require( '../molecules/Expandable' );
+var atomicCheckers = require( '../modules/util/atomic-checkers' );
 
 /**
  * ExpandableGroup
@@ -21,8 +23,7 @@ function ExpandableGroup( element ) {
 
   var BASE_CLASS = 'o-expandable-group';
 
-  var _dom = element.classList.contains( BASE_CLASS ) ?
-             element : element.querySelector( '.' + BASE_CLASS );
+  var _dom = atomicCheckers.validateDomElement( element, BASE_CLASS, 'ExpandableGroup' );
   var _domChildren = _dom.querySelectorAll( '.m-expandable' );
   var _lastOpenChild;
   var _isAccordion;
