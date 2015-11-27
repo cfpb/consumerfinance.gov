@@ -142,6 +142,15 @@ npm install -g gulp bower
 
 ## 3. Install dependencies
 
+> **NOTE:**
+  Protractor (for the test suite)
+  can be installed globally to avoid downloading Chromedriver repeatedly.
+  To do so, run:
+  ```bash
+  npm install -g protractor && webdriver-manager update
+  ```
+
+
 Next, install dependencies with:
 
 ```bash
