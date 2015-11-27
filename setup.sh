@@ -61,6 +61,10 @@ install(){
     protractor_symlink=$(command -v protractor)
     protractor_binary=$(readlink $protractor_symlink)
     protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
+    if [ ! -d $protractor_full_path/selenium ]; then
+      echo '\033[33;31m ERROR: Please run `webdriver-manager update` and try again!'
+      exit
+    fi
     mkdir -p ./$NODE_DIR/protractor
     cp -r $protractor_full_path ./$NODE_DIR/
     rm -rf ./$NODE_DIR/protractor/node_modules/
