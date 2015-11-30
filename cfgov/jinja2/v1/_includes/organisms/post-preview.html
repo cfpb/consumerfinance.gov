@@ -45,7 +45,7 @@
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
 {% if value %}
-    {% set path = value.post.url_path | replace ('home/', '') %}
+    {% set path = value.post.url_path %}
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">

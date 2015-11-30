@@ -11,6 +11,7 @@ from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDir
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
@@ -22,6 +23,7 @@ urlpatterns = [
     # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^$', SheerTemplateView.as_view(), name='home'),
+    url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s')),
 
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
@@ -219,7 +221,6 @@ if settings.DEBUG :
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))
-
 
 from sheerlike import register_permalink
 
