@@ -88,7 +88,7 @@ class FormFieldWithButton(blocks.StructBlock):
         ('number', 'Number'),
         ('url', 'URL'),
         ('radio', 'Radio'),
-    ], icon='cup', required=True)
+    ], required=True)
     placeholder = blocks.CharBlock(max_length=100, required=False)
 
     def clean(self, data):

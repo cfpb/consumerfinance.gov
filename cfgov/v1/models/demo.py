@@ -28,7 +28,9 @@ class DemoPage(CFGOVPage):
 
     organisms = StreamField([
         ('well', organisms.Well()),
-        ('email_signup', organisms.EmailSignUp())
+        ('email_signup', organisms.EmailSignUp()),
+        ('full_width_text', organisms.FullWidthText()),
+        ('post_preview', organisms.PostPreview()),
     ], blank=True)
 
     contact = models.ForeignKey(

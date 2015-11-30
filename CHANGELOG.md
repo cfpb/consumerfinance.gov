@@ -102,6 +102,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added `EventObserver` for adding event broadcaster capability to JS classes.
 - Added `atomic-checkers.js` and `validateDomElement`
   utility method for checking atomic element DOM nodes.
+- Backend Organisms Full Width Text & Post Preview  
+  
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

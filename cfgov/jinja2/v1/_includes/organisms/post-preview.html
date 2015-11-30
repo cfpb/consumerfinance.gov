@@ -39,12 +39,126 @@
 
    ========================================================================== #}
 
-{% macro render(settings, path) %}
-
 {% import 'macros/share.html' as share with context %}
 {% import 'category-slug.html' as category_slug %}
 {% import 'macros/time.html' as time %}
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
+
+{% if value %}
+    {% set path = value.post.url_path %}
+    <article class="o-post-preview">
+        <div class="meta-header">
+            <span class="date meta-header_right">
+                Published {{ time.render(value.post.cfgovpage.first_published_at, {'date':true}) }}
+            </span>
+            {% for cat in value.post.cfgovpage.categories.all() %}
+                {% if loop.index > 1 %}
+                    |
+                {% endif %}
+                {{ category_slug.render(cat.name,
+                        path,
+                        'post_slug meta-header_left',
+                        true) }}
+            {% endfor %}
+        </div>
+        {% if value.post.cfgovpage.eventpage %}
+            {% set event = value.post.cfgovpage.eventpage  %}
+        {% endif %}
+
+         {% if event %}
+            {% if event.start_dt %}
+                <div class="o-post-preview_image-container">
+                    <time class="calendar-icon"
+                          data-month="{{ event.start_dt | date('%b') }}"
+                          data-day="{{ event.start_dt | date('%-d') }}"
+                          datetime="{{ event.start_dt | date('%c') }}">
+                        <span class="u-visually-hidden">{{ event.start_dt| date('%b %-d, %Y') }}</span>
+                    </time>
+                    {% if event.live_stream_link %}
+                        <img class="o-post-preview_image"
+                             src="http://placehold.it/160x90"
+                             alt="Livestream event">
+                    {% else %}
+                        <img class="o-post-preview_image"
+                             src="{{ location_image_url({
+                                     'location': event.venue_city
+                                     | default('Washington, DC', true)
+                                     | urlencode,
+                                     'zoom':     '12',
+                                     'scale':    '2',
+                                     'size':     '276x155'
+                                     }) }}"
+                             alt="Google Maps image of {{ event.venue_name }}">
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% elif value.image.url %}
+            <div class="o-post-preview_image-container">
+                <img class="o-post-preview_image"
+                     src="{{ value.image.url }}"
+                     alt="{{ value.image.alt if value.image.alt else '' }}">
+            </div>
+        {% endif %}
+        <div class="o-post-preview_content">
+            <h3 class="o-post-preview_title">
+                {{ value.heading | safe }}
+            </h3>
+            {% if event %}
+                {% if event.start_dt %}
+                    <span class="o-post-preview_subtitle h6">
+                    {% if event.venue_city and event.venue_state %}
+                        {{ event.venue_city }}, {{ event.venue_state }}
+                    {% endif %}
+                            {{ event.venue_name if event.venue_name else '' }}
+                    {{ 'Livecast' if event.live_stream_url else '' }}
+                     -
+                    {{ time.render(event.start_dt) }}
+                    </span>
+                {% endif %}
+            {% endif %}
+            {% if value.post.comments_close_date %}
+                <span class="o-post-preview_subtitle h6">
+                    Comments close {{ time.render(value.comments_close_date, {'date':true}) }}
+                </span>
+            {% endif %}
+            {% if value.body %}
+                <p class="o-post-preview_description">
+                    {{ value.body | safe }}
+                </p>
+            {% endif %}
+            <div class="post_meta">
+                {% for author in value.post.cfgovpage.authors.names() %}
+                    <span class="o-post-preview_byline">
+                        {% if loop.index == 1  %}
+                            By <a href="{{ path }}?filter_author={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% elif loop.last == true %}
+                            and <a href="{{ path }}?filter_author={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% else %}
+                            ,<a href="{{ path }}?filter_author={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% endif %}
+                    </span>
+                {% endfor %}
+
+                {% if value.post.cfgovpage.tags.names() | length %}
+                    {%- import 'tags.html' as tags %}
+                    {{ tags.render(value.post.cfgovpage.tags.names(), path, true, false) }}
+                {% endif %}
+            </div>
+            {% if value.link.url %}
+                <a href="{{ value.link.url }}" class="jump-link jump-link__underline">
+                    {{ value.link.text }}
+                </a>
+            {% endif %}
+        </div>
+    </article>
+{% else %}
+{% macro render(settings, path) %}
 
 <article class="o-post-preview">
     <div class="meta-header">
@@ -150,3 +264,4 @@
 </article>
 
 {% endmacro %}
+{% endif %}
