@@ -70,8 +70,7 @@ git checkout refresh  # Branch for our staging-stable server.
 
 #### Updating all dependencies
 
-Each time you fetch from the upstream repository (this repo), run `./setup.sh`
-(or `./setup.sh local` for local development).
+Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
 This setup script will remove and re-install the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
@@ -162,9 +161,9 @@ from the source. Default is `False`.
 - `--verbosity` is set to 1 by default. Set it to 2 or higher and expect the
 name of the slugs to appear where appropriate.
 
-For now, in order for this command to import the data, one of the things it 
+For now, in order for this command to import the data, one of the things it
 needs is a file for "sheer logic" to use to retrieve the data. For us, the
-processors are already done from our last backend. This part of the command 
+processors are already done from our last backend. This part of the command
 will change as we move away from our dependency on "sheer logic". This is set
 by putting the file in a `processors` module in the top level of the project
 and adding it to the setting SHEER_PROCESSORS.
@@ -241,27 +240,27 @@ Additionally, you may want to consider
 which is the front-end pattern library used in this project.
 
 ## Working with the templates
-<!-- Perhaps we want to split this out into a separate page? -->
-### Front-End Template/Asset Locations ###
+<!-- TODO: Perhaps we want to split this out into a separate page? -->
+### Front-End Template/Asset Locations
 
-**Templates** that are served by the Django server: `cfgov\v1\jinja2\v1`
+**Templates** that are served by the Django server: `cfgov\jinja2\v1`
 
-**Static assets** prior to processing (minifying etc.): `cfgov\v1\unprocessed`.
-*Note, after a `gulp build` they are copied over to the `cfgov\v1\static` location,
-ready to be served by Django.*
+**Static assets** prior to processing (minifying etc.): `cfgov\unprocessed`.
+> NOTE: After a `gulp build` they are copied over to the `cfgov\static_built` location,
+  ready to be served by Django.
 
 ### Simple static template setup
 
 By default, Django will render pages with accordance to the URL pattern defined
 for it. For example, going to `http://localhost:8000/the-bureau/index.html`
 (or `http://localhost:8000/the-bureau/`) renders `/the-bureau/index.html` from
-the `v1` app folder's jinja2 templates folder as processed by the [Jinja2](http://jinja.pocoo.org/docs)
+the `cfgov` app folder's `jinja2` templates folder as processed by the [Jinja2](http://jinja.pocoo.org/docs)
 templating engine.
 
 ### Outputting indexed content in a Sheer template
 
 Most of our content is indexed from the API output of our WordPress back-end.
-This happens when the `manage.py sheer_index` command is run.
+This happens when the `python cfgov/manage.py sheer_index` command is run.
 
 There are two ways in which we use indexed content:
 repeating items (e.g., blog posts and press releases),
@@ -286,7 +285,7 @@ For any kind of repeating content, this is the basic process:
   simply set up a `for ... in` loop,
   then output the different properties of the post within.
   In the case of the blog, a list of posts is built using this method in
-  `_includes/posts-paginated.html`.
+  `cfgov/jinja2/v1/_includes/posts-paginated.html`.
 
   Here is a simplified example:
 
