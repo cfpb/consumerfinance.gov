@@ -23,7 +23,7 @@ urlpatterns = [
     # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^$', SheerTemplateView.as_view(), name='home'),
-    url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s')),
+    url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
