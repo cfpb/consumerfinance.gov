@@ -21,7 +21,6 @@ def environment(**options):
     })
     env.filters.update({
         'slugify': slugify,
-        'richtext': wagtailcore_tags.richtext
     })
     return env
 

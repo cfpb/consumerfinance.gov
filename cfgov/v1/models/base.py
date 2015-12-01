@@ -13,7 +13,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, TabbedInterface, ObjectList
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
@@ -58,9 +58,9 @@ class CFGOVPage(Page):
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField([
-        ('slug', blocks.CharBlock()),
-        ('heading', blocks.CharBlock()),
-        ('paragraph', blocks.RichTextBlock()),
+        ('slug', blocks.CharBlock(icon='title')),
+        ('heading', blocks.CharBlock(icon='title')),
+        ('paragraph', blocks.RichTextBlock(icon='edit')),
         ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
         ('related_posts', organisms.RelatedPosts()),
@@ -114,7 +114,8 @@ class CFGOVPage(Page):
                                            block.value['limit'])
                 except NotFoundError:
                     print('ES document not found for page.', file=sys.stderr)
-            return results
+                    return
+                return results
         # Comment out above
 
         # TODO:After all search types are migrated to Wagtail, uncomment below.

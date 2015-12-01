@@ -1,10 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.db import models
 
-from modelcluster.fields import ParentalKey
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Orderable
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 from . import atoms
 

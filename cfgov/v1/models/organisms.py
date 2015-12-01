@@ -7,7 +7,7 @@ from .snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True)
+    content = blocks.RichTextBlock(required=True, label='Well')
 
     class Meta:
         icon = 'title'
@@ -68,3 +68,18 @@ class MainContactInfo(blocks.StructBlock):
     class Meta:
         icon = 'wagtail'
         template = '_includes/organisms/main-contact-info.html'
+
+
+class Table(blocks.StructBlock):
+    headers = blocks.ListBlock(blocks.CharBlock(max_length=20))
+    rows = blocks.ListBlock(blocks.StreamBlock([
+        ('hyperlink', atoms.Hyperlink(required=False)),
+        ('text', blocks.CharBlock(max_length=20)),
+        ('text_blob', blocks.TextBlock()),
+        ('rich_text_blob', blocks.RichTextBlock()),
+    ]))
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/table.html'
+        label = 'Table'

@@ -109,6 +109,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add global context variable `global_dict` for easier prototyping
 - Add styleguide app to local settings
 - Added templates and CSS for the Filterable-List-Controls organism.
+- Add Table organism
+- Add Sublanding Page
+- Add Hyperlink template
+- Add icons to Sidefoot Streamfield blocks
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -182,6 +186,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move some Promote fields to Configuration tab
 - Change Promote to be Sidebar/Footer
 - Move Related Posts and Email Signup to sidefoot Streamfield in the Sidebar/Footer tab in CFGOVPage
+- Finalize Sidebar Breakout organism template
+- Finalize Sublanding Page template
 
 ### Removed
 - Removed unused exportsOverride section,

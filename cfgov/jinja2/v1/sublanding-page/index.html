@@ -1,242 +1,45 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{# Import organisms and molecules used in the template. #}
-
-{% import 'molecules/call-to-action.html' as call_to_action %}
-{% import 'molecules/half-width-link-blob.html' as link_blob %}
-{% import 'molecules/hero.html' as hero %}
-{% import 'molecules/image-text-25-75.html' as image_text_25_75 %}
-{% import 'molecules/image-text-50-50.html' as image_text_50_50 %}
-{% import 'molecules/related-posts.html' as related_posts with context %}
-{% import 'molecules/text-introduction.html' as text_introduction %}
-
-{% import 'organisms/email-signup.html' as email_signup %}
-{% import 'organisms/full-width-text.html' as full_width_text %}
-{% import 'organisms/main-contact-info.html' as main_contact_info %}
-{% import 'organisms/post-preview.html' as post_preview %}
-{% import 'organisms/sidebar-breakout.html' as sidebar_breakout %}
-{% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
-{% import 'organisms/table.html' as table %}
-{% import 'organisms/well.html' as well %}
-
 {% block title -%}
-    TODO: This is a prototype page for testing landing page layouts.
-    Remove when fully implemented elsewhere.
+    {{ page.seo_title }}
 {%- endblock %}
 
-{# NOTE: There are three options for introductions:
-    - Only Intro (no Text intro or breakout header)
-    - Only Text Introduction (No Hero)
-    - Text Introduction and Breakout header #}
-
-{# TODO: Remove lipsumText when and if it is no longer needed. #}
-{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-
 {% block hero -%}
-    {{ hero.render({
-        'heading':   'This is an example of a Hero Molecule',
-        'body':      'Heroes function as a primary focal point on a page,
-                      often used to introduce a collection of pages by
-                      combining a brief description of the goals of that
-                      section along with a visually impactful graphic.',
-        'image_url': 'http://www.consumerfinance.gov/know-before-you-owe/static/img/kbyo-hero_tablet-2x.png'
-    }, {
-        'background_color': '#d5e7e6',
-        'link_text':        'Hero call to action',
-        'link_url':         '#'
-    }) }}
+    {% for block in page.content -%}
+        {% if 'hero' in block.block_type -%}
+            {{ render_stream_child(block) }}
+        {%- endif %}
+    {%- endfor %}
 {% endblock %}
 
 {% block pre_content %}
-   {% set settings = {
-        'heading': 'Sample Header(H3)',
-        'image': {
-            'url':      '/static/img/clipboard-round-300x300.png',
-            'is_round': true
-        },
-        'intro':   {
-            'heading': 'Sample Header(H4)',
-            'body':    lipsumText,
-            'icon':    'speech-bubble'
-        }
-    }
-    %}
-    {% call sidebar_breakout.render(settings) %}
-        {{ text_introduction.render({
-            'heading':   'Text Introduction',
-            'intro':     'Content Intro Lorem Ipsum',
-            'body':      lipsumText,
-            'link_text': 'Placeholder link',
-            'link_url':  '#'
-        }) }}
-    {% endcall %}
+    {% set hero_exists = false %}
+    {% for block in page.content %}
+        {% set hero_exists = true if 'hero' in block.block_type else false %}
+    {% endfor %}
+    {% if hero_exists %}
+        {% include 'organisms/sidebar-breakout.html' %}
+    {% endif %}
 {% endblock %}
 
 {% block content_main %}
-    <div class="o-image-text-50-50-group">
-        {{ image_text_50_50.render({
-            'title' :       'Image and Text 50-50',
-            'image_path':   'http://placehold.it/1600x900',
-            'image_alt':    'This is a placeholder image',
-            'is_widescreen': true,
-            'description':  'When image conveys critical information
-                            and text is supporting it --
-                            i.e. chart, excerpt from document',
-            'is_button' :   true,
-            'link_url':     'http://www.google.com',
-            'link_text' :   'Visit Google'
-        }) }}
-        {{ image_text_50_50.render({
-            'title' :       'Image and Text 50-50',
-            'image_path':   'http://placehold.it/1600x900',
-            'image_alt':    'This is a placeholder image',
-            'is_widescreen': true,
-            'description':  'When image conveys critical information
-                            and text is supporting it --
-                            i.e. chart, excerpt from document',
-            'is_button' :   true,
-            'link_url':     'http://www.google.com',
-            'link_text' :   'Visit Google'
-        }) }}
-    </div>
-    <div class="block">
-        <h2>Headline for 2/7 organism</h2>
-        {{ image_text_25_75.render({
-            'image_path':   'http://placehold.it/300x300',
-            'image_alt':    '',
-            'heading':      'Placeholder',
-            'body':         lipsumText,
-            'link_url':     '#',
-            'link_text':    'Placeholder link'
-        }, true) }}
-        {{ image_text_25_75.render({
-            'image_path':   'http://placehold.it/300x300',
-            'image_alt':    '',
-            'heading':      'Placeholder',
-            'body':         lipsumText,
-            'link_url':     '#',
-            'link_text':    'Placeholder link'
-        }, true) }}
-        {{ image_text_25_75.render({
-            'image_path':   'http://placehold.it/300x300',
-            'image_alt':    '',
-            'heading':      'Placeholder',
-            'body':         lipsumText,
-            'link_url':     '#',
-            'link_text':    'Placeholder link'
-        }) }}
-    </div>
-    <div class="block">
-        {{ post_preview.render({
-            'heading':          'This is a blog post',
-            'body':             lipsumText,
-            'published_date':   '20030805T213611',
-            'image_url':        'http://www.placehold.it/160x90',
-            'post_category':    ['Info for Consumers', 'At the CFPB'],
-            'author':           ['Tom', 'Jerry'],
-            'post_tags':        ['FOIA', 'Mortgage']
-            },
-            '/blog/') }}
-    </div>
-    <div class="block
-                block__flush-top">
-        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
-    </div>
-    <div class="block">
-        {{ table.render( [
-                            'Column 1', 'Column 2', 'Column 3'
-                          ],
-                          [
-                            ['Cell A1', 'Cell A2', 'Cell A3'],
-                            ['Cell B1', 'Cell B2', 'Cell B3'],
-                            ['Cell C1', 'Cell C2', 'Cell C3']
-                          ]
-        ) }}
-    </div>
-    <div class="block">
-        {{ well.render( 'landing-page/_template-prototype-well-content.html' ) }}
-    </div>
-    <div class="o-link-blob-group">
-        {{ link_blob.render({
-            'heading': 'This is an example of a Half Width Link Blob',
-            'body':    'To highlight navigational links and provide
-                        context about what users can expect on the linked
-                        page',
-            'links': [
-                {
-                    'text': 'This is a Link List molecule inside the blob',
-                    'url':  '/some-url/'
-                },
-                {
-                    'text': 'This is another Link List molecule inside the
-                             blob',
-                    'url':  '/some-other-url/'
-                }
-            ]
-        }) }}
-        {{ link_blob.render({
-            'heading': 'This is another example of a Half Width Link Blob',
-            'body':    '<strong>Example:</strong> About Us landing page,
-                        sub-page descriptors on "office" pages and
-                        wireframed on Rulemaking landing page.',
-            'links': [
-                {
-                    'text': 'This is a Link List molecule inside the blob',
-                    'url':  '/some-url/'
-                }
-            ]
-        }) }}
-    </div>
-    <div class="block
-                block__flush-top">
-        {{ main_contact_info.render( {
-            'heading': 'Whistleblower tips',
-            'body':    lipsumText
-        }, {
-            'emails':  ['test@example.com'],
-            'phones':  [{'number': '1234567899',
-                         'vanity': '123456AAAA',
-                         'tty':    '1234567899'}]
-        }) }}
-    </div>
+    {% for block in page.content -%}
+        {% if 'text_introduction' not in block.block_type
+           and 'hero' not in block.block_type %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    {%- endfor %}
 {% endblock %}
 
 {% block content_sidebar scoped -%}
-    {% set doc = get_document('posts', 'four-years-working-for-you') %}
-    {% do global_dict.update({'page':  {
-        'related_posts': {
-            'posts': more_like_this(doc, search_types='posts', search_size=3),
-            'newsroom': more_like_this(doc, search_types='newsroom', search_size=3),
-        }
-    }}) %}
-    {{ related_posts.render() }}
-    {{ call_to_action.render( {
-      'slug_text':    'Slug Title',
-      'button': {
-          'text':   'Call to Action'
-      },
-      'paragraph_text': lipsumText
-    }) }}
-    {{ email_signup.render({
-        'heading':  'Slug Title',
-        'text':     lipsumText,
-        'required': true
-    }) }}
-    {{ sidebar_contact_info.render({
-        'heading': 'Header for text below',
-        'body':    lipsumText
-    }, {
-        'emails':  ['test@example.com'],
-        'phones':  [{'number': '1234567899',
-                     'vanity': '123456AAAA',
-                     'tty':    '1234567899'}],
-        'faxes':   [{'number': '1234567899'}],
-        'address': {
-            'title':    'Consumer Financial Protection Bureau',
-            'street':   '1700 G Street, NW',
-            'city':     'Washington',
-            'state':    'DC',
-            'zip_code': '20552-0003'
-        }
-    }) }}
+    {% for block in page.sidefoot -%}
+        {% if 'related_posts' in block.block_type %}
+            {% import 'molecules/related-posts.html' as related_posts with context %}
+            {{ related_posts.render() }}
+        {% elif 'email_signup' in block.block_type %}
+            {{ render_stream_child(block) }}
+        {% else %}
+            {{ block | safe }}
+        {% endif %}
+    {%- endfor %}
 {%- endblock %}
