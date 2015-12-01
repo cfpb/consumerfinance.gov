@@ -22,6 +22,9 @@ def share_the_page(request, page):
         page.shared = False
 
     page.save()
+    revision = page.save_revision()
+    if is_publishing:
+        revision.publish()
 
 
 @hooks.register('before_serve_page')
