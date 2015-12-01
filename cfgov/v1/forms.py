@@ -1,15 +1,35 @@
 from django import forms
 from django.forms.widgets import DateInput, SelectMultiple
 from v1.models.events import EventPage
+from sheerlike.templates import date_formatter
 
+
+class FormDateField(forms.DateField):
+
+    def to_python(self, value):
+        if value:
+            try:
+                value = date_formatter(value)
+            except Exception as e:
+                raise forms.ValidationError(self.error_messages['invalid'])
+        return super(FormDateField, self).to_python(value)
 
 class CalenderPDFFilterForm(forms.Form):
     filter_calendar = forms.CharField()
-    filter_range_date_gte = forms.DateField(input_formats=['%Y-%m-%d'])
-    filter_range_date_lte = forms.DateField(input_formats=['%Y-%m-%d'])
+    filter_range_date_gte = FormDateField(required=False)
+    filter_range_date_lte = FormDateField(required=False)
 
     def clean_filter_calendar(self):
         return self.cleaned_data['filter_calendar'].replace(' ', '+')
+
+    def clean(self, *args, **kwargs):
+        if {'filter_range_date_lte','filter_range_date_lte'} <= set(self.cleaned_data):
+            date_gte = self.cleaned_data['filter_range_date_gte']
+            date_lte = self.cleaned_data['filter_range_date_lte']
+            if date_gte > date_lte:
+                self.cleaned_data['filter_range_date_gte'] = date_lte
+                self.cleaned_data['filter_range_date_lte'] = date_gte
+        return self.cleaned_data
 
 
 class EventsFilterForm(forms.Form):
