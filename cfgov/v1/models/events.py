@@ -122,7 +122,7 @@ class EventPage(CFGOVPage):
         ObjectList(content_panels, heading='General Content'),
         ObjectList(venue_panels, heading='Venue Information'),
         ObjectList(agenda_panels, heading='Agenda Information'),
-        ObjectList(CFGOVPage.promote_panels, heading='Promote'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
     ])
 

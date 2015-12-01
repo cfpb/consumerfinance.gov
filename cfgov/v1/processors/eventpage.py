@@ -10,6 +10,7 @@ class DataConverter(PageDataConverter):
             'slug':       doc.get('slug', u''),
             'body':       doc.get('content', u''),
         }
+        self.add_defaults(post_dict)
         tags = ''
         for tag in doc.get('tags'):
             if ' ' in tag:
@@ -36,7 +37,7 @@ class DataConverter(PageDataConverter):
                         doc['venue']['address'].get(info, u'')
 
         if doc.get('live_stream'):
-            for info in ['url', 'available', 'date']:
+            for info in ['url', 'availability', 'date']:
                 post_dict['live_stream_'+info] = doc['live_stream'].get(info,
                                                                         u'')
 
