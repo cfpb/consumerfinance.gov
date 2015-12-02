@@ -1,0 +1,67 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{# Import organisms and molecules used in the template. #}
+
+{% import 'molecules/text-introduction.html' as text_introduction %}
+
+{% import 'organisms/full-width-text.html' as full_width_text %}
+{% import 'organisms/table.html' as table %}
+{% import 'organisms/well.html' as well %}
+
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+
+
+{% block title -%}
+    Learn Page
+{%- endblock %}
+
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
+{% block content_main %}
+    {# TODO: Add Main Section Organisms and Molecules
+              - Item Introduction
+              - Forms
+              - Expandables
+              - Insets
+              - 25-75 Image Text
+    #}
+    <div class="block
+                block__flush-top">
+        {{ text_introduction.render({
+            'heading':  'Text Introduction',
+            'intro':    'Content Intro Lorem Ipsum',
+            'body':     lipsumText,
+            'link_text':'Placeholder link',
+            'link_url': '#'
+        }) }}
+    </div>
+    <div class="block">
+        {{ full_width_text.render( 'sublanding-page-1/_template-prototype-full-width-content.html' ) }}
+    </div>
+    <div class="block">
+        {{ table.render( [
+                            'Column 1', 'Column 2', 'Column 3'
+                          ],
+                          [
+                            ['Cell A1', 'Cell A2', 'Cell A3'],
+                            ['Cell B1', 'Cell B2', 'Cell B3'],
+                            ['Cell C1', 'Cell C2', 'Cell C3']
+                          ]
+        ) }}
+    </div>
+    <div class="o-well">
+        {{ well.render( 'landing-page/_template-prototype-well-content.html' ) }}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+      {# TODO: Add Sidebar Organisms and Molecules
+              - Related Posts
+              - Generic Sidebar Content
+              - Contact Information
+    #}
+
+    </aside>
+{%- endblock %}
