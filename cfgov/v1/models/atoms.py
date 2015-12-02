@@ -64,6 +64,9 @@ class ImageBasic(blocks.StructBlock):
         else:
             return data
 
+    class Meta:
+        icon = 'image'
+
 
 class ImageBasicUrl(ImageBasic):
     url = blocks.CharBlock(required=False)

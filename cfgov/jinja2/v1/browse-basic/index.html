@@ -16,81 +16,102 @@
     <div class="block
                 block__flush-top">
         <div class="expandable-prototypes">
-            {% call expandable.render("Default Expandable") %}
-                {{ lipsum(1, false, 10, 225) | safe }}
-            {% endcall %}
+            {% do global_dict.update(
+            {
+            'label': 'Default Expandable',
+            'paragraph': lipsum(1, false, 10, 225),
+            'is_bordered': true,
+            'is_midtone': false,
+            'is_expanded': false
+            }) %}
+            {% include 'molecules/expandable.html' with context %}
 
-            {% call expandable.render("Bordered Expandable", {
-                    'is_bordered': true
-                }) %}
-                {{ lipsum(1, false, 10, 225) | safe }}
-            {% endcall %}
 
-            {% call expandable.render("Midtone Expandable", {
-                    'is_midtone': true
-                }) %}
-                {{ lipsum(1, false, 10, 225) | safe }}
-            {% endcall %}
+            {% do global_dict.update(
+            {
+            'label': 'Bordered Expandable',
+            'paragraph': lipsum(1, false, 10, 225),
+            'is_bordered': true,
+            'is_midtone': true,
+            'is_expanded': false
+            }) %}
+            {% include 'molecules/expandable.html' with context %}
 
-            {% call expandable.render("Midtone, Bordered Expandable", {
-                    'is_bordered': true,
-                    'is_midtone':  true
-                }) %}
-                {{ lipsum(1, false, 10, 225) | safe }}
-            {% endcall %}
+            {% do global_dict.update(
+            {
+            'label': 'Midtone Expandable',
+            'paragraph': lipsum(1, false, 10, 225),
+            'is_bordered': true,
+            'is_midtone': true,
+            'is_expanded': false
+            }) %}
+            {% include 'molecules/expandable.html' with context %}
 
-            {% call expandable.render("Midtone, Bordered, Expandable - Expanded", {
-                    'is_bordered': true,
-                    'is_midtone':  true,
-                    'is_expanded': true
-                }) %}
-                {{ lipsum(1, false, 10, 225) | safe }}
-            {% endcall %}
+            {% do global_dict.update(
+            {
+            'label': 'Midtone, Bordered, Expandable - Expanded',
+            'paragraph': lipsum(1, false, 10, 225),
+            'is_bordered': true,
+            'is_midtone': true,
+            'is_expanded': true
+            }) %}
+            {% include 'molecules/expandable.html' with context %}
         </div>
 
         <div class="expandable-group-prototypes">
-            {% call expandable_group.render({
-                    'heading': 'Group Header',
-                    'has_rule': true
-                }) %}
-                {% call expandable.render("Expand 1 - initially open", {
-                    'is_expanded': true,
+            {% do global_dict.update(
+            {
+            'heading': 'Group Header',
+            'has_rule': true,
+            'expandables': [
+                {
+                    'label': 'Expand 1 - initially open',
+                    'paragraph': lipsum(1, false, 10, 225),
                     'is_bordered': true,
-                    'is_midtone':  true
-                }) %}
-                    {{ lipsum(1, false, 10, 225) | safe }}
-                {% endcall %}
-
-                {% call expandable.render("Expand 2",  {
+                    'is_midtone': true,
+                    'is_expanded': true
+                },
+                 {
+                    'label': 'Expand 2',
+                    'paragraph': lipsum(1, false, 10, 225),
                     'is_bordered': true,
-                    'is_midtone':  true
-                }) %}
-                    {{ lipsum(1, false, 10, 225) | safe }}
-                {% endcall %}
-            {% endcall %}
+                    'is_midtone': true,
+                }
+            ],
+            }) %}
+            {% include 'organisms/expandable-group.html' with context %}
 
-            {% call expandable_group.render({
-                    'heading': 'Accordion-style Group',
-                    'intro': 'Intro paragraph blah blah blah',
-                    'is_accordion': true
-                }) %}
-                {% call expandable.render("Expand 1") %}
-                    {{ lipsum(1, false, 10, 225) | safe }}
-                {% endcall %}
-
-                {% call expandable.render("Expand 2 - bordered, midtone", {
+            {% do global_dict.update(
+            {
+            'heading': 'Accordion-style Group',
+            'intro': 'Intro paragraph blah blah blah',
+            'is_accordion': true,
+            'expandables': [
+                {
+                    'label': 'Expand 1',
+                    'paragraph': lipsum(1, false, 10, 225),
                     'is_bordered': true,
-                    'is_midtone':  true
-                }) %}
-                    {{ lipsum(1, false, 10, 225) | safe }}
-                {% endcall %}
+                    'is_midtone': false,
+                    'is_expanded': false
+                },
+                 {
+                    'label': 'Expand 2 - bordered, midtone',
+                    'paragraph': lipsum(1, false, 10, 225),
+                    'is_bordered': true,
+                    'is_midtone': true,
+                    'is_expanded': false
+                },
+                {
+                    'label': 'Expand 3 - bordered',
+                    'paragraph': lipsum(1, false, 10, 225),
+                    'is_bordered': true,
+                    'is_midtone': false,
+                    'is_expanded': true
+                }
+            ],
+            }) %}
+            {% include 'organisms/expandable-group.html' with context %}
 
-                {% call expandable.render("Expand 3 - bordered", {
-                    'is_bordered': true
-                }) %}
-                    {{ lipsum(1, false, 10, 225) | safe }}
-                {% endcall %}
-            {% endcall %}
         </div>
 
     </div>
