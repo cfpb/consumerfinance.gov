@@ -61,7 +61,7 @@ class Importer:
 
         # Convert the imported data into Wagtail readable data then publish it.
         request.POST = converter.convert(imported_data)
-        request.POST['action-publish'] = u'Publish on WWW'
+        request.POST['action-publish'] = 'Publish on WWW'
 
         # Create the page or overwrite the existing one. Since we aren't
         # hitting the middleware we have to catch the MessageFailure exception.
@@ -84,7 +84,7 @@ class Importer:
 
         # Convert the imported data into Wagtail readable data then save it.
         request.POST = converter.convert(imported_data)
-        request.POST['save'] = u'Save'
+        request.POST['save'] = 'Save'
 
         # Create the snippet or overwrite the existing one. Since we aren't
         # hitting the middleware we have to catch the MessageFailure exception.
@@ -133,6 +133,23 @@ class Importer:
 class PageDataConverter:
     def convert(self, imported_data):
         raise NotImplementedError()
+
+    def add_defaults(self, post_dict):
+        # Related Posts
+        for pagetype in ['events', 'newsroom', 'posts']:
+            post_dict['sidefoot-0-value-relate_'+pagetype] = 'on'
+        post_dict['sidefoot-0-order'] = '0'
+        post_dict['sidefoot-count'] = '1'
+        post_dict['sidefoot-0-deleted'] = ''
+        post_dict['sidefoot-0-type'] = 'related_posts'
+        post_dict['sidefoot-0-value-limit'] = '3'
+        post_dict['sidefoot-0-value-view_more-text'] = 'View More'
+        post_dict['sidefoot-0-value-view_more-url'] = '/'
+
+        # Categories
+        for setting in ['MIN_NUM_FORMS', 'INITIAL_FORMS', 'TOTAL_FORMS']:
+            post_dict['categories-'+setting] = '0'
+        post_dict['categories-MAX_NUM_FORMS'] = '2'
 
 
 class SnippetDataConverter(PageDataConverter):
