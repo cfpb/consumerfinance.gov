@@ -3,6 +3,7 @@
     "type": "git",
     "url": "http://github.com/cfpb/cfgov-refresh.git"
   },
+  "license": "SEE LICENSE IN TERMS.md",
   "engines": {
     "node": ">=4.1.0"
   },
@@ -31,23 +32,21 @@
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.3",
-    "gulp-sitespeedio": "0.0.6",
+    "gulp-sitespeedio": "^0.0.8",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.6",
-    "handlebars": "^4.0.2",
-    "handlebars-loader": "^1.1.0",
+    "handlebars": "^4.0.3",
     "imports-loader": "^0.6.4",
-    "istanbul": "^0.3.20",
     "jasmine-reporters": "^2.0.7",
     "jasmine-spec-reporter": "^2.4.0",
     "jquery": "^1.11.3",
-    "jsdom": "^6.5.1",
+    "jsdom": "^7.0.2",
     "lodash": "^3.10.0",
     "minimist": "^1.1.3",
     "mkdirp": "^0.5.1",
     "mocha": "^2.2.4",
     "mocha-jsdom": "^1.0.0",
-    "protractor": "^2.2.0",
+    "protractor": "^3.0.0",
     "require-dir": "^0.3.0",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.8.0",
@@ -55,9 +54,12 @@
     "webpack-stream": "^2.1.0",
     "wcag": "^0.2.2"
   },
+  "optionalDependencies": {
+    "player": "^0.5.1"
+  },
   "browser": {
     "dateformat": "./node_modules/dateformat/lib/dateformat.js",
-    "handlebars": "./vendor/handlebars/handlebars.min.js",
+    "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
     "history": "./vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
     "jquery-easing": "./vendor/jquery.easing/js/jquery.easing.js",

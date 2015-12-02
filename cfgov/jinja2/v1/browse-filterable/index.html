@@ -1,0 +1,97 @@
+{% extends 'layout-side-nav.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/text-introduction.html' as text_introduction %}
+{% import 'organisms/post-preview.html' as post_preview %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {# TODO: Add main molecules and organisms. #}
+        {{ text_introduction.render({
+            'heading': 'Text Introduction',
+            'intro': 'Content Intro Lorem Ipsum',
+            'body': lipsumText,
+            'link_text': 'Placeholder link',
+            'link_url': '#'
+        }) }}
+    </div>
+    <div class="block">
+        {{ post_preview.render({
+            'heading': 'This is a blog post',
+            'body': lipsumText,
+            'published_date': '20030805T213611',
+            'image_url': 'http://www.placehold.it/160x90',
+            'post_category': ['Info for Consumers', 'At the CFPB'],
+            'author': ['Tom', 'Jerry'],
+            'post_tags': ['FOIA', 'Mortgage']
+            },
+            '/blog/') }}
+    </div>
+    <div class="block">
+        {{ post_preview.render({
+            'heading': 'This is a newsroom post',
+            'body': lipsumText,
+            'published_date': '20030805T213611',
+            'post_category': ['Press Release'],
+            'author': ['Tom', 'Jerry'],
+            'post_tags': ['FOIA', 'Mortgage']
+            },
+            '/newsroom/') }}
+    </div>
+    <div class="block">
+        {{ post_preview.render({
+            'heading': 'This is a event post',
+            'body': lipsumText,
+            'published_date': '20030805T213611',
+            'event_venue': 'The White House',
+            'event_street': '1600 pennsylvania avenue',
+            'event_city': 'Washington',
+            'event_state': 'DC',
+            'event_zip': '20500',
+            'event_start_dt':'20030805T213611',
+            'post_category': ['Speech'],
+            'post_tags': ['FOIA', 'Mortgage']
+            },
+            '/events/') }}
+    </div>
+    <div class="block">
+        {{ post_preview.render({
+            'heading': 'This is a event livestream post',
+            'body': lipsumText,
+            'published_date': '20030805T213611',
+            'event_stream_link': 'http://www.whitehouse.gov',
+            'event_start_dt':'20030805T213611',
+            'post_category': ['Speech'],
+            'post_tags': ['FOIA', 'Mortgage']
+            },
+            '/events/') }}
+    </div>
+    <div class="block">
+        {{ post_preview.render({
+            'heading': 'This is a notice & comment post',
+            'body': lipsumText,
+            'published_date': '20030805T213611',
+            'post_category': ['Notice of request for public comment'],
+            'external_link': 'Submit a comment',
+            'external_link_url': 'http://www.google.com/',
+            'comments_close_date': '20030805T213611'
+            },
+            '') }}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+        Side Navigation
+    </aside>
+{%- endblock %}

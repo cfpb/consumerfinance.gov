@@ -1,0 +1,129 @@
+{# ==========================================================================
+
+   related_posts.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup when given:
+
+   settings:                  An object used to customize the markup.
+
+   settings.posts:            An array of related posts.
+
+   settings.half_width:       A Boolean indicating whether the posts should be
+                              at half width.
+
+   settings.hide_header_slug: A Boolean indicating whether the header should be
+                              hidden.
+
+   settings.view_more:        An object used to customize the view more markup.
+
+   ========================================================================== #}
+
+{% macro render(settings) %}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+{% set defaults = {
+    'search_types': 'posts, newsroom, press release, speech, testimony',
+    'search_size':  5
+} %}
+{% do settings.update(defaults) %}
+{% set posts = settings.posts or
+               more_like_this(settings.post,
+                              search_types=settings.search_types,
+                              search_size=settings.search_size)
+%}
+
+<div class="m-related-posts
+            {{ 'm-related-posts__half-width'
+               if settings.half_width else '' }}">
+    {% if settings.hide_header_slug != true %}
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            Related Posts
+        </span>
+    </h2>
+    {% endif %}
+    {#% TODO: Add condition to display various related post types %#}
+    {{ _related_posts_list(settings.view_more, posts) }}
+</div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   _related_posts_list()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup when given:
+
+   view_more: An object used to customize the view more markup.
+
+   posts:     An array of related posts.
+
+   ========================================================================== #}
+
+{% macro _related_posts_list(view_more, posts) %}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+{% import 'macros/time.html' as time %}
+<ul class="m-related-posts_list
+           list list__unstyled
+           list__spaced">
+    {% for post in posts %}
+    <li class="list_item">
+        <h4 class="u-mb5">
+            <a class="list_link"
+               href="{{ post.permalink }}">
+                {{ post.title | safe }}
+            </a>
+        </h4>
+        {% if post.text %}
+        <p class="short-desc">
+            {{ post.text | safe }}
+        </p>
+        {% endif %}
+        <p class="date">
+            {{ time.render(post.date, {'date':true}) }}
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+
+{% if view_more %}
+  {{ _view_more(view_more) }}
+{% endif %}
+
+{% endmacro %}
+
+{# ==========================================================================
+
+   _view_more()
+
+   ==========================================================================
+
+   Description:
+
+   Creates view more markup when given:
+
+   settings:           An object used to customize the markup.
+
+   settings.link_url:  A string used for the link href.
+
+   settings.link_text: A string used for the link text.
+
+   ========================================================================== #}
+
+{% macro _view_more(settings) %}
+{% if settings.link_url %}
+<a class="jump-link jump-link__underline"
+   href="{{ settings.link_url }}">
+    <span class="jump-link_text">
+        {{ settings.link_text or 'View More' }}
+    </span>
+</a>
+{% endif %}
+{% endmacro %}

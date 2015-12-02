@@ -1,0 +1,67 @@
+{# ==========================================================================
+
+   call-to-action.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates a call to action when given:
+
+   settings.slug_text:      The text to display within the header slug.
+
+   settings.paragraph_text: The text to display within the paragraph.
+
+   settings.button:         A dictionary containing options used to create
+                            the Button markup.
+
+   settings.button.url:     A link to a page.
+                            Defaults to '/'.
+
+   settings.button.text:    The text to display on button.
+
+   ========================================================================== #}
+
+<div class="m-call-to-action">
+    {% if value %}
+        {% if value.slug_text %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ value.slug_text }}
+                </span>
+            </h2>
+        {% endif %}
+        <p class="short-desc">
+            {{ value.paragraph_text | safe }}
+        </p>
+        {% if caller %}
+            caller()
+        {% else %}
+            <a class="btn btn__full"
+               href="{{ value.button.url or '/' }}">
+                {{ value.button.text }}
+            </a>
+        {% endif %}
+    {% else %}
+        {% macro render(settings) %}
+            {% if settings.slug_text %}
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        {{ settings.slug_text }}
+                    </span>
+                </h2>
+            {% endif %}
+            <p class="short-desc">
+                {{ settings.paragraph_text }}
+            </p>
+            {% if caller %}
+                caller()
+            {% else %}
+                <a class="btn btn__full"
+                   href="{{ settings.button.url or '/' }}">
+                    {{ settings.button.text }}
+                </a>
+            {% endif %}
+        {% endmacro %}
+    {% endif %}
+</div>

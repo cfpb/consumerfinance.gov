@@ -9,34 +9,49 @@
    Create a Text Introduction molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
 
-   settings:
+   settings:           An object with the following options for settings.
 
-      heading:   Heading text.
+   settings.heading:   Heading text.
+   settings.intro:     Body introduction text.
+   settings.body:      Body text.
 
-      intro:     Body introduction text.
+   settings.link_url:  Link URL.
+   settings.link_text: Link text.
 
-      body:      Body text.
-
-      link_url:  Link URL.
-
-      link_text: Link text.
-
-   has_rule:  Whether there is a bottom gray rule.
+   has_rule:           Whether there is a bottom gray rule.
+                       Default is false.
 
    ========================================================================== #}
 
-{% macro render(settings, has_rule=false) %}
-<div class="m-text-introduction
+{% if value %}
+
+    <div class="m-text-introduction
+            {{ 'm-text-introduction__bottom-rule' if value.has_rule else '' }}">
+        <h1 class='m-text-introduction_heading'>{{ value.heading }}</h1>
+
+        <p class='m-text-introduction_intro'>{{ value.intro }}</p>
+
+        <p class='m-text-introduction_body'>{{ value.body | safe }}</p>
+
+        <div class='m-text-introduction_link-container'>
+            <a class='jump-link' href='{{ value.link.url }}'>{{ value.link.text }}</a>
+        </div>
+
+    </div>
+{% else %}
+    {% macro render(settings, has_rule=false) %}
+        <div class="m-text-introduction
             {{ 'm-text-introduction__bottom-rule' if has_rule else '' }}">
-   <h1 class='m-text-introduction_heading'>{{ settings.heading }}</h1>
+            <h1 class='m-text-introduction_heading'>{{ settings.heading }}</h1>
 
-   <p class='m-text-introduction_intro'>{{ settings.intro }}</p>
+            <p class='m-text-introduction_intro'>{{ settings.intro }}</p>
 
-   <p class='m-text-introduction_body'>{{ settings.body }}</p>
+            <p class='m-text-introduction_body'>{{ settings.body }}</p>
 
-   <div class='m-text-introduction_link-container'>
-      <a class='jump-link' href='{{ settings.link_url }}'>{{ settings.link_text }}</a>
-   </div>
+            <div class='m-text-introduction_link-container'>
+                <a class='jump-link' href='{{ settings.link_url }}'>{{ settings.link_text }}</a>
+            </div>
 
-</div>
-{% endmacro %}
+        </div>
+    {% endmacro %}
+{% endif %}

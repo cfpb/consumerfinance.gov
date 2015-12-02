@@ -1,0 +1,90 @@
+{# ==========================================================================
+
+   main_contact_info.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a Main Contact Information organism.
+   See [GHE]/flapjack/Modules-V1/wiki/Contact-Information-(Main-Content-Area)
+
+   content:                  An object containing main content.
+   content.heading:          A string containing a heading.
+   content.body:             A string containing paragraph content.
+
+   contact:                  An object with contact details.
+   contact.emails:           An array containing email addresses.
+
+   contact.phones:           An array containing phone number information.
+   contact.phones.number:    A phone number.
+   contact.phones.vanity:    An associated vanity phone number.
+   contact.phones.tty:       An associated TTY/TDD number.
+
+   contact.faxes:            An object containing fax numbers.
+   contact.faxes.number:     A fax number.
+   contact.faxes.vanity:     An associated vanity fax number.
+   contact.faxes.tty:        An associated TTY/TDD number.
+                             This value can be used, but is not applicable.
+
+   contact.address:          An object containing address information.
+   contact.address.title:    A string containing an address name.
+   contact.address.street:   A string containing a street address.
+   contact.address.city:     A string containing a city.
+   contact.address.state:    A string containing a state.
+   contact.address.zip_code: A string containing a zip code.
+
+   ========================================================================== #}
+
+{% import 'molecules/contact-email.html' as contact_email %}
+{% import 'molecules/contact-phone.html' as contact_phone %}
+{% import 'molecules/contact-address.html' as contact_address %}
+{% if page %}
+    {% if page.contact %}
+        <div class="o-main-contact-info">
+            <h2>{{ page.contact.heading }}</h2>
+
+            <p>{{ page.contact.body |safe }}</p>
+
+            {% if page.contact.contact_info %}
+
+                {% for block in page.contact.contact_info %}
+                    {{ render_stream_child(block) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    {% macro render(content, contact) %}
+        <div class="o-main-contact-info">
+            <h2>{{ content.heading }}</h2>
+
+            <p>{{ content.body }}</p>
+
+            {% if contact %}
+                {% if contact.emails %}
+                    {{ contact_email.render(contact.emails) }}
+                {% endif %}
+
+                {% if contact.phones %}
+                    {{ contact_phone.render(contact.phones) }}
+                {% endif %}
+
+                {% if contact.faxes %}
+                    {{ contact_phone.render(contact.faxes, true) }}
+                {% endif %}
+
+                {% if contact.address %}
+                    {{ contact_address.render({
+                            'label':    'Mailing Address',
+                            'title':    contact.address.title,
+                            'street':   contact.address.street,
+                            'city':     contact.address.city,
+                            'state':    contact.address.state,
+                            'zip_code': contact.address.zip_code
+                            }) }}
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endmacro %}
+{% endif %}

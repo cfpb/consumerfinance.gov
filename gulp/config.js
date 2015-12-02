@@ -11,10 +11,10 @@ module.exports = {
       ' *              d$"                 $$\n' +
       ' *              $$                  $$\n' +
       ' *   ,adPYba.   $$$$$  $$.,dPYba.   $$.,dPYba.\n' +
-      ' *  aP‘    `$:  $$     $$P‘    `$a  $$P‘    `$a\n' +
+      ' *  aP\'    `$:  $$     $$P\'    `$a  $$P\'    `$a\n' +
       ' *  $(          $$     $$(      )$  $$(      )$\n' +
       ' *  "b.    ,$:  $$     $$b.    ,$"  $$b.    ,$"\n' +
-      ' *   `"Ybd$"‘   $$     $$`"YbdP"‘   $$`"YbdP"‘\n' +
+      ' *   `"Ybd$"\'   $$     $$`"YbdP"\'   $$`"YbdP"\'\n' +
       ' *                     $$\n' +
       ' *                     $$\n' +
       ' *                     $$\n' +
@@ -25,7 +25,7 @@ module.exports = {
       ' */\n',
   lint: {
     src: [
-      paths.preproccesed + '/js/**/*.js',
+      paths.unprocessed + '/js/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
@@ -36,17 +36,17 @@ module.exports = {
     ]
   },
   test: {
-    src:   paths.preproccesed + '/js/**/*.js',
+    src:   paths.unprocessed + '/js/**/*.js',
     tests: paths.test
   },
   clean: {
     dest: paths.processed
   },
   scripts: {
-    src: paths.preproccesed + '/js/**/*.js'
+    src: paths.unprocessed + '/js/**/*.js'
   },
   styles: {
-    cwd:      paths.preproccesed + '/css',
+    cwd:      paths.unprocessed + '/css',
     src:      '/main.less',
     dest:     paths.processed + '/css',
     settings: {
@@ -55,7 +55,7 @@ module.exports = {
     }
   },
   images: {
-    src:  paths.preproccesed + '/img/**',
+    src:  paths.unprocessed + '/img/**',
     dest: paths.processed + '/img'
   },
   copy: {
@@ -64,14 +64,14 @@ module.exports = {
       dest: paths.processed + '/fonts/'
     },
     vendorfonts: {
-      src:  paths.preproccesed + '/fonts/pdfreactor/*',
+      src:  paths.unprocessed + '/fonts/pdfreactor/*',
       dest: paths.processed + '/fonts/pdfreactor'
     },
     vendorcss: {
       src: [
         paths.lib + '/slick-carousel/slick/slick.css',
         paths.lib + '/slick-carousel/slick/slick.css.map',
-        paths.preproccesed + '/css/pdfreactor-fonts.css'
+        paths.unprocessed + '/css/pdfreactor-fonts.css'
       ],
       dest: paths.processed + '/css'
     },

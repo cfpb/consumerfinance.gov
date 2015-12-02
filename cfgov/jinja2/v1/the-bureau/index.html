@@ -1,5 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 {% import '_vars-the-bureau.html' as vars with context %}
+{% import 'molecules/hero.html' as hero %}
 
 {% block title -%}
     The Bureau
@@ -27,47 +28,16 @@
 {%- endblock %}
 
 {% block hero -%}
-    <section class="content_hero hero hero__bureau">
-        {% import 'macros/video-player.html' as video_player %}
-        {%
-            call video_player.render({
-                'image': {
-                    'url': 'https://img.youtube.com/vi/en0Iq8II4fA/maxresdefault.jpg'
-                },
-                'video': {
-                    'id':     'en0Iq8II4fA',
-                    'url':    'https://www.youtube.com/watch?v=en0Iq8II4fA',
-                    'width':  '640',
-                    'height': '410'
-                }
-            })
-        %}
-        <div class="hero_wrapper hide-on_video-playing">
-            <div class="hero_card hero_card__bureau">
-                <article class="hero_preview">
-                    <div class="summary">
-                        <header class="summary_header">
-                            {# TODO: Change to h2 when hero moves under title #}
-                            <h1 class="summary_heading">We are the CFPB</h1>
-                        </header>
-                        <p class="summary_text">
-                            We are a government agency created after the 2008 financial crisis.
-                            We protect American consumers. Allow us to introduce ourselves.
-                        </p>
-                        <footer class="summary_footer">
-                            <a class="jump-link jump-link__right" href="/the-bureau/history/">
-                                See the history of the CFPB
-                            </a>
-                            <a class="jump-link jump-link__right" href="/the-bureau/about-director/">
-                                Meet Director Richard Cordray
-                            </a>
-                        </footer>
-                    </div>
-                </article>
-            </div>
-        </div>
-        {% endcall %}
-    </section>
+    {{ hero.render({
+        'heading':   'We are the CFPB',
+        'body':      'We are a government agency created after the 2008
+                      financial crisis. We protect American consumers.
+                      Allow us to introduce ourselves.',
+        'image_url': 'https://img.youtube.com/vi/en0Iq8II4fA/maxresdefault.jpg'
+    }, {
+        'link_text': 'See the history of the CFPB',
+        'link_url':  '/the-bureau/history/'
+    }) }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}

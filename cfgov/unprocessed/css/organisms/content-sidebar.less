@@ -1,0 +1,34 @@
+/* topdoc
+  name: Content Sidebar
+  family: cfgov-organism
+  patterns:
+    - name: Default example
+      markup: |
+          <aside class="o-content-sidebar">
+              <*></*>
+          </aside>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-content-sidebar
+  tags:
+    - cfgov-molecules
+*/
+
+.o-content-sidebar {
+    border-width: 0;
+
+    .respond-to-range(@bp-sm-min, @bp-sm-max {
+
+        .header-slug {
+            margin-left: unit(@grid_gutter-width / @base-font-size-px, em) / 2;
+            margin-right: unit(@grid_gutter-width / @base-font-size-px, em) / 2;
+        }
+    });
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

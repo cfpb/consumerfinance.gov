@@ -16,6 +16,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
+- Migrated 'sheerlike' project into this codebase
+- Added 'watchserver' manage.py subcommand for running Django dev server and gulp watch together
 - Added Acceptance tests for the `activity-log` page.
 - Added webpack module loader for per-page JavaScript.
 - Added external-site page-specific script.
@@ -46,7 +49,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - CFPBPage model
 - Backend for Staging vs Production publishing
 - Django template tags
-- A temporary blog page template for testing
 - Added `block__flush` to cf-enhancements to remove margin from all sides.
 - Added Acceptance tests for `blog` pages.
 - Added Acceptance tests for `newsroom` pages.
@@ -63,6 +65,45 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Management command to convert Wordpress data into Wagtail based Django models
 - Script to convert Event WP data into Wagtail specific POST data for wagtailcore view `create()`
 - Added half-width-link-blob macro and styles
+- Added templates and CSS for the Image and Text 25/75 molecule.
+- Added templates and CSS for the Image and Text 50/50 molecule.
+- Added templates and CSS for the Call to Action molecule.
+- Added `gulp beep` task for optional alerting when the build process
+  has completed.
+- Added Molecule/Organism Streamfields.
+- Added wagtail specific demoPage only available in development for displaying moleclues/organisms.
+- Added `license` field to `package.json`.
+- EventArchivePage, EventRequestSpeakerPage, and EventFilterForm.
+- Added templates and CSS for the Full Width Text organism.
+- Added templates and CSS for the Contact Method molecule.
+- Added templates and CSS for the Sidebar Contact Info organism.
+- Added `/browse-filterable` template page
+- Added templates and CSS for the Main Contact Info organism.
+- Added templates and CSS for the Related Posts molecule.
+- Added templates for the Hero molecule (CSS is in CF-Layout v1.3.0)
+- Added template for post-preview molecule
+- Added templates and CSS for the Signup Form organism.
+- Added templates and CSS for the Content Sidebar organism.
+- Added instruction to create superuser for admin access.
+- Adds new file to commands module in the core app called `_helpers.py`
+- Adds ability to import snippets
+- Added ImageText2575 molecule backend model and template
+- Added Call to Action backend and template
+- Added Contact snippet and molecule backends
+- Added temporary folder for converted Jinja2 Wagtail field template files
+- Added WP Import Data Contact processor
+- Added templates and CSS for the Adding Sidebar Breakout organism.
+- Added cf-tables and tables molecule
+- Landing Page Type
+- Initial Data json file for preloading pages
+- Added `/browse-basic` template page.
+- Added templates and CSS for Expandable molecule and ExpandableGroup organism.
+- Added `classlist` JS polyfill.
+- Added `EventObserver` for adding event broadcaster capability to JS classes.
+- Added `atomic-checkers.js` and `validateDomElement`
+  utility method for checking atomic element DOM nodes.
+- Backend Organisms Full Width Text & Post Preview  
+  
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -103,6 +144,34 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Govdelivery subscribe view is now exempt from csrf verification
 - Fixed issue w/ gulp watch task not compiling JS on change
 - Refactored `BreakpointHandler.js` to remove jQuery dependency and unneeded code.
+- Changed from single cf import to individual module imports.
+- Move handlebars dependency to npm from bower.
+- Change Doing Business With Us email to office email
+- Updates `gulp-sitespeedio` from `0.0.6` to `0.0.7`.
+- CFGOVPage to include tags and authors
+- Event import script to include grabbing tags and authors
+- Change templates to move logic to Django backend
+- Move Event filter over to a Django form.
+- Updates `jsdom` to `7.0.2` from `6.5.1`.
+- Move staging hostname variable from django settings to be an environment variable
+- Uses globally installed Protractor in setup.sh, if available.
+- Updated the existing breakpoint variables and values to the ones released in cf-core v1.2.0
+- Excludes 3rd-party JS polyfills from linting.
+- Abstracts code into helper class `DataImporter`
+- Modifies command line options to allow specifying arguments for importing pages or snippets
+- Changes the way the processor module is imported so it imports it using the [app] argument
+- Moves the processors module from the core.management.commands module to the v1 app
+- Contact molecule templates
+- Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
+- Upgrade wagtail to 1.2
+- Cleaned up and rebuilt the secondary nav to reduce complexity and fix bugs
+- Routed landing page type related molecules and organisms
+  to use `jinja2/v1/_includes/` template locations.
+- Updated protractor from 2.5.1 to 3.0.0.
+- Updated gulp-sitespeedio from 0.0.7 to 0.0.8.
+- Update runserver script to start MYSQL if it isn't running
+- Reduced padding on expandables per direction of design.
+- Hide cues on expandables when JS is turned off.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -112,7 +181,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed bad CF Notifier tests.
 - Removed unnecessary mobile-only expandables
 - Removed link from Cordray's corner image `/the-bureau/about-director/`.
-- Removed extra Google Analytics code
+- Removed extra Google Analytics code.
+- Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
 
 ### Fixed
 - Fixed instructions for gulp watch
@@ -266,12 +336,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.0.0-2.1.0 - 2015-08-05
 
 ### Added
-- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
-- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
-- Added `u-hidden` utility class for fully hiding an element.
-- Added `TEST.md` readme file for testing instructions.
-- Added `grunt clean` and `grunt copy` tasks.
-- Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
 - Added `about-us` page and tests
 - Added `newsroom` type to Activity Snippets

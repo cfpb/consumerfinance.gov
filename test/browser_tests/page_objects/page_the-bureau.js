@@ -9,9 +9,7 @@ function TheBureauPage() {
 
   this.sideNav = element( by.css( '.nav-secondary' ) );
 
-  this.hero = element( by.css( '.hero__bureau' ) );
-
-  this.heroVideoPlayer = this.hero.element( by.css( '.video-player' ) );
+  this.hero = element( by.css( '.hero' ) );
 
   this.bureauHistory = element( by.css( '.bureau-history' ) );
 

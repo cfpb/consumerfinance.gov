@@ -1,0 +1,101 @@
+{% extends 'layout-side-nav.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/expandable.html' as expandable %}
+{% import 'organisms/expandable-group.html' as expandable_group %}
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        <div class="expandable-prototypes">
+            {% call expandable.render("Default Expandable") %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Bordered Expandable", {
+                    'is_bordered': true
+                }) %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Midtone Expandable", {
+                    'is_midtone': true
+                }) %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Midtone, Bordered Expandable", {
+                    'is_bordered': true,
+                    'is_midtone':  true
+                }) %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+
+            {% call expandable.render("Midtone, Bordered, Expandable - Expanded", {
+                    'is_bordered': true,
+                    'is_midtone':  true,
+                    'is_expanded': true
+                }) %}
+                {{ lipsum(1, false, 10, 225) | safe }}
+            {% endcall %}
+        </div>
+
+        <div class="expandable-group-prototypes">
+            {% call expandable_group.render({
+                    'heading': 'Group Header',
+                    'has_rule': true
+                }) %}
+                {% call expandable.render("Expand 1 - initially open", {
+                    'is_expanded': true,
+                    'is_bordered': true,
+                    'is_midtone':  true
+                }) %}
+                    {{ lipsum(1, false, 10, 225) | safe }}
+                {% endcall %}
+
+                {% call expandable.render("Expand 2",  {
+                    'is_bordered': true,
+                    'is_midtone':  true
+                }) %}
+                    {{ lipsum(1, false, 10, 225) | safe }}
+                {% endcall %}
+            {% endcall %}
+
+            {% call expandable_group.render({
+                    'heading': 'Accordion-style Group',
+                    'intro': 'Intro paragraph blah blah blah',
+                    'is_accordion': true
+                }) %}
+                {% call expandable.render("Expand 1") %}
+                    {{ lipsum(1, false, 10, 225) | safe }}
+                {% endcall %}
+
+                {% call expandable.render("Expand 2 - bordered, midtone", {
+                    'is_bordered': true,
+                    'is_midtone':  true
+                }) %}
+                    {{ lipsum(1, false, 10, 225) | safe }}
+                {% endcall %}
+
+                {% call expandable.render("Expand 3 - bordered", {
+                    'is_bordered': true
+                }) %}
+                    {{ lipsum(1, false, 10, 225) | safe }}
+                {% endcall %}
+            {% endcall %}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+        Side Navigation
+    </aside>
+{%- endblock %}

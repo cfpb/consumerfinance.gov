@@ -3,9 +3,9 @@ var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 var getBreakpointState =
-require( '../../../../cfgov/preprocessed/js/modules/util/breakpoint-state.js' ).get;
+require( '../../../../cfgov/unprocessed/js/modules/util/breakpoint-state.js' ).get;
 var breakpointConfig =
-require( '../../../../cfgov/preprocessed/js/config/breakpoints-config.js' );
+require( '../../../../cfgov/unprocessed/js/config/breakpoints-config.js' );
 
 var breakpointState;
 var configKeys;
@@ -21,7 +21,9 @@ describe( 'getBreakpointState', function() {
   it( 'should return an object with properties from config file', function() {
     var breakpointStatekeys =
         Object.keys( breakpointConfig ).map( function( key ) {
-          return key.toLowerCase().replace( 'is', '' );
+          key.replace( 'is', '' );
+          key.charAt( 0 ).toLowerCase() + key.slice( 1 );
+          return key;
         } );
 
     breakpointState = getBreakpointState();

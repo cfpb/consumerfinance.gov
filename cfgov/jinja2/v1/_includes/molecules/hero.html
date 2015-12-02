@@ -6,13 +6,90 @@
 
    Description:
 
-   Create a hero molecule. See [GHE]/flapjack/Modules-V1/wiki/Heros
+   Create a hero molecule.
+
+   settings:           An object with the following requirements.
+
+   settings.heading:   A string containing title of module.
+
+   settings.body:      A string containing the content to display below the
+                       heading (typically a paragraph).
+
+   settings.image_url: A string containing the URL of the image to be placed
+                       adjacent to the text.
+
+
+   options:            An object with the following options.
+
+   options.background_color:
+                       A string containing the color code (in any format) to
+                       set as the hero background color.
+
+   options.link_text:  A string for the text of the link.
+   options.link_url:   A string for the URL of the link.
+   options.is_button:  A boolean to change the CTA link to a button.
+
+
+   See [GHE]/flapjack/Modules-V1/wiki/Heros
 
    ========================================================================== #}
 
-{% macro render() %}
-<div>
-  {# TODO: Implement hero macro with actual content. #}
-  HERO
-</div>
-{% endmacro %}
+{% if value %}
+<section class="hero"
+         {{ 'style=background-color:' +
+             value.background_color + ';'
+             if value.background_color else '' }}>
+    <div class="wrapper hero_wrapper">
+        <div class="hero_text">
+            <h1 class="hero_heading">{{ value.heading | safe}}</h1>
+            <p class="hero_subhead">{{ value.body |richtext}}</p>
+            {% if value.link.text and value.link.url %}
+                <a href="{{ value.link.url }}"
+                   class="hero_cta
+                   {{ 'btn' if value.is_button
+                   else '' }}">
+                    {{ value.link.text }}
+                </a>
+            {% endif %}
+        </div>
+        {% if value.image.upload %}
+            {% set photo=image(value.image.upload, 'original') %}
+            <div class="hero_image"
+                 style="background-image: url( {{ photo.url }} );">
+        {% endif %}
+        </div>
+</section>
+
+{% else %}
+    {% macro render( settings, options={} ) %}
+
+        {% if settings.heading and settings.body and settings.image_url %}
+        <section class="hero"
+                 {{ 'style=background-color:' +
+                     options.background_color + ';'
+                     if options.background_color else '' }}>
+            <div class="wrapper hero_wrapper">
+                <div class="hero_text">
+                    <h1 class="hero_heading">{{ settings.heading }}</h1>
+                    <p class="hero_subhead">{{ settings.body }}</p>
+                    {% if options.link_text and options.link_url %}
+                        <a href="{{ options.link_url }}"
+                           class="hero_cta
+                           {{ 'btn' if options.is_button
+                           else '' }}">
+                            {{ options.link_text }}
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="hero_image"
+                     style="background-image: url( {{ settings.image_url }} );">
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    {% endmacro %}
+
+{% endif %}
+
+
+

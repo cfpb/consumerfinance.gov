@@ -1,5 +1,6 @@
+import os
+
 from django.http import Http404
-from django.conf import settings
 from v1.models import CFGOVPage
 
 from wagtail.wagtailcore import hooks
@@ -8,6 +9,7 @@ from wagtail.wagtailcore import hooks
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
 def share_the_page(request, page):
+    page = page.specific
     parent_page = page.get_ancestors(inclusive=False).reverse()[0].specific
     parent_page_perms = parent_page.permissions_for_user(request.user)
 
@@ -15,8 +17,7 @@ def share_the_page(request, page):
     is_sharing = bool(request.POST.get('action-share')) and parent_page_perms.can_publish()
 
     if is_sharing or is_publishing:
-        if isinstance(page, CFGOVPage):
-            page.shared = True
+        page.shared = True
     else:
         page.shared = False
 
@@ -28,7 +29,7 @@ def share_the_page(request, page):
 
 @hooks.register('before_serve_page')
 def check_request_site(page, request, serve_args, serve_kwargs):
-    if request.site.hostname == settings.STAGING_HOSTNAME:
+    if request.site.hostname == os.environ.get('STAGING_HOSTNAME'):
         if isinstance(page, CFGOVPage):
             if not page.shared:
                 raise Http404

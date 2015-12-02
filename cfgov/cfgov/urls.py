@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
@@ -10,6 +11,7 @@ from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDir
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
@@ -21,6 +23,7 @@ urlpatterns = [
     # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^$', SheerTemplateView.as_view(), name='home'),
+    url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
@@ -136,17 +139,6 @@ urlpatterns = [
             name='index')],
         namespace='contact-us')),
 
-    url(r'^events/', include([
-        url(r'^$', TemplateView.as_view(template_name='events/index.html'),
-            name='events'),
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='events',
-                                      local_name='event',
-                                      default_template='events/_single.html'),
-            name='event'),
-        url(r'^(?P<doc_id>[\w-]+)/ics/$', EventICSView.as_view())],
-        namespace='events')),
-
     url(r'^offices/', include([
         url(r'^(?P<doc_id>[\w-]+)/$',
             SheerTemplateView.as_view(doc_type='office',
@@ -220,10 +212,12 @@ urlpatterns = [
 
 # TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
 if settings.DEBUG :
-    urlpatterns.append(url(r'^landing-page-1/$', SheerTemplateView.as_view(template_name='landing-page-1/index.html'), name='landing-page-1'))
-    urlpatterns.append(url(r'^landing-page-2/$', SheerTemplateView.as_view(template_name='landing-page-2/index.html'), name='landing-page-2'))
     urlpatterns.append(url(r'^sublanding-page-1/$', SheerTemplateView.as_view(template_name='sublanding-page-1/index.html'), name='sublanding-page-1'))
     urlpatterns.append(url(r'^sublanding-page-2/$', SheerTemplateView.as_view(template_name='sublanding-page-2/index.html'), name='sublanding-page-2'))
+    urlpatterns.append(url(r'^browse-basic/$', SheerTemplateView.as_view(template_name='browse-basic/index.html'), name='browse-basic'))
+    urlpatterns.append(url(r'^browse-filterable/$', SheerTemplateView.as_view(template_name='browse-filterable/index.html'), name='browse-filterable'))
+    urlpatterns.append(url(r'^learn-page/$', SheerTemplateView.as_view(template_name='learn-page/index.html'), name='learn-page'))
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))

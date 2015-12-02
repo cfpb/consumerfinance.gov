@@ -1,27 +1,66 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {# Import organisms and molecules used in the template. #}
+{% import 'organisms/main-contact-info.html' as main_contact_info %}
 {% import 'molecules/hero.html' as hero %}
+{% import 'organisms/table.html' as table %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
     Remove when fully implemented elsewhere.
 {%- endblock %}
 
+{% block hero -%}
+    {{ hero.render({
+        'heading':   'This is an example of a Hero Molecule',
+        'body':      'Heroes function as a primary focal point on a page,
+                      often used to introduce a collection of pages by
+                      combining a brief description of the goals of that
+                      section along with a visually impactful graphic.',
+        'image_url': 'http://www.consumerfinance.gov/know-before-you-owe/static/img/kbyo-hero_tablet-2x.png'
+    }, {
+        'background_color': '#d5e7e6',
+        'link_text':        'Hero call to action',
+        'link_url':         '#'
+    }) }}
+{% endblock %}
+
 {#
     TODO: Add the following molecules
+        - Hero
         - Post feed
         - Grey well
         - Sidebar with related content and mailing list
 #}
 
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
 {% block content_main %}
     <div class="block
                 block__flush-top">
-        {# TODO: Add main molecules and organisms. #}
-        {{ hero.render() }}
-    </div>
 
+        {{ main_contact_info.render( {
+            'heading': 'Whistleblower tips',
+            'body': lipsumText
+        }, {
+            'emails':  ['test@example.com'],
+            'phones':  [{'number': '1234567899',
+                         'vanity': '123456AAAA',
+                         'tty':    '1234567899'}]
+        }) }}
+    </div>
+    <div class="block">
+        {{ table.render( [
+                            'Column 1', 'Column 2', 'Column 3'
+                          ],
+                          [
+                            ['Cell A1', 'Cell A2', 'Cell A3'],
+                            ['Cell B1', 'Cell B2', 'Cell B3'],
+                            ['Cell C1', 'Cell C2', 'Cell C3']
+                          ]
+        ) }}
+    </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}

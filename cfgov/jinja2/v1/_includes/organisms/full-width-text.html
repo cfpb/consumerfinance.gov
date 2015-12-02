@@ -1,0 +1,27 @@
+
+{# ==========================================================================
+
+   full_width_text.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a full width text organism.
+   See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
+
+   template: Template URL for content to include.
+
+   ========================================================================== #}
+
+
+<div class="o-full-width-text">
+    {% if value %}
+        {{ value.content | safe }}
+    {% else %}
+        {% macro render(template) %}
+            {% import template as content %}
+            {{ content }}
+        {% endmacro %}
+    {% endif %}
+</div>

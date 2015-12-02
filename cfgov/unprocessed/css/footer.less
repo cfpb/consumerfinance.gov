@@ -1,0 +1,219 @@
+/* ==========================================================================
+   cfgov-refresh
+   footer
+   ========================================================================== */
+
+/* topdoc
+  name: CF.gov site-wide footer
+  family: cfgov-footer
+  patterns:
+    - notes:
+        - "For the markup please see _layouts/footer.html."
+  tags:
+    - cfgov-footer
+*/
+
+.footer {
+    // Adding an extra 5px to the top to account for the absolute positioned
+    // social media icons.
+    padding-top: unit(50px / @base-font-size-px, em);
+    // There is a 10px margin-bottom on the  last .footer_list li's, plus the
+    // 50px bottom padding = 60px of total padding at the bottom of the footer.
+    padding-bottom: unit(50px / @base-font-size-px, em);
+    border-top: 10px solid @green;
+    background: @gray-5;
+
+    &_share-icon-list {
+        margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+        .list__horizontal();
+
+        .respond-to-min(@bp-sm-min, {
+            margin-bottom: 0;
+        });
+
+        .respond-to-min(@bp-med-min, {
+            margin-top: 0;
+            position: absolute;
+            // Aligns with the baseline of .footer_nav-list text.
+            top: -9px;
+            right: 0;
+        });
+    }
+
+    &_nav-list {
+        .list__links();
+
+        .list_link {
+            font-size: unit(18px / @base-font-size-px, em);
+            .u-link__colors(@black);
+
+            .respond-to-min(@bp-sm-min, {
+                margin-right: 1em;
+
+                .webfont-regular();
+                .u-link__hover-border();
+            });
+
+            .respond-to-min(@bp-med-min, {
+                margin-right: unit(@grid_gutter-width / 22px, em);
+                font-size: unit(20px / @base-font-size-px, em);
+            });
+        }
+
+        .list_link.list_link__disabled {
+            border-bottom: 1px dotted;
+
+            .respond-to-min(@bp-med-min, {
+                .u-link__no-border();
+            });
+        }
+    }
+
+    &_list {
+        .list__links();
+
+        .list_link {
+            .u-link__colors(@darkgray);
+            border-bottom: 1px dotted;
+        }
+    }
+
+    &_long-list {
+        .list__unstyled();
+
+        .respond-to-max(@bp-xs-max, {
+            margin-bottom: unit(10px / @base-font-size-px, em);
+            .list__spaced();
+
+            &:first-child {
+                margin-bottom: unit(24px / @base-font-size-px, em);
+            }
+        });
+
+        .respond-to-min(@bp-sm-min, {
+            .list__horizontal();
+
+            &:first-child {
+                margin-bottom: 0;
+            }
+        });
+
+        .list_item {
+            .respond-to-min(@bp-sm-min, {
+                margin-right: @grid_gutter-width - 4px;
+                margin-bottom: unit(10px / @base-font-size-px, em);
+            });
+        }
+
+        .list_link {
+            .webfont-regular();
+            .u-link__colors(@black);
+            .u-link__hover-border();
+        }
+
+    }
+
+    &-pre {
+        position: relative;
+        margin-bottom: unit(45px / @base-font-size-px, em);
+
+        .footer_top-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            // There's a standard margin between the top
+            // of the footer and the links. The button comes between
+            // that margin in the wireframes.
+            margin: -2em auto 2em;
+
+            .cf-icon-arrow-up {
+                padding-left: 1em;
+            }
+        }
+
+        .footer_nav-list {
+            margin-bottom: 0;
+        }
+
+        .respond-to-min(@bp-sm-min, {
+            padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+            margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+            border-bottom: 1px solid @gray-50;
+
+            .footer_top-button {
+                display: none;
+            }
+
+            .footer_nav-list {
+                .list__horizontal();
+
+                .list_item {
+                    margin-bottom: 0;
+                }
+
+            }
+        });
+    }
+
+    &-middle-left {
+        .footer_list {
+            margin: 0;
+        }
+
+        .respond-to-min(@bp-sm-min, {
+            .grid_column(8);
+            border-right: 1px solid @gray-50;
+            border-left: 0;
+
+            .footer_col {
+                .grid_column(6);
+                border-left: 0;
+                border-right: 0;
+            }
+        });
+
+    }
+
+    &-middle-right {
+        .respond-to-min(@bp-sm-min, {
+            .grid_column(4);
+
+            .footer_list {
+                padding-left: @grid_gutter-width;
+                padding-right: @grid_gutter-width;
+            }
+        });
+    }
+
+    &-post {
+        margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+
+        .respond-to-min(@bp-sm-min, {
+            padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
+            border-top: 1px solid @gray-50;
+        });
+
+        .footer_official-website {
+            .short-desc();
+            padding-left: 37px; //22px flag + 15px spacing
+            background: url('../img/us-flag_22x13.png') no-repeat 0 4px;
+
+            // This media query is to keep 'United States Government'
+            // on one line.
+            .respond-to-max(479px, {
+                max-width: 220px;
+            });
+
+            .respond-to-dpi(2, {
+                background-image: url('../img/us-flag_44x26.png');
+                background-size: 22px;
+            });
+        }
+    }
+}
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

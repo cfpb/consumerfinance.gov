@@ -1,0 +1,143 @@
+/* ==========================================================================
+   cfgov-refresh
+   Master Less File.
+   ========================================================================== */
+
+// @import Normalize before all other Less/CSS
+@import (less) "/normalize-css/normalize.css";
+@import (less) "/normalize-legacy-addon/normalize-legacy-addon.css";
+
+// @import third party plugins
+@import (less) "/chosen/chosen.css";
+
+// @import third party plugin overrides.
+@import (less) "chosen-overrides.less";
+
+
+/* Base styles
+   @import combined CF components Less file and make any overrides.
+   ========================================================================== */
+
+// Import required CF components.
+// Combined CF components.
+@import (less) 'cf-core/src/cf-core.less';
+@import (less) 'cf-icons/src/cf-icons.less';
+@import (less) 'cf-buttons/src/cf-buttons.less';
+@import (less) 'cf-forms/src/cf-forms.less';
+@import (less) 'cf-grid/src/cf-grid.less';
+@import (less) 'cf-layout/src/cf-layout.less';
+@import (less) 'cf-typography/src/cf-typography.less';
+@import (less) 'cf-pagination/src/cf-pagination.less';
+@import (less) 'cf-expandables/src/cf-expandables.less';
+@import (less) 'cf-tables/src/cf-tables.less';
+
+// The Capital Framework (CF) brand color palette.
+@import (less) "brand-palette.less";
+
+// Override the CF theme variables with colors from the brand color palette.
+@import (less) "cf-theme-overrides.less";
+
+// Enhancements that are on a migration path to being added to CF.
+@import (less) "cf-enhancements.less";
+
+// Crazy awesome notifications!
+@import (less) "cf-notifications.less";
+
+
+/* Base patterns
+   ========================================================================== */
+
+@import (less) "forms.less";
+@import (less) "lists.less";
+@import (less) "media.less";
+@import (less) "meta.less";
+@import (less) "misc.less";
+@import (less) "summary.less";
+@import (less) "video-player.less";
+
+
+/* Amalgamated patterns
+   ========================================================================== */
+
+@import (less) "activity.less";
+@import (less) "blog-docs.less";
+@import (less) "post.less";
+@import (less) "calendar-icon.less";
+@import (less) "modification-date.less";
+
+
+/* Atom pieces
+   ========================================================================== */
+
+@import (less) "atoms/rule-break.less";
+
+
+/* Molecule pieces
+   ========================================================================== */
+
+@import (less) "molecules/expandable.less";
+@import (less) "molecules/image-text-50-50.less";
+@import (less) "molecules/image-text-25-75.less";
+@import (less) "molecules/text-introduction.less";
+@import (less) "molecules/call-to-action.less";
+@import (less) "molecules/related-posts.less";
+@import (less) "molecules/half-width-link-blob.less";
+@import (less) "molecules/form-field-with-button.less";
+@import (less) "molecules/related-posts.less";
+
+/* Organism pieces
+   ========================================================================== */
+
+@import (less) "organisms/expandable-group.less";
+@import (less) "organisms/sidebar-contact-info.less";
+@import (less) "organisms/well.less";
+@import (less) "organisms/full-width-text.less";
+@import (less) "organisms/link-blob-group.less";
+@import (less) "organisms/image-text-50-50-group.less";
+@import (less) "organisms/post-preview.less";
+@import (less) "organisms/content-sidebar.less";
+@import (less) "organisms/email-signup.less";
+@import (less) "organisms/sidebar-breakout.less";
+
+/* Template pieces
+   ========================================================================== */
+
+@import (less) "skip-nav.less";
+@import (less) "nav-secondary.less";
+@import (less) "nav-primary.less";
+@import (less) "header.less";
+@import (less) "footer.less";
+@import (less) "breadcrumbs.less";
+@import (less) "mobile-carousel.less";
+@import (less) "share.less";
+
+
+/* Page-specific styles
+   ========================================================================== */
+
+@import (less) "pages/beta.less";
+@import (less) "pages/budget.less";
+@import (less) "pages/business.less";
+@import (less) "pages/event.less";
+@import (less) "pages/external-site.less";
+@import (less) "pages/error.less";
+@import (less) "pages/bureau.less";
+@import (less) "pages/bureau-structure.less";
+@import (less) "pages/contact-us.less";
+@import (less) "pages/careers.less";
+@import (less) "pages/history.less";
+@import (less) "pages/offices.less";
+@import (less) "pages/press-resources.less";
+@import (less) "pages/sub-pages.less";
+
+
+/* Demo-specific styles
+   ========================================================================== */
+
+@import (less) "demo.less";
+
+
+/* Print styles
+   ========================================================================== */
+
+@import (less) "print.less";

@@ -1,0 +1,78 @@
+<article class="post post__event">
+    <header>
+        <h1 class="post_heading">
+            {{ page.title | safe }}
+        </h1>
+        <p class="post_dek">
+        {% if (event_state == 'past') %}
+            {{ page.archive_body | striptags }}
+        {% elif (event_state == 'present') %}
+            {{ page.live_body | striptags }}
+        {% elif (event_state == 'future') %}
+            {{ page.future_body | striptags }}
+        {% endif %}
+        </p>
+        <div class="modification-date date u-right">
+            <span>Updated</span>
+            {% import 'macros/time.html' as time %}
+            {{ time.render(page.latest_revision_created_at, {'date':true}) }}
+        </div>
+        {% import 'macros/share.html' as share with context %}
+        {{ share.render({
+            'title': page.title,
+            'hide_heading': true,
+            'twitter_options': {
+                'text':     page.twtr_text,
+                'related':  page.twtr_rel,
+                'language': page.twtr_lang,
+                'hashtags': page.twtr_hash
+            }
+        }) }}
+        {% from 'events/_macros.html' import event_venue as event_venue %}
+        {{ event_venue(page, event_state) }}
+    </header>
+    <div class="post_body">
+        {% if (event_state != 'past') %}
+        <aside class="post_inset post_inset__right line-container event-status">
+            <div class="line-container_body">
+                <h1 class="u-visually-hidden">Event reservation and viewing details</h1>
+                <div class="event-status_rsvp">
+                  <p>
+                      <strong>This event requires an RSVP.</strong>
+                  </p>
+                  <p>
+                      <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:"
+                         class="btn">
+                          <span class="btn_icon__left cf-icon cf-icon-email-social"></span>
+                           reserve@cfpb.gov
+                      </a>
+                  </p>
+                </div>
+                {% if page.live_stream_availability %}
+                <div class="event-status_livestream">
+                  <p>
+                      <span class="cf-icon cf-icon-livestream"></span>
+                      <strong>Available on Live stream.</strong>
+                  </p>
+                  <p class="event-meta">
+                      <span class="event-meta_description event-meta_description__block">
+                          Video link available:
+                      </span>
+                      {% import 'macros/time.html' as time %}
+                      {{ time.render(page.live_stream_date,
+                                     {'date':true, 'time':true, 'timezone':true}) }}
+                  </p>
+                </div>
+                {% endif %}
+            </div>
+        </aside>
+        {% endif %}
+        {{ page.body | safe }}
+    </div>
+    {% if page.tags.names() | length %}
+    <footer>
+        {%- import 'tags.html' as tags %}
+        {{ tags.render(page.tags.names(), path) }}
+    </footer>
+    {% endif %}
+</article>
