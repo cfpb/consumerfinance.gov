@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'layout-side-nav.html' %}
 
 {% block title %}
     Consumer Financial Protection Bureau
@@ -9,28 +9,38 @@
     responsible providers, and the economy as a whole.
 {% endblock %}
 
-{% block content %}
+{% block content_main %}
     <div class="block
                 block__flush-top">
         {{ page.title }}
     </div>
 
-    <div class="content-l">
-        <div class="content-l_col-1-2">
-            {% for item in page.molecules %}
-                {{ render_stream_child(item) }}
-            {% endfor %}
-        </div>
-        <div class="content-l_col-1-2">
-            {% for item in page.organisms %}
-                {{ render_stream_child(item) }}
-            {% endfor %}
-        </div>
-
-        <div class="content-l_col-1-2">
-            {% include '_includes/organisms/main-contact-info.html' %}
-        </div>
+    <div class="expandable-prototypes">
+        {% for item in page.molecules %}
+            {{ render_stream_child(item) }}
+        {% endfor %}
+    </div>
+    <div class="content-l_col-1-2">
+        {% for item in page.organisms %}
+            {{ render_stream_child(item) }}
+        {% endfor %}
     </div>
 
-{% endblock content %}
+    <div class="content-l_col-1-2">
+        {% include '_includes/organisms/main-contact-info.html' %}
+    </div>
+
+{% endblock content_main %}
+
+{% block content_sidebar scoped -%}
+<aside>
+    {% for block in page.sidefoot %}
+        {% if 'related_posts' in block.block_type %}
+            {{ related_posts.render() }}
+        {% else %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    {% endfor %}
+</aside>
+{%- endblock %}
 
