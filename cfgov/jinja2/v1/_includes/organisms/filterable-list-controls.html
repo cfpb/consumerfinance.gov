@@ -1,0 +1,179 @@
+{# ==========================================================================
+
+   filterable_list_controls.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create an expandable of filters when given:
+
+   settings:            Array of objects describing a form structure.
+                        Example nested form:
+                        {
+                            'type': 'form',
+                            'children': [
+                                {
+                                    'type':     'text',
+                                    'label':    'Topics',
+                                    'name':     'topics',
+                                    'id':       'topics',
+                                    'cols':     '1-2',
+                                    'attrs':    { 'placeholder': 'Search for topics' }
+                                },
+                                {
+                                    'type':     'text',
+                                    'label':    'Author',
+                                    'name':     'author',
+                                    'id':       'author',
+                                    'cols':     '1-2',
+                                    'attrs':    { 'placeholder': 'Search for authors' }
+                                },
+                                {
+                                    'type':     'form',
+                                    'label':    'Date range',
+                                    'children': [{
+                                            'type':  'text',
+                                            'label': 'From:',
+                                            'cols':  '1-2',
+                                            'attrs': { 'placeholder': 'DD/MM/YYYY' }
+                                        },
+                                        {
+                                            'type':  'text',
+                                            'label': 'To:',
+                                            'cols':  '1-2',
+                                            'attrs': { 'placeholder': 'DD/MM/YYYY' }
+                                        }]
+                                }]
+                        }
+
+   options:             Object of optional settings.
+   options.form_method: "post" or "get" form method.
+                        Default is "post."
+   options.action:      The form action URL.
+
+   ========================================================================== #}
+
+{% macro render(settings=[], options={}) %}
+{% import 'molecules/expandable.html' as expandable %}
+
+<div class="o-filterable-list-controls">
+    {% call expandable.render("Filter", {
+      'is_bordered': true,
+      'is_midtone': true,
+      'is_expanded': true
+    }) %}
+        {{ _filters_form(settings, options) }}
+    {% endcall %}
+</div>
+
+{% endmacro %}
+
+
+{# A helper macro for filterable_list_controls.render()
+   ========================================================================== #}
+{% macro _filters_form(inputs=[], options={}) %}
+{% if options.action and options.action != '/' %}
+{% set action = options.action %}
+{% endif %}
+<form class="form-l"
+      {{ 'method=' ~ options.form_method if options.form_method else 'method=post' }}
+      {{ 'action=' ~ action if action else '' }}>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    {{ _render_form_wrapper(inputs) }}
+
+    <div class="form-actions form-actions__left-on-med">
+        <input class="btn form-actions_item"
+               type="submit"
+               value="Apply Filters">
+        <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+               type="button"
+               value="Clear filters"
+               data-js-hook="form-clear">
+    </div>
+
+</form>
+{% endmacro %}
+
+{# A helper macro for filterable_list_controls.render()
+   ========================================================================== #}
+{% macro _render_form_wrapper(inputs) -%}
+
+    {% for input in inputs recursive %}
+        <div class="form-l_col
+                    form-l_col-{{ input.cols if input.cols else '1' }}">
+            <div class="form-group">
+
+                {% if input.label %}
+                <label class="form-label-header"
+                       {{ 'for=filter_' ~ input.id if input.id else '' }}>
+                    {{ input.label }}
+                </label>
+                {% endif %}
+
+                {% if input.type == 'form' %}
+                    <div class="form-l">
+                        {{ loop(input.children) }}
+                    </div>
+                {% elif input.type == 'email'
+                   or input.type == 'number'
+                   or input.type == 'password'
+                   or input.type == 'tel'
+                   or input.type == 'text'
+                   or input.type == 'url' %}
+
+                    <input type="{{ input.type }}"
+                           value="{{ input.attrs.value if input.attrs.value else '' }}"
+                           placeholder="{{ input.attrs.placeholder if input.attrs.placeholder else '' }}"
+                           {{ 'id=filter_' ~ input.id if input.id else '' }}
+                           {{ 'name=filter_' ~ input.name if input.name else '' }}>
+                {% elif input.type == 'checkbox' %}
+                    {% for checkbox in input.attrs -%}
+                        <label class="form-group_item"
+                               {{ 'for=filter_' ~ checkbox.id if checkbox.id else '' }}>
+                            {{ _filter_checkbox(checkbox.label,
+                                                checkbox.id,
+                                                checkbox.name,
+                                                checkbox.value) | safe }}
+                        </label>
+                    {% endfor %}
+                {% elif input.type == 'select' %}
+                    <label class="form-group_item"
+                           {{ 'for=filter_' ~ input.id if input.id else '' }}>
+                    </label>
+                    <select {{ 'id=filter_' ~ input.id if input.id else '' }}
+                            {{ 'name=filter_' ~ input.name if input.name else '' }}>
+                    {% for option in input.attrs -%}
+                        {{ _filter_option(option.label, option.value) | safe }}
+                    {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{%- endmacro %}
+
+{# A helper macro for filterable_list_controls.render()
+   ========================================================================== #}
+{% macro _filter_checkbox(label_text, id, name, value) %}
+    <input class="custom-input"
+           type="checkbox"
+           value="{{ value }}"
+           id="filter_{{ id }}"
+           name="filter_{{ name }}"
+           {{ 'id=filter_' ~ id if id else '' }}
+           {{ 'name=filter_' ~ name if name else '' }}
+           {{ 'checked' if is_filter_selected(name, value) else '' }}>
+    {{ label_text if label_text else value }}
+{% endmacro %}
+
+{# A helper macro for filterable_list_controls.render()
+   ========================================================================== #}
+{% macro _filter_option(label_text, value) %}
+    <option value="{{ value }}"
+            {{ 'selected' if is_filter_selected(label_text, value) else '' }}
+            >
+        {{ label_text }}
+    </option>
+{% endmacro %}

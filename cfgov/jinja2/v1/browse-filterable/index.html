@@ -2,6 +2,7 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'organisms/post-preview.html' as post_preview %}
+{% import 'organisms/filterable-list-controls.html' as filterable_list_controls %}
 
 {% if not page %}
     {% set prototype = true %}
@@ -23,6 +24,131 @@
         {% if prototype %}
             {% include 'molecules/text-introduction.html' %}
         {% endif %}
+    </div>
+    <div class="block
+                block__flush-top">
+        {{ filterable_list_controls.render([
+            {
+                'type':  'checkbox',
+                'label': 'Category',
+                'cols':  '1-3',
+                'attrs': [
+                    {
+                        'label': 'Consumer information',
+                        'value': 'consumer-info',
+                        'name':  'consumer-info'
+                    },
+                    {
+                        'label': 'Engagement & events',
+                        'value': 'engagement-events',
+                        'name':  'engagement-events'
+                    },
+                    {
+                        'label': 'Announcements & updates',
+                        'value': 'announce-updates',
+                        'name':  'announce-updates'
+                    },
+                    {
+                        'label': 'Innovation',
+                        'value': 'innovation',
+                        'name':  'innovation'
+                    }
+                ]
+            },
+            {
+                'type':     'form',
+                'cols':     '2-3',
+                'children': [
+                    {
+                        'type':     'text',
+                        'label':    'Topics',
+                        'name':     'topics',
+                        'id':       'topics',
+                        'cols':     '1-2',
+                        'attrs':    { 'placeholder': 'Search for topics' }
+                    },
+                    {
+                        'type':     'text',
+                        'label':    'Author',
+                        'name':     'author',
+                        'id':       'author',
+                        'cols':     '1-2',
+                        'attrs':    { 'placeholder': 'Search for authors' }
+                    },
+                    {
+                        'type':     'form',
+                        'label':    'Date range',
+                        'children': [
+                            {
+                                'type':  'text',
+                                'label': 'From:',
+                                'name':  'date-from',
+                                'id':    'date-from',
+                                'cols':  '1-2',
+                                'attrs': { 'placeholder': 'dd/mm/yyyy' }
+                            },
+                            {
+                                'type':  'text',
+                                'label': 'To:',
+                                'name':  'date-to',
+                                'id':    'date-to',
+                                'cols':  '1-2',
+                                'attrs': { 'placeholder': 'dd/mm/yyyy' }
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            {
+                'type':  'text',
+                'label': 'Half width field label',
+                'cols':  '1-2',
+                'attrs': { 'value': 'half-width' }
+            },
+            {
+                'type':  'text',
+                'label': 'Half width field label',
+                'cols':  '1-2',
+                'attrs': { 'value': 'half-width' }
+            },
+            {
+                'type':  'text',
+                'label': 'Address - example full width field',
+                'name':  'address',
+                'id':    'address',
+                'attrs': { 'value': 'full-width' }
+            },
+            {
+                'type':  'text',
+                'label': 'City',
+                'name':  'city',
+                'id':    'city',
+                'cols':  '1-2',
+                'attrs': { 'value': 'half-width' }
+            },
+            {
+                'type':  'select',
+                'label': 'State',
+                'name':  'state',
+                'id':    'state',
+                'cols':  '1-4',
+                'attrs': [
+                    { 'label': 'Alabama', 'value': 'al' },
+                    { 'label': 'Alaska', 'value': 'ak'  },
+                    { 'label': 'Arizona', 'value': 'az'  },
+                    { 'label': 'Arkansas', 'value': 'ar'  }
+                ]
+            },
+            {
+                'type':  'text',
+                'label': 'Zip code',
+                'name':  'zipcode',
+                'id':    'zipcode',
+                'cols':  '1-4',
+                'attrs': { 'value': 'quarter-width' }
+            }
+        ]) }}
     </div>
     <div class="block">
         {{ post_preview.render({
