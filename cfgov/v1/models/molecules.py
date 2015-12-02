@@ -178,3 +178,26 @@ class Quote(blocks.StructBlock):
     class Meta:
         icon = 'openquote'
         template = '_includes/molecules/quote.html'
+
+
+class Expandable(blocks.StructBlock):
+    label = blocks.CharBlock(max_length=100, required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+
+    optional_content = blocks.StreamBlock(
+        [
+            ('links', atoms.Hyperlink()),
+            ('email', ContactEmail()),
+            ('phone', ContactPhone()),
+            ('address', ContactAddress()),
+        ], blank=True
+    )
+
+    is_bordered = blocks.BooleanBlock(required=False)
+    is_midtone = blocks.BooleanBlock(required=False)
+    is_expanded = blocks.BooleanBlock(required=False)
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/molecules/expandable.html'
+        label = 'Expandable'
