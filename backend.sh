@@ -24,8 +24,8 @@ init(){
 }
 
 
-# Install project dependencies.
-install(){
+# Build project dependencies.
+build(){
   echo 'Installing project dependencies...'
 
   # Update test dependencies.
@@ -41,6 +41,8 @@ install(){
   else
     pip install -r ./requirements/$1.txt
   fi
+
+  dbsetup
 }
 
 # Setup MYSQL Server.
@@ -72,5 +74,5 @@ is_installed(){
 }
 
 init
-install $1
-dbsetup
+build $1
+
