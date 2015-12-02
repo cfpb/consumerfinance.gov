@@ -1,20 +1,10 @@
 
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{# Import organisms and molecules used in the template. #}
-{% import 'molecules/call-to-action.html' as call_to_action %}
-{% import 'molecules/hero.html' as hero %}
-{% import 'molecules/half-width-link-blob.html' as link_blob %}
-{% import 'molecules/image-text-25-75.html' as image_text_25_75 %}
-{% import 'molecules/image-text-50-50.html' as image_text_50_50 %}
-{% import 'molecules/related-posts.html' as related_posts %}
-{% import 'molecules/text-introduction.html' as text_introduction %}
-
-{% import 'organisms/well.html' as well %}
-{% import 'organisms/email-signup.html' as email_signup %}
+{% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% block title -%}
-    {{ page.title }}
+    {{ page.seo_title }}
 {%- endblock %}
 
 {% block hero -%}
@@ -86,7 +76,11 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% for block in page.sidebar %}
+    {% for block in page.sidefoot %}
+    {% if 'related_posts' in block.block_type %}
+        {{ related_posts.render() }}
+    {% else %}
         {{ render_stream_child(block) }}
+    {% endif %}
     {% endfor %}
 {%- endblock %}
