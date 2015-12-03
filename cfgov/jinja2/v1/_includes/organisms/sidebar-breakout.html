@@ -8,23 +8,19 @@
 
    Creates Sidebar Breakout markup when given:
 
-   settings:               An object used to customize the markup.
+   settings:                         An object used to customize the markup.
 
-   settings.heading:       A string containing heading text.
+   settings.heading: (Optional)      A string containing heading text.
 
-   settings.image:         An object used to customize the image
-                           markup.
+   settings.image: (Optional)        An object used to customize the image
+                                      markup.
 
-   settings.intro.body:    A string containing body text.
+   settings.intro.body: (Optional)    A string containing body text.
 
-   settings.intro.heading: A string containing heading text.
+   settings.intro.heading:(Optional)  A string containing heading text.
 
-   settings.related_posts: An object used to customize the related posts
-                           markup.
-
-   settings.text_intro:    The text-introduction molecule markup that can
-                           be passed in instead of using the Jinja call
-                           method.
+   settings.related_posts: (Optional) An object used to customize the
+                                      related posts markup.
 
    ========================================================================== #}
 
@@ -37,11 +33,7 @@
             <section class="o-sidebar-breakout_col
                             content-l_col
                             content-l_col-2-3">
-                {% if caller %}
-                    {{ caller() }}
-                {% else %}
-                    {{ settings.text_intro }}
-                {% endif %}
+                {{ caller() }}
             </section>
             <aside class="o-sidebar-breakout_col
                           content-l_col
@@ -68,20 +60,20 @@
 
    Creates Sidebar Breakout markup when given:
 
-   settings:                An object used to customize the markup.
+   settings:                          An object used to customize the markup.
 
-   settings.heading:        A string containing heading text.
+   settings.heading:                  A string containing heading text.
 
-   settings.image.url:      A string containing the url for the image.
+   settings.image.url: (Optional)     A string containing the url for the image.
 
-   settings.image.is_round: A Boolean indicating whether the image is round.
+   settings.image.is_round: (Optional) A Boolean indicating whether the image is round.
 
-   settings.intro.heading:  A string containing heading text.
+   settings.intro.heading: (Optional)  A string containing heading text.
 
-   settings.intro.body:     A string containing body text.
+   settings.intro.body:                A string containing body text.
 
-   settings.related_posts:  An object used to customize the related posts
-                            markup.
+   settings.related_posts: (Optional)  An object used to customize the related posts
+                                       markup.
 
    ========================================================================== #}
 
@@ -112,7 +104,9 @@
         {{ settings.intro.body }}
     </p>
     {% endif %}
-    {% import 'molecules/related-posts.html' as related_posts with context %}
-    {{ related_posts.render(is_half_width=false, hide_header_slug=true) }}
+    {% if settings.related_posts %}
+        {% import 'molecules/related-posts.html' as related_posts with context %}
+        {{ related_posts.render(is_half_width=false, hide_header_slug=true) }}
+    {% endif %}
 </div>
 {% endmacro %}
