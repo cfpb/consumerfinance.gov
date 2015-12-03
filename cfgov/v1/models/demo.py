@@ -28,13 +28,12 @@ class DemoPage(CFGOVPage):
 
     organisms = StreamField([
         ('well', organisms.Well()),
-        ('email_signup', organisms.EmailSignUp()),
         ('full_width_text', organisms.FullWidthText()),
         ('post_preview', organisms.PostPreview()),
     ], blank=True)
 
     contact = models.ForeignKey(
-        'Contact',
+        Contact,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -52,7 +51,7 @@ class DemoPage(CFGOVPage):
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.promote_panels, heading='Promote'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Promote'),
         ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
     ])
 

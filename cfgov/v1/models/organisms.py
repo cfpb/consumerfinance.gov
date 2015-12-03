@@ -1,9 +1,9 @@
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from . import atoms
 from . import molecules
+from .snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):
@@ -43,12 +43,28 @@ class EmailSignUp(blocks.StructBlock):
 
     form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=False)
 
-    panels = [
-        FieldPanel('text'),
-        FieldPanel('gd_code'),
-        FieldPanel('form_field'),
-    ]
-
     class Meta:
         icon = 'mail'
         template = '_includes/organisms/email-signup.html'
+
+
+class RelatedPosts(blocks.StructBlock):
+    limit = blocks.CharBlock(default='3', label='Limit')
+    relate_posts = blocks.BooleanBlock(required=False, default=True, label='Blog Posts')
+    relate_newsroom = blocks.BooleanBlock(required=False, default=True, label='Newsroom')
+    relate_events = blocks.BooleanBlock(required=False, default=True, label='Events')
+    view_more = atoms.Hyperlink(required=False)
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/molecules/related-posts.html'
+
+
+class MainContactInfo(blocks.StructBlock):
+    header = blocks.CharBlock()
+    body = blocks.RichTextBlock()
+    contact = SnippetChooserBlock(ContactSnippetClass)
+
+    class Meta:
+        icon = 'wagtail'
+        template = '_includes/organisms/main-contact-info.html'
