@@ -107,6 +107,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add Main Contact Info molecule
 - Add Sidefoot Streamfield to CFGOVPage for sidebar/footer content
 - Add global context variable `global_dict` for easier prototyping
+- Add styleguide app to local settings
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
