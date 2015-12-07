@@ -2,11 +2,16 @@
 
 {# Import organisms and molecules used in the template. #}
 
+
 {% import 'molecules/related-links.html' as related_links %}
 {% import 'molecules/quote.html' as quote %}
+
 {% import 'organisms/full-width-text.html' as full_width_text %}
 {% import 'organisms/post-preview.html' as post_preview %}
 {% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
+
+{% import 'atoms/large-checkbox.html' as large_checkbox %}
+{% import 'atoms/large-radio.html' as large_radio %}
 
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
@@ -58,6 +63,26 @@
     {% if prototype %}
         {% include 'organisms/well.html' %}
     {% endif %}
+
+    <div class="block
+                block__bg
+                block__flush-sides">
+        <h3>Form Fields</h3>
+        {{ large_checkbox.render( {
+            'legend':   'Choose toppings',
+            'fields':   ['cheese', 'pepperoni', 'anchovies', 'mushrooms'],
+            'size':     '1-4'
+        }, {
+            'required': 'true'
+        }) }}
+        {{ large_radio.render( {
+            'legend':   'Extra Cheese',
+            'fields':   ['Yes', 'No'],
+            'size':     '1-2'
+        }, {
+            'required': 'true'
+        }) }}
+    </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}

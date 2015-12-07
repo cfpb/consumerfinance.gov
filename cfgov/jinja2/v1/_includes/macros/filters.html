@@ -198,9 +198,7 @@
                 {% set category_field = 'category' %}
             {% endif -%}
             {% for category in categories -%}
-                <label class="form-group_item">
-                    {{ _filter_checkbox(category_field, category.key)|safe }}
-                </label>
+                {{ _filter_checkbox(category_field, category.key)|safe }}
             {% endfor %}
             </div>
         </div>
@@ -215,9 +213,7 @@
             {% set categories =
                query.possible_values_for('category')|sort(attribute='key') %}
             {% for category in categories -%}
-                <label class="form-group_item">
-                    {{ _filter_checkbox('category', category.key)|safe }}
-                </label>
+                {{ _filter_checkbox('category', category.key)|safe }}
             {% endfor %}
             </div>
         </div>
@@ -235,9 +231,7 @@
                     Calendars
                 </label>
                 {% for director in directors_list %}
-                <label class="form-group_item">
                     {{ _filter_checkbox('calendar', director) | safe }}
-                </label>
                 {% endfor %}
             </div>
         </div>
@@ -362,15 +356,20 @@
 {# A helper macro for filters()
    ========================================================================== #}
 {% macro _filter_checkbox(field, value, label) %}
-    <input class="custom-input"
+    {% from 'macros/util/format/url.html' import slugify as slugify %}
+    {% set id_slug = slugify( value ) %}
+    <input class="cf-input"
            type="checkbox"
            name="filter_{{ field }}"
            value="{{ value }}"
+           id="filter_{{ id_slug }}"
            {%- if is_filter_selected(field, value) %}
            checked
            {%- endif -%}
            >
+    <label class="form-group_item" for="filter_{{ id_slug }}">
         {{ label if label else value }}
+    </label>
 {% endmacro %}
 
 {# A helper macro for filters()
