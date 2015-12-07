@@ -216,6 +216,7 @@ if settings.DEBUG :
     urlpatterns.append(url(r'^sublanding-page/$', SheerTemplateView.as_view(template_name='sublanding-page/index.html'), name='sublanding-page'))
     urlpatterns.append(url(r'^browse-filterable/$', SheerTemplateView.as_view(template_name='browse-filterable/index.html'), name='browse-filterable'))
     urlpatterns.append(url(r'^learn-page/$', SheerTemplateView.as_view(template_name='learn-page/index.html'), name='learn-page'))
+    urlpatterns.append(url(r'^document-detail/$', SheerTemplateView.as_view(template_name='document-detail/index.html'), name='document-detail'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.
