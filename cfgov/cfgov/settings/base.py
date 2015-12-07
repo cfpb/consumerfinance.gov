@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'localflavor',
     'v1',
     'core',
@@ -259,3 +260,14 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 # PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
+
+# S3 Configuration
+if os.environ.get('S3_ENABLED', False):
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    AWS_S3_SECURE_URLS = False  # True = use https; False = use http
+    AWS_QUERYSTRING_AUTH = False  # don't add complex authentication-related query parameters for requests
+    AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
+    AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+    MEDIA_URL = os.environ.get('AWS_S3_URL')
