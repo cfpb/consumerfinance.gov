@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var sinon = require( 'sinon' );
 var expect = chai.expect;
@@ -12,7 +14,7 @@ describe( 'web-storage-proxy', function() {
 
   before( function() {
     webStorageProxy =
-      require( '../../../../cfgov/unprocessed/js/modules/util/web-storage-proxy.js' );
+      require( BASE_JS_PATH + 'modules/util/web-storage-proxy.js' );
     setItem = webStorageProxy.setItem;
     getItem = webStorageProxy.getItem;
     removeItem = webStorageProxy.removeItem;

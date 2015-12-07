@@ -31,7 +31,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = atomicCheckers.validateDomElement( element, BASE_CLASS, 'Expandable' );
+  var _dom =
+    atomicCheckers.validateDomElement( element, BASE_CLASS, 'Expandable' );
   var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
   var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _contentAnimated =
@@ -293,14 +294,15 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 function _getTransitionEndEvent( elm ) {
   var transition;
   var transitions = {
-    'WebkitTransition' : 'webkitTransitionEnd',
-    'MozTransition'    : 'transitionend',
-    'OTransition'      : 'oTransitionEnd otransitionend',
-    'transition'       : 'transitionend'
+    WebkitTransition: 'webkitTransitionEnd',
+    MozTransition:    'transitionend',
+    OTransition:      'oTransitionEnd otransitionend',
+    transition:       'transitionend'
   };
 
   for ( var t in transitions ) {
-    if ( transitions.hasOwnProperty( t ) && typeof elm.style[t] !== 'undefined' ) {
+    if ( transitions.hasOwnProperty( t ) &&
+         typeof elm.style[t] !== 'undefined' ) {
       transition = transitions[t];
       break;
     }
@@ -327,7 +329,8 @@ function _calculateCollapseDuration( height ) {
 /**
  * @param {number} min The minimum height in pixels.
  * @param {number} max The maximum height in pixels.
- * @param {number} duration The amount of time over which to expand in milliseconds.
+ * @param {number} duration
+ *   The amount of time over which to expand in milliseconds.
  * @returns {number} The amount of time over which to expand in milliseconds,
  *   constrained to within the min/max values.
  */

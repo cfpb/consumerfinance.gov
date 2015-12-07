@@ -12,7 +12,8 @@ describe( 'The focusTarget function', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    focusTarget = require( '../../../cfgov/unprocessed/js/modules/focus-target.js' );
+    focusTarget =
+      require( '../../../cfgov/unprocessed/js/modules/focus-target.js' );
   } );
 
   beforeEach( function() {
