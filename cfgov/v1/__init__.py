@@ -15,6 +15,7 @@ def environment(**options):
     env.autoescape = True
     env.globals.update({
         'static': staticfiles_storage.url,
+        'global_dict': {},
         'reverse': reverse,
         'render_stream_child': render_stream_child
     })

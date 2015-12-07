@@ -52,9 +52,9 @@ class ImageText2575(blocks.StructBlock):
 
 class TextIntroduction(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
-    intro = blocks.CharBlock(max_length=100, required=False)
+    intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-    link = atoms.Hyperlink(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
     class Meta:
@@ -69,7 +69,7 @@ class Hero(blocks.StructBlock):
     image = atoms.ImageBasic()
 
     background_color = blocks.CharBlock(max_length=100, required=False)
-    link = atoms.Hyperlink()
+    link = atoms.Hyperlink(required=False)
     is_button = blocks.BooleanBlock(required=False)
 
     class Meta:

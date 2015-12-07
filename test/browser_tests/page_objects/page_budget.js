@@ -20,7 +20,7 @@ function Budget() {
   _getQAElement( 'mission-statements', true ).all( by.css( 'li' ) );
 
   this.budgetSections =
-  _getQAElement( 'budget-section', true ).all( by.css('.content-l_col' ) );
+  _getQAElement( 'budget-section', true ).all( by.css( '.content-l_col' ) );
 
   this.budgetSectionTitles = this.budgetSections.all( by.css( 'h2' ) );
 

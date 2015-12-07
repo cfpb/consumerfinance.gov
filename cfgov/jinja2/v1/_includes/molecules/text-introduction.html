@@ -34,7 +34,12 @@
         <p class='m-text-introduction_body'>{{ value.body | safe }}</p>
 
         <div class='m-text-introduction_link-container'>
-            <a class='jump-link' href='{{ value.link.url }}'>{{ value.link.text }}</a>
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class='jump-link' href='{{ link.url }}'>{{ link.text }}</a>
+                </li>
+            {% endfor %}
+
         </div>
 
     </div>

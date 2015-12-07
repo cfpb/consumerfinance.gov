@@ -34,6 +34,7 @@
         </span>
     </h2>
     {% endif %}
+    {% set page = global_dict.page if not page %}
     {% set related_post_types = page.related_posts %}
     {% if related_post_types | length  > 1 %}
     {% for post_type, post_type_list in related_post_types.iteritems() %}
@@ -69,6 +70,7 @@
 
 {% macro _related_posts_list(posts) %}
 {% import 'macros/time.html' as time %}
+{% set page = global_dict.page if not page %}
 <ul class="m-related-posts_list
            list list__unstyled
            list__spaced">

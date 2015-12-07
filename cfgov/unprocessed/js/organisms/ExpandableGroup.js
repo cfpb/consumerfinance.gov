@@ -23,7 +23,8 @@ function ExpandableGroup( element ) {
 
   var BASE_CLASS = 'o-expandable-group';
 
-  var _dom = atomicCheckers.validateDomElement( element, BASE_CLASS, 'ExpandableGroup' );
+  var _dom =
+    atomicCheckers.validateDomElement( element, BASE_CLASS, 'ExpandableGroup' );
   var _domChildren = _dom.querySelectorAll( '.m-expandable' );
   var _lastOpenChild;
   var _isAccordion;
