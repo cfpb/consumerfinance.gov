@@ -34,7 +34,6 @@
         </span>
     </h2>
     {% endif %}
-    {% if global_dict %} print sometihng {% endif %}
     {% set page = global_dict.page if not page %}
     {% set related_post_types = page.related_posts %}
     {% if related_post_types | length  > 1 %}
