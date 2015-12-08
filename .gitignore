@@ -105,3 +105,8 @@ coverage.xml
 # IDE Specifc
 ############
 *.idea
+
+
+# Application Specifc
+############
+pages.json
