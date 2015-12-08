@@ -1,0 +1,46 @@
+/* topdoc
+  name: Half Width Link Blob
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-half-width-link-blob">
+            <h2 class="h3">Heading</h2>
+            <p>Body content</p>
+            <ul class="list list__links">
+                <li class="list_item">
+                    <a class="list_link" href="/some-url/">
+                        Link
+                    </a>
+                </li>
+            </ul>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-half-width-link-blob
+  tags:
+    - cfgov-molecules
+*/
+
+.m-half-width-link-blob {
+  margin-bottom: unit( (@grid_gutter-width * 2) / @base-font-size-px, em);
+
+  .webfont-regular();
+
+  .respond-to-max(@bp-xs-max, {
+    & + & {
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+    }
+  });
+
+  .respond-to-min(@bp-sm-min, {
+    .grid_column(6);
+  });
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

@@ -1,0 +1,86 @@
+
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'molecules/related-posts.html' as related_posts with context %}
+
+{% block title -%}
+    {{ page.seo_title }}
+{%- endblock %}
+
+{% block hero -%}
+    {% for block in page.hero %}
+        {{ render_stream_child(block) }}
+    {% endfor %}
+{% endblock %}
+
+{% block content_main %}
+    {% if page.introduction %}
+        <div class="block
+                 block__flush-top">
+            {# This molecule should always be first #}
+            {% for block in page.introduction %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.image_text_50_50_content %}
+        <div class="o-image-text-50-50-group">
+            <h2 class="o-image-text-50-50-group__header">
+                {{ page.image_text_50_50_group_header }}
+            </h2>
+
+            {% for block in page.image_text_50_50_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.image_text_25_75_content %}
+        <div class="block">
+            <h2 class="o-image-text-25-75-group__header">
+                {{ page.image_text_25_75_group_header }}
+            </h2>
+
+            {% for block in page.image_text_25_75_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.wells %}
+        <div class="block">
+            {% for block in page.wells %}
+                <div class="block">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.half_width_link_blob_content %}
+        <div class="o-link-blob-group">
+            <h2 class="o-half-width-link-blob-group__header">
+                {{ page.half_width_link_blob_group_header }}
+            </h2>
+
+            {% for block in page.half_width_link_blob_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-content-sidebar
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {% for block in page.sidefoot %}
+    {% if 'related_posts' in block.block_type %}
+        {{ related_posts.render() }}
+    {% else %}
+        {{ render_stream_child(block) }}
+    {% endif %}
+    {% endfor %}
+{%- endblock %}

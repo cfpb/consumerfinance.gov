@@ -3,5 +3,9 @@ from .base import *
 from .events import *
 from .molecules import *
 from .organisms import *
-if settings.DEBUG :
+from .snippets import *
+from .landing_page import *
+from .ref import *
+
+if settings.DEBUG:
     from .demo import *

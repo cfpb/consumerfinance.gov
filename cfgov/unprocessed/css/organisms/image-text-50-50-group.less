@@ -1,0 +1,28 @@
+/* topdoc
+  name: Image Text 50-50 group
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-image-text-50-50-group">
+            Link blobs live inside the wrapper
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-image-text-50-50
+  tags:
+    - cfgov-molecules
+*/
+.o-image-text-50-50-group {
+    .respond-to-min(@bp-sm-min, {
+        margin-left: -@grid_gutter-width / 2;
+        margin-right: -@grid_gutter-width / 2;
+    });
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var sinon = require( 'sinon' );
 var expect = chai.expect;
@@ -12,7 +14,7 @@ describe( 'Event States', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    es = require( '../../../../cfgov/preprocessed/js/modules/util/expanded-state.js' );
+    es = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
     sandbox = sinon.sandbox.create();
   } );
 

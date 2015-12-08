@@ -61,7 +61,7 @@ class EventPage(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    flickr_url = models.URLField("Flikr URL", blank=True)
+    flickr_url = models.URLField("Flickr URL", blank=True)
     youtube_url = models.URLField("Youtube URL", blank=True)
     live_stream_availability = models.BooleanField("Streaming?", default=False, blank=True)
     live_stream_url = models.URLField("URL", blank=True)
@@ -122,7 +122,7 @@ class EventPage(CFGOVPage):
         ObjectList(content_panels, heading='General Content'),
         ObjectList(venue_panels, heading='Venue Information'),
         ObjectList(agenda_panels, heading='Agenda Information'),
-        ObjectList(CFGOVPage.promote_panels, heading='Promote'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
     ])
 

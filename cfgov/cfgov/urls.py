@@ -11,6 +11,7 @@ from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDir
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
@@ -22,6 +23,7 @@ urlpatterns = [
     # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^$', SheerTemplateView.as_view(), name='home'),
+    url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
@@ -210,16 +212,15 @@ urlpatterns = [
 
 # TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
 if settings.DEBUG :
-    urlpatterns.append(url(r'^landing-page-1/$', SheerTemplateView.as_view(template_name='landing-page-1/index.html'), name='landing-page-1'))
-    urlpatterns.append(url(r'^landing-page-2/$', SheerTemplateView.as_view(template_name='landing-page-2/index.html'), name='landing-page-2'))
-    urlpatterns.append(url(r'^sublanding-page-1/$', SheerTemplateView.as_view(template_name='sublanding-page-1/index.html'), name='sublanding-page-1'))
-    urlpatterns.append(url(r'^sublanding-page-2/$', SheerTemplateView.as_view(template_name='sublanding-page-2/index.html'), name='sublanding-page-2'))
+    urlpatterns.append(url(r'^browse-basic/$', SheerTemplateView.as_view(template_name='browse-basic/index.html'), name='browse-basic'))
+    urlpatterns.append(url(r'^sublanding-page/$', SheerTemplateView.as_view(template_name='sublanding-page/index.html'), name='sublanding-page'))
     urlpatterns.append(url(r'^browse-filterable/$', SheerTemplateView.as_view(template_name='browse-filterable/index.html'), name='browse-filterable'))
+    urlpatterns.append(url(r'^learn-page/$', SheerTemplateView.as_view(template_name='learn-page/index.html'), name='learn-page'))
+    urlpatterns.append(url(r'^document-detail/$', SheerTemplateView.as_view(template_name='document-detail/index.html'), name='document-detail'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))
-
 
 from sheerlike import register_permalink
 
@@ -227,5 +228,4 @@ register_permalink('posts', 'blog:detail')
 register_permalink('newsroom', 'newsroom:detail')
 register_permalink('office', 'offices:detail')
 register_permalink('sub_page', 'sub_page:detail')
-register_permalink('events', 'events:event')
 register_permalink('career', 'careers:career')

@@ -8,37 +8,48 @@
 
    Creates related posts markup when given:
 
-   settings:            An object used to customize the markup.
+   is_half_width:    A Boolean indicating whether the posts should be at half
+                     width. Defaults to False.
 
-   settings.posts:      An array of related posts.
-
-   settings.half_width: A Boolean indicating whether the posts should be
-                        at half width.
+   hide_header_slug: A Boolean indicating whether the header should be hidden.
+                     Defaults to False.
 
    ========================================================================== #}
 
-{% macro render(settings) %}
-{% from 'macros/util/format/url.html' import slugify as slugify %}
-{% set defaults = {
-    'search_types': 'posts, newsroom, press release, speech, testimony',
-    'search_size':  5
-} %}
-{% do settings.update(defaults) %}
-{% set posts = settings.posts or
-               more_like_this(settings.post,
-                              search_types=settings.search_types,
-                              search_size=settings.search_size)
+{% macro render(is_half_width=false, hide_header_slug=false) %}
+{% import 'macros/category-icon.html' as category_icon %}
+{% set title_icon_lookup = {
+    "newsroom" : ("Newsroom","newspaper"),
+    "posts"    : ("Blog", "speech-bubble"),
+    "events"   : ("Events", "speech-bubble")
+  }
 %}
 <div class="m-related-posts
-            {{ 'm-related-posts__half-width'
-               if settings.half_width else '' }}">
+            {{'m-related-posts__half-width'
+              if is_half_width else ''}}">
+    {% if not hide_header_slug %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
             Related Posts
         </span>
     </h2>
-    {#% TODO: Add condition to display various related post types %#}
-    {{ _related_posts_list(posts) }}
+    {% endif %}
+    {% set page = global_dict.page if not page %}
+    {% set related_post_types = page.related_posts %}
+    {% if related_post_types | length  > 1 %}
+    {% for post_type, post_type_list in related_post_types.iteritems() %}
+    {% set title, icon = title_icon_lookup[post_type] or ("Blog", "speech-bubble") %}
+    <div class="m-related-posts_list-container">
+        <h3 class="h4">
+             <span class="cf-icon cf-icon-{{icon}}"></span>
+            {{ title }}
+        </h3>
+        {{ _related_posts_list(post_type_list) }}
+    </div>
+    {% endfor %}
+    {% else %}
+        {{ _related_posts_list(related_post_types.values() | first) }}
+    {% endif %}
 </div>
 {% endmacro %}
 
@@ -53,21 +64,22 @@
 
    Creates related posts markup when given:
 
-   posts:      An array of related posts.
+   posts: A list of dictionaries containing related posts.
 
    ========================================================================== #}
 
 {% macro _related_posts_list(posts) %}
-{% from 'macros/util/format/url.html' import slugify as slugify %}
 {% import 'macros/time.html' as time %}
+{% set page = global_dict.page if not page %}
 <ul class="m-related-posts_list
            list list__unstyled
            list__spaced">
     {% for post in posts %}
+    {% set post_url = slugurl(post.slug) or '' %}
     <li class="list_item">
         <h4 class="u-mb5">
             <a class="list_link"
-               href="{{ post.permalink }}">
+               href="{{ post_url if post_url else post.permalink }}">
                 {{ post.title | safe }}
             </a>
         </h4>
@@ -82,4 +94,35 @@
     </li>
     {% endfor %}
 </ul>
+
+{% for block in page.sidefoot %}
+  {% if 'related_posts' in block.block_type %}
+    {% if block.value.view_more %}
+        {{ _view_more(block) }}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% endmacro %}
+
+{# ==========================================================================
+
+   _view_more()
+
+   ==========================================================================
+
+   Description:
+
+   Creates view more markup when given:
+
+   ========================================================================== #}
+
+{% macro _view_more(block) %}
+{% if block.value.view_more.text %}
+<a class="jump-link jump-link__underline"
+   href="{{ block.value.view_more.url }}">
+    <span class="jump-link_text">
+        {{ block.value.view_more.text }}
+    </span>
+</a>
+{% endif %}
 {% endmacro %}

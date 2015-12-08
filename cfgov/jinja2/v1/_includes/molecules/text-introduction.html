@@ -23,18 +23,40 @@
 
    ========================================================================== #}
 
-{% macro render(settings, has_rule=false) %}
-<div class="m-text-introduction
+{% if value %}
+
+    <div class="m-text-introduction
+            {{ 'm-text-introduction__bottom-rule' if value.has_rule else '' }}">
+        <h1 class='m-text-introduction_heading'>{{ value.heading }}</h1>
+
+        <p class='m-text-introduction_intro'>{{ value.intro }}</p>
+
+        <p class='m-text-introduction_body'>{{ value.body | safe }}</p>
+
+        <div class='m-text-introduction_link-container'>
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class='jump-link' href='{{ link.url }}'>{{ link.text }}</a>
+                </li>
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% else %}
+    {% macro render(settings, has_rule=false) %}
+        <div class="m-text-introduction
             {{ 'm-text-introduction__bottom-rule' if has_rule else '' }}">
-   <h1 class='m-text-introduction_heading'>{{ settings.heading }}</h1>
+            <h1 class='m-text-introduction_heading'>{{ settings.heading }}</h1>
 
-   <p class='m-text-introduction_intro'>{{ settings.intro }}</p>
+            <p class='m-text-introduction_intro'>{{ settings.intro }}</p>
 
-   <p class='m-text-introduction_body'>{{ settings.body }}</p>
+            <p class='m-text-introduction_body'>{{ settings.body }}</p>
 
-   <div class='m-text-introduction_link-container'>
-      <a class='jump-link' href='{{ settings.link_url }}'>{{ settings.link_text }}</a>
-   </div>
+            <div class='m-text-introduction_link-container'>
+                <a class='jump-link' href='{{ settings.link_url }}'>{{ settings.link_text }}</a>
+            </div>
 
-</div>
-{% endmacro %}
+        </div>
+    {% endmacro %}
+{% endif %}

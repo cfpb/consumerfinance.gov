@@ -1,16 +1,29 @@
+from __future__ import print_function
 import os
+import sys
+
+from elasticsearch.exceptions import NotFoundError
 
 from django.db import models
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, TabbedInterface, ObjectList
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
+
+from sheerlike.query import get_document, more_like_this
+from . import ref
+from . import atoms
+from . import molecules
+from . import organisms
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -32,7 +45,8 @@ class CFGOVTaggedPages(TaggedItemBase):
 class CFGOVPage(Page):
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
-                                     help_text='A comma separated list of authors.',
+                                     help_text='A comma separated list of '
+                                               + 'authors.',
                                      related_name='authored_pages')
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
@@ -41,11 +55,82 @@ class CFGOVPage(Page):
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
-    promote_panels = [
-        MultiFieldPanel(Page.promote_panels, "Page configuration"),
+    # These fields show up in either the sidebar or the footer of the page
+    # depending on the page type.
+    sidefoot = StreamField([
+        ('slug', blocks.CharBlock()),
+        ('heading', blocks.CharBlock()),
+        ('paragraph', blocks.RichTextBlock()),
+        ('hyperlink', atoms.Hyperlink()),
+        ('call_to_action', molecules.CallToAction()),
+        ('related_posts', organisms.RelatedPosts()),
+        ('email_signup', organisms.EmailSignUp()),
+        ('contact', organisms.MainContactInfo()),
+    ], blank=True)
+
+    ### Panels ###
+    sidefoot_panels = [
+        StreamFieldPanel('sidefoot'),
+    ]
+
+    settings_panels = [
+        MultiFieldPanel(Page.promote_panels, 'Settings'),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        InlinePanel('categories', label="Categories", max_num=2),
+        MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
     ]
+
+    # Tab handler interface guide because it must be repeated for each subclass
+    edit_handler = TabbedInterface([
+        ObjectList(Page.content_panels, heading='General Content'),
+        ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
+        ObjectList(settings_panels, heading='Configuration'),
+    ])
+
+    # TODO: After all search types are migrated to Wagtail this should relate
+    # pages based on tags.
+    @property
+    def related_posts(self):
+        # After all search types are migrated to Wagtail, comment out below. If
+        # we decide we'd like to use the more_like_this feature of
+        # Elasticsearch, we can always revert back to this.
+        results = {}
+        for block in self.sidefoot:
+            if 'related_posts' in block.block_type:
+                for search_type in ['posts', 'newsroom', 'events']:
+                    if 'relate_%s' % search_type in block.value \
+                       and block.value['relate_%s' % search_type]:
+                        results.update({search_type: []})
+
+                try:
+                    # Gets an ES document across all types by the slug of the
+                    # page.
+                    document = get_document('_all', self.slug)
+                    for search_type in results.keys():
+                        results[search_type] = \
+                            more_like_this(document, search_types=search_type,
+                                           search_size=
+                                           block.value['limit'])
+                except NotFoundError:
+                    print('ES document not found for page.', file=sys.stderr)
+            return results
+        # Comment out above
+
+        # TODO:After all search types are migrated to Wagtail, uncomment below.
+        # query = Q(('tags__name__in', self.tags))
+        # search_types = {
+        #     'blog_posts': 'BlogPostPage',
+        #     'newsroom_items': 'NewsroomPage',
+        #     'events': 'EventPage',
+        # }
+        # related = []
+        # for search_type in ['posts', 'newsroom', 'events']:
+        #     if eval('self.is_relating_%s' % search_type):
+        #         related += eval('%s.objects.filter(query)[:%s]' %
+        #                         search_types[search_type],
+        #                         self.related_limit)
+        # return related
 
     @property
     def status_string(self):
@@ -115,6 +200,15 @@ class CFGOVPage(Page):
 
     class Meta:
         app_label = 'v1'
+
+
+class CFGOVPageCategory(Orderable):
+    page = ParentalKey(CFGOVPage, related_name='categories')
+    name = models.CharField(max_length=255, choices=ref.choices)
+
+    panels = [
+        FieldPanel('name'),
+    ]
 
 
 class CFGOVPagePermissionTester(PagePermissionTester):

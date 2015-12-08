@@ -1,0 +1,79 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{# Import organisms and molecules used in the template. #}
+
+{% import 'molecules/text-introduction.html' as text_introduction %}
+{% import 'organisms/full-width-text.html' as full_width_text %}
+{% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
+
+{% import 'organisms/post-preview.html' as post_preview %}
+{% import 'organisms/well.html' as well %}
+{% import 'organisms/table.html' as table %}
+
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+
+
+{% block title -%}
+    TODO: This is a prototype page for testing landing page layouts.
+    Remove when fully implemented elsewhere.
+{%- endblock %}
+
+{# TODO: Remove lipsumText when and if it is no longer needed. #}
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+
+{% block content_main %}
+    {# TODO: Add Forms, Expandable, Inset Molecule#}
+    <div class="block
+                block__flush-top">
+        {# TODO: Add main molecules and organisms. #}
+        {{ text_introduction.render({
+            'heading':  'Text Introduction',
+            'intro':    'Content Intro Lorem Ipsum',
+            'body':     lipsumText,
+            'link_text':'Placeholder link',
+            'link_url': '#'
+        }) }}
+    </div>
+    <div class="block">
+        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
+    </div>
+    <div class="block">
+        {{ table.render( [
+                            'Column 1', 'Column 2', 'Column 3'
+                          ],
+                          [
+                            ['Cell A1', 'Cell A2', 'Cell A3'],
+                            ['Cell B1', 'Cell B2', 'Cell B3'],
+                            ['Cell C1', 'Cell C2', 'Cell C3']
+                          ]
+        ) }}
+    </div>
+    <div class="o-well">
+        {{ well.render( 'landing-page/_template-prototype-well-content.html' ) }}
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms.
+            - Related Content
+            - Generic Sidebar #}
+        {{ sidebar_contact_info.render({
+            'heading': 'Header for text below',
+            'body':    lipsumText
+        }, {
+            'emails':  ['test@example.com'],
+            'phones':  [{'number': '1234567899',
+                         'vanity': '123456AAAA',
+                         'tty':    '1234567899'}],
+            'faxes':   [{'number': '1234567899'}],
+            'address': {
+                'title':    'Consumer Financial Protection Bureau',
+                'street':   '1700 G Street, NW',
+                'city':     'Washington',
+                'state':    'DC',
+                'zip_code': '20552-0003'
+            }
+        }) }}
+    </aside>
+{%- endblock %}

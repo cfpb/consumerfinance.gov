@@ -36,38 +36,55 @@
 
    ========================================================================== #}
 
-{% macro render(content, contact) %}
 {% import 'molecules/contact-email.html' as contact_email %}
 {% import 'molecules/contact-phone.html' as contact_phone %}
 {% import 'molecules/contact-address.html' as contact_address %}
+{% if page %}
+    {% if page.contact %}
+        <div class="o-main-contact-info">
+            <h2>{{ page.contact.heading }}</h2>
 
-<div class="o-main-contact-info">
-    <h2>{{ content.heading }}</h2>
-    <p>{{ content.body }}</p>
+            <p>{{ page.contact.body |safe }}</p>
 
-    {% if contact %}
-        {% if contact.emails %}
-            {{ contact_email.render(contact.emails) }}
-        {% endif %}
+            {% if page.contact.contact_info %}
 
-        {% if contact.phones %}
-            {{ contact_phone.render(contact.phones) }}
-        {% endif %}
-
-        {% if contact.faxes %}
-            {{ contact_phone.render(contact.faxes, true) }}
-        {% endif %}
-
-        {% if contact.address %}
-            {{ contact_address.render({
-                'label':    'Mailing Address',
-                'title':    contact.address.title,
-                'street':   contact.address.street,
-                'city':     contact.address.city,
-                'state':    contact.address.state,
-                'zip_code': contact.address.zip_code
-            }) }}
-        {% endif %}
+                {% for block in page.contact.contact_info %}
+                    {{ render_stream_child(block) }}
+                {% endfor %}
+            {% endif %}
+        </div>
     {% endif %}
-</div>
-{% endmacro %}
+{% else %}
+    {% macro render(content, contact) %}
+        <div class="o-main-contact-info">
+            <h2>{{ content.heading }}</h2>
+
+            <p>{{ content.body }}</p>
+
+            {% if contact %}
+                {% if contact.emails %}
+                    {{ contact_email.render(contact.emails) }}
+                {% endif %}
+
+                {% if contact.phones %}
+                    {{ contact_phone.render(contact.phones) }}
+                {% endif %}
+
+                {% if contact.faxes %}
+                    {{ contact_phone.render(contact.faxes, true) }}
+                {% endif %}
+
+                {% if contact.address %}
+                    {{ contact_address.render({
+                            'label':    'Mailing Address',
+                            'title':    contact.address.title,
+                            'street':   contact.address.street,
+                            'city':     contact.address.city,
+                            'state':    contact.address.state,
+                            'zip_code': contact.address.zip_code
+                            }) }}
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endmacro %}
+{% endif %}

@@ -20,29 +20,58 @@
 
    ========================================================================== #}
 
-{% macro render(phones, is_fax=false) %}
-{% from 'macros/util/format/contact.html' import format_phone as format_phone %}
-<div class="m-contact-phone">
-    {% if is_fax == true %}
-        {% set icon = 'cf-icon-fax' %}
-        {% set label = 'Fax' %}
-    {% else %}
-        {% set icon = 'cf-icon-phone' %}
-        {% set label = 'Phone' %}
-    {% endif %}
+{% if value %}
+    {% from 'macros/util/format/contact.html' import format_phone as format_phone %}
+    <div class="m-contact-phone">
+        {% if value.fax == true %}
+            {% set icon = 'cf-icon-fax' %}
+            {% set label = 'Fax' %}
+        {% else %}
+            {% set icon = 'cf-icon-phone' %}
+            {% set label = 'Phone' %}
+        {% endif %}
 
-    <span class="cf-icon {{ icon }}"></span>
-    <span class="h5">{{ label }}</span>
-    <p class="short-desc">
-        {% for phone in phones %}
-            <span>{{ format_phone(phone.number) }}</span>
-            {% if phone.vanity %}
-            | <span>{{ format_phone(phone.vanity) }}</span>
+        <span class="cf-icon {{ icon }}"></span>
+        <span class="h5">{{ label }}</span>
+
+        <p class="short-desc">
+            {% for phone in value.phones %}
+                <span>{{ format_phone(phone.number) }}</span>
+                {% if phone.vanity %}
+                    | <span>{{ format_phone(phone.vanity) }}</span>
+                {% endif %}
+                {% if phone.tty %}
+                    <br>TTY/TDD: {{ format_phone(phone.tty) }}<br>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+{% else %}
+    {% macro render(phones, is_fax=false) %}
+        {% from 'macros/util/format/contact.html' import format_phone as format_phone %}
+        <div class="m-contact-phone">
+            {% if is_fax == true %}
+                {% set icon = 'cf-icon-fax' %}
+                {% set label = 'Fax' %}
+            {% else %}
+                {% set icon = 'cf-icon-phone' %}
+                {% set label = 'Phone' %}
             {% endif %}
-            {% if phone.tty %}
-                <br>TTY/TDD: {{ format_phone(phone.tty) }}<br>
-            {% endif %}
-        {% endfor %}
-    </p>
-</div>
-{% endmacro %}
+
+            <span class="cf-icon {{ icon }}"></span>
+            <span class="h5">{{ label }}</span>
+
+            <p class="short-desc">
+                {% for phone in phones %}
+                    <span>{{ format_phone(phone.number) }}</span>
+                    {% if phone.vanity %}
+                        | <span>{{ format_phone(phone.vanity) }}</span>
+                    {% endif %}
+                    {% if phone.tty %}
+                        <br>TTY/TDD: {{ format_phone(phone.tty) }}<br>
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    {% endmacro %}
+{% endif %}

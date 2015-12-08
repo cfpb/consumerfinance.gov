@@ -13,16 +13,28 @@
 
    ========================================================================== #}
 
-{% macro render(emails) %}
+
 <div class="m-contact-email">
     <span class="cf-icon cf-icon-email"></span>
     <span class="h5">Email</span>
-    <p class="short-desc">
-        {% for email in emails %}
-            <a href="mailto:{{ email }}">
-            {{ email }}
-            </a><br>
-        {% endfor %}
-    </p>
+    {% if value %}
+        <p class="short-desc">
+            {% for email in value.emails %}
+                <a href="mailto:{{ email }}">
+                    {{ email }}
+                </a><br>
+            {% endfor %}
+        </p>
+    {% else %}
+        {% macro render(emails) %}
+            <p class="short-desc">
+                {% for email in emails %}
+                    <a href="mailto:{{ email }}">
+                        {{ email }}
+                    </a><br>
+                {% endfor %}
+            </p>
+        {% endmacro %}
+    {% endif %}
 </div>
-{% endmacro %}
+

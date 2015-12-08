@@ -1,11 +1,14 @@
 'use strict';
+
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 var getBreakpointState =
-require( '../../../../cfgov/preprocessed/js/modules/util/breakpoint-state.js' ).get;
+require( BASE_JS_PATH + 'modules/util/breakpoint-state.js' ).get;
 var breakpointConfig =
-require( '../../../../cfgov/preprocessed/js/config/breakpoints-config.js' );
+require( BASE_JS_PATH + 'config/breakpoints-config.js' );
 
 var breakpointState;
 var configKeys;
@@ -21,7 +24,9 @@ describe( 'getBreakpointState', function() {
   it( 'should return an object with properties from config file', function() {
     var breakpointStatekeys =
         Object.keys( breakpointConfig ).map( function( key ) {
-          return key.toLowerCase().replace( 'is', '' );
+          key.replace( 'is', '' );
+          key.charAt( 0 ).toLowerCase() + key.slice( 1 );
+          return key;
         } );
 
     breakpointState = getBreakpointState();
@@ -34,7 +39,6 @@ describe( 'getBreakpointState', function() {
   it(
     'should return an object with one state property set to true',
     function() {
-
       var trueValueCount = 0;
 
       breakpointState = getBreakpointState();
@@ -52,7 +56,8 @@ describe( 'getBreakpointState', function() {
       var breakpointStateKey;
 
       for ( var rangeKey in breakpointConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
-        width = breakpointConfig[rangeKey].max || breakpointConfig[rangeKey].min;
+        width = breakpointConfig[rangeKey].max ||
+                breakpointConfig[rangeKey].min;
         breakpointState = getBreakpointState( width );
         breakpointStateKey =
         'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );

@@ -1,0 +1,58 @@
+
+/* topdoc
+  name: Contact Information (Sidebar)
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-sidebar-contact-info">
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    Contact Information
+                </span>
+            </h2>
+            <div class="o-sidebar-contact-info_column">
+                <figure>
+                    <a href="#">
+                        <img src="map.png" alt="">
+                    </a>
+                </figure>
+
+                <h3>Content heading</h3>
+                <p>Content body</p>
+            </div>
+            <div class="o-sidebar-contact-info_column">
+                Contact methods.
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-sidebar-contact-info
+            .o-sidebar-contact-info_column
+  tags:
+    - cfgov-organisms
+*/
+
+.o-sidebar-contact-info {
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-bottom: unit( ( @grid_gutter-width * 2 ) / @base-font-size-px, em );
+
+    &_heading {
+        .respond-to-range( @bp-sm-min, @bp-sm-max {
+            .grid_column(12);
+        } );
+    }
+
+    &_column {
+        .respond-to-range( @bp-sm-min, @bp-sm-max {
+            .grid_column(6);
+        } );
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

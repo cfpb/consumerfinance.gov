@@ -5,14 +5,14 @@ var jsdom = require( 'mocha-jsdom' );
 var sinon = require( 'sinon' );
 var BreakpointHandler;
 var args;
-var BASE_LOC = '../../../../cfgov/preprocessed/js/';
+var BASE_LOC = '../../../../cfgov/unprocessed/js/';
 
 
 beforeEach( function() {
   args = {
     enter:      function() {},
     leave:      function() {},
-    breakpoint: 599
+    breakpoint: 600
   };
 
   BreakpointHandler = require( BASE_LOC + 'modules/classes/BreakpointHandler' );
@@ -97,33 +97,33 @@ describe( 'BreakpointHandler', function() {
   } );
 
   it( 'should allow responsive breakpoints as arguments', function() {
-    args.breakpoint = 'mobile';
+    args.breakpoint = 'bpXS';
     var breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.breakpoint ).to.equal( 599 );
+    expect( breakpointHandler.breakpoint ).to.equal( 600 );
     expect( breakpointHandler.type === 'max' ).to.be.true;
     expect( breakpointHandler.testBreakpoint( 300 ) ).to.be.true;
 
-    args.breakpoint = 'tablet';
+    args.breakpoint = 'bpSM';
     args.type = 'min';
     breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.breakpoint ).to.equal( 600 );
+    expect( breakpointHandler.breakpoint ).to.equal( 601 );
     expect( breakpointHandler.type === 'min' ).to.be.true;
     expect( breakpointHandler.testBreakpoint( 601 ) ).to.be.true;
   } );
 
   it( 'should test a breakpoint', function() {
     var breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.testBreakpoint( 600 ) ).to.be.false;
+    expect( breakpointHandler.testBreakpoint( 601 ) ).to.be.false;
 
     args.type = 'min';
     breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.testBreakpoint( 600 ) ).to.be.true;
+    expect( breakpointHandler.testBreakpoint( 601 ) ).to.be.true;
 
     args.type = 'range';
-    args.breakpoint = [ 0, 599 ];
+    args.breakpoint = [ 0, 600 ];
     breakpointHandler = new BreakpointHandler( args );
     expect( breakpointHandler.testBreakpoint( 300 ) ).to.be.true;
-    expect( breakpointHandler.testBreakpoint( 600 ) ).to.be.false;
+    expect( breakpointHandler.testBreakpoint( 601 ) ).to.be.false;
   } );
 
   it( 'should handle viewport changes', function() {
@@ -133,30 +133,30 @@ describe( 'BreakpointHandler', function() {
 
     window.resizeTo( 598, 800 );
     expect( enterSpy.calledOnce ).to.be.true;
-    expect( enterSpy.calledWithMatch( sinon.match.has( 'isMobile', true ) ) )
+    expect( enterSpy.calledWithMatch( sinon.match.has( 'isBpXS', true ) ) )
     .to.be.true;
 
     window.resizeTo( 601, 800 );
     expect( leaveSpy.calledOnce ).to.be.true;
-    expect( leaveSpy.calledWithMatch( sinon.match.has( 'isTablet', true ) ) )
+    expect( leaveSpy.calledWithMatch( sinon.match.has( 'isBpSM', true ) ) )
     .to.be.true;
 
     args.type = 'min';
-    args.breakpoint = 801;
+    args.breakpoint = 901;
     breakpointHandler = new BreakpointHandler( args );
     enterSpy = sinon.spy( breakpointHandler, 'enter' );
-    window.resizeTo( 1199, 800 );
+    window.resizeTo( 1000, 800 );
     expect( enterSpy.calledOnce ).to.be.true;
-    expect( enterSpy.calledWithMatch( sinon.match.has( 'isDesktop', true ) ) )
+    expect( enterSpy.calledWithMatch( sinon.match.has( 'isBpMED', true ) ) )
     .to.be.true;
 
     args.type = 'max';
-    args.breakpoint = 1199;
+    args.breakpoint = 1020;
     breakpointHandler = new BreakpointHandler( args );
     leaveSpy = sinon.spy( breakpointHandler, 'leave' );
-    window.resizeTo( 1200, 800 );
+    window.resizeTo( 1021, 800 );
     expect( leaveSpy.calledOnce ).to.be.true;
-    expect( leaveSpy.calledWithMatch( sinon.match.has( 'isWall', true ) ) )
+    expect( leaveSpy.calledWithMatch( sinon.match.has( 'isBpLG', true ) ) )
     .to.be.true;
   } );
 

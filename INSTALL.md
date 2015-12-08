@@ -69,40 +69,29 @@ brew info elasticsearch
 ```
 
 ### MYSQL Database
-Ensure your database is running.
+Start MYSQL with the following command:
 ```
 mysql.server start
 ```
 
-Then run mysql creation script from root directory:
+Then run the MYSQL creation script from project root directory:
 ```
 ./create-mysql-db.sh
 ```
-If you would like to have a custom db setup then you can pass in the necessary args.
-> **NOTE** be sure to update your local settings `local.py` to account for these changes.
+
+If you would like to have a custom database setup then you can pass in the necessary arguments:
 
 ```
 ./create-mysql-db.sh <dbname> <username> <password>
 ```
 
+> **NOTE:** Be sure to update your local settings in
+  `cfgov/cfgov/settings/local.py` to account for these changes.
 
 
-### Sheer-like & Sheer
-> **NOTE** Ensure you install Sheer-like first to avoid version conflicts with dependencies.
-
-To [install Sheer-like](https://github.com/cfpb/django-sheerlike/blob/master/README.rst), start by cloning the
-Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
-```bash
-git clone https://github.com/cfpb/django-sheerlike.git
-```
-
-To [install Sheer](https://github.com/cfpb/sheer#installation), start by cloning the
-Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
-```bash
-git clone https://github.com/cfpb/sheer.git
-```
-
-Go back to the cfgov-refresh directory and workon a virtualenv, which you’ll name `cfgov-refresh`:
+### Virtual Environment
+In the project root directory,
+create a virtualenv that you’ll name `cfgov-refresh`:
 ```bash
 mkvirtualenv cfgov-refresh
 ```
@@ -113,23 +102,6 @@ You’ll know you have a virtual environment activated if you see the name of it
 parentheses before your terminal prompt. Ex:
 ```bash
 (cfgov-refresh)$
-```
-
-Install Sheer-like into the virtualenv with the `-e` flag (which allows you to make changes to
-Sheer itself). The path to Sheer-like is the root directory of the GitHub repository you
-cloned earlier, which will likely be `../django-sheerlike`:
-```bash
-pip install -e ~/path/to/django-sheerlike
-```
-Install Sheer-likes’s Python requirements:
-```bash
-pip install -r ~/path/to/django-sheerlike/requirements.txt
-```
-
-Install Sheer in the same fashion as Sheer-like:
-```bash
-pip install -e ~/path/to/sheer
-pip install -r ~/path/to/sheer/requirements.txt
 ```
 
 ### GovDelivery
@@ -170,6 +142,15 @@ npm install -g gulp bower
 
 ## 3. Install dependencies
 
+> **NOTE:**
+  Protractor (for the test suite)
+  can be installed globally to avoid downloading Chromedriver repeatedly.
+  To do so, run:
+  ```bash
+  npm install -g protractor && webdriver-manager update
+  ```
+
+
 Next, install dependencies with:
 
 ```bash
@@ -177,11 +158,7 @@ Next, install dependencies with:
 ```
 
 > **NOTE:**
-  To install dependencies for local development use:
-  ```bash
-  ./setup.sh local
-  ```
-  To re-install and rebuild all the site’s assets run `./setup.sh local` again.
+  To re-install and rebuild all the site’s assets run `./setup.sh` again.
   See the usage section
   [updating all the project dependencies](README.md#updating-all-dependencies).
 

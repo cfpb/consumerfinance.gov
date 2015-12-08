@@ -81,6 +81,33 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Main Contact Info organism.
 - Added templates and CSS for the Related Posts molecule.
 - Added templates for the Hero molecule (CSS is in CF-Layout v1.3.0)
+- Added template for post-preview molecule
+- Added templates and CSS for the Signup Form organism.
+- Added templates and CSS for the Content Sidebar organism.
+- Added instruction to create superuser for admin access.
+- Adds new file to commands module in the core app called `_helpers.py`
+- Adds ability to import snippets
+- Added ImageText2575 molecule backend model and template
+- Added Call to Action backend and template
+- Added Contact snippet and molecule backends
+- Added temporary folder for converted Jinja2 Wagtail field template files
+- Added WP Import Data Contact processor
+- Added templates and CSS for the Adding Sidebar Breakout organism.
+- Added cf-tables and tables molecule
+- Landing Page Type
+- Initial Data json file for preloading pages
+- Added `/browse-basic` template page.
+- Added templates and CSS for Expandable molecule and ExpandableGroup organism.
+- Added `classlist` JS polyfill.
+- Added `EventObserver` for adding event broadcaster capability to JS classes.
+- Added `atomic-checkers.js` and `validateDomElement`
+  utility method for checking atomic element DOM nodes.
+- Backend Organisms Full Width Text & Post Preview  
+- Added Related Posts molecule to the CFGOVPage
+- Add Main Contact Info molecule
+- Add Sidefoot Streamfield to CFGOVPage for sidebar/footer content
+- Add global context variable `global_dict` for easier prototyping
+- Add styleguide app to local settings
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -132,6 +159,28 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updates `jsdom` to `7.0.2` from `6.5.1`.
 - Move staging hostname variable from django settings to be an environment variable
 - Uses globally installed Protractor in setup.sh, if available.
+- Updated the existing breakpoint variables and values to the ones released in cf-core v1.2.0
+- Excludes 3rd-party JS polyfills from linting.
+- Abstracts code into helper class `DataImporter`
+- Modifies command line options to allow specifying arguments for importing pages or snippets
+- Changes the way the processor module is imported so it imports it using the [app] argument
+- Moves the processors module from the core.management.commands module to the v1 app
+- Contact molecule templates
+- Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
+- Upgrade wagtail to 1.2
+- Cleaned up and rebuilt the secondary nav to reduce complexity and fix bugs
+- Routed landing page type related molecules and organisms
+  to use `jinja2/v1/_includes/` template locations.
+- Updated protractor from 2.5.1 to 3.0.0.
+- Updated gulp-sitespeedio from 0.0.7 to 0.0.8.
+- Update runserver script to start MYSQL if it isn't running
+- Reduced padding on expandables per direction of design.
+- Hide cues on expandables when JS is turned off.
+- Updated protractor from 2.5.1 to 3.0.0.
+- Change name of Settings tab to Configuration
+- Move some Promote fields to Configuration tab
+- Change Promote to be Sidebar/Footer
+- Move Related Posts and Email Signup to sidefoot Streamfield in the Sidebar/Footer tab in CFGOVPage
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -143,6 +192,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed link from Cordray's corner image `/the-bureau/about-director/`.
 - Removed extra Google Analytics code.
 - Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
+- Sidebar from LandingPage
 
 ### Fixed
 - Fixed instructions for gulp watch
@@ -296,12 +346,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.0.0-2.1.0 - 2015-08-05
 
 ### Added
-- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
-- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
-- Added `u-hidden` utility class for fully hiding an element.
-- Added `TEST.md` readme file for testing instructions.
-- Added `grunt clean` and `grunt copy` tasks.
-- Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
 - Added `about-us` page and tests
 - Added `newsroom` type to Activity Snippets

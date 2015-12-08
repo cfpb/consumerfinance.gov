@@ -8,29 +8,68 @@
 
    Creates a call to action when given:
 
-   settings.text:        The text to include within slug markup.
+   settings.slug_text:      The text to display within the header slug.
 
-   settings.button:      Button options to create markup.
+   settings.paragraph_text: The text to display within the paragraph.
 
-   settings.button.href: A link to a page.
-                         Defaults to '/'.
+   settings.button:         A dictionary containing options used to create
+                            the Button markup.
 
-   settings.button.text: The text to display on button.
+   settings.button.url:     A link to a page.
+                            Defaults to '/'.
+
+   settings.button.text:    The text to display on button.
 
    ========================================================================== #}
 
-{% macro render(settings) %}
-<div class="m-call-to-action">
-    <p class="short-desc">
-        {{ settings.text }}
-    </p>
-    {% if caller %}
-        caller()
-    {% else %}
-    <a class="btn btn__full"
-       href="{{ settings.button.href or '/' }}">
-        {{ settings.button.text }}
-    </a>
-    {% endif %}
-</div>
-{% endmacro %}
+
+{% if value %}
+    <div class="m-call-to-action">
+        {% if value.slug_text %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ value.slug_text }}
+                </span>
+            </h2>
+        {% endif %}
+        {% if value.paragraph_text %}
+            <p class="short-desc">
+                {{ value.paragraph_text }}
+            </p>
+        {% endif %}
+        {% if caller %}
+            caller()
+        {% else %}
+            <a class="btn btn__full"
+               href="{{ value.button.url or '/' }}">
+                {{ value.button.text }}
+            </a>
+        {% endif %}
+    </div>
+{% else %}
+    {% macro render(settings) %}
+        <div class="m-call-to-action">
+            {% if settings.slug_text %}
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        {{ settings.slug_text }}
+                    </span>
+                </h2>
+            {% endif %}
+            {% if settings.paragraph_text %}
+                <p class="short-desc">
+                    {{ settings.paragraph_text }}
+                </p>
+            {% endif %}
+            {% if caller %}
+                caller()
+            {% else %}
+                <a class="btn btn__full"
+                   href="{{ settings.button.url or '/' }}">
+                    {{ settings.button.text }}
+                </a>
+            {% endif %}
+        </div>
+    {% endmacro %}
+{% endif %}
+
