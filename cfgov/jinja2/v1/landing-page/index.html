@@ -25,7 +25,7 @@
 
 {% block hero -%}
     {% if prototype %}
-        {% include 'molecules/hero.html' with context %}
+        {% include 'molecules/hero.html' %}
     {% endif %}
     {% for block in page.hero %}
         {{ render_stream_child(block) }}
@@ -38,7 +38,7 @@
         <div class="block
                  block__flush-top">
             {% if prototype %}
-                {% include 'molecules/text-introduction.html' with context %}
+                {% include 'molecules/text-introduction.html' %}
             {% endif %}
             {% for block in page.introduction %}
                 {{ render_stream_child(block) }}
@@ -56,7 +56,7 @@
 
             {% if prototype %}
                 {% for x in range(0, 2) %}
-                    {% include 'molecules/image-text-50-50.html' with context %}
+                    {% include 'molecules/image-text-50-50.html' %}
                 {% endfor %}
             {% endif %}
             {% for block in page.image_text_50_50_content %}
@@ -75,7 +75,7 @@
 
              {% if prototype %}
                 {% for x in range(0, 3) %}
-                    {% include 'molecules/image-text-25-75.html' with context %}
+                    {% include 'molecules/image-text-25-75.html' %}
                 {% endfor %}
             {% endif %}
             {% for block in page.image_text_25_75_content %}
@@ -87,7 +87,7 @@
     {% if page.wells or prototype %}
         <div class="block">
             {% if prototype %}
-                {% include 'organisms/well.html' with context %}
+                {% include 'organisms/well.html' %}
             {% endif %}
             {% for block in page.wells %}
                     {{ render_stream_child(block) }}
@@ -105,7 +105,7 @@
 
             {% if prototype %}
                 {% for x in range(0, 2) %}
-                    {% include 'molecules/half-width-link-blob.html' with context %}
+                    {% include 'molecules/half-width-link-blob.html' %}
                 {% endfor %}
             {% endif %}
 
@@ -123,8 +123,8 @@
 {% block content_sidebar scoped -%}
     {% if prototype %}
         {{ related_posts.render() }}
-        {% include 'molecules/call-to-action.html' with context %}
-        {% include 'organisms/email-signup.html' with context %}
+        {% include 'molecules/call-to-action.html' %}
+        {% include 'organisms/email-signup.html' %}
     {% endif %}
 
     {% for block in page.sidefoot %}
