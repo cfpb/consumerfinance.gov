@@ -1,0 +1,31 @@
+{# ==========================================================================
+
+   related_links.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup when given:
+
+   links:   An array of links with the link first followed by the text of link
+
+   ========================================================================== #}
+
+{% macro render(links) %}
+<div class="m-related-links">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            Related Links
+        </span>
+    </h2>
+    <ul class="list list__unstyled list__links">
+    {% for link in links %}
+    {%- set href, text = link[0], link[1] %}
+        <li class="list_item">
+            <a href="{{ href }}" class="list_link">{{ text }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endmacro %}
