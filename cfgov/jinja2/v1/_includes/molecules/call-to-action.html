@@ -21,7 +21,6 @@
    value.button.text:    The text to display on button.
 
    ========================================================================== #}
-
 {% if not value %}
     {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
     {% do global_dict.update(
@@ -50,13 +49,11 @@
             {{ value.paragraph_text }}
         </p>
     {% endif %}
-    {% if caller %}
-        caller()
-    {% else %}
+
+    {% if value.button %}
         <a class="btn btn__full"
            href="{{ value.button.url or '/' }}">
             {{ value.button.text }}
         </a>
     {% endif %}
 </div>
-
