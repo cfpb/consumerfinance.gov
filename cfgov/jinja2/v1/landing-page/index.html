@@ -3,66 +3,111 @@
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
 
+{% if not page %}
+      {% set doc = get_document('posts', 'four-years-working-for-you') %}
+      {% do global_dict.update(
+        {
+            'page':  {
+                'seo_title': 'This is a prototype page for testing landing page layouts.',
+                'related_posts': {
+                    'posts': more_like_this(doc, search_types='posts', search_size=3),
+                    }
+                }
+        })
+      %}
+      {% set page = global_dict.page %}
+      {% set prototype = true %}
+{% endif %}
+
 {% block title -%}
     {{ page.seo_title }}
 {%- endblock %}
 
 {% block hero -%}
+    {% if prototype %}
+        {% include 'molecules/hero.html' with context %}
+    {% endif %}
     {% for block in page.hero %}
         {{ render_stream_child(block) }}
     {% endfor %}
 {% endblock %}
 
+{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 {% block content_main %}
-    {% if page.introduction %}
+    {% if page.introduction or prototype %}
         <div class="block
                  block__flush-top">
-            {# This molecule should always be first #}
+            {% if prototype %}
+                {% include 'molecules/text-introduction.html' with context %}
+            {% endif %}
             {% for block in page.introduction %}
                 {{ render_stream_child(block) }}
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if page.image_text_50_50_content %}
+    {% if page.image_text_50_50_content or prototype %}
         <div class="o-image-text-50-50-group">
-            <h2 class="o-image-text-50-50-group__header">
-                {{ page.image_text_50_50_group_header }}
-            </h2>
+            {% if page.image_text_50_50_group_header %}
+                <h2 class="o-image-text-50-50-group__header">
+                    {{ page.image_text_50_50_group_header }}
+                </h2>
+            {% endif %}
 
+            {% if prototype %}
+                {% for x in range(0, 2) %}
+                    {% include 'molecules/image-text-50-50.html' with context %}
+                {% endfor %}
+            {% endif %}
             {% for block in page.image_text_50_50_content %}
                 {{ render_stream_child(block) }}
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if page.image_text_25_75_content %}
+    {% if page.image_text_25_75_content or prototype %}
         <div class="block">
-            <h2 class="o-image-text-25-75-group__header">
-                {{ page.image_text_25_75_group_header }}
-            </h2>
+            {% if page.image_text_25_75_group_header %}
+                <h2 class="o-image-text-25-75-group__header">
+                    {{ page.image_text_25_75_group_header }}
+                </h2>
+            {% endif %}
 
+             {% if prototype %}
+                {% for x in range(0, 3) %}
+                    {% include 'molecules/image-text-25-75.html' with context %}
+                {% endfor %}
+            {% endif %}
             {% for block in page.image_text_25_75_content %}
                 {{ render_stream_child(block) }}
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if page.wells %}
+    {% if page.wells or prototype %}
         <div class="block">
+            {% if prototype %}
+                {% include 'organisms/well.html' with context %}
+            {% endif %}
             {% for block in page.wells %}
-                <div class="block">
                     {{ render_stream_child(block) }}
-                </div>
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if page.half_width_link_blob_content %}
+    {% if page.half_width_link_blob_content or prototype %}
         <div class="o-link-blob-group">
-            <h2 class="o-half-width-link-blob-group__header">
-                {{ page.half_width_link_blob_group_header }}
-            </h2>
+            {% if page.half_width_link_blob_group_header %}
+                <h2 class="o-half-width-link-blob-group__header">
+                    {{ page.half_width_link_blob_group_header }}
+                </h2>
+            {% endif %}
+
+            {% if prototype %}
+                {% for x in range(0, 2) %}
+                    {% include 'molecules/half-width-link-blob.html' with context %}
+                {% endfor %}
+            {% endif %}
 
             {% for block in page.half_width_link_blob_content %}
                 {{ render_stream_child(block) }}
@@ -76,11 +121,17 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% for block in page.sidefoot %}
-    {% if 'related_posts' in block.block_type %}
+    {% if prototype %}
         {{ related_posts.render() }}
-    {% else %}
-        {{ render_stream_child(block) }}
+        {% include 'molecules/call-to-action.html' with context %}
+        {% include 'organisms/email-signup.html' with context %}
     {% endif %}
+
+    {% for block in page.sidefoot %}
+        {% if 'related_posts' in block.block_type %}
+            {{ related_posts.render() }}
+        {% else %}
+            {{ render_stream_child(block) }}
+        {% endif %}
     {% endfor %}
 {%- endblock %}
