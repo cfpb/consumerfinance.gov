@@ -2,8 +2,8 @@
     .webfont-regular();
     .grid_column(1,1);
 
-    padding-top: 30px;
-    font-size: 14px;
+    padding-top: unit(@grid_gutter-width / 14px, em);
+    font-size: unit(14px / @base-font-size-px, em);
     overflow-x: auto;
     white-space: nowrap;
 
@@ -14,8 +14,8 @@
     }
 
     .respond-to-max(@bp-sm-max, {
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: unit(@grid_gutter-width / 2 / 14px, em);
+        padding-bottom: unit(@grid_gutter-width / 2 / 14px, em);
     });
 
     &_link {
@@ -30,5 +30,11 @@
 }
 
 .breadcrumbs__main-first {
-    margin-bottom: -15px;
+    margin-bottom: unit(@grid_gutter-width / 2 / 14px, em);
+}
+
+.breadcrumbs__sidebar-first {
+    .respond-to-min(@bp-med-min, {
+        margin-bottom: unit(@grid_gutter-width / 2 / 14px, em);
+    });
 }
