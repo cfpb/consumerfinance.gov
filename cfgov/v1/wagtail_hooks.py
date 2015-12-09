@@ -71,7 +71,7 @@ def update_pages_json(request, page):
         elements.append(child[0])
 
     data['page_' + str(page.id)] = {
-        'slug': str(page.slug),
+        'slug': str(page.url),
         'elements': elements
     }
 
