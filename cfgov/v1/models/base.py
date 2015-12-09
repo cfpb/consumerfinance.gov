@@ -60,7 +60,7 @@ class CFGOVPage(Page):
     sidefoot = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
         ('heading', blocks.CharBlock(icon='title')),
-        ('paragraph', blocks.RichTextBlock(icon='edit')),
+        ('paragraph', blocks.TextBlock(icon='edit')),
         ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
         ('related_posts', organisms.RelatedPosts()),

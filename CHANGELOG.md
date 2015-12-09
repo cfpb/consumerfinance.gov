@@ -189,6 +189,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Finalize Sidebar Breakout organism template
 - Finalize Sublanding Page template
 - Fix related post molecule to be used in multiple places
+- Convert Sidefoot paragraph streamfield block to Textblock
 
 ### Removed
 - Removed unused exportsOverride section,
