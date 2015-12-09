@@ -4,7 +4,7 @@ from django.forms import modelformset_factory
 
 from wagtail.wagtailcore.models import Site
 
-from .forms import SelectSiteForm, FlagStateForm
+from .forms import FeatureFlagForm, SelectSiteForm, FlagStateForm
 from .models import Flag, FlagState
 from .utils import init_missing_flag_states_for_site
 
@@ -18,6 +18,20 @@ def select_site(request):
 	default_site = Site.objects.all().filter(is_default_site=True).get()
 	select_site_form = SelectSiteForm
 	return redirect('flagadmin:list', (default_site.id),)
+
+def create(request):
+    if request.method== 'POST':
+        form = FeatureFlagForm(request.POST)
+        if form.is_valid():
+            flag = Flag(key=form.cleaned_data['key'])
+            flag.save()
+            return redirect('flagadmin:select_site')
+    else:
+        form = FeatureFlagForm()
+    
+    context = dict(form=form)
+    return render(request, 'flagadmin/flags/create.html', context)
+
 
 def index(request, site_id):
     sites = Site.objects.all()

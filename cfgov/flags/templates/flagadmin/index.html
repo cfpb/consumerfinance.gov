@@ -37,7 +37,9 @@
 	<input type="submit" value="Switch"/>
     </form>
     <hr/>
-    <h2 class="nice-padding">Set Flags</h2>
+    <h2 class="nice-padding"> Set flags for {{selected_site.hostname}}:
+    {{selected_site.port}}</h2>
+    <div class="nice-padding"><a href="{% url 'flagadmin:create' %}">Add a flag</a></div>
     <form class="nice-padding" method="POST" action="{% url 'flagadmin:save' selected_site.pk  %}">
     {{ flagforms.management_form }}
 	<input type="submit" value="Save Flags" style="margin:10px"/>

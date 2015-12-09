@@ -3,7 +3,7 @@ import itertools
 from .models import Flag, FlagState
 
 def missing_flag_states_for_site(site, exclude_keys):
-    return (FlagState(site=site, flag=f)
+    return (FlagState(site=site, flag=f, enabled=f.enabled_by_default)
             for f in Flag.objects.exclude(key__in=exclude_keys))
 
 def init_missing_flag_states_for_site(site):
