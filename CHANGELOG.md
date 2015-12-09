@@ -113,6 +113,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add Sublanding Page
 - Add Hyperlink template
 - Add icons to Sidefoot Streamfield blocks
+- Add ImageText5050Group and HalfWidthLinkGroup templates and organisms
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

@@ -14,9 +14,8 @@ class SublandingPage(CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
         ('well', organisms.Well()),
         ('hero', molecules.Hero()),
-        ('image_text_25_75', molecules.ImageText2575()),
-        ('image_text_50_50', molecules.ImageText5050()),
-        ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
+        ('image_text_50_50_group', organisms.ImageText5050Group()),
+        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
     ], blank=True)

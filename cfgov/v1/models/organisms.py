@@ -22,6 +22,22 @@ class FullWidthText(blocks.StructBlock):
         template = '_includes/organisms/full-width-text.html'
 
 
+class ImageText5050Group(blocks.StructBlock):
+    image_texts = blocks.ListBlock(molecules.ImageText5050())
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/image-text-50-50-group.html'
+
+
+class HalfWidthLinkBlobGroup(blocks.StructBlock):
+    link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/organisms/half-width-link-blob-group.html'
+
+
 class PostPreview(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=True)
