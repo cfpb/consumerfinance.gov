@@ -188,6 +188,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move Related Posts and Email Signup to sidefoot Streamfield in the Sidebar/Footer tab in CFGOVPage
 - Finalize Sidebar Breakout organism template
 - Finalize Sublanding Page template
+- Fix related post molecule to be used in multiple places
 
 ### Removed
 - Removed unused exportsOverride section,

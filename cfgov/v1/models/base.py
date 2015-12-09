@@ -90,32 +90,29 @@ class CFGOVPage(Page):
 
     # TODO: After all search types are migrated to Wagtail this should relate
     # pages based on tags.
-    @property
-    def related_posts(self):
+    def related_posts(self, block):
         # After all search types are migrated to Wagtail, comment out below. If
         # we decide we'd like to use the more_like_this feature of
         # Elasticsearch, we can always revert back to this.
         results = {}
-        for block in self.sidefoot:
-            if 'related_posts' in block.block_type:
-                for search_type in ['posts', 'newsroom', 'events']:
-                    if 'relate_%s' % search_type in block.value \
-                       and block.value['relate_%s' % search_type]:
-                        results.update({search_type: []})
+        for search_type in ['posts', 'newsroom', 'events']:
+            if 'relate_%s' % search_type in block.value \
+               and block.value['relate_%s' % search_type]:
+                results.update({search_type: []})
 
-                try:
-                    # Gets an ES document across all types by the slug of the
-                    # page.
-                    document = get_document('_all', self.slug)
-                    for search_type in results.keys():
-                        results[search_type] = \
-                            more_like_this(document, search_types=search_type,
-                                           search_size=
-                                           block.value['limit'])
-                except NotFoundError:
-                    print('ES document not found for page.', file=sys.stderr)
-                    return
-                return results
+        try:
+            # Gets an ES document across all types by the slug of the
+            # page.
+            document = get_document('_all', self.slug)
+            for search_type in results.keys():
+                results[search_type] = \
+                    more_like_this(document, search_types=search_type,
+                                   search_size=
+                                   block.value['limit'])
+        except NotFoundError:
+            print('ES document not found for page.', file=sys.stderr)
+            return
+        return results
         # Comment out above
 
         # TODO:After all search types are migrated to Wagtail, uncomment below.
