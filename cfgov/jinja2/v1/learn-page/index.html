@@ -33,7 +33,7 @@
         {% endif %}
     </div>
     <div class="o-full-width-text-group">
-        {{ full_width_text.render( 'sublanding-page-1/_template-prototype-full-width-content.html' ) }}
+        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
         <div class="m-inset">
             {{ related_links.render( [
                 ['#', 'Related Link 1'],
@@ -41,20 +41,20 @@
                 ['#', 'Related Link 3']
             ])  }}
         </div>
-        {{ full_width_text.render( 'sublanding-page-1/_template-prototype-full-width-content.html' ) }}
+        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
         <div class="m-inset">
             {{ quote.render({
                 'quote':    'To infinity and beyond',
                 'citation': 'Buzz Lightyear'
             }) }}
         </div>
-        {{ full_width_text.render( 'sublanding-page-1/_template-prototype-full-width-content.html' ) }}
+        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
         <div class="m-inset">
             {% if prototype %}
                 {% include 'molecules/call-to-action.html' %}
             {% endif %}
         </div>
-        {{ full_width_text.render( 'sublanding-page-1/_template-prototype-full-width-content.html' ) }}
+        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
     </div>
     <div class="block">
         {{ table.render( [
