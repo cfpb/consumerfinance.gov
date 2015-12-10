@@ -29,9 +29,9 @@
         {
             'half_width_link_blob': {
                 'heading' :       'This is an example of a Half Width Link Blob',
-                'body':  'To highlight navigational links and provide
-                            context about what users can expect on the linked
-                            page',
+                'body': {
+                    'source' : lipsumText
+                },
                 'links': [
                         {
                             'text': 'This is a Link List molecule inside the blob',
@@ -50,7 +50,7 @@
 <div class="m-half-width-link-blob">
     <h2 class="h3">{{ value.heading }}</h2>
 
-    <p>{{ value.body | safe }}</p>
+    <div>{{ value.body.source | safe }}</div>
     <ul class="list list__links">
         {% for link in value.links %}
             <li class="list_item">
