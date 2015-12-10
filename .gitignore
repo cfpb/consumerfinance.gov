@@ -70,7 +70,7 @@ node_modules/
 bower_components/
 vendor/
 # Wagtail writes pages.json file when saving pages.
-cfgov/v1/_generated/pages.json
+# cfgov/v1/_generated/pages.json
 cfgov/unprocessed/js/routes/
 # TODO: When all pages migrate over to wagtail,
 #       these routes do not need ignoring as they
