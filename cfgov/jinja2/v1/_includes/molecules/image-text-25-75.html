@@ -31,7 +31,9 @@
         {
             'image_text_25_75': {
                 'heading' :       'Placeholder',
-                'body':  lipsumText,
+                'body': {
+                    'source': lipsumText
+                },
                 'image': {
                       'upload': {
                                 'url': 'http://placehold.it/300x300',
@@ -77,7 +79,7 @@
     <div class="m-image-text-25-75_content">
         <h3 class="m-image-text-25-75_heading">{{ value.heading }}</h3>
 
-        <p class="m-image-text-25-75_body">{{ value.body | safe }}</p>
+        <div class="m-image-text-25-75_body">{{ value.body.source | safe }}</div>
 
         <ul class="list list__links">
             {% for link in value.links %}

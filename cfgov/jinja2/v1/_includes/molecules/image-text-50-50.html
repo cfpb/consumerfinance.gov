@@ -30,6 +30,7 @@
    ========================================================================== #}
 
 {% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
     {% do global_dict.update(
         {
             'image_text_50_50': {
@@ -41,9 +42,9 @@
                       }
                 },
                 'is_widescreen': true,
-                'body':  'When image conveys critical information
-                                and text is supporting it --
-                                i.e. chart, excerpt from document',
+                'body': {
+                    'source': lipsumText
+                },
                 'is_button' :   true,
                 'links': [{
                             'text': 'Placeholder link',
@@ -78,9 +79,9 @@
         {{ value.heading }}
     </h2>
 
-    <p class="short-desc short-desc__large">
-        {{ value.body | safe }}
-    </p>
+    <div class="short-desc short-desc__large">
+        {{ value.body.source | safe }}
+    </div>
 
     {% if value.links %}
         <ul class="list list__links">

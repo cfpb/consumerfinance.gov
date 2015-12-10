@@ -29,7 +29,9 @@
             'introduction': {
                 'heading':      'Text Introduction',
                 'intro':        'Content Intro Lorem Ipsum',
-                'body':         lipsumText,
+                'body': {
+                    'source': lipsumText
+                },
                 'links': [{
                             'text': 'Placeholder link',
                             'url':  '#'
@@ -46,7 +48,7 @@
 
     <p class='m-text-introduction_intro'>{{ value.intro }}</p>
 
-    <p class='m-text-introduction_body'>{{ value.body | safe }}</p>
+    <div class='m-text-introduction_body'>{{ value.body.source | safe }}</div>
 
     <div class='m-text-introduction_link-container'>
         {% for link in value.links %}

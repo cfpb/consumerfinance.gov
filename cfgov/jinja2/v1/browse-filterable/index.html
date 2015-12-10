@@ -27,7 +27,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a blog post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'image_url': 'http://www.placehold.it/160x90',
             'post_category': ['Info for Consumers', 'At the CFPB'],
@@ -39,7 +41,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a newsroom post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'post_category': ['Press Release'],
             'author': ['Tom', 'Jerry'],
@@ -50,7 +54,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a event post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'event_venue': 'The White House',
             'event_street': '1600 pennsylvania avenue',
@@ -66,7 +72,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a event livestream post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'event_stream_link': 'http://www.whitehouse.gov',
             'event_start_dt':'20030805T213611',
@@ -78,7 +86,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a notice & comment post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'post_category': ['Notice of request for public comment'],
             'external_link': 'Submit a comment',
