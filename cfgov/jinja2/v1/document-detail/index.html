@@ -2,14 +2,14 @@
 
 {# Import organisms and molecules used in the template. #}
 
-{% import 'molecules/text-introduction.html' as text_introduction %}
-
 {% import 'organisms/full-width-text.html' as full_width_text %}
 {% import 'organisms/table.html' as table %}
-{% import 'organisms/well.html' as well %}
 
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
+{% if not page %}
+    {% set prototype = true %}
+{% endif %}
 
 {% block title -%}
     Learn Page
@@ -28,13 +28,9 @@
     #}
     <div class="block
                 block__flush-top">
-        {{ text_introduction.render({
-            'heading':  'Text Introduction',
-            'intro':    'Content Intro Lorem Ipsum',
-            'body':     lipsumText,
-            'link_text':'Placeholder link',
-            'link_url': '#'
-        }) }}
+        {% if prototype %}
+            {% include 'molecules/text-introduction.html' %}
+        {% endif %}
     </div>
     <div class="block">
         {{ full_width_text.render( 'sublanding-page-1/_template-prototype-full-width-content.html' ) }}
@@ -50,9 +46,9 @@
                           ]
         ) }}
     </div>
-    <div class="o-well">
-        {{ well.render( 'landing-page/_template-prototype-well-content.html' ) }}
-    </div>
+    {% if prototype %}
+        {% include 'organisms/well.html' %}
+    {% endif %}
 {% endblock %}
 
 {% block content_sidebar scoped -%}

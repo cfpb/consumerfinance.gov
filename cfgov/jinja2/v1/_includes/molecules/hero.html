@@ -8,33 +8,54 @@
 
    Create a hero molecule.
 
-   settings:           An object with the following requirements.
+   value:           An object with the following requirements.
 
-   settings.heading:   A string containing title of module.
+   value.heading:   A string containing title of module.
 
-   settings.body:      A string containing the content to display below the
+   value.body:      A string containing the content to display below the
                        heading (typically a paragraph).
 
-   settings.image_url: A string containing the URL of the image to be placed
+   value.image:     A image object containing the URL of the image to be placed
                        adjacent to the text.
 
 
-   options:            An object with the following options.
-
-   options.background_color:
+   value.background_color:
                        A string containing the color code (in any format) to
                        set as the hero background color.
 
-   options.link_text:  A string for the text of the link.
-   options.link_url:   A string for the URL of the link.
-   options.is_button:  A boolean to change the CTA link to a button.
+   value.link:       A link object containing the text & URL of the link.
+   value.is_button:  A boolean to change the CTA link to a button.
 
 
    See [GHE]/flapjack/Modules-V1/wiki/Heros
 
    ========================================================================== #}
 
-{% if value %}
+{% if not value %}
+    {% do global_dict.update(
+            {
+                'hero': {
+                    'heading':   'This is an example of a Hero Molecule',
+                    'body':      'Heroes function as a primary focal point on a page,
+                                  often used to introduce a collection of pages by
+                                  combining a brief description of the goals of that
+                                  section along with a visually impactful graphic.',
+                    'image': {
+                                  'upload': {
+                                            'url': 'http://placehold.it/1600x900'
+                                  }
+                    },
+                    'background_color': '#d5e7e6',
+                    'link': {
+                                'text': 'Hero call to action',
+                                'url':  '#'
+                    }
+                }
+            })
+    %}
+    {% set value = global_dict.hero %}
+    {% set prototype = true %}
+{% endif %}
 <section class="hero"
          {{ 'style=background-color:' +
              value.background_color + ';'
@@ -42,7 +63,7 @@
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <p class="hero_subhead">{{ value.body |richtext}}</p>
+            <p class="hero_subhead">{{ value.body |safe}}</p>
             {% if value.link.text and value.link.url %}
                 <a href="{{ value.link.url }}"
                    class="hero_cta
@@ -53,43 +74,13 @@
             {% endif %}
         </div>
         {% if value.image.upload %}
-            {% set photo=image(value.image.upload, 'original') %}
+            {% if prototype %}
+                {% set photo=value.image.upload %}
+            {% else %}
+                {% set photo=image(value.image.upload, 'original') %}
+            {% endif %}
             <div class="hero_image"
                  style="background-image: url( {{ photo.url }} );">
         {% endif %}
         </div>
 </section>
-
-{% else %}
-    {% macro render( settings, options={} ) %}
-
-        {% if settings.heading and settings.body and settings.image_url %}
-        <section class="hero"
-                 {{ 'style=background-color:' +
-                     options.background_color + ';'
-                     if options.background_color else '' }}>
-            <div class="wrapper hero_wrapper">
-                <div class="hero_text">
-                    <h1 class="hero_heading">{{ settings.heading }}</h1>
-                    <p class="hero_subhead">{{ settings.body }}</p>
-                    {% if options.link_text and options.link_url %}
-                        <a href="{{ options.link_url }}"
-                           class="hero_cta
-                           {{ 'btn' if options.is_button
-                           else '' }}">
-                            {{ options.link_text }}
-                        </a>
-                    {% endif %}
-                </div>
-                <div class="hero_image"
-                     style="background-image: url( {{ settings.image_url }} );">
-                </div>
-            </div>
-        </section>
-        {% endif %}
-    {% endmacro %}
-
-{% endif %}
-
-
-

@@ -1,9 +1,11 @@
 {% extends 'layout-side-nav.html' %}
 
 {# Import organisms and molecules used in the template. #}
-{% import 'molecules/text-introduction.html' as text_introduction %}
 {% import 'organisms/post-preview.html' as post_preview %}
 
+{% if not page %}
+    {% set prototype = true %}
+{% endif %}
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
 {% block title -%}
@@ -18,13 +20,9 @@
     <div class="block
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
-        {{ text_introduction.render({
-            'heading': 'Text Introduction',
-            'intro': 'Content Intro Lorem Ipsum',
-            'body': lipsumText,
-            'link_text': 'Placeholder link',
-            'link_url': '#'
-        }) }}
+        {% if prototype %}
+            {% include 'molecules/text-introduction.html' %}
+        {% endif %}
     </div>
     <div class="block">
         {{ post_preview.render({

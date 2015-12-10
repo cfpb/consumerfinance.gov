@@ -212,6 +212,7 @@ urlpatterns = [
 
 # TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
 if settings.DEBUG :
+    urlpatterns.append(url(r'^landing-page/$', SheerTemplateView.as_view(template_name='landing-page/index.html'), name='landing-page'))
     urlpatterns.append(url(r'^browse-basic/$', SheerTemplateView.as_view(template_name='browse-basic/index.html'), name='browse-basic'))
     urlpatterns.append(url(r'^sublanding-page/$', SheerTemplateView.as_view(template_name='sublanding-page/index.html'), name='sublanding-page'))
     urlpatterns.append(url(r'^browse-filterable/$', SheerTemplateView.as_view(template_name='browse-filterable/index.html'), name='browse-filterable'))

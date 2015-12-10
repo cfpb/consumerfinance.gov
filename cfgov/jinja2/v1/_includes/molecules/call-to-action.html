@@ -8,65 +8,52 @@
 
    Creates a call to action when given:
 
-   settings.slug_text:      The text to display within the header slug.
+   value.slug_text:      The text to display within the header slug.
 
-   settings.paragraph_text: The text to display within the paragraph.
+   value.paragraph_text: The text to display within the paragraph.
 
-   settings.button:         A dictionary containing options used to create
+   value.button:         A dictionary containing options used to create
                             the Button markup.
 
-   settings.button.url:     A link to a page.
+   value.button.url:     A link to a page.
                             Defaults to '/'.
 
-   settings.button.text:    The text to display on button.
+   value.button.text:    The text to display on button.
 
    ========================================================================== #}
-{% if value %}
-    <div class="m-call-to-action">
-        {% if value.slug_text %}
-            <h2 class="header-slug">
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update(
+        {
+            'call_to_action': {
+                'slug_text':    'Slug Title',
+                'button': {
+                    'text':   'Call to Action'
+                },
+                'paragraph_text': lipsumText
+            }
+        })
+    %}
+    {% set value = global_dict.call_to_action %}
+{% endif %}
+<div class="m-call-to-action">
+    {% if value.slug_text %}
+        <h2 class="header-slug">
                 <span class="header-slug_inner">
                     {{ value.slug_text }}
                 </span>
-            </h2>
-        {% endif %}
-        {% if value.paragraph_text %}
-            <p class="short-desc">
-                {{ value.paragraph_text }}
-            </p>
-        {% endif %}
-        {% if caller %}
-            caller()
-        {% else %}
-            <a class="btn btn__full"
-               href="{{ value.button.url or '/' }}">
-                {{ value.button.text }}
-            </a>
-        {% endif %}
-    </div>
-{% else %}
-    {% macro render(settings) %}
-        <div class="m-call-to-action">
-            {% if settings.slug_text %}
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
-                        {{ settings.slug_text }}
-                    </span>
-                </h2>
-            {% endif %}
-            {% if settings.paragraph_text %}
-                <p class="short-desc">
-                    {{ settings.paragraph_text }}
-                </p>
-            {% endif %}
-            {% if caller %}
-                caller()
-            {% else %}
-                <a class="btn btn__full"
-                   href="{{ settings.button.url or '/' }}">
-                    {{ settings.button.text }}
-                </a>
-            {% endif %}
-        </div>
-    {% endmacro %}
-{% endif %}
+        </h2>
+    {% endif %}
+    {% if value.paragraph_text %}
+        <p class="short-desc">
+            {{ value.paragraph_text }}
+        </p>
+    {% endif %}
+
+    {% if value.button %}
+        <a class="btn btn__full"
+           href="{{ value.button.url or '/' }}">
+            {{ value.button.text }}
+        </a>
+    {% endif %}
+</div>
