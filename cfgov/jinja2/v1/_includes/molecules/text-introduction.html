@@ -1,6 +1,6 @@
 {# =========================================================================
 
-   text_introduction.render()
+   Text Introduction
 
    =========================================================================
 
@@ -20,16 +20,15 @@
    ========================================================================== #}
 
 {% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
     {% do global_dict.update(
         {
-            'introduction': {
+            'text_introduction': {
                 'heading':      'Text Introduction',
                 'intro':  {
                     'source': 'Content Intro Lorem Ipsum'
                 },
                 'body': {
-                    'source': lipsumText
+                    'source': lipsum(1, false, 10, 25) | safe
                 },
                 'links': [{
                             'text': 'Placeholder link',
@@ -38,8 +37,8 @@
             }
         })
     %}
-    {% set value = global_dict.introduction %}
 {% endif %}
+{% set value = value or global_dict.text_introduction %}
 
 <h1>{{ value.heading }}</h1>
 <p class="lead-paragraph">{{ value.intro.source | safe }}</p>

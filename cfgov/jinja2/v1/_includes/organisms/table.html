@@ -12,6 +12,20 @@
 
    ========================================================================== #}
 
+{% if not value %}
+    {% do global_dict.update({
+        'value': {
+            'headers': ['Column 1', 'Column 2', 'Column 3'],
+            'rows' : [
+                ['Cell A1', 'Cell A2', 'Cell A3'],
+                ['Cell B1', 'Cell B2', 'Cell B3'],
+                ['Cell C1', 'Cell C2', 'Cell C3']
+            ]
+        }
+    }) %}
+{% endif %}
+{% set value = value or global_dict.value %}
+
 <table class="table__stack-on-small table__entry-header-on-small">
     <thead>
         <tr>
@@ -26,7 +40,7 @@
             {% set colcount = loop.index %}
             {% for thead in value.headers %}
                 {% if colcount == loop.index %}
-                    <td data-label="{{ thead | safe }}">
+                    <td data-label="{{ thead }}">
                         {{ cell | safe }}
                     </td>
                 {% endif %}

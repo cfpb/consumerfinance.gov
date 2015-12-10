@@ -121,6 +121,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added the featured content module molecule and included it in the landing-page prototype
 - Add ImageText2575Group organism
 - Add ImageText2575Group to Sublanding and Landing pages 
+- Add the insets Quote and Related Links.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -205,6 +206,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Merge Streamfields in LandingPage
 - Landing and Sublanding content blocks render each atomic structure with `div class="block">`
 - Added environments to frontend/backend setup scripts.
+- Make Full Width Text organism a StreamBlock and add insets
 
 ### Removed
 - Removed unused exportsOverride section,
