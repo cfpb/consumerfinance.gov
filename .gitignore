@@ -69,6 +69,17 @@ __pycache__/
 node_modules/
 bower_components/
 vendor/
+# Wagtail writes pages.json file when saving pages.
+cfgov/v1/_generated/pages.json
+cfgov/unprocessed/js/routes/
+# TODO: When all pages migrate over to wagtail,
+#       these routes do not need ignoring as they
+#       will all be dynamically created.
+!cfgov/unprocessed/js/routes/common.js
+!cfgov/unprocessed/js/routes/careers/**/*.js
+!cfgov/unprocessed/js/routes/contact-us/**/*.js
+!cfgov/unprocessed/js/routes/external-site/**/*.js
+!cfgov/unprocessed/js/routes/the-bureau/**/*.js
 
 # Floobits #
 ############
@@ -105,8 +116,3 @@ coverage.xml
 # IDE Specifc
 ############
 *.idea
-
-
-# Application Specifc
-############
-_generated

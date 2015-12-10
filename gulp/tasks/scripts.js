@@ -14,7 +14,7 @@ var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
 var paths = require( '../../config/environment' ).paths;
 
-gulp.task( 'scripts', function() {
+gulp.task( 'scripts', ['buildScriptsRoutes'], function() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( webpackStream( webpackConfig ) )
     .on( 'error', handleErrors )

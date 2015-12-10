@@ -14,6 +14,7 @@
     "chai": "^3.3.0",
     "dateformat": "^1.0.11",
     "del": "^2.0.0",
+    "event-stream": "^3.0.5",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.0.2",
     "gulp-changed": "^1.2.1",
