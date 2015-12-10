@@ -29,7 +29,7 @@ def share_the_page(request, page):
     if is_publishing:
         revision.publish()
 
-    update_pages_json(request, page)
+    update_key_pages_json(request, page)
 
 
 @hooks.register('before_serve_page')
@@ -45,14 +45,11 @@ def register_share_permissions():
     return Permission.objects.filter(codename='share_page')
 
 
-def update_pages_json(request, page):
+PAGES_JSON = settings.PROJECT_ROOT.child('v1', '_generated') + '/pages.json'
+
+def update_key_pages_json(request, page):
     page = page.specific
-
-    data = json.load(open(settings.PROJECT_ROOT.child('v1') + '/pages.json'))
-
-    # Base page doesn't have a generic ALL children object so you must create cases for each
-    # repetitive
-
+    data = json.load(open(PAGES_JSON))
     elements = []
 
     if hasattr(page, 'demopage'):
@@ -75,5 +72,13 @@ def update_pages_json(request, page):
         'elements': elements
     }
 
-    with open(settings.PROJECT_ROOT.child('v1') + '/pages.json', 'w') as outfile:
+    with open(PAGES_JSON, 'w') as outfile:
+        json.dump(data, outfile)
+
+
+@hooks.register('after_delete_page')
+def delete_key_pages_json(request, page):
+    data = json.load(open(PAGES_JSON))
+    data.pop('page_' + str(page.id), None)
+    with open(PAGES_JSON) as outfile:
         json.dump(data, outfile)

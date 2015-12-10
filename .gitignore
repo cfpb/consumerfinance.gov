@@ -109,4 +109,4 @@ coverage.xml
 
 # Application Specifc
 ############
-pages.json
+_generated
