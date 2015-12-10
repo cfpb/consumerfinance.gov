@@ -57,7 +57,7 @@ function _convertSnakeToCamel( str, isCapitalized ) {
  * @returns {Object} Return a stream to gulp.
  */
 function _writeStringToFile( filename, content ) {
-  var src = stream.readable( { objectMode: true } );
+  var src = stream.Readable( { objectMode: true } );
   src._read = function() {
     var opts = {
       cwd: '',
