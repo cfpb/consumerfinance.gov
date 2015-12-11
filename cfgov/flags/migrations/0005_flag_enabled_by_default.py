@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 def fix_beta_notice(apps, schema_editor):
     Flag = apps.get_model('flags','flag')
-    import pdb;pdb.set_trace()
 
 class Migration(migrations.Migration):
 
