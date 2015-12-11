@@ -1282,13 +1282,11 @@ textarea.input__long {
   tags: cf-layout
 */
 .content__half-top-on-desk {
-    // A new breakpoint needs to be added to Capital Framework
-    // before we port this
     .respond-to-min(@bp-med-min, {
-        padding-top: 20px;
+        padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
 
         &:after {
-            top: 20px !important;
+            top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
         }
     });
 }
@@ -1384,7 +1382,7 @@ ul:last-child,
   notes:
     - "Temporary changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
   tags:
-    - cf-layout
+    - cf-typography
 */
 
 
@@ -1394,6 +1392,19 @@ ul:last-child,
     });
 }
 
+
+/* topdoc
+  name: Adjustments to pull quote citation
+  family: cf-typography
+  notes:
+    - "An adjustment to add an emdash to pull quote citation"
+  tags:
+    - cf-typography
+*/
+
+.pull-quote_citation:before {
+  content: "\2014 ";
+}
 
 /* topdoc
     name: EOF

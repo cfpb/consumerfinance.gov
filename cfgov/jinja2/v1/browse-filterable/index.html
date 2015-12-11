@@ -1,8 +1,13 @@
 {% extends 'layout-side-nav.html' %}
 
 {# Import organisms and molecules used in the template. #}
-{% import 'molecules/text-introduction.html' as text_introduction %}
 {% import 'organisms/post-preview.html' as post_preview %}
+{% import 'organisms/filterable-list-controls.html' as filterable_list_controls %}
+
+{% if not page %}
+    {% set prototype = true %}
+{% endif %}
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.
@@ -16,18 +21,141 @@
     <div class="block
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
-        {{ text_introduction.render({
-            'heading': 'Text Introduction',
-            'intro': 'Content Intro Lorem Ipsum',
-            'body': lipsumText,
-            'link_text': 'Placeholder link',
-            'link_url': '#'
-        }) }}
+        {% if prototype %}
+            {% include 'molecules/text-introduction.html' %}
+        {% endif %}
+    </div>
+    <div class="block
+                block__flush-top">
+        {{ filterable_list_controls.render([
+            {
+                'type':  'checkbox',
+                'label': 'Category',
+                'cols':  '1-3',
+                'attrs': [
+                    {
+                        'label': 'Consumer information',
+                        'value': 'consumer-info',
+                        'name':  'consumer-info'
+                    },
+                    {
+                        'label': 'Engagement & events',
+                        'value': 'engagement-events',
+                        'name':  'engagement-events'
+                    },
+                    {
+                        'label': 'Announcements & updates',
+                        'value': 'announce-updates',
+                        'name':  'announce-updates'
+                    },
+                    {
+                        'label': 'Innovation',
+                        'value': 'innovation',
+                        'name':  'innovation'
+                    }
+                ]
+            },
+            {
+                'type':     'form',
+                'cols':     '2-3',
+                'children': [
+                    {
+                        'type':     'text',
+                        'label':    'Topics',
+                        'name':     'topics',
+                        'id':       'topics',
+                        'cols':     '1-2',
+                        'attrs':    { 'placeholder': 'Search for topics' }
+                    },
+                    {
+                        'type':     'text',
+                        'label':    'Author',
+                        'name':     'author',
+                        'id':       'author',
+                        'cols':     '1-2',
+                        'attrs':    { 'placeholder': 'Search for authors' }
+                    },
+                    {
+                        'type':     'form',
+                        'label':    'Date range',
+                        'children': [
+                            {
+                                'type':  'text',
+                                'label': 'From:',
+                                'name':  'date-from',
+                                'id':    'date-from',
+                                'cols':  '1-2',
+                                'attrs': { 'placeholder': 'dd/mm/yyyy' }
+                            },
+                            {
+                                'type':  'text',
+                                'label': 'To:',
+                                'name':  'date-to',
+                                'id':    'date-to',
+                                'cols':  '1-2',
+                                'attrs': { 'placeholder': 'dd/mm/yyyy' }
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            {
+                'type':  'text',
+                'label': 'Half width field label',
+                'cols':  '1-2',
+                'attrs': { 'value': 'half-width' }
+            },
+            {
+                'type':  'text',
+                'label': 'Half width field label',
+                'cols':  '1-2',
+                'attrs': { 'value': 'half-width' }
+            },
+            {
+                'type':  'text',
+                'label': 'Address - example full width field',
+                'name':  'address',
+                'id':    'address',
+                'attrs': { 'value': 'full-width' }
+            },
+            {
+                'type':  'text',
+                'label': 'City',
+                'name':  'city',
+                'id':    'city',
+                'cols':  '1-2',
+                'attrs': { 'value': 'half-width' }
+            },
+            {
+                'type':  'select',
+                'label': 'State',
+                'name':  'state',
+                'id':    'state',
+                'cols':  '1-4',
+                'attrs': [
+                    { 'label': 'Alabama', 'value': 'al' },
+                    { 'label': 'Alaska', 'value': 'ak'  },
+                    { 'label': 'Arizona', 'value': 'az'  },
+                    { 'label': 'Arkansas', 'value': 'ar'  }
+                ]
+            },
+            {
+                'type':  'text',
+                'label': 'Zip code',
+                'name':  'zipcode',
+                'id':    'zipcode',
+                'cols':  '1-4',
+                'attrs': { 'value': 'quarter-width' }
+            }
+        ]) }}
     </div>
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a blog post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'image_url': 'http://www.placehold.it/160x90',
             'post_category': ['Info for Consumers', 'At the CFPB'],
@@ -39,7 +167,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a newsroom post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'post_category': ['Press Release'],
             'author': ['Tom', 'Jerry'],
@@ -50,7 +180,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a event post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'event_venue': 'The White House',
             'event_street': '1600 pennsylvania avenue',
@@ -66,7 +198,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a event livestream post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'event_stream_link': 'http://www.whitehouse.gov',
             'event_start_dt':'20030805T213611',
@@ -78,7 +212,9 @@
     <div class="block">
         {{ post_preview.render({
             'heading': 'This is a notice & comment post',
-            'body': lipsumText,
+            'body': {
+                'source': lipsumText
+            },
             'published_date': '20030805T213611',
             'post_category': ['Notice of request for public comment'],
             'external_link': 'Submit a comment',

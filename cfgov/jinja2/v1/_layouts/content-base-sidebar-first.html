@@ -1,5 +1,14 @@
 {% extends 'content-base.html' %}
 
+{% block pre_content scoped -%}
+    {% if breadcrumb_items | length > 0 %}
+        <div class="wrapper">
+        {%- import 'breadcrumbs.html' as breadcrumbs -%}
+        {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__sidebar-first') }}
+        </div>
+    {% endif %}
+{%- endblock %}
+
 {% block body_content scoped %}
 <div class="wrapper content_wrapper">
     <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">

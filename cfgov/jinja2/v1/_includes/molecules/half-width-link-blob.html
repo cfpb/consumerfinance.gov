@@ -8,14 +8,14 @@
 
    Create a half-width-link-blob molecule when given:
 
-   settings:         An object with the following options for settings.
+   value:         An object with the following options for value.
 
-   settings.heading: A string containing title of module.
+   value.heading: A string containing title of module.
 
-   settings.body:    A string containing the content  to display below the
+   value.body:    A string containing the content  to display below the
                      heading (typically a paragraph).
 
-   settings.links:   A tuple of items to create a list of links. Objects include
+   value.links:   A tuple of items to create a list of links. Objects include
                      a url and text to display.
 
                      link_url: A string for the URL of the link.
@@ -23,37 +23,42 @@
 
    ========================================================================== #}
 
-{% if value %}
-    <div class="m-half-width-link-blob">
-        <h2 class="h3">{{ value.heading }}</h2>
-
-        <p>{{ value.body | safe }}</p>
-        <ul class="list list__links">
-            {% for link in value.links %}
-                <li class="list_item">
-                    <a class="list_link" href="{{ link.url }}">
-                        {{ link.text }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% else %}
-    {% macro render( settings ) %}
-        <div class="m-half-width-link-blob">
-            <h2 class="h3">{{ settings.heading }}</h2>
-
-            <p>{{ settings.body | safe }}</p>
-            <ul class="list list__links">
-                {% for link in settings.links %}
-                    <li class="list_item">
-                        <a class="list_link" href="{{ link.url }}">
-                            {{ link.text }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endmacro %}
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update(
+        {
+            'half_width_link_blob': {
+                'heading' :       'This is an example of a Half Width Link Blob',
+                'body': {
+                    'source': lipsumText
+                },
+                'links': [
+                        {
+                            'text': 'This is a Link List molecule inside the blob',
+                            'url':  '/some-url/'
+                        },
+                        {
+                            'text': 'This is another Link List molecule inside the
+                                     blob',
+                            'url':  '/some-other-url/'
+                        }]
+            }
+        })
+    %}
+    {% set value = global_dict.half_width_link_blob %}
 {% endif %}
+<div class="m-half-width-link-blob">
+    <h2 class="h3">{{ value.heading }}</h2>
+
+    <div>{{ value.body.source | safe }}</div>
+    <ul class="list list__links">
+        {% for link in value.links %}
+            <li class="list_item">
+                <a class="list_link" href="{{ link.url }}">
+                    {{ link.text }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 

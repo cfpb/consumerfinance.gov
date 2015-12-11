@@ -2,7 +2,10 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/expandable.html' as expandable %}
+
 {% import 'organisms/expandable-group.html' as expandable_group %}
+
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.

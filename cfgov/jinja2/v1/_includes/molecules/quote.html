@@ -1,0 +1,28 @@
+{# ==========================================================================
+
+   quote.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for quote when given. Typically used in insets.:
+
+   settings: (required) Mandatory settings for this inset
+
+   settings.quote:      String with quote for the text.
+
+   settings.citation:   String with the author or citation of text.
+
+   ========================================================================== #}
+
+{% macro render(settings) %}
+<div class="m-quote">
+    <p class="pull-quote_body">
+        {{ settings.quote }}
+    </p>
+    <p class="pull-quote_citation">
+        {{ settings.citation }}
+    </p>
+</div>
+{% endmacro %}
