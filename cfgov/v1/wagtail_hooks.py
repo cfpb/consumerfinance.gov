@@ -1,12 +1,13 @@
-import os, json, itertools
+import os, itertools
 
-from django.conf import settings
 from django.http import Http404
 from django.contrib.auth.models import Permission
+from django.core.management import call_command
+from v1.models import CFGOVPage
 
 from wagtail.wagtailcore import hooks
 
-from v1.models import CFGOVPage
+from v1.util import js_routes
 
 
 @hooks.register('after_create_page')
@@ -29,7 +30,7 @@ def share_the_page(request, page):
     if is_publishing:
         revision.publish()
 
-    update_key_pages_json(request, page)
+    build_js_routes(request, page)
 
 
 @hooks.register('before_serve_page')
@@ -40,16 +41,7 @@ def check_request_site(page, request, serve_args, serve_kwargs):
                 raise Http404
 
 
-@hooks.register('register_permissions')
-def register_share_permissions():
-    return Permission.objects.filter(codename='share_page')
-
-
-PAGES_JSON = settings.PROJECT_ROOT.child('v1', '_generated') + '/pages.json'
-
-def update_key_pages_json(request, page):
-    page = page.specific
-    data = json.load(open(PAGES_JSON))
+def build_js_routes(request, page):
     elements = []
 
     if hasattr(page, 'demopage'):
@@ -67,18 +59,16 @@ def update_key_pages_json(request, page):
     for child in children:
         elements.append(child[0])
 
-    data['page_' + str(page.id)] = {
+    data = {
         'slug': str(page.url),
         'elements': elements
     }
 
-    with open(PAGES_JSON, 'w') as outfile:
-        json.dump(data, outfile)
+    if js_routes.create_route(data):
+        call_command('build-routes')
 
 
 @hooks.register('after_delete_page')
 def delete_key_pages_json(request, page):
-    data = json.load(open(PAGES_JSON))
-    data.pop('page_' + str(page.id), None)
-    with open(PAGES_JSON) as outfile:
-        json.dump(data, outfile)
+    if js_routes.create_route(data):
+        js_routes.delete_route(page.url)

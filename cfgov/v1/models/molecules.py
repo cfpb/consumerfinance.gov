@@ -4,7 +4,7 @@ from wagtail.wagtailcore import blocks
 
 from . import atoms
 
-from ..util import id_validator
+from ..util import util
 
 
 def isRequired(field_name):
@@ -98,7 +98,7 @@ class FormFieldWithButton(blocks.StructBlock):
         except ValidationError as e:
             error_dict.update(e.params)
 
-        if not id_validator(data['id']):
+        if not util.id_validator(data['id']):
             id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
             error_dict.update({'id': id_err})
 
