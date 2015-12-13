@@ -68,3 +68,17 @@ class MainContactInfo(blocks.StructBlock):
     class Meta:
         icon = 'wagtail'
         template = '_includes/organisms/main-contact-info.html'
+
+
+class ExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+
+    is_accordion = blocks.BooleanBlock(required=False)
+    has_rule = blocks.BooleanBlock(required=False)
+
+    expandables = blocks.ListBlock(molecules.Expandable())
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'

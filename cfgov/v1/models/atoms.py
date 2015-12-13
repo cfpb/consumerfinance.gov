@@ -33,6 +33,10 @@ class Hyperlink(blocks.StructBlock):
         else:
             return data
 
+    class Meta:
+        template = 'atoms/hyperlink.html'
+        icon = 'link'
+
 
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
@@ -59,6 +63,9 @@ class ImageBasic(blocks.StructBlock):
             raise ValidationError("ImageBasic validation errors", params=error_dict)
         else:
             return data
+
+    class Meta:
+        icon = 'image'
 
 
 class ImageBasicUrl(ImageBasic):
