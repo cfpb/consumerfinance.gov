@@ -3,6 +3,8 @@ import os
 from django import template
 from wagtail.wagtailcore.models import Page
 
+from v1.models import CFGOVUserPagePermissionsProxy
+
 register = template.Library()
 
 
@@ -28,4 +30,7 @@ def staging_url(context, page):
 @register.assignment_tag(takes_context=True)
 def v1page_permissions(context, page):
     page = page.specific
-    return page.permissions_for_user(context['request'].user)
+    if 'user_page_permissions' not in context:
+        context['user_page_permissions'] = CFGOVUserPagePermissionsProxy(context['request'].user)
+
+    return context['user_page_permissions'].for_page(page)
