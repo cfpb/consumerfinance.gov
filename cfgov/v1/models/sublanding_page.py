@@ -9,13 +9,15 @@ from . import organisms
 
 
 class SublandingPage(CFGOVPage):
-    content = StreamField([
-        ('header', blocks.CharBlock(icon='title')),
-        ('text_introduction', molecules.TextIntroduction()),
-        ('well', organisms.Well()),
+    header = StreamField([
         ('hero', molecules.Hero()),
+        ('text_introduction', molecules.TextIntroduction()),
+    ], blank=True)
+    content = StreamField([
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('heading', blocks.CharBlock(icon='title')),
+        ('well', organisms.Well()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
     ], blank=True)
@@ -35,6 +37,7 @@ class SublandingPage(CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
+        StreamFieldPanel('header'),
         StreamFieldPanel('content'),
     ]
 
