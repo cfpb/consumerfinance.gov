@@ -4,182 +4,90 @@
    ========================================================================== */
 
 /* topdoc
-    name: Custom select menus via jquery.custom-input
+    name: CF-Select menu
     family: cfgov-forms
     patterns:
-    - name: Custom select menu demo with initialization markup
+    - name: CF-Select menu demo
       markup: |
-        <div class="custom-select">
+        <div class="cf-select">
             <select>
                 <option value="option1">Option 1</option>
                 <option value="option2">Option 2</option>
                 <option value="option3">Option 3</option>
                 <option value="option4">Option 4</option>
             </select>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
         </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .custom-select
+          .cf-select
             select
               option
-            .custom-select-icon
       notes:
-        - "Use the markup structure above to add .custom-select elements.
-          It is meant to allow for cases where JavaScript is unavailable.
-          The jQuery plugin transforms this initial HTML by adding more markup
-          and classes. If JavaScript is unavailable the new elements and classes
-          won't be added and won't interfere with default select behavior."
-        - "JavaScript is used to add .is-hovered and .is-focused classes to
-          .custom-select by detecting :hover and :focus on .custom-select."
-        - "The jQuery plugin will auto intitiate all select elements that are
-          wrapped in a parent with the class of custom-select."
-    - name: .custom-select__month (modifier)
-      markup: |
-        <div class="custom-select custom-select__month">
-            <select>
-                <option value="">Month</option>
-                <option value="01">Jan</option>
-                <option value="02">Feb</option>
-                <option value="03">Mar</option>
-                <option value="04">Apr</option>
-                <option value="05">May</option>
-                <option value="06">Jun</option>
-                <option value="07">Jul</option>
-                <option value="08">Aug</option>
-                <option value="09">Sep</option>
-                <option value="10">Oct</option>
-                <option value="11">Nov</option>
-                <option value="12">Dec</option>
-            </select>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - .custom-select__month
-      notes:
-        - "Simply sets a max-width appropriate for a month input."
-    - name: .custom-select__year (modifier)
-      markup: |
-        <div class="custom-select custom-select__year">
-            <select>
-                <option value="">Year</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-            </select>
-            <span class="custom-select_icon cf-icon cf-icon-down"></span>
-        </div>
-      codenotes:
-        - .custom-select__year
-      notes:
-        - "Simply sets a max-width appropriate for a year input."
-    - name: JavaScript setup
-      markup: |
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="../../static/js/jquery.custom-select.js"></script>
-      notes:
-        - "The jQuery plugin will auto intitiate all select elements with the
-          class of .custom-select and append the the .is-enabled class which
-          activates the styling."
+        - "Wrap the select in .cf-select to help target certain elements"
     tags:
     - cfgov-forms
 */
 
-.custom-select {
+.cf-select {
+    position: relative;
+    margin-top: 0.5em;
+    border: 1px solid @gray-50;
 
-    & {
-        .is-enabled& {
-            overflow: hidden;
-            position: relative;
-            min-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
-            // Since an input-group_item can overlap another we need to use z-index
-            // is needed to allow the focused input to pop over unfocused inputs.
-            z-index: 1;
-            border: solid 1px @gray-80;
-            background: @white;
+    select {
+        height: unit( 30px / @base-font-size-px, em );
+        width: 100%;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 6px / @base-font-size-px, em );
+        border: 0;
+        outline: 2px solid transparent;
+        appearance: none;
+        background-color: @white;
+        color: @black;
+
+        &:hover,
+        &:active,
+        &:focus {
+            outline-color: @pacific;
+            outline-offset: 0;
         }
     }
 
-    &.is-hovered,
-    &.is-focused {
-        z-index: 2;
-        border-color: @pacific;
-        outline: 1px solid @pacific;
+    select[disabled] {
+        color: @gray-80;
+        background-color: @gray-10;
     }
 
-    &_icon {
-        // This element does not get added dynamically so it should be hidden
-        // until JavaScript is enabled.
-        display: none;
+    select option:disabled {
+        color: @gray-80;
+    }
+
+    &:after {
         position: absolute;
         top: 0;
         right: 0;
-        z-index: 2;
-        min-width: 1em;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 6px / @base-font-size-px, em );
-        // This will overlay .custom-select_text and make it appear as if any
-        // long words get cut off before they touch the icon.
-        border-left: 4px solid @white;
-        background: @gray-10;
-        color: @gray-50;
-        line-height: @base-line-height;
+        height: unit( 30px / @base-font-size-px, em );
+        width: unit( 30px / @base-font-size-px, em );
+        border-left: 1px solid @gray-50;
+        background-color: @gray-10;
+        color: @gray-80;
+        content: @cf-icon-down;
+        font-family: 'CFPB Minicons';
+        line-height: unit( 30px / @base-font-size-px, em );
         text-align: center;
-        .is-enabled & {
-            display: inline-block;
-        }
-    }
-
-    &_text {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 10px / @base-font-size-px, em );
-        z-index: 1;
-        font-family: Arial, sans-serif;
-        line-height: @base-line-height;
-        color: @black;
-    }
-
-    &_placeholder {
-        color: @gray;
-    }
-
-    &_select {
-        position: relative;
-        // Push the native select arrow out of view
-        width: 100%;
-        max-height: unit((@base-line-height-px + (4px * 2)) / @base-font-size-px, em);
-        padding: unit( 4px / @base-font-size-px, em );
-        z-index: 3;
-        // Customize the colors
-        border: 0;
-        border-radius: 0;
-        background-color: transparent;
-        background-image: none;
-        color: @black;
-        -webkit-appearance: none;
-        box-shadow: none;
-
-        .is-hovered &,
-        .is-focused & {
-            outline: none;
-        }
-    }
-
-    &__month {
-        max-width: unit(96px / @base-font-size-px, em);
-    }
-
-    &__year {
-        max-width: unit(86px / @base-font-size-px, em);
+        pointer-events: none;
     }
 }
 
+.no-csspointerevents .cf-select {
+    &:after {
+        height: 0;
+        width: 0;
+        border: 0;
+        content: '';
+    }
+}
 
 /* topdoc
   name: Grouped inputs
