@@ -9,7 +9,7 @@ def create_share_permissions(apps, schema_editor):
     Permission = apps.get_model('auth.Permission')
     Group = apps.get_model('auth.Group')
 
-    v1_content_type = ContentType.objects.create(app_label="v1", model="cfgovpage")
+    v1_content_type = ContentType.objects.get(app_label="v1", model="cfgovpage")
 
     # Create share permission
     share_permission = Permission.objects.create(
