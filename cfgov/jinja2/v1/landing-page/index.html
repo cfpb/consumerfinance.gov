@@ -121,10 +121,11 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% if prototype %}
-        {{ related_posts.render() }}
-        {% include 'molecules/call-to-action.html' %}
-        {% include 'organisms/email-signup.html' %}
+    {% for block in page.sidefoot %}
+    {% if 'related_posts' in block.block_type %}
+        {{ related_posts.render(block) }}
+    {% else %}
+        {{ render_stream_child(block) }}
     {% endif %}
 
     {% for block in page.sidefoot %}

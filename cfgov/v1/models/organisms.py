@@ -7,7 +7,7 @@ from .snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True)
+    content = blocks.RichTextBlock(required=True, label='Well')
 
     class Meta:
         icon = 'title'
@@ -20,6 +20,22 @@ class FullWidthText(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = '_includes/organisms/full-width-text.html'
+
+
+class ImageText5050Group(blocks.StructBlock):
+    image_texts = blocks.ListBlock(molecules.ImageText5050())
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/image-text-50-50-group.html'
+
+
+class HalfWidthLinkBlobGroup(blocks.StructBlock):
+    link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/organisms/half-width-link-blob-group.html'
 
 
 class PostPreview(blocks.StructBlock):
@@ -68,3 +84,18 @@ class MainContactInfo(blocks.StructBlock):
     class Meta:
         icon = 'wagtail'
         template = '_includes/organisms/main-contact-info.html'
+
+
+class Table(blocks.StructBlock):
+    headers = blocks.ListBlock(blocks.CharBlock(max_length=20))
+    rows = blocks.ListBlock(blocks.StreamBlock([
+        ('hyperlink', atoms.Hyperlink(required=False)),
+        ('text', blocks.CharBlock(max_length=20)),
+        ('text_blob', blocks.TextBlock()),
+        ('rich_text_blob', blocks.RichTextBlock()),
+    ]))
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/table.html'
+        label = 'Table'

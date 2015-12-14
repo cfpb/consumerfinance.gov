@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   sidebar_breakout.render()
+   Sidebar Breakout Organism
 
    ==========================================================================
 
@@ -8,23 +8,27 @@
 
    Creates Sidebar Breakout markup when given:
 
-   settings:                         An object used to customize the markup.
+   page.content:                   An object used to customize the markup.
 
-   settings.heading: (Optional)      A string containing heading text.
+   page.content.text_introduction  An object containing the text intro molecule
 
-   settings.image: (Optional)        An object used to customize the image
-                                      markup.
+   page.sidebar_breakout:          An object used to customize the markup.
 
-   settings.intro.body: (Optional)    A string containing body text.
+   page.sidebar_breakout.heading:  A string containing heading text. (Optional)
 
-   settings.intro.heading:(Optional)  A string containing heading text.
+   page.sidebar_breakout.image:    An object used to customize the image
+                                    markup. (Optional)
 
-   settings.related_posts: (Optional) An object used to customize the
-                                      related posts markup.
+   page.sidebar_breakout.intro.body:  A string containing body text. (Optional)
 
+   page.sidebar_breakout.intro.heading: A string containing heading text.
+                                          (Optional)
+
+   page.sidebar_breakout.related_posts: An object used to customize the related
+                                          posts markup. (Optional)
+  
    ========================================================================== #}
 
-{% macro render(settings) %}
 <div class="o-sidebar-breakout
             content__flush-bottom
             wrapper">
@@ -33,7 +37,11 @@
             <section class="o-sidebar-breakout_col
                             content-l_col
                             content-l_col-2-3">
-                {{ caller() }}
+                {% for block in page.content %}
+                    {% if 'text_introduction' in block.block_type -%}
+                        {{ block | safe }}
+                    {% endif %}
+                {% endfor %}
             </section>
             <aside class="o-sidebar-breakout_col
                           content-l_col
@@ -41,72 +49,61 @@
                           block
                           block__flush-top
                           block__flush-bottom">
-                {{ _sidebar(settings) }}
+                {% for block in page.sidebar_breakout %}
+                    {% if 'heading' in block.block_type %}
+                        <h3 class="o-sidebar-breakout_heading">
+                            {{ block }}
+                        </h3>
+                    {% elif 'breakout_image' in block.block_type %}
+                        {% set blocks = block.value.bound_blocks %}
+                        {% if blocks.image is defined %}
+                            {% set photo = image(blocks.image.value, 'original') %}
+                            <div class="o-sidebar-breakout_img-container
+                                        {{ 'o-sidebar-breakout_img-container__round'
+                                        if blocks.is_round.render() else '' }}
+                                        u-centered-on-mobile">
+                              <div class="o-sidebar-breakout_img
+                                          u-centered-on-mobile"
+                                   style="background-image:url( {{ photo.url }} )">
+                              </div>
+                            </div>
+                            {% if blocks.heading.value or blocks.body.value %}
+                                <div class="o-sidebar-breakout_text-container">
+                                {% if blocks.heading.value %}
+                                    <h4 class="o-sidebar-breakout_text-heading">
+                                        <span class="cf-icon
+                                                     cf-icon-{{ blocks.icon.render()
+                                                                if blocks.icon is defined else '' }}"></span>
+                                        {{ blocks.heading.render() }}
+                                    </h4>
+                                {% endif %}
+                                {% if blocks.body.value %}
+                                    <p class="o-sidebar-breakout_text-body short-desc">
+                                        {{ blocks.body.render() }}
+                                    </p>
+                                {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% elif 'related_posts' in block.block_type %}
+                        {% import '_includes/molecules/related-posts.html' as related_posts with context %}
+                        {{ related_posts.render(block) }}
+                    {% elif 'slug' in block.block_type %}
+                        <h2 class="header-slug">
+                            <span class="header-slug_inner">
+                                {{ block | safe }}
+                            </span>
+                        </h2>
+                    {% elif 'heading' in block.block_type %}
+                        <h3>{{ block }}</h3>
+                    {% elif 'paragraph' in block.block_type %}
+                        <p class="short-desc">
+                            {{ block }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
             </aside>
         </div>
     </div>
 </div>
 <div class="content_line"></div>
-{% endmacro %}
-
-
-{# ==========================================================================
-
-   _sidebar()
-
-   ==========================================================================
-
-   Description:
-
-   Creates Sidebar Breakout markup when given:
-
-   settings:                          An object used to customize the markup.
-
-   settings.heading:                  A string containing heading text.
-
-   settings.image.url: (Optional)     A string containing the url for the image.
-
-   settings.image.is_round: (Optional) A Boolean indicating whether the image is round.
-
-   settings.intro.heading: (Optional)  A string containing heading text.
-
-   settings.intro.body:                A string containing body text.
-
-   settings.related_posts: (Optional)  An object used to customize the related posts
-                                       markup.
-
-   ========================================================================== #}
-
-{% macro _sidebar(settings) %}
-<h3 class="o-sidebar-breakout_heading">
-    {{ settings.heading }}
-</h3>
-{% if settings.image %}
-<div class="o-sidebar-breakout_img-container
-            {{ 'o-sidebar-breakout_img-container__round'
-            if settings.image.is_round else '' }}
-            u-centered-on-mobile">
-    <div class="o-sidebar-breakout_img
-                u-centered-on-mobile"
-         style="background-image:url( {{settings.image.url}} )">
-    </div>
-</div>
-{% endif %}
-<div class="o-sidebar-breakout_text-container">
-    {% if settings.image and settings.intro.heading %}
-    <h4 class="o-sidebar-breakout_text-heading">
-         <span class="cf-icon cf-icon-{{ settings.intro.icon }}"></span>
-        {{ settings.intro.heading }}
-    </h4>
-    {% endif %}
-    {% if settings.intro.body %}
-    <p class="o-sidebar-breakout_text-body short-desc">
-        {{ settings.intro.body }}
-    </p>
-    {% endif %}
-    {% if settings.related_posts %}
-        {% import 'molecules/related-posts.html' as related_posts with context %}
-        {{ related_posts.render(is_half_width=false, hide_header_slug=true) }}
-    {% endif %}
-</div>
-{% endmacro %}
