@@ -26,7 +26,11 @@
     {% for block in page.content -%}
         {% if 'text_introduction' not in block.block_type
            and 'hero' not in block.block_type %}
-            {{ render_stream_child(block) }}
+            {% if 'heading' in block.block_type %}
+                <h2>{{ block }}</h2>
+            {% else %}
+                {{ render_stream_child(block) }}
+            {% endif %}
         {% endif %}
     {%- endfor %}
 {% endblock %}
