@@ -37,7 +37,7 @@
             <section class="o-sidebar-breakout_col
                             content-l_col
                             content-l_col-2-3">
-                {% for block in page.content %}
+                {% for block in page.header %}
                     {% if 'text_introduction' in block.block_type -%}
                         {{ block | safe }}
                     {% endif %}
