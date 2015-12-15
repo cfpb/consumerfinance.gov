@@ -23,11 +23,21 @@ class FullWidthText(blocks.StructBlock):
 
 
 class ImageText5050Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
         icon = 'image'
         template = '_includes/organisms/image-text-50-50-group.html'
+
+
+class ImageText2575Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
+    image_texts = blocks.ListBlock(molecules.ImageText2575())
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/image-text-25-75-group.html'
 
 
 class HalfWidthLinkBlobGroup(blocks.StructBlock):

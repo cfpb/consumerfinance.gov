@@ -24,13 +24,15 @@
 
 {% block content_main %}
     {% for block in page.content -%}
-        {% if 'text_introduction' not in block.block_type
-           and 'hero' not in block.block_type %}
-            {% if 'heading' in block.block_type %}
-                <h2>{{ block }}</h2>
-            {% else %}
+        {% if loop.index == 1 %}
+            <div class="block
+                        block__flush-top">
                 {{ render_stream_child(block) }}
-            {% endif %}
+            </div>
+        {% else %}
+            <div class="block">
+                {{ render_stream_child(block) }}
+            </div>
         {% endif %}
     {%- endfor %}
 {% endblock %}
