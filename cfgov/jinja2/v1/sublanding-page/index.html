@@ -5,7 +5,7 @@
 {%- endblock %}
 
 {% block hero -%}
-    {% for block in page.content -%}
+    {% for block in page.header -%}
         {% if 'hero' in block.block_type -%}
             {{ render_stream_child(block) }}
         {%- endif %}
@@ -14,10 +14,10 @@
 
 {% block pre_content %}
     {% set hero_exists = false %}
-    {% for block in page.content %}
+    {% for block in page.header %}
         {% set hero_exists = true if 'hero' in block.block_type else false %}
     {% endfor %}
-    {% if hero_exists %}
+    {% if not hero_exists %}
         {% include 'organisms/sidebar-breakout.html' %}
     {% endif %}
 {% endblock %}

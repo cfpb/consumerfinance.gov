@@ -213,6 +213,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed heading structure throughout website
 - Fixed setup.sh to use argument correctly
 - Fixed title for Small & Minority Businesses
+- Fix page header rendering for Sublanding page
 
 
 ## 3.0.0-2.4.0 - 2015-09-29
