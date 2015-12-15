@@ -1,6 +1,7 @@
 {% extends "wagtailadmin/base.html" %}
 {% load wagtailadmin_tags %}
 {% load i18n %}
+{% load share %}
 
 {% block titletag %}{% blocktrans with page_type=content_type.model_class.get_verbose_name %}New {{ page_type }}{% endblocktrans %}{% endblock %}
 {% block bodyclass %}page-editor create model-{{ content_type.model }}{% endblock %}
@@ -21,7 +22,7 @@
         {% csrf_token %}
         {{ edit_handler.render_form_content }}
 
-        {% page_permissions parent_page as parent_page_perms %}
+        {% v1page_permissions parent_page as parent_page_perms %}
         <footer>
             <ul>
                 <li class="actions">
@@ -33,6 +34,8 @@
                                 <li>
                                     <button type="submit" name="action-publish" value="action-publish" class="button-longrunning" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Publish to WWW' %}</em></button>
                                 </li>
+                            {% endif %}
+                            {% if parent_page_perms.can_share %}
                                 <li>
                                     <button type="submit" name="action-share" value="action-share" class="button-longrunning" tabindex="3" data-clicked-text="{% trans 'Sharing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Share on Content' %}</em></button>
                                 </li>

@@ -20,8 +20,8 @@
     {% if value %}
         <p class="short-desc">
             {% for email in value.emails %}
-                <a href="mailto:{{ email }}">
-                    {{ email }}
+                <a href="mailto:{{ email.url }}">
+                    {{ email.text }}
                 </a><br>
             {% endfor %}
         </p>

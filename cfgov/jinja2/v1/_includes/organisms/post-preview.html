@@ -122,9 +122,9 @@
                 </span>
             {% endif %}
             {% if value.body %}
-                <p class="o-post-preview_description">
-                    {{ value.body | safe }}
-                </p>
+                <div class="o-post-preview_description">
+                    {{ value.body.source | safe }}
+                </div>
             {% endif %}
             <div class="post_meta">
                 {% for author in value.post.cfgovpage.authors.names() %}
@@ -234,7 +234,7 @@
         {% endif %}
         {% if settings.body %}
             <p class="o-post-preview_description">
-                {{ settings.body | safe }}
+                {{ settings.body.source | safe }}
             </p>
         {% endif %}
         <div class="post_meta">

@@ -42,10 +42,8 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% if page %}
-        {% import 'related-posts.html' as related_posts with context %}
-        {{ related_posts.render() }}
-        {% endif %}
+    {# This is where related posts was. When this page is converted to Wagtail it
+       will be back. #}
     </section>
     <section class="block stay-informed">
         <div class="block__sub">

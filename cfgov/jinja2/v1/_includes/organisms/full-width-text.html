@@ -14,14 +14,16 @@
 
    ========================================================================== #}
 
-
-<div class="o-full-width-text">
-    {% if value %}
+{% if value %}
+    <div class="m-full-width-text">
         {{ value.content | safe }}
-    {% else %}
-        {% macro render(template) %}
+    </div>
+{% else %}
+    {% macro render(template) %}
+        <div class="m-full-width-text">
             {% import template as content %}
-            {{ content }}
-        {% endmacro %}
-    {% endif %}
-</div>
+                {{ content }}
+        </div>
+    {% endmacro %}
+{% endif %}
+

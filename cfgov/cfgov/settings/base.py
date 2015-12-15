@@ -262,7 +262,7 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
 
 # S3 Configuration
-if os.environ.get('S3_ENABLED', False):
+if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
     AWS_S3_SECURE_URLS = False  # True = use https; False = use http
     AWS_QUERYSTRING_AUTH = False  # False = do not use authentication-related query parameters for requests

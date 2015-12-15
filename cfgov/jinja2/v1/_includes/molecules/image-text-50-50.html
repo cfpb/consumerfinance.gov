@@ -11,102 +11,91 @@
 
    See [GHE]/flapjack/Modules-V1/wiki/50-50-Image-&-Text
 
-   settings:                An object with the following options for settings.
-   settings.title:          A string containing title of module.
-   settings.image_path:     A string containing the URL for the image.
-   settings.image_alt:      A string containing alt text for screenreaders.
-   settings.is_widescreen:  Boolean if the image should be widescreen ratio.
+   value:                An object with the following options for value.
+   value.heading:          A string containing title of module.
+   value.image:          A image object containing the URL & alt text for screenreaders
+                            of the image to be placed adjacent to the text.
+   value.is_widescreen:  Boolean if the image should be widescreen ratio.
                             Will be 4:3 ratio by default.
-   settings.description:    A string for the description under the image.
+   value.body:           A string for the description under the image.
 
-   settings.link_is_button: Boolean if the link should be a button.
+   value.is_button:      Boolean if the link should be a button.
                             If false/blank,
                             the button will remain a plain link.
-   settings.link_url:       A string for the URL of the link/button.
-   settings.link_text:      A string for the text of the link/button
-                            call to action.
+   value.links:          A list of links containing URL & Text of the link/button.
 
-   has_rule:                Whether there is a bottom gray rule.
+   value.has_rule:       Whether there is a bottom gray rule.
                             Default is false.
 
    ========================================================================== #}
 
-{% if value %}
-    <div class="m-image-text-50-50
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update(
+        {
+            'image_text_50_50': {
+                'heading' :    'Image and Text 50-50',
+                'image': {
+                      'upload': {
+                                'url': 'http://placehold.it/1600x900',
+                                'alt': 'This is a placeholder image'
+                      }
+                },
+                'is_widescreen': true,
+                'body': {
+                    'source': lipsumText
+                },
+                'is_button' :   true,
+                'links': [{
+                            'text': 'Placeholder link',
+                            'url':  '#'
+                }]
+            }
+        })
+    %}
+    {% set value = global_dict.image_text_50_50 %}
+    {% set prototype = true %}
+{% endif %}
+<div class="m-image-text-50-50
             {{ 'm-image-text-50-50__bottom-rule' if value.has_rule else '' }}">
 
-        <div class="{{ 'm-image-text-50-50_widescreen-container' if value.is_widescreen
-                else 'm-image-text-50-50_container'}}">
+    <div class="{{ 'm-image-text-50-50_widescreen-container' if value.is_widescreen
+            else 'm-image-text-50-50_container'}}">
 
-            {% if value.image.upload %}
-                {% set photo=image(value.image.upload, 'original') %}
-                <img src="{{ photo.url }}"
-                     alt="{{ photo.alt }}"
-                     class="m-image-text-50-50_image">
+        {% if value.image.upload %}
+            {% if prototype %}
+                {% set photo=value.image.upload %}
             {% else %}
-                <img src="{{ value.image.url }}"
-                     alt="{{ value.image.alt if value.image.alt else '' }}"
-                     class="m-image-text-50-50_image">
+                {% set photo=image(value.image.upload, 'original') %}
             {% endif %}
-        </div>
 
-        <h2>
-            {{ value.heading }}
-        </h2>
+            <img src="{{ photo.url }}"
+                 alt="{{ photo.alt }}"
+                 class="m-image-text-50-50_image">
+        {% endif %}
+    </div>
 
-        <p class="short-desc short-desc__large">
-            {{ value.body | safe }}
-        </p>
+    <h2>
+        {{ value.heading }}
+    </h2>
 
-        {% if value.links %}
-            <ul class="list list__links">
-                {% for link in value.links %}
-                    <li class="list_item">
-                        <a class="{% if value.is_button %}
+    <div class="short-desc short-desc__large">
+        {{ value.body.source | safe }}
+    </div>
+
+    {% if value.links %}
+        <ul class="list list__links">
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class="{% if value.is_button %}
                               btn m-image-text-50-50_btn
                               {% else %}
                               jump-link jump-link__underline
                               {% endif %}" href="{{ link.url }}">
-                            {{ link.text if link.text else 'Learn More' }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
-
-{% else %}
-{% macro render(settings, has_rule=false) %}
-
-<div class="m-image-text-50-50
-            {{ 'm-image-text-50-50__bottom-rule' if has_rule else '' }}">
-
-    <div class="{{ 'm-image-text-50-50_widescreen-container' if settings.is_widescreen
-                    else 'm-image-text-50-50_container'}}">
-        <img src="{{ settings.image_path }}"
-             alt="{{ settings.alt_text if settings.alt_text else '' }}"
-             class="m-image-text-50-50_image">
-    </div>
-
-    <h2>
-        {{ settings.title }}
-    </h2>
-
-    <p class="short-desc short-desc__large">
-        {{ settings.description }}
-    </p>
-
-    {% if settings.link_url %}
-    <a class="{% if settings.link_is_button %}
-              btn m-image-text-50-50_btn
-              {% else %}
-              jump-link jump-link__underline
-              {% endif %}
-              "
-       href="{{ settings.link_url }}">
-        {{ settings.link_text if settings.link_text else 'Learn More' }}
-    </a>
+                        {{ link.text if link.text else 'Learn More' }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 </div>
-{% endmacro %}
-{% endif %}

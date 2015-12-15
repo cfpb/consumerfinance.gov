@@ -13,7 +13,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, TabbedInterface, ObjectList
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
@@ -58,9 +58,9 @@ class CFGOVPage(Page):
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField([
-        ('slug', blocks.CharBlock()),
-        ('heading', blocks.CharBlock()),
-        ('paragraph', blocks.RichTextBlock()),
+        ('slug', blocks.CharBlock(icon='title')),
+        ('heading', blocks.CharBlock(icon='title')),
+        ('paragraph', blocks.TextBlock(icon='edit')),
         ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
         ('related_posts', organisms.RelatedPosts()),
@@ -90,31 +90,29 @@ class CFGOVPage(Page):
 
     # TODO: After all search types are migrated to Wagtail this should relate
     # pages based on tags.
-    @property
-    def related_posts(self):
+    def related_posts(self, block):
         # After all search types are migrated to Wagtail, comment out below. If
         # we decide we'd like to use the more_like_this feature of
         # Elasticsearch, we can always revert back to this.
         results = {}
-        for block in self.sidefoot:
-            if 'related_posts' in block.block_type:
-                for search_type in ['posts', 'newsroom', 'events']:
-                    if 'relate_%s' % search_type in block.value \
-                       and block.value['relate_%s' % search_type]:
-                        results.update({search_type: []})
+        for search_type in ['posts', 'newsroom', 'events']:
+            if 'relate_%s' % search_type in block.value \
+               and block.value['relate_%s' % search_type]:
+                results.update({search_type: []})
 
-                try:
-                    # Gets an ES document across all types by the slug of the
-                    # page.
-                    document = get_document('_all', self.slug)
-                    for search_type in results.keys():
-                        results[search_type] = \
-                            more_like_this(document, search_types=search_type,
-                                           search_size=
-                                           block.value['limit'])
-                except NotFoundError:
-                    print('ES document not found for page.', file=sys.stderr)
-            return results
+        try:
+            # Gets an ES document across all types by the slug of the
+            # page.
+            document = get_document('_all', self.slug)
+            for search_type in results.keys():
+                results[search_type] = \
+                    more_like_this(document, search_types=search_type,
+                                   search_size=
+                                   block.value['limit'])
+        except NotFoundError:
+            print('ES document not found for page.', file=sys.stderr)
+            return
+        return results
         # Comment out above
 
         # TODO:After all search types are migrated to Wagtail, uncomment below.

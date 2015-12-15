@@ -9,7 +9,7 @@ def isRequired(field_name):
 
 
 class Hyperlink(blocks.StructBlock):
-    text = blocks.CharBlock(max_length=50, required=False)
+    text = blocks.CharBlock(max_length=100, required=False)
     url = blocks.CharBlock(default='/', required=False)
 
     def __init__(self, required=True):
@@ -32,6 +32,10 @@ class Hyperlink(blocks.StructBlock):
             raise ValidationError("Hyperlink validation errors", params=error_dict)
         else:
             return data
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/atoms/hyperlink.html'
 
 
 class ImageBasic(blocks.StructBlock):

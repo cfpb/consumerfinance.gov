@@ -22,13 +22,13 @@
 */
 
 .m-call-to-action {
+    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em ) * 2;
 
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
         .grid_column(6);
     });
 
     .btn {
-        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em ) * 2;
         text-align: center;
     }
 }
