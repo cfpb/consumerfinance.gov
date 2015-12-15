@@ -114,6 +114,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add Hyperlink template
 - Add icons to Sidefoot Streamfield blocks
 - Add ImageText5050Group and HalfWidthLinkGroup templates and organisms
+- S3 Image Upload support for Refresh/Prod
+- Dev Landing Page Demo
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
