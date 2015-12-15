@@ -122,11 +122,12 @@
 
 {% block content_sidebar scoped -%}
     {% for block in page.sidefoot %}
-    {% if 'related_posts' in block.block_type %}
-        {{ related_posts.render(block) }}
-    {% else %}
-        {{ render_stream_child(block) }}
-    {% endif %}
+        {% if 'related_posts' in block.block_type %}
+            {{ related_posts.render(block) }}
+        {% else %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    {% endfor %}
 
     {% for block in page.sidefoot %}
         {% if 'related_posts' in block.block_type %}
