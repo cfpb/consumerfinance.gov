@@ -117,6 +117,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - S3 Image Upload support for Refresh/Prod
 - Dev Landing Page Demo
 - Add Image Text 25/75 and Full Width Text into SublandingPage
+- Add related_posts_function to the global context in Jinja2 for prototyping of related posts
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -195,6 +196,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix related post molecule to be used in multiple places
 - Convert Sidefoot paragraph streamfield block to Textblock
 - Updated headings for changes in Capital Framework
+- Temporarily comment out related posts section of single blog post browser test until BlogPage's are in Wagtail
+- Add `show_heading` checkbox to Related Posts organism to toggle the heading
+  and icon.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -216,6 +220,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed setup.sh to use argument correctly
 - Fixed title for Small & Minority Businesses
 - Fix page header rendering for Sublanding page
+- Fix related post molecule to be used in multiple places
+- Fix failing tests relating to Related Posts organism
+- Fix related-posts.html logic
 
 
 ## 3.0.0-2.4.0 - 2015-09-29

@@ -28,11 +28,12 @@ function BlogSingle() {
 
   this.contentSidebar = element( by.css( '.content_sidebar' ) );
 
-  this.relatedPosts =
-  this.contentSidebar.element( by.css( '.related-posts' ) );
+  // TODO: Uncomment after blog post pages have been added to  Wagtail
+  // this.relatedPosts =
+  // this.contentSidebar.element( by.css( '.related-posts' ) );
 
-  this.relatedPostsTitle =
-  this.relatedPosts.element( by.css( '.header-slug_inner' ) );
+  // this.relatedPostsTitle =
+  // this.relatedPosts.element( by.css( '.header-slug_inner' ) );
 }
 
 module.exports = BlogSingle;

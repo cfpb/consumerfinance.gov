@@ -53,8 +53,12 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% import 'molecules/related-posts.html' as related_posts with context %}
-        {{ related_posts.render() }}
+        {% for block in page.sidefoot %}
+            {% if 'related_posts' in block.block_type %}
+                {% import 'molecules/related-posts.html' as related_posts with context %}
+                {{ related_posts.render(block) }}
+            {% endif %}
+        {% endfor %}
     </section>
     <section class="block">
         <h1 class="header-slug">
