@@ -19,9 +19,9 @@ install:
   - npm install -g bower
 
   # Project initialization.
-  - python cfgov/manage.py sheer_index
   - chmod +x ./setup.sh
   - ./setup.sh test
+  - python cfgov/manage.py sheer_index
   - python cfgov/manage.py migrate
 
 script:
