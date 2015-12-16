@@ -38,9 +38,7 @@
                             content-l_col
                             content-l_col-2-3">
                 {% for block in page.header %}
-                    {% if 'text_introduction' in block.block_type -%}
-                        {{ block | safe }}
-                    {% endif %}
+                    {{ render_stream_child(block) }}
                 {% endfor %}
             </section>
             <aside class="o-sidebar-breakout_col

@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   featured_content.render()
+   featured_content
 
    ==========================================================================
 
@@ -9,17 +9,29 @@
    Create a featured content molecule. See
    [GHE]/flapjack/Modules-V1/wiki/Featured-Content-Module
 
+   value:                     An object with the following options for value.
+
+   value.heading:             Heading text.
+   value.body:                Body text.
+
+   value.post                 Page being featured
+   value.show_post_link       Flag to render the Post
+   value.post_link_text       Flag to render the Post
+
+   value.image:               A image object containing the URL & alt text for screenreaders
+                              of the image to be placed adjacent to the text.
+
+   value.links:               A collection of links with URL & Text.
+
    ========================================================================== #}
 
+{%- import 'macros/category-icon.html' as category_icon -%}
 {% if not value %}
     {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
     {% do global_dict.update(
         {
             'featured_content_module': {
-                'category': {
-                    'icon': 'cf-icon-date',
-                    'text': 'Featured Event'
-                },
+                'category': 'info for consumers',
                 'heading': 'Fall Consumer Advisory Board meeting in
                             Washington, DC',
                 'body': {
@@ -29,8 +41,11 @@
                             'text': 'Read More About the Event',
                             'url':  '#'
                 }],
+
                 'image': {
-                    'url': 'https://maps.googleapis.com/maps/api/staticmap?center=Washington%2C%20DC&size=540x304&zoom=12&scale=2',
+                    'upload': {
+                                'url': 'https://maps.googleapis.com/maps/api/staticmap?center=Washington%2C%20DC&size=540x304&zoom=12&scale=2'
+                      },
                     'alt': 'Map of Washington D.C.'
                 }
             }
@@ -45,8 +60,8 @@
                 featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
-            <span class="cf-icon {{ value.category.icon }}"></span>
-            {{ value.category.text }}
+            {{ category_icon.render(value.category)|safe }}
+            {{ value.category }}
         </p>
         <h2>
             {{ value.heading }}
@@ -55,6 +70,10 @@
             {{ value.body.source | safe }}
         </p>
         <ul class="list list__links">
+            {% if value.show_post_link and value.post %}
+                <a href="{{ value.post.url_path }}"> {{ value.post_link_text }} </a>
+            {% endif %}
+
             {% for link in value.links %}
                 <li class="list_item">
                     <a class="list_link" href="{{ link.url }}">
@@ -66,8 +85,13 @@
     </div>
 
     <div class="featured-content-module_visual">
+        {% if prototype %}
+            {% set photo=value.image.upload %}
+        {% else %}
+            {% set photo=image(value.image.upload, 'original') %}
+        {% endif %}
         <img class="featured-content-module_img"
-             src="{{ value.image.url }}"
+             src="{{ photo.url }}"
              alt="{{ value.image.alt }}">
     </div>
 </section>

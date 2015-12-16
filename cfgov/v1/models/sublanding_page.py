@@ -13,6 +13,7 @@ class SublandingPage(CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
         ('text_introduction', molecules.TextIntroduction()),
+        ('featured_content', molecules.FeaturedContent()),
     ], blank=True)
     content = StreamField([
         ('image_text_25_75_group', organisms.ImageText2575Group()),

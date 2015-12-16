@@ -132,6 +132,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Backend Expandable/Expandable Group Molecule & Organisms
 - Added Number Block
 - [Added Form Field with Button to sublanding page] (https://github.com/cfpb/cfgov-refresh/issues/1246)
+- Added Backend Feature Content Molecule
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

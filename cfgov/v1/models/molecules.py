@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 
+from . import ref
 from . import atoms
 
 from ..util import id_validator
@@ -110,6 +111,26 @@ class FormFieldWithButton(blocks.StructBlock):
     class Meta:
         icon = 'mail'
         template = '_includes/molecules/form-field-with-button.html'
+
+
+class FeaturedContent(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=255, required=False)
+    body = blocks.RichTextBlock(required=False)
+
+    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+    post = blocks.PageChooserBlock(required=False)
+
+    show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
+    post_link_text = blocks.CharBlock(max_length=100, required=False)
+
+    image = atoms.ImageBasicAlt(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(required=False),
+                             label='Additional Links')
+
+    class Meta:
+        template = '_includes/molecules/featured-content.html'
+        icon = 'doc-full-inverse'
+        label = 'Featured Content'
 
 
 class CallToAction(blocks.StructBlock):
