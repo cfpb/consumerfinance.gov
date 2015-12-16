@@ -13,9 +13,16 @@ def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     env = sheerlike_environment(**options)
     env.autoescape = True
+    from v1.models import CFGOVPage
     env.globals.update({
         'static': staticfiles_storage.url,
-        'global_dict': {},
+        'global_dict': {
+            'related_posts_function': lambda x: {
+                'posts': CFGOVPage.objects.all()[:x['value']['limit']],
+                'newsroom': CFGOVPage.objects.all()[:x['value']['limit']],
+                'events': CFGOVPage.objects.all()[:x['value']['limit']]
+            }
+        },
         'reverse': reverse,
         'render_stream_child': render_stream_child
     })
