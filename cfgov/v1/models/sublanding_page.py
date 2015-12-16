@@ -15,8 +15,7 @@ class SublandingPage(CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
     content = StreamField([
-        ('heading', blocks.CharBlock(icon='title')),
-        ('image_text_25_75', molecules.ImageText2575()),
+        ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
