@@ -46,6 +46,18 @@
         </div>
     {% endif %}
 
+    {% if page.featured_content or prototype %}
+        <div class="block
+                 block__flush-top">
+            {% if prototype %}
+                {% include 'molecules/featured-content.html' %}
+            {% endif %}
+            {% for block in page.featured_content %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if page.image_text_50_50_content or prototype %}
         <div class="o-image-text-50-50-group">
             {% if page.image_text_50_50_group_header %}

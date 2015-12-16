@@ -118,6 +118,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Dev Landing Page Demo
 - Add Image Text 25/75 and Full Width Text into SublandingPage
 - Add related_posts_function to the global context in Jinja2 for prototyping of related posts
+- Added the featured content module molecule and included it in the landing-page prototype
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
