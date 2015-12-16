@@ -12,7 +12,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0013_add_sublanding'),
+        ('v1', '0014_add_fields_sublanding'),
     ]
 
     operations = [
