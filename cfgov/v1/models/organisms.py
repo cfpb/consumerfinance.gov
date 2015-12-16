@@ -66,9 +66,16 @@ class EmailSignUp(blocks.StructBlock):
 
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit')
-    relate_posts = blocks.BooleanBlock(required=False, default=True, label='Blog Posts')
-    relate_newsroom = blocks.BooleanBlock(required=False, default=True, label='Newsroom')
-    relate_events = blocks.BooleanBlock(required=False, default=True, label='Events')
+    show_heading = blocks.BooleanBlock(required=False, default=True,
+                                       label='Show Heading and Icon?',
+                                       help_text='This toggles the heading and'
+                                       + ' icon for the related types.')
+    relate_posts = blocks.BooleanBlock(required=False, default=True,
+                                       label='Blog Posts', editable=False)
+    relate_newsroom = blocks.BooleanBlock(required=False, default=True,
+                                          label='Newsroom', editable=False)
+    relate_events = blocks.BooleanBlock(required=False, default=True,
+                                        label='Events')
     view_more = atoms.Hyperlink(required=False)
 
     class Meta:

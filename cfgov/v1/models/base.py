@@ -1,4 +1,3 @@
-from __future__ import print_function
 import os
 import sys
 
@@ -88,47 +87,30 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
-    # TODO: After all search types are migrated to Wagtail this should relate
-    # pages based on tags.
     def related_posts(self, block):
-        # After all search types are migrated to Wagtail, comment out below. If
-        # we decide we'd like to use the more_like_this feature of
-        # Elasticsearch, we can always revert back to this.
-        results = {}
-        for search_type in ['posts', 'newsroom', 'events']:
+        related = {}
+        query = models.Q(('tags__name__in', self.tags.names()))
+        # TODO: Replace this in a more global scope when Filterable List gets
+        # implemented in the backend.
+        # Import classes that use this class here to maintain proper import
+        # order.
+        from . import EventPage
+        search_types = {
+            'events': EventPage,
+        }
+        # End TODO
+        for search_type, page_class in search_types.items():
             if 'relate_%s' % search_type in block.value \
                and block.value['relate_%s' % search_type]:
-                results.update({search_type: []})
+                related[search_type] = \
+                    page_class.objects.filter(query).order_by(
+                        '-latest_revision_created_at').exclude(
+                        slug=self.slug)[:block.value['limit']]
 
-        try:
-            # Gets an ES document across all types by the slug of the
-            # page.
-            document = get_document('_all', self.slug)
-            for search_type in results.keys():
-                results[search_type] = \
-                    more_like_this(document, search_types=search_type,
-                                   search_size=
-                                   block.value['limit'])
-        except NotFoundError:
-            print('ES document not found for page.', file=sys.stderr)
-            return
-        return results
-        # Comment out above
-
-        # TODO:After all search types are migrated to Wagtail, uncomment below.
-        # query = Q(('tags__name__in', self.tags))
-        # search_types = {
-        #     'blog_posts': 'BlogPostPage',
-        #     'newsroom_items': 'NewsroomPage',
-        #     'events': 'EventPage',
-        # }
-        # related = []
-        # for search_type in ['posts', 'newsroom', 'events']:
-        #     if eval('self.is_relating_%s' % search_type):
-        #         related += eval('%s.objects.filter(query)[:%s]' %
-        #                         search_types[search_type],
-        #                         self.related_limit)
-        # return related
+        # Return a dictionary of lists of each type when there's at least one
+        # hit for that type.
+        return {search_type: queryset for search_type, queryset in
+                related.items() if queryset}
 
     @property
     def status_string(self):

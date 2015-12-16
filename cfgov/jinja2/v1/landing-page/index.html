@@ -128,12 +128,4 @@
             {{ render_stream_child(block) }}
         {% endif %}
     {% endfor %}
-
-    {% for block in page.sidefoot %}
-        {% if 'related_posts' in block.block_type %}
-            {{ related_posts.render() }}
-        {% else %}
-            {{ render_stream_child(block) }}
-        {% endif %}
-    {% endfor %}
 {%- endblock %}
