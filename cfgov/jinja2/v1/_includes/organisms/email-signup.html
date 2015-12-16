@@ -20,17 +20,43 @@
 
 {% if not value %}
     {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'email_signup': {
-                  'heading':    'Slug Title',
-                  'text': lipsumText
+    {% macro _privacy_statement() %}
+        The information you provide will permit the Consumer Financial
+        Protection Bureau to process your request or inquiry.
+        <a href="/sub-pages/privacy-policy/">See More</a>
+    {% endmacro %}
+
+    {% macro _form_field() %}
+        {% do global_dict.update({
+            'form_field': {
+                'label':       'Email Address',
+                'name':        'o-email-signup_email',
+                'placeholder': 'mail@example.com',
+                'type':        'email',
+                'info':        {
+                    'source': _privacy_statement()
+                },
+                'required':    true,
+                'btn_text':    'Sign up'
             }
-        })
-    %}
+        }) %}
+        {% set value = global_dict.form_field %}
+        {% include 'molecules/form-field-with-button.html' %}
+    {% endmacro %}
+
+    {% do global_dict.update({
+        'email_signup': {
+            'heading':    'Slug Title',
+            'text':       lipsumText,
+            'form_field': [
+                _form_field()
+            ]
+        }
+    }) %}
     {% set value = global_dict.email_signup %}
     {% set prototype = true %}
 {% endif %}
+
 {% if value.heading %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
@@ -38,6 +64,7 @@
         </span>
     </h2>
 {% endif %}
+
 <form class="o-email-signup"
       id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
       action="/subscriptions/new/"
@@ -49,36 +76,7 @@
         </p>
     {% endif %}
 
-    {% if prototype %}
-        {% import 'molecules/form-field-with-button.html' as form_field_with_button %}
-        {% macro _privacy_statement() %}
-            <p class="short-desc">
-                The information you provide will permit the Consumer Financial
-                Protection Bureau to process your request or inquiry.
-                <a href="/sub-pages/privacy-policy/">See More</a>
-            </p>
-        {% endmacro %}
-        {{ form_field_with_button.render( {
-                'field': {
-                'label':       'Email Address',
-                'name':        'o-email-signup_email',
-                'placeholder': 'example@mail.com',
-                'type':        'email',
-                'info':        _privacy_statement(),
-                'required':    true
-                },
-                'btn_text': 'Sign up'
-                } ) }}
-
-
-    {% else %}
-        {% for form in value.form_field %}
-            {{ form |safe }}
-        {% endfor %}
-    {% endif %}
+    {% for form in value.form_field %}
+        {{ form | safe }}
+    {% endfor %}
 </form>
-
-
-
-
-

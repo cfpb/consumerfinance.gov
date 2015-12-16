@@ -24,43 +24,39 @@
    settings.field.placeholder: The placeholder used for the input.
 
    ========================================================================== #}
-
-{% if value %}
-    <div class="m-form-field-with-button">
-        <div class="form-group">
-            <label for="{{ value.id }}">
-                <b>{{ value.label }}</b>
-                {% if value.required %}
-                    (required)
-                {% endif %}
-            </label>
-            <input id="{{ value.id }}"
-                   type="{{ value.type }}"
-                   placeholder="{{ value.placeholder }}"
-                   class="m-form-field-with-button_field"
-                    {{ "required" if value.required else "" }}>
-        </div>
-        {{ value.info | safe }}
-        <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
-    </div>
-{% else %}
-    {% macro render(settings) %}
-        <div class="m-form-field-with-button">
-            <div class="form-group">
-                <label for="{{ settings.field.id }}">
-                    <b>{{ settings.field.label }}</b>
-                    {% if settings.field.required %}
-                        (required)
-                    {% endif %}
-                </label>
-                <input id="{{ settings.field.id }}"
-                       type="{{ settings.field.type }}"
-                       placeholder="{{ settings.field.placeholder }}"
-                       class="m-form-field-with-button_field"
-                       {{ "required" if settings.field.required else "" }}>
-            </div>
-            {{ settings.field.info or '' }}
-            <input class="btn btn__full" type="submit" value="{{ settings.btn_text }}">
-        </div>
-    {% endmacro %}
+{% if not value %}
+    {% do global_dict.update({
+        'form_field': {
+            'label':       'Form Field with Button',
+            'name':        'm-form-field-with-button',
+            'id':          'form-field-with-button',
+            'placeholder': 'form field with button',
+            'type':        'text',
+            'info':        {
+                'source': 'This is a form field with a button. Isn\'t it awesome?'
+            },
+            'required':    false,
+            'btn_text':    'The Awesome Button'
+        }
+    }) %}
+    {% set value = global_dict.form_field %}
+    {% set prototype = true %}
 {% endif %}
+
+<div class="m-form-field-with-button">
+    <div class="form-group">
+        <label for="{{ value.id }}">
+            <b>{{ value.label }}</b>
+            {{ '(required)' if value.required else '' }}
+        </label>
+        <input id="{{ value.id }}"
+               type="{{ value.type }}"
+               placeholder="{{ value.placeholder }}"
+               name="{{ value.name }}"
+               class="m-form-field-with-button_field"
+               {{ 'required' if value.required else '' }}>
+    </div>
+    <p class="short-desc">{{ value.info.source | safe }}</p>
+    <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
+</div>
+
