@@ -116,6 +116,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add ImageText5050Group and HalfWidthLinkGroup templates and organisms
 - S3 Image Upload support for Refresh/Prod
 - Dev Landing Page Demo
+- Add Image Text 25/75 and Full Width Text into SublandingPage
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
