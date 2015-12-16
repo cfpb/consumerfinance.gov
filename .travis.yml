@@ -13,8 +13,8 @@ install:
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
   - npm install nvm
-  - nvm install 4.1.0
-  - nvm use 4.1.0
+  - nvm install 5.2.0
+  - nvm use 5.2.0
   - npm install -g gulp
   - npm install -g bower
 
