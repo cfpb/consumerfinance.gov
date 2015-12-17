@@ -207,6 +207,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Landing and Sublanding content blocks render each atomic structure with `div class="block">`
 - Added environments to frontend/backend setup scripts.
 - Make Full Width Text organism a StreamBlock and add insets
+- Changed the ImageBasic atom to always include an optional alt by default
 
 ### Removed
 - Removed unused exportsOverride section,
