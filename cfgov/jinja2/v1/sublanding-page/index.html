@@ -13,13 +13,7 @@
 {% endblock %}
 
 {% block pre_content %}
-    {% set hero_exists = false %}
-    {% for block in page.header %}
-        {% set hero_exists = true if 'hero' in block.block_type else false %}
-    {% endfor %}
-    {% if not hero_exists %}
-        {% include 'organisms/sidebar-breakout.html' %}
-    {% endif %}
+    {% include 'organisms/sidebar-breakout.html' %}
 {% endblock %}
 
 {% block content_main %}
