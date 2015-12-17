@@ -65,7 +65,8 @@ class Hero(blocks.StructBlock):
 
     image = atoms.ImageBasic()
 
-    background_color = blocks.CharBlock(max_length=100, required=False)
+    background_color = blocks.CharBlock(max_length=100, required=False,
+                                        help_text="Use Hexcode colors e.g #F0F8FF")
     links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
 
@@ -123,7 +124,7 @@ class FeaturedContent(blocks.StructBlock):
     show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
     post_link_text = blocks.CharBlock(max_length=100, required=False)
 
-    image = atoms.ImageBasicAlt(required=False)
+    image = atoms.ImageBasic(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
                              label='Additional Links')
 
