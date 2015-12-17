@@ -23,13 +23,15 @@ class DemoPage(CFGOVPage):
         ('image_text_5050', molecules.ImageText5050()),
         ('hero', molecules.Hero()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
-        ('call_to_action', molecules.CallToAction())
+        ('call_to_action', molecules.CallToAction()),
+        ('expandable', molecules.Expandable()),
     ], blank=True)
 
     organisms = StreamField([
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
         ('post_preview', organisms.PostPreview()),
+        ('expandable_group', organisms.ExpandableGroup()),
     ], blank=True)
 
     contact = models.ForeignKey(
@@ -51,7 +53,7 @@ class DemoPage(CFGOVPage):
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Promote'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
     ])
 

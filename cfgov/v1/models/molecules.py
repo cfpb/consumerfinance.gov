@@ -4,7 +4,7 @@ from wagtail.wagtailcore import blocks
 
 from . import atoms
 
-from ..util import id_validator
+from ..util import util
 
 
 def isRequired(field_name):
@@ -98,7 +98,7 @@ class FormFieldWithButton(blocks.StructBlock):
         except ValidationError as e:
             error_dict.update(e.params)
 
-        if not id_validator(data['id']):
+        if not util.id_validator(data['id']):
             id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
             error_dict.update({'id': id_err})
 
@@ -160,3 +160,26 @@ class ContactPhone(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/molecules/contact-phone.html'
         label = 'Phone'
+
+
+class Expandable(blocks.StructBlock):
+    label = blocks.CharBlock(max_length=100, required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+
+    optional_content = blocks.StreamBlock(
+        [
+            ('links', atoms.Hyperlink()),
+            ('email', ContactEmail()),
+            ('phone', ContactPhone()),
+            ('address', ContactAddress()),
+        ], blank=True
+    )
+
+    is_bordered = blocks.BooleanBlock(required=False)
+    is_midtone = blocks.BooleanBlock(required=False)
+    is_expanded = blocks.BooleanBlock(required=False)
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/molecules/expandable.html'
+        label = 'Expandable'

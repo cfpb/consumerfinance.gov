@@ -187,8 +187,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {# Check and include template-level JavaScript. #}
     {% include '/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
 
+    {# TODO: Remove conditional when this is fully moved to wagtail. #}
     {# Check and include page-level JavaScript. #}
-    {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+    {% if page %}
+        {% include '/js/routes' + page.url + 'index.js' ignore missing %}
+    {% else %}
+        `{% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}`
+    {% endif %}
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}
