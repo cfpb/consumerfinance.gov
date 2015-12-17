@@ -1,8 +1,8 @@
-{# ==========================================================================
+{# =========================================================================
 
-   text_introduction.render()
+   Text Introduction
 
-   ==========================================================================
+   =========================================================================
 
    Description:
 
@@ -17,20 +17,18 @@
 
    value.links:     A collection of links with URL & Text.
 
-   value.has_rule:  Whether there is a bottom gray rule.
-                       Default is false.
-
    ========================================================================== #}
 
 {% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
     {% do global_dict.update(
         {
-            'introduction': {
+            'text_introduction': {
                 'heading':      'Text Introduction',
-                'intro':        'Content Intro Lorem Ipsum',
+                'intro':  {
+                    'source': 'Content Intro Lorem Ipsum'
+                },
                 'body': {
-                    'source': lipsumText
+                    'source': lipsum(1, false, 10, 25) | safe
                 },
                 'links': [{
                             'text': 'Placeholder link',
@@ -39,24 +37,18 @@
             }
         })
     %}
-    {% set value = global_dict.introduction %}
 {% endif %}
+{% set value = value or global_dict.text_introduction %}
 
-<div class="m-text-introduction
-            {{ 'm-text-introduction__bottom-rule' if value.has_rule else '' }}">
-    <h1 class='m-text-introduction_heading'>{{ value.heading }}</h1>
-
-    <p class='m-text-introduction_intro'>{{ value.intro }}</p>
-
-    <div class='m-text-introduction_body'>{{ value.body.source | safe }}</div>
-
-    <div class='m-text-introduction_link-container'>
-        {% for link in value.links %}
-            <li class="list_item">
-                <a class='jump-link' href='{{ link.url }}'>{{ link.text }}</a>
-            </li>
-        {% endfor %}
-
-    </div>
-
-</div>
+<h1>{{ value.heading }}</h1>
+<p class="lead-paragraph">{{ value.intro.source | safe }}</p>
+<p class="short-desc">{{ value.body.source | safe }}</p>
+<ul class="list list__links">
+    {% for link in value.links %}
+        <li class="list_item">
+            <a class="list_link" href="{{ link.url }}">
+                {{ link.text }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

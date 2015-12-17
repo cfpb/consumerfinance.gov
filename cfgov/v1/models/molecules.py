@@ -1,10 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.db import models
 
-from modelcluster.fields import ParentalKey
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Orderable
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 from . import atoms
 
@@ -69,7 +65,7 @@ class Hero(blocks.StructBlock):
     image = atoms.ImageBasic()
 
     background_color = blocks.CharBlock(max_length=100, required=False)
-    link = atoms.Hyperlink(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
 
     class Meta:
@@ -164,3 +160,21 @@ class ContactPhone(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/molecules/contact-phone.html'
         label = 'Phone'
+
+
+class RelatedLinks(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    links = blocks.ListBlock(atoms.Hyperlink())
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/molecules/related-links.html'
+
+
+class Quote(blocks.StructBlock):
+    body = blocks.TextBlock()
+    citation = blocks.TextBlock()
+
+    class Meta:
+        icon = 'openquote'
+        template = '_includes/molecules/quote.html'

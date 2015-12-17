@@ -10,25 +10,20 @@
                 Related Posts
             </span>
         </h2>
-        <section class="m-related-posts_section">
-            <h4>
-                <span class="cf-icon"></span>
-            </h4>
-            <ul class="m-related-posts_list">
-                <li class="list_item">
-                    <h4 class="u-mb5">
-                        <a class="list_link" >
-                        </a>
-                    </h4>
-                    <p class="date">
-                        <span class="datetime">
-                            <time class="datetime_date" datetime="">
-                            </time>
-                        </span>
-                    </p>
-                </li>
-            </ul>
-        </section>
+        <ul class="m-related-posts_list">
+            <li class="list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="list_link" >
+                    </a>
+                </h3>
+                <p class="date">
+                    <span class="datetime">
+                        <time class="datetime_date" datetime="">
+                        </time>
+                    </span>
+                </p>
+            </li>
+        </ul>
     </div>
     codenotes:
       - |
@@ -37,16 +32,13 @@
         .m-related-posts
           .header-slug
             .header-slug_inner
-          .m-related-posts_section
-            .h4
-              .cf-icon
-            .m-related-posts_list
-              .list-item
-                h4
-                  .list-link
-                .date
-                  .datetime
-                    .time.datetime_date
+        .m-related-posts_list
+          .list-item
+            h3
+              .list-link
+            .date
+              .datetime
+                .time.datetime_date
   tags:
     - cfgov-molecules
 */

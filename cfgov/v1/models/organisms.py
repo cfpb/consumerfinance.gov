@@ -7,19 +7,48 @@ from .snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True)
+    content = blocks.RichTextBlock(required=True, label='Well')
 
     class Meta:
         icon = 'title'
         template = '_includes/organisms/well.html'
 
 
-class FullWidthText(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True)
+class FullWidthText(blocks.StreamBlock):
+    content = blocks.RichTextBlock(icon='edit')
+    quote = molecules.Quote()
+    cta = molecules.CallToAction()
+    related_links = molecules.RelatedLinks()
 
     class Meta:
-        icon = 'title'
+        icon = 'edit'
         template = '_includes/organisms/full-width-text.html'
+
+
+class ImageText5050Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
+    image_texts = blocks.ListBlock(molecules.ImageText5050())
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/image-text-50-50-group.html'
+
+
+class ImageText2575Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
+    image_texts = blocks.ListBlock(molecules.ImageText2575())
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/image-text-25-75-group.html'
+
+
+class HalfWidthLinkBlobGroup(blocks.StructBlock):
+    link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/organisms/half-width-link-blob-group.html'
 
 
 class PostPreview(blocks.StructBlock):
@@ -50,9 +79,16 @@ class EmailSignUp(blocks.StructBlock):
 
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit')
-    relate_posts = blocks.BooleanBlock(required=False, default=True, label='Blog Posts')
-    relate_newsroom = blocks.BooleanBlock(required=False, default=True, label='Newsroom')
-    relate_events = blocks.BooleanBlock(required=False, default=True, label='Events')
+    show_heading = blocks.BooleanBlock(required=False, default=True,
+                                       label='Show Heading and Icon?',
+                                       help_text='This toggles the heading and'
+                                       + ' icon for the related types.')
+    relate_posts = blocks.BooleanBlock(required=False, default=True,
+                                       label='Blog Posts', editable=False)
+    relate_newsroom = blocks.BooleanBlock(required=False, default=True,
+                                          label='Newsroom', editable=False)
+    relate_events = blocks.BooleanBlock(required=False, default=True,
+                                        label='Events')
     view_more = atoms.Hyperlink(required=False)
 
     class Meta:
@@ -68,3 +104,18 @@ class MainContactInfo(blocks.StructBlock):
     class Meta:
         icon = 'wagtail'
         template = '_includes/organisms/main-contact-info.html'
+
+
+class Table(blocks.StructBlock):
+    headers = blocks.ListBlock(blocks.CharBlock(max_length=20))
+    rows = blocks.ListBlock(blocks.StreamBlock([
+        ('hyperlink', atoms.Hyperlink(required=False)),
+        ('text', blocks.CharBlock(max_length=20)),
+        ('text_blob', blocks.TextBlock()),
+        ('rich_text_blob', blocks.RichTextBlock()),
+    ]))
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/table.html'
+        label = 'Table'

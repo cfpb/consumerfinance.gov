@@ -130,13 +130,10 @@
                            {{ 'name=filter_' ~ input.name if input.name else '' }}>
                 {% elif input.type == 'checkbox' %}
                     {% for checkbox in input.attrs -%}
-                        <label class="form-group_item"
-                               {{ 'for=filter_' ~ checkbox.id if checkbox.id else '' }}>
-                            {{ _filter_checkbox(checkbox.label,
-                                                checkbox.id,
-                                                checkbox.name,
-                                                checkbox.value) | safe }}
-                        </label>
+                        {{ _filter_checkbox(checkbox.label,
+                                            checkbox.id,
+                                            checkbox.name,
+                                            checkbox.value) | safe }}
                     {% endfor %}
                 {% elif input.type == 'select' %}
                     <label class="form-group_item"
@@ -157,15 +154,15 @@
 {# A helper macro for filterable_list_controls.render()
    ========================================================================== #}
 {% macro _filter_checkbox(label_text, id, name, value) %}
-    <input class="custom-input"
+    <input class="cf-input"
            type="checkbox"
            value="{{ value }}"
            id="filter_{{ id }}"
            name="filter_{{ name }}"
-           {{ 'id=filter_' ~ id if id else '' }}
-           {{ 'name=filter_' ~ name if name else '' }}
            {{ 'checked' if is_filter_selected(name, value) else '' }}>
-    {{ label_text if label_text else value }}
+    <label for="filter_{{ id }}" >
+        {{ label_text if label_text else value }}
+    </label>
 {% endmacro %}
 
 {# A helper macro for filterable_list_controls.render()

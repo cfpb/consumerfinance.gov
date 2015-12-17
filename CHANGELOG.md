@@ -109,6 +109,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add global context variable `global_dict` for easier prototyping
 - Add styleguide app to local settings
 - Added templates and CSS for the Filterable-List-Controls organism.
+- Add Table organism
+- Add Sublanding Page
+- Add Hyperlink template
+- Add icons to Sidefoot Streamfield blocks
+- Add ImageText5050Group and HalfWidthLinkGroup templates and organisms
+- S3 Image Upload support for Refresh/Prod
+- Dev Landing Page Demo
+- Add Image Text 25/75 and Full Width Text into SublandingPage
+- Add related_posts_function to the global context in Jinja2 for prototyping of related posts
+- Added the featured content module molecule and included it in the landing-page prototype
+- Add ImageText2575Group organism
+- Add ImageText2575Group to Sublanding and Landing pages 
+- Add the insets Quote and Related Links.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -182,6 +195,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move some Promote fields to Configuration tab
 - Change Promote to be Sidebar/Footer
 - Move Related Posts and Email Signup to sidefoot Streamfield in the Sidebar/Footer tab in CFGOVPage
+- Finalize Sidebar Breakout organism template
+- Finalize Sublanding Page template
+- Fix related post molecule to be used in multiple places
+- Convert Sidefoot paragraph streamfield block to Textblock
+- Updated headings for changes in Capital Framework
+- Temporarily comment out related posts section of single blog post browser test until BlogPage's are in Wagtail
+- Add `show_heading` checkbox to Related Posts organism to toggle the heading
+  and icon.
+- Merge Streamfields in LandingPage
+- Landing and Sublanding content blocks render each atomic structure with `div class="block">`
+- Added environments to frontend/backend setup scripts.
+- Make Full Width Text organism a StreamBlock and add insets
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -202,6 +227,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed heading structure throughout website
 - Fixed setup.sh to use argument correctly
 - Fixed title for Small & Minority Businesses
+- Fix page header rendering for Sublanding page
+- Fix related post molecule to be used in multiple places
+- Fix failing tests relating to Related Posts organism
+- Fix related-posts.html logic
 
 
 ## 3.0.0-2.4.0 - 2015-09-29

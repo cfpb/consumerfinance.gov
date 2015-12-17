@@ -1,9 +1,11 @@
 import os
 
 from django.http import Http404
-from v1.models import CFGOVPage
+from django.contrib.auth.models import Permission
 
 from wagtail.wagtailcore import hooks
+
+from v1.models import CFGOVPage
 
 
 @hooks.register('after_create_page')
@@ -33,3 +35,8 @@ def check_request_site(page, request, serve_args, serve_kwargs):
         if isinstance(page, CFGOVPage):
             if not page.shared:
                 raise Http404
+
+
+@hooks.register('register_permissions')
+def register_share_permissions():
+    return Permission.objects.filter(codename='share_page')

@@ -13,16 +13,16 @@ install:
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
   - npm install nvm
-  - nvm install 4.1.0
-  - nvm use 4.1.0
+  - nvm install 5.2.0
+  - nvm use 5.2.0
   - npm install -g gulp
   - npm install -g bower
 
   # Project initialization.
-  - pip install -r requirements/test.txt 
-  - python cfgov/manage.py sheer_index
   - chmod +x ./setup.sh
-  - ./setup.sh
+  - ./setup.sh test
+  - python cfgov/manage.py sheer_index
+  - python cfgov/manage.py migrate
 
 script:
   - gulp lint

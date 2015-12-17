@@ -40,7 +40,7 @@ describe( 'The Blog single Page', function() {
     expect( page.contentSidebar.isPresent() ).toBe( true );
   } );
 
-  it( 'might include Related Posts in the sidebar', function() {
+  xit( 'might include Related Posts in the sidebar', function() {
     if ( page.relatedPosts ) {
       expect( page.relatedPostsTitle.getText() ).toBe( 'RELATED POSTS' );
     }

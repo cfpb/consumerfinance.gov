@@ -1,0 +1,73 @@
+{# ==========================================================================
+
+   featured_content.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create a featured content molecule. See
+   [GHE]/flapjack/Modules-V1/wiki/Featured-Content-Module
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update(
+        {
+            'featured_content_module': {
+                'category': {
+                    'icon': 'cf-icon-date',
+                    'text': 'Featured Event'
+                },
+                'heading': 'Fall Consumer Advisory Board meeting in
+                            Washington, DC',
+                'body': {
+                    'source': lipsumText
+                },
+                'links': [{
+                            'text': 'Read More About the Event',
+                            'url':  '#'
+                }],
+                'image': {
+                    'url': 'https://maps.googleapis.com/maps/api/staticmap?center=Washington%2C%20DC&size=540x304&zoom=12&scale=2',
+                    'alt': 'Map of Washington D.C.'
+                }
+            }
+        })
+    %}
+    {% set value = global_dict.featured_content_module %}
+{% endif %}
+
+<section class="block
+                block__border
+                block__flush
+                featured-content-module">
+    <div class="featured-content-module_text">
+        <p class="h4">
+            <span class="cf-icon {{ value.category.icon }}"></span>
+            {{ value.category.text }}
+        </p>
+        <h2>
+            {{ value.heading }}
+        </h2>
+        <p>
+            {{ value.body.source | safe }}
+        </p>
+        <ul class="list list__links">
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class="list_link" href="{{ link.url }}">
+                        {{ link.text }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="featured-content-module_visual">
+        <img class="featured-content-module_img"
+             src="{{ value.image.url }}"
+             alt="{{ value.image.alt }}">
+    </div>
+</section>

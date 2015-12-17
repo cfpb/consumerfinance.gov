@@ -10,7 +10,7 @@
 set -e
 
 setup(){
-  ./frontend.sh
+  ./frontend.sh $1
   ./backend.sh $1
   gulp beep
 }

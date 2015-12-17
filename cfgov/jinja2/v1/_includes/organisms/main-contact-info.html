@@ -39,16 +39,16 @@
 {% import 'molecules/contact-email.html' as contact_email %}
 {% import 'molecules/contact-phone.html' as contact_phone %}
 {% import 'molecules/contact-address.html' as contact_address %}
-{% if page %}
-    {% if page.contact %}
+{% if value %}
+    {% if value.contact %}
         <div class="o-main-contact-info">
-            <h2>{{ page.contact.heading }}</h2>
+            <h2>{{ value.contact.heading }}</h2>
 
-            <p>{{ page.contact.body |safe }}</p>
+            <p>{{ value.contact.body.source | safe }}</p>
 
-            {% if page.contact.contact_info %}
+            {% if value.contact.contact_info %}
 
-                {% for block in page.contact.contact_info %}
+                {% for block in value.contact.contact_info %}
                     {{ render_stream_child(block) }}
                 {% endfor %}
             {% endif %}

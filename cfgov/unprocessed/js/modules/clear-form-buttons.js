@@ -24,15 +24,15 @@ function init() {
     $form.find( '[type="checkbox"]' )
     .removeAttr( 'checked' );
 
+    // Clear radio
+    $form.find( '[type="radio"]' )
+    .removeAttr( 'checked' );
+
     // Clear select options
     $form.find( 'select option' )
     .removeAttr( 'selected' );
     $form.find( 'select option:first' )
     .attr( 'selected', true );
-
-    // Clear .custom-input elements
-    $form.find( '.custom-input' )
-    .trigger( 'updateState' );
 
     // Clear .custom-select elements
     $form.find( '.custom-select_select' )
