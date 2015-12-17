@@ -204,6 +204,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   and icon.
 - Merge Streamfields in LandingPage
 - Landing and Sublanding content blocks render each atomic structure with `div class="block">`
+- Added environments to frontend/backend setup scripts.
 
 ### Removed
 - Removed unused exportsOverride section,
