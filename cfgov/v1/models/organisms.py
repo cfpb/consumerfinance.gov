@@ -14,11 +14,14 @@ class Well(blocks.StructBlock):
         template = '_includes/organisms/well.html'
 
 
-class FullWidthText(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True)
+class FullWidthText(blocks.StreamBlock):
+    content = blocks.RichTextBlock(icon='edit')
+    quote = molecules.Quote()
+    cta = molecules.CallToAction()
+    related_links = molecules.RelatedLinks()
 
     class Meta:
-        icon = 'title'
+        icon = 'edit'
         template = '_includes/organisms/full-width-text.html'
 
 
