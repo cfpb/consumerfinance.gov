@@ -61,24 +61,6 @@
                     "assertion": "exists"
                 }
             ]
-        },
-        {
-            "macro_name": "radio_big",
-            "arguments": [
-                {
-                    "legend": "Test",
-                    "fields": ["one", "two", "three"],
-                    "size": "1",
-                    "required": true,
-                    "disabled": false
-                }
-            ],
-            "assertions": [
-                {
-                    "selector": ".form-label-header",
-                    "assertion": "exists"
-                }
-            ]
         }
     ]
 }
