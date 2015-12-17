@@ -1,5 +1,6 @@
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
+    StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -14,9 +15,10 @@ class SublandingPage(CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
     content = StreamField([
+        ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
+        ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
-        ('heading', blocks.CharBlock(icon='title')),
         ('well', organisms.Well()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
@@ -27,7 +29,8 @@ class SublandingPage(CFGOVPage):
         ('paragraph', blocks.RichTextBlock(icon='edit')),
         ('breakout_image', blocks.StructBlock([
             ('image', ImageChooserBlock()),
-            ('is_round', blocks.BooleanBlock(required=False, default=True, label='Round?')),
+            ('is_round', blocks.BooleanBlock(required=False, default=True,
+                                             label='Round?')),
             ('icon', blocks.CharBlock(help_text='Enter icon class name.')),
             ('heading', blocks.CharBlock(label='Introduction Heading')),
             ('body', blocks.TextBlock(label='Introduction Body')),

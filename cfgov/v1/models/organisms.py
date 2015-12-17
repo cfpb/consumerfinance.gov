@@ -23,11 +23,21 @@ class FullWidthText(blocks.StructBlock):
 
 
 class ImageText5050Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
         icon = 'image'
         template = '_includes/organisms/image-text-50-50-group.html'
+
+
+class ImageText2575Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
+    image_texts = blocks.ListBlock(molecules.ImageText2575())
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/image-text-25-75-group.html'
 
 
 class HalfWidthLinkBlobGroup(blocks.StructBlock):
@@ -66,9 +76,16 @@ class EmailSignUp(blocks.StructBlock):
 
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit')
-    relate_posts = blocks.BooleanBlock(required=False, default=True, label='Blog Posts')
-    relate_newsroom = blocks.BooleanBlock(required=False, default=True, label='Newsroom')
-    relate_events = blocks.BooleanBlock(required=False, default=True, label='Events')
+    show_heading = blocks.BooleanBlock(required=False, default=True,
+                                       label='Show Heading and Icon?',
+                                       help_text='This toggles the heading and'
+                                       + ' icon for the related types.')
+    relate_posts = blocks.BooleanBlock(required=False, default=True,
+                                       label='Blog Posts', editable=False)
+    relate_newsroom = blocks.BooleanBlock(required=False, default=True,
+                                          label='Newsroom', editable=False)
+    relate_events = blocks.BooleanBlock(required=False, default=True,
+                                        label='Events')
     view_more = atoms.Hyperlink(required=False)
 
     class Meta:
