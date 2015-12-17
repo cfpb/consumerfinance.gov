@@ -1,6 +1,6 @@
 /* topdoc
   name: Insets near Full Width Text
-  family: cfgov-organisms
+  family: cfgov-molecules
   patterns:
     - name: Default example
       markup: |
@@ -24,7 +24,7 @@
               .m-call-to-action
             .m-full-width-text
   tags:
-    - cfgov-organisms
+    - cfgov-molecules
   notes:
     - These are held in a full-width-text-group container to be held with
       various full-width text blocks,  insets and tables as needed.
@@ -34,6 +34,7 @@
     margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     width: 100%;
+    clear: right;
 
     .respond-to-min(@bp-med-min, {
         float: right;
