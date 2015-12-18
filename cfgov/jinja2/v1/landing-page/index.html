@@ -65,11 +65,7 @@
             {% include 'organisms/well.html' %}
         </div>
         <div class="block">
-            <div class="o-link-blob-group">
-                <h2>Link Blob Header</h2>
-                {% include 'molecules/half-width-link-blob.html' %}
-                {% include 'molecules/half-width-link-blob.html' %}
-            </div>
+            {% include 'organisms/half-width-link-blob-group.html' %}
         </div>
     {% else %}
         {% for block in page.header -%}

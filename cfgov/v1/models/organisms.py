@@ -44,6 +44,7 @@ class ImageText2575Group(blocks.StructBlock):
 
 
 class HalfWidthLinkBlobGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
     class Meta:
