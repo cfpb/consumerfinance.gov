@@ -126,7 +126,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added prototype data to the form-field-with-button molecule
 - Added prototype data to the email-signup organism
 - Added the email-signup organism to landing-page template
-
+- Added templates and CSS for the Social-Media molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -212,6 +212,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Landing and Sublanding content blocks render each atomic structure with `div class="block">`
 - Added environments to frontend/backend setup scripts.
 - Make Full Width Text organism a StreamBlock and add insets
+- Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
 
 ### Removed
 - Removed unused exportsOverride section,

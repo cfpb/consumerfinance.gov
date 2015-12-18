@@ -5,4 +5,6 @@
 
 'use strict';
 
-require( '../../modules/external-site.js' ).init();
+var ExternalSite = require( '../../modules/ExternalSite.js' );
+var externalSite = new ExternalSite( document.querySelector( '.external-site_container' ) );
+externalSite.init();
