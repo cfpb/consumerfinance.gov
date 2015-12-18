@@ -126,7 +126,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added prototype data to the form-field-with-button molecule
 - Added prototype data to the email-signup organism
 - Added the email-signup organism to landing-page template
-
+- Add Heading field to Link Blob group
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
