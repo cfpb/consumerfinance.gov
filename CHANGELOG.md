@@ -120,9 +120,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add related_posts_function to the global context in Jinja2 for prototyping of related posts
 - Added the featured content module molecule and included it in the landing-page prototype
 - Add ImageText2575Group organism
-- Add ImageText2575Group to Sublanding and Landing pages 
+- Add ImageText2575Group to Sublanding and Landing pages
 - Add the insets Quote and Related Links.
 - Added templates and CSS for the Notification molecule.
+- Added prototype data to the form-field-with-button molecule
+- Added prototype data to the email-signup organism
+- Added the email-signup organism to landing-page template
+
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
