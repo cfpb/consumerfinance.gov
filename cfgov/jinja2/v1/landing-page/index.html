@@ -3,7 +3,6 @@
 {% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% if not page %}
-    {% set doc = get_document('posts', 'four-years-working-for-you') %}
     {% do global_dict.update({
             'page':  {
                 'seo_title':     'This is a prototype page for testing landing page layouts.',

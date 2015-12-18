@@ -182,6 +182,8 @@ urlpatterns = [
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
+    url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
+
     url(r'^careers/', include([
         url(r'^$', TemplateView.as_view(template_name='careers/index.html'),
             name='careers'),

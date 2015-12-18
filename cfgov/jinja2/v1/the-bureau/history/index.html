@@ -14,7 +14,7 @@
 {% block content_main %}
 
     {% import 'post-macros.html' as post_macros %}
-    {% import 'macros/share.html' as share with context %}
+    {% import 'molecules/social-media.html' as social_media %}
 
     {% set query = queries.history %}
 
@@ -28,10 +28,7 @@
             Consumer Financial Protection Bureau.
             He previously led the Bureau’s Enforcement Division.
         </p>
-        {{ share.render({
-            'title': self.title(),
-            'hide_heading': true
-        }) }}
+        {{ social_media.render() }}
     </div>
 
 	{% set sections = query.search(filter_has_parent='false') -%}

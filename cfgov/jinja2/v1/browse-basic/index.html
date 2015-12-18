@@ -2,19 +2,33 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/expandable.html' as expandable %}
+{% import 'molecules/social-media.html' as social_media %}
 
 {% import 'organisms/expandable-group.html' as expandable_group %}
+
+{% if not page %}
+    {% do global_dict.update({
+            'page':  {
+                'seo_title': 'This is a prototype page for testing landing page layouts.'
+            },
+            'prototype': true
+        })
+    %}
+{% endif %}
+{% set page = page or global_dict.page %}
+{% set prototype = global_dict.prototype or false %}
 
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
 {% block title -%}
-    TODO: This is a prototype page for testing landing page layouts.
-    Remove when fully implemented elsewhere.
+    {{ page.seo_title }}
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block
-                block__flush-top">
+    <div class="block">
+        {{ social_media.render() }}
+    </div>
+    <div class="block">
         <div class="expandable-prototypes">
             {% call expandable.render("Default Expandable") %}
                 {{ lipsum(1, false, 10, 225) | safe }}
