@@ -1,6 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
 {# Import organisms and molecules used in the template. #}
+{% import 'molecules/notification.html' as notification %}
 {% import 'organisms/post-preview.html' as post_preview %}
 {% import 'organisms/filterable-list-controls.html' as filterable_list_controls %}
 
@@ -18,6 +19,43 @@
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
+    <div class="block
+                block__flush
+                block__padded-bottom">
+        {# TODO: Move notification to filter-list-control. #}
+        {{ notification.render() }}
+    </div>
+    <div class="block
+                block__flush
+                block__padded-bottom">
+        {{ notification.render({
+            'type': 'warning'
+        }) }}
+    </div>
+    <div class="block
+                block__flush
+                block__padded-bottom">
+        {{ notification.render({
+            'type': 'error'
+        }) }}
+    </div>
+    <div class="block
+                block__flush
+                block__padded-bottom">
+        {{ notification.render({
+            'message':     'Custom text',
+            'explanation': 'With an explanation!'
+        }) }}
+    </div>
+    <div class="block
+                block__flush
+                block__padded-bottom">
+        {{ notification.render({
+            'type':        'warning',
+            'message':     'Custom text',
+            'explanation': 'And an explanation with a <a href="#">link</a>' | safe
+        }) }}
+    </div>
     <div class="block
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}

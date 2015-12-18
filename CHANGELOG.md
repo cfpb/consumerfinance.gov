@@ -122,6 +122,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add ImageText2575Group organism
 - Add ImageText2575Group to Sublanding and Landing pages 
 - Add the insets Quote and Related Links.
+- Added templates and CSS for the Notification molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

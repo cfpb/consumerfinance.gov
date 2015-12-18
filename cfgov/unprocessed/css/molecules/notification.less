@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Capital Framework
+   Notification Styling
+   ========================================================================== */
+
+
+/* topdoc
+  name: Notifications
+  family: cf-molecules
+  notes:
+    - "Markup and styling for notifications"
+  patterns:
+    - name: Default Usage
+      markup: |
+        <div class="m-notification m-notification__error">
+          <span class="cf-notification_icon
+                       cf-notification_icon__error
+                       cf-icon
+                       cf-icon-error-round"></span>
+          <p class="h4>
+              This is a default alert.
+          </p>
+          <p class="h4 m-notification_explanation">
+              This is a default explanation with a <a href="#">link</a>.
+          </p>
+        </div>
+  tags:
+    - cf-molecules
+*/
+
+@m-notification-padding__px: 15px;
+
+.m-notification {
+    /* display: none; TODO: uncomment this line when prototype is merged into filters. x*/
+    position: relative;
+
+    padding: @m-notification-padding__px;
+    padding-left: 40px;
+
+    background: @gray-20;
+    border: 1px solid @gray;
+
+    &__success {
+        background: @green-tint;
+        border-color: @input-success;
+    }
+
+    &__warning {
+        background: @gold-20;
+        border-color: @input-warning;
+    }
+
+    &__error {
+        background: @redorange-20;
+        border-color: @input-error;
+    }
+
+    &_icon {
+        position: absolute;
+        top: @m-notification-padding__px + 2px;
+        left: @m-notification-padding__px;
+
+        color: @gray-20;
+        font-size: unit( 18px / @base-font-size-px, em );
+
+        &__success {
+            color: @green;
+        }
+
+        &__warning {
+            color: @gold;
+        }
+
+        &__error {
+            color: @redorange;
+        }
+    }
+
+    p:last-child {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    &_explanation {
+        font-size: 1em;
+
+        a {
+            border-bottom-width: 1px;
+        }
+    }
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/
