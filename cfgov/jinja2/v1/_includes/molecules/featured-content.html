@@ -85,13 +85,15 @@
     </div>
 
     <div class="featured-content-module_visual">
-        {% if prototype %}
-            {% set photo=value.image.upload %}
-        {% else %}
-            {% set photo=image(value.image.upload, 'original') %}
+        {% if value.image.upload %}
+            {% if prototype %}
+                {% set photo=value.image.upload %}
+            {% else %}
+                {% set photo=image(value.image.upload, 'original') %}
+            {% endif %}
+            <img class="featured-content-module_img"
+                 src="{{ photo.url }}"
+                 alt="{{ value.image.alt }}">
         {% endif %}
-        <img class="featured-content-module_img"
-             src="{{ photo.url }}"
-             alt="{{ value.image.alt }}">
     </div>
 </section>
