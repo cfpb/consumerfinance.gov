@@ -24,7 +24,30 @@
    ========================================================================== #}
 
 {% if not value %}
-    {% set value = global_dict %}
+    {% do global_dict.update(
+        {
+            'expandable_group': {
+                'heading': 'Group Header',
+                'has_rule': true,
+                'expandables': [
+                    {
+                        'label': 'Expand 1 - initially open',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                        'is_expanded': true
+                    },
+                     {
+                        'label': 'Expand 2',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                    }
+                ],
+            }
+        })
+    %}
+    {% set value = global_dict.expandable_group %}
     {% set prototype = true %}
 {% endif %}
 <div class="o-expandable-group

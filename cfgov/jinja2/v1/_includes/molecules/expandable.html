@@ -21,7 +21,18 @@
    ========================================================================== #}
 
 {% if not value %}
-    {% set value = global_dict %}
+    {% do global_dict.update(
+        {
+            'expandable': {
+                'label': 'Default Expandable',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': true,
+                'is_midtone': false,
+                'is_expanded': false
+            }
+        })
+    %}
+    {% set value = global_dict.expandable %}
 {% endif %}
 <div class="m-expandable
             m-expandable__expanded

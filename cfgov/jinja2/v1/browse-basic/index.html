@@ -30,14 +30,6 @@
     </div>
     <div class="block">
         <div class="expandable-prototypes">
-            {% do global_dict.update(
-            {
-            'label': 'Default Expandable',
-            'paragraph': lipsum(1, false, 10, 225),
-            'is_bordered': true,
-            'is_midtone': false,
-            'is_expanded': false
-            }) %}
             {% include 'molecules/expandable.html' with context %}
 
 
@@ -73,26 +65,6 @@
         </div>
 
         <div class="expandable-group-prototypes">
-            {% do global_dict.update(
-            {
-            'heading': 'Group Header',
-            'has_rule': true,
-            'expandables': [
-                {
-                    'label': 'Expand 1 - initially open',
-                    'paragraph': lipsum(1, false, 10, 225),
-                    'is_bordered': true,
-                    'is_midtone': true,
-                    'is_expanded': true
-                },
-                 {
-                    'label': 'Expand 2',
-                    'paragraph': lipsum(1, false, 10, 225),
-                    'is_bordered': true,
-                    'is_midtone': true,
-                }
-            ],
-            }) %}
             {% include 'organisms/expandable-group.html' with context %}
 
             {% do global_dict.update(
