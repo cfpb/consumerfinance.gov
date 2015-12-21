@@ -182,10 +182,10 @@ class Quote(blocks.StructBlock):
 
 class Expandable(blocks.StructBlock):
     label = blocks.CharBlock(max_length=100, required=False)
-    paragraph = blocks.RichTextBlock(required=False)
 
-    optional_content = blocks.StreamBlock(
+    content = blocks.StreamBlock(
         [
+            ('paragraph', blocks.RichTextBlock(required=False)),
             ('links', atoms.Hyperlink()),
             ('email', ContactEmail()),
             ('phone', ContactPhone()),

@@ -8,10 +8,10 @@
 
    Create an Expandable molecule when given:
 
-   label:                Label you want on the Expandable.
-                         Default is an empty string.
-
    value
+   value.label        Label you want on the Expandable.
+                         Default is an empty string.
+   value.content      Main content of the expandable
    value.is_bordered: Whether the Expandable has a bottom border or not.
                          Default is true.
    value.is_midtone:  Whether the Expandable is gray or not.
@@ -65,9 +65,12 @@
     <div class="m-expandable_content"
             {{ 'aria-expanded=true' if value.is_expanded else '' }}>
         <div class="m-expandable_content-animated">
-            {{ value.paragraph |safe }}
-            {% for item in value.optional_content %}
-                {{ render_stream_child(item) }}
+            {% for block in value.content %}
+                {% if 'paragraph' in block.block_type %}
+                    {{ block |safe }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
             {% endfor %}
         </div>
     </div>
