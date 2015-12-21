@@ -129,6 +129,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Social-Media molecule.
 - Add Heading field to Link Blob group
 - Add prototype data to Image Text organisms
+- Backend Expandable/Expandable Group Molecule & Organisms
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
