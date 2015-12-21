@@ -120,8 +120,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add related_posts_function to the global context in Jinja2 for prototyping of related posts
 - Added the featured content module molecule and included it in the landing-page prototype
 - Add ImageText2575Group organism
-- Add ImageText2575Group to Sublanding and Landing pages 
+- Add ImageText2575Group to Sublanding and Landing pages
 - Add the insets Quote and Related Links.
+- Added templates and CSS for the Notification molecule.
+- Added prototype data to the form-field-with-button molecule
+- Added prototype data to the email-signup organism
+- Added the email-signup organism to landing-page template
+- Added templates and CSS for the Social-Media molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -207,6 +212,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Landing and Sublanding content blocks render each atomic structure with `div class="block">`
 - Added environments to frontend/backend setup scripts.
 - Make Full Width Text organism a StreamBlock and add insets
+- Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
 - Changed the ImageBasic atom to always include an optional alt by default
 
 ### Removed

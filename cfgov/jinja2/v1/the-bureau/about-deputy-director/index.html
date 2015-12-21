@@ -13,7 +13,7 @@
 
 {% block content_main %}
 
-	{% import 'macros/share.html' as share with context %}
+	{% import 'molecules/social-media.html' as social_media %}
 
     <div class="block block__flush-top" data-qa-hook="director-bio">
         <h1 data-qa-hook="director-bio-title">
@@ -46,10 +46,7 @@
             Court for the District of Columbia. She is a graduate of the New York University
             School of Law and the London School of Economics and Political Science.
         </p>
-        {{ share.render({
-            'title': self.title(),
-            'hide_heading': true
-        }) }}
+        {{ social_media.render() }}
     </div>
 
     <section class="block block__padded-top block__padded-bottom block__border-top">

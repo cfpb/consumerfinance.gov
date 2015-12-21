@@ -1,0 +1,61 @@
+/* topdoc
+  name: Social Media
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-social-media">
+            <h5 class="m-social-media_heading">Share this</h5>
+            <ul class="list">
+                <li class="list_item">
+                    <a class="m-social-media_icon" href="#">
+                        <span class="cf-icon cf-icon-email-social-square"></span>
+                        <span class="u-visually-hidden">
+                            Share by email
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-social-media
+            .m-social-media_heading
+            ul.list
+              li.list_item
+                .m-social-media_icon
+                  span.cf-icon
+                  span.u-visually-hidden
+  tags:
+    - cfgov-molecules
+*/
+
+.m-social-media {
+    &_heading {
+        display: inline-block;
+        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        vertical-align: middle;
+    }
+
+    .list {
+        display: inline-block;
+
+        .list_item {
+            margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+        }
+
+        .list_item:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &_icon {
+        color: @darkgray;
+        font-size: unit( @grid_gutter-width / @base-font-size-px, em );
+        line-height: 1;
+        .u-link__colors( @darkgray, @pacific-80 );
+        .u-link__no-border();
+    }
+}

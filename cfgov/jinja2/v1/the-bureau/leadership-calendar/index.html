@@ -18,7 +18,7 @@
 {% block content_main %}
 
     {% import 'leadership-calendar-table.html' as calendar %}
-    {% import 'macros/share.html' as share with context %}
+    {% import 'molecules/social-media.html' as social_media %}
     {% import 'macros/filters.html' as filters with context %}
     {% from 'post-macros.html' import pagination as pagination with context %}
 
@@ -43,10 +43,7 @@
             month’s calendar will appear on this page a few weeks after that month has concluded. We
             have also retained the calendars of people who have previously lead the day-to-day work of the CFPB.
         </p>
-        {{ share.render({
-            'title': self.title(),
-            'hide_heading': true
-        }) }}
+        {{ social_media.render() }}
     </div>
 
     <div id="pagination_content"></div>
