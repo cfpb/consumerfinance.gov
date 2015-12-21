@@ -213,6 +213,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added environments to frontend/backend setup scripts.
 - Make Full Width Text organism a StreamBlock and add insets
 - Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
+- Changed the ImageBasic atom to always include an optional alt by default
 
 ### Removed
 - Removed unused exportsOverride section,

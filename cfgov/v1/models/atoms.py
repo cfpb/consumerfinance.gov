@@ -40,6 +40,7 @@ class Hyperlink(blocks.StructBlock):
 
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
+    alt = blocks.CharBlock(required=False)
 
     def __init__(self, required=True):
         self.required = required
@@ -93,11 +94,3 @@ class ImageBasicUrl(ImageBasic):
             raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
         else:
             return data
-
-
-class ImageBasicAlt(ImageBasic):
-    alt = blocks.CharBlock(required=False)
-
-
-class ImageBasicUrlAlt(ImageBasicUrl):
-    alt = blocks.CharBlock(required=False)

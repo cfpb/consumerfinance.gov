@@ -37,9 +37,9 @@
                 'heading' :    'Image and Text 50-50',
                 'image': {
                       'upload': {
-                                'url': 'http://placehold.it/1600x900',
-                                'alt': 'This is a placeholder image'
-                      }
+                                'url': 'http://placehold.it/1600x900'
+                      },
+                      'alt': 'This is a placeholder image'
                 },
                 'is_widescreen': true,
                 'body': {
@@ -70,7 +70,7 @@
             {% endif %}
 
             <img src="{{ photo.url }}"
-                 alt="{{ photo.alt }}"
+                 alt="{{ value.image.alt }}"
                  class="m-image-text-50-50_image">
         {% endif %}
     </div>

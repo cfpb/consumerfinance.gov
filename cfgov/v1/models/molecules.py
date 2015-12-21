@@ -37,7 +37,7 @@ class ImageText5050(blocks.StructBlock):
 class ImageText2575(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=True)
-    image = atoms.ImageBasicAlt()
+    image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
