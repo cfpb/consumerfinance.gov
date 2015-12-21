@@ -25,6 +25,7 @@ from . import ref
 from . import atoms
 from . import molecules
 from . import organisms
+from ..util import util
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -188,6 +189,30 @@ class CFGOVPage(Page):
 
     class Meta:
         app_label = 'v1'
+
+    def children(self):
+        pass
+
+    def _media(self):
+        from v1 import models
+
+        js = ()
+        for child in self.children():
+            if isinstance(child, dict):
+                type = child['type']
+            else:
+                type = child[0]
+
+            class_ = getattr(models, util.to_camel_case(type))
+
+            instance = class_()
+
+            if hasattr(instance.Media, 'js'):
+                js += instance.Media.js
+
+        return js
+
+    media = property(_media)
 
 
 class CFGOVPageCategory(Orderable):

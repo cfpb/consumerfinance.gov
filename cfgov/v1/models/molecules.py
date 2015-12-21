@@ -53,7 +53,8 @@ class TextIntroduction(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
-    js = "expandable.js"
+    class Media:
+        js = ("expandable.js",)
 
     class Meta:
         icon = 'title'
