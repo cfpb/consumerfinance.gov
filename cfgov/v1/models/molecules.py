@@ -4,8 +4,7 @@ from wagtail.wagtailcore import blocks
 
 from . import ref
 from . import atoms
-
-from ..util import id_validator
+from ..util import util
 
 
 def isRequired(field_name):
@@ -54,6 +53,8 @@ class TextIntroduction(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
+    js = "expandable.js"
+
     class Meta:
         icon = 'title'
         template = '_includes/molecules/text-introduction.html'
@@ -100,7 +101,7 @@ class FormFieldWithButton(blocks.StructBlock):
         except ValidationError as e:
             error_dict.update(e.params)
 
-        if not id_validator(data['id']):
+        if not util.id_validator(data['id']):
             id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
             error_dict.update({'id': id_err})
 

@@ -18,6 +18,8 @@ from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
+from sets import Set
+
 from sheerlike.query import get_document, more_like_this
 from . import ref
 from . import atoms
@@ -67,6 +69,9 @@ class CFGOVPage(Page):
         ('contact', organisms.MainContactInfo()),
     ], blank=True)
 
+    # Page specific JS based on included atomic elements
+    page_js_delimited = models.CharField(max_length=255, default='')
+
     ### Panels ###
     sidefoot_panels = [
         StreamFieldPanel('sidefoot'),
@@ -101,7 +106,7 @@ class CFGOVPage(Page):
         # End TODO
         for search_type, page_class in search_types.items():
             if 'relate_%s' % search_type in block.value \
-               and block.value['relate_%s' % search_type]:
+                    and block.value['relate_%s' % search_type]:
                 related[search_type] = \
                     page_class.objects.filter(query).order_by(
                         '-latest_revision_created_at').exclude(
@@ -177,6 +182,9 @@ class CFGOVPage(Page):
         """
         user_perms = CFGOVUserPagePermissionsProxy(user)
         return user_perms.for_page(self)
+
+    def page_js(self):
+        return filter(None, Set(self.page_js_delimited.split(";")))
 
     class Meta:
         app_label = 'v1'
