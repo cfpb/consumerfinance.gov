@@ -47,9 +47,9 @@
             }
         })
     %}
-    {% set value = global_dict.expandable_group %}
-    {% set prototype = true %}
 {% endif %}
+{% set value = value or global_dict.expandable_group %}
+
 <div class="o-expandable-group
             {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
 

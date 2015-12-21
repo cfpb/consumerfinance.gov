@@ -32,8 +32,9 @@
             }
         })
     %}
-    {% set value = global_dict.expandable %}
 {% endif %}
+{% set value = value or global_dict.expandable %}
+
 <div class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
@@ -65,6 +66,9 @@
     <div class="m-expandable_content"
             {{ 'aria-expanded=true' if value.is_expanded else '' }}>
         <div class="m-expandable_content-animated">
+            {% if prototype %}
+                {{ value.paragraph }}
+            {% endif %}
             {% for block in value.content %}
                 {% if 'paragraph' in block.block_type %}
                     {{ block |safe }}
