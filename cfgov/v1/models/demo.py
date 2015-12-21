@@ -35,7 +35,7 @@ class DemoPage(CFGOVPage):
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
         ('post_preview', organisms.PostPreview()),
-        ('expandables_group', organisms.ExpandableGroup()),
+        ('expandable_group', organisms.ExpandableGroup()),
     ], blank=True)
 
     contact = models.ForeignKey(

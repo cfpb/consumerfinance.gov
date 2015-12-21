@@ -53,9 +53,6 @@ class TextIntroduction(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
-    class Media:
-        js = ("expandable.js",)
-
     class Meta:
         icon = 'title'
         template = '_includes/molecules/text-introduction.html'
@@ -225,3 +222,6 @@ class Expandable(blocks.StructBlock):
         icon = 'list-ul'
         template = '_includes/molecules/expandable.html'
         label = 'Expandable'
+
+    class Media:
+        js = ("expandable.js",)
