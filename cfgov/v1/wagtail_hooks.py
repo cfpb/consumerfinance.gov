@@ -1,4 +1,4 @@
-import os, itertools
+import os
 
 from django.http import Http404
 from django.contrib.auth.models import Permission
