@@ -8,32 +8,44 @@
 
    Create an Expandable molecule when given:
 
-   label:                Label you want on the Expandable.
+   value
+   value.label        Label you want on the Expandable.
                          Default is an empty string.
-
-   settings
-   settings.is_bordered: Whether the Expandable has a bottom border or not.
+   value.content      Main content of the expandable
+   value.is_bordered: Whether the Expandable has a bottom border or not.
                          Default is true.
-   settings.is_midtone:  Whether the Expandable is gray or not.
+   value.is_midtone:  Whether the Expandable is gray or not.
                          Default is false.
-   settings.is_expanded: Whether the Expandable is expanded or not.
+   value.is_expanded: Whether the Expandable is expanded or not.
                          Default is false.
    ========================================================================== #}
 
-{% macro render(label="", settings) %}
-{# Add the __expanded modifier class by default so all expandables are open
-   when JS is switched off, but add a data-js-hook to tell JS to remove it. #}
+{% if not value %}
+    {% do global_dict.update(
+        {
+            'expandable': {
+                'label': 'Default Expandable',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': true,
+                'is_midtone': false,
+                'is_expanded': false
+            }
+        })
+    %}
+{% endif %}
+{% set value = value or global_dict.expandable %}
+
 <div class="m-expandable
             m-expandable__expanded
-            {{ 'm-expandable__borders' if settings.is_bordered else '' }}
-            {{ 'm-expandable__midtone' if settings.is_midtone else '' }}"
-     {{ 'data-state=expanded' if settings.is_expanded else '' }}>
+            {{ 'm-expandable__borders' if value.is_bordered else '' }}
+            {{ 'm-expandable__midtone' if value.is_midtone else '' }}"
+            {{ 'data-state=expanded' if value.is_expanded else '' }}>
 
-    <button class="m-expandable_target">
-        <div class="m-expandable_header">
+        <button class="m-expandable_target">
+            <div class="m-expandable_header">
             <span class="m-expandable_header-left
                          m-expandable_label">
-                {{ label }}
+                {{ value.label }}
             </span>
             <span class="m-expandable_header-right
                          m-expandable_link
@@ -52,10 +64,18 @@
         </div>
     </button>
     <div class="m-expandable_content"
-         {{ 'aria-expanded=true' if settings.is_expanded else '' }}>
+            {{ 'aria-expanded=true' if value.is_expanded else '' }}>
         <div class="m-expandable_content-animated">
-            {{ caller() }}
+            {% if prototype %}
+                {{ value.paragraph }}
+            {% endif %}
+            {% for block in value.content %}
+                {% if 'paragraph' in block.block_type %}
+                    {{ block |safe }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>
-{% endmacro %}
