@@ -14,11 +14,14 @@ class Well(blocks.StructBlock):
         template = '_includes/organisms/well.html'
 
 
-class FullWidthText(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True)
+class FullWidthText(blocks.StreamBlock):
+    content = blocks.RichTextBlock(icon='edit')
+    quote = molecules.Quote()
+    cta = molecules.CallToAction()
+    related_links = molecules.RelatedLinks()
 
     class Meta:
-        icon = 'title'
+        icon = 'edit'
         template = '_includes/organisms/full-width-text.html'
 
 
@@ -41,6 +44,7 @@ class ImageText2575Group(blocks.StructBlock):
 
 
 class HalfWidthLinkBlobGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title')
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
     class Meta:
@@ -79,7 +83,7 @@ class RelatedPosts(blocks.StructBlock):
     show_heading = blocks.BooleanBlock(required=False, default=True,
                                        label='Show Heading and Icon?',
                                        help_text='This toggles the heading and'
-                                       + ' icon for the related types.')
+                                                 + ' icon for the related types.')
     relate_posts = blocks.BooleanBlock(required=False, default=True,
                                        label='Blog Posts', editable=False)
     relate_newsroom = blocks.BooleanBlock(required=False, default=True,
@@ -116,3 +120,17 @@ class Table(blocks.StructBlock):
         icon = 'form'
         template = '_includes/organisms/table.html'
         label = 'Table'
+
+
+class ExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+
+    is_accordion = blocks.BooleanBlock(required=False)
+    has_rule = blocks.BooleanBlock(required=False)
+
+    expandables = blocks.ListBlock(molecules.Expandable())
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'

@@ -163,7 +163,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
  <!-- /PRIMARY CONTENT -->
 
 {% block footer %}
-    {% include 'templates/footer.html' %}
+    {% import 'macros/footer-global.html' as footer_global with context %}
+    {{ footer_global.render() }}
 {% endblock footer %}
 
 {% endblock body %}

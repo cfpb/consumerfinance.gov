@@ -38,8 +38,8 @@
           -----------------------
           .nav-secondary
             .nav-secondary_button
-            .nav-secondary_list
-              .nav-secondary_item
+            .nav-secondary_list.nav-secondary_list__parents
+              .nav-secondary_item.nav-secondary_list__parent
                 .nav-secondary_link /
                 .nav-secondary_link.nav-secondary_link__current
     - name: Current link modifier
@@ -75,7 +75,7 @@
                 </button>
             </div>
             <div class="expandable_content">
-                <ul class="nav-secondary_list">
+                <ul class="nav-secondary_list nav-secondary_list__parents">
                     <li class="nav-secondary_item nav-secondary_item__parent">
                         <a class="nav-secondary_link" href="#">
                            Item 1
@@ -109,8 +109,8 @@
                   .expandable_cue-close
                     .cf-icon.cf-icon-up
             .expandable_content
-              .nav-secondary_list
-                .nav-secondary_item
+              .nav-secondary_list.nav-secondary_list__parents
+                .nav-secondary_item.nav-secondary_list__parent
                   .nav-secondary_link /
                   .nav-secondary_link.nav-secondary_link__current
   tags:

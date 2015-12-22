@@ -3,7 +3,6 @@
 {% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% if not page %}
-    {% set doc = get_document('posts', 'four-years-working-for-you') %}
     {% do global_dict.update({
             'page':  {
                 'seo_title':     'This is a prototype page for testing landing page layouts.',
@@ -45,32 +44,22 @@
     {% if prototype %}
         <div class="block
                     block__flush-top">
-        {% include 'molecules/text-introduction.html' %}
+            {% include 'molecules/text-introduction.html' %}
         </div>
         <div class="block">
             {% include 'molecules/featured-content.html' %}
         </div>
         <div class="block">
-            <div class="o-image-text-50-50-group">
-                <h2>Image Text 50 50 Group Header</h2>
-                {% include 'molecules/image-text-50-50.html' %}
-                {% include 'molecules/image-text-50-50.html' %}
-            </div>
+            {% include 'organisms/image-text-50-50-group.html' %}
         </div>
         <div class="block">
-            <h2>Image Text 25 75 Group Header</h2>
-            {% include 'molecules/image-text-25-75.html' %}
-            {% include 'molecules/image-text-25-75.html' %}
+            {% include 'organisms/image-text-25-75-group.html' %}
         </div>
         <div class="block">
             {% include 'organisms/well.html' %}
         </div>
         <div class="block">
-            <div class="o-link-blob-group">
-                <h2>Link Blob Header</h2>
-                {% include 'molecules/half-width-link-blob.html' %}
-                {% include 'molecules/half-width-link-blob.html' %}
-            </div>
+            {% include 'organisms/half-width-link-blob-group.html' %}
         </div>
     {% else %}
         {% for block in page.header -%}

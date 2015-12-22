@@ -1,31 +1,47 @@
 {# ==========================================================================
 
-   related_links.render()
+    Related Links
 
-   ==========================================================================
+    ==========================================================================
 
-   Description:
+    Description:
 
-   Creates related posts markup when given:
+    Creates related posts markup when given:
 
-   links:   An array of links with the link first followed by the text of link
+    value:         A collection of a heading and links.
+
+    value.heading: The heading of the related links inset.
+                    (Default: Related Links)
+
+    value.links:   An list of links with the link first followed by the text of
+                    link   .
 
    ========================================================================== #}
 
-{% macro render(links) %}
+{% if not value %}
+    {% do global_dict.update({
+        'related_links': {
+            'heading': 'Related Links',
+            'links': [
+                {'url': '/url/', 'text': 'Link text'},
+                {'url': '/url/', 'text': 'Link text'},
+                {'url': '/url/', 'text': 'Link text'},
+            ]
+        }
+    }) %}
+{% endif %}
+{% set value = value or global_dict.related_links %}
 <div class="m-related-links">
     <h2 class="header-slug">
         <span class="header-slug_inner">
-            Related Links
+            {{ value.heading }}
         </span>
     </h2>
     <ul class="list list__unstyled list__links">
-    {% for link in links %}
-    {%- set href, text = link[0], link[1] %}
+    {% for link in value.links %}
         <li class="list_item">
-            <a href="{{ href }}" class="list_link">{{ text }}</a>
+            <a href="{{ link.url }}" class="list_link">{{ link.text }}</a>
         </li>
     {% endfor %}
     </ul>
 </div>
-{% endmacro %}

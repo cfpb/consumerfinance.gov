@@ -2,11 +2,11 @@
 
 {# Import organisms and molecules used in the template. #}
 
-{% import 'molecules/related-links.html' as related_links %}
-{% import 'molecules/quote.html' as quote %}
-{% import 'organisms/full-width-text.html' as full_width_text %}
 {% import 'organisms/post-preview.html' as post_preview %}
 {% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
+
+{% import 'atoms/large-checkbox.html' as large_checkbox %}
+{% import 'atoms/large-radio.html' as large_radio %}
 
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
@@ -23,7 +23,7 @@
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
-    {# TODO: Add Forms, Expandable, Inset Molecule#}
+    {# TODO: Add Forms, Expandable #}
     <div class="block
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
@@ -31,33 +31,35 @@
             {% include 'molecules/text-introduction.html' %}
         {% endif %}
     </div>
-    <div class="o-full-width-text-group">
-        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
-        <div class="m-inset">
-            {{ related_links.render( [
-                ['#', 'Related Link 1'],
-                ['#', 'Related Link 2'],
-                ['#', 'Related Link 3']
-            ])  }}
-        </div>
-        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
-        <div class="m-inset">
-            {{ quote.render({
-                'quote':    'To infinity and beyond',
-                'citation': 'Buzz Lightyear'
-            }) }}
-        </div>
-        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
-        <div class="m-inset">
-            {% if prototype %}
-                {% include 'molecules/call-to-action.html' %}
-            {% endif %}
-        </div>
-        {{ full_width_text.render( 'sublanding-page/_template-prototype-full-width-content.html' ) }}
+    <div class="block">
+        {% include 'organisms/full-width-text.html' %}
     </div>
+
     {% if prototype %}
-        {% include 'organisms/well.html' %}
+        <div class="block">
+            {% include 'organisms/well.html' %}
+        </div>
     {% endif %}
+
+    <div class="block
+                block__bg
+                block__flush-sides">
+        <h3>Form Fields</h3>
+        {{ large_checkbox.render( {
+            'legend':   'Choose toppings',
+            'fields':   ['cheese', 'pepperoni', 'anchovies', 'mushrooms'],
+            'size':     '1-4'
+        }, {
+            'required': 'true'
+        }) }}
+        {{ large_radio.render( {
+            'legend':   'Extra Cheese',
+            'fields':   ['Yes', 'No'],
+            'size':     '1-2'
+        }, {
+            'required': 'true'
+        }) }}
+    </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}

@@ -8,39 +8,72 @@
 
    Create an Expandable Group organism when given:
 
-   settings:              An object with the following options for settings.
+   value:              An object with the following options for value.
                           Defaults to an empty object.
 
-   settings.heading:      Heading text.
+   value.heading:      Heading text.
 
-   settings.intro:        Body introduction text.
+   value.body:        Body introduction text.
 
-   settings.is_accordion: Whether this group is an accordion or not.
+   value.is_accordion: Whether this group is an accordion or not.
                           Default is false.
 
-   settigns.has_rule:     Whether there is a top gray rule.
+   value.has_rule:     Whether there is a top gray rule.
                           Default is false.
 
    ========================================================================== #}
 
-{% macro render(settings={}) %}
-<div class="o-expandable-group
-            {{ 'o-expandable-group__accordion' if settings.is_accordion else '' }}">
+{% if not value %}
+    {% do global_dict.update(
+        {
+            'expandable_group': {
+                'heading': 'Group Header',
+                'has_rule': true,
+                'expandables': [
+                    {
+                        'label': 'Expand 1 - initially open',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                        'is_expanded': true
+                    },
+                     {
+                        'label': 'Expand 2',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                    }
+                ],
+            }
+        })
+    %}
+{% endif %}
+{% set value = value or global_dict.expandable_group %}
 
-    {% if settings.has_rule %}
+<div class="o-expandable-group
+            {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
+
+    {% if value.has_rule %}
         <div class="a-rule-break"></div>
     {% endif %}
 
-    {% if settings.heading %}
-        <h3>{{ settings.heading }}</h3>
+    {% if value.heading %}
+        <h3>{{ value.heading }}</h3>
     {% endif %}
 
-    {% if settings.intro %}
-        <p>{{ settings.intro }}</p>
+    {% if value.body %}
+        <p>{{ value.body }}</p>
     {% endif %}
 
     {# Should be a stack of Expandable instances. #}
-    {{ caller() }}
+    {% if value.expandables %}
+        {% for expandable in value.expandables %}
+            {% if prototype %}
+                {% set value = expandable %}
+                {% include 'molecules/expandable.html' with context %}
+            {% else %}
+                {{ expandable }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </div>
-
-{% endmacro %}

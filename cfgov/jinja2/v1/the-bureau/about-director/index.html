@@ -13,7 +13,7 @@
 
 {% block content_main %}
 
-	{% import 'macros/share.html' as share with context %}
+	{% import 'molecules/social-media.html' as social_media %}
 
     <div class="block block__flush-top" data-qa-hook="director-bio">
         <h1 data-qa-hook="director-bio-title">
@@ -71,10 +71,7 @@
             a Professor at Capital University Law School in Columbus –
             and twin children Danny and Holly.
         </p>
-        {{ share.render({
-            'title': self.title(),
-            'hide_heading': true
-        }) }}
+        {{ social_media.render() }}
     </div>
 
     <section class="block

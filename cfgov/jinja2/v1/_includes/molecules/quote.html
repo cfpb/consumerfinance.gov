@@ -8,21 +8,26 @@
 
    Creates markup for quote when given. Typically used in insets.:
 
-   settings: (required) Mandatory settings for this inset
+   value.quote:      String with quote for the text.
 
-   settings.quote:      String with quote for the text.
-
-   settings.citation:   String with the author or citation of text.
+   value.citation:   String with the author or citation of text.
 
    ========================================================================== #}
 
-{% macro render(settings) %}
+{% if not value %}
+    {% do global_dict.update({
+      'quote': {
+        'body': 'This is a quote.',
+        'citation': 'This is a citation.',
+      }
+    })%}
+{% endif %}
+{% set value = value or global_dict.quote %}
 <div class="m-quote">
     <p class="pull-quote_body">
-        {{ settings.quote }}
+        {{ value.body }}
     </p>
     <p class="pull-quote_citation">
-        {{ settings.citation }}
+        {{ value.citation }}
     </p>
 </div>
-{% endmacro %}

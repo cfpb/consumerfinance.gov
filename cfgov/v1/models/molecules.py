@@ -37,7 +37,7 @@ class ImageText5050(blocks.StructBlock):
 class ImageText2575(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=True)
     body = blocks.RichTextBlock(required=True)
-    image = atoms.ImageBasicAlt()
+    image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
@@ -65,7 +65,7 @@ class Hero(blocks.StructBlock):
     image = atoms.ImageBasic()
 
     background_color = blocks.CharBlock(max_length=100, required=False)
-    link = atoms.Hyperlink(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
 
     class Meta:
@@ -160,3 +160,44 @@ class ContactPhone(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/molecules/contact-phone.html'
         label = 'Phone'
+
+
+class RelatedLinks(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    links = blocks.ListBlock(atoms.Hyperlink())
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/molecules/related-links.html'
+
+
+class Quote(blocks.StructBlock):
+    body = blocks.TextBlock()
+    citation = blocks.TextBlock()
+
+    class Meta:
+        icon = 'openquote'
+        template = '_includes/molecules/quote.html'
+
+
+class Expandable(blocks.StructBlock):
+    label = blocks.CharBlock(max_length=100, required=False)
+
+    content = blocks.StreamBlock(
+        [
+            ('paragraph', blocks.RichTextBlock(required=False)),
+            ('links', atoms.Hyperlink()),
+            ('email', ContactEmail()),
+            ('phone', ContactPhone()),
+            ('address', ContactAddress()),
+        ], blank=True
+    )
+
+    is_bordered = blocks.BooleanBlock(required=False)
+    is_midtone = blocks.BooleanBlock(required=False)
+    is_expanded = blocks.BooleanBlock(required=False)
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/molecules/expandable.html'
+        label = 'Expandable'
