@@ -13,7 +13,9 @@
 {% endblock %}
 
 {% block pre_content %}
-    {% include 'organisms/sidebar-breakout.html' %}
+    {% if page.header or page.sidebar_breakout %}
+        {% include 'organisms/sidebar-breakout.html' %}
+    {% endif %}
 {% endblock %}
 
 {% block content_main %}
