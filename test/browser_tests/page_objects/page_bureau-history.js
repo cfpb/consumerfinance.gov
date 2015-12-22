@@ -18,7 +18,7 @@ function TheBureauHistoryPage() {
 
   this.introSummary = _getQAElement( 'history-summary' );
 
-  this.socialMediaShare = this.intro.element( by.css( '.share' ) );
+  this.socialMediaShare = this.intro.element( by.css( '.m-social-media' ) );
 
   this.historySections = _getQAElement( 'history-section', true );
 

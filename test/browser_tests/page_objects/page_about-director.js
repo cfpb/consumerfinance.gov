@@ -48,7 +48,7 @@ function TheAboutDirectorPage() {
 
   this.relatedLinks = element( by.css( '.related-links' ) );
 
-  this.socialMediaShare = element( by.css( '.share' ) );
+  this.socialMediaShare = element( by.css( '.m-social-media' ) );
 
   this.speakingInfo = _getQAElement( 'director-speaking-info' );
 
