@@ -20,6 +20,8 @@ from .filters import selected_filters_for_field, is_filter_selected
 from .templates import date_formatter
 from .middleware import get_request
 
+from flags.template_functions import flag_enabled, flag_disabled
+
 PERMALINK_REGISTRY={}
 
 def register_permalink(sheer_type, url_pattern_name):
@@ -89,7 +91,9 @@ def environment(**options):
         'get_document': get_document,
         'selected_filters_for_field': selected_filters_for_field,
         'is_filter_selected': is_filter_selected,
-        'when': when
+        'when': when,
+        'flag_enabled':flag_enabled,
+        'flag_disabled':flag_disabled,
     })
     env.filters.update({
         'date': date_formatter

@@ -22,6 +22,7 @@ class SublandingPage(CFGOVPage):
         ('well', organisms.Well()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
+        ('formfield_with_button', molecules.FormFieldWithButton()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
