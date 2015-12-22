@@ -129,6 +129,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <a href="#main" id="skip-nav">Skip to main content</a>
 
+{% if flag_enabled('BETA_NOTICE') %}
 <div class="beta-banner expandable" id="beta-banner">
     <div class="wrapper wrapper__match-content">
         <div class="beta-banner_head">
@@ -150,6 +151,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </button>
     </div>
 </div>
+{% endif %}
 
 {% block header %}
     {% include 'templates/header.html' %}

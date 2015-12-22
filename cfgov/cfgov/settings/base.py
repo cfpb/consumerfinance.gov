@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'storages',
     'localflavor',
+    'flags',
     'v1',
     'core',
     'sheerlike',
