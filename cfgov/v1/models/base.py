@@ -201,8 +201,11 @@ class CFGOVPage(Page):
 
             instance = class_()
 
-            if hasattr(instance.Media, 'js'):
-                js += instance.Media.js
+            try:
+                if hasattr(instance.Media, 'js'):
+                    js += instance.Media.js
+            except:
+                pass
 
         return Set(js)
 

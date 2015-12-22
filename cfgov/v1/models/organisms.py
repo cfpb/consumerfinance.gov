@@ -136,4 +136,4 @@ class ExpandableGroup(blocks.StructBlock):
         template = '_includes/organisms/expandable-group.html'
 
     class Media:
-        js = ("expandable.js",)
+        js = ("expandable-group.js",)

@@ -16,29 +16,14 @@
     </div>
 
     {% for block in page.molecules %}
-        {% if 'expandble' in block.block_type %}
-             <div class="expandable-prototypes">
-                {{ render_stream_child(block) }}
-             </div>
-        {% else %}
-             <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
-        {% endif %}
+        <div class="block">
+            {{ render_stream_child(block) }}
+        </div>
     {% endfor %}
 
-    <div class="block">
-        {% for block in page.organisms %}
-            {% if 'expandble_group' in block.block_type %}
-                 <div class="expandable-prototypes">
-                    {{ render_stream_child(block) }}
-                 </div>
-            {% else %}
-                 <div class="block">
-                    {{ render_stream_child(block) }}
-                 </div>
-            {% endif %}
-        {% endfor %}
+    {% for block in page.organisms %}
+        {{ render_stream_child(block) }}
+    {% endfor %}
     </div>
 
     <div class="block">
