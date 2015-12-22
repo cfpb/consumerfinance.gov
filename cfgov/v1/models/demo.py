@@ -17,6 +17,7 @@ from .snippets import Contact
 
 class DemoPage(CFGOVPage):
     molecules = StreamField([
+        ('number', atoms.NumberBlock()),
         ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
         ('text_introduction', molecules.TextIntroduction()),
         ('image_text_2575', molecules.ImageText2575()),

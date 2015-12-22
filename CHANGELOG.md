@@ -130,6 +130,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add Heading field to Link Blob group
 - Add prototype data to Image Text organisms
 - Backend Expandable/Expandable Group Molecule & Organisms
+- Added Number Block
+- [Added Form Field with Button to sublanding page] (https://github.com/cfpb/cfgov-refresh/issues/1246)
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -217,6 +219,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Make Full Width Text organism a StreamBlock and add insets
 - Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
 - Changed the ImageBasic atom to always include an optional alt by default
+- (removed field validation on content creation) (https://github.com/cfpb/cfgov-refresh/issues/1252)
 
 ### Removed
 - Removed unused exportsOverride section,

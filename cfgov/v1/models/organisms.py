@@ -7,7 +7,7 @@ from .snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True, label='Well')
+    content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
         icon = 'title'
@@ -26,7 +26,7 @@ class FullWidthText(blocks.StreamBlock):
 
 
 class ImageText5050Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title')
+    heading = blocks.CharBlock(icon='title', required=False)
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
@@ -35,7 +35,7 @@ class ImageText5050Group(blocks.StructBlock):
 
 
 class ImageText2575Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title')
+    heading = blocks.CharBlock(icon='title', required=False)
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -44,7 +44,7 @@ class ImageText2575Group(blocks.StructBlock):
 
 
 class HalfWidthLinkBlobGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title')
+    heading = blocks.CharBlock(icon='title', required=False)
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
     class Meta:
@@ -53,11 +53,11 @@ class HalfWidthLinkBlobGroup(blocks.StructBlock):
 
 
 class PostPreview(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    body = blocks.RichTextBlock(required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
+    body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
 
-    post = blocks.PageChooserBlock(required=True)
+    post = blocks.PageChooserBlock(required=False)
 
     link = atoms.Hyperlink(required=False)
 
@@ -67,8 +67,8 @@ class PostPreview(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    text = blocks.CharBlock(required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
+    text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
     form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=False)
@@ -98,8 +98,8 @@ class RelatedPosts(blocks.StructBlock):
 
 
 class MainContactInfo(blocks.StructBlock):
-    header = blocks.CharBlock()
-    body = blocks.RichTextBlock()
+    header = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
     contact = SnippetChooserBlock(ContactSnippetClass)
 
     class Meta:
