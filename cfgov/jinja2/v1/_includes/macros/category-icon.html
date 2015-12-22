@@ -32,8 +32,7 @@
     %}
     {% set category = category | lower %}
     {%- if icons[category] -%}
-    <span class="cf-icon
-                 {{ icons[category] }}
-                 {{ additional_classes }}"></span>
+    <span class="cf-icon {{ icons[category] }}
+                 {{ additional_classes or '' }}"></span>
     {%- endif -%}
 {% endmacro %}

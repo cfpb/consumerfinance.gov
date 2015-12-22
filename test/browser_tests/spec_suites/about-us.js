@@ -22,7 +22,7 @@ describe( 'About Landing Page', function() {
 
   it( 'should have Blog & Newspaper section in the Activity feed', function() {
     expect( page.firstIcon.getAttribute( 'class' ) )
-      .toMatch( 'cf-icon cf-icon-speech-bubble' );
+      .toContain( 'cf-icon cf-icon-speech-bubble' );
 
     expect( page.secondIcon.getAttribute( 'class' ) )
       .toContain( 'cf-icon cf-icon-newspaper' );
