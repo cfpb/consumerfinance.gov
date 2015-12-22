@@ -23,7 +23,7 @@
                        A string containing the color code (in any format) to
                        set as the hero background color.
 
-   value.link:       A link object containing the text & URL of the link.
+   value.links:      A list of links containing URL & Text of the link/button.
    value.is_button:  A boolean to change the CTA link to a button.
 
 
@@ -48,10 +48,10 @@
                                   }
                     },
                     'background_color': '#d5e7e6',
-                    'link': {
-                                'text': 'Hero call to action',
-                                'url':  '#'
-                    }
+                    'links': [{
+                            'text': 'Placeholder link',
+                            'url':  '#'
+                        }]
                 }
             })
     %}
@@ -66,14 +66,14 @@
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
             <div class="hero_subhead">{{ value.body.source |safe}}</div>
-            {% if value.link.text and value.link.url %}
-                <a href="{{ value.link.url }}"
+            {% for link in value.links %}
+                <a href="{{ link.url }}"
                    class="hero_cta
                    {{ 'btn' if value.is_button
                    else '' }}">
-                    {{ value.link.text }}
+                    {{ link.text }}
                 </a>
-            {% endif %}
+            {% endfor %}
         </div>
         {% if value.image.upload %}
             {% if prototype %}
