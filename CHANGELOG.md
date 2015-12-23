@@ -225,6 +225,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed the ImageBasic atom to always include an optional alt by default
 - Removed field validation on content creation
   ([Fixed 1252](https://github.com/cfpb/cfgov-refresh/issues/1252)).
+- Sets npm install on frontend.sh to warning level.
 
 ### Removed
 - Removed unused exportsOverride section,
