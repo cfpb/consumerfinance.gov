@@ -1,8 +1,8 @@
 'use strict';
 
-require( '../polyfill/event-listener.js' );
-var getBreakpointState = require( '../util/breakpoint-state' ).get;
-var _breakpointsConfig = require( '../../config/breakpoints-config' );
+require( './polyfill/event-listener.js' );
+var getBreakpointState = require( './util/breakpoint-state' ).get;
+var _breakpointsConfig = require( '../config/breakpoints-config' );
 
 // Used for checking browser capabilities.
 // TODO: Check what browsers this is necessary for and

@@ -15,7 +15,7 @@ beforeEach( function() {
     breakpoint: 600
   };
 
-  BreakpointHandler = require( BASE_LOC + 'modules/classes/BreakpointHandler' );
+  BreakpointHandler = require( BASE_LOC + 'modules/BreakpointHandler' );
 } );
 
 describe( 'BreakpointHandler', function() {

@@ -7,7 +7,7 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 var BreakpointHandler = require( './BreakpointHandler' );
-var breakpointsConfig = require( '../../config/breakpoints-config' );
+var breakpointsConfig = require( '../config/breakpoints-config' );
 
 /**
 * MobileCarousel
