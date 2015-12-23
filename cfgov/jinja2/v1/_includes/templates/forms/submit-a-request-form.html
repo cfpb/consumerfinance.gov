@@ -6,9 +6,31 @@
                     block__border
                     block__flush-sides">
         <form class="form-l js-validate-filters">
-            {{ form.input('First Name', 'text', '1-2', true) }}
+            {% do global_dict.update({
+                'input': {
+                    'label':        'First Name',
+                    'type':         'text',
+                    'size':         '1-2',
+                    'required':     true,
+                    'disabled':     false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% set prototype = true %}
+            {% include 'atoms/input.html' with context %}
 
-            {{ form.input('Last Name', 'text', '1-2', true) }}
+            {% do global_dict.update({
+                'input': {
+                    'label':        'Last Name',
+                    'type':         'text',
+                    'size':         '1-2',
+                    'required':     true,
+                    'disabled':     false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% set prototype = true %}
+            {% include 'atoms/input.html' with context %}
 
             {{ form_field.date_picker('Document dates:') }}
 
@@ -190,15 +212,59 @@
             </fieldset>
 
             <fieldset class="u-reset js-is-hidden" id="foia-request_organization-info">
-                {{ form.input('Organization name', 'text', '1', false, true) }}
+                {% do global_dict.update({
+                    'input': {
+                        'label':        'Organization Name',
+                        'type':         'text',
+                        'size':         '1',
+                        'required':     false,
+                        'disabled':     true
+                    }
+                }) %}
+                {% set value = global_dict.input %}
+                {% set prototype = true %}
+                {% include 'atoms/input.html' with context %}
 
-                {{ form.input('Address', 'text', '1', false, true) }}
+                {% do global_dict.update({
+                    'input': {
+                        'label':        'Address',
+                        'type':         'text',
+                        'size':         '1',
+                        'required':     false,
+                        'disabled':     true
+                    }
+                }) %}
+                {% set value = global_dict.input %}
+                {% set prototype = true %}
+                {% include 'atoms/input.html' with context %}
 
-                {{ form.input('City', 'text', '1-3', false, true) }}
+                {% do global_dict.update({
+                    'input': {
+                        'label':        'City',
+                        'type':         'text',
+                        'size':         '1-2',
+                        'required':     false,
+                        'disabled':     true
+                    }
+                }) %}
+                {% set value = global_dict.input %}
+                {% set prototype = true %}
+                {% include 'atoms/input.html' with context %}
 
                 {% include 'atoms/state-selector.html' %}
 
-                {{ form.input('Zip code', 'text', '1-3', false, true) }}
+                {% do global_dict.update({
+                    'input': {
+                        'label':        'Zip code',
+                        'type':         'text',
+                        'size':         '1-4',
+                        'required':     false,
+                        'disabled':     true
+                    }
+                }) %}
+                {% set value = global_dict.input %}
+                {% set prototype = true %}
+                {% include 'atoms/input.html' with context %}
             </fieldset>
 
             <div class="form-actions form-actions__right-on-med ">
