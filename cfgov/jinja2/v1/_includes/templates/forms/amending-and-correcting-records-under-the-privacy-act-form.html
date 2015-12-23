@@ -16,7 +16,7 @@
 
         {{ form.input('City', 'text', '1-3', true) }}
 
-        {{ form_field.state('1-3', true) }}
+        {% include 'atoms/state-selector.html' %}
 
         {{ form.input('Zip code', 'text', '1-3', true) }}
 
@@ -24,11 +24,19 @@
 
         {# TODO: Add additional times to form select below. #}
 
-        {{ form.select('Best time to reach you',
-                       'Select time',
-                       ['8:00 a.m'],
-                       '1-2'
-                      ) }}
+        {% do global_dict.update({
+            'select': {
+                'label':        'Best time to reach you',
+                'placeholder':  'Select time',
+                'fields':       ['8:00 am'],
+                'size':         '1-2',
+                'required':     false,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.select %}
+        {% set prototype = true %}
+        {% include 'atoms/select.html' with context %}
 
         {{ form.input('Fax number', 'tel', '1-2', false) }}
 

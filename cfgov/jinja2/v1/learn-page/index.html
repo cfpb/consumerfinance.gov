@@ -36,8 +36,13 @@
     </div>
 
     {% if prototype %}
+
         <div class="block">
             {% include 'organisms/well.html' %}
+        </div>
+
+        <div class="block">
+            {% include 'atoms/select.html' with context %}
         </div>
     {% endif %}
 
@@ -60,6 +65,7 @@
             'required': 'true'
         }) }}
     </div>
+
 {% endblock %}
 
 {% block content_sidebar scoped -%}
