@@ -82,7 +82,7 @@ install(){
     # Protractor - JavaScript acceptance testing.
     if [ $(is_installed protractor) = 0 ]; then
       echo 'Installing Protractor dependencies locally...'
-      npm install protractor
+      npm install protractor --loglevel warn
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
       echo 'Global Protractor installed. Copying global install locally...'
@@ -98,9 +98,9 @@ install(){
       rm -rf ./$NODE_DIR/protractor/node_modules/
     fi
 
-    npm install -d
+    npm install -d --loglevel warn
   else
-    npm install --production
+    npm install --production --loglevel warn
   fi
   bower install --config.interactive=false
 }
