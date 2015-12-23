@@ -39,7 +39,7 @@
 {% endif %}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 {% set id_slug = slugify( value.label ) %}
-<div class="form-l_col form-l_col-{{ 'form-l_col-' ~ value.size if value.size else 'form-l_col-1'}}">
+<div class="form-l_col {{ 'form-l_col-' ~ value.size if value.size else 'form-l_col-1'}}">
     <label class="form-label-header"
            for="form_{{ id_slug }}">
         {{ value.label }}
