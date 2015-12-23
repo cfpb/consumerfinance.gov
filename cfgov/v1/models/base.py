@@ -185,12 +185,13 @@ class CFGOVPage(Page):
         app_label = 'v1'
 
     def children(self):
-        pass
+        return []
 
     def _media(self):
         from v1 import models
 
         js = ()
+        
         for child in self.children():
             if isinstance(child, dict):
                 type = child['type']
