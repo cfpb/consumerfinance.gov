@@ -134,3 +134,6 @@ class ExpandableGroup(blocks.StructBlock):
     class Meta:
         icon = 'list-ul'
         template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ("expandable-group.js",)
