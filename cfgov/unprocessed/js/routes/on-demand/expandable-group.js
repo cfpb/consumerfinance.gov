@@ -27,5 +27,3 @@ var accordionExpandableGroup = new ExpandableGroup( expandableGroup[1] );
 
 regularExpandableGroup.init();
 accordionExpandableGroup.init();
-
-console.log("Expandables loaded!!");
