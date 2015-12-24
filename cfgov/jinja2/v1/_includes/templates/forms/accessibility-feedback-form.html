@@ -40,9 +40,7 @@
                 'label':        'Best time to reach you',
                 'placeholder':  'Select time',
                 'fields':       ['8:00 am'],
-                'size':         '1-2',
-                'required':     false,
-                'disabled':     false
+                'size':         '1-2'
             }
         }) %}
         {% set value = global_dict.select %}
@@ -55,12 +53,18 @@
 
         {# TODO: Add additional formats to form select below. #}
 
-        {{ form.select('Preferred format',
-                       'Select format',
-                       ['PDF'],
-                       '1',
-                       true
-                      ) }}
+        {% do global_dict.update({
+            'select': {
+                'label':        'Preferred format',
+                'placeholder':  'Select format! ',
+                'fields':       ['PDF', 'Text email'],
+                'size':         '1',
+                'required':     true
+            }
+        }) %}
+        {% set value = global_dict.select %}
+        {% set prototype = true %}
+        {% include 'atoms/select.html' with context %}
 
         <div class="form-l_col
                     form-l_col-1
