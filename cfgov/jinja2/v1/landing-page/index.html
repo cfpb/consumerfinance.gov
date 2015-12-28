@@ -20,9 +20,10 @@
             'prototype': true
         })
     %}
+    {% set page = page or global_dict.page %}
+    {% set prototype = global_dict.prototype or false %}
 {% endif %}
-{% set page = page or global_dict.page %}
-{% set prototype = global_dict.prototype or false %}
+
 
 {% block title -%}
     {{ page.seo_title }}
@@ -88,11 +89,13 @@
         {% include 'organisms/email-signup.html' %}
     {% else %}
         {% for block in page.sidefoot %}
-            {% if 'related_posts' in block.block_type %}
-                {{ related_posts.render(block) }}
-            {% else %}
-                {{ render_stream_child(block) }}
-            {% endif %}
+            <div class="block">
+                {% if 'related_posts' in block.block_type %}
+                    {{ related_posts.render(block) }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            </div>
         {% endfor %}
     {% endif %}
 {%- endblock %}

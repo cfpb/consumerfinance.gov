@@ -7,6 +7,7 @@ import HTMLParser
 from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
+from flags.template_functions import flag_enabled, flag_disabled
 
 
 def environment(**options):
@@ -24,7 +25,9 @@ def environment(**options):
             }
         },
         'reverse': reverse,
-        'render_stream_child': render_stream_child
+        'render_stream_child': render_stream_child,
+        'flag_enabled': flag_enabled,
+        'flag_disabled': flag_disabled
     })
     env.filters.update({
         'slugify': slugify,
@@ -35,7 +38,11 @@ def environment(**options):
 @contextfunction
 def render_stream_child(context, stream_child):
     # Use the django_jinja to get the template content based on its name
-    template = context.environment.get_template(stream_child.block.meta.template)
+    try:
+        template = context.environment.get_template(stream_child.block.meta.template)
+    except:
+        return stream_child
+
     # Create a new context based on the current one as we can't edit it directly
     new_context = context.get_all()
     # Add the value on the context (value is the keyword chosen by wagtail for the blocks context)

@@ -23,7 +23,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
 class ImageText5050(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=False)
-    body = blocks.RichTextBlock(blank=True)
+    body = blocks.RichTextBlock(blank=True, required=False)
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
     is_button = blocks.BooleanBlock(required=False, label="Show links as button")
@@ -78,7 +78,8 @@ class FormFieldWithButton(blocks.StructBlock):
     btn_text = blocks.CharBlock(max_length=100, required=False)
 
     required = blocks.BooleanBlock(required=False)
-    id = blocks.CharBlock(max_length=100, required=False)
+    id = blocks.CharBlock(max_length=100, required=False,
+                          help_text="Type of form i.e emailForm, submission-form. Should be unique if multiple forms are used")
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
     label = blocks.CharBlock(max_length=100, required=False)
     type = blocks.ChoiceBlock(choices=[
