@@ -226,6 +226,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed field validation on content creation
   ([Fixed 1252](https://github.com/cfpb/cfgov-refresh/issues/1252)).
 - Sets npm install on frontend.sh to warning level.
+- Updated `webpack-stream` to `3.1.0` from `2.1.0`.
+- Updated `player` to `0.5.1` from `0.6.1`.
+
 
 ### Removed
 - Removed unused exportsOverride section,

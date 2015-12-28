@@ -28,7 +28,7 @@
     "imports-loader": "^0.6.4",
     "require-dir": "^0.3.0",
     "webpack": "^1.12.0",
-    "webpack-stream": "^2.1.0"
+    "webpack-stream": "^3.1.0"
   },
   "devDependencies": {
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
@@ -58,7 +58,7 @@
     "wcag": "^0.2.2"
   },
   "optionalDependencies": {
-    "player": "^0.5.1"
+    "player": "^0.6.1"
   },
   "browser": {
     "dateformat": "./node_modules/dateformat/lib/dateformat.js",
