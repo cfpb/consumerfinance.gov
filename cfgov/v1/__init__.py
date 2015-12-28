@@ -7,7 +7,7 @@ import HTMLParser
 from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
-
+from flags.template_functions import flag_enabled, flag_disabled
 
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
@@ -24,7 +24,9 @@ def environment(**options):
             }
         },
         'reverse': reverse,
-        'render_stream_child': render_stream_child
+        'render_stream_child': render_stream_child,
+        'flag_enabled':flag_enabled,
+        'flag_disabled':flag_disabled
     })
     env.filters.update({
         'slugify': slugify,
