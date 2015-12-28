@@ -18,7 +18,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
 - Migrated 'sheerlike' project into this codebase
-- Added 'watchserver' manage.py subcommand for running Django dev server and gulp watch together
+- Added 'watchserver' manage.py subcommand for running Django dev server
+  and gulp watch together.
 - Added Acceptance tests for the `activity-log` page.
 - Added webpack module loader for per-page JavaScript.
 - Added external-site page-specific script.
@@ -131,7 +132,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add prototype data to Image Text organisms
 - Backend Expandable/Expandable Group Molecule & Organisms
 - Added Number Block
-- [Added Form Field with Button to sublanding page] (https://github.com/cfpb/cfgov-refresh/issues/1246)
+- Added Form Field with Button to sublanding page
+  ([Fixed 1246](https://github.com/cfpb/cfgov-refresh/issues/1246)).
+- Added Backend Feature Content Molecule
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -210,7 +213,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix related post molecule to be used in multiple places
 - Convert Sidefoot paragraph streamfield block to Textblock
 - Updated headings for changes in Capital Framework
-- Temporarily comment out related posts section of single blog post browser test until BlogPage's are in Wagtail
+- Temporarily comment out related posts section of single blog post
+  browser test until BlogPage's are in Wagtail.
 - Add `show_heading` checkbox to Related Posts organism to toggle the heading
   and icon.
 - Merge Streamfields in LandingPage
@@ -219,7 +223,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Make Full Width Text organism a StreamBlock and add insets
 - Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
 - Changed the ImageBasic atom to always include an optional alt by default
-- (removed field validation on content creation) (https://github.com/cfpb/cfgov-refresh/issues/1252)
+- Removed field validation on content creation
+  ([Fixed 1252](https://github.com/cfpb/cfgov-refresh/issues/1252)).
+- Sets npm install on frontend.sh to warning level.
 
 ### Removed
 - Removed unused exportsOverride section,

@@ -2,9 +2,9 @@ from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 
+from . import ref
 from . import atoms
-
-from ..util import id_validator
+from ..util import util
 
 
 def isRequired(field_name):
@@ -64,7 +64,8 @@ class Hero(blocks.StructBlock):
 
     image = atoms.ImageBasic()
 
-    background_color = blocks.CharBlock(max_length=100, required=False)
+    background_color = blocks.CharBlock(max_length=100, required=False,
+                                        help_text="Use Hexcode colors e.g #F0F8FF")
     links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
 
@@ -98,7 +99,7 @@ class FormFieldWithButton(blocks.StructBlock):
         except ValidationError as e:
             error_dict.update(e.params)
 
-        if not id_validator(data['id']):
+        if not util.id_validator(data['id']):
             id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
             error_dict.update({'id': id_err})
 
@@ -110,6 +111,26 @@ class FormFieldWithButton(blocks.StructBlock):
     class Meta:
         icon = 'mail'
         template = '_includes/molecules/form-field-with-button.html'
+
+
+class FeaturedContent(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=255, required=False)
+    body = blocks.RichTextBlock(required=False)
+
+    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+    post = blocks.PageChooserBlock(required=False)
+
+    show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
+    post_link_text = blocks.CharBlock(max_length=100, required=False)
+
+    image = atoms.ImageBasic(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(required=False),
+                             label='Additional Links')
+
+    class Meta:
+        template = '_includes/molecules/featured-content.html'
+        icon = 'doc-full-inverse'
+        label = 'Featured Content'
 
 
 class CallToAction(blocks.StructBlock):
@@ -201,3 +222,6 @@ class Expandable(blocks.StructBlock):
         icon = 'list-ul'
         template = '_includes/molecules/expandable.html'
         label = 'Expandable'
+
+    class Media:
+        js = ("expandable.js",)

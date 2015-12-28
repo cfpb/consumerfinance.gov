@@ -18,11 +18,14 @@ from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
+from sets import Set
+
 from sheerlike.query import get_document, more_like_this
 from . import ref
 from . import atoms
 from . import molecules
 from . import organisms
+from ..util import util
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -180,6 +183,34 @@ class CFGOVPage(Page):
 
     class Meta:
         app_label = 'v1'
+
+    def children(self):
+        return []
+
+    def _media(self):
+        from v1 import models
+
+        js = ()
+        
+        for child in self.children():
+            if isinstance(child, dict):
+                type = child['type']
+            else:
+                type = child[0]
+
+            class_ = getattr(models, util.to_camel_case(type))
+
+            instance = class_()
+
+            try:
+                if hasattr(instance.Media, 'js'):
+                    js += instance.Media.js
+            except:
+                pass
+
+        return Set(js)
+
+    media = property(_media)
 
 
 class CFGOVPageCategory(Orderable):
