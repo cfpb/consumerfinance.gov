@@ -228,6 +228,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Sets npm install on frontend.sh to warning level.
 - Updated Jinja2 environment inlcude flag related methods
 - Updated ImageText5050 requirements [Fixed 1269] (https://github.com/cfpb/cfgov-refresh/issues/1269)
+- Updated `webpack-stream` to `3.1.0` from `2.1.0`.
+- Updated `player` to `0.5.1` from `0.6.1`.
 
 ### Removed
 - Removed unused exportsOverride section,

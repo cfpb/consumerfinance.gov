@@ -22,43 +22,85 @@
                 block__flush
                 block__padded-bottom">
         {# TODO: Move notification to filter-list-control. #}
-        {{ notification.render() }}
+        {% do global_dict.update(
+            {
+                'notification': {
+                    'is_visible': true
+                }
+
+            })
+        %}
+        {% set value = global_dict.notification %}
+        {% include 'molecules/notification.html' with context %}
     </div>
     <div class="block
                 block__flush
                 block__padded-bottom">
-        {{ notification.render({
-            'type': 'warning'
-        }) }}
+        {% do global_dict.update(
+            {
+                'notification': {
+                    'is_visible': true,
+                    'type':       'warning'
+                }
+
+            })
+        %}
+        {% set value = global_dict.notification %}
+        {% include 'molecules/notification.html' with context %}
     </div>
     <div class="block
                 block__flush
                 block__padded-bottom">
-        {{ notification.render({
-            'type': 'error'
-        }) }}
+        {% do global_dict.update(
+            {
+                'notification': {
+                    'is_visible': true,
+                    'type':       'error'
+                }
+
+            })
+        %}
+        {% set value = global_dict.notification %}
+        {% include 'molecules/notification.html' with context %}
     </div>
     <div class="block
                 block__flush
                 block__padded-bottom">
-        {{ notification.render({
-            'message':     'Custom text',
-            'explanation': 'With an explanation!'
-        }) }}
+        {% do global_dict.update(
+            {
+                'notification': {
+                    'is_visible':   true,
+                    'message':     'Custom text',
+                    'explanation': 'With an explanation!'
+                }
+
+            })
+        %}
+        {% set value = global_dict.notification %}
+        {% include 'molecules/notification.html' with context %}
     </div>
     <div class="block
                 block__flush
                 block__padded-bottom">
-        {{ notification.render({
-            'type':        'warning',
-            'message':     'Custom text',
-            'explanation': 'And an explanation with a <a href="#">link</a>' | safe
-        }) }}
+        {% do global_dict.update(
+            {
+                'notification': {
+                    'is_visible':   true,
+                    'type':        'warning',
+                    'message':     'Custom text',
+                    'explanation': 'And an explanation with a <a href="#">link</a>' | safe
+                }
+
+            })
+        %}
+        {% set value = global_dict.notification %}
+        {% include 'molecules/notification.html' with context %}
     </div>
     <div class="block
                 block__flush-top">
         {# TODO: Add main molecules and organisms. #}
         {% if prototype %}
+            {% set value = undefined %}
             {% include 'molecules/text-introduction.html' %}
         {% endif %}
     </div>
