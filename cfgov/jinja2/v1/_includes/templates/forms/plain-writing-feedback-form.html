@@ -1,100 +1,92 @@
-{% import 'macros/util/form.html' as form %}
-{% import 'macros/util/common-form-fields.html' as form_field %}
-    <section class="block
-                    block__bg
-                    block__border
-                    block__flush-sides">
-        <form class="form-l js-validate-filters">
+    {% set prototype = true %}
+    <form class="js-validate-filters">
+        <section class="o-form-section">
             {% do global_dict.update({
                 'input': {
-                    'label':        'First Name',
-                    'type':         'text',
-                    'size':         '1-2',
-                    'required':     true,
-                    'disabled':     false
+                    'label':    'First Name',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': true,
+                    'disabled': false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
 
             {% do global_dict.update({
                 'input': {
-                    'label':        'Last Name',
-                    'type':         'text',
-                    'size':         '1-2',
-                    'required':     true,
-                    'disabled':     false
+                    'label':    'Last Name',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': true,
+                    'disabled': false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
 
             {% do global_dict.update({
                 'input': {
-                    'label':        'Address 1',
-                    'type':         'text',
-                    'size':         '1',
-                    'required':     true,
-                    'disabled':     false
+                    'label':    'Address 1',
+                    'type':     'text',
+                    'size':     '1',
+                    'required': true,
+                    'disabled': false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
 
             {% do global_dict.update({
                 'input': {
-                    'label':        'Address 2',
-                    'type':         'text',
-                    'size':         '1',
-                    'required':     false,
-                    'disabled':     false
+                    'label':    'Address 2',
+                    'type':     'text',
+                    'size':     '1',
+                    'required': false,
+                    'disabled': false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
 
             {% do global_dict.update({
                 'input': {
-                    'label':        'City',
-                    'type':         'text',
-                    'size':         '1-2',
-                    'required':     true,
-                    'disabled':     false
+                    'label':    'City',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': true,
+                    'disabled': false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
 
             {% include 'atoms/state-selector.html' %}
 
             {% do global_dict.update({
                 'input': {
-                    'label':        'Zip',
+                    'label':    'Zip',
+                    'type':     'text',
+                    'size':     '1-4',
+                    'required': true,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
+
+            {% do global_dict.update({
+                'input': {
+                    'label':        'Comment date',
                     'type':         'text',
-                    'size':         '1-4',
+                    'size':         '1',
+                    'placeholder':  'mm/dd/yyyy',
                     'required':     true,
                     'disabled':     false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
-
-            <div class="form-l_col form-l_col-1">
-                <label class="form-label-header"
-                       for="plain-writing-fb_starting-date">
-                    Comment date
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_starting-date"
-                       placeholder="mm/dd/yyyy"
-                       type="text">
-            </div>
 
             {% do global_dict.update({
                 'textarea': {
@@ -105,34 +97,28 @@
                 }
             }) %}
             {% set value = global_dict.textarea %}
-            {% set prototype = true %}
             {% include 'atoms/textarea.html' with context %}
 
             {% do global_dict.update({
                 'input': {
-                    'label':        'URL with plain writing issue',
-                    'type':         'url',
-                    'size':         '1',
-                    'required':     false,
-                    'disabled':     false
+                    'label':    'URL with plain writing issue',
+                    'type':     'url',
+                    'size':     '1',
+                    'required': false,
+                    'disabled': false
                 }
             }) %}
             {% set value = global_dict.input %}
-            {% set prototype = true %}
             {% include 'atoms/input.html' with context %}
-
-            <div class="form-actions form-actions__right-on-med">
-                <input class="btn form-actions_item"
-                       type="submit"
-                       value="Generate PDF">
-                <a class="btn btn__link form-actions_item u-link__disabled">
-                    Sample Letter
-                    <span class="cf-icon cf-icon-pdf"></span>
-                </a>
-            </div>
-
-        </form>
-    </section>
+        </section>
+        {% do global_dict.update({
+            'submit_button': {
+                'button_text':  'Generate PDF'
+            }
+        }) %}
+        {% set value = global_dict.submit_button %}
+        {% include 'atoms/submit-button.html' with context %}
+    </form>
     <section class="block">
         <p>
             Once you generate the PDF, send your feedback by email or fax.

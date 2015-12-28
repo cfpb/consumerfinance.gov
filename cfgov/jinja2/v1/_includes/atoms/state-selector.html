@@ -6,75 +6,79 @@
 
    Returns a select box with all 50 states and DC.
 
-   size:        The size of the fields. Defaults to 1-4.
-                Possible options: 1, 1-2, 1-4
-
-   required:    Whether the field is required. Defaults to false.
-
-   disabled:    Whether the field is disabled. Defaults to false.
-
    ========================================================================== #}
 
-{% do global_dict.update({
-    'states': {
-        'label':        'State',
-        'placeholder':  'Select a state',
-        'fields':       [ 'Alabama',
-                        'Alaska',
-                        'Arizona',
-                        'Arkansas',
-                        'California',
-                        'Colorado',
-                        'Connecticut',
-                        'Delaware',
-                        'District of Columbia',
-                        'Florida',
-                        'Georgia',
-                        'Hawaii',
-                        'Idaho',
-                        'Illinois',
-                        'Indiana',
-                        'Iowa',
-                        'Kansas',
-                        'Kentucky',
-                        'Louisiana',
-                        'Maine',
-                        'Maryland',
-                        'Massachusetts',
-                        'Michigan',
-                        'Minnesota',
-                        'Mississippi',
-                        'Missouri',
-                        'Montana',
-                        'Nebraska',
-                        'Nevada',
-                        'New Hampshire',
-                        'New Jersey',
-                        'New Mexico',
-                        'New York',
-                        'North Carolina',
-                        'North Dakota',
-                        'Ohio',
-                        'Oklahoma',
-                        'Oregon',
-                        'Pennsylvania',
-                        'Rhode Island',
-                        'South Carolina',
-                        'South Dakota',
-                        'Tennessee',
-                        'Texas',
-                        'Utah',
-                        'Vermont',
-                        'Virginia',
-                        'Washington',
-                        'West Virginia',
-                        'Wisconsin',
-                        'Wyoming'
-                      ],
-        'size':         '1-4',
-        'required':     false,
-        'disabled':     false
-    }
-}) %}
-{% set value = global_dict.states %}
-{% include 'atoms/select.html' with context %}
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update({
+        'states': {
+            'required':     true,
+            'disabled':     false
+        }
+    }) %}
+    {% set value = global_dict.states %}
+{% endif %}
+{% set id = get_unique_id('select_', '_') ~ 'state'%}
+<div class="form-l_col form-l_col-1-4">
+    <label class="form-label-header" for="{{ id }}">
+        State
+    </label>
+    <div class="cf-select">
+        <select id="{{ id }}"
+                {{ 'required' if value.required else '' }}
+                {{ 'disabled' if value.disabled else ''}}>
+            <option value="" disabled="" selected="">Select a state</option>
+            <option value="alabama">Alabama</option>
+            <option value="alaska">Alaska</option>
+            <option value="arizona">Arizona</option>
+            <option value="arkansas">Arkansas</option>
+            <option value="california">California</option>
+            <option value="colorado">Colorado</option>
+            <option value="connecticut">Connecticut</option>
+            <option value="delaware">Delaware</option>
+            <option value="district-of-columbia">District of Columbia</option>
+            <option value="florida">Florida</option>
+            <option value="georgia">Georgia</option>
+            <option value="hawaii">Hawaii</option>
+            <option value="idaho">Idaho</option>
+            <option value="illinois">Illinois</option>
+            <option value="indiana">Indiana</option>
+            <option value="iowa">Iowa</option>
+            <option value="kansas">Kansas</option>
+            <option value="kentucky">Kentucky</option>
+            <option value="louisiana">Louisiana</option>
+            <option value="maine">Maine</option>
+            <option value="maryland">Maryland</option>
+            <option value="massachusetts">Massachusetts</option>
+            <option value="michigan">Michigan</option>
+            <option value="minnesota">Minnesota</option>
+            <option value="mississippi">Mississippi</option>
+            <option value="missouri">Missouri</option>
+            <option value="montana">Montana</option>
+            <option value="nebraska">Nebraska</option>
+            <option value="nevada">Nevada</option>
+            <option value="new-hampshire">New Hampshire</option>
+            <option value="new-jersey">New Jersey</option>
+            <option value="new-mexico">New Mexico</option>
+            <option value="new-york">New York</option>
+            <option value="north-carolina">North Carolina</option>
+            <option value="north-dakota">North Dakota</option>
+            <option value="ohio">Ohio</option>
+            <option value="oklahoma">Oklahoma</option>
+            <option value="oregon">Oregon</option>
+            <option value="pennsylvania">Pennsylvania</option>
+            <option value="rhode-island">Rhode Island</option>
+            <option value="south-carolina">South Carolina</option>
+            <option value="south-dakota">South Dakota</option>
+            <option value="tennessee">Tennessee</option>
+            <option value="texas">Texas</option>
+            <option value="utah">Utah</option>
+            <option value="vermont">Vermont</option>
+            <option value="virginia">Virginia</option>
+            <option value="washington">Washington</option>
+            <option value="west-virginia">West Virginia</option>
+            <option value="wisconsin">Wisconsin</option>
+            <option value="wyoming">Wyoming</option>
+        </select>
+    </div>
+</div>
