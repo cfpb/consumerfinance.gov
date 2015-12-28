@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   notification.render()
+   Notification
 
    ==========================================================================
 
@@ -8,42 +8,59 @@
 
    Builds notification markup when given:
 
-   options (optional):  An object used to customize the notification markup.
+   value.is_visible:  Whether the notification is initially shown or not.
+                      Default is false.
 
-   options.type:        The type of notification to display.
-                        Values may be: 'success', 'error', or 'warning'.
+   value.type:        The type of notification to display.
+                      Values may be: 'success', 'error', or 'warning'.
 
-   options.message:     Text to display within the notification markup.
-                        Default is 'Success.', 'Warning!', or 'Error!',
-                        depending on notification type.
+   value.message:     Text to display within the notification markup.
+                      Default is 'Success.', 'Warning!', or 'Error!',
+                      depending on notification type.
 
-   options.explanation: Text to display as an explanation
-                        within the notification markup.
+   value.explanation: Text to display as an explanation
+                      within the notification markup.
 
    ========================================================================== #}
-{% macro render(options={}) -%}
-    {% set type  =  options.type if options.type in ['success', 'warning', 'error'] else 'success' %}
-    {% set type_lookup  = {
-          'success' : ('approved', 'Success.'),
-          'warning' : ('error', 'Warning!'),
-          'error'   :  ('delete', 'Error!')
-        }
-    %}
-    {% set icon, message = type_lookup[type]  %}
-    {% set message  =  options.message | default( message ) %}
 
-    {% set notification_type = ('m-notification__' + type) if type %}
-    {% set notification_icon_type = (' m-notification_icon__' + type) if type %}
-    {% set cf_icon_style = (' cf-icon-' + icon + '-round') if type %}
-    <div class="m-notification
-                {{ notification_type }}">
-        <span class="m-notification_icon
-                     {{ notification_icon_type }}
-                     cf-icon
-                     {{ cf_icon_style }}"></span>
-        <p class="h4">{{ message }}</p>
-        {% if options.explanation %}
-            <p class="h4 m-notification_explanation">{{ options.explanation }}</p>
-        {% endif %}
-    </div>
-{%- endmacro %}
+{% if not value %}
+    {% do global_dict.update(
+        {
+            'expandable': {
+                'label': 'Default Expandable',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': true,
+                'is_midtone': false,
+                'is_expanded': false
+            }
+        })
+    %}
+{% endif %}
+{% set value = value or global_dict.expandable %}
+
+{% set is_visible = value.is_visible if value.is_visible else false %}
+{% set type  =  value.type if value.type in ['success', 'warning', 'error'] else 'success' %}
+{% set type_lookup  = {
+      'success' : ('approved', 'Success.'),
+      'warning' : ('error', 'Warning!'),
+      'error'   :  ('delete', 'Error!')
+    }
+%}
+{% set icon, message = type_lookup[type]  %}
+{% set message  =  value.message | default( message ) %}
+
+{% set notification_type = ('m-notification__' + type) if type %}
+{% set notification_icon_type = (' m-notification_icon__' + type) if type %}
+{% set cf_icon_style = (' cf-icon-' + icon + '-round') if type %}
+<div class="m-notification
+            {{ notification_type }}
+            {{ 'm-notification__visible' if is_visible else '' }}">
+    <span class="m-notification_icon
+                 {{ notification_icon_type }}
+                 cf-icon
+                 {{ cf_icon_style }}"></span>
+    <p class="h4">{{ message }}</p>
+    {% if value.explanation %}
+        <p class="h4 m-notification_explanation">{{ value.explanation }}</p>
+    {% endif %}
+</div>
