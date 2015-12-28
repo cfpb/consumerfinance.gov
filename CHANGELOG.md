@@ -226,6 +226,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed field validation on content creation
   ([Fixed 1252](https://github.com/cfpb/cfgov-refresh/issues/1252)).
 - Sets npm install on frontend.sh to warning level.
+- Updated Jinja2 environment inlcude flag related methods
+- Updated ImageText5050 requirements [Fixed 1269] (https://github.com/cfpb/cfgov-refresh/issues/1269)
 
 ### Removed
 - Removed unused exportsOverride section,
