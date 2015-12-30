@@ -24,13 +24,17 @@
 
 {% block content_main %}
     {# TODO: Add Forms, Expandable #}
+    {% if prototype %}
     <div class="block
                 block__flush-top">
-        {# TODO: Add main molecules and organisms. #}
-        {% if prototype %}
             {% include 'molecules/text-introduction.html' %}
-        {% endif %}
     </div>
+    <div class="block
+                block__flush-top">
+            {% include 'organisms/item-introduction.html' %}
+    </div>
+    {% endif %}
+
     <div class="block">
         {% include 'organisms/full-width-text.html' %}
     </div>

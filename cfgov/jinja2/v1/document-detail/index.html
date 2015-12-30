@@ -19,7 +19,6 @@
 
 {% block content_main %}
     {# TODO: Add Main Section Organisms and Molecules
-              - Item Introduction
               - Forms
               - Expandables
               - Insets
@@ -29,6 +28,12 @@
                 block__flush-top">
         {% if prototype %}
             {% include 'molecules/text-introduction.html' %}
+        {% endif %}
+    </div>
+    <div class="block
+                block__flush-top">
+        {% if prototype %}
+            {% include 'organisms/item-introduction.html' %}
         {% endif %}
     </div>
     <div class="block">
