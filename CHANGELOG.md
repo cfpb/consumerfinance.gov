@@ -135,6 +135,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Form Field with Button to sublanding page
   ([Fixed 1246](https://github.com/cfpb/cfgov-refresh/issues/1246)).
 - Added Backend Feature Content Molecule
+- Added get_unique_id context method.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
