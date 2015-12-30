@@ -72,9 +72,16 @@
             {% endif %}
         {%- endfor %}
         {% for block in page.content -%}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+            {% if loop.index == 1 %}
+                <div class="block
+                            block__flush-top">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% else %}
+                <div class="block">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% endif %}
         {%- endfor %}
     {% endif %}
 {% endblock %}
@@ -89,7 +96,7 @@
         {% include 'organisms/email-signup.html' %}
     {% else %}
         {% for block in page.sidefoot %}
-            <div class="block">
+            <div class="block block__flush-top">
                 {% if 'related_posts' in block.block_type %}
                     {{ related_posts.render(block) }}
                 {% else %}
