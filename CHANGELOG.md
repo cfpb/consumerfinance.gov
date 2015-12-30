@@ -136,6 +136,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   ([Fixed 1246](https://github.com/cfpb/cfgov-refresh/issues/1246)).
 - Added Backend Feature Content Molecule
 - Added get_unique_id context method.
+- Added templates and CSS for the Item Introduction organism.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
