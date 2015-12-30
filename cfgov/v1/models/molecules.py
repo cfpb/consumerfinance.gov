@@ -81,7 +81,7 @@ class FormFieldWithButton(blocks.StructBlock):
     id = blocks.CharBlock(max_length=100, required=False,
                           help_text="Type of form i.e emailForm, submission-form. Should be unique if multiple forms are used")
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
-    label = blocks.CharBlock(max_length=100, required=False)
+    label = blocks.CharBlock(max_length=100, required=True)
     type = blocks.ChoiceBlock(choices=[
         ('text', 'Text'),
         ('checkbox', 'Checkbox'),
