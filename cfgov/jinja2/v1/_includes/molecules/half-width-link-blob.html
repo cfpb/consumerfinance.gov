@@ -49,8 +49,9 @@
 {% endif %}
 <div class="m-half-width-link-blob">
     <h2 class="h3">{{ value.heading }}</h2>
-
-    <div>{{ value.body.source | safe }}</div>
+    <div class="m-half-width-link-blob_paragraph">
+        {{ value.body.source | safe }}
+    </div>
     <ul class="list list__links">
         {% for link in value.links %}
             <li class="list_item">
