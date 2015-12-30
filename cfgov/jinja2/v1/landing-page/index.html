@@ -1,11 +1,9 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'molecules/related-posts.html' as related_posts with context %}
-
 {% if not page %}
     {% do global_dict.update({
             'page':  {
-                'seo_title':     'This is a prototype page for testing landing page layouts.',
+                'seo_title':     'Landing Page - This is a prototype page for testing page layouts.',
                 'related_posts': global_dict.related_posts_function
             },
             'related_posts_settings': {
@@ -24,6 +22,7 @@
     {% set prototype = global_dict.prototype or false %}
 {% endif %}
 
+{% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% block title -%}
     {{ page.seo_title }}
