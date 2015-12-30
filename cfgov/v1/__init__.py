@@ -2,6 +2,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
+from django.contrib import messages
 
 import HTMLParser
 from jinja2 import Environment, contextfunction, Markup
@@ -27,7 +28,8 @@ def environment(**options):
         'render_stream_child': render_stream_child,
         'flag_enabled': flag_enabled,
         'flag_disabled': flag_disabled,
-        'get_unique_id': get_unique_id
+        'get_unique_id': get_unique_id,
+        'get_messages': messages.get_messages
     })
     env.filters.update({
         'slugify': slugify,
