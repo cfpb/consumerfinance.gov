@@ -8,20 +8,21 @@ var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 
 describe( 'Event States', function() {
-  var $, es, sandbox, divExpanded, divClosed, openMenu;
+  var expandedState, sandbox, divExpanded, divClosed, openMenu;
 
   jsdom();
 
   before( function() {
-    $ = require( 'jquery' );
-    es = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
+    expandedState = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
     sandbox = sinon.sandbox.create();
   } );
 
   beforeEach( function() {
-    divExpanded = $( '<div class="div-expanded" aria-expanded="true" />' );
-    divClosed = $( '<div class="div-closed" aria-expanded="false" />' );
-    openMenu = $( [] ).add( divClosed ).add( divExpanded );
+    document.body.innerHTML = '<div class="div-expanded" aria-expanded="true" />' +
+                              '<div class="div-closed" aria-expanded="false" />';
+    divExpanded = document.querySelector( '.div-expanded' );
+    divClosed = document.querySelector( '.div-closed' );
+    openMenu = document.querySelectorAll( 'div' );
   } );
 
   afterEach( function() {
@@ -30,51 +31,51 @@ describe( 'Event States', function() {
 
   describe( 'get expanded state', function() {
     it( 'should return true when expanded', function() {
-      expect( es.get.isThisExpanded( divExpanded ) ).to.be.true;
+      expect( expandedState.isThisExpanded( divExpanded ) ).to.be.true;
     } );
 
     it( 'should return false when closed', function() {
-      expect( es.get.isThisExpanded( divClosed ) ).to.be.false;
+      expect( expandedState.isThisExpanded( divClosed ) ).to.be.false;
     } );
 
     it( 'should return true if at least one is expanded', function() {
-      var testExpandedDivs = $( [] ).add( divClosed ).add( divExpanded );
+      var testExpandedDivs = document.querySelectorAll( 'div' );
 
-      expect( es.get.isOneExpanded( testExpandedDivs ) ).to.be.true;
+      expect( expandedState.isOneExpanded( testExpandedDivs ) ).to.be.true;
     } );
 
     it( 'should return false if at least one isn’t expanded', function() {
-      var testClosedDivs = $( [] ).add( divClosed ).add( divClosed );
-
-      expect( es.get.isOneExpanded( testClosedDivs ) ).to.be.false;
+      var testClosedDivs = document.querySelectorAll( 'div' );
+      for ( var i = 0, len = testClosedDivs.length; i < len; i++ ) {
+        expect( expandedState.isOneExpanded( testClosedDivs[i] ) ).to.be.false;
+      }
     } );
   } );
 
-
   describe( 'set expanded state - default state', function() {
     it( 'should toggle a closed div open', function() {
-      es.set.toggleExpandedState( divClosed );
-      expect( es.get.isThisExpanded( divClosed ) ).to.be.true;
+      expandedState.toggleExpandedState( divClosed );
+      expect( expandedState.isThisExpanded( divClosed ) ).to.be.true;
     } );
 
     it( 'should toggle an open div closed', function() {
-      es.set.toggleExpandedState( divExpanded );
-      expect( es.get.isThisExpanded( divExpanded ) ).to.be.false;
+      expandedState.toggleExpandedState( divExpanded );
+      expect( expandedState.isThisExpanded( divExpanded ) ).to.be.false;
     } );
 
     it( 'should use null state to toggle an open div closed', function() {
-      es.set.toggleExpandedState( divExpanded, null );
-      expect( es.get.isThisExpanded( divExpanded ) ).to.be.false;
+      expandedState.toggleExpandedState( divExpanded, null );
+      expect( expandedState.isThisExpanded( divExpanded ) ).to.be.false;
     } );
 
     it( 'should use false state to close an open div', function() {
-      es.set.toggleExpandedState( divExpanded, 'false' );
-      expect( es.get.isThisExpanded( divExpanded ) ).to.be.false;
+      expandedState.toggleExpandedState( divExpanded, 'false' );
+      expect( expandedState.isThisExpanded( divExpanded ) ).to.be.false;
     } );
 
     it( 'should use true state to open a closed div', function() {
-      es.set.toggleExpandedState( divClosed, 'true' );
-      expect( es.get.isThisExpanded( divClosed ) ).to.be.true;
+      expandedState.toggleExpandedState( divClosed, 'true' );
+      expect( expandedState.isThisExpanded( divClosed ) ).to.be.true;
     } );
   } );
 
@@ -84,15 +85,19 @@ describe( 'Event States', function() {
     } );
 
     it( 'should close all open divs', function() {
-      es.set.toggleExpandedState( openMenu, 'false' );
-      expect( es.get.isOneExpanded( openMenu ) ).to.be.false;
+      for ( var i = 0, len = openMenu.length; i < len; i++ ) {
+        expandedState.toggleExpandedState( openMenu[i], 'false' );
+        expect( expandedState.isOneExpanded( openMenu[i] ) ).to.be.false;
+      }
     } );
 
     it( 'should fire a callback after toggling', function( done ) {
-      es.set.toggleExpandedState( openMenu, null, function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( es.get.isThisExpanded( divClosed ) ).to.be.true;
-        done();
-      } );
+      for ( var i = 0, len = openMenu.length; i < len; i++ ) {
+        expandedState.toggleExpandedState( openMenu[i], null, function() { // eslint-disable-line no-loop-func, no-inline-comments, max-len
+          expect( expandedState.isThisExpanded( divClosed ) ).to.be.true;
+          done();
+        } );
+      }
     } );
   } );
 } );
