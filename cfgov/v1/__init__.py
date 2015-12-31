@@ -9,6 +9,7 @@ from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
+from util.util import get_unique_id
 
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
@@ -35,14 +36,6 @@ def environment(**options):
         'slugify': slugify,
     })
     return env
-
-@contextfunction
-def get_unique_id(context, prefix='', suffix=''):
-    if hasattr(context, 'unique_id_index'):
-        context.unique_id_index += 1
-    else:
-        context.unique_id_index = 0
-    return prefix + str(context.unique_id_index) + suffix
 
 @contextfunction
 def render_stream_child(context, stream_child):
