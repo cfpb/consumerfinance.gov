@@ -78,10 +78,10 @@
              %}
             {% set value = global_dict.expandable %}
             {% include 'molecules/expandable.html' with context %}
+            {% set value = None if prototype %}
         </div>
 
         <div class="expandable-group-prototypes">
-            {% set value = None if prototype %}
             {% include 'organisms/expandable-group.html' with context %}
 
             {% do global_dict.update(
@@ -124,8 +124,6 @@
 {% endblock %}
 
 {% block content_sidebar scoped -%}
-    <aside>
-        {# TODO: Add sidebar organisms. #}
-        Side Navigation
-    </aside>
+    {# TODO: Add sidebar organisms. #}
+    Side Navigation
 {%- endblock %}

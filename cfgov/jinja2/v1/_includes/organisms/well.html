@@ -17,9 +17,9 @@
 {% if not value %}
     {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
     {% do global_dict.update({'well': { 'content' :  lipsumText  }}) %}
-    {% set value = global_dict.well %}
 {% endif %}
+{% set value = value or global_dict.well %}
+
 <div class="o-well">
     {{ value.content | safe }}
 </div>
-
