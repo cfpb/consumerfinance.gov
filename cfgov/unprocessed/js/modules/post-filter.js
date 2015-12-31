@@ -121,7 +121,7 @@ PostFilter.prototype = {
       error_messages.push(DATE_ERRORS.one_required);
     }
 
-    if( error_messages.length ) {
+    if ( error_messages.length ) {
       event.preventDefault();
       $form.trigger( 'cf_notifier:notify', {
         message: error_messages.join('</br>'),
