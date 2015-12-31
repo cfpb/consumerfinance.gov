@@ -3,7 +3,7 @@
 // Required modules.
 var atomicCheckers = require( '../modules/util/atomic-checkers' );
 var Expandable = require( '../molecules/Expandable' );
-var Notification = require( '..molecules/Notification' );
+var Notification = require( '../molecules/Notification' );
 // TODO: Implement form data client-side validation.
 // var validate = require( 'validate' );
 
