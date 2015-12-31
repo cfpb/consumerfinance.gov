@@ -160,6 +160,9 @@
         </span>
     </button>
     <div class="expandable_content">
+      {%- if options.show_errors -%}
+        {{ _errors() }}
+      {% endif %}
        {{ _filters_form(filters, query, doc_type, options) }}
     </div>
 </div>
@@ -352,6 +355,25 @@
 </form>
 {% endmacro %}
 
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro _errors(errors=[]) %}
+    {% set errors = errors or get_messages(request) %}
+    {%- if errors -%}
+        {% set error_messages = [] %}
+        {% for error in errors %}
+           {% do error_messages.append(error|string) %}
+        {% endfor %}
+        {% set value = {
+            'message': '</br>'.join(error_messages) | safe,
+            'type': 'error'
+        } %}
+        <div class="u-mt15 u-mb15">
+            {% include 'molecules/notification.html' with context %}
+        </div>
+    {%- endif -%}
+{% endmacro %}
 
 {# A helper macro for filters()
    ========================================================================== #}
