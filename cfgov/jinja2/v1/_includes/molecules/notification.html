@@ -26,17 +26,16 @@
 {% if not value %}
     {% do global_dict.update(
         {
-            'expandable': {
-                'label': 'Default Expandable',
-                'paragraph': lipsum(1, false, 10, 225),
-                'is_bordered': true,
-                'is_midtone': false,
-                'is_expanded': false
+            'notification': {
+                'is_visible': false,
+                'type': 'success',
+                'message': 'Success!',
+                'explanation': 'Explanation text paragraph.'
             }
         })
     %}
 {% endif %}
-{% set value = value or global_dict.expandable %}
+{% set value = value or global_dict.notification %}
 
 {% set is_visible = value.is_visible if value.is_visible else false %}
 {% set type  =  value.type if value.type in ['success', 'warning', 'error'] else 'success' %}
@@ -50,17 +49,15 @@
 {% set message  =  value.message | default( message ) %}
 
 {% set notification_type = ('m-notification__' + type) if type %}
-{% set notification_icon_type = (' m-notification_icon__' + type) if type %}
-{% set cf_icon_style = (' cf-icon-' + icon + '-round') if type %}
 <div class="m-notification
             {{ notification_type }}
             {{ 'm-notification__visible' if is_visible else '' }}">
     <span class="m-notification_icon
-                 {{ notification_icon_type }}
-                 cf-icon
-                 {{ cf_icon_style }}"></span>
-    <p class="h4">{{ message }}</p>
-    {% if value.explanation %}
-        <p class="h4 m-notification_explanation">{{ value.explanation }}</p>
-    {% endif %}
+                 cf-icon"></span>
+    <div class="m-notification_content">
+        <p class="h4 m-notification_message">{{ message }}</p>
+        {% if value.explanation %}
+            <p class="h4 m-notification_explanation">{{ value.explanation }}</p>
+        {% endif %}
+    </div>
 </div>
