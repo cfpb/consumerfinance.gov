@@ -61,11 +61,8 @@
                 {% if loop.first == false %}
                 and
                 {% endif %}
-                <a href="{{ link.url }}">
-                    {{ link.text }}
-                </a>
-            {% endfor %}
-            -
+                <a href="{{ link.url }}">{{ link.text }}</a>
+            {% endfor %}-
         {% endif %}
         {% if value.date %}
             {{ time.render(value.date, {'date':true}) }}
