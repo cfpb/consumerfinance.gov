@@ -39,7 +39,7 @@
                             content-l_col-2-3">
                 {% for block in page.header %}
                     {% if 'text_introduction' in block.block_type -%}
-                        {{ block | safe }}
+                        {{ render_stream_child(block) }}
                     {% endif %}
                 {% endfor %}
             </section>
@@ -52,7 +52,7 @@
                 {% for block in page.sidebar_breakout %}
                     {% if 'heading' in block.block_type %}
                         <h3 class="o-sidebar-breakout_heading">
-                            {{ block }}
+                            {{ render_stream_child(block) }}
                         </h3>
                     {% elif 'breakout_image' in block.block_type %}
                         {% set blocks = block.value.bound_blocks %}
@@ -91,15 +91,13 @@
                     {% elif 'slug' in block.block_type %}
                         <h2 class="header-slug">
                             <span class="header-slug_inner">
-                                {{ block | safe }}
+                                {{ render_stream_child(block) }}
                             </span>
                         </h2>
-                    {% elif 'heading' in block.block_type %}
-                        <h3>{{ block }}</h3>
                     {% elif 'paragraph' in block.block_type %}
-                        <p class="short-desc">
-                            {{ block }}
-                        </p>
+                        <div class="short-desc">
+                            {{ block.value.source | safe }}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </aside>

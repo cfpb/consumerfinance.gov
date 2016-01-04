@@ -99,7 +99,23 @@
                 {% if 'related_posts' in block.block_type %}
                     {{ related_posts.render(block) }}
                 {% else %}
-                    {{ render_stream_child(block) }}
+                    {% if 'heading' in block.block_type %}
+                        <h3 class="o-sidebar-breakout_heading">
+                            {{ render_stream_child(block) }}
+                        </h3>
+                    {% elif 'slug' in block.block_type %}
+                        <h2 class="header-slug">
+                            <span class="header-slug_inner">
+                                {{ render_stream_child(block) }}
+                            </span>
+                        </h2>
+                    {% elif 'paragraph' in block.block_type %}
+                        <div class="short-desc">
+                            {{ render_stream_child(block) }}
+                        </div>
+                    {% else %}
+                        {{ render_stream_child(block) }}
+                    {% endif %}
                 {% endif %}
             </div>
         {% endfor %}
