@@ -1,7 +1,4 @@
 import os
-import sys
-
-from elasticsearch.exceptions import NotFoundError
 
 from django.db import models
 from django.http import Http404
@@ -10,9 +7,11 @@ from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Page, PagePermissionTester, UserPagePermissionsProxy, Orderable
+from wagtail.wagtailcore.models import Page, PagePermissionTester, \
+    UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
+    MultiFieldPanel, TabbedInterface, ObjectList
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
@@ -20,7 +19,6 @@ from modelcluster.tags import ClusterTaggableManager
 
 from sets import Set
 
-from sheerlike.query import get_document, more_like_this
 from . import ref
 from . import atoms
 from . import molecules
@@ -70,7 +68,7 @@ class CFGOVPage(Page):
         ('contact', organisms.MainContactInfo()),
     ], blank=True)
 
-    ### Panels ###
+    # Panels
     sidefoot_panels = [
         StreamFieldPanel('sidefoot'),
     ]
@@ -133,7 +131,9 @@ class CFGOVPage(Page):
                 return _("live")
 
     def sharable_pages(self):
-        """Return a queryset of the pages that this user has permission to share"""
+        """
+        Return a queryset of the pages that this user has permission to share.
+        """
         # Deal with the trivial cases first...
         if not self.user.is_active:
             return Page.objects.none()
@@ -145,7 +145,8 @@ class CFGOVPage(Page):
         for perm in self.permissions.filter(permission_type='share'):
             # User has share permission on any subpage of perm.page
             # (including perm.page itself).
-            sharable_pages |= Page.objects.descendant_of(perm.page, inclusive=True)
+            sharable_pages |= Page.objects.descendant_of(perm.page,
+                                                         inclusive=True)
 
         return sharable_pages
 
@@ -176,7 +177,8 @@ class CFGOVPage(Page):
 
     def permissions_for_user(self, user):
         """
-        Return a CFGOVPagePermissionTester object defining what actions the user can perform on this page
+        Return a CFGOVPagePermissionTester object defining what actions the
+        user can perform on this page
         """
         user_perms = CFGOVUserPagePermissionsProxy(user)
         return user_perms.for_page(self)
@@ -184,15 +186,15 @@ class CFGOVPage(Page):
     class Meta:
         app_label = 'v1'
 
-    def children(self):
+    def elements(self):
         return []
 
     def _media(self):
         from v1 import models
 
         js = ()
-        
-        for child in self.children():
+
+        for child in self.elements():
             if isinstance(child, dict):
                 type = child['type']
             else:

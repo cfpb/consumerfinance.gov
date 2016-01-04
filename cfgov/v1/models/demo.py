@@ -2,13 +2,10 @@ import itertools
 
 from django.db import models
 
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, \
-    FieldRowPanel, TabbedInterface, ObjectList, StreamFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
+    StreamFieldPanel
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-from wagtail.wagtailcore import blocks
 
 from .base import CFGOVPage
 from . import atoms
@@ -46,7 +43,6 @@ class DemoPage(CFGOVPage):
         related_name='+'
     )
 
-
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('molecules'),
@@ -58,11 +54,13 @@ class DemoPage(CFGOVPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
+        ObjectList(CFGOVPage.settings_panels, heading='Settings',
+                   classname="settings"),
     ])
 
-    def children(self):
-        return list(itertools.chain(self.organisms.stream_data, self.molecules.stream_data))
+    def elements(self):
+        return list(itertools.chain(self.organisms.stream_data,
+                    self.molecules.stream_data))
 
     def get_context(self, request):
         context = super(DemoPage, self).get_context(request)
