@@ -11,9 +11,9 @@
 
    value:                   An object with the following options for value.
 
-   value.category_label:    The category label text.
-   value.title_heading:     Heading text.
-   value.paragraph_heading: Body introduction text.
+   value.category:    The category label text.
+   value.heading:     Heading text.
+   value.paragraph: Body introduction text.
    value.authors:           Array of author names and associated URLs.
 
    value.date:              A datetime for the post.
@@ -26,9 +26,9 @@
     {% do global_dict.update(
         {
             'intro_introduction': {
-                'category_label': 'info for consumers',
-                'title_heading': 'Item Introduction',
-                'paragraph_heading': lipsumText,
+                'category': 'info for consumers',
+                'heading': 'Item Introduction',
+                'paragraph': lipsumText,
                 'authors': [
                               {'text':'Pat Govning', 'url':'#'},
                               {'text':'Ingrid Phed', 'url':'#'}
@@ -46,12 +46,12 @@
 {% import 'macros/time.html' as time %}
 <div class="o-item-introduction">
     <div class="h4">
-        {{ category_slug.render('info for consumers') }}
+        {{ category_slug.render(value.category) }}
     </div>
-    <h1>{{ value.title_heading }}</h1>
+    <h1>{{ value.heading }}</h1>
 
-    {% if value.paragraph_heading %}
-        <p class="short-desc">{{ value.paragraph_heading | safe }}</p>
+    {% if value.paragraph %}
+        <div class="short-desc">{{ value.paragraph.source | safe }}</div>
     {% endif %}
 
     <p class="short-desc">

@@ -3,6 +3,7 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from . import atoms
 from . import molecules
+from . import ref
 from .snippets import Contact as ContactSnippetClass
 
 
@@ -137,3 +138,18 @@ class ExpandableGroup(blocks.StructBlock):
 
     class Media:
         js = ("expandable-group.js",)
+
+
+class ItemIntroducation(blocks.StructBlock):
+    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+
+    authors = blocks.ListBlock(atoms.Hyperlink(required=False))
+    date = blocks.DateTimeBlock(required=False)
+    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/item-introduction.html'
