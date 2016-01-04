@@ -86,8 +86,7 @@ module.exports = {
     vendorjs: {
       src: [
         paths.lib + '/jquery/dist/jquery.min.js',
-        paths.lib + '/box-sizing-polyfill/boxsizing.htc',
-        paths.lib + '/html5shiv/dist/html5shiv-printshiv.min.js'
+        paths.lib + '/box-sizing-polyfill/boxsizing.htc'
       ],
       dest: paths.processed + '/js/'
     }
