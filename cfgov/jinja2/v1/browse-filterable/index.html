@@ -181,6 +181,42 @@
             },
             '') }}
     </div>
+    <div class="block">
+        {% set value = {
+
+                'filters': [],
+                'pages': 44,
+                'current_page': 3,
+                'prev_button_href': '',
+                'next_button_href': ''
+           }
+        %}
+        {% include 'molecules/pagination.html' with context %}
+    </div>
+    <div class="block">
+        {% set value = {
+
+                'filters': [],
+                'pages': 44,
+                'current_page': 1,
+                'prev_button_href': '',
+                'next_button_href': ''
+           }
+        %}
+        {% include 'molecules/pagination.html' with context %}
+    </div>
+    <div class="block">
+        {% set value = {
+
+                'filters': [],
+                'pages': 44,
+                'current_page': 44,
+                'prev_button_href': '',
+                'next_button_href': ''
+           }
+        %}
+        {% include 'molecules/pagination.html' with context %}
+    </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}
