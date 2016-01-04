@@ -11,7 +11,9 @@ from django.core.exceptions import ImproperlyConfigured
 from pytz import timezone
 from dateutil.parser import parse
 from v1.forms import CalenderPDFFilterForm
-
+from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 class PDFReactorNotConfigured(Exception):
     pass
@@ -97,8 +99,10 @@ class PDFGeneratorView(View):
 
             return self.generate_pdf(query_opts)
         else:
-            return Exception('Error query values are not in expected format')
-
+            for error in form.errors.itervalues():
+                messages.error(request, str(error), extra_tags='leadership-calendar')
+            return HttpResponseRedirect(reverse('%s:leadership-calendar' %
+                                                 self.request.resolver_match.namespace))
 
 class ICSView(ContextMixin, View):
     """

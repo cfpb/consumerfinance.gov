@@ -1,12 +1,33 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-
-{# Import organisms and molecules used in the template. #}
-
-{% import 'organisms/post-preview.html' as post_preview %}
-{% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
+{% if not page %}
+    {% do global_dict.update({
+            'page':  {
+                'seo_title':     'Learn Page - This is a prototype page for testing page layouts.',
+                'related_posts': global_dict.related_posts_function
+            },
+            'related_posts_settings': {
+                'value': {
+                    'limit':            3,
+                    'show_heading':     true,
+                    'related_posts':    false,
+                    'related_newsroom': false,
+                    'related_events':   false,
+                }
+            },
+            'prototype': true
+        })
+    %}
+    {% set page = page or global_dict.page %}
+    {% set prototype = global_dict.prototype or false %}
+{% endif %}
 
 {% import 'atoms/large-checkbox.html' as large_checkbox %}
 {% import 'atoms/large-radio.html' as large_radio %}
+
+{% import 'molecules/related-posts.html' as related_posts with context %}
+
+{% import 'organisms/post-preview.html' as post_preview %}
+{% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
 
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
@@ -15,65 +36,100 @@
 {% endif %}
 
 {% block title -%}
-    TODO: This is a prototype page for testing landing page layouts.
-    Remove when fully implemented elsewhere.
+    {{ page.seo_title }}
 {%- endblock %}
 
 {# TODO: Remove lipsumText when and if it is no longer needed. #}
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
-    {# TODO: Add Forms, Expandable #}
-    <div class="block
-                block__flush-top">
-        {# TODO: Add main molecules and organisms. #}
-        {% if prototype %}
-            {% include 'molecules/text-introduction.html' %}
-        {% endif %}
-    </div>
-    <div class="block">
-        {% include 'organisms/full-width-text.html' %}
-    </div>
-
     {% if prototype %}
+        {# Area 1 #}
+        <div class="block
+                    block__flush-top">
+            {% include 'molecules/text-introduction.html' %}
+        </div>
+        <div class="block
+                    block__flush-top">
+            {% include 'organisms/item-introduction.html' %}
+        </div>
 
+        {# Area 2 #}
+        <div class="block">
+            {# NOTE: includes Bulleted List and Inset molecules. #}
+            {% include 'organisms/full-width-text.html' %}
+        </div>
+        <div class="block">
+            {% include 'organisms/table.html' %}
+        </div>
+        <div class="block
+                    block__bg
+                    block__flush-sides">
+            {# TODO: Finish adding Form atomic elements. #}
+            <h3>Form Fields</h3>
+            {% include 'atoms/select.html' with context %}
+            {{ large_checkbox.render( {
+                'legend':   'Choose toppings',
+                'fields':   ['cheese', 'pepperoni', 'anchovies', 'mushrooms'],
+                'size':     '1-4'
+            }, {
+                'required': 'true'
+            }) }}
+            {{ large_radio.render( {
+                'legend':   'Extra Cheese',
+                'fields':   ['Yes', 'No'],
+                'size':     '1-2'
+            }, {
+                'required': 'true'
+            }) }}
+        </div>
+        <div class="block">
+            {% do global_dict.update(
+                {
+                    'expandable': {
+                        'label': 'Midtone Expandable',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                        'is_expanded': false
+                    }
+
+                })
+            %}
+            {% set value = global_dict.expandable %}
+            {% include 'molecules/expandable.html' with context %}
+            {% set value = None if prototype %}
+        </div>
         <div class="block">
             {% include 'organisms/well.html' %}
         </div>
-
         <div class="block">
-            {% include 'atoms/select.html' with context %}
+            {% include 'organisms/image-text-25-75-group.html' %}
         </div>
+
     {% endif %}
-
-    <div class="block
-                block__bg
-                block__flush-sides">
-        <h3>Form Fields</h3>
-        {{ large_checkbox.render( {
-            'legend':   'Choose toppings',
-            'fields':   ['cheese', 'pepperoni', 'anchovies', 'mushrooms'],
-            'size':     '1-4'
-        }, {
-            'required': 'true'
-        }) }}
-        {{ large_radio.render( {
-            'legend':   'Extra Cheese',
-            'fields':   ['Yes', 'No'],
-            'size':     '1-2'
-        }, {
-            'required': 'true'
-        }) }}
-    </div>
-
 {% endblock %}
 
+{% block content_sidebar_modifiers -%}
+    o-content-sidebar
+{%- endblock %}
+
 {% block content_sidebar scoped -%}
-    <aside>
-        {# TODO: Add sidebar organisms.
-            - Related Content
-            - Generic Sidebar #}
-        {{ sidebar_contact_info.render({
+    {% if prototype %}
+        {{ related_posts.render(global_dict.related_posts_settings) }}
+    {% else %}
+        {% for block in page.sidefoot %}
+            <div class="block block__flush-top">
+                {% if 'related_posts' in block.block_type %}
+                    {{ related_posts.render(block) }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {{ sidebar_contact_info.render({
             'heading': 'Header for text below',
             'body':    lipsumText
         }, {
@@ -88,7 +144,6 @@
                 'city':     'Washington',
                 'state':    'DC',
                 'zip_code': '20552-0003'
-            }
-        }) }}
-    </aside>
+        }
+    }) }}
 {%- endblock %}

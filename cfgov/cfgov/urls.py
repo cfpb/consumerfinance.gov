@@ -111,6 +111,9 @@ urlpatterns = [
     url(r'^the-bureau/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='the-bureau/index.html'),
             name='index'),
+        url(r'^leadership-calendar/$',
+            SheerTemplateView.as_view(),
+            name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
             name='page'),

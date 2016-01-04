@@ -39,16 +39,17 @@
     %}
 {% endif %}
 {% set value = value or global_dict.text_introduction %}
-
-<h1>{{ value.heading }}</h1>
-<p class="lead-paragraph">{{ value.intro.source | safe }}</p>
-<p class="short-desc">{{ value.body.source | safe }}</p>
-<ul class="list list__links">
-    {% for link in value.links %}
-        <li class="list_item">
-            <a class="list_link" href="{{ link.url }}">
-                {{ link.text }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+<div>
+    <h1>{{ value.heading }}</h1>
+    <p class="lead-paragraph">{{ value.intro.source | safe }}</p>
+    <p class="short-desc">{{ value.body.source | safe }}</p>
+    <ul class="list list__links">
+        {% for link in value.links %}
+            <li class="list_item">
+                <a class="list_link" href="{{ link.url }}">
+                    {{ link.text }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -54,27 +54,6 @@
 
    ========================================================================== #}
 
-{# =========================================================================
-
-   Text Introduction
-
-   =========================================================================
-
-   Description:
-
-   Create a Text Introduction molecule.
-   See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
-
-   value:           An object with the following options for value.
-
-   value.heading:   Heading text.
-   value.intro:     Body introduction text.
-   value.body:      Body text.
-
-   value.links:     A collection of links with URL & Text.
-
-   ========================================================================== #}
-
 {% macro _filters_form(value) %}
 {% if value.action and value.action != '/' %}
 {% set action = value.action %}
@@ -325,4 +304,18 @@
     %}
     {% set value = global_dict.expandable %}
     {% include 'molecules/expandable.html' with context %}
+
+    {% do global_dict.update(
+        {
+            'notification': {
+                'type':        'error',
+                'message':     'Custom text',
+                'explanation': 'And an explanation with a <a href="#">link</a>' | safe
+            }
+
+        })
+    %}
+    {% set value = global_dict.notification %}
+    {% include 'molecules/notification.html' with context %}
+
 </div>

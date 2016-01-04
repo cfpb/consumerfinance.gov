@@ -1,0 +1,85 @@
+
+{# ==========================================================================
+
+   pagination()
+
+   ==========================================================================
+
+   Description:
+
+   Builds pagination markup when given:
+
+   value.current_page:          Current page number of the iterable list.
+
+   value.filters:               Current filters applied to the iterable list.
+
+   value.next_button_href:      Link to the next page.
+
+   value.pages:                 Number of pages in the iterable list.
+
+   value.previous_button_href:  Link to the previous page.
+
+   ========================================================================== #}
+
+    <nav class="m-pagination"
+         role="navigation"
+         aria-label="Pagination">
+        {%- if value.current_page > 1 %}
+        <a class="btn btn__super m-pagination_btn-prev"
+           href="{{ (value.previous_button_href or '') ~
+                    '#o-pagination-content_list' }}">
+        {%- else %}
+        <a class="btn btn__super
+                  btn__disabled
+                  m-pagination_btn-prev">
+        {% endif %}
+            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+            Newer
+        </a>
+        {%- if value.current_page < value.pages %}
+        <a class="btn btn__super m-pagination_btn-next"
+           href="{{ (value.next_button_href or '') ~
+                 '#o-pagination-content_list' }}">
+        {%- else %}
+        <a class="btn btn__super btn__disabled m-pagination_btn-next">
+        {% endif -%}
+            Older
+            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+        </a>
+        <form data-js-hook="validate_pagination" action="#o-pagination-content_list">
+            <label for="m-pagination_current-page">
+                Page
+                <span class="u-visually-hidden">
+                    number out of {{ value.pages }} total pages
+                </span>
+            </label>
+            <input id="m-pagination_current-page"
+                   name="page"
+                   type="number"
+                   min="1"
+                   max="{{ value.pages }}"
+                   value="{{ value.current_page }}">
+            {#- Include any current filters when submitting this form to allow
+                for paginating through a filtered set of results.
+                Without this the form would change the url to `?page=X` and we
+                would lose any currently applied filters that are in the URL. -#}
+    {%- for filter in value.filters -%}
+        {# Note that in order to gain access to selected_filters_for_field you
+           will need to import this macros file with context. #}
+        {% set selected_filters = selected_filters_for_field(filter) %}
+        {%- for value in selected_filters -%}
+            {%- if value %}
+            <input type="hidden" name="filter_{{ filter }}" value="{{ value }}">
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endfor -%}
+            <span class="m-pagination_label">
+                of {{ value.pages }}
+            </span>
+            <button class="btn btn__link"
+                    id="m-pagination_submit-btn"
+                    type="submit">
+                Go
+            </button>
+        </form>
+    </nav>

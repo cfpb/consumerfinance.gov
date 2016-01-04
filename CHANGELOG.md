@@ -135,6 +135,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Form Field with Button to sublanding page
   ([Fixed 1246](https://github.com/cfpb/cfgov-refresh/issues/1246)).
 - Added Backend Feature Content Molecule
+- Added get_unique_id context method.
+- Added templates and CSS for the Item Introduction organism.
+- Added templates and CSS for the Pagination molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -231,6 +234,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `webpack-stream` to `3.1.0` from `2.1.0`.
 - Updated `player` to `0.5.1` from `0.6.1`.
 - Updated streamchild render method to use default behavior when using default blocks [Fixed 1268] (https://github.com/cfpb/cfgov-refresh/issues/1268)
+- Fixes styling and rendering issues [Fixed 1278] (https://github.com/cfpb/cfgov-refresh/issues/1278)
 
 ### Removed
 - Removed unused exportsOverride section,
