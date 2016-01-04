@@ -11,13 +11,13 @@
 
    value:                   An object with the following options for value.
 
-   value.category:    The category label text.
-   value.heading:     Heading text.
-   value.paragraph: Body introduction text.
-   value.authors:           Array of author names and associated URLs.
+   value.category:         The category label text.
+   value.heading:          Heading text.
+   value.paragraph.source: Body introduction text.
+   value.authors:          Array of author names and associated URLs.
 
-   value.date:              A datetime for the post.
-   value.has_social:        Whether to show the share icons or not.
+   value.date:             A datetime for the post.
+   value.has_social:       Whether to show the share icons or not.
 
    ========================================================================== #}
 
@@ -28,7 +28,9 @@
             'intro_introduction': {
                 'category': 'info for consumers',
                 'heading': 'Item Introduction',
-                'paragraph': lipsumText,
+                'paragraph': {
+                    'source': lipsumText
+                },
                 'authors': [
                               {'text':'Pat Govning', 'url':'#'},
                               {'text':'Ingrid Phed', 'url':'#'}

@@ -140,7 +140,7 @@ class ExpandableGroup(blocks.StructBlock):
         js = ("expandable-group.js",)
 
 
-class ItemIntroducation(blocks.StructBlock):
+class ItemIntroduction(blocks.StructBlock):
     category = blocks.ChoiceBlock(choices=ref.choices, required=False)
 
     heading = blocks.CharBlock(required=False)
