@@ -34,7 +34,7 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    sidebar_panels = [StreamFieldPanel('side_navigation')]
+    sidebar_panels = [StreamFieldPanel('side_navigation')] + CFGOVPage.sidefoot_panels
 
     # Tab handler interface
     edit_handler = TabbedInterface([
