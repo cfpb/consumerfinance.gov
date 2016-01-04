@@ -12,6 +12,7 @@ from . import organisms
 class BrowsePage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
+        ('featured_content', molecules.FeaturedContent()),
     ], blank=True)
 
     content = StreamField([
@@ -33,22 +34,13 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    sidebar_panels = [
-                         StreamFieldPanel('side_navigation'),
-                     ] + CFGOVPage.sidefoot_panels
+    sidebar_panels = [StreamFieldPanel('side_navigation')]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(sidebar_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
-
-    def get_context(self, request, *args, **kwargs):
-        return {
-            PAGE_TEMPLATE_VAR: self,
-            'self': self,
-            'request': request,
-        }
 
     template = 'browse-basic/index.html'
