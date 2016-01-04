@@ -14,9 +14,8 @@
             'prototype': true
         })
     %}
+    {% set page = page or global_dict.page %}
 {% endif %}
-{% set page = page or global_dict.page %}
-
 
 {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
