@@ -25,7 +25,9 @@ class DemoPage(CFGOVPage):
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('call_to_action', molecules.CallToAction()),
         ('expandable', molecules.Expandable()),
-        ('featured_content', molecules.FeaturedContent())
+        ('featured_content', molecules.FeaturedContent()),
+        ('notification', molecules.Notification()),
+
     ], blank=True)
 
     organisms = StreamField([

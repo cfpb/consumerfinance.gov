@@ -140,6 +140,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added templates and CSS for the Pagination molecule.
 - Backend Browse Page
 - Added Backend Item Intro Organism
+- Added Backend: Notification
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
