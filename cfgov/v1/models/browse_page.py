@@ -1,3 +1,5 @@
+import itertools
+
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
@@ -21,6 +23,7 @@ class BrowsePage(CFGOVPage):
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
+        ('expandable', molecules.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)
@@ -44,3 +47,7 @@ class BrowsePage(CFGOVPage):
     ])
 
     template = 'browse-basic/index.html'
+
+    def elements(self):
+        return list(itertools.chain(self.content.stream_data))
+
