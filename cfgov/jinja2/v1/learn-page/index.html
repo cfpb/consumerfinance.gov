@@ -44,10 +44,10 @@
 
 {% block content_main %}
     {% for block in page.header -%}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
+        <div class="block
+                    block__flush-top">
+            {{ render_stream_child(block) }}
+        </div>
     {%- endfor %}
 
     {% for block in page.content -%}
@@ -147,9 +147,8 @@
                 'zip_code': '20552-0003'
         }
         }) }}
-    {% endif %}
-
-    {% for block in page.sidefoot %}
+    {% else %}
+        {% for block in page.sidefoot %}
         <div class="block block__flush-top">
             {% if 'related_posts' in block.block_type %}
                 {{ related_posts.render(block) }}
@@ -173,5 +172,6 @@
                 {% endif %}
             {% endif %}
         </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 {%- endblock %}

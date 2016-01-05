@@ -142,6 +142,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Backend Item Intro Organism
 - Added Backend: Notification
 - `dom-traverse.js` for dom querying not covered by native dom.
+- Added Backend Learn Page model
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
