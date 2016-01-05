@@ -13,3 +13,9 @@ choices = [
     ('blog', 'Blog'),
     ('newsroom', 'Newsroom'),
 ]
+
+notification_types = [
+    ('success', 'success'),
+    ('warning', 'warning'),
+    ('error', 'error'),
+]
