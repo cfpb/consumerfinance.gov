@@ -239,6 +239,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixes styling and rendering issues [Fixed 1278] (https://github.com/cfpb/cfgov-refresh/issues/1278)
 - Upgrade version of Wagtail to 1.3
 - Change method of CFGOVPage called `children` to be called `elements`
+- Moved html5shiv into modernizr.
 
 ### Removed
 - Removed unused exportsOverride section,
