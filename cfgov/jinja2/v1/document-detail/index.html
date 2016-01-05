@@ -116,9 +116,8 @@
                 'zip_code': '20552-0003'
         }
         }) }}
-    {% endif %}
-
-    {% for block in page.sidefoot %}
+    {% else %}
+        {% for block in page.sidefoot %}
         <div class="block block__flush-top">
             {% if 'related_posts' in block.block_type %}
                 {{ related_posts.render(block) }}
@@ -142,5 +141,6 @@
                 {% endif %}
             {% endif %}
         </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 {%- endblock %}
