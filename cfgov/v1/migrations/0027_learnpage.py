@@ -10,7 +10,7 @@ import wagtail.wagtailimages.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0025_auto_20160104_1755'),
+        ('v1', '0026_auto_20160105_1401'),
     ]
 
     operations = [
