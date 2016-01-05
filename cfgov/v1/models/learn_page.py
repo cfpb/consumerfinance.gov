@@ -14,6 +14,7 @@ from . import organisms
 class LearnPage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
+        ('item_introduction', organisms.ItemIntroduction()),
     ], blank=True)
 
     content = StreamField([
