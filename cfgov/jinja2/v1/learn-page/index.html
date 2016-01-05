@@ -25,7 +25,6 @@
 {% import 'atoms/large-radio.html' as large_radio %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
-
 {% import 'organisms/post-preview.html' as post_preview %}
 {% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
 
@@ -216,12 +215,13 @@
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
-    o-content-sidebar
+    o-sidebar-content
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
     {% if prototype %}
         {{ related_posts.render(global_dict.related_posts_settings) }}
+        {% include 'molecules/related-topics.html' %}
         {{ sidebar_contact_info.render({
             'heading': 'Header for text below',
             'body':    lipsumText
