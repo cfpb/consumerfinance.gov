@@ -8,8 +8,6 @@
 require( 'jquery' );
 require( 'jquery-easing' );
 require( 'cf-expandables' );
-// TODO: Move to gulp task
-require( '../modules/util/modernizr');
 
 // Global modules.
 require( '../modules/beta-banner-state' ).init();

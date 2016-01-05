@@ -39,7 +39,8 @@ class NumberBlock(blocks.StructBlock):
             error_dict.update({'text': ['Must be a numerical value']})
 
         if error_dict:
-            raise ValidationError("Hyperlink validation errors", params=error_dict)
+            raise ValidationError("NumberBlock validation errors",
+                                  params=error_dict)
         else:
             return data
 

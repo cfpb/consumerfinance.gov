@@ -88,16 +88,9 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 -->
-
-<!--[if lt IE 9]>
-    <script src="{{ static('js/html5shiv-printshiv.min.js') }}"></script>
-<![endif]-->
-
-    <script>
-        // Confirm availability of JS and remove no-js class from html.
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace( /(^|\s)no-js(\s|$)/, '$1$2' );
-    </script>
+    {# Customized Modernizr build that includes html5shiv.
+       Built via gulp-modernizer in `scripts.js` task. #}
+    <script src="{{ static('js/modernizr.min.js') }}"></script>
 
     {# TODO: jQuery CDN is provided in the head to satisfy
              Google Tag Manager (GTM) requirements.

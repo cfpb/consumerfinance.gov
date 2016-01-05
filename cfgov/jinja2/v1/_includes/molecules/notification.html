@@ -36,8 +36,6 @@
     %}
 {% endif %}
 {% set value = value or global_dict.notification %}
-
-{% set is_visible = value.is_visible if value.is_visible else false %}
 {% set type  =  value.type if value.type in ['success', 'warning', 'error'] else 'success' %}
 {% set type_lookup  = {
       'success' : ('approved', 'Success.'),
@@ -46,12 +44,14 @@
     }
 %}
 {% set icon, message = type_lookup[type]  %}
-{% set message  =  value.message | default( message ) %}
+{% if value.message %}
+    {% set message = value.message %}
+{% endif %}
+{% set type = ('m-notification__' + type) if type %}
 
-{% set notification_type = ('m-notification__' + type) if type %}
 <div class="m-notification
-            {{ notification_type }}
-            {{ 'm-notification__visible' if is_visible else '' }}">
+            {{ type }}
+            {{ 'm-notification__visible' if value.is_visible else '' }}">
     <span class="m-notification_icon
                  cf-icon"></span>
     <div class="m-notification_content">

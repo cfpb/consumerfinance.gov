@@ -226,3 +226,20 @@ class Expandable(blocks.StructBlock):
 
     class Media:
         js = ("expandable.js",)
+
+
+class Notification(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=ref.notification_types, required=False)
+    is_visible = blocks.BooleanBlock(required=False, help_text="Whether the notification is initially shown or not.")
+    message = blocks.TextBlock(required=False, help_text="Text to display within the notification markup."
+                                                         "\nDefault is 'Success.', 'Warning!', or 'Error!',\n "
+                                                         "depending on notification type.")
+    explanation = blocks.TextBlock(required=False,
+                                   help_text="Text to display as an explanation within the notification markup.")
+
+    class Meta:
+        icon = 'view'
+        template = '_includes/molecules/notification.html'
+
+    class Media:
+        js = ("notification.js",)

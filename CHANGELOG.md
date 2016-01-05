@@ -138,6 +138,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added get_unique_id context method.
 - Added templates and CSS for the Item Introduction organism.
 - Added templates and CSS for the Pagination molecule.
+- Backend Browse Page
+- Added Backend Item Intro Organism
+- Added Backend: Notification
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -235,6 +238,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `player` to `0.5.1` from `0.6.1`.
 - Updated streamchild render method to use default behavior when using default blocks [Fixed 1268] (https://github.com/cfpb/cfgov-refresh/issues/1268)
 - Fixes styling and rendering issues [Fixed 1278] (https://github.com/cfpb/cfgov-refresh/issues/1278)
+- Upgrade version of Wagtail to 1.3
+- Change method of CFGOVPage called `children` to be called `elements`
+- Moved html5shiv into modernizr.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -259,6 +265,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix related post molecule to be used in multiple places
 - Fix failing tests relating to Related Posts organism
 - Fix related-posts.html logic
+- Minor PEP8 compliance changes
 
 
 ## 3.0.0-2.4.0 - 2015-09-29
