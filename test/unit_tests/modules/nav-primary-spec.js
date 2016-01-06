@@ -8,7 +8,10 @@ var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 
 describe( 'Get Event States', function() {
-  var navPrimary, sandbox, link;
+  var navPrimary;
+  var sandbox;
+  var link;
+  var trigger;
 
   jsdom();
 
@@ -20,7 +23,8 @@ describe( 'Get Event States', function() {
   beforeEach( function() {
     //  Adding a simplified version of the thing we want to test.
     document.body.innerHTML =
-      '<button class="primary-nav_trigger js-primary-nav_trigger" aria-expanded="false"></button>' +
+      '<button class="primary-nav_trigger js-primary-nav_trigger" ' +
+      'aria-expanded="false"></button>' +
       '<nav class="js-primary-nav">' +
         '<div class="nav-item-1 js-primary-nav_item">' +
           '<a class="nav-link-1 js-primary-nav_link" ' +
@@ -49,8 +53,8 @@ describe( 'Get Event States', function() {
   describe( 'Primary Nav Link Events - Default state', function() {
     beforeEach( function() {
       link = document.querySelector( '.sub-nav-1 a' );
-
-      document.querySelector( '.nav-link-1' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
+      var event = new Event( 'click', { bubbles: true } );
+      document.querySelector( '.nav-link-1' ).dispatchEvent( event );
     } );
 
     it( 'should not navigate away from the page', function() {
@@ -89,8 +93,10 @@ describe( 'Get Event States', function() {
     beforeEach( function() {
       link = document.querySelector( '.sub-nav-2 a' );
 
-      document.querySelector( '.sub-nav-1' ).getAttribute( 'aria-expanded', 'true' );
-      document.querySelector( '.nav-link-2' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
+      document.querySelector( '.sub-nav-1' )
+        .getAttribute( 'aria-expanded', 'true' );
+      var event = new Event( 'click', { bubbles: true } );
+      document.querySelector( '.nav-link-2' ).dispatchEvent( event );
     } );
 
     it( 'should close others', function() {
@@ -115,20 +121,23 @@ describe( 'Get Event States', function() {
 
     it( 'should close itself', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        document.querySelector( '.nav-link-2' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
+        var event = new Event( 'click', { bubbles: true } );
+        var link2 = document.querySelector( '.nav-link-2' );
+        link2.dispatchEvent( event );
 
-        expect( document.querySelector( '.sub-nav-2' )
-          .getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
+        expect( link2.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
         done();
       }, 500 );
     } );
 
     it( 'should focus the primary link after closing', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        document.querySelector( '.nav-link-2' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
+        var event = new Event( 'click', { bubbles: true } );
+        var link2 = document.querySelector( '.nav-link-2' );
+        link2.dispatchEvent( event );
 
         setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-          expect( document.querySelector( '.nav-link-2' ) === document.activeElement ).to.be.true;
+          expect( link2 === document.activeElement ).to.be.true;
           done();
         }, 500 );
       }, 500 );
@@ -138,8 +147,8 @@ describe( 'Get Event States', function() {
   describe( 'Primary Nav Trigger Events', function() {
     beforeEach( function() {
       link = document.querySelector( '.nav-link-1' );
-
-      document.querySelector( '.js-primary-nav_trigger' ).dispatchEvent( new Event( 'click' ) );
+      trigger = document.querySelector( '.js-primary-nav_trigger' );
+      trigger.dispatchEvent( new Event( 'click' ) );
     } );
 
     it( 'should open the primary nav', function() {
@@ -156,7 +165,7 @@ describe( 'Get Event States', function() {
     } );
 
     it( 'should close the open primary nav', function() {
-      document.querySelector( '.js-primary-nav_trigger' ).dispatchEvent( new Event( 'click' ) );
+      trigger.dispatchEvent( new Event( 'click' ) );
 
       expect( document.querySelector( '.js-primary-nav' )
         .getAttribute( 'aria-expanded' ) )
@@ -164,10 +173,10 @@ describe( 'Get Event States', function() {
     } );
 
     it( 'should focus the trigger after closing', function( done ) {
-      document.querySelector( '.js-primary-nav_trigger' ).dispatchEvent( new Event( 'click' ) );
+      trigger.dispatchEvent( new Event( 'click' ) );
 
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( document.querySelector( '.js-primary-nav_trigger' ) === document.activeElement )
+        expect( trigger === document.activeElement )
           .to.be.true;
         done();
       }, 500 );
@@ -178,8 +187,10 @@ describe( 'Get Event States', function() {
     beforeEach( function() {
       link = document.querySelector( '.nav-link-1' );
 
-      document.querySelector( '.sub-nav-1' ).getAttribute( 'aria-expanded', 'true' );
-      document.querySelector( '.sub-nav-back-1' ).dispatchEvent( new Event( 'click' ) );
+      document.querySelector( '.sub-nav-1' )
+        .getAttribute( 'aria-expanded', 'true' );
+      document.querySelector( '.sub-nav-back-1' )
+        .dispatchEvent( new Event( 'click' ) );
     } );
 
     it( 'should close the sub nav', function() {

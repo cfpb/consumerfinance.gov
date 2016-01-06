@@ -21,7 +21,8 @@ require( '../modules/polyfill/array-polyfills' );
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
 
-  var _dom = atomicCheckers.validateDomElement( element, BASE_CLASS, 'FilterableListControls' );
+  var _dom = atomicCheckers.validateDomElement(
+    element, BASE_CLASS, 'FilterableListControls' );
   var _form = _dom.querySelector( 'form' );
   var _notification;
   var _fields = [];

@@ -20,10 +20,10 @@ var webpackStream = require( 'webpack-stream' );
 gulp.task( 'scripts', function() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpModernizr( {
-      tests:   ['csspointerevents'],
-      options: ['setClasses',
-                'html5printshiv',
-                'fnBind']
+      tests:   [ 'csspointerevents' ],
+      options: [ 'setClasses',
+                 'html5printshiv',
+                 'fnBind' ]
     } ) )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'modernizr.min.js' ) )
