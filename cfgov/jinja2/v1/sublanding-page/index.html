@@ -86,7 +86,8 @@
             {% include 'organisms/half-width-link-blob-group.html' %}
         </div>
         <div class="block">
-            {% include 'organisms/full-width-text.html' %}
+            {% set full_width_sans = true %}
+            {% include 'organisms/full-width-text.html' with context %}
         </div>
         <div class="block">
             {{ main_contact_info.render({

@@ -27,12 +27,15 @@
 
 {% if not value %}
     {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% macro _lipsum_paragraph() %}
+        <p>{{ lipsumText }}</p>
+    {% endmacro %}
     {% do global_dict.update(
         {
             'image_text_25_75': {
                 'heading' :       'Placeholder',
                 'body': {
-                    'source': lipsumText
+                    'source': _lipsum_paragraph()
                 },
                 'image': {
                       'upload': {
@@ -81,7 +84,9 @@
 
     <div class="m-image-text-25-75_content">
         <h3>{{ value.heading }}</h3>
-        <p class="short-desc">{{ value.body.source | safe }}</p>
+        <div class="short-desc">
+            {{ value.body.source }}
+        </div>
 
         <ul class="list list__links">
             {% for link in value.links %}

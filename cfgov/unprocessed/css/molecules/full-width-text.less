@@ -6,10 +6,15 @@
       markup: |
         <div class="o-full-width-text-group">
             <div class="m-full-width-text">
-              <ul>
-                <li>Gray Well</li>
-                <li>Well's content</li>
-              </ul>
+                <h2>Full Width Text Molecule</h2>
+                <p>The full width text molecule contains headings,
+                paragraphs, lists or a grey line rule</p>
+                <ul>
+                    <li>Should always default to text styling and spacing
+                    dictated in the Design Manual</li>
+                    <li>Convert the font-face from Georgia to Avenir by using
+                    the `__sans` modifier</li>
+                </ul>
             </div>
         </div>
       codenotes:
@@ -18,28 +23,20 @@
           -----------------------
           .o-full-width-text
             .m-full-width-text
+              h#
+              p
               ul
                 li
   tags:
     - cfgov-molecules
   notes:
-    - Since content will be entered by content managers,
-      these styles are applied on the ul li elements directly when needed.
     - These are held in a full-width-text-group container to be held with
       various insets and tables as needed.
 */
 
 .m-full-width-text {
-    ul {
-        padding-left: unit(30px / @base-font-size-px, em);
-        li {
-            .custom-bullet( @text:"\25AA",
-                            @color: @black,
-                            @offset: unit(15px / @base-font-size-px, em),
-                            @size: unit(22px / @base-font-size-px, em)
-                          );
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-        }
+    &__sans {
+        .webfont-regular();
     }
 }
 

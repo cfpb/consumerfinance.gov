@@ -144,6 +144,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `dom-traverse.js` for dom querying not covered by native dom.
 - Added Backend Learn Page model
 - Added Related Topics molecule.
+- Added full_width_sans setting for correct font face usage.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -271,6 +272,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix failing tests relating to Related Posts organism
 - Fix related-posts.html logic
 - Minor PEP8 compliance changes
+- Fixed the markup for the 25/75 organism.
 
 
 ## 3.0.0-2.4.0 - 2015-09-29
