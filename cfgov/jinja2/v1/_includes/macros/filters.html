@@ -160,6 +160,9 @@
         </span>
     </button>
     <div class="expandable_content">
+      {%- if options.show_errors -%}
+        {{ _errors() }}
+      {% endif %}
        {{ _filters_form(filters, query, doc_type, options) }}
     </div>
 </div>
@@ -355,19 +358,38 @@
 
 {# A helper macro for filters()
    ========================================================================== #}
+{% macro _errors(errors=[]) %}
+    {% set errors = errors or get_messages(request) %}
+    {%- if errors -%}
+        {% set error_messages = [] %}
+        {% for error in errors %}
+           {% do error_messages.append(error|string) %}
+        {% endfor %}
+        {% set value = {
+            'message': '</br>'.join(error_messages) | safe,
+            'type': 'error'
+        } %}
+        <div class="u-mt15 u-mb15">
+            {% include 'molecules/notification.html' with context %}
+        </div>
+    {%- endif -%}
+{% endmacro %}
+
+{# A helper macro for filters()
+   ========================================================================== #}
 {% macro _filter_checkbox(field, value, label) %}
     {% from 'macros/util/format/url.html' import slugify as slugify %}
-    {% set id_slug = slugify( value ) %}
+    {% set id = get_unique_id('filter_', '_') ~ slugify( value ) %}
     <input class="cf-input"
            type="checkbox"
            name="filter_{{ field }}"
            value="{{ value }}"
-           id="filter_{{ id_slug }}"
+           id="{{ id }}"
            {%- if is_filter_selected(field, value) %}
            checked
            {%- endif -%}
            >
-    <label class="form-group_item" for="filter_{{ id_slug }}">
+    <label class="form-group_item" for="{{ id }}">
         {{ label if label else value }}
     </label>
 {% endmacro %}

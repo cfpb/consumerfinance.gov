@@ -1,0 +1,80 @@
+{# ==========================================================================
+
+   state-selector.render()
+
+   ==========================================================================
+
+   Returns a select box with all 50 states and DC.
+
+   size:        The size of the fields. Defaults to 1-3.
+                Possible options: 1, 1-2, 1-3
+
+   required:    Whether the field is required. Defaults to false.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   ========================================================================== #}
+
+{% do global_dict.update({
+    'states': {
+        'label':        'State',
+        'placeholder':  'Select a state',
+        'fields':       [ 'Alabama',
+                        'Alaska',
+                        'Arizona',
+                        'Arkansas',
+                        'California',
+                        'Colorado',
+                        'Connecticut',
+                        'Delaware',
+                        'District of Columbia',
+                        'Florida',
+                        'Georgia',
+                        'Hawaii',
+                        'Idaho',
+                        'Illinois',
+                        'Indiana',
+                        'Iowa',
+                        'Kansas',
+                        'Kentucky',
+                        'Louisiana',
+                        'Maine',
+                        'Maryland',
+                        'Massachusetts',
+                        'Michigan',
+                        'Minnesota',
+                        'Mississippi',
+                        'Missouri',
+                        'Montana',
+                        'Nebraska',
+                        'Nevada',
+                        'New Hampshire',
+                        'New Jersey',
+                        'New Mexico',
+                        'New York',
+                        'North Carolina',
+                        'North Dakota',
+                        'Ohio',
+                        'Oklahoma',
+                        'Oregon',
+                        'Pennsylvania',
+                        'Rhode Island',
+                        'South Carolina',
+                        'South Dakota',
+                        'Tennessee',
+                        'Texas',
+                        'Utah',
+                        'Vermont',
+                        'Virginia',
+                        'Washington',
+                        'West Virginia',
+                        'Wisconsin',
+                        'Wyoming'
+                      ],
+        'size':         '1-3',
+        'required':     false,
+        'disabled':     false
+    }
+}) %}
+{% set value = global_dict.states %}
+{% include 'atoms/select.html' with context %}

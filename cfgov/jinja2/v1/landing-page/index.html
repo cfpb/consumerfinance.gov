@@ -1,11 +1,9 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'molecules/related-posts.html' as related_posts with context %}
-
 {% if not page %}
     {% do global_dict.update({
             'page':  {
-                'seo_title':     'This is a prototype page for testing landing page layouts.',
+                'seo_title':     'Landing Page - This is a prototype page for testing page layouts.',
                 'related_posts': global_dict.related_posts_function
             },
             'related_posts_settings': {
@@ -20,9 +18,11 @@
             'prototype': true
         })
     %}
+    {% set page = page or global_dict.page %}
+    {% set prototype = global_dict.prototype or false %}
 {% endif %}
-{% set page = page or global_dict.page %}
-{% set prototype = global_dict.prototype or false %}
+
+{% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -71,9 +71,16 @@
             {% endif %}
         {%- endfor %}
         {% for block in page.content -%}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+            {% if loop.index == 1 %}
+                <div class="block
+                            block__flush-top">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% else %}
+                <div class="block">
+                    {{ render_stream_child(block) }}
+                </div>
+            {% endif %}
         {%- endfor %}
     {% endif %}
 {% endblock %}
@@ -88,11 +95,29 @@
         {% include 'organisms/email-signup.html' %}
     {% else %}
         {% for block in page.sidefoot %}
-            {% if 'related_posts' in block.block_type %}
-                {{ related_posts.render(block) }}
-            {% else %}
-                {{ render_stream_child(block) }}
-            {% endif %}
+            <div class="block block__flush-top">
+                {% if 'related_posts' in block.block_type %}
+                    {{ related_posts.render(block) }}
+                {% else %}
+                    {% if 'heading' in block.block_type %}
+                        <h3 class="o-sidebar-breakout_heading">
+                            {{ render_stream_child(block) }}
+                        </h3>
+                    {% elif 'slug' in block.block_type %}
+                        <h2 class="header-slug">
+                            <span class="header-slug_inner">
+                                {{ render_stream_child(block) }}
+                            </span>
+                        </h2>
+                    {% elif 'paragraph' in block.block_type %}
+                        <div class="short-desc">
+                            {{ render_stream_child(block) }}
+                        </div>
+                    {% else %}
+                        {{ render_stream_child(block) }}
+                    {% endif %}
+                {% endif %}
+            </div>
         {% endfor %}
     {% endif %}
 {%- endblock %}

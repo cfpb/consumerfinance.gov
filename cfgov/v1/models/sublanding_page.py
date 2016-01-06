@@ -15,6 +15,8 @@ class SublandingPage(CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
     content = StreamField([
+        ('text_introduction', molecules.TextIntroduction()),
+        ('featured_content', molecules.FeaturedContent()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
@@ -22,6 +24,7 @@ class SublandingPage(CFGOVPage):
         ('well', organisms.Well()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
+        ('formfield_with_button', molecules.FormFieldWithButton()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),

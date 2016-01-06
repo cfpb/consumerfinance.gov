@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   expandable.render()
+   Expandable
 
    ==========================================================================
 
@@ -8,16 +8,22 @@
 
    Create an Expandable molecule when given:
 
-   value
-   value.label        Label you want on the Expandable.
-                         Default is an empty string.
-   value.content      Main content of the expandable
+   value.label:       Label you want on the Expandable.
+                      Default is an empty string.
+
+   value.paragraph:   Intro paragraph text.
+
+   value.content:     Main content of the expandable.
+
    value.is_bordered: Whether the Expandable has a bottom border or not.
-                         Default is true.
+                      Default is true.
+
    value.is_midtone:  Whether the Expandable is gray or not.
-                         Default is false.
+                      Default is false.
+
    value.is_expanded: Whether the Expandable is expanded or not.
-                         Default is false.
+                      Default is false.
+
    ========================================================================== #}
 
 {% if not value %}

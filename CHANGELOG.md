@@ -18,7 +18,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
 - Migrated 'sheerlike' project into this codebase
-- Added 'watchserver' manage.py subcommand for running Django dev server and gulp watch together
+- Added 'watchserver' manage.py subcommand for running Django dev server
+  and gulp watch together.
 - Added Acceptance tests for the `activity-log` page.
 - Added webpack module loader for per-page JavaScript.
 - Added external-site page-specific script.
@@ -130,6 +131,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add Heading field to Link Blob group
 - Add prototype data to Image Text organisms
 - Backend Expandable/Expandable Group Molecule & Organisms
+- Added Number Block
+- Added Form Field with Button to sublanding page
+  ([Fixed 1246](https://github.com/cfpb/cfgov-refresh/issues/1246)).
+- Added Backend Feature Content Molecule
+- Added get_unique_id context method.
+- Added templates and CSS for the Item Introduction organism.
+- Added templates and CSS for the Pagination molecule.
+- Backend Browse Page
+- Added Backend Item Intro Organism
+- Added Backend: Notification
+- `dom-traverse.js` for dom querying not covered by native dom.
+- Added Backend Learn Page model
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -208,7 +221,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix related post molecule to be used in multiple places
 - Convert Sidefoot paragraph streamfield block to Textblock
 - Updated headings for changes in Capital Framework
-- Temporarily comment out related posts section of single blog post browser test until BlogPage's are in Wagtail
+- Temporarily comment out related posts section of single blog post
+  browser test until BlogPage's are in Wagtail.
 - Add `show_heading` checkbox to Related Posts organism to toggle the heading
   and icon.
 - Merge Streamfields in LandingPage
@@ -217,6 +231,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Make Full Width Text organism a StreamBlock and add insets
 - Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
 - Changed the ImageBasic atom to always include an optional alt by default
+- Removed field validation on content creation
+  ([Fixed 1252](https://github.com/cfpb/cfgov-refresh/issues/1252)).
+- Sets npm install on frontend.sh to warning level.
+- Updated Jinja2 environment inlcude flag related methods
+- Updated ImageText5050 requirements [Fixed 1269] (https://github.com/cfpb/cfgov-refresh/issues/1269)
+- Updated `webpack-stream` to `3.1.0` from `2.1.0`.
+- Updated `player` to `0.5.1` from `0.6.1`.
+- Updated streamchild render method to use default behavior when using default blocks [Fixed 1268] (https://github.com/cfpb/cfgov-refresh/issues/1268)
+- Fixes styling and rendering issues [Fixed 1278] (https://github.com/cfpb/cfgov-refresh/issues/1278)
+- Upgrade version of Wagtail to 1.3
+- Change method of CFGOVPage called `children` to be called `elements`
+- Moved html5shiv into modernizr.
+- Updated `gulp-load-plugins` to `1.2.0` from `1.1.0`.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -241,6 +268,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix related post molecule to be used in multiple places
 - Fix failing tests relating to Related Posts organism
 - Fix related-posts.html logic
+- Minor PEP8 compliance changes
 
 
 ## 3.0.0-2.4.0 - 2015-09-29

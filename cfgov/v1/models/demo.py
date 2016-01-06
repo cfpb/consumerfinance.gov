@@ -1,12 +1,11 @@
+import itertools
+
 from django.db import models
 
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, \
-    FieldRowPanel, TabbedInterface, ObjectList, StreamFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
+    StreamFieldPanel
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-from wagtail.wagtailcore import blocks
 
 from .base import CFGOVPage
 from . import atoms
@@ -17,6 +16,7 @@ from .snippets import Contact
 
 class DemoPage(CFGOVPage):
     molecules = StreamField([
+        ('number', atoms.NumberBlock()),
         ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
         ('text_introduction', molecules.TextIntroduction()),
         ('image_text_2575', molecules.ImageText2575()),
@@ -25,13 +25,17 @@ class DemoPage(CFGOVPage):
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('call_to_action', molecules.CallToAction()),
         ('expandable', molecules.Expandable()),
+        ('featured_content', molecules.FeaturedContent()),
+        ('notification', molecules.Notification()),
+
     ], blank=True)
 
     organisms = StreamField([
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
         ('post_preview', organisms.PostPreview()),
-        ('expandables_group', organisms.ExpandableGroup()),
+        ('expandable_group', organisms.ExpandableGroup()),
+        ('item_intro', organisms.ItemIntroduction()),
     ], blank=True)
 
     contact = models.ForeignKey(
@@ -41,7 +45,6 @@ class DemoPage(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -54,8 +57,13 @@ class DemoPage(CFGOVPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
+        ObjectList(CFGOVPage.settings_panels, heading='Settings',
+                   classname="settings"),
     ])
+
+    def elements(self):
+        return list(itertools.chain(self.organisms.stream_data,
+                    self.molecules.stream_data))
 
     def get_context(self, request):
         context = super(DemoPage, self).get_context(request)

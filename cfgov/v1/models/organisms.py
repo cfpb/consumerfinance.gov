@@ -3,11 +3,12 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from . import atoms
 from . import molecules
+from . import ref
 from .snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):
-    content = blocks.RichTextBlock(required=True, label='Well')
+    content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
         icon = 'title'
@@ -26,7 +27,7 @@ class FullWidthText(blocks.StreamBlock):
 
 
 class ImageText5050Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title')
+    heading = blocks.CharBlock(icon='title', required=False)
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
@@ -35,7 +36,7 @@ class ImageText5050Group(blocks.StructBlock):
 
 
 class ImageText2575Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title')
+    heading = blocks.CharBlock(icon='title', required=False)
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -44,7 +45,7 @@ class ImageText2575Group(blocks.StructBlock):
 
 
 class HalfWidthLinkBlobGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title')
+    heading = blocks.CharBlock(icon='title', required=False)
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
     class Meta:
@@ -53,11 +54,11 @@ class HalfWidthLinkBlobGroup(blocks.StructBlock):
 
 
 class PostPreview(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    body = blocks.RichTextBlock(required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
+    body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
 
-    post = blocks.PageChooserBlock(required=True)
+    post = blocks.PageChooserBlock(required=False)
 
     link = atoms.Hyperlink(required=False)
 
@@ -67,8 +68,8 @@ class PostPreview(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    text = blocks.CharBlock(required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
+    text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
     form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=False)
@@ -98,8 +99,8 @@ class RelatedPosts(blocks.StructBlock):
 
 
 class MainContactInfo(blocks.StructBlock):
-    header = blocks.CharBlock()
-    body = blocks.RichTextBlock()
+    header = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
     contact = SnippetChooserBlock(ContactSnippetClass)
 
     class Meta:
@@ -134,3 +135,21 @@ class ExpandableGroup(blocks.StructBlock):
     class Meta:
         icon = 'list-ul'
         template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ("expandable-group.js",)
+
+
+class ItemIntroduction(blocks.StructBlock):
+    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+
+    authors = blocks.ListBlock(atoms.Hyperlink(required=False))
+    date = blocks.DateTimeBlock(required=False)
+    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/item-introduction.html'

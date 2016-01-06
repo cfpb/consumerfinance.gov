@@ -8,8 +8,8 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 
-var ContentSlider = require( '../../../modules/classes/ContentSlider' );
-var BreakpointHandler = require( '../../../modules/classes/BreakpointHandler' );
+var ContentSlider = require( '../../../modules/ContentSlider' );
+var BreakpointHandler = require( '../../../modules/BreakpointHandler' );
 
 var _slider;
 

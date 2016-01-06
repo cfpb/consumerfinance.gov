@@ -34,10 +34,6 @@ function init() {
     $form.find( 'select option:first' )
     .attr( 'selected', true );
 
-    // Clear .custom-select elements
-    $form.find( '.custom-select_select' )
-    .trigger( 'updateState' );
-
     // Clear Chosen.js elements
     $form.find( '.chosen-select' )
     .val( '' )

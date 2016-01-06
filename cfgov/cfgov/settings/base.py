@@ -82,9 +82,9 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
-                'wagtail.wagtailcore.templatetags.jinja2.core',
-                'wagtail.wagtailadmin.templatetags.jinja2.userbar',
-                'wagtail.wagtailimages.templatetags.jinja2.images',
+                'wagtail.wagtailcore.jinja2tags.core',
+                'wagtail.wagtailadmin.jinja2tags.userbar',
+                'wagtail.wagtailimages.jinja2tags.images',
             ],
         }
     },

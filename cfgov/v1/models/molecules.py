@@ -2,9 +2,9 @@ from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 
+from . import ref
 from . import atoms
-
-from ..util import id_validator
+from ..util import util
 
 
 def isRequired(field_name):
@@ -12,7 +12,7 @@ def isRequired(field_name):
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
     body = blocks.RichTextBlock(blank=True)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
@@ -22,8 +22,8 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
 
 class ImageText5050(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    body = blocks.RichTextBlock(blank=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
+    body = blocks.RichTextBlock(blank=True, required=False)
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
     is_button = blocks.BooleanBlock(required=False, label="Show links as button")
@@ -35,8 +35,8 @@ class ImageText5050(blocks.StructBlock):
 
 
 class ImageText2575(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
-    body = blocks.RichTextBlock(required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
+    body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
@@ -47,7 +47,7 @@ class ImageText2575(blocks.StructBlock):
 
 
 class TextIntroduction(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
     intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
@@ -59,12 +59,13 @@ class TextIntroduction(blocks.StructBlock):
 
 
 class Hero(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=True)
+    heading = blocks.CharBlock(max_length=100, required=False)
     body = blocks.RichTextBlock(required=False)
 
     image = atoms.ImageBasic()
 
-    background_color = blocks.CharBlock(max_length=100, required=False)
+    background_color = blocks.CharBlock(max_length=100, required=False,
+                                        help_text="Use Hexcode colors e.g #F0F8FF")
     links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
 
@@ -74,10 +75,11 @@ class Hero(blocks.StructBlock):
 
 
 class FormFieldWithButton(blocks.StructBlock):
-    btn_text = blocks.CharBlock(max_length=100, required=True)
+    btn_text = blocks.CharBlock(max_length=100, required=False)
 
     required = blocks.BooleanBlock(required=False)
-    id = blocks.CharBlock(max_length=100, required=True)
+    id = blocks.CharBlock(max_length=100, required=False,
+                          help_text="Type of form i.e emailForm, submission-form. Should be unique if multiple forms are used")
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
     label = blocks.CharBlock(max_length=100, required=True)
     type = blocks.ChoiceBlock(choices=[
@@ -87,7 +89,7 @@ class FormFieldWithButton(blocks.StructBlock):
         ('number', 'Number'),
         ('url', 'URL'),
         ('radio', 'Radio'),
-    ], required=True)
+    ], required=False)
     placeholder = blocks.CharBlock(max_length=100, required=False)
 
     def clean(self, data):
@@ -98,7 +100,7 @@ class FormFieldWithButton(blocks.StructBlock):
         except ValidationError as e:
             error_dict.update(e.params)
 
-        if not id_validator(data['id']):
+        if not util.id_validator(data['id']):
             id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
             error_dict.update({'id': id_err})
 
@@ -112,9 +114,29 @@ class FormFieldWithButton(blocks.StructBlock):
         template = '_includes/molecules/form-field-with-button.html'
 
 
+class FeaturedContent(blocks.StructBlock):
+    heading = blocks.CharBlock(max_length=255, required=False)
+    body = blocks.RichTextBlock(required=False)
+
+    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+    post = blocks.PageChooserBlock(required=False)
+
+    show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
+    post_link_text = blocks.CharBlock(max_length=100, required=False)
+
+    image = atoms.ImageBasic(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(required=False),
+                             label='Additional Links')
+
+    class Meta:
+        template = '_includes/molecules/featured-content.html'
+        icon = 'doc-full-inverse'
+        label = 'Featured Content'
+
+
 class CallToAction(blocks.StructBlock):
-    slug_text = blocks.CharBlock(max_length=100, required=True)
-    paragraph_text = blocks.RichTextBlock(required=True)
+    slug_text = blocks.CharBlock(max_length=100, required=False)
+    paragraph_text = blocks.RichTextBlock(required=False)
     button = atoms.Hyperlink()
 
     class Meta:
@@ -124,11 +146,11 @@ class CallToAction(blocks.StructBlock):
 
 
 class ContactAddress(blocks.StructBlock):
-    label = blocks.CharBlock(max_length=50)
+    label = blocks.CharBlock(max_length=50, required=False)
     title = blocks.CharBlock(max_length=100, required=False)
-    street = blocks.CharBlock(max_length=100)
-    city = blocks.CharBlock(max_length=50)
-    state = blocks.CharBlock(max_length=25)
+    street = blocks.CharBlock(max_length=100, required=False)
+    city = blocks.CharBlock(max_length=50, required=False)
+    state = blocks.CharBlock(max_length=25, required=False)
     zip_code = blocks.CharBlock(max_length=15, required=False)
 
     class Meta:
@@ -163,7 +185,7 @@ class ContactPhone(blocks.StructBlock):
 
 
 class RelatedLinks(blocks.StructBlock):
-    heading = blocks.CharBlock()
+    heading = blocks.CharBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
@@ -201,3 +223,23 @@ class Expandable(blocks.StructBlock):
         icon = 'list-ul'
         template = '_includes/molecules/expandable.html'
         label = 'Expandable'
+
+    class Media:
+        js = ("expandable.js",)
+
+
+class Notification(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=ref.notification_types, required=False)
+    is_visible = blocks.BooleanBlock(required=False, help_text="Whether the notification is initially shown or not.")
+    message = blocks.TextBlock(required=False, help_text="Text to display within the notification markup."
+                                                         "\nDefault is 'Success.', 'Warning!', or 'Error!',\n "
+                                                         "depending on notification type.")
+    explanation = blocks.TextBlock(required=False,
+                                   help_text="Text to display as an explanation within the notification markup.")
+
+    class Meta:
+        icon = 'view'
+        template = '_includes/molecules/notification.html'
+
+    class Media:
+        js = ("notification.js",)
