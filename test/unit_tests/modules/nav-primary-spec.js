@@ -1,28 +1,27 @@
 'use strict';
 
+var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var sinon = require( 'sinon' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
 
 describe( 'Get Event States', function() {
-  var $, navPrimary, sandbox, $link;
+  var navPrimary, sandbox, link;
 
   jsdom();
 
   before( function() {
-    $ = require( 'jquery' );
-    navPrimary =
-      require( '../../../cfgov/unprocessed/js/modules/nav-primary.js' );
+    navPrimary = require( BASE_JS_PATH + 'modules/nav-primary.js' );
     sandbox = sinon.sandbox.create();
   } );
 
   beforeEach( function() {
     //  Adding a simplified version of the thing we want to test.
-    //  Then calling jQuery to test after.
-    $( 'body' ).html(
-      '<div class="js-primary-nav">' +
-        '<div class="js-primary-nav_trigger"></div>' +
+    document.body.innerHTML =
+      '<button class="primary-nav_trigger js-primary-nav_trigger" aria-expanded="false"></button>' +
+      '<nav class="js-primary-nav">' +
         '<div class="nav-item-1 js-primary-nav_item">' +
           '<a class="nav-link-1 js-primary-nav_link" ' +
              'href="http:// github.com">Link</a>' +
@@ -39,8 +38,7 @@ describe( 'Get Event States', function() {
             '<a href="some-url">First Link</a>' +
           '</div>' +
         '</div>' +
-      '</div>'
-    );
+      '</nav>';
     navPrimary.init();
   } );
 
@@ -50,9 +48,9 @@ describe( 'Get Event States', function() {
 
   describe( 'Primary Nav Link Events - Default state', function() {
     beforeEach( function() {
-      $link = $( $( '.sub-nav-1' ).find( 'a' )[0] );
+      link = document.querySelector( '.sub-nav-1 a' );
 
-      $( '.nav-link-1' ).trigger( 'click' );
+      document.querySelector( '.nav-link-1' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
     } );
 
     it( 'should not navigate away from the page', function() {
@@ -60,26 +58,28 @@ describe( 'Get Event States', function() {
     } );
 
     it( 'should toggle the sibling sub nav', function() {
-      expect( $( '.sub-nav-1' ).attr( 'aria-expanded' ) ).to.equal( 'true' );
+      expect( document.querySelector( '.sub-nav-1' )
+        .getAttribute( 'aria-expanded' ) ).to.equal( 'true' );
     } );
 
     it( 'should not toggle a non-sibling sub nav', function() {
-      expect( $( '.sub-nav-2' ).attr( 'aria-expanded' ) ).to.equal( 'false' );
+      expect( document.querySelector( '.sub-nav-2' )
+        .getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
     } );
 
     it( 'should focus the first link in the sibling sub nav', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( $link.is( ':focus' ) ).to.be.true;
+        expect( link === document.activeElement ).to.be.true;
         done();
       }, 500 );
     } );
 
     it( 'should not focus the first link in a non-sibling sub nav',
       function( done ) {
-        var $nextlink = $( $( '.sub-nav-2' ).find( 'a' )[0] );
+        var nextlink = document.querySelector( '.sub-nav-2 a' );
 
         setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-          expect( $nextlink.is( ':focus' ) ).to.be.false;
+          expect( nextlink === document.activeElement ).to.be.false;
           done();
         }, 500 );
       } );
@@ -87,45 +87,48 @@ describe( 'Get Event States', function() {
 
   describe( 'Primary Nav Link Events - One expanded', function() {
     beforeEach( function() {
-      $link = $( $( '.sub-nav-2' ).find( 'a' )[0] );
+      link = document.querySelector( '.sub-nav-2 a' );
 
-      $( '.sub-nav-1' ).attr( 'aria-expanded', 'true' );
-      $( '.nav-link-2' ).trigger( 'click' );
+      document.querySelector( '.sub-nav-1' ).getAttribute( 'aria-expanded', 'true' );
+      document.querySelector( '.nav-link-2' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
     } );
 
     it( 'should close others', function() {
-      expect( $( '.sub-nav-1' ).attr( 'aria-expanded' ) ).to.equal( 'false' );
+      expect( document.querySelector( '.sub-nav-1' )
+        .getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
     } );
 
     it( 'should open the sibling sub nav', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( $( '.sub-nav-2' ).attr( 'aria-expanded' ) ).to.equal( 'true' );
+        expect( document.querySelector( '.sub-nav-2' )
+          .getAttribute( 'aria-expanded' ) ).to.equal( 'true' );
         done();
       }, 500 );
     } );
 
     it( 'should focus the first link in sibling sub nav', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( $link.is( ':focus' ) ).to.be.true;
+        expect( link === document.activeElement ).to.be.true;
         done();
       }, 500 );
     } );
 
     it( 'should close itself', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        $( '.nav-link-2' ).trigger( 'click' );
+        document.querySelector( '.nav-link-2' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
 
-        expect( $( '.sub-nav-2' ).attr( 'aria-expanded' ) ).to.equal( 'false' );
+        expect( document.querySelector( '.sub-nav-2' )
+          .getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
         done();
       }, 500 );
     } );
 
     it( 'should focus the primary link after closing', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        $( '.nav-link-2' ).trigger( 'click' );
+        document.querySelector( '.nav-link-2' ).dispatchEvent( new Event( 'click', { 'bubbles': true } ) );
 
         setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-          expect( $( '.nav-link-2' ).is( ':focus' ) ).to.be.true;
+          expect( document.querySelector( '.nav-link-2' ) === document.activeElement ).to.be.true;
           done();
         }, 500 );
       }, 500 );
@@ -134,35 +137,38 @@ describe( 'Get Event States', function() {
 
   describe( 'Primary Nav Trigger Events', function() {
     beforeEach( function() {
-      $link = $( '.nav-link-1' );
+      link = document.querySelector( '.nav-link-1' );
 
-      $( '.js-primary-nav_trigger' ).trigger( 'click' );
+      document.querySelector( '.js-primary-nav_trigger' ).dispatchEvent( new Event( 'click' ) );
     } );
 
     it( 'should open the primary nav', function() {
-      expect( $( '.js-primary-nav' ).attr( 'aria-expanded' ) )
+      expect( document.querySelector( '.js-primary-nav' )
+        .getAttribute( 'aria-expanded' ) )
         .to.equal( 'true' );
     } );
 
     it( 'should focus the first primary link', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( $link.is( ':focus' ) ).to.be.true;
+        expect( link === document.activeElement ).to.be.true;
         done();
       }, 500 );
     } );
 
     it( 'should close the open primary nav', function() {
-      $( '.js-primary-nav_trigger' ).trigger( 'click' );
+      document.querySelector( '.js-primary-nav_trigger' ).dispatchEvent( new Event( 'click' ) );
 
-      expect( $( '.js-primary-nav' ).attr( 'aria-expanded' ) )
+      expect( document.querySelector( '.js-primary-nav' )
+        .getAttribute( 'aria-expanded' ) )
         .to.equal( 'false' );
     } );
 
     it( 'should focus the trigger after closing', function( done ) {
-      $( '.js-primary-nav_trigger' ).trigger( 'click' );
+      document.querySelector( '.js-primary-nav_trigger' ).dispatchEvent( new Event( 'click' ) );
 
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( $( '.js-primary-nav_trigger' ).is( ':focus' ) ).to.be.true;
+        expect( document.querySelector( '.js-primary-nav_trigger' ) === document.activeElement )
+          .to.be.true;
         done();
       }, 500 );
     } );
@@ -170,19 +176,21 @@ describe( 'Get Event States', function() {
 
   describe( 'Sub Nav Back Events', function() {
     beforeEach( function() {
-      $link = $( '.nav-link-1' );
+      link = document.querySelector( '.nav-link-1' );
 
-      $( '.sub-nav-1' ).attr( 'aria-expanded', 'true' );
-      $( '.sub-nav-back-1' ).trigger( 'click' );
+      document.querySelector( '.sub-nav-1' ).getAttribute( 'aria-expanded', 'true' );
+      document.querySelector( '.sub-nav-back-1' ).dispatchEvent( new Event( 'click' ) );
     } );
 
     it( 'should close the sub nav', function() {
-      expect( $( '.sub-nav-1' ).attr( 'aria-expanded' ) ).to.equal( 'false' );
+      expect( document.querySelector( '.sub-nav-1' )
+        .getAttribute( 'aria-expanded' ) )
+        .to.equal( 'false' );
     } );
 
     it( 'should focus the primary link after closing', function( done ) {
       setTimeout( function() { // eslint-disable-line max-nested-callbacks, no-inline-comments, max-len
-        expect( $link.is( ':focus' ) ).to.be.true;
+        expect( link === document.activeElement ).to.be.true;
         done();
       }, 500 );
     } );

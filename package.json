@@ -48,7 +48,7 @@
     "jasmine-reporters": "^2.0.7",
     "jasmine-spec-reporter": "^2.4.0",
     "jquery": "^1.11.3",
-    "jsdom": "^7.0.2",
+    "jsdom": "^7.2.2",
     "lodash": "^3.10.0",
     "map-stream": "^0.0.6",
     "minimist": "^1.1.3",
