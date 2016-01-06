@@ -39,8 +39,20 @@
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
-    {% if prototype %}
+    {% for block in page.header -%}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+    {%- endfor %}
 
+    {% for block in page.content -%}
+        <div class="block">
+            {{ render_stream_child(block) }}
+        </div>
+    {%- endfor %}
+
+    {% if prototype %}
         {# Area 1 #}
         <div class="block
                     block__flush-top">
@@ -75,7 +87,6 @@
             {% set value = global_dict.expandable %}
             {% include 'molecules/expandable.html' with context %}
         </div>
-
     {% endif %}
 {% endblock %}
 
@@ -87,19 +98,8 @@
     {# TODO: Add Related Metadata and Topics Sidebar molecules. #}
     {% if prototype %}
         {{ related_posts.render(global_dict.related_posts_settings) }}
-    {% else %}
-        {% for block in page.sidefoot %}
-            <div class="block block__flush-top">
-                {% if 'related_posts' in block.block_type %}
-                    {{ related_posts.render(block) }}
-                {% else %}
-                    {{ render_stream_child(block) }}
-                {% endif %}
-            </div>
-        {% endfor %}
-    {% endif %}
 
-    {{ sidebar_contact_info.render({
+        {{ sidebar_contact_info.render({
             'heading': 'Header for text below',
             'body':    lipsumText
         }, {
@@ -115,5 +115,32 @@
                 'state':    'DC',
                 'zip_code': '20552-0003'
         }
-    }) }}
+        }) }}
+    {% else %}
+        {% for block in page.sidefoot %}
+        <div class="block block__flush-top">
+            {% if 'related_posts' in block.block_type %}
+                {{ related_posts.render(block) }}
+            {% else %}
+                {% if 'heading' in block.block_type %}
+                    <h3 class="o-sidebar-breakout_heading">
+                        {{ render_stream_child(block) }}
+                    </h3>
+                {% elif 'slug' in block.block_type %}
+                    <h2 class="header-slug">
+                        <span class="header-slug_inner">
+                            {{ render_stream_child(block) }}
+                        </span>
+                    </h2>
+                {% elif 'paragraph' in block.block_type %}
+                    <div class="short-desc">
+                        {{ render_stream_child(block) }}
+                    </div>
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
 {%- endblock %}
