@@ -50,6 +50,15 @@
 
 {% block content_main %}
     {% if prototype %}
+        {% if not page.sidebar_breakout %}
+            <div class="block">
+                {% include 'molecules/text-introduction.html' %}
+            </div>
+        {% endif %}
+
+        <div class="block">
+            {% include 'molecules/featured-content.html' %}
+        </div>
         <div class="block">
             {% include 'organisms/image-text-50-50-group.html' %}
         </div>
