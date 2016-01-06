@@ -1,218 +1,273 @@
-{% import 'macros/util/form.html' as form %}
-{% import 'macros/util/common-form-fields.html' as form_field %}
+{% set prototype = true %}
 
-    <section class="block
-                    block__bg
-                    block__border
-                    block__flush-sides">
-        <form class="form-l js-validate-filters">
-            {{ form.input('First Name', 'text', '1-2', true) }}
+<form class="js-validate-filters">
+    <section class="o-form-section">
+        {% do global_dict.update({
+            'input': {
+                'label':    'First name!',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-            {{ form.input('Last Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Last name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-            {{ form_field.date_picker('Document dates:') }}
+        {% do global_dict.update({
+            'date_picker': {
+                'legend':   'Document dates:'
+            }
+        }) %}
+        {% set value = global_dict.date_picker %}
+        {% include 'atoms/date-picker.html' with context %}
 
-            <div class="form-l_col form-l_col-1">
-                <label for="form_requested-info">
-                    <span class="form-label-header">Requested information</span>
-                    <span class="micro-copy micro-copy__large">
-                        Describe the records you seek from the CFPB.
-                        <a href="../foia-faqs" target="_blank">
-                            Review our FAQs for additional guidance.
-                        </a>
-                    </span>
-                </label>
-                <textarea class="input__long"
-                          id="form_requested-info"
-                          ></textarea>
+
+        {% do global_dict.update({
+            'textarea': {
+                'label':        'Requested information',
+                'helperText':   'Describe the records you seek from the CFPB.
+                                 <a href="../foia-faqs">Review our FAQs
+                                 for additional guidance.</a>',
+                required:       true
+            }
+        }) %}
+        {% set value = global_dict.textarea %}
+        {% include 'atoms/textarea.html' with context %}
+
+        {% do global_dict.update({
+            'select': {
+                'label':        'Select a request category',
+                'placeholder':  'Select FOIA request category',
+                'fields':       ['Commercial', 'Media', 'Others'],
+                'size':         '1',
+                'required':     false,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.select %}
+        {% include 'atoms/select.html' with context %}
+
+        <fieldset class="u-reset js-additional-field">
+            <div class="form-l_col
+                        form-l_col-1
+                        u-mb0">
+                <legend class="form-label-header">
+                    Requesting a fee waiver?
+                </legend>
             </div>
+            <div class="form-l_col
+                        form-l_col-1-2
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input"
+                           type="radio"
+                           name="request-fee-waiver_button"
+                           id="foia-request_fee-waiver-radio-1">
+                    <label class="cf-input_label"
+                           for="foia-request_fee-waiver-radio-1">
+                        No
+                    </label>
+                </div>
+            </div>
+            <div class="form-l_col
+                        form-l_col-1-2
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input js-additional-field_trigger"
+                           type="radio"
+                           name="request-fee-waiver_button"
+                           id="foia-request_fee-waiver-radio-2"
+                           data-additional-fields="#foia-request-fee-waiver-justify">
+                    <label class="cf-input_label"
+                           for="foia-request_fee-waiver-radio-2">
+                        Yes
+                    </label>
+                </div>
+            </div>
+        </fieldset>
 
+        <div class="form-l_col form-l_col-1 js-is-hidden"
+             id="foia-request-fee-waiver-justify">
+            <label>
+                <span class="form-label-header">
+                    Fee waiver justification explanation
+                </span><br/>
+                <span class="micro-copy micro-copy__large">
+                    Describe how the disclosed records would serve a public interest
+                </span>
+
+                <textarea class="input__long" disabled></textarea>
+            </label>
+        </div>
+
+        <fieldset class="u-reset">
+            <div class="form-l_col
+                        form-l_col-1
+                        u-mb0">
+                <legend class="form-label-header">
+                    Requesting expedited treatment?
+                </legend>
+            </div>
+            <div class="form-l_col
+                        form-l_col-1-2
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input"
+                           type="radio"
+                           name="expedite_button"
+                           id="foia-request_expedited-treatment-radio-1">
+                    <label class="cf-input_label"
+                            for="foia-request_expedited-treatment-radio-1">
+                        No
+                    </label>
+                </div>
+            </div>
+            <div class="form-l_col
+                        form-l_col-1-2
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input"
+                           type="radio"
+                           name="expedite_button"
+                           id="foia-request_expedited-treatment-radio-2">
+                    <label class="cf-input_label"
+                           for="foia-request_expedited-treatment-radio-2">
+                        Yes
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="u-reset js-additional-field">
+            <div class="form-l_col
+                        form-l_col-1
+                        u-mb0">
+                <legend class="form-label-header"
+                        for="foia-request_response-method">
+                    Preferred response method
+                </legend>
+            </div>
+            <div class="form-l_col
+                        form-l_col-1
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input"
+                           type="radio"
+                           name="response-method_button"
+                           id="foia-request_response-method-radio-1">
+                    <label class="cf-input_label"
+                           for="foia-request_response-method-radio-1">
+                        Email
+                    </label>
+                </div>
+            </div>
+            <div class="form-l_col
+                        form-l_col-1
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input js-additional-field_trigger"
+                           type="radio"
+                           name="response-method_button"
+                           id="foia-request_response-method-radio-2"
+                           data-additional-fields="#foia-request_organization-info">
+                    <label class="cf-input_label"
+                           for="foia-request_response-method-radio-2">
+                        Mail
+                    </label>
+                </div>
+            </div>
+            <div class="form-l_col
+                        form-l_col-1
+                        form-l-inset">
+                <div class="form-l-inset_container">
+                    <input class="cf-input js-additional-field_trigger"
+                           type="radio"
+                           name="response-method_button"
+                           id="foia-request_response-method-radio-3"
+                           data-additional-fields="#foia-request_organization-info">
+                    <label class="cf-input_label"
+                           for="foia-request_response-method-radio-3">
+                        Fax
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="u-reset js-is-hidden" id="foia-request_organization-info">
             {% do global_dict.update({
-                'select': {
-                    'label':        'Select a request category',
-                    'placeholder':  'Select FOIA request category',
-                    'fields':       ['Commercial', 'Media', 'Others'],
-                    'size':         '1',
-                    'required':     false,
-                    'disabled':     false
+                'input': {
+                    'label':    'Organization Name',
+                    'type':     'text',
+                    'size':     '1',
+                    'required': false,
+                    'disabled': true
                 }
             }) %}
-            {% set value = global_dict.select %}
-            {% set prototype = true %}
-            {% include 'atoms/select.html' with context %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            <div class="js-additional-field">
-            </div>
-            <fieldset class="u-reset js-additional-field">
-                <div class="form-l_col
-                            form-l_col-1
-                            u-mb0">
-                    <legend class="form-label-header">
-                        Requesting a fee waiver?
-                    </legend>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-2
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input"
-                               type="radio"
-                               name="request-fee-waiver_button"
-                               id="foia-request_fee-waiver-radio-1">
-                        <label class="cf-input_label"
-                               for="foia-request_fee-waiver-radio-1">
-                            No
-                        </label>
-                    </div>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-2
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input js-additional-field_trigger"
-                               type="radio"
-                               name="request-fee-waiver_button"
-                               id="foia-request_fee-waiver-radio-2"
-                               data-additional-fields="#foia-request-fee-waiver-justify">
-                        <label class="cf-input_label"
-                               for="foia-request_fee-waiver-radio-2">
-                            Yes
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
+            {% do global_dict.update({
+                'input': {
+                    'label':    'Address',
+                    'type':     'text',
+                    'size':     '1',
+                    'required': false,
+                    'disabled': true
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            <div class="form-l_col form-l_col-1 js-is-hidden"
-                 id="foia-request-fee-waiver-justify">
-                <label>
-                    <span class="form-label-header">
-                        Fee waiver justification explanation
-                    </span><br/>
-                    <span class="micro-copy micro-copy__large">
-                        Describe how the disclosed records would serve a public interest
-                    </span>
+            {% do global_dict.update({
+                'input': {
+                    'label':    'City',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': false,
+                    'disabled': true
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-                    <textarea class="input__long" disabled></textarea>
-                </label>
-            </div>
+            {% include 'atoms/state-selector.html' %}
 
-            <fieldset class="u-reset">
-                <div class="form-l_col
-                            form-l_col-1
-                            u-mb0">
-                    <legend class="form-label-header">
-                        Requesting expedited treatment?
-                    </legend>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-2
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input"
-                               type="radio"
-                               name="expedite_button"
-                               id="foia-request_expedited-treatment-radio-1">
-                        <label class="cf-input_label"
-                                for="foia-request_expedited-treatment-radio-1">
-                            No
-                        </label>
-                    </div>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-2
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input"
-                               type="radio"
-                               name="expedite_button"
-                               id="foia-request_expedited-treatment-radio-2">
-                        <label class="cf-input_label"
-                               for="foia-request_expedited-treatment-radio-2">
-                            Yes
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset class="u-reset js-additional-field">
-                <div class="form-l_col
-                            form-l_col-1
-                            u-mb0">
-                    <legend class="form-label-header"
-                            for="foia-request_response-method">
-                        Preferred response method
-                    </legend>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-3
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input"
-                               type="radio"
-                               name="response-method_button"
-                               id="foia-request_response-method-radio-1">
-                        <label class="cf-input_label"
-                               for="foia-request_response-method-radio-1">
-                            Email
-                        </label>
-                    </div>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-3
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input js-additional-field_trigger"
-                               type="radio"
-                               name="response-method_button"
-                               id="foia-request_response-method-radio-2"
-                               data-additional-fields="#foia-request_organization-info">
-                        <label class="cf-input_label"
-                               for="foia-request_response-method-radio-2">
-                            Mail
-                        </label>
-                    </div>
-                </div>
-                <div class="form-l_col
-                            form-l_col-1-3
-                            form-l-inset">
-                    <div class="form-l-inset_container">
-                        <input class="cf-input js-additional-field_trigger"
-                               type="radio"
-                               name="response-method_button"
-                               id="foia-request_response-method-radio-3"
-                               data-additional-fields="#foia-request_organization-info">
-                        <label class="cf-input_label"
-                               for="foia-request_response-method-radio-3">
-                            Fax
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset class="u-reset js-is-hidden" id="foia-request_organization-info">
-                {{ form.input('Organization name', 'text', '1', false, true) }}
-
-                {{ form.input('Address', 'text', '1', false, true) }}
-
-                {{ form.input('City', 'text', '1-3', false, true) }}
-
-                {% include 'atoms/state-selector.html' %}
-
-                {{ form.input('Zip code', 'text', '1-3', false, true) }}
-            </fieldset>
-
-            <div class="form-actions form-actions__right-on-med ">
-                <input class="btn form-actions_item"
-                       type="submit"
-                       value="Generate FOIA PDF">
-                <a href="#" class="btn btn__link form-actions_item">
-                    Sample Letter
-                    <span class="cf-icon cf-icon-pdf"></span>
-                </a>
-            </div>
-
-        </form>
+            {% do global_dict.update({
+                'input': {
+                    'label':    'Zip code',
+                    'type':     'text',
+                    'size':     '1-4',
+                    'required': false,
+                    'disabled': true
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
+        </fieldset>
     </section>
+
+    {% do global_dict.update({
+        'submit_button': {
+            'button_text':  'Generate FOIA PDF'
+        }
+    }) %}
+    {% set value = global_dict.submit_button %}
+    {% include 'atoms/submit-button.html' with context %}
+
+</form>
     <!-- End Form Module. -->
     <section class="block">
         <h3>How to submit</h3>
@@ -224,7 +279,7 @@
         </p>
         <div class="content-l content-l__main">
             <div class="content-l_col
-                        content-l_col-1-3
+                        content-l_col-1
                         block
                         block__flush-top">
                 <h5>
@@ -237,7 +292,7 @@
                 </p>
             </div>
             <div class="content-l_col
-                        content-l_col-1-3
+                        content-l_col-1
                         block
                         block__flush-top">
                 <h5>
@@ -252,7 +307,7 @@
                 </p>
             </div>
             <div class="content-l_col
-                        content-l_col-1-3
+                        content-l_col-1
                         block
                         block__flush-top">
                 <h5>

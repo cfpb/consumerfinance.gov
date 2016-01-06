@@ -38,17 +38,17 @@
     {% set value = global_dict.select %}
 {% endif %}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
-{% set id_slug = slugify( value.label ) %}
+{% set id = get_unique_id('select_', '_') ~ slugify( value.label ) %}
 <div class="form-l_col {{ 'form-l_col-' ~ value.size if value.size else 'form-l_col-1'}}">
     <label class="form-label-header"
-           for="form_{{ id_slug }}">
+           for="{{ id }}">
         {{ value.label }}
-        {%- if value.required -%}
-            * <span class="u-visually-hidden">Required</span>
+        {%- if value.required == false -%}
+            <span class="micro-copy">&nbsp;(Optional)</span>
         {%- endif -%}
     </label>
     <div class="cf-select">
-        <select id="form_{{ id_slug }}"
+        <select id="{{ id }}"
                 {{ 'required' if value.required else '' }}
                 {{ 'disabled' if value.disabled else '' }}>
             {%- if value.placeholder -%}

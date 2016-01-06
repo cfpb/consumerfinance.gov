@@ -1,82 +1,178 @@
-{% import 'macros/util/form.html' as form %}
-{% import 'macros/util/common-form-fields.html' as form_field %}
-<section class="block
-                block__bg
-                block__border
-                block__flush-sides">
-    <form class="form-l js-validate-filters">
+{% set prototype = true %}
+<form class="js-validate-filters">
+    <section class="">
+        {% do global_dict.update({
+            'input': {
+                'label':    'First Name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('First Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Last Name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Last Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Address 1',
+                'type':     'text',
+                'size':     '1',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Address 1', 'text', '1', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Address 2',
+                'type':     'text',
+                'size':     '1',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Address 2', 'text', '1', false) }}
-
-        {{ form.input('City', 'text', '1-3', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'City',
+                'type'      'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {% include 'atoms/state-selector.html' %}
 
-        {{ form.input('Zip code', 'text', '1-3', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Zip code',
+                'type':     'text',
+                'size':     '1-4',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Telephone number', 'tel', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Telephone number',
+                'type':     'tel',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {# TODO: Add additional times to form select below. #}
 
         {% do global_dict.update({
             'select': {
-                'label':        'Best time to reach you',
-                'placeholder':  'Select time',
-                'fields':       ['8:00 am'],
-                'size':         '1-2',
-                'required':     false,
-                'disabled':     false
+                'label':       'Best time to reach you',
+                'placeholder': 'Select time',
+                'fields':      ['8:00 am'],
+                'size':        '1-2',
+                'required':    false,
+                'disabled':    false
             }
         }) %}
         {% set value = global_dict.select %}
-        {% set prototype = true %}
         {% include 'atoms/select.html' with context %}
 
-        {{ form.input('Fax number', 'tel', '1-2', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Fax number',
+                'type':     'tel',
+                'size':     '1-2',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Email address', 'email', '1-2', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Email address',
+                'type':     'email',
+                'size':     '1-2',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Request date', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':       'Request date',
+                'type':        'text',
+                'placeholder': 'mm/dd/yyyy',
+                'size':        '1-2',
+                'required':    true,
+                'disabled':    false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.textarea('Information to amend',
-                         'Be as specific as possible and explain why you believe
-                          that the information in question is not
-                          accurate, relevant, timely, or complete.
-                          Please note that a requester bears the burden
-                          of proving by the preponderance of the evidence that
-                          information is not accurate, relevant, timely, or complete.',
-                          true) }}
+        {% do global_dict.update({
+            'textarea': {
+                'label':        'Information to amend',
+                'helperText':   'Be as specific as possible and explain why you believe
+                                that the information in question is not
+                                accurate, relevant, timely, or complete.
+                                Please note that a requester bears the burden
+                                of proving by the preponderance of the evidence that
+                                information is not accurate, relevant, timely, or complete.',
+                'required':     true,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.textarea %}
+        {% include 'atoms/textarea.html' with context %}
 
-        <div class="form-l_col form-l_col-1">
-            <label for="request-information-location">
-                <span class="form-label-header">Location of information</span>
-                <br>
-                <span class="micro-copy micro-copy__large">
-                    Identify the System of Records where you believe the information is located.
-                    View a
-                    <a href="../system-of-records-notices-sorns/">
-                        complete list of our Systems of Records
-                    </a>.
-                </span>
-            </label>
-            <textarea class="input__long"
-                      id="request-information-location"
-                      required></textarea>
-        </div>
-        <div class="form-actions form-actions__right-on-med">
-            <input class="btn form-actions_item"
-                   type="submit"
-                   value="Generate PDF">
-            <a class="btn btn__link form-actions_item u-link__disabled">
-                Sample Letter
-                <span class="cf-icon cf-icon-pdf"></span>
-            </a>
-        </div>
-    </form>
-</section>
+        {% do global_dict.update({
+            'textarea': {
+                'label':        'Location of information',
+                'helperText':   'Identify the System of Records where you believe the information is located.
+                                 View a <a href="../system-of-records-notices-sorns/">
+                                 complete list of our Systems of Records</a>.',
+                'required':     true,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.textarea %}
+        {% include 'atoms/textarea.html' with context %}
+    </section>
+    {% do global_dict.update({
+        'submit_button': {
+            'button_text':  'Generate PDF'
+        }
+    }) %}
+    {% set value = global_dict.submit_button %}
+    {% include 'atoms/submit-button.html' with context %}
+</form>

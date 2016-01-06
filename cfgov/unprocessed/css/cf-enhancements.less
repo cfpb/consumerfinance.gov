@@ -1126,44 +1126,6 @@ textarea {
     color: @input-warning;
 }
 
-
-/* topdoc
-  name: Long Input
-  family: cf-forms
-  patterns:
-    - name: .input__long
-      markup: |
-        <div class="form-l_col form-l_col-1-2">
-            <label class="form-label-header">
-                First name
-            </label>
-            <input type="text" class="input__long">
-        </div>
-
-      notes:
-        - "An input that fills the space it is given by the layout."
-  tags:
-    - cf-forms
-*/
-
-.input__long {
-    &[type="text"],
-    &[type="search"],
-    &[type="email"],
-    &[type="url"],
-    &[type="tel"],
-    &[type="number"] {
-        width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-textarea.input__long {
-    width: 100%;
-    box-sizing: border-box;
-    height: 10em;
-}
-
 /* topdoc
   name: Reset all
   family: cf-core
@@ -1398,9 +1360,44 @@ ul:last-child,
 */
 
 .pull-quote_citation:before {
-  content: "\2014 ";
+    content: "\2014 ";
 }
 
+/* topdoc
+  name: Adjustments to input borders
+  family: cf-core
+  notes:
+    - "An adjustment to the input borders to match Capital Framework specs"
+  tags:
+    - cf-core
+*/
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select[multiple] {
+    border: 1px solid @gray-50;
+}
+
+.form-label-header {
+    .heading-4();
+    margin-bottom: unit(10px / @font-size, em);
+
+    // TODO: These two properties can be removed when this is ported to CF
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.micro-copy {
+    font-size: 14px;
+    &p {
+        margin-bottom: unit(10px / @base-font-size-px, em);
+    }
+}
 /* topdoc
     name: EOF
     eof: true
