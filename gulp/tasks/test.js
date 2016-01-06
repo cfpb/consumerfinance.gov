@@ -110,7 +110,6 @@ function _getProtractorParams() {
  * where the site is running.
  * @returns {string} URL of website homepage.
  */
-
 function _getSiteUrl() {
   var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
   var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len

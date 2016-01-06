@@ -39,7 +39,8 @@ function isOneExpanded( elems ) {
  * current state if one is not passed. Allows for a delayed event for
  * animated elements.
  * @param {NodeList|Array|HTMLNode} elems
- *   List of elements or single element on which to set the aria-expanded attribute.
+ *   List of elements or single element on which to set
+ *   the aria-expanded attribute.
  * @param {string} state The value, if any, to set the aria-expanded
  *   attribute to. Options are "true", "false" or null.
  * @param {Function} cb The callback function to execute after a delay.
@@ -50,7 +51,7 @@ function toggleExpandedState( elems, state, cb, delay ) {
   var navTimeout;
   if ( elems.constructor !== NodeList &&
        elems.constructor !== Array ) {
-    elems = [elems];
+    elems = [ elems ];
   }
 
   delay = delay || 300;

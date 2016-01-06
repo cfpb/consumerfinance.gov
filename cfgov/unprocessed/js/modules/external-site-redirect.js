@@ -24,7 +24,8 @@ function init() {
 
     if ( $.isArray( externalURLArray ) ) {
       e.preventDefault();
-      window.location = '/external-site/?ext_url=' + encodeURIComponent(externalURLArray[1]);
+      window.location = '/external-site/?ext_url=' +
+                        encodeURIComponent( externalURLArray[1] );
     }
 
   } );

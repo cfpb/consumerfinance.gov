@@ -18,8 +18,9 @@ describe( 'Event States', function() {
   } );
 
   beforeEach( function() {
-    document.body.innerHTML = '<div class="div-expanded" aria-expanded="true" />' +
-                              '<div class="div-closed" aria-expanded="false" />';
+    var mockedContent = '<div class="div-expanded" aria-expanded="true" />' +
+                        '<div class="div-closed" aria-expanded="false" />';
+    document.body.innerHTML = mockedContent;
     divExpanded = document.querySelector( '.div-expanded' );
     divClosed = document.querySelector( '.div-closed' );
     openMenu = document.querySelectorAll( 'div' );
