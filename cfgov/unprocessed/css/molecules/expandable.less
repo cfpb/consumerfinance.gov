@@ -164,6 +164,17 @@
     }
 }
 
+// Setting height to prevent flash on load.
+.m-expandable_content:not([aria-expanded='true']) {
+    height: 0;
+}
+
+.no-js {
+    .m-expandable_content:not([aria-expanded='true']) {
+        height: 100%;
+    }
+}
+
 .m-expandable {
     // Modifiers
     &__borders {
