@@ -244,6 +244,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Change method of CFGOVPage called `children` to be called `elements`
 - Moved html5shiv into modernizr.
 - Updated `gulp-load-plugins` to `1.2.0` from `1.1.0`.
+- Included breadcrumb data from page context
 
 ### Removed
 - Removed unused exportsOverride section,

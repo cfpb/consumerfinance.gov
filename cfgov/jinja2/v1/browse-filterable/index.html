@@ -6,8 +6,13 @@
 
 {% if not page %}
     {% set prototype = true %}
+    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 {% endif %}
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+
+{% if not breadcrumb_items %}
+    {% set parent = page.parent() %}
+    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
+{% endif %}
 
 {% block title -%}
     TODO: This is a prototype page for testing landing page layouts.

@@ -186,6 +186,10 @@ class CFGOVPage(Page):
     class Meta:
         app_label = 'v1'
 
+    def parent(self):
+        parent = self.get_ancestors(inclusive=False).reverse()[0].specific
+        return parent
+
     def elements(self):
         return []
 

@@ -26,10 +26,14 @@
     %}
     {% set page = page or global_dict.page %}
     {% set prototype = global_dict.prototype or false %}
+    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 {% endif %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+{% if not breadcrumb_items %}
+    {% set parent = page.parent() %}
+    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
+{% endif %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -180,9 +184,6 @@
 {% endblock %}
 
 {% block content_sidebar scoped -%}
-    {# TODO: Add sidebar organisms. #}
-    Side Navigation
-
     {% for block in page.side_navigation -%}
         <div class="block">
             {{ render_stream_child(block) }}
