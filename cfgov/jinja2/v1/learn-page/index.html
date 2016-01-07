@@ -19,6 +19,7 @@
     %}
     {% set page = page or global_dict.page %}
     {% set prototype = global_dict.prototype or false %}
+    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 {% endif %}
 
 {% import 'atoms/large-checkbox.html' as large_checkbox %}
@@ -29,7 +30,10 @@
 {% import 'organisms/post-preview.html' as post_preview %}
 {% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
 
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+{% if not breadcrumb_items %}
+    {% set parent = page.parent() %}
+    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
+{% endif %}
 
 {% if not page %}
     {% set prototype = true %}
