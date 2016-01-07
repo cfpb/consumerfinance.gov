@@ -70,7 +70,8 @@
         {# Area 2 #}
         <div class="block">
             {# NOTE: includes Bulleted List and Inset molecules. #}
-            {% include 'organisms/full-width-text.html' %}
+            {% set full_width_sans = true %}
+            {% include 'organisms/full-width-text.html' with context %}
         </div>
         <div class="block">
             {% include 'organisms/table.html' %}
