@@ -148,7 +148,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added a new nav-link molecule macro and styles.
 - Added Related Links to Sidebar/Footer.
 - Added Related Metadata molecule.
-
+- Added custom image and rendition models CFGOVImage and CFGOVRendition
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

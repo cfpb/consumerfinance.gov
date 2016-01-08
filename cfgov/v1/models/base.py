@@ -1,9 +1,14 @@
+
+
 import os
 
 from django.db import models
+from django.db.models.signals import pre_delete
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
+from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
@@ -255,3 +260,27 @@ class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
             whether this user has permission to perform specific tasks on the
             given page."""
         return CFGOVPagePermissionTester(self, page)
+
+
+class CFGOVImage(AbstractImage):
+    alt = models.CharField(max_length=100, blank=True)
+
+    admin_form_fields = Image.admin_form_fields + (
+        'alt',
+    )
+
+
+class CFGOVRendition(AbstractRendition):
+    image = models.ForeignKey(CFGOVImage, related_name='renditions')
+
+
+# Delete the source image file when an image is deleted
+@receiver(pre_delete, sender=CFGOVImage)
+def image_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
+
+
+# Delete the rendition image file when a rendition is deleted
+@receiver(pre_delete, sender=CFGOVRendition)
+def rendition_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
