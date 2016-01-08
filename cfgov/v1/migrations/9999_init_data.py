@@ -37,7 +37,7 @@ def initial_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0031_addrelatedlinks_sidefoot'),
+        ('v1', '0032_cfgovimage_cfgovrendition'),
     ]
 
     operations = [
