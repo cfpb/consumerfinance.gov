@@ -1,0 +1,72 @@
+{# ==========================================================================
+
+   secondary_navigation.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create secondary navigation markup when given:
+
+   items:              An array of tuples used to display nav items.
+                       format: (href, id, text, children)
+
+   active_item_id:     A string indicating the id of the nav item
+                       to be activated.
+
+   ========================================================================== #}
+
+{% macro secondary_navigation(items, active_item_id) %}
+{% from 'molecules/nav-link.html' import nav_link as nav_link %}
+{# TODO: Update to the atomic expandable #}
+<nav class="expandable
+            o-secondary-navigation"
+     aria-label="Section navigation">
+
+    <div class="expandable_header
+                o-secondary-navigation_header">
+        <button class="expandable_target
+                       o-secondary-navigation_button">
+            <span class="expandable_header-left">
+                In this section
+            </span>
+            <span class="expandable_header-right">
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-down"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-up"></span>
+                </span>
+            </span>
+        </button>
+    </div>
+
+    <div class="expandable_content
+                o-secondary-navigation_content">
+        <ul class="o-secondary-navigation_list
+                   o-secondary-navigation_list__parents">
+        {%- for item in items %}
+            {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
+
+            <li class="o-secondary-navigation_item
+                       o-secondary-navigation_item__parent">
+                {{ nav_link(caption, href, true, id == active_item_id) }}
+            {%- if children -%}
+                {% set children = children[0] %}
+                <ul class="o-secondary-navigation_list
+                           o-secondary-navigation_list__children">
+                {%- for href, id, caption in children %}
+                    <li class="o-secondary-navigation_item">
+                        {{ nav_link(caption, href, false, id == active_item_id) }}
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif %}
+            </li>
+
+        {%- endfor %}
+        </ul>
+    </div>
+
+</nav>
+{% endmacro %}
