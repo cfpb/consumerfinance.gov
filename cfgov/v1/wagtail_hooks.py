@@ -12,7 +12,7 @@ from v1.models import CFGOVPage
 @hooks.register('after_edit_page')
 def share_the_page(request, page):
     page = page.specific
-    parent_page = page.get_ancestors(inclusive=False).reverse()[0].specific
+    parent_page = page.parent()
     parent_page_perms = parent_page.permissions_for_user(request.user)
 
     is_publishing = bool(request.POST.get('action-publish')) and parent_page_perms.can_publish()

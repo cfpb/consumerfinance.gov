@@ -11,19 +11,19 @@
 
 require( '../polyfill/object-defineproperty-polyfill' );
 var ariaStatesConfig = require( '../../config/aria-states-config' );
+
+// Properties
 var ariaState;
 
-
-// Private Properties
-
-var _statePrefix = 'is';
-var _ariaStatePrefix = 'aria-';
+// Constants
+var STATE_PREFIX = 'is';
+var ARIA_STATE_PREFIX = 'aria-';
 
 
 // Private Methods
 
 /**
- ** Defines ARIA state propery on an object.
+ * Defines ARIA state propery on an object.
  *
  * @param {string} state - ARIA state.
  * @param {HTMLElement} element - Element in which to apply
@@ -62,7 +62,7 @@ function _defineProperty( state, element, object ) {
  * @returns {Boolean} - Value indicating if ARIA state is valid.
  */
 function _validateState( state ) {
-  return Boolean( ariaStatesConfig[_ariaStatePrefix + state] );
+  return Boolean( ariaStatesConfig[ARIA_STATE_PREFIX + state] );
 }
 
 
@@ -99,7 +99,7 @@ ariaState = {
    */
   define: function define( state, element, object ) {
     if ( _validateState( state ) ) {
-      state = _statePrefix + state.charAt( 0 ).toUpperCase() +
+      state = STATE_PREFIX + state.charAt( 0 ).toUpperCase() +
               state.substring( 1 );
       _defineProperty( state, element, object );
     }
@@ -116,7 +116,7 @@ ariaState = {
    * @returns {value} - ARIA state attribute value.
    */
   get: function get( state, element ) {
-    return element.getAttribute( ariaStatesConfig[_ariaStatePrefix + state] );
+    return element.getAttribute( ariaStatesConfig[ARIA_STATE_PREFIX + state] );
   },
 
   /**
@@ -129,10 +129,10 @@ ariaState = {
    * @returns {element} - dom element.
    */
   set: function set( state, element, value ) {
-    state = state.substr( 0, 2 ) === 'is' && state.substr( 2 ) || state;
+    state = state.substr( 0, 2 ) === STATE_PREFIX && state.substr( 2 ) || state;
     state = state.toLowerCase();
     if ( _validateState( state ) ) {
-      state = _ariaStatePrefix + state;
+      state = ARIA_STATE_PREFIX + state;
       element.setAttribute( state, value );
     }
 

@@ -113,18 +113,18 @@ PostFilter.prototype = {
       this.$gte.val( dateRange.startDate );
       this.$lte.val( dateRange.endDate );
     } else {
-      error_messages.push(DATE_ERRORS.invalid);
+      error_messages.push( DATE_ERRORS.invalid );
     }
 
     if ( $form.hasClass( 'js-validate_require-date' ) &&
     toDateValue === '' && fromDateValue === '' ) {
-      error_messages.push(DATE_ERRORS.one_required);
+      error_messages.push( DATE_ERRORS.one_required );
     }
 
     if ( error_messages.length ) {
       event.preventDefault();
       $form.trigger( 'cf_notifier:notify', {
-        message: error_messages.join('</br>'),
+        message: error_messages.join( '</br>' ),
         state:   'error'
       } );
     }

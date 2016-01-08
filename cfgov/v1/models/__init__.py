@@ -8,6 +8,8 @@ from .snippets import *
 from .landing_page import *
 from .sublanding_page import *
 from .browse_page import *
+from .learn_page import *
+from .doc_detail_page import *
 from .ref import *
 
 if settings.DEBUG:

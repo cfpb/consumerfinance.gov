@@ -5,84 +5,116 @@
 
 'use strict';
 
-var $ = require( 'jquery' );
-var es = require( './util/expanded-state.js' );
+var expandedState = require( './util/expanded-state' );
+var domTraverse = require( './util/dom-traverse' );
+
+var _primaryNav;
+var _primaryTrigger;
+var _primaryLinks;
+var _subNavs;
 
 /**
  * Set up DOM references and event handlers.
  */
 function init() {
-  var $primaryNav = $( '.js-primary-nav' );
-  var $primaryTrigger = $( '.js-primary-nav_trigger' );
-  var $primaryLink = $( '.js-primary-nav_link' );
-  var $subNavs = $( '.js-sub-nav' );
-  var $subBack = $( '.js-sub-nav_back' );
+  _primaryNav = document.querySelector( '.js-primary-nav' );
+  _primaryTrigger = document.querySelector( '.js-primary-nav_trigger' );
+  _primaryLinks = _primaryNav.querySelectorAll( '.js-primary-nav_link' );
+  _subNavs = _primaryNav.querySelector( '.js-sub-nav' );
 
-  $primaryTrigger.on( 'click', function() {
-    if ( es.get.isThisExpanded( $primaryNav ) ) {
-      es.set.toggleExpandedState( $primaryNav, 'false', function() {
-        $primaryTrigger.focus();
-      } );
-    } else {
-      es.set.toggleExpandedState( $primaryNav, 'true', function() {
-        $primaryLink.first().focus();
-      } );
-    }
+  _primaryTrigger.addEventListener( 'click', _primaryTriggerAction );
 
-    es.set.toggleExpandedState( $primaryTrigger );
-    es.set.toggleExpandedState( $( 'body' ) );
-  } );
+  _primaryNav.addEventListener( 'click', _primaryLinkClicked );
 
-  $primaryLink.on( 'click', function( event ) {
-    event.preventDefault();
-
-    var $this = $( this );
-    var $thisSubNav = $this.siblings( '.js-sub-nav' );
-    var $otherSubNavs = $subNavs.not( $thisSubNav );
-    var firstLink = $thisSubNav.find( 'a' ).first();
-
-    if ( es.get.isOneExpanded( $otherSubNavs ) ) {
-      es.set.toggleExpandedState( $primaryLink, 'false' );
-      es.set.toggleExpandedState(
-        $otherSubNavs,
-        'false',
-        function() {
-          es.set.toggleExpandedState( $thisSubNav );
-          firstLink.focus();
-        }
-      );
-    } else if ( es.get.isThisExpanded( $thisSubNav ) ) {
-      es.set.toggleExpandedState( $thisSubNav, 'false', function() {
-        $this.focus();
-      } );
-    } else {
-      es.set.toggleExpandedState( $thisSubNav, null, function() {
-        firstLink.focus();
-      } );
-    }
-
-    es.set.toggleExpandedState( $this );
-  } );
-
-  $subBack.on( 'click', function() {
-    var $thisSubNav = $( this ).closest( '.js-sub-nav' );
-    var $thisPrimaryLink = $( this )
-                           .closest( '.js-primary-nav_item' )
-                           .find( '.js-primary-nav_link' );
-    es.set.toggleExpandedState( $primaryLink, 'false' );
-    es.set.toggleExpandedState( $thisSubNav, 'false', function() {
-      $thisPrimaryLink.focus();
-    } );
-  } );
+  var subBack = _primaryNav.querySelector( '.js-sub-nav_back' );
+  subBack.addEventListener( 'click', _subBackBtnClicked );
 
 /*
   TODO: wrap in a breakpoint handler along with other hover
   events to open the menu after #907 is merged
 
-  $primaryNav.on( 'mouseleave', function() {
-    es.set.toggleExpandedState( $subNavs, false );
+  _primaryNav.addEventListener( 'mouseleave', function() {
+    expandedState.toggleExpandedState( subNavs, false );
   } );
 */
+}
+
+/**
+ * Handle a click of the button to close the submenu.
+ *
+ * @param {MouseEvent} event
+ *   The event object for the click of the close button.
+ */
+function _subBackBtnClicked( event ) {
+  var target = event.currentTarget;
+  var targetSubNav = domTraverse.closest( target, 'js-sub-nav' );
+  var targetPrimaryItem = domTraverse.closest( target, 'js-primary-nav_item' );
+  targetPrimaryItem = targetPrimaryItem.querySelector( '.js-primary-nav_link' );
+  expandedState.toggleExpandedState( _primaryLinks, 'false' );
+  expandedState.toggleExpandedState( targetSubNav, 'false', function() {
+    targetPrimaryItem.focus();
+  } );
+}
+
+/**
+ * Handle a click of primary trigger to open/close the nav menu.
+ */
+function _primaryTriggerAction() {
+  if ( expandedState.isThisExpanded( _primaryNav ) ) {
+    expandedState.toggleExpandedState( _primaryNav, 'false', function() {
+      _primaryTrigger.focus();
+    } );
+  } else {
+    expandedState.toggleExpandedState( _primaryNav, 'true', function() {
+      _primaryLinks[0].focus();
+    } );
+  }
+
+  expandedState.toggleExpandedState( _primaryTrigger );
+}
+
+/**
+ * Handle a click of top-level link in the menu.
+ *
+ * @param {MouseEvent} event
+ *   The event object for the click of a menu link.
+ * @returns {undefined}
+ *   Bail out of the method if the click is not on a nav_link.
+ */
+function _primaryLinkClicked( event ) {
+  var target = event.target;
+  if ( !target.classList.contains( 'js-primary-nav_link' ) ) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  var targetSubNavs = domTraverse.getSiblings( target, '.js-sub-nav' );
+  var otherSubNavs = domTraverse.not( _subNavs, targetSubNavs );
+  var firstLink = targetSubNavs[0].querySelector( 'a' );
+
+  if ( expandedState.isOneExpanded( otherSubNavs ) ) {
+    expandedState.toggleExpandedState( _primaryLinks, 'false' );
+    expandedState.toggleExpandedState(
+      otherSubNavs,
+      'false',
+      function() {
+        expandedState.toggleExpandedState( targetSubNavs );
+        firstLink.focus();
+      }
+    );
+  } else if ( expandedState.isOneExpanded( targetSubNavs ) ) {
+    expandedState.toggleExpandedState( targetSubNavs, 'false', function() {
+      target.focus();
+    } );
+  } else {
+    expandedState.toggleExpandedState( targetSubNavs, null, function() {
+      firstLink.focus();
+    } );
+  }
+
+  expandedState.toggleExpandedState( target );
 }
 
 // Expose public methods.

@@ -221,12 +221,6 @@
     });
 }
 
-.form-actions_item + .form-actions_item {
-    // Eyeballed to 15px considering ~4px of space between inline-block items.
-    margin-left: unit(((@grid_gutter-width / 2) - 5) / @base-font-size-px, em);
-}
-
-
 /* topdoc
   name: Form layouts
   family: cfgov-forms
@@ -303,15 +297,7 @@
 }
 
 .form-l_col {
-    // Eyeballed to 30px considering line-height.
-    margin-bottom: unit(30px / @base-font-size-px, em);
-}
-
-.form-label-header + .form-l .form-label-header {
-    // Override heading-5() settings.
-    .webfont-regular();
-    text-transform: none;
-    margin-bottom: unit(10px / 14px, em);
+    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
 }
 
 .form-l {
@@ -320,8 +306,14 @@
     });
 }
 
-.form-l_col input,
-.form-l_col select {
+.form-l_col input[type="text"],
+.form-l_col input[type="search"],
+.form-l_col input[type="email"],
+.form-l_col input[type="url"],
+.form-l_col input[type="tel"],
+.form-l_col input[type="number"],
+.form-l_col select,
+.form-l_col textarea {
     // TODO: Move border-box value to cf-forms.
     box-sizing: border-box;
     width: 100%;
@@ -370,7 +362,7 @@
                 </div>
                 <div class="form-l_col
                             form-l_col-1-2
-                            form-l-inset">
+                            form-l-col__inset">
                     <div class="form-l-inset_container">
                         <input class="cf-input"
                                type="checkbox"
@@ -485,9 +477,11 @@
         .u-visually-hidden();
 
         .lt-ie9 & {
+            height: 20px;
+            width: 20px;
             border: 0;
             float: left;
-            margin: .4em .4em 0 0;
+            margin: 1em;
             position: static;
             width: auto;
         }
@@ -664,8 +658,9 @@
 
 .form-l-inset {
     border-right-width: 2.5px;
-    + .form-l-inset { border-left-width: 2.5px; }
-    &:last-child { border-right-width: 15px; }
+    + .form-l_col-1-2.form-l-inset:nth-child(odd) { border-left-width: 2.5px; }
+    &.form-l_col-1-2:nth-child(odd),
+    &.form-l_col-1-2:last-child { border-right-width: 15px; }
 
       .form-l-inset_container {
           background: @input-inset-bg;

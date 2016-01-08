@@ -1,53 +1,124 @@
-{% import 'macros/util/form.html' as form %}
-{% import 'macros/util/common-form-fields.html' as form_field %}
-    <section class="block
-                    block__bg
-                    block__border
-                    block__flush-sides">
-        <form class="form-l js-validate-filters">
+    {% set prototype = true %}
+    <form class="js-validate-filters">
+        <section class="o-form-section">
+            {% do global_dict.update({
+                'input': {
+                    'label':    'First Name',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': true,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
+            {% do global_dict.update({
+                'input': {
+                    'label':    'Last Name',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': true,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            {{ form.input('First Name', 'text', '1-2', true) }}
+            {% do global_dict.update({
+                'input': {
+                    'label':    'Address 1',
+                    'type':     'text',
+                    'size':     '1',
+                    'required': true,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            {{ form.input('Last Name', 'text', '1-2', true) }}
+            {% do global_dict.update({
+                'input': {
+                    'label':    'Address 2',
+                    'type':     'text',
+                    'size':     '1',
+                    'required': false,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            {{ form.input('Address 1', 'text', '1', true) }}
-
-            {{ form.input('Address 2', 'text', '1', false) }}
-
-            {{ form.input('City', 'text', '1-3', true) }}
+            {% do global_dict.update({
+                'input': {
+                    'label':    'City',
+                    'type':     'text',
+                    'size':     '1-2',
+                    'required': true,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
             {% include 'atoms/state-selector.html' %}
 
-            {{ form.input('Zip code', 'text', '1-3', true) }}
+            {% do global_dict.update({
+                'input': {
+                    'label':    'Zip',
+                    'type':     'text',
+                    'size':     '1-4',
+                    'required': true,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            <div class="form-l_col form-l_col-1">
-                <label class="form-label-header"
-                       for="plain-writing-fb_starting-date">
-                    Comment date
-                </label>
-                <input class="input__long"
-                       id="plain-writing-fb_starting-date"
-                       placeholder="mm/dd/yyyy"
-                       type="text">
-            </div>
+            {% do global_dict.update({
+                'input': {
+                    'label':        'Comment date',
+                    'type':         'text',
+                    'size':         '1',
+                    'placeholder':  'mm/dd/yyyy',
+                    'required':     true,
+                    'disabled':     false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
 
-            {{ form.textarea('Plain writing feedback', false, true) }}
+            {% do global_dict.update({
+                'textarea': {
+                    'label':        'Plain writing feedback',
+                    'helperText':   false,
+                    'required':     true,
+                    'disabled':     false
+                }
+            }) %}
+            {% set value = global_dict.textarea %}
+            {% include 'atoms/textarea.html' with context %}
 
-            {{ form.input('URL with plain writing issue', 'url', '1') }}
-
-            <div class="form-actions form-actions__right-on-med">
-                <input class="btn form-actions_item"
-                       type="submit"
-                       value="Generate PDF">
-                <a class="btn btn__link form-actions_item u-link__disabled">
-                    Sample Letter
-                    <span class="cf-icon cf-icon-pdf"></span>
-                </a>
-            </div>
-
-        </form>
-    </section>
+            {% do global_dict.update({
+                'input': {
+                    'label':    'URL with plain writing issue',
+                    'type':     'url',
+                    'size':     '1',
+                    'required': false,
+                    'disabled': false
+                }
+            }) %}
+            {% set value = global_dict.input %}
+            {% include 'atoms/input.html' with context %}
+        </section>
+        {% do global_dict.update({
+            'submit_button': {
+                'button_text':  'Generate PDF'
+            }
+        }) %}
+        {% set value = global_dict.submit_button %}
+        {% include 'atoms/submit-button.html' with context %}
+    </form>
     <section class="block">
         <p>
             Once you generate the PDF, send your feedback by email or fax.

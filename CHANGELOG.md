@@ -141,6 +141,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Backend Browse Page
 - Added Backend Item Intro Organism
 - Added Backend: Notification
+- `dom-traverse.js` for dom querying not covered by native dom.
+- Added Backend Learn Page model
+- Added Related Topics molecule.
+- Added full_width_sans setting for correct font face usage.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -241,6 +245,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Upgrade version of Wagtail to 1.3
 - Change method of CFGOVPage called `children` to be called `elements`
 - Moved html5shiv into modernizr.
+- Updated `gulp-load-plugins` to `1.2.0` from `1.1.0`.
+- Included breadcrumb data from page context
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -266,6 +272,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix failing tests relating to Related Posts organism
 - Fix related-posts.html logic
 - Minor PEP8 compliance changes
+- Fixed the markup for the 25/75 organism.
 
 
 ## 3.0.0-2.4.0 - 2015-09-29

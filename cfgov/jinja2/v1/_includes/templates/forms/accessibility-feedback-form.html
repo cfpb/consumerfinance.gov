@@ -1,83 +1,173 @@
-{% import 'macros/util/form.html' as form %}
-{% import 'macros/util/common-form-fields.html' as form_field %}
-<section class="block
-                block__bg
-                block__border
-                block__flush-sides">
-    <form class="form-l js-validate-filters" id="accessibility-form">
-        <div class="form-l_col
-                    form-l_col-1
-                    block
-                    block__flush-top
-                    block__flush-bottom">
-          <h2>Form to file your accessibility complaint</h2>
-        </div>
+{% set prototype = true %}
+<form class="js-validate-filters" id="accessibility-form">
+    <h2>Form to file your accessibility complaint</h2>
+    <section class="o-form-section">
+        {% do global_dict.update({
+            'input': {
+                'label':    'First name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('First Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Last name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Last Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':   'Address 1',
+                'type'     'text',
+                'size':    '1',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Address 1', 'text', '1', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Address 2',
+                'type':     'text',
+                'size':     '1',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Address 2', 'text', '1', false) }}
-
-        {{ form.input('City', 'text', '1-3', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'City',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {% include 'atoms/state-selector.html' %}
 
-        {{ form.input('Zip code', 'text', '1-3', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':   'Zip code',
+                'type':    'text',
+                'size':     '1-4',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Telephone number', 'tel', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Telephone number',
+                'type':     'tel',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Fax number', 'tel', '1-2', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Fax number',
+                'type':     'tel',
+                'size':     '1-2',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Email address', 'email', '1-2', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Email address',
+                'type':     'email',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {# TODO: Add additional times to form select below. #}
 
         {% do global_dict.update({
             'select': {
-                'label':        'Best time to reach you',
-                'placeholder':  'Select time',
-                'fields':       ['8:00 am'],
-                'size':         '1-2'
+                'label':       'Best time to reach you',
+                'placeholder': 'Select time',
+                'fields':      ['8:00 am'],
+                'size':        '1-2',
+                'required':    false
             }
         }) %}
         {% set value = global_dict.select %}
-        {% set prototype = true %}
         {% include 'atoms/select.html' with context %}
 
-        {{ form.textarea('Nature of the accessibility problem', false, true) }}
+        {% do global_dict.update({
+            'textarea': {
+                'label':      'Nature of the accessibility problem',
+                'helperText': false,
+                'required':   true,
+                'disabled':   false
+            }
+        }) %}
+        {% set value = global_dict.textarea %}
+        {% include 'atoms/textarea.html' with context %}
 
-        {{ form.input('Web address (URL) of requested material', 'url', '1', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Web address (URL) of requested material',
+                'type':     'url',
+                'size':     '1',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {# TODO: Add additional formats to form select below. #}
 
         {% do global_dict.update({
             'select': {
-                'label':        'Preferred format',
-                'placeholder':  'Select format! ',
-                'fields':       ['PDF', 'Text email'],
-                'size':         '1',
-                'required':     true
+                'label':       'Preferred format',
+                'placeholder': 'Select a format',
+                'fields':      ['PDF', 'Text email'],
+                'size':        '1',
+                'required':    true
             }
         }) %}
         {% set value = global_dict.select %}
-        {% set prototype = true %}
         {% include 'atoms/select.html' with context %}
-
-        <div class="form-l_col
-                    form-l_col-1
-                    form-actions
-                    form-actions__right-on-med">
-            <input class="btn form-actions_item"
-                   type="submit"
-                   value="Generate PDF">
-            <a class="btn btn__link form-actions_item u-link__disabled">
-                Sample Letter
-                <span class="cf-icon cf-icon-pdf"></span>
-            </a>
-        </div>
-
-    </form>
-</section>
+    </section>
+    {% do global_dict.update({
+    'submit_button': {
+        'button_text': 'Generate PDF'
+    }
+    }) %}
+    {% set value = global_dict.submit_button %}
+    {% include 'atoms/submit-button.html' with context %}
+</form>

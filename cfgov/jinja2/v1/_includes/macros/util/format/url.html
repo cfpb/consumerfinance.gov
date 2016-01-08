@@ -17,7 +17,14 @@
    ========================================================================== #}
 
 {% macro slugify(string) -%}
-    {{ string|lower|replace(' ', '-') }}
+    {{ string |
+       lower |
+       replace(' ', '-') |
+       replace(',', '') |
+       replace('.', '') |
+       replace('!', '') |
+       replace('?', '')
+    }}
 {%- endmacro %}
 
 

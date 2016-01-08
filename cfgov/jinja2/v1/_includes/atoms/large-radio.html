@@ -13,7 +13,7 @@
    settings.fields:   An array of all the radio button labels.
 
    settings.size:     The size of the fields. Defaults to 1-2.
-                      Possible options: 1, 1-2, 1-3
+                      Possible options: 1 or 1-2
 
    options (optional):
 
@@ -45,11 +45,11 @@
                     <input class="cf-input"
                            type="radio"
                            name="form_{{ id_slug }}"
-                           id="input_{{id_slug}}_{{loop.index}}"
+                           id="radio_{{ id_slug }}_{{ loop.index }}"
                            {{ 'required' if settings.required else '' }}
                            {{ 'disabled' if settings.disabled else '' }}>
                     <label class="cf-input_label"
-                           for="input_{{id_slug}}_{{loop.index}}">
+                           for="radio_{{ id_slug }}_{{ loop.index }}">
                         {{ field }}
                     </label>
                 </div>
