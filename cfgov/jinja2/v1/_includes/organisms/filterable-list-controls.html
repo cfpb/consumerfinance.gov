@@ -303,7 +303,8 @@
         })
     %}
     {% set value = global_dict.expandable %}
-    {% include 'molecules/expandable.html' with context %}
+    {% from 'molecules/expandable.html' import expandable with context %}
+    {{ expandable(value) }}
 
     {% do global_dict.update(
         {

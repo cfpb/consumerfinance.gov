@@ -148,6 +148,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added a new nav-link molecule macro and styles.
 - Added Related Links to Sidebar/Footer
 - Added custom image and rendition models CFGOVImage and CFGOVRendition
+- Added Page preview fields to CFGOVPage
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -256,6 +257,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Converted the nav-secondary macro and styles to an organism
 - Updated the new secondary-nav organism to use the new nav-link molecule
 - Updated the secondary-nav-toggle for new classnames
+- Changed expandable.html to be a macro for upcoming Filtered List
 
 ### Removed
 - Removed unused exportsOverride section,

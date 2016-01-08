@@ -10,8 +10,9 @@ from django.dispatch import receiver
 
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
@@ -48,6 +49,17 @@ class CFGOVTaggedPages(TaggedItemBase):
 
 
 class CFGOVPage(Page):
+    preview_title = models.CharField(max_length=255, blank=True)
+    preview_subheading = models.CharField(max_length=255, blank=True)
+    preview_description = RichTextField(blank=True)
+    preview_link_text = models.CharField(max_length=255, blank=True)
+    preview_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
                                      help_text='A comma separated list of '
@@ -81,6 +93,13 @@ class CFGOVPage(Page):
 
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        MultiFieldPanel([
+            FieldPanel('preview_title', classname="full"),
+            FieldPanel('preview_subheading', classname="full"),
+            FieldPanel('preview_description', classname="full"),
+            FieldPanel('preview_link_text', classname="full"),
+            ImageChooserPanel('preview_image'),
+        ], heading='Page Preview Fields', classname='collapsible collapsed'),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
         InlinePanel('categories', label="Categories", max_num=2),
