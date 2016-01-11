@@ -69,6 +69,10 @@ build(){
   pip install tox
 
   dbsetup
+
+  if [ "$cli_flag" = "development" ]; then
+    ./initial-data.sh
+  fi
 }
 
 # Setup MYSQL Server.
