@@ -6,18 +6,54 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF
+from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, change_password
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from django.views.generic import RedirectView
 
+from wagtail.wagtailadmin.forms import PasswordResetForm
+from wagtail.wagtailadmin.views import account
+password_reset = [
+    url(
+        r'^$', account.password_reset, {
+            'template_name': 'wagtailadmin/account/password_reset/form.html',
+            'email_template_name': 'wagtailadmin/account/password_reset/email.txt',
+            'subject_template_name': 'wagtailadmin/account/password_reset/email_subject.txt',
+            'password_reset_form': PasswordResetForm,
+            'post_reset_redirect': 'wagtailadmin_password_reset_done',
+        }, name='wagtailadmin_password_reset'
+    ),
+    url(
+        r'^done/$', account.password_reset_done, {
+            'template_name': 'wagtailadmin/account/password_reset/done.html'
+        }, name='wagtailadmin_password_reset_done'
+    ),
+    url(
+        r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        account.password_reset_confirm, {
+            'template_name': 'wagtailadmin/account/password_reset/confirm.html',
+            'post_reset_redirect': 'wagtailadmin_password_reset_complete',
+        }, name='wagtailadmin_password_reset_confirm',
+    ),
+    url(
+        r'^complete/$', account.password_reset_complete, {
+            'template_name': 'wagtailadmin/account/password_reset/complete.html'
+        }, name='wagtailadmin_password_reset_complete'
+    ),
+]
 
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
+
+    # Override Wagtail View
+    url(r'^admin/password_reset/', include(password_reset)),
+    url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
+
     url(r'^admin/', include(wagtailadmin_urls)),
+
     url(r'^documents/', include(wagtaildocs_urls)),
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
@@ -224,6 +260,7 @@ if settings.DEBUG :
     urlpatterns.append(url(r'^learn-page/$', SheerTemplateView.as_view(template_name='learn-page/index.html'), name='learn-page'))
     urlpatterns.append(url(r'^document-detail/$', SheerTemplateView.as_view(template_name='document-detail/index.html'), name='document-detail'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))

@@ -1,5 +1,6 @@
 import os
 from unipath import Path
+from ..util import admin_emails
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
@@ -274,3 +275,29 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 
     MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
+
+WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check banner from admin page.
+
+# Email
+ADMINS = admin_emails(os.environ.get('ADMIN_EMAILS'))
+EMAIL_SUBJECT_PREFIX = os.environ.get('EMAIL_SUBJECT_PREFIX')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get('WAGTAILADMIN_NOTIFICATION_FROM_EMAIL')
+
+
+
+
+# Password Policies
+# cfpb_common password rules
+CFPB_COMMON_PASSWORD_RULES = [
+    [r'.{12,}', 'Minimum allowed length is 12 characters'],
+    [r'[A-Z]', 'Password must include at least one capital letter'],
+    [r'[a-z]', 'Password must include at least one lowercase letter'],
+    [r'[0-9]', 'Password must include at least one digit'],
+    [r'[@#$%&!]', 'Password must include at least one special character (@#$%&!)'],
+]
+# cfpb_common login rules
+# in seconds
+LOGIN_FAIL_TIME_PERIOD = 120 * 60
+# number of failed attempts
+LOGIN_FAILS_ALLOWED = 5

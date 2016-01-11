@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse
 
+
 class LeadershipCalendarPDFView(PDFGeneratorView):
     render_url = 'http://localhost/the-bureau/leadership-calendar/print/'
     stylesheet_url = 'http://localhost/static/css/pdfreactor-fonts.css'
@@ -59,4 +60,50 @@ def unshare(request, page_id):
 
     return render(request, 'wagtailadmin/pages/confirm_unshare.html', {
         'page': page,
+    })
+
+
+# Override Wagtail Change Password
+
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth import update_session_auth_hash, views as auth_views
+from wagtail.wagtailadmin.views import account
+from .util import password_policy
+from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+
+
+def change_password(request):
+    if not account.password_management_enabled():
+        raise Http404
+
+    can_change_password = request.user.has_usable_password()
+
+    if can_change_password:
+        if request.POST:
+            form = PasswordChangeForm(user=request.user, data=request.POST)
+
+            if form.is_valid():
+                password1 = form.cleaned_data.get('new_password1', '')
+                password2 = form.cleaned_data.get('new_password2', '')
+
+                errors = password_policy._check_passwords(password1, password2)
+
+                if len(errors) == 0:
+                    form.save()
+                    update_session_auth_hash(request, form.user)
+
+                    messages.success(request, _("Your password has been changed successfully!"))
+                    return redirect('wagtailadmin_account')
+                else:
+                    messages.error(request, errors)
+                    form = PasswordChangeForm(user=request.user)
+        else:
+            form = PasswordChangeForm(user=request.user)
+    else:
+        form = None
+
+    return render(request, 'wagtailadmin/account/change_password.html', {
+        'form': form,
+        'can_change_password': can_change_password,
     })
