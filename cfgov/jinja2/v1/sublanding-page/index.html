@@ -112,8 +112,6 @@
     {% else %}
         {% for block in page.content -%}
             {% if loop.index == 1 %}
-                {% set full_width_sans = true %}
-
                 <div class="block
                             block__flush-top">
                     {{ render_stream_child(block) }}
