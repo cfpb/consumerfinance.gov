@@ -248,6 +248,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp-load-plugins` to `1.2.0` from `1.1.0`.
 - Included breadcrumb data from page context
 - Added development environment data initialization
+- Pinned jQuery to `1.11.3` due to changes in `1.12.0` that cause errors in jsdom.
 
 ### Removed
 - Removed unused exportsOverride section,
