@@ -50,11 +50,6 @@
         </div>
     {%- endfor %}
 
-    <div class="block">
-        {% set full_width_sans = true %}
-        {% include 'organisms/full-width-text.html' with context %}
-    </div>
-
     {% for block in page.content -%}
         <div class="block">
             {{ render_stream_child(block) }}
@@ -63,6 +58,9 @@
 
     {% if prototype %}
         <div class="block">
+            {% set full_width_sans = true %}
+            {% include 'organisms/full-width-text.html' with context %}
+
             <div class="expandable-prototypes">
                 {% include 'molecules/expandable.html' with context %}
 
