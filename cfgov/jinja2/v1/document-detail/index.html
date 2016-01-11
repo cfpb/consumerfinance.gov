@@ -20,12 +20,16 @@
     %}
     {% set page = page or global_dict.page %}
     {% set prototype = global_dict.prototype or false %}
+    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 {% endif %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
 
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+{% if not breadcrumb_items %}
+    {% set parent = page.parent() %}
+    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
+{% endif %}
 
 {% if not page %}
     {% set prototype = true %}
@@ -66,7 +70,8 @@
         {# Area 2 #}
         <div class="block">
             {# NOTE: includes Bulleted List and Inset molecules. #}
-            {% include 'organisms/full-width-text.html' %}
+            {% set full_width_sans = true %}
+            {% include 'organisms/full-width-text.html' with context %}
         </div>
         <div class="block">
             {% include 'organisms/table.html' %}
@@ -91,7 +96,7 @@
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
-    o-content-sidebar
+    o-sidebar-content
 {%- endblock %}
 
 {% block content_sidebar scoped -%}

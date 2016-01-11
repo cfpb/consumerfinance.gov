@@ -1,0 +1,50 @@
+{# ==========================================================================
+
+   form.textarea()
+
+   ==========================================================================
+
+   Description: Builds form textarea field.
+
+   label:       Name of the field.
+
+   helperText:  String for helper text. Defaults to false.
+
+   required:    Whether the field is required. Defaults to false.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update({
+        'textarea': {
+            'label':        'This is a label',
+            'helperText':   'This is helper text',
+            'required':     true,
+            'disabled':     false
+        }
+    }) %}
+    {% set value = global_dict.textarea %}
+{% endif %}
+
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+{% set id = get_unique_id('textarea_', '_') ~ slugify( value.label ) %}
+{% set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) %}
+<div class="form-l_col form-l_col-1">
+    <label for="{{ id }}" class="form-label-header">
+        {{ value.label }}
+        {%- if value.required == false -%}
+            <span class="micro-copy">&nbsp;(Optional)</span>
+        {%- endif -%}
+    </label>
+    {%- if value.helperText -%}
+        <p class="micro-copy" id="{{ ht_id }}">{{ value.helperText | safe }}</p>
+    {%- endif -%}
+    <textarea class="input__long"
+              id="{{ id }}"
+              {{ 'required' if value.required else '' }}
+              {{ 'disabled' if value.disabled else '' }}
+              {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}></textarea>
+</div>

@@ -30,12 +30,6 @@
                             <li>Lorem ipsum dolor sit amet</li>
                             <li>Lorem ipsum dolor sit amet</li>
                         </ul>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Sed metus tortor, lacinia vel arcu a, convallis consequat
-                            velit. Nam non turpis ac leo porta elementum id euismod
-                            erat. Nullam pretium purus ac ultricies pharetra.
-                        </p>
                     """,
                 }
             },
@@ -47,6 +41,12 @@
                 'block_type': 'content',
                 'value': {
                     'source': """
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Sed metus tortor, lacinia vel arcu a, convallis consequat
+                            velit. Nam non turpis ac leo porta elementum id euismod
+                            erat. Nullam pretium purus ac ultricies pharetra.
+                        </p>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             Sed metus tortor, lacinia vel arcu a, convallis consequat
@@ -85,7 +85,9 @@
 <div class="o-full-width-text-group">
     {% for block in value %}
         {% if 'content' in block.block_type %}
-            <div class="m-full-width-text">
+            <div class="m-full-width-text
+                        {{ 'm-full-width-text__sans' if
+                        full_width_sans else '' }}">
                 {{ block.value.source | safe }}
             </div>
         {% else %}

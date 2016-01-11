@@ -67,10 +67,10 @@
 };
 
 .m-related-posts {
-    padding-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
-    .header-slug {
-        margin-bottom: @margin_half__em * 2;
-    }
+
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
+        .grid_column(12);
+    });
 }
 
 .m-related-posts__half-width {
@@ -108,8 +108,6 @@
     }
 
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
-        .grid_column(12);
-        border: 0;
         .m-related-posts_list {
             .grid_nested-col-group();
         }

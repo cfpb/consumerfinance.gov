@@ -1,26 +1,91 @@
-{% import 'macros/util/form.html' as form %}
-{% import 'macros/util/common-form-fields.html' as form_field %}
+{% set prototype = true %}
+<form class="js-validate-filters">
+    <section class="o-form-section">
+        {% do global_dict.update({
+            'input': {
+                'label':    'First Name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-<section class="block
-                block__bg
-                block__border
-                block__flush-sides">
-    <form class="form-l js-validate-filters">
-        {{ form.input('First Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Last Name',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Last Name', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Address 1',
+                'type':     'text',
+                'size':     '1',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Address 1', 'text', '1', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Address 2',
+                'type':     'text',
+                'size':     '1',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Address 2', 'text', '1', false) }}
-
-        {{ form.input('City', 'text', '1-3', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'City',
+                'type':     'text',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {% include 'atoms/state-selector.html' %}
 
-        {{ form.input('Zip code', 'text', '1-3', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Zip code',
+                'type':     'text',
+                'size':     '1-4',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Telephone number', 'tel', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Telephone number',
+                'type':     'tel',
+                'size':     '1-2',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
         {# TODO: Add additional times to form select below. #}
 
@@ -35,30 +100,73 @@
             }
         }) %}
         {% set value = global_dict.select %}
-        {% set prototype = true %}
         {% include 'atoms/select.html' with context %}
 
-        {{ form.input('Fax number', 'tel', '1-2', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Fax number',
+                'type':     'tel',
+                'size':     '1-2',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Email address', 'email', '1-2', false) }}
+        {% do global_dict.update({
+            'input': {
+                'label':    'Email address',
+                'type':     'email',
+                'size':     '1-2',
+                'required': false,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.input('Request date', 'text', '1-2', true) }}
+        {% do global_dict.update({
+            'input': {
+                'label':        'Request date',
+                'type':         'text',
+                'placeholder':  'mm/dd/yyyy',
+                'size':         '1',
+                'required':     true,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
 
-        {{ form.textarea('Description of complaint', false, true) }}
+        {% do global_dict.update({
+            'textarea': {
+                'label':        'Description of complaint',
+                'helperText':   false,
+                'required':     true,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.textarea %}
+        {% include 'atoms/textarea.html' with context %}
 
-        {{ form.textarea('Summary to resolve complaint',
-                         'Summarize the steps taken, if any,
-                          by you or the CFPB to resolve this complaint.',
-                          true) }}
-        <div class="form-actions form-actions__right-on-med">
-            <input class="btn form-actions_item"
-                   type="submit"
-                   value="Generate PDF">
-            <a class="btn btn__link form-actions_item u-link__disabled">
-                Sample Letter
-                <span class="cf-icon cf-icon-pdf"></span>
-            </a>
-        </div>
-
-    </form>
-</section>
+        {% do global_dict.update({
+            'textarea': {
+                'label':        'Summary to resolve complaint',
+                'helperText':   'Summarize the steps taken, if any,
+                                by you or the CFPB to resolve this complaint',
+                'required':     true,
+                'disabled':     false
+            }
+        }) %}
+        {% set value = global_dict.textarea %}
+        {% include 'atoms/textarea.html' with context %}
+    </section>
+    {% do global_dict.update({
+        'submit_button': {
+            'button_text':  'Generate PDF'
+        }
+    }) %}
+    {% set value = global_dict.submit_button %}
+    {% include 'atoms/submit-button.html' with context %}
+</form>

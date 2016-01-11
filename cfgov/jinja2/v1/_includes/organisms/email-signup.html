@@ -57,6 +57,7 @@
     {% set prototype = true %}
 {% endif %}
 
+<div class="o-email-signup">
 {% if value.heading %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
@@ -65,8 +66,7 @@
     </h2>
 {% endif %}
 
-<form class="o-email-signup"
-      id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+<form id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
       action="/subscriptions/new/"
       method="POST"
       enctype="application/x-www-form-urlencoded">
@@ -80,3 +80,5 @@
         {{ form | safe }}
     {% endfor %}
 </form>
+</div>
+
