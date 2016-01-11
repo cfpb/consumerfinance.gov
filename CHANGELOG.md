@@ -248,6 +248,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp-load-plugins` to `1.2.0` from `1.1.0`.
 - Included breadcrumb data from page context
 - Added development environment data initialization
+- [Fixed 1320] (https://github.com/cfpb/cfgov-refresh/issues/1320)
 
 ### Removed
 - Removed unused exportsOverride section,
