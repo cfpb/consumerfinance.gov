@@ -249,6 +249,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included breadcrumb data from page context
 - Added development environment data initialization
 - Pinned jQuery to `1.11.3` due to changes in `1.12.0` that cause errors in jsdom.
+- [Fixed 1320] (https://github.com/cfpb/cfgov-refresh/issues/1320)
 
 ### Removed
 - Removed unused exportsOverride section,

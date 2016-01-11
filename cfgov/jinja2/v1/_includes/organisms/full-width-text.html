@@ -87,8 +87,8 @@
         {% if 'content' in block.block_type %}
             <div class="m-full-width-text
                         {{ 'm-full-width-text__sans' if
-                        full_width_sans else '' }}">
-                {{ block.value.source | safe }}
+                        global_dict.full_width_sans else '' }}">
+                {{ render_stream_child(block) }}
             </div>
         {% else %}
             <div class="m-inset">
