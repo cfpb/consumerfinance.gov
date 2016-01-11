@@ -43,6 +43,7 @@
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
+    {% do global_dict.update({ 'full_width_sans': true }) %}
     {% for block in page.header -%}
             <div class="block
                         block__flush-top">
@@ -70,7 +71,6 @@
         {# Area 2 #}
         <div class="block">
             {# NOTE: includes Bulleted List and Inset molecules. #}
-            {% set full_width_sans = true %}
             {% include 'organisms/full-width-text.html' with context %}
         </div>
         <div class="block">
