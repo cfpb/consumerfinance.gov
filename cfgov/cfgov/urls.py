@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, change_password
+from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, change_password, password_reset_confirm
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -17,31 +17,9 @@ from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
 password_reset = [
     url(
-        r'^$', account.password_reset, {
-            'template_name': 'wagtailadmin/account/password_reset/form.html',
-            'email_template_name': 'wagtailadmin/account/password_reset/email.txt',
-            'subject_template_name': 'wagtailadmin/account/password_reset/email_subject.txt',
-            'password_reset_form': PasswordResetForm,
-            'post_reset_redirect': 'wagtailadmin_password_reset_done',
-        }, name='wagtailadmin_password_reset'
-    ),
-    url(
-        r'^done/$', account.password_reset_done, {
-            'template_name': 'wagtailadmin/account/password_reset/done.html'
-        }, name='wagtailadmin_password_reset_done'
-    ),
-    url(
         r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        account.password_reset_confirm, {
-            'template_name': 'wagtailadmin/account/password_reset/confirm.html',
-            'post_reset_redirect': 'wagtailadmin_password_reset_complete',
-        }, name='wagtailadmin_password_reset_confirm',
-    ),
-    url(
-        r'^complete/$', account.password_reset_complete, {
-            'template_name': 'wagtailadmin/account/password_reset/complete.html'
-        }, name='wagtailadmin_password_reset_complete'
-    ),
+        password_reset_confirm, name='wagtailadmin_password_reset_confirm',
+    )
 ]
 
 urlpatterns = [

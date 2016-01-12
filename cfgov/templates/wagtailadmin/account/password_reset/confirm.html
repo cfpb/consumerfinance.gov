@@ -1,0 +1,53 @@
+{% extends "wagtailadmin/admin_base.html" %}
+{% load compress static i18n %}
+{% block titletag %}{% trans "Set your new password" %}{% endblock %}
+{% block bodyclass %}login{% endblock %}
+{% load wagtailadmin_tags %}
+
+{% block extra_css %}
+    {{ block.super }}
+
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
+    {% endcompress %}
+{% endblock %}
+
+{% block furniture %}
+    <div class="content-wrapper">
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <h1>{% trans "Set your new password" %}</h1>
+            <ul class="fields">
+                {% for field in form %}
+                    <li class="{% if field.field.required %}required{% endif %} {{ wrapper_classes }} {{ li_classes }} {% if field.errors %}error{% endif %}">
+                      <div class="field {{ field|fieldtype }} {{ field|widgettype }} {{ field_classes }}">
+                            {{ field.label_tag }}
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <div class="error-message">
+                                    {% for key, value in form.errors.items %}
+                                        <span>{{ value|escape }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                      </div>
+                    </li>
+                {% endfor %}
+                <li class="submit">
+                    <input type="submit" value="{% trans 'Reset password' %}"/>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}

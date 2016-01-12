@@ -66,11 +66,11 @@ def unshare(request, page_id):
 # Override Wagtail Change Password
 
 from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth import update_session_auth_hash, views as auth_views
+from django.contrib.auth import update_session_auth_hash, get_user_model, views as auth_views
 from wagtail.wagtailadmin.views import account
 from .util import password_policy
 from django.contrib import messages
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 
 
 def change_password(request):
@@ -107,3 +107,69 @@ def change_password(request):
         'form': form,
         'can_change_password': can_change_password,
     })
+
+
+from django.contrib.auth.tokens import default_token_generator
+from django.shortcuts import resolve_url
+from django.views.decorators.cache import never_cache
+from django.views.decorators.debug import sensitive_post_parameters
+from django.utils.encoding import force_text
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.template.response import TemplateResponse
+
+
+@sensitive_post_parameters()
+@never_cache
+def custom_password_reset_confirm(request, uidb64=None, token=None,
+                                  template_name='wagtailadmin/account/password_reset/confirm.html',
+                                  set_password_form=SetPasswordForm,
+                                  post_reset_redirect='wagtailadmin_password_reset_complete'):
+    """
+    View that checks the hash in a password reset link and presents a
+    form for entering a new password.
+    """
+    UserModel = get_user_model()
+    assert uidb64 is not None and token is not None  # checked by URLconf
+    post_reset_redirect = resolve_url(post_reset_redirect)
+
+    try:
+        # urlsafe_base64_decode() decodes to bytestring on Python 3
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = UserModel._default_manager.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        validlink = True
+        title = _('Enter new password')
+        if request.method == 'POST':
+            form = set_password_form(user, request.POST)
+            if form.is_valid():
+                password1 = form.cleaned_data.get('new_password1', '')
+                password2 = form.cleaned_data.get('new_password2', '')
+                errors = password_policy._check_passwords(password1, password2)
+
+                if len(errors) == 0:
+                    form.save()
+                    return HttpResponseRedirect(post_reset_redirect)
+                else:
+                    messages.error(request, errors)
+                    form = set_password_form(user)
+
+        else:
+            form = set_password_form(user)
+    else:
+        validlink = False
+        form = None
+        title = _('Password reset unsuccessful')
+
+    context = {
+        'form': form,
+        'title': title,
+        'validlink': validlink,
+    }
+
+    return TemplateResponse(request, template_name, context)
+
+
+password_reset_confirm = account._wrap_password_reset_view(custom_password_reset_confirm)
