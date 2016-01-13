@@ -67,13 +67,9 @@
 
     {# Should be a stack of Expandable instances. #}
     {% if value.expandables %}
-        {% for expandable in value.expandables %}
-            {% if prototype %}
-                {% set value = expandable %}
-                {% include 'molecules/expandable.html' with context %}
-            {% else %}
-                {{ expandable }}
-            {% endif %}
+        {% for expand in value.expandables %}
+            {% from 'molecules/expandable.html' import expandable with context %}
+            {{ expandable(expand) }}
         {% endfor %}
     {% endif %}
 </div>

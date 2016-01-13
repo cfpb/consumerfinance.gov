@@ -1,12 +1,18 @@
+
+
 import os
 
 from django.db import models
+from django.db.models.signals import pre_delete
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
+from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
@@ -43,6 +49,17 @@ class CFGOVTaggedPages(TaggedItemBase):
 
 
 class CFGOVPage(Page):
+    preview_title = models.CharField(max_length=255, blank=True)
+    preview_subheading = models.CharField(max_length=255, blank=True)
+    preview_description = RichTextField(blank=True)
+    preview_link_text = models.CharField(max_length=255, blank=True)
+    preview_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
                                      help_text='A comma separated list of '
@@ -76,6 +93,13 @@ class CFGOVPage(Page):
 
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        MultiFieldPanel([
+            FieldPanel('preview_title', classname="full"),
+            FieldPanel('preview_subheading', classname="full"),
+            FieldPanel('preview_description', classname="full"),
+            FieldPanel('preview_link_text', classname="full"),
+            ImageChooserPanel('preview_image'),
+        ], heading='Page Preview Fields', classname='collapsible collapsed'),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
         InlinePanel('categories', label="Categories", max_num=2),
@@ -255,3 +279,27 @@ class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
             whether this user has permission to perform specific tasks on the
             given page."""
         return CFGOVPagePermissionTester(self, page)
+
+
+class CFGOVImage(AbstractImage):
+    alt = models.CharField(max_length=100, blank=True)
+
+    admin_form_fields = Image.admin_form_fields + (
+        'alt',
+    )
+
+
+class CFGOVRendition(AbstractRendition):
+    image = models.ForeignKey(CFGOVImage, related_name='renditions')
+
+
+# Delete the source image file when an image is deleted
+@receiver(pre_delete, sender=CFGOVImage)
+def image_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
+
+
+# Delete the rendition image file when a rendition is deleted
+@receiver(pre_delete, sender=CFGOVRendition)
+def rendition_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
