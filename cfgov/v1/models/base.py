@@ -63,6 +63,7 @@ class CFGOVPage(Page):
         ('paragraph', blocks.TextBlock(icon='edit')),
         ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
+        ('related_links', molecules.RelatedLinks()),
         ('related_posts', organisms.RelatedPosts()),
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
