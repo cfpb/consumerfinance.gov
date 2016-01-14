@@ -1,0 +1,287 @@
+
+// TODO: Move the theme variables to cf-enhancements.
+/* topdoc
+  name: Theme variables
+  family: cf-core
+  notes:
+    - "The following color and sizing variables are exposed, allowing you to
+       easily override them before compiling."
+  patterns:
+    - name: Sizing
+      codenotes:
+        - |
+          @margin__em
+          @margin_half__em
+  tags:
+    - cf-core
+*/
+
+@margin__em: unit( @grid_gutter-width / @base-font-size-px, em );
+@margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+/* topdoc
+  name: Global Search molecule
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+          <div class="m-global-search">
+              <button class="m-global-search_trigger">
+                  <span class="cf-icon"></span>
+                  <span class="m-global-search_trigger-label">
+                      <span class="u-visually-hidden">Search</span>
+                  </span>
+              </button>
+              <div class="m-global-search_content" aria-expanded="false">
+                  <form class="m-global-search_content-form">
+                      <div class="input-with-btn">
+                          <div class="input-with-btn_input
+                                      input-contains-label">
+                              <label for="search-input"
+                                     class="input-contains-label_before
+                                            input-contains-label_before__search">
+                              </label>
+                              <label for="search-input"
+                                     class="input-contains-label_after
+                                            input-contains-label_after__clear
+                                            u-hidden">
+                              </label>
+                              <input type="text"
+                                     id="search-input"
+                                     value=""
+                                     placeholder="Search the CFPB">
+                          </div>
+                          <div class="input-with-btn_btn">
+                              <button class="btn">Search</button>
+                          </div>
+                      </div>
+
+                      <div class="m-global-search_content-suggestions">
+                          <p class="h5">Suggested search terms:</p>
+                          <ul class="list list__horizontal">
+                              <li class="list_item"><a class="list_link" href="#">Regulations</a></li>
+                              <li class="list_item"><a class="list_link" href="#">Compliance guides</a></li>
+                              <li class="list_item"><a class="list_link" href="#">Mortgage</a></li>
+                              <li class="list_item"><a class="list_link" href="#">College loans</a></li>
+                          </ul>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-global-search
+            button.m-global-search_trigger
+              span.cf-icon
+              span.m-global-search_trigger-label
+                span.u-visually-hidden
+            .m-global-search_content
+              form.m-global-search_content-form
+                […
+                .input-with-btn
+                .input-contains-label
+                from cf-forms
+                …]
+                .m-global-search_content-suggestions
+                  .h5
+                  […
+                  .list.list__horizontal
+                  from cf-typography
+                  …]
+  tags:
+    - cfgov-molecules
+*/
+
+.m-global-search {
+
+    // Absolute position when there is a flyout at mobile/tablet sizes.
+    .respond-to-max( @bp-sm-max, {
+        // Make the height large so that the overflowing flyout can be hidden,
+        // but not get cropped when it's visible.
+        height: 500px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        overflow-x: hidden;
+        // TODO: This will be ignored in IE8-10,
+        //       leading to the overflow preventing clicks on the links.
+        pointer-events: none;
+    } );
+
+    &_trigger {
+        height: unit( 45px / 18px, em );
+        min-width: unit( 45px / 18px, em );
+        padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+        padding-right: unit( @grid_gutter-width / 2 / 18px, em );
+
+        float: right;
+        position: relative;
+        z-index: 20;
+
+        background: @white;
+        border: none;
+        color: @black;
+        font-size: unit( 18px / @base-font-size-px, em );
+        pointer-events: auto;
+
+        &:focus {
+            outline: 1px dotted @black;
+        }
+
+        .cf-icon:before {
+            content: @cf-icon-search;
+            font-size: unit( 20px / 18px, em );
+        }
+
+        // Show "Search" text in trigger at tablet sizes.
+        .respond-to-min( @bp-sm-min {
+            &-label:before {
+                .webfont-medium();
+                content: 'Search';
+            }
+        } );
+
+        // Only show flyout and close trigger at tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            height: unit( 60px / 18px, em );
+            min-width: unit( 60px / 18px, em );
+            padding-top: unit( @grid_gutter-width / 2 / 18px, em );
+            padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
+
+            &[aria-expanded="true"] {
+                background: @gray-10;
+                border: 1px solid @gray-50;
+                border-bottom: none;
+                color: @black;
+
+                .cf-icon:before {
+                    content: @cf-icon-delete;
+                }
+
+                // Cover up the border edge of the flyout so that it is attached
+                // visually to the trigger button.
+                &:after {
+                    display: block;
+                    height: 1px;
+                    width: 100%;
+
+                    position: absolute;
+                    left: 0;
+                    bottom: -1px;
+
+                    content: '\a0';
+                    background: @gray-10;
+                }
+            }
+        } );
+
+        // Show "Close" text in trigger at tablet sizes.
+        .respond-to-range( @bp-sm-min, @bp-med-min, {
+            &[aria-expanded="true"] {
+                .m-global-search_trigger-label:before {
+                    content: 'Close';
+                }
+            }
+        } );
+
+        .respond-to-min( @bp-med-min {
+            &[aria-expanded="true"] {
+                display: none;
+            }
+        } );
+    }
+
+    &_content {
+        .respond-to-min( @bp-med-min {
+            display: none;
+        } );
+
+        padding-top: unit( @grid_gutter-width / 4 / @base-font-size-px, em );
+
+        &[aria-expanded="true"] {
+            display: block;
+
+            transform: translateX(0);
+        }
+
+        // Create flyout at table/mobile size.
+        .respond-to-max( @bp-sm-max, {
+            box-sizing: border-box;
+            width: 100%;
+
+            position: absolute;
+            left: 0;
+            // Offset for height of trigger button.
+            top: 60px;
+            z-index: 10;
+
+            background-color: @gray-10;
+            border: 1px solid @gray-50;
+            pointer-events: auto;
+
+            transform: translateX(100%);
+            transition: transform 0.25s ease-out;
+
+            &-form {
+                padding-top: @margin__em;
+                padding-left: @margin_half__em;
+                padding-right: @margin_half__em;
+                padding-bottom: @margin_half__em;
+            }
+
+            // Drop-shadow under the search flyout menu at mobile/tablet size.
+            &:after {
+                position: relative;
+                top: 5px;
+                content: '\a0';
+                display: block;
+                height: 5px;
+                width: 100%;
+                opacity: 0.2;
+                background: @gray;
+            }
+        } );
+
+        &-suggestions {
+            display: none;
+
+            // Only show search suggestions at tablet size.
+            .respond-to-range( @bp-sm-min, @bp-sm-max, {
+                & {
+                    display: block;
+                }
+            } );
+
+            .h5,
+            .list {
+                display: inline-block;
+            }
+        }
+    }
+
+    // TODO: Move these styles to cf-enhancements/cf-forms.
+    .respond-to-min( 480px, {
+        &_content-form {
+            // Attach button to input.
+            .input-with-btn_input {
+                width: 70%;
+            }
+            .input-with-btn_btn {
+                width: 30%;
+                border-left: 0;
+
+                button {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+            }
+        }
+    } );
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
