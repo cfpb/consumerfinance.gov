@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -12,6 +14,8 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from django.views.generic import RedirectView
+
+from transition_utilities.conditional_urls import include_if_app_enabled
 
 
 urlpatterns = [
@@ -213,7 +217,30 @@ urlpatterns = [
             name='how-to-apply-for-a-federal-job-with-the-cfpb'),
     ],
         namespace='transcripts')),
+    url(r'^jobs/', include_if_app_enabled('jobmanager','jobmanager.urls')),
+    url(r'^notice-and-comment/', include_if_app_enabled('noticeandcomment','noticeandcomment.urls')),
+    url(r'^leadership-calendar/', include_if_app_enabled('cal','cal.urls')),
+    url(r'^paying-for-college/', include_if_app_enabled('comparisontool','comparisontool.urls')),
+    url(r'^credit-cards/agreements/', include_if_app_enabled('agreements','agreements.urls')),
+    url(r'^(?i)askcfpb/', include_if_app_enabled('knowledgebase','knowledgebase.urls')),
+    url(r'^es/obtener-respuestas/', include_if_app_enabled('knowledgebase','knowledgebase.babel_urls')),
+    url(r'^selfregs/', include_if_app_enabled('selfregistration', 'selfregistration.urls')),
+    url(r'^hud-api-replace/', include_if_app_enabled('hud_api_replace','hud_api_replace.urls')),
+    url(r'^retirement/', include_if_app_enabled('retirement_api','retirement_api.urls')),
+    url(r'^complaint/', include_if_app_enabled('complaint','complaint.urls')),
+    url(r'^complaintdatabase/', include_if_app_enabled('complaintdatabase','complaintdatabase.urls')),
+    url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
+    url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
+
 ]
+if 'cfpb_common' in settings.INSTALLED_APPS:
+    pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
+    urlpatterns.append(pattern)
+
+if 'selfregistration' in settings.INSTALLED_APPS:
+    from selfregistration.views import CompanySignup
+    pattern = url(r'^company-signup/', CompanySignup.as_view())
+    urlpatterns.append(pattern)    
 
 # TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
 if settings.DEBUG :
@@ -226,6 +253,7 @@ if settings.DEBUG :
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.
+
 urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink

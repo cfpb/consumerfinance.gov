@@ -19,11 +19,12 @@ INSTALLED_APPS = (
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
-    'wagtail.wagtailsearch',
+#    'wagtail.wagtailsearch', conflicts with haystack, will need to revist
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
 
+    'localflavor',
     'modelcluster',
     'compressor',
     'taggit',
@@ -34,13 +35,29 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'storages',
-    'localflavor',
     'flags',
     'v1',
     'core',
     'sheerlike',
 )
+
+OPTIONAL_APPS=[
+    {'import':'noticeandcomment','apps':('noticeandcomment','cfpb_common')},
+    {'import':'cfpb_common','apps':('cfpb_common','cfpb_common')},
+    {'import':'jobmanager','apps':('jobmanager','cfpb_common')},
+    {'import':'cal','apps':('cal','cfpb_common')},
+    {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
+    {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
+    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common')},
+    {'import':'selfregistration','apps':('selfregistration','cfpb_common')},
+    {'import':'hud_api_replace','apps':('hud_api_replace','cfpb_common')},
+    {'import':'retirement_api','apps':('retirement_api',)},
+    {'import':'complaint','apps':('complaint','complaintdatabase','complaint_common',)},
+    {'import':'ratechecker','apps':('ratechecker','rest_framework')},
+    {'import':'countylimits','apps':('countylimits','rest_framework')},
+]
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
@@ -56,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailcore.middleware.SiteMiddleware',
 
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'transition_utilities.middleware.RewriteNemoURLsMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
@@ -135,7 +153,7 @@ MEDIA_URL = '/f/'
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'transition_utilities.finders.NoPHPFileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
@@ -148,6 +166,9 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built'),
     ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
 ]
+
+if 'NEMO_PATH' in os.environ:
+    STATICFILES_DIRS.append(('nemo', os.environ['NEMO_PATH']))
 
 ALLOWED_HOSTS = ['*']
 
@@ -262,6 +283,39 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 # PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
 
+#LEGACY APPS
+
+STATIC_VERSION = ''
+LEGACY_APP_URLS={'jobmanager': True,
+                 'cal':True,
+                 'comparisontool':True,
+                 'agreements':True,
+                 'knowledgebase':True,
+                 'selfregistration':True,
+                 'hud_api_replace':True,
+                 'retirement_api':True,
+                 'complaint':True,
+                 'complaintdatabase':True,
+                 'ratechecker':True,
+                 'countylimits':True,
+                 'noticeandcomment':True}
+
+# DJANGO HUD API
+GOOGLE_MAPS_API_PRIVATE_KEY = os.environ.get('GOOGLE_MAPS_API_PRIVATE_KEY')
+GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
+DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
+# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
+DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': SHEER_ELASTICSEARCH_SERVER,
+        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
+    },
+}
+
 # S3 Configuration
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
@@ -273,3 +327,26 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 
     MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
+
+# Govdelivery
+
+GOVDELIVERY_USER = os.environ.get('GOVDELIVERY_USER')
+GOVDELIVERY_PASSWORD = os.environ.get('GOVDELIVERY_PASSWORD')
+GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
+
+# LOAD OPTIONAL APPS
+# code from https://gist.github.com/msabramo/945406
+
+for app in OPTIONAL_APPS:
+    if app.get("condition", True):
+	try:
+	    __import__(app["import"])
+	except ImportError:
+	    pass
+	else:
+	    for name in app.get("apps",()):
+		if name not in INSTALLED_APPS:
+		    INSTALLED_APPS+=(name,)
+	    MIDDLEWARE_CLASSES += app.get("middleware", ())
+	    if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
+		TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
