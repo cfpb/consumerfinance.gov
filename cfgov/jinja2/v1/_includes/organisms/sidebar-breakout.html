@@ -96,7 +96,7 @@
                         </h2>
                     {% elif 'paragraph' in block.block_type %}
                         <div class="short-desc">
-                            {{ block.value.source | safe }}
+                            {{ block.value | safe }}
                         </div>
                     {% endif %}
                 {% endfor %}

@@ -145,6 +145,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Backend Learn Page model
 - Added Related Topics molecule.
 - Added full_width_sans setting for correct font face usage.
+- Added a new nav-link molecule macro and styles.
+- Added Related Links to Sidebar/Footer.
+- Added Related Metadata molecule.
+- Added custom image and rendition models CFGOVImage and CFGOVRendition
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -249,6 +253,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included breadcrumb data from page context
 - Added development environment data initialization
 - Pinned jQuery to `1.11.3` due to changes in `1.12.0` that cause errors in jsdom.
+- [Fixed 1320] (https://github.com/cfpb/cfgov-refresh/issues/1320)
+- Converted the nav-secondary macro and styles to an organism
+- Updated the new secondary-nav organism to use the new nav-link molecule
+- Updated the secondary-nav-toggle for new classnames
 
 ### Removed
 - Removed unused exportsOverride section,

@@ -14,9 +14,9 @@ import_data(){
     echo 'Creating DB Tables and initial data..'
     ./cfgov/manage.py migrate
     echo 'Importing Events...'
-    ./cfgov/manage.py import-data contact contact --snippet -u admin -p $ADMIN_PW
+    ./cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW
     echo 'Importing Contacts...'
-    ./cfgov/manage.py import-data events eventpage --parent events -u admin -p $ADMIN_PW
+    ./cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW
 }
 
 import_data
