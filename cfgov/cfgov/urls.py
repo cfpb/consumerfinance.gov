@@ -6,7 +6,8 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, change_password, password_reset_confirm
+from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, \
+    change_password, password_reset_confirm
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -15,23 +16,21 @@ from django.views.generic import RedirectView
 
 from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
-password_reset = [
-    url(
-        r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        password_reset_confirm, name='wagtailadmin_password_reset_confirm',
-    )
-]
 
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
-    # Override Wagtail View
-    url(r'^admin/password_reset/', include(password_reset)),
+    # Overrides Wagtail Password views
+    url(r'^admin/password_reset/', include([
+        url(
+            r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+            password_reset_confirm, name='wagtailadmin_password_reset_confirm',
+        )
+    ])),
     url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
 
     url(r'^admin/', include(wagtailadmin_urls)),
-
     url(r'^documents/', include(wagtaildocs_urls)),
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
@@ -238,7 +237,6 @@ if settings.DEBUG :
     urlpatterns.append(url(r'^learn-page/$', SheerTemplateView.as_view(template_name='learn-page/index.html'), name='learn-page'))
     urlpatterns.append(url(r'^document-detail/$', SheerTemplateView.as_view(template_name='document-detail/index.html'), name='document-detail'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))
