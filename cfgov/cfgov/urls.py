@@ -7,7 +7,7 @@ from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
 from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, \
-    change_password, password_reset_confirm
+    change_password, password_reset_confirm, cfpb_login
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -21,7 +21,8 @@ urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
-    # Overrides Wagtail Password views
+    # - Overridded Wagtail Password views - #
+    url(r'^admin/login/$', cfpb_login, name='wagtailadmin_login'),
     url(r'^admin/password_reset/', include([
         url(
             r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
@@ -29,6 +30,7 @@ urlpatterns = [
         )
     ])),
     url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
+    # ----------------x-------------------- #
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),

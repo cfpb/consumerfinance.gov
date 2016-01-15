@@ -63,19 +63,26 @@ def unshare(request, page_id):
     })
 
 
-# Override Wagtail Password Views
+# Overrided Wagtail Views
+import time
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash, get_user_model, views as auth_views
+from django.contrib.auth import update_session_auth_hash, get_user_model, REDIRECT_FIELD_NAME, views as auth_views, \
+    login
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.encoding import force_text
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.template.response import TemplateResponse
 from wagtail.wagtailadmin.views import account
+from wagtail.wagtailadmin import forms
 from .util import password_policy
+from .models import base
 
 
 def change_password(request):
@@ -112,6 +119,79 @@ def change_password(request):
         'form': form,
         'can_change_password': can_change_password,
     })
+
+
+@sensitive_post_parameters()
+@never_cache
+def cfpb_login(request):
+    if request.user.is_authenticated() and request.user.has_perm(
+            'wagtailadmin.access_admin'):
+        return redirect('wagtailadmin_home')
+    else:
+        return login_with_lockout(request)
+
+
+@sensitive_post_parameters()
+@csrf_protect
+@never_cache
+def login_with_lockout(request, template_name='wagtailadmin/login.html'):
+    """
+    Displays the login form and handles the login action.
+    """
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+
+    if request.method == "POST":
+        form = forms.LoginForm(request, data=request.POST)
+        if form.is_valid():
+            # Ensure the user-originating redirection url is safe.
+            if not is_safe_url(url=redirect_to, host=request.get_host()):
+                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+
+            login(request, form.get_user())
+
+            return HttpResponseRedirect(redirect_to)
+        else:
+            if not form.cleaned_data.get('username') or not form.cleaned_data.get('password'):
+                messages.add_message(request, messages.ERROR,
+                                         'Your username and password didn\'t match. Please try again.')
+            else:
+                UserModel = get_user_model()
+                try:
+                    user = UserModel._default_manager.get(username=form.cleaned_data.get('username'))
+                    fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
+                    now = time.time()
+                    fa.failed(now)
+                    time_period = now - getattr(settings, 'LOGIN_FAIL_TIME_PERIOD', 120 * 60)
+                    attempts_allowed = getattr(settings, 'LOGIN_FAILS_ALLOWED', 5)
+                    attempts_used = len(fa.failed_attempts.split(','))
+                    if fa.too_many_attempts(attempts_allowed, time_period):
+                        user.is_active = False
+                        user.save()
+                        messages.add_message(request, messages.ERROR,
+                                             'Too many failed login attempts, your account is blocked.')
+                        raise Exception('No need to wait till the end of the try block.')
+                    fa.save()
+                    messages.add_message(request, messages.ERROR,
+                                         ' %s (of %s) login attempts used.' % (attempts_used, attempts_allowed))
+                except Exception:
+                    pass
+    else:
+        form = forms.LoginForm(request)
+
+    current_site = get_current_site(request)
+
+    context = {
+        'form': form,
+        REDIRECT_FIELD_NAME: redirect_to,
+        'site': current_site,
+        'site_name': current_site.name,
+    }
+
+    context.update({'show_password_reset': account.password_reset_enabled(),
+                    'username_field': get_user_model().USERNAME_FIELD, })
+
+    return TemplateResponse(request, template_name, context)
 
 
 @sensitive_post_parameters()
