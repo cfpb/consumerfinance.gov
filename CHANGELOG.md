@@ -159,6 +159,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Frontend: Global Eyebrow.
 - Added Frontend: Global Search molecule.
 - Added language dropdown for pages, which defaults to english
+- Add BrowseFilterablePage model
+- Add BaseExpandable class for expandable controls
+- Add FilterControls organism using BaseExpandable
+- Add url_parameters macro to handle adding existing get URL parameters into links
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -274,6 +278,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the project to use Avenir font by default
 - Updated `mocha` from `2.2.4` from `2.4.2`.
 - Updated `sinon` from `1.14.1` from `1.17.3`.
+- Change jinja2 templates to handle Wagtail page
 
 ### Removed
 - Removed unused exportsOverride section,

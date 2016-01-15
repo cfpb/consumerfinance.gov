@@ -72,105 +72,104 @@
    value.action:      The form action URL.
 
    ========================================================================== #}
+{% from 'molecules/expandable.html' import expandable with context %}
 
-{% macro _filters_form(value) %}
-{% if value.action and value.action != '/' %}
-{% set action = value.action %}
-{% endif %}
-<form class="form-l"
-      {{ 'method=' ~ value.form_method if value.form_method else 'method=post' }}
-      {{ 'action=' ~ action if action else '' }}>
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-    {{ _render_form_wrapper(value.fields) }}
-
-    <div class="form-actions form-actions__left-on-med">
-        <input class="btn form-actions_item"
-               type="submit"
-               value="Apply Filters">
-        <input class="btn btn__warning btn__link form-actions_item js-form_clear"
-               type="button"
-               value="Clear filters"
-               data-js-hook="form-clear">
-    </div>
-
-</form>
-{% endmacro %}
-
-{% macro _render_form_wrapper(inputs) -%}
-
-    {% for input in inputs recursive %}
-        <div class="form-l_col
-                    form-l_col-{{ input.cols if input.cols else '1' }}">
-            <div class="form-group">
-
-                {% if input.label %}
-                <label class="form-label-header"
-                       {{ 'for=filter_' ~ input.id if input.id else '' }}>
-                    {{ input.label }}
-                </label>
-                {% endif %}
-
-                {% if input.type == 'form' %}
-                    <div class="form-l">
-                        {{ loop(input.children) }}
-                    </div>
-                {% elif input.type == 'email'
-                   or input.type == 'number'
-                   or input.type == 'password'
-                   or input.type == 'tel'
-                   or input.type == 'text'
-                   or input.type == 'url' %}
-
-                    <input type="{{ input.type }}"
-                           value="{{ input.attrs.value if input.attrs.value else '' }}"
-                           placeholder="{{ input.attrs.placeholder if input.attrs.placeholder else '' }}"
-                           {{ 'id=filter_' ~ input.id if input.id else '' }}
-                           {{ 'name=filter_' ~ input.name if input.name else '' }}>
-                {% elif input.type == 'checkbox' %}
-                    {% for checkbox in input.attrs -%}
-                        {{ _filter_checkbox(checkbox.label,
-                                            checkbox.id,
-                                            checkbox.name,
-                                            checkbox.value) | safe }}
-                    {% endfor %}
-                {% elif input.type == 'select' %}
-                    <select {{ 'id=filter_' ~ input.id if input.id else '' }}
-                            {{ 'name=filter_' ~ input.name if input.name else '' }}
-                            {{ 'multiple' if input.multiple else '' }}
-                            placeholder="{{ input.attrs.placeholder if input.attrs and input.attrs.placeholder else '' }}">
-                    {% for option in input.opts -%}
-                        {{ _filter_option(option.label, option.value) | safe }}
-                    {% endfor %}
-                    </select>
-                {% endif %}
-            </div>
-        </div>
-    {% endfor %}
-{%- endmacro %}
-
-{% macro _filter_checkbox(label_text, id, name, value) %}
+{% macro _filter_selectable(type, index, label_text, id, name, value) %}
     <input class="cf-input"
-           type="checkbox"
+           type="{{ type }}"
            value="{{ value }}"
-           id="filter_{{ id }}"
-           name="filter_{{ name }}"
+           id="filter{{ index }}_{{ id }}"
+           name="filter{{ index }}_{{ name }}"
            {{ 'checked' if is_filter_selected(name, value) else '' }}>
-    <label for="filter_{{ id }}" >
+    <label for="filter{{ index }}_{{ id }}" >
         {{ label_text if label_text else value }}
     </label>
 {% endmacro %}
 
 {% macro _filter_option(label_text, value) %}
     <option value="{{ value }}"
-            {{ 'selected' if is_filter_selected(label_text, value) else '' }}
-            >
+            {{ 'selected' if is_filter_selected(label_text, value) else '' }}>
         {{ label_text }}
     </option>
 {% endmacro %}
 
+{% if not page %}
+    {% macro _prototype_filter_form(value) %}
+        {% if value.action and value.action != '/' %}
+            {% set action = value.action %}
+        {% endif %}
+        <form class="form-l"
+              {{ 'method=' ~ value.form_method if value.form_method else 'method=post' }}
+              {{ 'action=' ~ action if action else '' }}>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
-{% if not value %}
+            {{ _prototype_render_form_wrapper(value.fields) }}
+
+            <div class="form-actions form-actions__left-on-med">
+                <input class="btn form-actions_item"
+                       type="submit"
+                       value="Apply Filters">
+                <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+                       type="button"
+                       value="Clear filters"
+                       data-js-hook="form-clear">
+            </div>
+
+        </form>
+    {% endmacro %}
+
+    {% macro _prototype_render_form_wrapper(inputs) -%}
+
+        {% for input in inputs recursive %}
+            <div class="form-l_col
+                        form-l_col-{{ input.cols if input.cols else '1' }}">
+                <div class="form-group">
+
+                    {% if input.label %}
+                    <label class="form-label-header"
+                           {{ 'for=filter_' ~ input.id if input.id else '' }}>
+                        {{ input.label }}
+                    </label>
+                    {% endif %}
+
+                    {% if input.type == 'form' %}
+                        <div class="form-l">
+                            {{ loop(input.children) }}
+                        </div>
+                    {% elif input.type == 'email'
+                       or input.type == 'number'
+                       or input.type == 'password'
+                       or input.type == 'tel'
+                       or input.type == 'text'
+                       or input.type == 'url' %}
+
+                        <input type="{{ input.type }}"
+                               value="{{ input.attrs.value if input.attrs.value else '' }}"
+                               placeholder="{{ input.attrs.placeholder if input.attrs.placeholder else '' }}"
+                               {{ 'id=filter_' ~ input.id if input.id else '' }}
+                               {{ 'name=filter_' ~ input.name if input.name else '' }}>
+                    {% elif input.type == 'checkbox' %}
+                        {% for checkbox in input.attrs -%}
+                            {{ _filter_selectable('checkbox', loop.index, checkbox.label,
+                                                checkbox.id,
+                                                checkbox.name,
+                                                checkbox.value) | safe }}
+                        {% endfor %}
+                    {% elif input.type == 'select' %}
+                        <label class="form-group_item"
+                               {{ 'for=filter_' ~ input.id if input.id else '' }}>
+                        </label>
+                        <select {{ 'id=filter_' ~ input.id if input.id else '' }}
+                                {{ 'name=filter_' ~ input.name if input.name else '' }}>
+                        {% for option in input.attrs -%}
+                            {{ _filter_option(option.label, option.value) | safe }}
+                        {% endfor %}
+                        </select>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {%- endmacro %}
     {% do global_dict.update(
         {
             'filter_list_controls': {
@@ -324,24 +323,20 @@
             }
         })
     %}
-{% endif %}
-{% set value = value or global_dict.filter_list_controls %}
-<div class="o-filterable-list-controls">
     {% do global_dict.update(
         {
             'expandable': {
                 'label': 'Filter',
-                'paragraph': _filters_form(value),
+                'paragraph': _prototype_filter_form(global_dict.filter_list_controls),
                 'is_bordered': true,
                 'is_midtone': true,
-                'is_expanded': false
+                'is_expanded': false,
             }
-
         })
     %}
-    {% set value = global_dict.expandable %}
-    {% include 'molecules/expandable.html' with context %}
-
+    <div class="o-filterable-list-controls">
+        {{ expandable(global_dict.expandable) }}
+    </div>
     {% do global_dict.update(
         {
             'notification': {
@@ -353,6 +348,183 @@
         })
     %}
     {% set value = global_dict.notification %}
-    {% include 'molecules/notification.html' with context %}
+    {% from 'molecules/notification.html' import render as notification with context %}
+    {{ notification(value.type, true, value.explanation) }}
+{% else %}
 
-</div>
+    {% macro _render_filter_fields(controls, form, index) -%}
+        {% if controls.title %}
+            <div class="form-l_col
+                        form-l_col-1">
+                <div class="form-group">
+                    <label class="form-label-header"
+                           for="title">
+                        Title:
+                    </label>
+                    {{ form.render_with_id(form.title,
+                        'filter' ~ index ~ '_title') }}
+                </div>
+            </div>
+        {% endif %}
+        {% if controls.categories.filter_category %}
+            <div class="form-l_col
+                        form-l_col-1-3">
+                <div class="form-group">
+                    <label class="form-label-header"
+                           for="categories">
+                        {% if 'leadership-calendar' in controls.categories.page_type %}
+                            Calendars
+                            </label>
+                            {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
+                                {{ _filter_selectable('radio', index, category_label(slug), 'category_' ~ slug, 'categories', slug) }}
+                            {% endfor %}
+                        {% else %}
+                            Category
+                            </label>
+                            {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
+                                {{ _filter_selectable('checkbox', index, category_label(slug), 'category_' ~ slug, 'categories', slug) }}
+                            {% endfor %}
+                        {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% if controls.topics or controls.authors or controls.date_range %}
+            <div class="form-l_col
+                        form-l_col-2-3">
+                <div class="form-group">
+                    <div class="form-l">
+                        {% if controls.topics %}
+                            <div class="form-l_col
+                                        form-l_col-1-2">
+                                <div class="form-group">
+                                    <label class="form-label-header"
+                                           for="topics">
+                                        Topic
+                                    </label>
+                                    {{ form.render_with_id(form.topics,
+                                       'filter' ~ index ~ '_topics') }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if controls.authors %}
+                            <div class="form-l_col
+                                        form-l_col-1-2">
+                                <div class="form-group">
+                                    <label class="form-label-header"
+                                           for="authors">
+                                        Author
+                                    </label>
+                                    {{ form.render_with_id(form.authors,
+                                       'filter' ~ index ~ '_authors') }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if controls.date_range %}
+                            <div class="form-l_col
+                                        form-l_col-1">
+                                <div class="form-group">
+                                    <label class="form-label-header">
+                                        Date Range
+                                    </label>
+                                    <div class="form-l">
+                                        <div class="form-l_col
+                                                    form-l_col-1-2">
+                                            <div class="form-group">
+                                                <label class="form-label-header"
+                                                       for="from_date">
+                                                    From:
+                                                </label>
+                                                {{ form.render_with_id(form.from_date,
+                                                   'filter' ~ index ~ '_from_date') }}
+                                            </div>
+                                        </div>
+                                        <div class="form-l_col
+                                                    form-l_col-1-2">
+                                            <div class="form-group">
+                                                <label class="form-label-header"
+                                                       for="to_date">
+                                                    To:
+                                                </label>
+                                                {{ form.render_with_id(form.to_date,
+                                                   'filter' ~ index ~ '_to_date') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endmacro %}
+
+    {% macro _filters_form(controls, form, index) %}
+        <form class="form-l"
+            {% if 'filterable-list' in controls.form_type %}
+                method="get"
+                action=".">
+            {% elif 'pdf-generator' in controls.form_type %}
+                method="post"
+                action="pdf/">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            {% endif %}
+            <input type="hidden" name="form-id" id="form-id" value="{{ index }}">
+
+            <div class="form-l_col
+                        form-l_col-1">
+                <div class="form-group">
+                    <div class="form-l">
+                        {{ _render_filter_fields(controls, form, index) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions form-actions__left-on-med">
+                <input class="btn form-actions_item"
+                       type="submit"
+                       value="Apply Filters">
+                <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+                       type="button"
+                       value="Clear filters"
+                       data-js-hook="form-clear">
+            </div>
+        </form>
+    {% endmacro %}
+
+    {% from 'molecules/notification.html' import render as notification with context %}
+
+    {% macro render(controls, form, index) %}
+        <div class="o-filterable-list-controls">
+            {% set form_markup = _filters_form(controls, form, index) %}
+            {% call() expandable(controls, true) %}
+                {{ form_markup | safe }}
+            {% endcall %}
+            {% for field in form %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        {{ notification('error', true, error) }}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors() %}
+                {% for error in form.non_field_errors() %}
+                        {{ notification('error', true, error) }}
+                {% endfor %}
+            {% endif %}
+            {% if 'filterable-list' in controls.form_type and posts is defined %}
+                {% if posts.paginator.count == 0 %}
+                    {{ notification('warning', true, 
+                        'Sorry, there were no results based on your filter selections.',
+                        'Please reset the filter or change your selections and try again.') }}
+                {% else %}
+                    {{ notification('success', true, posts.paginator.count ~ ' filtered results') }}
+                {% endif %}
+            {% endif %}
+            {% for post in posts %}
+                {{ post_preview.render(post) }}
+            {% endfor %}
+            {% include 'molecules/pagination.html' %}
+        </div>
+    {% endmacro %}
+
+{% endif %}
