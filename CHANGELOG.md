@@ -153,6 +153,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added preview fields to AbstractLearnPage
 - Added relevant date fields to AbstractLearnPage
 - Added multi-select atom styles and scripting
+- Added Frontend: Global Header CTA.
+- Added Frontend: Header.
+- Added Frontend: Mega Menu.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
