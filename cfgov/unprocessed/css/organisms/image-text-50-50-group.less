@@ -16,10 +16,18 @@
     - cfgov-molecules
 */
 .o-image-text-50-50-group {
+    // TODO: Find another way to handle spacing
+    margin-bottom: unit( @grid_gutter-width * -2 / @base-font-size-px, em );
+
     .respond-to-min(@bp-sm-min, {
         margin-left: -@grid_gutter-width / 2;
         margin-right: -@grid_gutter-width / 2;
     });
+
+    > h2 {
+        margin-left: @grid_gutter-width / 2;
+        margin-right: @grid_gutter-width / 2;
+    }
 }
 
 /* topdoc
