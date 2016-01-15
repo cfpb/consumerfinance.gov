@@ -143,7 +143,7 @@ class EventLandingPage(CFGOVPage):
     template = 'events/index.html'
 
 # Importing here solves circular importing for now
-from v1.forms import EventsFilterForm
+from v1.forms import FilterForm
 
 
 class EventArchivePage(CFGOVPage):
@@ -156,13 +156,13 @@ class EventArchivePage(CFGOVPage):
     ]
 
     def get_context(self, request, *args, **kwargs):
-        form = EventsFilterForm(request.GET)
+        form = FilterForm(request.GET)
         if form.is_valid():
             # Generates a query by iterating over the zipped collection of
             # tuples. The ordering of query strings is dependent on the
-            # ordering of the form fields in the definition of EventsFilterForm.
+            # ordering of the form fields in the definition of FilterForm.
             final_query = Q()
-            for query, field_name in form.field_queries:
+            for query, field_name in form.field_queries():
                 if form.cleaned_data.get(field_name):
                     final_query &= \
                         Q((query, form.cleaned_data.get(field_name)))
