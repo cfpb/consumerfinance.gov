@@ -15,7 +15,7 @@ def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     env = sheerlike_environment(**options)
     env.autoescape = True
-    from v1.models import CFGOVPage
+    from v1.models import ref, CFGOVPage
     env.globals.update({
         'static': staticfiles_storage.url,
         'global_dict': {
@@ -30,7 +30,9 @@ def environment(**options):
         'flag_enabled': flag_enabled,
         'flag_disabled': flag_disabled,
         'get_unique_id': get_unique_id,
-        'get_messages': messages.get_messages
+        'get_messages': messages.get_messages,
+        'category_label': ref.category_label,
+        'choices_for_page_type': ref.choices_for_page_type,
     })
     env.filters.update({
         'slugify': slugify,

@@ -118,7 +118,7 @@ class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=255, required=False)
     body = blocks.RichTextBlock(required=False)
 
-    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+    category = blocks.ChoiceBlock(choices=ref.categories, required=False)
     post = blocks.PageChooserBlock(required=False)
 
     show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
@@ -202,19 +202,8 @@ class Quote(blocks.StructBlock):
         template = '_includes/molecules/quote.html'
 
 
-class Expandable(blocks.StructBlock):
+class BaseExpandable(blocks.StructBlock):
     label = blocks.CharBlock(max_length=100, required=False)
-
-    content = blocks.StreamBlock(
-        [
-            ('paragraph', blocks.RichTextBlock(required=False)),
-            ('links', atoms.Hyperlink()),
-            ('email', ContactEmail()),
-            ('phone', ContactPhone()),
-            ('address', ContactAddress()),
-        ], blank=True
-    )
-
     is_bordered = blocks.BooleanBlock(required=False)
     is_midtone = blocks.BooleanBlock(required=False)
     is_expanded = blocks.BooleanBlock(required=False)
@@ -228,18 +217,13 @@ class Expandable(blocks.StructBlock):
         js = ("expandable.js",)
 
 
-class Notification(blocks.StructBlock):
-    type = blocks.ChoiceBlock(choices=ref.notification_types, required=False)
-    is_visible = blocks.BooleanBlock(required=False, help_text="Whether the notification is initially shown or not.")
-    message = blocks.TextBlock(required=False, help_text="Text to display within the notification markup."
-                                                         "\nDefault is 'Success.', 'Warning!', or 'Error!',\n "
-                                                         "depending on notification type.")
-    explanation = blocks.TextBlock(required=False,
-                                   help_text="Text to display as an explanation within the notification markup.")
-
-    class Meta:
-        icon = 'view'
-        template = '_includes/molecules/notification.html'
-
-    class Media:
-        js = ("notification.js",)
+class Expandable(BaseExpandable):
+    content = blocks.StreamBlock(
+        [
+            ('paragraph', blocks.RichTextBlock(required=False)),
+            ('links', atoms.Hyperlink()),
+            ('email', ContactEmail()),
+            ('phone', ContactPhone()),
+            ('address', ContactAddress()),
+        ], blank=True
+    )

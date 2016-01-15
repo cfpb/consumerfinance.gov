@@ -1,15 +1,17 @@
-from django.conf import settings
 from .base import *
-from .events import *
 from .atoms import *
 from .molecules import *
 from .organisms import *
+from .ref import *
+
 from .snippets import *
+from .events import *
 from .landing_page import *
 from .sublanding_page import *
 from .browse_page import *
+from .browse_filterable_page import *
 from .learn_page import *
-from .ref import *
 
+from django.conf import settings
 if settings.DEBUG:
     from .demo import *
