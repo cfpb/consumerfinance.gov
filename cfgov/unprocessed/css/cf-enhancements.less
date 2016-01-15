@@ -1464,6 +1464,29 @@ textarea {
 
 
 /* topdoc
+  name: Flush sides on small devices
+  family: cf-layout
+  patterns:
+    - name: .content__flush-sides-on-small
+      markup: |
+        <aside class="content_sidebar content__flush-sides-on-small">
+          <!-- sidebar components -->
+        </aside>
+        <div class="content_main content__flush-sides-on-small">
+          <!-- main content components -->
+        </div>
+  tags: cf-layout
+*/
+.content__flush-sides-on-small {
+    .respond-to-max(@bp-sm-max, {
+        padding-left: 0;
+        padding-right: 0;
+        border-width: 0;
+    });
+}
+
+
+/* topdoc
   name: Code styles
   family: cf-layout
   notes:

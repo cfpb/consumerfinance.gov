@@ -8,26 +8,17 @@
     add the nav macro.
 #}
 
-{# Side nav vars #}
-
-{# Set default value for nav_items array. #}
-{% set nav_items = [(
-    '/docs/sheer-layouts/layout-side-nav/',
-    '',
-    'Please review the instructions in _layouts/layout-side-nav.html for setting up the side nav.'
-)] %}
-
-{% set active_nav_id = active_nav_id|default('index') -%}
-
-{# Adding the side nav macro #}
 {% block content_sidebar %}
-    {% from 'organisms/secondary-navigation.html' import secondary_navigation as sec_nav %}
-    {{ sec_nav(vars.nav_items, active_nav_id) }}
+    {% set active_nav_id = active_nav_id | default('index') -%}
+    {% set sec_nav_items = vars.nav_items %}
+
+    {% include 'organisms/secondary-navigation.html' with context %}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}
 {% block content_sidebar_modifiers -%}
-    content__flush-all-on-small
+    content__flush-top-on-small
+    content__flush-sides-on-small
     {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 else '' }}
 {%- endblock %}
 
