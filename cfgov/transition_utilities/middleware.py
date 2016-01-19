@@ -1,6 +1,10 @@
 def alter_content(content):
     return content.replace('/wp-content/themes/cfpb_nemo/', '/static/nemo/')
 
+def wrap_streaming_content(content):
+    for chunk in content:
+        yield alter_content(chunk)
+
 class RewriteNemoURLsMiddleware(object):
     def process_response(self,request,response):
         if response.streaming:
