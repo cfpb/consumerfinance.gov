@@ -152,6 +152,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added AbstractLearnPage for Learn and Doc Detail pages
 - Added preview fields to AbstractLearnPage
 - Added relevant date fields to AbstractLearnPage
+- Added multi-select atom styles and scripting
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -261,6 +262,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the new secondary-nav organism to use the new nav-link molecule
 - Updated the secondary-nav-toggle for new classnames
 - Changed expandable.html to be a macro for upcoming Filtered List
+- Updated browse-filterable demo
+- Updated filterable-list-controls organism to allow for multiple option
 
 ### Removed
 - Removed unused exportsOverride section,
