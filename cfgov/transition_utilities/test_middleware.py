@@ -2,7 +2,7 @@ from django.test import TestCase
 from mock import Mock
 from .middleware import RewriteNemoURLsMiddleware
 
-class CartMiddlewareTest(TestCase):
+class RewriteNemoURLSMiddlewareTest(TestCase):
 
     def setUp(self):
         self.middleware = RewriteNemoURLsMiddleware()
