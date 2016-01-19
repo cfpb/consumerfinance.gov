@@ -4,7 +4,9 @@ from django.template import TemplateDoesNotExist
 
 from elasticsearch import TransportError
 
-from sheerlike.query import get_document 
+from sheerlike.query import get_document
+
+from v1.forms import CalenderPDFFilterForm
 
 class SheerTemplateView(TemplateView):
     doc_type = None
@@ -22,6 +24,7 @@ class SheerTemplateView(TemplateView):
              templates.append(request.path[1:]+'index.html')
         else:
              templates.append(request.path[1:])
+
         if 'doc_id' in self.kwargs and self.default_template:
             templates.append(self.default_template)
 
@@ -29,6 +32,9 @@ class SheerTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SheerTemplateView, self).get_context_data(**self.kwargs)
+
+        context['CalenderPDFFilterForm'] = CalenderPDFFilterForm
+
         if 'doc_id' in kwargs:
             doc_id = kwargs.pop('doc_id')
             self.doc_id = doc_id
@@ -47,7 +53,7 @@ class SheerTemplateView(TemplateView):
         response = super(SheerTemplateView,self).render_to_response(context, **response_kwargs)
         try:
             template = response.resolve_template(response.template_name)
-        
+
         except TemplateDoesNotExist:
             raise Http404("could not find template in " + str(response.template_name))
 

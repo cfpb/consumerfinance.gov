@@ -1,0 +1,52 @@
+{# ==========================================================================
+
+   common_form_fields.checkbox_list()
+
+   ==========================================================================
+
+   Description: Returns a date picker.
+
+   legend:      Name of the field. Defaults to 'Enter Date Range'.
+
+   required:    Whether the field is required. Defaults to false.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   ========================================================================== #}
+
+{% from 'atoms/input.html' import input %}
+{% set options = {
+            'label':       'This is a label',
+            'type':        'checkbox',
+            'helperText':  lipsumText,
+            'placeholder': 'mm/dd/yyy',
+            'size':        '1-2',
+            'required':    true,
+            'disabled':    false,
+            'choices':     ['1','2',3,4],
+            'classes':     'required-check-group'
+} %}
+{% do options.update(value) if value %}
+{% set value = options %}
+{% set id = get_unique_id('_') %}
+<div class="form-l_col {{ 'form-l_col-' ~ value.size
+                          if value.size else 'form-l_col-1' }}">
+    <fieldset class="u-reset {{ value.classes }}">
+        <legend class="form-label-header">
+            {{ value.label }}
+            {%- if value.required == false -%}
+                <span class="micro-copy">&nbsp;(Optional)</span>
+            {%- endif -%}
+        </legend>
+        {% for choice in value.choices %}
+        <input class="cf-input"
+               type="checkbox"
+               value="{{ choice }}"
+               id="{{ choice ~ id }}"
+               name="{{ name }}" />
+        <label for="{{ choice ~ id }}">
+            {{ choice }}
+        </label>
+        {% endfor %}
+    </fieldset>
+</div>
