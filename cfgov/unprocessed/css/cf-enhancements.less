@@ -1556,24 +1556,15 @@ ul:last-child,
     content: "\2014 ";
 }
 
-/* topdoc
-  name: Adjustments to input borders
-  family: cf-core
-  notes:
-    - "An adjustment to the input borders to match Capital Framework specs"
-  tags:
-    - cf-core
-*/
 
-input[type="text"],
-input[type="search"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
-textarea,
+/* topdoc
+  name: Sets default styling for multi-selects
+ */
+
 select[multiple] {
-    border: 1px solid @gray-50;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
 }
 
 .form-label-header {
