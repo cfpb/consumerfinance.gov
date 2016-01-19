@@ -8,6 +8,26 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse
 
+import time
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash, get_user_model, REDIRECT_FIELD_NAME, views as auth_views, \
+    login
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponseRedirect
+from django.shortcuts import resolve_url
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
+from django.utils.encoding import force_text
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.template.response import TemplateResponse
+from wagtail.wagtailadmin.views import account
+from wagtail.wagtailadmin import forms
+from .util import password_policy
+from .models import base
+
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
     render_url = 'http://localhost/the-bureau/leadership-calendar/print/'
@@ -64,27 +84,6 @@ def unshare(request, page_id):
 
 
 # Overrided Wagtail Views
-import time
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash, get_user_model, REDIRECT_FIELD_NAME, views as auth_views, \
-    login
-from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponseRedirect
-from django.shortcuts import resolve_url
-from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
-from django.utils.encoding import force_text
-from django.utils.http import is_safe_url, urlsafe_base64_decode
-from django.template.response import TemplateResponse
-from wagtail.wagtailadmin.views import account
-from wagtail.wagtailadmin import forms
-from .util import password_policy
-from .models import base
-
-
 def change_password(request):
     if not account.password_management_enabled():
         raise Http404
@@ -154,7 +153,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
         else:
             if not form.cleaned_data.get('username') or not form.cleaned_data.get('password'):
                 messages.add_message(request, messages.ERROR,
-                                         'Your username and password didn\'t match. Please try again.')
+                                     'Your username and password didn\'t match. Please try again.')
             else:
                 UserModel = get_user_model()
                 try:
@@ -162,8 +161,9 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
                     fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
                     now = time.time()
                     fa.failed(now)
-                    time_period = now - getattr(settings, 'LOGIN_FAIL_TIME_PERIOD', 120 * 60)
-                    attempts_allowed = getattr(settings, 'LOGIN_FAILS_ALLOWED', 5)
+                    # Defaults to a 2 hour lockout for a user
+                    time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
+                    attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
                     attempts_used = len(fa.failed_attempts.split(','))
                     if fa.too_many_attempts(attempts_allowed, time_period):
                         user.is_active = False
@@ -225,6 +225,8 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
                 errors = password_policy._check_passwords(password1, password2)
 
                 if len(errors) == 0:
+                    # If a user a locked out, it unlocks them with a successful password reset
+                    user.is_active = True
                     form.save()
                     return HttpResponseRedirect(post_reset_redirect)
                 else:

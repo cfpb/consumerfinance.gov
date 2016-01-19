@@ -1,6 +1,6 @@
 from .base import *
 
-# Sends an email to developers in the email list if Debug=False for errors
+# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

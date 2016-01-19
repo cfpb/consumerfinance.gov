@@ -298,6 +298,6 @@ CFPB_COMMON_PASSWORD_RULES = [
 ]
 # cfpb_common login rules
 # in seconds
-LOGIN_FAIL_TIME_PERIOD = 120 * 60
+LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
-LOGIN_FAILS_ALLOWED = 5
+LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
