@@ -64,90 +64,9 @@
 
             <div class="expandable-prototypes">
                 {% include 'molecules/expandable.html' with context %}
-
-
-                {% do global_dict.update(
-                    {
-                        'expandable': {
-                            'label': 'Bordered Expandable',
-                            'paragraph': lipsum(1, false, 10, 225),
-                            'is_bordered': true,
-                            'is_midtone': true,
-                            'is_expanded': false
-                        }
-
-                    })
-                %}
-                {% set value = global_dict.expandable %}
-                {% include 'molecules/expandable.html' with context %}
-
-                {% do global_dict.update(
-                    {
-                        'expandable': {
-                            'label': 'Midtone Expandable',
-                            'paragraph': lipsum(1, false, 10, 225),
-                            'is_bordered': true,
-                            'is_midtone': true,
-                            'is_expanded': false
-                        }
-
-                    })
-                %}
-                {% set value = global_dict.expandable %}
-                {% include 'molecules/expandable.html' with context %}
-
-                 {% do global_dict.update(
-                     {
-                        'expandable': {
-                            'label': 'Midtone, Bordered, Expandable - Expanded',
-                            'paragraph': lipsum(1, false, 10, 225),
-                            'is_bordered': true,
-                            'is_midtone': true,
-                            'is_expanded': true
-                        }
-                     })
-                 %}
-                {% set value = global_dict.expandable %}
-                {% include 'molecules/expandable.html' with context %}
-                {% set value = None if prototype %}
             </div>
 
             <div class="expandable-group-prototypes">
-                {% include 'organisms/expandable-group.html' with context %}
-
-                {% do global_dict.update(
-                     {
-                        'expandable_group': {
-                            'heading': 'Accordion-style Group',
-                            'intro': 'Intro paragraph blah blah blah',
-                            'is_accordion': true,
-                            'expandables': [
-                                {
-                                    'label': 'Expand 1',
-                                    'paragraph': lipsum(1, false, 10, 225),
-                                    'is_bordered': true,
-                                    'is_midtone': false,
-                                    'is_expanded': false
-                                },
-                                 {
-                                    'label': 'Expand 2 - bordered, midtone',
-                                    'paragraph': lipsum(1, false, 10, 225),
-                                    'is_bordered': true,
-                                    'is_midtone': true,
-                                    'is_expanded': false
-                                },
-                                {
-                                    'label': 'Expand 3 - bordered',
-                                    'paragraph': lipsum(1, false, 10, 225),
-                                    'is_bordered': true,
-                                    'is_midtone': false,
-                                    'is_expanded': true
-                                }
-                            ]
-                        }
-                     })
-                 %}
-                {% set value = global_dict.expandable_group %}
                 {% include 'organisms/expandable-group.html' with context %}
             </div>
 
@@ -184,6 +103,89 @@
             </div>
         {% endfor %}
     {% endif %}
+
+
+    {# TODO: Remove the below when input-contains-label
+             class is added cf-enhancements. #}
+    <div class="block">
+        <div class="block">
+            <div class="input-contains-label">
+                <label for="search-input1"
+                       class="input-contains-label_before
+                              input-contains-label_before__search">
+                </label>
+                <label for="search-input1"
+                       class="input-contains-label_after
+                              input-contains-label_after__clear">
+                </label>
+                <input id="search-input1"
+                       type="text"
+                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="input-contains-label
+                        input__super">
+                <label for="search-input2"
+                       class="input-contains-label_before
+                              input-contains-label_before__search">
+                </label>
+                <label for="search-input2"
+                       class="input-contains-label_after
+                              input-contains-label_after__clear">
+                </label>
+                <input class="input__super"
+                       id="search-input2"
+                       type="text"
+                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            </div>
+        </div>
+
+
+        <div class="input-with-btn">
+            <div class="input-with-btn_input
+                        input-contains-label">
+                <label for="search-input3"
+                       class="input-contains-label_before
+                              input-contains-label_before__search">
+                </label>
+                <label for="search-input3"
+                       class="input-contains-label_after
+                              input-contains-label_after__clear">
+                </label>
+                <input type="text"
+                       id="search-input3"
+                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+
+        <div class="input-with-btn">
+            <div class="input-with-btn_input
+                        input-contains-label
+                        input__super">
+                <label for="search-input4"
+                       class="input-contains-label_before
+                              input-contains-label_before__search">
+                </label>
+                <label for="search-input4"
+                       class="input-contains-label_after
+                              input-contains-label_after__clear">
+                </label>
+                <input class="input__super"
+                       type="text"
+                       id="search-input4"
+                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn btn__super">Search</button>
+            </div>
+        </div>
+
+    </div>
 
 {% endblock %}
 

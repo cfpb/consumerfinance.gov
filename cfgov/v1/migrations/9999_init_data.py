@@ -37,7 +37,7 @@ def initial_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0030_documentdetailpage'),
+        ('v1', '0033_abstractlearnpage'),
     ]
 
     operations = [

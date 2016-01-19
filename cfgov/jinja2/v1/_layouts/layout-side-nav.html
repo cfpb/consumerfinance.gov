@@ -21,8 +21,8 @@
 
 {# Adding the side nav macro #}
 {% block content_sidebar %}
-    {% import 'sidenav.html' as sidenav %}
-    {{ sidenav.render(vars.nav_items, active_nav_id) }}
+    {% from 'organisms/secondary-navigation.html' import secondary_navigation as sec_nav %}
+    {{ sec_nav(vars.nav_items, active_nav_id) }}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}

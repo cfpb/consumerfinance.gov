@@ -23,7 +23,7 @@ function init() {
 
 function _navSecondaryToggle() {
   if ( _navSecondaryToggleTest() ) {
-    $( '.nav-secondary .expandable_target' ).trigger( 'click' );
+    $( '.o-secondary-navigation .expandable_target' ).trigger( 'click' );
   }
 }
 
@@ -33,7 +33,7 @@ function _navSecondaryToggleTest() {
   var isSmall = breakpointState.isBpXS || breakpointState.isBpSM;
 
   var isExpanded =
-    $( '.nav-secondary .expandable_content' )
+    $( '.o-secondary-navigation .expandable_content' )
     .attr( 'aria-expanded' ) === 'true';
   return isSmall && isExpanded || !isSmall && !isExpanded;
 }

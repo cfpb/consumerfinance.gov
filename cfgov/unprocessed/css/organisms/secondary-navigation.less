@@ -1,0 +1,162 @@
+/* =========================================================================
+   cfgov-refresh
+   o-secondary-navigation
+   ========================================================================= */
+
+/* topdoc
+  name: Secondary navigation
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <nav class="o-secondary-navigation">
+            <button class="o-secondary-navigation_button">
+                Nav Button
+            </button>
+            <ul class="o-secondary-navigation_list
+                       o-secondary-navigation_list__parents">
+                <li class="o-secondary-navigation_item
+                           o-secondary-navigation_item__parent">
+                    m-nav-link
+                </li>
+                <li class="o-secondary-navigation_item
+                           o-secondary-navigation_item__parent">
+                    m-nav-link
+                </li>
+                <li class="o-secondary-navigation_item
+                           o-secondary-navigation_item__parent">
+                    m-nav-link
+                </li>
+            </ul>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-secondary-navigation
+            .o-secondary-navigation_button
+            .o-secondary-navigation_list.o-secondary-navigation_list__parents
+              .o-secondary-navigation_item.o-secondary-navigation_item__parent
+    - name: Secondary nav mixed with cf-expandable
+      markup: |
+        <nav class="expandable
+                    o-secondary-navigation">
+            <div class="expandable_header">
+                <button class="expandable_target
+                               o-secondary-navigation_button">
+                    <span class="expandable_header-left">
+                        Nav Button
+                    </span>
+                    <span class="expandable_header-right">
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon
+                                         cf-icon-down"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon
+                                         cf-icon-up"></span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+            <div class="expandable_content">
+                <ul class="o-secondary-navigation_list
+                           o-secondary-navigation_list__parents">
+                    <li class="o-secondary-navigation_item
+                               o-secondary-navigation_item__parent">
+                        nav-link
+                    </li>
+                    <li class="o-secondary-navigation_item
+                               o-secondary-navigation_item__parent">
+                        nav-link
+                    </li>
+                    <li class="o-secondary-navigation_item
+                               o-secondary-navigation_item__parent">
+                        nav-link
+                    </li>
+                </ul>
+            </div>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.o-secondary-navigation
+            .expandable_header
+              .expandable_target.o-secondary-navigation_button
+                .expandable_header-left
+                .expandable_header-right
+                  .expandable_cue-open
+                    .cf-icon.cf-icon-down
+                  .expandable_cue-close
+                    .cf-icon.cf-icon-up
+            .expandable_content
+              .o-secondary-navigation_list.o-secondary-navigation_list__parents
+                .o-secondary-navigation_item.o-secondary-navigation_item__parent
+  tags:
+    - cfgov-organisms
+*/
+
+.o-secondary-navigation {
+    .webfont-regular();
+
+    .respond-to-max(@bp-sm-max, {
+        // TODO: Move margin/spacing to template level styles
+        margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+
+        background-color: @gray-10;
+        border-top: 1px solid @gray-20;
+        border-bottom: 1px solid @gray-20;
+    });
+
+    &_button {
+        width: 100%;
+        padding: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+
+        .webfont-demi();
+
+        text-align: left;
+        text-transform: uppercase;
+
+        &:focus {
+            outline: 1px dotted;
+        }
+
+        .cf-icon {
+            color: @green;
+        }
+
+        .respond-to-min(@bp-med-min, {
+            display: none;
+        });
+    }
+
+    &_list {
+        margin: 0;
+        padding: 0;
+
+        &__parents {
+            .respond-to-max(@bp-sm-max, {
+                padding-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+                margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+                margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+
+                border-top: 1px solid @gray-50;
+            });
+        }
+
+        &__children {
+            margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+
+            .respond-to-min(@bp-med-min, {
+                // Add 5px for the border to half the gutter
+                margin-left: unit( ( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px, em) ;
+            });
+        }
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

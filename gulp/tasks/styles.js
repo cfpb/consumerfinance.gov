@@ -51,6 +51,7 @@ gulp.task( 'styles:ie', function() {
     .pipe( mqr( {
       width: '75em'
     } ) )
+    // mqr expands the minified file
     .pipe( $.cssmin() )
     .pipe( $.rename( {
       suffix:  '.ie',

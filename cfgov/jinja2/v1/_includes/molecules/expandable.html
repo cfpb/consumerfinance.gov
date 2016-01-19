@@ -26,29 +26,15 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% do global_dict.update(
-        {
-            'expandable': {
-                'label': 'Default Expandable',
-                'paragraph': lipsum(1, false, 10, 225),
-                'is_bordered': true,
-                'is_midtone': false,
-                'is_expanded': false
-            }
-        })
-    %}
-{% endif %}
-{% set value = value or global_dict.expandable %}
-
+{% macro expandable(value) %}
 <div class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
             {{ 'm-expandable__midtone' if value.is_midtone else '' }}"
             {{ 'data-state=expanded' if value.is_expanded else '' }}>
 
-        <button class="m-expandable_target">
-            <div class="m-expandable_header">
+    <button class="m-expandable_target">
+        <div class="m-expandable_header">
             <span class="m-expandable_header-left
                          m-expandable_label">
                 {{ value.label }}
@@ -85,3 +71,43 @@
         </div>
     </div>
 </div>
+{% endmacro %}
+
+{% if not value %}
+    {% set value = [
+            {
+                'label': 'Default Expandable',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': false,
+                'is_midtone': false,
+                'is_expanded': false
+            },
+            {
+                'label': 'Bordered Expandable',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': true,
+                'is_midtone': false,
+                'is_expanded': false
+            },
+            {
+                'label': 'Midtone Expandable',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': true,
+                'is_midtone': true,
+                'is_expanded': false
+            },
+            {
+                'label': 'Midtone, Bordered, Expandable - Expanded',
+                'paragraph': lipsum(1, false, 10, 225),
+                'is_bordered': true,
+                'is_midtone': true,
+                'is_expanded': true
+            },
+        ]
+    %}
+    {% for exp in value %}
+        {{ expandable(exp) }}
+    {% endfor %}
+{% else %}
+    {{ expandable(value) }}
+{% endif %}
