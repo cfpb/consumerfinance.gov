@@ -82,7 +82,8 @@
 */
 
 .m-image-text-50-50 {
-    padding-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
+
+    margin-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
 
     &_container {
         height: 150px;
@@ -119,10 +120,6 @@
         });
     }
 
-    &__bottom-rule {
-        border-bottom: 1px solid @m-image-text-50-50_rule;
-        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-    }
     .respond-to-min(@bp-sm-min, {
         .grid_column(6);
     });
