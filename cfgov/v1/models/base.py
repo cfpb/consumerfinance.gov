@@ -1,5 +1,3 @@
-
-
 import os
 
 from django.db import models
@@ -7,6 +5,7 @@ from django.db.models.signals import pre_delete
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
@@ -108,7 +107,7 @@ class CFGOVPage(Page):
         # End TODO
         for search_type, page_class in search_types.items():
             if 'relate_%s' % search_type in block.value \
-               and block.value['relate_%s' % search_type]:
+                    and block.value['relate_%s' % search_type]:
                 related[search_type] = \
                     page_class.objects.filter(query).order_by(
                         '-latest_revision_created_at').exclude(
@@ -284,3 +283,32 @@ def image_delete(sender, instance, **kwargs):
 @receiver(pre_delete, sender=CFGOVRendition)
 def rendition_delete(sender, instance, **kwargs):
     instance.file.delete(False)
+
+
+# User Failed Login Attempts
+class FailedLoginAttempt(models.Model):
+    user = models.OneToOneField(User)
+    # comma-separated timestamp values, right now it's a 10 digit number,
+    # so we can store about 91 last failed attempts
+    failed_attempts = models.CharField(max_length=1000)
+
+    def __unicode__(self):
+        attempts_no = 0 if not self.failed_attempts else len(self.failed_attempts.split(','))
+        return "%s has %s failed login attempts" % (self.user, attempts_no)
+
+    def clean_attempts(self, timestamp):
+        """ Leave only those that happened after <timestamp> """
+        attempts = self.failed_attempts.split(',')
+        self.failed_attempts = ','.join([fa for fa in attempts if int(fa) >= timestamp])
+
+    def failed(self, timestamp):
+        """ Add another failed attempt """
+        attempts = self.failed_attempts.split(',') if self.failed_attempts else []
+        attempts.append(str(int(timestamp)))
+        self.failed_attempts = ','.join(attempts)
+
+    def too_many_attempts(self, value, timestamp):
+        """ Compare number of failed attempts to <value> """
+        self.clean_attempts(timestamp)
+        attempts = self.failed_attempts.split(',')
+        return len(attempts) > value

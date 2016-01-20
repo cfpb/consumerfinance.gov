@@ -16,7 +16,7 @@ from wagtail.wagtailcore.models import Page
 def initial_data(apps, schema_editor):
     if settings.DEBUG:
         admin_user = User(username='admin',
-                          password=make_password(os.environ.get('ADMIN_PW')),
+                          password=make_password(os.environ.get('WAGTAIL_ADMIN_PW')),
                           is_superuser=True, is_active=True, is_staff=True)
         admin_user.save()
 
@@ -37,7 +37,7 @@ def initial_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0033_abstractlearnpage'),
+        ('v1', '0034_failedloginattempt'),
     ]
 
     operations = [

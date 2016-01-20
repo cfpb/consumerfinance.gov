@@ -264,6 +264,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed expandable.html to be a macro for upcoming Filtered List
 - Updated browse-filterable demo
 - Updated filterable-list-controls organism to allow for multiple option
+- Password Policy & Lockout criteria for login, account password change & forgot my password.
 
 ### Removed
 - Removed unused exportsOverride section,
