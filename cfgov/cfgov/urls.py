@@ -18,6 +18,8 @@ from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
 
 urlpatterns = [
+    url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
+    url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 

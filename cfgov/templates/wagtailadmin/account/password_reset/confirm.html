@@ -14,11 +14,14 @@
 
 {% block furniture %}
     <div class="content-wrapper">
-        {% if messages %}
+        {% if messages or form.errors %}
             <div class="messages">
                 <ul>
                     {% for message in messages %}
                         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
+                    {% endfor %}
+                    {% for key, value in form.errors.items %}
+                        <li class="error">{{ value|striptags }}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -33,14 +36,6 @@
                       <div class="field {{ field|fieldtype }} {{ field|widgettype }} {{ field_classes }}">
                             {{ field.label_tag }}
                             {{ field }}
-
-                            {% if field.errors %}
-                                <div class="error-message">
-                                    {% for key, value in form.errors.items %}
-                                        <span>{{ value|escape }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
                       </div>
                     </li>
                 {% endfor %}
