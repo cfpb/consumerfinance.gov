@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, EventICSView, unshare, renderDirectoryPDF, \
+from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
