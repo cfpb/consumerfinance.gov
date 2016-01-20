@@ -1,13 +1,31 @@
 {% import 'templates/nav/_vars-primary-nav.html' as vars with context %}
 {% import 'macros/sub-nav.html' as sub_nav with context %}
-<nav class="primary-nav
+<nav class="o-mega-menu
+            primary-nav
             js-primary-nav"
      aria-expanded="false"
      aria-label="main navigation"
      role="navigation">
+
     <ul class="list
                list__unstyled
                primary-nav_menu-list">
+
+        {% do global_dict.update(
+            {
+                'global_header_cta': {
+                    'is_in_list': true
+                }
+
+            })
+        %}
+        {% set value = global_dict.global_header_cta %}
+        {# TODO: CTA needs to be focused first when menu is opened. #}
+        <li class="list_item
+                   primary-nav_item">
+            {% include 'molecules/global-header-cta.html' with context %}
+        </li>
+
         {%- for nav_title,
                 sub_nav_landing,
                 sub_nav_title,
@@ -30,4 +48,5 @@
             </li>
         {%- endfor %}
     </ul><!-- END .primary-nav_top-level-list -->
+
 </nav><!-- END .primary-nav -->

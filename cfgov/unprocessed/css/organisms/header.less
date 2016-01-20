@@ -1,0 +1,42 @@
+/* topdoc
+  name: Header
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-header">
+          <div class="global-header-cta"></div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-header
+            .global-header-cta
+  tags:
+    - cfgov-organisms
+*/
+
+.o-header {
+
+    .respond-to-min(@bp-med-min, {
+        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    } );
+
+    // Position and display Global Header Call to Action (CTA).
+    & > .m-global-header-cta {
+
+        .respond-to-max( @bp-sm-max, {
+            display: none;
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            float: right;
+        } );
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
