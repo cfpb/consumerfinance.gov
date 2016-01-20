@@ -29,13 +29,13 @@
 
    ========================================================================== #}
 
-{% macro render(tags, path, hide_heading=false, display_block=false) %}
+{% macro render(tags, path, hide_heading=false, display_block=false, index=0) %}
 <div class="tags {{'tags__hide-heading' if hide_heading else ''}} {{'tags__block-list' if display_block else '' }}">
     <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">Topics:</span>
     <ul class="tags_list">
     {% for tag in tags %}
         <li class="tags_tag">
-            <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}&filter_topics={{ tag }}">
+            <a class="tags_link" href="{{ path }}?filter{{ index }}_topics={{ tag }}">
                 <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 {{ tag }}
             </a>

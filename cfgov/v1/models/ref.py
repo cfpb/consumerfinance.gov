@@ -109,7 +109,14 @@ def choices_for_page_type(page_type):
 
 
 def category_label(category):
-    for parent, children in categories:
+    for parent, children in page_type_choices:
         for slug, name in children:
             if category == slug:
                 return name
+
+
+def is_blog(page):
+    for category in page.categories.all():
+        for blog_category in choices_for_page_type('blog'):
+            if category.name == blog_category[0]:
+                return True

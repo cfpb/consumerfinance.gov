@@ -1,6 +1,9 @@
+import collections
 import re
-from django.conf import settings
 from time import time
+from django.conf import settings
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.wagtailcore.blocks.struct_block import StructValue
 
 
 
@@ -34,3 +37,35 @@ ERROR_MESSAGES = {
         'one_required': 'Please enter at least one date.'
     }
 }
+
+
+# Orders by most to least common in the list
+def most_common(lst):
+    if not lst or len(lst) == 1:
+        return lst
+    else:
+        most = max(set(lst), key=lst.count)
+        new_list = [e for e in lst if most not in e]
+        return [max(set(lst), key=lst.count)] + most_common(new_list)
+
+
+# When viewing the page as preview, the stream_data is a list of tuples. This
+# changes it to a wagtail-like dictionary that would be used if the page had
+# been viewed as published/shared.
+def wagtail_stream_data(tupl_list):
+    if isinstance(tupl_list, collections.Iterable):
+        stream_data = []
+        for tupl in tupl_list:
+            if isinstance(tupl, dict):
+                return tupl_list
+            elif isinstance(tupl, tuple):
+                if isinstance(tupl[1], StructValue):
+                    stream_data.append({'type': tupl[0], 'value': tupl[1]})
+                else:
+                    stream_data.append({'type': tupl[0],
+                                        'value': wagtail_stream_data(tupl[1])})
+            elif isinstance(tupl, StreamValue.StreamChild):
+                stream_data.append({'type': tupl.block_type,
+                                    'value': wagtail_stream_data(tupl.value)})
+        return stream_data
+    return tupl_list

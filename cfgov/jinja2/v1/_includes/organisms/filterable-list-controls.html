@@ -80,7 +80,7 @@
            value="{{ value }}"
            id="filter{{ index }}_{{ id }}"
            name="filter{{ index }}_{{ name }}"
-           {{ 'checked' if is_filter_selected(name, value) else '' }}>
+           {{ 'checked' if is_filter_selected('filter' ~ index ~ '_' ~ name, value) else '' }}>
     <label for="filter{{ index }}_{{ id }}" >
         {{ label_text if label_text else value }}
     </label>
@@ -376,13 +376,13 @@
                             Calendars
                             </label>
                             {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
-                                {{ _filter_selectable('radio', index, category_label(slug), 'category_' ~ slug, 'categories', slug) }}
+                                {{ _filter_selectable('radio', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                             {% endfor %}
                         {% else %}
                             Category
                             </label>
                             {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
-                                {{ _filter_selectable('checkbox', index, category_label(slug), 'category_' ~ slug, 'categories', slug) }}
+                                {{ _filter_selectable('checkbox', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                             {% endfor %}
                         {% endif %}
                 </div>
@@ -492,6 +492,7 @@
     {% endmacro %}
 
     {% from 'molecules/notification.html' import render as notification with context %}
+    {% from 'organisms/post-preview.html' import render as post_preview with context %}
 
     {% macro render(controls, form, index) %}
         <div class="o-filterable-list-controls">
@@ -521,7 +522,7 @@
                 {% endif %}
             {% endif %}
             {% for post in posts %}
-                {{ post_preview.render(post) }}
+                {{ post_preview(post, controls.categories.page_type, index) }}
             {% endfor %}
             {% include 'molecules/pagination.html' %}
         </div>

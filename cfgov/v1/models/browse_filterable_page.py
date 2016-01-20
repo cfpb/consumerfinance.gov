@@ -1,13 +1,17 @@
-import re
-import itertools
+from itertools import chain
+from operator import attrgetter
 
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
-from . import base, molecules, organisms, learn_page
-from v1.forms import FilterForm
+from . import base, molecules, organisms, ref
+from .learn_page import AbstractFilterPage
+from .. import forms
+from ..util.util import wagtail_stream_data
 
 
 class BrowseFilterablePage(base.CFGOVPage):
@@ -36,30 +40,53 @@ class BrowseFilterablePage(base.CFGOVPage):
     template = 'browse-filterable/index.html'
 
     def elements(self):
-        return list(itertools.chain(self.header.stream_data,
+        return list(chain(self.header.stream_data,
                     self.content.stream_data))
+
+    def get_form_class(self):
+        return forms.FilterableListForm
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowseFilterablePage, self).get_context(request, *args,
                                                                 **kwargs)
         context['forms'] = []
-        form_specific_filters = self.get_form_specific_filters(request.GET)
-        form_types = [f['value']['form_type']
-                      for f in self.content.stream_data
-                      if 'filter_controls' in f['type']]
-        forms = [FilterForm(form_specific_filters[filters_id])
-                 for type, filters_id in zip(form_types, form_specific_filters)
-                 if 'filterable-list' in type]
+        form_class = self.get_form_class()
+        form_specific_filters = self.get_form_specific_filter_data(form_class,
+                                                                   request.GET)
+        forms = [form_class(form_specific_filters[filters_id], parent=self)
+                 for filters_id in form_specific_filters.keys()]
         for form in forms:
             if form.is_valid():
-                # List of pages to pass to the template
-                page_set = \
-                    learn_page.AbstractLearnPage.objects.live().filter(
-                        form.generate_query())
-                paginator = Paginator(page_set.order_by('-date_published'),
-                                      10)
+                # If this is the Newsroom, then we need to go get the blog
+                # from a different part of the site.
+                blogs = []
+                for f in wagtail_stream_data(self.content.stream_data):
+                    if 'filter_controls' in f['type'] and 'newsroom' in \
+                            f['value']['categories']['page_type']:
+                        categories = form.cleaned_data.get('categories', [])
+                        if not categories or 'blog' in categories:
+                            blog_cats = [c[0] for c in ref.categories[1][1]]
+                            blogs = AbstractFilterPage.objects.filter(
+                                categories__name__in=blog_cats)
+                # If this is the staging site, then return pages that are
+                # shared. Else, make sure that the pages are published.
+                if getattr(settings, 'STAGING_HOSTNAME', 'content') in \
+                        request.site.hostname:
+                    page_set = AbstractFilterPage.objects.filter(
+                        shared=True).descendant_of(
+                        self).filter(form.generate_query())
+                else:
+                    page_set = AbstractFilterPage.objects.live().descendant_of(
+                        self).filter(form.generate_query())
+                page_list = sorted(list(chain(page_set, blogs)),
+                                   key=attrgetter(form.get_order_attr()))
+
+                # Paginate results by 10 items per page.
+                paginator = Paginator(page_list, 10)
                 page = request.GET.get('page')
 
+                # Get the page number in the request and get the page from the
+                # paginator to serve.
                 try:
                     posts = paginator.page(page)
                 except PageNotAnInteger:
@@ -68,26 +95,39 @@ class BrowseFilterablePage(base.CFGOVPage):
                     posts = paginator.page(paginator.num_pages)
 
                 context.update({'posts': posts})
-            else:
-                print form.errors
             context['forms'].append(form)
         return context
 
-    def get_form_specific_filters(self, request_dict):
-        forms = {}
-        for name in request_dict:
-            if re.search(r'\d+', name):
-                form_id = int(re.search(r'\d+', name).group())
-                forms[form_id] = {}
-        for f_id in forms.keys():
-            for field in FilterForm.declared_fields:
-                request_field_name = 'filter' + str(f_id) + '_' + field
-                if 'categories' in field:
-                    if forms[f_id].get(field):
-                        forms[f_id][field].append(
-                            request_dict.get(request_field_name))
-                    else:
-                        forms[f_id].update({
-                            field: [request_dict.get(request_field_name)]
-                        })
-        return forms
+    # Transform each GET parameter key from unique ID for the form in the
+    # request and assign it to a dictionary under the form ID from where it
+    # came from.
+    def get_form_specific_filter_data(self, form_class, request_dict):
+        filters_data = {}
+        form_ids = request_dict.getlist('form-id')
+        # Find every form existing on the page and assign a dictionary with its
+        # number as the key.
+        for f in wagtail_stream_data(self.content.stream_data):
+            if 'filter_controls' in f['type']:
+                filters_data[form_ids.pop(0)] = {}
+        # print filters_data
+        # For each form ID dictionary, find all the fields for it. Assign the
+        # select fields to lists and append them for each selection. Return the
+        # dictionary of normalized field names with their respective data.
+        for i in filters_data.keys():
+            for field in form_class.declared_fields:
+                request_field_name = 'filter' + str(i) + '_' + field
+                if field in ['categories', 'topics', 'authors']:
+                    filters_data[i][field] = \
+                        request_dict.getlist(request_field_name, [])
+                else:
+                    filters_data[i][field] = \
+                        request_dict.get(request_field_name, '')
+        return filters_data
+
+
+class EventArchivePage(BrowseFilterablePage):
+    def get_form_class(self):
+        return forms.EventArchiveFilterForm
+
+    def get_template(self, request, *args, **kwargs):
+        return BrowseFilterablePage.template

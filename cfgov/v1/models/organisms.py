@@ -158,10 +158,12 @@ class FilterControls(molecules.BaseExpandable):
         ('filterable-list', 'Filterable List'),
         ('pdf-generator', 'PDF Generator'),
     ], default='filterable-list')
+    title = blocks.BooleanBlock(default=True, required=False,
+                                label='Filter Title')
     categories = blocks.StructBlock([
         ('filter_category', blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
-                                         label='Page for Types')),
+                                         required=False)),
     ])
     topics = blocks.BooleanBlock(default=True, required=False,
                                  label='Filter Topics')
@@ -169,8 +171,6 @@ class FilterControls(molecules.BaseExpandable):
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
                                      label='Filter Date Range')
-    title = blocks.BooleanBlock(default=True, required=False,
-                                label='Filter Title')
 
     class Meta:
         label = 'Filter Controls'
