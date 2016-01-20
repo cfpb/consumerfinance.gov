@@ -27,7 +27,7 @@
 
    ========================================================================== #}
 
-{% macro render(category, href, classes, use_blog_category=false) %}
+{% macro render(category, href, classes, use_blog_category=false, index=0) %}
     {% import 'macros/category-icon.html' as category_icon %}
 
     {% if href %}
@@ -35,14 +35,14 @@
         {% if use_blog_category %}
             {% set href = href + '?filter_blog_category=' + category | urlencode | replace('%20', '+') %}
         {% else %}
-            {% set href = href + '?filter_category=' + category | urlencode | replace('%20', '+') %}
+            {% set href = href + '?filter' + index | string + '_categories=' + category | urlencode | replace('%20', '+') %}
         {% endif %}
     {% endif %}
 
     {% call _category_link(href, classes) %}
-        {{ category_icon.render(category, 'category-slug_icon') | safe }}
+        {{ category_icon.render(category_label(category), 'category-slug_icon') | safe }}
         <span class="u-visually-hidden">Category:</span>
-        {{ category }}
+        {{ category_label(category) }}
     {% endcall %}
 {% endmacro %}
 

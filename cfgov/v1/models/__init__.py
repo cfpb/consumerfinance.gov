@@ -5,7 +5,6 @@ from .organisms import *
 from .ref import *
 
 from .snippets import *
-from .events import *
 from .landing_page import *
 from .sublanding_page import *
 from .browse_page import *

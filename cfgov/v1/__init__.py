@@ -33,6 +33,7 @@ def environment(**options):
         'get_messages': messages.get_messages,
         'category_label': ref.category_label,
         'choices_for_page_type': ref.choices_for_page_type,
+        'is_blog': ref.is_blog,
     })
     env.filters.update({
         'slugify': slugify,
