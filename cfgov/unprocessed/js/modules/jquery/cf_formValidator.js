@@ -121,7 +121,7 @@ var _validator = {
       // If it's a checkbox test the entire check group.
       } else if ( $input.is( ':checkbox' ) ) {
         var name = $input.attr( 'name' );
-        var $group = $input.closest( '.form-group' );
+        var $group = $input.closest( '.form-group, fieldset' );
         if ( checkgroups[name] || !$group.hasClass( 'required-check-group' ) ) {
           return;
         }

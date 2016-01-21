@@ -1,0 +1,54 @@
+{# ==========================================================================
+
+   common_form_fields.checkbox_list()
+
+   ==========================================================================
+
+   Description: Returns a checbox list.
+
+   choices:     The choice to display in the checkbox.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   label:       Name of the field. Defaults to 'Checkbox List'.
+
+   name:        Name of the input element. Defaults to ''.
+
+   required:    Whether the field is required. Defaults to false.
+
+   size:        The size of the form column. Defaults to '1-2'.
+
+   ========================================================================== #}
+
+{% from 'atoms/input.html' import input %}
+{% set options = {
+            'choices':     [1,2,3,4],
+            'disabled':    false,
+            'label':       'Checkbox List',
+            'name':        '',
+            'required':    true,
+            'size':        '1-2',
+} %}
+{% do options.update(value) if value %}
+{% set value = options %}
+{% set id = get_unique_id('_') %}
+<div class="form-l_col {{ 'form-l_col-' ~ value.size }}">
+    <fieldset class="u-reset required-check-group">
+        <legend class="form-label-header">
+            {{ value.label }}
+            {%- if value.required == false -%}
+                <span class="micro-copy">&nbsp;(Optional)</span>
+            {%- endif -%}
+        </legend>
+        {% for choice in value.choices %}
+        <input class="cf-input"
+               type="checkbox"
+               value="{{ choice }}"
+               id="{{ choice ~ id }}"
+               name="{{ value.name }}" />
+        <label for="{{ choice ~ id }}">
+            {{ choice }}
+        </label>
+        {% endfor %}
+    </fieldset>
+</div>

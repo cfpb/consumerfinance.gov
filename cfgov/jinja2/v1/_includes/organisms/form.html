@@ -1,0 +1,72 @@
+{# ==========================================================================
+
+   common_form.form()
+
+   ==========================================================================
+
+   Description: Returns a date picker.
+
+   action:       The action for the form. Default is '/'.
+
+   classes:      A comma separated string list to be added to the form.
+                 Default is ''.
+
+   errors:       A list of errors to display on the form.  Default is [].
+
+   fields:       A list of forms fields to be rendered within the form.
+                 Default is [].
+
+   method:       The method for the form. Default is 'GET'.
+
+   submit_label: The action for the form submit button. Default is '/'.
+
+   ========================================================================== #}
+{% set options = {
+    'action':       '/',
+    'classes':      '',
+    'errors' :       None,
+    'fields' :       [],
+    'method':       'GET',
+    'submit_label': 'Submit',
+    'csrf_token':   csrf_token
+} %}
+{% do options.update(value) if value %}
+{% set value = options %}
+
+{% macro _errors(errors) %}
+    {% set error_messages = [] %}
+    {% for error in errors %}
+       {% do error_messages.append(error|string) %}
+    {% endfor %}
+    {% set value = {
+        'message':    '</br>'.join(error_messages) | safe,
+        'type':       'error',
+        'is_visible': true
+    } %}
+    <div class="u-mb15">
+        {% include 'molecules/notification.html' with context %}
+    </div>
+{% endmacro %}
+
+<div class="o-form">
+  {%- if value.errors -%}
+      {{ _errors(value.errors) }}
+  {% endif %}
+  <form class="form-l {{ value.classes }}"
+        method="{{ value.method }}"
+        action="{{ value.action }}">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ value.csrf_token }}">
+      {% for field in value.fields.itervalues() %}
+      {{ field | safe }}
+      {% endfor %}
+      <div class="form-actions
+                  form-actions__left-on-med">
+          <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+                 type="button"
+                 value="Reset filters">
+          <input class="btn form-actions_item"
+                 type="submit"
+                 value="{{ value.submit_label }}">
+      </div>
+  </form>
+</div>

@@ -97,7 +97,7 @@ PostFilter.prototype = {
     $ui.find( '.ie-date_format' ).html( '(' + dateFormat + ')' );
 
     // Add listener for submit event.
-    $ui.on( 'submit', 'form', this.onSubmit );
+    $ui.on( 'submit', this.onSubmit );
 
     return this;
   },

@@ -75,19 +75,26 @@
             only available for months when someone was serving in Bureau leadership. We’ll
             generate a PDF of the results for you. Very large requests may take a while.
         </p>
-        {{ filters.render(
-            ['calendar', 'range_date'], query, posts, 'calendar_event',
-            {
-                'id_prefix'           : 'download',
-                'expand_label'        : 'Download options',
-                'show_current_filters': false,
-                'action'              : 'pdf/',
-                'submit_label'        : 'Download PDF',
-                'additional_classes'  : 'js-validate_form-not-empty, js-validate_require-date',
-                'form_method'         : 'post',
-                'show_errors'         :  True
+        {% set calendar_form = CalenderPDFFilterForm(
+            attrs={
+                'action'      : 'pdf/',
+                'classes'     : 'js-validate_require-date
+                                 js-post-filter',
+                'errors'      : get_messages(request),
+                'method'      : 'post',
+                'submit_label': 'Download PDF'
             }
-        ) }}
+        ) %}
+
+        {% set value = {
+            'content':    [calendar_form],
+            'is_bordered': true,
+            'is_expanded': false,
+            'is_midtone':  true,
+            'label':       'Download Options'
+        } %}
+
+        {% include 'molecules/expandable.html' with context %}
     </section>
 
     <aside class="block
