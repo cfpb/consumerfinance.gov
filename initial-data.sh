@@ -15,9 +15,9 @@ import_data(){
     ./cfgov/manage.py migrate
     echo 'Loading Initial Data...'
     ./cfgov/manage.py runscript initial_data
-    echo 'Importing Events...'
-    ./cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW
     echo 'Importing Contacts...'
+    ./cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW
+    echo 'Importing Events...'
     ./cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW
 }
 

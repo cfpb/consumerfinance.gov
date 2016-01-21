@@ -4,13 +4,15 @@ from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 
-from v1.models.events import EventLandingPage
+from v1.models.browse_page import BrowsePage
 from wagtail.wagtailcore.models import Page
 
 
 def run():
     if settings.DEBUG:
         print 'Running script \'scripts.initial_data\' ...'
+        admin_user = None
+        site_root = None
 
         if not User.objects.filter(username='admin').exists():
             admin_user = User(username='admin',
@@ -23,10 +25,17 @@ def run():
             site_root.title = 'V1'
             site_root.save()
         # Events Landing Page required for event `import-data` command
-        if not EventLandingPage.objects.filter(title='Events').exists():
-            events = EventLandingPage(title='Events', slug='events')
+        if not BrowsePage.objects.filter(title='Events').exists():
+            if not admin_user:
+                admin_user = User.objects.filter(username='admin')[0]
+
+            events = BrowsePage(title='Events', slug='events', owner=admin_user)
+            if not site_root:
+                site_root = Page.objects.get(title='V1')
+
             site_root.add_child(instance=events)
             revision = events.save_revision(
+                user=admin_user,
                 submitted_for_moderation=False,
             )
             revision.publish()

@@ -126,7 +126,6 @@ class EventPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Settings', classname="settings"),
     ])
 
-    parent_page_types = ['v1.EventLandingPage']
     template = 'events/event.html'
 
 
