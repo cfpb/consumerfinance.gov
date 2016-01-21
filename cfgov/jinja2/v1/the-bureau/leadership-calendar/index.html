@@ -76,7 +76,7 @@
             generate a PDF of the results for you. Very large requests may take a while.
         </p>
         {% set calendar_form = CalenderPDFFilterForm(
-            {
+            attrs={
                 'action'      : 'pdf/',
                 'classes'     : 'js-validate_require-date
                                  js-post-filter',

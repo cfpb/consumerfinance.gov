@@ -9,8 +9,12 @@
    action:       The action for the form. Default is '/'.
 
    classes:      A comma separated string list to be added to the form.
+                 Default is ''.
+
+   errors:       A list of errors to display on the form.  Default is [].
 
    fields:       A list of forms fields to be rendered within the form.
+                 Default is [].
 
    method:       The method for the form. Default is 'GET'.
 
@@ -21,9 +25,10 @@
     'action':       '/',
     'classes':      '',
     'errors' :       None,
+    'fields' :       [],
     'method':       'GET',
     'submit_label': 'Submit',
-    'csrf_token':   '{{ csrf_token }}'
+    'csrf_token':   csrf_token
 } %}
 {% do options.update(value) if value %}
 {% set value = options %}

@@ -4,34 +4,36 @@
 
    ==========================================================================
 
-   Description: Returns a date picker.
+   Description: Returns a checbox list.
 
-   legend:      Name of the field. Defaults to 'Enter Date Range'.
+   choices:     The choice to display in the checkbox.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   label:       Name of the field. Defaults to 'Checkbox List'.
+
+   name:        Name of the input element. Defaults to ''.
 
    required:    Whether the field is required. Defaults to false.
 
-   disabled:    Whether the field is disabled. Defaults to false.
+   size:        The size of the form column. Defaults to '1-2'.
 
    ========================================================================== #}
 
 {% from 'atoms/input.html' import input %}
 {% set options = {
-            'label':       'This is a label',
-            'type':        'checkbox',
-            'helperText':  lipsumText,
-            'placeholder': 'mm/dd/yyy',
-            'size':        '1-2',
-            'required':    true,
+            'choices':     [1,2,3,4],
             'disabled':    false,
-            'choices':     ['1','2',3,4],
-            'classes':     'required-check-group'
+            'label':       'Checkbox List',
+            'name':        '',
+            'required':    true,
+            'size':        '1-2',
 } %}
 {% do options.update(value) if value %}
 {% set value = options %}
 {% set id = get_unique_id('_') %}
-<div class="form-l_col {{ 'form-l_col-' ~ value.size
-                          if value.size else 'form-l_col-1' }}">
-    <fieldset class="u-reset {{ value.classes }}">
+<div class="form-l_col {{ 'form-l_col-' ~ value.size }}">
+    <fieldset class="u-reset required-check-group">
         <legend class="form-label-header">
             {{ value.label }}
             {%- if value.required == false -%}
@@ -43,7 +45,7 @@
                type="checkbox"
                value="{{ choice }}"
                id="{{ choice ~ id }}"
-               name="{{ name }}" />
+               name="{{ value.name }}" />
         <label for="{{ choice ~ id }}">
             {{ choice }}
         </label>

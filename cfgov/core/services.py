@@ -92,9 +92,9 @@ class PDFGeneratorView(View):
         form = CalenderPDFFilterForm(request.POST)
         if form.is_valid():
             query_opts = {
-                'filter_calendar': form.cleaned_data['filter_calendar'],
-                'filter_range_date_gte': form.cleaned_data['filter_range_date_gte'],
-                'filter_range_date_lte': form.cleaned_data['filter_range_date_lte']
+                'filter_calendar': form.cleaned_data['checkbox_list'],
+                'filter_range_date_gte': form.cleaned_data['date_range'][0],
+                'filter_range_date_lte': form.cleaned_data['date_range'][1]
             }
 
             return self.generate_pdf(query_opts)
