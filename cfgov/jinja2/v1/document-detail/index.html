@@ -44,7 +44,7 @@
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
-    {% do global_dict.update({ 'full_width_sans': true }) %}
+    {% do global_dict.update({ 'full_width_serif': true }) %}
     {% for block in page.header -%}
             <div class="block
                         block__flush-top">
@@ -64,6 +64,7 @@
                     block__flush-top">
             {% include 'molecules/text-introduction.html' %}
         </div>
+        {# TODO: This should use either the text intro or the item intro, not both #}
         <div class="block
                     block__flush-top">
             {% include 'organisms/item-introduction.html' %}
@@ -155,9 +156,7 @@
                         </span>
                     </h2>
                 {% elif 'paragraph' in block.block_type %}
-                    <div class="short-desc">
-                        {{ render_stream_child(block) }}
-                    </div>
+                    {{ render_stream_child(block) }}
                 {% else %}
                     {{ render_stream_child(block) }}
                 {% endif %}

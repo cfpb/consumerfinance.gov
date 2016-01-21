@@ -268,6 +268,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated browse-filterable demo
 - Updated filterable-list-controls organism to allow for multiple option
 - Password Policy & Lockout criteria for login, account password change & forgot my password.
+- Updated the project to use Avenir font by default
 
 ### Removed
 - Removed unused exportsOverride section,

@@ -40,8 +40,6 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% do global_dict.update({ 'full_width_sans': true }) %}
-
     <div class="block">
         {{ social_media.render() }}
     </div>
@@ -93,9 +91,7 @@
                             </span>
                         </h2>
                     {% elif 'paragraph' in block.block_type %}
-                        <div class="short-desc">
-                            {{ render_stream_child(block) }}
-                        </div>
+                        {{ render_stream_child(block) }}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}
