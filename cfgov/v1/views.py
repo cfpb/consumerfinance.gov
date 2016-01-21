@@ -137,8 +137,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     """
     Displays the login form and handles the login action.
     """
-    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+    redirect_to = request.GET.get(REDIRECT_FIELD_NAME, '')
 
     if request.method == "POST":
         form = forms.LoginForm(request, data=request.POST)
