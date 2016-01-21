@@ -17,8 +17,14 @@
 
 .o-mega-menu {
 
-    // Position and display Global Header Call to Action (CTA).
     .m-global-header-cta {
+
+        .respond-to-min( @bp-med-min, {
+            display: none;
+        } );
+    }
+
+    .m-global-eyebrow {
 
         .respond-to-min( @bp-med-min, {
             display: none;

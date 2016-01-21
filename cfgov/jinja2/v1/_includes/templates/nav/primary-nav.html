@@ -49,4 +49,15 @@
         {%- endfor %}
     </ul><!-- END .primary-nav_top-level-list -->
 
+    {% do global_dict.update(
+        {
+            'global_eyebrow': {
+                'is_in_list': true
+            }
+
+        })
+    %}
+    {% set value = global_dict.global_eyebrow %}
+    {% include 'molecules/global-eyebrow.html' with context %}
+
 </nav><!-- END .primary-nav -->
