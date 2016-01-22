@@ -3,6 +3,10 @@
    capital framework enhancements
    ========================================================================== */
 
+body {
+  .webfont-regular();
+}
+
 /* topdoc
   name: Theme variables
   family: cf-core
@@ -19,7 +23,6 @@
 */
 
 @horizontal-rule: @gray-50;
-
 
 /* topdoc
   name: Code styles
@@ -1026,7 +1029,6 @@
 
     &.list_link__phone {
         .respond-to-min(@bp-sm-min, {
-            .webfont-regular();
             .u-link__colors(@black);
             .u-link__no-border;
         });
@@ -1477,7 +1479,6 @@ dt {
 }
 
 dd {
-    .webfont-regular();
     display: inline;
     margin-left: 0.2em;
 

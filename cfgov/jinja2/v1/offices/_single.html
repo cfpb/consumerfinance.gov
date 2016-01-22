@@ -37,7 +37,7 @@
                     content-l_col__before-divider
                     qa-subscription">
             <p class="h3 u-show-on-mobile">Stay informed</p>
-            <p class="short-desc">Stay up to date with our email newsletter</p>
+            <p>Stay up to date with our email newsletter</p>
             {% import 'macros/subscribe.html' as subscribe with context %}
             {{ subscribe.render(intro.govdelivery_code) }}
         </div>
@@ -63,8 +63,7 @@
                         {% else -%}
                         content-l_col-1
                         {% endif -%}">
-                <div class="short-desc
-                            qa-top-story-desc">
+                <div class="qa-top-story-desc">
                     {{ top_story.desc | safe }}
                 </div>
             </div>
@@ -116,7 +115,7 @@
                 {% endif %}
 
                 {% if resource.desc %}
-                <p class="short-desc qa-resource-desc">
+                <p class="qa-resource-desc">
                     {{ resource.desc | safe }}
                 </p>
                 {% endif %}

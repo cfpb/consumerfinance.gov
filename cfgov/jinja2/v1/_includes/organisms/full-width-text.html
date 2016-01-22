@@ -79,8 +79,8 @@
     {% for block in value %}
         {% if 'content' in block.block_type %}
             <div class="m-full-width-text
-                        {{ 'm-full-width-text__sans' if
-                        global_dict.full_width_sans else '' }}">
+                        {{ 'm-full-width-text__serif' if
+                        global_dict.full_width_serif else '' }}">
                 {{ render_stream_child(block.value) |safe}}
             </div>
         {% else %}

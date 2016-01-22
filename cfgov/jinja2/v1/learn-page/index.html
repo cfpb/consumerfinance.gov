@@ -65,6 +65,7 @@
                     block__flush-top">
             {% include 'molecules/text-introduction.html' %}
         </div>
+        {# TODO: This should use either the text intro or the item intro, not both #}
         <div class="block
                     block__flush-top">
             {% include 'organisms/item-introduction.html' %}
@@ -78,7 +79,7 @@
 
         <form class="js-validate-filters">
             <h2>A form</h2>
-            <p class="o-form-description short-desc">
+            <p class="o-form-description">
                 All questions required (unless otherwise noted)
             </p>
             <h3>Checkboxes and Radio Buttons</h3>
@@ -223,7 +224,6 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% do global_dict.update({ 'full_width_sans': false }) %}
     {% if prototype %}
         {{ related_posts.render(global_dict.related_posts_settings) }}
         {% include 'molecules/related-topics.html' %}
@@ -261,9 +261,7 @@
                         </span>
                     </h2>
                 {% elif 'paragraph' in block.block_type %}
-                    <div class="short-desc">
-                        {{ render_stream_child(block) }}
-                    </div>
+                    {{ render_stream_child(block) }}
                 {% else %}
                     {{ render_stream_child(block) }}
                 {% endif %}

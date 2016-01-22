@@ -26,7 +26,7 @@
 
    page.sidebar_breakout.related_posts: An object used to customize the related
                                           posts markup. (Optional)
-  
+
    ========================================================================== #}
 
 <div class="o-sidebar-breakout
@@ -78,7 +78,7 @@
                                     </h4>
                                 {% endif %}
                                 {% if blocks.body.value %}
-                                    <p class="o-sidebar-breakout_text-body short-desc">
+                                    <p class="o-sidebar-breakout_text-body">
                                         {{ blocks.body.render() }}
                                     </p>
                                 {% endif %}
@@ -95,9 +95,7 @@
                             </span>
                         </h2>
                     {% elif 'paragraph' in block.block_type %}
-                        <div class="short-desc">
-                            {{ block.value | safe }}
-                        </div>
+                        {{ block.value | safe }}
                     {% endif %}
                 {% endfor %}
             </aside>

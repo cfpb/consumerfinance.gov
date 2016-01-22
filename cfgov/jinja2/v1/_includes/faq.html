@@ -6,7 +6,7 @@
                 {{ block.value }}
             </h2>
         {% elif block.block_type == 'Description' %}
-            <p class="short-desc">
+            <p>
                 {{ block.value | safe }}
             </p>
         </div>
@@ -33,7 +33,7 @@
                             </span>
                         </button>
                         <div class="expandable_content">
-                            <p>     
+                            <p>
                                 {{ block.value.bound_blocks.answer.render() }}
                             </p>
                         </div>

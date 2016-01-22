@@ -110,9 +110,7 @@
                             </span>
                         </h2>
                     {% elif 'paragraph' in block.block_type %}
-                        <div class="short-desc">
-                            {{ render_stream_child(block) }}
-                        </div>
+                        {{ render_stream_child(block) }}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}

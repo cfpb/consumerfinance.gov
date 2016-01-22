@@ -34,7 +34,7 @@
         <span class="cf-icon {{ icon }}"></span>
         <span class="h5">{{ label }}</span>
 
-        <p class="short-desc">
+        <p>
             {% for phone in value.phones %}
                 <span>{{ format_phone(phone.number) }}</span>
                 {% if phone.vanity %}
@@ -61,7 +61,7 @@
             <span class="cf-icon {{ icon }}"></span>
             <span class="h5">{{ label }}</span>
 
-            <p class="short-desc">
+            <p>
                 {% for phone in phones %}
                     <span>{{ format_phone(phone.number) }}</span>
                     {% if phone.vanity %}
