@@ -13,7 +13,8 @@
     {% set value = global_dict.global_eyebrow %}
     {% include 'molecules/global-eyebrow.html' with context %}
 
-    <div class="wrapper">
+    <div class="o-header_content
+                wrapper">
         <button class="primary-nav_trigger js-primary-nav_trigger">
             <span class="u-visually-hidden">Menu</span>
         </button>
@@ -23,16 +24,23 @@
                 'global_header_cta': {
                     'is_in_list': false
                 }
-
             })
         %}
         {% set value = global_dict.global_header_cta %}
         {% include 'molecules/global-header-cta.html' with context %}
 
-        <a href="/">
-            <img class="header_logo u-js-only"
-                 src="/static/img/logo_sm-exec.svg"
-                 onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+    {% include 'molecules/global-search.html' with context %}
+
+    <a href="/">
+        <img class="o-header_logo header_logo u-js-only"
+             src="/static/img/logo_sm-exec.svg"
+             onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+             alt="Consumer Financial Protection Bureau"
+             width="237"
+             height="50">
+        <noscript>
+            <img class="header_logo logo__no-js"
+                 src="/static/img/logo_sm-exec.png"
                  alt="Consumer Financial Protection Bureau"
                  width="237"
                  height="50">
@@ -50,3 +58,4 @@
         {% endblock primary_nav %}
     </div>
 </header>
+<div class="content_bar"></div>

@@ -1,3 +1,22 @@
+
+// TODO: Move the theme variables to cf-enhancements.
+/* topdoc
+  name: Theme variables
+  family: cf-core
+  notes:
+    - "The following color and sizing variables are exposed, allowing you to
+       easily override them before compiling."
+  patterns:
+    - name: Sizing
+      codenotes:
+        - |
+          @margin_half__em
+  tags:
+    - cf-core
+*/
+
+@margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
 /* topdoc
   name: Header
   family: cfgov-organisms
@@ -26,14 +45,29 @@
         } );
     }
 
-    // Position and display Global Header Call to Action (CTA).
-    .wrapper > .m-global-header-cta {
-        .respond-to-max( @bp-sm-max, {
-            display: none;
-        } );
+    &_content {
 
         .respond-to-min( @bp-med-min, {
-            float: right;
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+            & > .m-global-header-cta {
+                    float: right;
+            }
+
+            & > .m-global-search {
+                float: right;
+
+                .m-global-search_content {
+                    padding-right: @margin_half__em;
+                }
+            }
+        } );
+
+        // Hide Global Header Call to Action at tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            & > .m-global-header-cta {
+                display: none;
+            }
         } );
     }
 }
