@@ -19,3 +19,15 @@ notification_types = [
     ('warning', 'warning'),
     ('error', 'error'),
 ]
+
+supported_languagues = [
+    ('en', 'English'),
+    ('es', 'Spanish'),
+    ('zh', 'Chinese'),
+    ('vi', 'Vietnamese'),
+    ('ko', 'Korean'),
+    ('tl', 'Tagalog'),
+    ('ru', 'Russian'),
+    ('ar', 'Arabic'),
+    ('ht', 'Haitian Creole'),
+]
