@@ -156,6 +156,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Frontend: Global Header CTA.
 - Added Frontend: Header.
 - Added Frontend: Mega Menu.
+- Added Frontend: Global Eyebrow.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels

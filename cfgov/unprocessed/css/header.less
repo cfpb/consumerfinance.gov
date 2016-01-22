@@ -31,18 +31,6 @@
         - "The `noscript` element displays the PNG fallback in the event that
            JavaScript is not available."
         - "The path in the `src` attribute has been adjusted for these docs."
-    - name: Miscellaneous stuff (top right)
-      markup: |
-        <div style="position: relative; min-height: 80px;">
-            <div class="header_misc">
-                Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
-                <a class="header_misc_es">Español</a>
-            </div>
-        </div>
-      notes:
-        - "The outer div with the inline style is only for demonstration
-           purposes in these docs, because the `.header_misc` div is positioned
-           absolutely."
   tags:
     - cfgov-header
 */
@@ -66,39 +54,6 @@
 
 .no-js .header_logo__no-js {
     display: block;
-}
-
-.header_misc {
-    display: none;
-
-    .respond-to-min(@bp-med-min, {
-        display: block;
-        // magic number for top margin aligns text baseline with logo baseline
-        margin: 52px
-                (@grid_gutter-width / 2)
-                (@grid_gutter-width / 2);
-        position: absolute;
-        top: 0;
-        right: @grid_gutter-width / 2;
-        color: @gray;
-
-        &_tel {
-            padding-right: @grid_gutter-width / 2;
-            border-right: 1px solid @gray-50;
-            // Subtracting typical inline horizonal whitespace from right margin.
-            margin-right: unit(@grid_gutter-width / 2 / @base-font-size-px, em) - 0.25em;
-            .u-link__colors(@darkgray);
-        }
-
-        &_es {
-            .h5();
-            .u-link__no-border();
-            color: @gray-20;
-            &:hover {
-                color: @gray-20;
-            }
-        }
-    });
 }
 
 /* topdoc

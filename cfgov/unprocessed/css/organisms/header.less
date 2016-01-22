@@ -19,13 +19,15 @@
 
 .o-header {
 
-    .respond-to-min(@bp-med-min, {
-        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-    } );
+    > .m-global-eyebrow {
+
+        .respond-to-max( @bp-sm-max, {
+            display: none;
+        } );
+    }
 
     // Position and display Global Header Call to Action (CTA).
-    & > .m-global-header-cta {
-
+    .wrapper > .m-global-header-cta {
         .respond-to-max( @bp-sm-max, {
             display: none;
         } );
