@@ -75,7 +75,47 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     if ( window.addEventListener ) {
       window.addEventListener( 'resize', _refreshHeight );
     }
+
+    _initObserver();
+
     return this;
+  }
+
+  /**
+   * Watch for the insertion/removal of DOM nodes.
+   * @returns {Object} The Expandable instance.
+   */
+  function _initObserver() {
+    var MutationObserver = window.MutationObserver ||
+                           window.WebKitMutationObserver ||
+                           window.MozMutationObserver;
+    var observeDOM;
+
+    if ( MutationObserver ) {
+      observeDOM = function() {
+        var observer = new MutationObserver( function( mutations ) {
+          mutations.forEach( function( ) {
+            _refreshHeight();
+          } );
+        } );
+
+        observer.observe( _content, { childList: true, subtree: true } );
+      };
+    } else {
+      observeDOM = function() {
+          _content.addEventListener( "DOMNodeInserted", function( event ){
+          _refreshHeight();
+        }, false );
+
+        _content.addEventListener( "DOMNodeRemoved", _refreshHeight, false );
+      };
+    }
+
+    window.setTimeout( function(){
+      observeDOM();
+    }, 0 )
+
+    return _that;
   }
 
   /**
