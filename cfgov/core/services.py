@@ -109,7 +109,6 @@ class PDFGeneratorView(View):
             return self.generate_pdf(query_opts)
         else:
             for error in form.errors.itervalues():
-                print error
                 messages.error(request, str(error),
                                extra_tags='leadership-calendar')
             return HttpResponseRedirect('/the-bureau/leadership-calendar/')
