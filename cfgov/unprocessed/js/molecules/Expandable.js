@@ -94,26 +94,19 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     if ( MutationObserver ) {
       observeDOM = function() {
         var observer = new MutationObserver( function( mutations ) {
-          mutations.forEach( function( ) {
-            _refreshHeight();
-          } );
+          mutations.forEach( _refreshHeight );
         } );
 
         observer.observe( _content, { childList: true, subtree: true } );
       };
     } else {
       observeDOM = function() {
-          _content.addEventListener( "DOMNodeInserted", function( event ){
-          _refreshHeight();
-        }, false );
-
-        _content.addEventListener( "DOMNodeRemoved", _refreshHeight, false );
+        _content.addEventListener( 'DOMNodeInserted', _refreshHeight, false );
+        _content.addEventListener( 'DOMNodeRemoved', _refreshHeight, false );
       };
     }
 
-    window.setTimeout( function(){
-      observeDOM();
-    }, 0 )
+    window.setTimeout( observeDOM, 0 );
 
     return _that;
   }
