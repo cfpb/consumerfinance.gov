@@ -11,11 +11,13 @@ set -e
 
 # Import Data
 import_data(){
-    echo 'Creating DB Tables and initial data..'
+    echo 'Creating DB Tables...'
     ./cfgov/manage.py migrate
-    echo 'Importing Events...'
-    ./cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW
+    echo 'Loading Initial Data...'
+    ./cfgov/manage.py runscript initial_data
     echo 'Importing Contacts...'
+    ./cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW
+    echo 'Importing Events...'
     ./cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW
 }
 
