@@ -78,6 +78,7 @@ class BrowseFilterablePage(base.CFGOVPage):
                 else:
                     page_set = AbstractFilterPage.objects.live().descendant_of(
                         self).filter(form.generate_query())
+                page_set = page_set.exclude(id__in=[b.id for b in blogs])
                 page_list = sorted(list(chain(page_set, blogs)),
                                    key=attrgetter(form.get_order_attr()))
 
@@ -103,12 +104,11 @@ class BrowseFilterablePage(base.CFGOVPage):
     # came from.
     def get_form_specific_filter_data(self, form_class, request_dict):
         filters_data = {}
-        form_ids = request_dict.getlist('form-id')
         # Find every form existing on the page and assign a dictionary with its
         # number as the key.
-        for f in wagtail_stream_data(self.content.stream_data):
+        for i, f in enumerate(wagtail_stream_data(self.content.stream_data)):
             if 'filter_controls' in f['type']:
-                filters_data[form_ids.pop(0)] = {}
+                filters_data[i] = {}
         # print filters_data
         # For each form ID dictionary, find all the fields for it. Assign the
         # select fields to lists and append them for each selection. Return the

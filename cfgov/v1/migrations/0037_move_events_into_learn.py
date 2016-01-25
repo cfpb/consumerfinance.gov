@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
         ('wagtailcore', '0023_alter_page_revision_on_delete_behaviour'),
         ('wagtailforms', '0003_capitalizeverbose'),
         ('wagtailredirects', '0005_capitalizeverbose'),
-        ('v1', '0035_browsefilterable'),
+        ('v1', '0036_browsefilterable'),
     ]
 
     operations = [

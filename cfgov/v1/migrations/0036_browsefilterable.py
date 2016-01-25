@@ -12,7 +12,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0034_failedloginattempt'),
+        ('v1', '0035_cfgovpage_language'),
     ]
 
     operations = [
