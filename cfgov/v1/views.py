@@ -1,19 +1,23 @@
+import time
+from datetime import timedelta
+
 from core.services import PDFGeneratorView, ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from wagtail.wagtailadmin import messages
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse
 
-import time
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, get_user_model, REDIRECT_FIELD_NAME, views as auth_views, \
     login
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import hashers
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url
@@ -27,6 +31,7 @@ from wagtail.wagtailadmin.views import account
 from wagtail.wagtailadmin import forms
 from .util import password_policy
 from .models import base
+from .models.base import PasswordHistoryItem
 
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
@@ -88,17 +93,18 @@ def change_password(request):
     if not account.password_management_enabled():
         raise Http404
 
-    can_change_password = request.user.has_usable_password()
+    user = request.user
+    can_change_password = user.has_usable_password()
 
     if can_change_password:
         if request.POST:
-            form = PasswordChangeForm(user=request.user, data=request.POST)
+            form = PasswordChangeForm(user=user, data=request.POST)
 
             if form.is_valid():
                 password1 = form.cleaned_data.get('new_password1', '')
                 password2 = form.cleaned_data.get('new_password2', '')
 
-                errors = password_policy._check_passwords(password1, password2)
+                errors = password_policy._check_passwords(password1, password2, user)
 
                 if len(errors) == 0:
                     form.save()
@@ -221,12 +227,23 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
             if form.is_valid():
                 password1 = form.cleaned_data.get('new_password1', '')
                 password2 = form.cleaned_data.get('new_password2', '')
-                errors = password_policy._check_passwords(password1, password2)
+                errors = password_policy._check_passwords(password1, password2, user)
+                
+                        
 
                 if len(errors) == 0:
-                    # If a user a locked out, it unlocks them with a successful password reset
-                    user.is_active = True
                     form.save()
+                    now = timezone.now()
+                    locked_until = now + timedelta(days=1)
+                    expires_at = now + timedelta(days=90)
+
+                    password_history = PasswordHistoryItem(user=user,
+                            encrypted_password=user.password,
+                            locked_until = locked_until,
+                            expires_at = expires_at)
+
+                    password_history.save()
+
                     return HttpResponseRedirect(post_reset_redirect)
                 else:
                     messages.error(request, errors)
