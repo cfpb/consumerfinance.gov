@@ -150,31 +150,28 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
             return HttpResponseRedirect(redirect_to)
         else:
-            if not form.cleaned_data.get('username') or not form.cleaned_data.get('password'):
+            UserModel = get_user_model()
+            try:
+                user = UserModel._default_manager.get(username=form.cleaned_data.get('username'))
+                fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
+                now = time.time()
+                fa.failed(now)
+                # Defaults to a 2 hour lockout for a user
+                time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
+                attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
+                attempts_used = len(fa.failed_attempts.split(','))
+                if fa.too_many_attempts(attempts_allowed, time_period):
+                    user.is_active = False
+                    user.save()
+                    messages.add_message(request, messages.ERROR,
+                                         'Too many failed login attempts, your account is blocked.')
+                    raise Exception('No need to wait till the end of the try block.')
+                fa.save()
+                messages.add_message(request, messages.ERROR,
+                                     ' %s (of %s) login attempts used.' % (attempts_used, attempts_allowed))
+            except Exception:
                 messages.add_message(request, messages.ERROR,
                                      'Your username and password didn\'t match. Please try again.')
-            else:
-                UserModel = get_user_model()
-                try:
-                    user = UserModel._default_manager.get(username=form.cleaned_data.get('username'))
-                    fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
-                    now = time.time()
-                    fa.failed(now)
-                    # Defaults to a 2 hour lockout for a user
-                    time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
-                    attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
-                    attempts_used = len(fa.failed_attempts.split(','))
-                    if fa.too_many_attempts(attempts_allowed, time_period):
-                        user.is_active = False
-                        user.save()
-                        messages.add_message(request, messages.ERROR,
-                                             'Too many failed login attempts, your account is blocked.')
-                        raise Exception('No need to wait till the end of the try block.')
-                    fa.save()
-                    messages.add_message(request, messages.ERROR,
-                                         ' %s (of %s) login attempts used.' % (attempts_used, attempts_allowed))
-                except Exception:
-                    pass
     else:
         form = forms.LoginForm(request)
 
