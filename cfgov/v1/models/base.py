@@ -56,6 +56,8 @@ class CFGOVPage(Page):
                                   related_name='tagged_pages')
     shared = models.BooleanField(default=False)
 
+    language = models.CharField(choices=ref.supported_languagues, default='en', max_length=2)
+
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
@@ -82,6 +84,7 @@ class CFGOVPage(Page):
         MultiFieldPanel(Page.promote_panels, 'Settings'),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('language', 'language'),
         InlinePanel('categories', label="Categories", max_num=2),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
     ]
