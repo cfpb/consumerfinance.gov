@@ -158,11 +158,11 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
                 redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
 
-	    user = form.get_user()
-	    try:
-		user.failedloginattempt.delete()
-	    except ObjectDoesNotExist:
-	    	pass
+            user = form.get_user()
+            try:
+                user.failedloginattempt.delete()
+            except ObjectDoesNotExist:
+                pass
 
             login(request, form.get_user())
 
@@ -229,11 +229,11 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
                             expires_at = expires_at)
 
                     password_history.save()
-		    user.temporarylockout_set.all().delete()
-		    try: 
-			user.failedloginattempt.delete()
-		    except ObjectDoesNotExist:
-		    	pass
+                    user.temporarylockout_set.all().delete()
+                    try: 
+                        user.failedloginattempt.delete()
+                    except ObjectDoesNotExist:
+                        pass
 
                     return HttpResponseRedirect(post_reset_redirect)
                 else:
