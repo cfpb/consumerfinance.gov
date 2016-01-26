@@ -16,14 +16,10 @@
     - cfgov-molecules
 */
 .o-link-blob-group {
-  .respond-to-min(@bp-sm-min, {
-    margin-left: -@grid_gutter-width / 2;
-    margin-right: -@grid_gutter-width / 2;
-  });
-
   > h2 {
-        margin-left: @grid_gutter-width / 2;
-        margin-right: @grid_gutter-width / 2;
+        .heading-2();
+        margin-left: unit( @grid_gutter-width / 2 / @font-size, em );
+        margin-right: unit( @grid_gutter-width / 2 / @font-size, em );
     }
 }
 
