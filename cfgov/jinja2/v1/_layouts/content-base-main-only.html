@@ -3,7 +3,10 @@
 {% block body_content scoped %}
 <div class="wrapper content_wrapper">
     <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-        <section>
+        <section lang="{{ page.language if page.language else '' }}"
+        {%- if page.language in ['ar'] -%}
+          dir="rtl"
+        {%- endif -%}>
             {% block content_main scoped -%}{%- endblock %}
         </section>
     </div>
