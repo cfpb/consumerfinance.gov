@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '10000_passwordhistoryitem'),
+        ('v1', '0036_passwordhistoryitem'),
     ]
 
     operations = [

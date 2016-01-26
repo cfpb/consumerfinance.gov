@@ -9,17 +9,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('v1', '10001_auto_20160125_1912'),
+        ('v1', '0035_cfgovpage_language'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TemporaryLockout',
+            name='PasswordHistoryItem',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
+                ('created', models.DateTimeField()),
                 ('expires_at', models.DateTimeField()),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('locked_until', models.DateTimeField()),
+                ('encrypted_password', models.CharField(max_length=128, verbose_name='password')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
