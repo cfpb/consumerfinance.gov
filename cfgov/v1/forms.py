@@ -1,11 +1,85 @@
+import time
+from datetime import timedelta
+
 from django import forms
 from django.forms.utils import ErrorList
 from django.forms.widgets import DateInput, SelectMultiple
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.db.models import Count
+from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, get_user_model
+from django.conf import settings
 
 from sheerlike.query import QueryFinder
 from sheerlike.templates import date_formatter
 from v1.models.events import EventPage
 from util import ERROR_MESSAGES
+
+from .models import base
+from .models.base import PasswordHistoryItem
+
+# importing wagtail.wagtailadmin.forms at module load time seems to have
+# caused some trouble with the translation subsystem being invoked before
+# it's ready-- so I've wrapped it in a function
+def login_form():
+    from wagtail.wagtailadmin import forms as wagtail_adminforms
+    from v1.util import password_policy
+
+    class LoginForm(wagtail_adminforms.LoginForm):
+
+	def clean(self):
+	    username = self.cleaned_data.get('username')
+	    password = self.cleaned_data.get('password')
+
+	    if username and password:
+		self.user_cache = authenticate(username=username,
+					       password=password)
+		if (self.user_cache is None and username is not None):
+		    UserModel = get_user_model()
+		    user = UserModel._default_manager.get(username=username)
+		    # fail fast if user is already blocked for some other reason
+		    self.confirm_login_allowed(user) 
+
+		    fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
+		    now = time.time()
+		    fa.failed(now)
+		    # Defaults to a 2 hour lockout for a user
+		    time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
+		    attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
+		    attempts_used = len(fa.failed_attempts.split(','))
+
+		    if fa.too_many_attempts(attempts_allowed, time_period):
+			dt_now = timezone.now()
+			lockout_expires = dt_now + timedelta(seconds=settings.LOGIN_FAIL_TIME_PERIOD)
+			lockout = user.temporarylockout_set.create(expires_at=lockout_expires)
+			lockout.save()
+			raise ValidationError("This account is temporarily locked; please try later or reset your password")
+		    else:
+			fa.save()
+			raise ValidationError('Login failed. %s more attempts until your account will be temporarily locked.' % (attempts_allowed-attempts_used))
+
+		else:
+		    self.confirm_login_allowed(self.user_cache)
+
+		    dt_now = timezone.now()
+		    current_password_data = self.user_cache.passwordhistoryitem_set.latest()
+
+		    if dt_now > current_password_data.expires_at:
+			raise ValidationError("This password has expired; please reset your password")
+		    return self.cleaned_data
+
+        def confirm_login_allowed(self, user):
+            super(LoginForm, self).confirm_login_allowed(user)
+            now = timezone.now()
+
+            lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
+
+            if lockout_query.count() > 0 :
+                raise ValidationError("This account is temporarily locked; please try later or reset your password")
+
+
+    return LoginForm
 
 class FilterErrorList(ErrorList):
     def __str__(self):

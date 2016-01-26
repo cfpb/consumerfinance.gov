@@ -336,3 +336,8 @@ class FailedLoginAttempt(models.Model):
         self.clean_attempts(timestamp)
         attempts = self.failed_attempts.split(',')
         return len(attempts) > value
+
+class TemporaryLockout(models.Model):
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
