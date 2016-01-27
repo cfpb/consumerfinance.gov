@@ -6,7 +6,6 @@ from django.utils import timezone
 from django.contrib.auth import hashers
 from django.core.exceptions import ObjectDoesNotExist
 
-from ..models import PasswordHistoryItem
 
 def _check_passwords(pass1, pass2, user):
     """ Run passwords through a set of rules """
@@ -21,6 +20,7 @@ def _check_passwords(pass1, pass2, user):
 
 
     if len(data)==0: # only check this stuff if there are no failures above
+        from ..models import PasswordHistoryItem
         try:
             current_password_data = user.passwordhistoryitem_set.latest()
 

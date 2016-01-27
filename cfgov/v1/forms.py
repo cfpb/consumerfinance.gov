@@ -16,9 +16,6 @@ from sheerlike.templates import date_formatter
 from v1.models.events import EventPage
 from util import ERROR_MESSAGES
 
-from .models import base
-from .models.base import PasswordHistoryItem
-
 # importing wagtail.wagtailadmin.forms at module load time seems to have
 # caused some trouble with the translation subsystem being invoked before
 # it's ready-- so I've wrapped it in a function
@@ -26,6 +23,8 @@ def login_form():
     from wagtail.wagtailadmin import forms as wagtail_adminforms
     from v1.util import password_policy
 
+    from .models import base
+    from .models.base import PasswordHistoryItem
     class LoginForm(wagtail_adminforms.LoginForm):
 
         def clean(self):
@@ -73,10 +72,15 @@ def login_form():
                     self.confirm_login_allowed(self.user_cache)
 
                     dt_now = timezone.now()
-                    current_password_data = self.user_cache.passwordhistoryitem_set.latest()
+                    try:
+                        current_password_data = self.user_cache.passwordhistoryitem_set.latest()
+                    
+                        if dt_now > current_password_data.expires_at:
+                            raise ValidationError("This password has expired; please reset your password")
 
-                    if dt_now > current_password_data.expires_at:
-                        raise ValidationError("This password has expired; please reset your password")
+                    except ObjectDoesNotExist:
+                        pass
+
                     return self.cleaned_data
 
         def confirm_login_allowed(self, user):
