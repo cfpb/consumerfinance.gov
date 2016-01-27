@@ -276,6 +276,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated filterable-list-controls organism to allow for multiple option
 - Password Policy & Lockout criteria for login, account password change & forgot my password.
 - Updated the project to use Avenir font by default
+- Updated `mocha` from `2.2.4` from `2.4.2`.
+- Updated `sinon` from `1.14.1` from `1.17.3`.
 - Change jinja2 templates to handle Wagtail page
 
 ### Removed

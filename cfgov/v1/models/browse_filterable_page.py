@@ -78,6 +78,7 @@ class BrowseFilterablePage(base.CFGOVPage):
                 else:
                     page_set = AbstractFilterPage.objects.live().descendant_of(
                         self).filter(form.generate_query())
+                page_set = page_set.exclude(id__in=[b.id for b in blogs])
                 page_list = sorted(list(chain(page_set, blogs)),
                                    key=attrgetter(form.get_order_attr()))
 

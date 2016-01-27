@@ -43,7 +43,6 @@ categories = [
         ('impl-compl-material', 'Implementation and Compliance Material'),
     )),
     ('Newsroom', (
-        ('blog', 'Blog'),
         ('op-ed', 'Op-Ed'),
         ('press-release', 'Press Release'),
         ('speech', 'Speech'),
@@ -77,16 +76,6 @@ categories = [
     )),
 ]
 
-page_type_choices = categories + [
-    ('Leadership Calendar', (
-        ('richard-cordray', 'Richard Cordray'),
-        ('meredith-fuchs', 'Meredith Fuchs'),
-        ('steve-antonakes', 'Steve Antonakes'),
-        ('raj-date', 'Raj Date'),
-        ('elizabeth-warren', 'Elizabeth Warren'),
-    ))
-]
-
 supported_languagues = [
     ('en', 'English'),
     ('es', 'Spanish'),
@@ -100,16 +89,34 @@ supported_languagues = [
 ]
 
 
+def page_type_choices():
+    new_choices = [
+        ('Leadership Calendar', (
+            ('richard-cordray', 'Richard Cordray'),
+            ('meredith-fuchs', 'Meredith Fuchs'),
+            ('steve-antonakes', 'Steve Antonakes'),
+            ('raj-date', 'Raj Date'),
+            ('elizabeth-warren', 'Elizabeth Warren'))),
+        ('Newsroom', (
+            ('blog', 'Blog'),
+            ('op-ed', 'Op-Ed'),
+            ('press-release', 'Press Release'),
+            ('speech', 'Speech'),
+            ('testimony', 'Testimony'))),
+    ]
+    return sorted(categories + new_choices)
+
+
 def choices_for_page_type(page_type):
     for slug, name in page_types:
         if page_type == slug:
-            for cat_slug, cat_list in page_type_choices:
+            for cat_slug, cat_tuples in page_type_choices():
                 if name == cat_slug:
-                    return cat_list
+                    return list(cat_tuples)
 
 
 def category_label(category):
-    for parent, children in page_type_choices:
+    for parent, children in page_type_choices():
         for slug, name in children:
             if category == slug:
                 return name
