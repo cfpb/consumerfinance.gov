@@ -1,6 +1,6 @@
 'use strict';
 
-var _assign = require( 'lodash' ).assign;
+var _assign = require( 'lodash.assign' );
 var filter = require( '../shared_objects/filter.js' );
 var pagination = require( '../shared_objects/pagination' );
 var stayInformedSection = require( '../shared_objects/stay-informed-section' );

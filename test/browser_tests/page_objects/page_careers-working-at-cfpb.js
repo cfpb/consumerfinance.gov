@@ -1,6 +1,6 @@
 'use strict';
 
-var _assign = require( 'lodash' ).assign;
+var _assign = require( 'lodash.assign' );
 var _getQAelement = require( '../util/QAelement' ).get;
 var careersSocialSection =
 require( '../shared_objects/careers-social-section' );
