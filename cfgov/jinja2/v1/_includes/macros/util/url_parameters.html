@@ -1,0 +1,21 @@
+{# ==========================================================================
+
+   url_parameters()
+
+   ==========================================================================
+
+   Description:
+
+   Builds pagination markup when given:
+
+   parameters:   A dictionary of url parameters.
+
+   ========================================================================== #}
+
+{% macro url_parameters(parameters) %}
+    {%- for name, value in parameters.iteritems() -%}
+        {% if value and 'page' not in name -%}
+            &{{ name }}={{ value }}
+        {%- endif %}
+    {%- endfor -%}
+{% endmacro %}

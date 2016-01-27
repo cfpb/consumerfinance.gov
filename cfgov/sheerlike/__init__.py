@@ -17,7 +17,7 @@ from unipath import Path
 
 from .query import QueryFinder, more_like_this, get_document, when
 from .filters import selected_filters_for_field, is_filter_selected
-from .templates import date_formatter
+from .templates import date_filter
 from .middleware import get_request
 
 from flags.template_functions import flag_enabled, flag_disabled
@@ -96,6 +96,6 @@ def environment(**options):
         'flag_disabled':flag_disabled,
     })
     env.filters.update({
-        'date': date_formatter
+        'date': date_filter
     })
     return env

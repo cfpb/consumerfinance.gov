@@ -11,6 +11,8 @@ class DataConverter(PageDataConverter):
             'body':       doc.get('content', u''),
         }
         self.add_defaults(post_dict)
+        dt = dateutil.parser.parse(doc.get('beginning_time').get('date'))
+        post_dict['date_published'] = dt.strftime('%Y-%m-%d')
         tags = ''
         for tag in doc.get('tags'):
             if ' ' in tag:
