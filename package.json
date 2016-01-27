@@ -53,10 +53,10 @@
     "map-stream": "^0.0.6",
     "minimist": "^1.1.3",
     "mkdirp": "^0.5.1",
-    "mocha": "^2.2.4",
+    "mocha": "^2.4.2",
     "mocha-jsdom": "^1.0.0",
     "protractor": "^3.0.0",
-    "sinon": "^1.14.1",
+    "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
     "wcag": "^0.2.2"
   },
