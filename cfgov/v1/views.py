@@ -215,26 +215,8 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
                 password2 = form.cleaned_data.get('new_password2', '')
                 errors = password_policy._check_passwords(password1, password2, user)
                 
-                        
-
                 if len(errors) == 0:
                     form.save()
-                    now = timezone.now()
-                    locked_until = now + timedelta(days=1)
-                    expires_at = now + timedelta(days=90)
-
-                    password_history = PasswordHistoryItem(user=user,
-                            encrypted_password=user.password,
-                            locked_until = locked_until,
-                            expires_at = expires_at)
-
-                    password_history.save()
-                    user.temporarylockout_set.all().delete()
-                    try: 
-                        user.failedloginattempt.delete()
-                    except ObjectDoesNotExist:
-                        pass
-
                     return HttpResponseRedirect(post_reset_redirect)
                 else:
                     messages.error(request, errors)

@@ -24,7 +24,6 @@ def login_form():
     from v1.util import password_policy
 
     from .models import base
-    from .models.base import PasswordHistoryItem
     class LoginForm(wagtail_adminforms.LoginForm):
 
         def clean(self):
