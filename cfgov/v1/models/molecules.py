@@ -118,7 +118,7 @@ class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=255, required=False)
     body = blocks.RichTextBlock(required=False)
 
-    category = blocks.ChoiceBlock(choices=ref.categories, required=False)
+    category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
     post = blocks.PageChooserBlock(required=False)
 
     show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")

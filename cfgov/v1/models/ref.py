@@ -12,6 +12,15 @@ page_types = [
     ('leadership-calendar', 'Leadership Calendar'),
 ]
 
+fcm_types = [
+    ('featured-event', 'Featured event'),
+    ('featured-blog', 'Featured blog'),
+    ('featured-video', 'Featured video'),
+    ('featured-tool', 'Featured tool'),
+    ('featured-news', 'Featured news'),
+    ('featured', 'Featured'),
+]
+
 categories = [
     ('Amicus Brief', (
         ('us-supreme-court', 'U.S. Supreme Court'),
@@ -121,6 +130,10 @@ def category_label(category):
             if category == slug:
                 return name
 
+def fcm_label(category):
+    for slug, name in fcm_types:
+        if slug == category:
+            return name
 
 def is_blog(page):
     for category in page.categories.all():
