@@ -163,6 +163,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add BaseExpandable class for expandable controls
 - Add FilterControls organism using BaseExpandable
 - Add url_parameters macro to handle adding existing get URL parameters into links
+- Add SharablePage abstract model
+- Add CFGOVFormPage to include FormBuilder in the page
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -279,6 +281,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `mocha` from `2.2.4` from `2.4.2`.
 - Updated `sinon` from `1.14.1` from `1.17.3`.
 - Change jinja2 templates to handle Wagtail page
+- CFGOVPage inherits from Page and SharablePage
+- CFGOVPage share logic and field resides in ShareablePage
 
 ### Removed
 - Removed unused exportsOverride section,
