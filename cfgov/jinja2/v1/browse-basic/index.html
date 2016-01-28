@@ -2,7 +2,6 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/expandable.html' as expandable %}
-{% import 'molecules/social-media.html' as social_media %}
 
 {% import 'organisms/expandable-group.html' as expandable_group %}
 
@@ -40,10 +39,6 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block">
-        {{ social_media.render() }}
-    </div>
-
     {% for block in page.header -%}
         <div class="block">
             {{ render_stream_child(block) }}
