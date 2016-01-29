@@ -13,10 +13,10 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from . import molecules
 from . import organisms
-from .base import CFGOVPage
+from .base import CFGOVFormPage
 
 
-class AbstractFilterPage(CFGOVPage):
+class AbstractFilterPage(CFGOVFormPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('item_introduction', organisms.ItemIntroduction()),
@@ -37,7 +37,7 @@ class AbstractFilterPage(CFGOVPage):
     comments_close_by = models.DateField(null=True, blank=True)
 
     # General content tab panels
-    content_panels = CFGOVPage.content_panels + [
+    content_panels = CFGOVFormPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
     ]
@@ -65,7 +65,7 @@ class AbstractFilterPage(CFGOVPage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVFormPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
@@ -166,7 +166,7 @@ class EventPage(AbstractFilterPage):
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
 
     # General content tab
-    content_panels = CFGOVPage.content_panels + [
+    content_panels = CFGOVFormPage.content_panels + [
         FieldPanel('body', classname="full"),
         FieldRowPanel([
             FieldPanel('start_dt', classname="col6"),

@@ -7,15 +7,17 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 
-from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
+    MultiFieldPanel, TabbedInterface, ObjectList
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
-    UserPagePermissionsProxy, Orderable
+    UserPagePermissionsProxy, Orderable, PageManager
+from wagtail.wagtailcore.query import PageQuerySet
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
-    MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
+from wagtail.wagtailforms.models import AbstractForm
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
@@ -46,20 +48,28 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
-class CFGOVPage(Page):
-    authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
-                                     verbose_name='Authors',
-                                     help_text='A comma separated list of '
-                                               + 'authors.',
-                                     related_name='authored_pages')
-    tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
-                                  related_name='tagged_pages')
+class ShareablePageQuerySet(PageQuerySet):
+    def shared_q(self):
+        return models.Q(shared=True)
+
+    def shared(self):
+        return self.filter(self.shared_q())
+
+    def not_shared(self):
+        return self.exclude(self.shared_q())
+
+    def live_or_shared(self):
+        return self.filter(self.live_q() | self.shared_q())
+
+    def not_live_or_shared(self):
+        return self.exclude(self.live_q() | self.shared_q())
+
+ShareablePageManager = PageManager.from_queryset(ShareablePageQuerySet)
+
+
+class ShareablePage(models.Model):
     shared = models.BooleanField(default=False)
-
     language = models.CharField(choices=ref.supported_languagues, default='en', max_length=2)
-
-    # This is used solely for subclassing pages we want to make at the CFPB.
-    is_creatable = False
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
@@ -95,6 +105,8 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    objects = ShareablePageManager()
 
     def related_posts(self, block):
         related = {}
@@ -192,6 +204,7 @@ class CFGOVPage(Page):
         return user_perms.for_page(self)
 
     class Meta:
+        abstract = True
         app_label = 'v1'
 
     def parent(self):
@@ -225,6 +238,34 @@ class CFGOVPage(Page):
         return Set(js)
 
     media = property(_media)
+
+
+class CFGOVPage(Page, ShareablePage):
+    authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
+                                     verbose_name='Authors',
+                                     help_text='A comma separated list of '
+                                               + 'authors.',
+                                     related_name='authored_pages')
+    tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
+                                  related_name='tagged_pages')
+    objects = ShareablePageManager()
+
+    # This is used solely for subclassing pages we want to make at the CFPB.
+    is_creatable = False
+
+
+class CFGOVFormPage(AbstractForm, ShareablePage):
+    authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
+                                     verbose_name='Authors',
+                                     help_text='A comma separated list of '
+                                               + 'authors.',
+                                     related_name='authored_formpages')
+    tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
+                                  related_name='tagged_formpages')
+    objects = ShareablePageManager()
+
+    # This is used solely for subclassing pages we want to make at the CFPB.
+    is_creatable = False
 
 
 class CFGOVPageCategory(Orderable):
