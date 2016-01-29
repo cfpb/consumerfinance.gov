@@ -5,28 +5,6 @@
 
 {% import 'organisms/expandable-group.html' as expandable_group %}
 
-{% if not page %}
-    {% do global_dict.update({
-            'page':  {
-                'seo_title': 'This is a prototype page for testing landing page layouts.',
-                'related_posts': global_dict.related_posts_function
-            },
-            'related_posts_settings': {
-                'value': {
-                    'limit':            3,
-                    'show_heading':     true,
-                    'related_posts':    false,
-                    'related_newsroom': false,
-                    'related_events':   false,
-                }
-            },
-            'prototype': true
-        })
-    %}
-    {% set page = page or global_dict.page %}
-    {% set prototype = global_dict.prototype or false %}
-    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
-{% endif %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
 {% if not breadcrumb_items %}
@@ -51,49 +29,29 @@
         </div>
     {%- endfor %}
 
-    {% if prototype %}
-        <div class="block">
-            {% include 'organisms/full-width-text.html' %}
-
-            <div class="expandable-prototypes">
-                {% include 'molecules/expandable.html' with context %}
-            </div>
-
-            <div class="expandable-group-prototypes">
-                {% include 'organisms/expandable-group.html' with context %}
-            </div>
-
-        </div>
-    {% endif %}
-
-    {% if prototype %}
-        {{ related_posts.render(global_dict.related_posts_settings) }}
-        {% include 'organisms/email-signup.html' %}
-    {% else %}
-        {% for block in page.sidefoot %}
-            <div class="block block__flush-top">
-                {% if 'related_posts' in block.block_type %}
-                    {{ related_posts.render(block) }}
-                {% else %}
-                    {% if 'heading' in block.block_type %}
-                        <h3 class="o-sidebar-breakout_heading">
+    {% for block in page.sidefoot %}
+        <div class="block block__flush-top">
+            {% if 'related_posts' in block.block_type %}
+                {{ related_posts.render(block) }}
+            {% else %}
+                {% if 'heading' in block.block_type %}
+                    <h3 class="o-sidebar-breakout_heading">
+                        {{ render_stream_child(block) }}
+                    </h3>
+                {% elif 'slug' in block.block_type %}
+                    <h2 class="header-slug">
+                        <span class="header-slug_inner">
                             {{ render_stream_child(block) }}
-                        </h3>
-                    {% elif 'slug' in block.block_type %}
-                        <h2 class="header-slug">
-                            <span class="header-slug_inner">
-                                {{ render_stream_child(block) }}
-                            </span>
-                        </h2>
-                    {% elif 'paragraph' in block.block_type %}
-                        {{ render_stream_child(block) }}
-                    {% else %}
-                        {{ render_stream_child(block) }}
-                    {% endif %}
+                        </span>
+                    </h2>
+                {% elif 'paragraph' in block.block_type %}
+                    {{ render_stream_child(block) }}
+                {% else %}
+                    {{ render_stream_child(block) }}
                 {% endif %}
-            </div>
-        {% endfor %}
-    {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block content_sidebar scoped -%}
