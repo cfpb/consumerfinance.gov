@@ -1,0 +1,20 @@
+{# ==========================================================================
+
+   accessible-languages.render()
+
+   ==========================================================================
+
+   Use this in a section or div to set the language and letter direction
+   settings. This may need to be updated when more right-to-left languages
+   are added.
+
+   ========================================================================== #}
+
+{% macro render() %}
+    {%- if page -%}
+        lang="{{ page.language if page.language else 'en' }}"
+              {%- if page.language in ['ar'] -%}
+                  dir="rtl"
+              {%- endif -%}
+    {%- endif -%}
+{% endmacro %}
