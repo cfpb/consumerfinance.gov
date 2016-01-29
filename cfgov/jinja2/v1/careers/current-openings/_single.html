@@ -107,7 +107,7 @@
                     block__border
                     block__sub">
             <h3>Before you apply</h3>
-            <p class="short-desc">
+            <p>
                 {# TODO: Replace with real content. #}
             </p>
 
@@ -129,7 +129,7 @@
         <div class="block block__flush-top">
             {% set applicant_type = career.applicant_types[0] %}
             <h4>{{ applicant_type.application_type.name }}</h4>
-            <p class="short-desc">{{ applicant_type.application_type.description | striptags }}</p>
+            <p>{{ applicant_type.application_type.description | striptags }}</p>
             <div class="content-l">
                 <div class="content-l_col content-l_col-1-4">
                     <a class="btn" href="{{ applicant_type.usajobs_url }}">Apply now</a>
@@ -138,7 +138,7 @@
                     <h4 class="u-mb0">
                         You are about to leave consumerfinance.gov.
                     </h4>
-                    <p class="short-desc">
+                    <p>
                         To finish the application, you must go to USAJobs.gov.
                     </p>
                 </div>

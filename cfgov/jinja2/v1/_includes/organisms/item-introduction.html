@@ -53,10 +53,10 @@
     <h1>{{ value.heading }}</h1>
 
     {% if value.paragraph %}
-        <div class="short-desc">{{ value.paragraph.source | safe }}</div>
+        <p class="lead-paragraph">{{ value.paragraph.source | safe }}</p>
     {% endif %}
 
-    <p class="short-desc">
+    <p>
         {% if value.authors %}
             By
             {% for link in value.authors %}
@@ -72,8 +72,6 @@
     </p>
 
     {% if value.has_social %}
-        <div>
-            {{ social_media.render() }}
-        </div>
+        {{ social_media.render() }}
     {% endif %}
 </div>

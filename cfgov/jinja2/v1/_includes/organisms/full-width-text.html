@@ -79,17 +79,13 @@
     {% for block in value %}
         {% if 'content' in block.block_type %}
             <div class="m-full-width-text
-                        {{ 'm-full-width-text__sans' if
-                        global_dict.full_width_sans else '' }}">
+                        {{ 'm-full-width-text__serif' if
+                        global_dict.full_width_serif else '' }}">
                 {{ render_stream_child(block.value) |safe}}
             </div>
         {% else %}
             <div class="m-inset">
-                {% if global_dict.prototype is defined and global_dict.prototype %}
-                    {% include 'molecules/' + block.source + '.html' without context %}
-                {% else %}
-                    {{ block }}
-                {% endif %}
+                {{ block | safe }}
             </div>
         {% endif %}
     {% endfor %}

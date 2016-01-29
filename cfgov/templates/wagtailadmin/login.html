@@ -1,0 +1,84 @@
+{% extends "wagtailadmin/admin_base.html" %}
+{% load compress static i18n %}
+{% block titletag %}{% trans "Sign in" %}{% endblock %}
+{% block bodyclass %}login{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
+    {% endcompress %}
+{% endblock %}
+
+{% block furniture %}
+    <div class="content-wrapper">
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form action="{% url 'wagtailadmin_login' %}" method="post" autocomplete="off">
+            {% csrf_token %}
+
+            {% url 'wagtailadmin_home' as home_url %}
+            <input type="hidden" name="next" value="{{ next|default:home_url }}" />
+
+            <h1>{% block branding_login %}{% trans "Sign in to Wagtail" %}{% endblock %}</h1>
+
+            <ul class="fields">
+                <li class="full">
+                    <div class="field iconfield">
+                        {{ form.username.label_tag }}
+                        <div class="input icon-user">
+                            {{ form.username }}
+                        </div>
+                    </div>
+                </li>
+                <li class="full">
+                    <div class="field iconfield">
+                        {{ form.password.label_tag }}
+                        <div class="input icon-password">
+                            {{ form.password }}
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="error-message">
+                                {% for key, value in form.password.errors.items %}
+                                    <span>{{ value|escape }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if show_password_reset %}
+                        <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}">{% trans "Forgotten it?" %}</a></p>
+                    {% endif %}
+                </li>
+                {% comment %}
+                    Removed until functionality exists
+                    <li class="checkbox">
+                        <div class="field">
+                            <label><input type="checkbox" />{% trans "Remember me" %}</label>
+                        </div>
+                    </li>
+                {% endcomment %}
+                <li class="submit">
+                    <button type="submit" class="button-longrunning" tabindex="3" data-clicked-text="{% trans 'Signing in...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    $(function(){
+        $('form input[name=username]').focus();
+    })
+</script>
+{% endblock %}

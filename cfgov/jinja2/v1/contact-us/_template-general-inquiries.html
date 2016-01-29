@@ -4,7 +4,7 @@
 <h2 class="h4">
     {{ general_inquiries.title }}
 </h2>
-<p class="short-desc">
+<p>
     {{ general_inquiries.sitewide_desc }}
 </p>
 {%- if general_inquiries.email or general_inquiries.phone or general_inquiries.fax_num %}
@@ -48,7 +48,7 @@
         <li class="list_item">
             <span class="cf-icon cf-icon-fax list_icon"></span>
             <span class="h5 list_text">Fax</span>
-            <p class="short-desc">
+            <p>
                 {{ format_phone(general_inquiries.fax.num) if general_inquiries.fax.num else '' }}
             </p>
         </li>

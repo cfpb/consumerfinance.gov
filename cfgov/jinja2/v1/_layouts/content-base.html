@@ -2,7 +2,6 @@
 
 {% block content scoped %}
     <main class="content {% block content_modifiers -%}{%- endblock %}" id="main" role="main">
-        <div class="content_bar"></div>
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
