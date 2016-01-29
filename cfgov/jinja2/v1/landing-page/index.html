@@ -1,27 +1,5 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% if not page %}
-    {% do global_dict.update({
-            'page':  {
-                'seo_title':     'Landing Page - This is a prototype page for testing page layouts.',
-                'related_posts': global_dict.related_posts_function
-            },
-            'related_posts_settings': {
-                'value': {
-                    'limit':            3,
-                    'show_heading':     true,
-                    'related_posts':    false,
-                    'related_newsroom': false,
-                    'related_events':   false,
-                }
-            },
-            'prototype': true
-        })
-    %}
-    {% set page = page or global_dict.page %}
-    {% set prototype = global_dict.prototype or false %}
-{% endif %}
-
 {% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% block title -%}
@@ -29,60 +7,34 @@
 {%- endblock %}
 
 {% block hero -%}
-    {% if prototype %}
-        {% include 'molecules/hero.html' %}
-    {% else %}
-        {% for block in page.header -%}
-            {% if 'hero' in block.block_type %}
-                {{ render_stream_child(block) }}
-            {% endif %}
-        {%- endfor %}
-    {%- endif %}
+    {% for block in page.header -%}
+        {% if 'hero' in block.block_type %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    {%- endfor %}
 {% endblock %}
 
 {% block content_main %}
-    {% if prototype %}
-        <div class="block
-                    block__flush-top">
-            {% include 'molecules/text-introduction.html' %}
-        </div>
-        <div class="block">
-            {% include 'molecules/featured-content.html' %}
-        </div>
-        <div class="block">
-            {% include 'organisms/image-text-50-50-group.html' %}
-        </div>
-        <div class="block">
-            {% include 'organisms/image-text-25-75-group.html' %}
-        </div>
-        <div class="block">
-            {% include 'organisms/well.html' %}
-        </div>
-        <div class="block">
-            {% include 'organisms/half-width-link-blob-group.html' %}
-        </div>
-    {% else %}
-        {% for block in page.header -%}
-            {% if 'text_introduction' in block.block_type %}
-                <div class="block
-                            block__flush-top">
-                    {{ render_stream_child(block) }}
-                </div>
-            {% endif %}
-        {%- endfor %}
-        {% for block in page.content -%}
-            {% if loop.index == 1 %}
-                <div class="block
-                            block__flush-top">
-                    {{ render_stream_child(block) }}
-                </div>
-            {% else %}
-                <div class="block">
-                    {{ render_stream_child(block) }}
-                </div>
-            {% endif %}
-        {%- endfor %}
-    {% endif %}
+    {% for block in page.header -%}
+        {% if 'text_introduction' in block.block_type %}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+        {% endif %}
+    {%- endfor %}
+    {% for block in page.content -%}
+        {% if loop.index == 1 %}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+        {% else %}
+            <div class="block">
+                {{ render_stream_child(block) }}
+            </div>
+        {% endif %}
+    {%- endfor %}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
@@ -90,32 +42,27 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% if prototype %}
-        {{ related_posts.render(global_dict.related_posts_settings) }}
-        {% include 'organisms/email-signup.html' %}
-    {% else %}
-        {% for block in page.sidefoot %}
-            <div class="block block__flush-top">
-                {% if 'related_posts' in block.block_type %}
-                    {{ related_posts.render(block) }}
-                {% else %}
-                    {% if 'heading' in block.block_type %}
-                        <h3 class="o-sidebar-breakout_heading">
+    {% for block in page.sidefoot %}
+        <div class="block block__flush-top">
+            {% if 'related_posts' in block.block_type %}
+                {{ related_posts.render(block) }}
+            {% else %}
+                {% if 'heading' in block.block_type %}
+                    <h3 class="o-sidebar-breakout_heading">
+                        {{ render_stream_child(block) }}
+                    </h3>
+                {% elif 'slug' in block.block_type %}
+                    <h2 class="header-slug">
+                        <span class="header-slug_inner">
                             {{ render_stream_child(block) }}
-                        </h3>
-                    {% elif 'slug' in block.block_type %}
-                        <h2 class="header-slug">
-                            <span class="header-slug_inner">
-                                {{ render_stream_child(block) }}
-                            </span>
-                        </h2>
-                    {% elif 'paragraph' in block.block_type %}
-                        {{ render_stream_child(block) }}
-                    {% else %}
-                        {{ render_stream_child(block) }}
-                    {% endif %}
+                        </span>
+                    </h2>
+                {% elif 'paragraph' in block.block_type %}
+                    {{ render_stream_child(block) }}
+                {% else %}
+                    {{ render_stream_child(block) }}
                 {% endif %}
-            </div>
-        {% endfor %}
-    {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
 {%- endblock %}
