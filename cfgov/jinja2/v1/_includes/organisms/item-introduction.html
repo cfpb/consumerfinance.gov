@@ -55,22 +55,21 @@
     {% if value.paragraph %}
         <p class="lead-paragraph">{{ value.paragraph.source | safe }}</p>
     {% endif %}
-
-    <p>
-        {% if value.authors %}
+    {% if value.authors.text %}
+        <p>
             By
             {% for link in value.authors %}
                 {% if loop.first == false %}
                 and
                 {% endif %}
                 <a href="{{ link.url }}">{{ link.text }}</a>
-            {% endfor %}-
-        {% endif %}
-        {% if value.date %}
-            {{ time.render(value.date, {'date':true}) }}
-        {% endif %}
-    </p>
-
+            {% endfor %}
+            {{ '-' if value.date else ''}}
+        </p>
+    {% endif %}
+    {% if value.date %}
+        {{ time.render(value.date, {'date':true}) }}
+    {% endif %}
     {% if value.has_social %}
         {{ social_media.render() }}
     {% endif %}
