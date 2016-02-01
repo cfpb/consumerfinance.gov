@@ -1,0 +1,118 @@
+/* topdoc
+  name: Global Eyebrow
+  family: cfgov-molecules
+  patterns:
+    - name: Horizontal layout example
+      markup: |
+        <div class="m-global-eyebrow
+                    m-global-eyebrow__horizontal">
+            <div class="wrapper">
+              <div class="m-global-eyebrow_tagline"></div>
+              <ul class="m-global-eyebrow_languages">
+                <li><a href="/es/" hreflang="es" lang="es">Español</a></li>
+              </ul>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-global-eyebrow.m-global-eyebrow__horizontal
+            .wrapper
+              .m-global-eyebrow_tagline
+              ul.m-global-eyebrow_languages
+                li
+                  a
+    - name: List item example
+      markup: |
+        <div class="m-global-eyebrow
+                    m-global-eyebrow__list">
+            <div class="wrapper">
+              <div class="m-global-eyebrow_tagline"></div>
+              <ul class="m-global-eyebrow_languages">
+                <li><a href="/es/" hreflang="es" lang="es">Español</a></li>
+              </ul>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-global-eyebrow.m-global-eyebrow__list
+            .wrapper
+              .m-global-eyebrow_tagline
+              ul.m-global-eyebrow_languages
+                li
+                  a
+  tags:
+    - cfgov-molecules
+*/
+
+.m-global-eyebrow {
+    font-size: unit( 12px / @base-font-size-px, em);
+
+    &_tagline {
+        padding-left: 37px; //22px flag + 15px spacing
+        background: url('../img/us-flag_22x13.png') no-repeat 0 0;
+
+        .respond-to-dpi(2, {
+            background-image: url('../img/us-flag_44x26.png');
+            background-size: 22px;
+        });
+
+        &-usa {
+            white-space: nowrap;
+        }
+    }
+
+    &_languages {
+        list-style-type: none;
+
+        li {
+            display: inline-block;
+            margin-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            margin-bottom: 0;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        a {
+            .u-link__no-border();
+        }
+    }
+
+    &__horizontal {
+        padding: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        background: @gray-5;
+        border-bottom: 1px solid @gray-40;
+
+        .m-global-eyebrow_tagline {
+            float: left;
+        }
+        .m-global-eyebrow_languages {
+            text-align: right;
+        }
+    }
+
+    &__list {
+        padding-left: unit( ( @grid_gutter-width / 4 ) * 3 / @base-font-size-px, em );
+        padding-right: unit( ( @grid_gutter-width / 4 ) * 3 / @base-font-size-px, em );
+        padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        border-top: 1px solid @gray-40;
+
+        .m-global-eyebrow_tagline {
+            background-position-y: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        }
+
+        .m-global-eyebrow_languages {
+            padding-left: 37px; //22px flag + 15px spacing
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            border-top: 1px solid @gray-40;
+        }
+    }
+}

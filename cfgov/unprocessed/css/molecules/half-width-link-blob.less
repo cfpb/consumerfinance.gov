@@ -4,7 +4,9 @@
   patterns:
     - name: Default example
       markup: |
-        <div class="m-half-width-link-blob">
+        <div class="m-half-width-link-blob
+                    content-l_col
+                    content-l_col-1-2">
             <h2 class="h3">Heading</h2>
             <p>Body content</p>
             <ul class="list list__links">
@@ -27,16 +29,10 @@
 .m-half-width-link-blob {
     margin-bottom: unit( (@grid_gutter-width * 2) / @base-font-size-px, em);
 
-    .webfont-regular();
-
     .respond-to-max(@bp-xs-max, {
         & + & {
             margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
         }
-    });
-
-    .respond-to-min(@bp-sm-min, {
-        .grid_column(6);
     });
 
     &_paragraph {

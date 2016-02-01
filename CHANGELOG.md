@@ -152,6 +152,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added AbstractLearnPage for Learn and Doc Detail pages
 - Added preview fields to AbstractLearnPage
 - Added relevant date fields to AbstractLearnPage
+- Added multi-select atom styles and scripting
+- Added Frontend: Global Header CTA.
+- Added Frontend: Header.
+- Added Frontend: Mega Menu.
+- Added Frontend: Global Eyebrow.
+- Added Frontend: Global Search molecule.
+- Added language dropdown for pages, which defaults to english
+- Add BrowseFilterablePage model
+- Add BaseExpandable class for expandable controls
+- Add FilterControls organism using BaseExpandable
+- Add url_parameters macro to handle adding existing get URL parameters into links
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -261,6 +272,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the new secondary-nav organism to use the new nav-link molecule
 - Updated the secondary-nav-toggle for new classnames
 - Changed expandable.html to be a macro for upcoming Filtered List
+- Updated browse-filterable demo
+- Updated filterable-list-controls organism to allow for multiple option
+- Password Policy & Lockout criteria for login, account password change & forgot my password.
+- Updated the project to use Avenir font by default
+- Updated `mocha` from `2.2.4` from `2.4.2`.
+- Updated `sinon` from `1.14.1` from `1.17.3`.
+- Updated `lodash` from `3.10.0` from `4.0.1`.
+- Change jinja2 templates to handle Wagtail page
+- Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 
 ### Removed
 - Removed unused exportsOverride section,

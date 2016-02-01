@@ -78,6 +78,7 @@
 
 .primary-nav {
     .list_link {
+        // Override default medium weight on .list_link
         .webfont-regular();
     }
 
@@ -178,8 +179,6 @@
     }
 
     &_title {
-        .webfont-regular();
-
         display: block;
 
         border-bottom: 1px solid @gray-50;
@@ -248,14 +247,19 @@
         }
 
         &_menu-list {
-            padding-left: @grid_gutter-width / 2;
-            padding-right: @grid_gutter-width / 2;
+            padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            margin-bottom: 0;
 
             background-color: @gray-10;
         }
 
         &_item:not(:last-child) {
             border-bottom: 1px solid @gray-50;
+        }
+
+        &_item:last-child {
+            margin-bottom: 0;
         }
 
         &_link {

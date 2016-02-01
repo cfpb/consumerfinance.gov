@@ -47,7 +47,9 @@
     %}
     {% set value = global_dict.half_width_link_blob %}
 {% endif %}
-<div class="m-half-width-link-blob">
+<div class="m-half-width-link-blob
+            content-l_col
+            content-l_col-1-2">
     <h2 class="h3">{{ value.heading }}</h2>
     <div class="m-half-width-link-blob_paragraph">
         {{ value.body.source | safe }}

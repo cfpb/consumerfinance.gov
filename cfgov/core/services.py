@@ -89,20 +89,29 @@ class PDFGeneratorView(View):
             return response
 
     def post(self, request):
-        form = CalenderPDFFilterForm(request.POST)
+        index = request.POST.get('form-id')
+        filter_calendar = 'filter' + index + '_categories'
+        filter_from_date = 'filter' + index + '_from_date'
+        filter_to_date = 'filter' + index + '_to_date'
+        form = CalenderPDFFilterForm({
+            'filter_calendar': request.POST.get(filter_calendar),
+            'filter_range_date_gte': request.POST.get(filter_from_date),
+            'filter_range_date_lte': request.POST.get(filter_to_date),
+        })
         if form.is_valid():
             query_opts = {
-                'filter_calendar': form.cleaned_data['filter_calendar'],
-                'filter_range_date_gte': form.cleaned_data['filter_range_date_gte'],
-                'filter_range_date_lte': form.cleaned_data['filter_range_date_lte']
+                'filter_calendar': form.cleaned_data.get(filter_calendar),
+                'filter_range_date_gte':
+                    form.cleaned_data.get(filter_from_date),
+                'filter_range_date_lte':
+                    form.cleaned_data.get(filter_to_date),
             }
-
             return self.generate_pdf(query_opts)
         else:
             for error in form.errors.itervalues():
-                messages.error(request, str(error), extra_tags='leadership-calendar')
-            return HttpResponseRedirect(reverse('%s:leadership-calendar' %
-                                                 self.request.resolver_match.namespace))
+                messages.error(request, str(error),
+                               extra_tags='leadership-calendar')
+            return HttpResponseRedirect('/the-bureau/leadership-calendar/')
 
 class ICSView(ContextMixin, View):
     """
