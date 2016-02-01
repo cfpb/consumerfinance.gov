@@ -13,7 +13,7 @@ def isRequired(field_name):
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(max_length=100, required=False)
-    body = blocks.RichTextBlock(blank=True)
+    body = blocks.RichTextBlock(blank=True,  required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
