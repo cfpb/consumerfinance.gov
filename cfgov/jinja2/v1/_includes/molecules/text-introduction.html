@@ -18,7 +18,6 @@
    value.links:     A collection of links with URL & Text.
 
    ========================================================================== #}
-{% set value = value or global_dict.text_introduction %}
 <div>
     <h1>{{ value.heading }}</h1>
     <p class="lead-paragraph">{{ value.intro.source | safe }}</p>
