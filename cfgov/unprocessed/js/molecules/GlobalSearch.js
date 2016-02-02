@@ -31,7 +31,7 @@ function GlobalSearch( element ) {
   var _clearBtnDom;
 
   var _isExpanded = false;
-  var _tabClicked = false;
+  var _tabPressed = false;
 
   var KEY_TAB = 9;
 
@@ -58,7 +58,7 @@ function GlobalSearch( element ) {
     searchBtnDom.addEventListener( 'mousedown', _searchBtnClicked );
     searchIconDom.addEventListener( 'click', _searchIconClicked );
 
-    _contentDom.addEventListener( 'keydown', _checkTabClicked );
+    _contentDom.addEventListener( 'keydown', _handleTabPress );
 
     _setClearBtnState( _searchInputDom.value );
 
@@ -66,15 +66,15 @@ function GlobalSearch( element ) {
   }
 
   /**
-   * Event handler for when the keyboard is pressed on the body.
+   * Event handler for when the keyboard is pressed on the HTML document body.
    * If the tab key was pressed, record the press so that when
    * getting to the search input, the input won't collapse when
    * tabbing between the input and the search button.
    * @param {KeyboardEvent} event The event object for the keyboard key press.
    */
-  function _checkTabClicked( event ) {
+  function _handleTabPress( event ) {
     if ( event.keyCode === KEY_TAB ) {
-      _tabClicked = true;
+      _tabPressed = true;
     }
   }
 
@@ -100,10 +100,10 @@ function GlobalSearch( element ) {
    * Closes the search input if the tab key was not pressed.
    */
   function _searchBlurred() {
-    if ( !_tabClicked ) {
+    if ( !_tabPressed ) {
       _collapseIfDesktop();
     } else {
-      _tabClicked = false;
+      _tabPressed = false;
     }
   }
 

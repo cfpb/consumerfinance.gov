@@ -2,7 +2,6 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/expandable.html' as expandable %}
-{% import 'molecules/social-media.html' as social_media %}
 
 {% import 'organisms/expandable-group.html' as expandable_group %}
 
@@ -40,10 +39,6 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block">
-        {{ social_media.render() }}
-    </div>
-
     {% for block in page.header -%}
         <div class="block">
             {{ render_stream_child(block) }}
@@ -99,90 +94,6 @@
             </div>
         {% endfor %}
     {% endif %}
-
-
-    {# TODO: Remove the below when input-contains-label
-             class is added cf-enhancements. #}
-    <div class="block">
-        <div class="block">
-            <div class="input-contains-label">
-                <label for="search-input1"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input1"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input id="search-input1"
-                       type="text"
-                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="input-contains-label
-                        input__super">
-                <label for="search-input2"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input2"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input class="input__super"
-                       id="search-input2"
-                       type="text"
-                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
-            </div>
-        </div>
-
-
-        <div class="input-with-btn">
-            <div class="input-with-btn_input
-                        input-contains-label">
-                <label for="search-input3"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input3"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input type="text"
-                       id="search-input3"
-                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="btn">Search</button>
-            </div>
-        </div>
-
-        <div class="input-with-btn">
-            <div class="input-with-btn_input
-                        input-contains-label
-                        input__super">
-                <label for="search-input4"
-                       class="input-contains-label_before
-                              input-contains-label_before__search">
-                </label>
-                <label for="search-input4"
-                       class="input-contains-label_after
-                              input-contains-label_after__clear">
-                </label>
-                <input class="input__super"
-                       type="text"
-                       id="search-input4"
-                       value="This is some really long text to make sure that the button doesn't overlap the content in such a way that this input becomes unusable.">
-            </div>
-            <div class="input-with-btn_btn">
-                <button class="btn btn__super">Search</button>
-            </div>
-        </div>
-
-    </div>
-
 {% endblock %}
 
 {% block content_sidebar scoped -%}

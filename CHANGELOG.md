@@ -278,7 +278,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the project to use Avenir font by default
 - Updated `mocha` from `2.2.4` from `2.4.2`.
 - Updated `sinon` from `1.14.1` from `1.17.3`.
+- Updated `lodash` from `3.10.0` from `4.0.1`.
 - Change jinja2 templates to handle Wagtail page
+- Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 
 ### Removed
 - Removed unused exportsOverride section,

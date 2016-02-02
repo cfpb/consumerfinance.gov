@@ -31,7 +31,7 @@
     {% do global_dict.update(
         {
             'featured_content_module': {
-                'category': 'info for consumers',
+                'category': 'Featured event',
                 'heading':  'Fall Consumer Advisory Board meeting in
                             Washington, DC',
                 'body':     { 'source': lipsumText },
@@ -58,8 +58,8 @@
                 featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
-            {{ category_icon.render(value.category) | safe }}
-            {{ value.category }}
+            {{ category_icon.render( fcm_label(value.category) ) | safe }}
+            {{ fcm_label( value.category ) }}
         </p>
         <h2>
             {{ value.heading }}
