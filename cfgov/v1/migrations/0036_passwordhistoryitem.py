@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('v1', '0035_cfgovpage_language'),
+        ('v1', '0002_share_perms'),
     ]
 
     operations = [
