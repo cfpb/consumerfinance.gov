@@ -65,18 +65,8 @@ class SheerlikeEnvironment(Environment):
 def environment(**options):
     queryfinder = QueryFinder()
 
-    searchpath =[]
     staticdirs = []
 
-    sites = settings.SHEER_SITES
-    for site in sites:
-        site_path = Path(site)
-        searchpath.append(site_path)
-        searchpath.append(site_path.child('_includes'))
-        searchpath.append(site_path.child('_layouts'))
-        staticdirs.append(site_path.child('static'))
-
-    options['loader'].searchpath += searchpath
     settings.STATICFILES_DIRS += staticdirs
 
     options.setdefault('extensions', []).append('jinja2.ext.do')

@@ -96,7 +96,9 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [PROJECT_ROOT.child('static_built')],
+        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+            V1_TEMPLATE_ROOT.child('_layouts'),
+            PROJECT_ROOT.child('static_built')],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
@@ -166,6 +168,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built'),
     ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
+    PROJECT_ROOT.child('static'),
 ]
 
 if 'NEMO_PATH' in os.environ:
@@ -378,3 +381,13 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL='/admin/'
+
+
+SHEEER_SITES = {
+        'owning-a-home': 
+            os.environ.get('OAH_SHEER_PATH') or 
+            Path(REPOSITORY_ROOT, '../owning-a-home/dist'),
+        'fin-ed-resources':
+            os.environ.get('FIN_ED_SHEER_PATH') or 
+            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')
+}
