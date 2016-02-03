@@ -281,6 +281,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `lodash` from `3.10.0` from `4.0.1`.
 - Change jinja2 templates to handle Wagtail page
 - Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
+- Updated brand colors to updates in generator-cf.
 
 ### Removed
 - Removed unused exportsOverride section,
