@@ -7,8 +7,6 @@ var Notification = require( '../molecules/Notification' );
 // TODO: Implement form data client-side validation.
 // var validate = require( 'validate' );
 
-require( '../modules/polyfill/array-polyfills' );
-
 /**
  * FilterableListControls
  * @class
