@@ -17,6 +17,7 @@
 
             })
         %}
+        {% set value = global_dict.global_header_cta %}
         {# TODO: CTA needs to be focused first when menu is opened. #}
         <li class="primary-nav_item">
             {% include 'molecules/global-header-cta.html' with context %}
@@ -52,6 +53,7 @@
 
         })
     %}
+    {% set value = global_dict.global_eyebrow %}
     {% include 'molecules/global-eyebrow.html' with context %}
 
 </nav><!-- END .primary-nav -->

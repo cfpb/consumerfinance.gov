@@ -11,6 +11,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -22,6 +23,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -33,6 +35,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -44,6 +47,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -55,6 +59,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% include 'atoms/state-selector.html' %}
@@ -68,6 +73,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -79,6 +85,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -90,6 +97,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -101,6 +109,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {# TODO: Add additional times to form select below. #}
@@ -114,6 +123,7 @@
                 'required':    false
             }
         }) %}
+        {% set value = global_dict.select %}
         {% include 'atoms/select.html' with context %}
 
         {% do global_dict.update({
@@ -124,6 +134,7 @@
                 'disabled':   false
             }
         }) %}
+        {% set value = global_dict.textarea %}
         {% include 'atoms/textarea.html' with context %}
 
         {% do global_dict.update({
@@ -135,6 +146,7 @@
                 'disabled': false
             }
         }) %}
+        {% set value = global_dict.input %}
         {% include 'atoms/input.html' with context %}
 
         {# TODO: Add additional formats to form select below. #}
@@ -148,6 +160,7 @@
                 'required':    true
             }
         }) %}
+        {% set value = global_dict.select %}
         {% include 'atoms/select.html' with context %}
     </section>
     {% do global_dict.update({
@@ -155,5 +168,6 @@
         'button_text': 'Generate PDF'
     }
     }) %}
+    {% set value = global_dict.submit_button %}
     {% include 'atoms/submit-button.html' with context %}
 </form>
