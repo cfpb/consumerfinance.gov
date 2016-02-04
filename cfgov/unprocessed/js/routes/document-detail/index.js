@@ -4,9 +4,6 @@
 
 'use strict';
 
-// Required polyfills for <IE8.
-require( '../../modules/polyfill/query-selector' );
-
 // List of organisms used.
 var Expandable = require( '../../molecules/Expandable' );
 var selector = '.m-expandable';

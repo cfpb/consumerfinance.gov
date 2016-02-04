@@ -1,9 +1,5 @@
 'use strict';
 
-// Required for IE8 support.
-require( './polyfill/event-listener.js' );
-require( './polyfill/query-selector.js' );
-
 /**
  * Makes a table row whose first table cell child is a link become the link
  * for the entire table row.

@@ -6,8 +6,8 @@
 
 'use strict';
 
-// Required polyfills for <IE9.
-require( '../polyfill/class-list' );
+// Required polyfills for IE9.
+if ( !Modernizr.classlist ) { require( '../polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
 
 /**
  * @param {HTMLNode} element

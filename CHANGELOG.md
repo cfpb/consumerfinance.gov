@@ -31,7 +31,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Acceptance tests for `the-bureau` pages.
 - Added test utility to retreive QA elements.
 - Added ARIA state utility to enable decorating dom elements with ARIA states.
-- Added `Object.defineProperty` polyfill.
 - Added unit test for `aria-state.js`.
 - Wagtail CMS
 - Added `gulp test:a11y` accessibility testing using node-wcag.
@@ -282,6 +281,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Change jinja2 templates to handle Wagtail page
 - Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 - Updated brand colors to updates in generator-cf.
+- Disabled JavaScript in IE8 and earlier.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -294,6 +294,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed extra Google Analytics code.
 - Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
 - Sidebar from LandingPage
+- Removed `map` and `filter` array polyfills.
+- Removed `event-listener.js` and `query-selector.js` polyfills for IE8.
 
 ### Fixed
 - Fixed instructions for gulp watch
