@@ -5,7 +5,6 @@
 
 {% import 'organisms/expandable-group.html' as expandable_group %}
 
-
 {% import 'molecules/related-posts.html' as related_posts with context %}
 {% if not breadcrumb_items %}
     {% set parent = page.parent() %}
@@ -14,6 +13,11 @@
 
 {% block title -%}
     {{ page.seo_title }}
+{%- endblock %}
+
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
@@ -29,10 +33,25 @@
         </div>
     {%- endfor %}
 
-    {% for block in page.sidefoot %}
-        <div class="block block__flush-top">
-            {% if 'related_posts' in block.block_type %}
-                {{ related_posts.render(block) }}
+    <div class="block
+                block__flush-bottom
+                block__flush-sides
+                block__bg
+                block__border-top
+                block__border-right">
+        {% for block in page.sidefoot %}
+            {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
+                {% if loop.index == 1 %}
+                    <div class="block
+                                block__flush-top">
+                        {{ render_stream_child(block) }}
+                    </div>
+                {% else %}
+                    <div class="block">
+                        {{ render_stream_child(block) }}
+                    </div>
+                {% endif %}
+            {# TODO: When we delete atoms, remove the following else #}
             {% else %}
                 {% if 'heading' in block.block_type %}
                     <h3 class="o-sidebar-breakout_heading">
@@ -44,14 +63,12 @@
                             {{ render_stream_child(block) }}
                         </span>
                     </h2>
-                {% elif 'paragraph' in block.block_type %}
-                    {{ render_stream_child(block) }}
                 {% else %}
-                    {{ render_stream_child(block) }}
+                    <p>{{ render_stream_child(block) }}</p>
                 {% endif %}
             {% endif %}
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}

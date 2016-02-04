@@ -107,7 +107,7 @@ class MainContactInfo(blocks.StructBlock):
 
 
 class Table(blocks.StructBlock):
-    headers = blocks.ListBlock(blocks.CharBlock(max_length=20))
+    headers = blocks.ListBlock(blocks.CharBlock())
     rows = blocks.ListBlock(blocks.StreamBlock([
         ('hyperlink', atoms.Hyperlink(required=False)),
         ('text', blocks.CharBlock(max_length=20)),

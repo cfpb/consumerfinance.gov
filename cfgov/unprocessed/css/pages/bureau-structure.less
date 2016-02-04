@@ -39,7 +39,7 @@
                 position: absolute;
                 top: 0;
                 left: 50%;
-                border-left: 1px solid @gray-50;
+                border-left: 1px solid @gray-40;
                 width: 0;
                 height: @grid_gutter-width;
             }
@@ -62,7 +62,7 @@
                 top: 0;
                 width: 50%;
                 height: @grid_gutter-width;
-                border-color: @gray-50;
+                border-color: @gray-40;
                 border-style: solid;
                 border-width: 0;
             }
@@ -121,7 +121,7 @@
 
         // nested .org-chart_node blocks have different background color & borders.
         .org-chart_nodes {
-            border-top: 5px solid @pacific-50;
+            border-top: 5px solid @pacific-60;
 
             .org-chart_node {
                 .respond-to-min(@bp-sm-min, {
@@ -179,13 +179,13 @@
             }
 
             &:hover {
-                border-color: @pacific-50;
+                border-color: @pacific-60;
                 z-index: 2;
 
                 .cf-icon,
                 &:before,
                 &:after {
-                    color: @pacific-50;
+                    color: @pacific-60;
                 }
             }
 
@@ -240,7 +240,7 @@
     color: @pacific;
 
     &:hover {
-        color: @pacific-50;
+        color: @pacific-60;
     }
 
     &:active{
