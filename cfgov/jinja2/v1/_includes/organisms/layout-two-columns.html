@@ -4,16 +4,6 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update({
-      'two_columns':
-      { 'column1' :  lipsumText,
-        'column2' :  lipsumText  }
-    }) %}
-{% endif %}
-{% set value = value or global_dict.two_columns %}
-
 <div class="content-l_col content-l_col-1-2">
     {{ value.column1 }}
 </div>

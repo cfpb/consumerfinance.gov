@@ -13,17 +13,6 @@
    disabled:    Whether the field is disabled. Defaults to false.
 
    ========================================================================== #}
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update({
-        'date_picker': {
-            'legend':       lipsumText,
-            'required':     true,
-            'disabled':     false
-        }
-    }) %}
-    {% set value = global_dict.date_picker %}
-{% endif %}
 {% set start_id = get_unique_id('form_date-picker-starting-date_', '_') %}
 {% set end_id = get_unique_id('form_date-picker-ending-date_', '_') %}
 <fieldset class="u-reset">
