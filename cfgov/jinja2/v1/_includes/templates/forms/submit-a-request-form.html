@@ -11,7 +11,7 @@
                 'disabled': false
             }
         }) %}
-        {% set value = global_dict.input %}
+        
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -23,7 +23,7 @@
                 'disabled': false
             }
         }) %}
-        {% set value = global_dict.input %}
+        
         {% include 'atoms/input.html' with context %}
 
         {% do global_dict.update({
@@ -31,7 +31,7 @@
                 'legend':   'Document dates:'
             }
         }) %}
-        {% set value = global_dict.date_picker %}
+        
         {% include 'atoms/date-picker.html' with context %}
 
 
@@ -44,7 +44,7 @@
                 required:       true
             }
         }) %}
-        {% set value = global_dict.textarea %}
+        
         {% include 'atoms/textarea.html' with context %}
 
         {% do global_dict.update({
@@ -57,7 +57,7 @@
                 'disabled':     false
             }
         }) %}
-        {% set value = global_dict.select %}
+    
         {% include 'atoms/select.html' with context %}
 
         <fieldset class="u-reset js-additional-field">
@@ -216,7 +216,7 @@
                     'disabled': true
                 }
             }) %}
-            {% set value = global_dict.input %}
+            
             {% include 'atoms/input.html' with context %}
 
             {% do global_dict.update({
@@ -228,7 +228,7 @@
                     'disabled': true
                 }
             }) %}
-            {% set value = global_dict.input %}
+            
             {% include 'atoms/input.html' with context %}
 
             {% do global_dict.update({
@@ -240,7 +240,7 @@
                     'disabled': true
                 }
             }) %}
-            {% set value = global_dict.input %}
+            
             {% include 'atoms/input.html' with context %}
 
             {% include 'atoms/state-selector.html' %}
@@ -254,7 +254,7 @@
                     'disabled': true
                 }
             }) %}
-            {% set value = global_dict.input %}
+            
             {% include 'atoms/input.html' with context %}
         </fieldset>
     </section>
@@ -264,7 +264,7 @@
             'button_text':  'Generate FOIA PDF'
         }
     }) %}
-    {% set value = global_dict.submit_button %}
+    
     {% include 'atoms/submit-button.html' with context %}
 
 </form>
