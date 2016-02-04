@@ -8,11 +8,15 @@
 
    Creates markup for Global Header Call to Action molecule.
 
-   value.is_in_list: Whether the molecule appears in a list or not.
+   is_horizontal: Whether the molecule appears horizontally or vertically.
+                  defaults to false.
 
    ========================================================================== #}
 
-<div class="m-global-header-cta
-            m-global-header-cta__{{ 'list' if value.is_in_list else 'horizontal' }}">
-    <a href="#">Submit a Complaint</a>
-</div>
+{% macro render( is_horizontal=false ) %}
+    {# TODO: Padding should be on link, not CTA itself #}
+    <div class="m-global-header-cta
+                m-global-header-cta__{{ 'horizontal' if is_horizontal else 'list' }}">
+        <a href="#">Submit a Complaint</a>
+    </div>
+{% endmacro %}

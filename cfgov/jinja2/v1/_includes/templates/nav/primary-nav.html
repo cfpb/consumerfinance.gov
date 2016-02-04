@@ -9,18 +9,10 @@
 
     <ul class="primary-nav_menu-list">
 
-        {% do global_dict.update(
-            {
-                'global_header_cta': {
-                    'is_in_list': true
-                }
-
-            })
-        %}
-        {% set value = global_dict.global_header_cta %}
         {# TODO: CTA needs to be focused first when menu is opened. #}
         <li class="primary-nav_item">
-            {% include 'molecules/global-header-cta.html' with context %}
+            {% import 'molecules/global-header-cta.html' as global_cta with context %}
+            {{ global_cta.render() }}
         </li>
 
         {%- for nav_title,
@@ -45,15 +37,7 @@
         {%- endfor %}
     </ul><!-- END .primary-nav_top-level-list -->
 
-    {% do global_dict.update(
-        {
-            'global_eyebrow': {
-                'is_in_list': true
-            }
-
-        })
-    %}
-    {% set value = global_dict.global_eyebrow %}
-    {% include 'molecules/global-eyebrow.html' with context %}
+    {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
+    {{ global_eyebrow.render() }}
 
 </nav><!-- END .primary-nav -->
