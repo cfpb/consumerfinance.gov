@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   related_metadata.render()
+   Related Metadata
 
    ==========================================================================
 
@@ -15,26 +15,32 @@
 
    ========================================================================== #}
 
-{% macro render(related_metadata_list, is_half_width=false) %}
+{% macro render(value) %}
 {% set types_lookup = {
-    'date': _date,
-    'list': _list,
-    'text': _text
+    'date':   _date,
+    'list':   _list,
+    'text':   _text,
+    'topics': _topics,
 } %}
 <div class="m-related-metadata
-            {{ 'm-related-metadata__half-width' if is_half_width else '' }}">
+            {{ 'm-related-metadata__half-width' if value.is_half_width else '' }}">
     <h2 class="header-slug">
         <span class="header-slug_inner">
-            Related Metadata
+            {{ value.slug }}
         </span>
     </h2>
-    {% for list_item in related_metadata_list %}
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-            {{ list_item.title }}
-        </h3>
-        {{ types_lookup[list_item.type](list_item.value) }}
-    </div>
+    {# For each of the blocks render them if they're there except for Topics.
+       In that case, render only if the value `show_topics` is True. #}
+    {% for block in value.content %}
+        {% if 'topics' in block.block_type and not block.value.show_topics %}
+            {% continue %}
+        {% endif %}
+        <div class="m-related-metadata_item-container">
+            <h3 class="h4">
+                {{ block.value.heading }}
+            </h3>
+            {{ types_lookup[block.block_type](block.value) }}
+        </div>
     {% endfor %}
 </div>
 {% endmacro %}
@@ -57,10 +63,10 @@
 <ul class="list
            list__unstyled
            list__links">
-    {% for list_item in list %}
+    {% for link in list.links %}
     <li class="list_item">
-        <a href="{{ list_item.url }}" class="list_link">
-            {{ list_item.text }}
+        <a href="{{ link.url }}" class="list_link">
+            {{ link.text }}
         </a>
     </li>
     {% endfor %}
@@ -84,7 +90,7 @@
 {% macro _date(date) %}
 {% import 'macros/time.html' as time %}
 <p class="date u-mb0">
-    {{ time.render(date, {'date':true}) }}
+    {{ time.render(date.date, {'date':true}) }}
 </p>
 {% endmacro %}
 
@@ -104,6 +110,25 @@
 
 {% macro _text(text) %}
 <p class="u-mb0">
-    {{ text }}
+    {{ text.blob.source | safe }}
 </p>
+{% endmacro %}
+
+{# ==========================================================================
+
+   _topics()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related metadata related topics markup
+
+   value: An object holding the tag information (Unused)
+
+   ========================================================================== #}
+
+{% macro _topics(value) %}
+    {# MARKUP FOR EACH TAG HERE #}
+    {{ page.tags.names() }} {# list of tag names #}
 {% endmacro %}

@@ -15,6 +15,7 @@ default_app_config = 'v1.apps.V1AppConfig'
 
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
+    options['extensions'].append('jinja2.ext.loopcontrols')
     env = sheerlike_environment(**options)
     env.autoescape = True
     from v1.models import ref, CFGOVPage

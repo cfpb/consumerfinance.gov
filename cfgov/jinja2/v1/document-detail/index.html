@@ -161,6 +161,8 @@
                     </h2>
                 {% elif 'paragraph' in block.block_type %}
                     {{ render_stream_child(block) }}
+                {% elif 'related_metadata' in block.block_type %}
+                    {{ related_metadata.render(block.value) }}
                 {% else %}
                     {{ render_stream_child(block) }}
                 {% endif %}
