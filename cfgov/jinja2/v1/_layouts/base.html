@@ -92,6 +92,14 @@
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
 
+    <!--[if lt IE 9]>
+    <script>
+        // If in IE8 reverse no-js/js class change made by modernizr.
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+    </script>
+    <![endif]-->
+
     {# TODO: jQuery CDN is provided in the head to satisfy
              Google Tag Manager (GTM) requirements.
              Ideally GTM would handle its own dependency management
@@ -173,7 +181,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 -->
 
 {% block javascript %}
-
+<!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
 <script type='text/javascript'>
     {% include '/js/routes/common.js' %}
@@ -204,7 +212,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ js_source }}
 </script>
 {% endif %}
-
+<!--<![endif]-->
 {% endblock javascript %}
 
 </body>

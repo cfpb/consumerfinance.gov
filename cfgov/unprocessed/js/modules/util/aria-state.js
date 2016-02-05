@@ -9,7 +9,6 @@
 
 'use strict';
 
-require( '../polyfill/object-defineproperty-polyfill' );
 var ariaStatesConfig = require( '../../config/aria-states-config' );
 
 // Properties
