@@ -162,6 +162,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add BaseExpandable class for expandable controls
 - Add FilterControls organism using BaseExpandable
 - Add url_parameters macro to handle adding existing get URL parameters into links
+- Add Related Metadata molecule to backend
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -282,6 +283,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 - Updated brand colors to updates in generator-cf.
 - Disabled JavaScript in IE8 and earlier.
+- Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
 
 ### Removed
 - Removed unused exportsOverride section,

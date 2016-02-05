@@ -71,6 +71,7 @@ class CFGOVPage(Page):
         ('call_to_action', molecules.CallToAction()),
         ('related_links', molecules.RelatedLinks()),
         ('related_posts', organisms.RelatedPosts()),
+        ('related_metadata', molecules.RelatedMetadata()),
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
     ], blank=True)

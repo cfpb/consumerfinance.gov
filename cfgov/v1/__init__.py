@@ -11,8 +11,10 @@ from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
 from util.util import get_unique_id
 
+
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
+    options['extensions'].append('jinja2.ext.loopcontrols')
     env = sheerlike_environment(**options)
     env.autoescape = True
     from v1.models import ref, CFGOVPage
