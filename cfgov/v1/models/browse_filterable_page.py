@@ -1,4 +1,3 @@
-from itertools import chain
 from operator import attrgetter
 
 from django.conf import settings
@@ -11,7 +10,6 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from . import base, molecules, organisms, ref
 from .learn_page import AbstractFilterPage
 from .. import forms
-from ..util.util import wagtail_stream_data
 
 
 class BrowseFilterablePage(base.CFGOVPage):
@@ -39,10 +37,6 @@ class BrowseFilterablePage(base.CFGOVPage):
 
     template = 'browse-filterable/index.html'
 
-    def elements(self):
-        return list(chain(self.header.stream_data,
-                    self.content.stream_data))
-
     def get_form_class(self):
         return forms.FilterableListForm
 
@@ -60,9 +54,9 @@ class BrowseFilterablePage(base.CFGOVPage):
                 # If this is the Newsroom, then we need to go get the blog
                 # from a different part of the site.
                 blogs = []
-                for f in wagtail_stream_data(self.content.stream_data):
-                    if 'filter_controls' in f['type'] and 'newsroom' in \
-                            f['value']['categories']['page_type']:
+                for f in self.content:
+                    if 'filter_controls' in f.block_type and 'newsroom' in \
+                            f.value['categories']['page_type']:
                         categories = form.cleaned_data.get('categories', [])
                         if not categories or 'blog' in categories:
                             blog_cats = [c[0] for c in ref.categories[1][1]]
@@ -106,10 +100,9 @@ class BrowseFilterablePage(base.CFGOVPage):
         filters_data = {}
         # Find every form existing on the page and assign a dictionary with its
         # number as the key.
-        for i, f in enumerate(wagtail_stream_data(self.content.stream_data)):
-            if 'filter_controls' in f['type']:
+        for i, f in enumerate(self.content):
+            if 'filter_controls' in f.block_type:
                 filters_data[i] = {}
-        # print filters_data
         # For each form ID dictionary, find all the fields for it. Assign the
         # select fields to lists and append them for each selection. Return the
         # dictionary of normalized field names with their respective data.

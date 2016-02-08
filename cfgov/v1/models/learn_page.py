@@ -1,4 +1,3 @@
-import itertools
 from datetime import datetime
 from localflavor.us.models import USStateField
 
@@ -71,10 +70,6 @@ class AbstractFilterPage(CFGOVPage):
 
     # This page class cannot be created.
     is_creatable = False
-
-    def elements(self):
-        return list(itertools.chain(self.header.stream_data,
-                                    self.content.stream_data))
 
 
 class LearnPage(AbstractFilterPage):
