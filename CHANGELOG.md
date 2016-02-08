@@ -162,6 +162,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add BaseExpandable class for expandable controls
 - Add FilterControls organism using BaseExpandable
 - Add url_parameters macro to handle adding existing get URL parameters into links
+- Added new info-unit molecule that combines (but doesn't replace) the half width link blob, image and text 50/50, and 25/75 into one base molecule using modifiers.
+- Added new (undocumented) card molecule.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
