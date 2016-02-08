@@ -8,42 +8,47 @@
 
    Creates markup for Global Eyebrow molecule.
 
-   value.is_in_list: Whether the molecule appears in a list or not.
+   is_horizontal: Whether the molecule appears horizontally or vertically.
+                  defaults to false.
 
    ========================================================================== #}
-
-<div class="m-global-eyebrow
-            m-global-eyebrow__{{ 'list' if value.is_in_list else 'horizontal' }}">
-    <div class="wrapper">
-        <div class="m-global-eyebrow_tagline">
-            An official website of the
-            <span class="m-global-eyebrow_tagline-usa">United States Government</span>
+{% macro render( is_horizontal=false ) %}
+    <div class="m-global-eyebrow
+                m-global-eyebrow__{{ 'horizontal' if is_horizontal
+                                      else 'list' }}">
+        <div class="wrapper">
+            <div class="m-global-eyebrow_tagline">
+                An official website of the
+                <span class="m-global-eyebrow_tagline-usa">United States Government</span>
+            </div>
+            <ul class="m-global-eyebrow_languages">
+                <li>
+                    <a href="/es/" hreflang="es" lang="es">Español</a>
+                </li>
+                <li>
+                    <a href="/lang/#zh" hreflang="zh" lang="zh">中文</a>
+                </li>
+                <li>
+                    <a href="/lang/#vi" hreflang="vi" lang="vi">Tiếng Việt</a>
+                </li>
+                <li>
+                    <a href="/lang/#ko" hreflang="ko" lang="ko">한국어</a>
+                </li>
+                <li>
+                    <a href="/lang/#tl" hreflang="tl" lang="tl">Tagalog</a>
+                </li>
+                <li>
+                    <a href="/lang/#ru" hreflang="ru" lang="ru">Pусский</a>
+                </li>
+                <li>
+                    <a href="/lang/#ar" hreflang="ar" lang="ar">العربية</a>
+                </li>
+                <li>
+                    <a href="/lang/#ht" hreflang="ht" lang="ht">
+                        Kreyòl Ayisyen
+                    </a>
+                </li>
+            </ul>
         </div>
-        <ul class="m-global-eyebrow_languages">
-            <li>
-                <a href="/es/" hreflang="es" lang="es">Español</a>
-            </li>
-            <li>
-                <a href="/lang/#zh" hreflang="zh" lang="zh">中文</a>
-            </li>
-            <li>
-                <a href="/lang/#vi" hreflang="vi" lang="vi">Tiếng Việt</a>
-            </li>
-            <li>
-                <a href="/lang/#ko" hreflang="ko" lang="ko">한국어</a>
-            </li>
-            <li>
-                <a href="/lang/#tl" hreflang="tl" lang="tl">Tagalog</a>
-            </li>
-            <li>
-                <a href="/lang/#ru" hreflang="ru" lang="ru">Pусский</a>
-            </li>
-            <li>
-                <a href="/lang/#ar" hreflang="ar" lang="ar">العربية</a>
-            </li>
-            <li>
-                <a href="/lang/#ht" hreflang="ht" lang="ht">Kreyòl Ayisyen</a>
-            </li>
-        </ul>
     </div>
-</div>
+{% endmacro %}

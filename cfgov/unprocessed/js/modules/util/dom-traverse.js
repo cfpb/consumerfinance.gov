@@ -1,6 +1,7 @@
 'use strict';
 
-require( '../polyfill/class-list' );
+// Required polyfills for IE9.
+if ( window.Modernizr && !window.Modernizr.classlist ) { require( '../polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
 
 /**
  * Get the sibling nodes of a dom node.

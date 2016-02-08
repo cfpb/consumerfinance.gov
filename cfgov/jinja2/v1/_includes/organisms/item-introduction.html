@@ -55,22 +55,25 @@
     {% if value.paragraph %}
         <p class="lead-paragraph">{{ value.paragraph.source | safe }}</p>
     {% endif %}
-
-    <p>
-        {% if value.authors %}
-            By
-            {% for link in value.authors %}
-                {% if loop.first == false %}
-                and
-                {% endif %}
-                <a href="{{ link.url }}">{{ link.text }}</a>
-            {% endfor %}-
-        {% endif %}
-        {% if value.date %}
-            {{ time.render(value.date, {'date':true}) }}
-        {% endif %}
-    </p>
-
+    {% if value.date or value.authors.text %}
+        <p>
+    {% endif %}
+    {% if value.authors.text %}
+        By
+        {% for link in value.authors %}
+            {% if loop.first == false %}
+            and
+            {% endif %}
+            <a href="{{ link.url }}">{{ link.text }}</a>
+        {% endfor %}
+        {{ '-' if value.date else ''}}
+    {% endif %}
+    {% if value.date %}
+        {{ time.render(value.date, {'date':true}) }}
+    {% endif %}
+    {% if value.date or value.authors.text %}
+        </p>
+    {% endif %}
     {% if value.has_social %}
         {{ social_media.render() }}
     {% endif %}
