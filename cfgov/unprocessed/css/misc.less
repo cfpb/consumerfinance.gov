@@ -631,6 +631,22 @@
     text-transform: uppercase;
 }
 
+// Creates semi-transparent drop-shadow after element.
+.u-drop-shadow-after() {
+    &:after {
+        display: block;
+        height: 5px;
+        width: 100%;
+
+        position: relative;
+        top: 5px;
+
+        background: @gray;
+        // Whitespace in content so element can have dimensions set.
+        content: '\a0';
+        opacity: 0.2;
+    }
+}
 
 /* topdoc
   name: EOF
