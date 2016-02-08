@@ -62,7 +62,7 @@ def login_form():
                         lockout_expires = dt_now + timedelta(seconds=settings.LOGIN_FAIL_TIME_PERIOD)
                         lockout = user.temporarylockout_set.create(expires_at=lockout_expires)
                         lockout.save()
-                        raise ValidationError("This account is temporarily locked; please try later or reset your password")
+                        raise ValidationError("This account is temporarily locked; please try later or <a href='/'>resetr your password</a>")
                     else:
                         fa.save()
                         raise ValidationError('Login failed. %s more attempts until your account will be temporarily locked.' % (attempts_allowed-attempts_used))
@@ -75,7 +75,7 @@ def login_form():
                         current_password_data = self.user_cache.passwordhistoryitem_set.latest()
                     
                         if dt_now > current_password_data.expires_at:
-                            raise ValidationError("This password has expired; please reset your password")
+                            raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
 
                     except ObjectDoesNotExist:
                         pass
@@ -89,7 +89,7 @@ def login_form():
             lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
 
             if lockout_query.count() > 0 :
-                raise ValidationError("This account is temporarily locked; please try later or reset your password")
+                raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
 
 
     return LoginForm
