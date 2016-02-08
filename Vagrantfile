@@ -16,7 +16,6 @@ Vagrant.configure(2) do |config|
       ansible.verbose = 'v'
       ansible.groups = {
           "db" => ["default"],
-          "elastisearch" => ["default"],
           "app" => ["default"]
       }
   end
