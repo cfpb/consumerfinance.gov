@@ -50,7 +50,7 @@ class NumberBlock(blocks.StructBlock):
 
 
 class Hyperlink(blocks.StructBlock):
-    text = blocks.CharBlock(max_length=100, required=False)
+    text = blocks.CharBlock(required=False)
     url = blocks.CharBlock(default='/', required=False)
 
     def __init__(self, required=True):

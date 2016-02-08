@@ -284,6 +284,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 - Updated brand colors to updates in generator-cf.
 - Disabled JavaScript in IE8 and earlier.
+- Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
 
 ### Removed
 - Removed unused exportsOverride section,
