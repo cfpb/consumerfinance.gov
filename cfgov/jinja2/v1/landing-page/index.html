@@ -28,6 +28,10 @@
     {{ page.seo_title }}
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block hero -%}
     {% if prototype %}
         {% include 'molecules/hero.html' %}

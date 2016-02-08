@@ -42,6 +42,10 @@
     {{ page.seo_title }}
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {# TODO: Remove lipsumText when and if it is no longer needed. #}
 {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
