@@ -26,7 +26,7 @@ require( '../modules/show-hide-fields.js' ).init();
 require( '../modules/external-site-redirect.js' ).init();
 
 // GLOBAL ATOMIC ELEMENTS.
-// Molecules.
-var GlobalSearch = require( '../molecules/GlobalSearch.js' );
-var globalSearch = new GlobalSearch( document.body );
-globalSearch.init();
+// Organisms.
+var Header = require( '../organisms/Header.js' );
+var header = new Header( document.body );
+header.init();
