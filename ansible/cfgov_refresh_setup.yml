@@ -1,0 +1,17 @@
+---
+- hosts: db
+  sudo: yes
+  sudo_user: root
+  vars_files:
+    - vars/db.yml
+  roles:
+    - { role: geerlingguy.mysql }
+
+- hosts: app
+  sudo: yes
+  sudo_user: root
+  vars_files:
+    - vars/app.yml
+  roles:
+    - { role: geerlingguy.java }
+    - { role: vccabral.elasticsearch }

@@ -1,0 +1,7 @@
+# Install a role from the Ansible Galaxy
+- src: geerlingguy.mysql
+
+# Install a role from GitHub
+- name: vccabral.elasticsearch
+  src: https://github.com/vccabral/ansible-role-elasticsearch.git
+  version: origin/add_version
