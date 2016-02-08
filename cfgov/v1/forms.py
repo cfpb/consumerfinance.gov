@@ -62,7 +62,7 @@ def login_form():
                         lockout_expires = dt_now + timedelta(seconds=settings.LOGIN_FAIL_TIME_PERIOD)
                         lockout = user.temporarylockout_set.create(expires_at=lockout_expires)
                         lockout.save()
-                        raise ValidationError("This account is temporarily locked; please try later or <a href='/'>resetr your password</a>")
+                        raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
                     else:
                         fa.save()
                         raise ValidationError('Login failed. %s more attempts until your account will be temporarily locked.' % (attempts_allowed-attempts_used))
