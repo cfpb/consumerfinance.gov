@@ -226,7 +226,6 @@
 {% block content_sidebar scoped -%}
     {% if prototype %}
         {{ related_posts.render(global_dict.related_posts_settings) }}
-        {% include 'molecules/related-topics.html' %}
         {{ sidebar_contact_info.render({
             'heading': 'Header for text below',
             'body':    lipsumText

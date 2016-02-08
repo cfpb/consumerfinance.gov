@@ -47,7 +47,7 @@
 
 {# ==========================================================================
 
-   _list()
+   _list( is_topics )
 
    ==========================================================================
 
@@ -55,14 +55,18 @@
 
    Creates related metadata list markup when given:
 
-   list: A list of dictionaries containing links.
+   list:              A list of dictionaries containing links.
+
+   is_related_topics: Boolean indicating whether the list is a
+                      Related Topics list. Defaults to false.
 
    ========================================================================== #}
 
-{% macro _list(list) %}
+{% macro _list(list, is_related_topics=false) %}
 <ul class="list
            list__unstyled
-           list__links">
+           list__links
+           {{ 'm-related-metadata_topics' if is_related_topics else '' }} ">
     {% for link in list.links %}
     <li class="list_item">
         <a href="{{ link.url }}" class="list_link">
@@ -128,7 +132,6 @@
 
    ========================================================================== #}
 
-{% macro _topics(value) %}
-    {# MARKUP FOR EACH TAG HERE #}
-    {{ page.tags.names() }} {# list of tag names #}
+{% macro _topics(list) %}
+    {{ _list( list, true ) }}
 {% endmacro %}
