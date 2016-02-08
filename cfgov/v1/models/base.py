@@ -230,7 +230,7 @@ class CFGOVPage(Page):
 
 class CFGOVPageCategory(Orderable):
     page = ParentalKey(CFGOVPage, related_name='categories')
-    name = models.CharField(max_length=255, choices=ref.choices)
+    name = models.CharField(max_length=255, choices=ref.categories)
 
     panels = [
         FieldPanel('name'),

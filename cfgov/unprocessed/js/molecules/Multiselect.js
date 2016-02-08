@@ -1,9 +1,7 @@
 'use strict';
 
-// Required polyfills for <IE9.
-require( '../modules/polyfill/query-selector' );
-require( '../modules/polyfill/event-listener' );
-require( '../modules/polyfill/class-list' );
+// Required polyfills for IE9.
+if ( !Modernizr.classlist ) { require( '../modules/polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
 
 // Required modules.
 var arrayHelpers = require( '../modules/util/array-helpers' );
@@ -67,7 +65,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     if ( _optionData.length > 0 ) {
       _populateMarkup();
       _bindEvents();
-      _dom.remove();
+      _dom.parentNode.removeChild(_dom);
     }
 
     return this;
@@ -79,9 +77,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function expand() {
     _container.classList.add( 'active' );
-    _fieldset
-      .setAttribute( 'visibility', 'visible' )
-      .setAttribute( 'aria-hidden', false );
+    _fieldset.setAttribute( 'visibility', 'visible' );
+    _fieldset.setAttribute( 'aria-hidden', false );
 
     return this;
   }
@@ -92,9 +89,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function collapse() {
     _container.classList.remove( 'active' );
-    _fieldset
-      .setAttribute( 'visibility', 'hidden' )
-      .setAttribute( 'aria-hidden', true );
+    _fieldset.setAttribute( 'visibility', 'hidden' );
+    _fieldset.setAttribute( 'aria-hidden', true );
     _index = -1;
 
     return this;
@@ -173,10 +169,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       } );
 
       _create( 'label', {
-        'for':       option.value,
-        'innerText': option.text,
-        'className': 'cf-multi-select_label',
-        'inside':    li
+        'for':         option.value,
+        'textContent': option.text,
+        'className':   'cf-multi-select_label',
+        'inside':      li
       } );
 
       _list.appendChild( li );

@@ -31,7 +31,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Acceptance tests for `the-bureau` pages.
 - Added test utility to retreive QA elements.
 - Added ARIA state utility to enable decorating dom elements with ARIA states.
-- Added `Object.defineProperty` polyfill.
 - Added unit test for `aria-state.js`.
 - Wagtail CMS
 - Added `gulp test:a11y` accessibility testing using node-wcag.
@@ -159,6 +158,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Frontend: Global Eyebrow.
 - Added Frontend: Global Search molecule.
 - Added language dropdown for pages, which defaults to english
+- Add BrowseFilterablePage model
+- Add BaseExpandable class for expandable controls
+- Add FilterControls organism using BaseExpandable
+- Add url_parameters macro to handle adding existing get URL parameters into links
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -272,6 +275,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated filterable-list-controls organism to allow for multiple option
 - Password Policy & Lockout criteria for login, account password change & forgot my password.
 - Updated the project to use Avenir font by default
+- Updated `mocha` from `2.2.4` from `2.4.2`.
+- Updated `sinon` from `1.14.1` from `1.17.3`.
+- Updated `lodash` from `3.10.0` from `4.0.1`.
+- Change jinja2 templates to handle Wagtail page
+- Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
+- Updated brand colors to updates in generator-cf.
+- Disabled JavaScript in IE8 and earlier.
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -284,6 +294,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed extra Google Analytics code.
 - Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
 - Sidebar from LandingPage
+- Removed `map` and `filter` array polyfills.
+- Removed `event-listener.js` and `query-selector.js` polyfills for IE8.
 
 ### Fixed
 - Fixed instructions for gulp watch

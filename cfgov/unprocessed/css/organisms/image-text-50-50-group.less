@@ -4,7 +4,7 @@
   patterns:
     - name: Default example
       markup: |
-        <div class="o-image-text-50-50-group">
+        <div class="o-image-text-50-50-group content-l">
             Link blobs live inside the wrapper
         </div>
       codenotes:
@@ -19,14 +19,10 @@
     // TODO: Find another way to handle spacing
     margin-bottom: unit( @grid_gutter-width * -2 / @base-font-size-px, em );
 
-    .respond-to-min(@bp-sm-min, {
-        margin-left: -@grid_gutter-width / 2;
-        margin-right: -@grid_gutter-width / 2;
-    });
-
     > h2 {
-        margin-left: @grid_gutter-width / 2;
-        margin-right: @grid_gutter-width / 2;
+          .heading-2();
+          margin-left: unit( @grid_gutter-width / 2 / @font-size, em );
+          margin-right: unit( @grid_gutter-width / 2 / @font-size, em );
     }
 }
 

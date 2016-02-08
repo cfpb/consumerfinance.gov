@@ -31,7 +31,7 @@
     {% do global_dict.update(
         {
             'featured_content_module': {
-                'category': 'info for consumers',
+                'category': 'Featured event',
                 'heading':  'Fall Consumer Advisory Board meeting in
                             Washington, DC',
                 'body':     { 'source': lipsumText },
@@ -58,8 +58,8 @@
                 featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
-            {{ category_icon.render(value.category) | safe }}
-            {{ value.category }}
+            {{ category_icon.render( fcm_label(value.category) ) | safe }}
+            {{ fcm_label( value.category ) }}
         </p>
         <h2>
             {{ value.heading }}
@@ -69,7 +69,11 @@
         </p>
         <ul class="list list__links">
             {% if value.show_post_link and value.post %}
-                <a href="{{ value.post.url_path }}"> {{ value.post_link_text }} </a>
+                <li class="list_item">
+                  <a class="list_link" href="{{ value.post.url_path }}">
+                    {{ value.post_link_text }}
+                  </a>
+                </li>
             {% endif %}
 
             {% for link in value.links %}

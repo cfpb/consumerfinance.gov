@@ -1,9 +1,7 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
-from . import atoms
-from . import molecules
-from . import ref
+from . import atoms, molecules, ref
 from .snippets import Contact as ContactSnippetClass
 
 
@@ -109,7 +107,7 @@ class MainContactInfo(blocks.StructBlock):
 
 
 class Table(blocks.StructBlock):
-    headers = blocks.ListBlock(blocks.CharBlock(max_length=20))
+    headers = blocks.ListBlock(blocks.CharBlock())
     rows = blocks.ListBlock(blocks.StreamBlock([
         ('hyperlink', atoms.Hyperlink(required=False)),
         ('text', blocks.CharBlock(max_length=20)),
@@ -141,7 +139,7 @@ class ExpandableGroup(blocks.StructBlock):
 
 
 class ItemIntroduction(blocks.StructBlock):
-    category = blocks.ChoiceBlock(choices=ref.choices, required=False)
+    category = blocks.ChoiceBlock(choices=ref.categories, required=False)
 
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
@@ -153,3 +151,30 @@ class ItemIntroduction(blocks.StructBlock):
     class Meta:
         icon = 'form'
         template = '_includes/organisms/item-introduction.html'
+
+
+class FilterControls(molecules.BaseExpandable):
+    form_type = blocks.ChoiceBlock(choices=[
+        ('filterable-list', 'Filterable List'),
+        ('pdf-generator', 'PDF Generator'),
+    ], default='filterable-list')
+    title = blocks.BooleanBlock(default=True, required=False,
+                                label='Filter Title')
+    categories = blocks.StructBlock([
+        ('filter_category', blocks.BooleanBlock(default=True, required=False)),
+        ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
+                                         required=False)),
+    ])
+    topics = blocks.BooleanBlock(default=True, required=False,
+                                 label='Filter Topics')
+    authors = blocks.BooleanBlock(default=True, required=False,
+                                  label='Filter Authors')
+    date_range = blocks.BooleanBlock(default=True, required=False,
+                                     label='Filter Date Range')
+
+    class Meta:
+        label = 'Filter Controls'
+        icon = 'form'
+
+    class Media:
+        js = ('notification.js', 'expandable.js')

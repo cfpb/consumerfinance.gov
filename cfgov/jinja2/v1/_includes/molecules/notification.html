@@ -8,22 +8,22 @@
 
    Builds notification markup when given:
 
-   value.is_visible:  Whether the notification is initially shown or not.
-                      Default is false.
+   type:        The type of notification to display.
+                  Values may be: 'success', 'error', or 'warning'.
 
-   value.type:        The type of notification to display.
-                      Values may be: 'success', 'error', or 'warning'.
+   is_visible:  Whether the notification is initially shown or not.
+                  Default is false.
 
-   value.message:     Text to display within the notification markup.
-                      Default is 'Success.', 'Warning!', or 'Error!',
-                      depending on notification type.
+   message:     Text to display within the notification markup.
+                  Default is 'Success.', 'Warning!', or 'Error!',
+                  depending on notification type.
 
-   value.explanation: Text to display as an explanation
-                      within the notification markup.
+   explanation: Text to display as an explanation
+                  within the notification markup.
 
    ========================================================================== #}
 
-{% if not value %}
+{% if not page %}
     {% do global_dict.update(
         {
             'notification': {
@@ -35,29 +35,29 @@
         })
     %}
 {% endif %}
-{% set value = value or global_dict.notification %}
-{% set type  =  value.type if value.type in ['success', 'warning', 'error'] else 'success' %}
-{% set type_lookup  = {
-      'success' : ('approved', 'Success.'),
-      'warning' : ('error', 'Warning!'),
-      'error'   :  ('delete', 'Error!')
-    }
-%}
-{% set icon, message = type_lookup[type]  %}
-{% if value.message %}
-    {% set message = value.message %}
-{% endif %}
-{% set type = ('m-notification__' + type) if type %}
 
-<div class="m-notification
-            {{ type }}
-            {{ 'm-notification__visible' if value.is_visible else '' }}">
-    <span class="m-notification_icon
-                 cf-icon"></span>
-    <div class="m-notification_content">
-        <p class="h4 m-notification_message">{{ message }}</p>
-        {% if value.explanation %}
-            <p class="h4 m-notification_explanation">{{ value.explanation }}</p>
-        {% endif %}
-    </div>
-</div>
+{% macro render(type, is_visible, message, explanation=none) %}
+
+  {% set type_lookup  = {
+        'success' : 'approved',
+        'warning' : 'error',
+        'error'   : 'delete',
+      }
+  %}
+  {% set icon = type_lookup[type]  %}
+  {% set type = ('m-notification__' + type) if type else '' %}
+
+  <div class="m-notification
+              {{ type }}
+              {{ 'm-notification__visible' if is_visible else '' }}">
+      <span class="m-notification_icon
+                   cf-icon"></span>
+      <div class="m-notification_content">
+          <p class="h4 m-notification_message">{{ message }}</p>
+          {% if explanation %}
+              <p class="h4 m-notification_explanation">{{ explanation }}</p>
+          {% endif %}
+      </div>
+  </div>
+
+{% endmacro %}

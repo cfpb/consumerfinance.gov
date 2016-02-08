@@ -2,225 +2,44 @@
 
 {# Import organisms and molecules used in the template. #}
 {% import 'molecules/notification.html' as notification %}
-{% import 'organisms/post-preview.html' as post_preview %}
-
-{% if not page %}
-    {% set prototype = true %}
-    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
-{% endif %}
-
-{% if not breadcrumb_items %}
-    {% set parent = page.parent() %}
-    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
-{% endif %}
+{% import 'organisms/post-preview.html' as post_preview with context %}
 
 {% block title -%}
-    TODO: This is a prototype page for testing landing page layouts.
-    Remove when fully implemented elsewhere.
+    {{ page.seo_title if page.seo_title else page.title }}
 {%- endblock %}
 
-{# TODO: Remove lipsumText when and if it is no longer needed. #}
-{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
 {% block content_main %}
+    {% for block in page.header %}
+        <div class="block
+                    block__flush-top">
+            {{ block | safe }}
+        </div>
+    {% endfor %}
+    {% for block in page.content %}
+        <div class="block
+                    block__flush-top">
+            {% if 'filter_controls' in block.block_type %}
+                {% set f = forms.pop(0) %}
+                {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
+                {{ flc(block.value, f, loop.index0) }}
+            {% else %}
+                {{ block | safe }}
+            {% endif %}
+        </div>
+    {% endfor %}
     <div class="block
-                block__flush
-                block__padded-bottom">
-        {# TODO: Move notification to filter-list-control. #}
-        {% do global_dict.update(
-            {
-                'notification': {
-                    'is_visible': true
-                }
-
-            })
-        %}
-        {% set value = global_dict.notification %}
-        {% include 'molecules/notification.html' with context %}
-    </div>
-    <div class="block
-                block__flush
-                block__padded-bottom">
-        {% do global_dict.update(
-            {
-                'notification': {
-                    'is_visible': true,
-                    'type':       'warning'
-                }
-
-            })
-        %}
-        {% set value = global_dict.notification %}
-        {% include 'molecules/notification.html' with context %}
-    </div>
-    <div class="block
-                block__flush
-                block__padded-bottom">
-        {% do global_dict.update(
-            {
-                'notification': {
-                    'is_visible': true,
-                    'type':       'error'
-                }
-
-            })
-        %}
-        {% set value = global_dict.notification %}
-        {% include 'molecules/notification.html' with context %}
-    </div>
-    <div class="block
-                block__flush
-                block__padded-bottom">
-        {% do global_dict.update(
-            {
-                'notification': {
-                    'is_visible':   true,
-                    'message':     'Custom text',
-                    'explanation': 'With an explanation!'
-                }
-
-            })
-        %}
-        {% set value = global_dict.notification %}
-        {% include 'molecules/notification.html' with context %}
-    </div>
-    <div class="block
-                block__flush
-                block__padded-bottom">
-        {% do global_dict.update(
-            {
-                'notification': {
-                    'is_visible':   true,
-                    'type':        'warning',
-                    'message':     'Custom text',
-                    'explanation': 'And an explanation with a <a href="#">link</a>' | safe
-                }
-
-            })
-        %}
-        {% set value = global_dict.notification %}
-        {% include 'molecules/notification.html' with context %}
-    </div>
-    <div class="block
-                block__flush-top">
-        {# TODO: Add main molecules and organisms. #}
-        {% if prototype %}
-            {% set value = undefined %}
-            {% include 'molecules/text-introduction.html' %}
-        {% endif %}
-    </div>
-    <div class="block
-                block__flush-top">
-        {% include 'organisms/filterable-list-controls.html' %}
-    </div>
-    <div class="block">
-        {{ post_preview.render({
-            'heading': 'This is a blog post',
-            'body': {
-                'source': lipsumText
-            },
-            'published_date': '20030805T213611',
-            'image_url': 'http://www.placehold.it/160x90',
-            'post_category': ['Info for Consumers', 'At the CFPB'],
-            'author': ['Tom', 'Jerry'],
-            'post_tags': ['FOIA', 'Mortgage']
-            },
-            '/blog/') }}
-    </div>
-    <div class="block">
-        {{ post_preview.render({
-            'heading': 'This is a newsroom post',
-            'body': {
-                'source': lipsumText
-            },
-            'published_date': '20030805T213611',
-            'post_category': ['Press Release'],
-            'author': ['Tom', 'Jerry'],
-            'post_tags': ['FOIA', 'Mortgage']
-            },
-            '/newsroom/') }}
-    </div>
-    <div class="block">
-        {{ post_preview.render({
-            'heading': 'This is a event post',
-            'body': {
-                'source': lipsumText
-            },
-            'published_date': '20030805T213611',
-            'event_venue': 'The White House',
-            'event_street': '1600 pennsylvania avenue',
-            'event_city': 'Washington',
-            'event_state': 'DC',
-            'event_zip': '20500',
-            'event_start_dt':'20030805T213611',
-            'post_category': ['Speech'],
-            'post_tags': ['FOIA', 'Mortgage']
-            },
-            '/events/') }}
-    </div>
-    <div class="block">
-        {{ post_preview.render({
-            'heading': 'This is a event livestream post',
-            'body': {
-                'source': lipsumText
-            },
-            'published_date': '20030805T213611',
-            'event_stream_link': 'http://www.whitehouse.gov',
-            'event_start_dt':'20030805T213611',
-            'post_category': ['Speech'],
-            'post_tags': ['FOIA', 'Mortgage']
-            },
-            '/events/') }}
-    </div>
-    <div class="block">
-        {{ post_preview.render({
-            'heading': 'This is a notice & comment post',
-            'body': {
-                'source': lipsumText
-            },
-            'published_date': '20030805T213611',
-            'post_category': ['Notice of request for public comment'],
-            'external_link': 'Submit a comment',
-            'external_link_url': 'http://www.google.com/',
-            'comments_close_date': '20030805T213611'
-            },
-            '') }}
-    </div>
-    <div class="block">
-        {% set value = {
-
-                'filters': [],
-                'pages': 44,
-                'current_page': 3,
-                'prev_button_href': '',
-                'next_button_href': ''
-           }
-        %}
-        {% include 'molecules/pagination.html' with context %}
-    </div>
-    <div class="block">
-        {% set value = {
-
-                'filters': [],
-                'pages': 44,
-                'current_page': 1,
-                'prev_button_href': '',
-                'next_button_href': ''
-           }
-        %}
-        {% include 'molecules/pagination.html' with context %}
-    </div>
-    <div class="block">
-        {% set value = {
-
-                'filters': [],
-                'pages': 44,
-                'current_page': 44,
-                'prev_button_href': '',
-                'next_button_href': ''
-           }
-        %}
-        {% include 'molecules/pagination.html' with context %}
+                block__flush-bottom
+                block__flush-sides
+                block__bg
+                block__border-top
+                block__border-right">
+        Put sidefoot content here
     </div>
 {% endblock %}
 
