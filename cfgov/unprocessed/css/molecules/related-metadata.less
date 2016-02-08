@@ -22,6 +22,12 @@
             </ul>
             <p class="date u-mb0"></p>
             <p class="short-desc u-mb0"></p>
+            <ul class="list list__unstyled list__links m-related-metadata_topics">
+            <li class="list_item">
+                <a href="" class="list_link">
+                </a>
+            </li>
+        </ul>
         </div>
     </div>
     codenotes:
@@ -38,11 +44,17 @@
               .list_link
           .date .u-mb0
           .short-desc .u-mb0
+          .m-related-metadata_topics
+            .list.list__unstyled.list__links
+              .list-item
+                a.list-link
   tags:
     - cfgov-molecules
 */
 
 @margin_half__em: unit(15px / @base-font-size-px, em);
+
+@bullet-font-size__em: unit(15px / @base-font-size-px, em);
 
 .m-related-metadata {
     .list_link {
@@ -59,6 +71,40 @@
     &:not(:last-child) {
         margin-bottom: @margin_half__em * 2;
     }
+}
+
+.m-related-metadata_topics {
+    line-height: 1em;
+
+    .list_link {
+        .h6();
+        position: relative;
+        margin: 0 0 0 @bullet-font-size__em;
+        text-transform: uppercase;
+
+        .u-link__colors(@gray, @gray, @gray, @gray, @gray,
+                        @gold-80, @gold-80, @gold-80, @gold-80, @gold-80);
+
+        &:before {
+            position: absolute;
+            left: -@bullet-font-size__em;
+            width: @bullet-font-size__em;
+
+            // Adding bullet.
+            content: "\2022";
+            color: @gold-80;
+        }
+    }
+
+    .respond-to-max(@bp-sm-min, {
+        .list_link {
+            margin-left: 0;
+
+            &:before {
+                position: static;
+            }
+        }
+    });
 }
 
 .m-related-metadata__half-width {
