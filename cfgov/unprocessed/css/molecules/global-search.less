@@ -152,28 +152,13 @@
 
             &[aria-expanded="true"] {
                 background: @gray-10;
-                border: 1px solid @gray-50;
-                border-bottom: none;
+                border-left: 1px solid @gray-40;
                 color: @black;
 
                 .cf-icon:before {
                     content: @cf-icon-delete;
                 }
 
-                // Cover up the border edge of the flyout so that it is attached
-                // visually to the trigger button.
-                &:after {
-                    display: block;
-                    height: 1px;
-                    width: 100%;
-
-                    position: absolute;
-                    left: 0;
-                    bottom: -1px;
-
-                    content: '\a0';
-                    background: @gray-10;
-                }
             }
         } );
 
@@ -217,11 +202,12 @@
             top: 60px;
             z-index: 10;
 
-            background-color: @gray-10;
-            border: 1px solid @gray-50;
+            background-color: @gray-5;
+            border-top: 1px solid @gray-40;
+            border-bottom: 1px solid @gray-40;
             pointer-events: auto;
 
-            transform: translateX(100%);
+            transform: translateX( 100% );
             transition: transform 0.25s ease-out;
 
             &-form {

@@ -69,7 +69,11 @@
         </p>
         <ul class="list list__links">
             {% if value.show_post_link and value.post %}
-                <a href="{{ value.post.url_path }}"> {{ value.post_link_text }} </a>
+                <li class="list_item">
+                  <a class="list_link" href="{{ value.post.url_path }}">
+                    {{ value.post_link_text }}
+                  </a>
+                </li>
             {% endif %}
 
             {% for link in value.links %}

@@ -11,6 +11,8 @@ from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
 from util.util import get_unique_id
 
+default_app_config = 'v1.apps.V1AppConfig'
+
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     env = sheerlike_environment(**options)

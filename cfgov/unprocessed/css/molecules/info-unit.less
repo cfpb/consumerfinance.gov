@@ -1,0 +1,161 @@
+@m-info-unit_img__sm: 130px;
+@m-info-unit_img__lg: 150px;
+
+.m-info-unit {
+    &__inline {
+        .u-clearfix();
+    }
+
+    &__inline &_image {
+        .respond-to-min( @bp-sm-min, {
+            float: left;
+            margin-bottom: 0;
+        } );
+    }
+
+    &__home &_image {
+        .respond-to-range( @bp-sm-min, @bp-med-max, {
+            float: left;
+            margin-bottom: 0;
+        } );
+    }
+
+    &__inline &_content {
+        .respond-to-min( @bp-sm-min, {
+            margin-left: unit( ( @m-info-unit_img__sm + @grid_gutter-width ) / @base-font-size-px, em );
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            margin-left: unit( ( @m-info-unit_img__lg + @grid_gutter-width ) / @base-font-size-px, em );
+        } );
+    }
+
+     &__home &_content {
+        .respond-to-range( @bp-sm-min, @bp-sm-max, {
+            margin-left: unit( ( @m-info-unit_img__sm + @grid_gutter-width ) / @base-font-size-px, em );
+        } );
+
+        .respond-to-range( @bp-med-min, @bp-med-max, {
+            margin-left: unit( ( @m-info-unit_img__lg + @grid_gutter-width ) / @base-font-size-px, em );
+        } );
+    }
+
+    &_image {
+        margin-right: auto;
+        margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        margin-left: auto;
+        display: block;
+        max-height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
+        background-size: cover;
+
+        .respond-to-min(@bp-med-min, {
+            max-height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
+        });
+
+        &__square {
+            width: unit( @m-info-unit_img__sm / @base-font-size-px, em );
+            height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
+
+            .respond-to-min( @bp-med-min, {
+                width: unit( @m-info-unit_img__lg / @base-font-size-px, em );
+                height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
+            } );
+        }
+    }
+
+    &_btn {
+        .respond-to-max( @bp-xs-max, {
+            width: 100%;
+            text-align: center;
+        } );
+    }
+}
+
+.content_main__home {
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+
+    .respond-to-max( @bp-xs-max, {
+        padding-bottom: unit( ( @grid_gutter-width * 2 ) / @base-font-size-px, em );
+    } );
+}
+
+.content-l_col__home {
+    .respond-to-max( @bp-med-max, {
+        + .content-l_col__home {
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+    } );
+
+    .respond-to-min( @bp-sm-min, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column( 4 );
+    } );
+}
+
+.o-well__home {
+    .respond-to-min( @bp-xl-min, {
+        max-width: 1230px - ( 45px * 2 ) !important;
+        margin: 0 auto;
+        padding-right: unit( 45px / @base-font-size-px, em ) !important;
+        padding-left: unit( 45px / @base-font-size-px, em ) !important;
+    } );
+}
+
+.o-well__home-hero {
+    background-repeat: no-repeat;;
+    border: none !important;
+
+    .respond-to-max( @bp-xs-max, {
+        padding-bottom: 56.25% !important;
+
+        background-image: url('../img/home-hero_sm.jpg');
+        background-position: center bottom;
+        background-size: 100%;
+    } );
+
+    .respond-to-min( @bp-sm-min, {
+        min-height: 380px - (45px * 2);
+        padding-top: unit( 45px / @base-font-size-px, em ) !important;
+        padding-bottom: unit( 45px / @base-font-size-px, em ) !important;
+
+        background-color: @gray !important;
+        background-image: url('../img/home-hero_full.jpg');
+        background-size: 1230px;
+        background-position: left top;
+        color: @white;
+    } );
+}
+
+.m-home-hero {
+
+    .respond-to-min( @bp-sm-min, {
+        .grid_column( 1, 1 );
+    } );
+
+    // Adding a custom breakpoint at 776px to fix specific
+    // layout issues
+    .respond-to-range( 776px, @bp-sm-max, {
+        .grid_column(8, 12);
+    } );
+
+    .respond-to-min( @bp-med-min, {
+        .grid_column(7, 12);
+    } );
+
+    &_heading {
+        .respond-to-min( @bp-sm-min, {
+            .superheading();
+        } );
+    }
+
+    &_text {
+        .lead-paragraph();
+
+        .respond-to-min( @bp-sm-min, {
+            .heading-2();
+        } );
+    }
+}

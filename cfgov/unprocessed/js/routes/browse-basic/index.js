@@ -4,9 +4,6 @@
 
 'use strict';
 
-// Required polyfills for <IE8.
-require( '../../modules/polyfill/query-selector' );
-
 // List of organisms used.
 var Expandable = require( '../../molecules/Expandable' );
 var ExpandableGroup = require( '../../organisms/ExpandableGroup' );
@@ -23,7 +20,5 @@ for ( var i = 0, len = expandables.length; i < len; i++ ) {
 selector = '.expandable-group-prototypes .o-expandable-group';
 var expandableGroup = document.querySelectorAll( selector );
 var regularExpandableGroup = new ExpandableGroup( expandableGroup[0] );
-var accordionExpandableGroup = new ExpandableGroup( expandableGroup[1] );
 
 regularExpandableGroup.init();
-accordionExpandableGroup.init();
