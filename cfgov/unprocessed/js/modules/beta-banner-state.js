@@ -5,54 +5,65 @@
 
 'use strict';
 
-// Import modules
-var $ = require( 'jquery' );
+// Required modules.
+var Expandable = require( '../molecules/Expandable' );
 var _storage = require( './util/web-storage-proxy' );
 
 // Private variables.
-var _key = 'betaBannerIsCollapsed';
+var _expandable;
+
+// Constants.
+var EXPANDED_STATE = 'betaBannerIsExpanded';
+
 
 /**
  * Set up DOM references and event handlers.
  */
 function init() {
 
-  // DOM references.
-  var btnDOM = $( '#beta-banner_btn' );
-  var bannerDOM = $( '#beta-banner' );
+  // Init Expandable.
+  var betaBannerDom = document.querySelector( '#beta-banner' );
+  var isExpanded = _storage.getItem( EXPANDED_STATE ) !== 'false';
 
-  // Event handlers.
-  btnDOM.click( _betaBannerClicked );
+  _expandable = new Expandable( betaBannerDom );
+  _expandable.init( isExpanded && _expandable.EXPANDED );
 
-  // Initial state.
-  if ( _storage.getItem( _key ) !== 'true' ) {
-    bannerDOM.get( 0 ).expand();
-  }
+  _initEvents();
 }
 
 /**
  * Run when the beta in-progress banner has been clicked.
- * @returns {boolean} always returns false.
  */
-function _betaBannerClicked() {
-  _toggleStorage();
-  return false;
+function _initEvents() {
+  _expandable.addEventListener( 'click', toggleStoredState );
+}
+
+/**
+ * Remove event handlers and local storage data.
+ */
+function destroy() {
+  _expandable.removeEventListener( 'click', toggleStoredState );
+  _storage.removeItem( EXPANDED_STATE, true );
 }
 
 /**
  * Toggle the boolean value stored in a web storage.
  * @returns {boolean} Returns value stored in the web storage,
- *   either true or false.
+ * either true or false.
  */
-function _toggleStorage() {
-  var value = _storage.getItem( _key );
+function toggleStoredState() {
+  var value = _storage.getItem( EXPANDED_STATE );
+
   if ( value === 'false' ) {
-    _storage.setItem( _key, true );
+    _storage.setItem( EXPANDED_STATE, true );
   } else {
-    _storage.setItem( _key, false );
+    _storage.setItem( EXPANDED_STATE, false );
   }
   return value;
 }
 
 // Expose public methods.
-module.exports = { init: init };
+module.exports = { init:              init,
+                   destroy:           destroy,
+                   toggleStoredState: toggleStoredState
+                 };
