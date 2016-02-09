@@ -1369,11 +1369,7 @@ textarea {
   patterns:
     - name: Utility class
       markup: |
-        <h1>
-            <a href="#">
-                <span class="u-hidden">Not shown</span>
-            </a>
-        </h1>
+        <span class="u-hidden">Not shown</span>
       codenotes:
         - .u-hidden;
       notes:
@@ -1386,6 +1382,29 @@ textarea {
 
 .u-hidden {
     display: none;
+}
+
+
+/* topdoc
+  name: Invisible
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <span class="u-invisible">Not shown</span>
+      codenotes:
+        - .u-invisible;
+      notes:
+        - "Use this class to make something invisible.
+           Useful for hiding off-screen elements that
+           are part of an animation, but you don't want
+           as part of the tabindex."
+  tags:
+    - cf-core
+*/
+
+.u-invisible {
+    visibility: hidden;
 }
 
 
