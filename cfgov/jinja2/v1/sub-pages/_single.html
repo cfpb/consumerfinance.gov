@@ -25,9 +25,8 @@
     {% if sub_page.content %}
     <section class="block
                     block__flush-top
-                    block__flush-bottom
                     sub-page_content">
-        {{ sub_page.content | safe }}
+        <div class="lead-paragraph">{{ sub_page.content | safe }}</div>
     </section>
     {% endif %}
 

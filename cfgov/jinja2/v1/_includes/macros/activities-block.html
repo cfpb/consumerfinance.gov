@@ -23,9 +23,12 @@
     {% import 'macros/activity-snippets.html' as activity_snippets with context %}
     {% set activities_feed = activity_snippets.render(tags, include_date_flag=true, number_columns=2) %}
     {% include 'templates/activities-feed.html' %}
-    <a class="jump-link jump-link__underline"
-       href="/activity-log/{{ ('?filter_tags=' ~ tags | join('&') ) if tags }}">
-        View all of our activities
-    </a>
+    <div class="block
+                block__flush-top">
+      <a class="jump-link jump-link__underline"
+         href="/activity-log/{{ ('?filter_tags=' ~ tags | join('&') ) if tags }}">
+          View all of our activities
+      </a>
+    </div>
 </section>
 {% endmacro %}
