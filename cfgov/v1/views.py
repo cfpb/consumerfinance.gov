@@ -1,4 +1,4 @@
-import time
+import time, re
 from datetime import timedelta
 
 from core.services import PDFGeneratorView, ICSView
@@ -147,7 +147,14 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     """
     Displays the login form and handles the login action.
     """
-    redirect_to = request.GET.get(REDIRECT_FIELD_NAME, '')
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+
+    # redirects to http://example.com should not be allowed, but things like /view/?param=http://example.com
+    # should be allowed. This regex checks if there is a '//' *before* a question mark.
+    if redirect_to:
+        if '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
+            redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
@@ -156,7 +163,6 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
             # Ensure the user-originating redirection url is safe.
             if not is_safe_url(url=redirect_to, host=request.get_host()):
                 redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
-
 
             user = form.get_user()
             try:
@@ -214,7 +220,7 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
                 password1 = form.cleaned_data.get('new_password1', '')
                 password2 = form.cleaned_data.get('new_password2', '')
                 errors = password_policy._check_passwords(password1, password2, user)
-                
+
                 if len(errors) == 0:
                     form.save()
                     return HttpResponseRedirect(post_reset_redirect)
