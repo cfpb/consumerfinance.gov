@@ -92,17 +92,20 @@
         }}
     </section>
     {% endif %}
-    <aside>
+    <aside class="block
+                  block__flush-bottom
+                  block__flush-sides
+                  block__bg
+                  block__border-top
+                  block__border-right">
         <div class="block
-                    block__flush-sides
-                    block__flush-bottom
-                    block__border-top
-                    block__border-right">
+                    block__flush-top">
             {% if sub_page.tags %}
                 {% import 'macros/activities-block.html' as activities_block with context %}
                 {{ activities_block.render(sub_page.tags) }}
+        </div>
+        <div class="block">
             {% endif %}
-
             {% set office = vars.office %}
             {% include 'templates/office-contact.html' %}
         </div>
