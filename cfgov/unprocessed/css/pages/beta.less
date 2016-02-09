@@ -12,8 +12,12 @@
     font-size: 0.875em;
     transition: padding 0.2s ease-out;
 
-    &.expandable__expanded {
+    &.m-expandable__expanded {
         padding: @grid_gutter-width 0;
+    }
+
+    .m-expandable_content {
+        border-bottom: none;
     }
 
     .respond-to-min(@bp-sm-min, {
@@ -25,7 +29,7 @@
     .h4();
     margin-bottom: 0;
 
-    .expandable__expanded & {
+    .m-expandable__expanded & {
         margin-bottom: unit(5px / @base-font-size-px, em);
     }
 }
@@ -36,6 +40,8 @@
 
 .beta-banner_desc {
     margin-bottom: 0;
+    padding: 0;
+    background: @gold-20;
 }
 
 .beta-banner_btn {
@@ -75,6 +81,12 @@
         // so the button position has to be adjusted accordingly.
         top: unit(-12px/@base-font-size-px, em);
     });
+}
+
+.no-js {
+    .beta-banner_btn {
+        display: none;
+    }
 }
 
 .beta-hero {

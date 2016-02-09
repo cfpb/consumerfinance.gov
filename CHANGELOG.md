@@ -165,6 +165,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added new info-unit molecule that combines (but doesn't replace) the half width link blob, image and text 50/50, and 25/75 into one base molecule using modifiers.
 - Added new (undocumented) card molecule.
 - Add wagtailuserbar to the base.html
+- Added unit test for beta-banner.js.
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -286,6 +287,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated brand colors to updates in generator-cf.
 - Disabled JavaScript in IE8 and earlier.
 - Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
+- Refactored beta-banner.js to demonstrate general lifecycle.
 
 ### Removed
 - Removed unused exportsOverride section,
