@@ -150,10 +150,9 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    # redirects to http://example.com should not be allowed, but things like /view/?param=http://example.com
-    # should be allowed. This regex checks if there is a '//' *before* a question mark.
+    # redirects to http://example.com should not be allowed
     if redirect_to:
-        if '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
+        if '//' in redirect_to:
             redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
     if request.method == "POST":
