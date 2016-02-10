@@ -74,6 +74,7 @@ class CFGOVPage(Page):
         ('related_posts', organisms.RelatedPosts()),
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
+        ('sidebar_contact', organisms.SidebarContactInfo()),
     ], blank=True)
 
     # Panels
