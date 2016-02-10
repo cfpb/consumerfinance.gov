@@ -109,11 +109,19 @@
             }}
         </div>
     {% else %}
+        {% from 'organisms/post-preview.html' import render as post_preview with context %}
         {% for block in page.content -%}
             {% if loop.index == 1 %}
                 <div class="block
                             block__flush-top">
                     {{ render_stream_child(block) }}
+                </div>
+            {% elif 'post_preview_snapshot' in block.block_type %}
+                {% set posts = page.get_browsefilterable_posts(request) %}
+                <div class="block">
+                    {% for i in range(block.value.limit | int) %}
+                        {{ post_preview(posts[i], '', 0, pageurl(posts[i].parent())) }}
+                    {% endfor %}
                 </div>
             {% else %}
                 <div class="block">
