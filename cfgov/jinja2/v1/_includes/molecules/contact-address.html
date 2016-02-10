@@ -19,36 +19,19 @@
 
    ========================================================================== #}
 
-{% if value %}
-    <div class="m-contact-address">
-        <span class="cf-icon cf-icon-mail"></span>
-        <span class="h5">{{ value.label }}</span>
+<div class="m-contact-address">
+    <span class="cf-icon cf-icon-mail"></span>
+    <span class="h5">{{ value.label }}</span>
 
-        <p>
-            {% if value.title %}
-                <span>{{ value.title }}</span><br>
-            {% endif %}
-            <span>{{ value.street }}</span><br>
-            <span>{{ value.city }}</span>,
-            <span>{{ value.state }}</span>
-            <span>{{ value.zip_code }}</span>
-        </p>
-    </div>
-{% else %}
-    {% macro render(address) %}
-        <div class="m-contact-address">
-            <span class="cf-icon cf-icon-mail"></span>
-            <span class="h5">{{ address.label }}</span>
+    <p>
+        {% if value.title %}
+            <span>{{ value.title }}</span><br>
+        {% endif %}
+        <span>{{ value.street }}</span><br>
+        <span>{{ value.city }}</span>,
+        <span>{{ value.state }}</span>
+        <span>{{ value.zip_code }}</span>
+    </p>
+</div>
 
-            <p>
-                {% if address.title %}
-                    <span>{{ address.title }}</span><br>
-                {% endif %}
-                <span>{{ address.street }}</span><br>
-                <span>{{ address.city }}</span>,
-                <span>{{ address.state }}</span>
-                <span>{{ address.zip_code }}</span>
-            </p>
-        </div>
-    {% endmacro %}
-{% endif %}
+

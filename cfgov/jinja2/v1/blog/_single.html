@@ -30,10 +30,8 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% if page %}
         {% import 'related-posts.html' as related_posts with context %}
         {{ related_posts.render() }}
-        {% endif %}
     </section>
     <section class="block" data-qa-hook="stay-informed-section">
         <h2 class="header-slug">
