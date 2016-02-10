@@ -71,6 +71,9 @@ class AbstractFilterPage(CFGOVPage):
     # This page class cannot be created.
     is_creatable = False
 
+    class Meta:
+        ordering = ('date_published',)
+
 
 class LearnPage(AbstractFilterPage):
     content = StreamField([
