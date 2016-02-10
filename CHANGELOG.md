@@ -302,6 +302,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Sidebar from LandingPage
 - Removed `map` and `filter` array polyfills.
 - Removed `event-listener.js` and `query-selector.js` polyfills for IE8.
+- Removed prototype language, such as instances of setting `value`, `page`, and `global_dict`
 
 ### Fixed
 - Fixed instructions for gulp watch
