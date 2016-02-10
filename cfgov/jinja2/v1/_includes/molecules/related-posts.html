@@ -24,7 +24,6 @@
     "events"   : ("Events", "speech-bubble")
   }
 %}
-{% set page = page or global_dict.page %}
 {% set related_post_types = page.related_posts(block) %}
 {% if related_post_types %}
 <div class="m-related-posts
@@ -70,7 +69,6 @@
 
 {% macro _related_posts_list(posts) %}
 {% import 'macros/time.html' as time %}
-{% set page = page or global_dict.page %}
 <ul class="m-related-posts_list
            list list__unstyled
            list__spaced">

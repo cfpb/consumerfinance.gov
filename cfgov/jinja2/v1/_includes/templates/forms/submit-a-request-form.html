@@ -2,62 +2,15 @@
 
 <form class="js-validate-filters">
     <section class="o-form-section">
-        {% do global_dict.update({
-            'input': {
-                'label':    'First name!',
-                'type':     'text',
-                'size':     '1-2',
-                'required': true,
-                'disabled': false
-            }
-        }) %}
         
         {% include 'atoms/input.html' with context %}
 
-        {% do global_dict.update({
-            'input': {
-                'label':    'Last name',
-                'type':     'text',
-                'size':     '1-2',
-                'required': true,
-                'disabled': false
-            }
-        }) %}
-        
         {% include 'atoms/input.html' with context %}
 
-        {% do global_dict.update({
-            'date_picker': {
-                'legend':   'Document dates:'
-            }
-        }) %}
-        
         {% include 'atoms/date-picker.html' with context %}
 
-
-        {% do global_dict.update({
-            'textarea': {
-                'label':        'Requested information',
-                'helperText':   'Describe the records you seek from the CFPB.
-                                 <a href="../foia-faqs">Review our FAQs
-                                 for additional guidance.</a>',
-                required:       true
-            }
-        }) %}
-        
         {% include 'atoms/textarea.html' with context %}
 
-        {% do global_dict.update({
-            'select': {
-                'label':        'Select a request category',
-                'placeholder':  'Select FOIA request category',
-                'fields':       ['Commercial', 'Media', 'Others'],
-                'size':         '1',
-                'required':     false,
-                'disabled':     false
-            }
-        }) %}
-    
         {% include 'atoms/select.html' with context %}
 
         <fieldset class="u-reset js-additional-field">
@@ -207,64 +160,19 @@
         </fieldset>
 
         <fieldset class="u-reset js-is-hidden" id="foia-request_organization-info">
-            {% do global_dict.update({
-                'input': {
-                    'label':    'Organization Name',
-                    'type':     'text',
-                    'size':     '1',
-                    'required': false,
-                    'disabled': true
-                }
-            }) %}
-            
+
             {% include 'atoms/input.html' with context %}
 
-            {% do global_dict.update({
-                'input': {
-                    'label':    'Address',
-                    'type':     'text',
-                    'size':     '1',
-                    'required': false,
-                    'disabled': true
-                }
-            }) %}
-            
             {% include 'atoms/input.html' with context %}
 
-            {% do global_dict.update({
-                'input': {
-                    'label':    'City',
-                    'type':     'text',
-                    'size':     '1-2',
-                    'required': false,
-                    'disabled': true
-                }
-            }) %}
-            
             {% include 'atoms/input.html' with context %}
 
             {% include 'atoms/state-selector.html' %}
 
-            {% do global_dict.update({
-                'input': {
-                    'label':    'Zip code',
-                    'type':     'text',
-                    'size':     '1-4',
-                    'required': false,
-                    'disabled': true
-                }
-            }) %}
-            
             {% include 'atoms/input.html' with context %}
         </fieldset>
     </section>
 
-    {% do global_dict.update({
-        'submit_button': {
-            'button_text':  'Generate FOIA PDF'
-        }
-    }) %}
-    
     {% include 'atoms/submit-button.html' with context %}
 
 </form>
