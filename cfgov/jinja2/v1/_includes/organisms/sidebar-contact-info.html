@@ -67,7 +67,9 @@
             {% endfor %}
         {% endif %}
 
-        <h3>{{ value.header }}</h3>
+        {% if value.header %}
+            <h3>{{ value.header }}</h3>
+        {% endif %}
 
         {{ value.contact.body | safe }}
     </div>
