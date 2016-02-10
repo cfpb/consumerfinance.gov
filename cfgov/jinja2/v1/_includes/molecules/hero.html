@@ -30,28 +30,33 @@
    See [GHE]/flapjack/Modules-V1/wiki/Heros
 
    ========================================================================== #}
-<section class="hero"
-         {{ 'style=background-color:' +
-             value.background_color + ';'
-             if value.background_color else '' }}>
-    <div class="wrapper hero_wrapper">
-        <div class="hero_text">
-            <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ value.body.source |safe}}</div>
-            {% for link in value.links %}
-                <a href="{{ link.url }}"
-                   class="hero_cta
-                   {{ 'btn' if value.is_button
-                   else '' }}">
-                    {{ link.text }}
-                </a>
-            {% endfor %}
-        </div>
-        {% if value.image.upload %}
-            {% set photo=image(value.image.upload, 'original') %}
-            <div class="hero_image"
-                 style="background-image: url( {{ photo.url }} );">
-        {% endif %}
-        </div>
-    </div>
-</section>
+{% macro render(value) %}
+  <section class="hero"
+    {{ value.body.source }}
+           {{ 'style=background-color:' +
+               value.background_color + ';'
+               if value.background_color else '' }}>
+      <div class="wrapper hero_wrapper">
+          <div class="hero_text">
+              <h1 class="hero_heading">{{ value.heading | safe}}</h1>
+              <div class="hero_subhead">{{ value.body.source |safe}}</div>
+              {% for link in value.links %}
+                  <a href="{{ link.url }}"
+                     class="hero_cta
+                     {{ 'btn' if value.is_button
+                     else '' }}">
+                      {{ link.text }}
+                  </a>
+              {% endfor %}
+        {# TODO: Get the image working (needs an AbstractImage type passed in)
+          </div>
+          {% if value.image.upload %}
+              {% set photo=image(value.image.upload, 'original') %}
+              <div class="hero_image"
+                   style="background-image: url( {{ photo.url }} );">
+          {% endif %}
+          </div>
+        #}
+      </div>
+  </section>
+{% endmacro %}
