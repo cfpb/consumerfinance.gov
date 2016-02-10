@@ -140,14 +140,13 @@
         {% include 'templates/activities-feed.html' %}
     </section>
     <section class="block">
-        {# TODO: Add OCR URL. #}
         {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([
             [ '/blog/',
               'CFPB Blog' ],
             [ '/newsroom/',
               'Newsroom' ],
-            [ '',
+            [ '/offices/office-of-civil-rights/',
               'Office of Civil Rights' ]
         ]) -}}
     </section>

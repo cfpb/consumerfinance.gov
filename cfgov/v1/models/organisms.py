@@ -52,7 +52,7 @@ class HalfWidthLinkBlobGroup(blocks.StructBlock):
 
 
 class PostPreview(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
 
@@ -66,7 +66,7 @@ class PostPreview(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
@@ -110,7 +110,7 @@ class Table(blocks.StructBlock):
     headers = blocks.ListBlock(blocks.CharBlock())
     rows = blocks.ListBlock(blocks.StreamBlock([
         ('hyperlink', atoms.Hyperlink(required=False)),
-        ('text', blocks.CharBlock(max_length=20)),
+        ('text', blocks.CharBlock()),
         ('text_blob', blocks.TextBlock()),
         ('rich_text_blob', blocks.RichTextBlock()),
     ]))

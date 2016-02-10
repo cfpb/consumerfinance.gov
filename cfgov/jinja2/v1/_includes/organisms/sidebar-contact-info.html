@@ -43,9 +43,9 @@
     <div class="o-sidebar-contact-info">
         <div class="o-sidebar-contact-info_heading">
             <h2 class="header-slug">
-            <span class="header-slug_inner">
-                Contact Information
-            </span>
+                <span class="header-slug_inner">
+                    Contact Information
+                </span>
             </h2>
         </div>
 
@@ -72,7 +72,6 @@
 
         <div class="o-sidebar-contact-info_column">
             {% if page.contact.contact_info %}
-
                 {% for block in page.contact.contact_info %}
                     {{ render_stream_child(block) }}
                 {% endfor %}
@@ -84,9 +83,9 @@
         <div class="o-sidebar-contact-info">
             <div class="o-sidebar-contact-info_heading">
                 <h2 class="header-slug">
-            <span class="header-slug_inner">
-                Contact Information
-            </span>
+                    <span class="header-slug_inner">
+                        Contact Information
+                    </span>
                 </h2>
             </div>
 
@@ -108,21 +107,28 @@
             </div>
 
             <div class="o-sidebar-contact-info_column">
+                {% if contact.emails %}
+                    {{ contact_email.render(contact.emails) }}
+                {% endif %}
 
-                {{ contact_email.render(contact.emails) }}
+                {% if contact.phones %}
+                    {{ contact_phone.render(contact.phones) }}
+                {% endif %}
 
-                {{ contact_phone.render(contact.phones) }}
+                {% if contact.faxes %}
+                    {{ contact_phone.render(contact.faxes, true) }}
+                {% endif %}
 
-                {{ contact_phone.render(contact.faxes, true) }}
-
-                {{ contact_address.render({
-                        'label':    'Mailing Address',
-                        'title':    contact.address.title,
-                        'street':   contact.address.street,
-                        'city':     contact.address.city,
-                        'state':    contact.address.state,
-                        'zip_code': contact.address.zip_code
-                        }) }}
+                {% if contact.address %}
+                    {{ contact_address.render({
+                            'label':    'Mailing Address',
+                            'title':    contact.address.title,
+                            'street':   contact.address.street,
+                            'city':     contact.address.city,
+                            'state':    contact.address.state,
+                            'zip_code': contact.address.zip_code
+                            }) }}
+                {% endif %}
             </div>
         </div>
     {% endmacro %}
