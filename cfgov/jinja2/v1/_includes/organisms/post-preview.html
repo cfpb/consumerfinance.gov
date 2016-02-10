@@ -158,7 +158,7 @@
                 {% endif %}
             </div>
             {% if post.preview_link_text %}
-                <a href="{{ post.url }}" class="jump-link jump-link__underline">
+                <a href="{{ get_page_state_url({'request':request}, page) }}" class="jump-link jump-link__underline">
                     {{ post.preview_link_text }}
                 </a>
             {% endif %}

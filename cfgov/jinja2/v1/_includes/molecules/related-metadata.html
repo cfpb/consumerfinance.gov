@@ -23,7 +23,7 @@
     'topics': _topics,
 } %}
 <div class="m-related-metadata
-            {{ 'm-related-metadata__half-width' if value.is_half_width else '' }}">
+            {{ 'm-related-metadata__half-width' if value.half_width else '' }}">
     <h2 class="header-slug">
         <span class="header-slug_inner">
             {{ value.slug }}
@@ -133,5 +133,5 @@
    ========================================================================== #}
 
 {% macro _topics(list) %}
-    {{ _list( list, true ) }}
+    {{ _list( page.related_metadata_tags(request.GET), true ) }}
 {% endmacro %}

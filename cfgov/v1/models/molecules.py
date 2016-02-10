@@ -13,7 +13,7 @@ def isRequired(field_name):
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(blank=True,  required=False)
+    body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
@@ -249,6 +249,7 @@ class RelatedMetadata(blocks.StructBlock):
             ('show_topics', blocks.BooleanBlock(default=True, required=False))
         ], icon='tag')),
     ])
+    half_width = blocks.BooleanBlock(required=False, default=False)
 
     class Meta:
         icon = 'grip'
