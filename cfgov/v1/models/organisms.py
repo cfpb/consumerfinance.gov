@@ -13,17 +13,6 @@ class Well(blocks.StructBlock):
         template = '_includes/organisms/well.html'
 
 
-class FullWidthText(blocks.StreamBlock):
-    content = blocks.RichTextBlock(icon='edit')
-    quote = molecules.Quote()
-    cta = molecules.CallToAction()
-    related_links = molecules.RelatedLinks()
-
-    class Meta:
-        icon = 'edit'
-        template = '_includes/organisms/full-width-text.html'
-
-
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
     image_texts = blocks.ListBlock(molecules.ImageText5050())
@@ -119,6 +108,18 @@ class Table(blocks.StructBlock):
         icon = 'form'
         template = '_includes/organisms/table.html'
         label = 'Table'
+
+
+class FullWidthText(blocks.StreamBlock):
+    content = blocks.RichTextBlock(icon='edit')
+    quote = molecules.Quote()
+    cta = molecules.CallToAction()
+    related_links = molecules.RelatedLinks()
+    table = Table()
+
+    class Meta:
+        icon = 'edit'
+        template = '_includes/organisms/full-width-text.html'
 
 
 class ExpandableGroup(blocks.StructBlock):

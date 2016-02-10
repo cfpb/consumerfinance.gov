@@ -301,6 +301,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
 - Refactored beta-banner.js to demonstrate general lifecycle.
 - Updated `protractor` from `3.0.0` to `3.1.1`.
+- Included Table organism within full width text
 
 ### Removed
 - Removed unused exportsOverride section,
