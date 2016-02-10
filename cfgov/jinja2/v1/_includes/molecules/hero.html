@@ -48,15 +48,16 @@
                       {{ link.text }}
                   </a>
               {% endfor %}
-        {# TODO: Get the image working (needs an AbstractImage type passed in)
           </div>
-          {% if value.image.upload %}
-              {% set photo=image(value.image.upload, 'original') %}
+
+          {# TODO: Update this when ready for images uploaded by user #}
+          {% if value.image.upload.url %}
               <div class="hero_image"
-                   style="background-image: url( {{ photo.url }} );">
+                   style="background-image: url( {{ value.image.upload.url }} );">
+              </div>
           {% endif %}
-          </div>
-        #}
       </div>
   </section>
 {% endmacro %}
+
+
