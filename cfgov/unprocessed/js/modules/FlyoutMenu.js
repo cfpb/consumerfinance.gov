@@ -124,6 +124,18 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
     this.dispatchEvent( 'collapseEnd', { target: this } );
   }
 
+  /**
+   * @returns {Object}
+   *   Hash of trigger, alternative trigger, and content DOM references.
+   */
+  function _getDom() {
+    return {
+      altTrigger: _altTriggerDom,
+      content:    _contentDom,
+      trigger:    _triggerDom
+    };
+  }
+
   // Attach public events.
   var eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
@@ -133,6 +145,7 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
   this.init = init;
   this.expand = expand;
   this.collapse = collapse;
+  this.getDom = _getDom;
 
   return this;
 }

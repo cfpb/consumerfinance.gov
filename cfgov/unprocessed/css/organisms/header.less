@@ -1,4 +1,3 @@
-
 // TODO: Move the theme variables to cf-enhancements.
 /* topdoc
   name: Theme variables
@@ -62,7 +61,11 @@
 */
 
 .o-header {
+    min-width: 320px;
     border-bottom: 5px solid @green;
+    position: relative;
+    z-index: 10;
+    background-color: @white;
 
     > .m-global-eyebrow {
 
@@ -76,12 +79,21 @@
         .respond-to-min( @bp-med-min, {
             padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-            & > .m-global-header-cta {
-                    float: right;
-            }
-
+            & > .m-global-header-cta,
             & > .m-global-search {
                 float: right;
+            }
+
+            // TODO: This needs another approach so menu doesn't wrap
+            //       around when search is expanded at small screen sizes.
+            // Flip stacking order between logo and mega menu,
+            // so that menu appears on bottom.
+            & > .o-mega-menu {
+                display: table-footer-group;
+            }
+
+            & > .o-header_logo {
+                display: table-header-group;
             }
         } );
 

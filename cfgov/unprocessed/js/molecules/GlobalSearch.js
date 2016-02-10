@@ -33,6 +33,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   var _searchInputDom;
   var _searchBtnDom;
   var _clearBtnDom;
+
+  // TODO: Move tab trigger to its own class.
   var _tabTriggerDom =
     _contentDom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
 
@@ -83,6 +85,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     }
   }
 
+  // TODO: Move this to breakpoint-state.js.
   /**
    * Whether currently in the desktop view.
    * @returns {boolean} True if in the desktop view, otherwise false.
@@ -115,16 +118,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * @returns {boolean} True if the passed target is in the mobile view.
    */
   function _isMobileTarget( target ) {
-    var bodyElem = document.body;
-    target = target.parentNode;
-    do {
-      if ( target === _dom ) {
-        return true;
-      } else if ( target === bodyElem ) {
-        return false;
-      }
-      target = target.parentNode;
-    } while ( target );
+    return _dom.contains( target );
   }
 
   /**

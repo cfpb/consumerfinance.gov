@@ -64,7 +64,7 @@ function closest( elem, className ) {
 }
 
 module.exports = {
+  closest:     closest,
   getSiblings: getSiblings,
-  not:         not,
-  closest:     closest
+  not:         not
 };
