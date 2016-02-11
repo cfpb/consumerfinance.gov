@@ -1,6 +1,5 @@
 'use strict';
 
-var _assign = require( 'lodash/assign' );
 var _getQAelement = require( '../util/QAelement' ).get;
 var careersSocialSection =
 require( '../shared_objects/careers-social-section' );
@@ -9,7 +8,7 @@ var relatedLinksSection = require( '../shared_objects/related-links-section' );
 
 function CurrentOpenings() {
 
-  _assign( this, careersSocialSection, relatedLinksSection );
+  Object.assign( this, careersSocialSection, relatedLinksSection );
 
   this.get = function() {
     browser.get( '/careers/current-openings/' );

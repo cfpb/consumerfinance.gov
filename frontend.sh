@@ -78,11 +78,13 @@ install(){
   # Protractor - JavaScript acceptance testing.
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
+
+    npm install -d --loglevel warn
+
     # Copy globally-installed packages.
     # Protractor - JavaScript acceptance testing.
     if [ $(is_installed protractor) = 0 ]; then
       echo 'Installing Protractor dependencies locally...'
-      npm install protractor --loglevel warn
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
       echo 'Global Protractor installed. Copying global install locally...'
@@ -95,10 +97,8 @@ install(){
       fi
       mkdir -p ./$NODE_DIR/protractor
       cp -r $protractor_full_path ./$NODE_DIR/
-      rm -rf ./$NODE_DIR/protractor/node_modules/
     fi
 
-    npm install -d --loglevel warn
   else
     npm install --production --loglevel warn
   fi
