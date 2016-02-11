@@ -1,14 +1,39 @@
 #!/usr/bin/env python
 
 import unittest
-import os.path
-from macropolo import MacroTestCase, JSONTestCaseLoader
-from macropolo.environments import SheerEnvironment
+import sys
+import os, os.path
 
-class CFGovTestCase(SheerEnvironment, MacroTestCase):
+from unipath import Path
+
+from macropolo import MacroTestCase, JSONTestCaseLoader
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfgov.settings.test')
+
+import django
+from django.conf import settings
+from django.utils.module_loading import import_string
+
+sys.path.append(Path(__file__).ancestor(3).child('cfgov'))
+django.setup()
+
+from macropolo.environments import Jinja2Environment
+
+class CFGovMacroTestEnvironment(Jinja2Environment):
+    def setup_environment(self):
+        super(CFGovMacroTestEnvironment, self).setup_environment()
+        backend_config = settings.TEMPLATES[1].copy()
+        backend_cls_name = backend_config.pop('BACKEND')
+        backend_cls = import_string(backend_cls_name)
+        backend = backend_cls(backend_config)
+        env = backend.env
+        self.filters = env.filters
+
+
+class CFGovTestCase(CFGovMacroTestEnvironment, MacroTestCase):
     """
     A MacroTestCase subclass for cfgov-refresh.
     """
+
 
     def search_root(self):
         """
@@ -17,12 +42,14 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
         # Get the cfgov-refresh root dir, ../../../
         # PLEASE NOTE: This presumes that the file containing the test always
         # lives three levels above the cfgov-refresh root.
-        root_dir = os.path.abspath(os.path.join(
+
+        templates = os.path.abspath(os.path.join(
             os.path.dirname(__file__),
             os.pardir,
             os.pardir,
-            'src'))
-        return root_dir
+            'cfgov/jinja2/v1'))
+
+        return templates
 
 
     def search_exceptions(self):
@@ -30,11 +57,12 @@ class CFGovTestCase(SheerEnvironment, MacroTestCase):
         Return a list of subdirectory names that should not be searched
         for templates.
         """
+        templates = 'cfgov/jinja2/v1'
         return [
-            'src/_defaults',
-            'src/_lib',
-            'src/_queries',
-            'src/_settings',
+            templates + '/_defaults',
+            templates + '/_lib',
+            templates + '/_queries',
+            templates + '/_settings',
             'test',
             'config'
         ]

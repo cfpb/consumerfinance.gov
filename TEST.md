@@ -137,13 +137,37 @@ Enjoy! :relieved:
 
 # Template Macro Tests
 
-Test the Jinja2 templates.
-
-## Running MacroPolo Tests
-
-From within the root project directory run `gulp test:unit:macro`.
+Test the Jinja2 templates. From within the root project directory run `gulp test:unit:macro`.
 
 ## Writing Tests
 
 Please see [Macro Polo](https://github.com/cfpb/macropolo) for
 documentation about writing tests.
+
+# Performance Testing
+
+To audit if the site complies with performance best practices and guidelines,
+run `gulp test:perf`.
+
+The audit will run against [sitespeed.io performance rules](https://www.sitespeed.io/rules/)
+and crawl the website from the homepage.
+You can adjust the settings to skip rules and change the crawling depth
+by editing `/gulp/tasks/test.js`.
+
+# Django Server Unit Tests
+
+To run the server unit tests using Tox,
+make sure the `TOXENV` variable is set in your `.env` file and
+run `gulp test:unit:server` from the command-line in the project root.
+
+
+# Accessibility Testing
+
+To audit a page's WCAG and Section 508 accessibility:
+  1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
+     Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
+  2. Reload your `.env` with `. ./.env` while in the project root directory.
+  3. Run `gulp test:a11y` to run an audit on the homepage.
+  4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
+     For example, `gulp test:a11y --u=contact-us`
+     or `gulp test:a11y --u=the-bureau/bureau-structure/`.

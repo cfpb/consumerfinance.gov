@@ -50,14 +50,12 @@ describe( 'The Footer Component', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-      expect( _sharedObject.footer.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.footer.isPresent() ).toBe( true );
+  } );
 
   it( 'should include navList', function() {
-      expect( _sharedObject.navList.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.navList.isPresent() ).toBe( true );
+  } );
 
   it( 'should include links and links should be valid', function() {
     var _baseURL;
@@ -86,13 +84,11 @@ describe( 'The Footer Component', function() {
   } );
 
   it( 'should include post', function() {
-      expect( _sharedObject.post.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.post.isPresent() ).toBe( true );
+  } );
 
   it( 'should include officialWebsite', function() {
-      expect( _sharedObject.officialWebsite.isPresent() ).toBe( true );
-    }
-  );
+    expect( _sharedObject.officialWebsite.isPresent() ).toBe( true );
+  } );
 
 } );

@@ -1,0 +1,45 @@
+{% extends 'layout-side-nav.html' %}
+
+{% block title %}
+    Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block desc %}
+    Our vision is a consumer finance marketplace that works for American consumers,
+    responsible providers, and the economy as a whole.
+{% endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        {{ page.title }} ({{ page.language }})
+    </div>
+
+    {% for block in page.molecules %}
+        <div class="block">
+            {{ render_stream_child(block) }}
+        </div>
+    {% endfor %}
+
+    {% for block in page.organisms %}
+        {{ render_stream_child(block) }}
+    {% endfor %}
+    </div>
+
+    <div class="block">
+        {% include '_includes/organisms/main-contact-info.html' %}
+    </div>
+
+{% endblock content_main %}
+
+{% block content_sidebar scoped -%}
+<aside>
+    {% for block in page.sidefoot %}
+        {% if 'related_posts' in block.block_type %}
+            {{ related_posts.render() }}
+        {% else %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    {% endfor %}
+</aside>
+{%- endblock %}

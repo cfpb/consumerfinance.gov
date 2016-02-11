@@ -1,0 +1,99 @@
+/* topdoc
+  name: Theme variables
+  family: cfgov-molecules
+  notes:
+    - "The following color and sizing variables are exposed,
+       allowing you to easily override them before compiling."
+  patterns:
+  - name: Colors
+    codenotes:
+      - |
+        @m-image-text-25-75_img__sm
+        @m-image-text-25-75_img__lg
+  tags:
+  - less
+*/
+@m-image-text-25-75_img__sm: 130px;
+@m-image-text-25-75_img__lg: 150px;
+
+
+/* topdoc
+  name: Image and Text 25/75
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-image-text-25-75">
+            <div class="m-image-text-25-75_image-container">
+                <img class="m-image-text-25-75_image" src="image">
+            </div>
+            <div class="m-image-text-25-75_content">
+                <h3>Heading</h3>
+                <p>Body content</p>
+                <a>Link</a>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-image-text-25-75
+            .m-image-text-25-75_image-container
+              img.m-image-text-25-75_image
+            .m-image-text-25-75_content
+              h3
+              p
+              a
+  tags:
+    - cfgov-molecules
+*/
+
+.m-image-text-25-75 {
+    padding-bottom: unit( ( @grid_gutter-width ) / @base-font-size-px, em );
+    .u-clearfix();
+
+    &_image-container {
+
+        .respond-to-max( @mobile-max, {
+            text-align: center;
+            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+
+        .respond-to-min( @tablet-min, {
+            float: left;
+            margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+    }
+
+    &_image {
+        width: @m-image-text-25-75_img__sm;
+        height: @m-image-text-25-75_img__sm;
+        background-size: contain;
+
+        .respond-to-min( @bp-med-min, {
+            width: @m-image-text-25-75_img__lg;
+            height: @m-image-text-25-75_img__lg;
+        } );
+    }
+
+    &_content {
+        .respond-to-min( @tablet-min, {
+            margin-left: unit( ( @m-image-text-25-75_img__sm +
+                                 @grid_gutter-width ) / @base-font-size-px, em );
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            margin-left: unit( ( @m-image-text-25-75_img__lg +
+                                 @grid_gutter-width ) / @base-font-size-px, em );
+        } );
+    }
+
+    &:last-child {
+        padding: 0;
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

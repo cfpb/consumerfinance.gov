@@ -1,0 +1,51 @@
+
+{# ==========================================================================
+
+   Table
+
+   ==========================================================================
+
+   Description:
+
+   Create a table.
+   See [GHE]/flapjack/Modules-V1/wiki/Tables
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% do global_dict.update({
+        'value': {
+            'headers': ['Column 1', 'Column 2', 'Column 3'],
+            'rows' : [
+                ['Cell A1', 'Cell A2', 'Cell A3'],
+                ['Cell B1', 'Cell B2', 'Cell B3'],
+                ['Cell C1', 'Cell C2', 'Cell C3']
+            ]
+        }
+    }) %}
+{% endif %}
+{% set value = value or global_dict.value %}
+
+<table class="table__stack-on-small table__entry-header-on-small">
+    <thead>
+        <tr>
+            {% for thead in value.headers %}
+                <th>{{ thead }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for row in value.rows %}
+        <tr>
+        {% for cell in row %}
+            {% set colcount = loop.index %}
+            {% for thead in value.headers %}
+                {% if colcount == loop.index %}
+                    <td data-label="{{ thead }}">
+                        {{ cell | safe }}
+                    </td>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tr>
+    {% endfor %}
+</table>

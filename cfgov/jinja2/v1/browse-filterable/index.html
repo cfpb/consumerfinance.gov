@@ -1,0 +1,51 @@
+{% extends 'layout-side-nav.html' %}
+
+{# Import organisms and molecules used in the template. #}
+{% import 'molecules/notification.html' as notification %}
+{% import 'organisms/post-preview.html' as post_preview with context %}
+
+{% block title -%}
+    {{ page.seo_title if page.seo_title else page.title }}
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+
+{% block content_main %}
+    {% for block in page.header %}
+        <div class="block
+                    block__flush-top">
+            {{ block | safe }}
+        </div>
+    {% endfor %}
+    {% for block in page.content %}
+        <div class="block
+                    block__flush-top">
+            {% if 'filter_controls' in block.block_type %}
+                {% set f = forms.pop(0) %}
+                {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
+                {{ flc(block.value, f, loop.index0) }}
+            {% else %}
+                {{ block | safe }}
+            {% endif %}
+        </div>
+    {% endfor %}
+    <div class="block
+                block__flush-bottom
+                block__flush-sides
+                block__bg
+                block__border-top
+                block__border-right">
+        Put sidefoot content here
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        {# TODO: Add sidebar organisms. #}
+        Side Navigation
+    </aside>
+{%- endblock %}

@@ -1,0 +1,293 @@
+{# ==========================================================================
+
+   event_location_image()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML image when given:
+
+   options (optional):         An object to use for customizing an event
+                               location image using Google Maps.
+
+   options.additional_classes: Extra classes you wish to add to the image,
+                               space separated.
+
+   options.location:           A location as either a comma-separated
+                               {latitude,longitude} pair
+                               (e.g. "40.714728,-73.998672")
+                               or a string address
+                               (e.g. "city hall, new york, ny").
+                               Defaults to 'Washington, DC'.
+
+   options.scale:              Affects the number of pixels that are returned.
+                               Accepted values are 1, 2 and 4.
+                               Defaults to '2'.
+
+   options.size:               Defines the rectangular dimensions of the map image.
+                               {horizontal_value}x{vertical_value} (e.g. 500x400)
+                               Defaults to '276x155'.
+
+   options.zoom:               Sets pixel density for high-dpi devices.
+                               Defaults to '12'.
+
+   ========================================================================== #}
+
+{% macro event_location_image(options={}) %}
+    {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
+
+    <img class="{{ options.additional_classes if options.additional_classes else '' }}"
+         src="{{ location_image_url({
+                        'location': options.location
+                                    | default('Washington, DC', true)
+                                    | urlencode,
+                        'zoom':     options.zoom  | default('12'),
+                        'scale':    options.scale | default('2'),
+                        'size':     options.size  | default('276x155')
+                    }) }}"
+         alt="Google Maps image of {{ options.location }}">
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   event_meta_address()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML event meta address markup when given:
+
+   venue:                     A post date from a query result.
+
+   address_format (optional): A python string format to display to
+                              address information
+                              (e.g. '{venue} - {city}, {state}').
+                              Defaults to '{city}, {state}'.
+
+   ========================================================================== #}
+
+{% macro event_meta_address(event, address_format='{city}, {state}') %}
+    {%- set city   =  event.venue_city     | default('Washington', true) -%}
+    {%- set state  =  event.venue_state    | default('DC', true) -%}
+    {%- set street =  event.venue_street   | default('1275 First St NE', true) -%}
+    {%- set name   =  event.venue_name     | default('CFPB', true) -%}
+    {%- set zip    =  event.venue_zip_code | default('20002', true) -%}
+
+    <p class="event-meta_address h-adr">
+        {%- macro _city() %}
+            <span class="event-meta_city p-locality">{{ city }}</span>
+        {% endmacro %}
+
+        {%- macro _state() %}
+            <span class="event-meta_state p-state">{{ state }}</span>
+        {% endmacro %}
+
+        {%- macro _street() %}
+            <span class="event-meta_street p-street-address">{{ street }}</span>
+        {% endmacro -%}
+
+        {% macro _venue() %}
+            <span class="event-meta_venue p-extended-address">{{ name }}</span>
+        {% endmacro %}
+
+        {% macro _zip() %}
+            <span class="event-meta_zip p-postal-code">{{ zip }}</span>
+        {% endmacro %}
+
+        {{
+            address_format.format(**{
+                'city'   : _city()   | trim,
+                'street' : _street() | trim,
+                'state'  : _state()  | trim,
+                'venue'  : _venue()  | trim,
+                'zip'    : _zip()    | trim
+            }) | safe
+        }}
+    </p>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   event_venue()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event post venue when given:
+
+   post: A post from a query result.
+
+   event_state: A string indicating the state of the event.
+                Possible values: past, present, future.
+
+   ========================================================================== #}
+
+{% macro event_venue(event, event_state) %}
+    {%- set city =  event.venue_city + ', ' + event.venue_state | default('Washington, DC') -%}
+    <section class="event-venue">
+        <header class="event-venue_header">
+            <h2 class="event-venue_heading">{{ city }}</h2>
+            <div class="content-l">
+                <div class="event-meta content-l_col content-l_col-1-2">
+                    {{ event_meta_address(event,
+                        address_format ='{venue} {street} {city}, {state} {zip}'
+                    ) }}
+                </div>
+                <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                {% if (event_state == 'past' and event.youtube_url is not defined) %}
+                    Video Replay will be<br> available shortly
+                {% else %}
+                    {% import 'macros/time.html' as time %}
+                    {{ time.render(event.start_dt) }}
+
+                    {# TODO: Replace with real download link #}
+                    {% if event_state == 'future' %}
+                    <a class="event-calendar_download
+                              jump-link
+                              jump-link__download
+                              u-link__disabled">
+                        <span class="jump_link_text">Download .ics</span>
+                    </a>
+                    {% endif %}
+                {% endif %}
+                </div>
+          </div>
+        </header>
+        <footer>
+            <figure class="event-media_container">
+            {# TODO: Add code for live streaming Event and determine image property name #}
+            {% if (event_state == 'past' and event.youtube_url is defined) %}
+                {% import 'macros/video-player.html' as video_player %}
+                {% set video_id   = event.youtube_url.split('=') | last %}
+                {% set image_url  = event.flickr_url if event.flickr_url is defined else '' %}
+                {{ video_player.render({
+                      'button_pos': 'bottomRight',
+                      'image': {
+                          'url': image_url,
+                      },
+                      'video': {
+                          'id': video_id
+                      }
+                   })
+                }}
+            {% elif event_state == 'past' %}
+                {# TODO: Replace placeholder image with appropriate image #}
+                <img src="https://placeholdit.imgix.net/~text?C3%97350&w=700&h=350"
+                     alt="Video placeholder image" />
+            {% else %}
+                {{ event_location_image({
+                    'location': city,
+                    'zoom':     '12',
+                    'scale':    '2',
+                    'size':     '640x320'
+                }) }}
+            {% endif %}
+            </figure>
+        </footer>
+    </section>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   event_agenda()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event agenda table when given
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_agenda(event) %}
+  {% set options = {
+      'time_col_classes': 'u-w25pct',
+      'agenda_col_classes': 'u-w25pct',
+      'location_col_classes': 'u-w25pct',
+      'speaker_col_classes': 'u-w25pct',
+  } %}
+  <div class="block
+              block__padded-top
+              block__border-top">
+    <h2>Agenda</h2>
+    <table class="u-w100pct
+                  block
+                  block__flush-top
+                  simple-table">
+        <thead>
+            <tr>
+                <th class="{{ options.time_col_classes }}">Time</th>
+                <th class="{{ options.desc_col_classes }}">Agenda</th>
+                <th class="{{ options.location_col_classes }}">Location</th>
+                <th class="{{ options.speaker_col_classes }}">Speakers</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for block in event.agenda_items %}
+          {% set bound = block.value.bound_blocks %}
+            <tr>
+                <td class="{{ options.time_col_classes }}">
+                    {% import 'macros/time.html' as time %}
+                    {{ time.render(bound.start_dt.render(), {'time':true, 'timezone':true}) }}
+                    &ndash;
+                    {{ time.render(bound.end_dt.render(), {'time':true, 'timezone':true}) }}
+                </td>
+                <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
+                    {{ bound.description.render() }}
+                </td>
+                <td class="{{ options.location_col_classes }}" data-label="Location">
+                  {% if bound.location.render() %}
+                    {{ bound.location.render() }}
+                  {% endif %}
+                </td>
+                <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
+                {% for speaker in bound.speakers.value %}
+                    {%- if speaker.bound_blocks.url -%}
+                    <a href="{{ speaker.bound_blocks.url.render() }}">
+                    {{ speaker.bound_blocks.name.render() }}
+                    </a>
+                    {%- else -%}
+                    {{ speaker.bound_blocks.name.render() }}
+                    {%- endif -%}
+                    {{ ';' if loop.index < loop.length else '' }}
+                {%- endfor -%}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+{% endmacro %}
+
+{# ==========================================================================
+
+   event_filter_args()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event agenda table when given
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_filter_args(filters) %}
+{%- for filter in filters -%}
+   {%- set selected_filters = selected_filters_for_field(filter) -%}
+   {%- for value in selected_filters -%}
+       {%- if value -%}
+          &{{ filter }}={{ value }}
+       {%- endif -%}
+   {%- endfor -%}
+{%- endfor -%}
+{% endmacro %}

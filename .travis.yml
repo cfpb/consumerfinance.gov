@@ -5,30 +5,39 @@ python:
 
 sudo: false
 
-services:
-  - elasticsearch
-
 addons:
   apt:
-    package:
-      - nodejs-0.12
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+
+services:
+  - elasticsearch
 
 install:
   # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
-  - git clone https://github.com/cfpb/sheer
-  - pip install -e sheer
-  - pip install -r sheer/requirements.txt
+  # Set g++ version for npm nan.
+  - export CXX=g++-4.8
+  - $CXX --version
+  - npm install nvm
+  - nvm install 5.2.0
+  - nvm use 5.2.0
   - npm install -g gulp
   - npm install -g bower
 
   # Project initialization.
-  - sheer index
   - chmod +x ./setup.sh
-  - ./setup.sh
+  - ./setup.sh test
+  - python cfgov/manage.py sheer_index
+  - python cfgov/manage.py migrate
 
 script:
   - gulp lint
   - gulp test:unit
   - gulp test:coveralls
+
+env:
+    - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov

@@ -1,0 +1,38 @@
+{% extends 'layout-1-3.html' %}
+
+{#
+    docs/sheer-layouts/layout-side-nav/
+
+    Since layout-side-nav.html extends from layout-1-3.html all we need to do
+    is set some side nav variables and override the `content_sidebar` block to
+    add the nav macro.
+#}
+
+{# Side nav vars #}
+
+{# Set default value for nav_items array. #}
+{% set nav_items = [(
+    '/docs/sheer-layouts/layout-side-nav/',
+    '',
+    'Please review the instructions in _layouts/layout-side-nav.html for setting up the side nav.'
+)] %}
+
+{% set active_nav_id = active_nav_id|default('index') -%}
+
+{# Adding the side nav macro #}
+{% block content_sidebar %}
+    {% from 'organisms/secondary-navigation.html' import secondary_navigation as sec_nav %}
+    {{ sec_nav(vars.nav_items, active_nav_id) }}
+{% endblock %}
+
+{# Extra classes needed for .content_sidebar #}
+{% block content_sidebar_modifiers -%}
+    content__flush-all-on-small
+    {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 else '' }}
+{%- endblock %}
+
+{# Extra classes needed for .content_main #}
+{% block content_main_modifiers -%}
+    content__flush-top-on-small
+    {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 else '' }}
+{%- endblock %}

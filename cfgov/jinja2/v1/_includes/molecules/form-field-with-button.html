@@ -1,0 +1,62 @@
+{# ==========================================================================
+
+   form_field_with_button.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates a form field with text when given:
+
+   value:  An object used to customize the markup.
+
+   value.btn_text:          The text for the submit button.
+
+   value.field.required:    Boolean indicating whether the field is
+                            required.
+
+   value.field.id:          The id for the input.
+
+   value.field.info:        The text information to display above the field.
+
+   value.field.label:       The label for the input.
+
+   value.field.placeholder: The placeholder used for the input.
+
+   ========================================================================== #}
+{% if not value %}
+    {% do global_dict.update({
+        'form_field': {
+            'label':       'Form Field with Button',
+            'name':        'm-form-field-with-button',
+            'id':          'form-field-with-button',
+            'placeholder': 'form field with button',
+            'type':        'text',
+            'info':        {
+                'source': 'This is a form field with a button. Isn\'t it awesome?'
+            },
+            'required':    false,
+            'btn_text':    'The Awesome Button'
+        }
+    }) %}
+    {% set value = global_dict.form_field %}
+    {% set prototype = true %}
+{% endif %}
+
+<div class="m-form-field-with-button">
+    <div class="form-group">
+        <label for="{{ value.id }}">
+            <b>{{ value.label }}</b>
+            {{ '(required)' if value.required else '' }}
+        </label>
+        <input id="{{ value.id }}"
+               type="{{ value.type }}"
+               placeholder="{{ value.placeholder }}"
+               name="{{ value.name }}"
+               class="m-form-field-with-button_field"
+               {{ 'required' if value.required else '' }}>
+    </div>
+    <p>{{ value.info.source | safe }}</p>
+    <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
+</div>
+

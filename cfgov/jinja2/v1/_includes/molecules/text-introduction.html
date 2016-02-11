@@ -1,0 +1,56 @@
+{# =========================================================================
+
+   Text Introduction
+
+   =========================================================================
+
+   Description:
+
+   Create a Text Introduction molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
+
+   value:           An object with the following options for value.
+
+   value.heading:   Heading text.
+   value.intro:     Body introduction text.
+   value.body:      Body text.
+
+   value.links:     A collection of links with URL & Text.
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% do global_dict.update(
+        {
+            'text_introduction': {
+                'heading':      'Text Introduction',
+                'intro':  {
+                    'source': 'Content Intro Lorem Ipsum'
+                },
+                'body': {
+                    'source': lipsum(1, false, 10, 25) | safe
+                },
+                'links': [{
+                            'text': 'Placeholder link',
+                            'url':  '#'
+                }]
+            }
+        })
+    %}
+{% endif %}
+{% set value = value or global_dict.text_introduction %}
+<div>
+    <h1>{{ value.heading }}</h1>
+    <p class="lead-paragraph">{{ value.intro.source | safe }}</p>
+    {# TODO: should the source include the p tags? What if there needs to be something other than a p? #}
+    <p>{{ value.body.source | safe }}</p>
+    <ul class="list list__links">
+        {% for link in value.links %}
+            <li class="list_item">
+                <a class="list_link" href="{{ link.url }}">
+                    {{ link.text }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

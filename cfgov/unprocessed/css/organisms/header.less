@@ -1,0 +1,138 @@
+// TODO: Move the theme variables to cf-enhancements.
+/* topdoc
+  name: Theme variables
+  family: cf-core
+  notes:
+    - "The following color and sizing variables are exposed, allowing you to
+       easily override them before compiling."
+  patterns:
+    - name: Sizing
+      codenotes:
+        - |
+          @margin_half__em
+  tags:
+    - cf-core
+*/
+
+@margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+/* topdoc
+  name: Header
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-header">
+            <div class="m-global-header-cta"></div>
+            <div class="m-global-search"></div>
+            <a class="o-header_logo" href="/">
+                <img class="header_logo u-js-only"
+                     src="/static/img/logo_sm-exec.svg"
+                     onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+                     alt="Consumer Financial Protection Bureau"
+                     width="237"
+                     height="50">
+                <noscript>
+                    <img class="header_logo logo__no-js"
+                         src="/static/img/logo_sm-exec.png"
+                         alt="Consumer Financial Protection Bureau"
+                         width="237"
+                         height="50">
+                </noscript>
+            </a>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-header
+            .m-global-header-cta
+            .m-global-search
+            .o-header_logo
+      notes:
+        - "The `onerror` attribute allows for the usage of an SVG logo for
+           browsers that support SVG, with a fallback to PNG for browsers that
+           don't."
+        - "The `noscript` element displays the PNG fallback in the event that
+           JavaScript is not available."
+        - "The path in the `src` attribute has been adjusted for these docs."
+  tags:
+    - cfgov-organisms
+*/
+
+.o-header {
+    min-width: 320px;
+    border-bottom: 5px solid @green;
+    position: relative;
+    z-index: 10;
+    background-color: @white;
+
+    > .m-global-eyebrow {
+
+        .respond-to-max( @bp-sm-max, {
+            display: none;
+        } );
+    }
+
+    &_content {
+
+        .respond-to-min( @bp-med-min, {
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+            & > .m-global-header-cta,
+            & > .m-global-search {
+                float: right;
+            }
+        } );
+
+        // Hide Global Header Call to Action at tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            & > .m-global-header-cta {
+                display: none;
+            }
+
+            & > .o-mega-menu {
+                float: left;
+            }
+        } );
+    }
+
+    &_logo {
+        &-img {
+            height: 40px;
+            width: 190px;
+            margin: 10px;
+            // Removes typical inline vertical whitespace.
+            vertical-align: middle;
+
+            .respond-to-min(@bp-med-min, {
+                margin: 0 0 unit(20px / @base-font-size-px, em) 0;
+                height: 50px;
+                width: 237px;
+            });
+        }
+
+        noscript .o-header_logo-img {
+            display: none;
+        }
+    }
+}
+
+// Display logo if JavaScript is turned off.
+.no-js noscript .o-header_logo-img {
+    display: block;
+    // TODO: Check that these settings can't be covered by `.o-header_logo-img`.
+    //       To test, turn off JavaScript. The logo PNG should look the same as the SVG.
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-top: 10px;
+
+    .respond-to-max( @bp-sm-max, {
+        padding-left: 10px;
+    } );
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

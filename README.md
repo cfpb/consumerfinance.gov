@@ -4,12 +4,10 @@
 [![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
 
 The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
-This project includes the front-end assets and build tools,
-[Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Sheer](https://github.com/cfpb/sheer) configurations for loading content from the
-WordPress and Django back-ends through Elasticsearch.
+This Django project includes the front-end assets and build tools,
+[Jinja templates](http://jinja.pocoo.org) for front-end rendering.
 
-**Technology stack**:
+**Technology stack:**
 - Mac OSX.
 - [Homebrew](http://brew.sh) - package manager for installing system
   software on Mac OSX.
@@ -23,9 +21,6 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 ![Screenshot of cfgov-refresh](screenshot.png)
 
 ## Dependencies
-- [Sheer](https://github.com/cfpb/sheer):
-  Web server used to serve the pages using [Jinja templates](http://jinja.pocoo.org).
-  Sheer is a Jekyll-inspired, Elasticsearch-powered, CMS-less publishing tool.
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and npm (Node Package Manager):
@@ -33,7 +28,15 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 
 ## Installation
 
-Follow the instructions in [INSTALL](INSTALL.md).
+Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
+Clone this project’s repository and switch to its directory with:
+
+```bash
+git clone git@github.com:cfpb/cfgov-refresh.git
+cd cfgov-refresh
+```
+
+Then follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
@@ -47,9 +50,9 @@ These will be used for:
  1. **Git operations**.
     Perform Git operations and general development in the repository.
  2. **Elasticsearch**.
-    Run an Elasticsearch instance.
- 3. **Sheer web server**.
-    Run the web server.
+    Run an Elasticsearch (ES) instance.
+    Running `cfgov/manage.py sheer_index` will load indexes into ES.
+ 3. **Django server**. Start and run the web server.
  4. **Gulp watch**.
     Run the Gulp watch task for watching for changes to content.
 
@@ -74,7 +77,7 @@ and rebuild the site's JavaScript and CSS assets.
 
 ### 2. Run Elasticsearch
 
-> Note: This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd`
+> **NOTE:** This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd`
 option when [installing Elasticsearch](INSTALL.md#elasticsearch).
 
 To launch Elasticsearch, first find out where your Elasticsearch config file is located.
@@ -91,58 +94,111 @@ proper path to its configuration file. For example, it may look like:
 elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
-### 3. Launch Sheer to serve the site
-
-To work on the app you will need Sheer running to compile the templates.
+### 3. Load Indexes & Launch Site
 To do this, run the following:
 
 ```bash
 # Use the cfgov-refresh virtualenv.
 workon cfgov-refresh
 
-# cd into the /dist/ directory.
-cd ./dist
+# cd into this directory (if you aren't already there)
+cd cfgov-refresh
 
 # Index the latest content from the API output from a WordPress and Django back-end.
 # **This requires the constants in INSTALL - Configuration to be set**
-sheer index
+python cfgov/manage.py sheer_index
 
-# Start sheer.
-sheer serve --debug
+# From the Project root, start server.
+python cfgov/manage.py runserver
+
+# **Note**
+# If prompted to migrate database changes, stop the server ctrl+c and run these commands
+python cfgov/manage.py migrate
+./initial-data.sh
+./runserver.sh
+
+# To set up a superuser in order to access the admin
+python cfgov/manage.py createsuperuser
 ```
 
-To view the site browse to: <http://localhost:7000>
+To view the site browse to: <http://localhost:8000>
 
 To view the project layout docs and pattern library,
-browse to <http://localhost:7000/docs>
+browse to <http://localhost:8000/docs>
 
 To view the indexed content you can use a tool called
 [elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
 
-**Using a different port:** If you want to run Sheer at a different port than 7000,
-serve Sheer with the `--port` argument,
-e.g. to run on port 7001 use `sheer serve --port 7001 --debug`.
+**Using a different port:** If you want to run the server at a different port
+than 8000 use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
 
-**NOTE:** You may see the following errors when running Sheer. This is expected.
-```bash
-Error importing package flask_pdfreactor
-Error importing package flask_eventics
-INFO:werkzeug: * Running on http://0.0.0.0:7000/
-INFO:werkzeug: * Restarting with reloader
-Error importing package flask_pdfreactor
-Error importing package flask_eventics
+### Load data into Django models
+The Django management command `import-data` will import data from the specified
+source into the specified model.
 ```
+usage: manage.py import-data [-h] [--version] [-v {0,1,2,3}] [--settings SETTINGS]
+        [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--parent PARENT] 
+        [--snippet] -u USERNAME -p PASSWORD [--app APP] [--overwrite]
+        data_type wagtail_type
+```
+- `data_type` is the WP post type defined in the `processors.py` file.
+- `wagtail_type` is the Django model name where the data is going to go.
+- `-u` and `-p` are credentials to an admin account.
+
+Required option:
+- `--parent` is the slug of the parent page that the pages will exist
+  under.
+- `--snippet` is a flag that's used to signify that the importing data will be
+  inserted into a Django model, registered as a [Wagtail snippet](http://docs.wagtail.io/en/v1.1/topics/snippets.html).
+  One of these options must be set for the command to run.
+
+Other options:
+- `--app` is the name of the app the Django models from `wagtail_type` exist in.
+  It defaults to our app, `v1`.
+- `--overwrite` overwrites existing pages in Wagtail based on comparing slugs.
+Be careful when using this as it will overwrite the data in Wagtail with data
+from the source. Default is `False`.
+- `--verbosity` is set to 1 by default. Set it to 2 or higher and expect the
+name of the slugs to appear where appropriate.
+
+For now, in order for this command to import the data, one of the things it
+needs is a file for "sheer logic" to use to retrieve the data. For us, the
+processors are already done from our last backend. This part of the command
+will change as we move away from our dependency on "sheer logic". This is set
+by putting the file in a `processors` module in the top level of the project
+and adding it to the setting SHEER_PROCESSORS.
+
+The command needs a `processors` module in the app that's passed to it, as well
+as a file with the same name as the Django model specified that defines a class
+named `DataConverter` that subclasses either `_helpers.PageDataConverter` or
+`_helpers.SnippetDataConverter` and implements their method(s) explained below:
+- **PageDataConverter**
+ - **convert(self, imported_data)**
+   For converting pages or snippets, the processor file must implement the
+   **convert()** function with one argument. That argument represents the
+   imported data dictionary. That function must take the dictionary and map it
+   to a new one that uses the keys that Wagtail's **create()** and **edit()**
+   admin/snippet view functions expect in the `request.POST` dictionary to
+   actually migrate the data over, and then returns that dictionary where it
+   will be assigned to `request.POST`.
+- **SnippetDataConverter(PageDataConverter)**
+ - **get_existing_snippet()**
+   This also accepts the imported data dictionary. It's used to find an
+   existing snippet given the imported data, returning it if found or `None` if
+   not.
 
 ### 4. Launch the Gulp watch task
 
 To watch for changes in the source code and automatically update the running site,
 open a terminal and run:
 
-```
-$ gulp watch
+``` bash
+gulp build
+gulp watch
 ```
 
-**NOTE:** The watch task only runs for the tasks for files that have changed.
+> **NOTE:** The watch task only runs for the tasks for files that have changed.
+  Also, you must run `gulp build` at least once before watching.
 
 #### Available Gulp Tasks
 In addition to `gulp watch`, there are a number of other important gulp tasks,
@@ -184,20 +240,27 @@ Additionally, you may want to consider
 which is the front-end pattern library used in this project.
 
 ## Working with the templates
-<!-- Perhaps we want to split this out into a separate page? -->
+<!-- TODO: Perhaps we want to split this out into a separate page? -->
+### Front-End Template/Asset Locations
+
+**Templates** that are served by the Django server: `cfgov\jinja2\v1`
+
+**Static assets** prior to processing (minifying etc.): `cfgov\unprocessed`.
+> NOTE: After a `gulp build` they are copied over to the `cfgov\static_built` location,
+  ready to be served by Django.
+
 ### Simple static template setup
 
-By default, Sheer will render pages at their natural paths in the project's file structure.
-For example, going to <http://localhost:7000/the-bureau/index.html>
-(or <http://localhost:7000/the-bureau/>) renders `/the-bureau/index.html`
-as processed by the [Jinja2](http://jinja.pocoo.org/docs) templating engine.
-**NOTE:** This page does not automatically show any content indexed by Sheer;
-it simply outputs the static HTML written into the template.
+By default, Django will render pages with accordance to the URL pattern defined
+for it. For example, going to `http://localhost:8000/the-bureau/index.html`
+(or `http://localhost:8000/the-bureau/`) renders `/the-bureau/index.html` from
+the `cfgov` app folder's `jinja2` templates folder as processed by the [Jinja2](http://jinja.pocoo.org/docs)
+templating engine.
 
 ### Outputting indexed content in a Sheer template
 
 Most of our content is indexed from the API output of our WordPress back-end.
-This happens when the `sheer index` command is run.
+This happens when the `python cfgov/manage.py sheer_index` command is run.
 
 There are two ways in which we use indexed content:
 repeating items (e.g., blog posts and press releases),
@@ -222,7 +285,7 @@ For any kind of repeating content, this is the basic process:
   simply set up a `for ... in` loop,
   then output the different properties of the post within.
   In the case of the blog, a list of posts is built using this method in
-  `_includes/posts-paginated.html`.
+  `cfgov/jinja2/v1/_includes/posts-paginated.html`.
 
   Here is a simplified example:
 
@@ -232,13 +295,6 @@ For any kind of repeating content, this is the basic process:
     {{ post.content }}
   {% endfor %}
   ```
-
-3. If you would like to display each instance of repeating content in a separate
-  page, create a `_single.html` template (in the case of the blog,
-  located at `blog/_single.html`) and a corresponding entry in `_settings/lookups.json`.
-  Sheer will automatically create URLs for every post of that type and render
-  them with the `_single.html` template.
-  This is how separate pages are generated for each blog post.
 
 #### Single content
 
@@ -252,15 +308,6 @@ here's how it's done:
 {% set page = get_document('pages', '63169') %}
 {{ page.content | safe }}
 ```
-
-This example pulls a WordPress page into a template.
-We use the page post type (i.e., the built-in "Page" entries in WordPress)
-when all or most of a page's content can be edited in WordPress.
-
-**NOTE:** When accessing a WordPress page,
-you must use the numeric ID to identify the page you want to get,
-as multiple pages can have the same slug.
-(This is also true of any custom post type that is hierarchical.)
 
 The `get_document` method can be used to retrieve a single item of any post type
 for display within a template.
@@ -304,7 +351,7 @@ An example of Term is:
 
 `filter_[field]=[value]`
 
-When you go to a URL such as http://localhost:7000/blog/?filter_category=Op-Ed
+When you go to a URL such as http://localhost:8000/blog/?filter_category=Op-Ed
 and you use `search()`,
 the queryset returned will only include objects with a category of 'Op-Ed'.
 
@@ -315,7 +362,7 @@ An example of Range is:
 `filter_range_[field]_[operator]=[value]`
 
 Continuing with the example above, if you go to a URL such as
-`http://localhost:7000/blog/?filter_range_date_gte=2014-01`
+`http://localhost:8000/blog/?filter_range_date_gte=2014-01`
 and you use `search()`,
 you'll get a queryset of objects where the 'date' field is in January, 2014, or later.
 

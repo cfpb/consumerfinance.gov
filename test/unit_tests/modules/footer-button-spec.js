@@ -1,4 +1,5 @@
 'use strict';
+
 var chai = require( 'chai' );
 var sinon = require( 'sinon' );
 var expect = chai.expect;
@@ -11,7 +12,8 @@ describe( 'The Footer Return-to-Top Button', function() {
 
   before( function() {
     $ = require( 'jquery' );
-    footerButton = require( '../../../src/static/js/modules/footer-button.js' );
+    footerButton =
+      require( '../../../cfgov/unprocessed/js/modules/footer-button.js' );
     sandbox = sinon.sandbox.create();
   } );
 

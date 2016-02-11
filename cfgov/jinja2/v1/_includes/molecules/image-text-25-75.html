@@ -1,0 +1,101 @@
+
+{# ==========================================================================
+
+   image_text_25_75.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create an image and text 25/75 molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/25-75-Image-&-Text
+
+   value:            An object with the following options for value.
+
+   value.image:      A image object containing the URL & alt text for screenreaders
+                        of the image to be placed adjacent to the text.
+
+   value.heading:    Heading of the text content.
+   value.body:       Body of the text content.
+
+   value.links:      A list of links containing URL & Text of the link/button.
+
+   value.has_rule:   Whether there is a top gray rule.
+                        Default is false.
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% macro _lipsum_paragraph() %}
+        <p>{{ lipsumText }}</p>
+    {% endmacro %}
+    {% do global_dict.update(
+        {
+            'image_text_25_75': {
+                'heading' :       'Placeholder',
+                'body': {
+                    'source': _lipsum_paragraph()
+                },
+                'image': {
+                      'upload': {
+                                'url': 'http://placehold.it/300x300',
+                                'alt': ''
+                      }
+                },
+                'links': [{
+                            'text': 'Placeholder link',
+                            'url':  '#'
+                }]
+            }
+        })
+    %}
+    {% set value = global_dict.image_text_25_75 %}
+    {% set prototype = true %}
+{% endif %}
+
+<div class="m-image-text-25-75">
+    {# TODO: Change to HR #}
+    {% if value.has_rule %}
+        <div class="a-rule-break"></div>
+    {% endif %}
+
+    <div class="m-image-text-25-75_image-container">
+        {# Use a div if this is a decorative image,
+        in which case the alt attribute is empty. #}
+
+        {% if value.image.upload %}
+            {% if prototype %}
+                {% set photo=value.image.upload %}
+            {% else %}
+                {% set photo=image(value.image.upload, 'original') %}
+            {% endif %}
+
+            {% if value.image.alt == '' %}
+                <div class="m-image-text-25-75_image u-centered-on-mobile"
+                     style="background-image:url({{ photo.url }})"></div>
+            {% else %}
+                <img class="m-image-text-25-75_image u-centered-on-mobile"
+                     src="{{ photo.url }}"
+                     alt="{{ value.image.alt }}">
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="m-image-text-25-75_content">
+        <h3>{{ value.heading }}</h3>
+        {# TODO: similar molecules include the p tag in the template. We should standardize with one or the other #}
+        {{ value.body.source | safe }}
+
+        <ul class="list list__links">
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class="list_link" href="{{ link.url }}">
+                        {{ link.text }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>

@@ -68,15 +68,38 @@ If you need to find this info again later, you can run:
 brew info elasticsearch
 ```
 
-### Sheer
-
-To [install Sheer](https://github.com/cfpb/sheer#installation), start by cloning the
-Sheer GitHub project to wherever you keep your projects (not inside cfgov-refresh directory):
-```bash
-git clone https://github.com/cfpb/sheer.git
+### MYSQL Database
+Start MYSQL with the following command:
+```
+mysql.server start
 ```
 
-Create a virtualenv for Sheer, which you’ll name `cfgov-refresh`:
+Then run the MYSQL creation script from project root directory:
+```
+./create-mysql-db.sh
+```
+
+If you would like to have a custom database setup
+then you can pass in the necessary arguments:
+
+```
+./create-mysql-db.sh <dbname> <username> <password>
+```
+
+> **NOTE:** Be sure to update your local settings in
+  `cfgov/cfgov/settings/local.py` to account for these changes.
+
+
+If something goes wrong and you'd like to delete the database
+and start again, you can do so with:
+
+```
+mysql v1 -u root -p -e 'drop database v1;'
+```
+
+### Virtual Environment
+In the project root directory,
+create a virtualenv that you’ll name `cfgov-refresh`:
 ```bash
 mkvirtualenv cfgov-refresh
 ```
@@ -87,18 +110,6 @@ You’ll know you have a virtual environment activated if you see the name of it
 parentheses before your terminal prompt. Ex:
 ```bash
 (cfgov-refresh)$
-```
-
-Install Sheer into the virtualenv with the `-e` flag (which allows you to make changes to
-Sheer itself). The path to Sheer is the root directory of the GitHub repository you
-cloned earlier, which will likely be `../sheer`:
-```bash
-pip install -e ~/path/to/sheer
-```
-
-Install Sheer’s Python requirements:
-```bash
-pip install -r ~/path/to/sheer/requirements.txt
 ```
 
 ### GovDelivery
@@ -137,15 +148,16 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 npm install -g gulp bower
 ```
 
-## 3. Clone project and install dependencies
+## 3. Install dependencies
 
-Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
-Clone this project’s repository and switch to it’s directory with:
+> **NOTE:**
+  Protractor (for the test suite)
+  can be installed globally to avoid downloading Chromedriver repeatedly.
+  To do so, run:
+  ```bash
+  npm install -g protractor && webdriver-manager update
+  ```
 
-```bash
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-```
 
 Next, install dependencies with:
 
@@ -153,8 +165,10 @@ Next, install dependencies with:
 ./setup.sh
 ```
 
-> **NOTE**: To re-install and rebuild all the site’s assets run `./setup.sh` again.
-See the usage section [updating all the project dependencies](README.md#updating-all-dependencies).
+> **NOTE:**
+  To re-install and rebuild all the site’s assets run `./setup.sh` again.
+  See the usage section
+  [updating all the project dependencies](README.md#updating-all-dependencies).
 
 
 ## 4. Project configuration

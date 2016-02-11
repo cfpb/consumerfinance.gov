@@ -13,11 +13,11 @@ describe( 'Events Landing page', function() {
     page.get();
   } );
 
-  it( 'should properly load in a browser', function() {
+  xit( 'should properly load in a browser', function() {
     expect( page.pageTitle() ).toBe( 'Upcoming Events' );
   } );
 
-  it( 'should include a hero', function() {
+  xit( 'should include a hero', function() {
     expect( page.heroElem.isPresent() ).toBe( true );
     expect( page.hero.maps.count() ).toEqual( 2 );
     expect( page.hero.maps.get( 0 ).getAttribute( 'style' ) )
@@ -53,15 +53,15 @@ describe( 'Events Archive page', function() {
     page.get();
   } );
 
-  it( 'should properly load in a browser', function() {
+  xit( 'should properly load in a browser', function() {
     expect( page.pageTitle() ).toBe( 'Past Events' );
   } );
 
-  it( 'should include at least one event', function() {
+  xit( 'should include at least one event', function() {
     expect( page.events.count() ).toBeGreaterThan( 0 );
   } );
 
-  it( 'should include all event meta data', function() {
+  xit( 'should include all event meta data', function() {
     expect( page.first.heading.getText() ).toBeDefined();
     expect( page.first.city.getText() ).toBeDefined();
     expect( page.first.state.getText() ).toBeDefined();

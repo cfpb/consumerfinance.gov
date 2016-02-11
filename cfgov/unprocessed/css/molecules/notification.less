@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Capital Framework
+   Notification Styling
+   ========================================================================== */
+
+
+/* topdoc
+  name: Notifications
+  family: cf-molecules
+  notes:
+    - "Markup and styling for notifications"
+  patterns:
+    - name: Default Usage
+      markup: |
+        <div class="m-notification m-notification__error">
+          <span class="m-notification_icon
+                       cf-icon"></span>
+          <div class="m-notification_content">
+            <p class="h4>
+                This is a default alert.
+            </p>
+            <p class="h4 m-notification_explanation">
+                This is a default explanation with a <a href="#">link</a>.
+            </p>
+          </div>
+        </div>
+  tags:
+    - cf-molecules
+*/
+
+@m-notification-padding__px: 15px;
+
+.m-notification {
+    display: none;
+    position: relative;
+
+    padding: @m-notification-padding__px;
+    padding-left: 40px;
+
+    background: @gray-20;
+    border: 1px solid @gray;
+
+    &__success {
+        background: @green-20;
+        border-color: @input-success;
+
+        .m-notification_icon:before {
+            .cf-icon();
+
+            content: @cf-icon-approved-round;
+            vertical-align: middle;
+            color: @green;
+        }
+    }
+
+    &__warning {
+        background: @gold-20;
+        border-color: @input-warning;
+
+        .m-notification_icon:before {
+            .cf-icon();
+
+            content: @cf-icon-error-round;
+            vertical-align: middle;
+            color: @gold;
+        }
+    }
+
+    &__error {
+        background: @red-20;
+        border-color: @input-error;
+
+        .m-notification_icon:before {
+            .cf-icon();
+
+            content: @cf-icon-delete-round;
+            vertical-align: middle;
+            color: @red;
+        }
+    }
+
+    &__visible {
+        display: block;
+    }
+
+    &_icon {
+        position: absolute;
+        top: @m-notification-padding__px + 2px;
+        left: @m-notification-padding__px;
+
+        color: @gray-20;
+        font-size: unit( 18px / @base-font-size-px, em );
+    }
+
+    p:last-child {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    &_explanation {
+        font-size: 1em;
+
+        a {
+            border-bottom-width: 1px;
+        }
+    }
+}
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

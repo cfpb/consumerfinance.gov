@@ -1,0 +1,79 @@
+{# ==========================================================================
+
+   expandable_group.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create an Expandable Group organism when given:
+
+   value:              An object with the following options for value.
+                          Defaults to an empty object.
+
+   value.heading:      Heading text.
+
+   value.body:        Body introduction text.
+
+   value.is_accordion: Whether this group is an accordion or not.
+                          Default is false.
+
+   value.has_rule:     Whether there is a top gray rule.
+                          Default is false.
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% do global_dict.update(
+        {
+            'expandable_group': {
+                'heading': 'Group Header',
+                'has_rule': true,
+                'expandables': [
+                    {
+                        'label': 'Expand 1 - initially open',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                        'is_expanded': true
+                    },
+                     {
+                        'label': 'Expand 2',
+                        'paragraph': lipsum(1, false, 10, 225),
+                        'is_bordered': true,
+                        'is_midtone': true,
+                    }
+                ],
+            }
+        })
+    %}
+{% endif %}
+{% set value = value or global_dict.expandable_group %}
+
+<div class="o-expandable-group
+            {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
+
+    {% if value.has_rule %}
+        <div class="a-rule-break"></div>
+    {% endif %}
+
+    {% if value.heading %}
+        <h3>{{ value.heading }}</h3>
+    {% endif %}
+
+    {% if value.body %}
+        <p>{{ value.body }}</p>
+    {% endif %}
+
+    {# Should be a stack of Expandable instances. #}
+    {% if value.expandables %}
+        {% for expandable in value.expandables %}
+            {% if prototype %}
+                {% set value = expandable %}
+                {% include 'molecules/expandable.html' with context %}
+            {% else %}
+                {{ expandable }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

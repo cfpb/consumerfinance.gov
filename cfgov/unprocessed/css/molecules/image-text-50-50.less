@@ -1,0 +1,133 @@
+/* ==========================================================================
+   cfgov-refresh
+   Image and Text 50-50 molecule
+   ========================================================================== */
+
+/* topdoc
+  name: Theme variables
+  family: cfgov-molecules
+  notes:
+    - "The following color and sizing variables are exposed,
+       allowing you to easily override them before compiling."
+  patterns:
+  - name: Colors
+    codenotes:
+      - |
+        @m-text-introduction_rule
+  tags:
+  - less
+*/
+@m-image-text-50-50_rule: @horizontal-rule;
+
+
+/* topdoc
+  name: Molecule: Image and Text 50-50 molecule
+  family: cfgov
+  patterns:
+    - name: Image and Text 50-50 molecule
+      markup: |
+        <div class="m-image-text-50-50
+                    content-l_col
+                    content-l_col-1-2">
+          <div class="m-image-text-50-50_widescreen-container">
+              <img src="http://placeholdit.com/1600x800"
+                   alt=""
+                   class="m-image-text-50-50_image">
+          </div>
+          <h2>
+              Title
+          </h2>
+          <p class="short-desc short-desc__large">
+              Description
+          </p>
+          <a class="btn m-image-text-50-50_btn"
+             href="http://cf.gov">
+             Go to CF.gov
+          </a>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-image-text-50-50
+            .m-image-text-50-50_widescreen-container
+              img
+            p.short-desc.short-desc__large
+            a.btn.m-image-text-50-50_btn    - name: .m-image-text-50-50__bottom-rule modifier
+      markup: |
+        <div class="m-image-text-50-50 m-image-text-50-50__bottom-rule">
+          <div class="m-image-text-50-50_widescreen-container">
+              <img src="http://placeholdit.com/1600x800"
+                   alt=""
+                   class="m-image-text-50-50_image">
+          </div>
+          <h2>
+              Title
+          </h2>
+          <p class="short-desc short-desc__large">
+              Description
+          </p>
+          <a class="btn m-image-text-50-50_btn"
+             href="http://cf.gov">
+             Go to CF.gov
+          </a>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-image-text-50-50.m-image-text-50-50__bottom-rule
+            .m-image-text-50-50_widescreen-container
+              img
+            p.short-desc.short-desc__large
+            a.btn.m-image-text-50-50_btn
+*/
+
+.m-image-text-50-50 {
+
+    margin-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
+
+    &_container {
+        height: 150px;
+        width: 150px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        .respond-to-max(@bp-sm-max, {
+            height: 130px;
+            width: 130px;
+        });
+    }
+
+    &_widescreen-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-bottom: 56.25%;
+        > img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &_btn {
+        .respond-to-max(@bp-xs-max, {
+            width: 100%;
+            text-align: center;
+        });
+    }
+
+    .respond-to-min(@bp-sm-min, {
+        .grid_column(6);
+    });
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

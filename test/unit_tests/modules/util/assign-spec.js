@@ -1,9 +1,10 @@
 'use strict';
 
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var expect = chai.expect;
-var assign = require( '../../../../src/static/js/modules/util/assign.js' )
-             .assign;
+var assign = require( BASE_JS_PATH + 'modules/util/assign.js' ).assign;
 var testObjectA;
 var testObjectB;
 var testObjectC;

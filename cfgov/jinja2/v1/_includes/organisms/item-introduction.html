@@ -1,0 +1,80 @@
+{# ==========================================================================
+
+   Item Introduction
+
+   ==========================================================================
+
+   Description:
+
+   Create an Item Introduction molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Item-Introduction
+
+   value:                   An object with the following options for value.
+
+   value.category:         The category label text.
+   value.heading:          Heading text.
+   value.paragraph.source: Body introduction text.
+   value.authors:          Array of author names and associated URLs.
+
+   value.date:             A datetime for the post.
+   value.has_social:       Whether to show the share icons or not.
+
+   ========================================================================== #}
+
+{% if not value %}
+    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
+    {% do global_dict.update(
+        {
+            'intro_introduction': {
+                'category': 'info for consumers',
+                'heading': 'Item Introduction',
+                'paragraph': {
+                    'source': lipsumText
+                },
+                'authors': [
+                              {'text':'Pat Govning', 'url':'#'},
+                              {'text':'Ingrid Phed', 'url':'#'}
+                          ],
+                'date': '12-12-2015',
+                'has_social': true
+            }
+        })
+    %}
+    {% set value = global_dict.intro_introduction %}
+{% endif %}
+
+{% import 'molecules/social-media.html' as social_media with context %}
+{% import 'macros/category-slug.html' as category_slug %}
+{% import 'macros/time.html' as time %}
+<div class="o-item-introduction">
+    <div class="h4">
+        {{ category_slug.render(value.category) }}
+    </div>
+    <h1>{{ value.heading }}</h1>
+
+    {% if value.paragraph %}
+        <p class="lead-paragraph">{{ value.paragraph.source | safe }}</p>
+    {% endif %}
+    {% if value.date or value.authors.text %}
+        <p>
+    {% endif %}
+    {% if value.authors.text %}
+        By
+        {% for link in value.authors %}
+            {% if loop.first == false %}
+            and
+            {% endif %}
+            <a href="{{ link.url }}">{{ link.text }}</a>
+        {% endfor %}
+        {{ '-' if value.date else ''}}
+    {% endif %}
+    {% if value.date %}
+        {{ time.render(value.date, {'date':true}) }}
+    {% endif %}
+    {% if value.date or value.authors.text %}
+        </p>
+    {% endif %}
+    {% if value.has_social %}
+        {{ social_media.render() }}
+    {% endif %}
+</div>

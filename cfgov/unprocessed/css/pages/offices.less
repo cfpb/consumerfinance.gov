@@ -1,0 +1,28 @@
+.office {
+
+    .content-l_col__before-divider.content-l_col-1-2 {
+        .respond-to-max(@bp-xs-max, {
+            margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+            &:before {
+                display: none;
+            }
+        });
+    }
+
+    // NOTE: This is to accommodate the variety of HTML tags that can be
+    //       delivered to the custom_fields > intro_text field in the CMS.
+    &_intro-text {
+        p {
+            .h3();
+        }
+
+        ul {
+            .list__branded();
+            padding-left: 20px;
+        }
+    }
+}
+
+.office_activities + .office_contact {
+    padding-top: 0;
+}

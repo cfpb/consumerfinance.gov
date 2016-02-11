@@ -24,6 +24,312 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+
+## 3.0.0-3.0.0 - 2016-02-11
+
+### Added
+- Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
+- Migrated 'sheerlike' project into this codebase
+- Added 'watchserver' manage.py subcommand for running Django dev server
+  and gulp watch together.
+- Added Acceptance tests for the `activity-log` page.
+- Added webpack module loader for per-page JavaScript.
+- Added external-site page-specific script.
+- Added `config/environment.js` for project JS path configuration.
+- Added filesystem helper to gulp utilities for retrieving a binary executable.
+- Django Server
+- Django related urls to access links
+- Django-Sheerlike integration
+- Added Acceptance tests for `the-bureau` pages.
+- Added test utility to retreive QA elements.
+- Added ARIA state utility to enable decorating dom elements with ARIA states.
+- Added unit test for `aria-state.js`.
+- Wagtail CMS
+- Added `gulp test:a11y` accessibility testing using node-wcag.
+- Added node 4.1.0 engine requirement in `package.json`.
+- Added `commonjs`, `jest`, `protractor` environments.
+- Added new ESLint `no-useless-concat`, `global-require`,
+  `jsx-quotes`, `no-restricted-syntax`, `block-spacing`, `require-jsdoc`,
+  `space-before-keywords`, `no-dupe-class-members`, `prefer-arrow-callback`,
+  and `prefer-template` rules.
+- Added `properties` attribute of `id-length` rule.
+- Added `keywords`, `unnecessary`, and `numbers` attributes
+  to `quote-props` rules.
+- runserver.sh script to collectstatic files and run the server
+- Added testing for web-storage-proxy.js
+- Added Acceptance tests for `careers` pages.
+- CFPBPage model
+- Backend for Staging vs Production publishing
+- Django template tags
+- Added `block__flush` to cf-enhancements to remove margin from all sides.
+- Added Acceptance tests for `blog` pages.
+- Added Acceptance tests for `newsroom` pages.
+- Added Acceptance tests for `doing-business-with-us` pages.
+- Added Acceptance tests for `budget` pages.
+- Added atomic landing page template prototypes.
+- Added `/organisms/` and `/molecules/` directories to includes directory.
+- Added `gulp test:perf` task to test for performance rules.
+- MYSQL backend to project settings & a database creation script
+- Added `gulp test:unit:server` for running Django unit tests via gulp.
+- Added templates and CSS for the Text Introduction molecule.
+- Added Unit test for `BreakpointHandler.js`.
+- EventPage and EventLandingPage
+- Management command to convert Wordpress data into Wagtail based Django models
+- Script to convert Event WP data into Wagtail specific POST data for wagtailcore view `create()`
+- Added half-width-link-blob macro and styles
+- Added templates and CSS for the Image and Text 25/75 molecule.
+- Added templates and CSS for the Image and Text 50/50 molecule.
+- Added templates and CSS for the Call to Action molecule.
+- Added `gulp beep` task for optional alerting when the build process
+  has completed.
+- Added Molecule/Organism Streamfields.
+- Added wagtail specific demoPage only available in development for displaying moleclues/organisms.
+- Added `license` field to `package.json`.
+- EventArchivePage, EventRequestSpeakerPage, and EventFilterForm.
+- Added templates and CSS for the Full Width Text organism.
+- Added templates and CSS for the Contact Method molecule.
+- Added templates and CSS for the Sidebar Contact Info organism.
+- Added `/browse-filterable` template page
+- Added templates and CSS for the Main Contact Info organism.
+- Added templates and CSS for the Related Posts molecule.
+- Added templates for the Hero molecule (CSS is in CF-Layout v1.3.0)
+- Added template for post-preview molecule
+- Added templates and CSS for the Signup Form organism.
+- Added templates and CSS for the Content Sidebar organism.
+- Added instruction to create superuser for admin access.
+- Adds new file to commands module in the core app called `_helpers.py`
+- Adds ability to import snippets
+- Added ImageText2575 molecule backend model and template
+- Added Call to Action backend and template
+- Added Contact snippet and molecule backends
+- Added temporary folder for converted Jinja2 Wagtail field template files
+- Added WP Import Data Contact processor
+- Added templates and CSS for the Adding Sidebar Breakout organism.
+- Added cf-tables and tables molecule
+- Landing Page Type
+- Initial Data json file for preloading pages
+- Added `/browse-basic` template page.
+- Added templates and CSS for Expandable molecule and ExpandableGroup organism.
+- Added `classlist` JS polyfill.
+- Added `EventObserver` for adding event broadcaster capability to JS classes.
+- Added `atomic-checkers.js` and `validateDomElement`
+  utility method for checking atomic element DOM nodes.
+- Backend Organisms Full Width Text & Post Preview.
+- Added Related Posts molecule to the CFGOVPage
+- Add Main Contact Info molecule
+- Add Sidefoot Streamfield to CFGOVPage for sidebar/footer content
+- Add global context variable `global_dict` for easier prototyping
+- Add styleguide app to local settings
+- Added templates and CSS for the Filterable-List-Controls organism.
+- Add Table organism
+- Add Sublanding Page
+- Add Hyperlink template
+- Add icons to Sidefoot Streamfield blocks
+- Add ImageText5050Group and HalfWidthLinkGroup templates and organisms
+- S3 Image Upload support for Refresh/Prod
+- Dev Landing Page Demo
+- Add Image Text 25/75 and Full Width Text into SublandingPage
+- Add related_posts_function to the global context in Jinja2 for prototyping of related posts
+- Added the featured content module molecule and included it in the landing-page prototype
+- Add ImageText2575Group organism
+- Add ImageText2575Group to Sublanding and Landing pages
+- Add the insets Quote and Related Links.
+- Added templates and CSS for the Notification molecule.
+- Added prototype data to the form-field-with-button molecule
+- Added prototype data to the email-signup organism
+- Added the email-signup organism to landing-page template
+- Added templates and CSS for the Social-Media molecule.
+- Add Heading field to Link Blob group
+- Add prototype data to Image Text organisms
+- Backend Expandable/Expandable Group Molecule & Organisms
+- Added Number Block
+- Added Form Field with Button to sublanding page
+  ([Fixed 1246](https://github.com/cfpb/cfgov-refresh/issues/1246)).
+- Added Backend Feature Content Molecule
+- Added get_unique_id context method.
+- Added templates and CSS for the Item Introduction organism.
+- Added templates and CSS for the Pagination molecule.
+- Backend Browse Page
+- Added Backend Item Intro Organism
+- Added Backend: Notification
+- `dom-traverse.js` for dom querying not covered by native dom.
+- Added Backend Learn Page model
+- Added Related Topics molecule.
+- Added full_width_sans setting for correct font face usage.
+- Added a new nav-link molecule macro and styles.
+- Added Related Links to Sidebar/Footer.
+- Added Related Metadata molecule.
+- Added custom image and rendition models CFGOVImage and CFGOVRendition
+- Added AbstractLearnPage for Learn and Doc Detail pages
+- Added preview fields to AbstractLearnPage
+- Added relevant date fields to AbstractLearnPage
+- Added multi-select atom styles and scripting
+- Added Frontend: Global Header CTA.
+- Added Frontend: Header.
+- Added Frontend: Mega Menu.
+- Added Frontend: Global Eyebrow.
+- Added Frontend: Global Search molecule.
+- Added language dropdown for pages, which defaults to english
+- Add BrowseFilterablePage model
+- Add BaseExpandable class for expandable controls
+- Add FilterControls organism using BaseExpandable
+- Add url_parameters macro to handle adding existing get URL parameters into links
+- Added new info-unit molecule that combines (but doesn't replace) the half width link blob, image and text 50/50, and 25/75 into one base molecule using modifiers.
+- Added new (undocumented) card molecule.
+- Add wagtailuserbar to the base.html
+- Added unit test for beta-banner.js.
+
+### Changed
+- Updated the primary nav to move focus as user enters and leaves nav levels
+- Moved handlebars from npm to bower.
+- Added jQuery CDN with fallback to head to satisfy GTM requirements.
+- Changes the location of the /dist folder to cfgov/v1/jinja2/v1
+- Server port is now at 8000
+- included with context flag for macros that make a call to request object
+- Updated Jinja2 shorthand if statements to include an empty else case.
+- Added `binaryDirectory` parameter to `fsHelper.getBinary` helper function.
+- Updated jsdom from `3.1.2` to `6.5.1`.
+- Updated mocha-jsdom from `0.3.0` to `1.0.0`.
+- Updated istanbul from `0.3.13` to `0.3.20`.
+- Updated TravisCI node version to `4.1.0`.
+- Updated ESLint configuration from `1.0.0` to `1.5.1`.
+- Vendor related files now sit at the root project location
+- Moved templates to reside in v1 app project jinja2 directory
+- Added ability to use django static & url functionality in jinja2 templates.
+  [More Information](https://docs.djangoproject.com/en/1.8/topics/templates/#django.template.backends.jinja2.Jinja2)
+- Refactored web-storage-proxy.js to be less complex and make it testable
+- Updated del from `1.2.0` to `2.0.0`.
+- Updated chai from `2.3.0` to `3.3.0`.
+- Updated sinon-chai from `2.7.0` to `2.8.0`.
+- Settings file and template loaders
+- Updated gulp-autoprefixer from `2.3.1` to `3.0.2`.
+- Added pixel dimensions to Cordrary corner video image.
+- Added JS in `./config` directory to `gulp lint:build` task
+  and merged that and gulp config together in `config.build`.
+- addressed security concerns about query data validation in calendar filter pdf generation,
+  and added an option to filters to allow post requests
+- fixed url routing for rendering directory cordrays pdf
+- explicitly stated jinja2 to autoescape in templates
+- Changes `align: value` attribute in ESLint `key-spacing` rule
+  to individual mode with `mode: minimum` option set.
+- Changes `quote-props` rule attribute to `consistent-as-needed`.
+- Added href URL to primary nav top-level menu link.
+- Changed DB backend from sqlite ==> MYSQL.
+- Govdelivery subscribe view is now exempt from csrf verification
+- Fixed issue w/ gulp watch task not compiling JS on change
+- Refactored `BreakpointHandler.js` to remove jQuery dependency and unneeded code.
+- Changed from single cf import to individual module imports.
+- Move handlebars dependency to npm from bower.
+- Change Doing Business With Us email to office email
+- Updates `gulp-sitespeedio` from `0.0.6` to `0.0.7`.
+- CFGOVPage to include tags and authors
+- Event import script to include grabbing tags and authors
+- Change templates to move logic to Django backend
+- Move Event filter over to a Django form.
+- Updates `jsdom` to `7.0.2` from `6.5.1`.
+- Move staging hostname variable from django settings to be an environment variable
+- Uses globally installed Protractor in setup.sh, if available.
+- Updated the existing breakpoint variables and values to the ones released in cf-core v1.2.0
+- Excludes 3rd-party JS polyfills from linting.
+- Abstracts code into helper class `DataImporter`
+- Modifies command line options to allow specifying arguments for importing pages or snippets
+- Changes the way the processor module is imported so it imports it using the [app] argument
+- Moves the processors module from the core.management.commands module to the v1 app
+- Contact molecule templates
+- Changes .env Project configuration workon control flow to direct stdout and stderr to /dev/null.
+- Upgrade wagtail to 1.2
+- Cleaned up and rebuilt the secondary nav to reduce complexity and fix bugs
+- Routed landing page type related molecules and organisms
+  to use `jinja2/v1/_includes/` template locations.
+- Updated protractor from 2.5.1 to 3.0.0.
+- Updated gulp-sitespeedio from 0.0.7 to 0.0.8.
+- Update runserver script to start MYSQL if it isn't running
+- Reduced padding on expandables per direction of design.
+- Hide cues on expandables when JS is turned off.
+- Updated protractor from 2.5.1 to 3.0.0.
+- Change name of Settings tab to Configuration
+- Move some Promote fields to Configuration tab
+- Change Promote to be Sidebar/Footer
+- Move Related Posts and Email Signup to sidefoot Streamfield in the Sidebar/Footer tab in CFGOVPage
+- Finalize Sidebar Breakout organism template
+- Finalize Sublanding Page template
+- Fix related post molecule to be used in multiple places
+- Convert Sidefoot paragraph streamfield block to Textblock
+- Updated headings for changes in Capital Framework
+- Temporarily comment out related posts section of single blog post
+  browser test until BlogPage's are in Wagtail.
+- Add `show_heading` checkbox to Related Posts organism to toggle the heading
+  and icon.
+- Merge Streamfields in LandingPage
+- Landing and Sublanding content blocks render each atomic structure with `div class="block">`
+- Added environments to frontend/backend setup scripts.
+- Make Full Width Text organism a StreamBlock and add insets
+- Converted `external-site.js` to `ExternalSite.js` class and removed 3rd party dependencies.
+- Changed the ImageBasic atom to always include an optional alt by default
+- Removed field validation on content creation
+  ([Fixed 1252](https://github.com/cfpb/cfgov-refresh/issues/1252)).
+- Sets npm install on frontend.sh to warning level.
+- Updated Jinja2 environment inlcude flag related methods
+- Updated ImageText5050 requirements [Fixed 1269] (https://github.com/cfpb/cfgov-refresh/issues/1269)
+- Updated `webpack-stream` to `3.1.0` from `2.1.0`.
+- Updated `player` to `0.5.1` from `0.6.1`.
+- Updated streamchild render method to use default behavior when using default blocks [Fixed 1268] (https://github.com/cfpb/cfgov-refresh/issues/1268)
+- Fixes styling and rendering issues [Fixed 1278] (https://github.com/cfpb/cfgov-refresh/issues/1278)
+- Upgrade version of Wagtail to 1.3
+- Change method of CFGOVPage called `children` to be called `elements`
+- Moved html5shiv into modernizr.
+- Updated `gulp-load-plugins` to `1.2.0` from `1.1.0`.
+- Included breadcrumb data from page context
+- Added development environment data initialization
+- Pinned jQuery to `1.11.3` due to changes in `1.12.0` that cause errors in jsdom.
+- [Fixed 1320] (https://github.com/cfpb/cfgov-refresh/issues/1320)
+- Converted the nav-secondary macro and styles to an organism
+- Updated the new secondary-nav organism to use the new nav-link molecule
+- Updated the secondary-nav-toggle for new classnames
+- Changed expandable.html to be a macro for upcoming Filtered List
+- Updated browse-filterable demo
+- Updated filterable-list-controls organism to allow for multiple option
+- Password Policy & Lockout criteria for login, account password change & forgot my password.
+- Updated the project to use Avenir font by default
+- Updated `mocha` from `2.2.4` from `2.4.2`.
+- Updated `sinon` from `1.14.1` from `1.17.3`.
+- Updated `lodash` from `3.10.0` from `4.0.1`.
+- Change jinja2 templates to handle Wagtail page
+- Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
+- Updated brand colors to updates in generator-cf.
+- Disabled JavaScript in IE8 and earlier.
+- Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
+- Refactored beta-banner.js to demonstrate general lifecycle.
+
+### Removed
+- Removed unused exportsOverride section,
+  which was an artifact of the grunt bower task.
+- Removed browserify, watchify, and browserify-shim dependencies.
+- Removed src directory
+- Removed bad CF Notifier tests.
+- Removed unnecessary mobile-only expandables
+- Removed link from Cordray's corner image `/the-bureau/about-director/`.
+- Removed extra Google Analytics code.
+- Removed `istanbul` because it's already a dependencies of `gulp-istanbul`.
+- Sidebar from LandingPage
+- Removed `map` and `filter` array polyfills.
+- Removed `event-listener.js` and `query-selector.js` polyfills for IE8.
+
+### Fixed
+- Fixed instructions for gulp watch
+- New way to run the server documented in the INSTALL.MD
+- New way to define url routing, no longer automatically set by file path
+- Fixed heading structure throughout website
+- Fixed setup.sh to use argument correctly
+- Fixed title for Small & Minority Businesses
+- Fix page header rendering for Sublanding page
+- Fix related post molecule to be used in multiple places
+- Fix failing tests relating to Related Posts organism
+- Fix related-posts.html logic
+- Minor PEP8 compliance changes
+- Fixed the markup for the 25/75 organism.
+
+
 ## 3.0.0-2.4.0 - 2015-09-29
 
 ### Added
@@ -167,12 +473,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.0.0-2.1.0 - 2015-08-05
 
 ### Added
-- Added `sub-pages/civil-penalty-fund-allocation-schedule/` page.
-- Added `sub-pages/sub-pages/consumer-education-financial-literacy-programs/` page.
-- Added `u-hidden` utility class for fully hiding an element.
-- Added `TEST.md` readme file for testing instructions.
-- Added `grunt clean` and `grunt copy` tasks.
-- Added `grunt clean` step to `setup.sh`.
 - Added `map` and `filter` array polyfills.
 - Added `about-us` page and tests
 - Added `newsroom` type to Activity Snippets

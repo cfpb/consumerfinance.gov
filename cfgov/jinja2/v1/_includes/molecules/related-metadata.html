@@ -1,0 +1,109 @@
+{# ==========================================================================
+
+   related_metadata.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related metadata markup when given:
+
+   related_metadata_list: A list of relatated metadata items.
+
+   is_half_width:         A Boolean indicating whether the list items should be at half
+                          width. Defaults to False.
+
+   ========================================================================== #}
+
+{% macro render(related_metadata_list, is_half_width=false) %}
+{% set types_lookup = {
+    'date': _date,
+    'list': _list,
+    'text': _text
+} %}
+<div class="m-related-metadata
+            {{ 'm-related-metadata__half-width' if is_half_width else '' }}">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            Related Metadata
+        </span>
+    </h2>
+    {% for list_item in related_metadata_list %}
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+            {{ list_item.title }}
+        </h3>
+        {{ types_lookup[list_item.type](list_item.value) }}
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{# ==========================================================================
+
+   _list()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related metadata list markup when given:
+
+   list: A list of dictionaries containing links.
+
+   ========================================================================== #}
+
+{% macro _list(list) %}
+<ul class="list
+           list__unstyled
+           list__links">
+    {% for list_item in list %}
+    <li class="list_item">
+        <a href="{{ list_item.url }}" class="list_link">
+            {{ list_item.text }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endmacro %}
+
+{# ==========================================================================
+
+   _date()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related metadata date markup when given:
+
+   date: A string representing a date.
+
+   ========================================================================== #}
+
+{% macro _date(date) %}
+{% import 'macros/time.html' as time %}
+<p class="date u-mb0">
+    {{ time.render(date, {'date':true}) }}
+</p>
+{% endmacro %}
+
+{# ==========================================================================
+
+   _text()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related metadata text markup when given:
+
+   text: A string representing text.
+
+   ========================================================================== #}
+
+{% macro _text(text) %}
+<p class="u-mb0">
+    {{ text }}
+</p>
+{% endmacro %}

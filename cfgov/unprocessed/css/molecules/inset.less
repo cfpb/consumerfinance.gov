@@ -1,0 +1,63 @@
+/* topdoc
+  name: Insets near Full Width Text
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-full-width-text-group">
+            <div class="m-full-width-text"></div>
+            <div class="m-inset">
+                <div class="m-quote">
+                </div>
+            </div>
+            <div class="m-full-width-text"></div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-full-width-text
+            .m-full-width-text
+            .m-inset
+              .m-quote
+              .m-related-links
+              .m-call-to-action
+            .m-full-width-text
+  tags:
+    - cfgov-molecules
+  notes:
+    - These are held in a full-width-text-group container to be held with
+      various full-width text blocks,  insets and tables as needed.
+*/
+
+.m-inset {
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+    width: 100%;
+    clear: right;
+
+    .respond-to-min(@bp-med-min, {
+        float: right;
+        width: unit( 270px / @base-font-size-px, em );
+        margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
+    });
+
+    .respond-to-min(@bp-lg-min, {
+        margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+    });
+
+    .m-call-to-action,
+    .m-related-links {
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        border-bottom: 1px solid @horizontal-rule;
+    }
+
+    .m-full-width-text,
+    .m-quote {
+        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        border-top: 1px solid @horizontal-rule;
+        border-bottom: 1px solid @horizontal-rule;
+        margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    }
+}

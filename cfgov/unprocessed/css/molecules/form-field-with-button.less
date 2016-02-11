@@ -1,0 +1,60 @@
+/* topdoc
+  name: Form Field with Button
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-form-field-with-button">
+            <div class="form-group">
+                <label for="name">
+                    <b>label text</b>(required)
+                </label>
+                <input id="" type="" name="" placeholder=""
+                class="m-form-field-with-button_field">
+            </div>
+            <p class="short-desc">
+            </p>
+            <input class="btn btn__full" type="" value="">
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-form-field-with-button
+            .form-group
+              label
+                b
+              .m-form-field-with-button_field
+            .short-desc
+            .btn btn__full
+  tags:
+    - cfgov-molecules
+*/
+
+@margin__em: unit( @grid_gutter-width / @base-font-size-px, em );
+
+.m-form-field-with-button {
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"] {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: @margin__em;
+    }
+
+    label {
+        margin-bottom: @margin__em / 2;
+    }
+
+    .short-desc {
+        margin-bottom: @margin__em / 2;
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
