@@ -16,6 +16,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+
+## 3.0.0-3.0.0 - 2016-02-11
+
+### Added
 - Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
 - Migrated 'sheerlike' project into this codebase
 - Added 'watchserver' manage.py subcommand for running Django dev server
