@@ -11,10 +11,6 @@
 
         {% include 'molecules/global-search.html' with context %}
 
-        {% block primary_nav %}
-            {% include 'organisms/mega-menu.html' with context %}
-        {% endblock primary_nav %}
-
         <a class="o-header_logo" href="/">
             <img class="o-header_logo-img u-js-only"
                  src="/static/img/logo_sm-exec.svg"
@@ -30,5 +26,10 @@
                      height="50">
             </noscript>
         </a>
+
+        {% block primary_nav %}
+            {% include 'organisms/mega-menu.html' with context %}
+        {% endblock primary_nav %}
+
     </div>
 </header>

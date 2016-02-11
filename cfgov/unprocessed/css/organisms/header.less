@@ -83,24 +83,16 @@
             & > .m-global-search {
                 float: right;
             }
-
-            // TODO: This needs another approach so menu doesn't wrap
-            //       around when search is expanded at small screen sizes.
-            // Flip stacking order between logo and mega menu,
-            // so that menu appears on bottom.
-            & > .o-mega-menu {
-                display: table-footer-group;
-            }
-
-            & > .o-header_logo {
-                display: table-header-group;
-            }
         } );
 
         // Hide Global Header Call to Action at tablet/mobile sizes.
         .respond-to-max( @bp-sm-max, {
             & > .m-global-header-cta {
                 display: none;
+            }
+
+            & > .o-mega-menu {
+                float: left;
             }
         } );
     }

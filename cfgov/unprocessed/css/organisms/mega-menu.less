@@ -343,7 +343,7 @@
 
         &_content {
             &-list {
-                padding-left: 0;
+                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 margin-bottom: 0;
             }
 
@@ -464,7 +464,7 @@
         &_subcontent-grid {
             .grid_column( 8 );
             // TODO: Check if .grid_nested-col-group()
-            //       can be used when updating Featured Menu Content.
+            //       can be used here when implementing Featured Menu Content.
             border-left: 0;
         }
     } );
