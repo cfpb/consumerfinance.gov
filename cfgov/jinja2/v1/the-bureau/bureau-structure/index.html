@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="/static/css/slick.css">
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }}
+    content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
 
     {% import '_macro-role.html' as role with context %}
@@ -129,7 +134,9 @@
 
     </div>
 
-    <aside class="block block__padded-top block__padded-bottom block__border-top">
+    <aside class="block
+                  block__padded-top
+                  block__border-top">
         <div class="content-l content-l__main">
             <div class="content-l_col content-l_col-1-2"
                  data-qa-hook="org-chart-download-info">
