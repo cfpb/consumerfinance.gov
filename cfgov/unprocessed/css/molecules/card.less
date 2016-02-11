@@ -1,30 +1,15 @@
 .m-card {
-  background: @white;
-  border: 1px solid @gray-20;
-  border-bottom-width: 3px;
-  padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    // TODO: Use flexbox to make these all the same height when side-by-side
+    background: @white;
+    border: 1px solid @gray-20;
+    border-bottom-width: 3px;
+    padding: unit( @grid_gutter-width / @base-font-size-px, em );
 
-  &_heading {
-    color: @green;
-  }
-
-  p {
-    margin-bottom: 0;
-  }
-}
-
-.o-card {
-  .respond-to-max( @bp-med-max, {
-     + .o-card {
-      margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    &_heading {
+        color: @green;
     }
-  } );
 
-  .respond-to-range( @bp-sm-min, @bp-med-max, {
-    .grid_column( 1, 1 );
-  } );
-
-  .respond-to-min( @bp-lg-min, {
-    .grid_column(6);
-  } );
+    &_body {
+        margin-bottom: 0;
+    }
 }

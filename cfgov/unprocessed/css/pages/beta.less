@@ -23,179 +23,68 @@
     .respond-to-min(@bp-sm-min, {
         font-size: 1em;
     });
-}
 
-.beta-banner_head {
-    .h4();
-    margin-bottom: 0;
+    &_head {
+        .h4();
+        margin-bottom: 0;
 
-    .m-expandable__expanded & {
-        margin-bottom: unit(5px / @base-font-size-px, em);
+        .m-expandable__expanded & {
+            margin-bottom: unit(5px / @base-font-size-px, em);
+        }
     }
-}
 
-.beta-banner_icon {
-    color: @gold;
-}
+    &_icon {
+        color: @gold;
+    }
 
-.beta-banner_desc {
-    margin-bottom: 0;
-    padding: 0;
-    background: @gold-20;
-}
+    &_desc {
+        margin-bottom: 0;
+        padding: 0;
+        background: @gold-20;
+    }
 
-.beta-banner_btn {
-    .btn__secondary();
-    width: 100%;
-    // Restore standard btn padding, which is removed by .expandable_target.
-    padding:
-        unit( @btn-v-padding / @btn-font-size, em )
-        unit( 14px / @btn-font-size, em );
-    margin-top: @grid_gutter-width / 2;
+    &_btn {
+        .btn__secondary();
+        width: 100%;
+        // Restore standard btn padding, which is removed by .expandable_target.
+        padding:
+            unit( @btn-v-padding / @btn-font-size, em )
+            unit( 14px / @btn-font-size, em );
+        margin-top: @grid_gutter-width / 2;
 
-    .respond-to-min(@bp-sm-min, {
-        .btn__link();
-        width: auto;
-        padding: @grid_gutter-width / 2;
-        margin: 0;
-        position: absolute;
-        top: 1px;
-        right: 0;
-        .u-link__colors(@black, @dark-gray);
-        .u-link__no-border();
-        text-transform: lowercase;
-    });
+        .respond-to-min(@bp-sm-min, {
+            .btn__link();
+            width: auto;
+            padding: @grid_gutter-width / 2;
+            margin: 0;
+            position: absolute;
+            top: 1px;
+            right: 0;
+            .u-link__colors(@black, @dark-gray);
+            .u-link__no-border();
+            text-transform: lowercase;
+        });
 
-    .respond-to-max(@bp-xs-max, {
-        // Prevent double-shrinkage.
-        font-size: 1em;
-    });
+        .respond-to-max(@bp-xs-max, {
+            // Prevent double-shrinkage.
+            font-size: 1em;
+        });
 
-    .respond-to-min(@bp-sm-min, {
-        // Adjust to match increasing side margins.
-        right: @grid_gutter-width / 2;
-    });
+        .respond-to-min(@bp-sm-min, {
+            // Adjust to match increasing side margins.
+            right: @grid_gutter-width / 2;
+        });
 
-    .respond-to-min(@bp-med-min, {
-        // At this width, the wrapper gains `position: relative`,
-        // so the button position has to be adjusted accordingly.
-        top: unit(-12px/@base-font-size-px, em);
-    });
+        .respond-to-min(@bp-med-min, {
+            // At this width, the wrapper gains `position: relative`,
+            // so the button position has to be adjusted accordingly.
+            top: unit(-12px/@base-font-size-px, em);
+        });
+    }
 }
 
 .no-js {
     .beta-banner_btn {
         display: none;
     }
-}
-
-.beta-hero {
-    min-height: 420px;
-    // Top padding reduced from 30px to compensate for line-height on title.
-    padding: unit(25px / @base-font-size-px, em) (@grid_gutter-width / 2);
-    background: @teal-20;
-    background-image: url('/static/img/beta-illustration_sm.png');
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: 1176px;
-    text-align: center;
-
-    .respond-to-min(@bp-sm-min, {
-        min-height: 520px;
-        padding: @grid_gutter-width;
-        background-image: url('/static/img/beta-illustration_lg.png');
-        background-size: 1470px;
-    });
-
-    .respond-to-min(@bp-lg-min, {
-        min-height: 540px;
-        background-size: 1838px;
-    });
-
-    .respond-to-dpi(2, {
-        // Retina-specific stuff here.
-        background-image: url('/static/img/beta-illustration_sm@2x.png');
-
-        .respond-to-min(@bp-sm-min, {
-            background-image: url('/static/img/beta-illustration_lg@2x.png');
-        });
-    });
-}
-
-.beta-hero_title {
-    .h2();
-
-    .respond-to-min(@bp-sm-min, {
-        .superheader();
-    });
-}
-
-.beta-hero_desc {
-    .h4();
-    max-width: 32em;
-    margin: 0 auto 1em;
-
-    .respond-to-min(@bp-sm-min, {
-        .h2();
-        // Override the property set in .h2().
-        margin-bottom: 1em;
-    });
-}
-
-.progress-charts {
-    .u-clearfix();
-}
-
-.progress-charts_container {
-    box-sizing: border-box;
-    margin-bottom: 1em;
-    position: relative;
-    background-size: cover;
-    .u-clearfix();
-
-    .respond-to-min(@bp-sm-min, {
-        .u-w33pct();
-        height: 150px;
-        padding: 0 1em;
-        float: left;
-        text-align: center;
-    });
-
-    .respond-to-min(768px, {
-        .u-w20pct();
-    });
-}
-
-.progress-charts_chart {
-    width: 100px;
-    height: 100px;
-
-    .respond-to-max(@bp-xs-max, {
-        margin-right: 1em;
-        float: left;
-    });
-}
-
-.chart-bg {
-    position: relative;
-    background: @gray-20;
-    width: 100%;
-    height: 100%;
-}
-
-.bar-chart {
-    position: absolute;
-    bottom: 0;
-    background: @gold;
-    width: 100%;
-}
-
-.chart-name {
-    .h5();
-
-    .respond-to-max(@bp-xs-max, {
-        position: relative;
-        // Half height of graph (50px) - half of line-height (11px).
-        top: 39px;
-    });
 }
