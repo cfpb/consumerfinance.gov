@@ -1,12 +1,5 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-
-{% import 'atoms/large-checkbox.html' as large_checkbox %}
-{% import 'atoms/large-radio.html' as large_radio %}
-
-{% import 'molecules/related-posts.html' as related_posts with context %}
-{% import 'organisms/post-preview.html' as post_preview %}
-
 {% if not breadcrumb_items %}
     {% set parent = page.parent() %}
     {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
