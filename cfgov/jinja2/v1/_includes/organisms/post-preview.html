@@ -45,7 +45,7 @@
 
 {% if page %}
 {% macro render(post, type='', form_id=0, url='') %}
-    {% set url = request.path if not url else url %}
+    {% set url = url or request.path %}
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">

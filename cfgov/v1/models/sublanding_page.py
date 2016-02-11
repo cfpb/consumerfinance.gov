@@ -68,6 +68,7 @@ class SublandingPage(CFGOVPage):
                         if 'BrowseFilterablePage' in p.specific_class.__name__]
         posts = []
         for page in filter_pages:
-            posts.append(page.get_page_set(page.get_form_class()(parent=page),
+            form_class = page.get_form_class()
+            posts.append(page.get_page_set(form_class(parent=page),
                                            request.site.hostname))
         return sorted(list(chain(*posts)))

@@ -323,7 +323,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Sidebar from LandingPage
 - Removed `map` and `filter` array polyfills.
 - Removed `event-listener.js` and `query-selector.js` polyfills for IE8.
-- Removed unnecessary Wagtail streamdata retreival function from v1/utils/util.py
+- Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
 
 ### Fixed
 - Fixed instructions for gulp watch
