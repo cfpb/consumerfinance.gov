@@ -50,11 +50,18 @@
               {% endfor %}
           </div>
 
-          {# TODO: Update this when ready for images uploaded by user #}
-          {% if value.image.upload.url %}
+
+          {# TODO: Remove this when /the-bureau/ has been converted to wagtail #}
+          {% if value.macro_image %}
               <div class="hero_image"
-                   style="background-image: url( {{ value.image.upload.url }} );">
+                   style="background-image: url( {{ value.macro_image.url }} );">
               </div>
+          {% else %}
+              {% if value.image.upload.url %}
+                  {% set photo=image(value.image.upload, 'original') %}
+                  <div class="hero_image"
+                       style="background-image: url( {{ photo.url }} );">
+              {% endif %}
           {% endif %}
       </div>
   </section>
