@@ -83,6 +83,12 @@
                         global_dict.full_width_serif else '' }}">
                 {{ render_stream_child(block.value) |safe}}
             </div>
+        {% elif 'table' in block.block_type %}
+            <div class="m-full-width-text
+                        {{ 'm-full-width-text__serif' if
+                        global_dict.full_width_serif else '' }}">
+                {{ render_stream_child(block) |safe}}
+            </div>
         {% else %}
             <div class="m-inset">
                 {{ block | safe }}
