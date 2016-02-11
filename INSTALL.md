@@ -79,7 +79,8 @@ Then run the MYSQL creation script from project root directory:
 ./create-mysql-db.sh
 ```
 
-If you would like to have a custom database setup then you can pass in the necessary arguments:
+If you would like to have a custom database setup
+then you can pass in the necessary arguments:
 
 ```
 ./create-mysql-db.sh <dbname> <username> <password>
@@ -88,6 +89,13 @@ If you would like to have a custom database setup then you can pass in the neces
 > **NOTE:** Be sure to update your local settings in
   `cfgov/cfgov/settings/local.py` to account for these changes.
 
+
+If something goes wrong and you'd like to delete the database
+and start again, you can do so with:
+
+```
+mysql v1 -u root -p -e 'drop database v1;'
+```
 
 ### Virtual Environment
 In the project root directory,

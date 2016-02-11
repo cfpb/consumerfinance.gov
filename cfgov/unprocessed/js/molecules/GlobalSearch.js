@@ -6,6 +6,8 @@ if ( !Modernizr.classlist ) { require( '../modules/polyfill/class-list' ); } // 
 // Required modules.
 var atomicCheckers = require( '../modules/util/atomic-checkers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
+var EventObserver = require( '../modules/util/EventObserver' );
+var FlyoutMenu = require( '../modules/FlyoutMenu' );
 
 /**
  * GlobalSearch
@@ -17,19 +19,24 @@ var breakpointState = require( '../modules/util/breakpoint-state' );
  *   The DOM element within which to search for the molecule.
  * @returns {Object} An GlobalSearch instance.
  */
-function GlobalSearch( element ) {
+function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   var BASE_CLASS = 'm-global-search';
 
   var _dom =
     atomicCheckers.validateDomElement( element, BASE_CLASS, 'GlobalSearch' );
-  var _triggerDom = _dom.querySelector( '.' + BASE_CLASS + '_trigger' );
+  var _triggerSel = '.' + BASE_CLASS + '_trigger';
+  var _triggerDom = _dom.querySelector( _triggerSel );
+  var _flyoutMenu =
+    new FlyoutMenu( _dom, _triggerSel, '.' + BASE_CLASS + '_content' ).init();
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _searchInputDom;
+  var _searchBtnDom;
   var _clearBtnDom;
 
-  var _isExpanded = false;
-  var _tabPressed = false;
+  // TODO: Move tab trigger to its own class.
+  var _tabTriggerDom =
+    _contentDom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
 
   var KEY_TAB = 9;
 
@@ -37,96 +44,133 @@ function GlobalSearch( element ) {
    * @returns {Object} The GlobalSearch instance.
    */
   function init() {
-    var inputSelector = '.' + BASE_CLASS + '_content-form input';
-    var clearBtnSelector =
-      '.' + BASE_CLASS + ' .input-contains-label_after__clear';
-    var searchIconSelector =
-      '.' + BASE_CLASS + ' .input-contains-label_before__search';
-    var searchBtnSelector = '.' + BASE_CLASS + ' .input-with-btn_btn button';
+    var inputSel = '.' + BASE_CLASS + '_content-form input';
+    var clearBtnSel = '.' + BASE_CLASS + ' .input-contains-label_after__clear';
+    var searchBtnSel = '.' + BASE_CLASS + ' .input-with-btn_btn button';
 
-    _searchInputDom = _contentDom.querySelector( inputSelector );
-    var searchIconDom = _contentDom.querySelector( searchIconSelector );
-    var searchBtnDom = _contentDom.querySelector( searchBtnSelector );
-    _clearBtnDom = _contentDom.querySelector( clearBtnSelector );
+    _searchInputDom = _contentDom.querySelector( inputSel );
+    _searchBtnDom = _contentDom.querySelector( searchBtnSel );
+    _clearBtnDom = _contentDom.querySelector( clearBtnSel );
 
-    _triggerDom.addEventListener( 'click', _triggerClicked );
+    _flyoutMenu.addEventListener( 'toggle',
+                                  _handleToggle.bind( this ) );
+    _flyoutMenu.addEventListener( 'expandBegin', _handleExpandBegin );
+    _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
+    _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
+
     _clearBtnDom.addEventListener( 'mousedown', _clearClicked );
     _searchInputDom.addEventListener( 'keyup', _inputTyped );
-    _searchInputDom.addEventListener( 'blur', _searchBlurred );
-    searchBtnDom.addEventListener( 'mousedown', _searchBtnClicked );
-    searchIconDom.addEventListener( 'click', _searchIconClicked );
-
-    _contentDom.addEventListener( 'keydown', _handleTabPress );
+    _tabTriggerDom.addEventListener( 'keyup', _handleTabPress );
 
     _setClearBtnState( _searchInputDom.value );
+
+    // Set initial collapse state.
+    _handleCollapseEnd();
 
     return this;
   }
 
   /**
-   * Event handler for when the keyboard is pressed on the HTML document body.
-   * If the tab key was pressed, record the press so that when
-   * getting to the search input, the input won't collapse when
-   * tabbing between the input and the search button.
-   * @param {KeyboardEvent} event The event object for the keyboard key press.
+   * Event handler for when there's a click on the page's body.
+   * Used to close the global search, if needed.
+   * @param {MouseEvent} event The event object for the mousedown event.
+   */
+  function _handleBodyClick( event ) {
+    var target = event.target;
+
+    var isInDesktop = _isInDesktop();
+    if ( isInDesktop && !_isDesktopTarget( target ) ||
+         !isInDesktop && !_isMobileTarget( target ) ) {
+      collapse();
+    }
+  }
+
+  // TODO: Move this to breakpoint-state.js.
+  /**
+   * Whether currently in the desktop view.
+   * @returns {boolean} True if in the desktop view, otherwise false.
+   */
+  function _isInDesktop() {
+    var isInDesktop = false;
+    var currentBreakpoint = breakpointState.get();
+    if ( currentBreakpoint.isBpMED ||
+         currentBreakpoint.isBpLG ||
+         currentBreakpoint.isBpXL ) {
+      isInDesktop = true;
+    }
+    return isInDesktop;
+  }
+
+  /**
+   * Whether a target is one of the ones that appear in the desktop view.
+   * @param {HTMLNode} target - The target of a mouse event (most likely).
+   * @returns {boolean} True if the passed target is in the desktop view.
+   */
+  function _isDesktopTarget( target ) {
+    return target === _searchInputDom ||
+           target === _searchBtnDom ||
+           target === _clearBtnDom;
+  }
+
+  /**
+   * Whether a target is one of the ones that appear in the mobile view.
+   * @param {HTMLNode} target - The target of a mouse event (most likely).
+   * @returns {boolean} True if the passed target is in the mobile view.
+   */
+  function _isMobileTarget( target ) {
+    return _dom.contains( target );
+  }
+
+  /**
+   * Event handler for when the tab key is pressed.
+   * @param {KeyboardEvent} event
+   *   The event object for the keyboard key press.
    */
   function _handleTabPress( event ) {
     if ( event.keyCode === KEY_TAB ) {
-      _tabPressed = true;
-    }
-  }
-
-  /**
-   * Event handler for when the search icon is clicked in the
-   * expanded state at desktop sizes. Closes the search box.
-   */
-  function _searchIconClicked() {
-    _collapseIfDesktop();
-  }
-
-  /**
-   * Force a click on the search button after it has been clicked.
-   * This is necessary to handle the button before the search input blurs.
-   * @param {MouseEvent} event The event object for mousedown event.
-   */
-  function _searchBtnClicked( event ) {
-    event.target.click();
-  }
-
-  /**
-   * Event handler for when the search input loses focus.
-   * Closes the search input if the tab key was not pressed.
-   */
-  function _searchBlurred() {
-    if ( !_tabPressed ) {
-      _collapseIfDesktop();
-    } else {
-      _tabPressed = false;
-    }
-  }
-
-  /**
-   * Collapse the search box if screen is at desktop sizes.
-   */
-  function _collapseIfDesktop() {
-    var currentBreakpoint = breakpointState.get();
-    if ( ( currentBreakpoint.isBpMED ||
-         currentBreakpoint.isBpLG ||
-         currentBreakpoint.isBpXL ) ) {
       collapse();
     }
   }
 
   /**
-   * Event handler for when the search input trigger is clicked,
+   * Event handler for when the search input flyout is toggled,
    * which opens/closes the search input.
    */
-  function _triggerClicked() {
-    if ( _isExpanded ) {
-      collapse();
-    } else {
-      expand();
-    }
+  function _handleToggle() {
+    this.dispatchEvent( 'toggle', { target: this } );
+  }
+
+  /**
+   * Event handler for when FlyoutMenu expand transition begins.
+   * Use this to perform post-expandBegin actions.
+   */
+  function _handleExpandBegin() {
+    if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-hidden' ); }
+    _contentDom.classList.remove( 'u-invisible' );
+    _searchInputDom.select();
+
+    document.body.addEventListener( 'mousedown', _handleBodyClick );
+  }
+
+  /**
+   * Event handler for when FlyoutMenu collapse transition begins.
+   * Use this to perform post-collapseBegin actions.
+   */
+  function _handleCollapseBegin() {
+    _triggerDom.classList.remove( 'u-hidden' );
+    document.body.removeEventListener( 'mousedown', _handleBodyClick );
+  }
+
+  /**
+   * Event handler for when FlyoutMenu collapse transition ends.
+   * Use this to perform post-collapseEnd actions.
+   */
+  function _handleCollapseEnd() {
+    // TODO: When tabbing is used to collapse the search flyout
+    //       it will not animate with the below line.
+    //       Investigate why this is the case for tab key
+    //       but not with mouse clicks.
+    _contentDom.classList.add( 'u-invisible' );
   }
 
   /**
@@ -134,12 +178,7 @@ function GlobalSearch( element ) {
    * @returns {Object} An GlobalSearch instance.
    */
   function expand() {
-    if ( !_isExpanded ) {
-      _isExpanded = true;
-      _triggerDom.setAttribute( 'aria-expanded', 'true' );
-      _contentDom.setAttribute( 'aria-expanded', 'true' );
-      _searchInputDom.select();
-    }
+    _flyoutMenu.expand();
 
     return this;
   }
@@ -149,11 +188,7 @@ function GlobalSearch( element ) {
    * @returns {Object} An GlobalSearch instance.
    */
   function collapse() {
-    if ( _isExpanded ) {
-      _isExpanded = false;
-      _triggerDom.setAttribute( 'aria-expanded', 'false' );
-      _contentDom.setAttribute( 'aria-expanded', 'false' );
-    }
+    _flyoutMenu.collapse();
 
     return this;
   }
@@ -166,8 +201,7 @@ function GlobalSearch( element ) {
     _searchInputDom.value = _setClearBtnState( '' );
     _searchInputDom.focus();
 
-    // Prevent event bubbling up to the input,
-    // which would blur and trigger a collapse otherwise.
+    // Prevent event bubbling up to the input, which would blur otherwise.
     event.preventDefault();
   }
 
@@ -183,12 +217,11 @@ function GlobalSearch( element ) {
    * @returns {string} The input value in the search box.
    */
   function _setClearBtnState( value ) {
-    if ( value !== '' ) {
-      _showClearBtn();
-    } else {
+    if ( value === '' ) {
       _hideClearBtn();
+    } else {
+      _showClearBtn();
     }
-
     return value;
   }
 
@@ -208,9 +241,16 @@ function GlobalSearch( element ) {
     _clearBtnDom.classList.remove( 'u-hidden' );
   }
 
+  // Attach public events.
+  var eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
+
   this.init = init;
   this.expand = expand;
   this.collapse = collapse;
+
   return this;
 }
 

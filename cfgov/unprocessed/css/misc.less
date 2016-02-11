@@ -631,6 +631,29 @@
     text-transform: uppercase;
 }
 
+/* topdoc
+  name: Drop shadow
+  family: cfgov-misc
+  notes:
+    - "Mixin to create a semi-transparent drop-shadow after element."
+  tags:
+    - cfgov-misc
+*/
+.u-drop-shadow-after() {
+    &:after {
+        display: block;
+        height: 5px;
+        width: 100%;
+
+        position: relative;
+        top: 5px;
+
+        background: @gray;
+        // Whitespace in content so element can have dimensions set.
+        content: '\a0';
+        opacity: 0.2;
+    }
+}
 
 /* topdoc
   name: EOF

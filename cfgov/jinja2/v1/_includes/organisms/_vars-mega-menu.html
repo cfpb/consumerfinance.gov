@@ -1,5 +1,7 @@
 
 {#
+  TODO: Rename file as _vars-mega-menu.html.
+
   Navigation and Sub-Navigation menu items,
   used to populate the contents of the site's navigation menus.
   Format: navigation title {{ string }},
@@ -8,14 +10,15 @@
           sub-navigation items {{ array of tuples }}
 #}
 
+{# TODO: Update file path for Featured Menu Content module when that is added. #}
 {% import 'templates/nav/about-us-media.html' as about_us_media %}
 
-{% set nav_tbd =  ('TBD Content', '#', '', '', []) %}
 {% set sub_nav_tbd =  ('', '', 'TBD Content') %}
 {% set nav_items = [
-    nav_tbd,
-    nav_tbd,
-    nav_tbd,
+    ('Consumer Tools', '#', '', '', []),
+    ('Educational Resources', '#', '', '', []),
+    ('Data & Research', '#', '', '', []),
+    ('Policy & Compliance', '#', '', '', []),
     ('About Us', '/about-us/',  'About Us Overview', about_us_media , [
         (
             ('/the-bureau/', 'the-bureau', 'The Bureau'),

@@ -1,4 +1,3 @@
-
 // TODO: Move the theme variables to cf-enhancements.
 /* topdoc
   name: Theme variables
@@ -62,7 +61,11 @@
 */
 
 .o-header {
+    min-width: 320px;
     border-bottom: 5px solid @green;
+    position: relative;
+    z-index: 10;
+    background-color: @white;
 
     > .m-global-eyebrow {
 
@@ -76,16 +79,9 @@
         .respond-to-min( @bp-med-min, {
             padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-            & > .m-global-header-cta {
-                    float: right;
-            }
-
+            & > .m-global-header-cta,
             & > .m-global-search {
                 float: right;
-
-                .m-global-search_content {
-                    padding-right: @margin_half__em;
-                }
             }
         } );
 
@@ -93,6 +89,10 @@
         .respond-to-max( @bp-sm-max, {
             & > .m-global-header-cta {
                 display: none;
+            }
+
+            & > .o-mega-menu {
+                float: left;
             }
         } );
     }
