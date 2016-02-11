@@ -27,7 +27,6 @@
       markup: |
           <div class="m-global-search">
               <button class="m-global-search_trigger">
-                  <span class="cf-icon"></span>
                   <span class="m-global-search_trigger-label">
                       <span class="u-visually-hidden">Search</span>
                   </span>
@@ -74,7 +73,6 @@
           -----------------------
           .m-global-search
             button.m-global-search_trigger
-              span.cf-icon
               span.m-global-search_trigger-label
                 span.u-visually-hidden
             .m-global-search_content
@@ -102,6 +100,7 @@
         padding-left: unit( @grid_gutter-width / 2 / 18px, em );
         padding-right: unit( @grid_gutter-width / 2 / 18px, em );
 
+        // TODO: Check that float doesn't spill outside molecule.
         float: right;
         position: relative;
         z-index: 20;
@@ -116,7 +115,8 @@
             outline: 1px dotted @black;
         }
 
-        .cf-icon:before {
+        &:before {
+            .cf-icon();
             content: @cf-icon-search;
             font-size: unit( 20px / 18px, em );
         }
@@ -170,7 +170,8 @@
                 border-left: 1px solid @gray-40;
                 color: @black;
 
-                .cf-icon:before {
+                &:before {
+                    .cf-icon();
                     content: @cf-icon-delete;
                 }
             }

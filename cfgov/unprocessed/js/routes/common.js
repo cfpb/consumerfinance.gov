@@ -11,7 +11,6 @@ require( 'cf-expandables' );
 
 // Global modules.
 require( '../modules/beta-banner-state' ).init();
-require( '../modules/nav-primary.js' ).init();
 require( '../modules/secondary-nav-toggle' ).init();
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();

@@ -1,19 +1,19 @@
-<header class="o-header
-               header"
+<header class="o-header"
         role="banner">
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( true ) }}
 
     <div class="o-header_content
                 wrapper">
-        <button class="primary-nav_trigger js-primary-nav_trigger">
-            <span class="u-visually-hidden">Menu</span>
-        </button>
 
-        {% import 'molecules/global-header-cta.html' as global_cta with context %}
-        {{ global_cta.render( true ) }}
+        {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
+        {{ global_header_cta.render( true ) }}
 
         {% include 'molecules/global-search.html' with context %}
+
+        {% block primary_nav %}
+            {% include 'organisms/mega-menu.html' with context %}
+        {% endblock primary_nav %}
 
         <a class="o-header_logo" href="/">
             <img class="o-header_logo-img u-js-only"
@@ -30,9 +30,5 @@
                      height="50">
             </noscript>
         </a>
-
-        {% block primary_nav %}
-            {% include 'templates/nav/primary-nav.html' %}
-        {% endblock primary_nav %}
     </div>
 </header>
