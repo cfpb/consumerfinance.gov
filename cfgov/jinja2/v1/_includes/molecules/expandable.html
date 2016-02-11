@@ -74,5 +74,6 @@
 </div>
 {% endmacro %}
 
-
-{{ expandable(value) }}
+{% if value %}
+    {{ expandable(value) }}
+{% endif %}
