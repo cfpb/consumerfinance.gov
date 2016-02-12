@@ -19,6 +19,7 @@ install:
   # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
+  - export CXX=clang++
   - npm install nvm
   - nvm install 5.2.0
   - nvm use 5.2.0
