@@ -95,6 +95,16 @@ class MainContactInfo(blocks.StructBlock):
         template = '_includes/organisms/main-contact-info.html'
 
 
+class SidebarContactInfo(blocks.StructBlock):
+    header = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    contact = SnippetChooserBlock(ContactSnippetClass)
+
+    class Meta:
+        icon = 'wagtail'
+        template = '_includes/organisms/sidebar-contact-info.html'
+
+
 class Table(blocks.StructBlock):
     headers = blocks.ListBlock(blocks.CharBlock())
     rows = blocks.ListBlock(blocks.StreamBlock([

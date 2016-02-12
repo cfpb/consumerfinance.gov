@@ -178,6 +178,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added new (undocumented) card molecule.
 - Add wagtailuserbar to the base.html
 - Added unit test for beta-banner.js.
+- Added Backend sidebar contact
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
