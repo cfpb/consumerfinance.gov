@@ -3,10 +3,6 @@
    Master Less File.
    ========================================================================== */
 
-// @import Normalize before all other Less/CSS
-@import (less) "/normalize-css/normalize.css";
-@import (less) "/normalize-legacy-addon/normalize-legacy-addon.css";
-
 // @import third party plugins
 @import (less) "/chosen/chosen.css";
 
@@ -20,6 +16,7 @@
 
 // Import required CF components.
 // Combined CF components.
+
 @import (less) 'cf-core/src/cf-core.less';
 @import (less) 'cf-icons/src/cf-icons.less';
 @import (less) 'cf-buttons/src/cf-buttons.less';
@@ -29,7 +26,10 @@
 @import (less) 'cf-typography/src/cf-typography.less';
 @import (less) 'cf-pagination/src/cf-pagination.less';
 @import (less) 'cf-expandables/src/cf-expandables.less';
+// Remove CF Tables from the bower manifest when it's released under the
+// main capital-framework repo
 @import (less) 'cf-tables/src/cf-tables.less';
+
 
 // The Capital Framework (CF) brand color palette.
 @import (less) "brand-palette.less";

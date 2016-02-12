@@ -19,7 +19,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Converted the project to Capital Framework v3
+
 ### Removed
+
+- Removed normalize and normalize-legacy from main less file because CF already includes it.
+- Removed old branded list mixin (was causing compile errors).
+
 
 ### Fixed
 
