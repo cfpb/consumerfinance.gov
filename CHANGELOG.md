@@ -16,6 +16,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+
+## 3.0.0-3.0.0 - 2016-02-11
+
+### Added
 - Added 'sheer_index' manage.py subcommand, to replace usage of 'sheer index'
 - Migrated 'sheerlike' project into this codebase
 - Added 'watchserver' manage.py subcommand for running Django dev server
@@ -166,6 +178,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added new (undocumented) card molecule.
 - Add wagtailuserbar to the base.html
 - Added unit test for beta-banner.js.
+- Added Backend sidebar contact
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -279,15 +292,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated filterable-list-controls organism to allow for multiple option
 - Password Policy & Lockout criteria for login, account password change & forgot my password.
 - Updated the project to use Avenir font by default
-- Updated `mocha` from `2.2.4` from `2.4.2`.
-- Updated `sinon` from `1.14.1` from `1.17.3`.
-- Updated `lodash` from `3.10.0` from `4.0.1`.
+- Updated `mocha` from `2.2.4` to `2.4.2`.
+- Updated `sinon` from `1.14.1` to `1.17.3`.
+- Updated `lodash` from `3.10.0` to `4.0.1`.
 - Change jinja2 templates to handle Wagtail page
 - Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 - Updated brand colors to updates in generator-cf.
 - Disabled JavaScript in IE8 and earlier.
 - Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
 - Refactored beta-banner.js to demonstrate general lifecycle.
+- Updated `protractor` from `3.0.0` to `3.1.1`.
+- Included Table organism within full width text
 
 ### Removed
 - Removed unused exportsOverride section,

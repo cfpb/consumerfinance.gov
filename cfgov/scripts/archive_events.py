@@ -24,10 +24,11 @@ def run():
             for child in events.get_children():
                 event = child.specific
                 if isinstance(event, EventPage):
-                    if event.end_dt < timezone.now():
-                        if event.can_move_to(archived_events):
-                            event.move(archived_events, pos='last-child')
-                            print event.title + ' Event .....archived'
+                    if event.end_dt:
+                        if event.end_dt < timezone.now():
+                            if event.can_move_to(archived_events):
+                                event.move(archived_events, pos='last-child')
+                                print event.title + ' Event .....archived'
         else:
             print 'No events to archive found....'
     elif not event_page_exists:

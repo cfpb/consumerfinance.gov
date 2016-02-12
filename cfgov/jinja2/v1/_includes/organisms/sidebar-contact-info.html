@@ -10,7 +10,7 @@
    See [GHE]/flapjack/Modules-V1/wiki/Contact-Information-(Sidebar)
 
    content:                  An object containing sidebar content.
-   content.heading:          A string containing a sidebar heading.
+   content.header:           A string containing a sidebar header.
    content.body:             A string containing sidebar paragraph content.
 
    contact:                  An object with contact details.
@@ -36,45 +36,51 @@
 
    ========================================================================== #}
 
+{% import 'molecules/contact-email.html' as contact_email %}
 {% import 'molecules/contact-phone.html' as contact_phone %}
 {% import 'molecules/contact-address.html' as contact_address %}
 
 <div class="o-sidebar-contact-info">
     <div class="o-sidebar-contact-info_heading">
         <h2 class="header-slug">
-            <span class="header-slug_inner">
-                Contact Information
-            </span>
+                <span class="header-slug_inner">
+                    Contact Information
+                </span>
         </h2>
     </div>
 
     <div class="o-sidebar-contact-info_column">
-        {% for block in page.contact.contact_info %}
-            {% if block.block_type == 'address' %}
-                {% set map_details = (block.value.street + ', ' +
-                block.value.city + ' ' +
-                block.value.state + ' ' +
-                block.value.zip_code) | urlencode %}
-                <figure>
-                    <a href="https://www.google.com/maps/place/{{ map_details }}">
-                        <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
-                             alt="">
-                    </a>
-                </figure>
-            {% endif %}
-        {% endfor %}
+        {% if value.contact.contact_info %}
+            {% for block in value.contact.contact_info %}
+                {% if block.block_type == 'address' %}
+                    {% set map_details = (block.value.street + ', ' +
+                    block.value.city + ' ' +
+                    block.value.state + ' ' +
+                    block.value.zip_code) | urlencode %}
+                    <figure>
+                        <a href="https://www.google.com/maps/place/{{ map_details }}">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
+                                 alt="">
+                        </a>
+                    </figure>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
-        <h3>{{ page.contact.heading }}</h3>
+        {% if value.header %}
+            <h3>{{ value.header }}</h3>
+        {% endif %}
 
-        <p>{{ page.contact.body |safe }}</p>
+        {{ value.contact.body | safe }}
     </div>
 
     <div class="o-sidebar-contact-info_column">
-        {% if page.contact.contact_info %}
-            {% for block in page.contact.contact_info %}
-                {{ render_stream_child(block) }}
+        {% if value.contact.contact_info %}
+            {% for block in value.contact.contact_info %}
+                {% if not block.block_type == 'address' %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
             {% endfor %}
         {% endif %}
     </div>
 </div>
-

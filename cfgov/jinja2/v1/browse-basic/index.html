@@ -13,16 +13,22 @@
     {{ page.seo_title }}
 {%- endblock %}
 
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
     {% for block in page.header -%}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+        {% if loop.index == 1 %}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+        {% else %}
+            <div class="block">
+                {{ render_stream_child(block) }}
+            </div>
+        {% endif %}
     {%- endfor %}
 
     {% for block in page.content -%}

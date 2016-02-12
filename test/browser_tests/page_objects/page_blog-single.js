@@ -1,12 +1,11 @@
 'use strict';
 
-var _assign = require( 'lodash/assign' );
 var stayInformedSection = require( '../shared_objects/stay-informed-section' );
 var rssSection = require( '../shared_objects/rss-section' );
 
 function BlogSingle() {
 
-  _assign( this, stayInformedSection, rssSection );
+  Object.assign( this, stayInformedSection, rssSection );
 
   this.get = function() {
     browser.get( '/blog/lessons-weve-learned/' );
