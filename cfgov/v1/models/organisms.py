@@ -198,4 +198,4 @@ class FilterControls(molecules.BaseExpandable):
         icon = 'form'
 
     class Media:
-        js = ('notification.js', 'expandable.js')
+        js = ('notification.js', 'expandable.js', 'filterable-list-controls.js',)
