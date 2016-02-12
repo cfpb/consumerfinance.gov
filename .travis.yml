@@ -5,13 +5,6 @@ python:
 
 sudo: false
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
-
 services:
   - elasticsearch
 
@@ -19,9 +12,7 @@ install:
   # Project configuration requirements.
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
-  # Set g++ version for npm nan.
-  - export CXX=g++-4.8
-  - $CXX --version
+  - export CXX=clang++
   - npm install nvm
   - nvm install 5.2.0
   - nvm use 5.2.0
