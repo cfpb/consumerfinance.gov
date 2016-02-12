@@ -20,6 +20,8 @@ install:
   - pip install virtualenv virtualenvwrapper
   - pip install autoenv
   # Set g++ version for npm nan.
+  # this is terrible
+  - find / -name "g++-*"
   - export CXX=g++-4.8
   - $CXX --version
   - npm install nvm
