@@ -11,6 +11,10 @@
     About Richard Cordray
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
 
 	{% import 'molecules/social-media.html' as social_media %}
@@ -225,14 +229,16 @@
             </div>
         </div>
 
-        <section class="block u-mb0">
-            {%- import 'related-links.html' as related_links %}
-            {{ related_links.render([
-                [ vars.path + 'about-deputy-director/',
-                  'Learn about Deputy Director Meredith Fuchs' ],
-                [ vars.path + 'bureau-structure/',
-                  'Bureau organizational structure' ],
-            ]) -}}
+        <section class="prefooter">
+            <div class="block block__flush-top">
+                {%- import 'related-links.html' as related_links %}
+                {{ related_links.render([
+                    [ vars.path + 'about-deputy-director/',
+                      'Learn about Deputy Director Meredith Fuchs' ],
+                    [ vars.path + 'bureau-structure/',
+                      'Bureau organizational structure' ],
+                ]) -}}
+            </div>
         </section>
 
     </aside>

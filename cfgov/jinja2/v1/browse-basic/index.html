@@ -92,12 +92,7 @@
             </div>
         </div>
     {% else %}
-        <div class="block
-                    block__flush-bottom
-                    block__flush-sides
-                    block__bg
-                    block__border-top
-                    block__border-right">
+        <aside class="prefooter">
             {% for block in page.sidefoot %}
                 {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
                     {% if loop.index == 1 %}
@@ -127,7 +122,7 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        </div>
+        </aside>
     {% endif %}
 {% endblock %}
 
