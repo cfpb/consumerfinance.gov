@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Fixed
+- Fix bug where publised pages were showing shared content
 
 
 
