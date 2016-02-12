@@ -5,11 +5,11 @@ function Header( url ) {
     browser.get( url || '/' );
   };
 
-  this.header = element( by.css( '.header' ) );
-  this.logo = element( by.css( '.header_logo' ) );
-  this.navList = element( by.css( '.primary-nav' ) );
-  this.primaryLinks = element.all( by.css( '.primary-nav_link' ) );
-  this.subLinks = element.all( by.css( '.sub-nav_link' ) );
+  this.header = element( by.css( '.o-header' ) );
+  this.logo = element( by.css( '.o-header_logo-img' ) );
+  this.navList = element( by.css( '.o-mega-menu_content-list' ) );
+  this.primaryLinks = this.navList.all( by.css( '.o-mega-menu_content-item' ) );
+  this.subLinks = element.all( by.css( '.o-mega-menu_subcontent-link' ) );
 }
 
 module.exports = Header;
