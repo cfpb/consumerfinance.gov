@@ -79,11 +79,15 @@ install(){
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
 
+    # Before installing dependencies,
+    # create variables for globally-installed ones.
+    local is_installed_protractor=$(is_installed protractor)
+
     npm install -d --loglevel warn
 
     # Copy globally-installed packages.
-    # Protractor - JavaScript acceptance testing.
-    if [ $(is_installed protractor) = 0 ]; then
+    # Protractor = JavaScript acceptance testing framework.
+    if [ $is_installed_protractor = 0 ]; then
       echo 'Installing Protractor dependencies locally...'
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
