@@ -7,14 +7,14 @@
 var $ = require( 'jquery' );
 var handlebars = require( 'handlebars' );
 
-var _notifierTemplate = '<div class="cf-notification ' +
-                                    'cf-notification__{{ state }}" ' +
+var _notifierTemplate = '<div class="m-notification ' +
+                                    'm-notification__{{ state }}" ' +
                              'style="display: none;">' +
-  '<span class="cf-notification_icon ' +
-               'cf-notification_icon__{{ state }} ' +
-               'cf-icon cf-icon-{{ icon }}-round"></span>' +
-  '<p class="cf-notification_text">{{{ message }}}</p>' +
-  '</div>';
+                          '<span class="m-notification_icon cf-icon"></span>' +
+                          '<div class="m-notification_content">' +
+                              '<p class="h4 m-notification_message">{{{ message }}}</p>' +
+                          '</div>' +
+                        '</div>';
 
 var _notifier = {
   defaults: {
