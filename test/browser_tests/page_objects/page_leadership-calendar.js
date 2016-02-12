@@ -8,7 +8,7 @@ function TheLeadershipCalendarPage() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.intro =
   element( by.css( '[data-qa-hook="leadership-calendar-intro"]' ) );

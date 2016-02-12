@@ -59,7 +59,7 @@ describe( 'The Header Component', function() {
   } );
 
   it( 'should include four Primary Nav Links', function() {
-    expect( _sharedObject.primaryLinks.count() ).toEqual( 4 );
+    expect( _sharedObject.primaryLinks.count() ).toEqual( 6 );
   } );
 
   it( 'should include multiple Sub Nav Links', function() {
