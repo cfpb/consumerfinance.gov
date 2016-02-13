@@ -147,18 +147,14 @@
         {{ office.content | safe }}
     </section>
     {% endif %}
-    <aside>
-        <div class="block
-                    block__flush-sides
-                    block__flush-bottom
-                    block__border-top
-                    block__border-right">
-            {% if office.tags %}
+    <aside class="prefooter">
+        {% if office.tags %}
+            <div class="block
+                        block__flush-top">
                 {% import 'macros/activities-block.html' as activities_block with context %}
                 {{ activities_block.render(office.tags) }}
-            {% endif %}
-
-            {% include 'templates/office-contact.html' %}
-        </div>
+            </div>
+        {% endif %}
+        {% include 'templates/office-contact.html' %}
     </aside>
 {% endblock %}
