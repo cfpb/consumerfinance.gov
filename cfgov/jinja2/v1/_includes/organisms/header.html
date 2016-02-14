@@ -1,0 +1,35 @@
+<header class="o-header"
+        role="banner">
+    {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
+    {{ global_eyebrow.render( true ) }}
+
+    <div class="o-header_content
+                wrapper">
+
+        {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
+        {{ global_header_cta.render( true ) }}
+
+        {% include 'molecules/global-search.html' with context %}
+
+        <a class="o-header_logo" href="/">
+            <img class="o-header_logo-img u-js-only"
+                 src="/static/img/logo_sm-exec.svg"
+                 onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+                 alt="Consumer Financial Protection Bureau"
+                 width="237"
+                 height="50">
+            <noscript>
+                <img class="o-header_logo-img"
+                     src="/static/img/logo_sm-exec.png"
+                     alt="Consumer Financial Protection Bureau"
+                     width="237"
+                     height="50">
+            </noscript>
+        </a>
+
+        {% block primary_nav %}
+            {% include 'organisms/mega-menu.html' with context %}
+        {% endblock primary_nav %}
+
+    </div>
+</header>

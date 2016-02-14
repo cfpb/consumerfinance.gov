@@ -12,7 +12,7 @@ def isRequired(field_name):
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(blank=True,  required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
@@ -22,7 +22,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
 
 class ImageText5050(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(blank=True, required=False)
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
@@ -35,7 +35,7 @@ class ImageText5050(blocks.StructBlock):
 
 
 class ImageText2575(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
@@ -47,7 +47,7 @@ class ImageText2575(blocks.StructBlock):
 
 
 class TextIntroduction(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
@@ -59,12 +59,12 @@ class TextIntroduction(blocks.StructBlock):
 
 
 class Hero(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
 
     image = atoms.ImageBasic()
 
-    background_color = blocks.CharBlock(max_length=100, required=False,
+    background_color = blocks.CharBlock(required=False,
                                         help_text="Use Hexcode colors e.g #F0F8FF")
     links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
@@ -75,13 +75,13 @@ class Hero(blocks.StructBlock):
 
 
 class FormFieldWithButton(blocks.StructBlock):
-    btn_text = blocks.CharBlock(max_length=100, required=False)
+    btn_text = blocks.CharBlock(required=False)
 
     required = blocks.BooleanBlock(required=False)
-    id = blocks.CharBlock(max_length=100, required=False,
+    id = blocks.CharBlock(required=False,
                           help_text="Type of form i.e emailForm, submission-form. Should be unique if multiple forms are used")
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
-    label = blocks.CharBlock(max_length=100, required=True)
+    label = blocks.CharBlock(required=True)
     type = blocks.ChoiceBlock(choices=[
         ('text', 'Text'),
         ('checkbox', 'Checkbox'),
@@ -90,7 +90,7 @@ class FormFieldWithButton(blocks.StructBlock):
         ('url', 'URL'),
         ('radio', 'Radio'),
     ], required=False)
-    placeholder = blocks.CharBlock(max_length=100, required=False)
+    placeholder = blocks.CharBlock(required=False)
 
     def clean(self, data):
         error_dict = {}
@@ -115,14 +115,14 @@ class FormFieldWithButton(blocks.StructBlock):
 
 
 class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=255, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
 
     category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
     post = blocks.PageChooserBlock(required=False)
 
     show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
-    post_link_text = blocks.CharBlock(max_length=100, required=False)
+    post_link_text = blocks.CharBlock(required=False)
 
     image = atoms.ImageBasic(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
@@ -135,7 +135,7 @@ class FeaturedContent(blocks.StructBlock):
 
 
 class CallToAction(blocks.StructBlock):
-    slug_text = blocks.CharBlock(max_length=100, required=False)
+    slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)
     button = atoms.Hyperlink()
 
@@ -146,9 +146,9 @@ class CallToAction(blocks.StructBlock):
 
 
 class ContactAddress(blocks.StructBlock):
-    label = blocks.CharBlock(max_length=50, required=False)
-    title = blocks.CharBlock(max_length=100, required=False)
-    street = blocks.CharBlock(max_length=100, required=False)
+    label = blocks.CharBlock(required=False)
+    title = blocks.CharBlock(required=False)
+    street = blocks.CharBlock(required=False)
     city = blocks.CharBlock(max_length=50, required=False)
     state = blocks.CharBlock(max_length=25, required=False)
     zip_code = blocks.CharBlock(max_length=15, required=False)
@@ -203,7 +203,7 @@ class Quote(blocks.StructBlock):
 
 
 class BaseExpandable(blocks.StructBlock):
-    label = blocks.CharBlock(max_length=100, required=False)
+    label = blocks.CharBlock(required=False)
     is_bordered = blocks.BooleanBlock(required=False)
     is_midtone = blocks.BooleanBlock(required=False)
     is_expanded = blocks.BooleanBlock(required=False)

@@ -5,46 +5,501 @@
     - name: Default example
       markup: |
         <div class="o-mega-menu">
+            <button class="o-mega-menu_trigger" aria-expanded="false">
+                <span class="o-mega-menu_trigger-label">
+                    <span class="u-visually-hidden">Menu</span>
+                </span>
+            </button>
+            <nav class="o-mega-menu_content"
+                 aria-expanded="false"
+                 aria-label="main navigation"
+                 role="navigation">
+                <ul class="o-mega-menu_content-list">
+                    <li class="o-mega-menu_content-item">
+                        [Global Header CTA]
+                    </li>
+                    <li class="o-mega-menu_content-item">
+                        <a class="o-mega-menu_content-link"
+                           href="/about-us/"
+                           aria-expanded="false">
+                            About Us
+                        </a>
+                        <div class="o-mega-menu_subcontent"
+                             aria-expanded="false">
+                            <div class="o-mega-menu_subcontent-wrapper">
+                                <div class="wrapper">
+                                    <button class="o-mega-menu_subcontent-btn__back">
+                                        Back
+                                    </button>
+                                    <div class="o-mega-menu_subcontent-menu">
+                                        <span class="o-mega-menu_subcontent-title">
+                                            <a class="o-mega-menu_subcontent-link"
+                                               href="/about-us/">
+                                                About Us Overview
+                                            </a>
+                                        </span>
+                                        <div class="o-mega-menu_subcontent-lists">
+                                            <ul class="list
+                                                       list__unstyled
+                                                       o-mega-menu_subcontent-list">
+                                                <li class="list_item
+                                                           o-mega-menu_subcontent-item">
+                                                    <a class="list_link
+                                                              o-mega-menu_subcontent-link"
+                                                       href="/the-bureau/">
+                                                        The Bureau
+                                                     </a>
+                                                </li>
+                                                …
+                                            </ul>
+                                            <ul class="list
+                                                       list__unstyled
+                                                       o-mega-menu_subcontent-list">
+                                                    <li class="list_item
+                                                               o-mega-menu_subcontent-item">
+                                                        <a class="list_link
+                                                                  list_link__current
+                                                                  o-mega-menu_subcontent-link"
+                                                           href="/careers/">
+                                                            Careers
+                                                         </a>
+                                                    </li>
+                                                    …
+                                            </ul>
+                                            …
+                                        </div>
+                                    </div>
+                                    <aside class="sub-nav_media">
+                                        <a href="/the-bureau/">
+                                            <img src="/static/img/nav-about-us-video.png"
+                                                 alt="About Us video image">
+                                            <p class="h4 u-mt15">
+                                              The CFPB: Working for you.
+                                            </p>
+                                        </a>
+                                        <p>
+                                            This short video covers what the CFPB is and
+                                            how we are working for American consumers.
+                                        </p>
+                                    </aside>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                [Global Eyebrow]
+            </nav>
         </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .o-mega-menu
+            .o-mega-menu_trigger
+            .o-mega-menu_content
+                ul.o-mega-menu_content-list
+                    li.o-mega-menu_content-item
+                        .m-global-header-cta.m-global-header-cta__list
+                    li.o-mega-menu_content-item
+                        a.o-mega-menu_content-link
+                    li.o-mega-menu_content-item
+                        a.o-mega-menu_content-link
+                        .o-mega-menu_subcontent
+                            .o-mega-menu_subcontent-wrapper
+                                .wrapper
+                                    button.o-mega-menu_subcontent-btn__back
+                                    .o-mega-menu_subcontent-grid
+                                        .o-mega-menu_subcontent-title
+                                            a.o-mega-menu_subcontent-link
+                                        .o-mega-menu_subcontent-lists
+                                            ul.o-mega-menu_subcontent-list
+                                                li.o-mega-menu_subcontent-item
+                                            ul.o-mega-menu_subcontent-list
+                                                li.o-mega-menu_subcontent-item
+                                    aside.sub-nav_media
   tags:
     - cfgov-organisms
 */
 
 .o-mega-menu {
 
-    .m-global-header-cta {
-
-        .respond-to-min( @bp-med-min, {
-            display: none;
-        } );
+    &_content-item,
+    &_subcontent-item {
+        // Override margin added by CF to list items.
+        margin-bottom: 0;
     }
 
-    .m-global-eyebrow {
+    &_content {
+        &-link {
+            // Colors for :link, :visited, :hover, :focus, :active.
+            .u-link__colors( @black );
 
-        .respond-to-min( @bp-med-min, {
-            display: none;
-        } );
+            display: block;
+        }
     }
 
-    .respond-to-min( @bp-med-min, {
-        ul {
-            padding-left: 0;
-            margin-bottom: 0;
+    &_subcontent {
+        &-title {
+            display: block;
+            border-bottom: 1px solid @gray-50;
+        }
 
-            li {
+        &-link {
+            // Colors for :link, :visited, :hover, :focus, :active.
+            .u-link__colors( @pacific, @black );
+
+            display: block;
+        }
+    }
+
+    // Tablet/mobile sizes.
+    .respond-to-max( @bp-sm-max, {
+        &_trigger {
+            height: unit( 60px / 18px, em );
+            min-width: unit( 60px / 18px, em );
+            padding-top: unit( @grid_gutter-width / 2 / 18px, em );
+            padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
+
+            // TODO: Check that float doesn't spill outside organism.
+            float: left;
+            position: relative;
+            z-index: 20;
+
+            background: @white;
+            border: none;
+            color: @black;
+            font-size: unit( 18px / @base-font-size-px, em );
+            pointer-events: auto;
+
+            &:focus {
+                outline: 1px dotted @black;
+            }
+
+            &:before {
+                .cf-icon();
+                content: @cf-icon-menu;
+                font-size: unit( 20px / 18px, em );
+            }
+
+            &[aria-expanded="true"] {
+                background: @gray-10;
+                border-left: 1px solid @gray-50;
+                border-right: 1px solid @gray-50;
+                color: @black;
+
+                &:before {
+                    .cf-icon();
+                    content: @cf-icon-delete;
+                }
+            }
+        }
+
+        // Menu flyout.
+        &_content {
+            box-sizing: border-box;
+            width: 100%;
+
+            position: absolute;
+            left: 0;
+            // Offset for height of trigger button.
+            top: 60px;
+            z-index: 10;
+
+            background-color: @gray-5;
+            border-top: 1px solid @gray-50;
+            border-bottom: 1px solid @gray-50;
+            pointer-events: auto;
+
+            transform: translateX( -100% );
+            transition: transform 0.25s ease-out;
+
+            .u-drop-shadow-after();
+
+            &[aria-expanded="true"] {
+                display: block;
+
+                transform: translateX( 0 );
+            }
+
+            // Adjust padding and margin on unordered list menu items
+            // above the global eyebrow.
+            &-list {
+                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 margin-bottom: 0;
+            }
+
+            &-item:not(:last-child) {
+                border-bottom: 1px solid @gray-50;
+            }
+
+            &-link {
+                // Colors for :link, :visited, :hover, :focus, :active.
+                .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
+
+                padding-top: @grid_gutter-width / 2;
+                padding-bottom: @grid_gutter-width / 2;
+
+                position: relative;
+
+                &:after {
+                    .cf-icon();
+
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+
+                    content: @cf-icon-right;
+                }
+
+                &:not(.u-link__disabled):after {
+                    color: @green;
+                }
+            }
+        }
+
+        // Submenu flyout.
+        &_subcontent {
+            background-color: @gray-5;
+            width: 100%;
+            position: absolute;
+            z-index: 10;
+            top: 0;
+            right: 100%;
+            transition: transform 0.25s ease-out;
+
+            .u-drop-shadow-after();
+
+            &[aria-expanded="true"] {
+                transform: translateX( 100% );
+            }
+
+            &-btn__back {
+                .webfont-medium();
+
+                padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                width: 100%;
+
+                display: block;
+                position: relative;
+
+                background-color: @gray-10;
+                border: none;
+                border-bottom: 1px solid @gray-50;
+                text-align: left;
+                text-transform: uppercase;
+
+                &:focus {
+                    outline: 1px dotted @black;
+                }
+
+                &:before {
+                    .cf-icon();
+
+                    margin-right: 0.6em;
+
+                    content: @cf-icon-left;
+                }
+            }
+
+            &-title {
+                margin-left: unit( @grid_gutter-width / 2 / 18px, em );
+                margin-right: unit( @grid_gutter-width / 2 / 18px, em );
+            }
+
+            &-lists {
+                padding-left: unit( @grid_gutter-width / 18px, em );
+                padding-right: unit( @grid_gutter-width / 2 / 18px, em );
+            }
+
+            &-list {
+                margin-bottom: 0;
+            }
+
+            &-item {
+                border-bottom: 1px solid @gray-50;
+            }
+
+            &-list:last-child .o-mega-menu_subcontent-item:last-child {
+                border-bottom: none;
+            }
+
+            &-link {
+                padding-top: @grid_gutter-width / 2;
+                padding-bottom: @grid_gutter-width / 2;
+            }
+        }
+    } );
+
+    // Desktop sizes.
+    .respond-to-min( @bp-med-min, {
+        margin-right: -@grid_gutter-width / 2;
+        margin-left: -@grid_gutter-width / 2;
+
+        &_trigger {
+            display: none;
+        }
+
+        &_content {
+            &-list {
+                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                margin-bottom: 0;
+            }
+
+            &-item {
+                margin-right: 0.25em;
+                display: inline-block;
 
                 &:first-child {
                     display: none;
                 }
             }
+
+            &-link {
+                padding-bottom: @grid_gutter-width;
+                margin-right: @grid_gutter-width / 2;
+                margin-left: @grid_gutter-width / 2;
+
+                font-size: unit( 18px / @base-font-size-px, em );
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                // TODO: Show menu on hover and remove :hover selector.
+                &[aria-expanded="true"],
+                &__current,
+                &:hover {
+                    padding-bottom: @grid_gutter-width - 6px;
+                    border-bottom: 6px solid @black;
+                }
+            }
+        }
+
+        &_subcontent {
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            z-index: 10;
+            width: 100%;
+
+            // Set an arbtrary min-height to create a "window" into which
+            // the menu will slide into view.
+            min-height: 600px;
+            pointer-events: none;
+
+            &-wrapper {
+                pointer-events: auto;
+                background-color: @gray-5;
+                border-top: 1px solid @gray-50;
+                border-bottom: 1px solid @gray-50;
+                transform: translateY( -100% );
+                transition: transform 0.25s ease-out;
+
+                .u-drop-shadow-after();
+
+                .wrapper {
+                    padding: unit( @grid_gutter-width / @base-font-size-px, em );
+                    padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                    padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                }
+            }
+
+            &[aria-expanded="true"] {
+
+                .o-mega-menu_subcontent-wrapper {
+                    display: block;
+                    transform: translateY( 0 );
+                }
+            }
+
+            &-btn__back {
+                display: none;
+            }
+
+            &-title {
+                padding-bottom: @grid_gutter-width / 2;
+                margin-bottom: unit( @grid_gutter-width / 2 / 18px, em );
+
+                font-size: 1em;
+            }
+
+            &-lists {
+                .grid_nested-col-group();
+            }
+
+            &-list {
+                .grid_column(4);
+            }
+
+            .list_link {
+                padding-top: unit( 10px / 18px, em );
+                padding-bottom: unit( 10px / 18px, em );
+                padding-left: unit( 15px / 18px, em );
+
+                border-left: 5px solid transparent;
+                font-size: unit( 18px / @base-font-size-px, em );
+
+                &:hover,
+                &__current {
+                    border-left-color: @green;
+                }
+
+                &__current {
+                    cursor: default;
+                }
+            }
+        }
+
+        // Hide global header CTA and eyebrow at desktop size.
+        .m-global-header-cta,
+        .m-global-eyebrow {
+            display: none;
         }
     } );
+
+    // Large desktop size.
+    .respond-to-min( @bp-lg-min, {
+        &_subcontent-grid {
+            .grid_column( 8 );
+            // TODO: Check if .grid_nested-col-group()
+            //       can be used here when implementing Featured Menu Content.
+            border-left: 0;
+        }
+    } );
+
+    // TODO: Update to Featured Menu Content molecule.
+    .sub-nav_media {
+        .grid_column( 4 );
+
+        padding: 0 @grid_gutter-width / 2;
+
+        position: relative;
+    }
+
+    .respond-to-max( @bp-med-max, {
+        .sub-nav_media {
+            display: none !important;
+        }
+    } );
+
+    .respond-to-min( @bp-xl-min, {
+        .sub-nav_media {
+            padding-right: @grid_gutter-width;
+            padding-left: @grid_gutter-width;
+        }
+    } );
+}
+
+.o-mega-menu {
+    // Tab trigger is used to capture press of the tab key so that
+    // global search can be collapsed when it hits this element.
+    &_tab-trigger {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
 }
 
 /* topdoc

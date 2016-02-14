@@ -115,40 +115,38 @@
 
     {# Footer #}
     <aside>
-        <div class="block
-                    block__flush-bottom
-                    block__flush-sides
-                    block__bg
-                    block__border-top
-                    block__border-right">
+        <div class="prefooter">
             <div class="content-l content-l__main">
                 <section class="content-l_col content-l_col-1-2"
                          data-qa-hook="business-with-CFPB-section">
-                    <h2 class="header-slug">
-                        <span class="header-slug_inner">
-                            Doing business with the CFPB
-                        </span>
-                    </h2>
-                    <p>
-                        We work with vendors who can help us achieve our mission. We publish
-                        information about both existing and future procurements.
-                    </p>
-                    <a class="jump-link jump-link__underline"
-                       href="/doing-business-with-us/">
-                        Learn more about opportunities to work with the CFPB
-                    </a>
+                    <div class="block block__flush-top">
+                        <h2 class="header-slug">
+                            <span class="header-slug_inner">
+                                Doing business with the CFPB
+                            </span>
+                        </h2>
+                        <p>
+                            We work with vendors who can help us achieve our mission. We publish
+                            information about both existing and future procurements.
+                        </p>
+                        <a class="jump-link jump-link__underline"
+                           href="/doing-business-with-us/">
+                            Learn more about opportunities to work with the CFPB
+                        </a>
+                    </div>
                 </section>
                 <section class="u-mb20 content-l_col content-l_col-1-2">
-                    {# TODO: Add Civil Penalty Fund URL. #}
-                    {%- import 'related-links.html' as related_links -%}
-                    {{- related_links.render([
-                        [ '/the-bureau/',
-                          'About the CFPB' ],
-                        [ '/blog/',
-                          'The blog' ],
-                        [ '',
-                          'Civil Penalty Fund' ]
-                    ]) -}}
+                    <div class="block block__flush-top">
+                        {%- import 'related-links.html' as related_links -%}
+                        {{- related_links.render([
+                            [ '/the-bureau/',
+                              'About the CFPB' ],
+                            [ '/blog/',
+                              'The blog' ],
+                            [ '/sub-pages/civil-penalty-fund/',
+                              'Civil Penalty Fund' ]
+                        ]) -}}
+                    </div>
                 </section>
             </div>
         </div>

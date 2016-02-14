@@ -335,10 +335,10 @@
 */
 
 .share-icon {
-    color: @darkgray;
+    color: @dark-gray;
     font-size: unit(26px / @base-font-size-px, em);
     line-height: 1;
-    .u-link__colors(@darkgray, @pacific-80);
+    .u-link__colors(@dark-gray, @pacific-80);
     .u-link__no-border();
 
     &__large {
@@ -622,7 +622,7 @@
     display: block;
     margin-bottom: unit(15px / 14px, em);
 
-    color: @darkgray;
+    color: @dark-gray;
     .webfont-demi();
     font-size: 14px; // fallback for browsers that don't support rem units
     // rem units needed because the main use case for this is within a heading
@@ -631,6 +631,29 @@
     text-transform: uppercase;
 }
 
+/* topdoc
+  name: Drop shadow
+  family: cfgov-misc
+  notes:
+    - "Mixin to create a semi-transparent drop-shadow after element."
+  tags:
+    - cfgov-misc
+*/
+.u-drop-shadow-after() {
+    &:after {
+        display: block;
+        height: 5px;
+        width: 100%;
+
+        position: relative;
+        top: 5px;
+
+        background: @gray;
+        // Whitespace in content so element can have dimensions set.
+        content: '\a0';
+        opacity: 0.2;
+    }
+}
 
 /* topdoc
   name: EOF

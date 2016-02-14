@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 
@@ -73,6 +74,7 @@ class CFGOVPage(Page):
         ('related_posts', organisms.RelatedPosts()),
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
+        ('sidebar_contact', organisms.SidebarContactInfo()),
     ], blank=True)
 
     # Panels
@@ -287,6 +289,29 @@ def image_delete(sender, instance, **kwargs):
 def rendition_delete(sender, instance, **kwargs):
     instance.file.delete(False)
 
+# keep encrypted passwords around to ensure that user does not re-use any of the
+# previous 10
+class PasswordHistoryItem(models.Model):
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()   # password becomes invalid at...
+    locked_until = models.DateTimeField() # password can not be changed until...
+    encrypted_password = models.CharField(_('password'), max_length=128)
+
+    class Meta:
+        get_latest_by = 'created'
+
+    @classmethod
+    def current_for_user(cls,user):
+        return user.passwordhistoryitem_set.latest()
+        
+    def can_change_password(self):
+        now = timezone.now()
+        return(now > self.locked_until)
+
+    def must_change_password(self):
+        now = timezone.now()
+        return(self.expires_at < now)
 
 # User Failed Login Attempts
 class FailedLoginAttempt(models.Model):
@@ -315,3 +340,8 @@ class FailedLoginAttempt(models.Model):
         self.clean_attempts(timestamp)
         attempts = self.failed_attempts.split(',')
         return len(attempts) > value
+
+class TemporaryLockout(models.Model):
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()

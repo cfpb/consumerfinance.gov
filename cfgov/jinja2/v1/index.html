@@ -13,64 +13,499 @@
 
     <main class="content" id="main" role="main">
 
-        <div class="content_hero hero beta-hero">
-            <h1 class="beta-hero_title">Welcome to beta.<wbr>consumerfinance.gov!</h1>
-            <p class="beta-hero_desc">
-                We’re redesigning consumerfinance.gov to make it easier to use.
-                Follow our work here as we build in the open.
-            </p>
+        {% include 'molecules/home-hero.html' %}
+
+        <div class="o-well
+                    o-well__home">
+            <div class="content-l">
+                <section class="content-l_col content-l_col-1-2">
+                    <div class="m-info-unit">
+                        <div class="m-info-unit_content">
+                            <p>We spoke to RushCard CEO to about how to help debit card customers who have been denied access to their funds.</p>
+                            <ul class="list list__links">
+                                <li class="list_item">
+                                    <a class="list_link" href="#">
+                                        Read our statement
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a class="list_link" href="#">
+                                        Complain if you've had debit card issues
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <section class="content-l_col content-l_col-1-2">
+                    <div class="m-info-unit">
+                        <div class="m-info-unit_content">
+                            <p>We created an easy tool to help you decide when to start receiving Social Security payments</p>
+                            <ul class="list list__links">
+                                <li class="list_item">
+                                    <a class="list_link" href="#">
+                                        Learn more about the tool
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a class="list_link" href="#">
+                                        Use the Planning for Retirement tool
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
 
-        <!-- .content_bar must come after .content_hero and before .content_wrapper -->
-        <div class="content_bar"></div>
+        <div class="wrapper">
+            <div class="content_main content_main__home">
+                <div class="content-l">
+                    <section class="content-l_col
+                                    content-l_col__home">
+                        <div class="m-info-unit
+                                    m-info-unit__home">
+                            <div class="m-info-unit_image
+                                        m-info-unit_image__square"
+                                 style="background-image: url(/static/img/home-complaint_150.png);">
+                            </div>
 
-        <div class="wrapper content_wrapper">
-            <div class="content_main">
-                <div class="content-l content-l__large-gutters">
-                    <section class="content-l_col content-l_col-1-2">
-                        <h2 class="h3">Why are we redesigning in beta?</h2>
-                        <p class="short_desc">
-                            A beta release gives both users and developers a sense of
-                            new features and capabilities.
-                            It helps us identify what’s working and what’s not.
-                            But the content here is not necessarily accurate or up to date.
-                            If you need reliable information from us right now, visit the current site.
-                        </p>
-                        <ul class="list__links">
-                            <li class="list_item">
-                                <a class="list_link jump-link" href="http://www.consumerfinance.gov/">
-                                    Go to consumerfinance.gov
-                                </a>
-                            </li>
-                        </ul>
+                            <div class="m-info-unit_content">
+                                <h2>Submit a complaint
+                                </h2>
+                                <p>
+                                    Can’t fix a problem with a financial product or service? Submit a complaint. We’ll work to get you a response from the company.
+                                </p>
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Submit your complaint
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Browse public complaints about companies
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="content-l_col
+                                    content-l_col__home">
+                        <div class="m-info-unit
+                                    m-info-unit__home">
+                            <div class="m-info-unit_image
+                                        m-info-unit_image__square"
+                                 style="background-image: url(/static/img/home-answers_150.png);">
+                            </div>
+
+                            <div class="m-info-unit_content">
+                                <h2>Get answers to money questions
+                                </h2>
+                                <p>
+                                    Financial matters can be complicated. Get the facts you need to make choices about money, credit scores, mortgages, and more.
+                                </p>
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Learn more about credit cards, student loans, and other financial products
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Find answers to common questions
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="content-l_col
+                                    content-l_col__home">
+                        <div class="m-info-unit
+                                    m-info-unit__home">
+                            <div class="m-info-unit_image
+                                        m-info-unit_image__square"
+                                 style="background-image: url(/static/img/home-goals_150.png);">
+                            </div>
+
+                            <div class="m-info-unit_content">
+                                <h2>Reach your financial goals
+                                </h2>
+                                <p>
+                                    For the big financial decisions in your life, we offer free tools and resources to help you reach your goals.
+                                </p>
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Paying for College
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Owning a Home
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Planning for Retirement
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    {# Move this markup into the info-card less example
+                    <section class="content-l_col content-l_col-1-3">
+                        <div class="m-info-unit">
+                            <img src="http://placehold.it/150x150"
+                                 alt="Image alt"
+                                 class="m-info-unit_image
+                                        m-info-unit_image__square">
+
+                            <div class="m-info-unit_content">
+                                <h2>Square content image (old 50/50)
+                                </h2>
+                                <p>
+                                    Body text
+                                </p>
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="content-l_col content-l_col-1-3">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_image
+                                        m-info-unit_image__square"
+                                 style="background-image: url(http://placehold.it/150x150);"></div>
+                            <div class="m-info-unit_content">
+                                <h2>
+                                    Square decorative image (old 50/50)
+                                </h2>
+
+                                <p>
+                                    Body text
+                                </p>
+
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="content-l_col content-l_col-1-3">
+                        <div class="m-info-unit">
+                            <img src="http://placehold.it/267x150"
+                                 alt="Image alt"
+                                 class="m-info-unit_image">
+                            <div class="m-info-unit_content">
+                                <h2>
+                                    16x9 Content Image (old 50/50)
+                                </h2>
+
+                                <p>
+                                    Body text
+                                </p>
+
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
 
-                    <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                        <h2 class="h3">Open government, open code</h2>
-                        <p class="short_desc">
-                            The new consumerfinance.gov is an open source project,
-                            but it’s not our only one.
-                            All the software we build is open source by default.
-                            We release as much as possible.
-                        </p>
-                        <ul class="list__links">
-                            <li class="list_item">
-                                <a class="list_link jump-link jump-link__external-link"
-                                   href="https://cfpb.github.io/">
-                                    Learn about our projects at CFPB Open Tech
-                                </a>
-                            </li>
-                            <li class="list_item">
-                                <a class="list_link jump-link jump-link__external-link"
-                                   href="https://github.com/cfpb/cfgov-refresh">
-                                    See the code for this redesign on GitHub
-                                </a>
-                            </li>
-                        </ul>
+                    <section class="content-l_col content-l_col-1">
+                        <div class="m-info-unit
+                                    m-info-unit__inline">
+                            <img src="http://placehold.it/150x150"
+                                 alt="Image alt"
+                                 class="m-info-unit_image
+                                        m-info-unit_image__square">
+
+                            <div class="m-info-unit_content">
+                                <h2>Square content image (old 25/75)
+                                </h2>
+                                <p>
+                                    Body text
+                                </p>
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
-                </div><!-- END .content-l -->
-            </div><!-- END .content_main -->
-        </div><!-- END .content_wrapper -->
+                    <section class="content-l_col content-l_col-1">
+                        <div class="m-info-unit
+                                    m-info-unit__inline">
+                            <div class="m-info-unit_image
+                                        m-info-unit_image__square"
+                                 style="background-image: url(http://placehold.it/150x150);"></div>
+                            <div class="m-info-unit_content">
+                                <h2>
+                                    Square decorative image (old 25/75)
+                                </h2>
+
+                                <p>
+                                    Body text
+                                </p>
+
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="btn m-info-unit_btn"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="content-l_col content-l_col-1-3">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_content">
+                                <h2>
+                                    No image (old half-width link blob)
+                                </h2>
+
+                                <p>
+                                    Body text
+                                </p>
+
+                                <ul class="list list__links">
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                    <li class="list_item">
+                                        <a class="list_link"
+                                           href="#">
+                                            Link Text
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    #}
+                </div>
+            </div>
+        </div>
+
+        <div class="o-well
+                    o-well__home" >
+            <h2>Standing up for you</h2>
+            <div class="content-l
+                        content-l__large-gutters">
+                <section class="content-l_col
+                                content-l_col-1-2">
+                    <h3>We hold companies accountable for illegal practices</h3>
+                    <div class="content-l">
+                        <div class="o-card">
+                            <div class="m-card">
+                                <h3 class="h1 m-card_heading">$11.2 billion in relief</h3>
+                                <p>to consumers from our enforcement actions</p>
+                            </div>
+                        </div>
+                        <div class="o-card">
+                            <div class="m-card">
+                                <h3 class="h1 m-card_heading">25 million+ consumers</h3>
+                                <p>will receive relief because of our actions</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-l_col
+                                content-l_col-1-2
+                                content-l_col__before-divider">
+                    <h3>We listen to consumers and make their voices heard</h3>
+                    <div class="content-l">
+                        <div class="o-card">
+                            <div class="m-card">
+                                <h3 class="h1 m-card_heading">800,000+ complaints</h3>
+                                <p>we’ve handled from consumers</p>
+                            </div>
+                        </div>
+                        <div class="o-card">
+                            <div class="m-card">
+                                <h3 class="h1 m-card_heading">98% of consumers</h3>
+                                <p>get timely replies when we send their complaints to companies</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <p style="margin-top: 30px;margin-bottom: 0;">Figures are updated quarterly. Last update on 01/08/2016</p>
+        </div>
+
+        <div class="wrapper">
+            <div class="content_main content_main__home">
+                <h2>Latest Updates</h2>
+                {% import 'macros/time.html' as time %}
+                <div class="content-l">
+                    <section class="content-l_col
+                                    content-l_col-1-3">
+                        <div class="">
+                            <h3 class="h4">
+                                 <span class="cf-icon cf-icon-speech-bubble"></span>
+                                Blog
+                            </h3>
+                            <a class="list_link"
+                               href="#">
+                                Before you claim Social Security, explore our new Planning for Retirement tool
+                            </a>
+                            <p class="date">
+                                <span class="datetime">
+                                    <time class="datetime_date">
+                                      Nov 12, 2015
+                                    </time>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="">
+                            <h3 class="h4">
+                                 <span class="cf-icon cf-icon-newspaper"></span>
+                                Newsroom
+                            </h3>
+                            <a class="list_link"
+                               href="#">
+                                Save the date: Retirement Planning with SSA in D.C. - November 12
+                            </a>
+                            <p class="date">
+                                <span class="datetime">
+                                    <time class="datetime_date">
+                                      Nov 7, 2015
+                                    </time>
+                                </span>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="content-l_col
+                                    content-l_col-1-3">
+                        <div class="">
+                            <h3 class="h4">
+                                 <span class="cf-icon cf-icon-newspaper"></span>
+                                Newsroom
+                            </h3>
+                            <a class="list_link"
+                               href="#">
+                                Save the date: Retirement Planning with SSA in D.C. - November 12
+                            </a>
+                            <p class="date">
+                                <span class="datetime">
+                                    <time class="datetime_date">
+                                      Oct 29, 2015
+                                    </time>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="m-related-posts_list-container">
+                            <h3 class="h4">
+                                 <span class="cf-icon cf-icon-document"></span>
+                                Report
+                            </h3>
+                            <a class="list_link"
+                               href="#">
+                                CFPB takes action against two of the largest employment background screening report providers for serious inaccuracies
+                            </a>
+                            <p class="date">
+                                <span class="datetime">
+                                    <time class="datetime_date">
+                                      Oct 26, 2015
+                                    </time>
+                                </span>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="content-l_col
+                                    content-l_col-1-3">
+                        <div>
+                            <h3 class="h4">
+                                 <span class="cf-icon cf-icon-date"></span>
+                                Events
+                            </h3>
+                            <a class="list_link"
+                               href="#">
+                                Save the date: Retirement Planning with SSA D.C. - November 12
+                            </a>
+                            <p class="date">
+                                <span class="datetime">
+                                    <time class="datetime_date">
+                                      Oct 23, 2015
+                                    </time>
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <a class="jump-link jump-link__underline"
+                               href="#">
+                                See all activities
+                            </a>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+
     </main>
 
 {% endblock content %}

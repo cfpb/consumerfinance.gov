@@ -1,15 +1,13 @@
-<section class="block
-                block__bg
-                block__border-top
-                block__border-right
-                block__flush">
-            {%- import 'related-links.html' as related_links -%}
-            {{- related_links.render([
-                [ '/blog/',
-                  'CFPB Blog' ],
-                [ '/newsroom/',
-                  'Newsroom' ],
-                [ '/offices/office-of-civil-rights/',
-                  'Office of Civil Rights' ]
-            ]) -}}
+<section class="prefooter">
+            <div class="block block__flush-top">
+              {%- import 'related-links.html' as related_links -%}
+              {{- related_links.render([
+                  [ '/blog/',
+                    'CFPB Blog' ],
+                  [ '/newsroom/',
+                    'Newsroom' ],
+                  [ '/offices/office-of-civil-rights/',
+                    'Office of Civil Rights' ]
+              ]) -}}
+            </div>
 </section>

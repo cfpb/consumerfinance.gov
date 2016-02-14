@@ -20,7 +20,7 @@
     // There is a 10px margin-bottom on the  last .footer_list li's, plus the
     // 50px bottom padding = 60px of total padding at the bottom of the footer.
     padding-bottom: unit(50px / @base-font-size-px, em);
-    border-top: 10px solid @green;
+    border-top: 5px solid @green;
     background: @gray-5;
 
     &_share-icon-list {
@@ -72,7 +72,7 @@
         .list__links();
 
         .list_link {
-            .u-link__colors(@darkgray);
+            .u-link__colors(@dark-gray);
             border-bottom: 1px dotted;
         }
     }
@@ -136,7 +136,7 @@
         .respond-to-min(@bp-sm-min, {
             padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
             margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-            border-bottom: 1px solid @gray-50;
+            border-bottom: 1px solid @gray-40;
 
             .footer_top-button {
                 display: none;
@@ -160,7 +160,7 @@
 
         .respond-to-min(@bp-sm-min, {
             .grid_column(8);
-            border-right: 1px solid @gray-50;
+            border-right: 1px solid @gray-40;
             border-left: 0;
 
             .footer_col {
@@ -188,7 +188,7 @@
 
         .respond-to-min(@bp-sm-min, {
             padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
-            border-top: 1px solid @gray-50;
+            border-top: 1px solid @gray-40;
         });
 
         .footer_official-website {

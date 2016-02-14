@@ -1,11 +1,9 @@
 {% set contact = get_document('contact', office.related_contact) if office.related_contact %}
 {% if contact %}
     {% import 'macros/contact-layout.html' as contact_layout %}
-    <section class="block
-                    block__flush-top
-                    block__flush-bottom
-                    block__bg
-                    office_contact">
+    <section class="office_contact
+                    block
+                    block__flush-top">
         <h2 class="header-slug">
             <span class="header-slug_inner">
                 Contact Information

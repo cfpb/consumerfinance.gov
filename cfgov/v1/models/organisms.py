@@ -13,17 +13,6 @@ class Well(blocks.StructBlock):
         template = '_includes/organisms/well.html'
 
 
-class FullWidthText(blocks.StreamBlock):
-    content = blocks.RichTextBlock(icon='edit')
-    quote = molecules.Quote()
-    cta = molecules.CallToAction()
-    related_links = molecules.RelatedLinks()
-
-    class Meta:
-        icon = 'edit'
-        template = '_includes/organisms/full-width-text.html'
-
-
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
     image_texts = blocks.ListBlock(molecules.ImageText5050())
@@ -52,7 +41,7 @@ class HalfWidthLinkBlobGroup(blocks.StructBlock):
 
 
 class PostPreview(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
 
@@ -66,7 +55,7 @@ class PostPreview(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(max_length=100, required=False)
+    heading = blocks.CharBlock(required=False)
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
@@ -106,11 +95,21 @@ class MainContactInfo(blocks.StructBlock):
         template = '_includes/organisms/main-contact-info.html'
 
 
+class SidebarContactInfo(blocks.StructBlock):
+    header = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    contact = SnippetChooserBlock(ContactSnippetClass)
+
+    class Meta:
+        icon = 'wagtail'
+        template = '_includes/organisms/sidebar-contact-info.html'
+
+
 class Table(blocks.StructBlock):
     headers = blocks.ListBlock(blocks.CharBlock())
     rows = blocks.ListBlock(blocks.StreamBlock([
         ('hyperlink', atoms.Hyperlink(required=False)),
-        ('text', blocks.CharBlock(max_length=20)),
+        ('text', blocks.CharBlock()),
         ('text_blob', blocks.TextBlock()),
         ('rich_text_blob', blocks.RichTextBlock()),
     ]))
@@ -119,6 +118,18 @@ class Table(blocks.StructBlock):
         icon = 'form'
         template = '_includes/organisms/table.html'
         label = 'Table'
+
+
+class FullWidthText(blocks.StreamBlock):
+    content = blocks.RichTextBlock(icon='edit')
+    quote = molecules.Quote()
+    cta = molecules.CallToAction()
+    related_links = molecules.RelatedLinks()
+    table = Table()
+
+    class Meta:
+        icon = 'edit'
+        template = '_includes/organisms/full-width-text.html'
 
 
 class ExpandableGroup(blocks.StructBlock):

@@ -20,7 +20,7 @@ var webpackStream = require( 'webpack-stream' );
 gulp.task( 'scripts', function() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpModernizr( {
-      tests:   [ 'csspointerevents' ],
+      tests:   [ 'csspointerevents', 'classlist' ],
       options: [ 'setClasses',
                  'html5printshiv',
                  'fnBind' ]

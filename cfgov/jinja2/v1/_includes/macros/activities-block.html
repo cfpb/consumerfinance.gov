@@ -15,10 +15,7 @@
 
 {% macro render(tags) %}
 {% from 'macros/util/text.html' import string_length as string_length %}
-<section class="block
-                block__bg
-                block__flush-top
-                block__flush-bottom
+<section class="m-related-posts
                 qa-tags">
     {% import 'macros/activity-snippets.html' as activity_snippets with context %}
     {% set activities_feed = activity_snippets.render(tags, include_date_flag=true, number_columns=2) %}

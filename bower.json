@@ -1,6 +1,6 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.0.0-2.4.0",
+  "version": "3.0.0-3.0.0",
   "description": "Refreshing consumerfinance.gov.",
   "keywords": [
     "cfpb",
@@ -21,19 +21,9 @@
   },
   "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
   "dependencies": {
-    "cf-core": "^1.0.0",
-    "cf-buttons": "^1.6.1",
-    "cf-expandables": "^1.0.0",
-    "cf-forms": "^1.3.0",
-    "cf-grid": "^1.0.0",
-    "cf-icons": "^1.0.0",
-    "cf-pagination": "^1.0.0",
-    "cf-typography": "^1.0.0",
-    "cf-layout": "^2.0.0",
     "cf-tables": "https://github.com/cfpb/cf-tables/archive/0.1.1.zip",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "history.js": "~1.8.0",
-    "jquery.easing": "~1.3.0",
     "string_score": "git://github.com/joshaven/string_score#0.1.20",
     "slick-carousel": "~1.3.7"
   }

@@ -93,19 +93,15 @@
         }}
     </section>
     {% endif %}
-    <aside>
-        <div class="block
-                    block__flush-sides
-                    block__flush-bottom
-                    block__border-top
-                    block__border-right">
-            {% if sub_page.tags %}
+    <aside class="prefooter">
+        {% if sub_page.tags %}
+            <div class="block
+                        block__flush-top">
                 {% import 'macros/activities-block.html' as activities_block with context %}
                 {{ activities_block.render(sub_page.tags) }}
-            {% endif %}
-
-            {% set office = vars.office %}
-            {% include 'templates/office-contact.html' %}
-        </div>
+            </div>
+        {% endif %}
+        {% set office = vars.office %}
+        {% include 'templates/office-contact.html' %}
     </aside>
 {% endblock %}

@@ -27,7 +27,6 @@
       markup: |
           <div class="m-global-search">
               <button class="m-global-search_trigger">
-                  <span class="cf-icon"></span>
                   <span class="m-global-search_trigger-label">
                       <span class="u-visually-hidden">Search</span>
                   </span>
@@ -74,7 +73,6 @@
           -----------------------
           .m-global-search
             button.m-global-search_trigger
-              span.cf-icon
               span.m-global-search_trigger-label
                 span.u-visually-hidden
             .m-global-search_content
@@ -94,21 +92,7 @@
     - cfgov-molecules
 */
 
-.m-global-search {
-
-    // Absolute position when there is a flyout at mobile/tablet sizes.
-    .respond-to-max( @bp-sm-max, {
-        // Make the height large so that the overflowing flyout can be hidden,
-        // but not get cropped when it's visible.
-        height: 500px;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        overflow-x: hidden;
-        // TODO: This will be ignored in IE8-10,
-        //       leading to the overflow preventing clicks on the links.
-        pointer-events: none;
-    } );
+.js .m-global-search {
 
     &_trigger {
         height: unit( 45px / 18px, em );
@@ -116,6 +100,7 @@
         padding-left: unit( @grid_gutter-width / 2 / 18px, em );
         padding-right: unit( @grid_gutter-width / 2 / 18px, em );
 
+        // TODO: Check that float doesn't spill outside molecule.
         float: right;
         position: relative;
         z-index: 20;
@@ -130,84 +115,69 @@
             outline: 1px dotted @black;
         }
 
-        .cf-icon:before {
+        &:before {
+            .cf-icon();
             content: @cf-icon-search;
             font-size: unit( 20px / 18px, em );
         }
-
-        // Show "Search" text in trigger at tablet sizes.
-        .respond-to-min( @bp-sm-min {
-            &-label:before {
-                .webfont-medium();
-                content: 'Search';
-            }
-        } );
-
-        // Only show flyout and close trigger at tablet/mobile sizes.
-        .respond-to-max( @bp-sm-max, {
-            height: unit( 60px / 18px, em );
-            min-width: unit( 60px / 18px, em );
-            padding-top: unit( @grid_gutter-width / 2 / 18px, em );
-            padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
-
-            &[aria-expanded="true"] {
-                background: @gray-10;
-                border: 1px solid @gray-50;
-                border-bottom: none;
-                color: @black;
-
-                .cf-icon:before {
-                    content: @cf-icon-delete;
-                }
-
-                // Cover up the border edge of the flyout so that it is attached
-                // visually to the trigger button.
-                &:after {
-                    display: block;
-                    height: 1px;
-                    width: 100%;
-
-                    position: absolute;
-                    left: 0;
-                    bottom: -1px;
-
-                    content: '\a0';
-                    background: @gray-10;
-                }
-            }
-        } );
-
-        // Show "Close" text in trigger at tablet sizes.
-        .respond-to-range( @bp-sm-min, @bp-med-min, {
-            &[aria-expanded="true"] {
-                .m-global-search_trigger-label:before {
-                    content: 'Close';
-                }
-            }
-        } );
-
-        .respond-to-min( @bp-med-min {
-            &[aria-expanded="true"] {
-                display: none;
-            }
-        } );
     }
 
     &_content {
-        .respond-to-min( @bp-med-min {
-            display: none;
-        } );
-
         padding-top: unit( @grid_gutter-width / 4 / @base-font-size-px, em );
+
+        transform: translateX( 100% );
+        transition: transform 0.25s ease-out;
 
         &[aria-expanded="true"] {
             display: block;
 
-            transform: translateX(0);
+            transform: translateX( 0 );
         }
 
-        // Create flyout at table/mobile size.
-        .respond-to-max( @bp-sm-max, {
+        &-suggestions {
+            display: none;
+
+            .h5,
+            .list {
+                display: inline-block;
+            }
+        }
+    }
+
+    // Tablet size and below.
+    .respond-to-max( @bp-sm-max, {
+        // Absolute position when there is a flyout at mobile/tablet sizes.
+        // Make the height large so that the overflowing flyout can be hidden,
+        // but not get cropped when it's visible.
+        height: 500px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        overflow-x: hidden;
+        // TODO: This will be ignored in IE8-10,
+        //       leading to the overflow preventing clicks on the links.
+        pointer-events: none;
+
+        &_trigger {
+            height: unit( 60px / 18px, em );
+            min-width: unit( 60px / 18px, em );
+            padding-top: unit( @grid_gutter-width / 2 / 18px, em );
+            padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
+            display: block;
+
+            &[aria-expanded="true"] {
+                background: @gray-10;
+                border-left: 1px solid @gray-40;
+                color: @black;
+
+                &:before {
+                    .cf-icon();
+                    content: @cf-icon-delete;
+                }
+            }
+        }
+
+        &_content {
             box-sizing: border-box;
             width: 100%;
 
@@ -217,12 +187,10 @@
             top: 60px;
             z-index: 10;
 
-            background-color: @gray-10;
-            border: 1px solid @gray-50;
+            background-color: @gray-5;
+            border-top: 1px solid @gray-40;
+            border-bottom: 1px solid @gray-40;
             pointer-events: auto;
-
-            transform: translateX(100%);
-            transition: transform 0.25s ease-out;
 
             &-form {
                 padding-top: @margin__em;
@@ -231,37 +199,77 @@
                 padding-bottom: @margin_half__em;
             }
 
-            // Drop-shadow under the search flyout menu at mobile/tablet size.
-            &:after {
-                position: relative;
-                top: 5px;
-                content: '\a0';
-                display: block;
-                height: 5px;
-                width: 100%;
-                opacity: 0.2;
-                background: @gray;
-            }
-        } );
+            .u-drop-shadow-after();
+        }
+    } );
 
-        &-suggestions {
-            display: none;
-
-            // Only show search suggestions at tablet size.
-            .respond-to-range( @bp-sm-min, @bp-sm-max, {
-                & {
-                    display: block;
-                }
-            } );
-
-            .h5,
-            .list {
-                display: inline-block;
+    // Tablet size and above.
+    .respond-to-min( @bp-sm-min {
+        &_trigger {
+            // Show "Search" text in trigger at tablet sizes.
+            &-label:before {
+                .webfont-medium();
+                content: 'Search';
             }
         }
-    }
+    } );
+
+    // Tablet size only.
+    .respond-to-range( @bp-sm-min, @bp-med-min, {
+        // Show "Close" text in trigger at tablet sizes.
+        &_trigger {
+            &[aria-expanded="true"] {
+                .m-global-search_trigger-label:before {
+                    content: 'Close';
+                }
+            }
+        }
+
+        // Only show search suggestions at tablet size.
+        &_content-suggestions {
+            display: block;
+        }
+    } );
+
+    // Desktop size.
+    .respond-to-min( @bp-med-min {
+      overflow: hidden;
+
+      // Match height of Search button at desktop size.
+      // Used to make overflow cover one line only.
+      // 1px offset is to expand overflow area by 1px
+      // so that the focus outline is not cropped.
+      max-height: 47px;
+      position: relative;
+      left: -1px;
+      top: -1px;
+
+      &_trigger,
+      &_trigger:focus,
+       {
+        position: relative;
+        top: 1px;
+      }
+      &_content {
+        position: relative;
+        left: 1px;
+      }
+
+
+      &_trigger {
+          &[aria-expanded="true"] {
+              display: none;
+          }
+      }
+
+      &_content {
+          padding-right: @margin_half__em;
+      }
+
+    } );
 
     // TODO: Move these styles to cf-enhancements/cf-forms.
+    // Mobile size.
     .respond-to-min( 480px, {
         &_content-form {
             // Attach button to input.
@@ -279,6 +287,22 @@
             }
         }
     } );
+}
+
+.m-global-search {
+    // Tab trigger is used to capture press of the tab key so that
+    // global search can be collapsed when it hits this element.
+    &_tab-trigger {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+}
+
+.no-js .m-global-search {
+    &_trigger {
+        display: none;
+    }
 }
 
 /* topdoc

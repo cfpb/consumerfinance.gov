@@ -22,7 +22,7 @@ body {
     - cf-core
 */
 
-@horizontal-rule: @gray-50;
+@horizontal-rule: @gray-40;
 
 /* topdoc
   name: Code styles
@@ -422,7 +422,7 @@ body {
         display: block;
         height: 1px;
         margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-        background-color: @gray-50;
+        background-color: @gray-40;
         content: '';
     }
 }
@@ -437,7 +437,7 @@ body {
         position: absolute;
         top: 0;
         bottom: 0;
-        background-color: @gray-50;
+        background-color: @gray-40;
         content: '';
     }
 }
@@ -491,11 +491,11 @@ body {
         &:hover,
         &.hover {
             border-style: solid;
-            border-color: @pacific-50;
+            border-color: @pacific-60;
 
             .expandable_label,
             .expandable_link {
-                color: @pacific-50;
+                color: @pacific-60;
             }
         }
 
@@ -1369,11 +1369,7 @@ textarea {
   patterns:
     - name: Utility class
       markup: |
-        <h1>
-            <a href="#">
-                <span class="u-hidden">Not shown</span>
-            </a>
-        </h1>
+        <span class="u-hidden">Not shown</span>
       codenotes:
         - .u-hidden;
       notes:
@@ -1386,6 +1382,29 @@ textarea {
 
 .u-hidden {
     display: none;
+}
+
+
+/* topdoc
+  name: Invisible
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <span class="u-invisible">Not shown</span>
+      codenotes:
+        - .u-invisible;
+      notes:
+        - "Use this class to make something invisible.
+           Useful for hiding off-screen elements that
+           are part of an animation, but you don't want
+           as part of the tabindex."
+  tags:
+    - cf-core
+*/
+
+.u-invisible {
+    visibility: hidden;
 }
 
 
@@ -1410,7 +1429,7 @@ textarea {
 */
 .u-link__disabled {
     border: none !important;
-    color: @gray-50 !important;
+    color: @gray-40 !important;
     cursor: not-allowed !important;
 
     &.btn {

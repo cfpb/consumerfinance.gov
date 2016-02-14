@@ -34,6 +34,8 @@
 
     a {
         .webfont-medium();
+        // Colors for :link, :visited, :hover, :focus, :active.
+        .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
         &:before {
             position: relative;
@@ -48,13 +50,14 @@
     }
 
     &__horizontal {
-        border-left: 1px solid @gray-50;
+        border-left: 1px solid @gray-40;
         padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
         padding-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
     }
 
-    &__list {
+    &__list a {
+        display: block;
         padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     }

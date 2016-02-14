@@ -38,11 +38,22 @@
     {{ page.seo_title }}
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
     {% for block in page.header -%}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+        {% if loop.index == 1 %}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+        {% else %}
+            <div class="block">
+                {{ render_stream_child(block) }}
+            </div>
+        {% endif %}
     {%- endfor %}
 
     {% for block in page.content -%}
@@ -67,13 +78,34 @@
     {% endif %}
 
     {% if prototype %}
-        {{ related_posts.render(global_dict.related_posts_settings) }}
-        {% include 'organisms/email-signup.html' %}
-    {% else %}
-        {% for block in page.sidefoot %}
+        <div class="block
+                    block__flush-bottom
+                    block__flush-sides
+                    block__bg
+                    block__border-top
+                    block__border-right">
             <div class="block block__flush-top">
-                {% if 'related_posts' in block.block_type %}
-                    {{ related_posts.render(block) }}
+                {{ related_posts.render(global_dict.related_posts_settings) }}
+            </div>
+            <div class="block">
+                {% include 'organisms/email-signup.html' %}
+            </div>
+        </div>
+    {% else %}
+        <aside class="prefooter">
+            {% for block in page.sidefoot %}
+                {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
+                    {% if loop.index == 1 %}
+                        <div class="block
+                                    block__flush-top">
+                            {{ render_stream_child(block) }}
+                        </div>
+                    {% else %}
+                        <div class="block">
+                            {{ render_stream_child(block) }}
+                        </div>
+                    {% endif %}
+                {# TODO: When we delete atoms, remove the following else #}
                 {% else %}
                     {% if 'heading' in block.block_type %}
                         <h3 class="o-sidebar-breakout_heading">
@@ -85,14 +117,12 @@
                                 {{ render_stream_child(block) }}
                             </span>
                         </h2>
-                    {% elif 'paragraph' in block.block_type %}
-                        {{ render_stream_child(block) }}
                     {% else %}
-                        {{ render_stream_child(block) }}
+                        <p>{{ render_stream_child(block) }}</p>
                     {% endif %}
                 {% endif %}
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </aside>
     {% endif %}
 {% endblock %}
 

@@ -1,19 +1,23 @@
+import time, re
+from datetime import timedelta
+
 from core.services import PDFGeneratorView, ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from wagtail.wagtailadmin import messages
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse
 
-import time
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, get_user_model, REDIRECT_FIELD_NAME, views as auth_views, \
     login
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import hashers
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url
@@ -25,9 +29,14 @@ from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.template.response import TemplateResponse
 from wagtail.wagtailadmin.views import account
 from wagtail.wagtailadmin import forms
+
+from .forms import login_form
 from .util import password_policy
 from .models import base
+from .models.base import PasswordHistoryItem
 
+
+LoginForm = login_form()
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
     render_url = 'http://localhost/the-bureau/leadership-calendar/print/'
@@ -88,17 +97,18 @@ def change_password(request):
     if not account.password_management_enabled():
         raise Http404
 
-    can_change_password = request.user.has_usable_password()
+    user = request.user
+    can_change_password = user.has_usable_password()
 
     if can_change_password:
         if request.POST:
-            form = PasswordChangeForm(user=request.user, data=request.POST)
+            form = PasswordChangeForm(user=user, data=request.POST)
 
             if form.is_valid():
                 password1 = form.cleaned_data.get('new_password1', '')
                 password2 = form.cleaned_data.get('new_password2', '')
 
-                errors = password_policy._check_passwords(password1, password2)
+                errors = password_policy._check_passwords(password1, password2, user)
 
                 if len(errors) == 0:
                     form.save()
@@ -137,43 +147,33 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     """
     Displays the login form and handles the login action.
     """
-    redirect_to = request.GET.get(REDIRECT_FIELD_NAME, '')
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+
+    # redirects to http://example.com should not be allowed
+    if redirect_to:
+        if '//' in redirect_to:
+            redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
     if request.method == "POST":
-        form = forms.LoginForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST)
+
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
             if not is_safe_url(url=redirect_to, host=request.get_host()):
                 redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
+            user = form.get_user()
+            try:
+                user.failedloginattempt.delete()
+            except ObjectDoesNotExist:
+                pass
+
             login(request, form.get_user())
 
             return HttpResponseRedirect(redirect_to)
-        else:
-            UserModel = get_user_model()
-            try:
-                user = UserModel._default_manager.get(username=form.cleaned_data.get('username'))
-                fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
-                now = time.time()
-                fa.failed(now)
-                # Defaults to a 2 hour lockout for a user
-                time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
-                attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
-                attempts_used = len(fa.failed_attempts.split(','))
-                if fa.too_many_attempts(attempts_allowed, time_period):
-                    user.is_active = False
-                    user.save()
-                    messages.add_message(request, messages.ERROR,
-                                         'Too many failed login attempts, your account is blocked.')
-                    raise Exception('No need to wait till the end of the try block.')
-                fa.save()
-                messages.add_message(request, messages.ERROR,
-                                     ' %s (of %s) login attempts used.' % (attempts_used, attempts_allowed))
-            except Exception:
-                messages.add_message(request, messages.ERROR,
-                                     'Your username and password didn\'t match. Please try again.')
     else:
-        form = forms.LoginForm(request)
+        form = LoginForm(request)
 
     current_site = get_current_site(request)
 
@@ -218,11 +218,9 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
             if form.is_valid():
                 password1 = form.cleaned_data.get('new_password1', '')
                 password2 = form.cleaned_data.get('new_password2', '')
-                errors = password_policy._check_passwords(password1, password2)
+                errors = password_policy._check_passwords(password1, password2, user)
 
                 if len(errors) == 0:
-                    # If a user a locked out, it unlocks them with a successful password reset
-                    user.is_active = True
                     form.save()
                     return HttpResponseRedirect(post_reset_redirect)
                 else:

@@ -11,6 +11,10 @@
     About Meredith Fuchs
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
 
 	{% import 'molecules/social-media.html' as social_media %}
@@ -144,15 +148,16 @@
                 </div>
             </div>
         </section>
-
-        <section class="block block__flush-bottom">
-            {%- import 'related-links.html' as related_links -%}
-            {{- related_links.render([
-                [ vars.path + 'about-director/',
-                  'Learn about Director Richard Cordray' ],
-                [ vars.path + 'bureau-structure/',
-                  'Bureau organizational structure' ],
-            ]) -}}
+        <section class="prefooter">
+            <div class="block block__flush-top">
+                {%- import 'related-links.html' as related_links -%}
+                {{- related_links.render([
+                    [ vars.path + 'about-director/',
+                      'Learn about Director Richard Cordray' ],
+                    [ vars.path + 'bureau-structure/',
+                      'Bureau organizational structure' ],
+                ]) -}}
+            </div>
         </section>
 
     </aside>

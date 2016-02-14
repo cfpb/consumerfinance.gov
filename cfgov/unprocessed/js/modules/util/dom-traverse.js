@@ -1,6 +1,7 @@
 'use strict';
 
-require( '../polyfill/class-list' );
+// Required polyfills for IE9.
+if ( window.Modernizr && !window.Modernizr.classlist ) { require( '../polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
 
 /**
  * Get the sibling nodes of a dom node.
@@ -63,7 +64,7 @@ function closest( elem, className ) {
 }
 
 module.exports = {
+  closest:     closest,
   getSiblings: getSiblings,
-  not:         not,
-  closest:     closest
+  not:         not
 };

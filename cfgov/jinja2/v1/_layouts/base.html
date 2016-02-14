@@ -92,6 +92,14 @@
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
 
+    <!--[if lt IE 9]>
+    <script>
+        // If in IE8 reverse no-js/js class change made by modernizr.
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+    </script>
+    <![endif]-->
+
     {# TODO: jQuery CDN is provided in the head to satisfy
              Google Tag Manager (GTM) requirements.
              Ideally GTM would handle its own dependency management
@@ -124,22 +132,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <a href="#main" id="skip-nav">Skip to main content</a>
 
 {% if flag_enabled('BETA_NOTICE') %}
-<div class="beta-banner expandable" id="beta-banner">
+<div class="beta-banner
+            m-expandable
+            m-expandable__expanded"
+     id="beta-banner">
     <div class="wrapper wrapper__match-content">
         <div class="beta-banner_head">
-            <span class="cf-icon cf-icon-error-round beta-banner_icon"></span>
+            <span class="cf-icon
+                         cf-icon-error-round
+                         beta-banner_icon"></span>
             This beta site is a work in progress.
         </div>
-        <p class="beta-banner_desc expandable_content">
-            We’re prototyping new designs. Things may not work as expected.
-            Our regular site continues to be at
-            <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
-        </p>
-        <button class="btn beta-banner_btn expandable_target" id="beta-banner_btn">
-            <span class="expandable_cue-close">
+        <div class="m-expandable_content">
+            <p class="beta-banner_desc  m-expandable_content-animated">
+                We’re prototyping new designs. Things may not work as expected.
+                Our regular site continues to be at
+                <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
+            </p>
+        </div>
+        <button class="btn
+                       beta-banner_btn
+                       m-expandable_target
+                       m-expandable_link"
+                id="beta-banner_btn">
+            <span class="m-expandable_cue m-expandable_cue-close">
                 Collapse <span class="cf-icon cf-icon-up"></span>
             </span>
-            <span class="expandable_cue-open">
+            <span class="m-expandable_cue m-expandable_cue-open">
                 More info <span class="cf-icon cf-icon-down"></span>
             </span>
         </button>
@@ -148,8 +167,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endif %}
 
 {% block header %}
-    {% include 'templates/header.html' %}
+    {% include 'organisms/header.html' %}
 {% endblock header %}
+
+{# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
+{{ wagtailuserbar() }}
 
 <!-- PRIMARY CONTENT -->
 {% block content %}
@@ -173,7 +195,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 -->
 
 {% block javascript %}
-
+<!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
 <script type='text/javascript'>
     {% include '/js/routes/common.js' %}
@@ -204,7 +226,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ js_source }}
 </script>
 {% endif %}
-
+<!--<![endif]-->
 {% endblock javascript %}
 
 </body>

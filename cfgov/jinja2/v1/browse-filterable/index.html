@@ -4,11 +4,15 @@
 {% import 'molecules/notification.html' as notification %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
-
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
 {%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
 
 {% block content_main %}
     {% for block in page.header %}
@@ -29,6 +33,9 @@
             {% endif %}
         </div>
     {% endfor %}
+    <aside class="prefooter">
+        Put sidefoot content here
+    </aside>
 {% endblock %}
 
 {% block content_sidebar scoped -%}
