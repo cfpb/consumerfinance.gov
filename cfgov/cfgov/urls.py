@@ -7,6 +7,7 @@ from django.conf.urls import include, url
 from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
+from sheerlike.sites import SheerSite
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login
@@ -249,6 +250,9 @@ urlpatterns = [
     url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
 
+    #sheerlike apps
+
+    url(r'owning-a-home/', include(SheerSite('owning-a-home').urls)),
 ]
 if 'cfpb_common' in settings.INSTALLED_APPS:
     pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')

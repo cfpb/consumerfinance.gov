@@ -181,7 +181,6 @@ ALLOWED_HOSTS = ['*']
 WAGTAIL_SITE_NAME = 'v1'
 WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 
-SHEER_SITES = [V1_TEMPLATE_ROOT]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
 
@@ -383,7 +382,7 @@ LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL='/admin/'
 
 
-SHEEER_SITES = {
+SHEER_SITES = {
         'owning-a-home': 
             os.environ.get('OAH_SHEER_PATH') or 
             Path(REPOSITORY_ROOT, '../owning-a-home/dist'),
