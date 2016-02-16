@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
->>>>>>> removed prototype data from page templates to resolve bug
+{% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -63,7 +63,6 @@
 {% block content_sidebar scoped -%}
     {% for block in page.sidefoot %}
         {% if 'related_posts' in block.block_type %}
-            {% import 'molecules/related-posts.html' as related_posts with context %}
             {{ related_posts.render(block) }}
         {% elif 'email_signup' in block.block_type %}
             {{ render_stream_child(block) }}
