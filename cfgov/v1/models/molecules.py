@@ -13,7 +13,7 @@ def isRequired(field_name):
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(blank=True,  required=False)
+    body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
@@ -227,3 +227,31 @@ class Expandable(BaseExpandable):
             ('address', ContactAddress()),
         ], blank=True
     )
+
+
+class RelatedMetadata(blocks.StructBlock):
+    slug = blocks.CharBlock(max_length=100)
+    content = blocks.StreamBlock([
+        ('text', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100)),
+            ('blob', blocks.RichTextBlock())
+        ], icon='pilcrow')),
+        ('list', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100)),
+            ('links', blocks.ListBlock(atoms.Hyperlink())),
+        ], icon='list-ul')),
+        ('date', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100)),
+            ('date', blocks.DateBlock(required=False))
+        ], icon='date')),
+        ('topics', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100, default='Topics')),
+            ('show_topics', blocks.BooleanBlock(default=True, required=False))
+        ], icon='tag')),
+    ])
+    half_width = blocks.BooleanBlock(required=False, default=False)
+
+    class Meta:
+        icon = 'grip'
+        template = '_includes/molecules/related-metadata.html'
+        label = 'Related Metadata'

@@ -52,3 +52,14 @@ def most_common(lst):
         # Recursively returns a list with the most common elements ordered
         # most to least. Ties go to the lowest index in the given list.
         return [most] + most_common(new_list)
+
+
+def get_form_id(page, get_request):
+        form_ids = []
+        if callable(getattr(page, 'get_form_specific_filter_data', None)):
+            form_ids = page.get_form_specific_filter_data(page.get_form_class(),
+                                                          get_request).keys()
+        if form_ids:
+            return form_ids[0]
+        else:
+            return None

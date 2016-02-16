@@ -1,4 +1,5 @@
 import os
+from urlparse import urlparse
 
 from django import template
 from wagtail.wagtailcore.models import Page
@@ -19,11 +20,12 @@ def is_shared(page):
 
 
 @register.assignment_tag(takes_context=True)
-def staging_url(context, page):
+def get_page_state_url(context, page):
     url = page.url
-    if os.environ.get('STAGING_HOSTNAME') not in page.url:
-        url = url.replace(context['request'].site.hostname,
-                          os.environ.get('STAGING_HOSTNAME'))
+    page_hostname = urlparse(url).hostname
+    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    if not page.live and page.specific.shared and staging_hostname not in page_hostname:
+        url = url.replace(page_hostname, staging_hostname)
     return url
 
 
