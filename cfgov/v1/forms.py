@@ -274,10 +274,6 @@ class FilterableListForm(forms.Form):
                         Q((query, self.cleaned_data.get(field_name)))
         return final_query
 
-    # Returns the field to order the list by
-    def get_order_attr(self):
-        return 'date_published'
-
     # Returns a list of query strings to associate for each field, ordered by
     # the field declaration for the form. Note: THEY MUST BE ORDERED IN THE
     # SAME WAY AS THEY ARE DECLARED.

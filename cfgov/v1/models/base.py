@@ -1,4 +1,5 @@
 import os
+from itertools import chain
 
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -11,13 +12,13 @@ from django.contrib.auth.models import User
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
     MultiFieldPanel, TabbedInterface, ObjectList
-
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
@@ -201,7 +202,9 @@ class CFGOVPage(Page):
         return parent
 
     def elements(self):
-        return []
+        lst = [value for key, value in vars(self).iteritems()
+               if type(value) is StreamValue]
+        return list(chain(*lst))
 
     def _media(self):
         from v1 import models
@@ -209,13 +212,7 @@ class CFGOVPage(Page):
         js = ()
 
         for child in self.elements():
-            if isinstance(child, dict):
-                type = child['type']
-            else:
-                type = child[0]
-
-            class_ = getattr(models, util.to_camel_case(type))
-
+            class_ = type(child.block)
             instance = class_()
 
             try:

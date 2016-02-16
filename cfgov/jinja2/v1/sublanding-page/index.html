@@ -23,8 +23,7 @@
 {% endif %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
-{% import 'organisms/post-preview.html' as post_preview %}
-{% import 'organisms/sidebar-contact-info.html' as sidebar_contact_info %}
+{% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'organisms/main-contact-info.html' as main_contact_info %}
 
 {% block title -%}
@@ -113,13 +112,20 @@
             {% if loop.index == 1 %}
                 <div class="block
                             block__flush-top">
-                    {{ render_stream_child(block) }}
-                </div>
             {% else %}
                 <div class="block">
-                    {{ render_stream_child(block) }}
-                </div>
             {% endif %}
+            {% if 'post_preview_snapshot' in block.block_type %}
+                {% set posts = page.get_browsefilterable_posts(request) %}
+                {% set limit = block.value.limit | int %}
+                {% set num_posts = limit if limit <= posts | length else posts | length %}
+                {% for i in range(num_posts) %}
+                    {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
+                {% endfor %}
+            {% else %}
+                {{ render_stream_child(block) }}
+            {% endif %}
+                </div>
         {%- endfor %}
     {% endif %}
 {% endblock %}
@@ -132,24 +138,6 @@
     {% if prototype %}
         {{ related_posts.render(global_dict.related_posts_settings) }}
         {% include 'organisms/email-signup.html' %}
-        {{ sidebar_contact_info.render({
-                'heading': 'Header for text below',
-                'body':    lipsumText
-            }, {
-                'emails':  ['test@example.com'],
-                'phones':  [{'number': '1234567899',
-                             'vanity': '123456AAAA',
-                             'tty':    '1234567899'}],
-                'faxes':   [{'number': '1234567899'}],
-                'address': {
-                    'title':    'Consumer Financial Protection Bureau',
-                    'street':   '1700 G Street, NW',
-                    'city':     'Washington',
-                    'state':    'DC',
-                    'zip_code': '20552-0003'
-                }
-            })
-        }}
     {% else %}
         {% for block in page.sidefoot %}
             {% if 'related_posts' in block.block_type %}
