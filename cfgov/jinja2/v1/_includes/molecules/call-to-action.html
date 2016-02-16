@@ -21,22 +21,6 @@
    value.button.text:    The text to display on button.
 
    ========================================================================== #}
-{% if not value %}
-    {% do global_dict.update(
-        {
-            'call_to_action': {
-                'slug_text': 'Slug Title',
-                'button': {
-                    'text':   'Call to Action'
-                },
-                'paragraph_text': {
-                    'source': lipsum(1, false, 10, 25) | safe
-                }
-            }
-        })
-    %}
-{% endif %}
-{% set value = value or global_dict.call_to_action %}
 <div class="m-call-to-action">
     {% if value.slug_text %}
         <h2 class="header-slug">

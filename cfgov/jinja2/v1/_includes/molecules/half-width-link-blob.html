@@ -22,31 +22,6 @@
                      link_text: A string for the text of the link.
 
    ========================================================================== #}
-
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'half_width_link_blob': {
-                'heading' :       'This is an example of a Half Width Link Blob',
-                'body': {
-                    'source': lipsumText
-                },
-                'links': [
-                        {
-                            'text': 'This is a Link List molecule inside the blob',
-                            'url':  '/some-url/'
-                        },
-                        {
-                            'text': 'This is another Link List molecule inside the
-                                     blob',
-                            'url':  '/some-other-url/'
-                        }]
-            }
-        })
-    %}
-    {% set value = global_dict.half_width_link_blob %}
-{% endif %}
 <div class="m-half-width-link-blob
             content-l_col
             content-l_col-1-2">

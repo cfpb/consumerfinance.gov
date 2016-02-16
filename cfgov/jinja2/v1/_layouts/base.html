@@ -216,8 +216,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {% else %}
             {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
         {% endif %}
-    {% else %}
-        {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
     {% endif %}
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}

@@ -5,29 +5,6 @@
 
 {% import 'organisms/expandable-group.html' as expandable_group %}
 
-{% if not page %}
-    {% do global_dict.update({
-            'page':  {
-                'seo_title': 'This is a prototype page for testing landing page layouts.',
-                'related_posts': global_dict.related_posts_function
-            },
-            'related_posts_settings': {
-                'value': {
-                    'limit':            3,
-                    'show_heading':     true,
-                    'related_posts':    false,
-                    'related_newsroom': false,
-                    'related_events':   false,
-                }
-            },
-            'prototype': true
-        })
-    %}
-    {% set page = page or global_dict.page %}
-    {% set prototype = global_dict.prototype or false %}
-    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
-{% endif %}
-
 {% import 'molecules/related-posts.html' as related_posts with context %}
 {% if not breadcrumb_items %}
     {% set parent = page.parent() %}
@@ -62,36 +39,6 @@
         </div>
     {%- endfor %}
 
-    {% if prototype %}
-        <div class="block">
-            {% include 'organisms/full-width-text.html' %}
-
-            <div class="expandable-prototypes">
-                {% include 'molecules/expandable.html' with context %}
-            </div>
-
-            <div class="expandable-group-prototypes">
-                {% include 'organisms/expandable-group.html' with context %}
-            </div>
-
-        </div>
-    {% endif %}
-
-    {% if prototype %}
-        <div class="block
-                    block__flush-bottom
-                    block__flush-sides
-                    block__bg
-                    block__border-top
-                    block__border-right">
-            <div class="block block__flush-top">
-                {{ related_posts.render(global_dict.related_posts_settings) }}
-            </div>
-            <div class="block">
-                {% include 'organisms/email-signup.html' %}
-            </div>
-        </div>
-    {% else %}
         <aside class="prefooter">
             {% for block in page.sidefoot %}
                 {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
@@ -123,7 +70,6 @@
                 {% endif %}
             {% endfor %}
         </aside>
-    {% endif %}
 {% endblock %}
 
 {% block content_sidebar scoped -%}

@@ -30,60 +30,41 @@
    See [GHE]/flapjack/Modules-V1/wiki/Heros
 
    ========================================================================== #}
+{% macro render(value) %}
+  <section class="hero"
+    {{ value.body.source }}
+           {{ 'style=background-color:' +
+               value.background_color + ';'
+               if value.background_color else '' }}>
+      <div class="wrapper hero_wrapper">
+          <div class="hero_text">
+              <h1 class="hero_heading">{{ value.heading | safe}}</h1>
+              <div class="hero_subhead">{{ value.body.source |safe}}</div>
+              {% for link in value.links %}
+                  <a href="{{ link.url }}"
+                     class="hero_cta
+                     {{ 'btn' if value.is_button
+                     else '' }}">
+                      {{ link.text }}
+                  </a>
+              {% endfor %}
+          </div>
 
-{% if not value %}
-    {% do global_dict.update(
-            {
-                'hero': {
-                    'heading':   'This is an example of a Hero Molecule',
-                    'body': {
-                        'source': 'Heroes function as a primary focal point on a page,
-                                  often used to introduce a collection of pages by
-                                  combining a brief description of the goals of that
-                                  section along with a visually impactful graphic.'
-                    },
-                    'image': {
-                                  'upload': {
-                                            'url': 'http://placehold.it/1600x900'
-                                  }
-                    },
-                    'background_color': '#d5e7e6',
-                    'links': [{
-                            'text': 'Placeholder link',
-                            'url':  '#'
-                        }]
-                }
-            })
-    %}
-    {% set value = global_dict.hero %}
-    {% set prototype = true %}
-{% endif %}
-<section class="hero"
-         {{ 'style=background-color:' +
-             value.background_color + ';'
-             if value.background_color else '' }}>
-    <div class="wrapper hero_wrapper">
-        <div class="hero_text">
-            <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ value.body.source |safe}}</div>
-            {% for link in value.links %}
-                <a href="{{ link.url }}"
-                   class="hero_cta
-                   {{ 'btn' if value.is_button
-                   else '' }}">
-                    {{ link.text }}
-                </a>
-            {% endfor %}
-        </div>
-        {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
-            <div class="hero_image"
-                 style="background-image: url( {{ photo.url }} );">
-        {% endif %}
-        </div>
-    </div>
-</section>
+
+          {# TODO: Remove this when /the-bureau/ has been converted to wagtail #}
+          {% if value.macro_image %}
+              <div class="hero_image"
+                   style="background-image: url( {{ value.macro_image.url }} );">
+              </div>
+          {% else %}
+              {% if value.image.upload.url %}
+                  {% set photo=image(value.image.upload, 'original') %}
+                  <div class="hero_image"
+                       style="background-image: url( {{ photo.url }} );">
+              {% endif %}
+          {% endif %}
+      </div>
+  </section>
+{% endmacro %}
+
+
