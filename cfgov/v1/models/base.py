@@ -1,5 +1,6 @@
 import os
 from itertools import chain
+import json
 
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -181,11 +182,20 @@ class CFGOVPage(Page):
 
         else:
             # Request is for this very page.
-            if self.live or self.shared and request.site.hostname == \
-                    os.environ.get('STAGING_HOSTNAME'):
-                return RouteResult(self)
-            else:
-                raise Http404
+            # If we're on the production site, make sure the version of the page
+            # displayed is the latest version that has `live` set to True for
+            # the live site or `shared` set to True for the staging site.
+            staging_hostname = os.environ.get('STAGING_HOSTNAME')
+            revisions = self.revisions.all().order_by('-created_at')
+            for revision in revisions:
+                page_version = json.loads(revision.content_json)
+                if request.site.hostname != staging_hostname:
+                    if page_version['live']:
+                        return RouteResult(revision.as_page_object())
+                else:
+                    if page_version['shared']:
+                        return RouteResult(revision.as_page_object())
+            raise Http404
 
     def permissions_for_user(self, user):
         """
