@@ -49,40 +49,38 @@
         </h2>
     </div>
 
-    {% if value %}
-        <div class="o-sidebar-contact-info_column">
-            {% if value.contact.contact_info %}
-                {% for block in value.contact.contact_info %}
-                    {% if block.block_type == 'address' %}
-                        {% set map_details = (block.value.street + ', ' +
-                        block.value.city + ' ' +
-                        block.value.state + ' ' +
-                        block.value.zip_code) | urlencode %}
-                        <figure>
-                            <a href="https://www.google.com/maps/place/{{ map_details }}">
-                                <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
-                                     alt="">
-                            </a>
-                        </figure>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
+    <div class="o-sidebar-contact-info_column">
+        {% if value.contact.contact_info %}
+            {% for block in value.contact.contact_info %}
+                {% if block.block_type == 'address' %}
+                    {% set map_details = (block.value.street + ', ' +
+                    block.value.city + ' ' +
+                    block.value.state + ' ' +
+                    block.value.zip_code) | urlencode %}
+                    <figure>
+                        <a href="https://www.google.com/maps/place/{{ map_details }}">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
+                                 alt="">
+                        </a>
+                    </figure>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
-            {% if value.header %}
-                <h3>{{ value.header }}</h3>
-            {% endif %}
+        {% if value.header %}
+            <h3>{{ value.header }}</h3>
+        {% endif %}
 
-            {{ value.contact.body | safe }}
-        </div>
+        {{ value.contact.body | safe }}
+    </div>
 
-        <div class="o-sidebar-contact-info_column">
-            {% if value.contact.contact_info %}
-                {% for block in value.contact.contact_info %}
-                    {% if not block.block_type == 'address' %}
-                        {{ render_stream_child(block) }}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        </div>
-    {% endif %}
+    <div class="o-sidebar-contact-info_column">
+        {% if value.contact.contact_info %}
+            {% for block in value.contact.contact_info %}
+                {% if not block.block_type == 'address' %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>
