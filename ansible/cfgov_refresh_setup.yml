@@ -39,3 +39,5 @@
       shell: "/usr/local/bin/virtualenv /vagrant/.env && source /vagrant/.env/bin/activate && pip install -r /vagrant/requirements/local.txt"
     - name: Migrate django db to match application state
       command: "/vagrant/.env/bin/python /vagrant/cfgov/manage.py migrate"
+    - name: Add virtualenv to bash rc
+      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source .env/bin/activate' line='cd /vagrant;source .env/bin/activate'"
