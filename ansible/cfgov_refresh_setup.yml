@@ -33,6 +33,12 @@
         - "tk-devel"
         - "python-devel"
         - "mysql-devel.x86_64"
+    - name: download PDFReactor
+      get_url: url=http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz
+    - name: Untar PDFReactor
+      unarchive: src=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt copy=no
+    - name: Start PDFReactor service
+      command: /opt/PDFreactor/bin/pdfreactorwebservice start
     - name: Manually create virtual .env and install requirements  
       command: "/usr/local/bin/pip install virtualenv"
     - name: Manually create virtual .env and install requirements  
