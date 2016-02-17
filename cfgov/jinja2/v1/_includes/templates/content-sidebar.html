@@ -1,3 +1,5 @@
+{% import 'molecules/related-posts.html' as related_posts with context %}
+
 {% for block in page.sidefoot %}
     <div class="block block__flush-top">
         {% if 'related_posts' in block.block_type %}
