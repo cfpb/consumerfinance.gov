@@ -1,4 +1,3 @@
-import itertools
 from datetime import datetime
 from localflavor.us.models import USStateField
 
@@ -14,6 +13,8 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from . import molecules
 from . import organisms
 from .base import CFGOVPage
+from ..templatetags.share import get_page_state_url
+from ..util import util
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -72,9 +73,25 @@ class AbstractFilterPage(CFGOVPage):
     # This page class cannot be created.
     is_creatable = False
 
-    def elements(self):
-        return list(itertools.chain(self.header.stream_data,
-                                    self.content.stream_data))
+    class Meta:
+        ordering = ('date_published',)
+
+    def related_metadata_tags(self, get_request):
+        # Set the tags to correct data format
+        tags = {'links': []}
+        # From the parent, get the form ids from the BrowseFilterablePage helper method
+        # then use the first id since the filterable list on the page will probably
+        # have the first id on the page. For more, see v1/models/browse_filterable_page.py line 105.
+        parent = self.parent()
+        id = util.get_form_id(parent, get_request)
+        for tag in self.tags.names():
+            tag_link = {'text': tag, 'url': ''}
+            if id is not None:
+                param = '?filter' + str(id) + '_topics=' + tag
+                tag_link['url'] = get_page_state_url({'request': get_request}, parent) + param
+            tags['links'].append(tag_link)
+
+        return tags
 
 
 class LearnPage(AbstractFilterPage):

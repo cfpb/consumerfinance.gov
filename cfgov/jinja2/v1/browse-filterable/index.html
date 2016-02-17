@@ -1,9 +1,5 @@
 {% extends 'layout-side-nav.html' %}
 
-{# Import organisms and molecules used in the template. #}
-{% import 'molecules/notification.html' as notification %}
-{% import 'organisms/post-preview.html' as post_preview with context %}
-
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
 {%- endblock %}
@@ -12,7 +8,8 @@
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+{% set parent = page.parent() %}
+{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block content_main %}
     {% for block in page.header %}
@@ -33,19 +30,13 @@
             {% endif %}
         </div>
     {% endfor %}
-    <div class="block
-                block__flush-bottom
-                block__flush-sides
-                block__bg
-                block__border-top
-                block__border-right">
+    <aside class="prefooter">
         Put sidefoot content here
-    </div>
+    </aside>
 {% endblock %}
 
 {% block content_sidebar scoped -%}
     <aside>
         {# TODO: Add sidebar organisms. #}
-        Side Navigation
     </aside>
 {%- endblock %}

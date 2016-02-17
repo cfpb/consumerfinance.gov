@@ -20,15 +20,15 @@ class DataConverter(SnippetDataConverter):
         phone_index = 0
         if doc.get('fax'):
             if doc.get('fax').get('num'):
-                post_dict = phone_formatter(post_dict, stream_index, phone_index, 'on', doc.get('fax').get('num'))
+                post_dict = phone_formatter(post_dict, stream_index, phone_index, True, doc.get('fax').get('num'))
                 phone_index += 1
 
         if doc.get('phone'):
             for phone in doc.get('phone'):
                 if stream_index > 0:
-                    post_dict = phone_formatter(post_dict, (stream_index - 1), phone_index, 'off', phone.get('num'))
+                    post_dict = phone_formatter(post_dict, (stream_index - 1), phone_index, False, phone.get('num'))
                 else:
-                    post_dict = phone_formatter(post_dict, stream_index, phone_index, 'off', phone.get('num'))
+                    post_dict = phone_formatter(post_dict, stream_index, phone_index, False, phone.get('num'))
                 phone_index += 1
 
         if phone_index > 0:
@@ -74,7 +74,8 @@ def phone_formatter(dict, index, pindex, is_fax, number):
 
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-deleted'] = u''
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-order'] = str(pindex)
-    dict[stream_group + str(index) + '-value-fax'] = is_fax
+    if is_fax:
+        dict[stream_group + str(index) + '-value-fax'] = 'on'
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-value-number'] = number
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-value-tty'] = u''
     dict[stream_group + str(index) + '-value-phones-' + str(pindex) + '-value-vanity'] = u''

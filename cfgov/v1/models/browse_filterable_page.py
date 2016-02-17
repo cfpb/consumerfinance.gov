@@ -1,8 +1,8 @@
-from itertools import chain
 from operator import attrgetter
 
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
@@ -11,7 +11,6 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from . import base, molecules, organisms, ref
 from .learn_page import AbstractFilterPage
 from .. import forms
-from ..util.util import wagtail_stream_data
 
 
 class BrowseFilterablePage(base.CFGOVPage):
@@ -39,13 +38,6 @@ class BrowseFilterablePage(base.CFGOVPage):
 
     template = 'browse-filterable/index.html'
 
-    def elements(self):
-        return list(chain(self.header.stream_data,
-                    self.content.stream_data))
-
-    def get_form_class(self):
-        return forms.FilterableListForm
-
     def get_context(self, request, *args, **kwargs):
         context = super(BrowseFilterablePage, self).get_context(request, *args,
                                                                 **kwargs)
@@ -57,33 +49,8 @@ class BrowseFilterablePage(base.CFGOVPage):
                  for filters_id in form_specific_filters.keys()]
         for form in forms:
             if form.is_valid():
-                # If this is the Newsroom, then we need to go get the blog
-                # from a different part of the site.
-                blogs = []
-                for f in wagtail_stream_data(self.content.stream_data):
-                    if 'filter_controls' in f['type'] and 'newsroom' in \
-                            f['value']['categories']['page_type']:
-                        categories = form.cleaned_data.get('categories', [])
-                        if not categories or 'blog' in categories:
-                            blog_cats = [c[0] for c in ref.categories[1][1]]
-                            blogs = AbstractFilterPage.objects.filter(
-                                categories__name__in=blog_cats)
-                # If this is the staging site, then return pages that are
-                # shared. Else, make sure that the pages are published.
-                if getattr(settings, 'STAGING_HOSTNAME', 'content') in \
-                        request.site.hostname:
-                    page_set = AbstractFilterPage.objects.filter(
-                        shared=True).descendant_of(
-                        self).filter(form.generate_query())
-                else:
-                    page_set = AbstractFilterPage.objects.live().descendant_of(
-                        self).filter(form.generate_query())
-                page_set = page_set.exclude(id__in=[b.id for b in blogs])
-                page_list = sorted(list(chain(page_set, blogs)),
-                                   key=attrgetter(form.get_order_attr()))
-
                 # Paginate results by 10 items per page.
-                paginator = Paginator(page_list, 10)
+                paginator = Paginator(self.get_page_set(form, request.site.hostname), 10)
                 page = request.GET.get('page')
 
                 # Get the page number in the request and get the page from the
@@ -99,6 +66,9 @@ class BrowseFilterablePage(base.CFGOVPage):
             context['forms'].append(form)
         return context
 
+    def get_form_class(self):
+        return forms.FilterableListForm
+
     # Transform each GET parameter key from unique ID for the form in the
     # request and assign it to a dictionary under the form ID from where it
     # came from.
@@ -106,10 +76,10 @@ class BrowseFilterablePage(base.CFGOVPage):
         filters_data = {}
         # Find every form existing on the page and assign a dictionary with its
         # number as the key.
-        for i, f in enumerate(wagtail_stream_data(self.content.stream_data)):
-            if 'filter_controls' in f['type']:
+        for i, f in enumerate(self.content):
+            if 'filter_controls' in f.block_type:
                 filters_data[i] = {}
-        # print filters_data
+
         # For each form ID dictionary, find all the fields for it. Assign the
         # select fields to lists and append them for each selection. Return the
         # dictionary of normalized field names with their respective data.
@@ -123,6 +93,27 @@ class BrowseFilterablePage(base.CFGOVPage):
                     filters_data[i][field] = \
                         request_dict.get(request_field_name, '')
         return filters_data
+
+    # Returns a queryset of AbstractFilterPages
+    def get_page_set(self, form, hostname):
+        # If this is the Newsroom, then we need to go get the blog
+        # from a different part of the site.
+        blog_q = Q()
+        for f in self.content:
+            if 'filter_controls' in f.block_type and 'newsroom' in \
+                    f.value['categories']['page_type']:
+                categories = form.cleaned_data.get('categories', [])
+                if not categories or 'blog' in categories:
+                    blog_cats = [c[0] for c in ref.categories[1][1]]
+                    blog_q = Q('categories__name__in', blog_cats)
+        # If this is the staging site, then return pages that are
+        # shared. Else, make sure that the pages are published.
+        if getattr(settings, 'STAGING_HOSTNAME', 'content') in hostname:
+            return AbstractFilterPage.objects.filter(
+                shared=True).descendant_of(self).filter(form.generate_query() | blog_q)
+        else:
+            return AbstractFilterPage.objects.live().descendant_of(
+                self).filter(form.generate_query() | blog_q)
 
 
 class EventArchivePage(BrowseFilterablePage):

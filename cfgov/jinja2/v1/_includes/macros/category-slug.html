@@ -40,9 +40,10 @@
     {% endif %}
 
     {% call _category_link(href, classes) %}
-        {{ category_icon.render(category_label(category), 'category-slug_icon') | safe }}
+        {% set cat = category_label(category) or category %}
+        {{ category_icon.render(cat, 'category-slug_icon') | safe }}
         <span class="u-visually-hidden">Category:</span>
-        {{ category_label(category) }}
+        {{ cat }}
     {% endcall %}
 {% endmacro %}
 

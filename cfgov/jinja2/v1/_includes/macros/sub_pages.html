@@ -24,7 +24,7 @@
                             block__padded-top
                             block__border-top
                             qa-subpage
-                            {{ 'block__border-bottom' if is_office_page == false }}">
+                            {{ 'block__border-bottom' if is_office_page == false else '' }}">
                   {% if title %}
                       <h2>
                           {{ title }}

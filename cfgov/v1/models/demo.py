@@ -1,5 +1,3 @@
-import itertools
-
 from django.db import models
 
 from wagtail.wagtailcore.fields import StreamField
@@ -59,10 +57,6 @@ class DemoPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Settings',
                    classname="settings"),
     ])
-
-    def elements(self):
-        return list(itertools.chain(self.organisms.stream_data,
-                    self.molecules.stream_data))
 
     def get_context(self, request):
         context = super(DemoPage, self).get_context(request)

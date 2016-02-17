@@ -44,7 +44,8 @@
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
 {% if page %}
-{% macro render(post, type, form_id) %}
+{% macro render(post, type='', form_id=0, url='') %}
+    {% set url = url or request.path %}
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
@@ -54,7 +55,7 @@
             {% if 'newsroom' in type %}
                 {% if is_blog(post) %}
                     {{ category_slug.render('blog',
-                            request.path,
+                            url,
                             'post_slug meta-header_left',
                             false, form_id) }}
                 {% endif %}
@@ -64,7 +65,7 @@
                         |
                     {% endif %}
                     {{ category_slug.render(cat.name,
-                            request.path,
+                            url,
                             'post_slug meta-header_left',
                             false, form_id) }}
                 {% endfor %}
@@ -136,15 +137,15 @@
                 {% for author in post.authors.names() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
-                            By <a href="{{ request.path }}?filter{{ form_id }}_authors={{ author }}">
+                            By <a href="{{ url }}?filter{{ form_id }}_authors={{ author }}">
                                 {{ author }}
                                 </a>
                         {% elif loop.last == true %}
-                            and <a href="{{ request.path }}?filter{{ form_id }}_authors={{ author }}">
+                            and <a href="{{ url }}?filter{{ form_id }}_authors={{ author }}">
                                 {{ author }}
                                 </a>
                         {% else %}
-                            ,<a href="{{ request.path }}?filter{{ form_id }}_authors={{ author }}">
+                            ,<a href="{{ url }}?filter{{ form_id }}_authors={{ author }}">
                                 {{ author }}
                                 </a>
                         {% endif %}
@@ -153,11 +154,11 @@
 
                 {% if post.tags.names() | length %}
                     {%- import 'tags.html' as tags %}
-                    {{ tags.render(post.tags.names(), request.path, true, false, form_id) }}
+                    {{ tags.render(post.tags.names(), url, true, false, form_id) }}
                 {% endif %}
             </div>
             {% if post.preview_link_text %}
-                <a href="{{ post.url }}" class="jump-link jump-link__underline">
+                <a href="{{ get_page_state_url({'request':request}, page) }}" class="jump-link jump-link__underline">
                     {{ post.preview_link_text }}
                 </a>
             {% endif %}
