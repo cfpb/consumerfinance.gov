@@ -2,7 +2,7 @@
 
 var stayInformedSection = require( '../shared_objects/stay-informed-section' );
 var rssSection = require( '../shared_objects/rss-section' );
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function PressResources() {
 
@@ -18,7 +18,7 @@ function PressResources() {
 
   this.subTitle = element( by.css( '.press-contacts_title' ) );
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.contactList = element( by.css( '.press-contacts_main-contact-list' ) );
 
