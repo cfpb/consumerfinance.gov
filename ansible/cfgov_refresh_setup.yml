@@ -2,16 +2,40 @@
 - hosts: db
   sudo: yes
   sudo_user: root
+  gather_facts: true
   vars_files:
     - vars/db.yml
   roles:
     - { role: geerlingguy.mysql }
+    - { role: geerlingguy.firewall }
 
 - hosts: app
   sudo: yes
   sudo_user: root
+  gather_facts: true
   vars_files:
     - vars/app.yml
   roles:
     - { role: geerlingguy.java }
-    - { role: vccabral.elasticsearch }
+    - { role: geerlingguy.elasticsearch }
+    - { role: geerlingguy.git }
+    - { role: Ken24.python }
+    - { role: geerlingguy.firewall }
+  tasks:
+    - name: Install python dependencies
+      yum: pkg={{ item }} state=present
+      with_items:
+        - "libtiff-devel"
+        - "libjpeg-devel"
+        - "libzip-devel"
+        - "freetype-devel"
+        - "tcl-devel"
+        - "tk-devel"
+        - "python-devel"
+        - "mysql-devel.x86_64"
+    - name: Manually create virtual .env and install requirements  
+      command: "/usr/local/bin/pip install virtualenv"
+    - name: Manually create virtual .env and install requirements  
+      shell: "/usr/local/bin/virtualenv /vagrant/.env && source /vagrant/.env/bin/activate && pip install -r /vagrant/requirements/local.txt"
+    - name: Migrate django db to match application state
+      command: "/vagrant/.env/bin/python /vagrant/cfgov/manage.py migrate"

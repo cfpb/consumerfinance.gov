@@ -1,1 +1,3 @@
-__elasticsearch_version: "1.7.x"
+firewall_allowed_tcp_ports:
+  - "22"
+  - "8000"
