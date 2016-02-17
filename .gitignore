@@ -92,6 +92,10 @@ documents/
 original_images/
 collectstatic/*
 
+# Ansible #
+#################
+ansible/roles/*
+
 # Unit test / coverage reports
 #################
 test/macro_tests/src/
