@@ -232,6 +232,7 @@ urlpatterns = [
         namespace='transcripts')),
 ]
 
+
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))
 

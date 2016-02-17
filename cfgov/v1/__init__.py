@@ -15,9 +15,11 @@ default_app_config = 'v1.apps.V1AppConfig'
 
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
+    options['extensions'].append('jinja2.ext.loopcontrols')
     env = sheerlike_environment(**options)
     env.autoescape = True
     from v1.models import ref, CFGOVPage
+    from v1.templatetags import share
     env.globals.update({
         'static': staticfiles_storage.url,
         'global_dict': {
@@ -32,6 +34,7 @@ def environment(**options):
         'fcm_label': ref.fcm_label,
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
+        'get_page_state_url': share.get_page_state_url,
     })
     env.filters.update({
         'slugify': slugify,

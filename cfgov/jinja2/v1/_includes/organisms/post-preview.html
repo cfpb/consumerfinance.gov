@@ -43,110 +43,124 @@
 {% import 'macros/time.html' as time %}
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
-{% macro render(settings, path) %}
-
-<article class="o-post-preview">
-    <div class="meta-header">
-        <span class="date meta-header_right">
-            Published {{ time.render(settings.published_date, {'date':true}) }}
-        </span>
-        {% if settings.post_category.0 %}
-            {% set use_post_category = true %}
-            {{ category_slug.render(settings.post_category.0,
-                                    path,
-                                    'post_slug meta-header_left',
-                                    use_post_category) }}
-        {% endif %}
-        {% if settings.post_category.1 %}
-            |
-            {{ category_slug.render(settings.post_category.1,
-                                    path,
-                                    'post_slug meta-header_left',
-                                    use_post_category) }}
-        {% endif %}
-    </div>
-    {% if settings.event_start_dt %}
-        <div class="o-post-preview_image-container">
-            <time class="calendar-icon"
-                data-month="{{ settings.event_start_dt | date('%b') }}"
-                data-day="{{ settings.event_start_dt | date('%-d') }}"
-                datetime="{{ settings.event_start_dt | date('%c') }}">
-                <span class="u-visually-hidden">{{ settings.event_start_dt| date('%b %-d, %Y') }}</span>
-            </time>
-            {% if settings.event_stream_link %}
-                <img class="o-post-preview_image"
-                     src="http://placehold.it/160x90"
-                     alt="Livestream event">
+{% macro render(post, type='', form_id=0, url='') %}
+    {% set url = url or request.path %}
+    <article class="o-post-preview">
+        <div class="meta-header">
+            <span class="date meta-header_right">
+                Published {{ time.render(post.date_published, {'date':true}) }}
+            </span>
+            {# Newsroom Blog category logic #}
+            {% if 'newsroom' in type %}
+                {% if is_blog(post) %}
+                    {{ category_slug.render('blog',
+                            url,
+                            'post_slug meta-header_left',
+                            false, form_id) }}
+                {% endif %}
             {% else %}
+                {% for cat in post.categories.all() %}
+                    {% if loop.index > 1 %}
+                        |
+                    {% endif %}
+                    {{ category_slug.render(cat.name,
+                            url,
+                            'post_slug meta-header_left',
+                            false, form_id) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+         {% if 'EventPage' in post.specific_class.__name__ %}
+            {% if post.specific.start_dt %}
+                <div class="o-post-preview_image-container">
+                    <time class="calendar-icon"
+                          data-month="{{ post.specific.start_dt | date('%b') }}"
+                          data-day="{{ post.specific.start_dt | date('%-d') }}"
+                          datetime="{{ post.specific.start_dt | date('%c') }}">
+                        <span class="u-visually-hidden">{{ post.specific.start_dt| date('%b %-d, %Y') }}</span>
+                    </time>
+                    {% if post.specific.live_stream_link %}
+                        <img class="o-post-preview_image"
+                             src="http://placehold.it/160x90"
+                             alt="Livestream event">
+                    {% else %}
+                        <img class="o-post-preview_image"
+                             src="{{ location_image_url({
+                                     'location': post.specific.venue_city
+                                     | default('Washington, DC', true)
+                                     | urlencode,
+                                     'zoom':     '12',
+                                     'scale':    '2',
+                                     'size':     '276x155'
+                                     }) }}"
+                             alt="Google Maps image of {{ post.specific.venue_name }}">
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% elif post.preview_image %}
+            {% set photo = image(post.preview_image, 'original') %}
+            <div class="o-post-preview_image-container">
                 <img class="o-post-preview_image"
-                     src="{{ location_image_url({
-                                'location': settings.event_city
-                                            | default('Washington, DC', true)
-                                            | urlencode,
-                                'zoom':     '12',
-                                'scale':    '2',
-                                'size':     '276x155'
-                            }) }}"
-                     alt="Google Maps image of {{ settings.event_venue }}">
+                     src="{{ photo.url }}"
+                     alt="{{ post.preview_image.alt if post.preview_image.alt else '' }}">
+            </div>
+        {% endif %}
+        <div class="o-post-preview_content">
+            <h3 class="o-post-preview_title">
+                {{ post.preview_title | safe if post.preview_title else post.title }}
+            </h3>
+            {% if 'EventPage' in post.specific_class.__name__ %}
+                {% if post.specific.start_dt %}
+                    <span class="o-post-preview_subtitle h6">
+                    {% if post.specific.venue_city and post.specific.venue_state %}
+                        {{ post.specific.venue_city }}, {{ post.specific.venue_state }}
+                    {% endif %}
+                            {{ post.specific.venue_name if post.specific.venue_name else '' }}
+                    {{ 'Livecast' if post.specific.live_stream_url else '' }}
+                     -
+                    {{ time.render(post.specific.start_dt) }}
+                    </span>
+                {% endif %}
             {% endif %}
-        </div>
-    {% elif settings.image_url %}
-        <div class="o-post-preview_image-container">
-            <img class="o-post-preview_image"
-                 src="{{ settings.image_url }}"
-                 alt="{{ settings.image_alt if settings.image_alt else '' }}">
-        </div>
-    {% endif %}
-    <div class="o-post-preview_content">
-        <h3 class="o-post-preview_title">
-            {{ settings.heading | safe }}
-        </h3>
-        {% if settings.event_start_dt %}
-            <span class="o-post-preview_subtitle h6">
-            {% if settings.event_city and settings.event_state %}
-                {{ settings.event_city }}, {{ settings.event_state }}
+            {% if post.comments_close_date %}
+                <span class="o-post-preview_subtitle h6">
+                    Comments close {{ time.render(post.comments_close_date, {'date':true}) }}
+                </span>
             {% endif %}
-            {{ settings.event_venue if settings.event_venue else '' }}
-            {{ 'Livecast' if settings.event_stream_link else '' }}
-             -
-            {{ time.render(settings.event_start_dt) }}
-            </span>
-        {% endif %}
-        {% if settings.comments_close_date %}
-            <span class="o-post-preview_subtitle h6">
-            Comments close {{ time.render(settings.comments_close_date, {'date':true}) }}
-            </span>
-        {% endif %}
-        {% if settings.body %}
-            <p class="o-post-preview_description">
-                {{ settings.body.source | safe }}
-            </p>
-        {% endif %}
-        <div class="post_meta">
-            {% if settings.author | length %}
+            {% if post.preview_description %}
+                <div class="o-post-preview_description">
+                    {{ post.preview_description | safe }}
+                </div>
+            {% endif %}
+            <div class="post_meta">
+                {% for author in post.authors.names() %}
                     <span class="o-post-preview_byline">
-                        By <a href="{{ path }}?filter_author={{ settings.author.0 }}">
-                            {{ settings.author.0 }}
-                        </a>
-                        {% if settings.author.1 %}
-                            and <a href="{{ path }}?filter_author={{ settings.author.1 }}">
-                                {{ settings.author.1 }}
-                            </a>
+                        {% if loop.index == 1  %}
+                            By <a href="{{ url }}?filter{{ form_id }}_authors={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% elif loop.last == true %}
+                            and <a href="{{ url }}?filter{{ form_id }}_authors={{ author }}">
+                                {{ author }}
+                                </a>
+                        {% else %}
+                            ,<a href="{{ url }}?filter{{ form_id }}_authors={{ author }}">
+                                {{ author }}
+                                </a>
                         {% endif %}
                     </span>
-            {% endif %}
-            {% if settings.post_tags | length %}
-                {%- import 'tags.html' as tags %}
-                {{ tags.render(settings.post_tags, path, true, false) }}
+                {% endfor %}
+
+                {% if post.tags.names() | length %}
+                    {%- import 'tags.html' as tags %}
+                    {{ tags.render(post.tags.names(), url, true, false, form_id) }}
+                {% endif %}
+            </div>
+            {% if post.preview_link_text %}
+                <a href="{{ get_page_state_url({'request':request}, page) }}" class="jump-link jump-link__underline">
+                    {{ post.preview_link_text }}
+                </a>
             {% endif %}
         </div>
-        {% if settings.link_url %}
-            <a href="{{ settings.link_url }}" class="jump-link jump-link__underline">
-                {{ settings.link_text }}
-            </a>
-        {% endif %}
-    </div>
-</article>
-
+    </article>
 {% endmacro %}
-

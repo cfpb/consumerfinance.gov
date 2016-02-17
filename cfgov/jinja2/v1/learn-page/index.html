@@ -1,9 +1,10 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% if not breadcrumb_items %}
-    {% set parent = page.parent() %}
-    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
-{% endif %}
+{% import 'molecules/related-posts.html' as related_posts with context %}
+{% import 'molecules/related-metadata.html' as related_metadata with context %}
+
+{% set parent = page.parent() %}
+{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -12,9 +13,6 @@
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
-
-{# TODO: Remove lipsumText when and if it is no longer needed. #}
-{% set lipsumText = lipsum(1, false, 10, 25) | safe %}
 
 {% block content_main %}
     {% for block in page.header -%}
@@ -36,5 +34,25 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% include 'templates/content-sidebar.html' %}
+    {% for block in page.sidefoot %}
+    <div class="block block__flush-top">
+        {% if 'related_posts' in block.block_type %}
+            {{ related_posts.render(block) }}
+        {% elif 'heading' in block.block_type %}
+            <h3 class="o-sidebar-breakout_heading">
+                {{ render_stream_child(block) }}
+            </h3>
+        {% elif 'related_metadata' in block.block_type %}
+            {{ related_metadata.render(block.value) }}
+        {% elif 'slug' in block.block_type %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ render_stream_child(block) }}
+                </span>
+            </h2>
+        {% else %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    </div>
+    {% endfor %}
 {%- endblock %}

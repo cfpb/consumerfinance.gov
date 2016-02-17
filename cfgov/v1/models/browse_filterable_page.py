@@ -79,6 +79,7 @@ class BrowseFilterablePage(base.CFGOVPage):
         for i, f in enumerate(self.content):
             if 'filter_controls' in f.block_type:
                 filters_data[i] = {}
+
         # For each form ID dictionary, find all the fields for it. Assign the
         # select fields to lists and append them for each selection. Return the
         # dictionary of normalized field names with their respective data.
