@@ -46,21 +46,6 @@
                         {{ render_stream_child(block) }}
                     </div>
                 {% endif %}
-            {# TODO: When we delete atoms, remove the following else #}
-            {% else %}
-                {% if 'heading' in block.block_type %}
-                    <h3 class="o-sidebar-breakout_heading">
-                        {{ render_stream_child(block) }}
-                    </h3>
-                {% elif 'slug' in block.block_type %}
-                    <h2 class="header-slug">
-                        <span class="header-slug_inner">
-                            {{ render_stream_child(block) }}
-                        </span>
-                    </h2>
-                {% else %}
-                    <p>{{ render_stream_child(block) }}</p>
-                {% endif %}
             {% endif %}
         {% endfor %}
     </aside>
