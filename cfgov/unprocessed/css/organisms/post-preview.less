@@ -82,6 +82,11 @@
 */
 
 .o-post-preview {
+
+    + .o-post-preview {
+        margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em);
+    }
+
     &_image-container {
         .respond-to-max(@bp-sm-max, {
             margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -93,6 +98,9 @@
     &_image {
         display: block;
         width: 100%;
+    }
+    &_title a {
+        .u-link__colors( @black, @pacific-80 );
     }
 }
 
