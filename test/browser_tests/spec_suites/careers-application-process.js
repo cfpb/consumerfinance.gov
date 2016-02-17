@@ -47,7 +47,7 @@ describe( 'The Application Process Page', function() {
 
     expect( page.infoSectionTitles.getText() )
     .toEqual( infoSectionTitles );
-    expect( page.infoSectionDescriptions.count() ).toEqual( 6 );
+    expect( page.infoSectionDescriptions.count() ).toEqual( 5 );
     expect( page.infoSectionLinks.getAttribute( 'href' ) )
     .toEqualUrl( infoSectionLinks );
   } );

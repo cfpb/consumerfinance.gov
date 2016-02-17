@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function PastAwards() {
 
@@ -10,7 +10,7 @@ function PastAwards() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.breadcrumb = element( by.css( '.breadcrumbs_link' ) );
 
@@ -30,8 +30,7 @@ function PastAwards() {
 
   this.moreInfoSectionTitles = this.moreInfoSection.all( by.css( 'h2' ) );
 
-  this.moreInfoSectionDescriptions =
-  this.moreInfoSection.all( by.css( '.short-desc' ) );
+  this.moreInfoSectionDescriptions = _getQAElement( 'more-info-desc', true );
 
   this.moreInfoSectionLinks = this.moreInfoSection.all( by.css( 'a' ) );
 

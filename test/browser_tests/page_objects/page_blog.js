@@ -4,7 +4,7 @@ var filter = require( '../shared_objects/filter.js' );
 var pagination = require( '../shared_objects/pagination' );
 var stayInformedSection = require( '../shared_objects/stay-informed-section' );
 var rssSection = require( '../shared_objects/rss-section' );
-var _getQAelement = require( '../util/QAelement' ).get;
+var _getQAelement = require( '../util/qa-element' ).get;
 
 function Blog() {
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAelement = require( '../util/QAelement' ).get;
+var _getQAelement = require( '../util/qa-element' ).get;
 
 var _stayInformedSection = _getQAelement( 'stay-informed-section' );
 
@@ -21,7 +21,7 @@ var stayInformedSection = {
 
   emailFormLabel: _emailSubscribeForm.element( by.css( 'label' ) ),
 
-  emailFormDescription: _emailSubscribeForm.element( by.css( '.short-desc' ) ),
+  emailFormDescription: _getQAelement( 'stay-informed-desc' ),
 
   emailFormHiddenField:
   _emailSubscribeForm.element( by.css( 'input[type="hidden"]' ) ),
