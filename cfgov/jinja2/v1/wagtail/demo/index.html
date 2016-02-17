@@ -16,13 +16,12 @@
     </div>
 
     {% for block in page.molecules %}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+
+        {% include 'templates/render_block.html' with context %}
     {% endfor %}
 
     {% for block in page.organisms %}
-        {{ render_stream_child(block) }}
+        {% include 'templates/render_block.html' with context %}
     {% endfor %}
     </div>
 {% endblock content_main %}
@@ -33,7 +32,7 @@
         {% if 'related_posts' in block.block_type %}
             {{ related_posts.render() }}
         {% else %}
-            {{ render_stream_child(block) }}
+            {% include 'templates/render_block.html' with context %}
         {% endif %}
     {% endfor %}
 </aside>

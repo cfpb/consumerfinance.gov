@@ -28,9 +28,7 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+        {% include 'templates/render_block.html' with context %}
     {%- endfor %}
 
     <aside class="prefooter">
@@ -53,8 +51,12 @@
 
 {% block content_sidebar scoped -%}
     {% for block in page.side_navigation -%}
-        <div class="block">
-            {{ render_stream_child(block) }}
+        <div class="block block__flush-top">
+            {% if 'related_posts' in block.block_type %}
+                {{ related_posts.render(block) }}
+            {% else %}
+                {{ render_stream_child(block) }}
+            {% endif %}
         </div>
     {%- endfor %}
 {%- endblock %}
