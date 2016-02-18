@@ -33,17 +33,25 @@
         - "tk-devel"
         - "python-devel"
         - "mysql-devel.x86_64"
+
+    # PDFReactor
     - name: download PDFReactor
-      get_url: url=http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz
+      get_url: url=http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz force=false
     - name: Untar PDFReactor
       unarchive: src=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt copy=no
     - name: Start PDFReactor service
       command: /opt/PDFreactor/bin/pdfreactorwebservice start
+
+    # Virtual Environment
     - name: Manually create virtual .env and install requirements  
       command: "/usr/local/bin/pip install virtualenv"
-    - name: Manually create virtual .env and install requirements  
-      shell: "/usr/local/bin/virtualenv /vagrant/.env && source /vagrant/.env/bin/activate && pip install -r /vagrant/requirements/local.txt"
+    - name: Create virtualenv
+      pip: requirements=/vagrant/requirements/local.txt virtualenv=/vagrant/.env virtualenv_command=/usr/local/bin/virtualenv
+
+    # Database Syncing
     - name: Migrate django db to match application state
       command: "/vagrant/.env/bin/python /vagrant/cfgov/manage.py migrate"
+
+    # Auto Source virtualenv
     - name: Add virtualenv to bash rc
       lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source .env/bin/activate' line='cd /vagrant;source .env/bin/activate'"
