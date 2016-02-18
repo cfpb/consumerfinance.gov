@@ -25,35 +25,6 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% macro _lipsum_paragraph() %}
-        <p>{{ lipsumText }}</p>
-    {% endmacro %}
-    {% do global_dict.update(
-        {
-            'image_text_25_75': {
-                'heading' :       'Placeholder',
-                'body': {
-                    'source': _lipsum_paragraph()
-                },
-                'image': {
-                      'upload': {
-                                'url': 'http://placehold.it/300x300',
-                                'alt': ''
-                      }
-                },
-                'links': [{
-                            'text': 'Placeholder link',
-                            'url':  '#'
-                }]
-            }
-        })
-    %}
-    {% set value = global_dict.image_text_25_75 %}
-    {% set prototype = true %}
-{% endif %}
-
 <div class="m-image-text-25-75">
     {# TODO: Change to HR #}
     {% if value.has_rule %}
@@ -65,12 +36,7 @@
         in which case the alt attribute is empty. #}
 
         {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
-
+            {% set photo=image(value.image.upload, 'original') %}
             {% if value.image.alt == '' %}
                 <div class="m-image-text-25-75_image u-centered-on-mobile"
                      style="background-image:url({{ photo.url }})"></div>

@@ -1,0 +1,33 @@
+{# ==========================================================================
+
+    Related Topics
+
+    ==========================================================================
+
+    Description:
+
+    Creates related topics markup when given:
+
+    value.heading: The heading of the related topics.
+                   (Default: Related Topics)
+
+    value.topics:  A list of links with the url first followed
+                   by the text of link.
+
+   ========================================================================== #}
+<div class="m-related-topics">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ value.heading or 'Related Topics' }}
+        </span>
+    </h2>
+    <ul class="list list__unstyled list__links">
+    {% for topic in value.topics %}
+    <li class="list_item">
+        <a href="{{ topic.url }}" class="list_link">
+            {{ topic.text }}
+        </a>
+    </li>
+    {% endfor %}
+    </ul>
+</div>

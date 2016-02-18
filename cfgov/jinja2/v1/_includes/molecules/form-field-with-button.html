@@ -24,24 +24,6 @@
    value.field.placeholder: The placeholder used for the input.
 
    ========================================================================== #}
-{% if not value %}
-    {% do global_dict.update({
-        'form_field': {
-            'label':       'Form Field with Button',
-            'name':        'm-form-field-with-button',
-            'id':          'form-field-with-button',
-            'placeholder': 'form field with button',
-            'type':        'text',
-            'info':        {
-                'source': 'This is a form field with a button. Isn\'t it awesome?'
-            },
-            'required':    false,
-            'btn_text':    'The Awesome Button'
-        }
-    }) %}
-    {% set value = global_dict.form_field %}
-    {% set prototype = true %}
-{% endif %}
 
 <div class="m-form-field-with-button">
     <div class="form-group">

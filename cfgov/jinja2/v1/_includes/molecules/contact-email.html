@@ -17,24 +17,12 @@
 <div class="m-contact-email">
     <span class="cf-icon cf-icon-email"></span>
     <span class="h5">Email</span>
-    {% if value %}
-        <p>
-            {% for email in value.emails %}
-                <a href="mailto:{{ email.url }}">
-                    {{ email.url }}
-                </a><br>
-            {% endfor %}
-        </p>
-    {% else %}
-        {% macro render(emails) %}
-            <p>
-                {% for email in emails %}
-                    <a href="mailto:{{ email.url }}">
-                        {{ email.text }}
-                    </a><br>
-                {% endfor %}
-            </p>
-        {% endmacro %}
-    {% endif %}
+    <p>
+        {% for email in value.emails %}
+            <a href="mailto:{{ email.url }}">
+                {{ email.url }}
+            </a><br>
+        {% endfor %}
+    </p>
 </div>
 

@@ -232,9 +232,8 @@ urlpatterns = [
         namespace='transcripts')),
 ]
 
-# TODO: Remove prototype landing page routes when all organisms and molecules have been implemented elsewhere.
-if settings.DEBUG :
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG :     
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))

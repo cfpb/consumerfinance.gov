@@ -26,31 +26,6 @@
    ========================================================================== #}
 
 {% import 'macros/category-icon.html' as category_icon %}
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'featured_content_module': {
-                'category': 'Featured event',
-                'heading':  'Fall Consumer Advisory Board meeting in
-                            Washington, DC',
-                'body':     { 'source': lipsumText },
-                'links':    [{
-                              'text': 'Read More About the Event',
-                              'url':  '#'
-                            }],
-                'image':    {
-                              'upload': {
-                                'url': 'https://maps.googleapis.com/maps/api/staticmap?center=Washington%2C%20DC&size=540x304&zoom=12&scale=2'
-                              },
-                            'alt': 'Map of Washington D.C.'
-                }
-            }
-        })
-    %}
-    {% set value = global_dict.featured_content_module %}
-    {% set prototype = true %}
-{% endif %}
 
 <section class="block
                 block__border
@@ -88,11 +63,7 @@
 
     <div class="featured-content-module_visual">
         {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
+            {% set photo=image(value.image.upload, 'original') %}
             <img class="featured-content-module_img"
                  src="{{ photo.url }}"
                  alt="{{ value.image.alt }}">
