@@ -10,6 +10,8 @@ import importlib
 
 from django.conf import settings
 
+from unipath import Path
+
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
@@ -121,7 +123,15 @@ def index(args, options):
             es.indices.create(index=index_name)
 
     processors = settings.SHEER_PROCESSORS
-
+    for slug, site_path  in settings.SHEER_SITES.items():
+        sys.path.append(site_path.child('_lib'))
+        processors_path = Path(site_path, '_settings/processors.json')
+        if processors_path.exists():
+            site_processors = read_json_file(processors_path)
+            for name, details in site_processors.items():
+                if 'mappings' in details:
+                    details['mappings'] = Path(site_path,details['mappings'])
+            processors.update(site_processors)
     
     selected_processor_names = options.get('processors', []) or []
     if len(selected_processor_names) > 0:

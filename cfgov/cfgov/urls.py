@@ -47,6 +47,12 @@ urlpatterns = [
     url(r'^$', SheerTemplateView.as_view(), name='home'),
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
+    url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
+    url(r'^adult-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('adult-financial-education'))),
+    url(r'^youth-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('youth-financial-education'))),
+    url(r'^library-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('library-resources'))),
+    url(r'^tax-preparer-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('tax-preparer-resources'))),
+    url(r'^managing-someone-elses-money/', include(SheerSite('fin-ed-resources').urls_for_prefix('managing-someone-elses-money'))),
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
 
@@ -77,6 +83,7 @@ urlpatterns = [
                 name='hero'),
         ],
             namespace='sheer-layouts')),
+
 
         url(r'^blog-docs/$', SheerTemplateView.as_view(template_name='blog-docs/index.html'), name='blog-docs'),
         url(r'^cf-enhancements/$', SheerTemplateView.as_view(template_name='cf-enhancements/index.html'),
@@ -250,9 +257,6 @@ urlpatterns = [
     url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
 
-    #sheerlike apps
-
-    url(r'owning-a-home/', include(SheerSite('owning-a-home').urls)),
 ]
 if 'cfpb_common' in settings.INSTALLED_APPS:
     pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
@@ -275,7 +279,7 @@ if settings.DEBUG :
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-urlpatterns.append(url(r'', include(wagtail_urls)))
+# urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
 

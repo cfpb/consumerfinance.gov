@@ -1,4 +1,6 @@
 def alter_content(content):
+    content = content.replace('http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/',
+            '/static/nemo/')
     return content.replace('/wp-content/themes/cfpb_nemo/', '/static/nemo/')
 
 def wrap_streaming_content(content):

@@ -275,7 +275,7 @@ class QueryFinder(object):
     def __init__(self):
         self.es = elasticsearch.Elasticsearch(settings.SHEER_ELASTICSEARCH_SERVER)
         self.es_index = settings.SHEER_ELASTICSEARCH_INDEX
-        self.searchpath = [Path(site).child('_queries') for site in settings.SHEER_SITES]
+        self.searchpath = [Path(p).child('_queries') for s,p in settings.SHEER_SITES.items()]
 
     def __getattr__(self, name):
         for dir in self.searchpath:

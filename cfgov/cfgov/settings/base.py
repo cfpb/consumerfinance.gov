@@ -156,6 +156,7 @@ MEDIA_URL = '/f/'
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
+    'sheerlike.finders.SheerlikeStaticFinder',
     'transition_utilities.finders.NoPHPFileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
@@ -168,7 +169,6 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built'),
     ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
-    PROJECT_ROOT.child('static'),
 ]
 
 if 'NEMO_PATH' in os.environ:
@@ -384,10 +384,11 @@ LOGIN_REDIRECT_URL='/admin/'
 
 
 SHEER_SITES = {
+        'refresh-legacy': V1_TEMPLATE_ROOT,
         'owning-a-home': 
-            os.environ.get('OAH_SHEER_PATH') or 
-            Path(REPOSITORY_ROOT, '../owning-a-home/dist'),
+            Path(os.environ.get('OAH_SHEER_PATH') or 
+            Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
         'fin-ed-resources':
-            os.environ.get('FIN_ED_SHEER_PATH') or 
-            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')
+            Path(os.environ.get('FIN_ED_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist'))
 }

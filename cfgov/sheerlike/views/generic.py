@@ -10,6 +10,7 @@ class SheerTemplateView(TemplateView):
     doc_type = None
     local_name = 'object'
     default_template = None
+    template_engine = None
 
     def get_template_names(self,*args, **kwargs):
         if self.template_name:
