@@ -1,60 +1,118 @@
+/* topdoc
+  name: Info Unit
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-info-unit">
+            <img src="http://placehold.it/267x150"
+                 alt="Image alt"
+                 class="m-info-unit_image">
+            <div class="m-info-unit_content">
+                <h2>
+                    Basic Info Unit
+                </h2>
+
+                <p>
+                    Body text
+                </p>
+
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link"
+                           href="#">
+                            Link Text
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link"
+                           href="#">
+                            Link Text
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-info-unit
+            .m-info-unit_image
+            .m-info-unit_content
+              h2
+              p
+              ul.list list__links
+                li.list_item
+                  a.list_link
+    - name: Square/Circle image
+      markup: |
+        <div class="m-info-unit">
+            <img src="http://placehold.it/267x150"
+                 alt="Image alt"
+                 class="m-info-unit_image
+                        m-info-unit_image__square">
+            <div class="m-info-unit_content">
+                ...
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-info-unit
+            .m-info-unit_image.m-info-unit_image__square
+            .m-info-unit_content
+              ...
+    - name: Inline Layout (aka 25/75)
+      markup: |
+        <div class="m-info-unit
+                    m-info-unit__inline">
+            <img src="http://placehold.it/267x150"
+                 alt="Image alt"
+                 class="m-info-unit_image
+                        m-info-unit_image__square">
+            <div class="m-info-unit_content">
+                ...
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-info-unit.m-info-unit__inline
+            .m-info-unit_image.m-info-unit_image__square
+            .m-info-unit_content
+              ...
+  tags:
+    - cfgov-molecules
+*/
+
 @m-info-unit_img__sm: 130px;
 @m-info-unit_img__lg: 150px;
 
-.m-info-unit {
-    &__inline {
-        .u-clearfix();
-    }
-
-    &__inline &_image {
-        .respond-to-min( @bp-sm-min, {
-            float: left;
-            margin-bottom: 0;
-        } );
-    }
-
-    &__home &_image {
-        .respond-to-range( @bp-sm-min, @bp-med-max, {
-            float: left;
-            margin-bottom: 0;
-        } );
-    }
-
-    &__inline &_content {
-        .respond-to-min( @bp-sm-min, {
-            margin-left: unit( ( @m-info-unit_img__sm + @grid_gutter-width ) / @base-font-size-px, em );
-        } );
-
-        .respond-to-min( @bp-med-min, {
-            margin-left: unit( ( @m-info-unit_img__lg + @grid_gutter-width ) / @base-font-size-px, em );
-        } );
-    }
-
-     &__home &_content {
-        .respond-to-range( @bp-sm-min, @bp-sm-max, {
-            margin-left: unit( ( @m-info-unit_img__sm + @grid_gutter-width ) / @base-font-size-px, em );
-        } );
-
-        .respond-to-range( @bp-med-min, @bp-med-max, {
-            margin-left: unit( ( @m-info-unit_img__lg + @grid_gutter-width ) / @base-font-size-px, em );
-        } );
-    }
-
+/*
+    info-unit Helper Mixin -
+    This mixin is used to create the main info-unit class below.
+    It shouldn't be used on it's own.
+ */
+.u-info-unit-base() {
     &_image {
+        max-height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
         margin-right: auto;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         margin-left: auto;
         display: block;
-        max-height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
-        background-size: cover;
 
-        .respond-to-min(@bp-med-min, {
+        .respond-to-min( @bp-med-min, {
             max-height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
-        });
+        } );
 
         &__square {
             width: unit( @m-info-unit_img__sm / @base-font-size-px, em );
             height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
+
+            background-size: cover;
 
             .respond-to-min( @bp-med-min, {
                 width: unit( @m-info-unit_img__lg / @base-font-size-px, em );
@@ -71,91 +129,39 @@
     }
 }
 
-.content_main__home {
-    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+/*
+    Inline info-unit Helper Mixin -
+    This mixin is used to modify an info-unit to an inline arrangement.
+    Most of the time the `.m-info-unit__inline` class will be sufficient,
+    but there are limited situations the inline arrangement needs to be conditioned.
+    See /pages/home.less L:103
+ */
+.u-info-unit-base__inline( @img_size ) {
+    .u-clearfix();
 
-    .respond-to-max( @bp-xs-max, {
-        padding-bottom: unit( ( @grid_gutter-width * 2 ) / @base-font-size-px, em );
-    } );
-}
-
-.content-l_col__home {
-    .respond-to-max( @bp-med-max, {
-        + .content-l_col__home {
-            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        }
-    } );
-
-    .respond-to-min( @bp-sm-min, {
-        .grid_column( 1, 1 );
-    } );
-
-    .respond-to-min( @bp-lg-min, {
-        .grid_column( 4 );
-    } );
-}
-
-.o-well__home {
-    .respond-to-min( @bp-xl-min, {
-        max-width: 1230px - ( 45px * 2 ) !important;
-        margin: 0 auto;
-        padding-right: unit( 45px / @base-font-size-px, em ) !important;
-        padding-left: unit( 45px / @base-font-size-px, em ) !important;
-    } );
-}
-
-.o-well__home-hero {
-    background-repeat: no-repeat;;
-    border: none !important;
-
-    .respond-to-max( @bp-xs-max, {
-        padding-bottom: 56.25% !important;
-
-        background-image: url('../img/home-hero_sm.jpg');
-        background-position: center bottom;
-        background-size: 100%;
-    } );
-
-    .respond-to-min( @bp-sm-min, {
-        min-height: 380px - (45px * 2);
-        padding-top: unit( 45px / @base-font-size-px, em ) !important;
-        padding-bottom: unit( 45px / @base-font-size-px, em ) !important;
-
-        background-color: @gray !important;
-        background-image: url('../img/home-hero_full.jpg');
-        background-size: 1230px;
-        background-position: left top;
-        color: @white;
-    } );
-}
-
-.m-home-hero {
-
-    .respond-to-min( @bp-sm-min, {
-        .grid_column( 1, 1 );
-    } );
-
-    // Adding a custom breakpoint at 776px to fix specific
-    // layout issues
-    .respond-to-range( 776px, @bp-sm-max, {
-        .grid_column(8, 12);
-    } );
-
-    .respond-to-min( @bp-med-min, {
-        .grid_column(7, 12);
-    } );
-
-    &_heading {
-        .respond-to-min( @bp-sm-min, {
-            .superheading();
-        } );
+    .m-info-unit_image {
+        float: left;
+        margin-bottom: 0;
     }
 
-    &_text {
-        .lead-paragraph();
+    .m-info-unit_content {
+        margin-left: unit( ( @img_size + @grid_gutter-width ) / @base-font-size-px, em );
+    }
+}
 
-        .respond-to-min( @bp-sm-min, {
-            .heading-2();
+.m-info-unit {
+    .u-info-unit-base();
+
+    &__inline {
+        .respond-to-range( @bp-sm-min, @bp-sm-max, {
+            .u-info-unit-base__inline( @m-info-unit_img__sm );
+        } );
+
+        .respond-to-min( @bp-med-max, {
+            .u-info-unit-base__inline( @m-info-unit_img__lg );
         } );
     }
 }
+
+
+

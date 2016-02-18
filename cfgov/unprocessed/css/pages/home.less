@@ -1,0 +1,94 @@
+.content_main__home {
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+
+    .respond-to-max( @bp-xs-max, {
+        padding-bottom: unit( ( @grid_gutter-width * 2 ) / @base-font-size-px, em );
+    } );
+}
+
+// TODO: Create a base well for easier re-use in full width wells and FCM
+.o-well__full {
+    .respond-to-min( @bp-xl-min, {
+        // TODO: 45px should be moved to a global grid gutter var
+        // Max-width - both gutters: required due to well spanning the full page
+        max-width: 1230px - ( 45px * 2 );
+        margin: 0 auto;
+        padding-right: unit( 45px / @base-font-size-px, em );
+        padding-left: unit( 45px / @base-font-size-px, em );
+    } );
+}
+
+@home-hero_sm: 100%;
+@home-hero_med: 900px;
+@home-hero_lg: 1230px;
+
+.o-well__home-hero {
+    background-repeat: no-repeat;
+    border: none;
+
+    .respond-to-max( @bp-xs-max, {
+        // Create a 16x9 area for the image to live below the text
+        padding-bottom: 56.25%;
+
+        background-image: url('../img/home-hero_sm.jpg');
+        background-position: center bottom;
+        background-size: @home-hero_sm;
+    } );
+
+    .respond-to-min( @bp-sm-min, {
+        min-height: 380px - ( 45px * 2 );
+        padding-top: unit( 45px / @base-font-size-px, em );
+        padding-bottom: unit( 45px / @base-font-size-px, em );
+
+        background-color: @gray;
+        background-image: url('../img/home-hero_med.jpg');
+        background-size: @home-hero_med;
+        background-position: left top;
+        color: @white;
+    } );
+
+    .respond-to-min( @bp-med-min, {
+        background-image: url( '../img/home-hero_lg.jpg' );
+        background-size: @home-hero_lg;
+    } );
+}
+
+.m-home-hero {
+    .respond-to-min( @bp-sm-min, {
+        .grid_column( 1, 1 );
+    } );
+
+    // Adding a custom breakpoint at 776px to fix specific
+    // layout issues
+    .respond-to-range( 776px, @bp-sm-max, {
+        .grid_column( 8, 12 );
+    } );
+
+    .respond-to-min( @bp-med-min, {
+        .grid_column( 7, 12 );
+    } );
+
+    &_heading {
+        .respond-to-min( @bp-sm-min, {
+            .superheading();
+        } );
+    }
+
+    &_text {
+        .lead-paragraph();
+
+        .respond-to-min( @bp-sm-min, {
+            .heading-2();
+        } );
+    }
+}
+
+.m-info-unit__home {
+    .respond-to-range( @bp-sm-min, @bp-sm-max, {
+        .u-info-unit-base__inline( @m-info-unit_img__sm );
+    } );
+
+    .respond-to-range( @bp-med-min, @bp-med-max, {
+        .u-info-unit-base__inline( @m-info-unit_img__lg );
+    } );
+}
