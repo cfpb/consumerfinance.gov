@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content_main %}
-
+<div class="block block__flush-top">
     <h1 data-qa-hook="main-title">Upcoming Procurement Needs</h1>
     <p class="lead-paragraph" data-qa-hook="main-summary">
         These are the procurement needs we expect to make in the near future. Each of the needs
@@ -31,7 +31,7 @@
         The needs below are forecasted, not current. Our fiscal year starts in October, so, for example,
         FY2015 Q1 is October–December 2014.
     </p>
-
+</div>
     {% set page = get_document('pages', '36601') %}
     {{ page.content | safe }}
 
