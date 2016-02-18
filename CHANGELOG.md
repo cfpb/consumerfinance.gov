@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   in `input-contains-label` CF class.
 - Add Related Metadata molecule to backend
 - Added Github specific Issue and PR templates.
+- included paragraph rich text field to related links
 
 
 ### Changed
