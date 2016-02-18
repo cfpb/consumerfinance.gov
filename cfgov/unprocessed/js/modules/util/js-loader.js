@@ -25,6 +25,7 @@ function loadScript( url, callback ) {
           return callback();
         }
       }
+      return null;
     };
   // Other browsers.
   } else {
@@ -32,6 +33,7 @@ function loadScript( url, callback ) {
       if ( callback ) {
         return callback();
       }
+      return null;
     };
   }
 

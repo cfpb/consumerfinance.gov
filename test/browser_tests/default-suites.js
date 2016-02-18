@@ -11,42 +11,42 @@ var defaultSuites = {
 
   // Essential browsers for running locally.
   essential: [
-      {
-        specs:       [ environment.specsBasePath + '*.js' ],
-        browserName: 'chrome',
-        version:     '',
-        platform:    'Windows',
-        maxDuration: 10800
-      }
+    {
+      specs:       [ environment.specsBasePath + '*.js' ],
+      browserName: 'chrome',
+      version:     '',
+      platform:    'Windows',
+      maxDuration: 10800
+    }
   ],
 
   // Legacy browsers to run in the cloud.
   legacy: [
-      {
-        specs:       [ environment.specsBasePath + '*.js' ],
-        browserName: 'internet explorer',
-        version:     '8.0',
-        platform:    'Windows XP',
-        maxDuration: 10800
-      }
+    {
+      specs:       [ environment.specsBasePath + '*.js' ],
+      browserName: 'internet explorer',
+      version:     '8.0',
+      platform:    'Windows XP',
+      maxDuration: 10800
+    }
   ],
 
   // Modern browsers to run in the cloud.
   modern: [
-      {
-        specs:       [ environment.specsBasePath + '*.js' ],
-        browserName: 'firefox',
-        version:     '',
-        platform:    'Windows 10',
-        maxDuration: 10800
-      },
-      {
-        specs:       [ environment.specsBasePath + '*.js' ],
-        browserName: 'internet explorer',
-        version:     '',
-        platform:    'Windows 10',
-        maxDuration: 10800
-      }
+    {
+      specs:       [ environment.specsBasePath + '*.js' ],
+      browserName: 'firefox',
+      version:     '',
+      platform:    'Windows 10',
+      maxDuration: 10800
+    },
+    {
+      specs:       [ environment.specsBasePath + '*.js' ],
+      browserName: 'internet explorer',
+      version:     '',
+      platform:    'Windows 10',
+      maxDuration: 10800
+    }
   ]
 };
 

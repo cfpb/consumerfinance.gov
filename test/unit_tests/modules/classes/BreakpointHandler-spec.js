@@ -6,12 +6,12 @@ var sinon = require( 'sinon' );
 var BreakpointHandler;
 var args;
 var BASE_LOC = '../../../../cfgov/unprocessed/js/';
-
+var standardType = require( BASE_LOC + 'modules/util/standard-type' );
 
 beforeEach( function() {
   args = {
-    enter:      function() {},
-    leave:      function() {},
+    enter:      standardType.noopFunct,
+    leave:      standardType.noopFunct,
     breakpoint: 600
   };
 

@@ -58,7 +58,7 @@ function ExternalSite( element ) {
    * Update the timer HTML content.
    */
   function _updateContent() {
-    var plurality = _duration !== 1 ? 's' : '';
+    var plurality = _duration === 1 ? '' : 's';
     var content = '<span class=\'external-site_reload-duration\'>' +
                   _duration + '</span> second' + plurality;
     _durationEl.innerHTML = content;

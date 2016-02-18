@@ -11,6 +11,7 @@
 
 var $ = require( 'jquery' );
 var score = require( 'string_score' );
+var standardType = require( '../util/standard-type' );
 
 function init() {
   $.fn.typeAndFilter = function( userSettings ) {
@@ -35,7 +36,7 @@ function init() {
               'The search term "{{ term }}" is not long enough. ' +
               '<span class="short-desc">' +
               'Please use a minimum of 3 characters.</span>',
-            clickCallback: function( e ) {}
+            clickCallback: standardType.noopFunct
           }, userSettings ),
           $this = $( this ),
           $form = settings.$form,
@@ -158,9 +159,7 @@ function init() {
   $.fn.typeAndFilter.scrubText = function( text, minLength ) {
     var cleanText = text;
     // Set a default for minLength if non was set.
-    if ( typeof minLength !== 'undefined' ) {
-      minLength = minLength;
-    } else {
+    if ( typeof minLength === 'undefined' ) {
       minLength = 3;
     }
     cleanText = cleanText.toLowerCase();
@@ -207,45 +206,47 @@ function init() {
         // Return false to break out of the $.each loop.
         return false;
       }
+      return true;
     } );
     return match;
   };
 
-  $.fn.typeAndFilter.filterItems = function( $items, searchTerm, fuzzy, options ) {
-    // TODO: If query is a multi-word phrase, search for exact phrase first
-    // if ( searchTerm.split(' ').length > 1 ) {
-    //     var match = $.fn.typeAndFilter.strictSearch( searchTerm, value );
-    //     ...
-    // }
+  $.fn.typeAndFilter.filterItems =
+    function( $items, searchTerm, fuzzy, options ) {
+      // TODO: If query is a multi-word phrase, search for exact phrase first
+      // if ( searchTerm.split(' ').length > 1 ) {
+      //     var match = $.fn.typeAndFilter.strictSearch( searchTerm, value );
+      //     ...
+      // }
 
-    // Loop through each item, if it contains matching text then show it,
-    // if it doesn't then hide it.
-    var terms = searchTerm.split( ' ' ),
-        itemsLength = $items.length,
-        termsLength = terms.length;
-    for ( var i = 0; i < itemsLength; i++ ) {
-      for ( var j = 0; j < termsLength; j++ ) {
-        var match,
-            $this = $items.eq( i ),
-            itemText = $.fn.typeAndFilter.scrubText( $this.text() );
-        // Choose which search to use.
-        if ( fuzzy ) {
-          match = $.fn.typeAndFilter.fuzzySearch( itemText, terms[j], options );
-        } else {
-          match = $.fn.typeAndFilter.strictSearch( itemText, terms[j] );
-        }
-        // The match variable is used to set the visiblity, true for
-        // visible and false for hidden.
-        $this.toggle( match );
+      // Loop through each item, if it contains matching text then show it,
+      // if it doesn't then hide it.
+      var terms = searchTerm.split( ' ' ),
+          itemsLength = $items.length,
+          termsLength = terms.length;
+      for ( var i = 0; i < itemsLength; i++ ) {
+        for ( var j = 0; j < termsLength; j++ ) {
+          var match,
+              $this = $items.eq( i ),
+              itemText = $.fn.typeAndFilter.scrubText( $this.text() );
+          // Choose which search to use.
+          if ( fuzzy ) {
+            match = $.fn.typeAndFilter.fuzzySearch( itemText, terms[j], options );
+          } else {
+            match = $.fn.typeAndFilter.strictSearch( itemText, terms[j] );
+          }
+          // The match variable is used to set the visiblity, true for
+          // visible and false for hidden.
+          $this.toggle( match );
 
-        // If we find a match then break out of the loop so we don't
-        // unmatch this during subsequent comparisons.
-        if ( match ) {
-          break;
+          // If we find a match then break out of the loop so we don't
+          // unmatch this during subsequent comparisons.
+          if ( match ) {
+            break;
+          }
         }
       }
-    }
-  };
+    };
 }
 
 module.exports = { init: init };

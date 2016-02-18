@@ -33,6 +33,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved Home page specific layout changes to it's own file.
 - Updated jsdom from `7.2.2` to `8.0.4`.
 - Updated secondary-nav to use new expandable molecule in place of old CF Expandable.
+- Updated gulp-eslint from `1.0.0` to `2.0.0`.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.

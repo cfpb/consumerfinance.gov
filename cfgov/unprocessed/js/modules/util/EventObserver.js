@@ -15,15 +15,15 @@ function EventObserver() {
 
   /**
    * Register an event listener.
-   * @param {string} evt The event name to listen for.
-   * @param {Function} callback The function called when the event has fired.
+   * @param {string} event - The event name to listen for.
+   * @param {Function} callback - The function called when the event has fired.
    * @returns {Object} The instance this EventObserver instance is decorating.
    */
-  function addEventListener( evt, callback ) {
-    if ( _events.hasOwnProperty( evt ) ) {
-      _events[evt].push( callback );
+  function addEventListener( event, callback ) {
+    if ( _events.hasOwnProperty( event ) ) {
+      _events[event].push( callback );
     } else {
-      _events[evt] = [ callback ];
+      _events[event] = [ callback ];
     }
 
     return this;
@@ -32,18 +32,18 @@ function EventObserver() {
   /**
    * Remove an added event listener.
    * Must match a call made to addEventListener.
-   * @param {string} evt The event name to remove.
-   * @param {Function} callback The function attached to the event.
+   * @param {string} event - The event name to remove.
+   * @param {Function} callback - The function attached to the event.
    * @returns {Object} The instance this EventObserver instance is decorating.
    */
-  function removeEventListener( evt, callback ) {
-    if ( !_events.hasOwnProperty( evt ) ) {
+  function removeEventListener( event, callback ) {
+    if ( !_events.hasOwnProperty( event ) ) {
       return this;
     }
 
-    var index = _events[evt].indexOf( callback );
+    var index = _events[event].indexOf( callback );
     if ( index !== -1 ) {
-      _events[evt].splice( index, 1 );
+      _events[event].splice( index, 1 );
     }
 
     return this;
@@ -51,20 +51,20 @@ function EventObserver() {
 
   /**
    * Broadcast an event.
-   * @param {string} evt The type of event to broadcast.
-   * @param {Object} options The event object to pass to the event handler.
+   * @param {string} event - The type of event to broadcast.
+   * @param {Object} options - The event object to pass to the event handler.
    * @returns {Object} The instance this EventObserver instance is decorating.
    */
-  function dispatchEvent( evt, options ) {
-    if ( !_events.hasOwnProperty( evt ) ) {
+  function dispatchEvent( event, options ) {
+    if ( !_events.hasOwnProperty( event ) ) {
       return this;
     }
 
     options = options || {};
 
-    var evts = _events[evt];
-    for ( var e = 0, len = evts.length; e < len; e++ ) {
-      evts[e].call( this, options );
+    var evts = _events[event];
+    for ( var i = 0, len = evts.length; i < len; i++ ) {
+      evts[i].call( this, options );
     }
 
     return this;
