@@ -20,6 +20,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Related Metadata molecule to backend
 - Added `ClearableInput` class for clearable input behavior
   in `input-contains-label` CF class.
+- Add Related Metadata molecule to backend
+- Added Github specific Issue and PR templates.
+
 
 ### Changed
 - Converted the project to Capital Framework v3
