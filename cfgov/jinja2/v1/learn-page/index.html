@@ -35,24 +35,14 @@
 
 {% block content_sidebar scoped -%}
     {% for block in page.sidefoot %}
-    <div class="block block__flush-top">
-        {% if 'related_posts' in block.block_type %}
-            {{ related_posts.render(block) }}
-        {% elif 'heading' in block.block_type %}
-            <h3 class="o-sidebar-breakout_heading">
+        <div class="block block__flush-top">
+            {% if 'related_posts' in block.block_type %}
+                {{ related_posts.render(block) }}
+            {% elif 'related_metadata' in block.block_type %}
+                {{ related_metadata.render(block.value) }}
+            {% else %}
                 {{ render_stream_child(block) }}
-            </h3>
-        {% elif 'related_metadata' in block.block_type %}
-            {{ related_metadata.render(block.value) }}
-        {% elif 'slug' in block.block_type %}
-            <h2 class="header-slug">
-                <span class="header-slug_inner">
-                    {{ render_stream_child(block) }}
-                </span>
-            </h2>
-        {% else %}
-            {{ render_stream_child(block) }}
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
     {% endfor %}
 {%- endblock %}

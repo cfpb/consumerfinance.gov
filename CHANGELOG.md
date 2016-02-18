@@ -16,19 +16,23 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added Backend sidebar contact
+- Add Related Metadata molecule to backend 
 
 ### Changed
-
 - Converted the project to Capital Framework v3
+- Updated `protractor` from `3.0.0` to `3.1.1`.
+- Included Table organism within full width text
+- Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
 
 ### Removed
-
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
 - Removed old branded list mixin (was causing compile errors).
-
+- Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
+- Fixed Contacts import-data script to set phone numbers correctly
 
 
 

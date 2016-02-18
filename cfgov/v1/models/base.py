@@ -27,7 +27,6 @@ from modelcluster.tags import ClusterTaggableManager
 from sets import Set
 
 from . import ref
-from . import atoms
 from . import molecules
 from . import organisms
 from ..util import util
@@ -67,10 +66,6 @@ class CFGOVPage(Page):
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField([
-        ('slug', blocks.CharBlock(icon='title')),
-        ('heading', blocks.CharBlock(icon='title')),
-        ('paragraph', blocks.TextBlock(icon='edit')),
-        ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
         ('related_links', molecules.RelatedLinks()),
         ('related_posts', organisms.RelatedPosts()),
