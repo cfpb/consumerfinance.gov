@@ -32,7 +32,7 @@
     <h1>{{ value.heading }}</h1>
 
     {% if value.paragraph %}
-        <p class="lead-paragraph">{{ value.paragraph.source | safe }}</p>
+        <div class="lead-paragraph">{{ value.paragraph.source | safe }}</div>
     {% endif %}
     {% if value.date or value.authors.text %}
         <p>
