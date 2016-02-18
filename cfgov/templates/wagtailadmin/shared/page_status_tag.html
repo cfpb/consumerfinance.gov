@@ -3,7 +3,7 @@
 {% if page.live %}
     <a href="{{ page.url }}" target="_blank" class="status-tag primary">{{ page.status_string }}</a>
 {% elif page.specific.shared %}
-    {% staging_url page as shared_url %}
+    {% get_page_state_url page as shared_url %}
     <a href="{{ shared_url }}" target="_blank" class="status-tag primary">{{ page.specific.status_string }}</a>
 {% else %}
     <span class="status-tag">{{ page.status_string }}</span>

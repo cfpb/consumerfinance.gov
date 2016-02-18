@@ -1,4 +1,6 @@
 import os
+from itertools import chain
+import json
 
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -11,13 +13,13 @@ from django.contrib.auth.models import User
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable
 from wagtail.wagtailcore.url_routing import RouteResult
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
     MultiFieldPanel, TabbedInterface, ObjectList
-
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
@@ -25,7 +27,6 @@ from modelcluster.tags import ClusterTaggableManager
 from sets import Set
 
 from . import ref
-from . import atoms
 from . import molecules
 from . import organisms
 from ..util import util
@@ -65,13 +66,10 @@ class CFGOVPage(Page):
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField([
-        ('slug', blocks.CharBlock(icon='title')),
-        ('heading', blocks.CharBlock(icon='title')),
-        ('paragraph', blocks.TextBlock(icon='edit')),
-        ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
         ('related_links', molecules.RelatedLinks()),
         ('related_posts', organisms.RelatedPosts()),
+        ('related_metadata', molecules.RelatedMetadata()),
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
         ('sidebar_contact', organisms.SidebarContactInfo()),
@@ -179,11 +177,20 @@ class CFGOVPage(Page):
 
         else:
             # Request is for this very page.
-            if self.live or self.shared and request.site.hostname == \
-                    os.environ.get('STAGING_HOSTNAME'):
-                return RouteResult(self)
-            else:
-                raise Http404
+            # If we're on the production site, make sure the version of the page
+            # displayed is the latest version that has `live` set to True for
+            # the live site or `shared` set to True for the staging site.
+            staging_hostname = os.environ.get('STAGING_HOSTNAME')
+            revisions = self.revisions.all().order_by('-created_at')
+            for revision in revisions:
+                page_version = json.loads(revision.content_json)
+                if request.site.hostname != staging_hostname:
+                    if page_version['live']:
+                        return RouteResult(revision.as_page_object())
+                else:
+                    if page_version['shared']:
+                        return RouteResult(revision.as_page_object())
+            raise Http404
 
     def permissions_for_user(self, user):
         """
@@ -201,7 +208,9 @@ class CFGOVPage(Page):
         return parent
 
     def elements(self):
-        return []
+        lst = [value for key, value in vars(self).iteritems()
+               if type(value) is StreamValue]
+        return list(chain(*lst))
 
     def _media(self):
         from v1 import models
@@ -209,13 +218,7 @@ class CFGOVPage(Page):
         js = ()
 
         for child in self.elements():
-            if isinstance(child, dict):
-                type = child['type']
-            else:
-                type = child[0]
-
-            class_ = getattr(models, util.to_camel_case(type))
-
+            class_ = type(child.block)
             instance = class_()
 
             try:

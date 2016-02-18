@@ -14,15 +14,6 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% do global_dict.update({
-      'quote': {
-        'body': 'This is a quote.',
-        'citation': 'This is a citation.',
-      }
-    })%}
-{% endif %}
-{% set value = value or global_dict.quote %}
 <div class="m-quote">
     <p class="pull-quote_body">
         {{ value.body }}

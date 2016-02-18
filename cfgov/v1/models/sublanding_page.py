@@ -1,3 +1,5 @@
+from itertools import chain
+
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
@@ -21,6 +23,7 @@ class SublandingPage(CFGOVPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
@@ -59,3 +62,13 @@ class SublandingPage(CFGOVPage):
     ])
 
     template = 'sublanding-page/index.html'
+
+    def get_browsefilterable_posts(self, request):
+        filter_pages = [p.specific for p in self.get_descendants()
+                        if 'BrowseFilterablePage' in p.specific_class.__name__]
+        posts = []
+        for page in filter_pages:
+            form_class = page.get_form_class()
+            posts.append(page.get_page_set(form_class(parent=page),
+                                           request.site.hostname))
+        return sorted(list(chain(*posts)))

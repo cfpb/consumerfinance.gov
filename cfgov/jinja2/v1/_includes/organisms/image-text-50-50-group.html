@@ -1,18 +1,3 @@
-{% if not value %}
-    {% macro _image_text_50_50_markup() %}
-        {% include 'molecules/image-text-50-50.html' %}
-    {% endmacro %}
-    {% set value = {
-        'heading': 'Image Text 50 50 Group Header',
-        'image_texts': [
-            _image_text_50_50_markup(),
-            _image_text_50_50_markup(),
-            _image_text_50_50_markup(),
-            _image_text_50_50_markup()
-        ]
-    } %}
-{% endif %}
-
 <div class="o-image-text-50-50-group content-l">
     <h2>{{ value.heading }}</h2>
     {% for block in value.image_texts %}

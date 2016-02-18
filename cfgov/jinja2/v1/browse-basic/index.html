@@ -1,38 +1,9 @@
 {% extends 'layout-side-nav.html' %}
 
-{# Import organisms and molecules used in the template. #}
-{% import 'molecules/expandable.html' as expandable %}
-
-{% import 'organisms/expandable-group.html' as expandable_group %}
-
-{% if not page %}
-    {% do global_dict.update({
-            'page':  {
-                'seo_title': 'This is a prototype page for testing landing page layouts.',
-                'related_posts': global_dict.related_posts_function
-            },
-            'related_posts_settings': {
-                'value': {
-                    'limit':            3,
-                    'show_heading':     true,
-                    'related_posts':    false,
-                    'related_newsroom': false,
-                    'related_events':   false,
-                }
-            },
-            'prototype': true
-        })
-    %}
-    {% set page = page or global_dict.page %}
-    {% set prototype = global_dict.prototype or false %}
-    {% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
-{% endif %}
-
 {% import 'molecules/related-posts.html' as related_posts with context %}
-{% if not breadcrumb_items %}
-    {% set parent = page.parent() %}
-    {% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
-{% endif %}
+
+{% set parent = page.parent() %}
+{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -62,68 +33,22 @@
         </div>
     {%- endfor %}
 
-    {% if prototype %}
-        <div class="block">
-            {% include 'organisms/full-width-text.html' %}
-
-            <div class="expandable-prototypes">
-                {% include 'molecules/expandable.html' with context %}
-            </div>
-
-            <div class="expandable-group-prototypes">
-                {% include 'organisms/expandable-group.html' with context %}
-            </div>
-
-        </div>
-    {% endif %}
-
-    {% if prototype %}
-        <div class="block
-                    block__flush-bottom
-                    block__flush-sides
-                    block__bg
-                    block__border-top
-                    block__border-right">
-            <div class="block block__flush-top">
-                {{ related_posts.render(global_dict.related_posts_settings) }}
-            </div>
-            <div class="block">
-                {% include 'organisms/email-signup.html' %}
-            </div>
-        </div>
-    {% else %}
-        <aside class="prefooter">
-            {% for block in page.sidefoot %}
-                {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
-                    {% if loop.index == 1 %}
-                        <div class="block
-                                    block__flush-top">
-                            {{ render_stream_child(block) }}
-                        </div>
-                    {% else %}
-                        <div class="block">
-                            {{ render_stream_child(block) }}
-                        </div>
-                    {% endif %}
-                {# TODO: When we delete atoms, remove the following else #}
+    <aside class="prefooter">
+        {% for block in page.sidefoot %}
+            {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
+                {% if loop.index == 1 %}
+                    <div class="block
+                                block__flush-top">
+                        {{ render_stream_child(block) }}
+                    </div>
                 {% else %}
-                    {% if 'heading' in block.block_type %}
-                        <h3 class="o-sidebar-breakout_heading">
-                            {{ render_stream_child(block) }}
-                        </h3>
-                    {% elif 'slug' in block.block_type %}
-                        <h2 class="header-slug">
-                            <span class="header-slug_inner">
-                                {{ render_stream_child(block) }}
-                            </span>
-                        </h2>
-                    {% else %}
-                        <p>{{ render_stream_child(block) }}</p>
-                    {% endif %}
+                    <div class="block">
+                        {{ render_stream_child(block) }}
+                    </div>
                 {% endif %}
-            {% endfor %}
-        </aside>
-    {% endif %}
+            {% endif %}
+        {% endfor %}
+    </aside>
 {% endblock %}
 
 {% block content_sidebar scoped -%}

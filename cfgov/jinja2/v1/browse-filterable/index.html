@@ -1,8 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 
-{# Import organisms and molecules used in the template. #}
-{% import 'molecules/notification.html' as notification %}
-{% import 'organisms/post-preview.html' as post_preview with context %}
+{% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
@@ -12,13 +10,14 @@
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
+{% set parent = page.parent() %}
+{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block content_main %}
     {% for block in page.header %}
         <div class="block
                     block__flush-top">
-            {{ block | safe }}
+            {{ render_stream_child(block) }}
         </div>
     {% endfor %}
     {% for block in page.content %}
@@ -29,18 +28,25 @@
                 {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
                 {{ flc(block.value, f, loop.index0) }}
             {% else %}
-                {{ block | safe }}
+                {{ render_stream_child(block) }}
             {% endif %}
         </div>
     {% endfor %}
     <aside class="prefooter">
-        Put sidefoot content here
+        {% for block in page.sidefoot %}
+            <div class="block block__flush-top">
+                {% if 'related_posts' in block.block_type %}
+                    {{ related_posts.render(block) }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            </div>
+        {% endfor %}
     </aside>
 {% endblock %}
 
 {% block content_sidebar scoped -%}
     <aside>
         {# TODO: Add sidebar organisms. #}
-        Side Navigation
     </aside>
 {%- endblock %}

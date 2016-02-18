@@ -31,8 +31,8 @@
 {% block content_sidebar %}
     <section class="block block__flush-top">
         {% if page %}
-        {% import 'related-posts.html' as related_posts with context %}
-        {{ related_posts.render() }}
+            {% import 'related-posts.html' as related_posts with context %}
+            {{ related_posts.render() }}
         {% endif %}
     </section>
     <section class="block" data-qa-hook="stay-informed-section">
@@ -42,7 +42,7 @@
             </span>
         </h2>
         <div class="block block__sub block__flush-top">
-            <p>
+            <p data-qa-hook="stay-informed-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
             {% import 'macros/subscribe.html' as subscribe with context %}

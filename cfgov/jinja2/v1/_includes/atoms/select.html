@@ -22,21 +22,6 @@
    disabled:      Whether the field is disabled. Defaults to false.
 
    ========================================================================== #}
-
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update({
-        'select': {
-            'label':        'This is a label',
-            'placeholder':  'This is a placeholder',
-            'fields':       ['Option 1', 'Option 2', 'Option 3'],
-            'size':         '1',
-            'required':     true,
-            'disabled':     false
-        }
-    }) %}
-    {% set value = global_dict.select %}
-{% endif %}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 {% set id = get_unique_id('select_', '_') ~ slugify( value.label ) %}
 <div class="form-l_col {{ 'form-l_col-' ~ value.size if value.size else 'form-l_col-1'}}">

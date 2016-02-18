@@ -1,21 +1,3 @@
-{% if not value %}
-    {% macro _image_text_25_75_markup() %}
-        {% include 'molecules/image-text-25-75.html' %}
-    {% endmacro %}
-    {% do global_dict.update(
-        {
-            'image_text_25_75': {
-                'heading': 'Image Text 25 75 Group Header',
-                'image_texts': [
-                    _image_text_25_75_markup(),
-                    _image_text_25_75_markup()
-                ]
-            }
-        })
-    %}
-{% endif %}
-{% set value = value or global_dict.image_text_25_75 %}
-
 <div class="o-image-text-25-75-group">
     <h2>{{ value.heading }}</h2>
     {% for block in value.image_texts %}

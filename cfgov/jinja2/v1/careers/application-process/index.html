@@ -23,31 +23,23 @@
 {%- endblock %}
 
 {% block hero -%}
-    {% do global_dict.update(
-        {
-            'hero': {
-                'heading':   'CFPB Hiring Video',
-                'body': {
-                    'source': 'We are a government agency created after the 2008
-                              financial crisis. We protect American consumers.
-                              Allow us to introduce ourselves.'
-                },
-                'image': {
-                    'upload': {
-                        'url': '/static/img/applying-video-screenshot.png'
-                    }
-                },
-                'background_color': '#d5e7e6',
-                'link': {
-                    'text': 'See the history of the CFPB',
-                    'url':  '/the-bureau/history/'
-                }
+    {{ hero.render({
+            'heading':   'CFPB Hiring Video',
+            'body': {
+                'source': 'We are a government agency created after the 2008
+                          financial crisis. We protect American consumers.
+                          Allow us to introduce ourselves.'
+            },
+            'macro_image': {
+                'url': '/static/img/applying-video-screenshot.png'
+            },
+            'background_color': '#d5e7e6',
+            'link': {
+                'text': 'See the history of the CFPB',
+                'url':  '/the-bureau/history/'
             }
         })
-    %}
-    {% set value = global_dict.hero %}
-    {% set prototype = true %}
-    {% include 'molecules/hero.html' with context %}
+    }}
 {%- endblock %}
 
 {% block content_main %}

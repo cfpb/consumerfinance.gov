@@ -1,5 +1,3 @@
-import itertools
-
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
@@ -51,3 +49,5 @@ class BrowsePage(CFGOVPage):
     def elements(self):
         return list(itertools.chain(self.content.stream_data))
 
+    def full_width_serif(self):
+        return true

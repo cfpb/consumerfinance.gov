@@ -54,6 +54,14 @@ class PostPreview(blocks.StructBlock):
         template = '_includes/organisms/post-preview.html'
 
 
+class PostPreviewSnapshot(blocks.StructBlock):
+    limit = blocks.CharBlock(default='3', label='Limit',
+                             help_text='How many posts do you want to show?')
+
+    class Meta:
+        icon = 'order'
+
+
 class EmailSignUp(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     text = blocks.CharBlock(required=False)

@@ -1,5 +1,6 @@
 import time
 from datetime import timedelta
+from itertools import chain
 from util import ERROR_MESSAGES
 
 from django import forms
@@ -203,9 +204,13 @@ class FilterableListForm(forms.Form):
 
     # Populate Topics' choices
     def set_topics(self, parent):
-        all_tags = [tag for tags in [page.tags.names() for page in
+        live_tags = [tag for tags in [page.tags.names() for page in
                     AbstractFilterPage.objects.live().descendant_of(
-                    parent).live()] for tag in tags]
+                    parent)] for tag in tags]
+        shared_tags = [tag for tags in [page.tags.names() for page in
+                       AbstractFilterPage.objects.descendant_of(parent)
+                       if page.shared] for tag in tags]
+        all_tags = list(chain(live_tags, shared_tags))
         # Orders by most to least common tags
         options = most_common(all_tags)
         most = [(option, option) for option in options[:3]]
@@ -273,10 +278,6 @@ class FilterableListForm(forms.Form):
                     final_query &= \
                         Q((query, self.cleaned_data.get(field_name)))
         return final_query
-
-    # Returns the field to order the list by
-    def get_order_attr(self):
-        return 'date_published'
 
     # Returns a list of query strings to associate for each field, ordered by
     # the field declaration for the form. Note: THEY MUST BE ORDERED IN THE

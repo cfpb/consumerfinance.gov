@@ -7,17 +7,6 @@
    Returns a select box with all 50 states and DC.
 
    ========================================================================== #}
-
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update({
-        'states': {
-            'required':     true,
-            'disabled':     false
-        }
-    }) %}
-    {% set value = global_dict.states %}
-{% endif %}
 {% set id = get_unique_id('select_', '_') ~ 'state'%}
 <div class="form-l_col form-l_col-1-4">
     <label class="form-label-header" for="{{ id }}">

@@ -21,27 +21,6 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'intro_introduction': {
-                'category': 'info for consumers',
-                'heading': 'Item Introduction',
-                'paragraph': {
-                    'source': lipsumText
-                },
-                'authors': [
-                              {'text':'Pat Govning', 'url':'#'},
-                              {'text':'Ingrid Phed', 'url':'#'}
-                          ],
-                'date': '12-12-2015',
-                'has_social': true
-            }
-        })
-    %}
-    {% set value = global_dict.intro_introduction %}
-{% endif %}
 
 {% import 'molecules/social-media.html' as social_media with context %}
 {% import 'macros/category-slug.html' as category_slug %}
@@ -53,7 +32,7 @@
     <h1>{{ value.heading }}</h1>
 
     {% if value.paragraph %}
-        <p class="lead-paragraph">{{ value.paragraph.source | safe }}</p>
+        <div class="lead-paragraph">{{ value.paragraph.source | safe }}</div>
     {% endif %}
     {% if value.date or value.authors.text %}
         <p>

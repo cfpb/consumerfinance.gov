@@ -18,32 +18,10 @@
    value.links:     A collection of links with URL & Text.
 
    ========================================================================== #}
-
-{% if not value %}
-    {% do global_dict.update(
-        {
-            'text_introduction': {
-                'heading':      'Text Introduction',
-                'intro':  {
-                    'source': 'Content Intro Lorem Ipsum'
-                },
-                'body': {
-                    'source': lipsum(1, false, 10, 25) | safe
-                },
-                'links': [{
-                            'text': 'Placeholder link',
-                            'url':  '#'
-                }]
-            }
-        })
-    %}
-{% endif %}
-{% set value = value or global_dict.text_introduction %}
 <div>
     <h1>{{ value.heading }}</h1>
-    <p class="lead-paragraph">{{ value.intro.source | safe }}</p>
-    {# TODO: should the source include the p tags? What if there needs to be something other than a p? #}
-    <p>{{ value.body.source | safe }}</p>
+    <div class="lead-paragraph">{{ value.intro.source | safe }}</div>
+    {{ value.body.source | safe }}
     <ul class="list list__links">
         {% for link in value.links %}
             <li class="list_item">
