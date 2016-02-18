@@ -22,11 +22,13 @@ from .middleware import get_request
 
 from flags.template_functions import flag_enabled, flag_disabled
 
-PERMALINK_REGISTRY={}
+PERMALINK_REGISTRY = {}
 default_app_config = 'sheerlike.apps.SheerlikeConfig'
 
+
 def register_permalink(sheer_type, url_pattern_name):
-    PERMALINK_REGISTRY[sheer_type]=url_pattern_name
+    PERMALINK_REGISTRY[sheer_type] = url_pattern_name
+
 
 def url_for(app, filename, site_slug=None):
     if app == 'static' and not site_slug:
@@ -36,9 +38,17 @@ def url_for(app, filename, site_slug=None):
     else:
         raise ValueError("url_for doesn't know about %s" % app)
 
+
 class SheerlikeContext(Context):
+
     def __init__(self, environment, parent, name, blocks):
-        super(SheerlikeContext, self).__init__(environment, parent, name, blocks)
+        super(
+            SheerlikeContext,
+            self).__init__(
+            environment,
+            parent,
+            name,
+            blocks)
         try:
             self.vars['request'] = get_request()
         except:
@@ -48,7 +58,9 @@ class SheerlikeContext(Context):
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
 jinja2.runtime.Context = SheerlikeContext
 
+
 class SheerlikeEnvironment(Environment):
+
     def join_path(self, template, parent):
         dirname = os.path.dirname(parent)
         segments = dirname.split('/')
@@ -56,7 +68,7 @@ class SheerlikeEnvironment(Environment):
         collected = ''
         for segment in segments:
             collected += segment + '/'
-            paths.insert(0,collected[:])
+            paths.insert(0, collected[:])
         for p in paths:
             relativepath = os.path.join(p, template)
             for search in self.loader.searchpath:
@@ -85,8 +97,8 @@ def environment(**options):
         'selected_filters_for_field': selected_filters_for_field,
         'is_filter_selected': is_filter_selected,
         'when': when,
-        'flag_enabled':flag_enabled,
-        'flag_disabled':flag_disabled,
+        'flag_enabled': flag_enabled,
+        'flag_disabled': flag_disabled,
     })
     env.filters.update({
         'date': date_filter

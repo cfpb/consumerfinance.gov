@@ -17,10 +17,11 @@ from elasticsearch.helpers import bulk
 
 from sheerlike.helpers import IndexHelper
 
+
 def read_json_file(path):
-        if os.path.exists(path):
-            with codecs.open(path, 'r', 'utf-8') as json_file:
-                return json.loads(json_file.read(), object_pairs_hook=OrderedDict)
+    if os.path.exists(path):
+        with codecs.open(path, 'r', 'utf-8') as json_file:
+            return json.loads(json_file.read(), object_pairs_hook=OrderedDict)
 
 
 class ContentProcessor(object):
@@ -37,8 +38,8 @@ class ContentProcessor(object):
 
     def mapping(self):
         if 'mappings' in self.kwargs:
-	    with file(self.kwargs['mappings']) as mapping_json:
-		return json.load(mapping_json)
+            with file(self.kwargs['mappings']) as mapping_json:
+                return json.load(mapping_json)
         else:
             return None
 
@@ -85,7 +86,7 @@ def index_processor(es, index_name, processor, reindex=False):
         index_success = False
 
     try:
-        result = bulk(es, document_iterator, index = index_name)
+        result = bulk(es, document_iterator, index=index_name)
     except ValueError:
         # There may be a ValueError (or JSONDecodeError, a subclass of
         # ValueError) raised by json.loads() with the API's supposedly JSON
@@ -111,44 +112,48 @@ def index(args, options):
 
     # If we're given args.reindex and NOT given a list of processors to reindex,
     # we're expected to reindex everything. Delete the existing index.
-    if not options.get('processors') and options.get('reindex') and es.indices.exists(index_name):
+    if not options.get('processors') and options.get(
+            'reindex') and es.indices.exists(index_name):
         print "reindexing %s" % index_name
         es.indices.delete(index_name)
 
     # If the index doesn't exist, create it.
     if not es.indices.exists(index_name):
-        if hasattr(settings, 'SHEER_ELASTICSEARCH_SETTINGS') :
-            es.indices.create(index=index_name, body=json.dumps(settings.SHEER_ELASTICSEARCH_SETTINGS))
+        if hasattr(settings, 'SHEER_ELASTICSEARCH_SETTINGS'):
+            es.indices.create(
+                index=index_name, body=json.dumps(
+                    settings.SHEER_ELASTICSEARCH_SETTINGS))
         else:
             es.indices.create(index=index_name)
 
     processors = settings.SHEER_PROCESSORS
-    for slug, site_path  in settings.SHEER_SITES.items():
+    for slug, site_path in settings.SHEER_SITES.items():
         sys.path.append(site_path.child('_lib'))
         processors_path = Path(site_path, '_settings/processors.json')
         if processors_path.exists():
             site_processors = read_json_file(processors_path)
             for name, details in site_processors.items():
                 if 'mappings' in details:
-                    details['mappings'] = Path(site_path,details['mappings'])
+                    details['mappings'] = Path(site_path, details['mappings'])
             processors.update(site_processors)
-    
+
     selected_processor_names = options.get('processors', []) or []
     if len(selected_processor_names) > 0:
-	configured_processors = [ContentProcessor(name, **details)
-				     for name, details
-				     in processors.iteritems() if name in selected_processor_names]
+        configured_processors = [
+            ContentProcessor(
+                name,
+                **details) for name,
+            details in processors.iteritems() if name in selected_processor_names]
 
     else:
-	configured_processors = [ContentProcessor(name, **details)
-				     for name, details
-				     in processors.iteritems()]
-
+        configured_processors = [ContentProcessor(name, **details)
+                                 for name, details
+                                 in processors.iteritems()]
 
     # If any specific content processors were selected, we run them. Otherwise
     # we run all of them.
 
-    #if  len(options['processors']) > 0:
+    # if  len(options['processors']) > 0:
     #    selected_processors = [p for p in processors if p.name in optionsprocessors]
 
     failed_processors = []
