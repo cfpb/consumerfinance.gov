@@ -17,7 +17,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added Backend sidebar contact
-- Add Related Metadata molecule to backend 
+- Added Related Metadata molecule to backend
+- Added `ClearableInput` class for clearable input behavior
+  in `input-contains-label` CF class.
 
 ### Changed
 - Converted the project to Capital Framework v3
