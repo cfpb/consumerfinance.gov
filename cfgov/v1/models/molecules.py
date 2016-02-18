@@ -186,6 +186,7 @@ class ContactPhone(blocks.StructBlock):
 
 class RelatedLinks(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
