@@ -35,7 +35,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed Contacts import-data script to set phone numbers correctly
 
 
-
 ## 3.0.0-3.0.0 - 2016-02-11
 
 ### Added
@@ -189,8 +188,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added new (undocumented) card molecule.
 - Add wagtailuserbar to the base.html
 - Added unit test for beta-banner.js.
-- Added Backend sidebar contact
-- Add Related Metadata molecule to backend
 
 ### Changed
 - Updated the primary nav to move focus as user enters and leaves nav levels
@@ -313,9 +310,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Disabled JavaScript in IE8 and earlier.
 - Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
 - Refactored beta-banner.js to demonstrate general lifecycle.
-- Updated `protractor` from `3.0.0` to `3.1.1`.
-- Included Table organism within full width text
-- Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
 
 ### Removed
 - Removed unused exportsOverride section,
@@ -330,7 +324,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Sidebar from LandingPage
 - Removed `map` and `filter` array polyfills.
 - Removed `event-listener.js` and `query-selector.js` polyfills for IE8.
-- Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
 
 ### Fixed
 - Fixed instructions for gulp watch
