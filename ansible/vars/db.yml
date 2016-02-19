@@ -1,6 +1,6 @@
-mysql_database: "cfgov"
-mysql_root_password: "cfgov123"
-mysql_user_password: "cfgov123"
+mysql_database: "v1"
+mysql_root_password: "root"
+mysql_user_password: "root"
 
 mysql_databases:
   - name: "{{ mysql_database }}"
