@@ -46,12 +46,15 @@
     - name: Manually create virtual .env and install requirements  
       command: "/usr/local/bin/pip install virtualenv"
     - name: Create virtualenv
-      pip: requirements=/vagrant/requirements/local.txt virtualenv=/vagrant/.env virtualenv_command=/usr/local/bin/virtualenv
+      pip: requirements=/vagrant/requirements/local.txt virtualenv=/vagrant/cfgov-refresh virtualenv_command=/usr/local/bin/virtualenv
+
+    # Auto Source virtualenv & .env
+    - name: Add environment variables to bash rc
+      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source /vagrant/cfgov-refresh/bin/activate' line='cd /vagrant;source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'"
 
     # Database Syncing
     - name: Migrate django db to match application state
-      command: "/vagrant/.env/bin/python /vagrant/cfgov/manage.py migrate"
+      shell: "source /home/vagrant/.bashrc; python /vagrant/cfgov/manage.py migrate"
 
-    # Auto Source virtualenv
-    - name: Add virtualenv to bash rc
-      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source .env/bin/activate' line='cd /vagrant;source .env/bin/activate'"
+
+

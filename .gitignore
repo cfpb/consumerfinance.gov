@@ -7,6 +7,7 @@
 _site/
 _build/
 cfgov/static_built/*
+cfgov-refresh/
 
 # Packages #
 ############
