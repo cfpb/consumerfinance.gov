@@ -171,8 +171,11 @@ STATICFILES_DIRS = [
     ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
 ]
 
-if 'NEMO_PATH' in os.environ:
-    STATICFILES_DIRS.append(('nemo', os.environ['NEMO_PATH']))
+NEMO_PATH = Path(os.environ.get('NEMO_PATH') or 
+        Path(REPOSITORY_ROOT, '../cfpb_nemo'))
+
+if NEMO_PATH.exists():
+    STATICFILES_DIRS.append(('nemo', NEMO_PATH))
 
 ALLOWED_HOSTS = ['*']
 
