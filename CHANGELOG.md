@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
 - Removed old beta styles.
 - Removed prototype language, such as instances of setting `value`, `page`, and `global_dict`
+- Imports of contact info macros that were breaking the page
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
