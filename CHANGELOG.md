@@ -17,13 +17,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added Backend sidebar contact
-- Added Related Metadata molecule to backend
+- Add Related Metadata molecule to backend
 - Added `ClearableInput` class for clearable input behavior
   in `input-contains-label` CF class.
-- Add Related Metadata molecule to backend
 - Added Github specific Issue and PR templates.
 - included paragraph rich text field to related links
-
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -32,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
 - Abstracted info unit into a helper mixin to make it easier to re-use the inline version.
 - Moved Home page specific layout changes to it's own file.
+- Updated jsdom from `7.2.2` to `8.0.4`.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
