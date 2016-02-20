@@ -24,6 +24,8 @@
    value.is_expanded: Whether the Expandable is expanded or not.
                       Default is false.
 
+   TODO: Add description to `filter` param, and possibly reconsider name to
+         avoid confusion w/ the filter controls that use it.
    ========================================================================== #}
 
 {% macro expandable(value, filter=false) %}
@@ -63,7 +65,7 @@
             {% else %}
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
-                        {{ block |safe }}
+                        {{ block | safe }}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}

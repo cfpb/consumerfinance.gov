@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   in `input-contains-label` CF class.
 - Added Github specific Issue and PR templates.
 - included paragraph rich text field to related links
+- Added new content flush sides on small modifier to fix an issue where margin was set on the molecule level instead of the template.
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -31,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Abstracted info unit into a helper mixin to make it easier to re-use the inline version.
 - Moved Home page specific layout changes to it's own file.
 - Updated jsdom from `7.2.2` to `8.0.4`.
+- Updated secondary-nav to use new expandable molecule in place of old CF Expandable.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
