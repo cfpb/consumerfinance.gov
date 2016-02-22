@@ -29,9 +29,9 @@ describe( 'The Newsroom Press Resources Page', function() {
   } );
 
   it( 'should include a Press contact email address', function() {
-    expect( page.contactListEmail .getText() )
+    expect( page.contactListEmail.getText() )
     .toBe( 'press@consumerfinance.gov' );
-    expect( page.contactListEmail .getAttribute( 'href' ) )
+    expect( page.contactListEmail.getAttribute( 'href' ) )
     .toBe( 'mailto:inquiries@consumerfinance.gov' );
   } );
 
@@ -76,7 +76,7 @@ describe( 'The Newsroom Press Resources Page', function() {
   } );
 
   it( 'should include more than one contact person', function() {
-    expect( page.contactPersons .count() ).toBeGreaterThan( 1 );
+    expect( page.contactPersons.count() ).toBeGreaterThan( 1 );
   } );
 
   it( 'should include a Stay Informed section', function() {

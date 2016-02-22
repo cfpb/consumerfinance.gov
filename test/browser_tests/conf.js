@@ -159,13 +159,13 @@ var config = {
     var windowSize = browser.params.windowSize;
     var windowWidthPx;
     var windowHeightPx;
-    if ( typeof windowSize !== 'undefined' ) {
+    if ( typeof windowSize === 'undefined' ) {
+      windowWidthPx = environment.windowWidthPx;
+      windowHeightPx = environment.windowHeightPx;
+    } else {
       var windowSizeArray = windowSize.split( ',' );
       windowWidthPx = Number( windowSizeArray[0] );
       windowHeightPx = Number( windowSizeArray[1] );
-    } else {
-      windowWidthPx = environment.windowWidthPx;
-      windowHeightPx = environment.windowHeightPx;
     }
 
     browser.driver.manage().window().setSize(

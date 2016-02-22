@@ -12,7 +12,7 @@ var $ = require( 'jquery' );
  * Set up event handler for links and determine if link is external or not.
  */
 function init() {
-  $( '#main, footer' ).on( 'click', 'a', function( e ) {
+  $( '#main, footer' ).on( 'click', 'a', function( event ) {
 
     var url = this.href;
     // Regex to determine if link URL is external.
@@ -23,7 +23,7 @@ function init() {
         .exec( url );
 
     if ( $.isArray( externalURLArray ) ) {
-      e.preventDefault();
+      event.preventDefault();
       window.location = '/external-site/?ext_url=' +
                         encodeURIComponent( externalURLArray[1] );
     }

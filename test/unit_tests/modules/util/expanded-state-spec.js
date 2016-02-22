@@ -81,10 +81,6 @@ describe( 'Event States', function() {
   } );
 
   describe( 'set expanded state - open state', function() {
-    beforeEach( function() {
-
-    } );
-
     it( 'should close all open divs', function() {
       for ( var i = 0, len = openMenu.length; i < len; i++ ) {
         expandedState.toggleExpandedState( openMenu[i], 'false' );

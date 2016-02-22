@@ -11,7 +11,7 @@ var Player;
 /* eslint-disable global-require, handle-callback-err, no-console, lines-around-comment, max-len */
 try {
   Player = require( 'player' );
-} catch ( e ) {
+} catch ( err ) {
   console.log( 'Warning: NPM Player module did not load!' );
 }
 /* eslint-enable */
@@ -40,7 +40,7 @@ gulp.task( 'beep', function() {
     if ( stats.isFile() ) {
       _playSound( soundPath );
     }
-  } catch ( e ) {
+  } catch ( err ) {
     console.log( 'No build alert beep configured. Add a sound file as "' + // eslint-disable-line no-console, no-inline-comments, max-len
                  SONG_PATH + '" in the project root directory.' );
   }

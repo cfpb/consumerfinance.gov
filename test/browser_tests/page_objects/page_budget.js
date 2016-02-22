@@ -33,7 +33,8 @@ function Budget() {
   this.businessWithCFPBTitle =
   this.businessWithCFPBSection.element( by.css( '.header-slug_inner' ) );
 
-  this.businessWithCFPBDescription = _getQAElement( by.css( 'business-with-CFPB-desc' ) );
+  this.businessWithCFPBDescription =
+    _getQAElement( by.css( 'business-with-CFPB-desc' ) );
 
   this.businessWithCFPBLink =
   this.businessWithCFPBSection.element( by.css( 'a' ) );
