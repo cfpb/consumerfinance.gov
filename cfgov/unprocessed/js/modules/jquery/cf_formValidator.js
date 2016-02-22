@@ -6,6 +6,7 @@
 
 var $ = require( 'jquery' );
 var _validate = require( 'validate' );
+var standardType = require( '../util/standard-type' );
 
 var _validator = {
   defaults: {
@@ -20,8 +21,8 @@ var _validator = {
       'checkgroup',
       'radiogroup'
     ],
-    onFailure: function() {},
-    onSuccess: function() {}
+    onFailure: standardType.noopFunct,
+    onSuccess: standardType.noopFunct
   },
 
   /**
@@ -61,6 +62,7 @@ var _validator = {
         return false;
       }
       status[val] = typeof validation[val] === 'undefined';
+      return true;
     } );
 
     return status;

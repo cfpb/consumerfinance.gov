@@ -48,7 +48,9 @@ describe( 'The Budget Page', function() {
   } );
 
   it( 'should have a Business With CFPB section', function() {
-    var budgetSectionLinks = [ '/the-bureau/', '/blog/', null ];
+    var budgetSectionLinks = [ '/the-bureau/',
+                               '/blog/',
+                               '/sub-pages/civil-penalty-fund/' ];
 
     expect( page.relatedLinksTitle.getText() )
     .toBe( 'RELATED LINKS' );

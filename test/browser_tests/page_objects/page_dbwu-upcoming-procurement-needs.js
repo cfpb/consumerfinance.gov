@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function UpcomingProcurementNeeds() {
 
@@ -10,7 +10,7 @@ function UpcomingProcurementNeeds() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.mainTitle = _getQAElement( 'main-title' );
 
@@ -19,7 +19,7 @@ function UpcomingProcurementNeeds() {
   this.breadcrumb = element( by.css( '.breadcrumbs_link' ) );
 
   this.procurementNeedsExternalLink =
-  element( by.css( '[data-qa-hook="main-summary"] + .short-desc a' ) );
+  element( by.css( '[data-qa-hook="main-summary"] + p a' ) );
 
   this.procurementNeedsTable =
   element( by.css( '.content_main .simple-table' ) );
@@ -28,8 +28,7 @@ function UpcomingProcurementNeeds() {
 
   this.moreInfoSectionTitles = this.moreInfoSection.all( by.css( 'h2' ) );
 
-  this.moreInfoSectionDescriptions =
-  this.moreInfoSection.all( by.css( '.short-desc' ) );
+  this.moreInfoSectionDescriptions = _getQAElement( 'more-info-desc', true );
 
   this.moreInfoSectionLinks = this.moreInfoSection.all( by.css( 'a' ) );
 

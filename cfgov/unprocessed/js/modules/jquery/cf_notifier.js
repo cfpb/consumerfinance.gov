@@ -66,6 +66,7 @@ var _notifier = {
         if ( callback ) {
           return callback();
         }
+        return null;
       }
     } );
   },

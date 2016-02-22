@@ -32,16 +32,9 @@
 
 {# TODO: Remove global page reference when moving to Wagtail. #}
 {% macro render(is_share_view=true, options={}) %}
-{% do global_dict.update({
-        'page':  {
-            'seo_title': 'This is a prototype page for testing landing page layouts.'
-        },
-        'prototype': true
-    })
-%}
-{% set page = page or global_dict.page %}
-{% set title = options.title | urlencode or page.seo_title | urlencode %}
+{% set title = options.title | urlencode or ( page or {} ).seo_title | urlencode  %}
 {% set parsed_url = request.url | urlencode %}
+
 <div class="m-social-media">
     {% if is_share_view %}
         <p class="h5 m-social-media_heading">Share this</p>

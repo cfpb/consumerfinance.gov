@@ -60,11 +60,11 @@ ContentSlider.prototype.init = function() {
   );
 };
 
-ContentSlider.prototype.slideInContent = function( e ) {
-  e.preventDefault();
+ContentSlider.prototype.slideInContent = function( event ) {
+  event.preventDefault();
   var contents;
   var $div = $( '<div>' );
-  var $node = $( $( e.currentTarget ).data( 'content' ) );
+  var $node = $( $( event.currentTarget ).data( 'content' ) );
   if ( $node.length ) {
     // TODO: Move content instead of cloning; use ids instead of classes.
     contents = $node.first().clone().show().appendTo( $div );
@@ -73,9 +73,9 @@ ContentSlider.prototype.slideInContent = function( e ) {
   }
 };
 
-ContentSlider.prototype.slideOutContent = function( e ) {
+ContentSlider.prototype.slideOutContent = function( event ) {
   var self = this;
-  e.preventDefault();
+  event.preventDefault();
   this.$container.slickPrev();
 
   // Once slide has been animated out of view, remove it from DOM.

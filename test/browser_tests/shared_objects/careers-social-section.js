@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAelement = require( '../util/QAelement' ).get;
+var _getQAelement = require( '../util/qa-element' ).get;
 
 var _socialSection = _getQAelement( 'social-section' );
 
@@ -10,7 +10,7 @@ var careersSocialSection = {
 
   socialSectionTitles: _socialSection.all( by.css( 'h2' ) ),
 
-  socialSectionDescriptions: _socialSection.all( by.css( '.short-desc' ) ),
+  socialSectionDescriptions: _socialSection.all( by.css( 'p' ) ),
 
   socialSectionLinks: _socialSection.all( by.css( 'a' ) )
 };

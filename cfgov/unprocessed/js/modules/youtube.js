@@ -142,9 +142,9 @@ YouTube.prototype = {
     }
   },
 
-  play: function( e ) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
+  play: function( event ) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
     if ( this.playerInitialized ) {
       this.player.seekTo( 0 );
       this.player.playVideo();
@@ -156,8 +156,8 @@ YouTube.prototype = {
     return this;
   },
 
-  close: function( e ) {
-    e.preventDefault();
+  close: function( event ) {
+    event.preventDefault();
     this.player.stopVideo();
     this.$element.removeClass( 'video-playing' );
 

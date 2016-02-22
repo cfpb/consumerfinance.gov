@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function SmallBusinessess() {
 
@@ -10,7 +10,7 @@ function SmallBusinessess() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.breadcrumb = element( by.css( '.breadcrumbs_link' ) );
 
@@ -22,8 +22,7 @@ function SmallBusinessess() {
 
   this.smallBusinessInfo = _getQAElement( 'small-business-info', true );
 
-  this.smallBusinessDescriptions =
-  this.smallBusinessInfo.all( by.css( '.short-desc' ) );
+  this.smallBusinessDescriptions = _getQAElement( 'small-business-desc', true );
 
   this.smallBusinessLinks = this.smallBusinessInfo.all( by.css( 'a' ) );
 
@@ -33,8 +32,7 @@ function SmallBusinessess() {
 
   this.moreInfoSectionTitles = this.moreInfoSection.all( by.css( 'h2' ) );
 
-  this.moreInfoSectionDescriptions =
-  this.moreInfoSection.all( by.css( '.short-desc' ) );
+  this.moreInfoSectionDescriptions = _getQAElement( 'more-info-desc', true );
 
   this.moreInfoSectionLinks = this.moreInfoSection.all( by.css( 'a' ) );
 

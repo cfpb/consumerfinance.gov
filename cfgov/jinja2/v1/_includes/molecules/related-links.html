@@ -18,30 +18,24 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% do global_dict.update({
-        'related_links': {
-            'heading': 'Related Links',
-            'links': [
-                {'url': '/url/', 'text': 'Link text'},
-                {'url': '/url/', 'text': 'Link text'},
-                {'url': '/url/', 'text': 'Link text'},
-            ]
-        }
-    }) %}
-{% endif %}
-{% set value = value or global_dict.related_links %}
 <div class="m-related-links">
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
-            {{ value.heading }}
-        </span>
-    </h2>
-    <ul class="list list__unstyled list__links">
-    {% for link in value.links %}
-        <li class="list_item">
-            <a href="{{ link.url }}" class="list_link">{{ link.text }}</a>
-        </li>
-    {% endfor %}
-    </ul>
+    {% if value.heading %}
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                {{ value.heading }}
+            </span>
+        </h2>
+    {% endif %}
+
+    {{ value.paragraph }}
+
+    {% if value.links %}
+        <ul class="list list__unstyled list__links">
+        {% for link in value.links %}
+            <li class="list_item">
+                <a href="{{ link.url }}" class="list_link">{{ link.text }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 </div>

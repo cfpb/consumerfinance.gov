@@ -31,6 +31,8 @@ env:
   browser: true
   node: true
   commonjs: false
+  shared-node-browser: true
+  es6: true
   worker: false
   amd: true
   mocha: false
@@ -46,8 +48,10 @@ env:
   mongo: false
   applescript: false
   serviceworker: true
+  atomtest: false
   embertest: false
-  es6: false
+  webextensions: false
+  greasemonkey: false
 
 globals:
 # No globals outside of env settings.
@@ -153,6 +157,7 @@ rules:
       requireReturn: false
       requireParamDescription: true
       requireReturnDescription: true
+      requireReturnType: true
 
   # Enforces that the results of typeof are compared against a valid string.
   valid-typeof: 2
@@ -169,6 +174,9 @@ rules:
     -
       getWithoutSet: false
 
+  # Enforces return statements in callbacks of array's methods.
+  array-callback-return: 2
+
   # Enforces treating var statements as if they were block scoped.
   block-scoped-var: 1
 
@@ -184,6 +192,7 @@ rules:
   curly:
     - 1
     - multi-line
+    - consistent
 
   # Enforces default case in switch statements.
   default-case: 2
@@ -215,14 +224,20 @@ rules:
   # Disallows use of arguments.caller or arguments.callee.
   no-caller: 2
 
+  # Disallow lexical declarations in case clauses.
+  no-case-declarations: 2
+
   # Disallows division operators explicitly at beginning of regex.
   no-div-regex: 2
 
   # Disallows else after a return in an if.
   no-else-return: 2
 
-  # Disallows use of labels, other than in loops and switches.
-  no-empty-label: 2
+  # Disallow use of empty functions.
+  no-empty-function: 2
+
+  # Disallow use of empty destructuring patterns.
+  no-empty-pattern: 2
 
   # Disallows comparisons to null without a type-checking operator.
   no-eq-null: 2
@@ -235,6 +250,9 @@ rules:
 
   # Disallows unnecessary function binding.
   no-extra-bind: 2
+
+  # Disallow unnecessary labels.
+  no-extra-label: 2
 
   # Disallows fallthrough of case statements.
   no-fallthrough: 1
@@ -249,6 +267,9 @@ rules:
       boolean: true
       number: true
       string: true
+
+  # Disallow var and named functions in global scope.
+  no-implicit-globals: 2
 
   # Disallows use of eval()-like methods.
   no-implied-eval: 2
@@ -267,6 +288,12 @@ rules:
 
   # Disallows creation of functions within loops.
   no-loop-func: 2
+
+  # Disallow the use of magic numbers.
+  no-magic-numbers:
+    - 0
+    -
+      ignoreArrayIndexes: true
 
   # Disallows use of multiple spaces.
   no-multi-spaces:
@@ -322,6 +349,9 @@ rules:
   # Disallows use of javascript: urls.
   no-script-url: 2
 
+  # Disallow assignments where both sides are exactly the same.
+  no-self-assign: 2
+
   # Disallows comparisons where both sides are exactly the same.
   no-self-compare: 2
 
@@ -331,8 +361,14 @@ rules:
   # Restrict what can be thrown as an exception.
   no-throw-literal: 2
 
+  # Disallow unmodified conditions of loops.
+  no-unmodified-loop-condition: 2
+
   # Disallows usage of expressions in statement position.
   no-unused-expressions: 2
+
+  # Disallow unused labels.
+  no-unused-labels: 2
 
   # Disallow unnecessary .call() and .apply().
   no-useless-call: 2
@@ -405,13 +441,18 @@ rules:
   no-shadow-restricted-names: 2
 
   # Disallows declaring variables already declared in the outer scope.
-  no-shadow: 1
+  no-shadow:
+    - 1
+    -
+      hoist: functions
+
+  # Disallows use of undeclared vars unless mentioned in a /*global */ block.
+  no-undef:
+    - 2
+    - typeof: true
 
   # Disallows use of undefined when initializing variables.
   no-undef-init: 2
-
-  # Disallows use of undeclared vars unless mentioned in a /*global */ block.
-  no-undef: 2
 
   # Disallows use of undefined variable.
   no-undefined: 2
@@ -426,7 +467,9 @@ rules:
   # Disallows use of variables before they are defined.
   no-use-before-define:
     - 2
-    - nofunc
+    -
+      functions: false
+      classes: true
 
 
   # Rules for NODE.JS.
@@ -453,7 +496,9 @@ rules:
   # This rule may have inaccurate behavior in Node 0.6- and if UMD is used.
   no-mixed-requires:
     - 1
-    - true
+    -
+      grouping: true
+      allowCall: true
 
   # Disallows use of new operator with the require function.
   no-new-require: 2
@@ -463,6 +508,9 @@ rules:
 
   # Disallows use of process.exit().
   no-process-exit: 1
+
+  # Restrict usage of specified node imports.
+  no-restricted-imports: 0
 
   # Restrict usage of specific node modules.
   no-restricted-modules: 0
@@ -519,10 +567,12 @@ rules:
   # matching value in the future for the ^[_]?self regex.
   consistent-this:
     - 0
-    - ''
+    - 'self'
 
   # Enforce newline at the end of file, with no multiple empty lines.
-  eol-last: 2
+  eol-last:
+    - 2
+    - unix
 
   # Enforce function expressions not having a name.
   func-names: 0
@@ -532,6 +582,13 @@ rules:
   func-style:
     - 1
     - declaration
+    -
+      allowArrowFunctions: true
+
+  # Blacklist certain identifiers to prevent them being used.
+  id-blacklist:
+    - 1
+    - e
 
   # Enforces min/max identifier lengths (variable names, property names etc.).
   id-length:
@@ -626,6 +683,11 @@ rules:
     - 1
     -
       max: 2
+      maxEOF: 1
+      maxBOF: 0
+
+  # Disallows negated conditions.
+  no-negated-condition: 2
 
   # Disallows nested ternary expressions.
   no-nested-ternary: 2
@@ -655,6 +717,9 @@ rules:
   # Disallow the use of Boolean literals in conditional expressions.
   no-unneeded-ternary: 0
 
+  # Disallow whitespace before properties.
+  no-whitespace-before-property: 2
+
   # Require or disallow padding inside curly braces.
   object-curly-spacing:
     - 1
@@ -667,6 +732,11 @@ rules:
   one-var:
     - 0
     - always
+
+  # Require or disallow an newline around variable declarations.
+  one-var-declaration-per-line:
+    - 2
+    - initializations
 
   # Requires assignment operator shorthand or prohibit it entirely.
   operator-assignment:
@@ -709,6 +779,11 @@ rules:
     -
       properties: false
 
+  # Requires or disallows use of semicolons instead of ASI.
+  semi:
+    - 2
+    - always
+
   # Disallows space before semicolon.
   semi-spacing:
     - 2
@@ -716,28 +791,28 @@ rules:
       before: false
       after: true
 
-  # Requires or disallows use of semicolons instead of ASI.
-  semi:
-    - 2
-    - always
+  # Sort import declarations within module.
+  sort-imports:
+    - 1
+    -
+      ignoreCase: false
+      ignoreMemberSort: false
+      memberSyntaxSortOrder:
+        - none
+        - all
+        - multiple
+        - single
 
   # Enforces sorting variables within the same declaration block.
   sort-vars: 0
 
-  # Requires a space after certain keywords.
-  space-after-keywords:
-    - 2
-    - always
-
-  # Requires a space before certain keywords.
-  space-before-keywords:
-    - 2
-    - always
-
   # Requires space before blocks.
   space-before-blocks:
     - 2
-    - always
+    -
+      functions: always
+      keywords: always
+      classes: always
 
   # Requires space before function parentheses.
   space-before-function-paren:
@@ -756,9 +831,6 @@ rules:
     - 2
     -
       int32Hint: false
-
-  # Requires a space after return, throw, and case.
-  space-return-throw-case: 2
 
   # Requires spaces before/after unary operators.
   space-unary-ops:
@@ -785,8 +857,15 @@ rules:
   # Rules for ECMASCRIPT 6.
   # These rules are only relevant to ES6 environments.
 
+  # Require braces in arrow function body.
+  arrow-body-style:
+    - 2
+    - as-needed
+
   # Require parens in arrow function arguments.
-  arrow-parens: 2
+  arrow-parens:
+    - 2
+    - as-needed
 
   # Require space before/after arrow function's arrow.
   arrow-spacing:
@@ -808,14 +887,24 @@ rules:
   # Disallow modifying variables of class declarations.
   no-class-assign: 2
 
+  # Disallow arrow functions where they could be confused with comparisons.
+  no-confusing-arrow: 1
+
   # Disallow modifying variables that are declared using const.
   no-const-assign: 2
 
   # Disallow duplicate name in class members.
   no-dupe-class-members: 2
 
+  # Disallow use of the new operator with the Symbol object.
+  # This rule should not be used in ES3/5 environments.
+  no-new-symbol: 0
+
   # Disallow to use this/super before super() calling in constructors.
   no-this-before-super: 2
+
+  # Disallow unnecessary constructor.
+  no-useless-constructor: 2
 
   # Requires using let or const instead of var.
   # This should be turned on when browser support is better.
@@ -841,12 +930,29 @@ rules:
   # Should not be enabled in ES3/5 environments.
   prefer-reflect: 0
 
+  # Suggest using the rest parameters instead of arguments.
+  # Should not be enabled in ES3/5 environments.
+  prefer-rest-params: 0
+
   # Suggest using template literals instead of strings concatenation.
   # Should not be enabled in ES3/5 environments.
   prefer-template: 0
 
   # Disallow generator functions that do not have yield.
   require-yield: 1
+
+  # Enforce spacing around embedded expressions of template strings.
+  template-curly-spacing:
+    - 1
+    - always
+
+  # Enforce spacing around the * in yield* expressions.
+  yield-star-spacing:
+    - 1
+    -
+      before: true
+      after: false
+
 
 
   # Rules for LEGACY SUPPORT.

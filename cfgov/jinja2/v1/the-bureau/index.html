@@ -28,31 +28,23 @@
 {%- endblock %}
 
 {% block hero -%}
-    {% do global_dict.update(
-        {
-            'hero': {
-                'heading':   'We are the CFPB',
-                'body': {
-                    'source': 'We are a government agency created after the 2008
-                              financial crisis. We protect American consumers.
-                              Allow us to introduce ourselves.'
-                },
-                'image': {
-                    'upload': {
-                        'url': 'https://img.youtube.com/vi/en0Iq8II4fA/maxresdefault.jpg'
-                    }
-                },
-                'background_color': '#d5e7e6',
-                'link': {
-                    'text': 'See the history of the CFPB',
-                    'url':  '/the-bureau/history/'
-                }
+    {{ hero.render({
+            'heading':   'We are the CFPB',
+            'body': {
+                'source': 'We are a government agency created after the 2008
+                          financial crisis. We protect American consumers.
+                          Allow us to introduce ourselves.'
+            },
+            'macro_image': {
+                'url': 'https://img.youtube.com/vi/en0Iq8II4fA/maxresdefault.jpg'
+            },
+            'background_color': '#d5e7e6',
+            'link': {
+                'text': 'See the history of the CFPB',
+                'url':  '/the-bureau/history/'
             }
         })
-    %}
-    {% set value = global_dict.hero %}
-    {% set prototype = true %}
-    {% include 'molecules/hero.html' with context %}
+    }}
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -102,34 +94,32 @@
             }]
         })
     }}
+    <div class="block block__flush">
+        <section class="o-well"
+                 data-qa-hook="bureau-core-functions">
+            <h2>Our core functions</h2>
+            <p>Congress created the CFPB to create a single point of accountability for enforcing
+            federal consumer financial laws and protecting consumers in the financial marketplace.
+            Before, that responsibility was divided among several agencies. Today, it’s our job.</p>
 
-    <section class="block
-                    block__bg
-                    block__border
-                    block__flush"
-             data-qa-hook="bureau-core-functions">
-        <h2>Our core functions</h2>
-        <p>Congress created the CFPB to create a single point of accountability for enforcing
-        federal consumer financial laws and protecting consumers in the financial marketplace.
-        Before, that responsibility was divided among several agencies. Today, it’s our job.</p>
-
-        <section class="bureau-functions block__padded-top">
-            <h3 class="h4">Among other things, we:</h3>
-            <ul class="list list__branded bureau-functions_list u-mb0">
-                <li>Write rules, supervise companies, and enforce federal consumer
-                financial protection laws</li>
-                <li>Restrict unfair, deceptive, or abusive acts or practices</li>
-                <li>Take consumer complaints</li>
-                <li>Promote financial education</li>
-            </ul>
-            <ul class="list list__branded bureau-functions_list">
-                <li>Research consumer behavior</li>
-                <li>Monitor financial markets for new risks to consumers</li>
-                <li>Enforce laws that outlaw discrimination and other unfair treatment
-                in consumer finance</li>
-            </ul>
-        </section>
-    </section><!-- END .content-block -->
+            <section class="bureau-functions block__padded-top">
+                <h3 class="h4">Among other things, we:</h3>
+                <ul class="list list__branded bureau-functions_list u-mb0">
+                    <li>Write rules, supervise companies, and enforce federal consumer
+                    financial protection laws</li>
+                    <li>Restrict unfair, deceptive, or abusive acts or practices</li>
+                    <li>Take consumer complaints</li>
+                    <li>Promote financial education</li>
+                </ul>
+                <ul class="list list__branded bureau-functions_list">
+                    <li>Research consumer behavior</li>
+                    <li>Monitor financial markets for new risks to consumers</li>
+                    <li>Enforce laws that outlaw discrimination and other unfair treatment
+                    in consumer finance</li>
+                </ul>
+            </section>
+        </section><!-- END .content-block -->
+    </div>
 
     <section class="block block__padded-top block__flush-top">
         <h2>CFPB leadership</h2>

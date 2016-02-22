@@ -1,5 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
+{% import 'molecules/related-posts.html' as related_posts with context %}
+
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
 {%- endblock %}
@@ -15,7 +17,7 @@
     {% for block in page.header %}
         <div class="block
                     block__flush-top">
-            {{ block | safe }}
+            {{ render_stream_child(block) }}
         </div>
     {% endfor %}
     {% for block in page.content %}
@@ -26,12 +28,20 @@
                 {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
                 {{ flc(block.value, f, loop.index0) }}
             {% else %}
-                {{ block | safe }}
+                {{ render_stream_child(block) }}
             {% endif %}
         </div>
     {% endfor %}
     <aside class="prefooter">
-        Put sidefoot content here
+        {% for block in page.sidefoot %}
+            <div class="block block__flush-top">
+                {% if 'related_posts' in block.block_type %}
+                    {{ related_posts.render(block) }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            </div>
+        {% endfor %}
     </aside>
 {% endblock %}
 

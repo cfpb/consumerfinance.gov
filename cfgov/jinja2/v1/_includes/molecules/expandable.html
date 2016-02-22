@@ -24,6 +24,8 @@
    value.is_expanded: Whether the Expandable is expanded or not.
                       Default is false.
 
+   TODO: Add description to `filter` param, and possibly reconsider name to
+         avoid confusion w/ the filter controls that use it.
    ========================================================================== #}
 
 {% macro expandable(value, filter=false) %}
@@ -58,15 +60,12 @@
     <div class="m-expandable_content"
             {{ 'aria-expanded=true' if value.is_expanded else '' }}>
         <div class="m-expandable_content-animated">
-            {% if prototype %}
-                {{ value.paragraph }}
-            {% endif %}
             {% if filter %}
                 {{ caller() }}
             {% else %}
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
-                        {{ block |safe }}
+                        {{ block | safe }}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}
@@ -77,41 +76,6 @@
 </div>
 {% endmacro %}
 
-{% if not value %}
-    {% set value = [
-            {
-                'label': 'Default Expandable',
-                'paragraph': lipsum(1, false, 10, 225),
-                'is_bordered': false,
-                'is_midtone': false,
-                'is_expanded': false
-            },
-            {
-                'label': 'Bordered Expandable',
-                'paragraph': lipsum(1, false, 10, 225),
-                'is_bordered': true,
-                'is_midtone': false,
-                'is_expanded': false
-            },
-            {
-                'label': 'Midtone Expandable',
-                'paragraph': lipsum(1, false, 10, 225),
-                'is_bordered': true,
-                'is_midtone': true,
-                'is_expanded': false
-            },
-            {
-                'label': 'Midtone, Bordered, Expandable - Expanded',
-                'paragraph': lipsum(1, false, 10, 225),
-                'is_bordered': true,
-                'is_midtone': true,
-                'is_expanded': true
-            },
-        ]
-    %}
-    {% for exp in value %}
-        {{ expandable(exp) }}
-    {% endfor %}
-{% else %}
+{% if value %}
     {{ expandable(value) }}
 {% endif %}

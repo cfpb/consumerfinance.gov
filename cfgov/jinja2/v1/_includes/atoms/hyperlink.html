@@ -15,16 +15,4 @@
    value.text:    A string for the text of the link.
 
    ========================================================================== #}
-
-{% if not value %}
-    {% do global_dict.update(
-        {
-            'hyperlink': {
-                'url' :       '/some-other-url/',
-                'text':  'This is a Link',
-            }
-        })
-    %}
-    {% set value = global_dict.hyperlink %}
-{% endif %}
 <a class="jump-link" href="{{ value.url }}">{{ value.text }}</a>

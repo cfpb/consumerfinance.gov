@@ -1464,6 +1464,29 @@ textarea {
 
 
 /* topdoc
+  name: Flush sides on small devices
+  family: cf-layout
+  patterns:
+    - name: .content__flush-sides-on-small
+      markup: |
+        <aside class="content_sidebar content__flush-sides-on-small">
+          <!-- sidebar components -->
+        </aside>
+        <div class="content_main content__flush-sides-on-small">
+          <!-- main content components -->
+        </div>
+  tags: cf-layout
+*/
+.content__flush-sides-on-small {
+    .respond-to-max(@bp-sm-max, {
+        padding-left: 0;
+        padding-right: 0;
+        border-width: 0;
+    });
+}
+
+
+/* topdoc
   name: Code styles
   family: cf-layout
   notes:
@@ -1547,14 +1570,67 @@ ul:last-child,
 }
 
 /* topdoc
+  name: Add Large breakpoint only columns
+  family: cf-layout
+  notes:
+    - "Columns normally only stack under @bp-sm-min.
+       These keep them stacked till @bp-lg-min"
+  tags:
+    - cf-layout
+*/
+.content-l_col-1-3__on-lg {
+    + .content-l_col-1-3__on-lg {
+        .respond-to-max( @bp-med-max, {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+
+        .respond-to-range( @bp-sm-min, @bp-med-max, {
+            &:before {
+                .a-rule-break();
+                content: '\a0';
+                display: block;
+            }
+        } );
+    }
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column(4);
+    } );
+}
+
+.content-l_col-1-2__on-lg {
+    .respond-to-max( @bp-med-max, {
+        + .content-l_col-1-2__on-lg {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+    } );
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column(6);
+    } );
+}
+
+/* topdoc
   name: Adjustments to meta-header
   family: cf-typography
   notes:
-    - "Temporary changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
+    - "Changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
+    - "Changes to better control spacing when a category isn't set"
   tags:
     - cf-typography
 */
 
+.meta-header {
+    overflow: auto;
+}
 
 .meta-header_right {
     .respond-to-max(@mobile-max, {

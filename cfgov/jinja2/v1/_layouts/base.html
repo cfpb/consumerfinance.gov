@@ -213,12 +213,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             {% for js in page.media %}
                 {% include '/js/routes/on-demand/' + js ignore missing %}
             {% endfor %}
-        {% else %}
-            {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
         {% endif %}
-    {% else %}
-        {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
     {% endif %}
+    {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}

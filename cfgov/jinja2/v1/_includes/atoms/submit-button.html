@@ -1,14 +1,3 @@
-
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update({
-        'submit_button': {
-            'button_text':  'Generate'
-        }
-    }) %}
-    {% set value = global_dict.submit_button %}
-{% endif %}
-
 <div class="o-form-actions">
     <input class="btn btn__super form-actions_item"
            type="submit"

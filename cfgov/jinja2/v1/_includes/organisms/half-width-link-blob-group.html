@@ -1,16 +1,3 @@
-{% if not value %}
-    {% macro _half_width_link_blob_markup() %}
-        {% include 'molecules/half-width-link-blob.html' %}
-    {% endmacro %}
-    {% set value = {
-        'heading': 'Link Blob Group',
-        'link_blobs': [
-            _half_width_link_blob_markup(),
-            _half_width_link_blob_markup()
-        ]
-    } %}
-{% endif %}
-
 <div class="o-link-blob-group content-l">
     <h2>{{ value.heading }}</h2>
     {% for block in value.link_blobs %}

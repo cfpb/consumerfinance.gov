@@ -15,18 +15,12 @@
             </button>
             <ul class="o-secondary-navigation_list
                        o-secondary-navigation_list__parents">
-                <li class="o-secondary-navigation_item
-                           o-secondary-navigation_item__parent">
+                li
                     m-nav-link
-                </li>
-                <li class="o-secondary-navigation_item
-                           o-secondary-navigation_item__parent">
+                li
                     m-nav-link
-                </li>
-                <li class="o-secondary-navigation_item
-                           o-secondary-navigation_item__parent">
+                li
                     m-nav-link
-                </li>
             </ul>
         </nav>
       codenotes:
@@ -36,7 +30,8 @@
           .o-secondary-navigation
             .o-secondary-navigation_button
             .o-secondary-navigation_list.o-secondary-navigation_list__parents
-              .o-secondary-navigation_item.o-secondary-navigation_item__parent
+              li
+                m-nav-link
     - name: Secondary nav mixed with cf-expandable
       markup: |
         <nav class="expandable
@@ -62,18 +57,12 @@
             <div class="expandable_content">
                 <ul class="o-secondary-navigation_list
                            o-secondary-navigation_list__parents">
-                    <li class="o-secondary-navigation_item
-                               o-secondary-navigation_item__parent">
-                        nav-link
-                    </li>
-                    <li class="o-secondary-navigation_item
-                               o-secondary-navigation_item__parent">
-                        nav-link
-                    </li>
-                    <li class="o-secondary-navigation_item
-                               o-secondary-navigation_item__parent">
-                        nav-link
-                    </li>
+                    li
+                        m-nav-link
+                    li
+                        m-nav-link
+                    li
+                      m-nav-link
                 </ul>
             </div>
         </nav>
@@ -92,41 +81,35 @@
                     .cf-icon.cf-icon-up
             .expandable_content
               .o-secondary-navigation_list.o-secondary-navigation_list__parents
-                .o-secondary-navigation_item.o-secondary-navigation_item__parent
+                li
+                  m-nav-link
   tags:
     - cfgov-organisms
 */
 
 .o-secondary-navigation {
-    .respond-to-max(@bp-sm-max, {
-        // TODO: Move margin/spacing to template level styles
-        margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+    .webfont-regular();
 
-        background-color: @gray-10;
-        border-top: 1px solid @gray-20;
-        border-bottom: 1px solid @gray-20;
-    });
-
-    &_button {
-        width: 100%;
-        padding: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-
+    .m-expandable_target {
         .webfont-demi();
 
-        text-align: left;
         text-transform: uppercase;
 
-        &:focus {
-            outline: 1px dotted;
-        }
-
-        .cf-icon {
-            color: @green;
-        }
-
         .respond-to-min(@bp-med-min, {
-            display: none;
+          display: none;
         });
+    }
+
+    .m-expandable_content {
+        .respond-to-min(@bp-med-min, {
+          background: none;
+          border: none;
+          height: auto !important;
+        });
+
+        &-animated {
+          padding: 0;
+        }
     }
 
     &_list {

@@ -65,7 +65,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     if ( _optionData.length > 0 ) {
       _populateMarkup();
       _bindEvents();
-      _dom.parentNode.removeChild(_dom);
+      _dom.parentNode.removeChild( _dom );
     }
 
     return this;

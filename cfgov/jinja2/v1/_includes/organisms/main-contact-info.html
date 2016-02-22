@@ -36,55 +36,18 @@
 
    ========================================================================== #}
 
-{% import 'molecules/contact-email.html' as contact_email %}
-{% import 'molecules/contact-phone.html' as contact_phone %}
-{% import 'molecules/contact-address.html' as contact_address %}
-{% if value %}
-    {% if value.contact %}
-        <div class="o-main-contact-info">
-            <h2>{{ value.contact.heading }}</h2>
+{% if value.contact %}
+    <div class="o-main-contact-info">
+        <h2>{{ value.contact.heading }}</h2>
 
-            {{ value.contact.body | safe }}
+        {{ value.contact.body | safe }}
 
-            {% if value.contact.contact_info %}
+        {% if value.contact.contact_info %}
 
-                {% for block in value.contact.contact_info %}
-                    {{ render_stream_child(block) }}
-                {% endfor %}
-            {% endif %}
-        </div>
-    {% endif %}
-{% else %}
-    {% macro render(content, contact) %}
-        <div class="o-main-contact-info">
-            <h2>{{ content.heading }}</h2>
-
-            <p>{{ content.body }}</p>
-
-            {% if contact %}
-                {% if contact.emails %}
-                    {{ contact_email.render(contact.emails) }}
-                {% endif %}
-
-                {% if contact.phones %}
-                    {{ contact_phone.render(contact.phones) }}
-                {% endif %}
-
-                {% if contact.faxes %}
-                    {{ contact_phone.render(contact.faxes, true) }}
-                {% endif %}
-
-                {% if contact.address %}
-                    {{ contact_address.render({
-                            'label':    'Mailing Address',
-                            'title':    contact.address.title,
-                            'street':   contact.address.street,
-                            'city':     contact.address.city,
-                            'state':    contact.address.state,
-                            'zip_code': contact.address.zip_code
-                            }) }}
-                {% endif %}
-            {% endif %}
-        </div>
-    {% endmacro %}
+            {% for block in value.contact.contact_info %}
+                {{ render_stream_child(block) }}
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endif %}
+

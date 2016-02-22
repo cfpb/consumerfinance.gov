@@ -17,18 +17,31 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added Backend sidebar contact
-- Add Related Metadata molecule to backend 
+- Add Related Metadata molecule to backend
+- Added `ClearableInput` class for clearable input behavior
+  in `input-contains-label` CF class.
+- Added Github specific Issue and PR templates.
+- included paragraph rich text field to related links
+- Added new content flush sides on small modifier to fix an issue where margin was set on the molecule level instead of the template.
 
 ### Changed
 - Converted the project to Capital Framework v3
 - Updated `protractor` from `3.0.0` to `3.1.1`.
 - Included Table organism within full width text
 - Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
+- Abstracted info unit into a helper mixin to make it easier to re-use the inline version.
+- Moved Home page specific layout changes to it's own file.
+- Updated jsdom from `7.2.2` to `8.0.4`.
+- Updated secondary-nav to use new expandable molecule in place of old CF Expandable.
+- Updated gulp-eslint from `1.0.0` to `2.0.0`.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
 - Removed old branded list mixin (was causing compile errors).
 - Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
+- Removed old beta styles.
+- Removed prototype language, such as instances of setting `value`, `page`, and `global_dict`
+- Imports of contact info macros that were breaking the page
 
 ### Fixed
 - Fix bug where publised pages were showing shared content

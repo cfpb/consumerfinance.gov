@@ -23,33 +23,6 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% do global_dict.update(
-        {
-            'expandable_group': {
-                'heading': 'Group Header',
-                'has_rule': true,
-                'expandables': [
-                    {
-                        'label': 'Expand 1 - initially open',
-                        'paragraph': lipsum(1, false, 10, 225),
-                        'is_bordered': true,
-                        'is_midtone': true,
-                        'is_expanded': true
-                    },
-                     {
-                        'label': 'Expand 2',
-                        'paragraph': lipsum(1, false, 10, 225),
-                        'is_bordered': true,
-                        'is_midtone': true,
-                    }
-                ],
-            }
-        })
-    %}
-{% endif %}
-{% set value = value or global_dict.expandable_group %}
-
 <div class="o-expandable-group
             {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
 
@@ -68,12 +41,7 @@
     {# Should be a stack of Expandable instances. #}
     {% if value.expandables %}
         {% for expandable in value.expandables %}
-            {% if prototype %}
-                {% set value = expandable %}
-                {% include 'molecules/expandable.html' with context %}
-            {% else %}
-                {{ expandable }}
-            {% endif %}
+            {{ expandable }}
         {% endfor %}
     {% endif %}
 </div>

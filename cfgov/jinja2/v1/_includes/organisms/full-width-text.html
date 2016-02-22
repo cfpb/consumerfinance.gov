@@ -11,82 +11,18 @@
    See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
 
    ========================================================================== #}
-{% if not value %}
-    {% do global_dict.update({
-        'full_width_text': [
-            {
-                'block_type': 'content',
-                'value': """
-                        <h2>Full-width text module</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Sed metus tortor, lacinia vel arcu a, convallis consequat
-                            velit. Nam non turpis ac leo porta elementum id euismod
-                            erat. Nullam pretium purus ac ultricies pharetra.
-                        </p>
-                        <ul>
-                            <li>Lorem ipsum dolor sit amet</li>
-                            <li>Lorem ipsum dolor sit amet</li>
-                            <li>Lorem ipsum dolor sit amet</li>
-                        </ul>
-                    """,
-            },
-            {
-                'block_type': 'inset',
-                'source': 'quote'
-            },
-            {
-                'block_type': 'content',
-                'value':  """
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Sed metus tortor, lacinia vel arcu a, convallis consequat
-                            velit. Nam non turpis ac leo porta elementum id euismod
-                            erat. Nullam pretium purus ac ultricies pharetra.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Sed metus tortor, lacinia vel arcu a, convallis consequat
-                            velit. Nam non turpis ac leo porta elementum id euismod
-                            erat. Nullam pretium purus ac ultricies pharetra.
-                        </p>
-                    """,
-            },
-            {
-                'block_type': 'inset',
-                'source': 'related-links'
-            },
-            {
-                'block_type': 'content',
-                'value':  """
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Sed metus tortor, lacinia vel arcu a, convallis consequat
-                            velit. Nam non turpis ac leo porta elementum id euismod
-                            erat. Nullam pretium purus ac ultricies pharetra.
-                        </p>
-                    """,
-            },
-            {
-                'block_type': 'inset',
-                'source': 'call-to-action'
-            },
-        ]
-    }) %}
-{% endif %}
-{% set value = value or global_dict.full_width_text %}
 <div class="o-full-width-text-group">
     {% for block in value %}
         {% if 'content' in block.block_type %}
             <div class="m-full-width-text
                         {{ 'm-full-width-text__serif' if
-                        global_dict.full_width_serif else '' }}">
+                         page.full_width_serif else '' }}">
                 {{ render_stream_child(block.value) |safe}}
             </div>
         {% elif 'table' in block.block_type %}
             <div class="m-full-width-text
                         {{ 'm-full-width-text__serif' if
-                        global_dict.full_width_serif else '' }}">
+                        page.full_width_serif else '' }}">
                 {{ render_stream_child(block) |safe}}
             </div>
         {% else %}

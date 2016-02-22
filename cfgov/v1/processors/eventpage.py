@@ -11,8 +11,19 @@ class DataConverter(PageDataConverter):
             'body':       doc.get('content', u''),
         }
         self.add_defaults(post_dict)
-        dt = dateutil.parser.parse(doc.get('beginning_time').get('date'))
-        post_dict['date_published'] = dt.strftime('%Y-%m-%d')
+
+        # Start and end times
+        times = [(doc.get('beginning_time', None), 'start_dt'),
+                 (doc.get('ending_time', None), 'end_dt')]
+        if times and times[0][0]:
+            date = dateutil.parser.parse(times[0][0].get('date'))
+            post_dict['date_published'] = date.strftime('%Y-%m-%d')
+        for t in times:
+            if t[0]:
+                dt = dateutil.parser.parse(t[0].get('date'))
+                post_dict[t[1]] = dt.strftime('%Y-%m-%d %H:%M')
+
+        # Tags and authors
         tags = ''
         for tag in doc.get('tags'):
             if ' ' in tag:
@@ -23,14 +34,7 @@ class DataConverter(PageDataConverter):
         post_dict['tags'] = tags
         post_dict['authors'] = '"%s"' % doc.get('author', {}).get('name', '')
 
-        times = [('beginning_time', 'start_dt'), ('ending_time', 'end_dt')]
-        for t in times:
-            if doc.get(t[0]):
-                time = doc.get(t[0]).get('date', u'')
-                if time:
-                    dt = dateutil.parser.parse(time)
-                    post_dict[t[1]] = dt.strftime('%Y-%m-%d %H:%M')
-
+        # Venue
         if doc.get('venue'):
             post_dict['venue_name'] = doc['venue'].get('name', u'')
             if doc['venue'].get('address', u''):
@@ -38,11 +42,13 @@ class DataConverter(PageDataConverter):
                     post_dict['venue_'+info] = \
                         doc['venue']['address'].get(info, u'')
 
+        # Live stream
         if doc.get('live_stream'):
             for info in ['url', 'availability', 'date']:
                 post_dict['live_stream_'+info] = doc['live_stream'].get(info,
                                                                         u'')
 
+        # Time period content
         for tense in ['archive', 'live', 'future']:
             if doc.get(tense):
                 summary = doc[tense].get('summary', u'')
@@ -54,6 +60,7 @@ class DataConverter(PageDataConverter):
                     post_dict['youtube_url'] = doc['archive'].get('youtube',
                                                                   u'')
 
+        # Agenda
         post_dict['agenda_items-count'] = len(doc.get('agenda', u''))
         if doc.get('agenda'):
             for i in range(len(doc.get('agenda', u''))):

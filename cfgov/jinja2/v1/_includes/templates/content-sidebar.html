@@ -1,0 +1,21 @@
+{% import 'molecules/related-posts.html' as related_posts with context %}
+
+{% for block in page.sidefoot %}
+    <div class="block block__flush-top">
+        {% if 'related_posts' in block.block_type %}
+            {{ related_posts.render(block) }}
+        {% elif 'heading' in block.block_type %}
+            <h3 class="o-sidebar-breakout_heading">
+                {{ render_stream_child(block) }}
+            </h3>
+        {% elif 'slug' in block.block_type %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ render_stream_child(block) }}
+                </span>
+            </h2>
+        {% else %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    </div>
+{% endfor %}

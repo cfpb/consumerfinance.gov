@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function Budget() {
 
@@ -10,7 +10,7 @@ function Budget() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.mainTitle = element( by.css( '.media_body h1' ) );
 
@@ -24,8 +24,7 @@ function Budget() {
 
   this.budgetSectionTitles = this.budgetSections.all( by.css( 'h2' ) );
 
-  this.budgetSectionDescriptions =
-  this.budgetSections.all( by.css( '.short-desc' ) );
+  this.budgetSectionDescriptions = _getQAElement( 'budget-section-desc', true );
 
   this.budgetSectionLinks = this.budgetSections.all( by.css( 'a' ) );
 
@@ -35,7 +34,7 @@ function Budget() {
   this.businessWithCFPBSection.element( by.css( '.header-slug_inner' ) );
 
   this.businessWithCFPBDescription =
-  this.businessWithCFPBSection.element( by.css( '.short-desc' ) );
+    _getQAElement( by.css( 'business-with-CFPB-desc' ) );
 
   this.businessWithCFPBLink =
   this.businessWithCFPBSection.element( by.css( 'a' ) );
