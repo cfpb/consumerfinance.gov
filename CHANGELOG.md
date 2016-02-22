@@ -23,6 +23,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Github specific Issue and PR templates.
 - included paragraph rich text field to related links
 - Added new content flush sides on small modifier to fix an issue where margin was set on the molecule level instead of the template.
+- Added Info Unit Macro.
+
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -34,6 +36,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated jsdom from `7.2.2` to `8.0.4`.
 - Updated secondary-nav to use new expandable molecule in place of old CF Expandable.
 - Updated gulp-eslint from `1.0.0` to `2.0.0`.
+- Converted Link Blob Group, 25/75 Group, and 50/50 Group to single Info Unit Group.
+- Converted Link Blob Macro to Info Unit Macro.
+- Converted 25/75 Macro to Info Unit Macro.
+- Converted 50/50 Macro to Info Unit Macro.
+- Updated Home Page to Info Unit Macro.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -42,6 +49,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed old beta styles.
 - Removed prototype language, such as instances of setting `value`, `page`, and `global_dict`
 - Imports of contact info macros that were breaking the page
+- Removed Link Blob, 25/75, and 50/50 styles.
+- Removed need for negative margin tweaks after groups.
+- Removed need for positive margin tweaks aroung group headings.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content

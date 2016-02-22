@@ -15,46 +15,39 @@
 
         {% include 'molecules/home-hero.html' %}
 
+        {% from 'molecules/info-unit.html' import info_unit with context %}
         <div class="o-well
                     o-well__full">
             <div class="content-l">
                 <section class="content-l_col content-l_col-1-2">
-                    <div class="m-info-unit">
-                        <div class="m-info-unit_content">
-                            <p>We spoke to RushCard CEO to about how to help debit card customers who have been denied access to their funds.</p>
-                            <ul class="list list__links">
-                                <li class="list_item">
-                                    <a class="list_link" href="#">
-                                        Read our statement
-                                    </a>
-                                </li>
-                                <li class="list_item">
-                                    <a class="list_link" href="#">
-                                        Complain if you've had debit card issues
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    {{ info_unit( {
+                        'body': '<p>We spoke to RushCard CEO to about how to help debit card customers who have been denied access to their funds.</p>',
+                        'links': [
+                            {
+                                'text': 'Read our statement',
+                                'url':  '#'
+                            },
+                            {
+                                'text': 'Complain if you’ve had debit card issues',
+                                'url':  '#'
+                            }
+                        ]
+                    } ) }}
                 </section>
                 <section class="content-l_col content-l_col-1-2">
-                    <div class="m-info-unit">
-                        <div class="m-info-unit_content">
-                            <p>We created an easy tool to help you decide when to start receiving Social Security payments</p>
-                            <ul class="list list__links">
-                                <li class="list_item">
-                                    <a class="list_link" href="#">
-                                        Learn more about the tool
-                                    </a>
-                                </li>
-                                <li class="list_item">
-                                    <a class="list_link" href="#">
-                                        Use the Planning for Retirement tool
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    {{ info_unit( {
+                        'body': '<p>We created an easy tool to help you decide when to start receiving Social Security payments</p>',
+                        'links': [
+                            {
+                                'text': 'Learn more about the tool',
+                                'url':  '#'
+                            },
+                            {
+                                'text': 'Use the Planning for Retirement tool',
+                                'url':  '#'
+                            }
+                        ]
+                    } ) }}
                 </section>
             </div>
         </div>
@@ -64,105 +57,76 @@
                 <div class="content-l">
                     <section class="content-l_col
                                     content-l_col-1-3__on-lg">
-                        <div class="m-info-unit
-                                    m-info-unit__home">
-                            <div class="m-info-unit_image
-                                        m-info-unit_image__square"
-                                 style="background-image: url(/static/img/home-complaint_150.png);">
-                            </div>
-
-                            <div class="m-info-unit_content">
-                                <h2>Submit a complaint
-                                </h2>
-                                <p>
-                                    Can’t fix a problem with a financial product or service? Submit a complaint. We’ll work to get you a response from the company.
-                                </p>
-                                <ul class="list list__links">
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Submit your complaint
-                                        </a>
-                                    </li>
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Browse public complaints about companies
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {{ info_unit( {
+                            'modifier': 'home',
+                            'image': {
+                                'url': '/static/img/home-complaint_150.png',
+                                'is_square': true,
+                                'is_decorative': true
+                            },
+                            'heading': '<h2>Submit a complaint</h2>',
+                            'body': '<p>Can’t fix a problem with a financial product or service? Submit a complaint. We’ll work to get you a response from the company.</p>',
+                            'links': [
+                                {
+                                    'text': 'Submit your complaint',
+                                    'url':  '#'
+                                },
+                                {
+                                    'text': 'Browse public complaints about companies',
+                                    'url':  '#'
+                                }
+                            ]
+                        } ) }}
                     </section>
                     <section class="content-l_col
                                     content-l_col-1-3__on-lg">
-                        <div class="m-info-unit
-                                    m-info-unit__home">
-                            <div class="m-info-unit_image
-                                        m-info-unit_image__square"
-                                 style="background-image: url(/static/img/home-answers_150.png);">
-                            </div>
-
-                            <div class="m-info-unit_content">
-                                <h2>Get answers to money questions
-                                </h2>
-                                <p>
-                                    Financial matters can be complicated. Get the facts you need to make choices about money, credit scores, mortgages, and more.
-                                </p>
-                                <ul class="list list__links">
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Learn more about credit cards, student loans, and other financial products
-                                        </a>
-                                    </li>
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Find answers to common questions
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {{ info_unit( {
+                            'modifier': 'home',
+                            'image': {
+                                'url': '/static/img/home-answers_150.png',
+                                'is_square': true,
+                                'is_decorative': true
+                            },
+                            'heading': '<h2>Get answers to money questions</h2>',
+                            'body': '<p>Financial matters can be complicated. Get the facts you need to make choices about money, credit scores, mortgages, and more.</p>',
+                            'links': [
+                                {
+                                    'text': 'Learn more about credit cards, student loans, and other financial products',
+                                    'url':  '#'
+                                },
+                                {
+                                    'text': 'Find answers to common questions',
+                                    'url':  '#'
+                                }
+                            ]
+                        } ) }}
                     </section>
                     <section class="content-l_col
                                     content-l_col-1-3__on-lg">
-                        <div class="m-info-unit
-                                    m-info-unit__home">
-                            <div class="m-info-unit_image
-                                        m-info-unit_image__square"
-                                 style="background-image: url(/static/img/home-goals_150.png);">
-                            </div>
-
-                            <div class="m-info-unit_content">
-                                <h2>Reach your financial goals
-                                </h2>
-                                <p>
-                                    For the big financial decisions in your life, we offer free tools and resources to help you reach your goals.
-                                </p>
-                                <ul class="list list__links">
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Paying for College
-                                        </a>
-                                    </li>
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Owning a Home
-                                        </a>
-                                    </li>
-                                    <li class="list_item">
-                                        <a class="list_link"
-                                           href="#">
-                                            Planning for Retirement
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {{ info_unit( {
+                            'modifier': 'home',
+                            'image': {
+                                'url': '/static/img/home-goals_150.png',
+                                'is_square': true,
+                                'is_decorative': true
+                            },
+                            'heading': '<h2>Reach your financial goals</h2>',
+                            'body': '<p>For the big financial decisions in your life, we offer free tools and resources to help you reach your goals.</p>',
+                            'links': [
+                                {
+                                    'text': 'Paying for College',
+                                    'url':  '#'
+                                },
+                                {
+                                    'text': 'Owning a Home',
+                                    'url':  '#'
+                                },
+                                {
+                                    'text': 'Planning for Retirement',
+                                    'url':  '#'
+                                }
+                            ]
+                        } ) }}
                     </section>
                 </div>
             </div>
