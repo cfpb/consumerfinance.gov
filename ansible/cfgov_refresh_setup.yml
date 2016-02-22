@@ -50,11 +50,11 @@
 
     # Auto Source virtualenv & .env
     - name: Add environment variables to bash rc
-      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source /vagrant/cfgov-refresh/bin/activate' line='cd /vagrant;source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'"
+      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source /vagrant/cfgov-refresh/bin/activate' line='source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'"
 
     # Database Syncing
     - name: Migrate django db to match application state
-      shell: "source /home/vagrant/.bashrc; python /vagrant/cfgov/manage.py migrate"
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py migrate"
 
 
 
