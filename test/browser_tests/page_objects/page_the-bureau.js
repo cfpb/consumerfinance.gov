@@ -9,8 +9,6 @@ function TheBureauPage() {
 
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
-  this.hero = element( by.css( '.hero' ) );
-
   this.bureauHistory = element( by.css( '.bureau-history' ) );
 
   this.bureauMission =
