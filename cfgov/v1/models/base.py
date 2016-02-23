@@ -127,6 +127,7 @@ class CFGOVPage(Page):
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
                 return ancestors[i+1:]
+        return []
 
     @property
     def status_string(self):
