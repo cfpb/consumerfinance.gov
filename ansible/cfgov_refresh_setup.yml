@@ -37,24 +37,34 @@
     # PDFReactor
     - name: download PDFReactor
       get_url: url=http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz force=false
+
     - name: Untar PDFReactor
       unarchive: src=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt copy=no
+
     - name: Start PDFReactor service
       command: /opt/PDFreactor/bin/pdfreactorwebservice start
 
-    # Virtual Environment
-    - name: Manually create virtual .env and install requirements  
+    # Django Development Setup
+    - name: Install virtualenv
       command: "/usr/local/bin/pip install virtualenv"
-    - name: Create virtualenv
+
+    - name: Create virtualenv and install requirements
       pip: requirements=/vagrant/requirements/local.txt virtualenv=/vagrant/cfgov-refresh virtualenv_command=/usr/local/bin/virtualenv
 
-    # Auto Source virtualenv & .env
-    - name: Add environment variables to bash rc
+    - name: Add environment variables to bashrc
       lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source /vagrant/cfgov-refresh/bin/activate' line='source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'"
 
-    # Database Syncing
     - name: Migrate django db to match application state
       shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py migrate"
 
+    - name: Create initial data 
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py runscript initial_data"
 
+    - name: Import contacts data 
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW"
 
+    - name: Import events data
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW"
+
+    # - name: Create Sheer Index
+    #   shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"
