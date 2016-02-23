@@ -28,8 +28,6 @@ class BrowsePage(CFGOVPage):
         ('table', organisms.Table()),
     ], blank=True)
 
-    side_navigation = StreamField([], blank=True)
-
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -37,12 +35,11 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    sidebar_panels = [StreamFieldPanel('side_navigation')] + CFGOVPage.sidefoot_panels
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 

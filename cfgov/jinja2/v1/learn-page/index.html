@@ -4,7 +4,6 @@
 {% import 'molecules/related-metadata.html' as related_metadata with context %}
 
 {% set parent = page.parent() %}
-{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block title -%}
     {{ page.seo_title }}

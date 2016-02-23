@@ -3,7 +3,6 @@
 {% import 'molecules/related-posts.html' as related_posts with context %}
 
 {% set parent = page.parent() %}
-{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block title -%}
     {{ page.seo_title }}
