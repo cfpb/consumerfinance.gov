@@ -41,6 +41,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Converted 25/75 Macro to Info Unit Macro.
 - Converted 50/50 Macro to Info Unit Macro.
 - Updated Home Page to Info Unit Macro.
+- Included use of wagtail `classname` meta field for block css modifiers
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
