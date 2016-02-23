@@ -61,6 +61,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix bug where publised pages were showing shared content
 - Fixed Contacts import-data script to set phone numbers correctly
 - Fixed an issue where heros were not displaying on new Wagtail pages.
+- Fixed an error where the secondary nav script was trying to initialize on pages it wasn't used.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

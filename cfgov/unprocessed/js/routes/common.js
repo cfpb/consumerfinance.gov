@@ -28,7 +28,3 @@ require( '../modules/external-site-redirect.js' ).init();
 var Header = require( '../organisms/Header.js' );
 var header = new Header( document.body );
 header.init();
-
-// Secondary Navigation
-var SecondaryNavigation = require( '../organisms/SecondaryNavigation' );
-var secondaryNavigation = new SecondaryNavigation( document.body ).init();
