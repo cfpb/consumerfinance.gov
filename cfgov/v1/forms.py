@@ -199,21 +199,19 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         parent = kwargs.pop('parent')
+        hostname = kwargs.pop('hostname')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        self.set_topics(parent)
-        self.set_authors(parent)
+        self.set_topics(parent, hostname)
+        self.set_authors(parent, hostname)
 
     # Populate Topics' choices
-    def set_topics(self, parent):
-        live_tags = [tag for tags in [page.tags.names() for page in
-                    AbstractFilterPage.objects.live().descendant_of(
-                    parent)] for tag in tags]
-        shared_tags = [tag for tags in [page.tags.names() for page in
-                       AbstractFilterPage.objects.descendant_of(parent)
-                       if page.shared] for tag in tags]
-        all_tags = list(chain(live_tags, shared_tags))
+    def set_topics(self, parent, hostname):
+        tags = [tag for tags in
+                     [page.tags.names() for page in
+                      AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent)]
+                     for tag in tags]
         # Orders by most to least common tags
-        options = most_common(all_tags)
+        options = most_common(tags)
         most = [(option, option) for option in options[:3]]
         other = [(option, option) for option in options[3:]]
         self.fields['topics'].choices = \
@@ -221,10 +219,10 @@ class FilterableListForm(forms.Form):
              ('All other topics', tuple(other)))
 
     # Populate Authors' choices
-    def set_authors(self, parent):
+    def set_authors(self, parent, hostname):
         all_authors = [author for authors in [page.authors.names() for page in
-                       AbstractFilterPage.objects.live().descendant_of(
-                       parent).live()] for author in authors]
+                       AbstractFilterPage.objects.live_shared().descendant_of(
+                       parent)] for author in authors]
         # Orders by most to least common authors
         self.fields['authors'].choices = [(author, author) for author in
                                           most_common(all_authors)]
