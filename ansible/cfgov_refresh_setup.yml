@@ -17,7 +17,7 @@
     - vars/app.yml
   roles:
     - { role: geerlingguy.java }
-    - { role: geerlingguy.elasticsearch }
+    - { role: vccabral.elasticsearch }
     - { role: geerlingguy.git }
     - { role: Ken24.python }
     - { role: geerlingguy.firewall }
@@ -33,6 +33,10 @@
         - "tk-devel"
         - "python-devel"
         - "mysql-devel.x86_64"
+
+    # Virtualbox Setup allows halt and up with vagrant again
+    - name: Virtualbox Add Setup
+      shell: sudo /etc/init.d/vboxadd setup
 
     # PDFReactor
     - name: download PDFReactor
