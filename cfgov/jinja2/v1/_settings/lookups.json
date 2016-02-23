@@ -1,9 +1,4 @@
 {
-  "contact": {
-    "url":       "/contact-us/<id>/",
-    "type":      "contact",
-    "permalink": true
-  },
   "career": {
     "url":       "/careers/current-openings/<id>/",
     "type":      "career",

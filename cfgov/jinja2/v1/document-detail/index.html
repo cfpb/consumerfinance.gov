@@ -4,7 +4,6 @@
 {% import 'molecules/related-metadata.html' as related_metadata with context %}
 
 {% set parent = page.parent() %}
-{% set breadcrumb_items = [(parent.url, parent.url, parent.title)] %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -23,9 +22,7 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+        {% include 'templates/render_block.html' with context %}
     {%- endfor %}
 {% endblock %}
 

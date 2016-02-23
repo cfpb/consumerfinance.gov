@@ -24,11 +24,9 @@
    value.is_expanded: Whether the Expandable is expanded or not.
                       Default is false.
 
-   TODO: Add description to `filter` param, and possibly reconsider name to
-         avoid confusion w/ the filter controls that use it.
    ========================================================================== #}
 
-{% macro expandable(value, filter=false) %}
+{% macro expandable(value) %}
 <div class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
@@ -60,7 +58,7 @@
     <div class="m-expandable_content"
             {{ 'aria-expanded=true' if value.is_expanded else '' }}>
         <div class="m-expandable_content-animated">
-            {% if filter %}
+            {% if caller is defined %}
                 {{ caller() }}
             {% else %}
                 {% for block in value.content %}

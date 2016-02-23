@@ -6,7 +6,6 @@ from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
 
 
-
 def id_validator(id_string, search=re.compile(r'[^a-zA-Z0-9-_]').search):
     if id_string:
         return not bool(search(id_string))
@@ -63,3 +62,33 @@ def get_form_id(page, get_request):
             return form_ids[0]
         else:
             return None
+
+
+# For use by Browse type pages to get the secondary navigation items
+def get_secondary_nav_items(current):
+    from ..templatetags.share import get_page_state_url
+    nav_items = []
+    parent = current.get_parent()
+    page = parent if 'Browse' in parent.specific_class.__name__ else current
+    for sibling in page.get_siblings():
+        # Only if it's a Browse type page
+        if 'Browse' in sibling.specific_class.__name__:
+            item = {
+                'title': sibling.title,
+                'slug': sibling.slug,
+                'url': get_page_state_url({}, sibling),
+                'children': [],
+            }
+            for child in sibling.get_children():
+                if 'Browse' in child.specific_class.__name__:
+                    item['children'].append({
+                        'title': child.title,
+                        'slug': child.slug,
+                        'url': get_page_state_url({}, child),
+                    })
+            nav_items.append(item)
+    # Return a boolean about whether or not the current page has Browse children
+    for item in nav_items:
+        if get_page_state_url({}, page) == item['url'] and item['children']:
+            return nav_items, True
+    return nav_items, False

@@ -153,12 +153,6 @@ urlpatterns = [
             name='page')],
         namespace='business')),
 
-    url(r'^contact-us/', include([
-        url(r'^$',
-            TemplateView.as_view(template_name='contact-us/index.html'),
-            name='index')],
-        namespace='contact-us')),
-
     url(r'^offices/', include([
         url(r'^(?P<doc_id>[\w-]+)/$',
             SheerTemplateView.as_view(doc_type='office',
@@ -232,8 +226,8 @@ urlpatterns = [
         namespace='transcripts')),
 ]
 
-if settings.DEBUG :     
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  
+if settings.DEBUG :
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtail_urls)))

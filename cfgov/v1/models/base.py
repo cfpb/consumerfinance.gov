@@ -121,6 +121,14 @@ class CFGOVPage(Page):
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
+    def get_breadcrumbs(self, site):
+        ancestors = self.get_ancestors()
+        home_page_children = site.root_page.get_children()
+        for i, ancestor in enumerate(ancestors):
+            if ancestor in home_page_children:
+                return ancestors[i+1:]
+        return []
+
     @property
     def status_string(self):
         if not self.live:

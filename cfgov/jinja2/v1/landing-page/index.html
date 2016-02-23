@@ -20,12 +20,7 @@
 
 {% block content_main %}
     {% for block in page.header -%}
-        {% if 'text_introduction' in block.block_type %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
-        {% endif %}
+        {% include 'templates/render_block.html' with context %}
     {%- endfor %}
     {% for block in page.content -%}
         {% if loop.index == 1 %}
@@ -34,9 +29,7 @@
                 {{ render_stream_child(block) }}
             </div>
         {% else %}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+             {% include 'templates/render_block.html' with context %}
         {% endif %}
     {%- endfor %}
 {% endblock %}
