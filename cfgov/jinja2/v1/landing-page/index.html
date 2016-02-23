@@ -23,7 +23,14 @@
         {% include 'templates/render_block.html' with context %}
     {%- endfor %}
     {% for block in page.content -%}
-        {% include 'templates/render_block.html' with context %}
+        {% if loop.index == 1 %}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+        {% else %}
+             {% include 'templates/render_block.html' with context %}
+        {% endif %}
     {%- endfor %}
 {% endblock %}
 
