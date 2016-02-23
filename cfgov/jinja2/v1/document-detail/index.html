@@ -23,9 +23,7 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+        {% include 'templates/render_block.html' with context %}
     {%- endfor %}
 {% endblock %}
 

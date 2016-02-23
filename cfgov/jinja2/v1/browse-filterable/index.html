@@ -21,16 +21,17 @@
         </div>
     {% endfor %}
     {% for block in page.content %}
-        <div class="block
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block
                     block__flush-top">
-            {% if 'filter_controls' in block.block_type %}
+
                 {% set f = forms.pop(0) %}
                 {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
                 {{ flc(block.value, f, loop.index0) }}
-            {% else %}
-                {{ render_stream_child(block) }}
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+            {% include 'templates/render_block.html' with context %}
+        {% endif %}
     {% endfor %}
     <aside class="prefooter">
         {% for block in page.sidefoot %}

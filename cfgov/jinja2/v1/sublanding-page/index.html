@@ -24,19 +24,23 @@
 
 {% block content_main %}
     {% for block in page.content -%}
-        <div class="block
-                    {{ 'block__flush-top' if loop.index == 1 else '' }}">
-        {% if 'post_preview_snapshot' in block.block_type %}
-            {% set posts = page.get_browsefilterable_posts(request) %}
-            {% set limit = block.value.limit | int %}
-            {% set num_posts = limit if limit <= posts | length else posts | length %}
-            {% for i in range(num_posts) %}
-                {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
-            {% endfor %}
+        {% if loop.index == 1 %}
+            <div class="block
+                        block__flush-top">
+                {% if 'post_preview_snapshot' in block.block_type %}
+                    {% set posts = page.get_browsefilterable_posts(request) %}
+                    {% set limit = block.value.limit | int %}
+                    {% set num_posts = limit if limit <= posts | length else posts | length %}
+                    {% for i in range(num_posts) %}
+                        {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
+                    {% endfor %}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+             </div>
         {% else %}
-            {{ render_stream_child(block) }}
+             {% include 'templates/render_block.html' with context %}
         {% endif %}
-        </div>
     {%- endfor %}
 {% endblock %}
 

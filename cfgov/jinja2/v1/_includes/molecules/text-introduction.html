@@ -18,17 +18,16 @@
    value.links:     A collection of links with URL & Text.
 
    ========================================================================== #}
-<div>
-    <h1>{{ value.heading }}</h1>
-    <div class="lead-paragraph">{{ value.intro.source | safe }}</div>
-    {{ value.body.source | safe }}
-    <ul class="list list__links">
-        {% for link in value.links %}
-            <li class="list_item">
-                <a class="list_link" href="{{ link.url }}">
-                    {{ link.text }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+
+<h1>{{ value.heading }}</h1>
+<div class="lead-paragraph">{{ value.intro.source | safe }}</div>
+{{ value.body.source | safe }}
+<ul class="list list__links">
+    {% for link in value.links %}
+        <li class="list_item">
+            <a class="list_link" href="{{ link.url }}">
+                {{ link.text }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

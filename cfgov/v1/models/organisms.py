@@ -11,6 +11,7 @@ class Well(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = '_includes/organisms/well.html'
+        classname = 'block__flush'
 
 
 class ImageText5050Group(blocks.StructBlock):
@@ -170,6 +171,7 @@ class ItemIntroduction(blocks.StructBlock):
     class Meta:
         icon = 'form'
         template = '_includes/organisms/item-introduction.html'
+        classname = 'block__flush-top'
 
 
 class FilterControls(molecules.BaseExpandable):
