@@ -182,7 +182,7 @@
 {% macro render(controls, form, index) %}
     <div class="o-filterable-list-controls">
         {% set form_markup = _filters_form(controls, form, index) %}
-        {% call() expandable(controls, true) %}
+        {% call() expandable(controls) %}
             {{ form_markup | safe }}
         {% endcall %}
         {% for field in form %}

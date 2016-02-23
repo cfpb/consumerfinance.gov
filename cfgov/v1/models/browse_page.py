@@ -9,7 +9,7 @@ from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 from .base import CFGOVPage
 from . import molecules
 from . import organisms
-
+from ..util.util import get_secondary_nav_items
 
 class BrowsePage(CFGOVPage):
     header = StreamField([
@@ -50,3 +50,8 @@ class BrowsePage(CFGOVPage):
 
     def full_width_serif(self):
         return true
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(BrowsePage, self).get_context(request, *args, **kwargs)
+        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        return context

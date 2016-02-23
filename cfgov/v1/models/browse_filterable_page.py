@@ -11,6 +11,7 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from . import base, molecules, organisms, ref
 from .learn_page import AbstractFilterPage
 from .. import forms
+from ..util.util import get_secondary_nav_items
 
 
 class BrowseFilterablePage(base.CFGOVPage):
@@ -41,6 +42,8 @@ class BrowseFilterablePage(base.CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(BrowseFilterablePage, self).get_context(request, *args,
                                                                 **kwargs)
+        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+
         context['forms'] = []
         form_class = self.get_form_class()
         form_specific_filters = self.get_form_specific_filter_data(form_class,
