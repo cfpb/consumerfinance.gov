@@ -1,3 +1,4 @@
 firewall_allowed_tcp_ports:
   - "22"
   - "8000"
+  - "9200"
