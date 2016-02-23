@@ -5,6 +5,8 @@
 
 - src: geerlingguy.firewall
 
+- src: xcezx.httpd
+
 - src: https://github.com/Ken24/ansible-role-python.git
   version: master
   name: Ken24.python

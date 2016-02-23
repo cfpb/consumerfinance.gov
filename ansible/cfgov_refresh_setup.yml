@@ -21,6 +21,7 @@
     - { role: geerlingguy.git }
     - { role: Ken24.python }
     - { role: geerlingguy.firewall }
+    - { role: xcezx.httpd }
   tasks:
     - name: Install python dependencies
       yum: pkg={{ item }} state=present
