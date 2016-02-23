@@ -43,6 +43,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Home Page to Info Unit Macro.
 - Included use of wagtail `classname` meta field for block css modifiers
 - Breadcrumbs for Wagtail pages now handled by Wagtail
+- Changed Wagtail pages extending from `layout-side-nav.html` to use new side navigation handling
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
