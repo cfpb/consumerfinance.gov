@@ -160,7 +160,7 @@
                     {{ tags.render(post.tags.names(), url, true, false, form_id) }}
                 {% endif %}
             </div>
-            {% if post.preview_link_text and post.preview_link_url %}
+            {% if post.preview_link_url and post.preview_link_text %}
                 <a href="{{ post.preview_link_url }}" class="jump-link jump-link__underline">
                     {{ post.preview_link_text }}
                 </a>
