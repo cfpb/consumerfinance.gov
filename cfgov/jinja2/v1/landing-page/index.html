@@ -28,16 +28,10 @@
         {% endif %}
     {%- endfor %}
     {% for block in page.content -%}
-        {% if loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
-        {% else %}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
-        {% endif %}
+        <div class="block
+                    {{ 'block__flush-top' if loop.index == 1 else '' }}">
+            {{ render_stream_child(block) }}
+        </div>
     {%- endfor %}
 {% endblock %}
 

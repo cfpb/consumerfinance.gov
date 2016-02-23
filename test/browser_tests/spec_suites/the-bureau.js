@@ -16,12 +16,6 @@ describe( 'The Bureau Page', function() {
     }
   );
 
-  it( 'should have a hero',
-    function() {
-      expect( page.hero.isPresent() ).toBe( true );
-    }
-  );
-
   it( 'should have a side nav',
     function() {
       expect( page.sideNav.isPresent() ).toBe( true );

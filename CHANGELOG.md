@@ -52,11 +52,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed Link Blob, 25/75, and 50/50 styles.
 - Removed need for negative margin tweaks after groups.
 - Removed need for positive margin tweaks aroung group headings.
+- Removed heros from old WordPress pages.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
 - Fixed Contacts import-data script to set phone numbers correctly
-
+- Fixed an issue where heros were not displaying on new Wagtail pages.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

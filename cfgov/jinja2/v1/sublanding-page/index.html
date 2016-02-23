@@ -21,15 +21,11 @@
     {% endif %}
 {% endblock %}
 
+
 {% block content_main %}
     {% for block in page.content -%}
-        {% if loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-        {% else %}
-            <div class="block">
-        {% endif %}
-
+        <div class="block
+                    {{ 'block__flush-top' if loop.index == 1 else '' }}">
         {% if 'post_preview_snapshot' in block.block_type %}
             {% set posts = page.get_browsefilterable_posts(request) %}
             {% set limit = block.value.limit | int %}
