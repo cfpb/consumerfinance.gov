@@ -13,3 +13,5 @@ DATABASES = {
         'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
     },
 }
+
+STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
