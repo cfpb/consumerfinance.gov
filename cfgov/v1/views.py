@@ -5,7 +5,7 @@ from core.services import PDFGeneratorView, ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from wagtail.wagtailadmin import messages
+from wagtail.wagtailadmin import messages as wagtail_messages
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 from django.core.urlresolvers import reverse
@@ -34,6 +34,7 @@ from .forms import login_form
 from .util import password_policy
 from .models import base
 from .models.base import PasswordHistoryItem
+from .signals import page_unshared
 
 
 LoginForm = login_form()
@@ -81,8 +82,10 @@ def unshare(request, page_id):
         page.save_revision(user=request.user, submitted_for_moderation=False)
         page.save()
 
-        messages.success(request, _("Page '{0}' unshared.").format(page.title), buttons=[
-            messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
+        page_unshared.send(sender=page.specific_class, instance=page.specific)
+
+        wagtail_messages.success(request, _("Page '{0}' unshared.").format(page.title), buttons=[
+            wagtail_messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
         ])
 
         return redirect('wagtailadmin_explore', page.get_parent().id)
