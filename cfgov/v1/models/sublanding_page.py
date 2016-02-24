@@ -14,7 +14,6 @@ from . import organisms
 class SublandingPage(CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
-        ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
