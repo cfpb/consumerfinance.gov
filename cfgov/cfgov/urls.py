@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -5,6 +7,7 @@ from django.conf.urls import include, url
 from django.views.generic.base import TemplateView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
+from sheerlike.sites import SheerSite
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login
@@ -13,6 +16,8 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from django.views.generic import RedirectView
+
+from transition_utilities.conditional_urls import include_if_app_enabled
 
 from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
@@ -42,6 +47,12 @@ urlpatterns = [
     url(r'^$', SheerTemplateView.as_view(), name='home'),
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
+    url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
+    url(r'^adult-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('adult-financial-education'))),
+    url(r'^youth-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('youth-financial-education'))),
+    url(r'^library-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('library-resources'))),
+    url(r'^tax-preparer-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('tax-preparer-resources'))),
+    url(r'^managing-someone-elses-money/', include(SheerSite('fin-ed-resources').urls_for_prefix('managing-someone-elses-money'))),
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
 
@@ -72,6 +83,7 @@ urlpatterns = [
                 name='hero'),
         ],
             namespace='sheer-layouts')),
+
 
         url(r'^blog-docs/$', SheerTemplateView.as_view(template_name='blog-docs/index.html'), name='blog-docs'),
         url(r'^cf-enhancements/$', SheerTemplateView.as_view(template_name='cf-enhancements/index.html'),
@@ -224,13 +236,37 @@ urlpatterns = [
             name='how-to-apply-for-a-federal-job-with-the-cfpb'),
     ],
         namespace='transcripts')),
+    url(r'^jobs/', include_if_app_enabled('jobmanager','jobmanager.urls')),
+    url(r'^notice-and-comment/', include_if_app_enabled('noticeandcomment','noticeandcomment.urls')),
+    url(r'^leadership-calendar/', include_if_app_enabled('cal','cal.urls')),
+    url(r'^paying-for-college/', include_if_app_enabled('comparisontool','comparisontool.urls')),
+    url(r'^credit-cards/agreements/', include_if_app_enabled('agreements','agreements.urls')),
+    url(r'^(?i)askcfpb/', include_if_app_enabled('knowledgebase','knowledgebase.urls')),
+    url(r'^es/obtener-respuestas/', include_if_app_enabled('knowledgebase','knowledgebase.babel_urls')),
+    url(r'^selfregs/', include_if_app_enabled('selfregistration', 'selfregistration.urls')),
+    url(r'^hud-api-replace/', include_if_app_enabled('hud_api_replace','hud_api_replace.urls')),
+    url(r'^retirement/', include_if_app_enabled('retirement_api','retirement_api.urls')),
+    url(r'^complaint/', include_if_app_enabled('complaint','complaint.urls')),
+    url(r'^complaintdatabase/', include_if_app_enabled('complaintdatabase','complaintdatabase.urls')),
+    url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
+    url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
+
 ]
+if 'cfpb_common' in settings.INSTALLED_APPS:
+    pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
+    urlpatterns.append(pattern)
+
+if 'selfregistration' in settings.INSTALLED_APPS:
+    from selfregistration.views import CompanySignup
+    pattern = url(r'^company-signup/', CompanySignup.as_view())
+    urlpatterns.append(pattern)    
 
 if settings.DEBUG :
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.
-urlpatterns.append(url(r'', include(wagtail_urls)))
+
+# urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
 
