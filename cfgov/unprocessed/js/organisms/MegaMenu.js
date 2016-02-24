@@ -65,8 +65,9 @@ function MegaMenu( element ) {
    */
   function _initEvents( menu ) {
     menu.addEventListener( 'toggle', _handleToggle.bind( this ) );
-    menu.addEventListener( 'expandBegin', _handleExpandBegin );
+    menu.addEventListener( 'expandBegin', _handleExpandBegin.bind( this ) );
     menu.addEventListener( 'collapseBegin', _handleCollapseBegin );
+    menu.addEventListener( 'collapseEnd', _handleCollapseEnd.bind( this ) );
   }
 
   /**
@@ -168,8 +169,12 @@ function MegaMenu( element ) {
   /**
    * Event handler for when FlyoutMenu expand transition begins.
    * Use this to perform post-expandBegin actions.
+   * @param {Event} event - A FlyoutMenu event.
    */
-  function _handleExpandBegin() {
+  function _handleExpandBegin( event ) {
+    if ( event.target === _flyoutMenu ) {
+      this.dispatchEvent( 'rootExpandBegin', { target: this } );
+    }
     // If on a submenu, focus the back button, otherwise focus the first link.
     var firstMenuLink;
     if ( _activeMenu === _flyoutMenu ) {
@@ -187,6 +192,18 @@ function MegaMenu( element ) {
    * Use this to perform post-collapseBegin actions.
    */
   function _handleCollapseBegin() {
+    document.body.removeEventListener( 'mousedown', _handleBodyClick );
+  }
+
+  /**
+   * Event handler for when FlyoutMenu collapse transition ends.
+   * Use this to perform post-collapseEnd actions.
+   * @param {Event} event - A FlyoutMenu event.
+   */
+  function _handleCollapseEnd( event ) {
+    if ( event.target === _flyoutMenu ) {
+      this.dispatchEvent( 'rootCollapseEnd', { target: this } );
+    }
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 

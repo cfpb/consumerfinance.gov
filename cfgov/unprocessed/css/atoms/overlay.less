@@ -1,0 +1,36 @@
+/* topdoc
+  name: Overlay
+  family: cfgov-atoms
+  patterns:
+    - name: Default example
+      markup: |
+          <div class="a-overlay"></div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .a-overlay
+  tags:
+    - cfgov-atoms
+*/
+
+.a-overlay {
+    // Only show overlay at mobile/tablet size.
+    .respond-to-max( @bp-sm-max, {
+        height: 100%;
+        width: 100%;
+
+        position: fixed;
+        // TODO: Update z-index value with standard z-index variable.
+        z-index: 10;
+
+        background: @black;
+        opacity: 0.6;
+    } );
+}
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
