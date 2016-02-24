@@ -266,7 +266,7 @@ if settings.DEBUG :
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-# urlpatterns.append(url(r'', include(wagtail_urls)))
+urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
 
