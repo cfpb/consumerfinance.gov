@@ -155,7 +155,8 @@ function isEmpty( value ) {
   return isUndefined( value ) ||
          value === null ||
          isString( value ) &&
-         value.length <= 0 ? true : false;
+         value.length <= 0 ||
+         ( /^\s*$/ ).test( value );
 }
 
 
