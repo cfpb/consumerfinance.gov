@@ -129,6 +129,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 {% block body %}
 
+{# Overlay for the page. Used for the mobile mega menu. #}
+<div class="a-overlay u-hidden"></div>
+
 <a href="#main" id="skip-nav">Skip to main content</a>
 
 {% if flag_enabled('BETA_NOTICE') %}
