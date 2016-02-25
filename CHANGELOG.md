@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added new content flush sides on small modifier to fix an issue where margin was set on the molecule level instead of the template.
 - Added Info Unit Macro.
 - URL field to the Post Preview organism
+- Frontend: Added overlay atom.
 
 ### Changed
 - Converted the project to Capital Framework v3

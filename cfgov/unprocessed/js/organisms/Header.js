@@ -23,17 +23,22 @@ function Header( element ) {
     atomicCheckers.validateDomElement( element, BASE_CLASS, 'Header' );
   var _globalSearch;
   var _megaMenu;
+  var _overlay;
 
   /**
+   * @param {HTMLNode} overlay
+   *   Overlay to show/hide when mobile mega menu is shown.
    * @returns {Object} The Header instance.
    */
-  function init() {
+  function init( overlay ) {
+    _overlay = overlay;
     _globalSearch = new GlobalSearch( _dom );
     _globalSearch.addEventListener( 'toggle', _searchClicked );
     _globalSearch.init();
 
     _megaMenu = new MegaMenu( _dom );
-    _megaMenu.addEventListener( 'triggerClick', _megaMenuClicked );
+    _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
+    _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
     _megaMenu.init();
 
     return this;
@@ -46,11 +51,22 @@ function Header( element ) {
     _megaMenu.collapse();
   }
 
+
   /**
-   * Handler for opening the mega menu.
+   * Handler for when the mega menu begins expansion.
+   * Collapse the global search.
    */
-  function _megaMenuClicked() {
+  function _megaMenuExpandBegin() {
     _globalSearch.collapse();
+    _overlay.classList.remove( 'u-hidden' );
+  }
+
+  /**
+   * Handler for when the mega menu ends collapsing.
+   * Show an overlay.
+   */
+  function _megaMenuCollapseEnd() {
+    _overlay.classList.add( 'u-hidden' );
   }
 
   this.init = init;

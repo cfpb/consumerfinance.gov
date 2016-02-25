@@ -27,4 +27,4 @@ require( '../modules/external-site-redirect.js' ).init();
 // Organisms.
 var Header = require( '../organisms/Header.js' );
 var header = new Header( document.body );
-header.init();
+header.init( document.body.querySelector( '.a-overlay' ) );
