@@ -14,8 +14,6 @@ function BudgetPerformancePlanReport() {
 
   this.mainTitle = element( by.css( '.content_main h1' ) );
 
-  this.mainSummary = element( by.css( '.content_main p.h3' ) );
-
   this.performancePlanTitles = element.all( by.css( '.performance-plan h4' ) );
 
   this.performancePlanLinks = element.all( by.css( '.performance-plan a' ) );
