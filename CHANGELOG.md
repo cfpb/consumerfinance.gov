@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Info Unit Macro.
 - URL field to the Post Preview organism
 - Frontend: Added overlay atom.
+- Backend: HomePage Model
 
 ### Changed
 - Converted the project to Capital Framework v3
