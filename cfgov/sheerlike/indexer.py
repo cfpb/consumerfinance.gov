@@ -34,7 +34,7 @@ class ContentProcessor(object):
         self.kwargs = kwargs
 
     def documents(self):
-        return self.processor_module.documents(self.name, **self.kwargs)
+        return self.processor_module.documents(**self.kwargs)
 
     def mapping(self):
         if 'mappings' in self.kwargs:

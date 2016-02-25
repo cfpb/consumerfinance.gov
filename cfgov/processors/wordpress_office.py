@@ -20,7 +20,7 @@ def posts_at_url(url):
             yield p
 
 
-def documents(name, url, **kwargs):
+def documents(url, **kwargs):
 
     for post in posts_at_url(url):
         yield process_office(post)
