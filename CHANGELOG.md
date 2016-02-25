@@ -58,6 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed need for negative margin tweaks after groups.
 - Removed need for positive margin tweaks aroung group headings.
 - Removed heros from old WordPress pages.
+- Removed `show-hide-fields.js` script and reference from common.js.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content

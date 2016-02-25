@@ -20,7 +20,6 @@ require( '../modules/scroll-on-history-collapse' ).init();
 require( '../modules/clear-form-buttons' ).init();
 require( '../modules/youtube' ).init();
 require( '../modules/pagination-validation.js' ).init();
-require( '../modules/show-hide-fields.js' ).init();
 require( '../modules/external-site-redirect.js' ).init();
 
 // GLOBAL ATOMIC ELEMENTS.
