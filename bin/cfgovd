@@ -1,0 +1,22 @@
+#! /usr/bin/perl
+
+my $workDir = "/vagrant/cfgov/";
+my $userDir = "/home/vagrant/";
+my $outFile = $userDir.".cfgovOutput";
+
+if ($#ARGV >= 0) {
+	if ($ARGV[0] eq "start_django") {
+		chdir($workDir) || die "Project does not exist.\n";
+		`PYTHONUNBUFFERED=1 python manage.py runserver 0.0.0.0:8000 >$outFile`;
+	}
+	elsif ($ARGV[0] eq 'stop_django') {
+		my @procList = `ps -aux |grep "runserver"`;
+		my $railsProc = $procList[0];
+		if ($#procList > 0) {	
+			my @psIds = split(/  /, $railsProc);	
+			print("\nKilling process $psIds[1]\n");	
+			`kill -9 $psIds[1]`;
+		}
+	}	
+	else { } 
+}
