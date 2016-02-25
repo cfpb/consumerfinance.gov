@@ -22,6 +22,7 @@
     - { role: Ken24.python }
     - { role: geerlingguy.firewall }
     - { role: xcezx.httpd }
+    - { role: juwai.nodejs }
   tasks:
     - name: Install python dependencies
       yum: pkg={{ item }} state=present
@@ -34,6 +35,7 @@
         - "tk-devel"
         - "python-devel"
         - "mysql-devel.x86_64"
+        - "alsa-lib-devel"
 
     # Virtualbox Setup allows halt and up with vagrant again
     - name: Virtualbox Add Setup
@@ -71,5 +73,15 @@
     - name: Import events data
       shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW"
 
-    # - name: Create Sheer Index
-    #   shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"
+    - name: Create Sheer Index
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"
+
+      # Gulp Development Setup
+    - name: Upgrade node
+      command: "npm -g install npm"
+
+    # - name: Update webdriver manager
+    #   command: webdriver-manager update
+
+    # - name: npm install
+    #   shell: "cd /vagrant; npm install"

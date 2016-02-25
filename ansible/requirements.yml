@@ -7,6 +7,10 @@
 
 - src: xcezx.httpd
 
+- src: https://github.com/vickumar1981/ansible-role-nodejs.git
+  version: master
+  name: juwai.nodejs
+
 - src: https://github.com/Ken24/ansible-role-python.git
   version: master
   name: Ken24.python
@@ -14,3 +18,4 @@
 - src: https://github.com/vccabral/ansible-role-elasticsearch.git
   version: master
   name: vccabral.elasticsearch
+
