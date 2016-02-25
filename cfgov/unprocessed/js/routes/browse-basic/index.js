@@ -5,8 +5,11 @@
 'use strict';
 
 // List of organisms used.
+var SecondaryNavigation = require( '../../organisms/SecondaryNavigation' );
 var Expandable = require( '../../molecules/Expandable' );
 var ExpandableGroup = require( '../../organisms/ExpandableGroup' );
+
+var secondaryNavigation = new SecondaryNavigation( document.body ).init();
 
 var selector = '.expandable-prototypes .m-expandable';
 var expandables = document.querySelectorAll( selector );

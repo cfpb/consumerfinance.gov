@@ -1,6 +1,15 @@
-<div class="o-image-text-50-50-group content-l">
+<div class="o-info-unit-group">
     <h2>{{ value.heading }}</h2>
-    {% for block in value.image_texts %}
-        {{ block }}
-    {% endfor %}
+    <div class="content-l">
+      {% for block in value.image_texts %}
+        <div class="content-l_col
+                    content-l_col-1-2">
+            {% if block.has_rule %}
+                <div class="a-rule-break"></div>
+            {% endif %}
+
+            {{ block }}
+        </div>
+        {% endfor %}
+    </div>
 </div>

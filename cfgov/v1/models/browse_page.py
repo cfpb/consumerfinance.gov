@@ -9,7 +9,7 @@ from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 from .base import CFGOVPage
 from . import molecules
 from . import organisms
-
+from ..util.util import get_secondary_nav_items
 
 class BrowsePage(CFGOVPage):
     header = StreamField([
@@ -28,8 +28,6 @@ class BrowsePage(CFGOVPage):
         ('table', organisms.Table()),
     ], blank=True)
 
-    side_navigation = StreamField([], blank=True)
-
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -37,12 +35,11 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    sidebar_panels = [StreamFieldPanel('side_navigation')] + CFGOVPage.sidefoot_panels
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
@@ -53,3 +50,8 @@ class BrowsePage(CFGOVPage):
 
     def full_width_serif(self):
         return true
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(BrowsePage, self).get_context(request, *args, **kwargs)
+        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        return context

@@ -3,7 +3,7 @@ import os.path
 import codecs
 import json
 
-from importlib import import_module 
+from importlib import import_module
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
@@ -16,17 +16,26 @@ ELASTICSEARCH_INDEX = settings.SHEER_ELASTICSEARCH_INDEX
 
 from sheerlike.indexer import index
 
+
 class Command(BaseCommand):
     help = "Run the classic 'sheer' indexer"
 
-    def add_arguments(self,parser):
+    def add_arguments(self, parser):
         parser.add_argument('--reindex', '-r', action="store_true",
-                                  help="Recreate the index and reindex all content.")
+                            help="Recreate the index and reindex all content.")
         parser.add_argument('--processors', '-p', nargs='*',
-                                  help='Content processors to index.')
+                            help='Content processors to index.')
 
-        parser.add_argument('--elasticsearch', '-e', default=ELASTICSEARCH_HOSTS, help="Elasticsearch host:port pairs. Separate hosts with commas. Default is localhost:9200. You can also set the SHEER_ELASTICSEARCH_HOSTS environment variable.")
-        parser.add_argument('--index', '-i', default=ELASTICSEARCH_INDEX, help="Elasticsearch index name. Default is 'content'. You can also set the SHEER_ELASTICSEARCH_INDEX environment variable.")
+        parser.add_argument(
+            '--elasticsearch',
+            '-e',
+            default=ELASTICSEARCH_HOSTS,
+            help="Elasticsearch host:port pairs. Separate hosts with commas. Default is localhost:9200. You can also set the SHEER_ELASTICSEARCH_HOSTS environment variable.")
+        parser.add_argument(
+            '--index',
+            '-i',
+            default=ELASTICSEARCH_INDEX,
+            help="Elasticsearch index name. Default is 'content'. You can also set the SHEER_ELASTICSEARCH_INDEX environment variable.")
 
     def handle(self, *args, **options):
-	index(args,options)
+        index(args, options)

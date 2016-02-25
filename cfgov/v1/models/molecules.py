@@ -56,6 +56,7 @@ class TextIntroduction(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = '_includes/molecules/text-introduction.html'
+        classname = 'block__flush-top'
 
 
 class Hero(blocks.StructBlock):
@@ -132,6 +133,7 @@ class FeaturedContent(blocks.StructBlock):
         template = '_includes/molecules/featured-content.html'
         icon = 'doc-full-inverse'
         label = 'Featured Content'
+        classname = 'block__flush'
 
 
 class CallToAction(blocks.StructBlock):

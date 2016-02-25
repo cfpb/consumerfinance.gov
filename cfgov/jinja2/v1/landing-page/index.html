@@ -20,11 +20,8 @@
 
 {% block content_main %}
     {% for block in page.header -%}
-        {% if 'text_introduction' in block.block_type %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
+        {% if block.block_type != 'hero' %}
+            {% include 'templates/render_block.html' with context %}
         {% endif %}
     {%- endfor %}
     {% for block in page.content -%}
@@ -34,9 +31,7 @@
                 {{ render_stream_child(block) }}
             </div>
         {% else %}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+             {% include 'templates/render_block.html' with context %}
         {% endif %}
     {%- endfor %}
 {% endblock %}
@@ -54,12 +49,6 @@
                 <h3 class="o-sidebar-breakout_heading">
                     {{ render_stream_child(block) }}
                 </h3>
-            {% elif 'slug' in block.block_type %}
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
-                        {{ render_stream_child(block) }}
-                    </span>
-                </h2>
             {% else %}
                 {{ render_stream_child(block) }}
             {% endif %}

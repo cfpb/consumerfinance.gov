@@ -22,20 +22,33 @@ from .middleware import get_request
 
 from flags.template_functions import flag_enabled, flag_disabled
 
-PERMALINK_REGISTRY={}
+PERMALINK_REGISTRY = {}
+default_app_config = 'sheerlike.apps.SheerlikeConfig'
+
 
 def register_permalink(sheer_type, url_pattern_name):
-    PERMALINK_REGISTRY[sheer_type]=url_pattern_name
+    PERMALINK_REGISTRY[sheer_type] = url_pattern_name
 
-def url_for(app, filename):
-    if app == 'static':
+
+def url_for(app, filename, site_slug=None):
+    if app == 'static' and not site_slug:
         return staticfiles_storage.url(filename)
+    elif app == 'static':
+        return staticfiles_storage.url(site_slug + '/static/' + filename)
     else:
         raise ValueError("url_for doesn't know about %s" % app)
 
+
 class SheerlikeContext(Context):
+
     def __init__(self, environment, parent, name, blocks):
-        super(SheerlikeContext, self).__init__(environment, parent, name, blocks)
+        super(
+            SheerlikeContext,
+            self).__init__(
+            environment,
+            parent,
+            name,
+            blocks)
         try:
             self.vars['request'] = get_request()
         except:
@@ -45,7 +58,9 @@ class SheerlikeContext(Context):
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
 jinja2.runtime.Context = SheerlikeContext
 
+
 class SheerlikeEnvironment(Environment):
+
     def join_path(self, template, parent):
         dirname = os.path.dirname(parent)
         segments = dirname.split('/')
@@ -53,7 +68,7 @@ class SheerlikeEnvironment(Environment):
         collected = ''
         for segment in segments:
             collected += segment + '/'
-            paths.insert(0,collected[:])
+            paths.insert(0, collected[:])
         for p in paths:
             relativepath = os.path.join(p, template)
             for search in self.loader.searchpath:
@@ -62,29 +77,19 @@ class SheerlikeEnvironment(Environment):
                     return relativepath
         return template
 
+
 def environment(**options):
     queryfinder = QueryFinder()
 
-    searchpath =[]
-    staticdirs = []
-
-    sites = settings.SHEER_SITES
-    for site in sites:
-        site_path = Path(site)
-        searchpath.append(site_path)
-        searchpath.append(site_path.child('_includes'))
-        searchpath.append(site_path.child('_layouts'))
-        staticdirs.append(site_path.child('static'))
-
-    options['loader'].searchpath += searchpath
-    settings.STATICFILES_DIRS += staticdirs
-
     options.setdefault('extensions', []).append('jinja2.ext.do')
 
+    site_slug = options.get('site_slug')
+    if site_slug:
+        del options['site_slug']
     env = SheerlikeEnvironment(**options)
     env.globals.update({
         'static': staticfiles_storage.url,
-        'url_for': url_for,
+        'url_for': functools.partial(url_for, site_slug=site_slug),
         'url': reverse,
         'queries': queryfinder,
         'more_like_this': more_like_this,
@@ -92,8 +97,8 @@ def environment(**options):
         'selected_filters_for_field': selected_filters_for_field,
         'is_filter_selected': is_filter_selected,
         'when': when,
-        'flag_enabled':flag_enabled,
-        'flag_disabled':flag_disabled,
+        'flag_enabled': flag_enabled,
+        'flag_disabled': flag_disabled,
     })
     env.filters.update({
         'date': date_filter

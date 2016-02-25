@@ -21,38 +21,26 @@
     {% endif %}
 {% endblock %}
 
+
 {% block content_main %}
     {% for block in page.content -%}
         {% if loop.index == 1 %}
             <div class="block
                         block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
+                {% if 'post_preview_snapshot' in block.block_type %}
+                    {% set posts = page.get_browsefilterable_posts(request) %}
+                    {% set limit = block.value.limit | int %}
+                    {% set num_posts = limit if limit <= posts | length else posts | length %}
+                    {% for i in range(num_posts) %}
+                        {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
+                    {% endfor %}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+             </div>
         {% else %}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+             {% include 'templates/render_block.html' with context %}
         {% endif %}
-
-        {% for block in page.content -%}
-            {% if loop.index == 1 %}
-                <div class="block
-                            block__flush-top">
-            {% else %}
-                <div class="block">
-            {% endif %}
-            {% if 'post_preview_snapshot' in block.block_type %}
-                {% set posts = page.get_browsefilterable_posts(request) %}
-                {% set limit = block.value.limit | int %}
-                {% set num_posts = limit if limit <= posts | length else posts | length %}
-                {% for i in range(num_posts) %}
-                    {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
-                {% endfor %}
-            {% else %}
-                {{ render_stream_child(block) }}
-            {% endif %}
-                </div>
-        {%- endfor %}
     {%- endfor %}
 {% endblock %}
 
@@ -62,26 +50,16 @@
 
 {% block content_sidebar scoped -%}
     {% for block in page.sidefoot %}
-        {% if 'related_posts' in block.block_type %}
-            {{ related_posts.render(block) }}
-        {% elif 'email_signup' in block.block_type %}
-            {{ render_stream_child(block) }}
-        {% else %}
-            {% if 'heading' in block.block_type %}
+        <div class="block block__flush-top">
+            {% if 'related_posts' in block.block_type %}
+                {{ related_posts.render(block) }}
+            {% elif 'heading' in block.block_type %}
                 <h3 class="o-sidebar-breakout_heading">
                     {{ render_stream_child(block) }}
                 </h3>
-            {% elif 'slug' in block.block_type %}
-                <h2 class="header-slug">
-                        <span class="header-slug_inner">
-                            {{ render_stream_child(block) }}
-                        </span>
-                </h2>
-            {% elif 'paragraph' in block.block_type %}
-                {{ render_stream_child(block) }}
             {% else %}
                 {{ render_stream_child(block) }}
             {% endif %}
-        {% endif %}
+        </div>
     {%- endfor %}
 {%- endblock %}
