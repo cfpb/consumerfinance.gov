@@ -7,7 +7,6 @@ import hashlib
 
 class DataConverter(SnippetDataConverter):
     def convert(self, doc):
-
         post_dict = {
             'heading': doc.get('title') + ';;' + doc.get('slug'),
             'body': doc.get('content', u''),
@@ -54,12 +53,11 @@ class DataConverter(SnippetDataConverter):
             stream_index += 1
 
         post_dict['contact_info-count'] = str(stream_index)
-
         return post_dict
 
     def get_existing_snippet(self, doc):
         try:
-            return Contact.objects.get(hash=hashlib.md5(doc.get('title') + ';;' + doc.get('slug')).hexdigest())
+            return Contact.get_by_title_slug(doc.get('title'), doc.get('slug'))
         except Contact.DoesNotExist:
             return None
 
