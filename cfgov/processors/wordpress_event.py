@@ -25,7 +25,7 @@ def posts_at_url(url):
             yield p
 
 
-def documents(name, url, **kwargs):
+def documents(url, **kwargs):
     """
     Yield documents to be indexed in Elasticsearch, one at a time.
     """
