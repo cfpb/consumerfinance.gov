@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Backend: HomePage Model
 - David Silberman's assets
 - Frontend: Added JS init scripts for /offices/, /sub-pages/, and /budget/.
+- Frontend: Added data-* attribute JS utility class.
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -52,6 +53,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed FilterableListControls.js to add validation for email, date, and checkbox fields.
 - Converted references and asset urls from Fuchs to Silberman.
 - Fix blog post template to use sheerlike related posts method.
+- Restructured mega menu to include submenus recursively to allow for a third-level.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.

@@ -21,9 +21,7 @@ function MegaMenu( element ) {
 
   var _dom =
     atomicCheckers.validateDomElement( element, BASE_CLASS, 'MegaMenu' );
-  var _flyoutMenu = new FlyoutMenu( _dom,
-                                    '.' + BASE_CLASS + '_trigger',
-                                    '.' + BASE_CLASS + '_content' ).init();
+  var _flyoutMenu = new FlyoutMenu( _dom ).init();
   var _activeMenu = _flyoutMenu;
   var _activeMenuDom = _flyoutMenu.getDom().content;
   var _menuItems = _dom.querySelectorAll( '.' + BASE_CLASS + '_content-item' );
@@ -41,13 +39,13 @@ function MegaMenu( element ) {
     var initEventsBinded = _initEvents.bind( this );
     var menuItem;
     var submenu;
+    var childSel = '.' + BASE_CLASS + '_content-link__has-children';
     for ( var i = 1, len = _menuItems.length; i < len; i++ ) {
       menuItem = _menuItems[i];
-      if ( menuItem.querySelector( '.u-link__disabled' ) === null ) {
+      if ( menuItem.querySelector( '.u-link__disabled' ) === null &&
+           menuItem.querySelector( childSel ) !== null ) {
         submenu =
-          new FlyoutMenu( menuItem, '.' + BASE_CLASS + '_content-link',
-                          '.' + BASE_CLASS + '_subcontent',
-                          '.' + BASE_CLASS + '_subcontent-btn__back' ).init();
+          new FlyoutMenu( menuItem ).init();
         _subMenus[menuItem] = submenu;
         initEventsBinded( submenu );
       }
@@ -143,6 +141,7 @@ function MegaMenu( element ) {
    * @returns {Object} A MegaMenu instance.
    */
   function collapse() {
+    _flyoutMenu.collapse();
     _activeMenu.collapse();
 
     return this;

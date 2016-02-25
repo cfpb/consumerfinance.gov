@@ -1,6 +1,7 @@
 'use strict';
 
 // Required modules.
+var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var standardType = require( '../modules/util/standard-type' );
 
@@ -12,18 +13,23 @@ var standardType = require( '../modules/util/standard-type' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the molecule.
- * @param {string} triggerSel - The selector for the menu trigger.
- * @param {string} contentSel - The selector for the menu content.
- * @param {string} altTriggerSel - The selector for a second menu trigger.
- * @returns {Object} A FlyoutMenu instance.
+ * @returns {FlyoutMenu} An instance.
  */
-function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
+function FlyoutMenu( element ) {
+
+  var BASE_CLASS = 'flyout-menu';
+  var BASE_SEL = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
+
+  // TODO: Update atomic-checker to support CSS selectors for validity check.
+  var _dom = dataHook.contains( element, BASE_CLASS ) ? element : null;
+  if ( !_dom ) _dom = element.parentNode.querySelector( BASE_SEL + ']' );
+  if ( !_dom ) { throw new Error( 'Selector not found on passed node!' ); }
+
+  var _triggerDom = _dom.querySelector( BASE_SEL + '_trigger]' );
+  var _contentDom = _dom.querySelector( BASE_SEL + '_content]' );
+  var _altTriggerDom = _dom.querySelector( BASE_SEL + '_alt-trigger]' );
 
   var _isExpanded = false;
-
-  var _triggerDom = element.querySelector( triggerSel );
-  var _contentDom = element.querySelector( contentSel );
-  var _altTriggerDom = element.querySelector( altTriggerSel );
 
   var _transitionEndEvent = _getTransitionEndEvent( _contentDom );
   var _isAnimating = false;
@@ -39,13 +45,22 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
   var _collapseBinded = collapse.bind( this );
 
   /**
-   * @returns {Object} The FlyoutMenu instance.
+   * @returns {FlyoutMenu} An instance.
    */
   function init() {
     _triggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
 
-    if ( altTriggerSel ) {
-      _altTriggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
+    if ( _altTriggerDom ) {
+      // If menu contains a submenu but doesn't have
+      // its own alternative trigger (such as a Back button),
+      // then the altTriggerDom may be in the submenu and we
+      // need to remove the reference.
+      var subMenu = _dom.querySelector( BASE_SEL + ']' );
+      if ( subMenu && subMenu.contains( _altTriggerDom ) ) {
+        _altTriggerDom = null;
+      } else {
+        _altTriggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
+      }
     }
 
     return this;
@@ -68,7 +83,7 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
 
   /**
    * Open the search box.
-   * @returns {Object} A FlyoutMenu instance.
+   * @returns {FlyoutMenu} An instance.
    */
   function expand() {
     if ( !_isExpanded && !_isAnimating ) {
@@ -94,7 +109,7 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
    * If collapse is called when expand animation is underway,
    * save a deferred call to collapse, which is called when
    * expand completes.
-   * @returns {Object} A FlyoutMenu instance.
+   * @returns {FlyoutMenu} An instance.
    */
   function collapse() {
     if ( _isExpanded && !_isAnimating ) {
