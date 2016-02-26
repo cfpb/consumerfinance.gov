@@ -17,6 +17,21 @@ if ($#ARGV >= 0) {
 			print("\nKilling process $psIds[1]\n");	
 			`kill -9 $psIds[1]`;
 		}
+	}
+	elsif ($ARGV[0] eq 'init_vbox') {
+		`sudo /etc/init.d/vboxadd setup 2>/dev/null`;
+	}
+	elsif ($ARGV[0] eq 'init_node') {
+		`sudo npm cache clean -f 2>/dev/null`;
+		`sudo npm install -g n 2>/dev/null`; 
+		`sudo n 5.6.0 2>/dev/null`; 
+		`sudo ln -sf /usr/local/n/versions/node/5.6.0/bin/node /usr/bin/node`;
+		`sudo npm install -g npm@2.5.1 2>/dev/null`;
+		`sudo ln -sf /usr/local/n/versions/node/5.6.0/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm`;
+		`sudo webdriver-manager update`;
+		`sudo rm -Rf /home/vagrant/.node-gyp 2>/dev/null`;
+		`sudo rm -Rf /vagrant/node_modules 2>/dev/null`;
+		`sudo rm /home/vagrant/.npmrc 2>/dev/null`;
 	}	
 	else { } 
 }
