@@ -2,6 +2,7 @@
 
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * FlyoutMenu
@@ -30,6 +31,12 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
   // Needed to add and remove events to transitions.
   var _expandEndBinded = _expandEnd.bind( this );
   var _collapseEndBinded = _collapseEnd.bind( this );
+
+  // Set this function to a queued collapse function,
+  // which is called if collapse is called while
+  // expand is animating.
+  var _deferFunct = standardType.noopFunct;
+  var _collapseBinded = collapse.bind( this );
 
   /**
    * @returns {Object} The FlyoutMenu instance.
@@ -65,7 +72,7 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
    */
   function expand() {
     if ( !_isExpanded && !_isAnimating ) {
-      this.dispatchEvent( 'toggle', { target: this } );
+      _deferFunct = standardType.noopFunct;
       this.dispatchEvent( 'expandBegin', { target: this } );
       _isExpanded = true;
       _isAnimating = true;
@@ -84,11 +91,14 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
 
   /**
    * Close the search box.
+   * If collapse is called when expand animation is underway,
+   * save a deferred call to collapse, which is called when
+   * expand completes.
    * @returns {Object} A FlyoutMenu instance.
    */
   function collapse() {
     if ( _isExpanded && !_isAnimating ) {
-      this.dispatchEvent( 'toggle', { target: this } );
+      _deferFunct = standardType.noopFunct;
       this.dispatchEvent( 'collapseBegin', { target: this } );
       _isExpanded = false;
       _isAnimating = true;
@@ -101,6 +111,8 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
       _triggerDom.setAttribute( 'aria-expanded', 'false' );
       _contentDom.setAttribute( 'aria-expanded', 'false' );
       _triggerDom.focus();
+    } else {
+      _deferFunct = _collapseBinded;
     }
 
     return this;
@@ -108,11 +120,14 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
 
   /**
    * Expand animation has completed.
+   * Call deferred collapse function,
+   * if set (otherwise it will call a noop function).
    */
   function _expandEnd() {
     _isAnimating = false;
     _contentDom.removeEventListener( _transitionEndEvent, _expandEndBinded );
     this.dispatchEvent( 'expandEnd', { target: this } );
+    _deferFunct();
   }
 
   /**

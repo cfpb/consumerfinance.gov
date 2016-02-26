@@ -33,7 +33,7 @@ function Header( element ) {
   function init( overlay ) {
     _overlay = overlay;
     _globalSearch = new GlobalSearch( _dom );
-    _globalSearch.addEventListener( 'toggle', _searchClicked );
+    _globalSearch.addEventListener( 'expandBegin', _searchExpandBegin );
     _globalSearch.init();
 
     _megaMenu = new MegaMenu( _dom );
@@ -47,7 +47,7 @@ function Header( element ) {
   /**
    * Handler for opening the search.
    */
-  function _searchClicked() {
+  function _searchExpandBegin() {
     _megaMenu.collapse();
   }
 
