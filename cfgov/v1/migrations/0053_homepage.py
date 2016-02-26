@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0051_abstractfilterpage_preview_link_url'),
+        ('v1', '0052_remove_browsepage_side_navigation'),
     ]
 
     operations = [
@@ -20,9 +20,5 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('v1.cfgovpage',),
-        ),
-        migrations.RemoveField(
-            model_name='browsepage',
-            name='side_navigation',
         ),
     ]
