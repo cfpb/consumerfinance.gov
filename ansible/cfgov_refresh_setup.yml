@@ -76,13 +76,9 @@
     - name: Create Sheer Index
       shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"
 
-      # Gulp Development Setup
-    - name: Fix node version
-      command: "npm -g install npm@3.3.12"
-
       # Update npm and node.js
     - name: Upgrade npm and node
-      command: "sudo npm cache clean -f; sudo npm install -g n; sudo n stable; sudo ln -sf /usr/local/n/versions/node/<VERSION>/bin/node /usr/bin/node"
+      command: "sudo npm cache clean -f; sudo npm install npm@2.5.1 -g n; sudo n stable; sudo ln -sf /usr/local/n/versions/node/5.6.0/bin/node /usr/bin/node"
 
     # - name: Update webdriver manager
     #   command: webdriver-manager update
