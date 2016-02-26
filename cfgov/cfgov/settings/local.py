@@ -11,7 +11,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('MYSQL_PW', ''),
         'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
         'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-        'OPTIONS': {'init_command': 'SET storage_engine=MYISAM', },
     },
 }
 
