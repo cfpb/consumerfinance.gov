@@ -45,6 +45,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included use of wagtail `classname` meta field for block css modifiers
 - Breadcrumbs for Wagtail pages now handled by Wagtail
 - Changed Wagtail pages extending from `layout-side-nav.html` to use new side navigation handling
+- Changed FilterableListControls.js to add validation for email, date, and checkbox fields. 
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -57,6 +58,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed need for negative margin tweaks after groups.
 - Removed need for positive margin tweaks aroung group headings.
 - Removed heros from old WordPress pages.
+- Removed `show-hide-fields.js` script and reference from common.js.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
