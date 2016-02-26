@@ -27,6 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - URL field to the Post Preview organism
 - Frontend: Added overlay atom.
 - Signal receiver function to unpublish all revisions for a page when a page is unpublished
+- Backend: HomePage Model
 
 ### Changed
 - Converted the project to Capital Framework v3
