@@ -1,8 +1,10 @@
 import itertools
 
+from django.db import models
+
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel
+    StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 
@@ -27,7 +29,7 @@ class BrowsePage(CFGOVPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)
-
+    secondary_nav_order = models.IntegerField(default=1)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -35,12 +37,15 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
+    settings_panels = CFGOVPage.settings_panels + [
+        FieldPanel('secondary_nav_order'),
+    ]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList(settings_panels, heading='Configuration'),
     ])
 
     template = 'browse-basic/index.html'
