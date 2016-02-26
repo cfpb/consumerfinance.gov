@@ -14,8 +14,6 @@ function BudgetFinancialReport() {
 
   this.mainTitle = element( by.css( '.content_main h1' ) );
 
-  this.mainSummary = element( by.css( '.content_main p.h3' ) );
-
   this.financialReportTitles = element.all( by.css( '.financial-report h4' ) );
 
   this.financialReportLinks = element.all( by.css( '.financial-report a' ) );

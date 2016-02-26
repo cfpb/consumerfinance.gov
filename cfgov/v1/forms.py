@@ -162,12 +162,13 @@ class FilterableListForm(forms.Form):
     authors_select_attrs = {
         'class': 'chosen-select',
         'multiple': 'multiple',
-        'data-placeholder': 'Search for authors',
+        'data-placeholder': 'Search for authors'
     }
     from_select_attrs = {
         'class': 'js-filter_range-date js-filter_range-date__gte',
         'type': 'text',
         'placeholder': 'dd/mm/yyyy',
+        'data-type': 'date'
     }
     to_select_attrs = from_select_attrs.copy()
     to_select_attrs.update({
@@ -175,11 +176,11 @@ class FilterableListForm(forms.Form):
     })
 
     title = forms.CharField(max_length=250, required=False)
-    from_date = forms.DateField(
+    from_date = FilterDateField(
         required=False,
         input_formats=['%d/%m/%Y'],
         widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date = forms.DateField(
+    to_date = FilterDateField(
         required=False,
         input_formats=['%d/%m/%Y'],
         widget=widgets.DateInput(attrs=to_select_attrs))

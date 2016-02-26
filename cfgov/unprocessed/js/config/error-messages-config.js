@@ -7,13 +7,21 @@
 'use strict';
 
 var ERROR_MESSAGES = {
-  CHECKBOX_ERRORS: {
-    required: 'Please select at least one of the "%s" options.'
+  CHECKBOX: {
+    REQUIRED: 'Please select at least %s of the options.'
   },
-  DATE_ERRORS: {
-    invalid:      'You have entered an invalid date.',
-    one_required: 'Please enter at least one date.'
-  }
+  DATE: {
+    INVALID: 'You have entered an invalid date.',
+    ONE_REQUIRED: 'Please enter at least one date.'
+  },
+  EMAIL: {
+    INVALID: 'You have entered an invalid email address.',
+    REQUIRED: 'Please enter an email address.'
+  },
+  FIELD: {
+    REQUIRED: 'This field is required.'
+  },
+  DEFAULT: 'Error!'
 };
 
-module.exports = ERROR_MESSAGES;
+module.exports = Object.seal( ERROR_MESSAGES );

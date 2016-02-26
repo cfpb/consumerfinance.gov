@@ -14,8 +14,6 @@ function BudgetStrategicPlan() {
 
   this.mainTitle = element( by.css( '.content_main h1' ) );
 
-  this.mainSummary = element( by.css( '.content_main p.h3' ) );
-
   this.mainSubTitle = element( by.css( '.content_main h2' ) );
 
   this.mainLinks = element.all( by.css( '.content_main a' ) );
