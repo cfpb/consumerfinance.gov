@@ -102,6 +102,7 @@ def page_type_choices():
     new_choices = [
         ('Leadership Calendar', (
             ('richard-cordray', 'Richard Cordray'),
+            ('david-silberman', 'David Silberman'),
             ('meredith-fuchs', 'Meredith Fuchs'),
             ('steve-antonakes', 'Steve Antonakes'),
             ('raj-date', 'Raj Date'),
