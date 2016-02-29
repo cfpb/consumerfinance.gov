@@ -51,9 +51,9 @@ function FilterableListControls( element ) {
     },
     email: function( field, currentStatus ) {
       var status = currentStatus || {};
-      var regex = [ "^[a-z0-9\u007F-\uffff!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9",
-                    "\u007F-\uffff!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]",
-                    "(?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$" ].join( '' );
+      var regex = [ '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9',
+                    '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]',
+                    '(?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$' ].join( '' );
       var emailRegex = new RegExp( regex, 'i' );
       if ( field.value && emailRegex.test( field.value ) === false ) {
         status.msg += ERROR_MESSAGES.EMAIL.INVALID;
