@@ -6,9 +6,6 @@
 
 'use strict';
 
-// Required polyfills for IE9.
-if ( !Modernizr.classlist ) { require( '../polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 /**
  * @param {HTMLNode} element
  *   The DOM element within which to search for the atomic element class.
