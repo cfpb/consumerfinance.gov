@@ -17,7 +17,6 @@ var FlyoutMenu = require( '../modules/FlyoutMenu' );
  * @returns {Object} An MegaMenu instance.
  */
 function MegaMenu( element ) {
-
   var BASE_CLASS = 'o-mega-menu';
 
   var _dom =
@@ -64,7 +63,6 @@ function MegaMenu( element ) {
    * @param {FlyoutMenu} menu - The FlyoutMenu to add event listeners to.
    */
   function _initEvents( menu ) {
-    menu.addEventListener( 'toggle', _handleToggle.bind( this ) );
     menu.addEventListener( 'expandBegin', _handleExpandBegin.bind( this ) );
     menu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     menu.addEventListener( 'collapseEnd', _handleCollapseEnd.bind( this ) );
@@ -153,17 +151,15 @@ function MegaMenu( element ) {
   /**
    * Event handler for when the search input flyout is toggled,
    * which opens/closes the search input.
-   * @param {Event} event - Event dispatched by the FlyoutMenu instance.
+   * @param {FlyoutMenu} target - menu that is expanding or collapsing.
    */
-  function _handleToggle( event ) {
-    var target = event.target;
+  function _handleToggle( target ) {
     if ( target === _flyoutMenu &&
          _activeMenu !== target ) {
       _activeMenu.collapse();
     }
     _activeMenu = target;
     _activeMenuDom = _activeMenu.getDom().content;
-    this.dispatchEvent( 'toggle', { target: this } );
   }
 
   /**
@@ -172,7 +168,9 @@ function MegaMenu( element ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin( event ) {
-    if ( event.target === _flyoutMenu ) {
+    var target = event.target;
+    _handleToggle( target );
+    if ( target === _flyoutMenu ) {
       this.dispatchEvent( 'rootExpandBegin', { target: this } );
     }
     // If on a submenu, focus the back button, otherwise focus the first link.
@@ -190,8 +188,10 @@ function MegaMenu( element ) {
   /**
    * Event handler for when FlyoutMenu collapse transition begins.
    * Use this to perform post-collapseBegin actions.
+   * @param {Event} event - A FlyoutMenu event.
    */
-  function _handleCollapseBegin() {
+  function _handleCollapseBegin( event ) {
+    _handleToggle( event.target );
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 

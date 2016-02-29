@@ -56,9 +56,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     var clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
 
-    _flyoutMenu.addEventListener( 'toggle',
-                                  _handleToggle.bind( this ) );
-    _flyoutMenu.addEventListener( 'expandBegin', _handleExpandBegin );
+    var handleExpandBeginBinded = _handleExpandBegin.bind( this );
+    _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
 
@@ -133,18 +132,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   }
 
   /**
-   * Event handler for when the search input flyout is toggled,
-   * which opens/closes the search input.
-   */
-  function _handleToggle() {
-    this.dispatchEvent( 'toggle', { target: this } );
-  }
-
-  /**
    * Event handler for when FlyoutMenu expand transition begins.
    * Use this to perform post-expandBegin actions.
    */
   function _handleExpandBegin() {
+    this.dispatchEvent( 'expandBegin', { target: this } );
     if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-hidden' ); }
     _contentDom.classList.remove( 'u-invisible' );
     _searchInputDom.select();
