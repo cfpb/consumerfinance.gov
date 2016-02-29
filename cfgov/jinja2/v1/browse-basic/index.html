@@ -1,6 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
+{% import 'molecules/featured-content.html' as featured_content %}
 
 {% set parent = page.parent() %}
 
@@ -14,7 +15,12 @@
 
 {% block content_main %}
     {% for block in page.header -%}
-        {% if loop.index == 1 %}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__flush-sides">
+                {{ featured_content.render(block.value) }}
+            </div>
+        {% elif loop.index == 1 %}
             <div class="block
                         block__flush-top">
                 {{ render_stream_child(block) }}

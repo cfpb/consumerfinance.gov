@@ -36,16 +36,18 @@
     %}
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
-    <div class="video-player video-player__{{ video_player }}"
+    <div class="video-player
+                video-player__{{ video_player }}
+                {{'featured-content-module_visual' if options.video.is_fcm else '' }}"
          data-video-id="{{ video_id }}"
-         data-width="{{ options.video.width }}"
-         data-height="{{ options.video.height }}">
+         data-width="{{ options.video.width if options.video.width else '' }}"
+         data-height="{{ options.video.height if options.video.height else '' }}">
         {{ caller() | safe if caller else '' }}
         <div class="video-player_video-container
                     show-on_video-playing
                     {{ 'video-player_video-container__flexible' if is_flexible else '' }}">
-            <div class='video-player_iframe-container'>
-                <div id='{{ video_player }}_video-player' class='video-player_video'></div>
+            <div class="video-player_iframe-container">
+                <div id="{{ video_player }}_video-player" class="video-player_video"></div>
             </div>
             <div class="video-player_video-actions-container">
                 <div class="video-player_video-actions">
@@ -62,17 +64,22 @@
                 {{ share.render({
                     'title': 'About the CFPB',
                     'heading': 'Share this video',
-                    'additional_classes': 'video-player_share-actions'
+                    'additional_classes': 'video-player_share-actions',
+                    'twitter_options': {
+                        'text': 'Check out this video from the @CFPB'
+                    }
                 }) }}
             </div>
         </div>
-        <div class="video-player_image-container hide-on_video-playing">
+        <div class="video-player_image-container
+                    hide-on_video-playing">
             <a class="video-player_play-btn video-player_play-btn__{{ button_pos }}"
                href="{{ video_url }}"
                target="_blank">
                 <span class="u-visually-hidden">Play video</span>
             </a>
-            <img class="video-player_image"
+            <img class="video-player_image
+                        {{ 'featured-content-module_img' if options.video.is_fcm else '' }}"
                  alt="Video image"
                  src="{{ image_url }}">
         </div>

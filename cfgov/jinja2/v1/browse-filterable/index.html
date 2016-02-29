@@ -1,6 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
+{% import 'molecules/featured-content.html' as featured_content %}
 
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
@@ -14,10 +15,17 @@
 
 {% block content_main %}
     {% for block in page.header %}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__flush-sides">
+                {{ featured_content.render(block.value) }}
+            </div>
+        {% elif loop.index == 1 %}
         <div class="block
                     block__flush-top">
             {{ render_stream_child(block) }}
         </div>
+        {% endif %}
     {% endfor %}
     {% for block in page.content %}
         {% if 'filter_controls' in block.block_type %}
