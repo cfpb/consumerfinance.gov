@@ -47,13 +47,6 @@ describe( 'The About Director Page', function() {
     }
   );
 
-  it( 'should include Director’s title',
-    function() {
-      expect( page.directorTitle.getText() )
-      .toEqual( 'Director Richard Cordray' );
-    }
-  );
-
   it( 'should include Director’s image',
     function() {
       expect( page.directorImage.isPresent() ).toBe( true );

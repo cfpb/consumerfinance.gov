@@ -27,8 +27,6 @@ function TheAboutDirectorPage() {
 
   this.directorHistory = _getQAElement( 'director-history' );
 
-  this.directorTitle = _getQAElement( 'director-bio-title' );
-
   this.directorImage = _getQAElement( 'director-bio-image' );
 
   this.mediaDownloads = element.all(
