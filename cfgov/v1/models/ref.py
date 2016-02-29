@@ -48,8 +48,8 @@ categories = [
         ('record', 'Record'),
     )),
     ('Implementation Resource', (
-        ('cfpb-bulletins-statements', 'CFPB Bulletins and Statements'),
-        ('impl-compl-material', 'Implementation and Compliance Material'),
+        ('compliance-aid', 'Compliance aid'),
+        ('official-guidance', 'Official guidance'),
     )),
     ('Newsroom', (
         ('op-ed', 'Op-Ed'),
