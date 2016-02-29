@@ -51,10 +51,10 @@ module.exports = {
     src:      '/main.less',
     dest:     paths.processed + '/css',
     settings: {
-      paths:  globAll.sync([
+      paths:  globAll.sync( [
         paths.modules + '/capital-framework/**',
         paths.lib
-      ]),
+      ] ),
       compress: true
     }
   },

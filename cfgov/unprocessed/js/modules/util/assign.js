@@ -11,10 +11,9 @@
 
 
 /**
-* @param {object} JavaScript object.
+* @param {Object} object - JavaScript object.
 * @returns {boolean} True if object is plain Javascript object.
 */
-
 function _isPlainObject( object ) {
   return Object.prototype.toString.call( object ) === '[object Object]';
 }
@@ -24,10 +23,9 @@ function _isPlainObject( object ) {
 * existing properties. When assigning from multiple sources, fields of every
 * next source will override same named fields of previous sources.
 *
-* @param {object} destination object.
-* @returns {object} assigned destination object.
+* @param {Object} destination object.
+* @returns {Object} assigned destination object.
 */
-
 function assign( destination ) {
   destination = destination || {};
 
