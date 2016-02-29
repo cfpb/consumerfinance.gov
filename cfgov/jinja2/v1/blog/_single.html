@@ -30,10 +30,9 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% if page %}
-            {% import 'related-posts.html' as related_posts with context %}
-            {{ related_posts.render() }}
-        {% endif %}
+        {# TODO: When moving blogs to Wagtail, change to "molecules/related-posts.html". #}
+        {% import 'related-posts.html' as related_posts with context %}
+        {{ related_posts.render(post) }}
     </section>
     <section class="block" data-qa-hook="stay-informed-section">
         <h2 class="header-slug">
