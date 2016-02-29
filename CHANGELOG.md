@@ -29,6 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Signal receiver function to unpublish all revisions for a page when a page is unpublished
 - Backend: HomePage Model
 - David Silberman's assets
+- Frontend: Added JS init scripts for /offices/, /sub-pages/, and /budget/.
 
 ### Changed
 - Converted the project to Capital Framework v3
