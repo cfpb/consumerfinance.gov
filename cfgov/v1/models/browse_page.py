@@ -52,6 +52,9 @@ class BrowsePage(CFGOVPage):
 
     template = 'browse-basic/index.html'
 
+    def get_page_js(self):
+        return ('SecondaryNavigation.js',)
+
     def full_width_serif(self):
         return true
 
