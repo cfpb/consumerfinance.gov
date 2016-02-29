@@ -17,21 +17,32 @@
         </span>
     </button>
     <div class="m-global-search_content" aria-expanded="false">
-        <form class="m-global-search_content-form">
+        <form class="m-global-search_content-form"
+              action="http://search.consumerfinance.gov/search"
+              method="get">
+            {# Required hidden input for CFPB search. #}
+            <input type="hidden"
+                           name="utf8"
+                           value="✓">
+            <input type="hidden"
+                   id="affiliate"
+                   name="affiliate"
+                   value="cfpb">
             <div class="input-with-btn">
                 <div class="input-with-btn_input
                             input-contains-label">
-                    <label for="search-input"
+                    <label for="query"
                            class="input-contains-label_before
                                   input-contains-label_before__search">
                     </label>
-                    <label for="search-input"
+                    <label for="query"
                            class="input-contains-label_after
                                   input-contains-label_after__clear
                                   u-hidden">
                     </label>
                     <input type="text"
-                           id="search-input"
+                           id="query"
+                           name="query"
                            value=""
                            placeholder="Search the CFPB">
                 </div>

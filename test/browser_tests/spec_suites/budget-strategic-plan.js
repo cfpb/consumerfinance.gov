@@ -32,10 +32,6 @@ describe( 'The Budget Strategic Plan Page', function() {
     expect( page.mainTitle.getText() ).toBe( 'Strategic Plan' );
   } );
 
-  it( 'should have a main summary', function() {
-    expect( page.mainSummary.isPresent() ).toBe( true );
-  } );
-
   it( 'should have a sub title', function() {
     expect( page.mainSubTitle.getText() ).toBe( 'CFPB Strategic Plan' );
   } );

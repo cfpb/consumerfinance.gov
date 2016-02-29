@@ -100,6 +100,8 @@
     </script>
     <![endif]-->
 
+    <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
+
     {# TODO: jQuery CDN is provided in the head to satisfy
              Google Tag Manager (GTM) requirements.
              Ideally GTM would handle its own dependency management
@@ -128,6 +130,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
 
 {% block body %}
+
+{# Overlay for the page. Used for the mobile mega menu. #}
+<div class="a-overlay u-hidden"></div>
 
 <a href="#main" id="skip-nav">Skip to main content</a>
 
@@ -208,14 +213,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     {# TODO: Remove Else conditional when this is fully moved to wagtail. #}
     {# Check and include page-level JavaScript. #}
-    {% if page %}
-        {% if page.media %}
-            {% for js in page.media %}
-                {% include '/js/routes/on-demand/' + js ignore missing %}
-            {% endfor %}
-        {% endif %}
+    {% if page and page.media %}
+        {% for js in page.media %}
+            {% include '/js/routes/on-demand/' + js ignore missing %}
+        {% endfor %}
+    {% else %}
+        {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
     {% endif %}
-    {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}

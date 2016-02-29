@@ -14,8 +14,6 @@ function BudgetFundingRequest() {
 
   this.mainTitle = element( by.css( '.content_main h1' ) );
 
-  this.mainSummary = element( by.css( '.content_main p.h3' ) );
-
   this.fundingRequestTitles = element.all( by.css( '.funding-request h4' ) );
 
   this.fundingRequestLinks = element.all( by.css( '.funding-request a' ) );
