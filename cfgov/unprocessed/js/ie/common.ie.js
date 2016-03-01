@@ -5,4 +5,4 @@
 'use strict';
 
 // Global modules.
-require( '../modules/polyfill/class-list' )
+require( '../modules/polyfill/class-list' );
