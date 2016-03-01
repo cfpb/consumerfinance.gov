@@ -10,13 +10,17 @@
 
    ========================================================================== #}
 
-<div class="m-global-search" data-js-hook="flyout-menu">
-    <button class="m-global-search_trigger" data-js-hook="flyout-menu_trigger">
+<div class="m-global-search"
+     data-js-hook="flyout-menu">
+    <button class="m-global-search_trigger"
+            data-js-hook="flyout-menu_trigger">
         <span class="m-global-search_trigger-label">
             <span class="u-visually-hidden">Search</span>
         </span>
     </button>
-    <div class="m-global-search_content" aria-expanded="false">
+    <div class="m-global-search_content"
+         data-js-hook="flyout-menu_content"
+         aria-expanded="false">
         <form class="m-global-search_content-form"
               action="http://search.consumerfinance.gov/search"
               method="get">
@@ -62,6 +66,6 @@
                 </ul>
             </div>
         </form>
-        <button class="m-global-search_tab-trigger" aria-hidden></button>
+        <button class="m-global-search_tab-trigger" aria-hidden="true"></button>
     </div>
 </div>
