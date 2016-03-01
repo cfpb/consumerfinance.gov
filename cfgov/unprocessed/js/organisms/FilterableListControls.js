@@ -1,7 +1,7 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Notification = require( '../molecules/Notification' );
@@ -18,7 +18,7 @@ var typeCheckers = require( '../modules/util/type-checkers' );
  */
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
-  var _dom = atomicCheckers.validateDomElement(
+  var _dom = atomicHelpers.checkDom(
     element, BASE_CLASS, 'FilterableListControls' );
   var _form = _dom.querySelector( 'form' );
   var _notification;

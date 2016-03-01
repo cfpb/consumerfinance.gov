@@ -1,7 +1,7 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var Expandable = require( '../molecules/Expandable' );
 
 /**
@@ -16,7 +16,7 @@ var Expandable = require( '../molecules/Expandable' );
 function SecondaryNavigation( element ) {
   var BASE_CLASS = 'o-secondary-navigation';
 
-  var _dom = atomicCheckers.validateDomElement(
+  var _dom = atomicHelpers.checkDom(
     element, BASE_CLASS, 'SecondaryNavigation' );
 
   /**

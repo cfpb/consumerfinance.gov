@@ -20,7 +20,7 @@ function FlyoutMenu( element ) {
   var BASE_CLASS = 'flyout-menu';
   var BASE_SEL = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
 
-  // TODO: Update atomic-checker to support CSS selectors for validity check.
+  // TODO: Update atomic-helpers to support CSS selectors for validity check.
   var _dom = dataHook.contains( element, BASE_CLASS ) ? element : null;
   if ( !_dom ) _dom = element.parentNode.querySelector( BASE_SEL + ']' );
   if ( !_dom ) { throw new Error( 'Selector not found on passed node!' ); }
@@ -48,7 +48,8 @@ function FlyoutMenu( element ) {
    * @returns {FlyoutMenu} An instance.
    */
   function init() {
-    _triggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
+    var triggerClickedBinded = _triggerClicked.bind( this );
+    _triggerDom.addEventListener( 'click', triggerClickedBinded );
 
     if ( _altTriggerDom ) {
       // If menu contains a submenu but doesn't have
@@ -59,7 +60,7 @@ function FlyoutMenu( element ) {
       if ( subMenu && subMenu.contains( _altTriggerDom ) ) {
         _altTriggerDom = null;
       } else {
-        _altTriggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
+        _altTriggerDom.addEventListener( 'click', triggerClickedBinded );
       }
     }
 

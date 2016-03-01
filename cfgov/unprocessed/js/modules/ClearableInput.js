@@ -1,7 +1,7 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * ClearableInput
@@ -16,8 +16,7 @@ var atomicCheckers = require( '../modules/util/atomic-checkers' );
 function ClearableInput( element ) {
   var BASE_CLASS = 'input-contains-label';
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'ClearableInput' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ClearableInput' );
   var _inputDom = _dom.querySelector( 'input' );
   var _clearBtnDom = _dom.querySelector( '.' + BASE_CLASS + '_after__clear' );
 
