@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New manager to query for the most appropriate pages (shared and/or live)
 - Enabled Demo Page in flapjack
 - Included Password Complexity rules for admin user creation/editing flow
+- Enabled email backend for Production settings
 
 ### Changed
 - Converted the project to Capital Framework v3
