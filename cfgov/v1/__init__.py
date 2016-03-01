@@ -11,7 +11,7 @@ from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
-from util.util import get_unique_id
+from util.util import get_unique_id, get_js_bundle_name
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup
@@ -44,6 +44,7 @@ def environment(**options):
         'parse_links': external_links_filter,
         'get_protected_url': get_protected_url,
         'related_metadata_tags': related_metadata_tags,
+        'get_js_bundle_name': get_js_bundle_name
     })
     env.filters.update({
         'slugify': slugify,

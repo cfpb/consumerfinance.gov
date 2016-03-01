@@ -1,4 +1,5 @@
 import collections
+import glob
 import re
 import os
 from itertools import chain
@@ -7,6 +8,9 @@ from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
 from ref import related_posts_categories
+from django.contrib.staticfiles.finders import find
+
+
 
 def id_validator(id_string, search=re.compile(r'[^a-zA-Z0-9-_]').search):
     if id_string:
@@ -26,6 +30,12 @@ def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
+def get_js_bundle_name( path ):
+    search_path = settings.STATICFILES_DIRS[0] + path
+    file_path = glob.glob( search_path )
+    if file_path:
+        path = file_path[0].replace(settings.STATICFILES_DIRS[0], settings.STATIC_URL)
+    return path
 
     # These messages are manually mirrored on the
     # Javascript side in error-messages-config.js

@@ -7,6 +7,7 @@ from django.conf import global_settings
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
+
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
 V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
@@ -160,6 +161,13 @@ STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'f')
 MEDIA_URL = '/f/'
+
+#Enabling compression for use in base.html
+COMPRESS_ENABLED = True
+
+COMPRESS_ROOT = MEDIA_ROOT
+
+COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
