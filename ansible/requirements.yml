@@ -8,7 +8,7 @@
 - src: xcezx.httpd
 
 - src: https://github.com/vickumar1981/ansible-role-nodejs.git
-  version: master
+  version: origin/version_fix
   name: juwai.nodejs
 
 - src: https://github.com/Ken24/ansible-role-python.git

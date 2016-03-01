@@ -39,7 +39,7 @@
 
     # Virtualbox Setup allows halt and up with vagrant again
     - name: Virtualbox Add Setup
-      shell: sudo /etc/init.d/vboxadd setup
+      shell: /etc/init.d/vboxadd setup
 
     # PDFReactor
     - name: download PDFReactor
