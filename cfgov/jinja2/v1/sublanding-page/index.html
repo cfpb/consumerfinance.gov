@@ -2,6 +2,8 @@
 
 {% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
+{% import 'molecules/related-posts.html' as related_posts with context %}
+{% import 'organisms/post-preview.html' as post_preview with context %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -9,18 +11,18 @@
 
 {% block hero -%}
     {% for block in page.header -%}
-        {% if 'hero' in block.block_type -%}
-            {{ render_stream_child(block) }}
-        {%- endif %}
+        {% include 'templates/render_block.html' with context %}
     {%- endfor %}
 {% endblock %}
 
 {% block pre_content %}
     {% if page.sidebar_breakout %}
-        {% include 'organisms/sidebar-breakout.html' %}
+        {% import 'organisms/sidebar-breakout.html' as sidebar_breakout with context %}
+        {% call(block) sidebar_breakout.render() %}
+            {{ render_stream_child(block) }}
+        {% endcall %}
     {% endif %}
 {% endblock %}
-
 
 {% block content_main %}
     {% for block in page.content -%}
@@ -29,22 +31,20 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
-        {% elif loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-                {% if 'post_preview_snapshot' in block.block_type %}
-                    {% set posts = page.get_browsefilterable_posts(request) %}
-                    {% set limit = block.value.limit | int %}
-                    {% set num_posts = limit if limit <= posts | length else posts | length %}
-                    {% for i in range(num_posts) %}
-                        {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
-                    {% endfor %}
-                {% else %}
-                    {{ render_stream_child(block) }}
-                {% endif %}
+        {% elif 'post_preview_snapshot' in block.block_type %}
+            <div class="block 
+                        {{ block.block.meta.classname if block.block.meta.classname else '' }}">
+                {% set posts = page.get_browsefilterable_posts(request) %}
+                {% set limit = block.value.limit | int %}
+                {% set num_posts = limit if limit <= posts | length else posts | length %}
+                {% for i in range(num_posts) %}
+                    {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
+                {% endfor %}
              </div>
-        {% else %}
-             {% include 'templates/render_block.html' with context %}
+        {% elif 'text_introduction' not in block.block_type %}
+            {% include 'templates/render_block.html' with context %}
+        {% elif not page.sidebar_breakout %}
+            {% include 'templates/render_block.html' with context %}
         {% endif %}
     {%- endfor %}
 {% endblock %}
