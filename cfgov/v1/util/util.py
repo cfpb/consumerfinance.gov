@@ -8,7 +8,6 @@ from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
 from ref import related_posts_categories
-from django.contrib.staticfiles.finders import find
 
 
 
