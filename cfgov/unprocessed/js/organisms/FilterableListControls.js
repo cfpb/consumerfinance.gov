@@ -5,7 +5,7 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Notification = require( '../molecules/Notification' );
-var typeCheckers = require( '../modules/util/type-checkers' );
+var validators = require( '../modules/util/validators' );
 
 /**
  * FilterableListControls
@@ -36,59 +36,6 @@ function FilterableListControls( element ) {
       'radio',
       'checkbox'
     ]
-  };
-
-  var _validators = {
-    date: function( field, currentStatus ) {
-      var status = currentStatus || {};
-      var dateRegex =
-        /^\d{2}$|^\d{4}$|^\d{2}\/(?:\d{4}|\d{2})$|^\d{2}\/\d{2}\/\d{4}$/;
-      if ( field.value && dateRegex.test( field.value ) === false ) {
-        status.msg += ERROR_MESSAGES.DATE.INVALID;
-        status.date = false;
-      }
-      return status;
-    },
-    email: function( field, currentStatus ) {
-      var status = currentStatus || {};
-      var regex = [ "^[a-z0-9\u007F-\uffff!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9",
-                    "\u007F-\uffff!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]",
-                    "(?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$" ].join( '' );
-      var emailRegex = new RegExp( regex, 'i' );
-      if ( field.value && emailRegex.test( field.value ) === false ) {
-        status.msg += ERROR_MESSAGES.EMAIL.INVALID;
-        status.email = false;
-      }
-      return status;
-    },
-    empty: function( field, currentStatus ) {
-      var status = currentStatus || {};
-      var isRequired = field.getAttribute( 'required' ) !== null;
-      if ( isRequired && typeCheckers.isEmpty( field.value ) ) {
-        status.msg += ERROR_MESSAGES.FIELD.REQUIRED;
-        status.required = false;
-      }
-      return status;
-    },
-    checkbox: function( field, currentStatus, type ) {
-      var status = currentStatus || {};
-      var groupName = field.getAttribute( 'data-group' ) ||
-                      field.getAttribute( 'name' );
-      var groupSelector = '[name=' + groupName + ']:checked,' +
-                          '[data-group=' + groupName + ']:checked';
-      var groupFields = _form.querySelectorAll( groupSelector );
-      var groupFieldsLength = ( groupFields || [] ).length;
-      var required = parseInt( field.getAttribute( 'data-required' ) ||
-                               0, 10 );
-      if ( groupFieldsLength < required ) {
-        status[type || 'checkbox'] = false;
-        status.msg = ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', required );
-      }
-      return status;
-    },
-    radio: function( field, currentStatus ) {
-      return _validators.checkbox( field, currentStatus, 'radio' );
-    }
   };
 
   /**
@@ -256,6 +203,7 @@ function FilterableListControls( element ) {
    * @returns {Object} An object with a status and message properties.
    */
   function _validateField( field, type, isInGroup ) {
+    var fieldset;
     var validation = {
       field:      field,
       // TODO: Change layout of field groups to use fieldset.
@@ -264,11 +212,19 @@ function FilterableListControls( element ) {
       status:     null
     };
 
-    if ( _validators[type] ) {
-      validation.status = _validators[type]( field, validation );
+    if ( isInGroup ) {
+      var groupName = field.getAttribute( 'data-group' ) ||
+                field.getAttribute( 'name' );
+      var groupSelector = '[name=' + groupName + ']:checked,' +
+                          '[data-group=' + groupName + ']:checked';
+      fieldset = _form.querySelectorAll( groupSelector ) || [];
     }
 
-    return _validators.empty( field, validation );
+    if ( validators[type] ) {
+      validation.status = validators[type]( field, validation, fieldset );
+    }
+
+    return validators.empty( field, validation );
   }
 
   this.init = init;
