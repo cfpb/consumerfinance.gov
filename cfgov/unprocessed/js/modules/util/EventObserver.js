@@ -73,6 +73,7 @@ function EventObserver() {
   EventObserver.prototype.addEventListener = addEventListener;
   EventObserver.prototype.removeEventListener = removeEventListener;
   EventObserver.prototype.dispatchEvent = dispatchEvent;
+
   return this;
 }
 

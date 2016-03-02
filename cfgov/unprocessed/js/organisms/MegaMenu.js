@@ -1,7 +1,7 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var FlyoutMenu = require( '../modules/FlyoutMenu' );
@@ -19,8 +19,7 @@ var FlyoutMenu = require( '../modules/FlyoutMenu' );
 function MegaMenu( element ) {
   var BASE_CLASS = 'o-mega-menu';
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'MegaMenu' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'MegaMenu' );
   var _flyoutMenu = new FlyoutMenu( _dom ).init();
   var _activeMenu = _flyoutMenu;
   var _activeMenuDom = _flyoutMenu.getDom().content;

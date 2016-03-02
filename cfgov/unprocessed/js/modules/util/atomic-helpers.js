@@ -1,11 +1,12 @@
 /* ==========================================================================
-   Atomic Checkers.
+   Atomic Helpers.
 
    Utilities for helping validate atomic design element architecture.
    ========================================================================= */
 
 'use strict';
 
+// TODO: Update baseClass to baseSel to handle CSS selector instead of a class.
 /**
  * @param {HTMLNode} element
  *   The DOM element within which to search for the atomic element class.
@@ -15,7 +16,7 @@
  * @returns {HTMLNode} The DOM element for the atomic element.
  * @throws {Error} If DOM element passed into the atomic element is not valid.
  */
-function validateDomElement( element, baseClass, atomicName ) {
+function checkDom( element, baseClass, atomicName ) {
   var msg;
   var dom;
   if ( !element || !element.classList ) {
@@ -37,5 +38,5 @@ function validateDomElement( element, baseClass, atomicName ) {
 
 // Expose public methods.
 module.exports = {
-  validateDomElement: validateDomElement
+  checkDom: checkDom
 };

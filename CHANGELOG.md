@@ -54,6 +54,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Converted references and asset urls from Fuchs to Silberman.
 - Fix blog post template to use sheerlike related posts method.
 - Restructured mega menu to include submenus recursively to allow for a third-level.
+- Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
