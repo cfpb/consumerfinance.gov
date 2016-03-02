@@ -59,7 +59,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix blog post template to use sheerlike related posts method.
 - Restructured mega menu to include submenus recursively to allow for a third-level.
 - Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
-- Add two categories to the Implementation Resource group
+- Add two categories to the Implementation Resource group.
+- Updated the homepage based on user feedback.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
