@@ -15,6 +15,10 @@ if ($#ARGV >= 0) {
 			print("\nStarting Django server on port 8001\n");
 			`vagrant ssh -c "/vagrant/bin/cfgovd start_django" &`;
 		}
+		elsif (($#ARGV >= 1) && ($ARGV[1] eq "watch")) {
+			print("\nStarted gulp watch\n");
+			`vagrant ssh -c "/vagrant/bin/cfgovd start_gulp_watch" &`;
+		}
 		else {
 			print("\nStarting CF Gov Refresh VM...\n\n");
 			my $argList = "";	
@@ -32,23 +36,30 @@ if ($#ARGV >= 0) {
 				`vagrant ssh -c "/vagrant/bin/cfgovd stop_django" 2>/dev/null`;
 			}
 		}
+		elsif (($#ARGV >= 1) && ($ARGV[1] eq "watch")) {
+			print("\nStopped gulp watch\n");
+			for ($i = 0; $i < 3; $i++) {
+				`vagrant ssh -c "/vagrant/bin/cfgovd stop_gulp_watch" 2>/dev/null`;
+			}
+		}
 		else {
 			print("\nStopping CF Gov Refresh VM...\n\n");
 			`vagrant ssh -c "sudo shutdown -h now"`;
 		}
 		print("\nDone.\n");
 	}
+
 	elsif ($ARGV[0] eq 'init') {
 		print("\nInitializing virtualbox guest add ons (may take a few minutes)...\n");
-		`vagrant ssh -c "/vagrant/bin/cfgovd init_vbox" 2>/dev/null`;
+		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init_vbox" 2>/dev/null`;
 		print("\nInitializing npm and node js (may take a few minutes)...\n");
-		`vagrant ssh -c "/vagrant/bin/cfgovd init_node" 2>/dev/null`;
+		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init_node" 2>/dev/null`;
 		print("\nInitializing local node js modules (may take a few minutes)...\n");
-		`vagrant ssh -c "sh /vagrant/frontend.sh init" 2>/dev/null`;
+		`vagrant ssh -c "cd /vagrant; sh frontend.sh init" &`;
 	}
 	elsif ($ARGV[0] eq 'assets') {
-		print("\nRebuilding frontend assets...\n");
-		`vagrant ssh -c "sh /vagrant/frontend.sh build" 2>/dev/null`;
+		print("\nRebuilding frontend assets (may take a few minutes)...\n");
+		`vagrant ssh -c "cd /vagrant; sh frontend.sh build" &`;
 	}
 	elsif ($ARGV[0] eq 'log') {
 		my $logData = `vagrant ssh -c "cat /home/vagrant/.cfgovOutput" 2>/dev/null`;
@@ -57,6 +68,6 @@ if ($#ARGV >= 0) {
 	else { }
 }
 else {
-	print "\nUsage: cfgov [init |start | stop | log | assets] [django]\n";
+	print "\nUsage: cfgov [init |start | stop | log | assets] [django | watch]\n";
 }
 chdir($currDir);

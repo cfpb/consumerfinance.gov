@@ -11,15 +11,28 @@ if ($#ARGV >= 0) {
 	}
 	elsif ($ARGV[0] eq 'stop_django') {
 		my @procList = `ps -aux |grep "runserver"`;
-		my $railsProc = $procList[0];
+		my $myProc = $procList[0];
 		if ($#procList > 0) {	
-			my @psIds = split(/  /, $railsProc);	
+			my @psIds = split(/  /, $myProc);	
 			print("\nKilling process $psIds[1]\n");	
 			`kill -9 $psIds[1]`;
 		}
 	}
+	elsif ($ARGV[0] eq 'stop_gulp_watch') {
+		my @procList = `ps -aux |grep "start_gulp_watch"`;
+		my $myProc = $procList[0];
+		if ($#procList > 0) {	
+			my @psIds = split(/  /, $myProc);	
+			print("\nKilling process $psIds[1]\n");	
+			`kill -9 $psIds[1]`;
+		}
+	}
+	elsif ($ARGV[0] eq 'start_gulp_watch') {
+		chdir("/vagrant");
+		`gulp watch`;
+	}
 	elsif ($ARGV[0] eq 'init_vbox') {
-		`sudo /etc/init.d/vboxadd setup 2>/dev/null`;
+		` 2>/dev/null`;
 	}
 	elsif ($ARGV[0] eq 'init_node') {
 		`sudo webdriver-manager update`;
