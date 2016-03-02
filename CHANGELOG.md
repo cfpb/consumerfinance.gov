@@ -56,6 +56,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix blog post template to use sheerlike related posts method.
 - Restructured mega menu to include submenus recursively to allow for a third-level.
 - Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
+- Add two categories to the Implementation Resource group
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -70,6 +71,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed heros from old WordPress pages.
 - Removed `show-hide-fields.js` script and reference from common.js.
 - Meredith Fuch's assets.
+- A couple of Implementation Resource group categories
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
