@@ -18,6 +18,11 @@ class ImportDataTest(TestCase):
         output = eventpage.DataConverter().format_author(author)
         self.assertEqual(output, expected_output)
 
+    def test_eventpage_formatvenuename(self):
+        venue = None
+        output = eventpage.DataConverter().format_venue_name(venue)
+        self.assertEqual(output, u'')
+
     def test_get_event_processor(self):
         processor = import_data.Command().get_processor('events', settings.SHEER_PROCESSORS)
         self.assertEqual(processor.__name__, 'processors.wordpress_event')
