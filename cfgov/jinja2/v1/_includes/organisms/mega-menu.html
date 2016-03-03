@@ -1,61 +1,147 @@
+{% import '_vars-mega-menu.html' as vars with context %}
+{% set base_class = 'o-mega-menu' %}
 
 {# ==========================================================================
 
-   sub_nav()
+   _classes()
 
    ==========================================================================
 
    Description:
 
-   Creates a mega menu sub menu content markup when given:
+   Creates mega menu CSS classes when given:
 
-   sub_nav_title:   A string used for the sub nav title.
+   nav_depth:    Level of menu nesting. 1 equals the root menu.
 
-   sub_nav_landing: A string used for the url of the sub nav landing page.
-
-   sub_nav_items:   An array of tuples.
-
-   sub_nav_media:   A string composed of html markup.
+   suffix:       Suffix to add to the classes.
+                 Default is ''.
 
    ========================================================================== #}
 
-{% macro _sub_nav(sub_nav_title, sub_nav_landing, sub_nav_items, sub_nav_media) %}
-<div class="o-mega-menu_subcontent" aria-expanded="false">
-    <div class="o-mega-menu_subcontent-wrapper">
+{# TODO: Move to external macro so it can be shared with secondary nav. #}
+{%- macro _classes( nav_depth, suffix='' ) -%}
+{%- set general_class = base_class ~ '_content' -%}
+{%- set depth_class = general_class ~ '-' ~ nav_depth -%}
+{{ general_class ~ suffix ~ ' ' ~ depth_class ~ suffix }}
+{%- endmacro -%}
+
+
+{# ==========================================================================
+
+   _nav_list()
+
+   ==========================================================================
+
+   Description:
+
+   Creates a mega menu sub menu list markup when given:
+
+   nav_depth: Level of menu nesting. 1 equals the root menu.
+
+   nav_items: An array of tuples containing menu link info.
+
+   ========================================================================== #}
+
+{% macro _nav_list( nav_depth, nav_items ) %}
+{%- for nav_group in nav_items %}
+<ul class="list
+           list__unstyled
+           {{ _classes( nav_depth, '-list' ) }}">
+    {% if nav_depth == 1 -%}
+    <li class="list_item
+               {{ _classes( nav_depth, '-item' ) }}">
+        {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
+        {{ global_header_cta.render() }}
+    </li>
+    {%- endif %}
+    {%- for nav_caption,
+            nav_url,
+            nav_children in nav_group %}
+    <li class="list_item
+               {{ _classes( nav_depth, '-item' ) }}"
+        {{ 'data-js-hook=flyout-menu' if nav_children | count > 0 else '' }}>
+        {# TODO: Remove nav_depth < 2 check on has-children class when 3rd level transitions are in. #}
+        <a class="{{ 'u-link__disabled' if nav_url == '' else '' }}
+                  {{ _classes( nav_depth, '-link' ) }}
+                  {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 and nav_depth < 2 else '' }}
+                  {{ _classes( nav_depth, '-link__current' ) if nav_url == request.path else '' }}"
+           {{ '' if nav_url == '' or nav_url == request.path else 'href=' + nav_url | e }}
+           {{ 'data-js-hook=flyout-menu_trigger' if nav_children | count > 0 else '' }}>
+            {{ nav_caption }}
+        </a>
+        {% if nav_children | count > 0 %}
+            {{ _nav( nav_depth | int + 1, nav_children, nav_caption ~ ' Overview', nav_url, vars.media_items ) }}
+        {% endif %}
+    </li>
+    {%- endfor %}
+</ul>
+{%- endfor %}
+{% endmacro %}
+
+{# ==========================================================================
+
+   _nav()
+
+   ==========================================================================
+
+   Description:
+
+   Creates menu content markup when given:
+
+   nav_depth:        Level of menu nesting. 1 equals the root menu.
+
+   nav_items:        An array of tuples containing menu link info.
+
+   nav_overview:     A string used for a sub nav overview title.
+
+   nav_overview_url: A string used for a sub nav overview title URL.
+
+   media_items:      A tuple of strings composed of HTML markup.
+
+   ========================================================================== #}
+
+{% macro _nav( nav_depth, nav_items, nav_overview, nav_overview_url, media_items ) %}
+<div class="{{ _classes( nav_depth ) }}"
+     aria-expanded="false"
+     data-js-hook="flyout-menu_content">
+
+    <div class="{{ _classes( nav_depth, '-wrapper' ) }}">
         <div class="wrapper">
-            <button class="o-mega-menu_subcontent-btn__back">Back</button>
-            <div class="o-mega-menu_subcontent-grid">
-                <span class="o-mega-menu_subcontent-title">
-                    <a class="o-mega-menu_subcontent-link" href="{{ sub_nav_landing }}">
-                        {{ sub_nav_title }}
+            {% if nav_depth > 1 %}
+            <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
+                    data-js-hook="flyout-menu_alt-trigger">
+                Back
+            </button>
+            {% endif %}
+            <div class="{{ _classes( nav_depth, '-grid' ) }}">
+                {% if nav_depth > 1 %}
+                <span class="{{ _classes( nav_depth, '-overview' ) }}">
+                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                       {{ '' if nav_overview_url == '' or nav_overview_url == request.path else 'href=' + nav_overview_url | e }}>
+                        {{ nav_overview }}
                     </a>
                 </span>
-                <div class="o-mega-menu_subcontent-lists">
-                {%- for sub_nav_item in sub_nav_items %}
-                    <ul class="list
-                               list__unstyled
-                               o-mega-menu_subcontent-list">
-                        {%- for href, id, caption in sub_nav_item %}
-                            <li class="list_item
-                                       o-mega-menu_subcontent-item">
-                                <a class="list_link
-                                          {{ 'list_link__current' if href == request.path else '' }}
-                                          {{ 'u-link__disabled' if href == '' else '' }}
-                                          o-mega-menu_subcontent-link"
-                                   {{ 'href=' + href | e if href != '' else '' }}>
-                                    {{ caption | safe }}
-                                 </a>
-                            </li>
-                        {%- endfor %}
-                    </ul>
-                {%- endfor %}
+                {% endif %}
+                <div class="{{ _classes( nav_depth, '-lists' ) }}">
+                    {{ _nav_list( nav_depth, nav_items ) }}
                 </div>
             </div>
+            {% for url, fmc in media_items %}
+            {% if url == nav_overview_url %}
             <aside class="sub-nav_media">
-                {{ sub_nav_media }}
+                {{ fmc }}
             </aside>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
+
+    {% if nav_depth == 1 %}
+    {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
+    {{ global_eyebrow.render() }}
+    {% endif %}
+
 </div>
 {% endmacro %}
 
@@ -70,56 +156,15 @@
    Creates a mega menu primary navigation menu.
 
    ========================================================================== #}
-{% import '_vars-mega-menu.html' as vars with context %}
-<div class="o-mega-menu">
-    <button class="o-mega-menu_trigger">
-        <span class="o-mega-menu_trigger-label">
-            <span class="u-visually-hidden">Menu</span>
-        </span>
+<nav class="{{ base_class }}"
+     data-js-hook="flyout-menu"
+     aria-label="main navigation"
+     role="navigation">
+    <button class="{{ base_class ~ '_trigger' }}" data-js-hook="flyout-menu_trigger">
+        <span class="u-visually-hidden">Menu</span>
     </button>
-    <nav class="o-mega-menu_content"
-         aria-expanded="false"
-         aria-label="main navigation"
-         role="navigation">
-
-        <ul class="list
-                   list__unstyled
-                   o-mega-menu_content-list">
-
-            <li class="list_item
-                       o-mega-menu_content-item">
-                {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-                {{ global_header_cta.render() }}
-            </li>
-
-            {%- for nav_title,
-                    sub_nav_landing,
-                    sub_nav_title,
-                    sub_nav_media,
-                    sub_nav_items in vars.nav_items %}
-                <li class="list_item
-                           o-mega-menu_content-item">
-                    {%- if sub_nav_items | length > 0 %}
-                        <a class="list_link
-                                  o-mega-menu_content-link"
-                           href="{{ sub_nav_landing }}">
-                            {{ nav_title }}
-                        </a>
-                        {{ _sub_nav(sub_nav_title, sub_nav_landing, sub_nav_items, sub_nav_media) }}
-                    {%- else %}
-                      <a class="list_link
-                                o-mega-menu_content-link
-                                u-link__disabled">
-                          {{ nav_title }}
-                      </a>
-                    {%- endif %}
-                </li>
-            {%- endfor %}
-        </ul>
-
-        {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
-        {{ global_eyebrow.render() }}
-
-    </nav>
-    <button class="o-mega-menu_tab-trigger" aria-hidden></button>
-</div>
+    {# Create a root menu at depth one.
+       This is the 1st level of a 3-level menu. #}
+    {{ _nav( 1, vars.nav_items ) }}
+    <button class="{{ base_class ~ '_tab-trigger' }}" aria-hidden="true"></button>
+</nav>

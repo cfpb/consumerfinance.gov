@@ -1,7 +1,7 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var GlobalSearch = require( '../molecules/GlobalSearch.js' );
 var MegaMenu = require( '../organisms/MegaMenu.js' );
 
@@ -19,8 +19,7 @@ function Header( element ) {
 
   var BASE_CLASS = 'o-header';
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'Header' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Header' );
   var _globalSearch;
   var _megaMenu;
   var _overlay;
@@ -33,7 +32,7 @@ function Header( element ) {
   function init( overlay ) {
     _overlay = overlay;
     _globalSearch = new GlobalSearch( _dom );
-    _globalSearch.addEventListener( 'toggle', _searchClicked );
+    _globalSearch.addEventListener( 'expandBegin', _searchExpandBegin );
     _globalSearch.init();
 
     _megaMenu = new MegaMenu( _dom );
@@ -47,7 +46,7 @@ function Header( element ) {
   /**
    * Handler for opening the search.
    */
-  function _searchClicked() {
+  function _searchExpandBegin() {
     _megaMenu.collapse();
   }
 

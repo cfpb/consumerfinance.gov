@@ -48,7 +48,7 @@ class BrowseFilterablePage(base.CFGOVPage):
         form_class = self.get_form_class()
         form_specific_filters = self.get_form_specific_filter_data(form_class,
                                                                    request.GET)
-        forms = [form_class(form_specific_filters[filters_id], parent=self)
+        forms = [form_class(form_specific_filters[filters_id], parent=self, hostname=request.site.hostname)
                  for filters_id in form_specific_filters.keys()]
         for form in forms:
             if form.is_valid():
@@ -109,14 +109,8 @@ class BrowseFilterablePage(base.CFGOVPage):
                 if not categories or 'blog' in categories:
                     blog_cats = [c[0] for c in ref.categories[1][1]]
                     blog_q = Q('categories__name__in', blog_cats)
-        # If this is the staging site, then return pages that are
-        # shared. Else, make sure that the pages are published.
-        if getattr(settings, 'STAGING_HOSTNAME', 'content') in hostname:
-            return AbstractFilterPage.objects.filter(
-                shared=True).descendant_of(self).filter(form.generate_query() | blog_q)
-        else:
-            return AbstractFilterPage.objects.live().descendant_of(
-                self).filter(form.generate_query() | blog_q)
+        return AbstractFilterPage.objects.live_shared(hostname).descendant_of(
+            self).filter(form.generate_query() | blog_q)
 
 
 class EventArchivePage(BrowseFilterablePage):

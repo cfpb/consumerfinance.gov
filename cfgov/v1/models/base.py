@@ -3,6 +3,7 @@ from itertools import chain
 import json
 
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import pre_delete
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
@@ -16,7 +17,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
-    UserPagePermissionsProxy, Orderable
+    UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
 from wagtail.wagtailcore.url_routing import RouteResult
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
     MultiFieldPanel, TabbedInterface, ObjectList
@@ -48,6 +49,31 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
+class CFGOVPageQuerySet(PageQuerySet):
+    def shared_q(self):
+        return Q(shared=True)
+
+    def shared(self):
+        return self.filter(self.shared_q())
+
+    def live_shared_q(self):
+        return self.live_q() | self.shared_q()
+
+    def live_shared(self, hostname):
+        staging_hostname = os.environ.get('STAGING_HOSTNAME')
+        if staging_hostname in hostname:
+            return self.filter(self.live_shared_q())
+        else:
+            return self.live()
+
+
+class BaseCFGOVPageManager(PageManager):
+    def get_queryset(self):
+        return CFGOVPageQuerySet(self.model).order_by('path')
+
+CFGOVPageManager = BaseCFGOVPageManager.from_queryset(CFGOVPageQuerySet)
+
+
 class CFGOVPage(Page):
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
@@ -62,6 +88,8 @@ class CFGOVPage(Page):
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
+
+    objects = CFGOVPageManager()
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.

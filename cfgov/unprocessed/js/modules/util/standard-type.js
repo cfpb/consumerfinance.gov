@@ -1,5 +1,9 @@
 'use strict';
 
+// Constant for the name of the JS hook used
+// for attaching JS behavior to HTML DOM elements.
+var JS_HOOK = 'data-js-hook';
+
 /**
  * Empty function that will do nothing.
  * A usecase is when an object has empty functions used for callbacks,
@@ -14,5 +18,6 @@ function noopFunct() {
 }
 
 module.exports = {
+  JS_HOOK:   JS_HOOK,
   noopFunct: noopFunct
 };

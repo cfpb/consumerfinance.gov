@@ -39,10 +39,11 @@ gulp.task( 'scripts:modern', function() {
 gulp.task( 'scripts:ie', function() {
   return gulp.src( paths.unprocessed + '/js/ie/common.ie.js' )
     .pipe( webpackStream( {
-        entry: paths.unprocessed + '/js/ie/common.ie.js' ,
-        output: {
-          filename: 'common.ie.js',
-    } } ) )
+      entry: paths.unprocessed + '/js/ie/common.ie.js',
+      output: {
+        filename: 'common.ie.js'
+      }
+    } ) )
     .on( 'error', handleErrors )
     .pipe( gulpUglify() )
     .pipe( gulp.dest( paths.processed + '/js/ie/' ) )

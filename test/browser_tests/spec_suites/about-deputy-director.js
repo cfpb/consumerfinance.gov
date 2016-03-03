@@ -12,7 +12,7 @@ describe( 'The About Deputy Director Page', function() {
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toBe( 'About Meredith Fuchs' );
+      expect( page.pageTitle() ).toBe( 'About David Silberman' );
     }
   );
 
@@ -34,13 +34,6 @@ describe( 'The About Deputy Director Page', function() {
     }
   );
 
-  it( 'should include the Deputy Director’s title',
-    function() {
-      expect( page.directorTitle.getText() )
-      .toEqual( 'Deputy Director Meredith Fuchs (Acting)' );
-    }
-  );
-
   it( 'should include the Deputy Director’s image',
     function() {
       expect( page.directorImage.isPresent() ).toBe( true );
@@ -56,7 +49,7 @@ describe( 'The About Deputy Director Page', function() {
   it( 'should include a More Info title',
     function() {
       expect( page.moreInfoTitle.getText() )
-      .toEqual( 'More information about Meredith Fuchs' );
+      .toContain( 'More information' );
     }
   );
 

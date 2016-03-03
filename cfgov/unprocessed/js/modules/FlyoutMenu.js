@@ -1,7 +1,9 @@
 'use strict';
 
 // Required modules.
+var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * FlyoutMenu
@@ -11,18 +13,23 @@ var EventObserver = require( '../modules/util/EventObserver' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the molecule.
- * @param {string} triggerSel - The selector for the menu trigger.
- * @param {string} contentSel - The selector for the menu content.
- * @param {string} altTriggerSel - The selector for a second menu trigger.
- * @returns {Object} A FlyoutMenu instance.
+ * @returns {FlyoutMenu} An instance.
  */
-function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
+function FlyoutMenu( element ) {
+
+  var BASE_CLASS = 'flyout-menu';
+  var BASE_SEL = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
+
+  // TODO: Update atomic-helpers to support CSS selectors for validity check.
+  var _dom = dataHook.contains( element, BASE_CLASS ) ? element : null;
+  if ( !_dom ) _dom = element.parentNode.querySelector( BASE_SEL + ']' );
+  if ( !_dom ) { throw new Error( 'Selector not found on passed node!' ); }
+
+  var _triggerDom = _dom.querySelector( BASE_SEL + '_trigger]' );
+  var _contentDom = _dom.querySelector( BASE_SEL + '_content]' );
+  var _altTriggerDom = _dom.querySelector( BASE_SEL + '_alt-trigger]' );
 
   var _isExpanded = false;
-
-  var _triggerDom = element.querySelector( triggerSel );
-  var _contentDom = element.querySelector( contentSel );
-  var _altTriggerDom = element.querySelector( altTriggerSel );
 
   var _transitionEndEvent = _getTransitionEndEvent( _contentDom );
   var _isAnimating = false;
@@ -31,14 +38,30 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
   var _expandEndBinded = _expandEnd.bind( this );
   var _collapseEndBinded = _collapseEnd.bind( this );
 
+  // Set this function to a queued collapse function,
+  // which is called if collapse is called while
+  // expand is animating.
+  var _deferFunct = standardType.noopFunct;
+  var _collapseBinded = collapse.bind( this );
+
   /**
-   * @returns {Object} The FlyoutMenu instance.
+   * @returns {FlyoutMenu} An instance.
    */
   function init() {
-    _triggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
+    var triggerClickedBinded = _triggerClicked.bind( this );
+    _triggerDom.addEventListener( 'click', triggerClickedBinded );
 
-    if ( altTriggerSel ) {
-      _altTriggerDom.addEventListener( 'click', _triggerClicked.bind( this ) );
+    if ( _altTriggerDom ) {
+      // If menu contains a submenu but doesn't have
+      // its own alternative trigger (such as a Back button),
+      // then the altTriggerDom may be in the submenu and we
+      // need to remove the reference.
+      var subMenu = _dom.querySelector( BASE_SEL + ']' );
+      if ( subMenu && subMenu.contains( _altTriggerDom ) ) {
+        _altTriggerDom = null;
+      } else {
+        _altTriggerDom.addEventListener( 'click', triggerClickedBinded );
+      }
     }
 
     return this;
@@ -61,11 +84,11 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
 
   /**
    * Open the search box.
-   * @returns {Object} A FlyoutMenu instance.
+   * @returns {FlyoutMenu} An instance.
    */
   function expand() {
     if ( !_isExpanded && !_isAnimating ) {
-      this.dispatchEvent( 'toggle', { target: this } );
+      _deferFunct = standardType.noopFunct;
       this.dispatchEvent( 'expandBegin', { target: this } );
       _isExpanded = true;
       _isAnimating = true;
@@ -84,11 +107,14 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
 
   /**
    * Close the search box.
-   * @returns {Object} A FlyoutMenu instance.
+   * If collapse is called when expand animation is underway,
+   * save a deferred call to collapse, which is called when
+   * expand completes.
+   * @returns {FlyoutMenu} An instance.
    */
   function collapse() {
     if ( _isExpanded && !_isAnimating ) {
-      this.dispatchEvent( 'toggle', { target: this } );
+      _deferFunct = standardType.noopFunct;
       this.dispatchEvent( 'collapseBegin', { target: this } );
       _isExpanded = false;
       _isAnimating = true;
@@ -101,6 +127,8 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
       _triggerDom.setAttribute( 'aria-expanded', 'false' );
       _contentDom.setAttribute( 'aria-expanded', 'false' );
       _triggerDom.focus();
+    } else {
+      _deferFunct = _collapseBinded;
     }
 
     return this;
@@ -108,11 +136,14 @@ function FlyoutMenu( element, triggerSel, contentSel, altTriggerSel ) {
 
   /**
    * Expand animation has completed.
+   * Call deferred collapse function,
+   * if set (otherwise it will call a noop function).
    */
   function _expandEnd() {
     _isAnimating = false;
     _contentDom.removeEventListener( _transitionEndEvent, _expandEndBinded );
     this.dispatchEvent( 'expandEnd', { target: this } );
+    _deferFunct();
   }
 
   /**

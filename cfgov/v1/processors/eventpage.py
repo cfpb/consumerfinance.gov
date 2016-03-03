@@ -1,4 +1,5 @@
 import dateutil
+import datetime
 
 from core.management.commands._helpers import PageDataConverter
 
@@ -18,6 +19,8 @@ class DataConverter(PageDataConverter):
         if times and times[0][0]:
             date = dateutil.parser.parse(times[0][0].get('date'))
             post_dict['date_published'] = date.strftime('%Y-%m-%d')
+        else:
+            post_dict['date_published'] = datetime.date.today()
         for t in times:
             if t[0]:
                 dt = dateutil.parser.parse(t[0].get('date'))
@@ -44,9 +47,12 @@ class DataConverter(PageDataConverter):
 
         # Live stream
         if doc.get('live_stream'):
-            for info in ['url', 'availability', 'date']:
-                post_dict['live_stream_'+info] = doc['live_stream'].get(info,
-                                                                        u'')
+            for info in ['url', 'availability']:
+                post_dict['live_stream_'+info] = doc['live_stream'].get(info, u'')
+            if doc['live_stream'].get('date'):
+                dt = dateutil.parser.parse(doc['live_stream'].get('date', {}).get('date'))
+                post_dict['live_stream_date'] = dt.strftime('%Y-%m-%d')
+
 
         # Time period content
         for tense in ['archive', 'live', 'future']:
