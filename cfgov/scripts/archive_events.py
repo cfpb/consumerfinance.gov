@@ -32,8 +32,8 @@ def run():
         else:
             print 'No events to archive found....'
     elif not event_page_exists:
-        print 'Events browse page has not create....'
+        print 'Events browse page has not been created....'
     elif not archive_event_page_exists:
-        print 'No archived events browse page not created....'
+        print 'No Archived events Browse page named \'Archive\' exist....'
     else:
         print 'No events exist in the database...'
