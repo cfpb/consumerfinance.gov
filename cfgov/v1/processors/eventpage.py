@@ -20,26 +20,27 @@ class DataConverter(PageDataConverter):
             return u'""'
         return '"%s"' % author.get('name')
 
-    def format_venue_name(self, venue):
-        if not venue or not venue.get('name'):
-            return u''
-        return venue['name']
+    def get_venue_dict(self, venue):
+        venue_dict = {}
+        if venue:
+            if venue.get('name'):
+                venue_dict['venue_name'] = venue['name']
+            if venue.get('address'):
+                for info in ['state', 'city', 'street', 'suite', 'zip']:
+                    if venue['address'].get(info):
+                        venue_dict['venue_'+info] = venue['address'][info]
+        return venue_dict 
 
-    def format_venue_address_info(self, venue, info):
-        if not venue or not venue.get('address') or not venue['address'].get(info):
-            return u''
-        return venue['address'][info]
-
-    def format_livestream(self, livestream, info):
-        if not livestream or not livestream.get(info):
-            return u''
-        return livestream[info]
-
-    def get_livestream_date(self, livestream_date):
-        if not livestream_date or not livestream_date.get('date'):
-            return u''
-        dt = dateutil.parser.parse(livestream_date['date'])
-        return dt.strftime('%Y-%m-%d')
+    def get_livestream_dict(self, livestream):
+        livestream_dict = {}
+        if livestream:
+            for info in ['url', 'availability']:
+                if livestream.get(info):
+                    livestream_dict['live_stream_'+info] = livestream[info]
+            if livestream.get('date') and livestream['date'].get('date'):
+                dt = dateutil.parser.parse(livestream['date']['date'])
+                livestream_dict['live_stream_date'] = dt.strftime('%Y-%m-%d')
+        return livestream_dict
 
     def format_time_period_content(self, doc_tense, tense):
         # Time period content
@@ -118,26 +119,13 @@ class DataConverter(PageDataConverter):
 
         post_dict['tags'] = self.format_tags(doc.get('tags'))
         post_dict['authors'] = self.format_author(doc.get('author'))
-        if doc.get('venue'):
-            post_dict['venue_name'] = self.format_venue_name(doc.get('venue'))
-            for info in ['state', 'city', 'street', 'suite', 'zip']:
-                post_dict['venue_'+info] = self.format_venue_address_info(doc.get('venue'), info)
-        if doc.get('archive'):
-            post_dict['flickr_url'] = self.get_flickr_url(doc.get('archive'))
-            post_dict['youtube_url'] = self.get_youtube_url(doc.get('archive'))
+        post_dict['flickr_url'] = self.get_flickr_url(doc.get('archive'))
+        post_dict['youtube_url'] = self.get_youtube_url(doc.get('archive'))
         post_dict.update(self.get_agenda_dict(doc.get('agenda')))
         post_dict.update(self.get_times_dict(doc.get('beginning_time'), doc.get('ending_time')))
-
-        if doc.get('live_stream'):
-            for info in ['url', 'availability', 'date']:
-                post_dict['live_stream_'+info] = self.format_livestream(doc.get('live_stream'), info)
-            if doc['live_stream'].get('date'):
-                post_dict['live_stream_date'] = self.get_livestream_date(doc.get('live_stream').get('date'))
-            for info in ['url', 'availability']:
-                post_dict['live_stream_'+info] = doc['live_stream'].get(info, u'')
-
+        post_dict.update(self.get_livestream_dict(doc.get('live_stream')))
+        post_dict.update(self.get_venue_dict(doc.get('venue')))
         for tense in ['archive', 'live', 'future']:
-            if doc.get(tense):
-                post_dict[tense+'_body'] = self.format_time_period_content(doc.get(tense), tense)
+            post_dict[tense+'_body'] = self.format_time_period_content(doc.get(tense), tense)
         
         return post_dict
