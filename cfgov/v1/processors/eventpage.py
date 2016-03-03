@@ -16,7 +16,7 @@ class DataConverter(PageDataConverter):
 
     def format_author(self, author):
         if not author or not author.get('name'):
-            return u''
+            return u'""'
         return '"%s"' % author.get('name')
 
     def format_venue_name(self, venue):
@@ -109,18 +109,21 @@ class DataConverter(PageDataConverter):
 
         post_dict['tags'] = self.format_tags(doc.get('tags'))
         post_dict['authors'] = self.format_author(doc.get('author'))
-        post_dict['venue_name'] = self.format_venue_name(doc.get('venue'))
-        post_dict['flickr_url'] = self.get_flickr_url(doc.get('archive'))
-        post_dict['youtube_url'] = self.get_youtube_url(doc.get('archive'))
+        if doc.get('venue'):
+            post_dict['venue_name'] = self.format_venue_name(doc.get('venue'))
+            for info in ['state', 'city', 'street', 'suite', 'zip']:
+                post_dict['venue_'+info] = self.format_venue_address_info(doc.get('venue'), info)
+        if doc.get('archive'):
+            post_dict['flickr_url'] = self.get_flickr_url(doc.get('archive'))
+            post_dict['youtube_url'] = self.get_youtube_url(doc.get('archive'))
         post_dict.update(self.get_agenda_dict(doc.get('agenda')))
         post_dict.update(self.get_times_dict(doc.get('beginning_time'), doc.get('ending_time')))
 
-        for info in ['state', 'city', 'street', 'suite', 'zip']:
-            post_dict['venue_'+info] = self.format_venue_address_info(doc.get('venue'), info)
-        for info in ['url', 'availability', 'date']:
-            post_dict['live_stream_'+info] = self.format_livestream(doc.get('live_stream'), info)
+        if doc.get('live_stream'):
+            for info in ['url', 'availability', 'date']:
+                post_dict['live_stream_'+info] = self.format_livestream(doc.get('live_stream'), info)
         for tense in ['archive', 'live', 'future']:
-            post_dict[tense+'_body'] = self.format_time_period_content(doc.get(tense), tense)
+            if doc.get(tense):
+                post_dict[tense+'_body'] = self.format_time_period_content(doc.get(tense), tense)
         
-
         return post_dict
