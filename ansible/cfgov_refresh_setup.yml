@@ -36,6 +36,7 @@
         - "python-devel"
         - "mysql-devel.x86_64"
         - "alsa-lib-devel"
+        - "libnotify"
 
     # Virtualbox Setup allows halt and up with vagrant again
     - name: Virtualbox Add Setup
