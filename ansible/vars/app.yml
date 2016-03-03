@@ -1,0 +1,16 @@
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+  - "8000"
+  - "9200"
+
+__elasticsearch_version: "1.7"
+__elasticsearch_url_version: "1.7.x"
+
+
+npm_packages:
+  - bower
+  - gulp
+  - grunt-cli
+  - less
+  - protractor

@@ -1,0 +1,24 @@
+mysql_database: "v1"
+mysql_root_password: "root"
+mysql_user_password: "root"
+
+mysql_databases:
+  - name: "{{ mysql_database }}"
+    encoding: latin1
+    collation: latin1_general_ci
+
+mysql_users:
+  - name: "{{ mysql_database }}"
+    host: "%"
+    password: "{{ mysql_user_password }}"
+    priv: "{{ mysql_database }}.*:ALL"
+
+mysql_packages:
+  - mysql-5.1.73-5.el6_6
+  - mysql-server
+  - mysql-libs
+  - MySQL-python
+
+firewall_allowed_tcp_ports:
+  - "22"
+  - "3306"

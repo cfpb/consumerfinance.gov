@@ -1,0 +1,84 @@
+---
+- hosts: db
+  sudo: yes
+  sudo_user: root
+  gather_facts: true
+  vars_files:
+    - vars/db.yml
+  roles:
+    - { role: geerlingguy.mysql }
+    - { role: geerlingguy.firewall }
+
+- hosts: app
+  sudo: yes
+  sudo_user: root
+  gather_facts: true
+  vars_files:
+    - vars/app.yml
+  roles:
+    - { role: geerlingguy.java }
+    - { role: vccabral.elasticsearch }
+    - { role: geerlingguy.git }
+    - { role: Ken24.python }
+    - { role: geerlingguy.firewall }
+    - { role: xcezx.httpd }
+    - { role: juwai.nodejs }
+  tasks:
+    - name: Install python dependencies
+      yum: pkg={{ item }} state=present
+      with_items:
+        - "libtiff-devel"
+        - "libjpeg-devel"
+        - "libzip-devel"
+        - "freetype-devel"
+        - "tcl-devel"
+        - "tk-devel"
+        - "python-devel"
+        - "mysql-devel.x86_64"
+        - "alsa-lib-devel"
+
+    # Virtualbox Setup allows halt and up with vagrant again
+    - name: Virtualbox Add Setup
+      shell: sudo /etc/init.d/vboxadd setup
+
+    # PDFReactor
+    - name: download PDFReactor
+      get_url: url=http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz force=false
+
+    - name: Untar PDFReactor
+      unarchive: src=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt copy=no
+
+    - name: Start PDFReactor service
+      command: /opt/PDFreactor/bin/pdfreactorwebservice start
+
+    # Django Development Setup
+    - name: Install virtualenv
+      command: "/usr/local/bin/pip install virtualenv"
+
+    - name: Create virtualenv and install requirements
+      pip: requirements=/vagrant/requirements/local.txt virtualenv=/vagrant/cfgov-refresh virtualenv_command=/usr/local/bin/virtualenv
+
+    - name: Add environment variables to bashrc
+      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source /vagrant/cfgov-refresh/bin/activate' line='source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'"
+
+    - name: Migrate django db to match application state
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py migrate"
+
+    - name: Create initial data 
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py runscript initial_data"
+
+    - name: Import contacts data 
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW"
+
+    - name: Import events data
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW"
+
+    - name: Create Sheer Index
+      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"
+
+
+    # - name: Update webdriver manager
+    #   command: webdriver-manager update
+
+    # - name: npm install
+    #   shell: "cd /vagrant; npm install"

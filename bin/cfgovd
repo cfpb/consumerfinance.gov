@@ -1,0 +1,37 @@
+#! /usr/bin/perl
+
+my $workDir = "/vagrant/cfgov/";
+my $userDir = "/home/vagrant/";
+my $outFile = $userDir.".cfgovOutput";
+
+if ($#ARGV >= 0) {
+	if ($ARGV[0] eq "start_django") {
+		chdir($workDir) || die "Project does not exist.\n";
+		`PYTHONUNBUFFERED=1 python manage.py runserver 0.0.0.0:8000 >$outFile`;
+	}
+	elsif ($ARGV[0] eq 'stop_django') {
+		my @procList = `ps -aux |grep "runserver"`;
+		my $railsProc = $procList[0];
+		if ($#procList > 0) {	
+			my @psIds = split(/  /, $railsProc);	
+			print("\nKilling process $psIds[1]\n");	
+			`kill -9 $psIds[1]`;
+		}
+	}
+	elsif ($ARGV[0] eq 'init_vbox') {
+		`sudo /etc/init.d/vboxadd setup 2>/dev/null`;
+	}
+	elsif ($ARGV[0] eq 'init_node') {
+		`sudo npm cache clean -f 2>/dev/null`;
+		`sudo npm install -g n 2>/dev/null`; 
+		`sudo n 5.6.0 2>/dev/null`; 
+		`sudo ln -sf /usr/local/n/versions/node/5.6.0/bin/node /usr/bin/node`;
+		`sudo npm install -g npm@2.5.1 2>/dev/null`;
+		`sudo ln -sf /usr/local/n/versions/node/5.6.0/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm`;
+		`sudo webdriver-manager update`;
+		`sudo rm -Rf /home/vagrant/.node-gyp 2>/dev/null`;
+		`sudo rm -Rf /vagrant/node_modules 2>/dev/null`;
+		`sudo rm /home/vagrant/.npmrc 2>/dev/null`;
+	}	
+	else { } 
+}
