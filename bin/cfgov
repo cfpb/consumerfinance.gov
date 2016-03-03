@@ -50,10 +50,8 @@ if ($#ARGV >= 0) {
 	}
 
 	elsif ($ARGV[0] eq 'init') {
-		print("\nInitializing virtualbox guest add ons (may take a few minutes)...\n");
-		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init_vbox" 2>/dev/null`;
 		print("\nInitializing npm and node js (may take a few minutes)...\n");
-		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init_node" 2>/dev/null`;
+		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init" 2>/dev/null`;
 		print("\nInitializing local node js modules (may take a few minutes)...\n");
 		`vagrant ssh -c "cd /vagrant; sh frontend.sh init" &`;
 	}
@@ -65,7 +63,9 @@ if ($#ARGV >= 0) {
 		my $logData = `vagrant ssh -c "cat /home/vagrant/.cfgovOutput" 2>/dev/null`;
 		print("\n$logData\n")
 	}
-	else { }
+	else {
+		print "\nUsage: cfgov [init |start | stop | log | assets] [django | watch]\n"; 
+	}
 }
 else {
 	print "\nUsage: cfgov [init |start | stop | log | assets] [django | watch]\n";

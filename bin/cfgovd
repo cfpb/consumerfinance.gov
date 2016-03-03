@@ -31,14 +31,11 @@ if ($#ARGV >= 0) {
 		chdir("/vagrant");
 		`gulp watch`;
 	}
-	elsif ($ARGV[0] eq 'init_vbox') {
-		` 2>/dev/null`;
-	}
-	elsif ($ARGV[0] eq 'init_node') {
+	elsif ($ARGV[0] eq 'init') {
 		`sudo webdriver-manager update`;
 		`sudo rm -Rf /home/vagrant/.node-gyp`;
+		`sudo rm -Rf /home/vagrant/.npm`;
 		`sudo rm -Rf /vagrant/node_modules`;
-		`sudo rm /home/vagrant/.npmrc`;
 	}	
 	else { } 
 }
