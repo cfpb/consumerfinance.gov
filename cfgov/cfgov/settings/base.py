@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'v1',
     'core',
     'sheerlike',
+    'django_extensions',
 )
 
 OPTIONAL_APPS=[

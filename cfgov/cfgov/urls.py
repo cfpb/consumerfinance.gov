@@ -10,7 +10,7 @@ from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
-    change_password, password_reset_confirm, cfpb_login
+    change_password, password_reset_confirm, cfpb_login, create_user, edit_user
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -37,6 +37,8 @@ urlpatterns = [
         )
     ])),
     url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
+    url(r'^admin/users/add/$', create_user, name='create_user'),
+    url(r'^admin/users/([^\/]+)/$', edit_user, name='edit_user'),
     # ----------------x-------------------- #
 
     url(r'^admin/', include(wagtailadmin_urls)),

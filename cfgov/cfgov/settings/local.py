@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = True
-INSTALLED_APPS += ('django_extensions', 'wagtail.contrib.wagtailstyleguide')
+INSTALLED_APPS += ('wagtail.contrib.wagtailstyleguide',)
 
 DATABASES = {
     'default': {
