@@ -1,11 +1,11 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
-var Expandable = require( '../molecules/Expandable' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
+var ERROR_MESSAGES = require( '../config/error-messages-config' );
+var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Notification = require( '../molecules/Notification' );
-// TODO: Implement form data client-side validation.
-// var validate = require( 'validate' );
+var validators = require( '../modules/util/validators' );
 
 /**
  * FilterableListControls
@@ -18,157 +18,217 @@ var Notification = require( '../molecules/Notification' );
  */
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
-
-  var _dom = atomicCheckers.validateDomElement(
+  var _dom = atomicHelpers.checkDom(
     element, BASE_CLASS, 'FilterableListControls' );
   var _form = _dom.querySelector( 'form' );
   var _notification;
-  var _fields = [];
+  var _fieldGroups;
 
-  var _validatorDefaults = {
-    inputs: [
-      'input',
-      'textarea',
-      'select'
+  var _defaults = {
+    ignoreFieldTypes: [
+      'hidden',
+      'button',
+      'submit',
+      'reset',
+      'fieldset'
+    ],
+    groupFieldTypes: [
+      'radio',
+      'checkbox'
     ]
   };
 
   /**
    * Initialize FilterableListControls instance.
-  */
-  function init() {
-    var expandable = new Expandable( _dom );
-    expandable.init();
+   */
+  function init( ) {
     _notification = new Notification( _dom );
     _notification.init();
-    _form.addEventListener( 'submit', _formSubmitted );
 
-    var inputs = _validatorDefaults.inputs;
-    var fields;
-    var field;
-    var type;
-    for ( var i = 0, len = inputs.length; i < len; i++ ) {
-      fields = _form.querySelectorAll( inputs[i] );
-      for ( var f = 0, flen = fields.length; f < flen; f++ ) {
-        field = fields[f];
-        type = field.getAttribute( 'type' );
-        if ( type !== 'hidden' &&
-             type !== 'button' &&
-             type !== 'submit' &&
-             type !== 'reset' &&
-             typeof field.getAttribute( 'disabled' ) !== 'undefined' ) {
-          _fields.push( field );
-        }
-      }
-    }
+    _initEvents();
+  }
+
+  /**
+   * Initialize FilterableListControls events.
+   */
+  function _initEvents() {
+    _form.addEventListener( 'submit', _formSubmitted );
+  }
+
+  /**
+   * Remove Event listeners.
+   */
+  function destroy() {
+    _form.removeEventListener( 'submit', _formSubmitted );
   }
 
   /**
    * Show error notification.
    * @param {Object} event Form submitted event.
-  */
+   */
   function _formSubmitted( event ) {
-    event.preventDefault();
-    var validatedFields = _validateFields( _fields );
+    var validatedFields = _validateFields( [].slice.call( _form.elements ) );
 
     if ( validatedFields.invalid.length > 0 ) {
-      _showError();
-    } else {
-      _showSuccess();
+      event.preventDefault();
+      _setNotification( _notification.ERROR,
+                        _buildErrorMessage( validatedFields.invalid ) );
     }
   }
 
   /**
-   * Show error notification.
-  */
-  function _showError() {
-    _notification.setTypeAndContent( _notification.ERROR, 'Error!' );
-    _notification.show();
-  }
+   * Build the error message to display within the notification.
+   * @param {Array} fields A list of form fields.
+   * @returns {string} A text to use for the error notification.
+   */
+  function _buildErrorMessage( fields ) {
+    var msg = '';
+    fields.forEach( function( validation ) {
+      msg += validation.label + ' ' + validation.msg + '</br>';
+    } );
 
-  /**
-   * Show success notification.
-  */
-  function _showSuccess() {
-    _notification.setTypeAndContent( _notification.SUCCESS, 'Success!' );
-    _notification.show();
+    return msg || ERROR_MESSAGES.DEFAULT;
   }
 
   /**
    * Validate the fields of our form.
-   * @param  {Array} fields The list of input fields we're testing.
+   * @param {HTMLNode} field A form field.
+   * @param {string} selector Selector used to retreive the dom element.
+   * @param {boolean} isInGroup Flag used determine if field is in group.
+   * @returns {string} The label of the field.
+   */
+  function _getLabelText( field, selector, isInGroup ) {
+    var labelText = '';
+    var labelDom;
+
+    if ( isInGroup && !selector ) {
+      labelDom = getClosestElement( field, 'fieldset' );
+      if ( labelDom ) labelDom = labelDom.querySelector( 'legend' );
+    } else {
+      selector = selector ||
+                 'label[for="' + field.getAttribute( 'id' ) + '"]';
+      labelDom = _form.querySelector( selector );
+    }
+
+    if ( labelDom ) labelText = labelDom.textContent.trim();
+
+    return labelText;
+  }
+
+  /**
+   * Set the notification type, msg, and visibility.
+   * @param {string} type The type of notification to display.
+   * @param {string} msg The message to display in the notification.
+   * @param {string} methodName The method to use to control visibility
+                                of the notification.
+   */
+  function _setNotification( type, msg, methodName ) {
+    methodName = methodName || 'show';
+    _notification.setTypeAndContent( type, msg );
+    _notification[methodName]();
+  }
+
+  /**
+   * Determines if you should validate a field.
+   * @param {HTMLNode} field A form field.
+   * @param {string} type The type of field.
+   * @param {boolean} isInGroup A boolean that determines if field in a group.
+   * @returns {boolean} Value indicating whether to validate a field.
+   */
+  function shouldValidateField( field, type, isInGroup ) {
+    var isDisabled = field.getAttribute( 'disabled' ) !== null;
+    var isIgnoreType = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
+    var shouldValidate = isDisabled === false && isIgnoreType === false;
+
+    if ( shouldValidate && isInGroup ) {
+      var name = field.getAttribute( 'data-group' ) ||
+                 field.getAttribute( 'name' );
+      var isRequired = field.getAttribute( 'data-required' ) !== null;
+      var groupExists = _fieldGroups.indexOf( name ) > -1;
+      if ( groupExists || isRequired === false ) {
+        shouldValidate = false;
+      } else {
+        _fieldGroups.push( name );
+      }
+    }
+
+    return shouldValidate;
+  }
+
+  /**
+   * Validate the fields of our form.
+   * @param {Array} fields A list of form fields.
    * @returns {Object}
    *   The tested list of fields broken into valid and invalid blocks.
-  */
+   */
   function _validateFields( fields ) {
-    var checkgroups = {};
     var validatedFields = {
-      valid:   [],
-      invalid: []
+      invalid: [],
+      valid:   []
     };
+    var validatedField;
 
-    var field;
-    var name;
-    for ( var f = 0, flen = fields.length; f < flen; f++ ) {
-      field = fields[f];
-      name = field.getAttribute( 'name' );
-      if ( !checkgroups[name] ) {
-        checkgroups[name] = [];
+    _fieldGroups = [];
+
+    fields.forEach( function loopFields( field ) {
+      var fieldIsValid = true;
+      var type = field.getAttribute( 'data-type' ) ||
+                 field.getAttribute( 'type' ) ||
+                 field.tagName.toLowerCase();
+      var isGroupField = _defaults.groupFieldTypes.indexOf( type ) > -1;
+
+      if ( shouldValidateField( field, type, isGroupField ) === false ) return;
+
+      validatedField = _validateField( field, type, isGroupField );
+
+      for ( var prop in validatedField.status ) {
+        if ( validatedField.status[prop] === false ) fieldIsValid = false;
       }
-      checkgroups[name].push( field );
-    }
 
-    var status;
-    for ( var group in checkgroups ) {
-      if ( checkgroups.hasOwnProperty( group ) ) {
-        status = group.length > 1 ?
-                 _validateCheckGroup( group ) : _validateInput( group );
-
-        for ( var prop in status.status ) {
-          if ( status.status[prop] === false ) {
-            validatedFields.valid.push( field );
-          } else {
-            validatedFields.invalid.push( field );
-          }
-        }
+      if ( fieldIsValid ) {
+        validatedFields.valid.push( validatedField );
+      } else {
+        validatedFields.invalid.push( validatedField );
       }
-    }
+    } );
 
     return validatedFields;
   }
 
   /**
-   * @param {Object} elem The check group we're testing.
-   * @returns {Object}
-   *   The formatted validation object of the tested check group.
+   * Validate the specific field types.
+   * @param {HTMLNode} field A form field.
+   * @param {string} type The type of field.
+   * @param {boolean} isInGroup A boolean that determines if field in a group.
+   * @returns {Object} An object with a status and message properties.
    */
-  function _validateCheckGroup( elem ) {
-    // TODO: Replace mock data with real validation data.
-    return {
-      elem:   elem,
-      value:  null,
-      label:  null,
-      status: {
-        checkgroup: false
-      }
+  function _validateField( field, type, isInGroup ) {
+    var fieldset;
+    var validation = {
+      field:      field,
+      // TODO: Change layout of field groups to use fieldset.
+      label:      _getLabelText( field, '', false || isInGroup ),
+      msg:        '',
+      status:     null
     };
-  }
 
-  /**
-   * @param {Object} elem The input we're testing.
-   * @returns {Object} The formatted validation object of the tested input.
-   */
-  function _validateInput( elem ) {
-    // TODO: Replace mock data with real validation data.
-    return {
-      elem:   elem,
-      value:  null,
-      label:  null,
-      status: false
-    };
+    if ( isInGroup ) {
+      var groupName = field.getAttribute( 'data-group' ) ||
+                field.getAttribute( 'name' );
+      var groupSelector = '[name=' + groupName + ']:checked,' +
+                          '[data-group=' + groupName + ']:checked';
+      fieldset = _form.querySelectorAll( groupSelector ) || [];
+    }
+
+    if ( validators[type] ) {
+      validation.status = validators[type]( field, validation, fieldset );
+    }
+
+    return validators.empty( field, validation );
   }
 
   this.init = init;
+  this.destroy = destroy;
   return this;
 }
 

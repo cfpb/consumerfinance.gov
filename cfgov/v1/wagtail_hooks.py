@@ -15,8 +15,12 @@ def share_the_page(request, page):
     parent_page = page.parent()
     parent_page_perms = parent_page.permissions_for_user(request.user)
 
-    is_publishing = bool(request.POST.get('action-publish')) and parent_page_perms.can_publish()
-    is_sharing = bool(request.POST.get('action-share')) and parent_page_perms.can_publish()
+    if parent_page.slug != 'root':
+        is_publishing = bool(request.POST.get('action-publish')) and parent_page_perms.can_publish()
+        is_sharing = bool(request.POST.get('action-share')) and parent_page_perms.can_publish()
+    else:  # Giving Root page permissions to publish/share
+        is_publishing = bool(request.POST.get('action-publish'))
+        is_sharing = bool(request.POST.get('action-share'))
 
     # If the page is being shared or published, set `shared` to True or else False
     # and save the page.

@@ -1,4 +1,5 @@
 import dateutil
+import datetime
 
 from core.management.commands._helpers import PageDataConverter
 
@@ -33,6 +34,12 @@ class DataConverter(PageDataConverter):
         if not livestream or not livestream.get(info):
             return u''
         return livestream[info]
+
+    def get_livestream_date(self, livestream_date):
+        if not livestream_date or not livestream_date.get('date'):
+            return u''
+        dt = dateutil.parser.parse(livestream_date['date'])
+        return dt.strftime('%Y-%m-%d')
 
     def format_time_period_content(self, doc_tense, tense):
         # Time period content
@@ -93,6 +100,8 @@ class DataConverter(PageDataConverter):
         if times and times[0][0]:
             date = dateutil.parser.parse(times[0][0].get('date'))
             times_dict['date_published'] = date.strftime('%Y-%m-%d')
+        else:
+            times_dict['date_published'] = datetime.date.today()
         for t in times:
             if t[0]:
                 dt = dateutil.parser.parse(t[0].get('date'))
@@ -122,6 +131,11 @@ class DataConverter(PageDataConverter):
         if doc.get('live_stream'):
             for info in ['url', 'availability', 'date']:
                 post_dict['live_stream_'+info] = self.format_livestream(doc.get('live_stream'), info)
+            if doc['live_stream'].get('date'):
+                post_dict['live_stream_date'] = self.get_livestream_date(doc.get('live_stream').get('date'))
+            for info in ['url', 'availability']:
+                post_dict['live_stream_'+info] = doc['live_stream'].get(info, u'')
+
         for tense in ['archive', 'live', 'future']:
             if doc.get(tense):
                 post_dict[tense+'_body'] = self.format_time_period_content(doc.get(tense), tense)

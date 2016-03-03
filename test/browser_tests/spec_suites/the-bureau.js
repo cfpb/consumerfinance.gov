@@ -43,7 +43,7 @@ describe( 'The Bureau Page', function() {
 
   it( 'should include the Deputy Director’s Bio',
     function() {
-      expect( page.deputyDirectorsName.getText() ).toEqual( 'Meredith Fuchs' );
+      expect( page.deputyDirectorsName.getText() ).toEqual( 'David Silberman' );
       expect( page.deputyDirectorsBio.isPresent() ).toBe( true );
     }
   );

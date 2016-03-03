@@ -1,10 +1,7 @@
 'use strict';
 
-// Required polyfills for IE9.
-if ( !Modernizr.classlist ) { require( '../modules/polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * Notification
@@ -28,8 +25,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   // Constants for the Notification modifiers.
   var MODIFIER_VISIBLE = BASE_CLASS + '__visible';
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'Notification' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Notification' );
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 
   var _currentType;

@@ -7,7 +7,7 @@
 
 var $ = require( 'jquery' );
 var dateRangeFormatter = require( './util/date-range-formatter' );
-var DATE_ERRORS = require( '../config/error-messages-config' ).DATE_ERRORS;
+var DATE_ERRORS = require( '../config/error-messages-config' ).DATE;
 
 /**
  * Set up jQuery plugin initialization.
@@ -107,24 +107,24 @@ PostFilter.prototype = {
     var fromDateValue = this.$gte.val();
     var toDateValue = this.$lte.val();
     var dateRange = dateRangeFormatter.format( fromDateValue, toDateValue );
-    var error_messages = [];
+    var errorMessages = [];
 
     if ( dateRange && dateRange.isValid ) {
       this.$gte.val( dateRange.startDate );
       this.$lte.val( dateRange.endDate );
     } else {
-      error_messages.push( DATE_ERRORS.invalid );
+      errorMessages.push( DATE_ERRORS.INVALID );
     }
 
     if ( $form.hasClass( 'js-validate_require-date' ) &&
     toDateValue === '' && fromDateValue === '' ) {
-      error_messages.push( DATE_ERRORS.one_required );
+      errorMessages.push( DATE_ERRORS.ONE_REQUIRED );
     }
 
-    if ( error_messages.length ) {
+    if ( errorMessages.length ) {
       event.preventDefault();
       $form.trigger( 'cf_notifier:notify', {
-        message: error_messages.join( '</br>' ),
+        message: errorMessages.join( '</br>' ),
         state:   'error'
       } );
     }

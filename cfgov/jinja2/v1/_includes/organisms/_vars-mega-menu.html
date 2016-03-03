@@ -1,44 +1,61 @@
 
 {#
-  TODO: Rename file as _vars-mega-menu.html.
-
   Navigation and Sub-Navigation menu items,
-  used to populate the contents of the site's navigation menus.
-  Format: navigation title {{ string }},
-          sub-navigation title {{ string }},
-          sub-navigation media {{ HTML string }},
-          sub-navigation items {{ array of tuples }}
+  used to populate the contents of the site's navigation menus (Mega Menu).
+
+  Format:
+
+  media_items:     Array of tuples containing a media item lookup map.
+  media_items.url: The URL of the menu item.
+                   Used to look up the featured menu content.
+  media_item.fmc:  Featured Menu Content.
+
+  nav_items:                       Multi-dimensional array of tuples.
+  nav_items.nav_group:             Tuple defining groupings of nav items.
+                                   Rendered as UL HTML element.
+  nav_items.nav_group.nav_caption: Menu item link text.
+  nav_items.nav_group.nav_url:     Menu item link URL.
+  nav_items.nav_group.children:    Array of menu item submenus,
+                                   recursively repeats nav_group structure.
 #}
 
 {# TODO: Update file path for Featured Menu Content module when that is added. #}
 {% import 'templates/nav/about-us-media.html' as about_us_media %}
 
-{% set sub_nav_tbd =  ('', '', 'TBD Content') %}
-{% set nav_items = [
-    ('Consumer Tools', '#', '', '', []),
-    ('Educational Resources', '#', '', '', []),
-    ('Data & Research', '#', '', '', []),
-    ('Policy & Compliance', '#', '', '', []),
-    ('About Us', '/about-us/',  'About Us Overview', about_us_media , [
+{% set media_items = [
+  ('/about-us/', about_us_media)
+] %}
+{% set nav_items = [(
+    ('Consumer Tools', '', []),
+    ('Educational Resources', '', []),
+    ('Data & Research', '', []),
+    ('Policy & Compliance', '', []),
+    ('About Us', '/about-us/', [
         (
-            ('/the-bureau/', 'the-bureau', 'The Bureau'),
-            ('/budget/', 'budget', 'Budget and Strategy'),
-            ('/offices/payments-to-harmed-consumers/',
-             'payments-to-harmed-consumers',
-             'Payments to Harmed Consumers')
+            ('The Bureau', '/the-bureau/', []),
+            ('Budget and Strategy', '/budget/', []),
+            ('Payments to Harmed Consumers',
+             '/offices/payments-to-harmed-consumers/', [])
         ),
         (
-            ('/blog/', 'blog', 'Blog'),
-            ('/newsroom/', 'newsroom', 'Newsroom'),
-            ('/events/', 'events', 'Events'),
-            ('/activity-log/', 'activity-log', 'Activity Log')
+            ('Blog','/blog/', []),
+            ('Newsroom', '/newsroom/', []),
+            ('Events', '/events/', []),
+            ('Activity Log', '/activity-log/', [])
         ),
         (
-            ('/careers/', 'careers', 'Careers'),
-            ('/doing-business-with-us/', 'doing-business-with-us', 'Doing Business With Us'),
-            ('/offices/advisory-groups/', 'advisory-groups', 'Advisory Groups'),
-            ('/offices/project-catalyst/', 'project-catalyst', 'Project Catalyst'),
-            ('/contact-us/', 'contact-us', 'Contact Us')
+            ('Careers', '/careers/', [
+                (
+                    ('Working at the CFPB', '/careers/working-at-cfpb/', []),
+                    ('Job Application Process', '/careers/application-process/', []),
+                    ('Students & Recent Graduates', '/careers/students-and-graduates/', []),
+                    ('Current Openings', '/careers/current-openings/', [])
+                )
+            ]),
+            ('Doing Business With Us', '/doing-business-with-us/', []),
+            ('Advisory Groups', '/offices/advisory-groups/', []),
+            ('Project Catalyst', '/offices/project-catalyst/', []),
+            ('Contact Us', '/contact-us/', [])
         )
     ])
-] -%}
+)] -%}

@@ -48,8 +48,8 @@ categories = [
         ('record', 'Record'),
     )),
     ('Implementation Resource', (
-        ('cfpb-bulletins-statements', 'CFPB Bulletins and Statements'),
-        ('impl-compl-material', 'Implementation and Compliance Material'),
+        ('compliance-aid', 'Compliance aid'),
+        ('official-guidance', 'Official guidance'),
     )),
     ('Newsroom', (
         ('op-ed', 'Op-Ed'),
@@ -102,6 +102,7 @@ def page_type_choices():
     new_choices = [
         ('Leadership Calendar', (
             ('richard-cordray', 'Richard Cordray'),
+            ('david-silberman', 'David Silberman'),
             ('meredith-fuchs', 'Meredith Fuchs'),
             ('steve-antonakes', 'Steve Antonakes'),
             ('raj-date', 'Raj Date'),

@@ -1,11 +1,8 @@
 'use strict';
 
-// Required polyfills for IE9.
-if ( !Modernizr.classlist ) { require( '../modules/polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * Expandable
@@ -29,8 +26,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'Expandable' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Expandable' );
   var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
   var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _contentAnimated =

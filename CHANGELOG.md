@@ -25,6 +25,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added new content flush sides on small modifier to fix an issue where margin was set on the molecule level instead of the template.
 - Added Info Unit Macro.
 - URL field to the Post Preview organism
+- Frontend: Added overlay atom.
+- Signal receiver function to unpublish all revisions for a page when a page is unpublished
+- Backend: HomePage Model
+- David Silberman's assets
+- Frontend: Added JS init scripts for /offices/, /sub-pages/, and /budget/.
+- Frontend: Added data-* attribute JS utility class.
+- New manager to query for the most appropriate pages (shared and/or live)
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -44,6 +51,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included use of wagtail `classname` meta field for block css modifiers
 - Breadcrumbs for Wagtail pages now handled by Wagtail
 - Changed Wagtail pages extending from `layout-side-nav.html` to use new side navigation handling
+- Changed FilterableListControls.js to add validation for email, date, and checkbox fields.
+- Converted references and asset urls from Fuchs to Silberman.
+- Fix blog post template to use sheerlike related posts method.
+- Restructured mega menu to include submenus recursively to allow for a third-level.
+- Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
+- Add two categories to the Implementation Resource group
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -56,6 +69,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed need for negative margin tweaks after groups.
 - Removed need for positive margin tweaks aroung group headings.
 - Removed heros from old WordPress pages.
+- Removed `show-hide-fields.js` script and reference from common.js.
+- Meredith Fuch's assets.
+- A couple of Implementation Resource group categories
 
 ### Fixed
 - Fix bug where publised pages were showing shared content

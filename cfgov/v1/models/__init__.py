@@ -10,6 +10,7 @@ from .sublanding_page import *
 from .browse_page import *
 from .browse_filterable_page import *
 from .learn_page import *
+from .home_page import *
 
 from django.conf import settings
 if settings.DEBUG:

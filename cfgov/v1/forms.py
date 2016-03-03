@@ -162,12 +162,13 @@ class FilterableListForm(forms.Form):
     authors_select_attrs = {
         'class': 'chosen-select',
         'multiple': 'multiple',
-        'data-placeholder': 'Search for authors',
+        'data-placeholder': 'Search for authors'
     }
     from_select_attrs = {
         'class': 'js-filter_range-date js-filter_range-date__gte',
         'type': 'text',
         'placeholder': 'dd/mm/yyyy',
+        'data-type': 'date'
     }
     to_select_attrs = from_select_attrs.copy()
     to_select_attrs.update({
@@ -175,11 +176,11 @@ class FilterableListForm(forms.Form):
     })
 
     title = forms.CharField(max_length=250, required=False)
-    from_date = forms.DateField(
+    from_date = FilterDateField(
         required=False,
         input_formats=['%d/%m/%Y'],
         widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date = forms.DateField(
+    to_date = FilterDateField(
         required=False,
         input_formats=['%d/%m/%Y'],
         widget=widgets.DateInput(attrs=to_select_attrs))
@@ -198,21 +199,19 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         parent = kwargs.pop('parent')
+        hostname = kwargs.pop('hostname')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        self.set_topics(parent)
-        self.set_authors(parent)
+        self.set_topics(parent, hostname)
+        self.set_authors(parent, hostname)
 
     # Populate Topics' choices
-    def set_topics(self, parent):
-        live_tags = [tag for tags in [page.tags.names() for page in
-                    AbstractFilterPage.objects.live().descendant_of(
-                    parent)] for tag in tags]
-        shared_tags = [tag for tags in [page.tags.names() for page in
-                       AbstractFilterPage.objects.descendant_of(parent)
-                       if page.shared] for tag in tags]
-        all_tags = list(chain(live_tags, shared_tags))
+    def set_topics(self, parent, hostname):
+        tags = [tag for tags in
+                     [page.tags.names() for page in
+                      AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent)]
+                     for tag in tags]
         # Orders by most to least common tags
-        options = most_common(all_tags)
+        options = most_common(tags)
         most = [(option, option) for option in options[:3]]
         other = [(option, option) for option in options[3:]]
         self.fields['topics'].choices = \
@@ -220,10 +219,10 @@ class FilterableListForm(forms.Form):
              ('All other topics', tuple(other)))
 
     # Populate Authors' choices
-    def set_authors(self, parent):
+    def set_authors(self, parent, hostname):
         all_authors = [author for authors in [page.authors.names() for page in
-                       AbstractFilterPage.objects.live().descendant_of(
-                       parent).live()] for author in authors]
+                       AbstractFilterPage.objects.live_shared().descendant_of(
+                       parent)] for author in authors]
         # Orders by most to least common authors
         self.fields['authors'].choices = [(author, author) for author in
                                           most_common(all_authors)]

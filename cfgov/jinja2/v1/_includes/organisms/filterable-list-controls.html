@@ -18,12 +18,14 @@
    ========================================================================== #}
 {% from 'molecules/expandable.html' import expandable with context %}
 
-{% macro _filter_selectable(type, index, label_text, id, name, value) %}
+{% macro _filter_selectable(type, index, label_text, id, name, value, required=None, group=None) %}
     <input class="cf-input"
            type="{{ type }}"
            value="{{ value }}"
            id="filter{{ index }}_{{ id }}"
            name="filter{{ index }}_{{ name }}"
+           {{ 'data-required=' ~ required if required else ''  }}
+           {{ 'data-group=' ~ group if group else ''  }}
            {{ 'checked' if is_filter_selected('filter' ~ index ~ '_' ~ name, value) else '' }}>
     <label for="filter{{ index }}_{{ id }}" >
         {{ label_text if label_text else value }}
@@ -116,7 +118,7 @@
                                                 form-l_col-1-2">
                                         <div class="form-group">
                                             <label class="form-label-header"
-                                                   for="from_date">
+                                                   for="{{ 'filter' ~ index ~ '_from_date' }}">
                                                 From:
                                             </label>
                                             {{ form.render_with_id(form.from_date,
@@ -127,7 +129,7 @@
                                                 form-l_col-1-2">
                                         <div class="form-group">
                                             <label class="form-label-header"
-                                                   for="to_date">
+                                                   for="{{ 'filter' ~ index ~ '_to_date' }}">
                                                 To:
                                             </label>
                                             {{ form.render_with_id(form.to_date,

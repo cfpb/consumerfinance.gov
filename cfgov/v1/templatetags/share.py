@@ -22,6 +22,8 @@ def is_shared(page):
 @register.assignment_tag(takes_context=True)
 def get_page_state_url(context, page):
     url = page.url
+    if url is None:  # If page is not aligned to a site root return None
+        return None
     page_hostname = urlparse(url).hostname
     staging_hostname = os.environ.get('STAGING_HOSTNAME')
     if not page.live and page.specific.shared and staging_hostname not in page_hostname:
