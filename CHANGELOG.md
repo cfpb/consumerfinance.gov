@@ -32,6 +32,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Added JS init scripts for /offices/, /sub-pages/, and /budget/.
 - Frontend: Added data-* attribute JS utility class.
 - New manager to query for the most appropriate pages (shared and/or live)
+- Enabled Demo Page in flapjack
+- Included Password Complexity rules for admin user creation/editing flow
+- Enabled email backend for Production settings
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -78,6 +81,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed Contacts import-data script to set phone numbers correctly
 - Fixed an issue where heros were not displaying on new Wagtail pages.
 - Fixed an error where the secondary nav script was trying to initialize on pages it wasn't used.
+- Fixed archive_events script to run in production
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

@@ -14,7 +14,6 @@ from . import organisms
 class SublandingPage(CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
-        ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
@@ -38,8 +37,8 @@ class SublandingPage(CFGOVPage):
             ('is_round', blocks.BooleanBlock(required=False, default=True,
                                              label='Round?')),
             ('icon', blocks.CharBlock(help_text='Enter icon class name.')),
-            ('heading', blocks.CharBlock(label='Introduction Heading')),
-            ('body', blocks.TextBlock(label='Introduction Body')),
+            ('heading', blocks.CharBlock(required=False, label='Introduction Heading')),
+            ('body', blocks.TextBlock(required=False, label='Introduction Body')),
         ], heading='Breakout Image', icon='image')),
         ('related_posts', organisms.RelatedPosts()),
     ], blank=True)
