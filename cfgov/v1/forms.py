@@ -221,7 +221,7 @@ class FilterableListForm(forms.Form):
     # Populate Authors' choices
     def set_authors(self, parent, hostname):
         all_authors = [author for authors in [page.authors.names() for page in
-                       AbstractFilterPage.objects.live_shared().descendant_of(
+                       AbstractFilterPage.objects.live_shared(hostname).descendant_of(
                        parent)] for author in authors]
         # Orders by most to least common authors
         self.fields['authors'].choices = [(author, author) for author in
