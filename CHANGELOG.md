@@ -59,7 +59,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix blog post template to use sheerlike related posts method.
 - Restructured mega menu to include submenus recursively to allow for a third-level.
 - Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
-- Add two categories to the Implementation Resource group
+- Add two categories to the Implementation Resource group.
+- Updated the homepage based on user feedback.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -81,7 +82,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed Contacts import-data script to set phone numbers correctly
 - Fixed an issue where heros were not displaying on new Wagtail pages.
 - Fixed an error where the secondary nav script was trying to initialize on pages it wasn't used.
-- Fixed archive_events script to run in production
+- Fixed archive_events script to run in production.
+- Fixed issue where form validation clashed with filterable list controls.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
