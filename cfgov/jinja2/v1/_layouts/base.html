@@ -105,6 +105,8 @@
         docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
     </script>
     <![endif]-->
+    
+    <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
 
     {# TODO: jQuery CDN is provided in the head to satisfy
              Google Tag Manager (GTM) requirements.
@@ -171,7 +173,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% block javascript %}
 <!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
-<script type='text/javascript' src=" {{ get_js_bundle_name( '/js/routes/*.js' ) }} "></script>
+<script type='text/javascript' src=" {{ get_js_bundle_name( '/js/routes/common.*.js' ) }} "></script>
 
 {# Remove after sheer has been completely phased out #}
 {% if not page %}
