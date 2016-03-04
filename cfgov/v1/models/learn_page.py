@@ -25,8 +25,8 @@ class AbstractFilterPage(CFGOVPage):
     preview_title = models.CharField(max_length=255, null=True, blank=True)
     preview_subheading = models.CharField(max_length=255, null=True, blank=True)
     preview_description = RichTextField(null=True, blank=True)
-    preview_link_url = models.CharField(max_length=500, null=True, blank=True)
-    preview_link_text = models.CharField(max_length=255, null=True, blank=True)
+    secondary_link_url = models.CharField(max_length=500, null=True, blank=True)
+    secondary_link_text = models.CharField(max_length=255, null=True, blank=True)
     preview_image = models.ForeignKey(
         'v1.CFGOVImage',
         null=True,

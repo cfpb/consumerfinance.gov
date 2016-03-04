@@ -108,7 +108,7 @@
         <div class="o-post-preview_content">
 
             <h3 class="o-post-preview_title">
-                <a href="{{ get_page_state_url({'request':request}, page) }}">
+                <a href="{{ get_page_state_url({'request':request}, post) }}">
                     {{ post.preview_title | safe if post.preview_title else post.title }}
                 </a>
             </h3>
