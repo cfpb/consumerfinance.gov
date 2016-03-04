@@ -51,8 +51,8 @@ class AbstractFilterPage(CFGOVPage):
             FieldPanel('preview_title', classname="full"),
             FieldPanel('preview_subheading', classname="full"),
             FieldPanel('preview_description', classname="full"),
-            FieldPanel('preview_link_url', classname="full"),
-            FieldPanel('preview_link_text', classname="full"),
+            FieldPanel('secondary_link_url', classname="full"),
+            FieldPanel('secondary_link_text', classname="full"),
             ImageChooserPanel('preview_image'),
         ], heading='Page Preview Fields', classname='collapsible collapsed'),
         MultiFieldPanel([
