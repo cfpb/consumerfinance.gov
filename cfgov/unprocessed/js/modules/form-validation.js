@@ -71,7 +71,7 @@ function _sendSubscriptionRequest( elem ) {
 }
 
 function init() {
-  $( 'form' )
+  $( '#email-subscribe-form' )
     .cf_notifier()
     .cf_formValidator( 'init', {
       onFailure: function( event, fields ) {
