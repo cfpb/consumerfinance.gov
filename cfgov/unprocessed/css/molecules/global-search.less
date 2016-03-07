@@ -125,15 +125,6 @@
         padding-top: unit( @grid_gutter-width / 4 / @base-font-size-px, em );
         position: absolute;
 
-        transform: translateX( 100% );
-        transition: transform 0.25s ease-out;
-
-        &[aria-expanded="true"] {
-            display: block;
-
-            transform: translateX( 0 );
-        }
-
         &-suggestions {
             display: none;
 
@@ -302,6 +293,11 @@
 .no-js .m-global-search {
     &_trigger {
         display: none;
+    }
+
+    // JS isn't available to remove u-hidden class, so override it.
+    &_content.u-hidden {
+        display: block;
     }
 }
 

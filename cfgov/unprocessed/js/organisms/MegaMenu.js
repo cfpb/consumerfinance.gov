@@ -72,6 +72,9 @@ function MegaMenu( element ) {
    */
   function _handleBodyClick( event ) {
     var target = event.target;
+    if ( _activeMenu.getDom().trigger === target ) {
+      return;
+    }
 
     var isInDesktop = _isInDesktop();
     if ( isInDesktop && !_isDesktopTarget( target ) ||

@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Enabled Demo Page in flapjack
 - Included Password Complexity rules for admin user creation/editing flow
 - Enabled email backend for Production settings
+- Frontend: Added utility classes for translation and opacity CSS transitions.
 
 ### Changed
 - Converted the project to Capital Framework v3
