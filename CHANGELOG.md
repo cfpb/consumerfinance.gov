@@ -61,6 +61,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
 - Add two categories to the Implementation Resource group.
 - Updated the homepage based on user feedback.
+- Renamed preview_link_url/text => secondary_link_url/text
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -84,6 +85,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed an error where the secondary nav script was trying to initialize on pages it wasn't used.
 - Fixed archive_events script to run in production.
 - Fixed issue where form validation clashed with filterable list controls.
+- Post preview title now links to page link.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
