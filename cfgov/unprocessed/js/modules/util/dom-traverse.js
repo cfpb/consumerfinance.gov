@@ -1,7 +1,5 @@
 'use strict';
 
-if ( window.Modernizr && !window.Modernizr.classlist ) { require( '../polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 /**
  * Get the sibling nodes of a dom node.
  *
