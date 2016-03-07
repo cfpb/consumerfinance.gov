@@ -263,10 +263,10 @@ class CFGOVPage(Page):
         js = ()
 
         for child in self.elements():
-            class_ = type(child.block)
-            instance = class_()
-
             try:
+                class_ = type(child.block)
+                instance = class_()
+
                 if hasattr(instance.Media, 'js'):
                     js += instance.Media.js
             except:
