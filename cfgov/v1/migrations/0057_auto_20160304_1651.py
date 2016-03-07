@@ -19,7 +19,7 @@ def save_revisions(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0055_auto_20160224_2201'),
+        ('v1', '0056_auto_20160226_1919'),
     ]
 
     operations = [
