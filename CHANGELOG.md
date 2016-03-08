@@ -87,7 +87,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue where form validation clashed with filterable list controls.
 - Post preview title now links to page link.
 - Fixed a bug where the search input and button in the header were misaligned.
-
+- Fixed urls document type for career pages
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
