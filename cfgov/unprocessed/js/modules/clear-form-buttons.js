@@ -38,6 +38,8 @@ function init() {
     $form.find( '.chosen-select' )
     .val( '' )
     .trigger( 'chosen:updated' );
+
+    $form.submit();
   } );
 }
 

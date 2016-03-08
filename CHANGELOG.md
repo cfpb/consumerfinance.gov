@@ -63,7 +63,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add two categories to the Implementation Resource group.
 - Updated the homepage based on user feedback.
 - Renamed preview_link_url/text => secondary_link_url/text
-- Updated Categories for Research & Reports 
+- Updated Categories for Research & Reports
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -92,7 +92,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed urls document type for career pages.
 - Fixed stacking bug in header search.
 - Fixed page saving bug that would prevent the display of a page's tags
-- Fixed ordering for Filterable results to be newest => oldest by published_date
+- Fixed ordering for Filterable results to be newest => oldest by published_date.
+- Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
