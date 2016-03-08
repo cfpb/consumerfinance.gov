@@ -4,8 +4,8 @@ mysql_user_password: "root"
 
 mysql_databases:
   - name: "{{ mysql_database }}"
-    encoding: latin1
-    collation: latin1_general_ci
+    encoding: utf8
+    collation: utf8_general_ci
 
 mysql_users:
   - name: "{{ mysql_database }}"

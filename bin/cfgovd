@@ -36,6 +36,5 @@ if ($#ARGV >= 0) {
 		`sudo rm -Rf /home/vagrant/.node-gyp`;
 		`sudo rm -Rf /home/vagrant/.npm`;
 		`sudo rm -Rf /vagrant/node_modules`;
-	}	
-	else { } 
+	}
 }
