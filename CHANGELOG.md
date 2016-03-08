@@ -64,7 +64,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add two categories to the Implementation Resource group.
 - Updated the homepage based on user feedback.
 - Renamed preview_link_url/text => secondary_link_url/text
+<<<<<<< HEAD
 - Updated Categories for Research & Reports
+=======
+- Changes to job listing pages
+>>>>>>> Fixing the template for the individual job posting
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
