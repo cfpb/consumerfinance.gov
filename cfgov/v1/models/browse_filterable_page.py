@@ -2,9 +2,10 @@ from operator import attrgetter
 
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import models
 from django.db.models import Q
 
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
@@ -23,6 +24,7 @@ class BrowseFilterablePage(base.CFGOVPage):
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
     ])
+    secondary_nav_order = models.IntegerField()
 
     # General content tab
     content_panels = base.CFGOVPage.content_panels + [
@@ -30,11 +32,15 @@ class BrowseFilterablePage(base.CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
+    settings_panels = base.CFGOVPage.settings_panels + [
+        FieldPanel('secondary_nav_order'),
+    ]
+
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(base.CFGOVPage.sidefoot_panels, heading='Footer'),
-        ObjectList(base.CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList(settings_panels, heading='Configuration'),
     ])
 
     template = 'browse-filterable/index.html'
