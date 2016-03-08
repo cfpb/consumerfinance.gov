@@ -1709,6 +1709,49 @@ select[multiple] {
 }
 
 /* topdoc
+  name: Set form elements to base webfont
+  family: cf-core
+  tags:
+    - cf-core
+*/
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select[multiple] {
+    .webfont-regular();
+}
+
+/* topdoc
+  name: Match the input to button
+  family: cf-form
+  notes: "Matches the font-size and padding of the input in
+          .input-with-btn to the button"
+  tags:
+    - cf-form
+*/
+
+input {
+    .input-with-btn & {
+        // Match button 8px padding minus border width
+        padding-top: 7px;
+        padding-bottom: 7px;
+
+        // Match button font-size
+        font-size: unit( 14px / @base-font-size-px, em );
+
+        &:focus {
+            box-shadow: 0 0 0 1px @pacific inset;
+            outline: none;
+        }
+    }
+}
+
+/* topdoc
     name: EOF
     eof: true
 */
