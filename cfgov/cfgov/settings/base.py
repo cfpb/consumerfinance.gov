@@ -2,6 +2,8 @@ import os
 from unipath import Path
 from ..util import admin_emails
 
+from django.conf import global_settings
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -10,6 +12,11 @@ PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
 V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
+
+# Use the django default password hashing
+PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
+
+
 # Application definition
 
 INSTALLED_APPS = (
