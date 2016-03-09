@@ -25,6 +25,6 @@ require( '../modules/external-site-redirect.js' ).init();
 // GLOBAL ATOMIC ELEMENTS.
 // Organisms.
 var Header = require( '../organisms/Header.js' );
-// Initialize header by passing it reference to global overlay atom.
 var header = new Header( document.body );
+// Initialize header by passing it reference to global overlay atom.
 header.init( document.body.querySelector( '.a-overlay' ) );

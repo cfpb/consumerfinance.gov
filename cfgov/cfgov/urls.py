@@ -217,8 +217,8 @@ urlpatterns = [
             name='careers'),
 
         url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='careers',
-                                      local_name='careers',
+            SheerTemplateView.as_view(doc_type='career',
+                                      local_name='career',
                                       default_template='careers/_single.html'), name='career'),
 
         url(r'^current-openings/$', SheerTemplateView.as_view(template_name='current-openings/index.html'),

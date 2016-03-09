@@ -58,7 +58,7 @@ describe( 'The Header Component', function() {
     expect( _sharedObject.navList.isPresent() ).toBe( true );
   } );
 
-  it( 'should include four Primary Nav Links', function() {
+  it( 'should include six Primary Nav Links', function() {
     expect( _sharedObject.primaryLinks.count() ).toEqual( 6 );
   } );
 
