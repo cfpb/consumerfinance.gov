@@ -92,6 +92,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed urls document type for career pages.
 - Fixed stacking bug in header search.
 - Fixed page saving bug that would prevent the display of a page's tags
+- Fixed ordering for Filterable results to be newest => oldest by published_date
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
