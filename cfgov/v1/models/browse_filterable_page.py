@@ -125,12 +125,3 @@ class EventArchivePage(BrowseFilterablePage):
 
     def get_template(self, request, *args, **kwargs):
         return BrowseFilterablePage.template
-
-class SublandingFilterablePage(BrowseFilterablePage):
-    def get_template(self, request, *args, **kwargs):
-        return 'sublanding-page/index.html'
-
-    def get_context(self, request, *args, **kwargs):
-        context = super(BrowseFilterablePage, self).get_context(request, *args, **kwargs)
-        context.update({'get_secondary_nav_items': get_secondary_nav_items})
-        return context
