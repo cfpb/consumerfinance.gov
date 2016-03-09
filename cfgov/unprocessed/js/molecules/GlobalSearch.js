@@ -6,6 +6,7 @@ var breakpointState = require( '../modules/util/breakpoint-state' );
 var ClearableInput = require( '../modules/ClearableInput' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var MoveTransition = require( '../modules/transition/MoveTransition' );
 
 /**
  * GlobalSearch
@@ -24,8 +25,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'GlobalSearch' );
   var _triggerSel = '.' + BASE_CLASS + '_trigger';
   var _triggerDom = _dom.querySelector( _triggerSel );
-  var _flyoutMenu = new FlyoutMenu( _dom ).init();
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  var _flyoutMenu = new FlyoutMenu( _dom );
   var _searchInputDom;
   var _searchBtnDom;
   var _clearBtnDom;
@@ -40,6 +41,15 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * @returns {Object} The GlobalSearch instance.
    */
   function init() {
+    // Set initial appearance.
+    var transition = new MoveTransition( _contentDom ).init();
+    transition.moveRight();
+    _flyoutMenu.setExpandTransition( transition, transition.moveToOrigin );
+    _flyoutMenu.setCollapseTransition( transition, transition.moveRight );
+    _flyoutMenu.init();
+
+    _contentDom.classList.remove( 'u-hidden' );
+
     var clearBtnSel = '.' + BASE_CLASS + ' .input-contains-label_after__clear';
     var inputContainsLabelSel =
       '.' + BASE_CLASS + '_content-form .input-contains-label';
@@ -135,6 +145,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    */
   function _handleExpandBegin() {
     this.dispatchEvent( 'expandBegin', { target: this } );
+    // If it's the desktop view, hide the "Search" button.
     if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-hidden' ); }
     _contentDom.classList.remove( 'u-invisible' );
     _searchInputDom.select();
