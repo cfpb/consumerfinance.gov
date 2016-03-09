@@ -9,30 +9,52 @@ var standardType = require( '../modules/util/standard-type' );
  * FlyoutMenu
  * @class
  *
- * @classdesc Initializes a new FlyoutMenu molecule.
+ * @classdesc Initializes new FlyoutMenu behavior.
+ * As added JS behavior, this is added through HTML data-js-hook attributes.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the molecule.
+ * Structure is:
+ * flyout-menu
+ *   flyout-menu_trigger
+ *   flyout-menu_content
+ *     flyout-menu_alt-trigger
+ *
+ * The alt-trigger is for a back button, which may obscure the first trigger.
+ * The flyout can be triggered three ways: through a click of the trigger or
+ * through the click of an alt-trigger.
+ *
+ * @param {HTMLNode} element - The DOM element to attach FlyoutMenu behavior.
  * @returns {FlyoutMenu} An instance.
  */
-function FlyoutMenu( element ) {
+function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   var BASE_CLASS = 'flyout-menu';
-  var BASE_SEL = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
+  var SEL_PREFIX = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
+
+  var BASE_SEL = SEL_PREFIX + ']';
+  var ALT_TRIGGER_SEL = SEL_PREFIX + '_alt-trigger]';
+  var CONTENT_SEL = SEL_PREFIX + '_content]';
+  var TRIGGER_SEL = SEL_PREFIX + '_trigger]';
 
   // TODO: Update atomic-helpers to support CSS selectors for validity check.
   var _dom = dataHook.contains( element, BASE_CLASS ) ? element : null;
-  if ( !_dom ) _dom = element.parentNode.querySelector( BASE_SEL + ']' );
+  if ( !_dom ) _dom = element.parentNode.querySelector( BASE_SEL );
   if ( !_dom ) { throw new Error( 'Selector not found on passed node!' ); }
 
-  var _triggerDom = _dom.querySelector( BASE_SEL + '_trigger]' );
-  var _contentDom = _dom.querySelector( BASE_SEL + '_content]' );
-  var _altTriggerDom = _dom.querySelector( BASE_SEL + '_alt-trigger]' );
+  var _triggerDom = _dom.querySelector( TRIGGER_SEL );
+  var _contentDom = _dom.querySelector( CONTENT_SEL );
+
+  if ( !_triggerDom ) { throw new Error( TRIGGER_SEL + ' is missing!' ); }
+  if ( !_contentDom ) { throw new Error( CONTENT_SEL + ' is missing!' ); }
+
+  var _altTriggerDom = _dom.querySelector( ALT_TRIGGER_SEL );
 
   var _isExpanded = false;
-
-  var _transitionEndEvent = _getTransitionEndEvent( _contentDom );
   var _isAnimating = false;
+
+  var _expandTransition;
+  var _collapseTransition;
+  var _expandTransitionMethod;
+  var _collapseTransitionMethod;
 
   // Needed to add and remove events to transitions.
   var _expandEndBinded = _expandEnd.bind( this );
@@ -56,7 +78,7 @@ function FlyoutMenu( element ) {
       // its own alternative trigger (such as a Back button),
       // then the altTriggerDom may be in the submenu and we
       // need to remove the reference.
-      var subMenu = _dom.querySelector( BASE_SEL + ']' );
+      var subMenu = _dom.querySelector( BASE_SEL );
       if ( subMenu && subMenu.contains( _altTriggerDom ) ) {
         _altTriggerDom = null;
       } else {
@@ -74,7 +96,7 @@ function FlyoutMenu( element ) {
    */
   function _triggerClicked( event ) {
     event.preventDefault();
-    this.dispatchEvent( 'triggerClick', { target: event.target } );
+    this.dispatchEvent( 'triggerClick', { target: this } );
     if ( _isExpanded ) {
       this.collapse();
     } else {
@@ -92,14 +114,18 @@ function FlyoutMenu( element ) {
       this.dispatchEvent( 'expandBegin', { target: this } );
       _isExpanded = true;
       _isAnimating = true;
-      // If transition is not supported, call handler directly (IE9/OperaMini).
-      if ( _transitionEndEvent ) {
-        _contentDom.addEventListener( _transitionEndEvent, _expandEndBinded );
+      if ( _expandTransitionMethod ) {
+        // The following method is defined in the transition, not this file.
+        _expandTransitionMethod();
+        if ( _expandTransition && _collapseTransition.isAnimated() ) {
+          _expandTransition
+            .addEventListener( 'transitionEnd', _expandEndBinded );
+        } else {
+          _expandEndBinded();
+        }
       } else {
         _expandEndBinded();
       }
-      _triggerDom.setAttribute( 'aria-expanded', 'true' );
-      _contentDom.setAttribute( 'aria-expanded', 'true' );
     }
 
     return this;
@@ -118,9 +144,15 @@ function FlyoutMenu( element ) {
       this.dispatchEvent( 'collapseBegin', { target: this } );
       _isExpanded = false;
       _isAnimating = true;
-      // If transition is not supported, call handler directly (IE9/OperaMini).
-      if ( _transitionEndEvent ) {
-        _contentDom.addEventListener( _transitionEndEvent, _collapseEndBinded );
+      if ( _collapseTransitionMethod ) {
+        // The following method is defined in the transition, not this file.
+        _collapseTransitionMethod();
+        if ( _collapseTransition && _collapseTransition.isAnimated() ) {
+          _collapseTransition
+            .addEventListener( 'transitionEnd', _collapseEndBinded );
+        } else {
+          _collapseEndBinded();
+        }
       } else {
         _collapseEndBinded();
       }
@@ -141,8 +173,14 @@ function FlyoutMenu( element ) {
    */
   function _expandEnd() {
     _isAnimating = false;
-    _contentDom.removeEventListener( _transitionEndEvent, _expandEndBinded );
+    if ( _expandTransition ) {
+      _expandTransition
+        .removeEventListener( 'transitionEnd', _expandEndBinded );
+    }
     this.dispatchEvent( 'expandEnd', { target: this } );
+    _triggerDom.setAttribute( 'aria-expanded', 'true' );
+    _contentDom.setAttribute( 'aria-expanded', 'true' );
+    // Call collapse, if it was called while expand was animating.
     _deferFunct();
   }
 
@@ -151,15 +189,58 @@ function FlyoutMenu( element ) {
    */
   function _collapseEnd() {
     _isAnimating = false;
-    _contentDom.removeEventListener( _transitionEndEvent, _collapseEndBinded );
+    if ( _collapseTransition ) {
+      _collapseTransition
+        .removeEventListener( 'transitionEnd', _collapseEndBinded );
+    }
     this.dispatchEvent( 'collapseEnd', { target: this } );
+  }
+
+  /**
+   * @param {MoveTransition|AlphaTransition} transition
+   *   A transition instance to watch for events on.
+   * @param {Function} method
+   *   The transition method to call on expand.
+   */
+  function setExpandTransition( transition, method ) {
+    _expandTransition = transition;
+    _expandTransitionMethod = method;
+  }
+
+  /**
+   * @param {MoveTransition|AlphaTransition} transition
+   *   A transition instance to watch for events on.
+   * @param {Function} method
+   *   The transition method to call on collapse.
+   */
+  function setCollapseTransition( transition, method ) {
+    _collapseTransition = transition;
+    _collapseTransitionMethod = method;
+  }
+
+  /**
+   * @param {string} type
+   *   (Optional) The type of transition to return.
+   *   Accepts 'expand' or 'collapse'.
+   *   `FlyoutMenu.EXPAND_TYPE` and `FlyoutMenu.COLLAPSE_TYPE` can be used
+   *   as type-safe constants passed into this method.
+   *   If neither or something else is supplied, expand type is returned.
+   * @returns {MoveTransition|AlphaTransition}
+   *   A transition instance set on this instance, or undefined if none is set.
+   */
+  function getTransition( type ) {
+    if ( type === FlyoutMenu.COLLAPSE_TYPE ) {
+      return _collapseTransition;
+    }
+
+    return _expandTransition;
   }
 
   /**
    * @returns {Object}
    *   Hash of trigger, alternative trigger, and content DOM references.
    */
-  function _getDom() {
+  function getDom() {
     return {
       altTrigger: _altTriggerDom,
       content:    _contentDom,
@@ -176,34 +257,16 @@ function FlyoutMenu( element ) {
   this.init = init;
   this.expand = expand;
   this.collapse = collapse;
-  this.getDom = _getDom;
+  this.setExpandTransition = setExpandTransition;
+  this.setCollapseTransition = setCollapseTransition;
+  this.getTransition = getTransition;
+  this.getDom = getDom;
+
+  // Public static properties.
+  FlyoutMenu.EXPAND_TYPE = 'expand';
+  FlyoutMenu.COLLAPSE_TYPE = 'collapse';
 
   return this;
-}
-
-// TODO: Move to a utility module and share this between Expandables and here.
-/**
- * @param {HTMLNode} elm
- *   The element to check for support of transition end event.
- * @returns {string} The browser-prefixed transition end event.
- */
-function _getTransitionEndEvent( elm ) {
-  var transition;
-  var transitions = {
-    WebkitTransition: 'webkitTransitionEnd',
-    MozTransition:    'transitionend',
-    OTransition:      'oTransitionEnd otransitionend',
-    transition:       'transitionend'
-  };
-
-  for ( var t in transitions ) {
-    if ( transitions.hasOwnProperty( t ) &&
-         typeof elm.style[t] !== 'undefined' ) {
-      transition = transitions[t];
-      break;
-    }
-  }
-  return transition;
 }
 
 module.exports = FlyoutMenu;

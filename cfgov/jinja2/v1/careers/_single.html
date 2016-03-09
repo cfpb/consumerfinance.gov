@@ -56,6 +56,11 @@
                 'heading': 'Share this job',
                 'hide_heading': false,
                 'show_linkedin': true,
+                'twitter_options': {
+                    'text':     career.title,
+                    'related':  '@cfpb',
+                    'hashtags': '#usajobs'
+                },
                 'additional_classes':
                     'share__horizontal share__align-right'
             }) }}
@@ -67,7 +72,7 @@
                     block__padded-top
                     block__border-top">
         <h2>Job Description</h2>
-        {{ career.description }}
+        {{ career.description | safe}}
 
         {# TODO: Discuss how to break duties and departments out of
                  the description.
@@ -97,6 +102,11 @@
                     'heading': 'Share this job',
                     'hide_heading': false,
                     'show_linkedin': true,
+                    'twitter_options': {
+                        'text':     career.title,
+                        'related':  '@cfpb',
+                        'hashtags': '#usajobs'
+                    },
                     'additional_classes':
                         'share__horizontal share__align-right'
                 }) }}
