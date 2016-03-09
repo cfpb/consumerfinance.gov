@@ -75,8 +75,6 @@ class AbstractFilterPage(CFGOVPage):
     # This page class cannot be created.
     is_creatable = False
 
-    objects = CFGOVPage.objects
-
     class Meta:
         ordering = ('date_published',)
 

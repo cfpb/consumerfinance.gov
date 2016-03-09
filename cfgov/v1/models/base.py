@@ -157,6 +157,15 @@ class CFGOVPage(Page):
                 return ancestors[i+1:]
         return []
 
+    def get_appropriate_siblings(self, hostname, inclusive=True):
+        return CFGOVPage.objects.live_shared(hostname).sibling_of(self, inclusive)
+
+    def get_next_appropriate_siblings(self, hostname, inclusive=False):
+        return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__gte=self.path).order_by('path')
+
+    def get_prev_appropriate_siblings(self, hostname, inclusive=False):
+        return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
+
     @property
     def status_string(self):
         if not self.live:
