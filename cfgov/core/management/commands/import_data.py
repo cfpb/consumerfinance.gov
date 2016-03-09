@@ -42,7 +42,8 @@ class Command(BaseCommand):
 
     def get_documents(self, data_type, processors):
         processor = self.get_processor(data_type, processors)
-        return processor.documents(processors[data_type]['url'])
+        # 'name' is actually an unused param, so we just pass None to it for now
+        return processor.documents(name = None, url = processors[data_type]['url'])
 
 
     def handle(self, *args, **options):
