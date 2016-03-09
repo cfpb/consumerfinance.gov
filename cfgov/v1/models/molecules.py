@@ -73,6 +73,7 @@ class Hero(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = '_includes/molecules/hero.html'
+        classname = 'block__flush'
 
 
 class FormFieldWithButton(blocks.StructBlock):
