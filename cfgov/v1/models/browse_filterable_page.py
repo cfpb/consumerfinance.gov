@@ -110,9 +110,8 @@ class BrowseFilterablePage(base.CFGOVPage):
                 if not categories or 'blog' in categories:
                     blog_cats = [c[0] for c in ref.categories[1][1]]
                     blog_q = Q('categories__name__in', blog_cats)
-        results = base.CFGOVPage.objects.live_shared(hostname).descendant_of(
-            self).filter(form.generate_query() | blog_q).specific()
-        return [page for page in results if isinstance(page, AbstractFilterPage)]
+        return AbstractFilterPage.objects.live_shared(hostname).descendant_of(self).filter(
+            form.generate_query() | blog_q).order_by('-date_published')
 
 
 class EventArchivePage(BrowseFilterablePage):
