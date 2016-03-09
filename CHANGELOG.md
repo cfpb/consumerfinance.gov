@@ -90,6 +90,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed a bug where the search input and button in the header were misaligned.
 - Fixed urls document type for career pages.
 - Fixed stacking bug in header search.
+- Fixed page saving bug that would prevent the display of a page's tags
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
