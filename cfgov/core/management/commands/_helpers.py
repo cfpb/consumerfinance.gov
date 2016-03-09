@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpRequest
 from django.contrib.messages.api import MessageFailure
+from django.db.utils import IntegrityError
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailadmin.views import pages as pages_views
@@ -71,7 +72,7 @@ class Importer:
             else:
                 pages_views.create(request, self.app, self.wagtail_type,
                                    parent_page.id)
-        except MessageFailure:
+        except (IntegrityError, MessageFailure):
             self.is_valid(existing, imported_data)
 
     def migrate_snippet(self, request, imported_data, converter):
