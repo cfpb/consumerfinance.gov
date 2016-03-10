@@ -178,11 +178,13 @@
    ========================================================================== #}
 {% macro _filters_form(filters, query, doc_type, options) %}
 
-<form class="{{ options.additional_classes }}"
-      method="{{ options.form_method }}"
-      {{ "action=" ~ options.action if options.action != '/' }}
+<form class="{{ options.additional_classes or '' }}"
+      method="{{ options.form_method or 'get' }}"
+      {{ "action=" ~ options.action if options.action != '/' else '' }}
       >
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% if options.addition_classes and options.addition_classes == 'post' %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% endif %}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
