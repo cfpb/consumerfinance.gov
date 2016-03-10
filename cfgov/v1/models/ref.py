@@ -3,6 +3,10 @@ limited_categories = [
     ('newspaper', 'Newsroom'),
     ('document', 'Report'),
     ('date', 'Events'),
+    ('microphone', 'Speech'),
+    ('bullhorn', 'Press Release'),
+    ('contract', 'Op-Ed'),
+    ('double-quote', 'Testimony'),
 ]
 
 page_types = [
