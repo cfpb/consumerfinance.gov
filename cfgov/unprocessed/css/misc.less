@@ -645,12 +645,14 @@
         height: 5px;
         width: 100%;
 
-        position: relative;
-        top: 5px;
+        position: absolute;
+        // Offset for thickness of shadow.
+        bottom: -5px;
+        left: 0;
 
         background: @gray;
         // Whitespace in content so element can have dimensions set.
-        content: '\a0';
+        content: '';
         opacity: 0.2;
     }
 }
