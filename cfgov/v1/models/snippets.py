@@ -32,6 +32,10 @@ class Contact(models.Model):
     def __str__(self):
         return self.heading
 
+    @classmethod
+    def get_by_title_slug(self, title, slug):
+        return self.objects.get(hash=hashlib.md5(title + ';;' + slug).hexdigest())
+
 
 @receiver(pre_save, sender=Contact)
 def set_hash(sender, instance, **kwargs):

@@ -75,11 +75,6 @@ class AbstractFilterPage(CFGOVPage):
     # This page class cannot be created.
     is_creatable = False
 
-    objects = CFGOVPage.objects
-
-    class Meta:
-        ordering = ('date_published',)
-
     def related_metadata_tags(self, get_request):
         # Set the tags to correct data format
         tags = {'links': []}
