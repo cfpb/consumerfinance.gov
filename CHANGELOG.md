@@ -36,6 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included Password Complexity rules for admin user creation/editing flow
 - Enabled email backend for Production settings
 - Frontend: Added utility classes for translation and opacity CSS transitions.
+- Script to semi-automate importing refresh data
 
 ### Changed
 - Converted the project to Capital Framework v3
