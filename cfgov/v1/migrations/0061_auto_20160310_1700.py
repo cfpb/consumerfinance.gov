@@ -12,6 +12,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
+            model_name='browsefilterablepage',
+            name='secondary_nav_exclude_sibling_pages',
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
             model_name='browsepage',
             name='secondary_nav_exclude_sibling_pages',
             field=models.BooleanField(default=False),
