@@ -37,6 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Enabled email backend for Production settings
 - Frontend: Added utility classes for translation and opacity CSS transitions.
 - Script to semi-automate importing refresh data
+- Provided option to exclude sibling pages in secondary navigation
 
 ### Changed
 - Converted the project to Capital Framework v3
