@@ -37,7 +37,7 @@
     </ul>
 {% endmacro %}
 
-{% set nav_items, has_children = get_secondary_nav_items(page) %}
+{% set nav_items, has_children = get_secondary_nav_items(page, request.site.hostname) %}
 
 {# TODO: This should be hidden on tablets as well. #}
 <nav class="o-secondary-navigation
