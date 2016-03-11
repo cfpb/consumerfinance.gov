@@ -171,7 +171,7 @@ class EventPage(AbstractFilterPage):
     live_stream_availability = models.BooleanField("Streaming?", default=False,
                                                    blank=True)
     live_stream_url = models.URLField("URL", blank=True)
-    live_stream_date = models.DateField("Go Live Date", blank=True, null=True)
+    live_stream_date = models.DateTimeField("Go Live Date", blank=True, null=True)
     # Venue content fields
     venue_name = models.CharField(max_length=100, blank=True)
     venue_street = models.CharField(max_length=100, blank=True)
