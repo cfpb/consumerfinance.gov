@@ -1,4 +1,5 @@
 import os
+import json
 
 from django.http import Http404
 from django.contrib.auth.models import Permission
@@ -41,13 +42,12 @@ def share_the_page(request, page):
     if not is_publishing:
         page.live = False
     latest = page.get_latest_revision()
-    latest.delete()
-    revision = page.save_revision()
-
-    # If the page is being published, the publish the newly created revision.
+    content_json = json.loads(latest.content_json)
+    content_json['live'], content_json['shared'] = page.live, page.shared
+    latest.content_json = json.dumps(content_json)
+    latest.save()
     if is_publishing:
-        revision.publish()
-
+        latest.publish()
 
 @hooks.register('before_serve_page')
 def check_request_site(page, request, serve_args, serve_kwargs):

@@ -13,6 +13,7 @@ from . import molecules
 from . import organisms
 from ..util.util import get_secondary_nav_items
 
+
 class BrowsePage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
@@ -29,7 +30,8 @@ class BrowsePage(CFGOVPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)
-    secondary_nav_order = models.IntegerField(default=1)
+
+    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -37,15 +39,15 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    settings_panels = CFGOVPage.settings_panels + [
-        FieldPanel('secondary_nav_order'),
+    sidefoot_panels = CFGOVPage.sidefoot_panels + [
+        FieldPanel('secondary_nav_exclude_sibling_pages'),
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(settings_panels, heading='Configuration'),
+        ObjectList(sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     template = 'browse-basic/index.html'

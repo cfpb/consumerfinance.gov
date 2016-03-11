@@ -1,5 +1,6 @@
 import collections
 import re
+import os
 from itertools import chain
 from time import time
 from django.conf import settings
@@ -22,18 +23,20 @@ def to_camel_case(snake_str):
 
 
 def get_unique_id(prefix='', suffix=''):
-    index = hex(int(time()*10000000))[2:]
+    index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
 
- # These messages are manually mirrored on the
- # Javascript side in error-messages-config.js
+    # These messages are manually mirrored on the
+    # Javascript side in error-messages-config.js
+
+
 ERROR_MESSAGES = {
-    'CHECKBOX_ERRORS' : {
-        'required' : 'Please select at least one of the "%s" options.'
+    'CHECKBOX_ERRORS': {
+        'required': 'Please select at least one of the "%s" options.'
     },
-    'DATE_ERRORS' :{
-        'invalid' : 'You have entered an invalid date.',
+    'DATE_ERRORS': {
+        'invalid': 'You have entered an invalid date.',
         'one_required': 'Please enter at least one date.'
     }
 }
@@ -55,47 +58,46 @@ def most_common(lst):
 
 
 def get_form_id(page, get_request):
-        form_ids = []
-        if callable(getattr(page, 'get_form_specific_filter_data', None)):
-            form_ids = page.get_form_specific_filter_data(page.get_form_class(),
-                                                          get_request).keys()
-        if form_ids:
-            return form_ids[0]
-        else:
-            return None
+    form_ids = []
+    if callable(getattr(page, 'get_form_specific_filter_data', None)):
+        form_ids = page.get_form_specific_filter_data(page.get_form_class(),
+                                                      get_request).keys()
+    if form_ids:
+        return form_ids[0]
+    else:
+        return None
 
 
 # For use by Browse type pages to get the secondary navigation items
-def get_secondary_nav_items(current):
+def get_secondary_nav_items(current, hostname, exclude_siblings=False):
     from ..templatetags.share import get_page_state_url
+    on_staging = os.environ.get('STAGING_HOSTNAME') == hostname
     nav_items = []
-    parent = current.get_parent()
+    parent = current.get_parent().specific
     page = parent if 'Browse' in parent.specific_class.__name__ else current
-    # Use chain to add the page object in from the function call since the page
-    # argument passed could be different than the one in the database, as is
-    # the case with "previewing".
-    for sibling in list(chain([page], page.get_siblings(inclusive=False))):
+
+    pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(hostname)
+
+    for sibling in pages:
         # Only if it's a Browse type page
         if 'Browse' in sibling.specific_class.__name__:
+            sibling = page if page.id == sibling.id else sibling
             item = {
                 'title': sibling.title,
                 'slug': sibling.slug,
                 'url': get_page_state_url({}, sibling),
-                'order': sibling.specific.secondary_nav_order,
                 'children': [],
             }
-            for child in sibling.get_children():
+            children = sibling.get_children().specific()
+            for child in [c for c in children if (on_staging and c.shared) or c.live]:
                 if 'Browse' in child.specific_class.__name__:
                     item['children'].append({
                         'title': child.title,
                         'slug': child.slug,
                         'url': get_page_state_url({}, child),
-                        'order': child.specific.secondary_nav_order,
                     })
-            item['children'] = sorted(item['children'], key=lambda x: x['order'])
             nav_items.append(item)
     # Return a boolean about whether or not the current page has Browse children
-    nav_items = sorted(nav_items, key=lambda x: x['order'])
     for item in nav_items:
         if get_page_state_url({}, page) == item['url'] and item['children']:
             return nav_items, True

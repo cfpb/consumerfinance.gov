@@ -7,18 +7,18 @@ from django.contrib.auth.models import User
 
 from v1.models.learn_page import EventPage
 from v1.models.browse_page import BrowsePage
-from v1.models.browse_filterable_page import BrowseFilterablePage
+from v1.models.browse_filterable_page import EventArchivePage
 from wagtail.wagtailcore.models import Page
 from modelcluster.models import get_all_child_relations
 
 
 def run():
     event_page_exists = BrowsePage.objects.filter(title='Events').exists()
-    archive_event_page_exists = BrowseFilterablePage.objects.filter(title='Archive').exists()
+    archive_event_page_exists = EventArchivePage.objects.filter(title='Archive').exists()
 
     if event_page_exists and archive_event_page_exists:
         events = BrowsePage.objects.get(title='Events')
-        archived_events = BrowseFilterablePage.objects.get(title='Archive')
+        archived_events = EventArchivePage.objects.get(title='Archive')
 
         if len(events.get_children()) > 1:
             for child in events.get_children():

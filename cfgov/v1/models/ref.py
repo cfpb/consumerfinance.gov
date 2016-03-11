@@ -1,3 +1,14 @@
+limited_categories = [
+    ('speech-bubble', 'Blog'),
+    ('newspaper', 'Newsroom'),
+    ('document', 'Report'),
+    ('date', 'Events'),
+    ('microphone', 'Speech'),
+    ('bullhorn', 'Press Release'),
+    ('contract', 'Op-Ed'),
+    ('double-quote', 'Testimony'),
+]
+
 page_types = [
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
@@ -71,13 +82,9 @@ categories = [
         ('consumer-complaint', 'Consumer Complaint'),
         ('super-highlight', 'Supervisory Highlights'),
         ('data-point', 'Data Point'),
-        ('snapshot', 'Snapshot'),
-        ('consumer-voices', 'Consumer Voices'),
-        ('education-programs', 'Education and Programs'),
-        ('our-regulations', 'Our Regulations'),
-        ('industry-practices', 'Industry Practices'),
-        ('joint-reports', 'Joint Reports'),
-        ('finances-results', 'Finances and Results'),
+        ('industry-markets', 'Industry and markets'),
+        ('consumer-programs-experiences', 'Consumer programs and experiences'),
+        ('to-congress', 'To Congress'),
     )),
     ('Rule under development', (
         ('notice-proposed-rule-2', 'Advanced Notice of Proposed Rulemaking'),
@@ -131,10 +138,12 @@ def category_label(category):
             if category == slug:
                 return name
 
+
 def fcm_label(category):
     for slug, name in fcm_types:
         if slug == category:
             return name
+
 
 def is_blog(page):
     for category in page.categories.all():

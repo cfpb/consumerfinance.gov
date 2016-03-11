@@ -15,7 +15,7 @@ from django.forms import widgets
 
 from sheerlike.templates import date_formatter
 from .models import ref
-from .models.learn_page import AbstractFilterPage
+from .models.base import CFGOVPage
 from .util.util import most_common
 
 
@@ -208,7 +208,7 @@ class FilterableListForm(forms.Form):
     def set_topics(self, parent, hostname):
         tags = [tag for tags in
                      [page.tags.names() for page in
-                      AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent)]
+                      CFGOVPage.objects.live_shared(hostname).descendant_of(parent)]
                      for tag in tags]
         # Orders by most to least common tags
         options = most_common(tags)
@@ -221,7 +221,7 @@ class FilterableListForm(forms.Form):
     # Populate Authors' choices
     def set_authors(self, parent, hostname):
         all_authors = [author for authors in [page.authors.names() for page in
-                       AbstractFilterPage.objects.live_shared(hostname).descendant_of(
+                       CFGOVPage.objects.live_shared(hostname).descendant_of(
                        parent)] for author in authors]
         # Orders by most to least common authors
         self.fields['authors'].choices = [(author, author) for author in

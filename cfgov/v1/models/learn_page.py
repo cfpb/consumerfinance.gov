@@ -12,7 +12,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from . import molecules
 from . import organisms
-from .base import CFGOVPage
+from .base import CFGOVPage, CFGOVPageManager
 from ..templatetags.share import get_page_state_url
 from ..util import util
 
@@ -74,11 +74,6 @@ class AbstractFilterPage(CFGOVPage):
 
     # This page class cannot be created.
     is_creatable = False
-
-    objects = CFGOVPage.objects
-
-    class Meta:
-        ordering = ('date_published',)
 
     def related_metadata_tags(self, get_request):
         # Set the tags to correct data format
@@ -185,6 +180,8 @@ class EventPage(AbstractFilterPage):
     venue_state = USStateField(blank=True)
     venue_zip = models.IntegerField(blank=True, null=True)
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
+
+    objects = CFGOVPageManager()
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
