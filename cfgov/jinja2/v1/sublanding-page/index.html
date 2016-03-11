@@ -38,7 +38,7 @@
                 {% set limit = block.value.limit | int %}
                 {% set num_posts = limit if limit <= posts | length else posts | length %}
                 {% for i in range(num_posts) %}
-                    {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
+                    {{ post_preview.render(posts[i], '', 0, get_page_state_url({'request':request}, posts[i].parent())) }}
                 {% endfor %}
              </div>
         {% elif 'filter_controls' in block.block_type %}

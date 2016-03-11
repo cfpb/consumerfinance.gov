@@ -1,6 +1,7 @@
 import os
 from itertools import chain
 import json
+from sets import Set
 
 from django.db import models
 from django.db.models import Q
@@ -25,7 +26,7 @@ from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
-from sets import Set
+from sheerlike.query import QueryFinder
 
 from . import ref
 from . import molecules
@@ -124,25 +125,30 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
-    def related_posts(self, block):
+    def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
-        # TODO: Replace this in a more global scope when Filterable List gets
-        # implemented in the backend.
+        # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
         from . import EventPage
-        search_types = {
-            'events': EventPage,
-        }
-        # End TODO
-        for search_type, page_class in search_types.items():
+        search_types = [
+            ('events', EventPage, 'Events'),
+        ]
+        for search_type, search_class, search_type_name in search_types:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
-                related[search_type] = \
-                    page_class.objects.filter(query).order_by(
+                related[search_type_name] = \
+                    search_class.objects.filter(query).order_by(
                         '-latest_revision_created_at').exclude(
-                        slug=self.slug)[:block.value['limit']]
+                        slug=self.slug).live_shared(hostname)[:block.value['limit']]
+        # TODO: Remove each search_type as it is implemented into Django
+        queries = QueryFinder()
+        for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
+            if 'relate_%s' % search_type in block.value \
+                    and block.value['relate_%s' % search_type]:
+                sheer_query = getattr(queries, search_type)
+                related[search_type_name] = sheer_query.search(filter_tags=self.tags.names())
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
@@ -263,10 +269,10 @@ class CFGOVPage(Page):
         js = ()
 
         for child in self.elements():
-            class_ = type(child.block)
-            instance = class_()
-
             try:
+                class_ = type(child.block)
+                instance = class_()
+
                 if hasattr(instance.Media, 'js'):
                     js += instance.Media.js
             except:

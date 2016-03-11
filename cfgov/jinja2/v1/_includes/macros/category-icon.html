@@ -18,27 +18,26 @@
 
 {% macro render(category, additional_classes) %}
     {% set icons = {
-        'info for consumers': 'cf-icon-information',
         'at the cfpb': 'cf-icon-bullhorn',
-        'data, research & reports': 'cf-icon-chart',
-        'policy & compliance': 'cf-icon-bank-account',
-        'speech': 'cf-icon-microphone',
-        'press release': 'cf-icon-bullhorn',
-        'op-ed': 'cf-icon-contract',
-        'testimony': 'cf-icon-double-quote',
         'blog': 'cf-icon-speech-bubble',
-        'newsroom': 'cf-icon-newspaper',
+        'data, research & reports': 'cf-icon-chart',
+        'events': 'cf-icon-date',
         'featured event': 'cf-icon-date',
         'featured blog': 'cf-icon-speech-bubble',
         'featured video': 'cf-icon-play-round',
         'featured tool': 'cf-icon-settings',
         'featured news': 'cf-icon-newspaper',
-        'featured': 'cf-icon-favorite'
+        'featured': 'cf-icon-favorite',
+        'info for consumers': 'cf-icon-information',
+        'newsroom': 'cf-icon-newspaper',
+        'op-ed': 'cf-icon-contract',
+        'policy & compliance': 'cf-icon-bank-account',
+        'press release': 'cf-icon-bullhorn',
+        'speech': 'cf-icon-microphone',
+        'testimony': 'cf-icon-double-quote',
       }
     %}
-    {% set category = category | lower %}
-    {%- if icons[category] -%}
-    <span class="cf-icon {{ icons[category] }}
-                 {{ additional_classes or '' }}"></span>
-    {%- endif -%}
+    {% set icon = icons[category | lower] or icons['blog'] %}
+    <span class="cf-icon {{ icon }}
+                 {{- additional_classes or '' -}}"></span>
 {% endmacro %}

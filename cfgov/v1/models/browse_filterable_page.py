@@ -26,16 +26,22 @@ class BrowseFilterablePage(base.CFGOVPage):
         ('filter_controls', organisms.FilterControls()),
     ])
 
+    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
+
     # General content tab
     content_panels = base.CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
     ]
 
+    sidefoot_panels = base.CFGOVPage.sidefoot_panels + [
+        FieldPanel('secondary_nav_exclude_sibling_pages'),
+    ]
+
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(base.CFGOVPage.sidefoot_panels, heading='Footer'),
+        ObjectList(sidefoot_panels, heading='SideFoot'),
         ObjectList(base.CFGOVPage.settings_panels, heading='Configuration'),
     ])
 

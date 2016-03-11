@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Added utility classes for translation and opacity CSS transitions.
 - Added SublandingFilterablePage class 
 - Script to semi-automate importing refresh data
+- Provided option to exclude sibling pages in secondary navigation
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -65,7 +66,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add two categories to the Implementation Resource group.
 - Updated the homepage based on user feedback.
 - Renamed preview_link_url/text => secondary_link_url/text
-- Updated Categories for Research & Reports
+- Updated Categories for Research & Reports.
+- Changes to job listing pages.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
