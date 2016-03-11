@@ -68,6 +68,6 @@ class SublandingPage(CFGOVPage):
         posts = []
         for page in filter_pages:
             form_class = page.get_form_class()
-            posts.append(page.get_page_set(form_class(parent=page),
+            posts.append(page.get_page_set(form_class(parent=page, hostname=request.site.hostname),
                                            request.site.hostname))
         return sorted(list(chain(*posts)))
