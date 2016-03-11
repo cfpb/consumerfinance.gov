@@ -18,7 +18,6 @@ class HomePage(CFGOVPage):
                                               required=False)),
             ('link', atoms.Hyperlink()),
             ('date', blocks.DateTimeBlock(required=False)),
-            ('render_all_activities_link', blocks.BooleanBlock(required=False)),
         ]))),
     ], blank=True)
 

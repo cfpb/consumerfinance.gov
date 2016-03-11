@@ -179,21 +179,22 @@
                                     </a>
                                     <p class="date">
                                         <span class="datetime">
+                                            {% import 'macros/time.html' as time %}
                                             <time class="datetime_date">
-                                              {{ block.date }}
+                                                {{ time.render(block.date, {'date':true}) }}
                                             </time>
                                         </span>
                                     </p>
                                 </div>
-                                {% if block.render_all_activities_link %}
-                                    <div>
-                                        <a class="jump-link jump-link__underline"
-                                           href="#">
-                                            See all activities
-                                        </a>
-                                    </div>
-                                {% endif %}
                             {% endfor %}
+                        {% if loop.last %}
+                            <div>
+                                <a class="jump-link jump-link__underline"
+                                   href="#">
+                                    See all activities
+                                </a>
+                            </div>
+                        {% endif %}
                         </section>
                     {% endfor %}
                 </div>
