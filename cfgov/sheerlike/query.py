@@ -175,6 +175,16 @@ class QueryResults(object):
                 query_hit = QueryHit(hit, self.query.es, self.query.es_index)
                 yield query_hit
 
+    def __getitem__(self, index):
+        if 'hits' in self.result_dict and 'hits' in self.result_dict['hits']:
+            for i, hit in enumerate(self.result_dict['hits']['hits']):
+                if i == index:
+                    return QueryHit(hit, self.query.es, self.query.es_index)
+
+    def __len__(self):
+        if 'hits' in self.result_dict and 'hits' in self.result_dict['hits']:
+            return len(self.result_dict['hits']['hits'])
+
     def aggregations(self, fieldname):
         if "aggregations" in self.result_dict and \
                 fieldname in self.result_dict['aggregations']:
