@@ -23,25 +23,10 @@ class SublandingFilterablePage(base.CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
-    sidebar_breakout = StreamField([
-        ('slug', blocks.CharBlock(icon='title')),
-        ('heading', blocks.CharBlock(icon='title')),
-        ('paragraph', blocks.RichTextBlock(icon='edit')),
-        ('breakout_image', blocks.StructBlock([
-            ('image', ImageChooserBlock()),
-            ('is_round', blocks.BooleanBlock(required=False, default=True,
-                                             label='Round?')),
-            ('icon', blocks.CharBlock(help_text='Enter icon class name.')),
-            ('heading', blocks.CharBlock(required=False, label='Introduction Heading')),
-            ('body', blocks.TextBlock(required=False, label='Introduction Body')),
-        ], heading='Breakout Image', icon='image')),
-        ('related_posts', organisms.RelatedPosts()),
-    ], blank=True)
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
     ])
-    secondary_nav_order = models.IntegerField()
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -49,18 +34,90 @@ class SublandingFilterablePage(base.CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    sidebar_panels = CFGOVPage.sidefoot_panels + [
-        StreamFieldPanel('sidebar_breakout'),
-        FieldPanel('secondary_nav_order'),
-    ]
-
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     template = 'sublanding-page/index.html'
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(SublandingFilterablePage, self).get_context(request, *args,
+                                                                **kwargs)
+        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+
+        context['forms'] = []
+        form_class = self.get_form_class()
+        form_specific_filters = self.get_form_specific_filter_data(form_class,
+                                                                   request.GET)
+        forms = [form_class(form_specific_filters[filters_id], parent=self, hostname=request.site.hostname)
+                 for filters_id in form_specific_filters.keys()]
+        for form in forms:
+            if form.is_valid():
+                # Paginate results by 10 items per page.
+                paginator = Paginator(self.get_page_set(form, request.site.hostname), 10)
+                page = request.GET.get('page')
+
+                # Get the page number in the request and get the page from the
+                # paginator to serve.
+                try:
+                    posts = paginator.page(page)
+                except PageNotAnInteger:
+                    posts = paginator.page(1)
+                except EmptyPage:
+                    posts = paginator.page(paginator.num_pages)
+
+                context.update({'posts': posts})
+            context['forms'].append(form)
+        return context
+
+    def get_form_class(self):
+        return forms.FilterableListForm
+
+    # Transform each GET parameter key from unique ID for the form in the
+    # request and assign it to a dictionary under the form ID from where it
+    # came from.
+    def get_form_specific_filter_data(self, form_class, request_dict):
+        filters_data = {}
+        # Find every form existing on the page and assign a dictionary with its
+        # number as the key.
+        for i, f in enumerate(self.content):
+            if 'filter_controls' in f.block_type:
+                filters_data[i] = {}
+
+        # For each form ID dictionary, find all the fields for it. Assign the
+        # select fields to lists and append them for each selection. Return the
+        # dictionary of normalized field names with their respective data.
+        for i in filters_data.keys():
+            for field in form_class.declared_fields:
+                request_field_name = 'filter' + str(i) + '_' + field
+                if field in ['categories', 'topics', 'authors']:
+                    filters_data[i][field] = \
+                        request_dict.getlist(request_field_name, [])
+                else:
+                    filters_data[i][field] = \
+                        request_dict.get(request_field_name, '')
+        return filters_data
+
+    # Returns a queryset of AbstractFilterPages
+    def get_page_set(self, form, hostname):
+        # If this is the Newsroom, then we need to go get the blog
+        # from a different part of the site.
+        blog_q = Q()
+        for f in self.content:
+            if 'filter_controls' in f.block_type and 'newsroom' in \
+                    f.value['categories']['page_type']:
+                categories = form.cleaned_data.get('categories', [])
+                if not categories or 'blog' in categories:
+                    blog_cats = [c[0] for c in ref.categories[1][1]]
+                    blog_q = Q('categories__name__in', blog_cats)
+
+        results = base.CFGOVPage.objects.live_shared(hostname).descendant_of(
+            self).filter(form.generate_query() | blog_q).specific()
+
+        filter_pages = [page for page in results if isinstance(page, AbstractFilterPage)]
+        filter_pages.sort(key=lambda x: x.date_published, reverse=True)
+        return filter_pages
 
