@@ -5,7 +5,7 @@
  * @class
  *
  * @classdesc A tree data structure.
- * Tree's have one root node, and child nodes that branch.
+ * Trees have one root node, and child nodes that branch.
  * Like:
  *
  *        R
@@ -69,6 +69,7 @@ function Tree() {
    *      A   B
    *    / | \
    *   C  D  E
+   *
    * Level 0 nodes would return (R).
    * Level 1 nodes would return (A) and (B).
    * Level 2 nodes would return (C), (D), and (E).

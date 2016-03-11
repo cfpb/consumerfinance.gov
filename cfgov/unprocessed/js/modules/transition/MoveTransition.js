@@ -47,10 +47,10 @@ function MoveTransition( element ) { // eslint-disable-line max-statements, no-i
   }
 
   /**
-   * Clear transition classes from the transition target.
+   * Remove all transition classes.
    */
-  function flush() {
-    _baseTransition.flush();
+  function remove() {
+    _baseTransition.remove();
   }
 
   /**
@@ -142,7 +142,6 @@ function MoveTransition( element ) { // eslint-disable-line max-statements, no-i
 
   this.animateOff = animateOff;
   this.animateOn = animateOn;
-  this.flush = flush;
   this.init = init;
   this.isAnimated = isAnimated;
   this.moveToOrigin = moveToOrigin;
@@ -150,6 +149,7 @@ function MoveTransition( element ) { // eslint-disable-line max-statements, no-i
   this.moveRight = moveRight;
   this.moveUp = moveUp;
   this.setElement = setElement;
+  this.remove = remove;
 
   return this;
 }

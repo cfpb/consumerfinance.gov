@@ -56,22 +56,31 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   var _expandTransitionMethod;
   var _collapseTransitionMethod;
 
+  // Binded events.
+  var _collapseBinded = collapse.bind( this );
   // Needed to add and remove events to transitions.
-  var _expandEndBinded = _expandEnd.bind( this );
   var _collapseEndBinded = _collapseEnd.bind( this );
+  var _expandEndBinded = _expandEnd.bind( this );
+
+  // If this menu appears in a data source,
+  // this can be used to store the source.
+  // Examples include the index in an Array,
+  // a key in an Hash, or a node in a Tree.
+  var _data;
 
   // Set this function to a queued collapse function,
   // which is called if collapse is called while
   // expand is animating.
   var _deferFunct = standardType.noopFunct;
-  var _collapseBinded = collapse.bind( this );
 
   /**
    * @returns {FlyoutMenu} An instance.
    */
   function init() {
     var triggerClickedBinded = _triggerClicked.bind( this );
+    var triggerOverBinded = _triggerOver.bind( this );
     _triggerDom.addEventListener( 'click', triggerClickedBinded );
+    _triggerDom.addEventListener( 'mouseover', triggerOverBinded );
 
     if ( _altTriggerDom ) {
       // If menu contains a submenu but doesn't have
@@ -90,13 +99,21 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
+   * Event handler for when the search input trigger is hovered over.
+   */
+  function _triggerOver() {
+    this.dispatchEvent( 'triggerOver', { target: this, type: 'triggerOver' } );
+  }
+
+  /**
    * Event handler for when the search input trigger is clicked,
    * which opens/closes the search input.
    * @param {MouseEvent} event - The flyout trigger was clicked.
    */
   function _triggerClicked( event ) {
     event.preventDefault();
-    this.dispatchEvent( 'triggerClick', { target: this } );
+    this.dispatchEvent( 'triggerClick',
+                        { target: this, type: 'triggerClick' } );
     if ( _isExpanded ) {
       this.collapse();
     } else {
@@ -110,10 +127,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function expand() {
     if ( !_isExpanded && !_isAnimating ) {
-      _deferFunct = standardType.noopFunct;
-      this.dispatchEvent( 'expandBegin', { target: this } );
-      _isExpanded = true;
       _isAnimating = true;
+      _deferFunct = standardType.noopFunct;
+      this.dispatchEvent( 'expandBegin',
+                          { target: this, type: 'expandBegin' } );
       if ( _expandTransitionMethod ) {
         // The following method is defined in the transition, not this file.
         _expandTransitionMethod();
@@ -141,7 +158,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   function collapse() {
     if ( _isExpanded && !_isAnimating ) {
       _deferFunct = standardType.noopFunct;
-      this.dispatchEvent( 'collapseBegin', { target: this } );
+      this.dispatchEvent( 'collapseBegin',
+                          { target: this, type: 'collapseBegin' } );
       _isExpanded = false;
       _isAnimating = true;
       if ( _collapseTransitionMethod ) {
@@ -158,7 +176,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       }
       _triggerDom.setAttribute( 'aria-expanded', 'false' );
       _contentDom.setAttribute( 'aria-expanded', 'false' );
-      _triggerDom.focus();
+      // TODO: Remove or uncomment when keyboard navigation is in.
+      //_triggerDom.focus();
     } else {
       _deferFunct = _collapseBinded;
     }
@@ -173,11 +192,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _expandEnd() {
     _isAnimating = false;
+    _isExpanded = true;
     if ( _expandTransition ) {
       _expandTransition
         .removeEventListener( 'transitionEnd', _expandEndBinded );
     }
-    this.dispatchEvent( 'expandEnd', { target: this } );
+    this.dispatchEvent( 'expandEnd', { target: this, type: 'expandEnd' } );
     _triggerDom.setAttribute( 'aria-expanded', 'true' );
     _contentDom.setAttribute( 'aria-expanded', 'true' );
     // Call collapse, if it was called while expand was animating.
@@ -193,7 +213,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _collapseTransition
         .removeEventListener( 'transitionEnd', _collapseEndBinded );
     }
-    this.dispatchEvent( 'collapseEnd', { target: this } );
+    this.dispatchEvent( 'collapseEnd', { target: this, type: 'collapseEnd' } );
   }
 
   /**
@@ -243,9 +263,39 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   function getDom() {
     return {
       altTrigger: _altTriggerDom,
+      container:  _dom,
       content:    _contentDom,
       trigger:    _triggerDom
     };
+  }
+
+  // TODO: Use Object.defineProperty to create a getter/setter.
+  //       See https://github.com/cfpb/cfgov-refresh/pull/1566/
+  //           files#diff-7a844d22219d7d3db1fa7c1e70d7ba45R35
+  /**
+   * @returns {number|string|Object} A data identifier such as an Array index,
+   *   Hash key, or Tree node.
+   */
+  function getData() {
+    return _data;
+  }
+
+  /**
+   * @param {number|string|Object} data - A data identifier such as an Array index,
+   *   Hash key, or Tree node.
+   * @returns {FlyoutMenu} An instance.
+   */
+  function setData( data ) {
+    _data = data;
+
+    return this;
+  }
+
+  /**
+   * @returns {boolean} True if menu is expanded, false otherwise.
+   */
+  function isAnimating() {
+    return _isAnimating;
   }
 
   // Attach public events.
@@ -259,12 +309,20 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   this.collapse = collapse;
   this.setExpandTransition = setExpandTransition;
   this.setCollapseTransition = setCollapseTransition;
+  this.getData = getData;
   this.getTransition = getTransition;
   this.getDom = getDom;
+  this.isAnimating = isAnimating;
+  this.setData = setData;
 
   // Public static properties.
   FlyoutMenu.EXPAND_TYPE = 'expand';
   FlyoutMenu.COLLAPSE_TYPE = 'collapse';
+  FlyoutMenu.BASE_CLASS = BASE_CLASS;
+  FlyoutMenu.BASE_SEL = BASE_SEL;
+  FlyoutMenu.ALT_TRIGGER_SEL = ALT_TRIGGER_SEL;
+  FlyoutMenu.CONTENT_SEL = CONTENT_SEL;
+  FlyoutMenu.TRIGGER_SEL = TRIGGER_SEL;
 
   return this;
 }
