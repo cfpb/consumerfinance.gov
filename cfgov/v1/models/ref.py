@@ -1,3 +1,14 @@
+limited_categories = [
+    ('speech-bubble', 'Blog'),
+    ('newspaper', 'Newsroom'),
+    ('document', 'Report'),
+    ('date', 'Events'),
+    ('microphone', 'Speech'),
+    ('bullhorn', 'Press Release'),
+    ('contract', 'Op-Ed'),
+    ('double-quote', 'Testimony'),
+]
+
 page_types = [
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
@@ -127,10 +138,12 @@ def category_label(category):
             if category == slug:
                 return name
 
+
 def fcm_label(category):
     for slug, name in fcm_types:
         if slug == category:
             return name
+
 
 def is_blog(page):
     for category in page.categories.all():
