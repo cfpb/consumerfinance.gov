@@ -24,7 +24,6 @@ class BrowseFilterablePage(base.CFGOVPage):
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
     ])
-    secondary_nav_order = models.IntegerField()
 
     # General content tab
     content_panels = base.CFGOVPage.content_panels + [
@@ -32,15 +31,11 @@ class BrowseFilterablePage(base.CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    settings_panels = base.CFGOVPage.settings_panels + [
-        FieldPanel('secondary_nav_order'),
-    ]
-
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(base.CFGOVPage.sidefoot_panels, heading='Footer'),
-        ObjectList(settings_panels, heading='Configuration'),
+        ObjectList(base.CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     template = 'browse-filterable/index.html'
@@ -115,8 +110,13 @@ class BrowseFilterablePage(base.CFGOVPage):
                 if not categories or 'blog' in categories:
                     blog_cats = [c[0] for c in ref.categories[1][1]]
                     blog_q = Q('categories__name__in', blog_cats)
-        return AbstractFilterPage.objects.live_shared(hostname).descendant_of(
-            self).filter(form.generate_query() | blog_q)
+
+        results = base.CFGOVPage.objects.live_shared(hostname).descendant_of(
+            self).filter(form.generate_query() | blog_q).specific()
+
+        filter_pages = [page for page in results if isinstance(page, AbstractFilterPage)]
+        filter_pages.sort(key=lambda x: x.date_published, reverse=True)
+        return filter_pages
 
 
 class EventArchivePage(BrowseFilterablePage):
