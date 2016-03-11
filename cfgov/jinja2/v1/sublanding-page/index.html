@@ -46,6 +46,15 @@
         {% elif not page.sidebar_breakout %}
             {% include 'templates/render_block.html' with context %}
         {% endif %}
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block
+                    block__flush-top">
+
+                {% set f = forms.pop(0) %}
+                {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
+                {{ flc(block.value, f, loop.index0) }}
+            </div>}
+        {% endif %}
     {%- endfor %}
 {% endblock %}
 
