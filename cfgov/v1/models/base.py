@@ -133,22 +133,22 @@ class CFGOVPage(Page):
         # order.
         from . import EventPage
         search_types = [
-            ('events', EventPage),
+            ('events', EventPage, 'Events'),
         ]
-        for search_type, search_class in search_types:
+        for search_type, search_class, search_type_name in search_types:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
-                related[search_type] = \
+                related[search_type_name] = \
                     search_class.objects.filter(query).order_by(
                         '-latest_revision_created_at').exclude(
                         slug=self.slug).live_shared(hostname)[:block.value['limit']]
         # TODO: Remove each search_type as it is implemented into Django
         queries = QueryFinder()
-        for search_type in ['newsroom', 'posts']:
+        for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
                 sheer_query = getattr(queries, search_type)
-                related[search_type] = sheer_query.search(filter_tags=self.tags.names())
+                related[search_type_name] = sheer_query.search(filter_tags=self.tags.names())
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
