@@ -41,19 +41,16 @@
                     {{ post_preview.render(posts[i], '', 0, pageurl(posts[i].parent())) }}
                 {% endfor %}
              </div>
+        {% elif 'filter_controls' in block.block_type %}
+            <div class="block block__flush-top">
+                {% set f = forms.pop(0) %}
+                {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
+                {{ flc(block.value, f, loop.index0) }}
+            </div>
         {% elif 'text_introduction' not in block.block_type %}
             {% include 'templates/render_block.html' with context %}
         {% elif not page.sidebar_breakout %}
             {% include 'templates/render_block.html' with context %}
-        {% endif %}
-        {% if 'filter_controls' in block.block_type %}
-            <div class="block
-                    block__flush-top">
-
-                {% set f = forms.pop(0) %}
-                {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
-                {{ flc(block.value, f, loop.index0) }}
-            </div>}
         {% endif %}
     {%- endfor %}
 {% endblock %}
