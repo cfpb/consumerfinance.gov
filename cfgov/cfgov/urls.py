@@ -46,7 +46,6 @@ urlpatterns = [
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
 
-    url(r'^$', SheerTemplateView.as_view(), name='home'),
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),

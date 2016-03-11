@@ -1,4 +1,4 @@
-{% extends 'layout-side-nav.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
 {% import '_vars-careers.html' as vars with context %}
 {% set breadcrumb_items = [(vars.path, vars.path, 'Careers'),
                             (vars.path + 'current-openings/',
@@ -12,7 +12,6 @@
 {% block desc -%}
     {# TODO: Update admin to include excerpt. #}
     {{ career.excerpt | striptags }}
-    }
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -112,15 +111,11 @@
                 }) }}
             </div>
         </div>
-        <div class="block
-                    block__bg
-                    block__border
-                    block__sub">
+        <div class="block">
             <h3>Before you apply</h3>
             <p>
                 {# TODO: Replace with real content. #}
             </p>
-
             <ul class="list list__links">
                 <li class="list_item">
                     <a class="jump-link"
@@ -136,24 +131,74 @@
                 </li>
             </ul>
         </div>
-        <div class="block block__flush-top">
-            {% set applicant_type = career.applicant_types[0] %}
+        {% for applicant_type in career.applicant_types %}
+        <div class="block block__bg block__border">
             <h4>{{ applicant_type.application_type.name }}</h4>
             <p>{{ applicant_type.application_type.description | striptags }}</p>
-            <div class="content-l">
-                <div class="content-l_col content-l_col-1-4">
-                    <a class="btn" href="{{ applicant_type.usajobs_url }}">Apply now</a>
-                </div>
-                <div class="content-l_col content-l_col-3-4">
-                    <h4 class="u-mb0">
-                        You are about to leave consumerfinance.gov.
-                    </h4>
-                    <p>
-                        To finish the application, you must go to USAJobs.gov.
-                    </p>
-                </div>
-            </div>
+
+            <p><a class="btn" href="{{ applicant_type.usajobs_url }}">Apply now</a></p>
+
+            <p>
+                You are about to leave consumerfinance.gov. To submit the application, you must go to USAJobs.gov.
+            </p>
         </div>
+        {% endfor %}
     </section>
+
+{% endblock %}
+
+{% block content_sidebar scoped  %}
+
+<div class="block block__flush-top">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            Before you apply
+        </span>
+    </h2>
+    <p>
+        Consider exploring our information about working at the CFPB
+        and our application process.
+    </p>
+    <ul class="list list__links u-mb0">
+        <li class="list_item">
+            <a href="/careers/working-at-cfpb" class="list_link">
+                Working at the CFPB
+            </a>
+        </li>
+        <li class="list_item">
+            <a href="/careers/application-process" class="list_link">
+                Learn how the application process works
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="block block__flush-top">
+    {%- import 'related-links.html' as related_links -%}
+    {{- related_links.render([
+      [ '/blog/',
+        'CFPB Blog' ],
+      [ '/newsroom/',
+        'Newsroom' ],
+      [ '/offices/office-of-civil-rights/',
+        'Office of Civil Rights' ]
+    ]) -}}
+</div>
+
+<h2 class="header-slug">
+    <span class="header-slug_inner">
+        Follow us on LinkedIn
+    </span>
+</h2>
+<p data-qa-hook="info-section-desc">
+    The CFPB is one of the most searched for agencies
+    in the federal government.
+    Connect with us to stay updated on the work
+    we do and new opportunities to be a part of it.
+</p>
+<a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+   class="jump-link jump-link__external-link jump-link__underline">
+    Follow us on LinkedIn
+</a>
 
 {% endblock %}
