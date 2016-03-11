@@ -67,6 +67,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Renamed preview_link_url/text => secondary_link_url/text
 - Updated Categories for Research & Reports.
 - Changes to job listing pages.
+- included backend support for Video in FCM
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
