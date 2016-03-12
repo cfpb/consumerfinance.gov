@@ -45,7 +45,7 @@
             <div class="block block__flush-top">
                 {% set f = forms.pop(0) %}
                 {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
-                {{ flc(block.value, f, loop.index0) }}
+                {{ flc(block.value, f, loop.index0, request.GET) }}
             </div>
         {% elif 'text_introduction' not in block.block_type %}
             {% include 'templates/render_block.html' with context %}
