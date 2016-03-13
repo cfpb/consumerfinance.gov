@@ -34,7 +34,7 @@
 
                 {% set f = forms.pop(0) %}
                 {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
-                {{ flc(block.value, f, loop.index0, request.GET) }}
+                {{ flc(block.value, f, loop.index0) }}
             </div>
         {% else %}
             {% include 'templates/render_block.html' with context %}

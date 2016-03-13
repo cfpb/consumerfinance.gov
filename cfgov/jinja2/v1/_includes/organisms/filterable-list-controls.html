@@ -181,7 +181,7 @@
 {% from 'molecules/notification.html' import render as notification with context %}
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
 
-{% macro render(controls, form, index, filters) %}
+{% macro render(controls, form, index) %}
     <div class="o-filterable-list-controls">
         {% set form_markup = _filters_form(controls, form, index) %}
         {% call() expandable(controls) %}
@@ -200,7 +200,7 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
-            {% if not filters %}
+            {% if not request.GET %}
                 {{ notification('success', false, posts.paginator.count ~ ' filtered results') }}
             {% elif posts.paginator.count == 0 %}
                 {{ notification('warning', true, 
