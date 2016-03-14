@@ -40,6 +40,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Script to semi-automate importing refresh data
 - Provided option to exclude sibling pages in secondary navigation
 - Added tests for `external-site-redirect.js`
+- Frontend: Added JS Tree data structure and traversal algorithms.
 
 ### Changed
 - Converted the project to Capital Framework v3
