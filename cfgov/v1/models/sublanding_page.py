@@ -50,8 +50,8 @@ class SublandingPage(CFGOVPage):
     ]
 
     sidebar_panels = [
-                         StreamFieldPanel('sidebar_breakout'),
-                     ] + CFGOVPage.sidefoot_panels
+        StreamFieldPanel('sidebar_breakout'),
+    ] + CFGOVPage.sidefoot_panels
 
     # Tab handler interface
     edit_handler = TabbedInterface([
