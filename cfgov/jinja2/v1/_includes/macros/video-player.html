@@ -37,8 +37,7 @@
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
-                video-player__{{ video_player }}
-                {{'featured-content-module_visual' if options.video.is_fcm else '' }}"
+                video-player__{{ video_player }}"
          data-video-id="{{ video_id }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
          data-height="{{ options.video.height if options.video.height else '' }}">
@@ -78,8 +77,7 @@
                target="_blank">
                 <span class="u-visually-hidden">Play video</span>
             </a>
-            <img class="video-player_image
-                        {{ 'featured-content-module_img' if options.video.is_fcm else '' }}"
+            <img class="video-player_image"
                  alt="Video image"
                  src="{{ image_url }}">
         </div>
