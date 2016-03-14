@@ -22,12 +22,6 @@ describe( 'The Bureau Page', function() {
     }
   );
 
-  it( 'should include Bureau history',
-    function() {
-      expect( page.bureauHistory.isPresent() ).toBe( true );
-    }
-  );
-
   it( 'should include Bureau functions',
     function() {
       expect( page.bureauFunctions.isPresent() ).toBe( true );
