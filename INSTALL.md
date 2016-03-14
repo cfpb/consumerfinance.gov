@@ -36,7 +36,7 @@ managed through ansible-galaxy, a core module for this exact purpose. To downloa
 the dependencies, there is a simple command.
 
 ```bash
-ansible-galaxy install -r ansible/requiremenst.yml
+ansible-galaxy install -r ansible/requirements.yml
 ```
 
 ## 3. Vagrant up
