@@ -38,6 +38,12 @@ def process_post(post):
                       post['taxonomy_fj_author'] if 'Press Release' not in
                       post['category']]
     post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
+    for name in ['author', 'tags']:
+        for i, string in enumerate(post[name]):
+            if not string.isalnum():
+                for char in string:
+                    if not char.isalnum() and not char.isspace() and not char == '-':
+                        post[name][i] = string.replace(char, '')
 
     names = ['og_title', 'og_image', 'og_desc', 'twtr_text', 'twtr_lang',
              'twtr_rel', 'twtr_hash', 'utm_campaign', 'utm_term',

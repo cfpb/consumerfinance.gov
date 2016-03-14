@@ -14,7 +14,6 @@ require( '../modules/beta-banner-state' ).init();
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
 require( '../modules/post-filter' ).init();
-require( '../modules/init-chosen' ).init();
 require( '../modules/form-validation' ).init();
 require( '../modules/scroll-on-history-collapse' ).init();
 require( '../modules/clear-form-buttons' ).init();
@@ -28,3 +27,14 @@ var Header = require( '../organisms/Header.js' );
 var header = new Header( document.body );
 // Initialize header by passing it reference to global overlay atom.
 header.init( document.body.querySelector( '.a-overlay' ) );
+
+// Multi-select.
+// TODO: Move to browse-filterable route after old WP pages are removed
+var Multiselect = require( '../molecules/Multiselect' );
+var selects = document.querySelectorAll( 'select[multiple]' );
+
+var multiselect;
+for ( var i = 0, len = selects.length; i < len; i++ ) {
+  multiselect = new Multiselect( selects[i] );
+  multiselect.init();
+}
