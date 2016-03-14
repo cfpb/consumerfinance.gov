@@ -45,14 +45,14 @@ vagrant up
 
 ## 4. Frontend Tools
 
-In order to run the application, we must generate the front end assets. After running these commands, simply visit http://localhost:8001
+In order to run the application, we must generate the front end assets. After running these commands, simply visit http://localhost:8001. You can also place the two export commands into your .bashrc to simplify things later. 
 
 ```bash
 export CFGOV_HOME=path/to/cfgov-refresh
 export PATH=$PATH:$CFGOV_HOME/bin
 cfgov init
 cfgov assets
-cfogv django start
+cfgov django start
 ```
 
 
