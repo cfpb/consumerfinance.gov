@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Added utility classes for translation and opacity CSS transitions.
 - Script to semi-automate importing refresh data
 - Provided option to exclude sibling pages in secondary navigation
+- Added tests for `external-site-redirect.js`
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -68,6 +69,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Categories for Research & Reports.
 - Changes to job listing pages.
 - included backend support for Video in FCM
+- Changed `external-site-redirect.js` to remove jQuery and fix Regex.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
