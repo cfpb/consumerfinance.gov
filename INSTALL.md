@@ -1,5 +1,13 @@
 # Installation and Congiguration for cfgov-refersh with Vagrant
 
+## 0. Prerequisites
+
+ * VirtualBox >= 4.3.20
+ * Vagrant >= 1.7.2
+ * python >=  2.6
+ * ansible >= 1.9
+
+
 ## 1. Environment Varaibles setup
 
 The project uses a number of environment variables.
