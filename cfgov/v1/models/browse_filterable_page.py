@@ -50,6 +50,13 @@ class BrowseFilterablePage(base.CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(BrowseFilterablePage, self).get_context(request, *args, **kwargs)
         return filterable_context.get_context(self, request, context)
+
+
+    def get_form_class(self):
+        return filterable_context.get_form_class(self)
+
+    def get_page_set(self, form, hostname):
+        return filterable_context.get_page_set(self, form, hostname)
      
 
 class EventArchivePage(BrowseFilterablePage):

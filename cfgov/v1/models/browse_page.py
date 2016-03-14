@@ -52,9 +52,6 @@ class BrowsePage(CFGOVPage):
 
     template = 'browse-basic/index.html'
 
-    def elements(self):
-        return list(itertools.chain(self.content.stream_data))
-
     def full_width_serif(self):
         return true
 
