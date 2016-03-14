@@ -8,6 +8,8 @@ from django.db.models import Q
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from . import base, molecules, organisms, ref
 from .learn_page import AbstractFilterPage
@@ -15,42 +17,36 @@ from .. import forms
 from ..util.util import get_secondary_nav_items
 from ..util import filterable_context
 
+from .base import CFGOVPage
 
-class BrowseFilterablePage(base.CFGOVPage):
+
+class SublandingFilterablePage(base.CFGOVPage):
     header = StreamField([
-        ('text_introduction', molecules.TextIntroduction()),
-        ('featured_content', molecules.FeaturedContent()),
-    ])
+        ('hero', molecules.Hero()),
+    ], blank=True)
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
     ])
 
-    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
-
     # General content tab
-    content_panels = base.CFGOVPage.content_panels + [
+    content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
-    ]
-
-    sidefoot_panels = base.CFGOVPage.sidefoot_panels + [
-        FieldPanel('secondary_nav_exclude_sibling_pages'),
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(sidefoot_panels, heading='SideFoot'),
-        ObjectList(base.CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    template = 'browse-filterable/index.html'
+    template = 'sublanding-page/index.html'
 
     def get_context(self, request, *args, **kwargs):
-        context = super(BrowseFilterablePage, self).get_context(request, *args, **kwargs)
+        context = super(SublandingFilterablePage, self).get_context(request, *args, **kwargs)
         return filterable_context.get_context(self, request, context)
-
 
     def get_form_class(self):
         return filterable_context.get_form_class(self)
@@ -59,9 +55,3 @@ class BrowseFilterablePage(base.CFGOVPage):
         return filterable_context.get_page_set(self, form, hostname)
      
 
-class EventArchivePage(BrowseFilterablePage):
-    def get_form_class(self):
-        return forms.EventArchiveFilterForm
-
-    def get_template(self, request, *args, **kwargs):
-        return BrowseFilterablePage.template
