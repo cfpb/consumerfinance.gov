@@ -81,7 +81,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed heros from old WordPress pages.
 - Removed `show-hide-fields.js` script and reference from common.js.
 - Meredith Fuch's assets.
-- A couple of Implementation Resource group categories
+- A couple of Implementation Resource group categories.
+- Removed Chosen.js library and custom styles/scripts.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
@@ -97,6 +98,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed page saving bug that would prevent the display of a page's tags
 - Fixed ordering for Filterable results to be newest => oldest by published_date.
 - Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
+- Fixes the values for author and tag options to remove special characters.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
