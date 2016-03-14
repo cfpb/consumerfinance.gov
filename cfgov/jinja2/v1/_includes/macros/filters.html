@@ -182,7 +182,7 @@
       method="{{ options.form_method or 'get' }}"
       {{ "action=" ~ options.action if options.action != '/' else '' }}
       >
-    {% if options.addition_classes and options.addition_classes == 'post' %}
+    {% if options.form_method and options.form_method == 'post' %}
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     {% endif %}
     <div class="form-l form-l__float form-l__flush">
