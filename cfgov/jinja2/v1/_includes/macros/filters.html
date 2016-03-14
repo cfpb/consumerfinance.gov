@@ -178,11 +178,13 @@
    ========================================================================== #}
 {% macro _filters_form(filters, query, doc_type, options) %}
 
-<form class="{{ options.additional_classes }}"
-      method="{{ options.form_method }}"
-      {{ "action=" ~ options.action if options.action != '/' }}
+<form class="{{ options.additional_classes or '' }}"
+      method="{{ options.form_method or 'get' }}"
+      {{ "action=" ~ options.action if options.action != '/' else '' }}
       >
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% if options.form_method and options.form_method == 'post' %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% endif %}
     <div class="form-l form-l__float form-l__flush">
 {% for filter in filters %}
 
@@ -246,8 +248,7 @@
             <label class="form-label-header" for="{{ options.id_tags }}">
                 Topics
             </label>
-            <select class="chosen-select"
-                    id="{{ options.id_tags }}"
+            <select id="{{ options.id_tags }}"
                     name="{{ options.id_tags }}"
                     multiple
                     data-placeholder="Search for topics">
@@ -279,8 +280,7 @@
             <label class="form-label-header" for="{{ options.id_author }}">
                 Author
             </label>
-            <select class="chosen-select"
-                    id="{{ options.id_author }}"
+            <select id="{{ options.id_author }}"
                     name="{{ options.id_author }}"
                     multiple
                     data-placeholder="Search for authors">

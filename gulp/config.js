@@ -82,8 +82,6 @@ module.exports = {
     vendorimg: {
       src: [
         paths.lib + '/slick-carousel/slick/ajax-loader.gif',
-        paths.lib + '/chosen/chosen-sprite.png',
-        paths.lib + '/chosen/chosen-sprite@2x.png'
       ],
       dest: paths.processed + '/img'
     },
