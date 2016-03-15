@@ -35,10 +35,6 @@ function MobileCarousel( breakpointPx ) {
   * @returns {Object} A reference to the instance.
   */
   function enableOn( selector ) {
-    if ( $( 'html' ).hasClass( 'lt-ie9' ) ) {
-      return this;
-    }
-
     _targetDom = $( selector );
     if ( !selector || !_targetDom ) {
       throw new Error( 'MobileCarousel.enableOn requires a valid selector!' );
