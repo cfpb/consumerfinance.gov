@@ -36,7 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included Password Complexity rules for admin user creation/editing flow
 - Enabled email backend for Production settings
 - Frontend: Added utility classes for translation and opacity CSS transitions.
-- Added SublandingFilterablePage class 
+- Added SublandingFilterablePage class
 - Script to semi-automate importing refresh data
 - Provided option to exclude sibling pages in secondary navigation
 - Added tests for `external-site-redirect.js`
@@ -72,6 +72,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes to job listing pages.
 - included backend support for Video in FCM
 - Changed `external-site-redirect.js` to remove jQuery and fix Regex.
+- Updated the global search for no-js and IE 8-10 fixes.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.

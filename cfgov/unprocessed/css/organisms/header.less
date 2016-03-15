@@ -76,11 +76,14 @@
 
     &_content {
 
+        > .m-global-search {
+          float: right;
+        }
+
         .respond-to-min( @bp-med-min, {
             padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-            & > .m-global-header-cta,
-            & > .m-global-search {
+            > .m-global-header-cta {
                 float: right;
             }
 
@@ -91,11 +94,11 @@
 
         // Hide Global Header Call to Action at tablet/mobile sizes.
         .respond-to-max( @bp-sm-max, {
-            & > .m-global-header-cta {
+            > .m-global-header-cta {
                 display: none;
             }
 
-            & > .o-mega-menu {
+            > .o-mega-menu {
                 float: left;
             }
         } );
