@@ -21,20 +21,26 @@ function init() {
   } );
 }
 
+/**
+ * Trigger a click on the secondary nav.
+ */
 function _navSecondaryToggle() {
   if ( _navSecondaryToggleTest() ) {
     $( '.o-secondary-navigation .expandable_target' ).trigger( 'click' );
   }
 }
 
-// Tests whether or not the secondary nav should be toggled.
+/**
+ * @returns {boolean} True if mobile state and expanded
+ *   or desktop size and not expanded, false otherwise.
+ */
 function _navSecondaryToggleTest() {
   var breakpointState = getBreakpointState();
   var isSmall = breakpointState.isBpXS || breakpointState.isBpSM;
 
   var isExpanded =
     $( '.o-secondary-navigation .expandable_content' )
-    .attr( 'aria-expanded' ) === 'true';
+      .attr( 'aria-expanded' ) === 'true';
   return isSmall && isExpanded || !isSmall && !isExpanded;
 }
 
