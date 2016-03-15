@@ -43,10 +43,10 @@ function AlphaTransition( element ) {
   }
 
   /**
-   * Clear transition classes from the transition target.
+   * Remove all transition classes.
    */
-  function flush() {
-    _baseTransition.flush();
+  function remove() {
+    _baseTransition.remove();
   }
 
   /**
@@ -107,10 +107,10 @@ function AlphaTransition( element ) {
   this.animateOn = animateOn;
   this.fadeTo100 = fadeTo100;
   this.fadeTo0 = fadeTo0;
-  this.flush = flush;
   this.init = init;
   this.isAnimated = isAnimated;
   this.setElement = setElement;
+  this.remove = remove;
 
   return this;
 }
