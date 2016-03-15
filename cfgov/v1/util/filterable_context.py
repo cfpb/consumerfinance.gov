@@ -66,7 +66,7 @@ def get_form_specific_filter_data(page, form_class, request_dict):
 
 # Returns a queryset of AbstractFilterPages
 def get_page_set(page, form, hostname):
-    from ..models.browse_filterable_page import EventArchivePage, BrowseFilterablePage
+    from ..models.browse_filterable_page import EventArchivePage
     # If this is the Newsroom, then we need to go get the blog
     # from a different part of the site.
     blog_q = Q()
