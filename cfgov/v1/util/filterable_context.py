@@ -33,8 +33,10 @@ def get_context(page, request, context):
         context['forms'].append(form)
     return context
 
+
 def get_form_class():
     return forms.FilterableListForm
+
 
 # Transform each GET parameter key from unique ID for the form in the
 # request and assign it to a dictionary under the form ID from where it
@@ -61,8 +63,10 @@ def get_form_specific_filter_data(page, form_class, request_dict):
                     request_dict.get(request_field_name, '')
     return filters_data
 
+
 # Returns a queryset of AbstractFilterPages
 def get_page_set(page, form, hostname):
+    from ..models.browse_filterable_page import EventArchivePage, BrowseFilterablePage
     # If this is the Newsroom, then we need to go get the blog
     # from a different part of the site.
     blog_q = Q()
@@ -77,7 +81,12 @@ def get_page_set(page, form, hostname):
     results = base.CFGOVPage.objects.live_shared(hostname).descendant_of(
         page).filter(form.generate_query() | blog_q).specific()
 
-    filter_pages = [page for page in results if isinstance(page, AbstractFilterPage)]
+    if isinstance(page, EventArchivePage):
+        filter_pages = [page for page in results if isinstance(page, AbstractFilterPage)]
+    else:
+        filter_pages = [page for page in results if
+                        isinstance(page, AbstractFilterPage) and not isinstance(page.get_parent().specific,
+                                                                                EventArchivePage)]
+
     filter_pages.sort(key=lambda x: x.date_published, reverse=True)
     return filter_pages
-
