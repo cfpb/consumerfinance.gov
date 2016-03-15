@@ -728,6 +728,29 @@
     opacity: 0;
 }
 
+/* topdoc
+  name: Download icons
+  family: cfgov-misc
+  notes:
+    - "Adds download icons to certain links"
+  tags:
+    - cfgov-misc
+*/
+
+
+a[href$='.pdf']:after,
+a[href$='.doc']:after,
+a[href$='.docx']:after,
+a[href$='.xls']:after,
+a[href$='.xlsx']:after,
+a[href$='.csv']:after,
+a[href$='.zip']:after {
+    .cf-icon();
+    display: inline-block;
+    content: @cf-icon-download;
+    width: 1em;
+    text-align: right;
+}
 
 /* topdoc
   name: EOF
