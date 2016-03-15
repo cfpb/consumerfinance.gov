@@ -63,11 +63,16 @@ class SublandingPage(CFGOVPage):
     template = 'sublanding-page/index.html'
 
     def get_browsefilterable_posts(self, request):
-        filter_pages = [p.specific for p in self.get_descendants()
+        filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
                         if 'BrowseFilterablePage' in p.specific_class.__name__]
         posts = []
         for page in filter_pages:
             form_class = page.get_form_class()
             posts.append(page.get_page_set(form_class(parent=page, hostname=request.site.hostname),
                                            request.site.hostname))
-        return sorted(list(chain(*posts)))
+
+        if posts:
+            posts = list(chain(*posts))
+            posts.sort(key=lambda x: x.date_published, reverse=True)
+
+        return posts

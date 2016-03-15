@@ -36,8 +36,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Included Password Complexity rules for admin user creation/editing flow
 - Enabled email backend for Production settings
 - Frontend: Added utility classes for translation and opacity CSS transitions.
+- Added SublandingFilterablePage class 
 - Script to semi-automate importing refresh data
 - Provided option to exclude sibling pages in secondary navigation
+- Added tests for `external-site-redirect.js`
+- Frontend: Added JS Tree data structure and traversal algorithms.
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -65,11 +68,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add two categories to the Implementation Resource group.
 - Updated the homepage based on user feedback.
 - Renamed preview_link_url/text => secondary_link_url/text
-<<<<<<< HEAD
-- Updated Categories for Research & Reports
-=======
-- Changes to job listing pages
->>>>>>> Fixing the template for the individual job posting
+- Updated Categories for Research & Reports.
+- Changes to job listing pages.
+- included backend support for Video in FCM
+- Changed `external-site-redirect.js` to remove jQuery and fix Regex.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -84,7 +86,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed heros from old WordPress pages.
 - Removed `show-hide-fields.js` script and reference from common.js.
 - Meredith Fuch's assets.
-- A couple of Implementation Resource group categories
+- A couple of Implementation Resource group categories.
+- Removed Chosen.js library and custom styles/scripts.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
@@ -100,6 +103,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed page saving bug that would prevent the display of a page's tags
 - Fixed ordering for Filterable results to be newest => oldest by published_date.
 - Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
+- Fixes the values for author and tag options to remove special characters.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

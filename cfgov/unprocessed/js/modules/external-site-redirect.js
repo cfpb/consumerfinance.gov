@@ -6,29 +6,39 @@
    ========================================================================== */
 
 'use strict';
-var $ = require( 'jquery' );
 
 /**
  * Set up event handler for links and determine if link is external or not.
  */
 function init() {
-  $( '#main, footer' ).on( 'click', 'a', function( event ) {
+  var elements = document.querySelectorAll( '#main, body > footer' );
 
-    var url = this.href;
-    // Regex to determine if link URL is external.
-    // Futher explanation can be viewed
-    // at https://regex101.com/r/xT7sL5/2.
-    var externalURLArray =
-        ( /(https?:\/\/(?:www\.)?(?!.*gov)(?!(content\.)?localhost).*)/g )
-        .exec( url );
+  for ( var i = 0; i < elements.length; ++i ) {
+    elements[i].addEventListener( 'click', _handleClick, false );
+  }
+}
 
-    if ( $.isArray( externalURLArray ) ) {
-      event.preventDefault();
-      window.location = '/external-site/?ext_url=' +
-                        encodeURIComponent( externalURLArray[1] );
-    }
+/**
+ * Handle the element click event.
+ * @param {MouseEvent} event A click event.
+ */
+function _handleClick( event ) {
+  var element = event.target;
+  if ( element && element.tagName !== 'A' ) element = element.parentNode;
+  if ( element === null || element.tagName !== 'A' ) return;
 
-  } );
+  // Regex to determine if link URL is external.
+  // Futher explanation can be viewed
+  // at https://regex101.com/r/xT7sL5/6.
+  var externalURLArray =
+    ( /(https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*)/g )
+    .exec( element.href );
+
+  if ( Array.isArray( externalURLArray ) ) {
+    event.preventDefault();
+    window.location.href = '/external-site/?ext_url=' +
+     encodeURIComponent( externalURLArray[1] );
+  }
 }
 
 // Expose public methods.

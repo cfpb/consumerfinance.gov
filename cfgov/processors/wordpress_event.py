@@ -45,6 +45,11 @@ def process_event(event):
     # Reassign data out of custom fields
     event['tags'] = [tag['title'] for tag in event['taxonomy_fj_tag']
                      if event['taxonomy_fj_tag']]
+    for i, tag in enumerate(event['tags']):
+        if not tag.isalnum():
+            for char in tag:
+                if not char.isalnum() and not char.isspace() and not char == '-':
+                    event['tags'][i] = tag.replace(char, '')
     event['open_graph'] = {}
     og_fields = ['og_title', 'og_image', 'og_desc', 'twtr_text', 'twtr_rel',
                  'twtr_lang', 'twtr_hash', 'utm_campaign', 'utm_term',

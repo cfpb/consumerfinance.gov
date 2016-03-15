@@ -163,6 +163,9 @@ class CFGOVPage(Page):
                 return ancestors[i+1:]
         return []
 
+    def get_appropriate_descendants(self, hostname, inclusive=True):
+        return CFGOVPage.objects.live_shared(hostname).descendant_of(self, inclusive)
+
     def get_appropriate_siblings(self, hostname, inclusive=True):
         return CFGOVPage.objects.live_shared(hostname).sibling_of(self, inclusive)
 

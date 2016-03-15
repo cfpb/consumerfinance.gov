@@ -130,6 +130,13 @@ class FeaturedContent(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
                              label='Additional Links')
 
+    video = blocks.StructBlock([
+        ('id', blocks.CharBlock(required=False, help_text='e.g In \"https://www.youtube.com/watch?v=en0Iq8II4fA\", the ID is everything after the \"?v=\"')),
+        ('url', blocks.CharBlock(default='/', required=False)),
+        ('height', blocks.CharBlock(default='320', required=False)),
+        ('width', blocks.CharBlock(default='568', required=False)),
+    ])
+
     class Meta:
         template = '_includes/molecules/featured-content.html'
         icon = 'doc-full-inverse'

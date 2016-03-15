@@ -101,6 +101,11 @@ def process_office(post):
                 post[related] = custom_fields[related][0]
 
     post['tags'] = [tag['title'] for tag in post['taxonomy_fj_tag']]
+    for i, tag in enumerate(post['tags']):
+        if not tag.isalnum():
+            for char in tag:
+                if not char.isalnum() and not char.isspace() and not char == '-':
+                    post['tags'][i] = tag.replace(char, '')
 
     del post['custom_fields']
 
