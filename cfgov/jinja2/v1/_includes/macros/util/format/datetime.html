@@ -20,13 +20,11 @@
 
    ========================================================================== #}
 
-{% macro format_time(datetime, timezone) %}
-    {% set parse_timezone = 'America/New_York'
-                            if timezone == '' else timezone %}
-    {% if parse_timezone is defined %}
-    {{- datetime | date('%I:%M %p %Z', parse_timezone) -}}
+{% macro format_time(datetime, timezone=none) %}
+    {% if timezone %}
+        {{- datetime | date('%I:%M %p %Z', timezone) -}}
     {% else %}
-    {{- datetime | date('%I:%M %p') -}}
+        {{- datetime | date('%I:%M %p') -}}
     {% endif %}
 {% endmacro %}
 

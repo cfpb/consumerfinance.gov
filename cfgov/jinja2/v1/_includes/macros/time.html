@@ -21,7 +21,7 @@
 
 {% macro render(datetime,
                 show_only={'date':true, 'time':true, 'timezone':true},
-                timezone='America/New_York') %}
+                timezone=none) %}
 <span class="datetime">
     {% if show_only.date == true  %}
     <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
