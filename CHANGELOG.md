@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added tests for `external-site-redirect.js`
 - Frontend: Added JS Tree data structure and traversal algorithms.
 - Add text intro and featured content to SublandingFilterablePage
+- Add a script `move_reports.py` to move all reports under a given SublandingFilterablePage
 
 ### Changed
 - Converted the project to Capital Framework v3
