@@ -19,16 +19,14 @@
 
     {% import 'leadership-calendar-table.html' as calendar %}
     {% import 'molecules/social-media.html' as social_media %}
-    {% import 'macros/filters.html' as filters with context %}
     {% from 'post-macros.html' import pagination as pagination with context %}
 
     <div class="block
-                block__flush-top
-                block__padded-bottom
-                block__border-bottom"
+                block__flush-top"
          data-qa-hook="leadership-calendar-intro">
         <h1>Leadership Calendar</h1>
-        <p class="h3" data-qa-hook="leadership-calendar-summary">
+        <p class="lead-paragraph"
+           data-qa-hook="leadership-calendar-summary">
             At the Consumer Financial Protection Bureau, we are committed to letting you
             know how we’re working for you every day by, among other things, providing you
             with a view into the workday of the CFPB’s senior leadership.
@@ -46,37 +44,48 @@
         {{ social_media.render() }}
     </div>
 
-    <div id="pagination_content"></div>
+    <div class="block block__flush-top"
+         data-qa-hook="leadership-calendar-filter">
+         <div class="a-rule-break"></div>
+         <div class="o-filterable-list-controls">
 
-    <div class="block block__flush-top" data-qa-hook="leadership-calendar-filter">
+            {# Set the filters #}
+            {% set filter_by = {
+                'calendar':   true,
+                'range_date': true
+            } %}
+            {% set query = queries.calendar_event %}
+            {% set posts = query.search() %}
 
-    {% set query = queries.calendar_event %}
-    {% set posts = query.search() %}
+            {% import 'macros/filters.html' as filters with context %}
+            {{ filters.render(
+                filter_by,
+                query,
+                posts,
+                'calendar_event',
+                { 'expand_label': 'Filter calendars' }
+            ) }}
 
-        {{ filters.render(
-            ['calendar', 'range_date'], query, posts, 'calendar_event',
-            {
-                'expand_label': 'Filter calendars'
-            }
-        ) }}
+            {{ calendar.render(posts) }}
 
-    {{ calendar.render(posts) }}
+            {{ pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
+        </div>
+    </div>
 
-    </div><!-- END calendar -->
-
-    {{ pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
-
-    <section class="block block__padded-top block__border-top">
-        <h2>
-            Download a copy
-        </h2>
+    <section class="block">
+        <div class="a-rule-break"></div>
+        <h2>Download a copy</h2>
         <p>
             Choose the names and dates for which you want to see the calendar. Appointments are
             only available for months when someone was serving in Bureau leadership. We’ll
             generate a PDF of the results for you. Very large requests may take a while.
         </p>
+
         {{ filters.render(
-            ['calendar', 'range_date'], query, posts, 'calendar_event',
+            filter_by,
+            query,
+            posts,
+            'calendar_event',
             {
                 'id_prefix'           : 'download',
                 'expand_label'        : 'Download options',
