@@ -25,8 +25,10 @@ class SublandingFilterablePage(base.CFGOVPage):
         ('hero', molecules.Hero()),
     ], blank=True)
     content = StreamField([
+        ('text_introduction', molecules.TextIntroduction()),
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
+        ('featured_content', molecules.FeaturedContent()),
     ])
 
     # General content tab
