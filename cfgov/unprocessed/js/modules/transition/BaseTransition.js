@@ -45,8 +45,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
     // If the element has already been set,
     // clear the transition classes from the old element.
     if ( _dom ) {
-      _dom.classList.remove( _classes.BASE_CLASS );
-      flush();
+      remove();
       animateOn();
     }
     _dom = elem;
@@ -111,10 +110,8 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   /**
    * Search for and remove initial BaseTransition classes that have
    * already been applied to this BaseTransition's target element.
-   * Will only be run once internally, but can be run additional
-   * times externally.
    */
-  function flush() {
+  function _flush() {
     for ( var prop in _classes ) {
       if ( _classes.hasOwnProperty( prop ) &&
            _classes[prop] !== _classes.BASE_CLASS &&
@@ -125,13 +122,21 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   }
 
   /**
+   * Remove all transition classes.
+   */
+  function remove() {
+    _dom.classList.remove( _classes.BASE_CLASS );
+    _flush();
+  }
+
+  /**
    * @param {string} className - A CSS class.
    * @returns {boolean} False if the class is already applied,
    *   otherwise true if the class was applied.
    */
   function applyClass( className ) {
     if ( !_isFlushed ) {
-      flush();
+      _flush();
       _isFlushed = true;
     }
 
@@ -187,9 +192,9 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   this.animateOff = animateOff;
   this.animateOn = animateOn;
   this.applyClass = applyClass;
-  this.flush = flush;
   this.init = init;
   this.isAnimated = isAnimated;
+  this.remove = remove;
   this.setElement = setElement;
 
   // Public static constants.

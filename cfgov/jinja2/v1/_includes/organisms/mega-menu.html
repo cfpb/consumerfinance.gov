@@ -61,8 +61,7 @@
                {{ _classes( nav_depth, '-item' ) }}"
         {{ 'data-js-hook=flyout-menu' if nav_children | count > 0 else '' }}>
         {# TODO: Remove nav_depth < 2 check on has-children class when 3rd level transitions are in. #}
-        <a class="{{ 'u-link__disabled' if nav_url == '' else '' }}
-                  {{ _classes( nav_depth, '-link' ) }}
+        <a class="{{ _classes( nav_depth, '-link' ) }}
                   {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 and nav_depth < 2 else '' }}
                   {{ _classes( nav_depth, '-link__current' ) if nav_url == request.path else '' }}"
            {{ '' if nav_url == '' or nav_url == request.path else 'href=' + nav_url | e }}
@@ -116,11 +115,13 @@
             <div class="{{ _classes( nav_depth, '-grid' ) }}">
                 {% if nav_depth > 1 %}
                 <span class="{{ _classes( nav_depth, '-overview' ) }}">
+                    {% if nav_overview_url %}
                     <a class="{{ _classes( nav_depth, '-overview-link' ) }}
                               {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                       {{ '' if nav_overview_url == '' or nav_overview_url == request.path else 'href=' + nav_overview_url | e }}>
+                       {{ '' if nav_overview_url == request.path else 'href=' + nav_overview_url | e }}>
                         {{ nav_overview }}
                     </a>
+                    {% endif %}
                 </span>
                 {% endif %}
                 <div class="{{ _classes( nav_depth, '-lists' ) }}">
@@ -156,7 +157,8 @@
    Creates a mega menu primary navigation menu.
 
    ========================================================================== #}
-<nav class="{{ base_class }}"
+<nav class="{{ base_class }}
+            u-hidden"
      data-js-hook="flyout-menu"
      aria-label="main navigation"
      role="navigation">

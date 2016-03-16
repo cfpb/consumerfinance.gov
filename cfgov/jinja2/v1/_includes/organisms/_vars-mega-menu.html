@@ -1,4 +1,3 @@
-
 {#
   Navigation and Sub-Navigation menu items,
   used to populate the contents of the site's navigation menus (Mega Menu).
@@ -22,40 +21,100 @@
 {# TODO: Update file path for Featured Menu Content module when that is added. #}
 {% import 'templates/nav/about-us-media.html' as about_us_media %}
 
+{# Featured Menu Content. #}
 {% set media_items = [
   ('/about-us/', about_us_media)
 ] %}
+
 {% set nav_items = [(
-    ('Consumer Tools', '', []),
-    ('Educational Resources', '', []),
-    ('Data & Research', '', []),
-    ('Policy & Compliance', '', []),
-    ('About Us', '/about-us/', [
-        (
-            ('The Bureau', '/the-bureau/', []),
-            ('Budget and Strategy', '/budget/', []),
-            ('Payments to Harmed Consumers',
-             '/offices/payments-to-harmed-consumers/', [])
-        ),
-        (
-            ('Blog','/blog/', []),
-            ('Newsroom', '/newsroom/', []),
-            ('Events', '/events/', []),
-            ('Activity Log', '/activity-log/', [])
-        ),
-        (
-            ('Careers', '/careers/', [
-                (
-                    ('Working at the CFPB', '/careers/working-at-cfpb/', []),
-                    ('Job Application Process', '/careers/application-process/', []),
-                    ('Students & Recent Graduates', '/careers/students-and-graduates/', []),
-                    ('Current Openings', '/careers/current-openings/', [])
-                )
-            ]),
-            ('Doing Business With Us', '/doing-business-with-us/', []),
-            ('Advisory Groups', '/offices/advisory-groups/', []),
-            ('Project Catalyst', '/offices/project-catalyst/', []),
-            ('Contact Us', '/contact-us/', [])
-        )
-    ])
+    ('Consumer Tools', '', [(
+        ('Submit a Complaint', '/complaint/', []),
+        ('Ask CFPB', '/askcfpb/', []),
+        ('Tell Your Story', '/your-story/', []),
+        ('Information for Students', '/students/', []),
+        ('Information for Older Americans', '/older-americans/', []),
+        ('Information for Servicemembers', '/servicemembers/', [])
+    ),(
+        ('Paying for College', '/paying-for-college/', []),
+        ('Owning a Home', '/owning-a-home/', []),
+        ('Planning for Retirement', '/retirement/', []),
+        ('Sending Money Abroad', '/sending-money/', [])
+    ),(
+        ('Know Before You Owe Mortgages', '/know-before-you-owe/', []),
+        ('Trouble Paying Your Mortgage?', '/mortgagehelp/', []),
+        ('Protections Against Discrimination', '/fair-lending/', [])
+    )]),
+    ('Educational Resources', '', [(
+        ('Your Money, Your Goals', '/your-money-your-goals/', []),
+        ('Adult Financial Education', '/adult-financial-education/', []),
+        ('Youth Financial Education', '/youth-financial-education/', [])
+    ),(
+        ('Resources for Libraries', '/library-resources/', []),
+        ('Resources for Tax Preparers', '/tax-preparer-resources/', []),
+        ('Resources for Parents', '/parents/', [])
+    ),(
+        ('Information for Economically Vulnerable Consumers', '/empowerment/', []),
+        ('Managing Someone Else’s Money', '/managing-someone-elses-money/', []),
+        ('Free Brochures', 'http://promotions.usa.gov/cfpbpubs.html', [])
+    )]),
+    ('Data & Research', '/data-research/', [(
+        ('Research & Reports', '/data-research/research-reports/', []),
+    ),(
+        ('Consumer Complaint Database', '/complaintdatabase/', []),
+        ('Mortgage Database (HMDA)', '/hmda/', [])
+    ),(
+        ('Credit Card Surveys & Agreements', '/data-research/credit-card-data/', []),
+    )]),
+    ('Policy & Compliance', '/policy-and-compliance/', [(
+        ('Rulemaking', '/policy-compliance/rulemaking/', [(
+            ('Final Rules', '/policy-compliance/rulemaking/final-rules/', []),
+            ('Rules Under Development', '/policy-compliance/rulemaking/rules-under-development/', []),
+            ('Regulatory Agenda', '/policy-compliance/rulemaking/regulatory-agenda/', []),
+            ('Small Business Review Panels', '/policy-compliance/rulemaking/small-business-review-panels/', []),
+        )]),
+    ),(
+        ('Compliance & Guidance', '/policy-compliance/guidance/', [(
+            ('Implementation & Guidance', '/policy-compliance/guidance/implementation-guidance/', []),
+            ('Supervision & Examinations', '/policy-compliance/guidance/supervision-and-examinations/', []),
+            ('Supervisory Highlights', '/policy-compliance/guidance/supervisory-highlights/', [])
+        )]),
+        ('Enforcement', '/policy-compliance/enforcement/', [(
+            ('Enforcement Actions', '/policy-compliance/enforcement/actions/', []),
+            ('Petitions to Modify or Set Aside', '/policy-compliance/enforcement/petitions/', []),
+            ('Warning Letters', '/policy-compliance/enforcement/warning-letters/', [])
+        )])
+    ),(
+        ('Notices & Opportunities to Comment', '/policy-compliance/notice-opportunities-comment/', [(
+            ('Open Notices', '/policy-compliance/notice-opportunities-comment/open-notices/', []),
+            ('Archive of Closed Notices', '/policy-compliance/notice-opportunities-comment/archive-closed/', [])
+        )]),
+        ('Amicus Program', '/policy-compliance/amicus/', [(
+            ('Filed Briefs', '/policy-compliance/amicus/briefs/', []),
+            ('Suggest a Case', '/policy-compliance/amicus/suggest/', [])
+        )])
+    )]),
+    ('About Us', '/about-us/', [(
+        ('The Bureau', '/the-bureau/', []),
+        ('Budget and Strategy', '/budget/', []),
+        ('Payments to Harmed Consumers',
+         '/about-us/payments-harmed-consumers/', [])
+    ),(
+        ('Blog','/blog/', []),
+        ('Newsroom', '/newsroom/', []),
+        ('Events', '/about-us/events/', []),
+        ('Recent Postings', '/activity-log/', [])
+    ),(
+        ('Careers', '/careers/', [
+            (
+                ('Working @ CFPB', '/careers/working-at-cfpb/', []),
+                ('Job Application Process', '/careers/application-process/', []),
+                ('Students & Recent Graduates', '/careers/students-and-graduates/', []),
+                ('All Current Openings', '/careers/current-openings/', [])
+            )
+        ]),
+        ('Doing Business With Us', '/doing-business-with-us/', []),
+        ('Advisory Groups', '/about-us/advisory-groups/', []),
+        ('Project Catalyst', '/about-us/project-catalyst/', []),
+        ('Contact Us', '/about-us/contact-us/', [])
+    )])
 )] -%}

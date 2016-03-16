@@ -115,7 +115,7 @@
    ========================================================================== #}
 {% macro _active_filters_notification(posts) %}
 {%- if posts | list | length > 0 -%}
-    {% if posts.paginator is defined -%}
+    {% if posts.paginator is defined and posts.paginator -%}
       {% set text = posts.paginator.count | string
                     + ' filtered result'
                     + ('s' if posts.paginator.count > 1 else '') %}
@@ -138,9 +138,6 @@
 
 {% import 'molecules/notification.html' as notification %}
 <div class='filtered-by'>
-    {{ notification.render({
-        'text': text,
-        'type': type
-    }) }}
+    {{ notification.render(type=type, is_visible=true, message=text) }}
 </div>
 {% endmacro %}

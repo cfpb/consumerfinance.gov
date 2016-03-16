@@ -74,6 +74,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - included backend support for Video in FCM
 - Changed `external-site-redirect.js` to remove jQuery and fix Regex.
 - Updated the global search for no-js and IE 8-10 fixes.
+- Frontend: Added all launch-state mega menu links.
+- Frontend: Added hover-to-show behavior in desktop mega menu.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.

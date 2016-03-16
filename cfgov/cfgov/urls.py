@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
@@ -252,6 +252,8 @@ urlpatterns = [
     url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
 
+    # Report redirects
+    url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s')),
 ]
 if 'cfpb_common' in settings.INSTALLED_APPS:
     pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
