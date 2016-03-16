@@ -78,8 +78,8 @@ def get_page_set(page, form, hostname):
                 blog_cats = [c[0] for c in ref.categories[1][1]]
                 blog_q = Q('categories__name__in', blog_cats)
 
-    results = base.CFGOVPage.objects.live_shared(hostname).descendant_of(
-        page).filter(form.generate_query() | blog_q).specific()
+    results = AbstractFilterPage.objects.live_shared(hostname).descendant_of(
+        page).filter(form.generate_query() | blog_q)
 
     if isinstance(page, EventArchivePage):
         filter_pages = [page for page in results if isinstance(page, AbstractFilterPage)]
