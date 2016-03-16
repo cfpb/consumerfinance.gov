@@ -23,10 +23,6 @@ function TheAboutDirectorPage() {
 
   this.directorBioSummary = _getQAElement( 'director-bio-summary' );
 
-  this.directorCorner = _getQAElement( 'director-corner' );
-
-  this.directorHistory = _getQAElement( 'director-history' );
-
   this.directorImage = _getQAElement( 'director-bio-image' );
 
   this.mediaDownloads = element.all(

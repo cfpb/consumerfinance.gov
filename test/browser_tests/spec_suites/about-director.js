@@ -35,18 +35,6 @@ describe( 'The About Director Page', function() {
     }
   );
 
-  it( 'should include the Director’s Corner',
-    function() {
-      expect( page.directorCorner.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Director’s history',
-    function() {
-      expect( page.directorHistory.isPresent() ).toBe( true );
-    }
-  );
-
   it( 'should include Director’s image',
     function() {
       expect( page.directorImage.isPresent() ).toBe( true );

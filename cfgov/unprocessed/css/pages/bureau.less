@@ -76,33 +76,3 @@
     }
 
 }
-
-.bureau-history {
-    position: relative;
-
-    &_header {
-        .respond-to-min(@bp-lg-min, {
-            position: absolute;
-            left: 277px;
-            top: 25px;
-        });
-    }
-
-    &_text {
-        .respond-to-min(@bp-lg-min, {
-            position: relative;
-            top: 48px;
-        });
-    }
-
-    &_image {
-
-        .respond-to-range(@bp-sm-min, @bp-sm-max, {
-            width: 215px;
-        });
-
-        .respond-to-min(@bp-med-min, {
-            width: 250px;
-        });
-    }
-}
