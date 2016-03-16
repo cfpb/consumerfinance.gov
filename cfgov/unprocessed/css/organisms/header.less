@@ -67,41 +67,63 @@
     z-index: 10;
     background-color: @white;
 
-    > .m-global-eyebrow {
-
-        .respond-to-max( @bp-sm-max, {
+    // Desktop size
+    .respond-to-max( @bp-sm-max, {
+        > .m-global-eyebrow {
             display: none;
-        } );
-    }
+        }
+    } );
 
     &_content {
+
+        > .wrapper {
+            > .m-global-search {
+                float: right;
+            }
+        }
 
         .respond-to-min( @bp-med-min, {
             padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-            & > .m-global-header-cta,
-            & > .m-global-search {
-                float: right;
-            }
+            > .wrapper {
+                > .m-global-header-cta {
+                    float: right;
+                }
 
-            > .m-global-search {
-                min-width: 340px;
+                > .m-global-search {
+                    min-width: 340px;
+                }
             }
         } );
 
-        // Hide Global Header Call to Action at tablet/mobile sizes.
+        // Tablet/mobile sizes.
+        // Hide Global Header Call to Action.
         .respond-to-max( @bp-sm-max, {
-            & > .m-global-header-cta {
-                display: none;
+            > .wrapper {
+                > .m-global-header-cta {
+                    display: none;
+                }
             }
 
-            & > .o-mega-menu {
-                float: left;
+            // Set the mobile hamburger mega menu next to the logo.
+            // Remove pointer-events so the menu doesn't cover up the search.
+            > .o-mega-menu {
+                top: 0;
+                left: 0;
+                position: absolute;
+                pointer-events: none;
             }
         } );
     }
 
     &_logo {
+
+        // Tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            // Offset logo by width of mega menu trigger: 60px + 10px gap.
+            margin-left: 70px;
+        } );
+
         &-img {
             height: 40px;
             width: 190px;
@@ -109,11 +131,12 @@
             // Removes typical inline vertical whitespace.
             vertical-align: middle;
 
-            .respond-to-min(@bp-med-min, {
+            // Desktop size.
+            .respond-to-min( @bp-med-min, {
                 margin: 0 0 unit(20px / @base-font-size-px, em) 0;
                 height: 50px;
                 width: 237px;
-            });
+            } );
         }
 
         noscript .o-header_logo-img {

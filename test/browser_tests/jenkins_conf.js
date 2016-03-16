@@ -19,7 +19,7 @@ exports.config = {
   onPrepare: function() {
     browser.ignoreSynchronization = true;
 
-    // add jasmine spec reporter
+    // Add jasmine spec reporter.
     jasmine.getEnv().addReporter(
       new JasmineSpecReporter( { displayStacktrace: true } )
     );
@@ -30,13 +30,11 @@ exports.config = {
       if ( err ) {
         console.error( err ); // eslint-disable-line no-console, no-inline-comments, max-len
       } else {
-        var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter(
-            {
-              consolidateAll: true,
-              savePath:       newFolder,
-              filePrefix:     'test-results'
-            }
-        );
+        var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter( {
+          consolidateAll: true,
+          savePath:       newFolder,
+          filePrefix:     'test-results'
+        } );
         jasmine.getEnv().addReporter( jUnitXmlReporter );
       }
     } );

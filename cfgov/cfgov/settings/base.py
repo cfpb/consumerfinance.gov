@@ -268,6 +268,11 @@ SHEER_PROCESSORS = \
             "url": "$WORDPRESS/api/get_posts/?post_type=faq",
             "processor": "processors.wordpress_faq",
             "mappings": MAPPINGS.child("faq.json")
+        },
+        "report": {
+            "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_report",
+            "processor": "processors.wordpress_cfpb_report",
+            "mappings": MAPPINGS.child("report.json")
         }
     }
 

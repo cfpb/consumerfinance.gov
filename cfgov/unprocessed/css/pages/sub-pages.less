@@ -3,17 +3,6 @@
    Sub-Pages pages at /sub-pages/*.
    ========================================================================== */
 
-.sub-page {
-    a[href $='.pdf']:after {
-        .cf-icon();
-        .u-inline-block();
-        width: 1em;
-        content: @cf-icon-download;
-        color: @pacific;
-        text-align: right;
-    }
-}
-
 .sub-page__grandchild,
 .sub-page__grandchild + .content_sidebar {
     padding-top: @grid_gutter-width;
@@ -24,14 +13,5 @@
 .sub-page_privacy-impact-assessments-pias {
     a {
         .jump-link();
-
-        &:after {
-            .cf-icon();
-            .u-inline-block();
-            width: 1em;
-            content: @cf-icon-download;
-            color: @pacific;
-            text-align: right;
-        }
     }
 }

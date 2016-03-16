@@ -1,0 +1,7 @@
+{
+  "name": "Reports",
+  "query": {
+    "doc_type": "report",
+    "size": 10000
+  }
+}

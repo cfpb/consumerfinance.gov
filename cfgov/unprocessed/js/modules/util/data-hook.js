@@ -35,10 +35,10 @@ function add( element, value ) {
 function remove( element, value ) {
   var values = element.getAttribute( standardType.JS_HOOK );
   var index = values.indexOf( value );
-  var values = values.split( ' ' );
+  var valuesList = values.split( ' ' );
   if ( index > -1 ) {
-    values.splice( index, 1 );
-    element.setAttribute( standardType.JS_HOOK, values.join( ' ' ) );
+    valuesList.splice( index, 1 );
+    element.setAttribute( standardType.JS_HOOK, valuesList.join( ' ' ) );
     return true;
   }
 

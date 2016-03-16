@@ -258,19 +258,19 @@ class Query(object):
         query_dict.update(non_filter_args)
         pagenum = 1
 
-        request = get_request()
         # Add in filters from the template.
         new_multidict = MultiDict()
         # First add the url arguments if requested
         if use_url_arguments:
+            request = get_request()
             new_multidict = MultiDict(request.GET.copy())
+            args_flat = request.GET.copy()
         # Next add the arguments from the search() function used in the
         # template
         for key, value in filter_args.items():
             new_multidict.update({key: value})
 
         filters = filter_dsl_from_multidict(new_multidict)
-        args_flat = request.GET.copy()
         query_body = {}
 
         if aggregations:
@@ -282,14 +282,15 @@ class Query(object):
                                        {'field': fieldname, 'size': 10000}}
             query_body['aggs'] = aggs_dsl
         else:
-            if 'page' in args_flat:
-                args_flat['from_'] = int(query_dict.get(
-                    'size', '10')) * (int(args_flat['page']) - 1)
-                pagenum = int(args_flat['page'])
+            if use_url_arguments:
+                if 'page' in args_flat:
+                    args_flat['from_'] = int(query_dict.get(
+                        'size', '10')) * (int(args_flat['page']) - 1)
+                    pagenum = int(args_flat['page'])
 
-            args_flat_filtered = dict(
-                [(k, v) for k, v in args_flat.items() if v])
-            query_dict.update(args_flat_filtered)
+                args_flat_filtered = dict(
+                    [(k, v) for k, v in args_flat.items() if v])
+                query_dict.update(args_flat_filtered)
             query_body['query'] = {'filtered': {'filter': {}}}
             if filters:
                 query_body['query']['filtered']['filter'][

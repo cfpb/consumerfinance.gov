@@ -53,7 +53,7 @@ class BrowseFilterablePage(base.CFGOVPage):
 
 
     def get_form_class(self):
-        return filterable_context.get_form_class(self)
+        return filterable_context.get_form_class()
 
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
