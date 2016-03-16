@@ -27,13 +27,15 @@
 
    ========================================================================== #}
 
-{% macro render(category, href, classes, use_blog_category=false, index=0) %}
+{% macro render(category, href, classes, use_blog_category=false, index=0, sheerpage=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
 
     {% if href %}
         {# TODO: Remove use_blog_category parameter when this element becomes atomic. #}
         {% if use_blog_category %}
             {% set href = href + '?filter_blog_category=' + category | urlencode | replace('%20', '+') %}
+        {% elif sheerpage %}
+            {% set href = href + '?filter_category=' + category | urlencode | replace('%20', '+') %}
         {% else %}
             {% set href = href + '?filter' + index | string + '_categories=' + category | urlencode | replace('%20', '+') %}
         {% endif %}
