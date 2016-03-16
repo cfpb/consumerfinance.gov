@@ -51,7 +51,7 @@
     <div class="block block__flush-top" data-qa-hook="leadership-calendar-filter">
 
     {% set query = queries.calendar_event %}
-    {% set posts = query.search(size=20) %}
+    {% set posts = query.search() %}
 
         {{ filters.render(
             ['calendar', 'range_date'], query, posts, 'calendar_event',
