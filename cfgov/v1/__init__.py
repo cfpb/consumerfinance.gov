@@ -57,7 +57,8 @@ def external_links(value):
 
         for a in soup('a'):
             if p.match(a['href']):
-                a['class'] = os.environ.get('EXTERNAL_LINK_CSS', 'icon-link icon-link__external-link')
+                a.append('<span class="' + str(
+                    os.environ.get('EXTERNAL_LINK_CSS', 'icon-link link-with-icon icon-link__external-link')) + '"></span>')
     except:
         pass
 
