@@ -1,5 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-{% import '_vars-careers.html' as vars with context %}
+{% set query = queries.careers_preview %}
+{% set careers = query.search() %}
 
 {% block title -%}
     Careers at the CFPB
@@ -57,7 +58,7 @@
                    data-qa-hook="openings-section">
                 <h2 class="h3">Newest Openings</h2>
                 <ul class="list list__unstyled">
-                    {% for career in vars.careers %}
+                    {% for career in careers %}
                     <li class="list_item">
                         <a class="list_link"
                             href="{{ career.permalink }}">{{ career.title }}</a>
