@@ -73,6 +73,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   // expand is animating.
   var _deferFunct = standardType.noopFunct;
 
+  // Whether this instance's behaviors are suspended or not.
+  var _suspended = true;
+
   /**
    * @returns {FlyoutMenu} An instance.
    */
@@ -95,6 +98,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       }
     }
 
+    resume();
+
     return this;
   }
 
@@ -102,7 +107,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * Event handler for when the search input trigger is hovered over.
    */
   function _triggerOver() {
-    this.dispatchEvent( 'triggerOver', { target: this, type: 'triggerOver' } );
+    if ( !_suspended ) {
+      this.dispatchEvent( 'triggerOver',
+                          { target: this, type: 'triggerOver' } );
+    }
   }
 
   /**
@@ -111,13 +119,15 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * @param {MouseEvent} event - The flyout trigger was clicked.
    */
   function _triggerClicked( event ) {
-    event.preventDefault();
-    this.dispatchEvent( 'triggerClick',
-                        { target: this, type: 'triggerClick' } );
-    if ( _isExpanded ) {
-      this.collapse();
-    } else {
-      this.expand();
+    if ( !_suspended ) {
+      this.dispatchEvent( 'triggerClick',
+                          { target: this, type: 'triggerClick' } );
+      event.preventDefault();
+      if ( _isExpanded ) {
+        this.collapse();
+      } else {
+        this.expand();
+      }
     }
   }
 
@@ -177,7 +187,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _triggerDom.setAttribute( 'aria-expanded', 'false' );
       _contentDom.setAttribute( 'aria-expanded', 'false' );
       // TODO: Remove or uncomment when keyboard navigation is in.
-      //_triggerDom.focus();
+      // _triggerDom.focus();
     } else {
       _deferFunct = _collapseBinded;
     }
@@ -269,6 +279,30 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     };
   }
 
+  /**
+   * Enable broadcasting of trigger events.
+   * @returns {boolean} True if resumed, false otherwise.
+   */
+  function resume() {
+    if ( _suspended ) {
+      _suspended = false;
+    }
+
+    return !_suspended;
+  }
+
+  /**
+   * Suspend broadcasting of trigger events.
+   * @returns {boolean} True if suspended, false otherwise.
+   */
+  function suspend() {
+    if ( !_suspended ) {
+      _suspended = true;
+    }
+
+    return _suspended;
+  }
+
   // TODO: Use Object.defineProperty to create a getter/setter.
   //       See https://github.com/cfpb/cfgov-refresh/pull/1566/
   //           files#diff-7a844d22219d7d3db1fa7c1e70d7ba45R35
@@ -281,8 +315,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
-   * @param {number|string|Object} data - A data identifier such as an Array index,
-   *   Hash key, or Tree node.
+   * @param {number|string|Object} data
+   *   A data identifier such as an Array index, Hash key, or Tree node.
    * @returns {FlyoutMenu} An instance.
    */
   function setData( data ) {
@@ -313,7 +347,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   this.getTransition = getTransition;
   this.getDom = getDom;
   this.isAnimating = isAnimating;
+  this.resume = resume;
   this.setData = setData;
+  this.suspend = suspend;
 
   // Public static properties.
   FlyoutMenu.EXPAND_TYPE = 'expand';
