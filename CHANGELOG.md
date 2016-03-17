@@ -96,6 +96,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - A couple of Implementation Resource group categories.
 - Removed Chosen.js library and custom styles/scripts.
 - Removed several size=x params passed to query.search(), which don't do anything
+- Removed all the pages and associated code that have been ported to wagtail.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
