@@ -12,7 +12,7 @@
 
 {% block content_main %}
 
-    {% set archives = vars.query.search(size=30) %}
+    {% set archives = vars.query.search() %}
     {% import 'macros/filters.html' as filters with context %}
     {% import 'macros/category-icon.html' as category_icon %}
     {% from 'post-macros.html' import pagination as pagination with context %}

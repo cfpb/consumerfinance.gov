@@ -26,7 +26,7 @@
 {# This to fake data for records sub-pages #}
 {# TODO: Update _queries/records.json when we have real record posts #}
 {% set record_query = queries.records %}
-{% set records = record_query.search(size=10) %}
+{% set records = record_query.search() %}
 
 {# Forms for sub-pages #}
 {% set forms = ['Submit-a-Request-form',
