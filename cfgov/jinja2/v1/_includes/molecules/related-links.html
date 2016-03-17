@@ -17,7 +17,7 @@
                     link   .
 
    ========================================================================== #}
-
+{% from 'atoms/rich-text.html' import rich_text with context %}
 <div class="m-related-links">
     {% if value.heading %}
         <h2 class="header-slug">
@@ -27,7 +27,7 @@
         </h2>
     {% endif %}
 
-    {{ value.paragraph }}
+    {{ rich_text(value.paragraph) }}
 
     {% if value.links %}
         <ul class="list list__unstyled list__links">

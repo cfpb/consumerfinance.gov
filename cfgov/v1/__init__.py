@@ -1,18 +1,21 @@
+import os, re,HTMLParser
+
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
 
-import HTMLParser
 from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
 from util.util import get_unique_id
 
-default_app_config = 'v1.apps.V1AppConfig'
+from wagtail.wagtailcore.rich_text import expand_db_html
+from BeautifulSoup import BeautifulSoup
 
+default_app_config = 'v1.apps.V1AppConfig'
 
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
@@ -43,11 +46,6 @@ def environment(**options):
     })
     return env
 
-
-from wagtail.wagtailcore.rich_text import expand_db_html
-from BeautifulSoup import BeautifulSoup
-import os, re
-
 EXTERNAL_LINK_PATTERN = '(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 
 
@@ -58,7 +56,7 @@ def external_links(value):
         for a in soup('a'):
             p = re.compile(EXTERNAL_LINK_PATTERN)
             if p.match(a['href']):
-                a['class'] = os.environ.get('EXTERNAL_LINK_CSS', 'icon-link__external-link')
+                a['class'] = os.environ.get('EXTERNAL_LINK_CSS', 'icon-link icon-link__external-link')
     except:
         pass
 

@@ -13,7 +13,7 @@
    template: Template URL for content to include.
 
    ========================================================================== #}
-
+{% from 'atoms/rich-text.html' import rich_text with context %}
 <div class="o-well">
-    {{ value.content | safe }}
+    {{ rich_text(value.content) }}
 </div>

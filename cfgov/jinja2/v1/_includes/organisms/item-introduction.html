@@ -25,6 +25,7 @@
 {% import 'molecules/social-media.html' as social_media with context %}
 {% import 'macros/category-slug.html' as category_slug %}
 {% import 'macros/time.html' as time %}
+{% from 'atoms/rich-text.html' import rich_text with context %}
 <div class="o-item-introduction">
     <div class="h4">
         {{ category_slug.render(value.category) }}
@@ -32,7 +33,7 @@
     <h1>{{ value.heading }}</h1>
 
     {% if value.paragraph %}
-        <div class="lead-paragraph">{{ value.paragraph.source | safe }}</div>
+        <div class="lead-paragraph">{{ rich_text(value.paragraph) }}</div>
     {% endif %}
     {% if value.date or value.authors.text %}
         <p>

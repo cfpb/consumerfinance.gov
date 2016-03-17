@@ -24,7 +24,7 @@
    value.field.placeholder: The placeholder used for the input.
 
    ========================================================================== #}
-
+{% from 'atoms/rich-text.html' import rich_text with context %}
 <div class="m-form-field-with-button">
     <div class="form-group">
         <label for="{{ value.id }}">
@@ -38,7 +38,7 @@
                class="m-form-field-with-button_field"
                {{ 'required' if value.required else '' }}>
     </div>
-    <p>{{ value.info.source | safe }}</p>
+    <p>{{ rich_text(value.info) }}</p>
     <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
 </div>
 

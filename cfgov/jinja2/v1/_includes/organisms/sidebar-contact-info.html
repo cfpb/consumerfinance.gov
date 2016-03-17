@@ -35,7 +35,7 @@
    contact.address.zip_code: A string containing a zip code.
 
    ========================================================================== #}
-
+{% from 'atoms/rich-text.html' import rich_text with context %}
 <div class="o-sidebar-contact-info">
     <div class="o-sidebar-contact-info_heading">
         <h2 class="header-slug">
@@ -50,7 +50,7 @@
             <h3>{{ value.header }}</h3>
         {% endif %}
 
-        {{ value.contact.body | safe }}
+        {{ rich_text(value.contact.body) }}
     </div>
 
     <div class="o-sidebar-contact-info_column">

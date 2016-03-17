@@ -113,8 +113,9 @@
    ========================================================================== #}
 
 {% macro _text(text) %}
+{% from 'atoms/rich-text.html' import rich_text with context %}
 <p class="u-mb0">
-    {{ text.blob.source | safe }}
+    {{ rich_text(text.blob) }}
 </p>
 {% endmacro %}
 
