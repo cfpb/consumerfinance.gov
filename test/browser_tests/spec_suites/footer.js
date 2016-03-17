@@ -26,6 +26,8 @@ describe( 'The Footer Component', function() {
       'plain writing',
     '/privacy/':
       'privacy, policy & legal notices',
+    '/tribal/':
+      'tribal',
     'http://usa.gov/':
       'usa.gov',
     'http://www.federalreserve.gov/oig/default.htm':
