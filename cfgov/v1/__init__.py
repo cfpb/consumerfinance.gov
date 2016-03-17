@@ -46,14 +46,18 @@ def environment(**options):
 
 from wagtail.wagtailcore.rich_text import expand_db_html
 from BeautifulSoup import BeautifulSoup
-import os,re
+import os, re
+
+EXTERNAL_LINK_PATTERN = '(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
+
 
 def external_links(value):
     soup = BeautifulSoup(expand_db_html(value.source))
 
     try:
         for a in soup('a'):
-            if a['href']:
+            p = re.compile(EXTERNAL_LINK_PATTERN)
+            if p.match(a['href']):
                 a['class'] = os.environ.get('EXTERNAL_LINK_CSS', 'icon-link__external-link')
     except:
         pass
