@@ -174,6 +174,13 @@ function MegaMenuDesktop( menus ) {
         menu.collapse();
       }
 
+      // TODO: Combine this loop with the above
+      //       into a Breadth-First Search iteration.
+      var level3 = _menus.getAllAtLevel( 2 );
+      for ( var i2 = 0, len2 = level3.length; i2 < len2; i2++ ) {
+        level3[i2].data.suspend();
+      }
+
       _suspended = false;
     }
 
