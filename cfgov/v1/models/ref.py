@@ -47,7 +47,7 @@ categories = [
     )),
     ('Enforcement action', (
         ('fed-district-case', 'Federal District Court Case'),
-        ('admin-adj-process', 'Administrative Filing'),
+        ('admin-filing', 'Administrative Filing'),
     )),
     ('Final Rule', (
         ('interim-final-rule', 'Interim Final Rule'),
