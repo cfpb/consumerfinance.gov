@@ -146,81 +146,6 @@
 
 }
 
-
-/* topdoc
-  name: Form actions
-  family: cfgov-forms
-  patterns:
-    - name: Form actions
-      markup: |
-        <div class="form-actions">
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-actions
-            .form-actions_item
-      notes:
-        - ".form-actions adds a top margin to set it apart from form groups."
-        - ".form-actions_item adds margins between each other."
-    - name: "Form actions modifier: right align"
-      markup: |
-        <div class="form-actions form-actions__right">
-            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-actions.form-actions__right
-            .form-actions_item
-      notes:
-        - "Align text to the right."
-    - name: "Form actions modifier: right align on medium screens or larger"
-      markup: |
-        <div class="form-actions form-actions__right-on-med">
-            <a href="/blog/" class="btn btn__warning btn__link form-actions_item">Reset filters</a>
-            <input type="submit" value="Apply filters" class="btn form-actions_item">
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .form-actions.form-actions__right-on-med
-            .form-actions_item
-      notes:
-        - "Align text to the right at 600px or larger."
-  tags:
-    - cfgov-forms
-*/
-
-.form-actions {
-    margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-
-    // Once the form layouts start using columns their margins won't collapse
-    // so we'll need to update the top margin from .form-actions to avoid
-    // double margins.
-    .form-l + & {
-        .respond-to-min(@bp-sm-min, {
-            margin-top: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-        });
-    }
-}
-
-.form-actions__right {
-    text-align: right;
-}
-
-.form-actions__right-on-med {
-    .respond-to-min(@bp-sm-min, {
-        text-align: right;
-    });
-}
-
 /* topdoc
   name: Form layouts
   family: cfgov-forms
@@ -294,29 +219,33 @@
             }
         });
     }
-}
 
-.form-l_col {
-    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-}
-
-.form-l {
     .respond-to-min(@bp-sm-min, {
         .grid_nested-col-group();
     });
 }
 
-.form-l_col input[type="text"],
-.form-l_col input[type="search"],
-.form-l_col input[type="email"],
-.form-l_col input[type="url"],
-.form-l_col input[type="tel"],
-.form-l_col input[type="number"],
-.form-l_col select,
-.form-l_col textarea {
-    // TODO: Move border-box value to cf-forms.
-    box-sizing: border-box;
-    width: 100%;
+.form-l_col {
+    margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+
+    &__flush-bottom {
+        // Used when a col is wrapping inner cols that
+        // have their own margin
+        margin-bottom: 0;
+    }
+
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+        // TODO: Move border-box value to cf-forms.
+        box-sizing: border-box;
+        width: 100%;
+    }
 }
 
 .respond-to-min(@bp-sm-min, {

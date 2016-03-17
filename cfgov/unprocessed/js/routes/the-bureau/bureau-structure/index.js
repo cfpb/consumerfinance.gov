@@ -26,8 +26,6 @@ function init() {
   };
 
   new BreakpointHandler( bpSettings ); // eslint-disable-line no-new, no-inline-comments, max-len
-
-  initExpandables();
 }
 
 function initExpandables() {
