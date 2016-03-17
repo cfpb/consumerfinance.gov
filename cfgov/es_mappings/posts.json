@@ -91,7 +91,13 @@
         },
         "tags": {
             "index": "not_analyzed",
-            "type": "string"
+            "type": "string",
+            "fields": {
+                "lower": {
+                    "type": "string",
+                    "analyzer": "tag_analyzer"
+                }
+            }
         },
         "comment_count": {
             "type": "long"
