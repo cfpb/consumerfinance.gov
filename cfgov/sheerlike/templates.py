@@ -3,27 +3,26 @@ from dateutil import parser
 from pytz import timezone
 
 
-def date_filter(value, format="%Y-%m-%d", tz='America/New_York'):
-    if value:
-        if type(value) not in [datetime.datetime, datetime.date]:
-            date = parser.parse(value,
+def _convert_date(date, tz):
+    if date:
+        if isinstance(date, basestring):
+            date = parser.parse(date,
                                 default=datetime.datetime.today().replace(day=1))
-            naive = date.replace(tzinfo=None)
-            dt = timezone(tz).localize(naive)
-        else:
-            dt = value
+        if type(date) in [datetime.datetime, datetime.date]:
+            if isinstance(date, datetime.datetime):
+                pytzone = timezone(tz)
+                if not date.tzinfo:
+                    date = pytzone.localize(date)
+                else:
+                    date = date.astimezone(pytzone)
+    return date
 
-        return dt.strftime(format)
-    else:
-        return ''
+
+def get_date_string(date, format="%Y-%m-%d", tz='America/New_York'):
+    dt = _convert_date(date, tz)
+    return dt.strftime(format)
 
 
-def date_formatter(value, format='%d/%m/%Y', tz='America/New_York'):
-    if type(value) not in [datetime.datetime, datetime.date]:
-        date = parser.parse(value,
-                            default=datetime.datetime.today().replace(day=1))
-        naive = date.replace(tzinfo=None)
-        dt = timezone(tz).localize(naive)
-    else:
-        dt = value
+def get_date_obj(date, tz='America/New_York'):
+    dt = _convert_date(date, tz)
     return dt
