@@ -21,8 +21,8 @@
 
 
 <h1>{{ value.heading }}</h1>
-<div class="lead-paragraph">{{ rich_text(value.intro) |safe }}</div>
-{{ rich_text(value.body) |safe }}
+<div class="lead-paragraph">{{ cfgov_rich_text(value.intro) |safe }}</div>
+{{ cfgov_rich_text(value.body) |safe }}
 <ul class="list list__links">
     {% for link in value.links %}
         <li class="list_item">

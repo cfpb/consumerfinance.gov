@@ -38,7 +38,7 @@
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ rich_text(value.body) |safe }}</div>
+            <div class="hero_subhead">{{ cfgov_rich_text(value.body) |safe }}</div>
             {% for link in value.links %}
                 <a href="{{ link.url }}"
                    class="hero_cta

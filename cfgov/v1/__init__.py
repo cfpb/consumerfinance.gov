@@ -39,7 +39,7 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'get_page_state_url': share.get_page_state_url,
-        'rich_text': external_links,
+        'cfgov_rich_text': external_links,
     })
     env.filters.update({
         'slugify': slugify,
@@ -53,8 +53,9 @@ def external_links(value):
     soup = BeautifulSoup(expand_db_html(value.source))
 
     try:
+        p = re.compile(EXTERNAL_LINK_PATTERN)
+
         for a in soup('a'):
-            p = re.compile(EXTERNAL_LINK_PATTERN)
             if p.match(a['href']):
                 a['class'] = os.environ.get('EXTERNAL_LINK_CSS', 'icon-link icon-link__external-link')
     except:

@@ -64,7 +64,7 @@
             {% else %}
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
-                        {{ rich_text(block) |safe}}
+                        {{ cfgov_rich_text(block) |safe}}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}

@@ -40,7 +40,7 @@
     <div class="o-main-contact-info">
         <h2>{{ value.contact.heading }}</h2>
 
-        {{ rich_text(value.contact.body) |safe }}
+        {{ cfgov_rich_text(value.contact.body) |safe }}
 
         {% if value.contact.contact_info %}
 
