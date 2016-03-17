@@ -132,6 +132,11 @@
                     Comments close {{ time.render(post.comments_close_date, {'date':true}) }}
                 </span>
             {% endif %}
+            {% if post.preview_subheading %}
+                <div class="o-post-preview_subtitle h6">
+                    {{ post.preview_subheading }}
+                </div>
+            {% endif %}
             {% if post.preview_description %}
                 <div class="o-post-preview_description">
                     {{ post.preview_description | safe }}
@@ -161,9 +166,9 @@
                     {{ tags.render(post.tags.names(), page_url, true, false, form_id) }}
                 {% endif %}
             </div>
-            {% if post.preview_link_url and post.preview_link_text %}
-                <a href="{{ post.preview_link_url }}" class="jump-link jump-link__underline">
-                    {{ post.preview_link_text }}
+            {% if post.secondary_link_url and post.secondary_link_text %}
+                <a href="{{ post.secondary_link_url }}" class="jump-link jump-link__underline">
+                    {{ post.secondary_link_text }}
                 </a>
             {% endif %}
         </div>
