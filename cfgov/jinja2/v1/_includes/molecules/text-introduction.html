@@ -18,10 +18,11 @@
    value.links:     A collection of links with URL & Text.
 
    ========================================================================== #}
+{% from 'atoms/rich-text.html' import rich_text with context %}
 
 <h1>{{ value.heading }}</h1>
-<div class="lead-paragraph">{{ value.intro.source | safe }}</div>
-{{ value.body.source | safe }}
+<div class="lead-paragraph">{{ rich_text(value.intro) }}</div>
+{{ rich_text(value.body) }}
 <ul class="list list__links">
     {% for link in value.links %}
         <li class="list_item">

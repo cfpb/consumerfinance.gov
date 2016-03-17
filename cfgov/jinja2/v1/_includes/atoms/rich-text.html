@@ -1,0 +1,19 @@
+{# ==========================================================================
+
+   Rich Text
+
+   ==========================================================================
+
+   Description:
+
+   Create an rich text atom when given:
+
+   richtext:        Html Markup
+
+   ========================================================================== #}
+
+{% macro rich_text(value) %}
+    {% if value %}
+        {{ external_links(value) |safe}}
+    {% endif %}
+{% endmacro %}

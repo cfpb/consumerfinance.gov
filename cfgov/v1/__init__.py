@@ -13,6 +13,7 @@ from util.util import get_unique_id
 
 default_app_config = 'v1.apps.V1AppConfig'
 
+
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     options['extensions'].append('jinja2.ext.loopcontrols')
@@ -35,11 +36,30 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'get_page_state_url': share.get_page_state_url,
+        'external_links': external_links,
     })
     env.filters.update({
         'slugify': slugify,
     })
     return env
+
+
+from wagtail.wagtailcore.rich_text import expand_db_html
+from BeautifulSoup import BeautifulSoup
+import os,re
+
+def external_links(value):
+    soup = BeautifulSoup(expand_db_html(value.source))
+
+    try:
+        for a in soup('a'):
+            if a['href']:
+                a['class'] = os.environ.get('EXTERNAL_LINK_CSS', 'icon-link__external-link')
+    except:
+        pass
+
+    return soup
+
 
 @contextfunction
 def render_stream_child(context, stream_child):
