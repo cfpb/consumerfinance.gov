@@ -27,7 +27,7 @@
    ========================================================================== #}
 
 {% macro expandable(value) %}
-{% from 'atoms/rich-text.html' import rich_text with context %}
+
 <div class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
@@ -64,7 +64,7 @@
             {% else %}
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
-                        {{ rich_text(block) }}
+                        {{ rich_text(block) |safe}}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}

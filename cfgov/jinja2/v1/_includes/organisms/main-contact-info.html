@@ -35,12 +35,12 @@
    contact.address.zip_code: A string containing a zip code.
 
    ========================================================================== #}
-{% from 'atoms/rich-text.html' import rich_text with context %}
+
 {% if value.contact %}
     <div class="o-main-contact-info">
         <h2>{{ value.contact.heading }}</h2>
 
-        {{ rich_text(value.contact.body) }}
+        {{ rich_text(value.contact.body) |safe }}
 
         {% if value.contact.contact_info %}
 

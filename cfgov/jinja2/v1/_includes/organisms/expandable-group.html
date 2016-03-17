@@ -22,7 +22,7 @@
                           Default is false.
 
    ========================================================================== #}
-{% from 'atoms/rich-text.html' import rich_text with context %}
+
 
 <div class="o-expandable-group
             {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
@@ -36,7 +36,7 @@
     {% endif %}
 
     {% if value.body %}
-        <p>{{ rich_text(value.body) }}</p>
+        <p>{{ rich_text(value.body) |safe }}</p>
     {% endif %}
 
     {# Should be a stack of Expandable instances. #}

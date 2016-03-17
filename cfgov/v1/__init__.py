@@ -39,7 +39,7 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'get_page_state_url': share.get_page_state_url,
-        'external_links': external_links,
+        'rich_text': external_links,
     })
     env.filters.update({
         'slugify': slugify,

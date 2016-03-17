@@ -43,7 +43,7 @@
 
 {% macro render(value) %}
 {% import 'macros/category-icon.html' as category_icon %}
-{% from 'atoms/rich-text.html' import rich_text with context %}
+
 <section class="featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
@@ -54,7 +54,7 @@
             {{ value.heading }}
         </h2>
         <p>
-            {{ rich_text(value.body) }}
+            {{ rich_text(value.body) |safe }}
         </p>
         <ul class="list list__links">
             {% if value.show_post_link and value.post %}

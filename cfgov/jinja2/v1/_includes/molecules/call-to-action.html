@@ -21,7 +21,7 @@
    value.button.text:    The text to display on button.
 
    ========================================================================== #}
-{% from 'atoms/rich-text.html' import rich_text with context %}
+
 <div class="m-call-to-action">
     {% if value.slug_text %}
         <h2 class="header-slug">
@@ -32,7 +32,7 @@
     {% endif %}
     {% if value.paragraph_text %}
         <p>
-            {{ rich_text(value.paragraph_text) }}
+            {{ rich_text(value.paragraph_text) |safe }}
         </p>
     {% endif %}
 

@@ -11,14 +11,14 @@
    See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
 
    ========================================================================== #}
-{% from 'atoms/rich-text.html' import rich_text with context %}
+
 <div class="o-full-width-text-group">
     {% for block in value %}
         {% if 'content' in block.block_type %}
             <div class="m-full-width-text
                         {{ 'm-full-width-text__serif' if
                          page.full_width_serif else '' }}">
-                {{ rich_text(block.value)}}
+                {{ rich_text(block.value) |safe }}
             </div>
         {% elif 'table' in block.block_type %}
             <div class="m-full-width-text
