@@ -17,21 +17,10 @@ function init() {
     var $form = $this.parents( 'form' );
 
     // Clear text inputs
-    $form.find( 'input[type="text"]' ).val( '' );
-
-    // Clear checkboxes
-    $form.find( '[type="checkbox"]' )
-    .removeAttr( 'checked' );
-
-    // Clear radio
-    $form.find( '[type="radio"]' )
-    .removeAttr( 'checked' );
-
-    // Clear select options
-    $form.find( 'select option' )
-    .removeAttr( 'selected' );
-    $form.find( 'select option:first' )
-    .attr( 'selected', true );
+    var inputs = $form.find( 'input' );
+    $.each(inputs, function() {
+      this.remove();
+    });
 
     $form.submit();
   } );
