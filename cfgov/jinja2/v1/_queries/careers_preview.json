@@ -1,0 +1,17 @@
+{
+  "name": "Careers Preview",
+  "query": {
+    "doc_type": "career",
+    "size": 5,
+    "sort": "close_date:asc"
+  },
+  "filters": [
+    {
+    "range" : {
+        "close_date" : {
+          "gte": "now"
+        }
+      }
+    }
+  ]
+}

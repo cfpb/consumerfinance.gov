@@ -42,6 +42,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added tests for `external-site-redirect.js`
 - Frontend: Added JS Tree data structure and traversal algorithms.
 - Add text intro and featured content to SublandingFilterablePage
+- Add a script `move_reports.py` to move all reports under a given SublandingFilterablePage
+- Add a 'careers_preview' query to limit the results to 5
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -76,6 +78,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the global search for no-js and IE 8-10 fixes.
 - Frontend: Added all launch-state mega menu links.
 - Frontend: Added hover-to-show behavior in desktop mega menu.
+- Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -92,6 +95,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Meredith Fuch's assets.
 - A couple of Implementation Resource group categories.
 - Removed Chosen.js library and custom styles/scripts.
+- Removed several size=x params passed to query.search(), which don't do anything
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
