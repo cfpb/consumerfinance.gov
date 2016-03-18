@@ -27,27 +27,44 @@
 
 {% macro render(options={}) -%}
     {% import 'macros/share.html' as share with context %}
-    {% set video_player = options.video.player | default('youtube') %}
-    {% set video_id     = options.video.id     | default('') %}
-    {% set video_url    = options.video.url    | default('/') %}
-    {% set image_url    = options.image.url or
-                          'https://img.youtube.com/vi/' + video_id + '/maxresdefault.jpg'
-                          if video_player == 'youtube'
-    %}
+    {% set video_url    = options.video.url | default('/') %}
+    {% set video_player = options.video.player or
+                          ( video_url.find( 'youtube.com') > -1 and 'youtube' ) or
+                          ( video_url.find( 'ustream.tv') and 'ustream' ) %}
+    {# TODO: Replace with django method for getting video id if youtube and urlparams #}
+    {% if video_player == 'youtube' -%}
+        {% set video_id = options.video.id or ( video_url.split('?')[0].split('/') | last ) %}
+        {% set image_url = options.image.url or ( 'https://img.youtube.com/vi/' + video_id + '/maxresdefault.jpg' ) %}
+        {% if video_url.find( '?' ) == -1 -%}
+            {% set video_url = video_url ~ '?'  %}
+        {% endif %}
+        {% if video_url.find( 'enablejsapi=' ) == -1 -%}
+            {% set video_url = _buildParam( video_url, 'enablejsapi=1' )  %}
+        {% endif -%}
+        {% if video_url.find( 'autoplay=' ) == -1 -%}
+            {% set video_url = _buildParam( video_url, 'autoplay=1' )  %}
+        {% endif %}
+        {% if video_url.find( 'origin=' ) == -1 -%}
+            {% set video_url = _buildParam( video_url, 'origin=http://' ~ request.META['HTTP_HOST'] )  %}
+        {% endif %}
+    {% else %}
+        {% set video_id = '' %}
+        {% set image_url = '/static/img/cfpb_video_cover_card_1380x776.png' %}
+    {% endif %}
+
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
                 video-player__{{ video_player }}"
-         data-video-id="{{ video_id }}"
+         {{ "data-id="~video_id | trim if video_id else '' }}
+         data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
          data-height="{{ options.video.height if options.video.height else '' }}">
         {{ caller() | safe if caller else '' }}
         <div class="video-player_video-container
                     show-on_video-playing
                     {{ 'video-player_video-container__flexible' if is_flexible else '' }}">
-            <div class="video-player_iframe-container">
-                <div id="{{ video_player }}_video-player" class="video-player_video"></div>
-            </div>
+            <div class="video-player_iframe-container"></div>
             <div class="video-player_video-actions-container">
                 <div class="video-player_video-actions">
                     <a class="btn video-player_close-btn" href="/">
@@ -60,6 +77,7 @@
                         close
                     </a>
                 </div>
+                {# TODO: Update Title #}
                 {{ share.render({
                     'title': 'About the CFPB',
                     'heading': 'Share this video',
@@ -82,4 +100,15 @@
                  src="{{ image_url }}">
         </div>
     </div>
+
 {%- endmacro %}
+
+{% macro _buildParam( previousParam , param='') -%}
+    {% set lastParamChar = previousParam | last -%}
+    {%- if lastParamChar == '&' or lastParamChar == '?' -%}
+        {{  previousParam ~ param }}
+    {%- else -%}
+        {{ previousParam ~ '&' ~ param }}
+    {%- endif -%}
+{%- endmacro %}
+

@@ -39,6 +39,8 @@
     decisions, and we protect them from unfair, deceptive, and abusive practices.</p>
 
     <div class="block block__flush-sides">
+        {% set youtubeURL = 'https://www.youtube.com/embed/en0Iq8II4fA?autoplay=1&enablejsapi=1' %}
+
         {{ featured_content.render({
             'category':  'featured-video',
             'heading':   'The Bureau',
@@ -50,13 +52,13 @@
             'image': {
             },
             'video': {
-                'id': 'en0Iq8II4fA',
-                'url'   : 'https://www.youtube.com/watch?v=en0Iq8II4fA',
+                'id':    'en0Iq8II4fA',
+                'url':    youtubeURL,
                 'height': '320',
-                'width': '568'
+                'width' : '568'
             },
             'button_pos': 'bottomRight',
-        })
+            })
         }}
     </div>
 

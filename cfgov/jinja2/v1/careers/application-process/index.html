@@ -44,7 +44,8 @@
             </p>
     </section>
     <div class="block block__flush-sides">
-        {{ featured_content.render({
+        {% set youtubeURL = 'https://www.youtube.com/embed/XCbZnTIeTOY' %}
+        {{ featured_content.render( {
             'category':  'featured-video',
             'heading':   'CFPB Hiring Video',
             'body': {
@@ -62,12 +63,12 @@
             },
             'video': {
                 'id':     'XCbZnTIeTOY',
-                'url':    'https://www.youtube.com/watch?v=XCbZnTIeTOY',
+                'url':    youtubeURL,
                 'height': '320',
                 'width':  '568'
             },
             'button_pos': 'bottomRight',
-        })
+        } )
         }}
     </div>
     <section class="job-applications-interfaces">
