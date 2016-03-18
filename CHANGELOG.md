@@ -80,6 +80,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Added all launch-state mega menu links.
 - Frontend: Added hover-to-show behavior in desktop mega menu.
 - Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
+- Update `clear-form-buttons.js` to remove the input fields themselves, rather than clear the values.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
