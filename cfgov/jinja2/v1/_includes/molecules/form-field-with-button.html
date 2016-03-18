@@ -38,7 +38,7 @@
                class="m-form-field-with-button_field"
                {{ 'required' if value.required else '' }}>
     </div>
-    <p>{{ value.info.source | safe }}</p>
+    <p>{{ parse_links(value.info) |safe }}</p>
     <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
 </div>
 

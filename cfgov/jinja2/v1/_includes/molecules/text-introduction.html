@@ -19,9 +19,10 @@
 
    ========================================================================== #}
 
+
 <h1>{{ value.heading }}</h1>
-<div class="lead-paragraph">{{ value.intro.source | safe }}</div>
-{{ value.body.source | safe }}
+<div class="lead-paragraph">{{ parse_links(value.intro) |safe }}</div>
+{{ parse_links(value.body) |safe }}
 <ul class="list list__links">
     {% for link in value.links %}
         <li class="list_item">

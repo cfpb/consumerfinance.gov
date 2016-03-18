@@ -27,6 +27,7 @@
    ========================================================================== #}
 
 {% macro expandable(value) %}
+
 <div class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
@@ -63,7 +64,7 @@
             {% else %}
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
-                        {{ block | safe }}
+                        {{ parse_links(block) |safe}}
                     {% else %}
                         {{ render_stream_child(block) }}
                     {% endif %}
