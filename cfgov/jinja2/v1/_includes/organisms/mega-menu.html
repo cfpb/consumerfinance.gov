@@ -60,11 +60,11 @@
     <li class="list_item
                {{ _classes( nav_depth, '-item' ) }}"
         {{ 'data-js-hook=flyout-menu' if nav_children | count > 0 else '' }}>
-        {# TODO: Remove nav_depth < 2 check on has-children class when 3rd level transitions are in. #}
+        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
         <a class="{{ _classes( nav_depth, '-link' ) }}
-                  {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 and nav_depth < 2 else '' }}
+                  {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 else '' }}
                   {{ _classes( nav_depth, '-link__current' ) if nav_url == request.path else '' }}"
-           {{ '' if nav_url == '' or nav_url == request.path else 'href=' + nav_url | e }}
+           {{ '' if nav_url == '' else 'href=' + nav_url | e }}
            {{ 'data-js-hook=flyout-menu_trigger' if nav_children | count > 0 else '' }}>
             {{ nav_caption }}
         </a>
@@ -100,7 +100,8 @@
    ========================================================================== #}
 
 {% macro _nav( nav_depth, nav_items, nav_overview, nav_overview_url, media_items ) %}
-<div class="{{ _classes( nav_depth ) }}"
+<div class="{{ _classes( nav_depth ) }}
+            u-hidden-overflow"
      aria-expanded="false"
      data-js-hook="flyout-menu_content">
 
@@ -115,7 +116,10 @@
             <div class="{{ _classes( nav_depth, '-grid' ) }}">
                 {% if nav_depth > 1 %}
                 <span class="{{ _classes( nav_depth, '-overview' ) }}">
-                    {% if nav_overview_url %}
+                    {# TODO: Remove the check for '#' when real overview pages
+                             are added for the Consumer Resources and Education
+                             pages. #}
+                    {% if nav_overview_url and nav_overview_url != '#' %}
                     <a class="{{ _classes( nav_depth, '-overview-link' ) }}
                               {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
                        {{ '' if nav_overview_url == request.path else 'href=' + nav_overview_url | e }}>

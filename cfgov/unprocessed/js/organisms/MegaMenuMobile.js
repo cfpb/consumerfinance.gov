@@ -20,14 +20,17 @@ function MegaMenuMobile( menus ) {
   var _bodyDom = document.body;
 
   // Binded functions.
+  var _handleTriggerClickBinded = _handleTriggerClick.bind( this );
   var _handleExpandBeginBinded = _handleExpandBegin.bind( this );
   var _handleCollapseBeginBinded = _handleCollapseBegin.bind( this );
   var _handleCollapseEndBinded = _handleCollapseEnd.bind( this );
+  var _suspendBinded = suspend.bind( this );
 
   // Tree model.
   var _menus = menus;
 
   var _rootMenu;
+  var _rootMenuContentDom;
 
   //  Currently showing menu picked from the tree.
   var _activeMenu = null;
@@ -43,19 +46,11 @@ function MegaMenuMobile( menus ) {
 
     var rootNode = _menus.getRoot();
     _rootMenu = rootNode.data;
+    _rootMenuContentDom = _rootMenu.getDom().content;
     _activeMenu = _rootMenu;
-    _activeMenuDom = _rootMenu.getDom().content;
+    _activeMenuDom = _rootMenuContentDom;
 
     return this;
-  }
-
-  function _setTransition( node ) {
-    var menu = node.data;
-    var transition = new MoveTransition( menu.getDom().content ).init();
-    menu.setExpandTransition( transition, transition.moveToOrigin );
-    menu.setCollapseTransition( transition, transition.moveLeft );
-    menu.collapse();
-    transition.moveLeft();
   }
 
   /**
@@ -70,8 +65,7 @@ function MegaMenuMobile( menus ) {
     }
 
     if ( !_rootMenu.getDom().container.contains( target ) ) {
-      _rootMenu.collapse();
-      _activeMenu.collapse();
+      _rootMenu.getDom().trigger.click();
     }
   }
 
@@ -81,7 +75,9 @@ function MegaMenuMobile( menus ) {
    */
   function handleEvent( event ) {
     if ( !_suspended ) {
-      if ( event.type === 'expandBegin' ) {
+      if ( event.type === 'triggerClick' ) {
+        _handleTriggerClickBinded( event );
+      } else if ( event.type === 'expandBegin' ) {
         _handleExpandBeginBinded( event );
       } else if ( event.type === 'collapseBegin' ) {
         _handleCollapseBeginBinded( event );
@@ -89,6 +85,58 @@ function MegaMenuMobile( menus ) {
         _handleCollapseEndBinded( event );
       }
     }
+  }
+
+  /**
+   * Event handler for when FlyoutMenu trigger is clicked.
+   * @param {Event} event - A FlyoutMenu event.
+   */
+  function _handleTriggerClick( event ) {
+    this.dispatchEvent( 'triggerClick', { target: this } );
+    var menu = event.target;
+    var rootMenu = _menus.getRoot().data;
+    var menuNode = menu.getData();
+    var level = menuNode.level;
+    var transition = rootMenu.getTransition();
+
+    if ( menu === rootMenu ) {
+      // Root menu clicked.
+
+      // Root menu is closing.
+      if ( menu.isExpanded() ) {
+        level = _activeMenu.getData().level;
+        menu.setCollapseTransition( transition,
+                                    transition.moveLeft, [ level + 1 ] );
+      }
+    } else {
+      // Submenu clicked.
+      var siblings = _menus.getAllAtLevel( level );
+      var siblingMenu;
+      for ( var i = 0, len = siblings.length; i < len; i++ ) {
+        siblingMenu = siblings[i].data;
+        siblingMenu
+          .setExpandTransition( transition, transition.moveLeft, [ level ] );
+        // If on the 2nd level menu, set the back button to moveToOrigin,
+        // otherwise we're on the 3rd level menu, so moveLeft is needed.
+        if ( level === 1 ) {
+          siblingMenu
+            .setCollapseTransition( transition, transition.moveToOrigin );
+        } else {
+          siblingMenu.setCollapseTransition( transition, transition.moveLeft );
+        }
+        // If we're on the current menu, show it & hide all the other siblings.
+        if ( siblings[i] === menuNode ) {
+          siblingMenu.getDom().content.classList.remove( 'u-invisible' );
+        } else {
+          siblingMenu.getDom().content.classList.add( 'u-invisible' );
+        }
+      }
+
+      // TODO: Investigate helper functions to mask these crazy long lookups!
+      menuNode.parent.data.getDom()
+        .content.classList.remove( 'u-hidden-overflow' );
+    }
+    _activeMenu = menu;
   }
 
   /**
@@ -115,17 +163,18 @@ function MegaMenuMobile( menus ) {
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
       this.dispatchEvent( 'rootExpandBegin', { target: this } );
-    }
-    // If on a submenu, focus the back button, otherwise focus the first link.
-    var firstMenuLink;
-    if ( _activeMenu === _rootMenu ) {
-      firstMenuLink = _activeMenuDom.querySelector( 'a' );
-    } else {
-      firstMenuLink = _activeMenuDom.querySelector( 'button' );
+      _bodyDom.addEventListener( 'mousedown', _handleBodyClick );
     }
 
-    firstMenuLink.focus();
-    document.body.addEventListener( 'mousedown', _handleBodyClick );
+    // TODO: Enable or remove when keyboard navigation is in.
+    // If on a submenu, focus the back button, otherwise focus the first link.
+    // var firstMenuLink;
+    // if ( _activeMenu === _rootMenu ) {
+    //   firstMenuLink = _activeMenuDom.querySelector( 'a' );
+    // } else {
+    //   firstMenuLink = _activeMenuDom.querySelector( 'button' );
+    // }
+    // firstMenuLink.focus();
   }
 
   /**
@@ -134,8 +183,11 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleCollapseBegin( event ) {
-    _handleToggle( event.target );
-    document.body.removeEventListener( 'mousedown', _handleBodyClick );
+    var menu = event.target;
+    _handleToggle( menu );
+    if ( menu === _rootMenu ) {
+      _bodyDom.removeEventListener( 'mousedown', _handleBodyClick );
+    }
   }
 
   /**
@@ -144,10 +196,16 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleCollapseEnd( event ) {
-    if ( event.target === _rootMenu ) {
-      this.dispatchEvent( 'rootCollapseEnd', { target: this } );
+    var menu = event.target;
+    if ( menu === _rootMenu ) {
+      _suspendBinded();
+      resume();
+    } else {
+      // When clicking the back button and sliding to the right,
+      // hide the overflow after animation has completed.
+      var parentNode = menu.getData().parent;
+      parentNode.data.getDom().content.classList.add( 'u-hidden-overflow' );
     }
-    document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 
   /**
@@ -155,12 +213,9 @@ function MegaMenuMobile( menus ) {
    * @returns {MegaMenuMobile} A instance.
    */
   function collapse() {
-
-    // TODO: Combine with `resume` implementation.
-    treeTraversal.bfs( _menus.getRoot(), function( node ) {
-      var menu = node.data;
-      menu.collapse();
-    } );
+    if ( _rootMenu.isExpanded() ) {
+      _rootMenu.getDom().trigger.click();
+    }
 
     return this;
   }
@@ -171,7 +226,14 @@ function MegaMenuMobile( menus ) {
    */
   function resume() {
     if ( _suspended ) {
-      treeTraversal.bfs( _menus.getRoot(), _setTransition );
+      var transition = new MoveTransition( _rootMenuContentDom ).init();
+      _rootMenu.setExpandTransition( transition, transition.moveToOrigin );
+      _rootMenu.setCollapseTransition( transition, transition.moveLeft );
+      _rootMenu.getTransition().moveLeft();
+      _rootMenuContentDom.classList.add( 'u-hidden-overflow' );
+
+      _activeMenu = _rootMenu;
+
       _suspended = false;
     }
 
@@ -184,14 +246,35 @@ function MegaMenuMobile( menus ) {
    */
   function suspend() {
     if ( !_suspended ) {
-      _menus.getRoot().data.getTransition().remove();
+      _suspended = true;
 
-      // TODO: Update this to close the menus directly
+      _rootMenu.getTransition().remove();
+
+      var rootNode = _menus.getRoot();
+      treeTraversal.bfs( rootNode, function( node ) {
+        node.data.setCollapseTransition( null );
+        node.data.setExpandTransition( null );
+
+        // TODO: Investigate whether deferred collapse has another solution.
+        //       This check is necessary since a call to an already collapsed
+        //       menu will set a deferred collapse that will be called
+        //       on expandEnd next time the flyout is expanded.
+        //       The deferred collapse is used in cases where the
+        //       user clicks the flyout menu while it is animating open,
+        //       so that it appears like they can collapse it, even when
+        //       clicking during the expand animation.
+        if ( node.data.isExpanded() ) {
+          node.data.collapse();
+        }
+      } );
+
+      _rootMenuContentDom.classList.remove( 'u-invisible' );
+      _rootMenuContentDom.classList.remove( 'u-hidden-overflow' );
+
+      // TODO: Investigate updating this to close the menus directly
       //       so `_handleCollapseEnd` is fired.
       this.dispatchEvent( 'rootCollapseEnd', { target: this } );
-      document.body.removeEventListener( 'mousedown', _handleBodyClick );
-
-      _suspended = true;
+      _bodyDom.removeEventListener( 'mousedown', _handleBodyClick );
     }
 
     return _suspended;

@@ -45,6 +45,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add a script `move_reports.py` to move all reports under a given SublandingFilterablePage
 - Add a 'careers_preview' query to limit the results to 5
 - Added CFGovLinkHandler to convert richtext internal links to relative links
+- Frontend: added `u-hidden-overflow` utility class.
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -81,6 +82,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Added hover-to-show behavior in desktop mega menu.
 - Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
 - Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
+- Frontend: Added behaviors for third level mobile mega menu.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.

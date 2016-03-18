@@ -60,6 +60,7 @@ function MegaMenu( element ) {
 
     // Populate tree model with menus.
     var rootNode = _menus.init( rootMenu ).getRoot();
+    rootMenu.setData( rootNode );
     _populateTreeFromDom( rootMenuDom, rootNode, _addMenu );
 
     // Initialize screen-size specific behaviors.
