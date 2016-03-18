@@ -7,7 +7,6 @@ from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
 
-
 def id_validator(id_string, search=re.compile(r'[^a-zA-Z0-9-_]').search):
     if id_string:
         return not bool(search(id_string))
@@ -58,9 +57,11 @@ def most_common(lst):
 
 
 def get_form_id(page, get_request):
+    from filterable_context import get_form_specific_filter_data
+
     form_ids = []
-    if callable(getattr(page, 'get_form_specific_filter_data', None)):
-        form_ids = page.get_form_specific_filter_data(page.get_form_class(),
+
+    form_ids = get_form_specific_filter_data(page, page.get_form_class(),
                                                       get_request).keys()
     if form_ids:
         return form_ids[0]
