@@ -74,9 +74,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function expand() {
     _container.classList.add( 'active' );
-    _fieldset.setAttribute( 'visibility', 'visible' );
+    _fieldset.classList.remove( 'u-invisible' );
     _fieldset.setAttribute( 'aria-hidden', false );
-
     return this;
   }
 
@@ -86,10 +85,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function collapse() {
     _container.classList.remove( 'active' );
-    _fieldset.setAttribute( 'visibility', 'hidden' );
+    _fieldset.classList.add( 'u-invisible' );
     _fieldset.setAttribute( 'aria-hidden', true );
     _index = -1;
-
     return this;
   }
 
@@ -138,12 +136,13 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       className:   'cf-multi-select_search',
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
-      inside:      _header
+      inside:      _header,
+      id:          _name
     } );
 
     _fieldset = _create( 'fieldset', {
-      className:  'cf-multi-select_fieldset',
-      visibility: 'hidden'
+      className:  'cf-multi-select_fieldset u-invisible',
+      'aria-hidden': 'true'
     } );
 
     _list = _create( 'ul', {
@@ -246,7 +245,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _index = -1;
     _isBlurSkipped = false;
 
-    if ( _fieldset.getAttribute( 'visibility' ) === 'visible' ) {
+    if ( _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
       _search.focus();
     }
   }
@@ -331,19 +330,21 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         expand();
       },
       blur: function() {
-        if ( !_isBlurSkipped ) {
+        if ( !_isBlurSkipped &&
+              _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
         }
       },
       mousedown: function() {
-        if ( _fieldset.getAttribute( 'visibility' ) === 'hidden' ) {
+        if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' ) {
           expand();
         }
       },
       keydown: function( event ) {
         var key = event.keyCode;
 
-        if ( _fieldset.getAttribute( 'visibility' ) === 'hidden' ) {
+        if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' &&
+             key != KEY_TAB ) {
           expand();
         }
 
@@ -357,7 +358,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           _highlight( DIR_NEXT );
         } else if ( key === KEY_TAB &&
                     !event.shiftKey &&
-                    _fieldset.getAttribute( 'visibility' ) === 'visible' ) {
+                    _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
         }
       }
