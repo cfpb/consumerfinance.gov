@@ -24,24 +24,6 @@ describe( 'The Bureau Structure Page', function() {
     }
   );
 
-  it( 'should include the Director’s image',
-    function() {
-      expect( page.directorImage.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Director’s name',
-    function() {
-      expect( page.directorName.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Director’s title',
-    function() {
-      expect( page.directorTitle.isPresent() ).toBe( true );
-    }
-  );
-
   it( 'should include two org chart branches',
     function() {
       expect( page.orgChartBranches.count() ).toEqual( 2 );

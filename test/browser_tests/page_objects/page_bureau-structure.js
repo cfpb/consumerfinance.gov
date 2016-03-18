@@ -12,13 +12,6 @@ function TheBureauStructurePage() {
 
   this.orgChartRoot = element( by.css( '.org-chart_root' ) );
 
-  this.directorImage =
-  this.orgChartRoot.element( by.css( '.media_image__150' ) );
-
-  this.directorName = this.orgChartRoot.element( by.css( '.h2' ) );
-
-  this.directorTitle = this.orgChartRoot.element( by.css( 'h2' ) );
-
   this.orgChartBranches = element.all( by.css( '.org-chart_branch' ) );
 
   this.orgChartParentNodes =
