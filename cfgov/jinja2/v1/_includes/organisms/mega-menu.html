@@ -115,7 +115,10 @@
             <div class="{{ _classes( nav_depth, '-grid' ) }}">
                 {% if nav_depth > 1 %}
                 <span class="{{ _classes( nav_depth, '-overview' ) }}">
-                    {% if nav_overview_url %}
+                    {# TODO: Remove the check for '#' when real overview pages
+                             are added for the Consumer Resources and Education
+                             pages. #}
+                    {% if nav_overview_url and nav_overview_url != '#' %}
                     <a class="{{ _classes( nav_depth, '-overview-link' ) }}
                               {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
                        {{ '' if nav_overview_url == request.path else 'href=' + nav_overview_url | e }}>
