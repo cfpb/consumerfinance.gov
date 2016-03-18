@@ -38,7 +38,9 @@
             {% include 'templates/render_block.html' with context %}
         {% endif %}
     {% endfor %}
-    <aside class="prefooter">
-        {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
-    </aside>
+    {% if page.sidefoot %}
+        <aside class="prefooter">
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        </aside>
+    {% if page.sidefoot %}
 {% endblock %}
