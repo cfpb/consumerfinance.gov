@@ -119,6 +119,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixes the values for author and tag options to remove special characters.
 - Fixes layout issues with filters on sheer pages.
 - Fixed failing browser tests due to atomic naming updates.
+- Fixed a bug in the multi-select script where value was set before input type.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
