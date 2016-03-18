@@ -66,7 +66,6 @@ def register_share_permissions():
     return Permission.objects.filter(codename='share_page')
 
 
-
 class CFGovLinkHandler(object):
     """
     CFGovLinkHandler will be invoked whenever we encounter an <a> element in HTML content
@@ -93,8 +92,6 @@ class CFGovLinkHandler(object):
                 editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
             else:
                 editor_attrs = ''
-
-            # TODO Add check for External Links to include icon css class
 
             return '<a %shref="%s">' % (editor_attrs, escape(urlsplit(page.url).path))
         except Page.DoesNotExist:
