@@ -1,9 +1,8 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
-{% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -60,17 +59,5 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% for block in page.sidefoot %}
-        <div class="block block__flush-top">
-            {% if 'related_posts' in block.block_type %}
-                {{ related_posts.render(block) }}
-            {% elif 'heading' in block.block_type %}
-                <h3 class="o-sidebar-breakout_heading">
-                    {{ render_stream_child(block) }}
-                </h3>
-            {% else %}
-                {{ render_stream_child(block) }}
-            {% endif %}
-        </div>
-    {%- endfor %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}

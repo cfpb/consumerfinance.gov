@@ -1,7 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
-{% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
@@ -10,8 +10,6 @@
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
-
-{% set parent = page.parent() %}
 
 {% block content_main %}
     {% for block in page.header %}
@@ -41,14 +39,6 @@
         {% endif %}
     {% endfor %}
     <aside class="prefooter">
-        {% for block in page.sidefoot %}
-            <div class="block block__flush-top">
-                {% if 'related_posts' in block.block_type %}
-                    {{ related_posts.render(block) }}
-                {% else %}
-                    {{ render_stream_child(block) }}
-                {% endif %}
-            </div>
-        {% endfor %}
+        {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
     </aside>
 {% endblock %}

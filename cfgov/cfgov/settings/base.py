@@ -282,6 +282,10 @@ SHEER_ELASTICSEARCH_SETTINGS = \
                 "analyzer": {
                     "my_edge_ngram_analyzer": {
                         "tokenizer": "my_edge_ngram_tokenizer"
+                    },
+                    "tag_analyzer": {
+                       "tokenizer": "keyword",
+                       "filter": "lowercase"
                     }
                 },
                 "tokenizer": {

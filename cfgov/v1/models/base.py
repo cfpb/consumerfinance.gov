@@ -147,8 +147,12 @@ class CFGOVPage(Page):
         for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
+                if search_type == 'newsroom':
+                    search_type = 'just_newsroom'
                 sheer_query = getattr(queries, search_type)
-                related[search_type_name] = sheer_query.search(filter_tags=self.tags.names())
+                related[search_type_name] = \
+                    sheer_query.get_tag_related_documents(tags=self.tags.names(),
+                                                          size=block.value['limit'])
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.

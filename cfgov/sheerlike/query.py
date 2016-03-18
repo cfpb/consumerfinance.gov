@@ -234,6 +234,18 @@ class Query(object):
         self.__results = None
         self.json_safe = json_safe
 
+    def get_tag_related_documents(self, tags, size=0):
+        query_file = json.loads(file(self.filename).read())
+        doc_type = query_file['query']['doc_type']
+        query_dict = {'query': {'bool': {'should': []}}}
+        if size:
+            query_dict['size'] = size
+        for tag in tags:
+            query_dict['query']['bool']['should'].append({'match': {'tags.lower': tag}})
+        response = self.es.search(index=self.es_index, doc_type=doc_type,
+                                  body=query_dict, analyzer='tag_analyzer')
+        return QueryResults(self, response)
+
     def search(
             self,
             aggregations=None,
