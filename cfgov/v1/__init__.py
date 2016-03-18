@@ -12,7 +12,7 @@ from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
 from util.util import get_unique_id
 
-from wagtail.wagtailcore.rich_text import expand_db_html
+from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from BeautifulSoup import BeautifulSoup
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -50,19 +50,22 @@ EXTERNAL_LINK_PATTERN = '(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).g
 
 
 def external_links(value):
-    soup = BeautifulSoup(expand_db_html(value.source))
+    if isinstance(value, RichText):
+        soup = BeautifulSoup(expand_db_html(value.source))
 
-    try:
-        p = re.compile(EXTERNAL_LINK_PATTERN)
+        try:
+            p = re.compile(EXTERNAL_LINK_PATTERN)
 
-        for a in soup('a'):
-            if p.match(a['href']):
-                a.append('<span class="' + str(
-                    os.environ.get('EXTERNAL_LINK_CSS', 'icon-link link-with-icon icon-link__external-link')) + '"></span>')
-    except:
-        pass
+            for a in soup('a'):
+                if p.match(a['href']):
+                    a.append('<span class="' + str(
+                        os.environ.get('EXTERNAL_LINK_CSS', 'icon-link link-with-icon icon-link__external-link')) + '"></span>')
+        except:
+            pass
 
-    return soup
+        return soup
+    else:   # Handles sheer sites
+        return value['source']
 
 
 @contextfunction
