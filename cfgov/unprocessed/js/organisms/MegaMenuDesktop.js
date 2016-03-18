@@ -2,6 +2,7 @@
 
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
+var MoveTransition = require( '../modules/transition/MoveTransition' );
 
 /**
  * MegaMenuDesktop
@@ -153,14 +154,19 @@ function MegaMenuDesktop( menus ) {
       var menu;
       var contentDom;
       var wrapperDom;
-      var transition;
       var wrapperSel = '.o-mega-menu_content-2-wrapper';
+      var transition;
       for ( var i = 0, len = level2.length; i < len; i++ ) {
         menu = level2[i].data;
         contentDom = menu.getDom().content;
         wrapperDom = contentDom.querySelector( wrapperSel );
         transition = menu.getTransition();
-        transition.setElement( wrapperDom );
+        // This checks if the transition has been removed by MegaMenuMobile.
+        if ( transition ) {
+          transition.setElement( wrapperDom );
+        } else {
+          transition = new MoveTransition( wrapperDom );
+        }
         transition.moveUp();
         // TODO: The only reason hiding is necessary is that the
         //       drop-shadow of the menu extends below it border,
@@ -171,7 +177,18 @@ function MegaMenuDesktop( menus ) {
         menu.getDom().content.classList.add( 'u-invisible' );
         menu.setExpandTransition( transition, transition.moveToOrigin );
         menu.setCollapseTransition( transition, transition.moveUp );
-        menu.collapse();
+
+        // TODO: Investigate whether deferred collapse has another solution.
+        //       This check is necessary since a call to an already collapsed
+        //       menu will set a deferred collapse that will be called
+        //       on expandEnd next time the flyout is expanded.
+        //       The deferred collapse is used in cases where the
+        //       user clicks the flyout menu while it is animating open,
+        //       so that it appears like they can collapse it, even when
+        //       clicking during the expand animation.
+        if ( menu.isExpanded() ) {
+          menu.collapse();
+        }
       }
 
       // TODO: Combine this loop with the above
@@ -201,6 +218,17 @@ function MegaMenuDesktop( menus ) {
         transition = menu.getTransition();
         transition.remove();
         menu.getDom().content.classList.remove( 'u-invisible' );
+
+        if ( menu.isExpanded() ) {
+          menu.collapse();
+        }
+      }
+
+      // TODO: Combine this loop with the above
+      //       into a Breadth-First Search iteration.
+      var level3 = _menus.getAllAtLevel( 2 );
+      for ( var i2 = 0, len2 = level3.length; i2 < len2; i2++ ) {
+        level3[i2].data.resume();
       }
 
       _suspended = true;
