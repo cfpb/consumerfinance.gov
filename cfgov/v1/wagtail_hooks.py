@@ -1,9 +1,12 @@
 import os
 import json
+from urlparse import urlsplit
 
 from django.http import Http404
 from django.contrib.auth.models import Permission
+from django.utils.html import escape
 
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore import hooks
 
 from v1.models import CFGOVPage
@@ -49,6 +52,7 @@ def share_the_page(request, page):
     if is_publishing:
         latest.publish()
 
+
 @hooks.register('before_serve_page')
 def check_request_site(page, request, serve_args, serve_kwargs):
     if request.site.hostname == os.environ.get('STAGING_HOSTNAME'):
@@ -60,3 +64,40 @@ def check_request_site(page, request, serve_args, serve_kwargs):
 @hooks.register('register_permissions')
 def register_share_permissions():
     return Permission.objects.filter(codename='share_page')
+
+
+class CFGovLinkHandler(object):
+    """
+    CFGovLinkHandler will be invoked whenever we encounter an <a> element in HTML content
+    with an attribute of data-linktype="page". The resulting element in the database
+    representation will be:
+    <a linktype="page" id="42">hello world</a>
+    """
+
+    @staticmethod
+    def get_db_attributes(tag):
+        """
+        Given an <a> tag that we've identified as a page link embed (because it has a
+        data-linktype="page" attribute), return a dict of the attributes we should
+        have on the resulting <a linktype="page"> element.
+        """
+        return {'id': tag['data-id']}
+
+    @staticmethod
+    def expand_db_attributes(attrs, for_editor):
+        try:
+            page = Page.objects.get(id=attrs['id'])
+
+            if for_editor:
+                editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
+            else:
+                editor_attrs = ''
+
+            return '<a %shref="%s">' % (editor_attrs, escape(urlsplit(page.url).path))
+        except Page.DoesNotExist:
+            return "<a>"
+
+
+@hooks.register('register_rich_text_link_handler')
+def register_cfgov_link_handler():
+    return ('page', CFGovLinkHandler)
