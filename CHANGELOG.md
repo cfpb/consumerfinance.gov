@@ -118,6 +118,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
 - Fixes the values for author and tag options to remove special characters.
 - Fixes layout issues with filters on sheer pages.
+- Fixed failing browser tests due to atomic naming updates.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

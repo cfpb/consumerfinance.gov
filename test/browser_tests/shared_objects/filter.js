@@ -12,11 +12,11 @@ var filter = {
   searchFilterCategories:
   _getFilterElement( '[data-qa-hook="filter-categories"]' ),
 
-  searchFilterBtn: _getFilterElement( '.expandable_target' ),
+  searchFilterBtn: _getFilterElement( '.m-expandable_target' ),
 
-  searchFilterShowBtn: _getFilterElement( '.expandable_cue-open' ),
+  searchFilterShowBtn: _getFilterElement( '.m-expandable_cue-open' ),
 
-  searchFilterHideBtn: _getFilterElement( '.expandable_cue-close' ),
+  searchFilterHideBtn: _getFilterElement( '.m-expandable_cue-close' ),
 
   searchFilterResetBtn: _getFilterElement( '.js-form_clear' ),
 
