@@ -27,12 +27,6 @@
 
 {% block content_sidebar scoped -%}
 <aside>
-    {% for block in page.sidefoot %}
-        {% if 'related_posts' in block.block_type %}
-            {{ related_posts.render() }}
-        {% else %}
-            {% include 'templates/render_block.html' with context %}
-        {% endif %}
-    {% endfor %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
 </aside>
 {%- endblock %}
