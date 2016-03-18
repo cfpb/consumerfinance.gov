@@ -115,7 +115,7 @@
 {% macro _text(text) %}
 
 <p class="u-mb0">
-    {{ cfgov_rich_text(text.blob) |safe }}
+    {{ parse_links(text.blob) |safe }}
 </p>
 {% endmacro %}
 

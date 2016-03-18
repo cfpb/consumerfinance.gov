@@ -27,7 +27,7 @@
         </h2>
     {% endif %}
 
-    {{ cfgov_rich_text(value.paragraph) |safe }}
+    {{ parse_links(value.paragraph) |safe }}
 
     {% if value.links %}
         <ul class="list list__unstyled list__links">

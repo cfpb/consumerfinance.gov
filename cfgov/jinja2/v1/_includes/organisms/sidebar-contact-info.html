@@ -50,7 +50,7 @@
             <h3>{{ value.header }}</h3>
         {% endif %}
 
-        {{ cfgov_rich_text(value.contact.body) |safe }}
+        {{ parse_links(value.contact.body) |safe }}
     </div>
 
     <div class="o-sidebar-contact-info_column">

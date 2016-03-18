@@ -32,7 +32,7 @@
     {% endif %}
     {% if value.paragraph_text %}
         <p>
-            {{ cfgov_rich_text(value.paragraph_text) |safe }}
+            {{ parse_links(value.paragraph_text) |safe }}
         </p>
     {% endif %}
 
