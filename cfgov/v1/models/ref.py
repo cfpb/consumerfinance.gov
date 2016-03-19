@@ -83,7 +83,7 @@ categories = [
         ('super-highlight', 'Supervisory Highlights'),
         ('data-point', 'Data Point'),
         ('industry-markets', 'Industry and markets'),
-        ('consumer-programs-experiences', 'Consumer programs and experiences'),
+        ('consumer-edu-empower', 'Consumer education and empowerment'),
         ('to-congress', 'To Congress'),
     )),
     ('Rule under development', (
