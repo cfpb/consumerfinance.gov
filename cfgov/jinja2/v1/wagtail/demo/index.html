@@ -26,6 +26,8 @@
 {% endblock content_main %}
 
 {% block content_sidebar scoped -%}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
 <aside>
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 </aside>

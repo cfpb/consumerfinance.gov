@@ -49,21 +49,24 @@ def environment(**options):
 EXTERNAL_LINK_PATTERN = '(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 
 
+def parse_link(soup):
+    try:
+        p = re.compile(EXTERNAL_LINK_PATTERN)
+
+        for a in soup('a'):
+            if p.match(a['href']):
+                a.append('<span class="' + str(
+                    os.environ.get('EXTERNAL_LINK_CSS',
+                                   'icon-link link-with-icon icon-link__external-link')) + '"></span>')
+    except:
+        pass
+
+    return soup
+
+
 def external_links(value):
     if isinstance(value, RichText):
-        soup = BeautifulSoup(expand_db_html(value.source))
-
-        try:
-            p = re.compile(EXTERNAL_LINK_PATTERN)
-
-            for a in soup('a'):
-                if p.match(a['href']):
-                    a.append('<span class="' + str(
-                        os.environ.get('EXTERNAL_LINK_CSS', 'icon-link link-with-icon icon-link__external-link')) + '"></span>')
-        except:
-            pass
-
-        return soup
+        return parse_link(BeautifulSoup(expand_db_html(value.source)))
     elif 'source' in value:   # Handles sheer sites
         return value['source']
     else:
