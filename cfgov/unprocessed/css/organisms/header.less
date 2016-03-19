@@ -112,12 +112,12 @@
             }
 
             // Set the mobile hamburger mega menu next to the logo.
-            // Remove pointer-events so the menu doesn't cover up the search.
             > .o-mega-menu {
-                top: 0;
-                left: 0;
-                position: absolute;
-                pointer-events: none;
+                .js & {
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                }
             }
         } );
     }
@@ -126,8 +126,10 @@
 
         // Tablet/mobile sizes.
         .respond-to-max( @bp-sm-max, {
-            // Offset logo by width of mega menu trigger: 60px + 10px gap.
-            margin-left: 70px;
+            .js & {
+                // Offset logo by width of mega menu trigger: 60px + 10px gap.
+                margin-left: 70px;
+            }
         } );
 
         &-img {

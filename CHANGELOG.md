@@ -84,6 +84,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
 - Frontend: Added behaviors for third level mobile mega menu.
 - Frontend: Made Expandables collapse under 600px window size.
+- Updated the Mega Menu layout to avoid pointer events for older IE.
+- Updated the Mega Menu for devices without JS.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
